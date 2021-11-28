@@ -41,6 +41,7 @@
       });
 		}
 
+			//
 	onMount(async () => {
 		const auth = getAuth()
 		onAuthStateChanged(auth, async (user) => {

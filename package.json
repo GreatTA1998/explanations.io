@@ -1,0 +1,36 @@
+{
+  "name": "v4",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "package": "svelte-kit package",
+    "preview": "svelte-kit preview",
+    "prepare": "npm run smui-theme-light && npm run smui-theme-dark",
+    "smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
+    "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "smui-theme": "^6.0.0-beta.4",
+    "svelte": "^3.44.0",
+    "@smui/button": "^6.0.0-beta.4",
+    "@smui/card": "^6.0.0-beta.4",
+    "@smui/common": "^6.0.0-beta.4",
+    "@smui/drawer": "^6.0.0-beta.4",
+    "@smui/fab": "^6.0.0-beta.4",
+    "@smui/icon-button": "^6.0.0-beta.4",
+    "@smui/linear-progress": "^6.0.0-beta.4",
+    "@smui/menu": "^6.0.0-beta.4",
+    "@smui/slider": "^6.0.0-beta.4",
+    "@sveltejs/adapter-vercel": "next"
+  },
+  "type": "module",
+  "dependencies": {
+    "@fontsource/fira-mono": "^4.5.0",
+    "@lukeed/uuid": "^2.0.0",
+    "cookie": "^0.4.1",
+    "firebase": "^9.5.0"
+  }
+}

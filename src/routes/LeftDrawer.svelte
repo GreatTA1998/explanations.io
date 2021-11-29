@@ -4,7 +4,7 @@
       <div class="card-container">
         <Card padded>
           <div style="display: flex; align-items: center">
-            <img src="/logo.png" width="55" height="50">
+            <img src="/logo.png" width="55" height="50" alt="web-logo">
             {#if !storeUser.uid}
               <div id="sign-up-area">
 

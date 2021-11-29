@@ -1,10 +1,16 @@
-<script context="module">
-	export const prerender = true;
-</script>
-
 <script>
 	import Counter from '$lib/Counter.svelte';
 	import Button from '@smui/button'
+	import { goto } from '$app/navigation'
+
+
+	// use async promises to get user data first
+	console.log('redirecting to a proper path')
+
+	// deprecate soon
+	goto('/lvzQqyZIV1wjwYnRV9hn/', 'lvzQqyZIV1wjwYnRV9hn')
+
+	console.log('Hello from index.svelte, can set up renavigation here')
 </script>
 
 

@@ -1,22 +1,18 @@
 <script>
 	// import Header from '$lib/header/Header.svelte';
 	import '../app.css';
-
+	import '../database.js' // initialize the database
 	import { portal } from '../actions.js'
 	import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 	import Button, { Label } from '@smui/button';
 	import { storeUser } from '../store.js'
-	import { collection, getDocs, getDoc, query, where  } from "firebase/firestore"; 
-	import db from '../database.js'
 	import { onMount } from 'svelte'
-
 	import LeftDrawer from './LeftDrawer.svelte'
+	import { goto } from '$app/navigation'
 
-	export let areaDocs;
 		// handle authentication
-		function signInWithGoogle () {
+	function signInWithGoogle () {
     const provider = new GoogleAuthProvider();
-    // provider.addScope('https://www.googleapis.cfom/auth/contacts.readonly');
     const auth = getAuth();
 
     signInWithPopup(auth, provider)
@@ -25,7 +21,6 @@
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        // The signed-in user info.
         const user = result.user;
         // ...
       }).catch((error) => {
@@ -50,27 +45,33 @@
 				// https://firebase.google.com/docs/reference/js/firebase.User
 				const uid = user.uid;
 				storeUser.set(user)
+
+				// use async promises to get user data first
+				console.log('user logged in, redirecting...')
+				goto('/lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn', { replaceState: true })
+						
 			} else {
 				console.log('not logged in')
-				// User is signed out
-				// ...
 			}
-		});
+		})
+
+		// consider removing the authStateChanged listener once it's done its job
 	})
 </script>
-<!-- 
-<Header />
- -->
 
 <LeftDrawer/>
 
-<main>
-	<slot />
-</main>
+{#if !storeUser.uid}
+	<div use:portal={'sign-up-area'}>
+		<Button on:click={signInWithGoogle}>Phone Login</Button>
+	</div>
+{/if}
 
-<footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-</footer>
+<main>
+	<slot> 
+
+	</slot>
+</main>
 
 <style>
 	main {
@@ -83,32 +84,5 @@
 		margin: 0 auto;
 		box-sizing: border-box;
 	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 40px 0;
-		}
-	}
 </style>
 
-{#if !storeUser.uid}
-	<div use:portal={'sign-up-area'}>
-		<Button on:click={signInWithGoogle}>Google Sign-in</Button>
-	</div>
-{/if}
-
-<slot>
-	
-</slot>

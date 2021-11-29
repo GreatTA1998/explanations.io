@@ -1,13 +1,24 @@
+<LeftDrawer/>
+
+{#if !storeUser.uid}
+	<Button>6.036</Button>>
+{/if}
+
+<!-- <main></main> -->
+<slot>
+
+</slot>
+
+<!-- TODO: whole point of components is it has no JS so can pre-render :) -->
 <script>
 	// import Header from '$lib/header/Header.svelte';
 	import '../app.css';
-	import '../database.js' // initialize the database
-	import { portal } from '../actions.js'
+	import '../../../database.js' // initialize the database
+	import { portal } from '../../../actions.js'
 	import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
-	import Button, { Label } from '@smui/button';
-	import { storeUser } from '../store.js'
+	import { storeUser } from '../../../store.js'
 	import { onMount } from 'svelte'
-	import LeftDrawer from './LeftDrawer.svelte'
+	import LeftDrawer from '../LeftDrawer.svelte'
 	import { goto } from '$app/navigation'
 
 		// handle authentication
@@ -59,21 +70,7 @@
 	})
 </script>
 
-<LeftDrawer/>
-
-{#if !storeUser.uid}
-	<div use:portal={'sign-up-area'}>
-		<Button on:click={signInWithGoogle}>Phone Login</Button>
-	</div>
-{/if}
-
-<main>
-	<slot> 
-
-	</slot>
-</main>
-
-<style>
+<!-- <style>
 	main {
 		flex: 1;
 		display: flex;
@@ -84,5 +81,5 @@
 		margin: 0 auto;
 		box-sizing: border-box;
 	}
-</style>
+</style> -->
 

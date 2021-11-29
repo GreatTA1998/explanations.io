@@ -1,44 +1,52 @@
+<script context="module">
+	export function load () {
+		// console.log('load() from root, if not logged in redirect to tutorial')
+		return {
+
+		}
+		// return {
+		// 	redirect: '/',
+		// 	status: 302
+		// }
+	}
+</script>
+
 <script>
 	import Counter from '$lib/Counter.svelte';
 	import Button from '@smui/button'
 	import { goto } from '$app/navigation'
+	import '../database.js'
+	// use async promises to fetch users first
+	import { getAuth, onAuthStateChanged } from "firebase/auth"
+	import { onMount } from 'svelte'
 
-
-	// use async promises to get user data first
-	console.log('redirecting to a proper path')
-
-	// deprecate soon
-	goto('/lvzQqyZIV1wjwYnRV9hn/', 'lvzQqyZIV1wjwYnRV9hn')
-
-	console.log('Hello from index.svelte, can set up renavigation here')
+	onMount(() => {
+		const auth = getAuth();
+		let unsubAuthListener = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				// User is signed in, see docs for a list of available properties
+				// https://firebase.google.com/docs/reference/js/firebase.User
+				const uid = user.uid;
+				console.log('logged in')
+				goto('/lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn') // soon you can try 6.036
+				unsubAuthListener()
+				// ...
+			} else {
+				// User is signed out
+				// ...
+				console.log('not logged in, redirecting to tutorial')
+				goto('/tutorial')
+				unsubAuthListener()
+			}
+		});
+	})
 </script>
 
-
-<svelte:head>
-	<title>Home</title>
-</svelte:head>
-
-<Button>Hello world!</Button>
-
-<section>
-	<h1>
-		<div class="welcome">
-			<picture>
+<!-- 	<picture>
 				<source srcset="svelte-welcome.webp" type="image/webp" />
 				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
-
+			</picture> -->
+<!-- 
 <style>
 	section {
 		display: flex;
@@ -66,4 +74,4 @@
 		top: 0;
 		display: block;
 	}
-</style>
+</style> -->

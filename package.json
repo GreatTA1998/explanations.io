@@ -11,10 +11,6 @@
     "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "next",
-    "smui-theme": "^6.0.0-beta.4",
-    "svelte": "^3.44.0",
     "@smui/button": "^6.0.0-beta.4",
     "@smui/card": "^6.0.0-beta.4",
     "@smui/common": "^6.0.0-beta.4",
@@ -24,12 +20,17 @@
     "@smui/linear-progress": "^6.0.0-beta.4",
     "@smui/menu": "^6.0.0-beta.4",
     "@smui/slider": "^6.0.0-beta.4",
-    "@sveltejs/adapter-vercel": "next"
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/adapter-vercel": "next",
+    "@sveltejs/kit": "next",
+    "smui-theme": "^6.0.0-beta.4",
+    "svelte": "^3.44.0"
   },
   "type": "module",
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
+    "@smui/textfield": "^6.0.0-beta.4",
     "cookie": "^0.4.1",
     "firebase": "^9.5.0"
   }

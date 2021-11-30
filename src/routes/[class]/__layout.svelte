@@ -12,14 +12,15 @@
 <!-- TODO: whole point of components is it has no JS so can pre-render :) -->
 <script>
 	// import Header from '$lib/header/Header.svelte';
-	import '../app.css';
-	import '../../../database.js' // initialize the database
-	import { portal } from '../../../actions.js'
+	import '../../app.css';
+	import '../../database.js' // initialize the database
+	import { portal } from '../../actions.js'
 	import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
-	import { storeUser } from '../../../store.js'
+	import { storeUser } from '../../store.js'
 	import { onMount } from 'svelte'
 	import LeftDrawer from '../LeftDrawer.svelte'
 	import { goto } from '$app/navigation'
+	import Button, { Label } from '@smui/button'
 
 		// handle authentication
 	function signInWithGoogle () {
@@ -45,9 +46,8 @@
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
-		}
+	}
 
-			//
 	onMount(async () => {
 		const auth = getAuth()
 		onAuthStateChanged(auth, async (user) => {

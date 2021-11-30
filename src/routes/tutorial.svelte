@@ -22,9 +22,10 @@
   Phone Login
 </Button>
 <Textfield variant="filled" bind:value={phoneConfirmCode} label="Leading Icon">
-  <!-- <Icon class="material-icons" slot="leadingIcon">event</Icon>
-  <HelperText slot="helper">Helper Text</HelperText> -->
+  <!-- <Icon class="material-icons" slot="leadingIcon">event</Icon> -->
+  <HelperText slot="helper">Helper Text</HelperText>
 </Textfield>
+<Button on:click={verifyConfirmationCode}>Confirm code</Button>
 
 <h2>Join 6.036's server</h2>
 <!-- contains the asking questions -->
@@ -37,18 +38,36 @@ import HelperText from '@smui/textfield/helper-text';
 import { onMount } from 'svelte'
 import '../database.js'
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { goto } from '$app/navigation'
 
-let phoneConfirmCode
+let phoneConfirmCode = ''
 let auth
 let appVerifier
 const print = console.log
 
 onMount(() => {
   auth = getAuth(); 
-
-
-
 })
+
+function verifyConfirmationCode () {
+  console.log('value =', phoneConfirmCode)
+  // SIGN IN WITH CONFIRMATION CODE
+  // const code = getCodeFromUserInput();
+  console.log('phoneConfirmCode =', phoneConfirmCode)
+  window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
+    // User signed in successfully.
+    const user = result.user;
+    console.log('redirecting, user =', user)
+    storeUser.set(user)
+    goto('/lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn', { replaceState: true })
+    // ...
+  }).catch((error) => {
+    alert(error)
+    // User couldn't sign in (bad verification code?)
+    // ...
+  });
+}
+
 function signInWithPhone () {
     console.log('before, window.verifier =', window.recaptchaVerifier)
     window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
@@ -64,6 +83,7 @@ function signInWithPhone () {
 
     onSignInSubmit();
 
+
     function onSignInSubmit () {
       const phoneNumber = '+1 503-250-3868'
       print(auth, phoneNumber, appVerifier)
@@ -73,19 +93,7 @@ function signInWithPhone () {
 
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
-          window.confirmationResult = confirmationResult;
-          
-          // SIGN IN WITH CONFIRMATION CODE
-          // const code = getCodeFromUserInput();
-          confirmationResult.confirm('008978').then((result) => {
-            // User signed in successfully.
-            const user = result.user;
-            // ...
-          }).catch((error) => {
-            alert(error)
-            // User couldn't sign in (bad verification code?)
-            // ...
-          });
+          window.confirmationResult = confirmationResult
           // ...
         }).catch((error) => {
           console.log('error =', error)
@@ -102,6 +110,8 @@ function signInWithPhone () {
         });
       }
     }
+
+
 </script>
 
 

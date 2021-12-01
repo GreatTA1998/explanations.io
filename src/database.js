@@ -16,8 +16,6 @@ export function initializeDatabase () {
   })
 }
 
-// export const db = getFirestore()
-// export const auth = getAuth()
 
 export async function fetchDocs (dbPath) {
   return new Promise(async (resolve) => {

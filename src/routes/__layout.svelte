@@ -1,4 +1,6 @@
-{#if $hasFetchedUser}
+{#if !$hasFetchedUser}
+  <h2>Fetching user data...</h2>
+{:else}
   <slot>
 
   </slot>

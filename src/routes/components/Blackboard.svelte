@@ -162,8 +162,8 @@
       currentStroke = {
         strokeNumber: strokesArray.length + 1,
         startTime: Number(currentTime.toFixed(1)),
-        color: currentTool.color,
-        lineWidth: currentTool.lineWidth,
+        color: $currentTool.color,
+        lineWidth: $currentTool.lineWidth,
         isErasing: isNormalEraser,
         points: [],
         sessionID: '123' // TODO: initialize in store
@@ -193,8 +193,8 @@
           1, // `i`: note that setting i = 1 is a quick-fix (will refactor $_connectTwoPoints() in the future)
           isNormalEraser, // `isErasing`,
           ctx,
-          currentTool.color,
-          currentTool.lineWidth,
+          $currentTool.color,
+          $currentTool.lineWidth,
           canvas
         )
       }

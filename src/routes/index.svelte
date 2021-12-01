@@ -11,25 +11,120 @@
 	}
 </script>
 
-{#if $hasFetchedUser}
-	<h2>Fetching user data...{user}</h2>
-{:else if $hasFetchedUser && $user === {}}
+{#if !$user.uid}
 	<h1>Welcome to the Tutorial</h1>
+	<p>
+		Start this "immersive" tutorial by typing "How to solve 2b?" above
+	</p>
+	
+	<h2>How to solve 2b</h2>
+	<p>
+		Putting a ? creates a question, and text notifies the community to answer 
+	</p>
+	
+	<h2>Answering</h2>
+	<p>
+		To create a "miracle", press REC" and draw a triangle...
+		<!-- hard-coded caleb's explanation -->
+	</p>
+
+	<h2>Join the 6.036 server</h2>
+	
+	<Button id="sign-in-button" on:click={signInWithPhone}>
+		Phone Login
+	</Button>
+	<Textfield variant="filled" bind:value={phoneConfirmCode} label="Leading Icon">
+		<!-- <Icon class="material-icons" slot="leadingIcon">event</Icon> -->
+		<HelperText slot="helper">Helper Text</HelperText>
+	</Textfield>
+	<Button on:click={verifyConfirmationCode}>Confirm code</Button>
 {/if}
 
 <script>
-	import { hasFetchedUser, user } from '../store.js'
+	import Button, { Label } from '@smui/button';
+	import Textfield from '@smui/textfield';
+	import HelperText from '@smui/textfield/helper-text';
+	import { onMount } from 'svelte'
+	import '../database.js'
+	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 	import { goto } from '$app/navigation'
+	import { user } from '../store.js'
+
+	let phoneConfirmCode = ''
+	let appVerifier
+	const print = console.log
 
 	console.log('route/index.svelte')
 
-	const unsubscribe = hasFetchedUser.subscribe(() => {
-		if ($hasFetchedUser && $user) {
-			console.log('redirecting to class page')
-			goto('lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn')
+	// const unsubscribe = hasFetchedUser.subscribe(() => {
+	if ($user.uid) {
+		console.log('redirecting to class page')
+		goto('lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn')
+	}
+	// 	}
+	// })
+	// unsubscribe()
+
+	function verifyConfirmationCode () {
+		console.log('value =', phoneConfirmCode)
+		// SIGN IN WITH CONFIRMATION CODE
+		// const code = getCodeFromUserInput();
+		console.log('phoneConfirmCode =', phoneConfirmCode)
+		window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
+			// User signed in successfully.
+			const user = result.user;
+			console.log('redirecting, user =', user)
+			storeUser.set(user)
+			goto('/lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn', { replaceState: true })
+			// ...
+		}).catch((error) => {
+			alert(error)
+			// User couldn't sign in (bad verification code?)
+			// ...
+		});
+	}
+
+	function signInWithPhone () {
+		console.log('before, window.verifier =', window.recaptchaVerifier)
+		window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
+			'size': 'invisible',
+			'callback': (response) => {
+				// reCAPTCHA solved, allow signInWithPhoneNumber.
+				console.log('reCAPTCHA solved =', response)
+				// onSignInSubmit()
+			}
+		}, getAuth())
+		appVerifier = window.recaptchaVerifier;
+		print('after, verifier =', window.recaptchaVerifier)
+
+		onSignInSubmit();
+
+		function onSignInSubmit () {
+			const phoneNumber = '+1 503-250-3868'
+			print(getAuth(), phoneNumber, appVerifier)
+			signInWithPhoneNumber(getAuth(), phoneNumber, appVerifier)
+				.then((confirmationResult) => {
+					console.log('confirmation result =', confirmationResult)
+
+					// SMS sent. Prompt user to type the code from the message, then sign the
+					// user in with confirmationResult.confirm(code).
+					window.confirmationResult = confirmationResult
+					// ...
+				}).catch((error) => {
+					console.log('error =', error)
+					// Error; SMS not sent
+					// ...
+			
+					// if it fails, reset 
+					grecaptcha.reset(window.recaptchaWidgetId);
+			
+					// Or, if you haven't stored the widget ID:
+					window.recaptchaVerifier.render().then(function(widgetId) {
+						grecaptcha.reset(widgetId);
+					})
+				});
 		}
-	})
-	unsubscribe()
+	}
 </script>
 
 <!-- 	<picture>

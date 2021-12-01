@@ -54,17 +54,11 @@
 	let appVerifier
 	const print = console.log
 
-	console.log('route/index.svelte')
-
-	// const unsubscribe = hasFetchedUser.subscribe(() => {
 	if ($user.uid) {
 		console.log('redirecting to class page')
 		goto('lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn')
 	}
-	// 	}
-	// })
-	// unsubscribe()
-
+	
 	function verifyConfirmationCode () {
 		console.log('value =', phoneConfirmCode)
 		// SIGN IN WITH CONFIRMATION CODE

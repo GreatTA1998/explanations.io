@@ -22,17 +22,12 @@
     onAuthStateChanged(getAuth(), async (resultUser) => {
       hasFetchedUser.set(true) 
       if (resultUser) {
-        // await wipeDoc('users', resultUser.uid)
-        // console.log('deleted')
-        console.log('result user =', resultUser)
-
         // partially hydrate the user
         user.set({ 
           phoneNumber: resultUser.phoneNumber, 
           uid: resultUser.uid, 
           pencilColors: [] 
         })
-        console.log('partially hydrated $user =', $user)
 
         // hydrate the user doc fully
         const userRef = doc(
@@ -50,11 +45,10 @@
             phoneNumber: resultUser.phoneNumber,
             pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"] 
           })
-          console.log('successfully set document')
           let dbUserSnapshot = await getDoc(userRef)
           user.set({ id: dbUserSnapshot.id, ...dbUserSnapshot.data()})
+          console.log('created mirror doc')
         }
-        console.log('at the end of __layout, $user =', $user)
       } 
       else {
         user.set({})

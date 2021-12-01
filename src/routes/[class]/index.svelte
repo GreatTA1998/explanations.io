@@ -13,7 +13,6 @@
 <script>  
     import { db, fetchDoc, fetchDocs } from '../../database.js'
     // import LeftDrawer from '../../LeftDrawer.svelte'
-    import { portal } from "../../actions.js";
     import { onMount } from 'svelte'
     // import { storeUser } from '../../store.js'
 

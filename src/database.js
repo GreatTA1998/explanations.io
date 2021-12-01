@@ -16,7 +16,6 @@ export function initializeDatabase () {
   })
 }
 
-
 export async function fetchDocs (dbPath) {
   return new Promise(async (resolve) => {
     const snapshot = await getDocs(collection(getFirestore(), dbPath))
@@ -37,7 +36,6 @@ export async function fetchDoc (dbPath) {
   })
 }
 
-// TODO: listener and writers 
 export async function createDoc (collectionName, docID, docObject) {
   return new Promise(async (resolve) => {
     const dbDoc = await setDoc(

@@ -10,28 +10,4 @@
   }  
 </script>
 
-<script>  
-    // import LeftDrawer from '../../LeftDrawer.svelte'
-    import { onMount } from 'svelte'
-    // import { storeUser } from '../../store.js'
-
-    // storeUser.subscribe(async (newUserValue) => {
-    //   // console.log('new user value was set =', newUserValue)
-    //   if (newUserValue) {
-    //     roomDocs = await fetchDocs(roomsDbPath)
-    //     const roomSnapshot = await getDoc(doc(db, roomsDbPath + roomID))
-    //     roomDoc = { id: roomSnapshot.id, ...roomSnapshot.data() }
-    //     console.log('roomDoc =', roomDoc)
-    //     console.log('roomDocs =', roomDocs)
-    //   }
-    // })
-
-    $: roomID, updateRoomDoc() 
-
-    async function updateRoomDoc () {
-      // console.log('roomID changed =', roomID)
-      // const roomSnapshot = await getDoc(doc(db, roomsDbPath + roomID))
-      // roomDoc = { id: roomSnapshot.id, ...roomSnapshot.data() }
-    }
-  
-  </script>
+<!-- TODO: fetch participants and rooms here -->

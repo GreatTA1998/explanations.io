@@ -55,10 +55,9 @@
 	const print = console.log
 
 	if ($user.uid) {
-		console.log('redirecting to class page')
 		goto('lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn')
 	}
-	
+
 	function verifyConfirmationCode () {
 		console.log('value =', phoneConfirmCode)
 		// SIGN IN WITH CONFIRMATION CODE
@@ -68,7 +67,6 @@
 			// User signed in successfully.
 			const user = result.user;
 			console.log('redirecting, user =', user)
-			storeUser.set(user)
 			goto('/lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn', { replaceState: true })
 			// ...
 		}).catch((error) => {

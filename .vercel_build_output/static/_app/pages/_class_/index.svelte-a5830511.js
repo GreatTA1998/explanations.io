@@ -1,1 +1,0 @@
-import{S as n,i as e,s as t}from"../../chunks/vendor-c302d6cd.js";function r({page:o}){return console.log("load function from [class].svelte"),console.log("page =",o),{props:{myProps:o.params}}}async function a(){}function c(o){return roomID,a(),[]}class u extends n{constructor(s){super();e(this,s,c,null,t,{})}}export{u as default,r as load};

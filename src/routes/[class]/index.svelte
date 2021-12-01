@@ -11,7 +11,6 @@
 </script>
 
 <script>  
-    import { db, fetchDoc, fetchDocs } from '../../database.js'
     // import LeftDrawer from '../../LeftDrawer.svelte'
     import { onMount } from 'svelte'
     // import { storeUser } from '../../store.js'

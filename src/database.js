@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
-import { doc, collection, getDocs, getDoc, query, where, setDoc, deleteDoc  } from "firebase/firestore";
+import { doc, collection, getDocs, getDoc, query, where, setDoc, deleteDoc, onSnapshot  } from "firebase/firestore";
 
 export function initializeDatabase () {
   initializeApp({
@@ -55,4 +55,30 @@ export async function wipeDoc (collectionName, docID) {
     )
     resolve()
   })
+}
+
+export async function syncVariableWithDB ({ variable, dbPath }) {
+  // return new Promise(async (resolve, reject) => {
+    // try {
+      const ref = collection(getFirestore(), dbPath)
+      const unsubscribe = onSnapshot(ref, snapshot => { // onSnapshot does NOT return a promise
+        const docs = []
+        snapshot.forEach(doc => { 
+          docs.push({ 
+            id: doc.id, 
+            ref: doc.ref.path, 
+            ...doc.data() 
+          })
+        });
+        console.log('variable =', variable)
+        variable = docs // if it doesn't work consider [...]
+      })
+      return unsubscribe
+
+    //   resolve(unsubscribe);
+    // } catch (error) {
+    //   reject(error);
+    //   alert(error)
+    // } 
+  // });
 }

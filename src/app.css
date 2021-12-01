@@ -1,4 +1,8 @@
-@import '@fontsource/fira-mono';
+body {
+	margin: 0;
+}
+
+/* @import '@fontsource/fira-mono';
 
 :root {
 	font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
@@ -104,4 +108,4 @@ button:focus:not(:focus-visible) {
 	h1 {
 		font-size: 2.4rem;
 	}
-}
+} */

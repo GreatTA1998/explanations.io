@@ -10,22 +10,6 @@
   }
 </script>
 
-<!-- TODO: potentially better for `roomDocs` related code to live in [class].svelte instead -->
-{#if roomDocs.length > 0}
-  <div use:portal={'side-drawer-list'}>
-		{#each roomDocs as roomDoc}
-		  {#if roomDoc.name }
-				<Item 
-					on:click={() => goto(`/${classID}/${roomDoc.id}`)}
-					selected={roomDoc.id === roomID}
-				>
-					{roomDoc.name}
-				</Item>
-			{/if}
-		{/each}
-  </div>
-{/if}
-
 <!-- Lazy loading -->
 {#if roomDoc}
 	<div use:portal={'main-content'} style="height: 100vh">
@@ -42,14 +26,20 @@
         {#if boardDoc}
           {#if boardDoc.audioDownloadURL }
             <div use:lazyCallable={fetchStrokes}>
-              <DoodleVideo 
-                {strokesArray} 
-                audioDownloadURL={boardDoc.audioDownloadURL}
-              />
+              {#if !strokesArray}
+                <Blackboard strokesArray={[]}/>  <!-- quick-fix for proper placeholder size -->
+              {:else}
+                <DoodleVideo 
+                  {strokesArray} 
+                  audioDownloadURL={boardDoc.audioDownloadURL}
+                />
+              {/if}
             </div>
           {:else}
             <div use:lazyCallable={listenToStrokes}>
-              {#if strokesArray}
+              {#if !strokesArray}
+                <Blackboard strokesArray={[]}/> <!-- quick-fix for proper placeholder size -->
+              {:else}
                 <Blackboard 
                   {strokesArray} 
                   on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
@@ -76,7 +66,7 @@
   import { onMount } from 'svelte'
   import List, { Item, Text } from '@smui/list'
   import Button from '@smui/button'
-  import { portal } from '../../../helpers/actions.js'
+  import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
   import { user } from '../../../store.js'
 
@@ -84,7 +74,6 @@
   export let roomID
 
   let roomDoc
-  let roomDocs = []
   const boardsDbPath = `classes/${classID}/blackboards/`
   const roomsDbPath = `classes/${classID}/rooms/`
 
@@ -95,31 +84,8 @@
 
   // slugify the classID if it contains '.', convert to '-' regenerate 6.036 and 6.046's class
   onMount(async () => {
-    roomDocs = await fetchDocs(roomsDbPath)
     roomDoc = await fetchDoc(roomsDbPath + roomID)
   })
-
-  function lazyCallable (node, callback) {
-    let observer = new IntersectionObserver (
-      (entries) => {
-        // for some god damn reason the callbacks fire on initialization, even when there is no intersection,
-        // so we have to check manually
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            callback()
-            observer.unobserve(node)
-            return
-          }
-        }
-      }, 
-      {
-        root: null, // use viewport as root
-        threshold: 0.1,
-        rootMargin: '0px' // shrink/expand the root element's area, not very useful
-      }
-    )
-    observer.observe(node)
-  }
 
   $: roomID, updateRoomDoc() 
 

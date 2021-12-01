@@ -7,7 +7,7 @@
 {/if}
 
 <script>
-	// import '../app.css';
+	import '../app.css';
   import 'firebase/app'
   import { initializeDatabase, fetchDoc, createDoc, wipeDoc } from '../database.js'
   import { getAuth, onAuthStateChanged } from 'firebase/auth'

@@ -16,12 +16,10 @@
 <script>
   import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
   import { resizable } from '../helpers/canvasHelpers.js'
-  import { connectTwoPoints } from '../helpers/canvasDraw.js'
-  import { onMount } from 'svelte'
+  import { connectTwoPoints, drawStroke } from '../helpers/canvasDraw.js'
   import { getRandomID } from '../helpers/utility.js'
-  import { createEventDispatcher } from 'svelte'
+  import { onMount, createEventDispatcher } from 'svelte'
   import { currentTool } from '../store.js'
-  import { drawStroke } from '../helpers/canvasDraw.js'
 
   export let strokesArray
   
@@ -39,10 +37,8 @@
     points: [] 
   }
   let currentTime = 0
-  let isNormalEraser = false
   let debouncerTimeout
 
-  // WATCH HOOK IS NOT YET NEEDED
   /**
    * Ensures `strokesArray => UI`, that is whenever the client mutates the `strokesArray` prop, we update <canvas/> accordingly`. 
    * 
@@ -67,10 +63,10 @@
         }
         else {
           for (let i = m; i < n; i++) {
-            const newStroke = this.strokesArray[i];
+            const newStroke = strokesArray[i];
             drawStroke(
               newStroke, 
-              newStroke.startTime !== newStroke.endTime ? this.$_getPointDuration(newStroke) : null, // instantly or smoothly,
+              newStroke.startTime !== newStroke.endTime ? getPointDuration(newStroke) : null, // instantly or smoothly,
               ctx, 
               canvas
             );
@@ -232,6 +228,11 @@
         unitX: x / canvas.width,
         unitY: y / canvas.height
       }
+    }
+
+    function getPointDuration (stroke) {
+      const strokePeriod = (stroke.endTime - stroke.startTime);
+      return strokePeriod / stroke.points.length;
     }
 
     function wipeUI () {

@@ -17,9 +17,9 @@
   import { query, collection, getFirestore, orderBy, onSnapshot, doc, setDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
   export let dbPath
 
+  let strokesArray // null means unfetched, [] means empty board
   let isFetchingStrokes = false
   let boardDoc
-  let strokesArray
   let unsubStrokesListener
   const strokesRef = collection(getFirestore(), `${dbPath}/strokes`)
 
@@ -29,23 +29,30 @@
   }
   init()
 
+  onDestroy(() => {
+    if (unsubStrokesListener) {
+      unsubStrokesListener()
+    }
+  })
+
   // for lazy-fetching
   async function fetchStrokes () {
     isFetchingStrokes = true
     strokesArray = await fetchDocs(dbPath + '/strokes')
   }
 
+  /**
+   * NOTE: the snapshot listener is triggered TWICE whenever a new stroke is added. 
+   * I'm guessing it's because I use `serverTimestamp` which changes value twice
+   */
   async function listenToStrokes () {
     isFetchingStrokes = true
 
     const strokesQuery = query(strokesRef, orderBy('timestamp'))
-    unsubStrokesListener = onSnapshot(strokesQuery, async (snapshot) => {
-      console.log('snapshot =', snapshot)
-      
+    unsubStrokesListener = onSnapshot(strokesQuery, async (snapshot) => {      
       // CASE 1: wipe board operation
       const removedDocs = snapshot.docChanges().filter(change => change.type === "removed"); 
       if (removedDocs.length > 0) {
-        // this.$root.$emit("show-snackbar", "Someone wiped a blackboard.");
         // trigger <Blackboard/> to wipe the canvas UI via resetting `strokesArray` 
         strokesArray = []; 
         /* Wait 1 tick, otherwise <Blackboard/> can't react to `strokesArray = []`,
@@ -77,9 +84,7 @@
         // b: stroke added by someone else 
         else {
           snapshot.docChanges().filter(change => change.type === "added").forEach(change => {
-            strokesArray.push(
-              convertDocToStroke(change.doc)
-            );
+            strokesArray = [...strokesArray, convertDocToStroke(change.doc)] // see reactivity caveat: https://svelte.dev/tutorial/updating-arrays-and-objects
           });
         }
       }
@@ -97,10 +102,6 @@
       alert(error)
     }
   }
-
-  onDestroy(() => {
-    if (unsubStrokesListener) unsubStrokesListener()
-  })
 
   function convertDocToStroke (doc) {
     const strokeObject = {

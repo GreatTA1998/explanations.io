@@ -17,9 +17,9 @@
         </Card>
       </div>
       <List>
-        <div id="side-drawer-list">
+        <slot>
 
-        </div>
+        </slot>
       </List>
     </Content>
   </Drawer>

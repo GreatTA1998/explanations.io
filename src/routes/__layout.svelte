@@ -16,7 +16,6 @@
   import { onMount } from 'svelte'
 
   onMount(() => {
-    console.log('__layout.svelte: initializeDatabase()')
     initializeDatabase()
 
     onAuthStateChanged(getAuth(), async (resultUser) => {

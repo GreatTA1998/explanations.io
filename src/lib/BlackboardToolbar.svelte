@@ -1,9 +1,13 @@
-<Button on:click={currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}>
+<Button on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}>
   Eraser
 </Button>
 
+<slot>
+  
+</slot>
+
 {#each $user.pencilColors as color }
-  <Button on:click={currentTool.set({ type: 'pencil', color, lineWidth: 3 })}>
+  <Button on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })}>
     <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       width="16px" height="35px" :viewBox="`0 0 100 230`" style="enable-background:new 0 0 100 230;" xml:space="preserve"
     >

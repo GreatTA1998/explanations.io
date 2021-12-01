@@ -30,42 +30,52 @@
 {#if roomDoc}
 	<div use:portal={'main-content'} style="height: 100vh">
 		{#each roomDoc.blackboards as boardID (boardID) }
-			<FetchBlackboard dbPath={boardsDbPath + boardID} 
+			<RenderlessBoardMethods dbPath={boardsDbPath + boardID} 
 				let:boardDoc={boardDoc}
 				let:fetchStrokes={fetchStrokes}
+        let:listenToStrokes={listenToStrokes}
 				let:isFetchingStrokes={isFetchingStrokes}
 				let:strokesArray={strokesArray}
+        let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
+        let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
 			>
-				{#if !strokesArray}
-					{#if isFetchingStrokes}
-            <!--  -->
-					{/if}
-					<div use:lazyFetching={fetchStrokes} style="height: 500px">
-						<!-- the blackboard serves as a placeholder loader -->
-						<Blackboard strokesArray={[]}></Blackboard>
-					</div> 
-				{:else if boardDoc }
-					{#if boardDoc.audioDownloadURL }
-						<DoodleVideo {strokesArray} audioDownloadURL={boardDoc.audioDownloadURL}/>
-					{:else if boardDoc.creator }
-						<DoodleAnimation {strokesArray}/>
-					{:else}
-						<Blackboard {strokesArray}/>
-					{/if}
-				{/if}
-				</FetchBlackboard>
+        {#if boardDoc}
+          {#if boardDoc.audioDownloadURL }
+            <div use:lazyCallable={fetchStrokes}>
+              <DoodleVideo 
+                {strokesArray} 
+                audioDownloadURL={boardDoc.audioDownloadURL}
+              />
+            </div>
+          {:else}
+            <div use:lazyCallable={listenToStrokes}>
+              {#if strokesArray}
+                <Blackboard 
+                  {strokesArray} 
+                  on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+                >
+                  <Button on:click={deleteAllStrokesFromDb}>
+                    Wipe board
+                  </Button>
+                </Blackboard>
+              {/if}
+            </div>
+          {/if}
+        {/if}
+      </RenderlessBoardMethods>
 		{/each}
 	</div>
 {/if}
 
 <script>
-  import FetchBlackboard from '$lib/FetchBlackboard.svelte'
+  import RenderlessBoardMethods from '$lib/RenderlessBoardMethods.svelte'
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import DoodleAnimation from '$lib/DoodleAnimation.svelte'
   import { fetchDoc, fetchDocs } from '../../../database.js'
   import { onMount } from 'svelte'
   import List, { Item, Text } from '@smui/list'
+  import Button from '@smui/button'
   import { portal } from '../../../helpers/actions.js'
   import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
   import { user } from '../../../store.js'
@@ -78,12 +88,10 @@
   const boardsDbPath = `classes/${classID}/blackboards/`
   const roomsDbPath = `classes/${classID}/rooms/`
 
-  // $: if ($hasFetchedUser) {
-    if (!$user.uid) {
-      console.log('redirecting to tutorial')
-      goto('/')
-    }
-  // }
+  if (!$user.uid) {
+    console.log('redirecting to tutorial')
+    goto('/')
+  }
 
   // slugify the classID if it contains '.', convert to '-' regenerate 6.036 and 6.046's class
   onMount(async () => {
@@ -91,14 +99,15 @@
     roomDoc = await fetchDoc(roomsDbPath + roomID)
   })
 
-  function lazyFetching (node, fetchStrokes) {
+  function lazyCallable (node, callback) {
     let observer = new IntersectionObserver (
       (entries) => {
         // for some god damn reason the callbacks fire on initialization, even when there is no intersection,
         // so we have to check manually
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            fetchStrokes()
+            callback()
+            observer.unobserve(node)
             return
           }
         }
@@ -116,11 +125,6 @@
 
   async function updateRoomDoc () {
     roomDoc = await fetchDoc(roomsDbPath + roomID)
-  }
-
-  // TODO: isn't the function a redundant wrapper?
-  function routeToPage(route, replaceState = true) {
-    goto(`/${route}`, { replaceState }) 
   }
 </script>
 

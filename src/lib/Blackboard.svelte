@@ -1,5 +1,8 @@
-<!-- Add a blackboard toolbar that changes the store variable for what tools to use -->
-<BlackboardToolbar/>
+<BlackboardToolbar>
+  <slot>
+
+  </slot>
+</BlackboardToolbar>
 
 <canvas 
   use:resizable={{strokesArray}}
@@ -37,6 +40,7 @@
   }
   let currentTime = 0
   let isNormalEraser = false
+  let debouncerTimeout
 
   // WATCH HOOK IS NOT YET NEEDED
   /**
@@ -75,13 +79,7 @@
         }
       }
       else { 
-        // [WHY USE DEBOUNCE]: if number of strokes > 500, then deletion happens in multiple batches that can 
-        // resolve very close to each other, and the resizeBlackboard()
-        // which draws hundreds of strokes instantly overfloods the event loop 
-        // and causes strange remnant strokes to linger on the board
-        const one_second_in_milliseconds = 1000; 
-        const wipeThenDraw = _.debounce(() => {
-          console.log("debounced board reset");
+        function wipeThenDraw () {
           // reset component
           wipeUI() 
           localStrokesArray = [];
@@ -90,13 +88,26 @@
             y: -1 
           };
 
-          // // draw to current progress
-          // resizeBlackboard(); 
+          // draw to current progress
           for (const stroke of strokesArray) {
             drawStroke(stroke, null, ctx, canvas)
           }
-        }, one_second_in_milliseconds);
-        wipeThenDraw(); 
+        }
+        // [WHY USE DEBOUNCE]: if number of strokes > 500, then deletion happens in multiple batches that can 
+        // resolve very close to each other, and the resizeBlackboard()
+        // which draws hundreds of strokes instantly overfloods the event loop 
+        // and causes strange remnant strokes to linger on the board
+        function debouncedWipeThenDraw () {
+          console.log("debounced board reset");
+          if (debouncerTimeout) {
+            clearTimeout(debouncerTimeout)
+          }
+          debouncerTimeout = setTimeout(
+            wipeThenDraw, 
+            1000
+          )
+        }
+        debouncedWipeThenDraw()
       }
     }
 
@@ -164,7 +175,7 @@
         startTime: Number(currentTime.toFixed(1)),
         color: $currentTool.color,
         lineWidth: $currentTool.lineWidth,
-        isErasing: isNormalEraser,
+        isErasing: $currentTool.type === 'eraser',
         points: [],
         sessionID: '123' // TODO: initialize in store
       }
@@ -191,7 +202,7 @@
         connectTwoPoints(
           [normalizePoint(prevPoint), normalizePoint(contactPoint)], // `points`: note that the points have to be normalized for now before refactors
           1, // `i`: note that setting i = 1 is a quick-fix (will refactor $_connectTwoPoints() in the future)
-          isNormalEraser, // `isErasing`,
+          $currentTool.type === 'eraser',
           ctx,
           $currentTool.color,
           $currentTool.lineWidth,
@@ -205,7 +216,7 @@
       newStroke.endTime = Number(currentTime.toFixed(1));
       newStroke.id = getRandomID(); 
       localStrokesArray.push(newStroke)
-      dispatch('stroke-drawn', newStroke)
+      dispatch('stroke-drawn', { newStroke })
     }
 
     function getContactPosition (e) {

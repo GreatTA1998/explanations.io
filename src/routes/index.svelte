@@ -11,35 +11,25 @@
 	}
 </script>
 
-<script>
-	import Counter from '$lib/Counter.svelte';
-	import Button from '@smui/button'
-	import { goto } from '$app/navigation'
-	import '../database.js'
-	// use async promises to fetch users first
-	import { getAuth, onAuthStateChanged } from "firebase/auth"
-	import { onMount } from 'svelte'
+{#if $hasFetchedUser}
+	<h2>Fetching user data...{user}</h2>
+{:else if $hasFetchedUser && $user === {}}
+	<h1>Welcome to the Tutorial</h1>
+{/if}
 
-	onMount(() => {
-		const auth = getAuth();
-		let unsubAuthListener = onAuthStateChanged(auth, (user) => {
-			if (user) {
-				// User is signed in, see docs for a list of available properties
-				// https://firebase.google.com/docs/reference/js/firebase.User
-				const uid = user.uid;
-				console.log('logged in')
-				goto('/lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn') // soon you can try 6.036
-				unsubAuthListener()
-				// ...
-			} else {
-				// User is signed out
-				// ...
-				console.log('not logged in, redirecting to tutorial')
-				goto('/tutorial')
-				unsubAuthListener()
-			}
-		});
+<script>
+	import { hasFetchedUser, user } from '../store.js'
+	import { goto } from '$app/navigation'
+
+	console.log('route/index.svelte')
+
+	const unsubscribe = hasFetchedUser.subscribe(() => {
+		if ($hasFetchedUser && $user) {
+			console.log('redirecting to class page')
+			goto('lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn')
+		}
 	})
+	unsubscribe()
 </script>
 
 <!-- 	<picture>

@@ -1,4 +1,6 @@
-<!-- FUTURE: use "drawable" Svelte action to handle the touch event listeners -->
+<!-- Add a blackboard toolbar that changes the store variable for what tools to use -->
+<BlackboardToolbar/>
+
 <canvas 
   use:resizable={{strokesArray}}
   on:touchstart={touchStart}
@@ -9,18 +11,21 @@
 </canvas>
 
 <script>
+  import BlackboardToolbar from './BlackboardToolbar.svelte'
   import { resizable } from '../../helpers/canvasHelpers.js'
   import { connectTwoPoints } from '../../helpers/canvasDraw.js'
   import { onMount } from 'svelte'
   import { getRandomID } from '../../helpers/utility.js'
+  import { createEventDispatcher } from 'svelte'
+  import { currentTool } from '../../store.js'
+  import { drawStroke } from '../../helpers/canvasDraw.js'
 
   export let strokesArray
-
-  // will need to emit an event
-
+  
+	const dispatch = createEventDispatcher()
+  let ctx
   let localStrokesArray = []
   let canvas
-  let ctx
   let isInMiddleOfStroke = false
   let onlyAllowApplePencil = false
   let prevPoint = {
@@ -31,19 +36,69 @@
     points: [] 
   }
   let currentTime = 0
-  let currentTool = {
-    type: 'PEN',
-    color: 'white',
-    lineWidth: 2
-  }
   let isNormalEraser = false
 
   // WATCH HOOK IS NOT YET NEEDED
-  // $: {
-  //   if (localStrokesArray.length > strokesArray) {
+  /**
+   * Ensures `strokesArray => UI`, that is whenever the client mutates the `strokesArray` prop, we update <canvas/> accordingly`. 
+   * 
+   * Note we ignore the case where (n == this.localStrokesArray.length)
+   * because it means that user drew on canvas --> emits event --> client changes --> triggers our own watch hook
+   * 
+   * CRITICAL ASSUMPTION: strokesArray can be pushed singularly and deleted in batch, but can never be modified in place. 
+   */
+  $: if (strokesArray && ctx) {
+      console.log('strokesArray changed and NOT localStrokesArray')
+      let m = localStrokesArray.length; 
+      let n = strokesArray.length; 
+      if (m === n) { 
+        // do nothing: this blackboard updated its parent, and the change propagated back to itself
+      } 
+      else if (m < n) {
+        if (m === 0) { // blackboard just finished loading i.e. there can be 500 strokes
+          for (const stroke of strokesArray) {
+            drawStroke(stroke, null, ctx, canvas)
+          }
+          localStrokesArray = [...strokesArray]
+        }
+        else {
+          for (let i = m; i < n; i++) {
+            const newStroke = this.strokesArray[i];
+            drawStroke(
+              newStroke, 
+              newStroke.startTime !== newStroke.endTime ? this.$_getPointDuration(newStroke) : null, // instantly or smoothly,
+              ctx, 
+              canvas
+            );
+            localStrokesArray.push(newStroke);
+          }
+        }
+      }
+      else { 
+        // [WHY USE DEBOUNCE]: if number of strokes > 500, then deletion happens in multiple batches that can 
+        // resolve very close to each other, and the resizeBlackboard()
+        // which draws hundreds of strokes instantly overfloods the event loop 
+        // and causes strange remnant strokes to linger on the board
+        const one_second_in_milliseconds = 1000; 
+        const wipeThenDraw = _.debounce(() => {
+          console.log("debounced board reset");
+          // reset component
+          wipeUI() 
+          localStrokesArray = [];
+          prevPoint = { 
+            x: -1, 
+            y: -1 
+          };
 
-  //   }
-  // }
+          // // draw to current progress
+          // resizeBlackboard(); 
+          for (const stroke of strokesArray) {
+            drawStroke(stroke, null, ctx, canvas)
+          }
+        }, one_second_in_milliseconds);
+        wipeThenDraw(); 
+      }
+    }
 
   onMount(() => {
     ctx = canvas.getContext('2d')
@@ -149,8 +204,8 @@
     function handleEndOfStroke (newStroke) {
       newStroke.endTime = Number(currentTime.toFixed(1));
       newStroke.id = getRandomID(); 
-      localStrokesArray.push(newStroke);
-      // this.$emit("stroke-drawn", newStroke);
+      localStrokesArray.push(newStroke)
+      dispatch('stroke-drawn', newStroke)
     }
 
     function getContactPosition (e) {
@@ -166,5 +221,9 @@
         unitX: x / canvas.width,
         unitY: y / canvas.height
       }
+    }
+
+    function wipeUI () {
+      ctx.clearRect(0, 0, canvas.scrollWidth, canvas.scrollHeight)
     }
 </script>

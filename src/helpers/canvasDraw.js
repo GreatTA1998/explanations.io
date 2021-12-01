@@ -1,4 +1,4 @@
-export function drawStroke ({ points, color, lineWidth, isErasing }, pointPeriod = null, ctx = this.ctx, canvas) {
+export function drawStroke ({ points, color, lineWidth, isErasing }, pointPeriod = null, ctx, canvas) {
   return new Promise(async resolve => {
     for (let i = 1; i < points.length; i++) {
       connectTwoPoints(points, i, isErasing, ctx, color, lineWidth, canvas);
@@ -24,7 +24,7 @@ export function drawStroke ({ points, color, lineWidth, isErasing }, pointPeriod
  * @param {*} color 
  * @param {*} lineWidth 
  */
-export function connectTwoPoints (points, i, isErasing, ctx = this.ctx, color = "white", lineWidth = 2, canvas) {
+export function connectTwoPoints (points, i, isErasing, ctx, color = "white", lineWidth = 3, canvas) {
   setStrokeProperties(color, lineWidth, isErasing, ctx);
 
   // TODO: this line silently fails for edge case if a stroke only has 1 point

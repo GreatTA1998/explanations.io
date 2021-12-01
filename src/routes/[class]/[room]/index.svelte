@@ -10,6 +10,7 @@
   }
 </script>
 
+<!-- TODO: potentially better for `roomDocs` related code to live in [class].svelte instead -->
 {#if roomDocs.length > 0}
   <div use:portal={'side-drawer-list'}>
 		{#each roomDocs as roomDoc}
@@ -67,6 +68,7 @@
   import List, { Item, Text } from '@smui/list'
   import { portal } from '../../../actions.js'
   import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
+  import { hasFetchedUser, user } from '../../../store'
 
   export let classID
   export let roomID
@@ -75,6 +77,13 @@
   let roomDocs = []
   const boardsDbPath = `classes/${classID}/blackboards/`
   const roomsDbPath = `classes/${classID}/rooms/`
+
+  $: if ($hasFetchedUser) {
+    if ($user === {}) {
+      console.log('redirecting to tutorial')
+      goto('/')
+    }
+  }
 
   // slugify the classID if it contains '.', convert to '-' regenerate 6.036 and 6.046's class
   onMount(async () => {

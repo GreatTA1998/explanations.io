@@ -5,13 +5,13 @@
         <Card padded>
           <div style="display: flex; align-items: center">
             <img src="/logo.png" width="55" height="50" alt="web-logo">
-            {#if !storeUser.uid}
+            {#if $user}
+              <ClassDropdownMenu/>
+            
+            {:else}
               <div id="sign-up-area">
 
               </div>
-            {:else}
-              {storeUser}
-              <ClassDropdownMenu/>
             {/if}
           </div>
         </Card>
@@ -38,7 +38,7 @@
   import Drawer, { AppContent, Content } from '@smui/drawer';
   import Card from '@smui/card'
   import List, { Item, Text } from '@smui/list';
-  import { storeUser } from '../store.js'
+  import { user } from '../store.js'
 </script>
  
 <style>

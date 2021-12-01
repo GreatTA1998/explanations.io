@@ -15,8 +15,8 @@
 </audio>
 
 <script>
-  import { resizable } from '../../helpers/canvasHelpers.js'
-  import { connectTwoPoints } from '../../helpers/canvasDraw.js'
+  import { resizable } from '../helpers/canvasHelpers.js'
+  import { connectTwoPoints } from '../helpers/canvasDraw.js'
   import { onMount, onDestroy } from 'svelte'
 
   export let strokesArray

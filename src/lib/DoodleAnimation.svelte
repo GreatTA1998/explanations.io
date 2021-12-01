@@ -15,8 +15,8 @@
 />
  
 <script>
-  import { resizable } from '../../helpers/canvasHelpers.js'
-  import { connectTwoPoints } from '../../helpers/canvasDraw.js'
+  import { resizable } from '../helpers/canvasHelpers.js'
+  import { connectTwoPoints } from '../helpers/canvasDraw.js'
   import Slider from '@smui/slider';
   import Button from '@smui/button'
   import { onMount, onDestroy } from 'svelte'

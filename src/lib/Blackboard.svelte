@@ -11,14 +11,14 @@
 </canvas>
 
 <script>
-  import BlackboardToolbar from './BlackboardToolbar.svelte'
-  import { resizable } from '../../helpers/canvasHelpers.js'
-  import { connectTwoPoints } from '../../helpers/canvasDraw.js'
+  import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
+  import { resizable } from '../helpers/canvasHelpers.js'
+  import { connectTwoPoints } from '../helpers/canvasDraw.js'
   import { onMount } from 'svelte'
-  import { getRandomID } from '../../helpers/utility.js'
+  import { getRandomID } from '../helpers/utility.js'
   import { createEventDispatcher } from 'svelte'
-  import { currentTool } from '../../store.js'
-  import { drawStroke } from '../../helpers/canvasDraw.js'
+  import { currentTool } from '../store.js'
+  import { drawStroke } from '../helpers/canvasDraw.js'
 
   export let strokesArray
   

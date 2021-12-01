@@ -59,16 +59,16 @@
 {/if}
 
 <script>
-  import FetchBlackboard from '../../components/FetchBlackboard.svelte'
-  import Blackboard from '../../components/Blackboard.svelte'
-  import DoodleVideo from '../../components/DoodleVideo.svelte'
-  import DoodleAnimation from '../../components/DoodleAnimation.svelte'
+  import FetchBlackboard from '$lib/FetchBlackboard.svelte'
+  import Blackboard from '../../../lib/Blackboard.svelte'
+  import DoodleVideo from '$lib/DoodleVideo.svelte'
+  import DoodleAnimation from '$lib/DoodleAnimation.svelte'
   import { fetchDoc, fetchDocs } from '../../../database.js'
   import { onMount } from 'svelte'
   import List, { Item, Text } from '@smui/list'
-  import { portal } from '../../../actions.js'
+  import { portal } from '../../../helpers/actions.js'
   import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
-  import { hasFetchedUser, user } from '../../../store'
+  import { user } from '../../../store.js'
 
   export let classID
   export let roomID
@@ -78,12 +78,12 @@
   const boardsDbPath = `classes/${classID}/blackboards/`
   const roomsDbPath = `classes/${classID}/rooms/`
 
-  $: if ($hasFetchedUser) {
-    if ($user === {}) {
+  // $: if ($hasFetchedUser) {
+    if (!$user.uid) {
       console.log('redirecting to tutorial')
       goto('/')
     }
-  }
+  // }
 
   // slugify the classID if it contains '.', convert to '-' regenerate 6.036 and 6.046's class
   onMount(async () => {

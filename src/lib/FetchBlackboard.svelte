@@ -4,7 +4,7 @@
 </slot>
 
 <script>
-  import { fetchDoc, fetchDocs } from '../../database.js'
+  import { fetchDoc, fetchDocs } from '../database.js'
   export let dbPath
   let isFetchingStrokes = false
   let boardDoc

@@ -7,13 +7,7 @@
 <!-- TODO: whole point of components is it has no JS so can pre-render :) -->
 <script>
 	// import Header from '$lib/header/Header.svelte';
-	import '../../app.css';
-	import { onMount } from 'svelte'
-	import LeftDrawer from '../LeftDrawer.svelte'
-	import { goto } from '$app/navigation'
-	import Button, { Label } from '@smui/button'
-	import { portal } from '../../actions.js'
-
+	import LeftDrawer from '$lib/LeftDrawer.svelte'
 
 </script>
 

@@ -32,9 +32,5 @@
 
 <script>
 import Button from '@smui/button'
-import { user, currentTool } from '../../store.js'
-
-console.log('inside BlackboardToolbar, check user.pencilColors ', user)
-console.log('$user =', $user)
-
+import { user, currentTool } from '../store.js'
 </script>

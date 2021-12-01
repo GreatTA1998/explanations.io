@@ -34,7 +34,7 @@
 </div>
  
 <script lang="ts">
-  import ClassDropdownMenu from './components/ClassDropdownMenu.svelte'
+  import ClassDropdownMenu from '$lib/ClassDropdownMenu.svelte'
   import Drawer, { AppContent, Content } from '@smui/drawer';
   import Card from '@smui/card'
   import List, { Item, Text } from '@smui/list';

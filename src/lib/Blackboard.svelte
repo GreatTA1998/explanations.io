@@ -22,6 +22,7 @@
   import { currentTool } from '../store.js'
 
   export let strokesArray
+  export let currentTime = 0
   
 	const dispatch = createEventDispatcher()
   let ctx
@@ -36,10 +37,10 @@
   let currentStroke = { 
     points: [] 
   }
-  let currentTime = 0
   let debouncerTimeout
 
   /**
+   * Reactive statement that triggers each time `strokesArray` changes
    * Ensures `strokesArray => UI`, that is whenever the client mutates the `strokesArray` prop, we update <canvas/> accordingly`. 
    * 
    * Note we ignore the case where (n == this.localStrokesArray.length)
@@ -47,8 +48,7 @@
    * 
    * CRITICAL ASSUMPTION: strokesArray can be pushed singularly and deleted in batch, but can never be modified in place. 
    */
-  $: if (strokesArray && ctx) {
-      console.log('strokesArray changed and NOT localStrokesArray')
+  $: if (ctx) {
       let m = localStrokesArray.length; 
       let n = strokesArray.length; 
       if (m === n) { 

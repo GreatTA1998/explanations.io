@@ -1,6 +1,5 @@
 <script context="module">
   export function load ({ page }) {
-    console.log('load function from [room].svelte')
     return {
       props: {
         classID: page.params.class,
@@ -40,14 +39,39 @@
               {#if !strokesArray}
                 <Blackboard strokesArray={[]}/> <!-- quick-fix for proper placeholder size -->
               {:else}
-                <Blackboard 
-                  {strokesArray} 
-                  on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+                <!-- 
+                  minimum viable: you can record videos  
+                    - Blackboard
+                    - it gets uploaded to Firebase storage 
+                 -->
+                <RenderlessAudioRecorder
+                  let:startRecording={startRecording} 
+                  let:stopRecording={stopRecording}
+                  let:currentTime={currentTime}
+                  on:record-end={(e) => saveVideo(e.detail.audioBlob, boardID)}
                 >
-                  <Button on:click={deleteAllStrokesFromDb}>
-                    Wipe board
-                  </Button>
-                </Blackboard>
+                  <Blackboard 
+                    {strokesArray} 
+                    {currentTime}
+                    on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+                  > 
+                    {#if $recordState === 'pre_record'}
+                      <Button on:click={startRecording}>
+                        Record
+                      </Button>
+                    {:else if $recordState === 'mid_record'}
+                      <Button on:click={stopRecording}>
+                        Stop
+                      </Button>
+                    {:else}
+                      Uploading...
+                    {/if}
+
+                    <Button on:click={deleteAllStrokesFromDb}>
+                      Wipe board
+                    </Button>
+                  </Blackboard>
+                </RenderlessAudioRecorder>
               {/if}
             </div>
           {/if}
@@ -59,16 +83,18 @@
 
 <script>
   import RenderlessBoardMethods from '$lib/RenderlessBoardMethods.svelte'
+  import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
-  import DoodleAnimation from '$lib/DoodleAnimation.svelte'
   import { fetchDoc, fetchDocs } from '../../../database.js'
   import { onMount } from 'svelte'
-  import List, { Item, Text } from '@smui/list'
   import Button from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
-  import { user } from '../../../store.js'
+  import { recordState, user } from '../../../store.js'
+  import { getRandomID } from '../../../helpers/utility.js'
+  import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+ import { doc, getFirestore, updateDoc } from '@firebase/firestore';
 
   export let classID
   export let roomID
@@ -91,6 +117,35 @@
 
   async function updateRoomDoc () {
     roomDoc = await fetchDoc(roomsDbPath + roomID)
+  }
+
+  async function saveVideo (audioBlob, boardID) {
+    console.log('saveVideo(), audioBlob =', audioBlob)
+    const storage = getStorage()
+    const audioRef = ref(storage, `audio/${getRandomID()}`)
+    console.log('audioRef =', audioRef)
+
+    await uploadBytes(audioRef, audioBlob)
+    const downloadURL = await getDownloadURL(audioRef)
+    // await Promise.all([
+    //   uploadBytes(audioRef, audioBlob),
+    //   getDownloadURL(audioRef).then(URL => downloadURL = URL)
+    // ])
+    console.log('downloadURL =', downloadURL)
+
+    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
+    await updateDoc(blackboardRef, {
+      creatorUID: $user.uid,
+      creatorPhoneNumber: $user.phoneNumber,
+      date: new Date().toISOString(),
+      audioDownloadURL: downloadURL
+    })
+    console.log('updated doc =', {
+      creatorUID: $user.uid,
+      creatorPhoneNumber: $user.phoneNumber,
+      date: new Date().toISOString(),
+      audioDownloadURL: downloadURL
+    })
   }
 </script>
 

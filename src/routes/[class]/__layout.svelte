@@ -1,7 +1,5 @@
 <script context="module">
   export function load ({ page }) {
-    console.log('load() from [class __layout].svelte')
-    console.log('page =', page)
     return {
       props: {
         classID: page.params.class,

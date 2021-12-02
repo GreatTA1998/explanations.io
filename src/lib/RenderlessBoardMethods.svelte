@@ -14,7 +14,7 @@
 <script>
   import { fetchDoc, fetchDocs } from '../database.js'
   import { onDestroy, tick } from 'svelte'
-  import { query, collection, getFirestore, orderBy, onSnapshot, doc, setDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
+  import { query, collection, getFirestore, orderBy, onSnapshot, doc, setDoc, serverTimestamp, writeBatch, onSnapshotsInSync } from 'firebase/firestore'
   export let dbPath
 
   let strokesArray // null means unfetched, [] means empty board
@@ -23,11 +23,10 @@
   let unsubStrokesListener
   const strokesRef = collection(getFirestore(), `${dbPath}/strokes`)
 
-  async function init () {
-    const result = await fetchDoc(dbPath)
-    boardDoc = result // I want boardDoc to be fully hydrated to simplify things for the clients
-  }
-  init()
+  const boardRef = doc(getFirestore(), dbPath)
+  onSnapshot(boardRef, (snapshot) => {
+    boardDoc = { id: snapshot.id, ...snapshot.data() }
+  })
 
   onDestroy(() => {
     if (unsubStrokesListener) {

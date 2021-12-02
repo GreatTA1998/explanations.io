@@ -9,3 +9,7 @@ export const currentTool = writable({
     color: 'white',
     lineWidth: 3
 })
+
+export const recordState = writable('pre_record') // mid_record and post_record
+
+export const dailyMicStream = writable(null)

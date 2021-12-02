@@ -4845,7 +4845,7 @@ var init_dist = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-090f0253.js
+// .svelte-kit/output/server/chunks/store-46a11b64.js
 function __extends(d2, b) {
   if (typeof b !== "function" && b !== null)
     throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
@@ -4923,10 +4923,10 @@ function writable(value, start2 = noop) {
   return { set, update: update2, subscribe: subscribe2 };
 }
 var extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, recordState, dailyMicStream;
-var init_store_090f0253 = __esm({
-  ".svelte-kit/output/server/chunks/store-090f0253.js"() {
+var init_store_46a11b64 = __esm({
+  ".svelte-kit/output/server/chunks/store-46a11b64.js"() {
     init_shims();
-    init_app_311653dc();
+    init_app_fe0490a9();
     extendStatics = function(d2, b) {
       extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b2) {
         d22.__proto__ = b2;
@@ -4964,7 +4964,7 @@ var init_store_090f0253 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-f782d9c8.js
+// .svelte-kit/output/server/chunks/index-c327074d-39b2c669.js
 function getUA() {
   if (typeof navigator !== "undefined" && typeof navigator["userAgent"] === "string") {
     return navigator["userAgent"];
@@ -6240,10 +6240,10 @@ function registerAuth(clientPlatform) {
   registerVersion(name, version, "esm2017");
 }
 var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, stringToByteArray$1, byteArrayToString, base64, base64Decode, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, ObserverProxy, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1$1, name$p, version$2, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, name$1, version$1, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob4, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name, version, AuthInterop;
-var init_index_c327074d_f782d9c8 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-f782d9c8.js"() {
+var init_index_c327074d_39b2c669 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-39b2c669.js"() {
     init_shims();
-    init_store_090f0253();
+    init_store_46a11b64();
     import_stream2 = __toModule(require("stream"));
     import_http2 = __toModule(require("http"));
     import_url2 = __toModule(require("url"));
@@ -110913,19 +110913,19 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-4951d382.js
-var layout_4951d382_exports = {};
-__export(layout_4951d382_exports, {
+// .svelte-kit/output/server/chunks/__layout-74105f31.js
+var layout_74105f31_exports = {};
+__export(layout_74105f31_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_4951d382 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-4951d382.js"() {
+var init_layout_74105f31 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-74105f31.js"() {
     init_shims();
-    init_app_311653dc();
-    init_index_c327074d_f782d9c8();
+    init_app_fe0490a9();
+    init_index_c327074d_39b2c669();
     init_index_node();
-    init_store_090f0253();
+    init_store_46a11b64();
     import_cookie = __toModule(require_cookie());
     init_dist();
     import_stream3 = __toModule(require("stream"));
@@ -110945,9 +110945,9 @@ var init_layout_4951d382 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-5865cef5.js
-var error_5865cef5_exports = {};
-__export(error_5865cef5_exports, {
+// .svelte-kit/output/server/chunks/error-59e32339.js
+var error_59e32339_exports = {};
+__export(error_59e32339_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -110955,10 +110955,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_5865cef5 = __esm({
-  ".svelte-kit/output/server/chunks/error-5865cef5.js"() {
+var init_error_59e32339 = __esm({
+  ".svelte-kit/output/server/chunks/error-59e32339.js"() {
     init_shims();
-    init_app_311653dc();
+    init_app_fe0490a9();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -110980,7 +110980,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/Button-13e919af.js
+// .svelte-kit/output/server/chunks/classAdderBuilder-90a388cb.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name5, value]) => name5 !== "" && value).map(([name5]) => name5).join(" ");
 }
@@ -111302,12 +111302,24 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
     }
   };
 }
-var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, Button_1;
-var init_Button_13e919af = __esm({
-  ".svelte-kit/output/server/chunks/Button-13e919af.js"() {
+function classAdderBuilder(props) {
+  return new Proxy(ClassAdder, {
+    construct: function(target, args) {
+      Object.assign(internals, defaults, props);
+      return new target(...args);
+    },
+    get: function(target, prop) {
+      Object.assign(internals, defaults, props);
+      return target[prop];
+    }
+  });
+}
+var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, Button_1, Object_1, internals, ClassAdder, defaults;
+var init_classAdderBuilder_90a388cb = __esm({
+  ".svelte-kit/output/server/chunks/classAdderBuilder-90a388cb.js"() {
     init_shims();
-    init_app_311653dc();
-    init_store_090f0253();
+    init_app_fe0490a9();
+    init_store_46a11b64();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112044,7 +112056,7 @@ var init_Button_13e919af = __esm({
     Nav = Nav$1;
     Span = Span$1;
     Ul = Ul$1;
-    ({ Object: Object_1 } = globals);
+    ({ Object: Object_1$1 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
       let defaultProp;
@@ -112139,7 +112151,7 @@ var init_Button_13e919af = __esm({
         actionProp = context2 === "dialog:action" && action != null ? { "data-mdc-dialog-action": action } : { action: $$props.action };
         defaultProp = context2 === "dialog:action" && defaultAction ? { "data-mdc-dialog-button-default": "" } : { default: $$props.default };
         secondaryProp = context2 === "banner" ? {} : { secondary: $$props.secondary };
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1.assign({
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1$1.assign({
           use: [
             [
               Ripple,
@@ -112190,29 +112202,7 @@ var init_Button_13e919af = __esm({
       } while (!$$settled);
       return $$rendered;
     });
-  }
-});
-
-// .svelte-kit/output/server/chunks/classAdderBuilder-426c307a.js
-function classAdderBuilder(props) {
-  return new Proxy(ClassAdder, {
-    construct: function(target, args) {
-      Object.assign(internals, defaults, props);
-      return new target(...args);
-    },
-    get: function(target, prop) {
-      Object.assign(internals, defaults, props);
-      return target[prop];
-    }
-  });
-}
-var Object_12, internals, ClassAdder, defaults;
-var init_classAdderBuilder_426c307a = __esm({
-  ".svelte-kit/output/server/chunks/classAdderBuilder-426c307a.js"() {
-    init_shims();
-    init_app_311653dc();
-    init_Button_13e919af();
-    ({ Object: Object_12 } = globals);
+    ({ Object: Object_1 } = globals);
     internals = {
       component: Div$1,
       class: "",
@@ -112265,7 +112255,7 @@ var init_classAdderBuilder_426c307a = __esm({
       let $$rendered;
       do {
         $$settled = true;
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_12.assign({ use: [forwardEvents, ...use] }, {
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1.assign({ use: [forwardEvents, ...use] }, {
           class: classMap({
             [className]: true,
             [smuiClass]: true,
@@ -112286,26 +112276,7 @@ var init_classAdderBuilder_426c307a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/navigation-0a4806ec.js
-function guard(name5) {
-  return () => {
-    throw new Error(`Cannot call ${name5}(...) on the server`);
-  };
-}
-var goto;
-var init_navigation_0a4806ec = __esm({
-  ".svelte-kit/output/server/chunks/navigation-0a4806ec.js"() {
-    init_shims();
-    goto = guard("goto");
-  }
-});
-
-// .svelte-kit/output/server/chunks/index-53f30dc1.js
-var index_53f30dc1_exports = {};
-__export(index_53f30dc1_exports, {
-  default: () => Routes,
-  load: () => load2
-});
+// .svelte-kit/output/server/chunks/navigation-d5543fac.js
 function exclude(obj, keys) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
@@ -112333,28 +112304,18 @@ function prefixFilter(obj, prefix) {
   }
   return newObj;
 }
-function load2() {
-  return {};
+function guard(name5) {
+  return () => {
+    throw new Error(`Cannot call ${name5}(...) on the server`);
+  };
 }
-var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_13, Textfield, counter, HelperText, Routes;
-var init_index_53f30dc1 = __esm({
-  ".svelte-kit/output/server/chunks/index-53f30dc1.js"() {
+var ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto;
+var init_navigation_d5543fac = __esm({
+  ".svelte-kit/output/server/chunks/navigation-d5543fac.js"() {
     init_shims();
-    init_app_311653dc();
-    init_Button_13e919af();
-    init_store_090f0253();
-    init_classAdderBuilder_426c307a();
-    init_index_c327074d_f782d9c8();
-    init_index_node();
-    init_navigation_0a4806ec();
-    import_cookie3 = __toModule(require_cookie());
-    init_dist();
-    import_stream4 = __toModule(require("stream"));
-    import_http4 = __toModule(require("http"));
-    import_url5 = __toModule(require("url"));
-    import_punycode3 = __toModule(require("punycode"));
-    import_https4 = __toModule(require("https"));
-    import_zlib4 = __toModule(require("zlib"));
+    init_app_fe0490a9();
+    init_classAdderBuilder_90a388cb();
+    init_store_46a11b64();
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
       let { key } = $$props;
@@ -112806,7 +112767,7 @@ var init_index_53f30dc1 = __esm({
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}>${value || ""}</textarea>`;
     });
-    ({ Object: Object_13 } = globals);
+    ({ Object: Object_12 } = globals);
     Textfield = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -112995,7 +112956,7 @@ var init_index_53f30dc1 = __esm({
           },
           escape_object(exclude($$restProps, ["input$", "label$", "ripple$", "outline$", "helperLine$"]))
         ])}${add_attribute("this", element, 0)}>${!textarea && variant !== "outlined" ? `${variant === "filled" ? `<span class="${"mdc-text-field__ripple"}"></span>` : ``}
-      ${!noLabel && (label != null || $$slots.label) ? `${validate_component(FloatingLabel, "FloatingLabel").$$render($$result, Object_13.assign({
+      ${!noLabel && (label != null || $$slots.label) ? `${validate_component(FloatingLabel, "FloatingLabel").$$render($$result, Object_12.assign({
           floatAbove: value != null && value !== ""
         }, { required }, { wrapped: true }, prefixFilter($$restProps, "label$"), { this: floatingLabel }), {
           this: ($$value) => {
@@ -113005,7 +112966,7 @@ var init_index_53f30dc1 = __esm({
         }, {
           default: () => `${escape(label == null ? "" : label)}${slots.label ? slots.label({}) : ``}`
         })}` : ``}` : ``}
-    ${textarea || variant === "outlined" ? `${validate_component(NotchedOutline, "NotchedOutline").$$render($$result, Object_13.assign({
+    ${textarea || variant === "outlined" ? `${validate_component(NotchedOutline, "NotchedOutline").$$render($$result, Object_12.assign({
           noLabel: noLabel || label == null && !$$slots.label
         }, prefixFilter($$restProps, "outline$"), { this: notchedOutline }), {
           this: ($$value) => {
@@ -113013,7 +112974,7 @@ var init_index_53f30dc1 = __esm({
             $$settled = false;
           }
         }, {
-          default: () => `${!noLabel && (label != null || $$slots.label) ? `${validate_component(FloatingLabel, "FloatingLabel").$$render($$result, Object_13.assign({
+          default: () => `${!noLabel && (label != null || $$slots.label) ? `${validate_component(FloatingLabel, "FloatingLabel").$$render($$result, Object_12.assign({
             floatAbove: value != null && value !== ""
           }, { required }, { wrapped: true }, prefixFilter($$restProps, "label$"), { this: floatingLabel }), {
             this: ($$value) => {
@@ -113033,7 +112994,7 @@ var init_index_53f30dc1 = __esm({
     ${slots.default ? slots.default({}) : ``}
     ${textarea && typeof value === "string" ? `<span${add_attribute("class", classMap({
           "mdc-text-field__resizer": !("input$resizable" in $$restProps) || $$restProps.input$resizable
-        }), 0)}>${validate_component(Textarea, "Textarea").$$render($$result, Object_13.assign({ disabled }, { required }, { updateInvalid }, { "aria-controls": helperId }, { "aria-describedby": helperId }, prefixFilter($$restProps, "input$"), { this: input }, { value }, { dirty }, { invalid }), {
+        }), 0)}>${validate_component(Textarea, "Textarea").$$render($$result, Object_12.assign({ disabled }, { required }, { updateInvalid }, { "aria-controls": helperId }, { "aria-describedby": helperId }, prefixFilter($$restProps, "input$"), { this: input }, { value }, { dirty }, { invalid }), {
           this: ($$value) => {
             input = $$value;
             $$settled = false;
@@ -113053,7 +113014,7 @@ var init_index_53f30dc1 = __esm({
         }, {})}
         ${slots.internalCounter ? slots.internalCounter({}) : ``}</span>` : `${slots.prefix ? slots.prefix({}) : ``}
       ${prefix != null ? `${validate_component(Prefix, "Prefix").$$render($$result, {}, {}, { default: () => `${escape(prefix)}` })}` : ``}
-      ${validate_component(Input, "Input").$$render($$result, Object_13.assign({ type }, { disabled }, { required }, { updateInvalid }, { "aria-controls": helperId }, { "aria-describedby": helperId }, noLabel && label != null ? { placeholder: label } : {}, prefixFilter($$restProps, "input$"), { this: input }, { value }, { files }, { dirty }, { invalid }), {
+      ${validate_component(Input, "Input").$$render($$result, Object_12.assign({ type }, { disabled }, { required }, { updateInvalid }, { "aria-controls": helperId }, { "aria-describedby": helperId }, noLabel && label != null ? { placeholder: label } : {}, prefixFilter($$restProps, "input$"), { this: input }, { value }, { files }, { dirty }, { invalid }), {
           this: ($$value) => {
             input = $$value;
             $$settled = false;
@@ -113083,7 +113044,7 @@ var init_index_53f30dc1 = __esm({
         }, {}, {
           default: () => `${slots.trailingIcon ? slots.trailingIcon({}) : ``}`
         })}
-    ${!textarea && variant !== "outlined" && ripple ? `${validate_component(LineRipple, "LineRipple").$$render($$result, Object_13.assign(prefixFilter($$restProps, "ripple$"), { this: lineRipple }), {
+    ${!textarea && variant !== "outlined" && ripple ? `${validate_component(LineRipple, "LineRipple").$$render($$result, Object_12.assign(prefixFilter($$restProps, "ripple$"), { this: lineRipple }), {
           this: ($$value) => {
             lineRipple = $$value;
             $$settled = false;
@@ -113124,12 +113085,43 @@ var init_index_53f30dc1 = __esm({
           default: () => `${slots.trailingIcon ? slots.trailingIcon({}) : ``}`
         })}
     ${slots.ripple ? slots.ripple({}) : ``}</div>`}
-${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$result, Object_13.assign(prefixFilter($$restProps, "helperLine$")), {}, {
+${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$result, Object_12.assign(prefixFilter($$restProps, "helperLine$")), {}, {
           default: () => `${slots.helper ? slots.helper({}) : ``}`
         })}` : ``}`;
       } while (!$$settled);
       return $$rendered;
     });
+    goto = guard("goto");
+  }
+});
+
+// .svelte-kit/output/server/chunks/index-24bcd3cd.js
+var index_24bcd3cd_exports = {};
+__export(index_24bcd3cd_exports, {
+  default: () => Routes,
+  load: () => load2
+});
+function load2() {
+  return {};
+}
+var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, counter, HelperText, Routes;
+var init_index_24bcd3cd = __esm({
+  ".svelte-kit/output/server/chunks/index-24bcd3cd.js"() {
+    init_shims();
+    init_app_fe0490a9();
+    init_classAdderBuilder_90a388cb();
+    init_navigation_d5543fac();
+    init_index_c327074d_39b2c669();
+    init_index_node();
+    init_store_46a11b64();
+    import_cookie3 = __toModule(require_cookie());
+    init_dist();
+    import_stream4 = __toModule(require("stream"));
+    import_http4 = __toModule(require("http"));
+    import_url5 = __toModule(require("url"));
+    import_punycode3 = __toModule(require("punycode"));
+    import_https4 = __toModule(require("https"));
+    import_zlib4 = __toModule(require("zlib"));
     counter = 0;
     HelperText = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["use", "class", "id", "persistent", "validationMsg", "getElement"]);
@@ -113230,9 +113222,9 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-15e55217.js
-var layout_15e55217_exports = {};
-__export(layout_15e55217_exports, {
+// .svelte-kit/output/server/chunks/__layout-320bcac9.js
+var layout_320bcac9_exports = {};
+__export(layout_320bcac9_exports, {
   default: () => _layout2,
   load: () => load3
 });
@@ -113258,14 +113250,13 @@ function load3({ page }) {
     }
   };
 }
-var import_cookie4, MenuSurface, Menu, List, Object_14, counter2, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css, LeftDrawer, _layout2;
-var init_layout_15e55217 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-15e55217.js"() {
+var import_cookie4, MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css$1, LeftDrawer, css, _layout2;
+var init_layout_320bcac9 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-320bcac9.js"() {
     init_shims();
-    init_app_311653dc();
-    init_Button_13e919af();
-    init_classAdderBuilder_426c307a();
-    init_store_090f0253();
+    init_app_fe0490a9();
+    init_classAdderBuilder_90a388cb();
+    init_store_46a11b64();
     init_index_node();
     import_cookie4 = __toModule(require_cookie());
     init_dist();
@@ -113648,7 +113639,7 @@ var init_layout_15e55217 = __esm({
       } while (!$$settled);
       return $$rendered;
     });
-    ({ Object: Object_14 } = globals);
+    ({ Object: Object_13 } = globals);
     counter2 = 0;
     Item$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let tabindex;
@@ -113780,7 +113771,7 @@ var init_layout_15e55217 = __esm({
       do {
         $$settled = true;
         tabindex = isUninitializedValue(tabindexProp) ? !nonInteractive && !disabled && (selected || input) ? 0 : -1 : tabindexProp;
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_14.assign({
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_13.assign({
           use: [
             ...nonInteractive ? [] : [
               [
@@ -114300,14 +114291,14 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       class: "mdc-card__action-icons",
       component: Div
     });
-    css = {
+    css$1 = {
       code: ".drawer-container.svelte-f4hgt4{height:100vh;position:relative;display:flex}.svelte-f4hgt4 .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}.main-content.svelte-f4hgt4{overflow:auto;padding:16px;height:100%;box-sizing:border-box}",
       map: null
     };
     LeftDrawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $user, $$unsubscribe_user;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$result.css.add(css);
+      $$result.css.add(css$1);
       $$unsubscribe_user();
       return `<div class="${"drawer-container svelte-f4hgt4"}">${validate_component(Drawer, "Drawer").$$render($$result, {}, {}, {
         default: () => `${validate_component(Content, "Content").$$render($$result, {}, {}, {
@@ -114328,6 +114319,10 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       })}
 </div>`;
     });
+    css = {
+      code: ".question-item.svelte-t9y9x2{color:red}",
+      map: null
+    };
     _layout2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { classID } = $$props;
       let { roomID } = $$props;
@@ -114365,10 +114360,16 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
+      $$result.css.add(css);
       return `${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, {}, {}, {
-        default: () => `${rooms ? `<div>${each(rooms, (room) => `${room.name ? `${validate_component(Item, "Item").$$render($$result, { selected: room.id === roomID }, {}, {
-          default: () => `${escape(room.name)}
-					`
+        default: () => `${rooms ? `<div>${each(rooms, (room) => `
+        ${room.name !== void 0 ? `${validate_component(Item, "Item").$$render($$result, { selected: room.id === roomID }, {}, {
+          default: () => `${room.name ? `<div class="${[
+            "svelte-t9y9x2",
+            room.name.charAt(room.name.length - 1) === "?" ? "question-item" : ""
+          ].join(" ").trim()}">${escape(room.name)}</div>
+            ` : `${room.name === "" ? `<div>(no title)</div>` : ``}`}
+          `
         })}` : ``}`)}</div>` : ``}`
       })}
 
@@ -114376,6 +114377,8 @@ ${validate_component(Menu, "Menu").$$render($$result, {
 ${slots.default ? slots.default({}) : `
 
 `}
+
+
 
 
 
@@ -114558,9 +114561,9 @@ var init_audio_recorder_polyfill = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-aadddef0.js
-var index_aadddef0_exports = {};
-__export(index_aadddef0_exports, {
+// .svelte-kit/output/server/chunks/index-6aebc046.js
+var index_6aebc046_exports = {};
+__export(index_6aebc046_exports, {
   default: () => U5Broomu5D,
   load: () => load4
 });
@@ -115057,17 +115060,17 @@ function load4({ page }) {
     }
   };
 }
-var import_stream5, import_http5, import_url6, import_https5, import_zlib5, import_cookie5, import_punycode4, RenderlessBoardMethods, RenderlessAudioRecorder, BlackboardToolbar, Blackboard, DoodleVideo, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers3, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name4, version4, STORAGE_TYPE, U5Broomu5D;
-var init_index_aadddef0 = __esm({
-  ".svelte-kit/output/server/chunks/index-aadddef0.js"() {
+var import_stream5, import_http5, import_url6, import_https5, import_zlib5, import_cookie5, import_punycode4, RenderlessBoardMethods, RenderlessAudioRecorder, BlackboardToolbar, Blackboard, DoodleVideo, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers3, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name4, version4, STORAGE_TYPE, css2, U5Broomu5D;
+var init_index_6aebc046 = __esm({
+  ".svelte-kit/output/server/chunks/index-6aebc046.js"() {
     init_shims();
-    init_app_311653dc();
-    init_index_c327074d_f782d9c8();
+    init_app_fe0490a9();
+    init_index_c327074d_39b2c669();
     init_index_node();
     init_audio_recorder_polyfill();
-    init_store_090f0253();
-    init_Button_13e919af();
-    init_navigation_0a4806ec();
+    init_store_46a11b64();
+    init_classAdderBuilder_90a388cb();
+    init_navigation_d5543fac();
     import_stream5 = __toModule(require("stream"));
     import_http5 = __toModule(require("http"));
     import_url6 = __toModule(require("url"));
@@ -116180,6 +116183,10 @@ ${this.customData.serverResponse}`;
     version4 = "0.9.0";
     STORAGE_TYPE = "storage";
     registerStorage();
+    css2 = {
+      code: ".question-room.svelte-8vfgqd{background-color:red}",
+      map: null
+    };
     U5Broomu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $user, $$unsubscribe_user;
       let $canvasHeight, $$unsubscribe_canvasHeight;
@@ -116192,6 +116199,7 @@ ${this.customData.serverResponse}`;
       let roomDoc;
       const boardsDbPath = `classes/${classID}/blackboards/`;
       const roomsDbPath = `classes/${classID}/rooms/`;
+      doc(getFirestore(), roomsDbPath + roomID);
       if (!$user.uid) {
         console.log("redirecting to tutorial");
         goto("/");
@@ -116203,6 +116211,7 @@ ${this.customData.serverResponse}`;
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
+      $$result.css.add(css2);
       {
         updateRoomDoc();
       }
@@ -116210,8 +116219,20 @@ ${this.customData.serverResponse}`;
       $$unsubscribe_canvasHeight();
       $$unsubscribe_recordState();
       return `
-${roomDoc ? `<div style="${"height: 100vh"}">${each(roomDoc.blackboards, (boardID) => `${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-        default: ({ boardDoc, fetchStrokes, listenToStrokes, isFetchingStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: 100%; height: ${$canvasHeight + 80}px`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+${roomDoc ? `<div style="${"height: 100vh"}" class="${[
+        "svelte-8vfgqd",
+        roomDoc.name.charAt(roomDoc.name.length - 1) === "?" ? "question-room" : ""
+      ].join(" ").trim()}">${validate_component(Textfield, "Textfield").$$render($$result, {
+        value: roomDoc.name,
+        style: "width: 100%"
+      }, {}, {})}
+		${each(roomDoc.blackboards, (boardID) => `${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
+        default: ({ boardDoc, fetchStrokes, listenToStrokes, isFetchingStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${validate_component(Textfield, "Textfield").$$render($$result, {
+          textarea: true,
+          value: boardDoc.description || ""
+        }, {}, {})}
+
+          ${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: 100%; height: ${$canvasHeight + 80}px`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
           strokesArray,
           audioDownloadURL: boardDoc.audioDownloadURL
         }, {}, {
@@ -116226,15 +116247,14 @@ ${roomDoc ? `<div style="${"height: 100vh"}">${each(roomDoc.blackboards, (boardI
             default: () => `${$recordState === "pre_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
               default: () => `Record
                       `
+            })}          
+                      ${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+              default: () => `Wipe board
+                      `
             })}` : `${$recordState === "mid_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
               default: () => `Stop
                       `
             })}` : `Uploading...`}`}
-
-                    ${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-              default: () => `Wipe board
-                    `
-            })}
                   `
           })}
                 `
@@ -116246,7 +116266,7 @@ ${roomDoc ? `<div style="${"height: 100vh"}">${each(roomDoc.blackboards, (boardI
   }
 });
 
-// .svelte-kit/output/server/chunks/app-311653dc.js
+// .svelte-kit/output/server/chunks/app-fe0490a9.js
 function get_single_valued_header(headers, key) {
   const value = headers[key];
   if (Array.isArray(value)) {
@@ -117698,9 +117718,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-add7a7b5.js",
+      file: assets + "/_app/start-97d63ddc.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-add7a7b5.js", assets + "/_app/chunks/vendor-6cbcc546.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-97d63ddc.js", assets + "/_app/chunks/vendor-55a52f70.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -117743,9 +117763,9 @@ function render(request, {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css2, Root, base, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_311653dc = __esm({
-  ".svelte-kit/output/server/chunks/app-311653dc.js"() {
+var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css3, Root, base, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
+var init_app_fe0490a9 = __esm({
+  ".svelte-kit/output/server/chunks/app-fe0490a9.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -117899,7 +117919,7 @@ var init_app_311653dc = __esm({
     missing_component = {
       $$render: () => ""
     };
-    css2 = {
+    css3 = {
       code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
       map: null
     };
@@ -117927,7 +117947,7 @@ var init_app_311653dc = __esm({
         $$bindings.props_2(props_2);
       if ($$props.props_3 === void 0 && $$bindings.props_3 && props_3 !== void 0)
         $$bindings.props_3(props_3);
-      $$result.css.add(css2);
+      $$result.css.add(css3);
       {
         stores.page.set(page);
       }
@@ -117999,13 +118019,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_4951d382(), layout_4951d382_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_5865cef5(), error_5865cef5_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_53f30dc1(), index_53f30dc1_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_15e55217(), layout_15e55217_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_aadddef0(), index_aadddef0_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_74105f31(), layout_74105f31_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_59e32339(), error_59e32339_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_24bcd3cd(), index_24bcd3cd_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_320bcac9(), layout_320bcac9_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_6aebc046(), index_6aebc046_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-1464c7f2.js", "css": ["assets/pages/__layout.svelte-68eb443a.css"], "js": ["pages/__layout.svelte-1464c7f2.js", "chunks/vendor-6cbcc546.js", "chunks/database-07664a5b.js", "chunks/store-f9fd671f.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-b84d3e75.js", "css": [], "js": ["error.svelte-b84d3e75.js", "chunks/vendor-6cbcc546.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-722092e9.js", "css": [], "js": ["pages/index.svelte-722092e9.js", "chunks/vendor-6cbcc546.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-f9fd671f.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-a8566c28.js", "css": ["assets/pages/_class_/__layout.svelte-12f5d01b.css"], "js": ["pages/_class_/__layout.svelte-a8566c28.js", "chunks/vendor-6cbcc546.js", "chunks/store-f9fd671f.js", "chunks/canvas-dc2dc66e.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-12c6aafc.js", "css": [], "js": ["pages/_class_/_room_/index.svelte-12c6aafc.js", "chunks/vendor-6cbcc546.js", "chunks/database-07664a5b.js", "chunks/store-f9fd671f.js", "chunks/canvas-dc2dc66e.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-29332d54.js", "css": ["assets/pages/__layout.svelte-68eb443a.css"], "js": ["pages/__layout.svelte-29332d54.js", "chunks/vendor-55a52f70.js", "chunks/database-a36dd1eb.js", "chunks/store-2964d983.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-75c03261.js", "css": [], "js": ["error.svelte-75c03261.js", "chunks/vendor-55a52f70.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-1c48c9dd.js", "css": [], "js": ["pages/index.svelte-1c48c9dd.js", "chunks/vendor-55a52f70.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-2964d983.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-d5345179.js", "css": ["assets/pages/_class_/__layout.svelte-0bf132d8.css"], "js": ["pages/_class_/__layout.svelte-d5345179.js", "chunks/vendor-55a52f70.js", "chunks/store-2964d983.js", "chunks/canvas-dc2dc66e.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-8602f397.js", "css": ["assets/pages/_class_/_room_/index.svelte-500a8c23.css"], "js": ["pages/_class_/_room_/index.svelte-8602f397.js", "chunks/vendor-55a52f70.js", "chunks/database-a36dd1eb.js", "chunks/store-2964d983.js", "chunks/canvas-dc2dc66e.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
   }
 });
 
@@ -118058,7 +118078,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_311653dc();
+init_app_fe0490a9();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

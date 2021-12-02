@@ -24,10 +24,11 @@
 			>
         {#if boardDoc}
           {#if boardDoc.audioDownloadURL }
-            <div use:lazyCallable={fetchStrokes}>
-              {#if !strokesArray}
-                <Blackboard strokesArray={[]}/>  <!-- quick-fix for proper placeholder size -->
-              {:else}
+            <div
+              use:lazyCallable={fetchStrokes} 
+              style={`width: ${placeholderWidth}px; height: ${placeholderHeight}px`}
+            >
+              {#if strokesArray}
                 <DoodleVideo 
                   {strokesArray} 
                   audioDownloadURL={boardDoc.audioDownloadURL}
@@ -35,15 +36,8 @@
               {/if}
             </div>
           {:else}
-            <div use:lazyCallable={listenToStrokes}>
-              {#if !strokesArray}
-                <Blackboard strokesArray={[]}/> <!-- quick-fix for proper placeholder size -->
-              {:else}
-                <!-- 
-                  minimum viable: you can record videos  
-                    - Blackboard
-                    - it gets uploaded to Firebase storage 
-                 -->
+            <div use:lazyCallable={listenToStrokes} style={`width: ${placeholderWidth}px; height: ${placeholderHeight}px`}>
+              {#if strokesArray}
                 <RenderlessAudioRecorder
                   let:startRecording={startRecording} 
                   let:stopRecording={stopRecording}
@@ -90,11 +84,12 @@
   import { onMount } from 'svelte'
   import Button from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
-  import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
+  import { goto } from '$app/navigation';
   import { recordState, user } from '../../../store.js'
   import { getRandomID } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
- import { doc, getFirestore, updateDoc } from '@firebase/firestore';
+  import { doc, getFirestore, updateDoc } from '@firebase/firestore';
+  import { calculateCanvasDimensions } from '../../../helpers/canvasHelpers.js'
 
   export let classID
   export let roomID
@@ -102,6 +97,8 @@
   let roomDoc
   const boardsDbPath = `classes/${classID}/blackboards/`
   const roomsDbPath = `classes/${classID}/rooms/`
+  let placeholderWidth
+  let placeholderHeight
 
   if (!$user.uid) {
     console.log('redirecting to tutorial')
@@ -111,6 +108,10 @@
   // slugify the classID if it contains '.', convert to '-' regenerate 6.036 and 6.046's class
   onMount(async () => {
     roomDoc = await fetchDoc(roomsDbPath + roomID)
+    // quick-fix
+    const dimensions = calculateCanvasDimensions()
+    placeholderWidth = dimensions.width + 50
+    placeholderHeight = dimensions.height + 50
   })
 
   $: roomID, updateRoomDoc() 

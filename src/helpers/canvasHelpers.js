@@ -17,34 +17,10 @@ export function resizable (canvas, { strokesArray, specialRedrawFunc }) {
 
   function resizeCanvas () {
     if (resizeDebouncer) clearTimeout(resizeDebouncer)
-   
-    // calculate size
-    let videoHeight
-    let videoWidth
-    const appElement = document.getElementById('main-content')
-    const availableHeight = appElement.clientHeight
-    const availableWidth= appElement.clientWidth
-    const aspectRatio = 4/3
-    if (availableWidth * (1/aspectRatio) < availableHeight) {
-      videoWidth = availableWidth;
-      videoHeight = videoWidth * (1/aspectRatio);
-    } else {
-      videoHeight = availableHeight;
-      videoWidth = videoHeight * aspectRatio;
-    }
 
-    // perform the resize
-    // internal dimensions (true scale factor)
-    // canvas.style.width = videoWidth
-    // canvas.style.height = videoHeight
-
-    canvas.width = videoWidth
-    canvas.height = videoHeight
-
-    // visible, external dimension
-    // canvas.style.scrollWidth = videoWidth
-    // canvas.style.scrollHeight = videoHeight
-    // then have a listener
+    const { height, width } = calculateCanvasDimensions()
+    canvas.width = width
+    canvas.height = height
 
     // TODO: debounce 
     window.addEventListener('resize', debouncedResizeHandler)
@@ -66,4 +42,21 @@ export function resizable (canvas, { strokesArray, specialRedrawFunc }) {
       window.removeEventListener('resize', debouncedResizeHandler)
     }
   }
+}
+
+export function calculateCanvasDimensions () {
+  const appElement = document.getElementById('main-content')
+  const availableHeight = appElement.clientHeight
+  const availableWidth = appElement.clientWidth
+  const aspectRatio = 4/3
+
+  let dimensions = {}
+  if (availableWidth * (1/aspectRatio) < availableHeight) {
+    dimensions.width = availableWidth;
+    dimensions.height = dimensions.width * (1/aspectRatio);
+  } else {
+    dimensions.height = availableHeight;
+    dimensions.width = dimensions.height * aspectRatio;
+  }
+  return dimensions
 }

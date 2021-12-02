@@ -27,7 +27,7 @@ export function lazyCallable (node, callback) {
     }, 
     {
       root: null, // use viewport as root
-      threshold: 0.1,
+      threshold: 0.2,
       rootMargin: '0px' // shrink/expand the root element's area, not very useful
     }
   )

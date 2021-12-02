@@ -1,11 +1,3 @@
-<Button on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}>
-  Eraser
-</Button>
-
-<slot>
-  
-</slot>
-
 {#each $user.pencilColors as color }
   <Button on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })}>
     <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -33,6 +25,14 @@
     </svg> 
   </Button>
 {/each}
+
+<Button on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}>
+  Eraser
+</Button>
+
+<slot>
+  
+</slot>
 
 <script>
 import Button from '@smui/button'

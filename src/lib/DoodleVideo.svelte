@@ -6,6 +6,7 @@
 >
 
 </canvas>
+
 <audio 
   on:play={initSyncing} 
   bind:this={AudioPlayer} 

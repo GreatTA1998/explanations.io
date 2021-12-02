@@ -1,0 +1,1 @@
+function l(r,t){let e=document.getElementById(t);return e==null||e.appendChild(r),{destroy(){r.remove()}}}function s(r,t){let e=new IntersectionObserver(n=>{for(const o of n)if(o.isIntersecting){t(),e.unobserve(r);return}},{root:null,threshold:.2,rootMargin:"0px"});e.observe(r)}export{s as l,l as p};

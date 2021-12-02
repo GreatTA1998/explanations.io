@@ -1,5 +1,4 @@
 <canvas 
-  use:resizable={{strokesArray, onResize}}
   bind:this={canvas}
 >
 
@@ -15,8 +14,7 @@
 />
  
 <script>
-  import { resizable } from '../helpers/canvasHelpers.js'
-  import { connectTwoPoints } from '../helpers/canvasDraw.js'
+  import { connectTwoPoints } from '../helpers/canvas.js'
   import Slider from '@smui/slider';
   import Button from '@smui/button'
   import { onMount, onDestroy } from 'svelte'

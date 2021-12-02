@@ -5,26 +5,26 @@
 </BlackboardToolbar>
 
 <canvas 
-  use:resizable={{strokesArray}}
   on:touchstart={touchStart}
   on:touchmove={touchMove}
   on:touchend={touchEnd}
   bind:this={canvas}
+  style={`background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`}
 >
 </canvas>
 
 <script>
   import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
-  import { resizable } from '../helpers/canvasHelpers.js'
-  import { connectTwoPoints, drawStroke } from '../helpers/canvasDraw.js'
+  import { connectTwoPoints, drawStroke } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, createEventDispatcher } from 'svelte'
-  import { currentTool } from '../store.js'
+  import { currentTool, canvasWidth, canvasHeight } from '../store.js'
 
   export let strokesArray
   export let currentTime = 0
   
 	const dispatch = createEventDispatcher()
+
   let ctx
   let localStrokesArray = []
   let canvas
@@ -38,6 +38,19 @@
     points: [] 
   }
   let debouncerTimeout
+
+  onMount(() => {
+    ctx = canvas.getContext('2d')
+  })
+
+  // auto-resize
+  $: if (ctx) {
+    canvas.width = $canvasWidth
+    canvas.height = $canvasHeight
+    for (const stroke of strokesArray) {
+      drawStroke(stroke, null, ctx, canvas)
+    }
+  }
 
   /**
    * Reactive statement that triggers each time `strokesArray` changes
@@ -106,10 +119,6 @@
         debouncedWipeThenDraw()
       }
     }
-
-  onMount(() => {
-    ctx = canvas.getContext('2d')
-  })
 
   function touchStart (e) {
     if (e.touches.length > 1) {

@@ -1,3 +1,21 @@
+
+export function calculateCanvasDimensions () {
+  const appElement = document.getElementById('main-content') || document.getElementById('root-layout-div')
+  const availableHeight = appElement.clientHeight
+  const availableWidth = appElement.clientWidth
+  const aspectRatio = 4/3
+
+  let dimensions = {}
+  if (availableWidth * (1/aspectRatio) < availableHeight) {
+    dimensions.width = availableWidth;
+    dimensions.height = dimensions.width * (1/aspectRatio);
+  } else {
+    dimensions.height = availableHeight;
+    dimensions.width = dimensions.height * aspectRatio;
+  }
+  return dimensions
+}
+
 export function drawStroke ({ points, color, lineWidth, isErasing }, pointPeriod = null, ctx, canvas) {
   return new Promise(async resolve => {
     for (let i = 1; i < points.length; i++) {
@@ -33,6 +51,8 @@ export function connectTwoPoints (points, i, isErasing, ctx, color = "white", li
   const prevY = prevPoint.unitY * canvas.height;
 
   const curPoint = points[i];
+  // console.log('curPoint =', curPoint)
+  // console.log('canvas =', canvas)
   const curX = curPoint.unitX * canvas.width;
   const curY = curPoint.unitY * canvas.height;
 

@@ -18,6 +18,7 @@
   onMount(() => {
     initializeDatabase()
 
+    // USER LOGIN
     onAuthStateChanged(getAuth(), async (resultUser) => {
       hasFetchedUser.set(true) 
       if (resultUser) {
@@ -46,7 +47,6 @@
           })
           let dbUserSnapshot = await getDoc(userRef)
           user.set({ id: dbUserSnapshot.id, ...dbUserSnapshot.data()})
-          console.log('created mirror doc')
         }
       } 
       else {

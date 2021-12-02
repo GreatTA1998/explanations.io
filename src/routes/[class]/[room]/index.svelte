@@ -24,19 +24,20 @@
 			>
         {#if boardDoc}
           {#if boardDoc.audioDownloadURL }
-            <div
-              use:lazyCallable={fetchStrokes} 
-              style={`width: ${placeholderWidth}px; height: ${placeholderHeight}px`}
-            >
+            <div use:lazyCallable={fetchStrokes} style={`width: 100%; height: ${$canvasHeight + 80}px`}>
               {#if strokesArray}
                 <DoodleVideo 
                   {strokesArray} 
                   audioDownloadURL={boardDoc.audioDownloadURL}
-                />
+                >
+                  <Button on:click={revertToBoard(boardDoc)}>
+                    Revert to board
+                  </Button>
+                </DoodleVideo>
               {/if}
             </div>
           {:else}
-            <div use:lazyCallable={listenToStrokes} style={`width: ${placeholderWidth}px; height: ${placeholderHeight}px`}>
+            <div use:lazyCallable={listenToStrokes} style={`width: 100%; height: ${$canvasHeight + 80}px`}>
               {#if strokesArray}
                 <RenderlessAudioRecorder
                   let:startRecording={startRecording} 
@@ -85,11 +86,11 @@
   import Button from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
-  import { recordState, user } from '../../../store.js'
+  import { recordState, user, canvasHeight } from '../../../store.js'
   import { getRandomID } from '../../../helpers/utility.js'
-  import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-  import { doc, getFirestore, updateDoc } from '@firebase/firestore';
-  import { calculateCanvasDimensions } from '../../../helpers/canvasHelpers.js'
+  import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
+  import { doc, getFirestore, updateDoc, deleteField } from '@firebase/firestore';
+  import { calculateCanvasDimensions } from '../../../helpers/canvas.js'
 
   export let classID
   export let roomID
@@ -124,29 +125,43 @@
     console.log('saveVideo(), audioBlob =', audioBlob)
     const storage = getStorage()
     const audioRef = ref(storage, `audio/${getRandomID()}`)
-    console.log('audioRef =', audioRef)
-
     await uploadBytes(audioRef, audioBlob)
     const downloadURL = await getDownloadURL(audioRef)
-    // await Promise.all([
-    //   uploadBytes(audioRef, audioBlob),
-    //   getDownloadURL(audioRef).then(URL => downloadURL = URL)
-    // ])
-    console.log('downloadURL =', downloadURL)
 
     const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
     await updateDoc(blackboardRef, {
       creatorUID: $user.uid,
       creatorPhoneNumber: $user.phoneNumber,
       date: new Date().toISOString(),
-      audioDownloadURL: downloadURL
+      audioDownloadURL: downloadURL,
+      audioRefFullPath: audioRef.fullPath
     })
     console.log('updated doc =', {
       creatorUID: $user.uid,
       creatorPhoneNumber: $user.phoneNumber,
       date: new Date().toISOString(),
-      audioDownloadURL: downloadURL
+      audioDownloadURL: downloadURL,
+      audioRefFullPath: audioRef.fullPath
     })
+  }
+
+  async function revertToBoard ({ id, audioRefFullPath }) {
+    const boardRef = doc(getFirestore(), boardsDbPath + id)
+    const audioRef = ref(getStorage(), audioRefFullPath)
+    const promises = []
+    promises.push(
+      deleteObject(audioRef)
+    )
+    promises.push(
+      updateDoc(boardRef, {
+        creator: deleteField(),
+        creatorPhoneNumber: deleteField(),
+        date: deleteField(),
+        audioDownloadURL: deleteField(),
+        audioRefFullPath: deleteField()
+      })
+    )
+    await Promise.all(promises)
   }
 </script>
 

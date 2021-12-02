@@ -1,5 +1,7 @@
-import { readable, writable } from 'svelte/store';
-import { onAuthStateChanged, getAuth } from 'firebase/auth'
+import { writable } from 'svelte/store';
+
+export const canvasHeight = writable(0)
+export const canvasWidth = writable(0)
 
 export const hasFetchedUser = writable(false)
 export const user = writable({}) // {} means not logged in, cannot be null

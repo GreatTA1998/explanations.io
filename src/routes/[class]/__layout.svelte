@@ -33,25 +33,50 @@
 
 <script>
 	import LeftDrawer from '$lib/LeftDrawer.svelte'
-  import { onDestroy } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import List, { Item, Text } from '@smui/list'
   import { portal } from '../../helpers/actions.js'
   import { goto } from '$app/navigation'
   import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
+  import { calculateCanvasDimensions } from '../../helpers/canvas'
+  import { browser } from '$app/env'
+  import { canvasHeight, canvasWidth } from '../../store.js'
 
   export let classID;
   export let roomID;
   let participants
   let rooms
 
-  let unsubFuncs = []
-	
+	// START OF RESIZE LOGIC 
+  let resizeDebouncer = null
   onDestroy(() => {
     for (const unsubFunc of unsubFuncs) {
       unsubFunc()
     }
+    if (browser) {
+      window.removeEventListener('resize', debouncedResizeHandler)
+    }
   })
 
+  onMount(() => {
+    window.addEventListener('resize', debouncedResizeHandler)
+    debouncedResizeHandler()
+  })
+
+  function resizeCanvas () {
+    const { height, width } = calculateCanvasDimensions()
+    canvasHeight.set(height)
+    canvasWidth.set(width)
+  }
+
+  function debouncedResizeHandler () {
+    if (resizeDebouncer) clearTimeout(resizeDebouncer)
+    setTimeout(resizeCanvas, 100)
+  }
+  // END OF RESIZE LOGIC
+
+  // HYDRATE PARTICIPANTS AND ROOMS
+  let unsubFuncs = []
   const participantsRef = collection(
     getFirestore(), 
     `classes/${classID}/participants`

@@ -1,14 +1,16 @@
+<slot>
 
+</slot>
 <canvas 
   bind:this={canvas} 
-  use:resizable={{strokesArray, handleResize}}
-  on:resized={handleResize}
+  style={`background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`}
 >
 
 </canvas>
 
 <audio 
   on:play={initSyncing} 
+  on:seeking={syncStrokesToAudio}
   bind:this={AudioPlayer} 
   src={audioDownloadURL} 
   controls 
@@ -16,9 +18,9 @@
 </audio>
 
 <script>
-  import { resizable } from '../helpers/canvasHelpers.js'
-  import { connectTwoPoints } from '../helpers/canvasDraw.js'
+  import { connectTwoPoints } from '../helpers/canvas.js'
   import { onMount, onDestroy } from 'svelte'
+  import { canvasWidth, canvasHeight } from '../store.js'
 
   export let strokesArray
   export let audioDownloadURL
@@ -30,6 +32,13 @@
   let AudioPlayer
   let recursiveSyncer
   let playbackSpeed = 1
+
+  // handle resizing
+  $: if (ctx && AudioPlayer) {
+    canvas.width = $canvasWidth
+    canvas.height = $canvasHeight
+    handleResize()
+  }
 
   onDestroy(() => {
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
@@ -63,7 +72,7 @@
 
   function initSyncing () {
     nextFrameIdx = 0;
-    ctx.clearRect(0, 0, canvas.width, canvas.height) // video could already be rendered as an initial preview or completed video
+    ctx.clearRect(0, 0, $canvasWidth, $canvasHeight) // video could already be rendered as an initial preview or completed video
     syncRecursively()
   }
   
@@ -120,9 +129,9 @@
       if (recursiveSyncer) {
         // video was playing: resume to previous progress
         nextFrameIdx = 0;
-        this.syncStrokesToAudio();
+        syncStrokesToAudio();
       } else {
-        this.renderFramesUntilCurrentTime()
+        renderFramesUntilCurrentTime()
       }
       resolve();
     })

@@ -13,8 +13,8 @@ var __commonJS = (cb, mod2) => function __require() {
 };
 var __export = (target, all) => {
   __markAsModule(target);
-  for (var name6 in all)
-    __defProp(target, name6, { get: all[name6], enumerable: true });
+  for (var name5 in all)
+    __defProp(target, name5, { get: all[name5], enumerable: true });
 };
 var __reExport = (target, module3, desc) => {
   if (module3 && typeof module3 === "object" || typeof module3 === "function") {
@@ -96,10 +96,10 @@ async function* toIterator(parts, clone4 = true) {
 function isFormData(object) {
   return typeof object === "object" && typeof object.append === "function" && typeof object.set === "function" && typeof object.get === "function" && typeof object.getAll === "function" && typeof object.delete === "function" && typeof object.keys === "function" && typeof object.values === "function" && typeof object.entries === "function" && typeof object.constructor === "function" && object[NAME] === "FormData";
 }
-function getHeader(boundary, name6, field) {
+function getHeader(boundary, name5, field) {
   let header = "";
   header += `${dashes}${boundary}${carriage}`;
-  header += `Content-Disposition: form-data; name="${name6}"`;
+  header += `Content-Disposition: form-data; name="${name5}"`;
   if (isBlob(field)) {
     header += `; filename="${field.name}"${carriage}`;
     header += `Content-Type: ${field.type || "application/octet-stream"}`;
@@ -107,8 +107,8 @@ function getHeader(boundary, name6, field) {
   return `${header}${carriage.repeat(2)}`;
 }
 async function* formDataIterator(form, boundary) {
-  for (const [name6, value] of form) {
-    yield getHeader(boundary, name6, value);
+  for (const [name5, value] of form) {
+    yield getHeader(boundary, name5, value);
     if (isBlob(value)) {
       yield* value.stream();
     } else {
@@ -120,8 +120,8 @@ async function* formDataIterator(form, boundary) {
 }
 function getFormDataLength(form, boundary) {
   let length = 0;
-  for (const [name6, value] of form) {
-    length += Buffer.byteLength(getHeader(boundary, name6, value));
+  for (const [name5, value] of form) {
+    length += Buffer.byteLength(getHeader(boundary, name5, value));
     length += isBlob(value) ? value.size : Buffer.byteLength(String(value));
     length += carriageLength;
   }
@@ -184,10 +184,10 @@ function fromRawHeaders(headers = []) {
       result.push(array.slice(index, index + 2));
     }
     return result;
-  }, []).filter(([name6, value]) => {
+  }, []).filter(([name5, value]) => {
     try {
-      validateHeaderName(name6);
-      validateHeaderValue(name6, String(value));
+      validateHeaderName(name5);
+      validateHeaderValue(name5, String(value));
       return true;
     } catch {
       return false;
@@ -588,8 +588,8 @@ var init_install_fetch = __esm({
           reader._ownerReadableStream._reader = void 0;
           reader._ownerReadableStream = void 0;
         }
-        function readerLockException(name6) {
-          return new TypeError("Cannot " + name6 + " a stream using a released reader");
+        function readerLockException(name5) {
+          return new TypeError("Cannot " + name5 + " a stream using a released reader");
         }
         function defaultReaderClosedPromiseInitialize(reader) {
           reader._closedPromise = newPromise((resolve3, reject) => {
@@ -816,8 +816,8 @@ var init_install_fetch = __esm({
             stream._readableStreamController[PullSteps](readRequest);
           }
         }
-        function defaultReaderBrandCheckException(name6) {
-          return new TypeError(`ReadableStreamDefaultReader.prototype.${name6} can only be used on a ReadableStreamDefaultReader`);
+        function defaultReaderBrandCheckException(name5) {
+          return new TypeError(`ReadableStreamDefaultReader.prototype.${name5} can only be used on a ReadableStreamDefaultReader`);
         }
         const AsyncIteratorPrototype = Object.getPrototypeOf(Object.getPrototypeOf(async function* () {
         }).prototype);
@@ -927,8 +927,8 @@ var init_install_fetch = __esm({
             return false;
           }
         }
-        function streamAsyncIteratorBrandCheckException(name6) {
-          return new TypeError(`ReadableStreamAsyncIterator.${name6} can only be used on a ReadableSteamAsyncIterator`);
+        function streamAsyncIteratorBrandCheckException(name5) {
+          return new TypeError(`ReadableStreamAsyncIterator.${name5} can only be used on a ReadableSteamAsyncIterator`);
         }
         const NumberIsNaN = Number.isNaN || function(x) {
           return x !== x;
@@ -1564,11 +1564,11 @@ var init_install_fetch = __esm({
           request._associatedReadableByteStreamController = controller;
           request._view = view;
         }
-        function byobRequestBrandCheckException(name6) {
-          return new TypeError(`ReadableStreamBYOBRequest.prototype.${name6} can only be used on a ReadableStreamBYOBRequest`);
+        function byobRequestBrandCheckException(name5) {
+          return new TypeError(`ReadableStreamBYOBRequest.prototype.${name5} can only be used on a ReadableStreamBYOBRequest`);
         }
-        function byteStreamControllerBrandCheckException(name6) {
-          return new TypeError(`ReadableByteStreamController.prototype.${name6} can only be used on a ReadableByteStreamController`);
+        function byteStreamControllerBrandCheckException(name5) {
+          return new TypeError(`ReadableByteStreamController.prototype.${name5} can only be used on a ReadableByteStreamController`);
         }
         function AcquireReadableStreamBYOBReader(stream) {
           return new ReadableStreamBYOBReader(stream);
@@ -1701,8 +1701,8 @@ var init_install_fetch = __esm({
             ReadableByteStreamControllerPullInto(stream._readableStreamController, view, readIntoRequest);
           }
         }
-        function byobReaderBrandCheckException(name6) {
-          return new TypeError(`ReadableStreamBYOBReader.prototype.${name6} can only be used on a ReadableStreamBYOBReader`);
+        function byobReaderBrandCheckException(name5) {
+          return new TypeError(`ReadableStreamBYOBReader.prototype.${name5} can only be used on a ReadableStreamBYOBReader`);
         }
         function ExtractHighWaterMark(strategy, defaultHWM) {
           const { highWaterMark } = strategy;
@@ -2470,17 +2470,17 @@ var init_install_fetch = __esm({
           WritableStreamDefaultControllerClearAlgorithms(controller);
           WritableStreamStartErroring(stream, error3);
         }
-        function streamBrandCheckException$2(name6) {
-          return new TypeError(`WritableStream.prototype.${name6} can only be used on a WritableStream`);
+        function streamBrandCheckException$2(name5) {
+          return new TypeError(`WritableStream.prototype.${name5} can only be used on a WritableStream`);
         }
-        function defaultControllerBrandCheckException$2(name6) {
-          return new TypeError(`WritableStreamDefaultController.prototype.${name6} can only be used on a WritableStreamDefaultController`);
+        function defaultControllerBrandCheckException$2(name5) {
+          return new TypeError(`WritableStreamDefaultController.prototype.${name5} can only be used on a WritableStreamDefaultController`);
         }
-        function defaultWriterBrandCheckException(name6) {
-          return new TypeError(`WritableStreamDefaultWriter.prototype.${name6} can only be used on a WritableStreamDefaultWriter`);
+        function defaultWriterBrandCheckException(name5) {
+          return new TypeError(`WritableStreamDefaultWriter.prototype.${name5} can only be used on a WritableStreamDefaultWriter`);
         }
-        function defaultWriterLockException(name6) {
-          return new TypeError("Cannot " + name6 + " a stream using a released writer");
+        function defaultWriterLockException(name5) {
+          return new TypeError("Cannot " + name5 + " a stream using a released writer");
         }
         function defaultWriterClosedPromiseInitialize(writer) {
           writer._closedPromise = newPromise((resolve3, reject) => {
@@ -2572,9 +2572,9 @@ var init_install_fetch = __esm({
           }
         }
         function createDOMExceptionPolyfill() {
-          const ctor = function DOMException2(message, name6) {
+          const ctor = function DOMException2(message, name5) {
             this.message = message || "";
-            this.name = name6 || "Error";
+            this.name = name5 || "Error";
             if (Error.captureStackTrace) {
               Error.captureStackTrace(this, this.constructor);
             }
@@ -2962,8 +2962,8 @@ var init_install_fetch = __esm({
           }
           SetUpReadableStreamDefaultController(stream, controller, startAlgorithm, pullAlgorithm, cancelAlgorithm, highWaterMark, sizeAlgorithm);
         }
-        function defaultControllerBrandCheckException$1(name6) {
-          return new TypeError(`ReadableStreamDefaultController.prototype.${name6} can only be used on a ReadableStreamDefaultController`);
+        function defaultControllerBrandCheckException$1(name5) {
+          return new TypeError(`ReadableStreamDefaultController.prototype.${name5} can only be used on a ReadableStreamDefaultController`);
         }
         function ReadableStreamTee(stream, cloneForBranch2) {
           if (IsReadableByteStreamController(stream._readableStreamController)) {
@@ -3547,8 +3547,8 @@ var init_install_fetch = __esm({
             reader._readIntoRequests = new SimpleQueue();
           }
         }
-        function streamBrandCheckException$1(name6) {
-          return new TypeError(`ReadableStream.prototype.${name6} can only be used on a ReadableStream`);
+        function streamBrandCheckException$1(name5) {
+          return new TypeError(`ReadableStream.prototype.${name5} can only be used on a ReadableStream`);
         }
         function convertQueuingStrategyInit(init2, context2) {
           assertDictionary(init2, context2);
@@ -3594,8 +3594,8 @@ var init_install_fetch = __esm({
             configurable: true
           });
         }
-        function byteLengthBrandCheckException(name6) {
-          return new TypeError(`ByteLengthQueuingStrategy.prototype.${name6} can only be used on a ByteLengthQueuingStrategy`);
+        function byteLengthBrandCheckException(name5) {
+          return new TypeError(`ByteLengthQueuingStrategy.prototype.${name5} can only be used on a ByteLengthQueuingStrategy`);
         }
         function IsByteLengthQueuingStrategy(x) {
           if (!typeIsObject(x)) {
@@ -3642,8 +3642,8 @@ var init_install_fetch = __esm({
             configurable: true
           });
         }
-        function countBrandCheckException(name6) {
-          return new TypeError(`CountQueuingStrategy.prototype.${name6} can only be used on a CountQueuingStrategy`);
+        function countBrandCheckException(name5) {
+          return new TypeError(`CountQueuingStrategy.prototype.${name5} can only be used on a CountQueuingStrategy`);
         }
         function IsCountQueuingStrategy(x) {
           if (!typeIsObject(x)) {
@@ -3943,11 +3943,11 @@ var init_install_fetch = __esm({
           TransformStreamSetBackpressure(stream, false);
           return stream._backpressureChangePromise;
         }
-        function defaultControllerBrandCheckException(name6) {
-          return new TypeError(`TransformStreamDefaultController.prototype.${name6} can only be used on a TransformStreamDefaultController`);
+        function defaultControllerBrandCheckException(name5) {
+          return new TypeError(`TransformStreamDefaultController.prototype.${name5} can only be used on a TransformStreamDefaultController`);
         }
-        function streamBrandCheckException(name6) {
-          return new TypeError(`TransformStream.prototype.${name6} can only be used on a TransformStream`);
+        function streamBrandCheckException(name5) {
+          return new TypeError(`TransformStream.prototype.${name5} can only be used on a TransformStream`);
         }
         exports3.ByteLengthQueuingStrategy = ByteLengthQueuingStrategy;
         exports3.CountQueuingStrategy = CountQueuingStrategy;
@@ -3986,7 +3986,7 @@ var init_install_fetch = __esm({
     try {
       const { Blob: Blob6 } = require("buffer");
       if (Blob6 && !Blob6.prototype.stream) {
-        Blob6.prototype.stream = function name6(params) {
+        Blob6.prototype.stream = function name5(params) {
           let position = 0;
           const blob = this;
           return new ReadableStream({
@@ -4315,16 +4315,16 @@ var init_install_fetch = __esm({
         body.pipe(dest);
       }
     };
-    validateHeaderName = typeof import_http.default.validateHeaderName === "function" ? import_http.default.validateHeaderName : (name6) => {
-      if (!/^[\^`\-\w!#$%&'*+.|~]+$/.test(name6)) {
-        const error3 = new TypeError(`Header name must be a valid HTTP token [${name6}]`);
+    validateHeaderName = typeof import_http.default.validateHeaderName === "function" ? import_http.default.validateHeaderName : (name5) => {
+      if (!/^[\^`\-\w!#$%&'*+.|~]+$/.test(name5)) {
+        const error3 = new TypeError(`Header name must be a valid HTTP token [${name5}]`);
         Object.defineProperty(error3, "code", { value: "ERR_INVALID_HTTP_TOKEN" });
         throw error3;
       }
     };
-    validateHeaderValue = typeof import_http.default.validateHeaderValue === "function" ? import_http.default.validateHeaderValue : (name6, value) => {
+    validateHeaderValue = typeof import_http.default.validateHeaderValue === "function" ? import_http.default.validateHeaderValue : (name5, value) => {
       if (/[^\t\u0020-\u007E\u0080-\u00FF]/.test(value)) {
-        const error3 = new TypeError(`Invalid character in header content ["${name6}"]`);
+        const error3 = new TypeError(`Invalid character in header content ["${name5}"]`);
         Object.defineProperty(error3, "code", { value: "ERR_INVALID_CHAR" });
         throw error3;
       }
@@ -4334,8 +4334,8 @@ var init_install_fetch = __esm({
         let result = [];
         if (init2 instanceof Headers) {
           const raw = init2.raw();
-          for (const [name6, values] of Object.entries(raw)) {
-            result.push(...values.map((value) => [name6, value]));
+          for (const [name5, values] of Object.entries(raw)) {
+            result.push(...values.map((value) => [name5, value]));
           }
         } else if (init2 == null)
           ;
@@ -4362,10 +4362,10 @@ var init_install_fetch = __esm({
         } else {
           throw new TypeError("Failed to construct 'Headers': The provided value is not of type '(sequence<sequence<ByteString>> or record<ByteString, ByteString>)");
         }
-        result = result.length > 0 ? result.map(([name6, value]) => {
-          validateHeaderName(name6);
-          validateHeaderValue(name6, String(value));
-          return [String(name6).toLowerCase(), String(value)];
+        result = result.length > 0 ? result.map(([name5, value]) => {
+          validateHeaderName(name5);
+          validateHeaderValue(name5, String(value));
+          return [String(name5).toLowerCase(), String(value)];
         }) : void 0;
         super(result);
         return new Proxy(this, {
@@ -4373,17 +4373,17 @@ var init_install_fetch = __esm({
             switch (p) {
               case "append":
               case "set":
-                return (name6, value) => {
-                  validateHeaderName(name6);
-                  validateHeaderValue(name6, String(value));
-                  return URLSearchParams.prototype[p].call(target, String(name6).toLowerCase(), String(value));
+                return (name5, value) => {
+                  validateHeaderName(name5);
+                  validateHeaderValue(name5, String(value));
+                  return URLSearchParams.prototype[p].call(target, String(name5).toLowerCase(), String(value));
                 };
               case "delete":
               case "has":
               case "getAll":
-                return (name6) => {
-                  validateHeaderName(name6);
-                  return URLSearchParams.prototype[p].call(target, String(name6).toLowerCase());
+                return (name5) => {
+                  validateHeaderName(name5);
+                  return URLSearchParams.prototype[p].call(target, String(name5).toLowerCase());
                 };
               case "keys":
                 return () => {
@@ -4402,30 +4402,30 @@ var init_install_fetch = __esm({
       toString() {
         return Object.prototype.toString.call(this);
       }
-      get(name6) {
-        const values = this.getAll(name6);
+      get(name5) {
+        const values = this.getAll(name5);
         if (values.length === 0) {
           return null;
         }
         let value = values.join(", ");
-        if (/^content-encoding$/i.test(name6)) {
+        if (/^content-encoding$/i.test(name5)) {
           value = value.toLowerCase();
         }
         return value;
       }
       forEach(callback, thisArg = void 0) {
-        for (const name6 of this.keys()) {
-          Reflect.apply(callback, thisArg, [this.get(name6), name6, this]);
+        for (const name5 of this.keys()) {
+          Reflect.apply(callback, thisArg, [this.get(name5), name5, this]);
         }
       }
       *values() {
-        for (const name6 of this.keys()) {
-          yield this.get(name6);
+        for (const name5 of this.keys()) {
+          yield this.get(name5);
         }
       }
       *entries() {
-        for (const name6 of this.keys()) {
-          yield [name6, this.get(name6)];
+        for (const name5 of this.keys()) {
+          yield [name5, this.get(name5)];
         }
       }
       [Symbol.iterator]() {
@@ -4735,20 +4735,20 @@ var require_cookie = __commonJS({
       }
       return obj;
     }
-    function serialize(name6, val, options2) {
+    function serialize(name5, val, options2) {
       var opt = options2 || {};
       var enc = opt.encode || encode;
       if (typeof enc !== "function") {
         throw new TypeError("option encode is invalid");
       }
-      if (!fieldContentRegExp.test(name6)) {
+      if (!fieldContentRegExp.test(name5)) {
         throw new TypeError("argument name is invalid");
       }
       var value = enc(val);
       if (value && !fieldContentRegExp.test(value)) {
         throw new TypeError("argument val is invalid");
       }
-      var str = name6 + "=" + value;
+      var str = name5 + "=" + value;
       if (opt.maxAge != null) {
         var maxAge = opt.maxAge - 0;
         if (isNaN(maxAge) || !isFinite(maxAge)) {
@@ -4845,7 +4845,126 @@ var init_dist = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-fc50c793.js
+// .svelte-kit/output/server/chunks/store-090f0253.js
+function __extends(d2, b) {
+  if (typeof b !== "function" && b !== null)
+    throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+  extendStatics(d2, b);
+  function __() {
+    this.constructor = d2;
+  }
+  d2.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+function __rest(s2, e) {
+  var t = {};
+  for (var p in s2)
+    if (Object.prototype.hasOwnProperty.call(s2, p) && e.indexOf(p) < 0)
+      t[p] = s2[p];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
+    for (var i = 0, p = Object.getOwnPropertySymbols(s2); i < p.length; i++) {
+      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p[i]))
+        t[p[i]] = s2[p[i]];
+    }
+  return t;
+}
+function __values(o) {
+  var s2 = typeof Symbol === "function" && Symbol.iterator, m = s2 && o[s2], i = 0;
+  if (m)
+    return m.call(o);
+  if (o && typeof o.length === "number")
+    return {
+      next: function() {
+        if (o && i >= o.length)
+          o = void 0;
+        return { value: o && o[i++], done: !o };
+      }
+    };
+  throw new TypeError(s2 ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+function writable(value, start2 = noop) {
+  let stop2;
+  const subscribers = new Set();
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop2) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  function update2(fn) {
+    set(fn(value));
+  }
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop2 = start2(set) || noop;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0) {
+        stop2();
+        stop2 = null;
+      }
+    };
+  }
+  return { set, update: update2, subscribe: subscribe2 };
+}
+var extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, recordState, dailyMicStream;
+var init_store_090f0253 = __esm({
+  ".svelte-kit/output/server/chunks/store-090f0253.js"() {
+    init_shims();
+    init_app_311653dc();
+    extendStatics = function(d2, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b2) {
+        d22.__proto__ = b2;
+      } || function(d22, b2) {
+        for (var p in b2)
+          if (Object.prototype.hasOwnProperty.call(b2, p))
+            d22[p] = b2[p];
+      };
+      return extendStatics(d2, b);
+    };
+    __assign = function() {
+      __assign = Object.assign || function __assign2(t) {
+        for (var s2, i = 1, n = arguments.length; i < n; i++) {
+          s2 = arguments[i];
+          for (var p in s2)
+            if (Object.prototype.hasOwnProperty.call(s2, p))
+              t[p] = s2[p];
+        }
+        return t;
+      };
+      return __assign.apply(this, arguments);
+    };
+    subscriber_queue = [];
+    canvasHeight = writable(0);
+    canvasWidth = writable(0);
+    hasFetchedUser = writable(false);
+    user = writable({});
+    currentTool = writable({
+      type: "pencil",
+      color: "white",
+      lineWidth: 3
+    });
+    recordState = writable("pre_record");
+    dailyMicStream = writable(null);
+  }
+});
+
+// .svelte-kit/output/server/chunks/index-c327074d-f782d9c8.js
 function getUA() {
   if (typeof navigator !== "undefined" && typeof navigator["userAgent"] === "string") {
     return navigator["userAgent"];
@@ -4957,44 +5076,9 @@ function registerVersion(libraryKeyOrName, version22, variant) {
 }
 function registerCoreComponents(variant) {
   _registerComponent(new Component("platform-logger", (container) => new PlatformLoggerServiceImpl(container), "PRIVATE"));
-  registerVersion(name$o, version$1, variant);
-  registerVersion(name$o, version$1, "esm2017");
+  registerVersion(name$o, version$1$1, variant);
+  registerVersion(name$o, version$1$1, "esm2017");
   registerVersion("fire-js", "");
-}
-function __extends(d2, b) {
-  if (typeof b !== "function" && b !== null)
-    throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-  extendStatics(d2, b);
-  function __() {
-    this.constructor = d2;
-  }
-  d2.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-function __rest(s2, e) {
-  var t = {};
-  for (var p in s2)
-    if (Object.prototype.hasOwnProperty.call(s2, p) && e.indexOf(p) < 0)
-      t[p] = s2[p];
-  if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
-    for (var i = 0, p = Object.getOwnPropertySymbols(s2); i < p.length; i++) {
-      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p[i]))
-        t[p[i]] = s2[p[i]];
-    }
-  return t;
-}
-function __values(o) {
-  var s2 = typeof Symbol === "function" && Symbol.iterator, m = s2 && o[s2], i = 0;
-  if (m)
-    return m.call(o);
-  if (o && typeof o.length === "number")
-    return {
-      next: function() {
-        if (o && i >= o.length)
-          o = void 0;
-        return { value: o && o[i++], done: !o };
-      }
-    };
-  throw new TypeError(s2 ? "Object is not iterable." : "Symbol.iterator is not defined.");
 }
 function sign(x) {
   return x < 0 ? -1 : 1;
@@ -6155,52 +6239,11 @@ function registerAuth(clientPlatform) {
   registerVersion(name, version, getVersionForPlatform(clientPlatform));
   registerVersion(name, version, "esm2017");
 }
-function writable(value, start2 = noop) {
-  let stop2;
-  const subscribers = new Set();
-  function set(new_value) {
-    if (safe_not_equal(value, new_value)) {
-      value = new_value;
-      if (stop2) {
-        const run_queue = !subscriber_queue.length;
-        for (const subscriber of subscribers) {
-          subscriber[1]();
-          subscriber_queue.push(subscriber, value);
-        }
-        if (run_queue) {
-          for (let i = 0; i < subscriber_queue.length; i += 2) {
-            subscriber_queue[i][0](subscriber_queue[i + 1]);
-          }
-          subscriber_queue.length = 0;
-        }
-      }
-    }
-  }
-  function update2(fn) {
-    set(fn(value));
-  }
-  function subscribe2(run2, invalidate = noop) {
-    const subscriber = [run2, invalidate];
-    subscribers.add(subscriber);
-    if (subscribers.size === 1) {
-      stop2 = start2(set) || noop;
-    }
-    run2(value);
-    return () => {
-      subscribers.delete(subscriber);
-      if (subscribers.size === 0) {
-        stop2();
-        stop2 = null;
-      }
-    };
-  }
-  return { set, update: update2, subscribe: subscribe2 };
-}
-var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, stringToByteArray$1, byteArrayToString, base64, base64Decode, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, ObserverProxy, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name$p, version$2, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, extendStatics, __assign, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob4, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name, version, AuthInterop, subscriber_queue, hasFetchedUser, user, currentTool, recordState, dailyMicStream;
-var init_store_fc50c793 = __esm({
-  ".svelte-kit/output/server/chunks/store-fc50c793.js"() {
+var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, stringToByteArray$1, byteArrayToString, base64, base64Decode, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, ObserverProxy, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1$1, name$p, version$2, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, name$1, version$1, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob4, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name, version, AuthInterop;
+var init_index_c327074d_f782d9c8 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-f782d9c8.js"() {
     init_shims();
-    init_app_c5be8a63();
+    init_store_090f0253();
     import_stream2 = __toModule(require("stream"));
     import_http2 = __toModule(require("http"));
     import_url2 = __toModule(require("url"));
@@ -6651,7 +6694,7 @@ var init_store_fc50c793 = __esm({
       }
     };
     name$o = "@firebase/app";
-    version$1 = "0.7.9";
+    version$1$1 = "0.7.9";
     logger = new Logger("@firebase/app");
     name$n = "@firebase/app-compat";
     name$m = "@firebase/analytics-compat";
@@ -6675,7 +6718,7 @@ var init_store_fc50c793 = __esm({
     name$4 = "@firebase/storage";
     name$3 = "@firebase/storage-compat";
     name$2 = "@firebase/firestore";
-    name$1 = "@firebase/firestore-compat";
+    name$1$1 = "@firebase/firestore-compat";
     name$p = "firebase";
     version$2 = "9.5.0";
     PLATFORM_LOG_STRING = {
@@ -6702,7 +6745,7 @@ var init_store_fc50c793 = __esm({
       [name$4]: "fire-gcs",
       [name$3]: "fire-gcs-compat",
       [name$2]: "fire-fst",
-      [name$1]: "fire-fst-compat",
+      [name$1$1]: "fire-fst-compat",
       "fire-js": "fire-js",
       [name$p]: "fire-js-all"
     };
@@ -6719,28 +6762,9 @@ var init_store_fc50c793 = __esm({
     new ErrorFactory("app", "Firebase", ERRORS);
     SDK_VERSION = version$2;
     registerCoreComponents("");
-    extendStatics = function(d2, b) {
-      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b2) {
-        d22.__proto__ = b2;
-      } || function(d22, b2) {
-        for (var p in b2)
-          if (Object.prototype.hasOwnProperty.call(b2, p))
-            d22[p] = b2[p];
-      };
-      return extendStatics(d2, b);
-    };
-    __assign = function() {
-      __assign = Object.assign || function __assign2(t) {
-        for (var s2, i = 1, n = arguments.length; i < n; i++) {
-          s2 = arguments[i];
-          for (var p in s2)
-            if (Object.prototype.hasOwnProperty.call(s2, p))
-              t[p] = s2[p];
-        }
-        return t;
-      };
-      return __assign.apply(this, arguments);
-    };
+    name$1 = "firebase";
+    version$1 = "9.5.0";
+    registerVersion(name$1, version$1, "app");
     publicApi = {};
     URL$1 = { exports: {} };
     conversions = {};
@@ -86823,28 +86847,6 @@ var init_store_fc50c793 = __esm({
     _createError("operation-not-supported-in-this-environment");
     AuthImpl.prototype.setPersistence = async () => {
     };
-    subscriber_queue = [];
-    hasFetchedUser = writable(false);
-    user = writable({});
-    currentTool = writable({
-      type: "pencil",
-      color: "white",
-      lineWidth: 3
-    });
-    recordState = writable("pre_record");
-    dailyMicStream = writable(null);
-  }
-});
-
-// .svelte-kit/output/server/chunks/index-18beaaad.js
-var name2, version2;
-var init_index_18beaaad = __esm({
-  ".svelte-kit/output/server/chunks/index-18beaaad.js"() {
-    init_shims();
-    init_store_fc50c793();
-    name2 = "firebase";
-    version2 = "9.5.0";
-    registerVersion(name2, version2, "app");
   }
 });
 
@@ -86913,8 +86915,8 @@ var init_index_esm2017 = __esm({
     init_shims();
     init_index_node_esm();
     Component2 = class {
-      constructor(name6, instanceFactory, type) {
-        this.name = name6;
+      constructor(name5, instanceFactory, type) {
+        this.name = name5;
         this.instanceFactory = instanceFactory;
         this.type = type;
         this.multipleInstances = false;
@@ -86985,8 +86987,8 @@ var init_index_esm20172 = __esm({
       }
     };
     Logger2 = class {
-      constructor(name6) {
-        this.name = name6;
+      constructor(name5) {
+        this.name = name5;
         this._logLevel = defaultLogLevel2;
         this._logHandler = defaultLogHandler2;
         this._userLogHandler = null;
@@ -87067,27 +87069,27 @@ function _registerComponent2(component) {
   }
   return true;
 }
-function _getProvider(app, name6) {
-  return app.container.getProvider(name6);
+function _getProvider(app, name5) {
+  return app.container.getProvider(name5);
 }
-function getApp(name6 = DEFAULT_ENTRY_NAME) {
-  const app = _apps2.get(name6);
+function getApp(name5 = DEFAULT_ENTRY_NAME) {
+  const app = _apps2.get(name5);
   if (!app) {
-    throw ERROR_FACTORY.create("no-app", { appName: name6 });
+    throw ERROR_FACTORY.create("no-app", { appName: name5 });
   }
   return app;
 }
-function registerVersion2(libraryKeyOrName, version6, variant) {
+function registerVersion2(libraryKeyOrName, version5, variant) {
   var _a;
   let library = (_a = PLATFORM_LOG_STRING2[libraryKeyOrName]) !== null && _a !== void 0 ? _a : libraryKeyOrName;
   if (variant) {
     library += `-${variant}`;
   }
   const libraryMismatch = library.match(/\s|\//);
-  const versionMismatch = version6.match(/\s|\//);
+  const versionMismatch = version5.match(/\s|\//);
   if (libraryMismatch || versionMismatch) {
     const warning = [
-      `Unable to register library "${library}" with version "${version6}":`
+      `Unable to register library "${library}" with version "${version5}":`
     ];
     if (libraryMismatch) {
       warning.push(`library name "${library}" contains illegal characters (whitespace or "/")`);
@@ -87096,12 +87098,12 @@ function registerVersion2(libraryKeyOrName, version6, variant) {
       warning.push("and");
     }
     if (versionMismatch) {
-      warning.push(`version name "${version6}" contains illegal characters (whitespace or "/")`);
+      warning.push(`version name "${version5}" contains illegal characters (whitespace or "/")`);
     }
     logger2.warn(warning.join(" "));
     return;
   }
-  _registerComponent2(new Component2(`${library}-version`, () => ({ library, version: version6 }), "VERSION"));
+  _registerComponent2(new Component2(`${library}-version`, () => ({ library, version: version5 }), "VERSION"));
 }
 function registerCoreComponents2(variant) {
   _registerComponent2(new Component2("platform-logger", (container) => new PlatformLoggerServiceImpl2(container), "PRIVATE"));
@@ -87109,7 +87111,7 @@ function registerCoreComponents2(variant) {
   registerVersion2(name$o2, version$12, "esm2017");
   registerVersion2("fire-js", "");
 }
-var PlatformLoggerServiceImpl2, name$o2, version$12, logger2, name$n2, name$m2, name$l2, name$k2, name$j2, name$i2, name$h2, name$g2, name$f2, name$e2, name$d2, name$c2, name$b2, name$a2, name$92, name$82, name$72, name$62, name$52, name$42, name$32, name$22, name$12, name3, version3, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING2, _apps2, _components2, ERRORS2, ERROR_FACTORY, SDK_VERSION2;
+var PlatformLoggerServiceImpl2, name$o2, version$12, logger2, name$n2, name$m2, name$l2, name$k2, name$j2, name$i2, name$h2, name$g2, name$f2, name$e2, name$d2, name$c2, name$b2, name$a2, name$92, name$82, name$72, name$62, name$52, name$42, name$32, name$22, name$12, name2, version2, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING2, _apps2, _components2, ERRORS2, ERROR_FACTORY, SDK_VERSION2;
 var init_index_esm20173 = __esm({
   "node_modules/@firebase/app/dist/esm/index.esm2017.js"() {
     init_shims();
@@ -87159,8 +87161,8 @@ var init_index_esm20173 = __esm({
     name$32 = "@firebase/storage-compat";
     name$22 = "@firebase/firestore";
     name$12 = "@firebase/firestore-compat";
-    name3 = "firebase";
-    version3 = "9.5.0";
+    name2 = "firebase";
+    version2 = "9.5.0";
     DEFAULT_ENTRY_NAME = "[DEFAULT]";
     PLATFORM_LOG_STRING2 = {
       [name$o2]: "fire-core",
@@ -87188,7 +87190,7 @@ var init_index_esm20173 = __esm({
       [name$22]: "fire-fst",
       [name$12]: "fire-fst-compat",
       "fire-js": "fire-js",
-      [name3]: "fire-js-all"
+      [name2]: "fire-js-all"
     };
     _apps2 = new Map();
     _components2 = new Map();
@@ -87201,7 +87203,7 @@ var init_index_esm20173 = __esm({
       ["invalid-log-argument"]: "First argument to `onLog` must be null or a function."
     };
     ERROR_FACTORY = new ErrorFactory2("app", "Firebase", ERRORS2);
-    SDK_VERSION2 = version3;
+    SDK_VERSION2 = version2;
     registerCoreComponents2("");
   }
 });
@@ -87744,9 +87746,9 @@ var require_call_stream = __commonJS({
     var TRACER_NAME = "call_stream";
     var { HTTP2_HEADER_STATUS, HTTP2_HEADER_CONTENT_TYPE, NGHTTP2_CANCEL } = http22.constants;
     function getSystemErrorName(errno) {
-      for (const [name6, num] of Object.entries(os.constants.errno)) {
+      for (const [name5, num] of Object.entries(os.constants.errno)) {
         if (num === errno) {
-          return name6;
+          return name5;
         }
       }
       return "Unknown system error " + errno;
@@ -88532,8 +88534,8 @@ var require_service_config = __commonJS({
       if (!("name" in obj) || !Array.isArray(obj.name)) {
         throw new Error("Invalid method config: invalid name array");
       }
-      for (const name6 of obj.name) {
-        result.name.push(validateName3(name6));
+      for (const name5 of obj.name) {
+        result.name.push(validateName3(name5));
       }
       if ("waitForReady" in obj) {
         if (typeof obj.waitForReady !== "boolean") {
@@ -88604,13 +88606,13 @@ var require_service_config = __commonJS({
       }
       const seenMethodNames = [];
       for (const methodConfig of result.methodConfig) {
-        for (const name6 of methodConfig.name) {
+        for (const name5 of methodConfig.name) {
           for (const seenName of seenMethodNames) {
-            if (name6.service === seenName.service && name6.method === seenName.method) {
-              throw new Error(`Invalid service config: duplicate name ${name6.service}/${name6.method}`);
+            if (name5.service === seenName.service && name5.method === seenName.method) {
+              throw new Error(`Invalid service config: duplicate name ${name5.service}/${name5.method}`);
             }
           }
-          seenMethodNames.push(name6);
+          seenMethodNames.push(name5);
         }
       }
       return result;
@@ -89170,8 +89172,8 @@ var require_resolving_load_balancer = __commonJS({
         const method = (_b = splitName[1]) !== null && _b !== void 0 ? _b : "";
         if (serviceConfig && serviceConfig.methodConfig) {
           for (const methodConfig of serviceConfig.methodConfig) {
-            for (const name6 of methodConfig.name) {
-              if (name6.service === service && (name6.method === void 0 || name6.method === method)) {
+            for (const name5 of methodConfig.name) {
+              if (name5.service === service && (name5.method === void 0 || name5.method === method)) {
                 return {
                   methodConfig,
                   pickInformation: {},
@@ -90449,13 +90451,13 @@ var require_make_client = __commonJS({
       }
       class ServiceClientImpl extends client_1.Client {
       }
-      Object.keys(methods).forEach((name6) => {
-        if (isPrototypePolluted(name6)) {
+      Object.keys(methods).forEach((name5) => {
+        if (isPrototypePolluted(name5)) {
           return;
         }
-        const attrs = methods[name6];
+        const attrs = methods[name5];
         let methodType;
-        if (typeof name6 === "string" && name6.charAt(0) === "$") {
+        if (typeof name5 === "string" && name5.charAt(0) === "$") {
           throw new Error("Method names cannot start with $");
         }
         if (attrs.requestStream) {
@@ -90474,10 +90476,10 @@ var require_make_client = __commonJS({
         const serialize = attrs.requestSerialize;
         const deserialize = attrs.responseDeserialize;
         const methodFunc = partial(requesterFuncs[methodType], attrs.path, serialize, deserialize);
-        ServiceClientImpl.prototype[name6] = methodFunc;
-        Object.assign(ServiceClientImpl.prototype[name6], attrs);
+        ServiceClientImpl.prototype[name5] = methodFunc;
+        Object.assign(ServiceClientImpl.prototype[name5], attrs);
         if (attrs.originalName && !isPrototypePolluted(attrs.originalName)) {
-          ServiceClientImpl.prototype[attrs.originalName] = ServiceClientImpl.prototype[name6];
+          ServiceClientImpl.prototype[attrs.originalName] = ServiceClientImpl.prototype[name5];
         }
       });
       ServiceClientImpl.service = methods;
@@ -91552,7 +91554,7 @@ var require_minimal = __commonJS({
     util.lcFirst = function lcFirst(str) {
       return str.charAt(0).toLowerCase() + str.substring(1);
     };
-    function newError(name6) {
+    function newError(name5) {
       function CustomError(message, properties) {
         if (!(this instanceof CustomError))
           return new CustomError(message, properties);
@@ -91568,7 +91570,7 @@ var require_minimal = __commonJS({
       }
       (CustomError.prototype = Object.create(Error.prototype)).constructor = CustomError;
       Object.defineProperty(CustomError.prototype, "name", { get: function() {
-        return name6;
+        return name5;
       } });
       CustomError.prototype.toString = function toString() {
         return this.name + ": " + this.message;
@@ -91588,9 +91590,9 @@ var require_minimal = __commonJS({
       };
     };
     util.oneOfSetter = function setOneOf(fieldNames) {
-      return function(name6) {
+      return function(name5) {
         for (var i = 0; i < fieldNames.length; ++i)
-          if (fieldNames[i] !== name6)
+          if (fieldNames[i] !== name5)
             delete this[fieldNames[i]];
       };
     };
@@ -92488,10 +92490,10 @@ var require_field = __commonJS({
     var util = require_util();
     var Type;
     var ruleRe = /^required|optional|repeated$/;
-    Field.fromJSON = function fromJSON(name6, json) {
-      return new Field(name6, json.id, json.type, json.rule, json.extend, json.options, json.comment);
+    Field.fromJSON = function fromJSON(name5, json) {
+      return new Field(name5, json.id, json.type, json.rule, json.extend, json.options, json.comment);
     };
-    function Field(name6, id, type, rule, extend, options2, comment) {
+    function Field(name5, id, type, rule, extend, options2, comment) {
       if (util.isObject(rule)) {
         comment = extend;
         options2 = rule;
@@ -92501,7 +92503,7 @@ var require_field = __commonJS({
         options2 = extend;
         extend = void 0;
       }
-      ReflectionObject.call(this, name6, options2);
+      ReflectionObject.call(this, name5, options2);
       if (!util.isInteger(id) || id < 0)
         throw TypeError("id must be a non-negative integer");
       if (!util.isString(type))
@@ -92540,10 +92542,10 @@ var require_field = __commonJS({
         return this._packed;
       }
     });
-    Field.prototype.setOption = function setOption(name6, value, ifNotSet) {
-      if (name6 === "packed")
+    Field.prototype.setOption = function setOption(name5, value, ifNotSet) {
+      if (name5 === "packed")
         this._packed = null;
-      return ReflectionObject.prototype.setOption.call(this, name6, value, ifNotSet);
+      return ReflectionObject.prototype.setOption.call(this, name5, value, ifNotSet);
     };
     Field.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
@@ -92630,20 +92632,20 @@ var require_oneof = __commonJS({
     ((OneOf.prototype = Object.create(ReflectionObject.prototype)).constructor = OneOf).className = "OneOf";
     var Field = require_field();
     var util = require_util();
-    function OneOf(name6, fieldNames, options2, comment) {
+    function OneOf(name5, fieldNames, options2, comment) {
       if (!Array.isArray(fieldNames)) {
         options2 = fieldNames;
         fieldNames = void 0;
       }
-      ReflectionObject.call(this, name6, options2);
+      ReflectionObject.call(this, name5, options2);
       if (!(fieldNames === void 0 || Array.isArray(fieldNames)))
         throw TypeError("fieldNames must be an Array");
       this.oneof = fieldNames || [];
       this.fieldsArray = [];
       this.comment = comment;
     }
-    OneOf.fromJSON = function fromJSON(name6, json) {
-      return new OneOf(name6, json.oneof, json.options, json.comment);
+    OneOf.fromJSON = function fromJSON(name5, json) {
+      return new OneOf(name5, json.oneof, json.options, json.comment);
     };
     OneOf.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
@@ -92734,8 +92736,8 @@ var require_namespace = __commonJS({
     var Type;
     var Service;
     var Enum;
-    Namespace.fromJSON = function fromJSON(name6, json) {
-      return new Namespace(name6, json.options).addJSON(json.nested);
+    Namespace.fromJSON = function fromJSON(name5, json) {
+      return new Namespace(name5, json.options).addJSON(json.nested);
     };
     function arrayToJSON(array, toJSONOptions) {
       if (!(array && array.length))
@@ -92754,16 +92756,16 @@ var require_namespace = __commonJS({
       }
       return false;
     };
-    Namespace.isReservedName = function isReservedName(reserved2, name6) {
+    Namespace.isReservedName = function isReservedName(reserved2, name5) {
       if (reserved2) {
         for (var i = 0; i < reserved2.length; ++i)
-          if (reserved2[i] === name6)
+          if (reserved2[i] === name5)
             return true;
       }
       return false;
     };
-    function Namespace(name6, options2) {
-      ReflectionObject.call(this, name6, options2);
+    function Namespace(name5, options2) {
+      ReflectionObject.call(this, name5, options2);
       this.nested = void 0;
       this._nestedArray = null;
     }
@@ -92794,13 +92796,13 @@ var require_namespace = __commonJS({
       }
       return this;
     };
-    Namespace.prototype.get = function get(name6) {
-      return this.nested && this.nested[name6] || null;
+    Namespace.prototype.get = function get(name5) {
+      return this.nested && this.nested[name5] || null;
     };
-    Namespace.prototype.getEnum = function getEnum(name6) {
-      if (this.nested && this.nested[name6] instanceof Enum)
-        return this.nested[name6].values;
-      throw Error("no such enum: " + name6);
+    Namespace.prototype.getEnum = function getEnum(name5) {
+      if (this.nested && this.nested[name5] instanceof Enum)
+        return this.nested[name5].values;
+      throw Error("no such enum: " + name5);
     };
     Namespace.prototype.add = function add(object) {
       if (!(object instanceof Field && object.extend !== void 0 || object instanceof Type || object instanceof Enum || object instanceof Service || object instanceof Namespace || object instanceof OneOf))
@@ -92938,16 +92940,16 @@ var require_mapfield = __commonJS({
     ((MapField.prototype = Object.create(Field.prototype)).constructor = MapField).className = "MapField";
     var types2 = require_types();
     var util = require_util();
-    function MapField(name6, id, keyType, type, options2, comment) {
-      Field.call(this, name6, id, type, void 0, void 0, options2, comment);
+    function MapField(name5, id, keyType, type, options2, comment) {
+      Field.call(this, name5, id, type, void 0, void 0, options2, comment);
       if (!util.isString(keyType))
         throw TypeError("keyType must be a string");
       this.keyType = keyType;
       this.resolvedKeyType = null;
       this.map = true;
     }
-    MapField.fromJSON = function fromJSON(name6, json) {
-      return new MapField(name6, json.id, json.keyType, json.type, json.options, json.comment);
+    MapField.fromJSON = function fromJSON(name5, json) {
+      return new MapField(name5, json.id, json.keyType, json.type, json.options, json.comment);
     };
     MapField.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
@@ -92994,7 +92996,7 @@ var require_method = __commonJS({
     var ReflectionObject = require_object();
     ((Method.prototype = Object.create(ReflectionObject.prototype)).constructor = Method).className = "Method";
     var util = require_util();
-    function Method(name6, type, requestType, responseType, requestStream, responseStream, options2, comment, parsedOptions) {
+    function Method(name5, type, requestType, responseType, requestStream, responseStream, options2, comment, parsedOptions) {
       if (util.isObject(requestStream)) {
         options2 = requestStream;
         requestStream = responseStream = void 0;
@@ -93008,7 +93010,7 @@ var require_method = __commonJS({
         throw TypeError("requestType must be a string");
       if (!util.isString(responseType))
         throw TypeError("responseType must be a string");
-      ReflectionObject.call(this, name6, options2);
+      ReflectionObject.call(this, name5, options2);
       this.type = type || "rpc";
       this.requestType = requestType;
       this.requestStream = requestStream ? true : void 0;
@@ -93019,8 +93021,8 @@ var require_method = __commonJS({
       this.comment = comment;
       this.parsedOptions = parsedOptions;
     }
-    Method.fromJSON = function fromJSON(name6, json) {
-      return new Method(name6, json.type, json.requestType, json.responseType, json.requestStream, json.responseStream, json.options, json.comment, json.parsedOptions);
+    Method.fromJSON = function fromJSON(name5, json) {
+      return new Method(name5, json.type, json.requestType, json.responseType, json.requestStream, json.responseStream, json.options, json.comment, json.parsedOptions);
     };
     Method.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
@@ -93064,13 +93066,13 @@ var require_service2 = __commonJS({
     var Method = require_method();
     var util = require_util();
     var rpc = require_rpc();
-    function Service(name6, options2) {
-      Namespace.call(this, name6, options2);
+    function Service(name5, options2) {
+      Namespace.call(this, name5, options2);
       this.methods = {};
       this._methodsArray = null;
     }
-    Service.fromJSON = function fromJSON(name6, json) {
-      var service = new Service(name6, json.options);
+    Service.fromJSON = function fromJSON(name5, json) {
+      var service = new Service(name5, json.options);
       if (json.methods)
         for (var names = Object.keys(json.methods), i = 0; i < names.length; ++i)
           service.add(Method.fromJSON(names[i], json.methods[names[i]]));
@@ -93102,8 +93104,8 @@ var require_service2 = __commonJS({
       service._methodsArray = null;
       return service;
     }
-    Service.prototype.get = function get(name6) {
-      return this.methods[name6] || Namespace.prototype.get.call(this, name6);
+    Service.prototype.get = function get(name5) {
+      return this.methods[name5] || Namespace.prototype.get.call(this, name5);
     };
     Service.prototype.resolveAll = function resolveAll() {
       var methods = this.methodsArray;
@@ -93551,8 +93553,8 @@ var require_wrappers = __commonJS({
     wrappers[".google.protobuf.Any"] = {
       fromObject: function(object) {
         if (object && object["@type"]) {
-          var name6 = object["@type"].substring(object["@type"].lastIndexOf("/") + 1);
-          var type = this.lookup(name6);
+          var name5 = object["@type"].substring(object["@type"].lastIndexOf("/") + 1);
+          var type = this.lookup(name5);
           if (type) {
             var type_url = object["@type"].charAt(0) === "." ? object["@type"].substr(1) : object["@type"];
             if (type_url.indexOf("/") === -1) {
@@ -93569,11 +93571,11 @@ var require_wrappers = __commonJS({
       toObject: function(message, options2) {
         var googleApi = "type.googleapis.com/";
         var prefix = "";
-        var name6 = "";
+        var name5 = "";
         if (options2 && options2.json && message.type_url && message.value) {
-          name6 = message.type_url.substring(message.type_url.lastIndexOf("/") + 1);
+          name5 = message.type_url.substring(message.type_url.lastIndexOf("/") + 1);
           prefix = message.type_url.substring(0, message.type_url.lastIndexOf("/") + 1);
-          var type = this.lookup(name6);
+          var type = this.lookup(name5);
           if (type)
             message = type.decode(message.value);
         }
@@ -93583,8 +93585,8 @@ var require_wrappers = __commonJS({
           if (prefix === "") {
             prefix = googleApi;
           }
-          name6 = prefix + messageName;
-          object["@type"] = name6;
+          name5 = prefix + messageName;
+          object["@type"] = name5;
           return object;
         }
         return this.toObject(message, options2);
@@ -93615,8 +93617,8 @@ var require_type = __commonJS({
     var verifier = require_verifier();
     var converter = require_converter();
     var wrappers = require_wrappers();
-    function Type(name6, options2) {
-      Namespace.call(this, name6, options2);
+    function Type(name5, options2) {
+      Namespace.call(this, name5, options2);
       this.fields = {};
       this.oneofs = void 0;
       this.extensions = void 0;
@@ -93695,8 +93697,8 @@ var require_type = __commonJS({
       delete type.verify;
       return type;
     }
-    Type.fromJSON = function fromJSON(name6, json) {
-      var type = new Type(name6, json.options);
+    Type.fromJSON = function fromJSON(name5, json) {
+      var type = new Type(name5, json.options);
       type.extensions = json.extensions;
       type.reserved = json.reserved;
       var names = Object.keys(json.fields), i = 0;
@@ -93754,8 +93756,8 @@ var require_type = __commonJS({
         oneofs[i++].resolve();
       return Namespace.prototype.resolveAll.call(this);
     };
-    Type.prototype.get = function get(name6) {
-      return this.fields[name6] || this.oneofs && this.oneofs[name6] || this.nested && this.nested[name6] || null;
+    Type.prototype.get = function get(name5) {
+      return this.fields[name5] || this.oneofs && this.oneofs[name5] || this.nested && this.nested[name5] || null;
     };
     Type.prototype.add = function add(object) {
       if (this.get(object.name))
@@ -93805,8 +93807,8 @@ var require_type = __commonJS({
     Type.prototype.isReservedId = function isReservedId(id) {
       return Namespace.isReservedId(this.reserved, id);
     };
-    Type.prototype.isReservedName = function isReservedName(name6) {
-      return Namespace.isReservedName(this.reserved, name6);
+    Type.prototype.isReservedName = function isReservedName(name5) {
+      return Namespace.isReservedName(this.reserved, name5);
     };
     Type.prototype.create = function create(properties) {
       return new this.ctor(properties);
@@ -94126,8 +94128,8 @@ var require_util = __commonJS({
     };
     var safePropBackslashRe = /\\/g;
     var safePropQuoteRe = /"/g;
-    util.isReserved = function isReserved(name6) {
-      return /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/.test(name6);
+    util.isReserved = function isReserved(name5) {
+      return /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/.test(name5);
     };
     util.safeProp = function safeProp2(prop) {
       if (!/^[$\w_]+$/.test(prop) || util.isReserved(prop))
@@ -94212,14 +94214,14 @@ var require_object = __commonJS({
     ReflectionObject.className = "ReflectionObject";
     var util = require_util();
     var Root2;
-    function ReflectionObject(name6, options2) {
-      if (!util.isString(name6))
+    function ReflectionObject(name5, options2) {
+      if (!util.isString(name5))
         throw TypeError("name must be a string");
       if (options2 && !util.isObject(options2))
         throw TypeError("options must be an object");
       this.options = options2;
       this.parsedOptions = null;
-      this.name = name6;
+      this.name = name5;
       this.parent = null;
       this.resolved = false;
       this.comment = null;
@@ -94271,36 +94273,36 @@ var require_object = __commonJS({
         this.resolved = true;
       return this;
     };
-    ReflectionObject.prototype.getOption = function getOption(name6) {
+    ReflectionObject.prototype.getOption = function getOption(name5) {
       if (this.options)
-        return this.options[name6];
+        return this.options[name5];
       return void 0;
     };
-    ReflectionObject.prototype.setOption = function setOption(name6, value, ifNotSet) {
-      if (!ifNotSet || !this.options || this.options[name6] === void 0)
-        (this.options || (this.options = {}))[name6] = value;
+    ReflectionObject.prototype.setOption = function setOption(name5, value, ifNotSet) {
+      if (!ifNotSet || !this.options || this.options[name5] === void 0)
+        (this.options || (this.options = {}))[name5] = value;
       return this;
     };
-    ReflectionObject.prototype.setParsedOption = function setParsedOption(name6, value, propName) {
+    ReflectionObject.prototype.setParsedOption = function setParsedOption(name5, value, propName) {
       if (!this.parsedOptions) {
         this.parsedOptions = [];
       }
       var parsedOptions = this.parsedOptions;
       if (propName) {
         var opt = parsedOptions.find(function(opt2) {
-          return Object.prototype.hasOwnProperty.call(opt2, name6);
+          return Object.prototype.hasOwnProperty.call(opt2, name5);
         });
         if (opt) {
-          var newValue = opt[name6];
+          var newValue = opt[name5];
           util.setProperty(newValue, propName, value);
         } else {
           opt = {};
-          opt[name6] = util.setProperty({}, propName, value);
+          opt[name5] = util.setProperty({}, propName, value);
           parsedOptions.push(opt);
         }
       } else {
         var newOpt = {};
-        newOpt[name6] = value;
+        newOpt[name5] = value;
         parsedOptions.push(newOpt);
       }
       return this;
@@ -94333,8 +94335,8 @@ var require_enum = __commonJS({
     ((Enum.prototype = Object.create(ReflectionObject.prototype)).constructor = Enum).className = "Enum";
     var Namespace = require_namespace();
     var util = require_util();
-    function Enum(name6, values, options2, comment, comments) {
-      ReflectionObject.call(this, name6, options2);
+    function Enum(name5, values, options2, comment, comments) {
+      ReflectionObject.call(this, name5, options2);
       if (values && typeof values !== "object")
         throw TypeError("values must be an object");
       this.valuesById = {};
@@ -94348,8 +94350,8 @@ var require_enum = __commonJS({
             this.valuesById[this.values[keys[i]] = values[keys[i]]] = keys[i];
       }
     }
-    Enum.fromJSON = function fromJSON(name6, json) {
-      var enm = new Enum(name6, json.values, json.options, json.comment, json.comments);
+    Enum.fromJSON = function fromJSON(name5, json) {
+      var enm = new Enum(name5, json.values, json.options, json.comment, json.comments);
       enm.reserved = json.reserved;
       return enm;
     };
@@ -94368,42 +94370,42 @@ var require_enum = __commonJS({
         keepComments ? this.comments : void 0
       ]);
     };
-    Enum.prototype.add = function add(name6, id, comment) {
-      if (!util.isString(name6))
+    Enum.prototype.add = function add(name5, id, comment) {
+      if (!util.isString(name5))
         throw TypeError("name must be a string");
       if (!util.isInteger(id))
         throw TypeError("id must be an integer");
-      if (this.values[name6] !== void 0)
-        throw Error("duplicate name '" + name6 + "' in " + this);
+      if (this.values[name5] !== void 0)
+        throw Error("duplicate name '" + name5 + "' in " + this);
       if (this.isReservedId(id))
         throw Error("id " + id + " is reserved in " + this);
-      if (this.isReservedName(name6))
-        throw Error("name '" + name6 + "' is reserved in " + this);
+      if (this.isReservedName(name5))
+        throw Error("name '" + name5 + "' is reserved in " + this);
       if (this.valuesById[id] !== void 0) {
         if (!(this.options && this.options.allow_alias))
           throw Error("duplicate id " + id + " in " + this);
-        this.values[name6] = id;
+        this.values[name5] = id;
       } else
-        this.valuesById[this.values[name6] = id] = name6;
-      this.comments[name6] = comment || null;
+        this.valuesById[this.values[name5] = id] = name5;
+      this.comments[name5] = comment || null;
       return this;
     };
-    Enum.prototype.remove = function remove(name6) {
-      if (!util.isString(name6))
+    Enum.prototype.remove = function remove(name5) {
+      if (!util.isString(name5))
         throw TypeError("name must be a string");
-      var val = this.values[name6];
+      var val = this.values[name5];
       if (val == null)
-        throw Error("name '" + name6 + "' does not exist in " + this);
+        throw Error("name '" + name5 + "' does not exist in " + this);
       delete this.valuesById[val];
-      delete this.values[name6];
-      delete this.comments[name6];
+      delete this.values[name5];
+      delete this.comments[name5];
       return this;
     };
     Enum.prototype.isReservedId = function isReservedId(id) {
       return Namespace.isReservedId(this.reserved, id);
     };
-    Enum.prototype.isReservedName = function isReservedName(name6) {
-      return Namespace.isReservedName(this.reserved, name6);
+    Enum.prototype.isReservedName = function isReservedName(name5) {
+      return Namespace.isReservedName(this.reserved, name5);
     };
   }
 });
@@ -94781,14 +94783,14 @@ var require_parse = __commonJS({
       var tn = tokenize(source, options2.alternateCommentMode || false), next = tn.next, push = tn.push, peek = tn.peek, skip = tn.skip, cmnt = tn.cmnt;
       var head = true, pkg, imports, weakImports, syntax, isProto3 = false;
       var ptr = root;
-      var applyCase = options2.keepCase ? function(name6) {
-        return name6;
+      var applyCase = options2.keepCase ? function(name5) {
+        return name5;
       } : util.camelCase;
-      function illegal(token2, name6, insideTryCatch) {
+      function illegal(token2, name5, insideTryCatch) {
         var filename = parse.filename;
         if (!insideTryCatch)
           parse.filename = null;
-        return Error("illegal " + (name6 || "token") + " '" + token2 + "' (" + (filename ? filename + ", " : "") + "line " + tn.line + ")");
+        return Error("illegal " + (name5 || "token") + " '" + token2 + "' (" + (filename ? filename + ", " : "") + "line " + tn.line + ")");
       }
       function readString() {
         var values = [], token2;
@@ -95007,12 +95009,12 @@ var require_parse = __commonJS({
         }
         if (!typeRefRe.test(type))
           throw illegal(type, "type");
-        var name6 = next();
-        if (!nameRe.test(name6))
-          throw illegal(name6, "name");
-        name6 = applyCase(name6);
+        var name5 = next();
+        if (!nameRe.test(name5))
+          throw illegal(name5, "name");
+        name5 = applyCase(name5);
         skip("=");
-        var field = new Field(name6, parseId(next()), type, rule, extend);
+        var field = new Field(name5, parseId(next()), type, rule, extend);
         ifBlock(field, function parseField_block(token2) {
           if (token2 === "option") {
             parseOption(field, token2);
@@ -95023,7 +95025,7 @@ var require_parse = __commonJS({
           parseInlineOptions(field);
         });
         if (rule === "proto3_optional") {
-          var oneof = new OneOf("_" + name6);
+          var oneof = new OneOf("_" + name5);
           field.setOption("proto3_optional", true);
           oneof.add(field);
           parent2.add(oneof);
@@ -95034,17 +95036,17 @@ var require_parse = __commonJS({
           field.setOption("packed", false, true);
       }
       function parseGroup(parent2, rule) {
-        var name6 = next();
-        if (!nameRe.test(name6))
-          throw illegal(name6, "name");
-        var fieldName = util.lcFirst(name6);
-        if (name6 === fieldName)
-          name6 = util.ucFirst(name6);
+        var name5 = next();
+        if (!nameRe.test(name5))
+          throw illegal(name5, "name");
+        var fieldName = util.lcFirst(name5);
+        if (name5 === fieldName)
+          name5 = util.ucFirst(name5);
         skip("=");
         var id = parseId(next());
-        var type = new Type(name6);
+        var type = new Type(name5);
         type.group = true;
-        var field = new Field(fieldName, id, name6, rule);
+        var field = new Field(fieldName, id, name5, rule);
         field.filename = parse.filename;
         ifBlock(type, function parseGroup_block(token2) {
           switch (token2) {
@@ -95079,11 +95081,11 @@ var require_parse = __commonJS({
         if (!typeRefRe.test(valueType))
           throw illegal(valueType, "type");
         skip(">");
-        var name6 = next();
-        if (!nameRe.test(name6))
-          throw illegal(name6, "name");
+        var name5 = next();
+        if (!nameRe.test(name5))
+          throw illegal(name5, "name");
         skip("=");
-        var field = new MapField(applyCase(name6), parseId(next()), keyType, valueType);
+        var field = new MapField(applyCase(name5), parseId(next()), keyType, valueType);
         ifBlock(field, function parseMapField_block(token2) {
           if (token2 === "option") {
             parseOption(field, token2);
@@ -95149,25 +95151,25 @@ var require_parse = __commonJS({
         var isCustom = skip("(", true);
         if (!typeRefRe.test(token2 = next()))
           throw illegal(token2, "name");
-        var name6 = token2;
-        var option = name6;
+        var name5 = token2;
+        var option = name5;
         var propName;
         if (isCustom) {
           skip(")");
-          name6 = "(" + name6 + ")";
-          option = name6;
+          name5 = "(" + name5 + ")";
+          option = name5;
           token2 = peek();
           if (fqTypeRefRe.test(token2)) {
             propName = token2.substr(1);
-            name6 += token2;
+            name5 += token2;
             next();
           }
         }
         skip("=");
-        var optionValue = parseOptionValue(parent2, name6);
+        var optionValue = parseOptionValue(parent2, name5);
         setParsedOption(parent2, option, optionValue, propName);
       }
-      function parseOptionValue(parent2, name6) {
+      function parseOptionValue(parent2, name5) {
         if (skip("{", true)) {
           var result = {};
           while (!skip("}", true)) {
@@ -95176,14 +95178,14 @@ var require_parse = __commonJS({
             var value;
             var propName = token;
             if (peek() === "{")
-              value = parseOptionValue(parent2, name6 + "." + token);
+              value = parseOptionValue(parent2, name5 + "." + token);
             else {
               skip(":");
               if (peek() === "{")
-                value = parseOptionValue(parent2, name6 + "." + token);
+                value = parseOptionValue(parent2, name5 + "." + token);
               else {
                 value = readValue(true);
-                setOption(parent2, name6 + "." + token, value);
+                setOption(parent2, name5 + "." + token, value);
               }
             }
             var prevValue = result[propName];
@@ -95195,16 +95197,16 @@ var require_parse = __commonJS({
           return result;
         }
         var simpleValue = readValue(true);
-        setOption(parent2, name6, simpleValue);
+        setOption(parent2, name5, simpleValue);
         return simpleValue;
       }
-      function setOption(parent2, name6, value) {
+      function setOption(parent2, name5, value) {
         if (parent2.setOption)
-          parent2.setOption(name6, value);
+          parent2.setOption(name5, value);
       }
-      function setParsedOption(parent2, name6, value, propName) {
+      function setParsedOption(parent2, name5, value, propName) {
         if (parent2.setParsedOption)
-          parent2.setParsedOption(name6, value, propName);
+          parent2.setParsedOption(name5, value, propName);
       }
       function parseInlineOptions(parent2) {
         if (skip("[", true)) {
@@ -95234,7 +95236,7 @@ var require_parse = __commonJS({
         var type = token2;
         if (!nameRe.test(token2 = next()))
           throw illegal(token2, "name");
-        var name6 = token2, requestType, requestStream, responseType, responseStream;
+        var name5 = token2, requestType, requestStream, responseType, responseStream;
         skip("(");
         if (skip("stream", true))
           requestStream = true;
@@ -95250,7 +95252,7 @@ var require_parse = __commonJS({
           throw illegal(token2);
         responseType = token2;
         skip(")");
-        var method = new Method(name6, type, requestType, responseType, requestStream, responseStream);
+        var method = new Method(name5, type, requestType, responseType, requestStream, responseStream);
         method.comment = commentText;
         ifBlock(method, function parseMethod_block(token3) {
           if (token3 === "option") {
@@ -95336,12 +95338,12 @@ var require_common = __commonJS({
     "use strict";
     module3.exports = common;
     var commonRe = /\/|\./;
-    function common(name6, json) {
-      if (!commonRe.test(name6)) {
-        name6 = "google/protobuf/" + name6 + ".proto";
+    function common(name5, json) {
+      if (!commonRe.test(name5)) {
+        name5 = "google/protobuf/" + name5 + ".proto";
         json = { nested: { google: { nested: { protobuf: { nested: json } } } } };
       }
-      common[name6] = json;
+      common[name5] = json;
     }
     common("any", {
       Any: {
@@ -96571,8 +96573,8 @@ var require_descriptor2 = __commonJS({
       var values = {};
       if (descriptor.value)
         for (var i = 0; i < descriptor.value.length; ++i) {
-          var name6 = descriptor.value[i].name, value = descriptor.value[i].number || 0;
-          values[name6 && name6.length ? name6 : "NAME" + value] = value;
+          var name5 = descriptor.value[i].name, value = descriptor.value[i].number || 0;
+          values[name5 && name5.length ? name5 : "NAME" + value] = value;
         }
       return new Enum(descriptor.name && descriptor.name.length ? descriptor.name : "Enum" + unnamedEnumIndex++, values, fromDescriptorOptions(descriptor.options, exports2.EnumOptions));
     };
@@ -97229,11 +97231,11 @@ var require_src2 = __commonJS({
       oneofs: true,
       json: true
     };
-    function joinName(baseName, name6) {
+    function joinName(baseName, name5) {
       if (baseName === "") {
-        return name6;
+        return name5;
       } else {
-        return baseName + "." + name6;
+        return baseName + "." + name5;
       }
     }
     function isHandledReflectionObject(obj) {
@@ -97248,8 +97250,8 @@ var require_src2 = __commonJS({
         return [[objName, obj]];
       } else {
         if (isNamespaceBase(obj) && typeof obj.nested !== "undefined") {
-          return Object.keys(obj.nested).map((name6) => {
-            return getAllHandledReflectionObjects(obj.nested[name6], objName);
+          return Object.keys(obj.nested).map((name5) => {
+            return getAllHandledReflectionObjects(obj.nested[name5], objName);
           }).reduce((accumulator, currentValue) => accumulator.concat(currentValue), []);
         }
       }
@@ -97285,10 +97287,10 @@ var require_src2 = __commonJS({
         responseType: createMessageDefinition(responseType, fileDescriptors)
       };
     }
-    function createServiceDefinition(service, name6, options2, fileDescriptors) {
+    function createServiceDefinition(service, name5, options2, fileDescriptors) {
       const def = {};
       for (const method of service.methodsArray) {
-        def[method.name] = createMethodDefinition(method, name6, options2, fileDescriptors);
+        def[method.name] = createMethodDefinition(method, name5, options2, fileDescriptors);
       }
       return def;
     }
@@ -97308,9 +97310,9 @@ var require_src2 = __commonJS({
         fileDescriptorProtos: fileDescriptors
       };
     }
-    function createDefinition(obj, name6, options2, fileDescriptors) {
+    function createDefinition(obj, name5, options2, fileDescriptors) {
       if (obj instanceof Protobuf.Service) {
-        return createServiceDefinition(obj, name6, options2, fileDescriptors);
+        return createServiceDefinition(obj, name5, options2, fileDescriptors);
       } else if (obj instanceof Protobuf.Type) {
         return createMessageDefinition(obj, fileDescriptors);
       } else if (obj instanceof Protobuf.Enum) {
@@ -97324,8 +97326,8 @@ var require_src2 = __commonJS({
       root.resolveAll();
       const descriptorList = root.toDescriptor("proto3").file;
       const bufferList = descriptorList.map((value) => Buffer.from(descriptor.FileDescriptorProto.encode(value).finish()));
-      for (const [name6, obj] of getAllHandledReflectionObjects(root, "")) {
-        def[name6] = createDefinition(obj, name6, options2, bufferList);
+      for (const [name5, obj] of getAllHandledReflectionObjects(root, "")) {
+        def[name5] = createDefinition(obj, name5, options2, bufferList);
       }
       return def;
     }
@@ -97554,16 +97556,16 @@ var require_channelz = __commonJS({
     var subchannels = [];
     var servers = [];
     var sockets = [];
-    function registerChannelzChannel(name6, getInfo) {
+    function registerChannelzChannel(name5, getInfo) {
       const id = getNextId();
-      const ref = { id, name: name6, kind: "channel" };
+      const ref = { id, name: name5, kind: "channel" };
       channels[id] = { ref, getInfo };
       return ref;
     }
     exports2.registerChannelzChannel = registerChannelzChannel;
-    function registerChannelzSubchannel(name6, getInfo) {
+    function registerChannelzSubchannel(name5, getInfo) {
       const id = getNextId();
-      const ref = { id, name: name6, kind: "subchannel" };
+      const ref = { id, name: name5, kind: "subchannel" };
       subchannels[id] = { ref, getInfo };
       return ref;
     }
@@ -97575,9 +97577,9 @@ var require_channelz = __commonJS({
       return ref;
     }
     exports2.registerChannelzServer = registerChannelzServer;
-    function registerChannelzSocket(name6, getInfo) {
+    function registerChannelzSocket(name5, getInfo) {
       const id = getNextId();
-      const ref = { id, name: name6, kind: "socket" };
+      const ref = { id, name: name5, kind: "socket" };
       sockets[id] = { ref, getInfo };
       return ref;
     }
@@ -100198,8 +100200,8 @@ var require_server = __commonJS({
         if (serviceKeys.length === 0) {
           throw new Error("Cannot add an empty service to a server");
         }
-        serviceKeys.forEach((name6) => {
-          const attrs = service[name6];
+        serviceKeys.forEach((name5) => {
+          const attrs = service[name5];
           let methodType;
           if (attrs.requestStream) {
             if (attrs.responseStream) {
@@ -100214,7 +100216,7 @@ var require_server = __commonJS({
               methodType = "unary";
             }
           }
-          let implFn = implementation[name6];
+          let implFn = implementation[name5];
           let impl;
           if (implFn === void 0 && typeof attrs.originalName === "string") {
             implFn = implementation[attrs.originalName];
@@ -100222,7 +100224,7 @@ var require_server = __commonJS({
           if (implFn !== void 0) {
             impl = implFn.bind(implementation);
           } else {
-            impl = getDefaultHandler(methodType, name6);
+            impl = getDefaultHandler(methodType, name5);
           }
           const success = this.register(attrs.path, impl, attrs.responseSerialize, attrs.requestDeserialize, methodType);
           if (success === false) {
@@ -100235,8 +100237,8 @@ var require_server = __commonJS({
           throw new Error("removeService() requires object as argument");
         }
         const serviceKeys = Object.keys(service);
-        serviceKeys.forEach((name6) => {
-          const attrs = service[name6];
+        serviceKeys.forEach((name5) => {
+          const attrs = service[name5];
           this.unregister(attrs.path);
         });
       }
@@ -100472,21 +100474,21 @@ var require_server = __commonJS({
         this.sessions.clear();
         channelz_1.unregisterChannelzRef(this.channelzRef);
       }
-      register(name6, handler, serialize, deserialize, type) {
-        if (this.handlers.has(name6)) {
+      register(name5, handler, serialize, deserialize, type) {
+        if (this.handlers.has(name5)) {
           return false;
         }
-        this.handlers.set(name6, {
+        this.handlers.set(name5, {
           func: handler,
           serialize,
           deserialize,
           type,
-          path: name6
+          path: name5
         });
         return true;
       }
-      unregister(name6) {
-        return this.handlers.delete(name6);
+      unregister(name5) {
+        return this.handlers.delete(name5);
       }
       start() {
         if (this.http2ServerList.length === 0 || this.http2ServerList.every(({ server: http2Server }) => http2Server.listening !== true)) {
@@ -101658,8 +101660,8 @@ var require_src3 = __commonJS({
 });
 
 // node_modules/@firebase/firestore/dist/index.node.mjs
-function setSDKVersion(version6) {
-  SDK_VERSION3 = version6;
+function setSDKVersion(version5) {
+  SDK_VERSION3 = version5;
 }
 function formatJSON(value) {
   return (0, import_util5.inspect)(value, { depth: 100 });
@@ -102961,26 +102963,26 @@ function fromBytes(serializer, value) {
     return ByteString.fromUint8Array(value ? value : new Uint8Array());
   }
 }
-function toVersion(serializer, version6) {
-  return toTimestamp(serializer, version6.toTimestamp());
+function toVersion(serializer, version5) {
+  return toTimestamp(serializer, version5.toTimestamp());
 }
-function fromVersion(version6) {
-  hardAssert(!!version6);
-  return SnapshotVersion.fromTimestamp(fromTimestamp(version6));
+function fromVersion(version5) {
+  hardAssert(!!version5);
+  return SnapshotVersion.fromTimestamp(fromTimestamp(version5));
 }
 function toResourceName(databaseId, path) {
   return fullyQualifiedPrefixPath(databaseId).child("documents").child(path).canonicalString();
 }
-function fromResourceName(name6) {
-  const resource = ResourcePath.fromString(name6);
+function fromResourceName(name5) {
+  const resource = ResourcePath.fromString(name5);
   hardAssert(isValidResourceName(resource));
   return resource;
 }
 function toName(serializer, key) {
   return toResourceName(serializer.databaseId, key.path);
 }
-function fromName(serializer, name6) {
-  const resource = fromResourceName(name6);
+function fromName(serializer, name5) {
+  const resource = fromResourceName(name5);
   if (resource.get(1) !== serializer.databaseId.projectId) {
     throw new FirestoreError(Code.INVALID_ARGUMENT, "Tried to deserialize key from different project: " + resource.get(1) + " vs " + serializer.databaseId.projectId);
   }
@@ -102992,8 +102994,8 @@ function fromName(serializer, name6) {
 function toQueryPath(serializer, path) {
   return toResourceName(serializer.databaseId, path);
 }
-function fromQueryPath(name6) {
-  const resourceName = fromResourceName(name6);
+function fromQueryPath(name5) {
+  const resourceName = fromResourceName(name5);
   if (resourceName.length === 4) {
     return ResourcePath.emptyPath();
   }
@@ -103043,11 +103045,11 @@ function fromWatchChange(serializer, change) {
     assertPresent(entityChange.document.name);
     assertPresent(entityChange.document.updateTime);
     const key = fromName(serializer, entityChange.document.name);
-    const version6 = fromVersion(entityChange.document.updateTime);
+    const version5 = fromVersion(entityChange.document.updateTime);
     const data = new ObjectValue({
       mapValue: { fields: entityChange.document.fields }
     });
-    const doc2 = MutableDocument.newFoundDocument(key, version6, data);
+    const doc2 = MutableDocument.newFoundDocument(key, version5, data);
     const updatedTargetIds = entityChange.targetIds || [];
     const removedTargetIds = entityChange.removedTargetIds || [];
     watchChange = new DocumentWatchChange(updatedTargetIds, removedTargetIds, doc2.key, doc2);
@@ -103056,8 +103058,8 @@ function fromWatchChange(serializer, change) {
     const docDelete = change.documentDelete;
     assertPresent(docDelete.document);
     const key = fromName(serializer, docDelete.document);
-    const version6 = docDelete.readTime ? fromVersion(docDelete.readTime) : SnapshotVersion.min();
-    const doc2 = MutableDocument.newNoDocument(key, version6);
+    const version5 = docDelete.readTime ? fromVersion(docDelete.readTime) : SnapshotVersion.min();
+    const doc2 = MutableDocument.newNoDocument(key, version5);
     const removedTargetIds = docDelete.removedTargetIds || [];
     watchChange = new DocumentWatchChange([], removedTargetIds, doc2.key, doc2);
   } else if ("documentRemove" in change) {
@@ -103148,11 +103150,11 @@ function toPrecondition(serializer, precondition) {
   }
 }
 function fromWriteResult(proto, commitTime) {
-  let version6 = proto.updateTime ? fromVersion(proto.updateTime) : fromVersion(commitTime);
-  if (version6.isEqual(SnapshotVersion.min())) {
-    version6 = fromVersion(commitTime);
+  let version5 = proto.updateTime ? fromVersion(proto.updateTime) : fromVersion(commitTime);
+  if (version5.isEqual(SnapshotVersion.min())) {
+    version5 = fromVersion(commitTime);
   }
-  return new MutationResult(version6, proto.transformResults || []);
+  return new MutationResult(version5, proto.transformResults || []);
 }
 function fromWriteResults(protos, commitTime) {
   if (protos && protos.length > 0) {
@@ -104967,8 +104969,8 @@ function registerFirestore(variant, useFetchStreams = true) {
     firestoreInstance._setSettings(settings);
     return firestoreInstance;
   }, "PUBLIC"));
-  registerVersion2(name4, version$13, variant);
-  registerVersion2(name4, version$13, "esm2017");
+  registerVersion2(name3, version$13, variant);
+  registerVersion2(name3, version$13, "esm2017");
 }
 function isWrite(dataSource) {
   switch (dataSource) {
@@ -105464,7 +105466,7 @@ function writeBatch(firestore) {
   ensureFirestoreConfigured(firestore);
   return new WriteBatch(firestore, (mutations) => executeWrite(firestore, mutations));
 }
-var import_util5, import_crypto2, import_module, import_grpc_js, import_path, import_url3, import_proto_loader, import_meta, name4, version$13, User, version4, SDK_VERSION3, logClient2, Code, FirestoreError, Deferred2, OAuthToken, EmptyCredentialsProvider, FirebaseCredentialsProvider, FirstPartyToken, FirstPartyCredentialsProvider, ListenSequence, DOCUMENT_KEY_NAME, BasePath, ResourcePath, identifierRegExp, FieldPath$1, escapeChar, encodedSeparatorChar, encodedNul, encodedEscape, DbPrimaryClient, DbMutationQueue, DbMutationBatch, DbDocumentMutation, DbRemoteDocument, DbRemoteDocumentGlobal, DbTarget, DbTargetDocument, DbTargetGlobal, DbCollectionParent, DbClientMetadata, DbBundle, DbNamedQuery, V1_STORES, V3_STORES, V4_STORES, V6_STORES, V8_STORES, V11_STORES, PRIMARY_LEASE_LOST_ERROR_MSG, PersistenceTransaction, PersistencePromise, AutoId, MIN_SECONDS, MS_TO_NANOS, Timestamp, SnapshotVersion, FieldMask, ByteString, ISO_TIMESTAMP_REG_EXP, SERVER_TIMESTAMP_SENTINEL, TYPE_KEY, PREVIOUS_VALUE_KEY, LOCAL_WRITE_TIME_KEY, BATCHID_UNKNOWN, DocumentKey, ObjectValue, MutableDocument, TargetImpl, Filter, FieldFilter, KeyFieldFilter, KeyFieldInFilter, KeyFieldNotInFilter, ArrayContainsFilter, InFilter, NotInFilter, ArrayContainsAnyFilter, Bound, OrderBy, QueryImpl, SortedMap, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedSet, SortedSetIterator, EMPTY_MUTABLE_DOCUMENT_MAP, EMPTY_DOCUMENT_MAP, EMPTY_DOCUMENT_VERSION_MAP, EMPTY_DOCUMENT_KEY_SET, EMPTY_TARGET_ID_SET, TransformOperation, ServerTimestampTransform, ArrayUnionTransformOperation, ArrayRemoveTransformOperation, NumericIncrementTransformOperation, FieldTransform, MutationResult, Precondition, Mutation, SetMutation, PatchMutation, DeleteMutation, VerifyMutation, MutationBatch, MutationBatchResult, ExistenceFilter, RpcCode, RemoteEvent, TargetChange, DocumentWatchChange, ExistenceFilterChange, WatchTargetChange, TargetState, LOG_TAG$f, WatchChangeAggregator, DIRECTIONS, OPERATORS, JsonProtoSerializer, TargetData, LocalSerializer, MemoryIndexManager, MemoryCollectionParentIndex, OFFSET, TargetIdGenerator, LRU_COLLECTION_DISABLED, LRU_DEFAULT_CACHE_SIZE_BYTES, LruParams, LRU_MINIMUM_CACHE_SIZE_BYTES, INITIAL_GC_DELAY_MS, REGULAR_GC_DELAY_MS, ObjectMap, RemoteDocumentChangeBuffer, MAX_CLIENT_AGE_MS, LocalDocumentsView, LOG_TAG$c, RESUME_TOKEN_MAX_AGE_MICROS, LocalStoreImpl, MemoryBundleCache, ReferenceSet, DocReference, MemoryMutationQueue, MemoryRemoteDocumentCacheImpl, MemoryRemoteDocumentChangeBuffer, MemoryTargetCache, LOG_TAG$b, MemoryPersistence, MemoryTransaction, MemoryEagerDelegate, QueryEngine, LocalClientState, MemorySharedClientState, NoopConnectivityMonitor, StreamBridge, require2, grpcVersion, LOG_TAG$9, X_GOOG_API_CLIENT_VALUE, GrpcConnection, __filename, __dirname2, protoLoaderOptions, LOG_TAG$8, DEFAULT_BACKOFF_INITIAL_DELAY_MS, DEFAULT_BACKOFF_FACTOR, DEFAULT_BACKOFF_MAX_DELAY_MS, ExponentialBackoff, LOG_TAG$7, IDLE_TIMEOUT_MS, HEALTHY_TIMEOUT_MS, PersistentStream, PersistentListenStream, PersistentWriteStream, Datastore, DatastoreImpl, LOG_TAG$6, MAX_WATCH_STREAM_FAILURES, ONLINE_STATE_TIMEOUT_MS, OnlineStateTracker, LOG_TAG$5, MAX_PENDING_WRITES, RemoteStoreImpl, LOG_TAG$4, DelayedOperation, DocumentSet, DocumentChangeSet, ViewSnapshot, QueryListenersInfo, EventManagerImpl, QueryListener, LocalViewChanges, AddedLimboDocument, RemovedLimboDocument, View, LOG_TAG$3, QueryView, LimboResolution, SyncEngineImpl, MemoryOfflineComponentProvider, OnlineComponentProvider, AsyncObserver, LOG_TAG$2, MAX_CONCURRENT_LIMBO_RESOLUTIONS, FirestoreClient, DatabaseInfo, DEFAULT_DATABASE_NAME, DatabaseId, LOG_TAG$1, datastoreInstances, DEFAULT_HOST, DEFAULT_SSL, FirestoreSettingsImpl, Firestore$1, DocumentReference, Query, CollectionReference, LOG_TAG, AsyncQueueImpl, Firestore, FieldPath, Bytes, FieldValue, GeoPoint, RESERVED_FIELD_REGEX, ParsedSetData, ParsedUpdateData, ParseContextImpl, UserDataReader, DeleteFieldValueImpl, ServerTimestampFieldValueImpl, FIELD_PATH_RESERVED, DocumentSnapshot$1, QueryDocumentSnapshot$1, SnapshotMetadata, DocumentSnapshot, QueryDocumentSnapshot, QuerySnapshot, QueryConstraint, QueryOrderByConstraint, AbstractUserDataWriter, WriteBatch, ExpUserDataWriter;
+var import_util5, import_crypto2, import_module, import_grpc_js, import_path, import_url3, import_proto_loader, import_meta, name3, version$13, User, version3, SDK_VERSION3, logClient2, Code, FirestoreError, Deferred2, OAuthToken, EmptyCredentialsProvider, FirebaseCredentialsProvider, FirstPartyToken, FirstPartyCredentialsProvider, ListenSequence, DOCUMENT_KEY_NAME, BasePath, ResourcePath, identifierRegExp, FieldPath$1, escapeChar, encodedSeparatorChar, encodedNul, encodedEscape, DbPrimaryClient, DbMutationQueue, DbMutationBatch, DbDocumentMutation, DbRemoteDocument, DbRemoteDocumentGlobal, DbTarget, DbTargetDocument, DbTargetGlobal, DbCollectionParent, DbClientMetadata, DbBundle, DbNamedQuery, V1_STORES, V3_STORES, V4_STORES, V6_STORES, V8_STORES, V11_STORES, PRIMARY_LEASE_LOST_ERROR_MSG, PersistenceTransaction, PersistencePromise, AutoId, MIN_SECONDS, MS_TO_NANOS, Timestamp, SnapshotVersion, FieldMask, ByteString, ISO_TIMESTAMP_REG_EXP, SERVER_TIMESTAMP_SENTINEL, TYPE_KEY, PREVIOUS_VALUE_KEY, LOCAL_WRITE_TIME_KEY, BATCHID_UNKNOWN, DocumentKey, ObjectValue, MutableDocument, TargetImpl, Filter, FieldFilter, KeyFieldFilter, KeyFieldInFilter, KeyFieldNotInFilter, ArrayContainsFilter, InFilter, NotInFilter, ArrayContainsAnyFilter, Bound, OrderBy, QueryImpl, SortedMap, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedSet, SortedSetIterator, EMPTY_MUTABLE_DOCUMENT_MAP, EMPTY_DOCUMENT_MAP, EMPTY_DOCUMENT_VERSION_MAP, EMPTY_DOCUMENT_KEY_SET, EMPTY_TARGET_ID_SET, TransformOperation, ServerTimestampTransform, ArrayUnionTransformOperation, ArrayRemoveTransformOperation, NumericIncrementTransformOperation, FieldTransform, MutationResult, Precondition, Mutation, SetMutation, PatchMutation, DeleteMutation, VerifyMutation, MutationBatch, MutationBatchResult, ExistenceFilter, RpcCode, RemoteEvent, TargetChange, DocumentWatchChange, ExistenceFilterChange, WatchTargetChange, TargetState, LOG_TAG$f, WatchChangeAggregator, DIRECTIONS, OPERATORS, JsonProtoSerializer, TargetData, LocalSerializer, MemoryIndexManager, MemoryCollectionParentIndex, OFFSET, TargetIdGenerator, LRU_COLLECTION_DISABLED, LRU_DEFAULT_CACHE_SIZE_BYTES, LruParams, LRU_MINIMUM_CACHE_SIZE_BYTES, INITIAL_GC_DELAY_MS, REGULAR_GC_DELAY_MS, ObjectMap, RemoteDocumentChangeBuffer, MAX_CLIENT_AGE_MS, LocalDocumentsView, LOG_TAG$c, RESUME_TOKEN_MAX_AGE_MICROS, LocalStoreImpl, MemoryBundleCache, ReferenceSet, DocReference, MemoryMutationQueue, MemoryRemoteDocumentCacheImpl, MemoryRemoteDocumentChangeBuffer, MemoryTargetCache, LOG_TAG$b, MemoryPersistence, MemoryTransaction, MemoryEagerDelegate, QueryEngine, LocalClientState, MemorySharedClientState, NoopConnectivityMonitor, StreamBridge, require2, grpcVersion, LOG_TAG$9, X_GOOG_API_CLIENT_VALUE, GrpcConnection, __filename, __dirname2, protoLoaderOptions, LOG_TAG$8, DEFAULT_BACKOFF_INITIAL_DELAY_MS, DEFAULT_BACKOFF_FACTOR, DEFAULT_BACKOFF_MAX_DELAY_MS, ExponentialBackoff, LOG_TAG$7, IDLE_TIMEOUT_MS, HEALTHY_TIMEOUT_MS, PersistentStream, PersistentListenStream, PersistentWriteStream, Datastore, DatastoreImpl, LOG_TAG$6, MAX_WATCH_STREAM_FAILURES, ONLINE_STATE_TIMEOUT_MS, OnlineStateTracker, LOG_TAG$5, MAX_PENDING_WRITES, RemoteStoreImpl, LOG_TAG$4, DelayedOperation, DocumentSet, DocumentChangeSet, ViewSnapshot, QueryListenersInfo, EventManagerImpl, QueryListener, LocalViewChanges, AddedLimboDocument, RemovedLimboDocument, View, LOG_TAG$3, QueryView, LimboResolution, SyncEngineImpl, MemoryOfflineComponentProvider, OnlineComponentProvider, AsyncObserver, LOG_TAG$2, MAX_CONCURRENT_LIMBO_RESOLUTIONS, FirestoreClient, DatabaseInfo, DEFAULT_DATABASE_NAME, DatabaseId, LOG_TAG$1, datastoreInstances, DEFAULT_HOST, DEFAULT_SSL, FirestoreSettingsImpl, Firestore$1, DocumentReference, Query, CollectionReference, LOG_TAG, AsyncQueueImpl, Firestore, FieldPath, Bytes, FieldValue, GeoPoint, RESERVED_FIELD_REGEX, ParsedSetData, ParsedUpdateData, ParseContextImpl, UserDataReader, DeleteFieldValueImpl, ServerTimestampFieldValueImpl, FIELD_PATH_RESERVED, DocumentSnapshot$1, QueryDocumentSnapshot$1, SnapshotMetadata, DocumentSnapshot, QueryDocumentSnapshot, QuerySnapshot, QueryConstraint, QueryOrderByConstraint, AbstractUserDataWriter, WriteBatch, ExpUserDataWriter;
 var init_index_node = __esm({
   "node_modules/@firebase/firestore/dist/index.node.mjs"() {
     init_shims();
@@ -105480,7 +105482,7 @@ var init_index_node = __esm({
     import_url3 = __toModule(require("url"));
     import_proto_loader = __toModule(require_src2());
     import_meta = {};
-    name4 = "@firebase/firestore";
+    name3 = "@firebase/firestore";
     version$13 = "3.3.1";
     User = class {
       constructor(uid) {
@@ -105504,8 +105506,8 @@ var init_index_node = __esm({
     User.GOOGLE_CREDENTIALS = new User("google-credentials-uid");
     User.FIRST_PARTY = new User("first-party-uid");
     User.MOCK_USER = new User("mock-user");
-    version4 = "9.5.0";
-    SDK_VERSION3 = version4;
+    version3 = "9.5.0";
+    SDK_VERSION3 = version3;
     logClient2 = new Logger2("@firebase/firestore");
     Code = {
       OK: "ok",
@@ -106041,17 +106043,17 @@ var init_index_node = __esm({
     DbClientMetadata.store = "clientMetadata";
     DbClientMetadata.keyPath = "clientId";
     DbBundle = class {
-      constructor(bundleId, createTime, version6) {
+      constructor(bundleId, createTime, version5) {
         this.bundleId = bundleId;
         this.createTime = createTime;
-        this.version = version6;
+        this.version = version5;
       }
     };
     DbBundle.store = "bundles";
     DbBundle.keyPath = "bundleId";
     DbNamedQuery = class {
-      constructor(name6, readTime, bundledQuery) {
-        this.name = name6;
+      constructor(name5, readTime, bundledQuery) {
+        this.name = name5;
         this.readTime = readTime;
         this.bundledQuery = bundledQuery;
       }
@@ -106374,8 +106376,8 @@ var init_index_node = __esm({
       static fromPath(path) {
         return new DocumentKey(ResourcePath.fromString(path));
       }
-      static fromName(name6) {
-        return new DocumentKey(ResourcePath.fromString(name6).popFirst(5));
+      static fromName(name5) {
+        return new DocumentKey(ResourcePath.fromString(name5).popFirst(5));
       }
       hasCollectionId(collectionId) {
         return this.path.length >= 2 && this.path.get(this.path.length - 2) === collectionId;
@@ -106478,41 +106480,41 @@ var init_index_node = __esm({
       }
     };
     MutableDocument = class {
-      constructor(key, documentType, version6, data, documentState) {
+      constructor(key, documentType, version5, data, documentState) {
         this.key = key;
         this.documentType = documentType;
-        this.version = version6;
+        this.version = version5;
         this.data = data;
         this.documentState = documentState;
       }
       static newInvalidDocument(documentKey) {
         return new MutableDocument(documentKey, 0, SnapshotVersion.min(), ObjectValue.empty(), 0);
       }
-      static newFoundDocument(documentKey, version6, value) {
-        return new MutableDocument(documentKey, 1, version6, value, 0);
+      static newFoundDocument(documentKey, version5, value) {
+        return new MutableDocument(documentKey, 1, version5, value, 0);
       }
-      static newNoDocument(documentKey, version6) {
-        return new MutableDocument(documentKey, 2, version6, ObjectValue.empty(), 0);
+      static newNoDocument(documentKey, version5) {
+        return new MutableDocument(documentKey, 2, version5, ObjectValue.empty(), 0);
       }
-      static newUnknownDocument(documentKey, version6) {
-        return new MutableDocument(documentKey, 3, version6, ObjectValue.empty(), 2);
+      static newUnknownDocument(documentKey, version5) {
+        return new MutableDocument(documentKey, 3, version5, ObjectValue.empty(), 2);
       }
-      convertToFoundDocument(version6, value) {
-        this.version = version6;
+      convertToFoundDocument(version5, value) {
+        this.version = version5;
         this.documentType = 1;
         this.data = value;
         this.documentState = 0;
         return this;
       }
-      convertToNoDocument(version6) {
-        this.version = version6;
+      convertToNoDocument(version5) {
+        this.version = version5;
         this.documentType = 2;
         this.data = ObjectValue.empty();
         this.documentState = 0;
         return this;
       }
-      convertToUnknownDocument(version6) {
-        this.version = version6;
+      convertToUnknownDocument(version5) {
+        this.version = version5;
         this.documentType = 3;
         this.data = ObjectValue.empty();
         this.documentState = 2;
@@ -107263,8 +107265,8 @@ var init_index_node = __esm({
       }
     };
     MutationResult = class {
-      constructor(version6, transformResults) {
-        this.version = version6;
+      constructor(version5, transformResults) {
+        this.version = version5;
         this.transformResults = transformResults;
       }
     };
@@ -107279,8 +107281,8 @@ var init_index_node = __esm({
       static exists(exists) {
         return new Precondition(void 0, exists);
       }
-      static updateTime(version6) {
-        return new Precondition(version6);
+      static updateTime(version5) {
+        return new Precondition(version5);
       }
       get isNone() {
         return this.updateTime === void 0 && this.exists === void 0;
@@ -110834,8 +110836,8 @@ This typically indicates that your device does not have a healthy Internet conne
         const normalizedValue = normalizeTimestamp(value);
         return new Timestamp(normalizedValue.seconds, normalizedValue.nanos);
       }
-      convertDocumentKey(name6, expectedDatabaseId) {
-        const resourcePath = ResourcePath.fromString(name6);
+      convertDocumentKey(name5, expectedDatabaseId) {
+        const resourcePath = ResourcePath.fromString(name5);
         hardAssert(isValidResourceName(resourcePath));
         const databaseId = new DatabaseId(resourcePath.get(1), resourcePath.get(3));
         const key = new DocumentKey(resourcePath.popFirst(5));
@@ -110902,8 +110904,8 @@ This typically indicates that your device does not have a healthy Internet conne
       convertBytes(bytes) {
         return new Bytes(bytes);
       }
-      convertReference(name6) {
-        const key = this.convertDocumentKey(name6, this.firestore._databaseId);
+      convertReference(name5) {
+        const key = this.convertDocumentKey(name5, this.firestore._databaseId);
         return new DocumentReference(this.firestore, null, key);
       }
     };
@@ -110911,19 +110913,19 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-745080af.js
-var layout_745080af_exports = {};
-__export(layout_745080af_exports, {
+// .svelte-kit/output/server/chunks/__layout-4951d382.js
+var layout_4951d382_exports = {};
+__export(layout_4951d382_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_745080af = __esm({
-  ".svelte-kit/output/server/chunks/__layout-745080af.js"() {
+var init_layout_4951d382 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-4951d382.js"() {
     init_shims();
-    init_app_c5be8a63();
-    init_index_18beaaad();
-    init_store_fc50c793();
+    init_app_311653dc();
+    init_index_c327074d_f782d9c8();
     init_index_node();
+    init_store_090f0253();
     import_cookie = __toModule(require_cookie());
     init_dist();
     import_stream3 = __toModule(require("stream"));
@@ -110943,9 +110945,9 @@ var init_layout_745080af = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-f7247335.js
-var error_f7247335_exports = {};
-__export(error_f7247335_exports, {
+// .svelte-kit/output/server/chunks/error-5865cef5.js
+var error_5865cef5_exports = {};
+__export(error_5865cef5_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -110953,10 +110955,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_f7247335 = __esm({
-  ".svelte-kit/output/server/chunks/error-f7247335.js"() {
+var init_error_5865cef5 = __esm({
+  ".svelte-kit/output/server/chunks/error-5865cef5.js"() {
     init_shims();
-    init_app_c5be8a63();
+    init_app_311653dc();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -110978,9 +110980,9 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/Button-77778597.js
+// .svelte-kit/output/server/chunks/Button-13e919af.js
 function classMap(classObj) {
-  return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
+  return Object.entries(classObj).filter(([name5, value]) => name5 !== "" && value).map(([name5]) => name5).join(" ");
 }
 function forwardEventsBuilder(component) {
   let $on;
@@ -111178,7 +111180,7 @@ function estimateScrollWidth(element) {
   document.documentElement.removeChild(clone4);
   return scrollWidth;
 }
-function Ripple(node, { ripple = true, surface = false, unbounded = false, disabled = false, color, active, rippleElement, eventTarget, activeTarget, addClass = (className) => node.classList.add(className), removeClass = (className) => node.classList.remove(className), addStyle = (name6, value) => node.style.setProperty(name6, value), initPromise = Promise.resolve() } = {}) {
+function Ripple(node, { ripple = true, surface = false, unbounded = false, disabled = false, color, active, rippleElement, eventTarget, activeTarget, addClass = (className) => node.classList.add(className), removeClass = (className) => node.classList.remove(className), addStyle = (name5, value) => node.style.setProperty(name5, value), initPromise = Promise.resolve() } = {}) {
   let instance;
   let addLayoutListener = getContext("SMUI:addLayoutListener");
   let removeLayoutListener;
@@ -111283,7 +111285,7 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
         removeClass,
         addStyle,
         initPromise
-      } = Object.assign({ ripple: true, surface: false, unbounded: false, disabled: false, color: void 0, active: void 0, rippleElement: void 0, eventTarget: void 0, activeTarget: void 0, addClass: (className) => node.classList.add(className), removeClass: (className) => node.classList.remove(className), addStyle: (name6, value) => node.style.setProperty(name6, value), initPromise: Promise.resolve() }, props));
+      } = Object.assign({ ripple: true, surface: false, unbounded: false, disabled: false, color: void 0, active: void 0, rippleElement: void 0, eventTarget: void 0, activeTarget: void 0, addClass: (className) => node.classList.add(className), removeClass: (className) => node.classList.remove(className), addStyle: (name5, value) => node.style.setProperty(name5, value), initPromise: Promise.resolve() }, props));
       handleProps();
     },
     destroy() {
@@ -111301,11 +111303,11 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
   };
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, Button_1;
-var init_Button_77778597 = __esm({
-  ".svelte-kit/output/server/chunks/Button-77778597.js"() {
+var init_Button_13e919af = __esm({
+  ".svelte-kit/output/server/chunks/Button-13e919af.js"() {
     init_shims();
-    init_app_c5be8a63();
-    init_store_fc50c793();
+    init_app_311653dc();
+    init_store_090f0253();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112091,13 +112093,13 @@ var init_Button_77778597 = __esm({
           internalClasses[className2] = false;
         }
       }
-      function addStyle(name6, value) {
-        if (internalStyles[name6] != value) {
+      function addStyle(name5, value) {
+        if (internalStyles[name5] != value) {
           if (value === "" || value == null) {
-            delete internalStyles[name6];
+            delete internalStyles[name5];
             internalStyles = internalStyles;
           } else {
-            internalStyles[name6] = value;
+            internalStyles[name5] = value;
           }
         }
       }
@@ -112175,7 +112177,7 @@ var init_Button_77778597 = __esm({
             ...internalClasses
           })
         }, {
-          style: Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" ")
+          style: Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" ")
         }, actionProp, defaultProp, secondaryProp, { href }, $$restProps, { this: element }), {
           this: ($$value) => {
             element = $$value;
@@ -112191,7 +112193,7 @@ var init_Button_77778597 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/classAdderBuilder-eddb4785.js
+// .svelte-kit/output/server/chunks/classAdderBuilder-426c307a.js
 function classAdderBuilder(props) {
   return new Proxy(ClassAdder, {
     construct: function(target, args) {
@@ -112205,11 +112207,11 @@ function classAdderBuilder(props) {
   });
 }
 var Object_12, internals, ClassAdder, defaults;
-var init_classAdderBuilder_eddb4785 = __esm({
-  ".svelte-kit/output/server/chunks/classAdderBuilder-eddb4785.js"() {
+var init_classAdderBuilder_426c307a = __esm({
+  ".svelte-kit/output/server/chunks/classAdderBuilder-426c307a.js"() {
     init_shims();
-    init_app_c5be8a63();
-    init_Button_77778597();
+    init_app_311653dc();
+    init_Button_13e919af();
     ({ Object: Object_12 } = globals);
     internals = {
       component: Div$1,
@@ -112229,11 +112231,11 @@ var init_classAdderBuilder_eddb4785 = __esm({
       const contexts = internals.contexts;
       const props = internals.props;
       let { component = internals.component } = $$props;
-      Object.entries(internals.classMap).forEach(([name6, context2]) => {
+      Object.entries(internals.classMap).forEach(([name5, context2]) => {
         const store = getContext(context2);
         if (store && "subscribe" in store) {
           smuiClassUnsubscribes.push(store.subscribe((value) => {
-            smuiClassMap[name6] = value;
+            smuiClassMap[name5] = value;
           }));
         }
       });
@@ -112285,9 +112287,9 @@ var init_classAdderBuilder_eddb4785 = __esm({
 });
 
 // .svelte-kit/output/server/chunks/navigation-0a4806ec.js
-function guard(name6) {
+function guard(name5) {
   return () => {
-    throw new Error(`Cannot call ${name6}(...) on the server`);
+    throw new Error(`Cannot call ${name5}(...) on the server`);
   };
 }
 var goto;
@@ -112298,9 +112300,9 @@ var init_navigation_0a4806ec = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-42f686b4.js
-var index_42f686b4_exports = {};
-__export(index_42f686b4_exports, {
+// .svelte-kit/output/server/chunks/index-53f30dc1.js
+var index_53f30dc1_exports = {};
+__export(index_53f30dc1_exports, {
   default: () => Routes,
   load: () => load2
 });
@@ -112308,15 +112310,15 @@ function exclude(obj, keys) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
   for (let i = 0; i < names.length; i++) {
-    const name6 = names[i];
-    const cashIndex = name6.indexOf("$");
-    if (cashIndex !== -1 && keys.indexOf(name6.substring(0, cashIndex + 1)) !== -1) {
+    const name5 = names[i];
+    const cashIndex = name5.indexOf("$");
+    if (cashIndex !== -1 && keys.indexOf(name5.substring(0, cashIndex + 1)) !== -1) {
       continue;
     }
-    if (keys.indexOf(name6) !== -1) {
+    if (keys.indexOf(name5) !== -1) {
       continue;
     }
-    newObj[name6] = obj[name6];
+    newObj[name5] = obj[name5];
   }
   return newObj;
 }
@@ -112324,9 +112326,9 @@ function prefixFilter(obj, prefix) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
   for (let i = 0; i < names.length; i++) {
-    const name6 = names[i];
-    if (name6.substring(0, prefix.length) === prefix) {
-      newObj[name6.substring(prefix.length)] = obj[name6];
+    const name5 = names[i];
+    if (name5.substring(0, prefix.length) === prefix) {
+      newObj[name5.substring(prefix.length)] = obj[name5];
     }
   }
   return newObj;
@@ -112335,14 +112337,14 @@ function load2() {
   return {};
 }
 var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_13, Textfield, counter, HelperText, Routes;
-var init_index_42f686b4 = __esm({
-  ".svelte-kit/output/server/chunks/index-42f686b4.js"() {
+var init_index_53f30dc1 = __esm({
+  ".svelte-kit/output/server/chunks/index-53f30dc1.js"() {
     init_shims();
-    init_app_c5be8a63();
-    init_Button_77778597();
-    init_store_fc50c793();
-    init_classAdderBuilder_eddb4785();
-    init_index_18beaaad();
+    init_app_311653dc();
+    init_Button_13e919af();
+    init_store_090f0253();
+    init_classAdderBuilder_426c307a();
+    init_index_c327074d_f782d9c8();
     init_index_node();
     init_navigation_0a4806ec();
     import_cookie3 = __toModule(require_cookie());
@@ -112450,7 +112452,7 @@ var init_index_42f686b4 = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>` : `<label${spread([
@@ -112464,7 +112466,7 @@ var init_index_42f686b4 = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" "))
         },
         {
           for: escape_attribute_value(forId || (inputProps ? inputProps.id : void 0))
@@ -112530,7 +112532,7 @@ var init_index_42f686b4 = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}></div>`;
@@ -112591,7 +112593,7 @@ var init_index_42f686b4 = __esm({
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}><div class="${"mdc-notched-outline__leading"}"></div>
-  ${!noLabel ? `<div class="${"mdc-notched-outline__notch"}"${add_attribute("style", Object.entries(notchStyles).map(([name6, value]) => `${name6}: ${value};`).join(" "), 0)}>${slots.default ? slots.default({}) : ``}</div>` : ``}
+  ${!noLabel ? `<div class="${"mdc-notched-outline__notch"}"${add_attribute("style", Object.entries(notchStyles).map(([name5, value]) => `${name5}: ${value};`).join(" "), 0)}>${slots.default ? slots.default({}) : ``}</div>` : ``}
   <div class="${"mdc-notched-outline__trailing"}"></div>
 </div>`;
     });
@@ -112641,18 +112643,18 @@ var init_index_42f686b4 = __esm({
       let element;
       let internalAttrs = {};
       let valueProp = {};
-      function getAttr(name6) {
+      function getAttr(name5) {
         var _a;
-        return name6 in internalAttrs ? (_a = internalAttrs[name6]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name6);
+        return name5 in internalAttrs ? (_a = internalAttrs[name5]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name5);
       }
-      function addAttr(name6, value2) {
-        if (internalAttrs[name6] !== value2) {
-          internalAttrs[name6] = value2;
+      function addAttr(name5, value2) {
+        if (internalAttrs[name5] !== value2) {
+          internalAttrs[name5] = value2;
         }
       }
-      function removeAttr(name6) {
-        if (!(name6 in internalAttrs) || internalAttrs[name6] != null) {
-          internalAttrs[name6] = void 0;
+      function removeAttr(name5) {
+        if (!(name5 in internalAttrs) || internalAttrs[name5] != null) {
+          internalAttrs[name5] = void 0;
         }
       }
       function focus() {
@@ -112744,18 +112746,18 @@ var init_index_42f686b4 = __esm({
       let { resizable = true } = $$props;
       let element;
       let internalAttrs = {};
-      function getAttr(name6) {
+      function getAttr(name5) {
         var _a;
-        return name6 in internalAttrs ? (_a = internalAttrs[name6]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name6);
+        return name5 in internalAttrs ? (_a = internalAttrs[name5]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name5);
       }
-      function addAttr(name6, value2) {
-        if (internalAttrs[name6] !== value2) {
-          internalAttrs[name6] = value2;
+      function addAttr(name5, value2) {
+        if (internalAttrs[name5] !== value2) {
+          internalAttrs[name5] = value2;
         }
       }
-      function removeAttr(name6) {
-        if (!(name6 in internalAttrs) || internalAttrs[name6] != null) {
-          internalAttrs[name6] = void 0;
+      function removeAttr(name5) {
+        if (!(name5 in internalAttrs) || internalAttrs[name5] != null) {
+          internalAttrs[name5] = void 0;
         }
       }
       function focus() {
@@ -112986,7 +112988,7 @@ var init_index_42f686b4 = __esm({
             }))
           },
           {
-            style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value2]) => `${name6}: ${value2};`).concat([style]).join(" "))
+            style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value2]) => `${name5}: ${value2};`).concat([style]).join(" "))
           },
           {
             for: escape_attribute_value(void 0)
@@ -113104,7 +113106,7 @@ var init_index_42f686b4 = __esm({
             }))
           },
           {
-            style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value2]) => `${name6}: ${value2};`).concat([style]).join(" "))
+            style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value2]) => `${name5}: ${value2};`).concat([style]).join(" "))
           },
           escape_object(exclude($$restProps, ["input$", "label$", "ripple$", "outline$", "helperLine$"]))
         ])}${add_attribute("this", element, 0)}>${slots.label ? slots.label({}) : ``}
@@ -113228,9 +113230,9 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-1240c0ab.js
-var layout_1240c0ab_exports = {};
-__export(layout_1240c0ab_exports, {
+// .svelte-kit/output/server/chunks/__layout-15e55217.js
+var layout_15e55217_exports = {};
+__export(layout_15e55217_exports, {
   default: () => _layout2,
   load: () => load3
 });
@@ -113256,23 +113258,17 @@ function load3({ page }) {
     }
   };
 }
-var import_cookie4, import_stream5, import_http5, import_url6, import_punycode4, import_https5, import_zlib5, MenuSurface, Menu, List, Object_14, counter2, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css, LeftDrawer, _layout2;
-var init_layout_1240c0ab = __esm({
-  ".svelte-kit/output/server/chunks/__layout-1240c0ab.js"() {
+var import_cookie4, MenuSurface, Menu, List, Object_14, counter2, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css, LeftDrawer, _layout2;
+var init_layout_15e55217 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-15e55217.js"() {
     init_shims();
-    init_app_c5be8a63();
-    init_Button_77778597();
-    init_classAdderBuilder_eddb4785();
-    init_store_fc50c793();
+    init_app_311653dc();
+    init_Button_13e919af();
+    init_classAdderBuilder_426c307a();
+    init_store_090f0253();
     init_index_node();
     import_cookie4 = __toModule(require_cookie());
     init_dist();
-    import_stream5 = __toModule(require("stream"));
-    import_http5 = __toModule(require("http"));
-    import_url6 = __toModule(require("url"));
-    import_punycode4 = __toModule(require("punycode"));
-    import_https5 = __toModule(require("https"));
-    import_zlib5 = __toModule(require("zlib"));
     MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -113392,7 +113388,7 @@ var init_layout_1240c0ab = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}
@@ -113719,13 +113715,13 @@ var init_layout_1240c0ab = __esm({
           internalClasses[className2] = false;
         }
       }
-      function addStyle(name6, value) {
-        if (internalStyles[name6] != value) {
+      function addStyle(name5, value) {
+        if (internalStyles[name5] != value) {
           if (value === "" || value == null) {
-            delete internalStyles[name6];
+            delete internalStyles[name5];
             internalStyles = internalStyles;
           } else {
-            internalStyles[name6] = value;
+            internalStyles[name5] = value;
           }
         }
       }
@@ -113815,7 +113811,7 @@ var init_layout_1240c0ab = __esm({
             ...internalClasses
           })
         }, {
-          style: Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" ")
+          style: Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" ")
         }, nav && activated ? { "aria-current": "page" } : {}, !nav ? { role } : {}, !nav && role === "option" ? {
           "aria-selected": selected ? "true" : "false"
         } : {}, !nav && (role === "radio" || role === "checkbox") ? {
@@ -114336,12 +114332,12 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       let { classID } = $$props;
       let { roomID } = $$props;
       let rooms;
-      let unsubFuncs = [];
       onDestroy(() => {
         for (const unsubFunc of unsubFuncs) {
           unsubFunc();
         }
       });
+      let unsubFuncs = [];
       const participantsRef = collection(getFirestore(), `classes/${classID}/participants`);
       const roomsRef = collection(getFirestore(), `classes/${classID}/rooms`);
       unsubFuncs.push(onSnapshot(participantsRef, (snapshot) => {
@@ -114562,9 +114558,9 @@ var init_audio_recorder_polyfill = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-5dc90523.js
-var index_5dc90523_exports = {};
-__export(index_5dc90523_exports, {
+// .svelte-kit/output/server/chunks/index-aadddef0.js
+var index_aadddef0_exports = {};
+__export(index_aadddef0_exports, {
   default: () => U5Broomu5D,
   load: () => load4
 });
@@ -114620,7 +114616,7 @@ function Body3(body) {
     body = Buffer.from(body);
   } else if (ArrayBuffer.isView(body)) {
     body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
-  } else if (body instanceof import_stream6.default)
+  } else if (body instanceof import_stream5.default)
     ;
   else {
     body = Buffer.from(String(body));
@@ -114632,7 +114628,7 @@ function Body3(body) {
   };
   this.size = size;
   this.timeout = timeout;
-  if (body instanceof import_stream6.default) {
+  if (body instanceof import_stream5.default) {
     body.on("error", function(err) {
       const error3 = err.name === "AbortError" ? err : new FetchError3(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
       _this[INTERNALS3].error = error3;
@@ -114658,7 +114654,7 @@ function consumeBody3() {
   if (Buffer.isBuffer(body)) {
     return Body3.Promise.resolve(body);
   }
-  if (!(body instanceof import_stream6.default)) {
+  if (!(body instanceof import_stream5.default)) {
     return Body3.Promise.resolve(Buffer.alloc(0));
   }
   let accum = [];
@@ -114757,7 +114753,7 @@ function clone3(instance) {
   if (instance.bodyUsed) {
     throw new Error("cannot clone body after it is used");
   }
-  if (body instanceof import_stream6.default && typeof body.getBoundary !== "function") {
+  if (body instanceof import_stream5.default && typeof body.getBoundary !== "function") {
     p1 = new PassThrough3();
     p2 = new PassThrough3();
     body.pipe(p1);
@@ -114784,7 +114780,7 @@ function extractContentType3(body) {
     return null;
   } else if (typeof body.getBoundary === "function") {
     return `multipart/form-data;boundary=${body.getBoundary()}`;
-  } else if (body instanceof import_stream6.default) {
+  } else if (body instanceof import_stream5.default) {
     return null;
   } else {
     return "text/plain;charset=UTF-8";
@@ -115050,8 +115046,8 @@ function factory(container, { instanceIdentifier: url }) {
 }
 function registerStorage() {
   _registerComponent(new Component(STORAGE_TYPE, factory, "PUBLIC").setMultipleInstances(true));
-  registerVersion(name5, version5, "node");
-  registerVersion(name5, version5, "esm2017");
+  registerVersion(name4, version4, "node");
+  registerVersion(name4, version4, "esm2017");
 }
 function load4({ page }) {
   return {
@@ -115061,25 +115057,25 @@ function load4({ page }) {
     }
   };
 }
-var import_stream6, import_http6, import_url7, import_https6, import_zlib6, import_cookie5, import_punycode5, RenderlessBoardMethods, RenderlessAudioRecorder, BlackboardToolbar, Blackboard, DoodleVideo, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers3, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name5, version5, STORAGE_TYPE, U5Broomu5D;
-var init_index_5dc90523 = __esm({
-  ".svelte-kit/output/server/chunks/index-5dc90523.js"() {
+var import_stream5, import_http5, import_url6, import_https5, import_zlib5, import_cookie5, import_punycode4, RenderlessBoardMethods, RenderlessAudioRecorder, BlackboardToolbar, Blackboard, DoodleVideo, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers3, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name4, version4, STORAGE_TYPE, U5Broomu5D;
+var init_index_aadddef0 = __esm({
+  ".svelte-kit/output/server/chunks/index-aadddef0.js"() {
     init_shims();
-    init_app_c5be8a63();
-    init_index_18beaaad();
-    init_store_fc50c793();
+    init_app_311653dc();
+    init_index_c327074d_f782d9c8();
     init_index_node();
     init_audio_recorder_polyfill();
-    init_Button_77778597();
+    init_store_090f0253();
+    init_Button_13e919af();
     init_navigation_0a4806ec();
-    import_stream6 = __toModule(require("stream"));
-    import_http6 = __toModule(require("http"));
-    import_url7 = __toModule(require("url"));
-    import_https6 = __toModule(require("https"));
-    import_zlib6 = __toModule(require("zlib"));
+    import_stream5 = __toModule(require("stream"));
+    import_http5 = __toModule(require("http"));
+    import_url6 = __toModule(require("url"));
+    import_https5 = __toModule(require("https"));
+    import_zlib5 = __toModule(require("zlib"));
     import_cookie5 = __toModule(require_cookie());
     init_dist();
-    import_punycode5 = __toModule(require("punycode"));
+    import_punycode4 = __toModule(require("punycode"));
     RenderlessBoardMethods = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { dbPath } = $$props;
       let strokesArray;
@@ -115172,6 +115168,8 @@ var init_index_5dc90523 = __esm({
     RenderlessAudioRecorder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $dailyMicStream, $$unsubscribe_dailyMicStream;
       $$unsubscribe_dailyMicStream = subscribe(dailyMicStream, (value) => $dailyMicStream = value);
+      let currentTime = 0;
+      let timer;
       const dispatch2 = createEventDispatcher();
       let recorder = null;
       function startRecording() {
@@ -115183,6 +115181,7 @@ var init_index_5dc90523 = __esm({
           const micStreamCopy = $dailyMicStream.clone();
           recorder = new MediaRecorder(micStreamCopy);
           recorder.start();
+          timer = setInterval(() => currentTime += 0.1, 100);
           dispatch2("record-start");
           recordState.set("mid_record");
           resolve3();
@@ -115190,6 +115189,7 @@ var init_index_5dc90523 = __esm({
       }
       function stopRecording() {
         return new Promise((resolve3, reject) => {
+          clearTimeout(timer);
           recordState.set("post_record");
           recorder.addEventListener("dataavailable", (e) => {
             const audioBlob = e.data;
@@ -115204,7 +115204,11 @@ var init_index_5dc90523 = __esm({
         });
       }
       $$unsubscribe_dailyMicStream();
-      return `${slots.default ? slots.default({ startRecording, stopRecording }) : `
+      return `${slots.default ? slots.default({
+        startRecording,
+        stopRecording,
+        currentTime
+      }) : `
 
 `}`;
     });
@@ -115228,7 +115232,11 @@ ${slots.default ? slots.default({}) : `
     });
     Blackboard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$unsubscribe_currentTool;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
       $$unsubscribe_currentTool = subscribe(currentTool, (value) => value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
       let { strokesArray } = $$props;
       let { currentTime = 0 } = $$props;
       createEventDispatcher();
@@ -115238,15 +115246,21 @@ ${slots.default ? slots.default({}) : `
       if ($$props.currentTime === void 0 && $$bindings.currentTime && currentTime !== void 0)
         $$bindings.currentTime(currentTime);
       $$unsubscribe_currentTool();
+      $$unsubscribe_canvasHeight();
+      $$unsubscribe_canvasWidth();
       return `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
         default: () => `${slots.default ? slots.default({}) : `
 
   `}`
       })}
 
-<canvas${add_attribute("this", canvas, 0)}></canvas>`;
+<canvas${add_attribute("style", `background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`, 0)}${add_attribute("this", canvas, 0)}></canvas>`;
     });
     DoodleVideo = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $canvasHeight, $$unsubscribe_canvasHeight;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
       let { strokesArray } = $$props;
       let { audioDownloadURL } = $$props;
       let canvas;
@@ -115257,11 +115271,16 @@ ${slots.default ? slots.default({}) : `
         $$bindings.strokesArray(strokesArray);
       if ($$props.audioDownloadURL === void 0 && $$bindings.audioDownloadURL && audioDownloadURL !== void 0)
         $$bindings.audioDownloadURL(audioDownloadURL);
-      return `<canvas${add_attribute("this", canvas, 0)}></canvas>
+      $$unsubscribe_canvasHeight();
+      $$unsubscribe_canvasWidth();
+      return `${slots.default ? slots.default({}) : `
+
+`}
+<canvas${add_attribute("style", `background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`, 0)}${add_attribute("this", canvas, 0)}></canvas>
 
 <audio${add_attribute("src", audioDownloadURL, 0)} controls style="${"width: 100%;"}"${add_attribute("this", AudioPlayer, 0)}></audio>`;
     });
-    Readable2 = import_stream6.default.Readable;
+    Readable2 = import_stream5.default.Readable;
     BUFFER3 = Symbol("buffer");
     TYPE2 = Symbol("type");
     Blob5 = class {
@@ -115369,7 +115388,7 @@ ${slots.default ? slots.default({}) : `
     } catch (e) {
     }
     INTERNALS3 = Symbol("Body internals");
-    PassThrough3 = import_stream6.default.PassThrough;
+    PassThrough3 = import_stream5.default.PassThrough;
     Body3.prototype = {
       get body() {
         return this[INTERNALS3].body;
@@ -115597,7 +115616,7 @@ ${slots.default ? slots.default({}) : `
       configurable: true
     });
     INTERNALS$13 = Symbol("Response internals");
-    STATUS_CODES2 = import_http6.default.STATUS_CODES;
+    STATUS_CODES2 = import_http5.default.STATUS_CODES;
     Response3 = class {
       constructor() {
         let body = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
@@ -115666,9 +115685,9 @@ ${slots.default ? slots.default({}) : `
     });
     INTERNALS$23 = Symbol("Request internals");
     URL3 = publicApi.URL;
-    parse_url2 = import_url7.default.parse;
-    format_url2 = import_url7.default.format;
-    "destroy" in import_stream6.default.Readable.prototype;
+    parse_url2 = import_url6.default.parse;
+    format_url2 = import_url6.default.format;
+    "destroy" in import_stream5.default.Readable.prototype;
     Request3 = class {
       constructor(input) {
         let init2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
@@ -115755,8 +115774,8 @@ ${slots.default ? slots.default({}) : `
     AbortError3.prototype = Object.create(Error.prototype);
     AbortError3.prototype.constructor = AbortError3;
     AbortError3.prototype.name = "AbortError";
-    import_stream6.default.PassThrough;
-    import_url7.default.resolve;
+    import_stream5.default.PassThrough;
+    import_url6.default.resolve;
     DEFAULT_HOST2 = "firebasestorage.googleapis.com";
     CONFIG_STORAGE_BUCKET_KEY = "storageBucket";
     DEFAULT_MAX_OPERATION_RETRY_TIME = 2 * 60 * 1e3;
@@ -116157,22 +116176,22 @@ ${this.customData.serverResponse}`;
         return this._makeRequest(requestInfo, requestFactory, authToken, appCheckToken).getPromise();
       }
     };
-    name5 = "@firebase/storage";
-    version5 = "0.9.0";
+    name4 = "@firebase/storage";
+    version4 = "0.9.0";
     STORAGE_TYPE = "storage";
     registerStorage();
     U5Broomu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $user, $$unsubscribe_user;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
       let $recordState, $$unsubscribe_recordState;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       $$unsubscribe_recordState = subscribe(recordState, (value) => $recordState = value);
       let { classID } = $$props;
       let { roomID } = $$props;
       let roomDoc;
       const boardsDbPath = `classes/${classID}/blackboards/`;
       const roomsDbPath = `classes/${classID}/rooms/`;
-      let placeholderWidth;
-      let placeholderHeight;
       if (!$user.uid) {
         console.log("redirecting to tutorial");
         goto("/");
@@ -116188,14 +116207,21 @@ ${this.customData.serverResponse}`;
         updateRoomDoc();
       }
       $$unsubscribe_user();
+      $$unsubscribe_canvasHeight();
       $$unsubscribe_recordState();
       return `
 ${roomDoc ? `<div style="${"height: 100vh"}">${each(roomDoc.blackboards, (boardID) => `${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-        default: ({ boardDoc, fetchStrokes, listenToStrokes, isFetchingStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: ${placeholderWidth}px; height: ${placeholderHeight}px`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+        default: ({ boardDoc, fetchStrokes, listenToStrokes, isFetchingStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: 100%; height: ${$canvasHeight + 80}px`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
           strokesArray,
           audioDownloadURL: boardDoc.audioDownloadURL
-        }, {}, {})}` : ``}
-            </div>` : `<div${add_attribute("style", `width: ${placeholderWidth}px; height: ${placeholderHeight}px`, 0)}>${strokesArray ? `${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
+        }, {}, {
+          default: () => `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+            default: () => `Revert to board
+                  `
+          })}
+                `
+        })}` : ``}
+            </div>` : `<div${add_attribute("style", `width: 100%; height: ${$canvasHeight + 80}px`, 0)}>${strokesArray ? `${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
           default: ({ startRecording, stopRecording, currentTime }) => `${validate_component(Blackboard, "Blackboard").$$render($$result, { strokesArray, currentTime }, {}, {
             default: () => `${$recordState === "pre_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
               default: () => `Record
@@ -116220,7 +116246,7 @@ ${roomDoc ? `<div style="${"height: 100vh"}">${each(roomDoc.blackboards, (boardI
   }
 });
 
-// .svelte-kit/output/server/chunks/app-c5be8a63.js
+// .svelte-kit/output/server/chunks/app-311653dc.js
 function get_single_valued_header(headers, key) {
   const value = headers[key];
   if (Array.isArray(value)) {
@@ -116409,8 +116435,8 @@ function devalue(value) {
     var params_1 = [];
     var statements_1 = [];
     var values_1 = [];
-    names.forEach(function(name6, thing) {
-      params_1.push(name6);
+    names.forEach(function(name5, thing) {
+      params_1.push(name5);
       if (isPrimitive(thing)) {
         values_1.push(stringifyPrimitive(thing));
         return;
@@ -116431,18 +116457,18 @@ function devalue(value) {
         case "Array":
           values_1.push("Array(" + thing.length + ")");
           thing.forEach(function(v, i) {
-            statements_1.push(name6 + "[" + i + "]=" + stringify(v));
+            statements_1.push(name5 + "[" + i + "]=" + stringify(v));
           });
           break;
         case "Set":
           values_1.push("new Set");
-          statements_1.push(name6 + "." + Array.from(thing).map(function(v) {
+          statements_1.push(name5 + "." + Array.from(thing).map(function(v) {
             return "add(" + stringify(v) + ")";
           }).join("."));
           break;
         case "Map":
           values_1.push("new Map");
-          statements_1.push(name6 + "." + Array.from(thing).map(function(_a) {
+          statements_1.push(name5 + "." + Array.from(thing).map(function(_a) {
             var k = _a[0], v = _a[1];
             return "set(" + stringify(k) + ", " + stringify(v) + ")";
           }).join("."));
@@ -116450,7 +116476,7 @@ function devalue(value) {
         default:
           values_1.push(Object.getPrototypeOf(thing) === null ? "Object.create(null)" : "{}");
           Object.keys(thing).forEach(function(key) {
-            statements_1.push("" + name6 + safeProp(key) + "=" + stringify(thing[key]));
+            statements_1.push("" + name5 + safeProp(key) + "=" + stringify(thing[key]));
           });
       }
     });
@@ -116461,12 +116487,12 @@ function devalue(value) {
   }
 }
 function getName(num) {
-  var name6 = "";
+  var name5 = "";
   do {
-    name6 = chars[num % chars.length] + name6;
+    name5 = chars[num % chars.length] + name5;
     num = ~~(num / chars.length) - 1;
   } while (num >= 0);
-  return reserved.test(name6) ? name6 + "_" : name6;
+  return reserved.test(name5) ? name5 + "_" : name5;
 }
 function isPrimitive(thing) {
   return Object(thing) !== thing;
@@ -116763,8 +116789,8 @@ function serialize_error(error22) {
     return null;
   let serialized = try_serialize(error22);
   if (!serialized) {
-    const { name: name6, message, stack } = error22;
-    serialized = try_serialize({ ...error22, name: name6, message, stack });
+    const { name: name5, message, stack } = error22;
+    serialized = try_serialize({ ...error22, name: name5, message, stack });
   }
   if (!serialized) {
     serialized = "{}";
@@ -117307,15 +117333,15 @@ function get_multipart(text, boundary) {
     const headers = {};
     raw_headers.split("\r\n").forEach((str) => {
       const [raw_header, ...raw_directives] = str.split("; ");
-      let [name6, value] = raw_header.split(": ");
-      name6 = name6.toLowerCase();
-      headers[name6] = value;
+      let [name5, value] = raw_header.split(": ");
+      name5 = name5.toLowerCase();
+      headers[name5] = value;
       const directives = {};
       raw_directives.forEach((raw_directive) => {
         const [name22, value2] = raw_directive.split("=");
         directives[name22] = JSON.parse(value2);
       });
-      if (name6 === "content-disposition") {
+      if (name5 === "content-disposition") {
         if (value !== "form-data")
           throw new Error("Malformed form data");
         if (directives.filename) {
@@ -117574,17 +117600,17 @@ function spread(args, classes_to_add) {
     }
   }
   let str = "";
-  Object.keys(attributes).forEach((name6) => {
-    if (invalid_attribute_name_character.test(name6))
+  Object.keys(attributes).forEach((name5) => {
+    if (invalid_attribute_name_character.test(name5))
       return;
-    const value = attributes[name6];
+    const value = attributes[name5];
     if (value === true)
-      str += " " + name6;
-    else if (boolean_attributes.has(name6.toLowerCase())) {
+      str += " " + name5;
+    else if (boolean_attributes.has(name5.toLowerCase())) {
       if (value)
-        str += " " + name6;
+        str += " " + name5;
     } else if (value != null) {
-      str += ` ${name6}="${value}"`;
+      str += ` ${name5}="${value}"`;
     }
   });
   return str;
@@ -117609,11 +117635,11 @@ function each(items, fn) {
   }
   return str;
 }
-function validate_component(component, name6) {
+function validate_component(component, name5) {
   if (!component || !component.$$render) {
-    if (name6 === "svelte:component")
-      name6 += " this={...}";
-    throw new Error(`<${name6}> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules`);
+    if (name5 === "svelte:component")
+      name5 += " this={...}";
+    throw new Error(`<${name5}> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules`);
   }
   return component;
 }
@@ -117651,10 +117677,10 @@ function create_ssr_component(fn) {
     $$render
   };
 }
-function add_attribute(name6, value, boolean) {
+function add_attribute(name5, value, boolean) {
   if (value == null || boolean && !value)
     return "";
-  return ` ${name6}${value === true ? "" : `=${typeof value === "string" ? JSON.stringify(escape(value)) : `"${value}"`}`}`;
+  return ` ${name5}${value === true ? "" : `=${typeof value === "string" ? JSON.stringify(escape(value)) : `"${value}"`}`}`;
 }
 function afterUpdate() {
 }
@@ -117672,9 +117698,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-602b04ff.js",
+      file: assets + "/_app/start-add7a7b5.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-602b04ff.js", assets + "/_app/chunks/vendor-569078ae.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-add7a7b5.js", assets + "/_app/chunks/vendor-6cbcc546.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -117718,8 +117744,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css2, Root, base, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_c5be8a63 = __esm({
-  ".svelte-kit/output/server/chunks/app-c5be8a63.js"() {
+var init_app_311653dc = __esm({
+  ".svelte-kit/output/server/chunks/app-311653dc.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -117973,13 +117999,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_745080af(), layout_745080af_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_f7247335(), error_f7247335_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_42f686b4(), index_42f686b4_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_1240c0ab(), layout_1240c0ab_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_5dc90523(), index_5dc90523_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_4951d382(), layout_4951d382_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_5865cef5(), error_5865cef5_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_53f30dc1(), index_53f30dc1_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_15e55217(), layout_15e55217_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_aadddef0(), index_aadddef0_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-58c5b182.js", "css": ["assets/pages/__layout.svelte-68eb443a.css"], "js": ["pages/__layout.svelte-58c5b182.js", "chunks/vendor-569078ae.js", "chunks/database-66f37af8.js", "chunks/store-27550397.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-a4c78f22.js", "css": [], "js": ["error.svelte-a4c78f22.js", "chunks/vendor-569078ae.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-2f86a116.js", "css": [], "js": ["pages/index.svelte-2f86a116.js", "chunks/vendor-569078ae.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-27550397.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-49ef4e22.js", "css": ["assets/pages/_class_/__layout.svelte-12f5d01b.css"], "js": ["pages/_class_/__layout.svelte-49ef4e22.js", "chunks/vendor-569078ae.js", "chunks/store-27550397.js", "chunks/actions-f4d3704b.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-d35e036c.js", "css": [], "js": ["pages/_class_/_room_/index.svelte-d35e036c.js", "chunks/vendor-569078ae.js", "chunks/database-66f37af8.js", "chunks/store-27550397.js", "chunks/actions-f4d3704b.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-1464c7f2.js", "css": ["assets/pages/__layout.svelte-68eb443a.css"], "js": ["pages/__layout.svelte-1464c7f2.js", "chunks/vendor-6cbcc546.js", "chunks/database-07664a5b.js", "chunks/store-f9fd671f.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-b84d3e75.js", "css": [], "js": ["error.svelte-b84d3e75.js", "chunks/vendor-6cbcc546.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-722092e9.js", "css": [], "js": ["pages/index.svelte-722092e9.js", "chunks/vendor-6cbcc546.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-f9fd671f.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-a8566c28.js", "css": ["assets/pages/_class_/__layout.svelte-12f5d01b.css"], "js": ["pages/_class_/__layout.svelte-a8566c28.js", "chunks/vendor-6cbcc546.js", "chunks/store-f9fd671f.js", "chunks/canvas-dc2dc66e.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-12c6aafc.js", "css": [], "js": ["pages/_class_/_room_/index.svelte-12c6aafc.js", "chunks/vendor-6cbcc546.js", "chunks/database-07664a5b.js", "chunks/store-f9fd671f.js", "chunks/canvas-dc2dc66e.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
   }
 });
 
@@ -118032,7 +118058,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_c5be8a63();
+init_app_311653dc();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

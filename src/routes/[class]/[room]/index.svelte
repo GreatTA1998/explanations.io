@@ -11,7 +11,10 @@
 
 <!-- Lazy loading -->
 {#if roomDoc}
-	<div use:portal={'main-content'} style="height: 100vh">
+	<div use:portal={'main-content'} style="height: 100vh" class:question-room={'?' === roomDoc.name.charAt(roomDoc.name.length - 1)}>
+    <Textfield value={roomDoc.name} on:input={(e) => updateRoomName(e)} style="width: 100%">
+      
+    </Textfield>
 		{#each roomDoc.blackboards as boardID (boardID) }
 			<RenderlessBoardMethods dbPath={boardsDbPath + boardID} 
 				let:boardDoc={boardDoc}
@@ -23,6 +26,10 @@
         let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
 			>
         {#if boardDoc}
+          <Textfield textarea value={boardDoc.description || ''} on:input={(e) => updateBoardDescription(e, boardID)}>
+
+          </Textfield>
+
           {#if boardDoc.audioDownloadURL }
             <div use:lazyCallable={fetchStrokes} style={`width: 100%; height: ${$canvasHeight + 80}px`}>
               {#if strokesArray}
@@ -53,6 +60,9 @@
                     {#if $recordState === 'pre_record'}
                       <Button on:click={startRecording}>
                         Record
+                      </Button>          
+                      <Button on:click={deleteAllStrokesFromDb}>
+                        Wipe board
                       </Button>
                     {:else if $recordState === 'mid_record'}
                       <Button on:click={stopRecording}>
@@ -61,10 +71,6 @@
                     {:else}
                       Uploading...
                     {/if}
-
-                    <Button on:click={deleteAllStrokesFromDb}>
-                      Wipe board
-                    </Button>
                   </Blackboard>
                 </RenderlessAudioRecorder>
               {/if}
@@ -89,8 +95,8 @@
   import { recordState, user, canvasHeight } from '../../../store.js'
   import { getRandomID } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-  import { doc, getFirestore, updateDoc, deleteField } from '@firebase/firestore';
-  import { calculateCanvasDimensions } from '../../../helpers/canvas.js'
+  import { doc, getFirestore, updateDoc, deleteField, onSnapshot } from '@firebase/firestore';
+  import Textfield from '@smui/textfield'
 
   export let classID
   export let roomID
@@ -98,21 +104,34 @@
   let roomDoc
   const boardsDbPath = `classes/${classID}/blackboards/`
   const roomsDbPath = `classes/${classID}/rooms/`
-  let placeholderWidth
-  let placeholderHeight
+  const roomRef = doc(getFirestore(), roomsDbPath + roomID)
 
   if (!$user.uid) {
     console.log('redirecting to tutorial')
     goto('/')
   }
 
+  async function updateRoomName (e) {
+    console.log('e =', e.srcElement.value)
+    const { value } = e.srcElement
+    await updateDoc(roomRef, {
+      name: value
+    })
+  }
+
+  async function updateBoardDescription (e, id) {
+    const { value } = e.srcElement 
+    const boardRef = doc(getFirestore(), boardsDbPath + id)
+    await updateDoc(boardRef, {
+      description: value
+    })
+  }
+
   // slugify the classID if it contains '.', convert to '-' regenerate 6.036 and 6.046's class
   onMount(async () => {
-    roomDoc = await fetchDoc(roomsDbPath + roomID)
-    // quick-fix
-    const dimensions = calculateCanvasDimensions()
-    placeholderWidth = dimensions.width + 50
-    placeholderHeight = dimensions.height + 50
+    onSnapshot(roomRef, (snapshot) => {
+      roomDoc = { id: snapshot.id, ...snapshot.data() }
+    })
   })
 
   $: roomID, updateRoomDoc() 
@@ -130,13 +149,6 @@
 
     const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
     await updateDoc(blackboardRef, {
-      creatorUID: $user.uid,
-      creatorPhoneNumber: $user.phoneNumber,
-      date: new Date().toISOString(),
-      audioDownloadURL: downloadURL,
-      audioRefFullPath: audioRef.fullPath
-    })
-    console.log('updated doc =', {
       creatorUID: $user.uid,
       creatorPhoneNumber: $user.phoneNumber,
       date: new Date().toISOString(),
@@ -164,4 +176,10 @@
     await Promise.all(promises)
   }
 </script>
+
+<style>
+.question-room {
+  background-color: red;
+}
+</style>
 

@@ -13,14 +13,22 @@
 	{#if rooms}
 		<div use:portal={'side-drawer-list'}>
 			{#each rooms as room (room.id)}
-				{#if room.name }
-					<Item 
-						on:click={() => goto(`/${classID}/${room.id}`)}
-						selected={room.id === roomID}
-					>
-						{room.name}
-					</Item>
-				{/if}
+        <!-- temporary measure -->
+        {#if room.name !== undefined }
+          <Item 
+            on:click={() => goto(`/${classID}/${room.id}`)}
+            selected={room.id === roomID}
+          > 
+            {#if room.name}
+              <div class:question-item={'?' === room.name.charAt(room.name.length - 1)}>
+                {room.name}
+              </div>
+            <!-- Do not allow `null` -->
+            {:else if room.name === ''}
+              <div>(no title)</div>
+            {/if}
+          </Item>
+        {/if}
 			{/each}
 		</div>
 	{/if}
@@ -112,6 +120,12 @@
     })
   )
 </script>
+
+<style>
+  .question-item {
+    color: red;
+  }
+</style>
 
 <!-- <style>
 	main {

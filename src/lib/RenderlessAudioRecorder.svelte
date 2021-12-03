@@ -15,7 +15,7 @@
   let timer
 
   onMount(() => {
-    if (browser) {
+    if (browser && window) {
       window.MediaRecorder = AudioRecorder;
     }
   })

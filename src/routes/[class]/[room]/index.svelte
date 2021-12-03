@@ -11,11 +11,14 @@
 
 {#if roomDoc}
   <!-- Give a 5-seconds countdown UI feedback before pinging the server -->
-	<div use:portal={'main-content'} style="height: 100vh" class:question-room={'?' === roomDoc.name.charAt(roomDoc.name.length - 1)}>
-    <!-- TODO: placeholder & larger text size -->
-    <Textfield value={roomDoc.name} on:input={(e) => updateRoomName(e)} style="width: 100%; margin-bottom: 20px;">
-
+	<div use:portal={'main-content'} style="padding: 16px;" class:question={'?' === roomDoc.name.charAt(roomDoc.name.length - 1)}>
+    
+    <Textfield 
+      value={roomDoc.name} on:input={(e) => updateRoomName(e)}
+      class={`room-title`} 
+      style="width: 100%; margin-bottom: 20px;">
     </Textfield>
+
 		{#each roomDoc.blackboards as boardID (boardID) }
 			<RenderlessBoardMethods dbPath={boardsDbPath + boardID} 
 				let:boardDoc={boardDoc}
@@ -26,9 +29,11 @@
         let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
 			>
         {#if boardDoc}
-          <Textfield textarea value={boardDoc.description || ''} on:input={(e) => updateBoardDescription(e, boardID)} style="width: 100%; margin-bottom: 10px">
+          {#if strokesArray}
+            <Textfield textarea value={boardDoc.description || ''} on:input={(e) => updateBoardDescription(e, boardID)} style="width: 100%; margin-bottom: 10px">
 
-          </Textfield>
+            </Textfield>
+          {/if}
 
           {#if boardDoc.audioDownloadURL }
             <div use:lazyCallable={fetchStrokes} style={`width: 100%; height: ${$canvasHeight + 80}px`}>
@@ -169,8 +174,12 @@
 </script>
 
 <style>
-.question-room {
-  background-color: red;
+:global(.room-title input) {
+  font-size: 2rem;
+}
+
+:global(.question input) {
+  color: red !important;
 }
 </style>
 

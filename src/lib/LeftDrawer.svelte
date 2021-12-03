@@ -1,8 +1,9 @@
 <div class="drawer-container">
-  <Drawer>
+  
+  <Drawer style="overflow-y: scroll; height: 100%;">
     <Content>
       <div class="card-container">
-        <Card padded>
+        <Card padded style="padding-top: 0; padding-bottom: 0">
           <div style="display: flex; align-items: center">
             <img src="/logo.png" width="55" height="50" alt="web-logo">
             {#if $user}
@@ -25,8 +26,8 @@
   </Drawer>
  
   <AppContent class="app-content">
-    <main class="main-content">
-      <div id="main-content" style="height: 100vh">
+    <main class="main-content" style="padding: 0">
+      <div id="main-content" style="height: 100vh;">
         
       </div>
     </main>

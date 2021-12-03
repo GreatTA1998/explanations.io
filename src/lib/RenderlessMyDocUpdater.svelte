@@ -16,11 +16,10 @@
   let onDisconnectRef
   let unsubIsConnected
   let isFirestoreDocCreated
-  let myName = `Beaver ${Math.floor(Math.random()*(999-100+1)+100)}`
+  let myName = `Beaver #${Math.floor(Math.random()*(999-100+1)+100)}`
 
   $: if (isFirestoreDocCreated) {
     // react to `roomID` changes]
-    console.log('roomID changed =', roomID)
     setDoc(myFirestoreRef, {
       uid: $user.uid,
       currentRoomID: roomID,

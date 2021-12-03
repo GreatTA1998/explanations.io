@@ -1,5 +1,5 @@
 {#if !$hasFetchedUser}
-  <h3>Fetching user data...</h3>
+  <h3 style="margin-left: 10px;">Fetching user data...</h3>
 {:else}
   <slot>
 

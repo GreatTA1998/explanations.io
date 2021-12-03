@@ -15,27 +15,34 @@
 	{#if rooms}
 		<div use:portal={'side-drawer-list'}>
 			{#each rooms as room ('room' + room.id)}
-        <!-- temporary measure -->
+        <!-- TODO: room.name can't be undefined, AF('') better -->
         {#if room.name !== undefined }
-          <Item 
+          <!-- <Item 
             on:click={() => goto(`/${classID}/${room.id}`)}
             selected={room.id === roomID}
-          > 
-            {#if room.name}
-              <div class:question-item={'?' === room.name.charAt(room.name.length - 1)}>
-                {room.name}
-              </div>
-              
-            {:else if room.name === ''}
-              <div>(no title)</div>
-            {/if}
+          >  -->
+          <div on:click={() => goto(`/${classID}/${room.id}`)}
+            class:selected={room.id === roomID} 
+            style="padding: 10px"
+          >
+            <div>
+              {#if room.name}
+                <div class:question-item={'?' === room.name.charAt(room.name.length - 1)}>
+                  {room.name}
+                </div>
+                
+              {:else if room.name === ''}
+                <div>(no title)</div>
+              {/if}
 
-            {#if $roomToPeople[room.id]}
-              {#each $roomToPeople[room.id] as person ('person' + person.uid)}
-                <div>{person.name}</div>
-              {/each}
-            {/if}
-          </Item>
+              {#if $roomToPeople[room.id]}
+                {#each $roomToPeople[room.id] as person ('person' + person.uid)}
+                  <div style="font-size: 0.7rem; margin-left: 4px;">{person.name}</div>
+                {/each}
+              {/if}
+            </div>
+          </div>
+          <!-- </Item> -->
         {/if}
 			{/each}
 		</div>
@@ -161,6 +168,10 @@
 <style>
   .question-item {
     color: red;
+  }
+
+  .selected {
+    background-color:rgb(136, 233, 233);
   }
 </style>
 

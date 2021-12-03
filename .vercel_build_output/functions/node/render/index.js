@@ -13,8 +13,8 @@ var __commonJS = (cb, mod2) => function __require() {
 };
 var __export = (target, all) => {
   __markAsModule(target);
-  for (var name5 in all)
-    __defProp(target, name5, { get: all[name5], enumerable: true });
+  for (var name7 in all)
+    __defProp(target, name7, { get: all[name7], enumerable: true });
 };
 var __reExport = (target, module3, desc) => {
   if (module3 && typeof module3 === "object" || typeof module3 === "function") {
@@ -96,10 +96,10 @@ async function* toIterator(parts, clone4 = true) {
 function isFormData(object) {
   return typeof object === "object" && typeof object.append === "function" && typeof object.set === "function" && typeof object.get === "function" && typeof object.getAll === "function" && typeof object.delete === "function" && typeof object.keys === "function" && typeof object.values === "function" && typeof object.entries === "function" && typeof object.constructor === "function" && object[NAME] === "FormData";
 }
-function getHeader(boundary, name5, field) {
+function getHeader(boundary, name7, field) {
   let header = "";
   header += `${dashes}${boundary}${carriage}`;
-  header += `Content-Disposition: form-data; name="${name5}"`;
+  header += `Content-Disposition: form-data; name="${name7}"`;
   if (isBlob(field)) {
     header += `; filename="${field.name}"${carriage}`;
     header += `Content-Type: ${field.type || "application/octet-stream"}`;
@@ -107,8 +107,8 @@ function getHeader(boundary, name5, field) {
   return `${header}${carriage.repeat(2)}`;
 }
 async function* formDataIterator(form, boundary) {
-  for (const [name5, value] of form) {
-    yield getHeader(boundary, name5, value);
+  for (const [name7, value] of form) {
+    yield getHeader(boundary, name7, value);
     if (isBlob(value)) {
       yield* value.stream();
     } else {
@@ -120,8 +120,8 @@ async function* formDataIterator(form, boundary) {
 }
 function getFormDataLength(form, boundary) {
   let length = 0;
-  for (const [name5, value] of form) {
-    length += Buffer.byteLength(getHeader(boundary, name5, value));
+  for (const [name7, value] of form) {
+    length += Buffer.byteLength(getHeader(boundary, name7, value));
     length += isBlob(value) ? value.size : Buffer.byteLength(String(value));
     length += carriageLength;
   }
@@ -154,15 +154,15 @@ async function consumeBody(data) {
   try {
     for await (const chunk of body) {
       if (data.size > 0 && accumBytes + chunk.length > data.size) {
-        const error3 = new FetchError(`content size at ${data.url} over limit: ${data.size}`, "max-size");
-        body.destroy(error3);
-        throw error3;
+        const error4 = new FetchError(`content size at ${data.url} over limit: ${data.size}`, "max-size");
+        body.destroy(error4);
+        throw error4;
       }
       accumBytes += chunk.length;
       accum.push(chunk);
     }
-  } catch (error3) {
-    const error_ = error3 instanceof FetchBaseError ? error3 : new FetchError(`Invalid response body while trying to fetch ${data.url}: ${error3.message}`, "system", error3);
+  } catch (error4) {
+    const error_ = error4 instanceof FetchBaseError ? error4 : new FetchError(`Invalid response body while trying to fetch ${data.url}: ${error4.message}`, "system", error4);
     throw error_;
   }
   if (body.readableEnded === true || body._readableState.ended === true) {
@@ -171,35 +171,35 @@ async function consumeBody(data) {
         return Buffer.from(accum.join(""));
       }
       return Buffer.concat(accum, accumBytes);
-    } catch (error3) {
-      throw new FetchError(`Could not create Buffer from response body for ${data.url}: ${error3.message}`, "system", error3);
+    } catch (error4) {
+      throw new FetchError(`Could not create Buffer from response body for ${data.url}: ${error4.message}`, "system", error4);
     }
   } else {
     throw new FetchError(`Premature close of server response while trying to fetch ${data.url}`);
   }
 }
-function fromRawHeaders(headers = []) {
-  return new Headers(headers.reduce((result, value, index, array) => {
+function fromRawHeaders(headers2 = []) {
+  return new Headers(headers2.reduce((result, value, index, array) => {
     if (index % 2 === 0) {
       result.push(array.slice(index, index + 2));
     }
     return result;
-  }, []).filter(([name5, value]) => {
+  }, []).filter(([name7, value]) => {
     try {
-      validateHeaderName(name5);
-      validateHeaderValue(name5, String(value));
+      validateHeaderName(name7);
+      validateHeaderValue(name7, String(value));
       return true;
     } catch {
       return false;
     }
   }));
 }
-async function fetch(url, options_) {
+async function fetch(url2, options_) {
   return new Promise((resolve3, reject) => {
-    const request = new Request(url, options_);
+    const request = new Request(url2, options_);
     const options2 = getNodeRequestOptions(request);
     if (!supportedSchemas.has(options2.protocol)) {
-      throw new TypeError(`node-fetch cannot load ${url}. URL scheme "${options2.protocol.replace(/:$/, "")}" is not supported.`);
+      throw new TypeError(`node-fetch cannot load ${url2}. URL scheme "${options2.protocol.replace(/:$/, "")}" is not supported.`);
     }
     if (options2.protocol === "data:") {
       const data = dataUriToBuffer$1(request.url);
@@ -211,15 +211,15 @@ async function fetch(url, options_) {
     const { signal } = request;
     let response = null;
     const abort = () => {
-      const error3 = new AbortError("The operation was aborted.");
-      reject(error3);
+      const error4 = new AbortError("The operation was aborted.");
+      reject(error4);
       if (request.body && request.body instanceof import_stream.default.Readable) {
-        request.body.destroy(error3);
+        request.body.destroy(error4);
       }
       if (!response || !response.body) {
         return;
       }
-      response.body.emit("error", error3);
+      response.body.emit("error", error4);
     };
     if (signal && signal.aborted) {
       abort();
@@ -239,12 +239,12 @@ async function fetch(url, options_) {
         signal.removeEventListener("abort", abortAndFinalize);
       }
     };
-    request_.on("error", (error3) => {
-      reject(new FetchError(`request to ${request.url} failed, reason: ${error3.message}`, "system", error3));
+    request_.on("error", (error4) => {
+      reject(new FetchError(`request to ${request.url} failed, reason: ${error4.message}`, "system", error4));
       finalize();
     });
-    fixResponseChunkedTransferBadEnding(request_, (error3) => {
-      response.body.destroy(error3);
+    fixResponseChunkedTransferBadEnding(request_, (error4) => {
+      response.body.destroy(error4);
     });
     if (process.version < "v14") {
       request_.on("socket", (s2) => {
@@ -254,19 +254,19 @@ async function fetch(url, options_) {
         });
         s2.prependListener("close", (hadError) => {
           if (response && endedWithEventsCount < s2._eventsCount && !hadError) {
-            const error3 = new Error("Premature close");
-            error3.code = "ERR_STREAM_PREMATURE_CLOSE";
-            response.body.emit("error", error3);
+            const error4 = new Error("Premature close");
+            error4.code = "ERR_STREAM_PREMATURE_CLOSE";
+            response.body.emit("error", error4);
           }
         });
       });
     }
     request_.on("response", (response_) => {
       request_.setTimeout(0);
-      const headers = fromRawHeaders(response_.rawHeaders);
+      const headers2 = fromRawHeaders(response_.rawHeaders);
       if (isRedirect(response_.statusCode)) {
-        const location = headers.get("Location");
-        const locationURL = location === null ? null : new URL(location, request.url);
+        const location2 = headers2.get("Location");
+        const locationURL = location2 === null ? null : new URL(location2, request.url);
         switch (request.redirect) {
           case "error":
             reject(new FetchError(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
@@ -274,7 +274,7 @@ async function fetch(url, options_) {
             return;
           case "manual":
             if (locationURL !== null) {
-              headers.set("Location", locationURL);
+              headers2.set("Location", locationURL);
             }
             break;
           case "follow": {
@@ -328,12 +328,12 @@ async function fetch(url, options_) {
         url: request.url,
         status: response_.statusCode,
         statusText: response_.statusMessage,
-        headers,
+        headers: headers2,
         size: request.size,
         counter: request.counter,
         highWaterMark: request.highWaterMark
       };
-      const codings = headers.get("Content-Encoding");
+      const codings = headers2.get("Content-Encoding");
       if (!request.compress || request.method === "HEAD" || codings === null || response_.statusCode === 204 || response_.statusCode === 304) {
         response = new Response(body, responseOptions);
         resolve3(response);
@@ -376,15 +376,15 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
   let properLastChunkReceived = false;
   let previousChunk;
   request.on("response", (response) => {
-    const { headers } = response;
-    isChunkedTransfer = headers["transfer-encoding"] === "chunked" && !headers["content-length"];
+    const { headers: headers2 } = response;
+    isChunkedTransfer = headers2["transfer-encoding"] === "chunked" && !headers2["content-length"];
   });
   request.on("socket", (socket) => {
     const onSocketClose = () => {
       if (isChunkedTransfer && !properLastChunkReceived) {
-        const error3 = new Error("Premature close");
-        error3.code = "ERR_STREAM_PREMATURE_CLOSE";
-        errorCallback(error3);
+        const error4 = new Error("Premature close");
+        error4.code = "ERR_STREAM_PREMATURE_CLOSE";
+        errorCallback(error4);
       }
     };
     socket.prependListener("close", onSocketClose);
@@ -588,8 +588,8 @@ var init_install_fetch = __esm({
           reader._ownerReadableStream._reader = void 0;
           reader._ownerReadableStream = void 0;
         }
-        function readerLockException(name5) {
-          return new TypeError("Cannot " + name5 + " a stream using a released reader");
+        function readerLockException(name7) {
+          return new TypeError("Cannot " + name7 + " a stream using a released reader");
         }
         function defaultReaderClosedPromiseInitialize(reader) {
           reader._closedPromise = newPromise((resolve3, reject) => {
@@ -816,8 +816,8 @@ var init_install_fetch = __esm({
             stream._readableStreamController[PullSteps](readRequest);
           }
         }
-        function defaultReaderBrandCheckException(name5) {
-          return new TypeError(`ReadableStreamDefaultReader.prototype.${name5} can only be used on a ReadableStreamDefaultReader`);
+        function defaultReaderBrandCheckException(name7) {
+          return new TypeError(`ReadableStreamDefaultReader.prototype.${name7} can only be used on a ReadableStreamDefaultReader`);
         }
         const AsyncIteratorPrototype = Object.getPrototypeOf(Object.getPrototypeOf(async function* () {
         }).prototype);
@@ -927,8 +927,8 @@ var init_install_fetch = __esm({
             return false;
           }
         }
-        function streamAsyncIteratorBrandCheckException(name5) {
-          return new TypeError(`ReadableStreamAsyncIterator.${name5} can only be used on a ReadableSteamAsyncIterator`);
+        function streamAsyncIteratorBrandCheckException(name7) {
+          return new TypeError(`ReadableStreamAsyncIterator.${name7} can only be used on a ReadableSteamAsyncIterator`);
         }
         const NumberIsNaN = Number.isNaN || function(x) {
           return x !== x;
@@ -1564,11 +1564,11 @@ var init_install_fetch = __esm({
           request._associatedReadableByteStreamController = controller;
           request._view = view;
         }
-        function byobRequestBrandCheckException(name5) {
-          return new TypeError(`ReadableStreamBYOBRequest.prototype.${name5} can only be used on a ReadableStreamBYOBRequest`);
+        function byobRequestBrandCheckException(name7) {
+          return new TypeError(`ReadableStreamBYOBRequest.prototype.${name7} can only be used on a ReadableStreamBYOBRequest`);
         }
-        function byteStreamControllerBrandCheckException(name5) {
-          return new TypeError(`ReadableByteStreamController.prototype.${name5} can only be used on a ReadableByteStreamController`);
+        function byteStreamControllerBrandCheckException(name7) {
+          return new TypeError(`ReadableByteStreamController.prototype.${name7} can only be used on a ReadableByteStreamController`);
         }
         function AcquireReadableStreamBYOBReader(stream) {
           return new ReadableStreamBYOBReader(stream);
@@ -1701,8 +1701,8 @@ var init_install_fetch = __esm({
             ReadableByteStreamControllerPullInto(stream._readableStreamController, view, readIntoRequest);
           }
         }
-        function byobReaderBrandCheckException(name5) {
-          return new TypeError(`ReadableStreamBYOBReader.prototype.${name5} can only be used on a ReadableStreamBYOBReader`);
+        function byobReaderBrandCheckException(name7) {
+          return new TypeError(`ReadableStreamBYOBReader.prototype.${name7} can only be used on a ReadableStreamBYOBReader`);
         }
         function ExtractHighWaterMark(strategy, defaultHWM) {
           const { highWaterMark } = strategy;
@@ -1951,10 +1951,10 @@ var init_install_fetch = __esm({
           });
           return promise;
         }
-        function WritableStreamDealWithRejection(stream, error3) {
+        function WritableStreamDealWithRejection(stream, error4) {
           const state = stream._state;
           if (state === "writable") {
-            WritableStreamStartErroring(stream, error3);
+            WritableStreamStartErroring(stream, error4);
             return;
           }
           WritableStreamFinishErroring(stream);
@@ -2003,10 +2003,10 @@ var init_install_fetch = __esm({
           stream._inFlightWriteRequest._resolve(void 0);
           stream._inFlightWriteRequest = void 0;
         }
-        function WritableStreamFinishInFlightWriteWithError(stream, error3) {
-          stream._inFlightWriteRequest._reject(error3);
+        function WritableStreamFinishInFlightWriteWithError(stream, error4) {
+          stream._inFlightWriteRequest._reject(error4);
           stream._inFlightWriteRequest = void 0;
-          WritableStreamDealWithRejection(stream, error3);
+          WritableStreamDealWithRejection(stream, error4);
         }
         function WritableStreamFinishInFlightClose(stream) {
           stream._inFlightCloseRequest._resolve(void 0);
@@ -2025,14 +2025,14 @@ var init_install_fetch = __esm({
             defaultWriterClosedPromiseResolve(writer);
           }
         }
-        function WritableStreamFinishInFlightCloseWithError(stream, error3) {
-          stream._inFlightCloseRequest._reject(error3);
+        function WritableStreamFinishInFlightCloseWithError(stream, error4) {
+          stream._inFlightCloseRequest._reject(error4);
           stream._inFlightCloseRequest = void 0;
           if (stream._pendingAbortRequest !== void 0) {
-            stream._pendingAbortRequest._reject(error3);
+            stream._pendingAbortRequest._reject(error4);
             stream._pendingAbortRequest = void 0;
           }
-          WritableStreamDealWithRejection(stream, error3);
+          WritableStreamDealWithRejection(stream, error4);
         }
         function WritableStreamCloseQueuedOrInFlight(stream) {
           if (stream._closeRequest === void 0 && stream._inFlightCloseRequest === void 0) {
@@ -2209,18 +2209,18 @@ var init_install_fetch = __esm({
           }
           return WritableStreamDefaultWriterClose(writer);
         }
-        function WritableStreamDefaultWriterEnsureClosedPromiseRejected(writer, error3) {
+        function WritableStreamDefaultWriterEnsureClosedPromiseRejected(writer, error4) {
           if (writer._closedPromiseState === "pending") {
-            defaultWriterClosedPromiseReject(writer, error3);
+            defaultWriterClosedPromiseReject(writer, error4);
           } else {
-            defaultWriterClosedPromiseResetToRejected(writer, error3);
+            defaultWriterClosedPromiseResetToRejected(writer, error4);
           }
         }
-        function WritableStreamDefaultWriterEnsureReadyPromiseRejected(writer, error3) {
+        function WritableStreamDefaultWriterEnsureReadyPromiseRejected(writer, error4) {
           if (writer._readyPromiseState === "pending") {
-            defaultWriterReadyPromiseReject(writer, error3);
+            defaultWriterReadyPromiseReject(writer, error4);
           } else {
-            defaultWriterReadyPromiseResetToRejected(writer, error3);
+            defaultWriterReadyPromiseResetToRejected(writer, error4);
           }
         }
         function WritableStreamDefaultWriterGetDesiredSize(writer) {
@@ -2424,9 +2424,9 @@ var init_install_fetch = __esm({
             WritableStreamDefaultControllerProcessWrite(controller, value);
           }
         }
-        function WritableStreamDefaultControllerErrorIfNeeded(controller, error3) {
+        function WritableStreamDefaultControllerErrorIfNeeded(controller, error4) {
           if (controller._controlledWritableStream._state === "writable") {
-            WritableStreamDefaultControllerError(controller, error3);
+            WritableStreamDefaultControllerError(controller, error4);
           }
         }
         function WritableStreamDefaultControllerProcessClose(controller) {
@@ -2465,22 +2465,22 @@ var init_install_fetch = __esm({
           const desiredSize = WritableStreamDefaultControllerGetDesiredSize(controller);
           return desiredSize <= 0;
         }
-        function WritableStreamDefaultControllerError(controller, error3) {
+        function WritableStreamDefaultControllerError(controller, error4) {
           const stream = controller._controlledWritableStream;
           WritableStreamDefaultControllerClearAlgorithms(controller);
-          WritableStreamStartErroring(stream, error3);
+          WritableStreamStartErroring(stream, error4);
         }
-        function streamBrandCheckException$2(name5) {
-          return new TypeError(`WritableStream.prototype.${name5} can only be used on a WritableStream`);
+        function streamBrandCheckException$2(name7) {
+          return new TypeError(`WritableStream.prototype.${name7} can only be used on a WritableStream`);
         }
-        function defaultControllerBrandCheckException$2(name5) {
-          return new TypeError(`WritableStreamDefaultController.prototype.${name5} can only be used on a WritableStreamDefaultController`);
+        function defaultControllerBrandCheckException$2(name7) {
+          return new TypeError(`WritableStreamDefaultController.prototype.${name7} can only be used on a WritableStreamDefaultController`);
         }
-        function defaultWriterBrandCheckException(name5) {
-          return new TypeError(`WritableStreamDefaultWriter.prototype.${name5} can only be used on a WritableStreamDefaultWriter`);
+        function defaultWriterBrandCheckException(name7) {
+          return new TypeError(`WritableStreamDefaultWriter.prototype.${name7} can only be used on a WritableStreamDefaultWriter`);
         }
-        function defaultWriterLockException(name5) {
-          return new TypeError("Cannot " + name5 + " a stream using a released writer");
+        function defaultWriterLockException(name7) {
+          return new TypeError("Cannot " + name7 + " a stream using a released writer");
         }
         function defaultWriterClosedPromiseInitialize(writer) {
           writer._closedPromise = newPromise((resolve3, reject) => {
@@ -2572,9 +2572,9 @@ var init_install_fetch = __esm({
           }
         }
         function createDOMExceptionPolyfill() {
-          const ctor = function DOMException2(message, name5) {
-            this.message = message || "";
-            this.name = name5 || "Error";
+          const ctor = function DOMException2(message2, name7) {
+            this.message = message2 || "";
+            this.name = name7 || "Error";
             if (Error.captureStackTrace) {
               Error.captureStackTrace(this, this.constructor);
             }
@@ -2594,12 +2594,12 @@ var init_install_fetch = __esm({
             let abortAlgorithm;
             if (signal !== void 0) {
               abortAlgorithm = () => {
-                const error3 = new DOMException$1("Aborted", "AbortError");
+                const error4 = new DOMException$1("Aborted", "AbortError");
                 const actions = [];
                 if (!preventAbort) {
                   actions.push(() => {
                     if (dest._state === "writable") {
-                      return WritableStreamAbort(dest, error3);
+                      return WritableStreamAbort(dest, error4);
                     }
                     return promiseResolvedWith(void 0);
                   });
@@ -2607,12 +2607,12 @@ var init_install_fetch = __esm({
                 if (!preventCancel) {
                   actions.push(() => {
                     if (source._state === "readable") {
-                      return ReadableStreamCancel(source, error3);
+                      return ReadableStreamCancel(source, error4);
                     }
                     return promiseResolvedWith(void 0);
                   });
                 }
-                shutdownWithAction(() => Promise.all(actions.map((action) => action())), true, error3);
+                shutdownWithAction(() => Promise.all(actions.map((action) => action())), true, error4);
               };
               if (signal.aborted) {
                 abortAlgorithm();
@@ -2711,25 +2711,25 @@ var init_install_fetch = __esm({
                 uponPromise(action(), () => finalize(originalIsError, originalError), (newError) => finalize(true, newError));
               }
             }
-            function shutdown(isError, error3) {
+            function shutdown(isError, error4) {
               if (shuttingDown) {
                 return;
               }
               shuttingDown = true;
               if (dest._state === "writable" && !WritableStreamCloseQueuedOrInFlight(dest)) {
-                uponFulfillment(waitForWritesToFinish(), () => finalize(isError, error3));
+                uponFulfillment(waitForWritesToFinish(), () => finalize(isError, error4));
               } else {
-                finalize(isError, error3);
+                finalize(isError, error4);
               }
             }
-            function finalize(isError, error3) {
+            function finalize(isError, error4) {
               WritableStreamDefaultWriterRelease(writer);
               ReadableStreamReaderGenericRelease(reader);
               if (signal !== void 0) {
                 signal.removeEventListener("abort", abortAlgorithm);
               }
               if (isError) {
-                reject(error3);
+                reject(error4);
               } else {
                 resolve3(void 0);
               }
@@ -2962,8 +2962,8 @@ var init_install_fetch = __esm({
           }
           SetUpReadableStreamDefaultController(stream, controller, startAlgorithm, pullAlgorithm, cancelAlgorithm, highWaterMark, sizeAlgorithm);
         }
-        function defaultControllerBrandCheckException$1(name5) {
-          return new TypeError(`ReadableStreamDefaultController.prototype.${name5} can only be used on a ReadableStreamDefaultController`);
+        function defaultControllerBrandCheckException$1(name7) {
+          return new TypeError(`ReadableStreamDefaultController.prototype.${name7} can only be used on a ReadableStreamDefaultController`);
         }
         function ReadableStreamTee(stream, cloneForBranch2) {
           if (IsReadableByteStreamController(stream._readableStreamController)) {
@@ -3547,8 +3547,8 @@ var init_install_fetch = __esm({
             reader._readIntoRequests = new SimpleQueue();
           }
         }
-        function streamBrandCheckException$1(name5) {
-          return new TypeError(`ReadableStream.prototype.${name5} can only be used on a ReadableStream`);
+        function streamBrandCheckException$1(name7) {
+          return new TypeError(`ReadableStream.prototype.${name7} can only be used on a ReadableStream`);
         }
         function convertQueuingStrategyInit(init2, context2) {
           assertDictionary(init2, context2);
@@ -3594,8 +3594,8 @@ var init_install_fetch = __esm({
             configurable: true
           });
         }
-        function byteLengthBrandCheckException(name5) {
-          return new TypeError(`ByteLengthQueuingStrategy.prototype.${name5} can only be used on a ByteLengthQueuingStrategy`);
+        function byteLengthBrandCheckException(name7) {
+          return new TypeError(`ByteLengthQueuingStrategy.prototype.${name7} can only be used on a ByteLengthQueuingStrategy`);
         }
         function IsByteLengthQueuingStrategy(x) {
           if (!typeIsObject(x)) {
@@ -3642,8 +3642,8 @@ var init_install_fetch = __esm({
             configurable: true
           });
         }
-        function countBrandCheckException(name5) {
-          return new TypeError(`CountQueuingStrategy.prototype.${name5} can only be used on a CountQueuingStrategy`);
+        function countBrandCheckException(name7) {
+          return new TypeError(`CountQueuingStrategy.prototype.${name7} can only be used on a CountQueuingStrategy`);
         }
         function IsCountQueuingStrategy(x) {
           if (!typeIsObject(x)) {
@@ -3902,8 +3902,8 @@ var init_install_fetch = __esm({
           const stream = controller._controlledTransformStream;
           const readableController = stream._readable._readableStreamController;
           ReadableStreamDefaultControllerClose(readableController);
-          const error3 = new TypeError("TransformStream terminated");
-          TransformStreamErrorWritableAndUnblockWrite(stream, error3);
+          const error4 = new TypeError("TransformStream terminated");
+          TransformStreamErrorWritableAndUnblockWrite(stream, error4);
         }
         function TransformStreamDefaultSinkWriteAlgorithm(stream, chunk) {
           const controller = stream._transformStreamController;
@@ -3943,11 +3943,11 @@ var init_install_fetch = __esm({
           TransformStreamSetBackpressure(stream, false);
           return stream._backpressureChangePromise;
         }
-        function defaultControllerBrandCheckException(name5) {
-          return new TypeError(`TransformStreamDefaultController.prototype.${name5} can only be used on a TransformStreamDefaultController`);
+        function defaultControllerBrandCheckException(name7) {
+          return new TypeError(`TransformStreamDefaultController.prototype.${name7} can only be used on a TransformStreamDefaultController`);
         }
-        function streamBrandCheckException(name5) {
-          return new TypeError(`TransformStream.prototype.${name5} can only be used on a TransformStream`);
+        function streamBrandCheckException(name7) {
+          return new TypeError(`TransformStream.prototype.${name7} can only be used on a TransformStream`);
         }
         exports3.ByteLengthQueuingStrategy = ByteLengthQueuingStrategy;
         exports3.CountQueuingStrategy = CountQueuingStrategy;
@@ -3975,18 +3975,18 @@ var init_install_fetch = __esm({
           };
           Object.assign(globalThis, require("node:stream/web"));
           process2.emitWarning = emitWarning;
-        } catch (error3) {
+        } catch (error4) {
           process2.emitWarning = emitWarning;
-          throw error3;
+          throw error4;
         }
-      } catch (error3) {
+      } catch (error4) {
         Object.assign(globalThis, ponyfill_es2018.exports);
       }
     }
     try {
       const { Blob: Blob6 } = require("buffer");
       if (Blob6 && !Blob6.prototype.stream) {
-        Blob6.prototype.stream = function name5(params) {
+        Blob6.prototype.stream = function name7(params) {
           let position = 0;
           const blob = this;
           return new ReadableStream({
@@ -4003,7 +4003,7 @@ var init_install_fetch = __esm({
           });
         };
       }
-    } catch (error3) {
+    } catch (error4) {
     }
     POOL_SIZE = 65536;
     _Blob = class Blob2 {
@@ -4127,8 +4127,8 @@ var init_install_fetch = __esm({
     Blob3 = _Blob;
     Blob$1 = Blob3;
     FetchBaseError = class extends Error {
-      constructor(message, type) {
-        super(message);
+      constructor(message2, type) {
+        super(message2);
         Error.captureStackTrace(this, this.constructor);
         this.type = type;
       }
@@ -4140,8 +4140,8 @@ var init_install_fetch = __esm({
       }
     };
     FetchError = class extends FetchBaseError {
-      constructor(message, type, systemError) {
-        super(message, type);
+      constructor(message2, type, systemError) {
+        super(message2, type);
         if (systemError) {
           this.code = this.errno = systemError.code;
           this.erroredSysCall = systemError.syscall;
@@ -4198,8 +4198,8 @@ var init_install_fetch = __esm({
         this.size = size;
         if (body instanceof import_stream.default) {
           body.on("error", (error_) => {
-            const error3 = error_ instanceof FetchBaseError ? error_ : new FetchError(`Invalid response body while trying to fetch ${this.url}: ${error_.message}`, "system", error_);
-            this[INTERNALS$2].error = error3;
+            const error4 = error_ instanceof FetchBaseError ? error_ : new FetchError(`Invalid response body while trying to fetch ${this.url}: ${error_.message}`, "system", error_);
+            this[INTERNALS$2].error = error4;
           });
         }
       }
@@ -4240,11 +4240,11 @@ var init_install_fetch = __esm({
       json: { enumerable: true },
       text: { enumerable: true }
     });
-    clone = (instance, highWaterMark) => {
+    clone = (instance2, highWaterMark) => {
       let p1;
       let p2;
-      let { body } = instance;
-      if (instance.bodyUsed) {
+      let { body } = instance2;
+      if (instance2.bodyUsed) {
         throw new Error("cannot clone body after it is used");
       }
       if (body instanceof import_stream.default && typeof body.getBoundary !== "function") {
@@ -4252,7 +4252,7 @@ var init_install_fetch = __esm({
         p2 = new import_stream.PassThrough({ highWaterMark });
         body.pipe(p1);
         body.pipe(p2);
-        instance[INTERNALS$2].body = p1;
+        instance2[INTERNALS$2].body = p1;
         body = p2;
       }
       return body;
@@ -4315,18 +4315,18 @@ var init_install_fetch = __esm({
         body.pipe(dest);
       }
     };
-    validateHeaderName = typeof import_http.default.validateHeaderName === "function" ? import_http.default.validateHeaderName : (name5) => {
-      if (!/^[\^`\-\w!#$%&'*+.|~]+$/.test(name5)) {
-        const error3 = new TypeError(`Header name must be a valid HTTP token [${name5}]`);
-        Object.defineProperty(error3, "code", { value: "ERR_INVALID_HTTP_TOKEN" });
-        throw error3;
+    validateHeaderName = typeof import_http.default.validateHeaderName === "function" ? import_http.default.validateHeaderName : (name7) => {
+      if (!/^[\^`\-\w!#$%&'*+.|~]+$/.test(name7)) {
+        const error4 = new TypeError(`Header name must be a valid HTTP token [${name7}]`);
+        Object.defineProperty(error4, "code", { value: "ERR_INVALID_HTTP_TOKEN" });
+        throw error4;
       }
     };
-    validateHeaderValue = typeof import_http.default.validateHeaderValue === "function" ? import_http.default.validateHeaderValue : (name5, value) => {
+    validateHeaderValue = typeof import_http.default.validateHeaderValue === "function" ? import_http.default.validateHeaderValue : (name7, value) => {
       if (/[^\t\u0020-\u007E\u0080-\u00FF]/.test(value)) {
-        const error3 = new TypeError(`Invalid character in header content ["${name5}"]`);
-        Object.defineProperty(error3, "code", { value: "ERR_INVALID_CHAR" });
-        throw error3;
+        const error4 = new TypeError(`Invalid character in header content ["${name7}"]`);
+        Object.defineProperty(error4, "code", { value: "ERR_INVALID_CHAR" });
+        throw error4;
       }
     };
     Headers = class extends URLSearchParams {
@@ -4334,8 +4334,8 @@ var init_install_fetch = __esm({
         let result = [];
         if (init2 instanceof Headers) {
           const raw = init2.raw();
-          for (const [name5, values] of Object.entries(raw)) {
-            result.push(...values.map((value) => [name5, value]));
+          for (const [name7, values] of Object.entries(raw)) {
+            result.push(...values.map((value) => [name7, value]));
           }
         } else if (init2 == null)
           ;
@@ -4362,10 +4362,10 @@ var init_install_fetch = __esm({
         } else {
           throw new TypeError("Failed to construct 'Headers': The provided value is not of type '(sequence<sequence<ByteString>> or record<ByteString, ByteString>)");
         }
-        result = result.length > 0 ? result.map(([name5, value]) => {
-          validateHeaderName(name5);
-          validateHeaderValue(name5, String(value));
-          return [String(name5).toLowerCase(), String(value)];
+        result = result.length > 0 ? result.map(([name7, value]) => {
+          validateHeaderName(name7);
+          validateHeaderValue(name7, String(value));
+          return [String(name7).toLowerCase(), String(value)];
         }) : void 0;
         super(result);
         return new Proxy(this, {
@@ -4373,17 +4373,17 @@ var init_install_fetch = __esm({
             switch (p) {
               case "append":
               case "set":
-                return (name5, value) => {
-                  validateHeaderName(name5);
-                  validateHeaderValue(name5, String(value));
-                  return URLSearchParams.prototype[p].call(target, String(name5).toLowerCase(), String(value));
+                return (name7, value) => {
+                  validateHeaderName(name7);
+                  validateHeaderValue(name7, String(value));
+                  return URLSearchParams.prototype[p].call(target, String(name7).toLowerCase(), String(value));
                 };
               case "delete":
               case "has":
               case "getAll":
-                return (name5) => {
-                  validateHeaderName(name5);
-                  return URLSearchParams.prototype[p].call(target, String(name5).toLowerCase());
+                return (name7) => {
+                  validateHeaderName(name7);
+                  return URLSearchParams.prototype[p].call(target, String(name7).toLowerCase());
                 };
               case "keys":
                 return () => {
@@ -4402,30 +4402,30 @@ var init_install_fetch = __esm({
       toString() {
         return Object.prototype.toString.call(this);
       }
-      get(name5) {
-        const values = this.getAll(name5);
+      get(name7) {
+        const values = this.getAll(name7);
         if (values.length === 0) {
           return null;
         }
         let value = values.join(", ");
-        if (/^content-encoding$/i.test(name5)) {
+        if (/^content-encoding$/i.test(name7)) {
           value = value.toLowerCase();
         }
         return value;
       }
       forEach(callback, thisArg = void 0) {
-        for (const name5 of this.keys()) {
-          Reflect.apply(callback, thisArg, [this.get(name5), name5, this]);
+        for (const name7 of this.keys()) {
+          Reflect.apply(callback, thisArg, [this.get(name7), name7, this]);
         }
       }
       *values() {
-        for (const name5 of this.keys()) {
-          yield this.get(name5);
+        for (const name7 of this.keys()) {
+          yield this.get(name7);
         }
       }
       *entries() {
-        for (const name5 of this.keys()) {
-          yield [name5, this.get(name5)];
+        for (const name7 of this.keys()) {
+          yield [name7, this.get(name7)];
         }
       }
       [Symbol.iterator]() {
@@ -4462,11 +4462,11 @@ var init_install_fetch = __esm({
       constructor(body = null, options2 = {}) {
         super(body, options2);
         const status = options2.status != null ? options2.status : 200;
-        const headers = new Headers(options2.headers);
-        if (body !== null && !headers.has("Content-Type")) {
+        const headers2 = new Headers(options2.headers);
+        if (body !== null && !headers2.has("Content-Type")) {
           const contentType = extractContentType(body);
           if (contentType) {
-            headers.append("Content-Type", contentType);
+            headers2.append("Content-Type", contentType);
           }
         }
         this[INTERNALS$1] = {
@@ -4474,7 +4474,7 @@ var init_install_fetch = __esm({
           url: options2.url,
           status,
           statusText: options2.statusText || "",
-          headers,
+          headers: headers2,
           counter: options2.counter,
           highWaterMark: options2.highWaterMark
         };
@@ -4515,13 +4515,13 @@ var init_install_fetch = __esm({
           size: this.size
         });
       }
-      static redirect(url, status = 302) {
+      static redirect(url2, status = 302) {
         if (!isRedirect(status)) {
           throw new RangeError('Failed to execute "redirect" on "response": Invalid status code');
         }
         return new Response(null, {
           headers: {
-            location: new URL(url).toString()
+            location: new URL(url2).toString()
           },
           status
         });
@@ -4575,11 +4575,11 @@ var init_install_fetch = __esm({
         super(inputBody, {
           size: init2.size || input.size || 0
         });
-        const headers = new Headers(init2.headers || input.headers || {});
-        if (inputBody !== null && !headers.has("Content-Type")) {
+        const headers2 = new Headers(init2.headers || input.headers || {});
+        if (inputBody !== null && !headers2.has("Content-Type")) {
           const contentType = extractContentType(inputBody, this);
           if (contentType) {
-            headers.append("Content-Type", contentType);
+            headers2.append("Content-Type", contentType);
           }
         }
         let signal = isRequest(input) ? input.signal : null;
@@ -4592,7 +4592,7 @@ var init_install_fetch = __esm({
         this[INTERNALS] = {
           method,
           redirect: init2.redirect || input.redirect || "follow",
-          headers,
+          headers: headers2,
           parsedURL,
           signal
         };
@@ -4635,9 +4635,9 @@ var init_install_fetch = __esm({
     });
     getNodeRequestOptions = (request) => {
       const { parsedURL } = request[INTERNALS];
-      const headers = new Headers(request[INTERNALS].headers);
-      if (!headers.has("Accept")) {
-        headers.set("Accept", "*/*");
+      const headers2 = new Headers(request[INTERNALS].headers);
+      if (!headers2.has("Accept")) {
+        headers2.set("Accept", "*/*");
       }
       let contentLengthValue = null;
       if (request.body === null && /^(post|put)$/i.test(request.method)) {
@@ -4650,20 +4650,20 @@ var init_install_fetch = __esm({
         }
       }
       if (contentLengthValue) {
-        headers.set("Content-Length", contentLengthValue);
+        headers2.set("Content-Length", contentLengthValue);
       }
-      if (!headers.has("User-Agent")) {
-        headers.set("User-Agent", "node-fetch");
+      if (!headers2.has("User-Agent")) {
+        headers2.set("User-Agent", "node-fetch");
       }
-      if (request.compress && !headers.has("Accept-Encoding")) {
-        headers.set("Accept-Encoding", "gzip,deflate,br");
+      if (request.compress && !headers2.has("Accept-Encoding")) {
+        headers2.set("Accept-Encoding", "gzip,deflate,br");
       }
       let { agent } = request;
       if (typeof agent === "function") {
         agent = agent(parsedURL);
       }
-      if (!headers.has("Connection") && !agent) {
-        headers.set("Connection", "close");
+      if (!headers2.has("Connection") && !agent) {
+        headers2.set("Connection", "close");
       }
       const search = getSearch(parsedURL);
       const requestOptions = {
@@ -4677,15 +4677,15 @@ var init_install_fetch = __esm({
         query: parsedURL.query,
         href: parsedURL.href,
         method: request.method,
-        headers: headers[Symbol.for("nodejs.util.inspect.custom")](),
+        headers: headers2[Symbol.for("nodejs.util.inspect.custom")](),
         insecureHTTPParser: request.insecureHTTPParser,
         agent
       };
       return requestOptions;
     };
     AbortError = class extends FetchBaseError {
-      constructor(message, type = "aborted") {
-        super(message, type);
+      constructor(message2, type = "aborted") {
+        super(message2, type);
       }
     };
     supportedSchemas = new Set(["data:", "http:", "https:"]);
@@ -4706,7 +4706,7 @@ var require_cookie = __commonJS({
     "use strict";
     exports2.parse = parse;
     exports2.serialize = serialize;
-    var decode = decodeURIComponent;
+    var decode2 = decodeURIComponent;
     var encode = encodeURIComponent;
     var pairSplitRegExp = /; */;
     var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
@@ -4717,7 +4717,7 @@ var require_cookie = __commonJS({
       var obj = {};
       var opt = options2 || {};
       var pairs = str.split(pairSplitRegExp);
-      var dec = opt.decode || decode;
+      var dec = opt.decode || decode2;
       for (var i = 0; i < pairs.length; i++) {
         var pair = pairs[i];
         var eq_idx = pair.indexOf("=");
@@ -4735,20 +4735,20 @@ var require_cookie = __commonJS({
       }
       return obj;
     }
-    function serialize(name5, val, options2) {
+    function serialize(name7, val, options2) {
       var opt = options2 || {};
       var enc = opt.encode || encode;
       if (typeof enc !== "function") {
         throw new TypeError("option encode is invalid");
       }
-      if (!fieldContentRegExp.test(name5)) {
+      if (!fieldContentRegExp.test(name7)) {
         throw new TypeError("argument name is invalid");
       }
       var value = enc(val);
       if (value && !fieldContentRegExp.test(value)) {
         throw new TypeError("argument val is invalid");
       }
-      var str = name5 + "=" + value;
+      var str = name7 + "=" + value;
       if (opt.maxAge != null) {
         var maxAge = opt.maxAge - 0;
         if (isNaN(maxAge) || !isFinite(maxAge)) {
@@ -4801,9 +4801,9 @@ var require_cookie = __commonJS({
       }
       return str;
     }
-    function tryDecode(str, decode2) {
+    function tryDecode(str, decode3) {
       try {
-        return decode2(str);
+        return decode3(str);
       } catch (e) {
         return str;
       }
@@ -4845,7 +4845,194 @@ var init_dist = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-46a11b64.js
+// .svelte-kit/output/server/chunks/store-b4dcaf75.js
+function deepCopy(value) {
+  return deepExtend(void 0, value);
+}
+function deepExtend(target, source) {
+  if (!(source instanceof Object)) {
+    return source;
+  }
+  switch (source.constructor) {
+    case Date:
+      const dateValue = source;
+      return new Date(dateValue.getTime());
+    case Object:
+      if (target === void 0) {
+        target = {};
+      }
+      break;
+    case Array:
+      target = [];
+      break;
+    default:
+      return source;
+  }
+  for (const prop in source) {
+    if (!source.hasOwnProperty(prop) || !isValidKey(prop)) {
+      continue;
+    }
+    target[prop] = deepExtend(target[prop], source[prop]);
+  }
+  return target;
+}
+function isValidKey(key) {
+  return key !== "__proto__";
+}
+function getUA() {
+  if (typeof navigator !== "undefined" && typeof navigator["userAgent"] === "string") {
+    return navigator["userAgent"];
+  } else {
+    return "";
+  }
+}
+function isMobileCordova() {
+  return typeof window !== "undefined" && !!(window["cordova"] || window["phonegap"] || window["PhoneGap"]) && /ios|iphone|ipod|ipad|android|blackberry|iemobile/i.test(getUA());
+}
+function isBrowserExtension() {
+  const runtime = typeof chrome === "object" ? chrome.runtime : typeof browser === "object" ? browser.runtime : void 0;
+  return typeof runtime === "object" && runtime.id !== void 0;
+}
+function isReactNative() {
+  return typeof navigator === "object" && navigator["product"] === "ReactNative";
+}
+function isNodeSdk() {
+  return CONSTANTS.NODE_CLIENT === true || CONSTANTS.NODE_ADMIN === true;
+}
+function replaceTemplate(template2, data) {
+  return template2.replace(PATTERN, (_, key) => {
+    const value = data[key];
+    return value != null ? String(value) : `<${key}?>`;
+  });
+}
+function jsonEval(str) {
+  return JSON.parse(str);
+}
+function stringify(data) {
+  return JSON.stringify(data);
+}
+function contains(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+function safeGet(obj, key) {
+  if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    return obj[key];
+  } else {
+    return void 0;
+  }
+}
+function isEmpty(obj) {
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      return false;
+    }
+  }
+  return true;
+}
+function map(obj, fn, contextObj) {
+  const res = {};
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      res[key] = fn.call(contextObj, obj[key], key, obj);
+    }
+  }
+  return res;
+}
+function querystring(querystringParams) {
+  const params = [];
+  for (const [key, value] of Object.entries(querystringParams)) {
+    if (Array.isArray(value)) {
+      value.forEach((arrayVal) => {
+        params.push(encodeURIComponent(key) + "=" + encodeURIComponent(arrayVal));
+      });
+    } else {
+      params.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+    }
+  }
+  return params.length ? "&" + params.join("&") : "";
+}
+function createSubscribe(executor, onNoObservers) {
+  const proxy2 = new ObserverProxy(executor, onNoObservers);
+  return proxy2.subscribe.bind(proxy2);
+}
+function implementsAnyMethods(obj, methods2) {
+  if (typeof obj !== "object" || obj === null) {
+    return false;
+  }
+  for (const method of methods2) {
+    if (method in obj && typeof obj[method] === "function") {
+      return true;
+    }
+  }
+  return false;
+}
+function noop2() {
+}
+function errorPrefix(fnName, argName) {
+  return `${fnName} failed: ${argName} argument `;
+}
+function getModularInstance(service) {
+  if (service && service._delegate) {
+    return service._delegate;
+  } else {
+    return service;
+  }
+}
+function isVersionServiceProvider(provider) {
+  const component = provider.getComponent();
+  return (component === null || component === void 0 ? void 0 : component.type) === "VERSION";
+}
+function _addComponent(app, component) {
+  try {
+    app.container.addComponent(component);
+  } catch (e) {
+    logger.debug(`Component ${component.name} failed to register with FirebaseApp ${app.name}`, e);
+  }
+}
+function _registerComponent(component) {
+  const componentName = component.name;
+  if (_components.has(componentName)) {
+    logger.debug(`There were multiple attempts to register component ${componentName}.`);
+    return false;
+  }
+  _components.set(componentName, component);
+  for (const app of _apps.values()) {
+    _addComponent(app, component);
+  }
+  return true;
+}
+function registerVersion(libraryKeyOrName, version22, variant) {
+  var _a;
+  let library = (_a = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a !== void 0 ? _a : libraryKeyOrName;
+  if (variant) {
+    library += `-${variant}`;
+  }
+  const libraryMismatch = library.match(/\s|\//);
+  const versionMismatch = version22.match(/\s|\//);
+  if (libraryMismatch || versionMismatch) {
+    const warning = [
+      `Unable to register library "${library}" with version "${version22}":`
+    ];
+    if (libraryMismatch) {
+      warning.push(`library name "${library}" contains illegal characters (whitespace or "/")`);
+    }
+    if (libraryMismatch && versionMismatch) {
+      warning.push("and");
+    }
+    if (versionMismatch) {
+      warning.push(`version name "${version22}" contains illegal characters (whitespace or "/")`);
+    }
+    logger.warn(warning.join(" "));
+    return;
+  }
+  _registerComponent(new Component(`${library}-version`, () => ({ library, version: version22 }), "VERSION"));
+}
+function registerCoreComponents(variant) {
+  _registerComponent(new Component("platform-logger", (container) => new PlatformLoggerServiceImpl(container), "PRIVATE"));
+  registerVersion(name$o, version$1, variant);
+  registerVersion(name$o, version$1, "esm2017");
+  registerVersion("fire-js", "");
+}
 function __extends(d2, b) {
   if (typeof b !== "function" && b !== null)
     throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
@@ -4922,1334 +5109,24 @@ function writable(value, start2 = noop) {
   }
   return { set, update: update2, subscribe: subscribe2 };
 }
-var extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, recordState, dailyMicStream;
-var init_store_46a11b64 = __esm({
-  ".svelte-kit/output/server/chunks/store-46a11b64.js"() {
+var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, recordState, dailyMicStream, roomToPeople;
+var init_store_b4dcaf75 = __esm({
+  ".svelte-kit/output/server/chunks/store-b4dcaf75.js"() {
     init_shims();
-    init_app_fe0490a9();
-    extendStatics = function(d2, b) {
-      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b2) {
-        d22.__proto__ = b2;
-      } || function(d22, b2) {
-        for (var p in b2)
-          if (Object.prototype.hasOwnProperty.call(b2, p))
-            d22[p] = b2[p];
-      };
-      return extendStatics(d2, b);
+    init_app_02afcaab();
+    CONSTANTS = {
+      NODE_CLIENT: false,
+      NODE_ADMIN: false,
+      SDK_VERSION: "${JSCORE_VERSION}"
     };
-    __assign = function() {
-      __assign = Object.assign || function __assign2(t) {
-        for (var s2, i = 1, n = arguments.length; i < n; i++) {
-          s2 = arguments[i];
-          for (var p in s2)
-            if (Object.prototype.hasOwnProperty.call(s2, p))
-              t[p] = s2[p];
-        }
-        return t;
-      };
-      return __assign.apply(this, arguments);
+    assert = function(assertion, message2) {
+      if (!assertion) {
+        throw assertionError(message2);
+      }
     };
-    subscriber_queue = [];
-    canvasHeight = writable(0);
-    canvasWidth = writable(0);
-    hasFetchedUser = writable(false);
-    user = writable({});
-    currentTool = writable({
-      type: "pencil",
-      color: "white",
-      lineWidth: 3
-    });
-    recordState = writable("pre_record");
-    dailyMicStream = writable(null);
-  }
-});
-
-// .svelte-kit/output/server/chunks/index-c327074d-39b2c669.js
-function getUA() {
-  if (typeof navigator !== "undefined" && typeof navigator["userAgent"] === "string") {
-    return navigator["userAgent"];
-  } else {
-    return "";
-  }
-}
-function isMobileCordova() {
-  return typeof window !== "undefined" && !!(window["cordova"] || window["phonegap"] || window["PhoneGap"]) && /ios|iphone|ipod|ipad|android|blackberry|iemobile/i.test(getUA());
-}
-function isBrowserExtension() {
-  const runtime = typeof chrome === "object" ? chrome.runtime : typeof browser === "object" ? browser.runtime : void 0;
-  return typeof runtime === "object" && runtime.id !== void 0;
-}
-function isReactNative() {
-  return typeof navigator === "object" && navigator["product"] === "ReactNative";
-}
-function replaceTemplate(template2, data) {
-  return template2.replace(PATTERN, (_, key) => {
-    const value = data[key];
-    return value != null ? String(value) : `<${key}?>`;
-  });
-}
-function querystring(querystringParams) {
-  const params = [];
-  for (const [key, value] of Object.entries(querystringParams)) {
-    if (Array.isArray(value)) {
-      value.forEach((arrayVal) => {
-        params.push(encodeURIComponent(key) + "=" + encodeURIComponent(arrayVal));
-      });
-    } else {
-      params.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
-    }
-  }
-  return params.length ? "&" + params.join("&") : "";
-}
-function createSubscribe(executor, onNoObservers) {
-  const proxy = new ObserverProxy(executor, onNoObservers);
-  return proxy.subscribe.bind(proxy);
-}
-function implementsAnyMethods(obj, methods) {
-  if (typeof obj !== "object" || obj === null) {
-    return false;
-  }
-  for (const method of methods) {
-    if (method in obj && typeof obj[method] === "function") {
-      return true;
-    }
-  }
-  return false;
-}
-function noop2() {
-}
-function getModularInstance(service) {
-  if (service && service._delegate) {
-    return service._delegate;
-  } else {
-    return service;
-  }
-}
-function isVersionServiceProvider(provider) {
-  const component = provider.getComponent();
-  return (component === null || component === void 0 ? void 0 : component.type) === "VERSION";
-}
-function _addComponent(app, component) {
-  try {
-    app.container.addComponent(component);
-  } catch (e) {
-    logger.debug(`Component ${component.name} failed to register with FirebaseApp ${app.name}`, e);
-  }
-}
-function _registerComponent(component) {
-  const componentName = component.name;
-  if (_components.has(componentName)) {
-    logger.debug(`There were multiple attempts to register component ${componentName}.`);
-    return false;
-  }
-  _components.set(componentName, component);
-  for (const app of _apps.values()) {
-    _addComponent(app, component);
-  }
-  return true;
-}
-function registerVersion(libraryKeyOrName, version22, variant) {
-  var _a;
-  let library = (_a = PLATFORM_LOG_STRING[libraryKeyOrName]) !== null && _a !== void 0 ? _a : libraryKeyOrName;
-  if (variant) {
-    library += `-${variant}`;
-  }
-  const libraryMismatch = library.match(/\s|\//);
-  const versionMismatch = version22.match(/\s|\//);
-  if (libraryMismatch || versionMismatch) {
-    const warning = [
-      `Unable to register library "${library}" with version "${version22}":`
-    ];
-    if (libraryMismatch) {
-      warning.push(`library name "${library}" contains illegal characters (whitespace or "/")`);
-    }
-    if (libraryMismatch && versionMismatch) {
-      warning.push("and");
-    }
-    if (versionMismatch) {
-      warning.push(`version name "${version22}" contains illegal characters (whitespace or "/")`);
-    }
-    logger.warn(warning.join(" "));
-    return;
-  }
-  _registerComponent(new Component(`${library}-version`, () => ({ library, version: version22 }), "VERSION"));
-}
-function registerCoreComponents(variant) {
-  _registerComponent(new Component("platform-logger", (container) => new PlatformLoggerServiceImpl(container), "PRIVATE"));
-  registerVersion(name$o, version$1$1, variant);
-  registerVersion(name$o, version$1$1, "esm2017");
-  registerVersion("fire-js", "");
-}
-function sign(x) {
-  return x < 0 ? -1 : 1;
-}
-function evenRound(x) {
-  if (x % 1 === 0.5 && (x & 1) === 0) {
-    return Math.floor(x);
-  } else {
-    return Math.round(x);
-  }
-}
-function createNumberConversion(bitLength, typeOpts) {
-  if (!typeOpts.unsigned) {
-    --bitLength;
-  }
-  const lowerBound = typeOpts.unsigned ? 0 : -Math.pow(2, bitLength);
-  const upperBound = Math.pow(2, bitLength) - 1;
-  const moduloVal = typeOpts.moduloBitLength ? Math.pow(2, typeOpts.moduloBitLength) : Math.pow(2, bitLength);
-  const moduloBound = typeOpts.moduloBitLength ? Math.pow(2, typeOpts.moduloBitLength - 1) : Math.pow(2, bitLength - 1);
-  return function(V, opts) {
-    if (!opts)
-      opts = {};
-    let x = +V;
-    if (opts.enforceRange) {
-      if (!Number.isFinite(x)) {
-        throw new TypeError("Argument is not a finite number");
-      }
-      x = sign(x) * Math.floor(Math.abs(x));
-      if (x < lowerBound || x > upperBound) {
-        throw new TypeError("Argument is not in byte range");
-      }
-      return x;
-    }
-    if (!isNaN(x) && opts.clamp) {
-      x = evenRound(x);
-      if (x < lowerBound)
-        x = lowerBound;
-      if (x > upperBound)
-        x = upperBound;
-      return x;
-    }
-    if (!Number.isFinite(x) || x === 0) {
-      return 0;
-    }
-    x = sign(x) * Math.floor(Math.abs(x));
-    x = x % moduloVal;
-    if (!typeOpts.unsigned && x >= moduloBound) {
-      return x - moduloVal;
-    } else if (typeOpts.unsigned) {
-      if (x < 0) {
-        x += moduloVal;
-      } else if (x === -0) {
-        return 0;
-      }
-    }
-    return x;
-  };
-}
-function normalize(str) {
-  return str.split("\0").map(function(s2) {
-    return s2.normalize("NFC");
-  }).join("\0");
-}
-function findStatus(val) {
-  var start2 = 0;
-  var end = mappingTable.length - 1;
-  while (start2 <= end) {
-    var mid = Math.floor((start2 + end) / 2);
-    var target = mappingTable[mid];
-    if (target[0][0] <= val && target[0][1] >= val) {
-      return target;
-    } else if (target[0][0] > val) {
-      end = mid - 1;
-    } else {
-      start2 = mid + 1;
-    }
-  }
-  return null;
-}
-function countSymbols(string) {
-  return string.replace(regexAstralSymbols, "_").length;
-}
-function mapChars(domain_name, useSTD3, processing_option) {
-  var hasError = false;
-  var processed = "";
-  var len = countSymbols(domain_name);
-  for (var i = 0; i < len; ++i) {
-    var codePoint = domain_name.codePointAt(i);
-    var status = findStatus(codePoint);
-    switch (status[1]) {
-      case "disallowed":
-        hasError = true;
-        processed += String.fromCodePoint(codePoint);
-        break;
-      case "ignored":
-        break;
-      case "mapped":
-        processed += String.fromCodePoint.apply(String, status[2]);
-        break;
-      case "deviation":
-        if (processing_option === PROCESSING_OPTIONS.TRANSITIONAL) {
-          processed += String.fromCodePoint.apply(String, status[2]);
-        } else {
-          processed += String.fromCodePoint(codePoint);
-        }
-        break;
-      case "valid":
-        processed += String.fromCodePoint(codePoint);
-        break;
-      case "disallowed_STD3_mapped":
-        if (useSTD3) {
-          hasError = true;
-          processed += String.fromCodePoint(codePoint);
-        } else {
-          processed += String.fromCodePoint.apply(String, status[2]);
-        }
-        break;
-      case "disallowed_STD3_valid":
-        if (useSTD3) {
-          hasError = true;
-        }
-        processed += String.fromCodePoint(codePoint);
-        break;
-    }
-  }
-  return {
-    string: processed,
-    error: hasError
-  };
-}
-function validateLabel(label, processing_option) {
-  if (label.substr(0, 4) === "xn--") {
-    label = punycode.toUnicode(label);
-  }
-  var error3 = false;
-  if (normalize(label) !== label || label[3] === "-" && label[4] === "-" || label[0] === "-" || label[label.length - 1] === "-" || label.indexOf(".") !== -1 || label.search(combiningMarksRegex) === 0) {
-    error3 = true;
-  }
-  var len = countSymbols(label);
-  for (var i = 0; i < len; ++i) {
-    var status = findStatus(label.codePointAt(i));
-    if (processing === PROCESSING_OPTIONS.TRANSITIONAL && status[1] !== "valid" || processing === PROCESSING_OPTIONS.NONTRANSITIONAL && status[1] !== "valid" && status[1] !== "deviation") {
-      error3 = true;
-      break;
-    }
-  }
-  return {
-    label,
-    error: error3
-  };
-}
-function processing(domain_name, useSTD3, processing_option) {
-  var result = mapChars(domain_name, useSTD3, processing_option);
-  result.string = normalize(result.string);
-  var labels = result.string.split(".");
-  for (var i = 0; i < labels.length; ++i) {
-    try {
-      var validation = validateLabel(labels[i]);
-      labels[i] = validation.label;
-      result.error = result.error || validation.error;
-    } catch (e) {
-      result.error = true;
-    }
-  }
-  return {
-    string: labels.join("."),
-    error: result.error
-  };
-}
-function FetchError2(message, type, systemError) {
-  Error.call(this, message);
-  this.message = message;
-  this.type = type;
-  if (systemError) {
-    this.code = this.errno = systemError.code;
-  }
-  Error.captureStackTrace(this, this.constructor);
-}
-function Body2(body) {
-  var _this = this;
-  var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$size = _ref.size;
-  let size = _ref$size === void 0 ? 0 : _ref$size;
-  var _ref$timeout = _ref.timeout;
-  let timeout = _ref$timeout === void 0 ? 0 : _ref$timeout;
-  if (body == null) {
-    body = null;
-  } else if (isURLSearchParams(body)) {
-    body = Buffer.from(body.toString());
-  } else if (isBlob2(body))
-    ;
-  else if (Buffer.isBuffer(body))
-    ;
-  else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
-    body = Buffer.from(body);
-  } else if (ArrayBuffer.isView(body)) {
-    body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
-  } else if (body instanceof import_stream2.default)
-    ;
-  else {
-    body = Buffer.from(String(body));
-  }
-  this[INTERNALS2] = {
-    body,
-    disturbed: false,
-    error: null
-  };
-  this.size = size;
-  this.timeout = timeout;
-  if (body instanceof import_stream2.default) {
-    body.on("error", function(err) {
-      const error3 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
-      _this[INTERNALS2].error = error3;
-    });
-  }
-}
-function consumeBody2() {
-  var _this4 = this;
-  if (this[INTERNALS2].disturbed) {
-    return Body2.Promise.reject(new TypeError(`body used already for: ${this.url}`));
-  }
-  this[INTERNALS2].disturbed = true;
-  if (this[INTERNALS2].error) {
-    return Body2.Promise.reject(this[INTERNALS2].error);
-  }
-  let body = this.body;
-  if (body === null) {
-    return Body2.Promise.resolve(Buffer.alloc(0));
-  }
-  if (isBlob2(body)) {
-    body = body.stream();
-  }
-  if (Buffer.isBuffer(body)) {
-    return Body2.Promise.resolve(body);
-  }
-  if (!(body instanceof import_stream2.default)) {
-    return Body2.Promise.resolve(Buffer.alloc(0));
-  }
-  let accum = [];
-  let accumBytes = 0;
-  let abort = false;
-  return new Body2.Promise(function(resolve3, reject) {
-    let resTimeout;
-    if (_this4.timeout) {
-      resTimeout = setTimeout(function() {
-        abort = true;
-        reject(new FetchError2(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
-      }, _this4.timeout);
-    }
-    body.on("error", function(err) {
-      if (err.name === "AbortError") {
-        abort = true;
-        reject(err);
-      } else {
-        reject(new FetchError2(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
-      }
-    });
-    body.on("data", function(chunk) {
-      if (abort || chunk === null) {
-        return;
-      }
-      if (_this4.size && accumBytes + chunk.length > _this4.size) {
-        abort = true;
-        reject(new FetchError2(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
-        return;
-      }
-      accumBytes += chunk.length;
-      accum.push(chunk);
-    });
-    body.on("end", function() {
-      if (abort) {
-        return;
-      }
-      clearTimeout(resTimeout);
-      try {
-        resolve3(Buffer.concat(accum, accumBytes));
-      } catch (err) {
-        reject(new FetchError2(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
-      }
-    });
-  });
-}
-function convertBody(buffer, headers) {
-  if (typeof convert !== "function") {
-    throw new Error("The package `encoding` must be installed to use the textConverted() function");
-  }
-  const ct = headers.get("content-type");
-  let charset = "utf-8";
-  let res, str;
-  if (ct) {
-    res = /charset=([^;]*)/i.exec(ct);
-  }
-  str = buffer.slice(0, 1024).toString();
-  if (!res && str) {
-    res = /<meta.+?charset=(['"])(.+?)\1/i.exec(str);
-  }
-  if (!res && str) {
-    res = /<meta[\s]+?http-equiv=(['"])content-type\1[\s]+?content=(['"])(.+?)\2/i.exec(str);
-    if (!res) {
-      res = /<meta[\s]+?content=(['"])(.+?)\1[\s]+?http-equiv=(['"])content-type\3/i.exec(str);
-      if (res) {
-        res.pop();
-      }
-    }
-    if (res) {
-      res = /charset=(.*)/i.exec(res.pop());
-    }
-  }
-  if (!res && str) {
-    res = /<\?xml.+?encoding=(['"])(.+?)\1/i.exec(str);
-  }
-  if (res) {
-    charset = res.pop();
-    if (charset === "gb2312" || charset === "gbk") {
-      charset = "gb18030";
-    }
-  }
-  return convert(buffer, "UTF-8", charset).toString();
-}
-function isURLSearchParams(obj) {
-  if (typeof obj !== "object" || typeof obj.append !== "function" || typeof obj.delete !== "function" || typeof obj.get !== "function" || typeof obj.getAll !== "function" || typeof obj.has !== "function" || typeof obj.set !== "function") {
-    return false;
-  }
-  return obj.constructor.name === "URLSearchParams" || Object.prototype.toString.call(obj) === "[object URLSearchParams]" || typeof obj.sort === "function";
-}
-function isBlob2(obj) {
-  return typeof obj === "object" && typeof obj.arrayBuffer === "function" && typeof obj.type === "string" && typeof obj.stream === "function" && typeof obj.constructor === "function" && typeof obj.constructor.name === "string" && /^(Blob|File)$/.test(obj.constructor.name) && /^(Blob|File)$/.test(obj[Symbol.toStringTag]);
-}
-function clone2(instance) {
-  let p1, p2;
-  let body = instance.body;
-  if (instance.bodyUsed) {
-    throw new Error("cannot clone body after it is used");
-  }
-  if (body instanceof import_stream2.default && typeof body.getBoundary !== "function") {
-    p1 = new PassThrough2();
-    p2 = new PassThrough2();
-    body.pipe(p1);
-    body.pipe(p2);
-    instance[INTERNALS2].body = p1;
-    body = p2;
-  }
-  return body;
-}
-function extractContentType2(body) {
-  if (body === null) {
-    return null;
-  } else if (typeof body === "string") {
-    return "text/plain;charset=UTF-8";
-  } else if (isURLSearchParams(body)) {
-    return "application/x-www-form-urlencoded;charset=UTF-8";
-  } else if (isBlob2(body)) {
-    return body.type || null;
-  } else if (Buffer.isBuffer(body)) {
-    return null;
-  } else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
-    return null;
-  } else if (ArrayBuffer.isView(body)) {
-    return null;
-  } else if (typeof body.getBoundary === "function") {
-    return `multipart/form-data;boundary=${body.getBoundary()}`;
-  } else if (body instanceof import_stream2.default) {
-    return null;
-  } else {
-    return "text/plain;charset=UTF-8";
-  }
-}
-function getTotalBytes2(instance) {
-  const body = instance.body;
-  if (body === null) {
-    return 0;
-  } else if (isBlob2(body)) {
-    return body.size;
-  } else if (Buffer.isBuffer(body)) {
-    return body.length;
-  } else if (body && typeof body.getLengthSync === "function") {
-    if (body._lengthRetrievers && body._lengthRetrievers.length == 0 || body.hasKnownLength && body.hasKnownLength()) {
-      return body.getLengthSync();
-    }
-    return null;
-  } else {
-    return null;
-  }
-}
-function writeToStream2(dest, instance) {
-  const body = instance.body;
-  if (body === null) {
-    dest.end();
-  } else if (isBlob2(body)) {
-    body.stream().pipe(dest);
-  } else if (Buffer.isBuffer(body)) {
-    dest.write(body);
-    dest.end();
-  } else {
-    body.pipe(dest);
-  }
-}
-function validateName(name22) {
-  name22 = `${name22}`;
-  if (invalidTokenRegex.test(name22) || name22 === "") {
-    throw new TypeError(`${name22} is not a legal HTTP header name`);
-  }
-}
-function validateValue(value) {
-  value = `${value}`;
-  if (invalidHeaderCharRegex.test(value)) {
-    throw new TypeError(`${value} is not a legal HTTP header value`);
-  }
-}
-function find(map, name22) {
-  name22 = name22.toLowerCase();
-  for (const key in map) {
-    if (key.toLowerCase() === name22) {
-      return key;
-    }
-  }
-  return void 0;
-}
-function getHeaders(headers) {
-  let kind = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key+value";
-  const keys = Object.keys(headers[MAP]).sort();
-  return keys.map(kind === "key" ? function(k) {
-    return k.toLowerCase();
-  } : kind === "value" ? function(k) {
-    return headers[MAP][k].join(", ");
-  } : function(k) {
-    return [k.toLowerCase(), headers[MAP][k].join(", ")];
-  });
-}
-function createHeadersIterator(target, kind) {
-  const iterator = Object.create(HeadersIteratorPrototype);
-  iterator[INTERNAL] = {
-    target,
-    kind,
-    index: 0
-  };
-  return iterator;
-}
-function exportNodeCompatibleHeaders(headers) {
-  const obj = Object.assign({ __proto__: null }, headers[MAP]);
-  const hostHeaderKey = find(headers[MAP], "Host");
-  if (hostHeaderKey !== void 0) {
-    obj[hostHeaderKey] = obj[hostHeaderKey][0];
-  }
-  return obj;
-}
-function createHeadersLenient(obj) {
-  const headers = new Headers2();
-  for (const name22 of Object.keys(obj)) {
-    if (invalidTokenRegex.test(name22)) {
-      continue;
-    }
-    if (Array.isArray(obj[name22])) {
-      for (const val of obj[name22]) {
-        if (invalidHeaderCharRegex.test(val)) {
-          continue;
-        }
-        if (headers[MAP][name22] === void 0) {
-          headers[MAP][name22] = [val];
-        } else {
-          headers[MAP][name22].push(val);
-        }
-      }
-    } else if (!invalidHeaderCharRegex.test(obj[name22])) {
-      headers[MAP][name22] = [obj[name22]];
-    }
-  }
-  return headers;
-}
-function parseURL(urlStr) {
-  if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.exec(urlStr)) {
-    urlStr = new URL2(urlStr).toString();
-  }
-  return parse_url(urlStr);
-}
-function isRequest2(input) {
-  return typeof input === "object" && typeof input[INTERNALS$22] === "object";
-}
-function isAbortSignal2(signal) {
-  const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
-  return !!(proto && proto.constructor.name === "AbortSignal");
-}
-function getNodeRequestOptions2(request) {
-  const parsedURL = request[INTERNALS$22].parsedURL;
-  const headers = new Headers2(request[INTERNALS$22].headers);
-  if (!headers.has("Accept")) {
-    headers.set("Accept", "*/*");
-  }
-  if (!parsedURL.protocol || !parsedURL.hostname) {
-    throw new TypeError("Only absolute URLs are supported");
-  }
-  if (!/^https?:$/.test(parsedURL.protocol)) {
-    throw new TypeError("Only HTTP(S) protocols are supported");
-  }
-  if (request.signal && request.body instanceof import_stream2.default.Readable && !streamDestructionSupported) {
-    throw new Error("Cancellation of streamed requests with AbortSignal is not supported in node < 8");
-  }
-  let contentLengthValue = null;
-  if (request.body == null && /^(POST|PUT)$/i.test(request.method)) {
-    contentLengthValue = "0";
-  }
-  if (request.body != null) {
-    const totalBytes = getTotalBytes2(request);
-    if (typeof totalBytes === "number") {
-      contentLengthValue = String(totalBytes);
-    }
-  }
-  if (contentLengthValue) {
-    headers.set("Content-Length", contentLengthValue);
-  }
-  if (!headers.has("User-Agent")) {
-    headers.set("User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)");
-  }
-  if (request.compress && !headers.has("Accept-Encoding")) {
-    headers.set("Accept-Encoding", "gzip,deflate");
-  }
-  let agent = request.agent;
-  if (typeof agent === "function") {
-    agent = agent(parsedURL);
-  }
-  if (!headers.has("Connection") && !agent) {
-    headers.set("Connection", "close");
-  }
-  return Object.assign({}, parsedURL, {
-    method: request.method,
-    headers: exportNodeCompatibleHeaders(headers),
-    agent
-  });
-}
-function AbortError2(message) {
-  Error.call(this, message);
-  this.type = "aborted";
-  this.message = message;
-  Error.captureStackTrace(this, this.constructor);
-}
-function fetch2(url, opts) {
-  if (!fetch2.Promise) {
-    throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
-  }
-  Body2.Promise = fetch2.Promise;
-  return new fetch2.Promise(function(resolve3, reject) {
-    const request = new Request2(url, opts);
-    const options2 = getNodeRequestOptions2(request);
-    const send = (options2.protocol === "https:" ? import_https2.default : import_http2.default).request;
-    const signal = request.signal;
-    let response = null;
-    const abort = function abort2() {
-      let error3 = new AbortError2("The user aborted a request.");
-      reject(error3);
-      if (request.body && request.body instanceof import_stream2.default.Readable) {
-        request.body.destroy(error3);
-      }
-      if (!response || !response.body)
-        return;
-      response.body.emit("error", error3);
+    assertionError = function(message2) {
+      return new Error("Firebase Database (" + CONSTANTS.SDK_VERSION + ") INTERNAL ASSERT FAILED: " + message2);
     };
-    if (signal && signal.aborted) {
-      abort();
-      return;
-    }
-    const abortAndFinalize = function abortAndFinalize2() {
-      abort();
-      finalize();
-    };
-    const req = send(options2);
-    let reqTimeout;
-    if (signal) {
-      signal.addEventListener("abort", abortAndFinalize);
-    }
-    function finalize() {
-      req.abort();
-      if (signal)
-        signal.removeEventListener("abort", abortAndFinalize);
-      clearTimeout(reqTimeout);
-    }
-    if (request.timeout) {
-      req.once("socket", function(socket) {
-        reqTimeout = setTimeout(function() {
-          reject(new FetchError2(`network timeout at: ${request.url}`, "request-timeout"));
-          finalize();
-        }, request.timeout);
-      });
-    }
-    req.on("error", function(err) {
-      reject(new FetchError2(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
-      finalize();
-    });
-    req.on("response", function(res) {
-      clearTimeout(reqTimeout);
-      const headers = createHeadersLenient(res.headers);
-      if (fetch2.isRedirect(res.statusCode)) {
-        const location = headers.get("Location");
-        const locationURL = location === null ? null : resolve_url(request.url, location);
-        switch (request.redirect) {
-          case "error":
-            reject(new FetchError2(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
-            finalize();
-            return;
-          case "manual":
-            if (locationURL !== null) {
-              try {
-                headers.set("Location", locationURL);
-              } catch (err) {
-                reject(err);
-              }
-            }
-            break;
-          case "follow":
-            if (locationURL === null) {
-              break;
-            }
-            if (request.counter >= request.follow) {
-              reject(new FetchError2(`maximum redirect reached at: ${request.url}`, "max-redirect"));
-              finalize();
-              return;
-            }
-            const requestOpts = {
-              headers: new Headers2(request.headers),
-              follow: request.follow,
-              counter: request.counter + 1,
-              agent: request.agent,
-              compress: request.compress,
-              method: request.method,
-              body: request.body,
-              signal: request.signal,
-              timeout: request.timeout,
-              size: request.size
-            };
-            if (res.statusCode !== 303 && request.body && getTotalBytes2(request) === null) {
-              reject(new FetchError2("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
-              finalize();
-              return;
-            }
-            if (res.statusCode === 303 || (res.statusCode === 301 || res.statusCode === 302) && request.method === "POST") {
-              requestOpts.method = "GET";
-              requestOpts.body = void 0;
-              requestOpts.headers.delete("content-length");
-            }
-            resolve3(fetch2(new Request2(locationURL, requestOpts)));
-            finalize();
-            return;
-        }
-      }
-      res.once("end", function() {
-        if (signal)
-          signal.removeEventListener("abort", abortAndFinalize);
-      });
-      let body = res.pipe(new PassThrough$1());
-      const response_options = {
-        url: request.url,
-        status: res.statusCode,
-        statusText: res.statusMessage,
-        headers,
-        size: request.size,
-        timeout: request.timeout,
-        counter: request.counter
-      };
-      const codings = headers.get("Content-Encoding");
-      if (!request.compress || request.method === "HEAD" || codings === null || res.statusCode === 204 || res.statusCode === 304) {
-        response = new Response2(body, response_options);
-        resolve3(response);
-        return;
-      }
-      const zlibOptions = {
-        flush: import_zlib2.default.Z_SYNC_FLUSH,
-        finishFlush: import_zlib2.default.Z_SYNC_FLUSH
-      };
-      if (codings == "gzip" || codings == "x-gzip") {
-        body = body.pipe(import_zlib2.default.createGunzip(zlibOptions));
-        response = new Response2(body, response_options);
-        resolve3(response);
-        return;
-      }
-      if (codings == "deflate" || codings == "x-deflate") {
-        const raw = res.pipe(new PassThrough$1());
-        raw.once("data", function(chunk) {
-          if ((chunk[0] & 15) === 8) {
-            body = body.pipe(import_zlib2.default.createInflate());
-          } else {
-            body = body.pipe(import_zlib2.default.createInflateRaw());
-          }
-          response = new Response2(body, response_options);
-          resolve3(response);
-        });
-        return;
-      }
-      if (codings == "br" && typeof import_zlib2.default.createBrotliDecompress === "function") {
-        body = body.pipe(import_zlib2.default.createBrotliDecompress());
-        response = new Response2(body, response_options);
-        resolve3(response);
-        return;
-      }
-      response = new Response2(body, response_options);
-      resolve3(response);
-    });
-    writeToStream2(req, request);
-  });
-}
-function _prodErrorMap() {
-  return {
-    ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
-  };
-}
-function _logError(msg, ...args) {
-  if (logClient.logLevel <= LogLevel.ERROR) {
-    logClient.error(`Auth (${SDK_VERSION}): ${msg}`, ...args);
-  }
-}
-function _fail(authOrCode, ...rest) {
-  throw createErrorInternal(authOrCode, ...rest);
-}
-function _createError(authOrCode, ...rest) {
-  return createErrorInternal(authOrCode, ...rest);
-}
-function _errorWithCustomMessage(auth, code, message) {
-  const errorMap = Object.assign(Object.assign({}, prodErrorMap()), { [code]: message });
-  const factory2 = new ErrorFactory("auth", "Firebase", errorMap);
-  return factory2.create(code, {
-    appName: auth.name
-  });
-}
-function createErrorInternal(authOrCode, ...rest) {
-  if (typeof authOrCode !== "string") {
-    const code = rest[0];
-    const fullParams = [...rest.slice(1)];
-    if (fullParams[0]) {
-      fullParams[0].appName = authOrCode.name;
-    }
-    return authOrCode._errorFactory.create(code, ...fullParams);
-  }
-  return _DEFAULT_AUTH_ERROR_FACTORY.create(authOrCode, ...rest);
-}
-function _assert(assertion, authOrCode, ...rest) {
-  if (!assertion) {
-    throw createErrorInternal(authOrCode, ...rest);
-  }
-}
-function debugFail(failure) {
-  const message = `INTERNAL ASSERTION FAILED: ` + failure;
-  _logError(message);
-  throw new Error(message);
-}
-function debugAssert(assertion, message) {
-  if (!assertion) {
-    debugFail(message);
-  }
-}
-function _getInstance(cls) {
-  debugAssert(cls instanceof Function, "Expected a class definition");
-  let instance = instanceCache.get(cls);
-  if (instance) {
-    debugAssert(instance instanceof cls, "Instance stored in cache mismatched with class");
-    return instance;
-  }
-  instance = new cls();
-  instanceCache.set(cls, instance);
-  return instance;
-}
-function _initializeAuthInstance(auth, deps) {
-  const persistence = (deps === null || deps === void 0 ? void 0 : deps.persistence) || [];
-  const hierarchy = (Array.isArray(persistence) ? persistence : [persistence]).map(_getInstance);
-  if (deps === null || deps === void 0 ? void 0 : deps.errorMap) {
-    auth._updateErrorMap(deps.errorMap);
-  }
-  auth._initializeWithPersistence(hierarchy, deps === null || deps === void 0 ? void 0 : deps.popupRedirectResolver);
-}
-function _isHttpOrHttps() {
-  return _getCurrentScheme() === "http:" || _getCurrentScheme() === "https:";
-}
-function _getCurrentScheme() {
-  var _a;
-  return typeof self !== "undefined" && ((_a = self.location) === null || _a === void 0 ? void 0 : _a.protocol) || null;
-}
-function _isOnline() {
-  if (typeof navigator !== "undefined" && navigator && "onLine" in navigator && typeof navigator.onLine === "boolean" && (_isHttpOrHttps() || isBrowserExtension() || "connection" in navigator)) {
-    return navigator.onLine;
-  }
-  return true;
-}
-function _getUserLanguage() {
-  if (typeof navigator === "undefined") {
-    return null;
-  }
-  const navigatorLanguage = navigator;
-  return navigatorLanguage.languages && navigatorLanguage.languages[0] || navigatorLanguage.language || null;
-}
-function _emulatorUrl(config, path) {
-  debugAssert(config.emulator, "Emulator should always be set here");
-  const { url } = config.emulator;
-  if (!path) {
-    return url;
-  }
-  return `${url}${path.startsWith("/") ? path.slice(1) : path}`;
-}
-async function _performApiRequest(auth, method, path, request, customErrorMap = {}) {
-  return _performFetchWithErrorHandling(auth, customErrorMap, () => {
-    let body = {};
-    let params = {};
-    if (request) {
-      if (method === "GET") {
-        params = request;
-      } else {
-        body = {
-          body: JSON.stringify(request)
-        };
-      }
-    }
-    const query2 = querystring(Object.assign({ key: auth.config.apiKey }, params)).slice(1);
-    const headers = new (FetchProvider.headers())();
-    headers.set("Content-Type", "application/json");
-    headers.set("X-Client-Version", auth._getSdkClientVersion());
-    if (auth.languageCode) {
-      headers.set("X-Firebase-Locale", auth.languageCode);
-    }
-    return FetchProvider.fetch()(_getFinalTarget(auth, auth.config.apiHost, path, query2), Object.assign({
-      method,
-      headers,
-      referrerPolicy: "no-referrer"
-    }, body));
-  });
-}
-async function _performFetchWithErrorHandling(auth, customErrorMap, fetchFn) {
-  auth._canInitEmulator = false;
-  const errorMap = Object.assign(Object.assign({}, SERVER_ERROR_MAP), customErrorMap);
-  try {
-    const networkTimeout = new NetworkTimeout(auth);
-    const response = await Promise.race([
-      fetchFn(),
-      networkTimeout.promise
-    ]);
-    networkTimeout.clearNetworkTimeout();
-    const json = await response.json();
-    if ("needConfirmation" in json) {
-      throw _makeTaggedError(auth, "account-exists-with-different-credential", json);
-    }
-    if (response.ok && !("errorMessage" in json)) {
-      return json;
-    } else {
-      const errorMessage = response.ok ? json.errorMessage : json.error.message;
-      const [serverErrorCode, serverErrorMessage] = errorMessage.split(" : ");
-      if (serverErrorCode === "FEDERATED_USER_ID_ALREADY_LINKED") {
-        throw _makeTaggedError(auth, "credential-already-in-use", json);
-      } else if (serverErrorCode === "EMAIL_EXISTS") {
-        throw _makeTaggedError(auth, "email-already-in-use", json);
-      }
-      const authError = errorMap[serverErrorCode] || serverErrorCode.toLowerCase().replace(/[_\s]+/g, "-");
-      if (serverErrorMessage) {
-        throw _errorWithCustomMessage(auth, authError, serverErrorMessage);
-      } else {
-        _fail(auth, authError);
-      }
-    }
-  } catch (e) {
-    if (e instanceof FirebaseError) {
-      throw e;
-    }
-    _fail(auth, "network-request-failed");
-  }
-}
-function _getFinalTarget(auth, host, path, query2) {
-  const base2 = `${host}${path}?${query2}`;
-  if (!auth.config.emulator) {
-    return `${auth.config.apiScheme}://${base2}`;
-  }
-  return _emulatorUrl(auth.config, base2);
-}
-function _makeTaggedError(auth, code, response) {
-  const errorParams = {
-    appName: auth.name
-  };
-  if (response.email) {
-    errorParams.email = response.email;
-  }
-  if (response.phoneNumber) {
-    errorParams.phoneNumber = response.phoneNumber;
-  }
-  const error3 = _createError(auth, code, errorParams);
-  error3.customData._tokenResponse = response;
-  return error3;
-}
-async function deleteAccount(auth, request) {
-  return _performApiRequest(auth, "POST", "/v1/accounts:delete", request);
-}
-async function getAccountInfo(auth, request) {
-  return _performApiRequest(auth, "POST", "/v1/accounts:lookup", request);
-}
-function utcTimestampToDateString(utcTimestamp) {
-  if (!utcTimestamp) {
-    return void 0;
-  }
-  try {
-    const date = new Date(Number(utcTimestamp));
-    if (!isNaN(date.getTime())) {
-      return date.toUTCString();
-    }
-  } catch (e) {
-  }
-  return void 0;
-}
-async function getIdTokenResult(user2, forceRefresh = false) {
-  const userInternal = getModularInstance(user2);
-  const token = await userInternal.getIdToken(forceRefresh);
-  const claims = _parseToken(token);
-  _assert(claims && claims.exp && claims.auth_time && claims.iat, userInternal.auth, "internal-error");
-  const firebase = typeof claims.firebase === "object" ? claims.firebase : void 0;
-  const signInProvider = firebase === null || firebase === void 0 ? void 0 : firebase["sign_in_provider"];
-  return {
-    claims,
-    token,
-    authTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.auth_time)),
-    issuedAtTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.iat)),
-    expirationTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.exp)),
-    signInProvider: signInProvider || null,
-    signInSecondFactor: (firebase === null || firebase === void 0 ? void 0 : firebase["sign_in_second_factor"]) || null
-  };
-}
-function secondsStringToMilliseconds(seconds) {
-  return Number(seconds) * 1e3;
-}
-function _parseToken(token) {
-  const [algorithm, payload, signature] = token.split(".");
-  if (algorithm === void 0 || payload === void 0 || signature === void 0) {
-    _logError("JWT malformed, contained fewer than 3 sections");
-    return null;
-  }
-  try {
-    const decoded = base64Decode(payload);
-    if (!decoded) {
-      _logError("Failed to decode base64 JWT payload");
-      return null;
-    }
-    return JSON.parse(decoded);
-  } catch (e) {
-    _logError("Caught error parsing JWT payload as JSON", e);
-    return null;
-  }
-}
-function _tokenExpiresIn(token) {
-  const parsedToken = _parseToken(token);
-  _assert(parsedToken, "internal-error");
-  _assert(typeof parsedToken.exp !== "undefined", "internal-error");
-  _assert(typeof parsedToken.iat !== "undefined", "internal-error");
-  return Number(parsedToken.exp) - Number(parsedToken.iat);
-}
-async function _logoutIfInvalidated(user2, promise, bypassAuthState = false) {
-  if (bypassAuthState) {
-    return promise;
-  }
-  try {
-    return await promise;
-  } catch (e) {
-    if (e instanceof FirebaseError && isUserInvalidated(e)) {
-      if (user2.auth.currentUser === user2) {
-        await user2.auth.signOut();
-      }
-    }
-    throw e;
-  }
-}
-function isUserInvalidated({ code }) {
-  return code === `auth/${"user-disabled"}` || code === `auth/${"user-token-expired"}`;
-}
-async function _reloadWithoutSaving(user2) {
-  var _a;
-  const auth = user2.auth;
-  const idToken = await user2.getIdToken();
-  const response = await _logoutIfInvalidated(user2, getAccountInfo(auth, { idToken }));
-  _assert(response === null || response === void 0 ? void 0 : response.users.length, auth, "internal-error");
-  const coreAccount = response.users[0];
-  user2._notifyReloadListener(coreAccount);
-  const newProviderData = ((_a = coreAccount.providerUserInfo) === null || _a === void 0 ? void 0 : _a.length) ? extractProviderData(coreAccount.providerUserInfo) : [];
-  const providerData = mergeProviderData(user2.providerData, newProviderData);
-  const oldIsAnonymous = user2.isAnonymous;
-  const newIsAnonymous = !(user2.email && coreAccount.passwordHash) && !(providerData === null || providerData === void 0 ? void 0 : providerData.length);
-  const isAnonymous = !oldIsAnonymous ? false : newIsAnonymous;
-  const updates = {
-    uid: coreAccount.localId,
-    displayName: coreAccount.displayName || null,
-    photoURL: coreAccount.photoUrl || null,
-    email: coreAccount.email || null,
-    emailVerified: coreAccount.emailVerified || false,
-    phoneNumber: coreAccount.phoneNumber || null,
-    tenantId: coreAccount.tenantId || null,
-    providerData,
-    metadata: new UserMetadata(coreAccount.createdAt, coreAccount.lastLoginAt),
-    isAnonymous
-  };
-  Object.assign(user2, updates);
-}
-async function reload(user2) {
-  const userInternal = getModularInstance(user2);
-  await _reloadWithoutSaving(userInternal);
-  await userInternal.auth._persistUserIfCurrent(userInternal);
-  userInternal.auth._notifyListenersIfCurrent(userInternal);
-}
-function mergeProviderData(original, newData) {
-  const deduped = original.filter((o) => !newData.some((n) => n.providerId === o.providerId));
-  return [...deduped, ...newData];
-}
-function extractProviderData(providers) {
-  return providers.map((_a) => {
-    var { providerId } = _a, provider = __rest(_a, ["providerId"]);
-    return {
-      providerId,
-      uid: provider.rawId || "",
-      displayName: provider.displayName || null,
-      email: provider.email || null,
-      phoneNumber: provider.phoneNumber || null,
-      photoURL: provider.photoUrl || null
-    };
-  });
-}
-async function requestStsToken(auth, refreshToken) {
-  const response = await _performFetchWithErrorHandling(auth, {}, () => {
-    const body = querystring({
-      "grant_type": "refresh_token",
-      "refresh_token": refreshToken
-    }).slice(1);
-    const { tokenApiHost, apiKey } = auth.config;
-    const url = _getFinalTarget(auth, tokenApiHost, "/v1/token", `key=${apiKey}`);
-    return FetchProvider.fetch()(url, {
-      method: "POST",
-      headers: {
-        "X-Client-Version": auth._getSdkClientVersion(),
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body
-    });
-  });
-  return {
-    accessToken: response.access_token,
-    expiresIn: response.expires_in,
-    refreshToken: response.refresh_token
-  };
-}
-function assertStringOrUndefined(assertion, appName) {
-  _assert(typeof assertion === "string" || typeof assertion === "undefined", "internal-error", { appName });
-}
-function _persistenceKeyName(key, apiKey, appName) {
-  return `${"firebase"}:${key}:${apiKey}:${appName}`;
-}
-function _getBrowserName(userAgent) {
-  const ua = userAgent.toLowerCase();
-  if (ua.includes("opera/") || ua.includes("opr/") || ua.includes("opios/")) {
-    return "Opera";
-  } else if (_isIEMobile(ua)) {
-    return "IEMobile";
-  } else if (ua.includes("msie") || ua.includes("trident/")) {
-    return "IE";
-  } else if (ua.includes("edge/")) {
-    return "Edge";
-  } else if (_isFirefox(ua)) {
-    return "Firefox";
-  } else if (ua.includes("silk/")) {
-    return "Silk";
-  } else if (_isBlackBerry(ua)) {
-    return "Blackberry";
-  } else if (_isWebOS(ua)) {
-    return "Webos";
-  } else if (_isSafari(ua)) {
-    return "Safari";
-  } else if ((ua.includes("chrome/") || _isChromeIOS(ua)) && !ua.includes("edge/")) {
-    return "Chrome";
-  } else if (_isAndroid(ua)) {
-    return "Android";
-  } else {
-    const re = /([a-zA-Z\d\.]+)\/[a-zA-Z\d\.]*$/;
-    const matches2 = userAgent.match(re);
-    if ((matches2 === null || matches2 === void 0 ? void 0 : matches2.length) === 2) {
-      return matches2[1];
-    }
-  }
-  return "Other";
-}
-function _isFirefox(ua = getUA()) {
-  return /firefox\//i.test(ua);
-}
-function _isSafari(userAgent = getUA()) {
-  const ua = userAgent.toLowerCase();
-  return ua.includes("safari/") && !ua.includes("chrome/") && !ua.includes("crios/") && !ua.includes("android");
-}
-function _isChromeIOS(ua = getUA()) {
-  return /crios\//i.test(ua);
-}
-function _isIEMobile(ua = getUA()) {
-  return /iemobile/i.test(ua);
-}
-function _isAndroid(ua = getUA()) {
-  return /android/i.test(ua);
-}
-function _isBlackBerry(ua = getUA()) {
-  return /blackberry/i.test(ua);
-}
-function _isWebOS(ua = getUA()) {
-  return /webos/i.test(ua);
-}
-function _getClientVersion(clientPlatform, frameworks = []) {
-  let reportedPlatform;
-  switch (clientPlatform) {
-    case "Browser":
-      reportedPlatform = _getBrowserName(getUA());
-      break;
-    case "Worker":
-      reportedPlatform = `${_getBrowserName(getUA())}-${clientPlatform}`;
-      break;
-    default:
-      reportedPlatform = clientPlatform;
-  }
-  const reportedFrameworks = frameworks.length ? frameworks.join(",") : "FirebaseCore-web";
-  return `${reportedPlatform}/${"JsCore"}/${SDK_VERSION}/${reportedFrameworks}`;
-}
-function _castAuth(auth) {
-  return getModularInstance(auth);
-}
-function getVersionForPlatform(clientPlatform) {
-  switch (clientPlatform) {
-    case "Node":
-      return "node";
-    case "ReactNative":
-      return "rn";
-    case "Worker":
-      return "webworker";
-    case "Cordova":
-      return "cordova";
-    default:
-      return void 0;
-  }
-}
-function registerAuth(clientPlatform) {
-  _registerComponent(new Component("auth", (container, { options: deps }) => {
-    const app = container.getProvider("app").getImmediate();
-    const { apiKey, authDomain } = app.options;
-    return ((app2) => {
-      _assert(apiKey && !apiKey.includes(":"), "invalid-api-key", { appName: app2.name });
-      _assert(!(authDomain === null || authDomain === void 0 ? void 0 : authDomain.includes(":")), "argument-error", {
-        appName: app2.name
-      });
-      const config = {
-        apiKey,
-        authDomain,
-        clientPlatform,
-        apiHost: "identitytoolkit.googleapis.com",
-        tokenApiHost: "securetoken.googleapis.com",
-        apiScheme: "https",
-        sdkClientVersion: _getClientVersion(clientPlatform)
-      };
-      const authInstance = new AuthImpl(app2, config);
-      _initializeAuthInstance(authInstance, deps);
-      return authInstance;
-    })(app);
-  }, "PUBLIC").setInstantiationMode("EXPLICIT").setInstanceCreatedCallback((container, _instanceIdentifier, _instance) => {
-    const authInternalProvider = container.getProvider("auth-internal");
-    authInternalProvider.initialize();
-  }));
-  _registerComponent(new Component("auth-internal", (container) => {
-    const auth = _castAuth(container.getProvider("auth").getImmediate());
-    return ((auth2) => new AuthInterop(auth2))(auth);
-  }, "PRIVATE").setInstantiationMode("EXPLICIT"));
-  registerVersion(name, version, getVersionForPlatform(clientPlatform));
-  registerVersion(name, version, "esm2017");
-}
-var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, stringToByteArray$1, byteArrayToString, base64, base64Decode, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, ObserverProxy, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1$1, name$p, version$2, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, name$1, version$1, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob4, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name, version, AuthInterop;
-var init_index_c327074d_39b2c669 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-39b2c669.js"() {
-    init_shims();
-    init_store_46a11b64();
-    import_stream2 = __toModule(require("stream"));
-    import_http2 = __toModule(require("http"));
-    import_url2 = __toModule(require("url"));
-    import_punycode = __toModule(require("punycode"));
-    import_https2 = __toModule(require("https"));
-    import_zlib2 = __toModule(require("zlib"));
     stringToByteArray$1 = function(str) {
       const out = [];
       let p = 0;
@@ -6401,6 +5278,10 @@ var init_index_c327074d_39b2c669 = __esm({
         }
       }
     };
+    base64Encode = function(str) {
+      const utf8Bytes = stringToByteArray$1(str);
+      return base64.encodeByteArray(utf8Bytes, true);
+    };
     base64Decode = function(str) {
       try {
         return base64.decodeString(str, true);
@@ -6409,10 +5290,40 @@ var init_index_c327074d_39b2c669 = __esm({
       }
       return null;
     };
+    Deferred = class {
+      constructor() {
+        this.reject = () => {
+        };
+        this.resolve = () => {
+        };
+        this.promise = new Promise((resolve3, reject) => {
+          this.resolve = resolve3;
+          this.reject = reject;
+        });
+      }
+      wrapCallback(callback) {
+        return (error4, value) => {
+          if (error4) {
+            this.reject(error4);
+          } else {
+            this.resolve(value);
+          }
+          if (typeof callback === "function") {
+            this.promise.catch(() => {
+            });
+            if (callback.length === 1) {
+              callback(error4);
+            } else {
+              callback(error4, value);
+            }
+          }
+        };
+      }
+    };
     ERROR_NAME = "FirebaseError";
     FirebaseError = class extends Error {
-      constructor(code, message, customData) {
-        super(message);
+      constructor(code, message2, customData) {
+        super(message2);
         this.code = code;
         this.customData = customData;
         this.name = ERROR_NAME;
@@ -6432,13 +5343,188 @@ var init_index_c327074d_39b2c669 = __esm({
         const customData = data[0] || {};
         const fullCode = `${this.service}/${code}`;
         const template2 = this.errors[code];
-        const message = template2 ? replaceTemplate(template2, customData) : "Error";
-        const fullMessage = `${this.serviceName}: ${message} (${fullCode}).`;
-        const error3 = new FirebaseError(fullCode, fullMessage, customData);
-        return error3;
+        const message2 = template2 ? replaceTemplate(template2, customData) : "Error";
+        const fullMessage = `${this.serviceName}: ${message2} (${fullCode}).`;
+        const error4 = new FirebaseError(fullCode, fullMessage, customData);
+        return error4;
       }
     };
     PATTERN = /\{\$([^}]+)}/g;
+    decode = function(token) {
+      let header = {}, claims = {}, data = {}, signature = "";
+      try {
+        const parts = token.split(".");
+        header = jsonEval(base64Decode(parts[0]) || "");
+        claims = jsonEval(base64Decode(parts[1]) || "");
+        signature = parts[2];
+        data = claims["d"] || {};
+        delete claims["d"];
+      } catch (e) {
+      }
+      return {
+        header,
+        claims,
+        data,
+        signature
+      };
+    };
+    isValidFormat = function(token) {
+      const decoded = decode(token), claims = decoded.claims;
+      return !!claims && typeof claims === "object" && claims.hasOwnProperty("iat");
+    };
+    isAdmin = function(token) {
+      const claims = decode(token).claims;
+      return typeof claims === "object" && claims["admin"] === true;
+    };
+    Sha1 = class {
+      constructor() {
+        this.chain_ = [];
+        this.buf_ = [];
+        this.W_ = [];
+        this.pad_ = [];
+        this.inbuf_ = 0;
+        this.total_ = 0;
+        this.blockSize = 512 / 8;
+        this.pad_[0] = 128;
+        for (let i = 1; i < this.blockSize; ++i) {
+          this.pad_[i] = 0;
+        }
+        this.reset();
+      }
+      reset() {
+        this.chain_[0] = 1732584193;
+        this.chain_[1] = 4023233417;
+        this.chain_[2] = 2562383102;
+        this.chain_[3] = 271733878;
+        this.chain_[4] = 3285377520;
+        this.inbuf_ = 0;
+        this.total_ = 0;
+      }
+      compress_(buf, offset) {
+        if (!offset) {
+          offset = 0;
+        }
+        const W = this.W_;
+        if (typeof buf === "string") {
+          for (let i = 0; i < 16; i++) {
+            W[i] = buf.charCodeAt(offset) << 24 | buf.charCodeAt(offset + 1) << 16 | buf.charCodeAt(offset + 2) << 8 | buf.charCodeAt(offset + 3);
+            offset += 4;
+          }
+        } else {
+          for (let i = 0; i < 16; i++) {
+            W[i] = buf[offset] << 24 | buf[offset + 1] << 16 | buf[offset + 2] << 8 | buf[offset + 3];
+            offset += 4;
+          }
+        }
+        for (let i = 16; i < 80; i++) {
+          const t = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
+          W[i] = (t << 1 | t >>> 31) & 4294967295;
+        }
+        let a = this.chain_[0];
+        let b = this.chain_[1];
+        let c = this.chain_[2];
+        let d2 = this.chain_[3];
+        let e = this.chain_[4];
+        let f, k;
+        for (let i = 0; i < 80; i++) {
+          if (i < 40) {
+            if (i < 20) {
+              f = d2 ^ b & (c ^ d2);
+              k = 1518500249;
+            } else {
+              f = b ^ c ^ d2;
+              k = 1859775393;
+            }
+          } else {
+            if (i < 60) {
+              f = b & c | d2 & (b | c);
+              k = 2400959708;
+            } else {
+              f = b ^ c ^ d2;
+              k = 3395469782;
+            }
+          }
+          const t = (a << 5 | a >>> 27) + f + e + k + W[i] & 4294967295;
+          e = d2;
+          d2 = c;
+          c = (b << 30 | b >>> 2) & 4294967295;
+          b = a;
+          a = t;
+        }
+        this.chain_[0] = this.chain_[0] + a & 4294967295;
+        this.chain_[1] = this.chain_[1] + b & 4294967295;
+        this.chain_[2] = this.chain_[2] + c & 4294967295;
+        this.chain_[3] = this.chain_[3] + d2 & 4294967295;
+        this.chain_[4] = this.chain_[4] + e & 4294967295;
+      }
+      update(bytes, length) {
+        if (bytes == null) {
+          return;
+        }
+        if (length === void 0) {
+          length = bytes.length;
+        }
+        const lengthMinusBlock = length - this.blockSize;
+        let n = 0;
+        const buf = this.buf_;
+        let inbuf = this.inbuf_;
+        while (n < length) {
+          if (inbuf === 0) {
+            while (n <= lengthMinusBlock) {
+              this.compress_(bytes, n);
+              n += this.blockSize;
+            }
+          }
+          if (typeof bytes === "string") {
+            while (n < length) {
+              buf[inbuf] = bytes.charCodeAt(n);
+              ++inbuf;
+              ++n;
+              if (inbuf === this.blockSize) {
+                this.compress_(buf);
+                inbuf = 0;
+                break;
+              }
+            }
+          } else {
+            while (n < length) {
+              buf[inbuf] = bytes[n];
+              ++inbuf;
+              ++n;
+              if (inbuf === this.blockSize) {
+                this.compress_(buf);
+                inbuf = 0;
+                break;
+              }
+            }
+          }
+        }
+        this.inbuf_ = inbuf;
+        this.total_ += length;
+      }
+      digest() {
+        const digest = [];
+        let totalBits = this.total_ * 8;
+        if (this.inbuf_ < 56) {
+          this.update(this.pad_, 56 - this.inbuf_);
+        } else {
+          this.update(this.pad_, this.blockSize - (this.inbuf_ - 56));
+        }
+        for (let i = this.blockSize - 1; i >= 56; i--) {
+          this.buf_[i] = totalBits & 255;
+          totalBits /= 256;
+        }
+        this.compress_(this.buf_);
+        let n = 0;
+        for (let i = 0; i < 5; i++) {
+          for (let j = 24; j >= 0; j -= 8) {
+            digest[n] = this.chain_[i] >> j & 255;
+            ++n;
+          }
+        }
+        return digest;
+      }
+    };
     ObserverProxy = class {
       constructor(executor, onNoObservers) {
         this.observers = [];
@@ -6458,11 +5544,11 @@ var init_index_c327074d_39b2c669 = __esm({
           observer.next(value);
         });
       }
-      error(error3) {
+      error(error4) {
         this.forEachObserver((observer) => {
-          observer.error(error3);
+          observer.error(error4);
         });
-        this.close(error3);
+        this.close(error4);
       }
       complete() {
         this.forEachObserver((observer) => {
@@ -6470,9 +5556,9 @@ var init_index_c327074d_39b2c669 = __esm({
         });
         this.close();
       }
-      subscribe(nextOrObserver, error3, complete) {
+      subscribe(nextOrObserver, error4, complete) {
         let observer;
-        if (nextOrObserver === void 0 && error3 === void 0 && complete === void 0) {
+        if (nextOrObserver === void 0 && error4 === void 0 && complete === void 0) {
           throw new Error("Missing Observer.");
         }
         if (implementsAnyMethods(nextOrObserver, [
@@ -6484,7 +5570,7 @@ var init_index_c327074d_39b2c669 = __esm({
         } else {
           observer = {
             next: nextOrObserver,
-            error: error3,
+            error: error4,
             complete
           };
         }
@@ -6559,6 +5645,54 @@ var init_index_c327074d_39b2c669 = __esm({
         });
       }
     };
+    stringToByteArray = function(str) {
+      const out = [];
+      let p = 0;
+      for (let i = 0; i < str.length; i++) {
+        let c = str.charCodeAt(i);
+        if (c >= 55296 && c <= 56319) {
+          const high = c - 55296;
+          i++;
+          assert(i < str.length, "Surrogate pair missing trail surrogate.");
+          const low = str.charCodeAt(i) - 56320;
+          c = 65536 + (high << 10) + low;
+        }
+        if (c < 128) {
+          out[p++] = c;
+        } else if (c < 2048) {
+          out[p++] = c >> 6 | 192;
+          out[p++] = c & 63 | 128;
+        } else if (c < 65536) {
+          out[p++] = c >> 12 | 224;
+          out[p++] = c >> 6 & 63 | 128;
+          out[p++] = c & 63 | 128;
+        } else {
+          out[p++] = c >> 18 | 240;
+          out[p++] = c >> 12 & 63 | 128;
+          out[p++] = c >> 6 & 63 | 128;
+          out[p++] = c & 63 | 128;
+        }
+      }
+      return out;
+    };
+    stringLength = function(str) {
+      let p = 0;
+      for (let i = 0; i < str.length; i++) {
+        const c = str.charCodeAt(i);
+        if (c < 128) {
+          p++;
+        } else if (c < 2048) {
+          p += 2;
+        } else if (c >= 55296 && c <= 56319) {
+          p += 4;
+          i++;
+        } else {
+          p += 3;
+        }
+      }
+      return p;
+    };
+    CONSTANTS.NODE_CLIENT = true;
     Component = class {
       constructor(name22, instanceFactory, type) {
         this.name = name22;
@@ -6610,14 +5744,14 @@ var init_index_c327074d_39b2c669 = __esm({
       [LogLevel.WARN]: "warn",
       [LogLevel.ERROR]: "error"
     };
-    defaultLogHandler = (instance, logType, ...args) => {
-      if (logType < instance.logLevel) {
+    defaultLogHandler = (instance2, logType, ...args) => {
+      if (logType < instance2.logLevel) {
         return;
       }
       const now = new Date().toISOString();
       const method = ConsoleMethod[logType];
       if (method) {
-        console[method](`[${now}]  ${instance.name}:`, ...args);
+        console[method](`[${now}]  ${instance2.name}:`, ...args);
       } else {
         throw new Error(`Attempted to log a message with an invalid logType (value: ${logType})`);
       }
@@ -6694,7 +5828,7 @@ var init_index_c327074d_39b2c669 = __esm({
       }
     };
     name$o = "@firebase/app";
-    version$1$1 = "0.7.9";
+    version$1 = "0.7.9";
     logger = new Logger("@firebase/app");
     name$n = "@firebase/app-compat";
     name$m = "@firebase/analytics-compat";
@@ -6718,9 +5852,9 @@ var init_index_c327074d_39b2c669 = __esm({
     name$4 = "@firebase/storage";
     name$3 = "@firebase/storage-compat";
     name$2 = "@firebase/firestore";
-    name$1$1 = "@firebase/firestore-compat";
-    name$p = "firebase";
-    version$2 = "9.5.0";
+    name$1 = "@firebase/firestore-compat";
+    name = "firebase";
+    version = "9.5.0";
     PLATFORM_LOG_STRING = {
       [name$o]: "fire-core",
       [name$n]: "fire-core-compat",
@@ -6745,9 +5879,9 @@ var init_index_c327074d_39b2c669 = __esm({
       [name$4]: "fire-gcs",
       [name$3]: "fire-gcs-compat",
       [name$2]: "fire-fst",
-      [name$1$1]: "fire-fst-compat",
+      [name$1]: "fire-fst-compat",
       "fire-js": "fire-js",
-      [name$p]: "fire-js-all"
+      [name]: "fire-js-all"
     };
     _apps = new Map();
     _components = new Map();
@@ -6760,11 +5894,1220 @@ var init_index_c327074d_39b2c669 = __esm({
       ["invalid-log-argument"]: "First argument to `onLog` must be null or a function."
     };
     new ErrorFactory("app", "Firebase", ERRORS);
-    SDK_VERSION = version$2;
+    SDK_VERSION = version;
     registerCoreComponents("");
-    name$1 = "firebase";
-    version$1 = "9.5.0";
-    registerVersion(name$1, version$1, "app");
+    extendStatics = function(d2, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b2) {
+        d22.__proto__ = b2;
+      } || function(d22, b2) {
+        for (var p in b2)
+          if (Object.prototype.hasOwnProperty.call(b2, p))
+            d22[p] = b2[p];
+      };
+      return extendStatics(d2, b);
+    };
+    __assign = function() {
+      __assign = Object.assign || function __assign2(t) {
+        for (var s2, i = 1, n = arguments.length; i < n; i++) {
+          s2 = arguments[i];
+          for (var p in s2)
+            if (Object.prototype.hasOwnProperty.call(s2, p))
+              t[p] = s2[p];
+        }
+        return t;
+      };
+      return __assign.apply(this, arguments);
+    };
+    subscriber_queue = [];
+    canvasHeight = writable(0);
+    canvasWidth = writable(0);
+    hasFetchedUser = writable(false);
+    user = writable({});
+    currentTool = writable({
+      type: "pencil",
+      color: "white",
+      lineWidth: 3
+    });
+    recordState = writable("pre_record");
+    dailyMicStream = writable(null);
+    roomToPeople = writable({});
+  }
+});
+
+// .svelte-kit/output/server/chunks/index-c327074d-6185bbbf.js
+function sign(x) {
+  return x < 0 ? -1 : 1;
+}
+function evenRound(x) {
+  if (x % 1 === 0.5 && (x & 1) === 0) {
+    return Math.floor(x);
+  } else {
+    return Math.round(x);
+  }
+}
+function createNumberConversion(bitLength, typeOpts) {
+  if (!typeOpts.unsigned) {
+    --bitLength;
+  }
+  const lowerBound = typeOpts.unsigned ? 0 : -Math.pow(2, bitLength);
+  const upperBound = Math.pow(2, bitLength) - 1;
+  const moduloVal = typeOpts.moduloBitLength ? Math.pow(2, typeOpts.moduloBitLength) : Math.pow(2, bitLength);
+  const moduloBound = typeOpts.moduloBitLength ? Math.pow(2, typeOpts.moduloBitLength - 1) : Math.pow(2, bitLength - 1);
+  return function(V, opts) {
+    if (!opts)
+      opts = {};
+    let x = +V;
+    if (opts.enforceRange) {
+      if (!Number.isFinite(x)) {
+        throw new TypeError("Argument is not a finite number");
+      }
+      x = sign(x) * Math.floor(Math.abs(x));
+      if (x < lowerBound || x > upperBound) {
+        throw new TypeError("Argument is not in byte range");
+      }
+      return x;
+    }
+    if (!isNaN(x) && opts.clamp) {
+      x = evenRound(x);
+      if (x < lowerBound)
+        x = lowerBound;
+      if (x > upperBound)
+        x = upperBound;
+      return x;
+    }
+    if (!Number.isFinite(x) || x === 0) {
+      return 0;
+    }
+    x = sign(x) * Math.floor(Math.abs(x));
+    x = x % moduloVal;
+    if (!typeOpts.unsigned && x >= moduloBound) {
+      return x - moduloVal;
+    } else if (typeOpts.unsigned) {
+      if (x < 0) {
+        x += moduloVal;
+      } else if (x === -0) {
+        return 0;
+      }
+    }
+    return x;
+  };
+}
+function normalize(str) {
+  return str.split("\0").map(function(s2) {
+    return s2.normalize("NFC");
+  }).join("\0");
+}
+function findStatus(val) {
+  var start2 = 0;
+  var end = mappingTable.length - 1;
+  while (start2 <= end) {
+    var mid = Math.floor((start2 + end) / 2);
+    var target = mappingTable[mid];
+    if (target[0][0] <= val && target[0][1] >= val) {
+      return target;
+    } else if (target[0][0] > val) {
+      end = mid - 1;
+    } else {
+      start2 = mid + 1;
+    }
+  }
+  return null;
+}
+function countSymbols(string) {
+  return string.replace(regexAstralSymbols, "_").length;
+}
+function mapChars(domain_name, useSTD3, processing_option) {
+  var hasError = false;
+  var processed = "";
+  var len = countSymbols(domain_name);
+  for (var i = 0; i < len; ++i) {
+    var codePoint = domain_name.codePointAt(i);
+    var status = findStatus(codePoint);
+    switch (status[1]) {
+      case "disallowed":
+        hasError = true;
+        processed += String.fromCodePoint(codePoint);
+        break;
+      case "ignored":
+        break;
+      case "mapped":
+        processed += String.fromCodePoint.apply(String, status[2]);
+        break;
+      case "deviation":
+        if (processing_option === PROCESSING_OPTIONS.TRANSITIONAL) {
+          processed += String.fromCodePoint.apply(String, status[2]);
+        } else {
+          processed += String.fromCodePoint(codePoint);
+        }
+        break;
+      case "valid":
+        processed += String.fromCodePoint(codePoint);
+        break;
+      case "disallowed_STD3_mapped":
+        if (useSTD3) {
+          hasError = true;
+          processed += String.fromCodePoint(codePoint);
+        } else {
+          processed += String.fromCodePoint.apply(String, status[2]);
+        }
+        break;
+      case "disallowed_STD3_valid":
+        if (useSTD3) {
+          hasError = true;
+        }
+        processed += String.fromCodePoint(codePoint);
+        break;
+    }
+  }
+  return {
+    string: processed,
+    error: hasError
+  };
+}
+function validateLabel(label, processing_option) {
+  if (label.substr(0, 4) === "xn--") {
+    label = punycode.toUnicode(label);
+  }
+  var error4 = false;
+  if (normalize(label) !== label || label[3] === "-" && label[4] === "-" || label[0] === "-" || label[label.length - 1] === "-" || label.indexOf(".") !== -1 || label.search(combiningMarksRegex) === 0) {
+    error4 = true;
+  }
+  var len = countSymbols(label);
+  for (var i = 0; i < len; ++i) {
+    var status = findStatus(label.codePointAt(i));
+    if (processing === PROCESSING_OPTIONS.TRANSITIONAL && status[1] !== "valid" || processing === PROCESSING_OPTIONS.NONTRANSITIONAL && status[1] !== "valid" && status[1] !== "deviation") {
+      error4 = true;
+      break;
+    }
+  }
+  return {
+    label,
+    error: error4
+  };
+}
+function processing(domain_name, useSTD3, processing_option) {
+  var result = mapChars(domain_name, useSTD3, processing_option);
+  result.string = normalize(result.string);
+  var labels = result.string.split(".");
+  for (var i = 0; i < labels.length; ++i) {
+    try {
+      var validation = validateLabel(labels[i]);
+      labels[i] = validation.label;
+      result.error = result.error || validation.error;
+    } catch (e) {
+      result.error = true;
+    }
+  }
+  return {
+    string: labels.join("."),
+    error: result.error
+  };
+}
+function FetchError2(message2, type, systemError) {
+  Error.call(this, message2);
+  this.message = message2;
+  this.type = type;
+  if (systemError) {
+    this.code = this.errno = systemError.code;
+  }
+  Error.captureStackTrace(this, this.constructor);
+}
+function Body2(body) {
+  var _this = this;
+  var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$size = _ref.size;
+  let size = _ref$size === void 0 ? 0 : _ref$size;
+  var _ref$timeout = _ref.timeout;
+  let timeout = _ref$timeout === void 0 ? 0 : _ref$timeout;
+  if (body == null) {
+    body = null;
+  } else if (isURLSearchParams(body)) {
+    body = Buffer.from(body.toString());
+  } else if (isBlob2(body))
+    ;
+  else if (Buffer.isBuffer(body))
+    ;
+  else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
+    body = Buffer.from(body);
+  } else if (ArrayBuffer.isView(body)) {
+    body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
+  } else if (body instanceof import_stream2.default)
+    ;
+  else {
+    body = Buffer.from(String(body));
+  }
+  this[INTERNALS2] = {
+    body,
+    disturbed: false,
+    error: null
+  };
+  this.size = size;
+  this.timeout = timeout;
+  if (body instanceof import_stream2.default) {
+    body.on("error", function(err) {
+      const error4 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+      _this[INTERNALS2].error = error4;
+    });
+  }
+}
+function consumeBody2() {
+  var _this4 = this;
+  if (this[INTERNALS2].disturbed) {
+    return Body2.Promise.reject(new TypeError(`body used already for: ${this.url}`));
+  }
+  this[INTERNALS2].disturbed = true;
+  if (this[INTERNALS2].error) {
+    return Body2.Promise.reject(this[INTERNALS2].error);
+  }
+  let body = this.body;
+  if (body === null) {
+    return Body2.Promise.resolve(Buffer.alloc(0));
+  }
+  if (isBlob2(body)) {
+    body = body.stream();
+  }
+  if (Buffer.isBuffer(body)) {
+    return Body2.Promise.resolve(body);
+  }
+  if (!(body instanceof import_stream2.default)) {
+    return Body2.Promise.resolve(Buffer.alloc(0));
+  }
+  let accum = [];
+  let accumBytes = 0;
+  let abort = false;
+  return new Body2.Promise(function(resolve3, reject) {
+    let resTimeout;
+    if (_this4.timeout) {
+      resTimeout = setTimeout(function() {
+        abort = true;
+        reject(new FetchError2(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
+      }, _this4.timeout);
+    }
+    body.on("error", function(err) {
+      if (err.name === "AbortError") {
+        abort = true;
+        reject(err);
+      } else {
+        reject(new FetchError2(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
+      }
+    });
+    body.on("data", function(chunk) {
+      if (abort || chunk === null) {
+        return;
+      }
+      if (_this4.size && accumBytes + chunk.length > _this4.size) {
+        abort = true;
+        reject(new FetchError2(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
+        return;
+      }
+      accumBytes += chunk.length;
+      accum.push(chunk);
+    });
+    body.on("end", function() {
+      if (abort) {
+        return;
+      }
+      clearTimeout(resTimeout);
+      try {
+        resolve3(Buffer.concat(accum, accumBytes));
+      } catch (err) {
+        reject(new FetchError2(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
+      }
+    });
+  });
+}
+function convertBody(buffer, headers2) {
+  if (typeof convert !== "function") {
+    throw new Error("The package `encoding` must be installed to use the textConverted() function");
+  }
+  const ct = headers2.get("content-type");
+  let charset = "utf-8";
+  let res, str;
+  if (ct) {
+    res = /charset=([^;]*)/i.exec(ct);
+  }
+  str = buffer.slice(0, 1024).toString();
+  if (!res && str) {
+    res = /<meta.+?charset=(['"])(.+?)\1/i.exec(str);
+  }
+  if (!res && str) {
+    res = /<meta[\s]+?http-equiv=(['"])content-type\1[\s]+?content=(['"])(.+?)\2/i.exec(str);
+    if (!res) {
+      res = /<meta[\s]+?content=(['"])(.+?)\1[\s]+?http-equiv=(['"])content-type\3/i.exec(str);
+      if (res) {
+        res.pop();
+      }
+    }
+    if (res) {
+      res = /charset=(.*)/i.exec(res.pop());
+    }
+  }
+  if (!res && str) {
+    res = /<\?xml.+?encoding=(['"])(.+?)\1/i.exec(str);
+  }
+  if (res) {
+    charset = res.pop();
+    if (charset === "gb2312" || charset === "gbk") {
+      charset = "gb18030";
+    }
+  }
+  return convert(buffer, "UTF-8", charset).toString();
+}
+function isURLSearchParams(obj) {
+  if (typeof obj !== "object" || typeof obj.append !== "function" || typeof obj.delete !== "function" || typeof obj.get !== "function" || typeof obj.getAll !== "function" || typeof obj.has !== "function" || typeof obj.set !== "function") {
+    return false;
+  }
+  return obj.constructor.name === "URLSearchParams" || Object.prototype.toString.call(obj) === "[object URLSearchParams]" || typeof obj.sort === "function";
+}
+function isBlob2(obj) {
+  return typeof obj === "object" && typeof obj.arrayBuffer === "function" && typeof obj.type === "string" && typeof obj.stream === "function" && typeof obj.constructor === "function" && typeof obj.constructor.name === "string" && /^(Blob|File)$/.test(obj.constructor.name) && /^(Blob|File)$/.test(obj[Symbol.toStringTag]);
+}
+function clone2(instance2) {
+  let p1, p2;
+  let body = instance2.body;
+  if (instance2.bodyUsed) {
+    throw new Error("cannot clone body after it is used");
+  }
+  if (body instanceof import_stream2.default && typeof body.getBoundary !== "function") {
+    p1 = new PassThrough2();
+    p2 = new PassThrough2();
+    body.pipe(p1);
+    body.pipe(p2);
+    instance2[INTERNALS2].body = p1;
+    body = p2;
+  }
+  return body;
+}
+function extractContentType2(body) {
+  if (body === null) {
+    return null;
+  } else if (typeof body === "string") {
+    return "text/plain;charset=UTF-8";
+  } else if (isURLSearchParams(body)) {
+    return "application/x-www-form-urlencoded;charset=UTF-8";
+  } else if (isBlob2(body)) {
+    return body.type || null;
+  } else if (Buffer.isBuffer(body)) {
+    return null;
+  } else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
+    return null;
+  } else if (ArrayBuffer.isView(body)) {
+    return null;
+  } else if (typeof body.getBoundary === "function") {
+    return `multipart/form-data;boundary=${body.getBoundary()}`;
+  } else if (body instanceof import_stream2.default) {
+    return null;
+  } else {
+    return "text/plain;charset=UTF-8";
+  }
+}
+function getTotalBytes2(instance2) {
+  const body = instance2.body;
+  if (body === null) {
+    return 0;
+  } else if (isBlob2(body)) {
+    return body.size;
+  } else if (Buffer.isBuffer(body)) {
+    return body.length;
+  } else if (body && typeof body.getLengthSync === "function") {
+    if (body._lengthRetrievers && body._lengthRetrievers.length == 0 || body.hasKnownLength && body.hasKnownLength()) {
+      return body.getLengthSync();
+    }
+    return null;
+  } else {
+    return null;
+  }
+}
+function writeToStream2(dest, instance2) {
+  const body = instance2.body;
+  if (body === null) {
+    dest.end();
+  } else if (isBlob2(body)) {
+    body.stream().pipe(dest);
+  } else if (Buffer.isBuffer(body)) {
+    dest.write(body);
+    dest.end();
+  } else {
+    body.pipe(dest);
+  }
+}
+function validateName(name22) {
+  name22 = `${name22}`;
+  if (invalidTokenRegex.test(name22) || name22 === "") {
+    throw new TypeError(`${name22} is not a legal HTTP header name`);
+  }
+}
+function validateValue(value) {
+  value = `${value}`;
+  if (invalidHeaderCharRegex.test(value)) {
+    throw new TypeError(`${value} is not a legal HTTP header value`);
+  }
+}
+function find(map2, name22) {
+  name22 = name22.toLowerCase();
+  for (const key in map2) {
+    if (key.toLowerCase() === name22) {
+      return key;
+    }
+  }
+  return void 0;
+}
+function getHeaders(headers2) {
+  let kind = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key+value";
+  const keys = Object.keys(headers2[MAP]).sort();
+  return keys.map(kind === "key" ? function(k) {
+    return k.toLowerCase();
+  } : kind === "value" ? function(k) {
+    return headers2[MAP][k].join(", ");
+  } : function(k) {
+    return [k.toLowerCase(), headers2[MAP][k].join(", ")];
+  });
+}
+function createHeadersIterator(target, kind) {
+  const iterator = Object.create(HeadersIteratorPrototype);
+  iterator[INTERNAL] = {
+    target,
+    kind,
+    index: 0
+  };
+  return iterator;
+}
+function exportNodeCompatibleHeaders(headers2) {
+  const obj = Object.assign({ __proto__: null }, headers2[MAP]);
+  const hostHeaderKey = find(headers2[MAP], "Host");
+  if (hostHeaderKey !== void 0) {
+    obj[hostHeaderKey] = obj[hostHeaderKey][0];
+  }
+  return obj;
+}
+function createHeadersLenient(obj) {
+  const headers2 = new Headers2();
+  for (const name22 of Object.keys(obj)) {
+    if (invalidTokenRegex.test(name22)) {
+      continue;
+    }
+    if (Array.isArray(obj[name22])) {
+      for (const val of obj[name22]) {
+        if (invalidHeaderCharRegex.test(val)) {
+          continue;
+        }
+        if (headers2[MAP][name22] === void 0) {
+          headers2[MAP][name22] = [val];
+        } else {
+          headers2[MAP][name22].push(val);
+        }
+      }
+    } else if (!invalidHeaderCharRegex.test(obj[name22])) {
+      headers2[MAP][name22] = [obj[name22]];
+    }
+  }
+  return headers2;
+}
+function parseURL(urlStr) {
+  if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.exec(urlStr)) {
+    urlStr = new URL2(urlStr).toString();
+  }
+  return parse_url(urlStr);
+}
+function isRequest2(input) {
+  return typeof input === "object" && typeof input[INTERNALS$22] === "object";
+}
+function isAbortSignal2(signal) {
+  const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
+  return !!(proto && proto.constructor.name === "AbortSignal");
+}
+function getNodeRequestOptions2(request) {
+  const parsedURL = request[INTERNALS$22].parsedURL;
+  const headers2 = new Headers2(request[INTERNALS$22].headers);
+  if (!headers2.has("Accept")) {
+    headers2.set("Accept", "*/*");
+  }
+  if (!parsedURL.protocol || !parsedURL.hostname) {
+    throw new TypeError("Only absolute URLs are supported");
+  }
+  if (!/^https?:$/.test(parsedURL.protocol)) {
+    throw new TypeError("Only HTTP(S) protocols are supported");
+  }
+  if (request.signal && request.body instanceof import_stream2.default.Readable && !streamDestructionSupported) {
+    throw new Error("Cancellation of streamed requests with AbortSignal is not supported in node < 8");
+  }
+  let contentLengthValue = null;
+  if (request.body == null && /^(POST|PUT)$/i.test(request.method)) {
+    contentLengthValue = "0";
+  }
+  if (request.body != null) {
+    const totalBytes = getTotalBytes2(request);
+    if (typeof totalBytes === "number") {
+      contentLengthValue = String(totalBytes);
+    }
+  }
+  if (contentLengthValue) {
+    headers2.set("Content-Length", contentLengthValue);
+  }
+  if (!headers2.has("User-Agent")) {
+    headers2.set("User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)");
+  }
+  if (request.compress && !headers2.has("Accept-Encoding")) {
+    headers2.set("Accept-Encoding", "gzip,deflate");
+  }
+  let agent = request.agent;
+  if (typeof agent === "function") {
+    agent = agent(parsedURL);
+  }
+  if (!headers2.has("Connection") && !agent) {
+    headers2.set("Connection", "close");
+  }
+  return Object.assign({}, parsedURL, {
+    method: request.method,
+    headers: exportNodeCompatibleHeaders(headers2),
+    agent
+  });
+}
+function AbortError2(message2) {
+  Error.call(this, message2);
+  this.type = "aborted";
+  this.message = message2;
+  Error.captureStackTrace(this, this.constructor);
+}
+function fetch2(url2, opts) {
+  if (!fetch2.Promise) {
+    throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
+  }
+  Body2.Promise = fetch2.Promise;
+  return new fetch2.Promise(function(resolve3, reject) {
+    const request = new Request2(url2, opts);
+    const options2 = getNodeRequestOptions2(request);
+    const send = (options2.protocol === "https:" ? import_https2.default : import_http2.default).request;
+    const signal = request.signal;
+    let response = null;
+    const abort = function abort2() {
+      let error4 = new AbortError2("The user aborted a request.");
+      reject(error4);
+      if (request.body && request.body instanceof import_stream2.default.Readable) {
+        request.body.destroy(error4);
+      }
+      if (!response || !response.body)
+        return;
+      response.body.emit("error", error4);
+    };
+    if (signal && signal.aborted) {
+      abort();
+      return;
+    }
+    const abortAndFinalize = function abortAndFinalize2() {
+      abort();
+      finalize();
+    };
+    const req = send(options2);
+    let reqTimeout;
+    if (signal) {
+      signal.addEventListener("abort", abortAndFinalize);
+    }
+    function finalize() {
+      req.abort();
+      if (signal)
+        signal.removeEventListener("abort", abortAndFinalize);
+      clearTimeout(reqTimeout);
+    }
+    if (request.timeout) {
+      req.once("socket", function(socket) {
+        reqTimeout = setTimeout(function() {
+          reject(new FetchError2(`network timeout at: ${request.url}`, "request-timeout"));
+          finalize();
+        }, request.timeout);
+      });
+    }
+    req.on("error", function(err) {
+      reject(new FetchError2(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
+      finalize();
+    });
+    req.on("response", function(res) {
+      clearTimeout(reqTimeout);
+      const headers2 = createHeadersLenient(res.headers);
+      if (fetch2.isRedirect(res.statusCode)) {
+        const location2 = headers2.get("Location");
+        const locationURL = location2 === null ? null : resolve_url(request.url, location2);
+        switch (request.redirect) {
+          case "error":
+            reject(new FetchError2(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
+            finalize();
+            return;
+          case "manual":
+            if (locationURL !== null) {
+              try {
+                headers2.set("Location", locationURL);
+              } catch (err) {
+                reject(err);
+              }
+            }
+            break;
+          case "follow":
+            if (locationURL === null) {
+              break;
+            }
+            if (request.counter >= request.follow) {
+              reject(new FetchError2(`maximum redirect reached at: ${request.url}`, "max-redirect"));
+              finalize();
+              return;
+            }
+            const requestOpts = {
+              headers: new Headers2(request.headers),
+              follow: request.follow,
+              counter: request.counter + 1,
+              agent: request.agent,
+              compress: request.compress,
+              method: request.method,
+              body: request.body,
+              signal: request.signal,
+              timeout: request.timeout,
+              size: request.size
+            };
+            if (res.statusCode !== 303 && request.body && getTotalBytes2(request) === null) {
+              reject(new FetchError2("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
+              finalize();
+              return;
+            }
+            if (res.statusCode === 303 || (res.statusCode === 301 || res.statusCode === 302) && request.method === "POST") {
+              requestOpts.method = "GET";
+              requestOpts.body = void 0;
+              requestOpts.headers.delete("content-length");
+            }
+            resolve3(fetch2(new Request2(locationURL, requestOpts)));
+            finalize();
+            return;
+        }
+      }
+      res.once("end", function() {
+        if (signal)
+          signal.removeEventListener("abort", abortAndFinalize);
+      });
+      let body = res.pipe(new PassThrough$1());
+      const response_options = {
+        url: request.url,
+        status: res.statusCode,
+        statusText: res.statusMessage,
+        headers: headers2,
+        size: request.size,
+        timeout: request.timeout,
+        counter: request.counter
+      };
+      const codings = headers2.get("Content-Encoding");
+      if (!request.compress || request.method === "HEAD" || codings === null || res.statusCode === 204 || res.statusCode === 304) {
+        response = new Response2(body, response_options);
+        resolve3(response);
+        return;
+      }
+      const zlibOptions = {
+        flush: import_zlib2.default.Z_SYNC_FLUSH,
+        finishFlush: import_zlib2.default.Z_SYNC_FLUSH
+      };
+      if (codings == "gzip" || codings == "x-gzip") {
+        body = body.pipe(import_zlib2.default.createGunzip(zlibOptions));
+        response = new Response2(body, response_options);
+        resolve3(response);
+        return;
+      }
+      if (codings == "deflate" || codings == "x-deflate") {
+        const raw = res.pipe(new PassThrough$1());
+        raw.once("data", function(chunk) {
+          if ((chunk[0] & 15) === 8) {
+            body = body.pipe(import_zlib2.default.createInflate());
+          } else {
+            body = body.pipe(import_zlib2.default.createInflateRaw());
+          }
+          response = new Response2(body, response_options);
+          resolve3(response);
+        });
+        return;
+      }
+      if (codings == "br" && typeof import_zlib2.default.createBrotliDecompress === "function") {
+        body = body.pipe(import_zlib2.default.createBrotliDecompress());
+        response = new Response2(body, response_options);
+        resolve3(response);
+        return;
+      }
+      response = new Response2(body, response_options);
+      resolve3(response);
+    });
+    writeToStream2(req, request);
+  });
+}
+function _prodErrorMap() {
+  return {
+    ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
+  };
+}
+function _logError(msg, ...args) {
+  if (logClient.logLevel <= LogLevel.ERROR) {
+    logClient.error(`Auth (${SDK_VERSION}): ${msg}`, ...args);
+  }
+}
+function _fail(authOrCode, ...rest) {
+  throw createErrorInternal(authOrCode, ...rest);
+}
+function _createError(authOrCode, ...rest) {
+  return createErrorInternal(authOrCode, ...rest);
+}
+function _errorWithCustomMessage(auth, code, message2) {
+  const errorMap = Object.assign(Object.assign({}, prodErrorMap()), { [code]: message2 });
+  const factory2 = new ErrorFactory("auth", "Firebase", errorMap);
+  return factory2.create(code, {
+    appName: auth.name
+  });
+}
+function createErrorInternal(authOrCode, ...rest) {
+  if (typeof authOrCode !== "string") {
+    const code = rest[0];
+    const fullParams = [...rest.slice(1)];
+    if (fullParams[0]) {
+      fullParams[0].appName = authOrCode.name;
+    }
+    return authOrCode._errorFactory.create(code, ...fullParams);
+  }
+  return _DEFAULT_AUTH_ERROR_FACTORY.create(authOrCode, ...rest);
+}
+function _assert(assertion, authOrCode, ...rest) {
+  if (!assertion) {
+    throw createErrorInternal(authOrCode, ...rest);
+  }
+}
+function debugFail(failure) {
+  const message2 = `INTERNAL ASSERTION FAILED: ` + failure;
+  _logError(message2);
+  throw new Error(message2);
+}
+function debugAssert(assertion, message2) {
+  if (!assertion) {
+    debugFail(message2);
+  }
+}
+function _getInstance(cls) {
+  debugAssert(cls instanceof Function, "Expected a class definition");
+  let instance2 = instanceCache.get(cls);
+  if (instance2) {
+    debugAssert(instance2 instanceof cls, "Instance stored in cache mismatched with class");
+    return instance2;
+  }
+  instance2 = new cls();
+  instanceCache.set(cls, instance2);
+  return instance2;
+}
+function _initializeAuthInstance(auth, deps) {
+  const persistence = (deps === null || deps === void 0 ? void 0 : deps.persistence) || [];
+  const hierarchy = (Array.isArray(persistence) ? persistence : [persistence]).map(_getInstance);
+  if (deps === null || deps === void 0 ? void 0 : deps.errorMap) {
+    auth._updateErrorMap(deps.errorMap);
+  }
+  auth._initializeWithPersistence(hierarchy, deps === null || deps === void 0 ? void 0 : deps.popupRedirectResolver);
+}
+function _isHttpOrHttps() {
+  return _getCurrentScheme() === "http:" || _getCurrentScheme() === "https:";
+}
+function _getCurrentScheme() {
+  var _a;
+  return typeof self !== "undefined" && ((_a = self.location) === null || _a === void 0 ? void 0 : _a.protocol) || null;
+}
+function _isOnline() {
+  if (typeof navigator !== "undefined" && navigator && "onLine" in navigator && typeof navigator.onLine === "boolean" && (_isHttpOrHttps() || isBrowserExtension() || "connection" in navigator)) {
+    return navigator.onLine;
+  }
+  return true;
+}
+function _getUserLanguage() {
+  if (typeof navigator === "undefined") {
+    return null;
+  }
+  const navigatorLanguage = navigator;
+  return navigatorLanguage.languages && navigatorLanguage.languages[0] || navigatorLanguage.language || null;
+}
+function _emulatorUrl(config, path) {
+  debugAssert(config.emulator, "Emulator should always be set here");
+  const { url: url2 } = config.emulator;
+  if (!path) {
+    return url2;
+  }
+  return `${url2}${path.startsWith("/") ? path.slice(1) : path}`;
+}
+async function _performApiRequest(auth, method, path, request, customErrorMap = {}) {
+  return _performFetchWithErrorHandling(auth, customErrorMap, () => {
+    let body = {};
+    let params = {};
+    if (request) {
+      if (method === "GET") {
+        params = request;
+      } else {
+        body = {
+          body: JSON.stringify(request)
+        };
+      }
+    }
+    const query2 = querystring(Object.assign({ key: auth.config.apiKey }, params)).slice(1);
+    const headers2 = new (FetchProvider.headers())();
+    headers2.set("Content-Type", "application/json");
+    headers2.set("X-Client-Version", auth._getSdkClientVersion());
+    if (auth.languageCode) {
+      headers2.set("X-Firebase-Locale", auth.languageCode);
+    }
+    return FetchProvider.fetch()(_getFinalTarget(auth, auth.config.apiHost, path, query2), Object.assign({
+      method,
+      headers: headers2,
+      referrerPolicy: "no-referrer"
+    }, body));
+  });
+}
+async function _performFetchWithErrorHandling(auth, customErrorMap, fetchFn) {
+  auth._canInitEmulator = false;
+  const errorMap = Object.assign(Object.assign({}, SERVER_ERROR_MAP), customErrorMap);
+  try {
+    const networkTimeout = new NetworkTimeout(auth);
+    const response = await Promise.race([
+      fetchFn(),
+      networkTimeout.promise
+    ]);
+    networkTimeout.clearNetworkTimeout();
+    const json = await response.json();
+    if ("needConfirmation" in json) {
+      throw _makeTaggedError(auth, "account-exists-with-different-credential", json);
+    }
+    if (response.ok && !("errorMessage" in json)) {
+      return json;
+    } else {
+      const errorMessage = response.ok ? json.errorMessage : json.error.message;
+      const [serverErrorCode, serverErrorMessage] = errorMessage.split(" : ");
+      if (serverErrorCode === "FEDERATED_USER_ID_ALREADY_LINKED") {
+        throw _makeTaggedError(auth, "credential-already-in-use", json);
+      } else if (serverErrorCode === "EMAIL_EXISTS") {
+        throw _makeTaggedError(auth, "email-already-in-use", json);
+      }
+      const authError = errorMap[serverErrorCode] || serverErrorCode.toLowerCase().replace(/[_\s]+/g, "-");
+      if (serverErrorMessage) {
+        throw _errorWithCustomMessage(auth, authError, serverErrorMessage);
+      } else {
+        _fail(auth, authError);
+      }
+    }
+  } catch (e) {
+    if (e instanceof FirebaseError) {
+      throw e;
+    }
+    _fail(auth, "network-request-failed");
+  }
+}
+function _getFinalTarget(auth, host, path, query2) {
+  const base3 = `${host}${path}?${query2}`;
+  if (!auth.config.emulator) {
+    return `${auth.config.apiScheme}://${base3}`;
+  }
+  return _emulatorUrl(auth.config, base3);
+}
+function _makeTaggedError(auth, code, response) {
+  const errorParams = {
+    appName: auth.name
+  };
+  if (response.email) {
+    errorParams.email = response.email;
+  }
+  if (response.phoneNumber) {
+    errorParams.phoneNumber = response.phoneNumber;
+  }
+  const error4 = _createError(auth, code, errorParams);
+  error4.customData._tokenResponse = response;
+  return error4;
+}
+async function deleteAccount(auth, request) {
+  return _performApiRequest(auth, "POST", "/v1/accounts:delete", request);
+}
+async function getAccountInfo(auth, request) {
+  return _performApiRequest(auth, "POST", "/v1/accounts:lookup", request);
+}
+function utcTimestampToDateString(utcTimestamp) {
+  if (!utcTimestamp) {
+    return void 0;
+  }
+  try {
+    const date = new Date(Number(utcTimestamp));
+    if (!isNaN(date.getTime())) {
+      return date.toUTCString();
+    }
+  } catch (e) {
+  }
+  return void 0;
+}
+async function getIdTokenResult(user2, forceRefresh = false) {
+  const userInternal = getModularInstance(user2);
+  const token = await userInternal.getIdToken(forceRefresh);
+  const claims = _parseToken(token);
+  _assert(claims && claims.exp && claims.auth_time && claims.iat, userInternal.auth, "internal-error");
+  const firebase = typeof claims.firebase === "object" ? claims.firebase : void 0;
+  const signInProvider = firebase === null || firebase === void 0 ? void 0 : firebase["sign_in_provider"];
+  return {
+    claims,
+    token,
+    authTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.auth_time)),
+    issuedAtTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.iat)),
+    expirationTime: utcTimestampToDateString(secondsStringToMilliseconds(claims.exp)),
+    signInProvider: signInProvider || null,
+    signInSecondFactor: (firebase === null || firebase === void 0 ? void 0 : firebase["sign_in_second_factor"]) || null
+  };
+}
+function secondsStringToMilliseconds(seconds) {
+  return Number(seconds) * 1e3;
+}
+function _parseToken(token) {
+  const [algorithm, payload, signature] = token.split(".");
+  if (algorithm === void 0 || payload === void 0 || signature === void 0) {
+    _logError("JWT malformed, contained fewer than 3 sections");
+    return null;
+  }
+  try {
+    const decoded = base64Decode(payload);
+    if (!decoded) {
+      _logError("Failed to decode base64 JWT payload");
+      return null;
+    }
+    return JSON.parse(decoded);
+  } catch (e) {
+    _logError("Caught error parsing JWT payload as JSON", e);
+    return null;
+  }
+}
+function _tokenExpiresIn(token) {
+  const parsedToken = _parseToken(token);
+  _assert(parsedToken, "internal-error");
+  _assert(typeof parsedToken.exp !== "undefined", "internal-error");
+  _assert(typeof parsedToken.iat !== "undefined", "internal-error");
+  return Number(parsedToken.exp) - Number(parsedToken.iat);
+}
+async function _logoutIfInvalidated(user2, promise, bypassAuthState = false) {
+  if (bypassAuthState) {
+    return promise;
+  }
+  try {
+    return await promise;
+  } catch (e) {
+    if (e instanceof FirebaseError && isUserInvalidated(e)) {
+      if (user2.auth.currentUser === user2) {
+        await user2.auth.signOut();
+      }
+    }
+    throw e;
+  }
+}
+function isUserInvalidated({ code }) {
+  return code === `auth/${"user-disabled"}` || code === `auth/${"user-token-expired"}`;
+}
+async function _reloadWithoutSaving(user2) {
+  var _a;
+  const auth = user2.auth;
+  const idToken = await user2.getIdToken();
+  const response = await _logoutIfInvalidated(user2, getAccountInfo(auth, { idToken }));
+  _assert(response === null || response === void 0 ? void 0 : response.users.length, auth, "internal-error");
+  const coreAccount = response.users[0];
+  user2._notifyReloadListener(coreAccount);
+  const newProviderData = ((_a = coreAccount.providerUserInfo) === null || _a === void 0 ? void 0 : _a.length) ? extractProviderData(coreAccount.providerUserInfo) : [];
+  const providerData = mergeProviderData(user2.providerData, newProviderData);
+  const oldIsAnonymous = user2.isAnonymous;
+  const newIsAnonymous = !(user2.email && coreAccount.passwordHash) && !(providerData === null || providerData === void 0 ? void 0 : providerData.length);
+  const isAnonymous = !oldIsAnonymous ? false : newIsAnonymous;
+  const updates = {
+    uid: coreAccount.localId,
+    displayName: coreAccount.displayName || null,
+    photoURL: coreAccount.photoUrl || null,
+    email: coreAccount.email || null,
+    emailVerified: coreAccount.emailVerified || false,
+    phoneNumber: coreAccount.phoneNumber || null,
+    tenantId: coreAccount.tenantId || null,
+    providerData,
+    metadata: new UserMetadata(coreAccount.createdAt, coreAccount.lastLoginAt),
+    isAnonymous
+  };
+  Object.assign(user2, updates);
+}
+async function reload(user2) {
+  const userInternal = getModularInstance(user2);
+  await _reloadWithoutSaving(userInternal);
+  await userInternal.auth._persistUserIfCurrent(userInternal);
+  userInternal.auth._notifyListenersIfCurrent(userInternal);
+}
+function mergeProviderData(original, newData) {
+  const deduped = original.filter((o) => !newData.some((n) => n.providerId === o.providerId));
+  return [...deduped, ...newData];
+}
+function extractProviderData(providers) {
+  return providers.map((_a) => {
+    var { providerId } = _a, provider = __rest(_a, ["providerId"]);
+    return {
+      providerId,
+      uid: provider.rawId || "",
+      displayName: provider.displayName || null,
+      email: provider.email || null,
+      phoneNumber: provider.phoneNumber || null,
+      photoURL: provider.photoUrl || null
+    };
+  });
+}
+async function requestStsToken(auth, refreshToken) {
+  const response = await _performFetchWithErrorHandling(auth, {}, () => {
+    const body = querystring({
+      "grant_type": "refresh_token",
+      "refresh_token": refreshToken
+    }).slice(1);
+    const { tokenApiHost, apiKey } = auth.config;
+    const url2 = _getFinalTarget(auth, tokenApiHost, "/v1/token", `key=${apiKey}`);
+    return FetchProvider.fetch()(url2, {
+      method: "POST",
+      headers: {
+        "X-Client-Version": auth._getSdkClientVersion(),
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body
+    });
+  });
+  return {
+    accessToken: response.access_token,
+    expiresIn: response.expires_in,
+    refreshToken: response.refresh_token
+  };
+}
+function assertStringOrUndefined(assertion, appName) {
+  _assert(typeof assertion === "string" || typeof assertion === "undefined", "internal-error", { appName });
+}
+function _persistenceKeyName(key, apiKey, appName) {
+  return `${"firebase"}:${key}:${apiKey}:${appName}`;
+}
+function _getBrowserName(userAgent) {
+  const ua = userAgent.toLowerCase();
+  if (ua.includes("opera/") || ua.includes("opr/") || ua.includes("opios/")) {
+    return "Opera";
+  } else if (_isIEMobile(ua)) {
+    return "IEMobile";
+  } else if (ua.includes("msie") || ua.includes("trident/")) {
+    return "IE";
+  } else if (ua.includes("edge/")) {
+    return "Edge";
+  } else if (_isFirefox(ua)) {
+    return "Firefox";
+  } else if (ua.includes("silk/")) {
+    return "Silk";
+  } else if (_isBlackBerry(ua)) {
+    return "Blackberry";
+  } else if (_isWebOS(ua)) {
+    return "Webos";
+  } else if (_isSafari(ua)) {
+    return "Safari";
+  } else if ((ua.includes("chrome/") || _isChromeIOS(ua)) && !ua.includes("edge/")) {
+    return "Chrome";
+  } else if (_isAndroid(ua)) {
+    return "Android";
+  } else {
+    const re = /([a-zA-Z\d\.]+)\/[a-zA-Z\d\.]*$/;
+    const matches2 = userAgent.match(re);
+    if ((matches2 === null || matches2 === void 0 ? void 0 : matches2.length) === 2) {
+      return matches2[1];
+    }
+  }
+  return "Other";
+}
+function _isFirefox(ua = getUA()) {
+  return /firefox\//i.test(ua);
+}
+function _isSafari(userAgent = getUA()) {
+  const ua = userAgent.toLowerCase();
+  return ua.includes("safari/") && !ua.includes("chrome/") && !ua.includes("crios/") && !ua.includes("android");
+}
+function _isChromeIOS(ua = getUA()) {
+  return /crios\//i.test(ua);
+}
+function _isIEMobile(ua = getUA()) {
+  return /iemobile/i.test(ua);
+}
+function _isAndroid(ua = getUA()) {
+  return /android/i.test(ua);
+}
+function _isBlackBerry(ua = getUA()) {
+  return /blackberry/i.test(ua);
+}
+function _isWebOS(ua = getUA()) {
+  return /webos/i.test(ua);
+}
+function _getClientVersion(clientPlatform, frameworks = []) {
+  let reportedPlatform;
+  switch (clientPlatform) {
+    case "Browser":
+      reportedPlatform = _getBrowserName(getUA());
+      break;
+    case "Worker":
+      reportedPlatform = `${_getBrowserName(getUA())}-${clientPlatform}`;
+      break;
+    default:
+      reportedPlatform = clientPlatform;
+  }
+  const reportedFrameworks = frameworks.length ? frameworks.join(",") : "FirebaseCore-web";
+  return `${reportedPlatform}/${"JsCore"}/${SDK_VERSION}/${reportedFrameworks}`;
+}
+function _castAuth(auth) {
+  return getModularInstance(auth);
+}
+function getVersionForPlatform(clientPlatform) {
+  switch (clientPlatform) {
+    case "Node":
+      return "node";
+    case "ReactNative":
+      return "rn";
+    case "Worker":
+      return "webworker";
+    case "Cordova":
+      return "cordova";
+    default:
+      return void 0;
+  }
+}
+function registerAuth(clientPlatform) {
+  _registerComponent(new Component("auth", (container, { options: deps }) => {
+    const app = container.getProvider("app").getImmediate();
+    const { apiKey, authDomain } = app.options;
+    return ((app2) => {
+      _assert(apiKey && !apiKey.includes(":"), "invalid-api-key", { appName: app2.name });
+      _assert(!(authDomain === null || authDomain === void 0 ? void 0 : authDomain.includes(":")), "argument-error", {
+        appName: app2.name
+      });
+      const config = {
+        apiKey,
+        authDomain,
+        clientPlatform,
+        apiHost: "identitytoolkit.googleapis.com",
+        tokenApiHost: "securetoken.googleapis.com",
+        apiScheme: "https",
+        sdkClientVersion: _getClientVersion(clientPlatform)
+      };
+      const authInstance = new AuthImpl(app2, config);
+      _initializeAuthInstance(authInstance, deps);
+      return authInstance;
+    })(app);
+  }, "PUBLIC").setInstantiationMode("EXPLICIT").setInstanceCreatedCallback((container, _instanceIdentifier, _instance) => {
+    const authInternalProvider = container.getProvider("auth-internal");
+    authInternalProvider.initialize();
+  }));
+  _registerComponent(new Component("auth-internal", (container) => {
+    const auth = _castAuth(container.getProvider("auth").getImmediate());
+    return ((auth2) => new AuthInterop(auth2))(auth);
+  }, "PRIVATE").setInstantiationMode("EXPLICIT"));
+  registerVersion(name2, version2, getVersionForPlatform(clientPlatform));
+  registerVersion(name2, version2, "esm2017");
+}
+var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob4, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop;
+var init_index_c327074d_6185bbbf = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-6185bbbf.js"() {
+    init_shims();
+    init_store_b4dcaf75();
+    import_stream2 = __toModule(require("stream"));
+    import_http2 = __toModule(require("http"));
+    import_url2 = __toModule(require("url"));
+    import_punycode = __toModule(require("punycode"));
+    import_https2 = __toModule(require("https"));
+    import_zlib2 = __toModule(require("zlib"));
+    name$12 = "firebase";
+    version$12 = "9.5.0";
+    registerVersion(name$12, version$12, "app");
     publicApi = {};
     URL$1 = { exports: {} };
     conversions = {};
@@ -84084,8 +84427,8 @@ var init_index_c327074d_39b2c669 = __esm({
       function isSpecialScheme(scheme2) {
         return specialSchemes[scheme2] !== void 0;
       }
-      function isSpecial(url) {
-        return isSpecialScheme(url.scheme);
+      function isSpecial(url2) {
+        return isSpecialScheme(url2.scheme);
       }
       function defaultPort(scheme2) {
         return specialSchemes[scheme2];
@@ -84407,38 +84750,38 @@ var init_index_c327074d_39b2c669 = __esm({
         }
         return host;
       }
-      function trimControlChars(url) {
-        return url.replace(/^[\u0000-\u001F\u0020]+|[\u0000-\u001F\u0020]+$/g, "");
+      function trimControlChars(url2) {
+        return url2.replace(/^[\u0000-\u001F\u0020]+|[\u0000-\u001F\u0020]+$/g, "");
       }
-      function trimTabAndNewline(url) {
-        return url.replace(/\u0009|\u000A|\u000D/g, "");
+      function trimTabAndNewline(url2) {
+        return url2.replace(/\u0009|\u000A|\u000D/g, "");
       }
-      function shortenPath(url) {
-        const path = url.path;
+      function shortenPath(url2) {
+        const path = url2.path;
         if (path.length === 0) {
           return;
         }
-        if (url.scheme === "file" && path.length === 1 && isNormalizedWindowsDriveLetter(path[0])) {
+        if (url2.scheme === "file" && path.length === 1 && isNormalizedWindowsDriveLetter(path[0])) {
           return;
         }
         path.pop();
       }
-      function includesCredentials(url) {
-        return url.username !== "" || url.password !== "";
+      function includesCredentials(url2) {
+        return url2.username !== "" || url2.password !== "";
       }
-      function cannotHaveAUsernamePasswordPort(url) {
-        return url.host === null || url.host === "" || url.cannotBeABaseURL || url.scheme === "file";
+      function cannotHaveAUsernamePasswordPort(url2) {
+        return url2.host === null || url2.host === "" || url2.cannotBeABaseURL || url2.scheme === "file";
       }
       function isNormalizedWindowsDriveLetter(string) {
         return /^[A-Za-z]:$/.test(string);
       }
-      function URLStateMachine(input, base2, encodingOverride, url, stateOverride) {
+      function URLStateMachine(input, base3, encodingOverride, url2, stateOverride) {
         this.pointer = 0;
         this.input = input;
-        this.base = base2 || null;
+        this.base = base3 || null;
         this.encodingOverride = encodingOverride || "utf-8";
         this.stateOverride = stateOverride;
-        this.url = url;
+        this.url = url2;
         this.failure = false;
         this.parseError = false;
         if (!this.url) {
@@ -84990,36 +85333,36 @@ var init_index_c327074d_39b2c669 = __esm({
         }
         return true;
       };
-      function serializeURL(url, excludeFragment) {
-        let output = url.scheme + ":";
-        if (url.host !== null) {
+      function serializeURL(url2, excludeFragment) {
+        let output = url2.scheme + ":";
+        if (url2.host !== null) {
           output += "//";
-          if (url.username !== "" || url.password !== "") {
-            output += url.username;
-            if (url.password !== "") {
-              output += ":" + url.password;
+          if (url2.username !== "" || url2.password !== "") {
+            output += url2.username;
+            if (url2.password !== "") {
+              output += ":" + url2.password;
             }
             output += "@";
           }
-          output += serializeHost(url.host);
-          if (url.port !== null) {
-            output += ":" + url.port;
+          output += serializeHost(url2.host);
+          if (url2.port !== null) {
+            output += ":" + url2.port;
           }
-        } else if (url.host === null && url.scheme === "file") {
+        } else if (url2.host === null && url2.scheme === "file") {
           output += "//";
         }
-        if (url.cannotBeABaseURL) {
-          output += url.path[0];
+        if (url2.cannotBeABaseURL) {
+          output += url2.path[0];
         } else {
-          for (const string of url.path) {
+          for (const string of url2.path) {
             output += "/" + string;
           }
         }
-        if (url.query !== null) {
-          output += "?" + url.query;
+        if (url2.query !== null) {
+          output += "?" + url2.query;
         }
-        if (!excludeFragment && url.fragment !== null) {
-          output += "#" + url.fragment;
+        if (!excludeFragment && url2.fragment !== null) {
+          output += "#" + url2.fragment;
         }
         return output;
       }
@@ -85032,11 +85375,11 @@ var init_index_c327074d_39b2c669 = __esm({
         return result;
       }
       module3.exports.serializeURL = serializeURL;
-      module3.exports.serializeURLOrigin = function(url) {
-        switch (url.scheme) {
+      module3.exports.serializeURLOrigin = function(url2) {
+        switch (url2.scheme) {
           case "blob":
             try {
-              return module3.exports.serializeURLOrigin(module3.exports.parseURL(url.path[0]));
+              return module3.exports.serializeURLOrigin(module3.exports.parseURL(url2.path[0]));
             } catch (e) {
               return "null";
             }
@@ -85047,9 +85390,9 @@ var init_index_c327074d_39b2c669 = __esm({
           case "ws":
           case "wss":
             return serializeOrigin({
-              scheme: url.scheme,
-              host: url.host,
-              port: url.port
+              scheme: url2.scheme,
+              host: url2.host,
+              port: url2.port
             });
           case "file":
             return "file://";
@@ -85067,18 +85410,18 @@ var init_index_c327074d_39b2c669 = __esm({
         }
         return usm2.url;
       };
-      module3.exports.setTheUsername = function(url, username) {
-        url.username = "";
+      module3.exports.setTheUsername = function(url2, username) {
+        url2.username = "";
         const decoded = punycode2.ucs2.decode(username);
         for (let i = 0; i < decoded.length; ++i) {
-          url.username += percentEncodeChar(decoded[i], isUserinfoPercentEncode);
+          url2.username += percentEncodeChar(decoded[i], isUserinfoPercentEncode);
         }
       };
-      module3.exports.setThePassword = function(url, password) {
-        url.password = "";
+      module3.exports.setThePassword = function(url2, password) {
+        url2.password = "";
         const decoded = punycode2.ucs2.decode(password);
         for (let i = 0; i < decoded.length; ++i) {
-          url.password += percentEncodeChar(decoded[i], isUserinfoPercentEncode);
+          url2.password += percentEncodeChar(decoded[i], isUserinfoPercentEncode);
         }
       };
       module3.exports.serializeHost = serializeHost;
@@ -85096,16 +85439,16 @@ var init_index_c327074d_39b2c669 = __esm({
     usm = urlStateMachine.exports;
     URLImpl.implementation = class URLImpl2 {
       constructor(constructorArgs) {
-        const url = constructorArgs[0];
-        const base2 = constructorArgs[1];
+        const url2 = constructorArgs[0];
+        const base3 = constructorArgs[1];
         let parsedBase = null;
-        if (base2 !== void 0) {
-          parsedBase = usm.basicURLParse(base2);
+        if (base3 !== void 0) {
+          parsedBase = usm.basicURLParse(base3);
           if (parsedBase === "failure") {
             throw new TypeError("Invalid base URL");
           }
         }
-        const parsedURL = usm.basicURLParse(url, { baseURL: parsedBase });
+        const parsedURL = usm.basicURLParse(url2, { baseURL: parsedBase });
         if (parsedURL === "failure") {
           throw new TypeError("Invalid URL");
         }
@@ -85149,14 +85492,14 @@ var init_index_c327074d_39b2c669 = __esm({
         usm.setThePassword(this._url, v);
       }
       get host() {
-        const url = this._url;
-        if (url.host === null) {
+        const url2 = this._url;
+        if (url2.host === null) {
           return "";
         }
-        if (url.port === null) {
-          return usm.serializeHost(url.host);
+        if (url2.port === null) {
+          return usm.serializeHost(url2.host);
         }
-        return usm.serializeHost(url.host) + ":" + usm.serializeInteger(url.port);
+        return usm.serializeHost(url2.host) + ":" + usm.serializeInteger(url2.port);
       }
       set host(v) {
         if (this._url.cannotBeABaseURL) {
@@ -85215,14 +85558,14 @@ var init_index_c327074d_39b2c669 = __esm({
         return "?" + this._url.query;
       }
       set search(v) {
-        const url = this._url;
+        const url2 = this._url;
         if (v === "") {
-          url.query = null;
+          url2.query = null;
           return;
         }
         const input = v[0] === "?" ? v.substring(1) : v;
-        url.query = "";
-        usm.basicURLParse(input, { url, stateOverride: "query" });
+        url2.query = "";
+        usm.basicURLParse(input, { url: url2, stateOverride: "query" });
       }
       get hash() {
         if (this._url.fragment === null || this._url.fragment === "") {
@@ -85248,7 +85591,7 @@ var init_index_c327074d_39b2c669 = __esm({
       const utils$1 = utils.exports;
       const Impl = URLImpl;
       const impl = utils$1.implSymbol;
-      function URL22(url) {
+      function URL22(url2) {
         if (!this || this[impl] || !(this instanceof URL22)) {
           throw new TypeError("Failed to construct 'URL': Please use the 'new' operator, this DOM object constructor cannot be called as a function.");
         }
@@ -85773,18 +86116,18 @@ var init_index_c327074d_39b2c669 = __esm({
         let opts = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
         Body2.call(this, body, opts);
         const status = opts.status || 200;
-        const headers = new Headers2(opts.headers);
-        if (body != null && !headers.has("Content-Type")) {
+        const headers2 = new Headers2(opts.headers);
+        if (body != null && !headers2.has("Content-Type")) {
           const contentType = extractContentType2(body);
           if (contentType) {
-            headers.append("Content-Type", contentType);
+            headers2.append("Content-Type", contentType);
           }
         }
         this[INTERNALS$12] = {
           url: opts.url,
           status,
           statusText: opts.statusText || STATUS_CODES[status],
-          headers,
+          headers: headers2,
           counter: opts.counter
         };
       }
@@ -85862,11 +86205,11 @@ var init_index_c327074d_39b2c669 = __esm({
           timeout: init2.timeout || input.timeout || 0,
           size: init2.size || input.size || 0
         });
-        const headers = new Headers2(init2.headers || input.headers || {});
-        if (inputBody != null && !headers.has("Content-Type")) {
+        const headers2 = new Headers2(init2.headers || input.headers || {});
+        if (inputBody != null && !headers2.has("Content-Type")) {
           const contentType = extractContentType2(inputBody);
           if (contentType) {
-            headers.append("Content-Type", contentType);
+            headers2.append("Content-Type", contentType);
           }
         }
         let signal = isRequest2(input) ? input.signal : null;
@@ -85878,7 +86221,7 @@ var init_index_c327074d_39b2c669 = __esm({
         this[INTERNALS$22] = {
           method,
           redirect: init2.redirect || input.redirect || "follow",
-          headers,
+          headers: headers2,
           parsedURL,
           signal
         };
@@ -86643,11 +86986,11 @@ var init_index_c327074d_39b2c669 = __esm({
       _updateErrorMap(errorMap) {
         this._errorFactory = new ErrorFactory("auth", "Firebase", errorMap());
       }
-      onAuthStateChanged(nextOrObserver, error3, completed) {
-        return this.registerStateListener(this.authStateSubscription, nextOrObserver, error3, completed);
+      onAuthStateChanged(nextOrObserver, error4, completed) {
+        return this.registerStateListener(this.authStateSubscription, nextOrObserver, error4, completed);
       }
-      onIdTokenChanged(nextOrObserver, error3, completed) {
-        return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error3, completed);
+      onIdTokenChanged(nextOrObserver, error4, completed) {
+        return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error4, completed);
       }
       toJSON() {
         var _a;
@@ -86725,7 +87068,7 @@ var init_index_c327074d_39b2c669 = __esm({
           this.authStateSubscription.next(this.currentUser);
         }
       }
-      registerStateListener(subscription, nextOrObserver, error3, completed) {
+      registerStateListener(subscription, nextOrObserver, error4, completed) {
         if (this._deleted) {
           return () => {
           };
@@ -86735,7 +87078,7 @@ var init_index_c327074d_39b2c669 = __esm({
         _assert(promise, this, "internal-error");
         promise.then(() => cb(this.currentUser));
         if (typeof nextOrObserver === "function") {
-          return subscription.addObserver(nextOrObserver, error3, completed);
+          return subscription.addObserver(nextOrObserver, error4, completed);
         } else {
           return subscription.addObserver(nextOrObserver);
         }
@@ -86788,8 +87131,8 @@ var init_index_c327074d_39b2c669 = __esm({
         return this.observer.next.bind(this.observer);
       }
     };
-    name = "@firebase/auth";
-    version = "0.19.3";
+    name2 = "@firebase/auth";
+    version2 = "0.19.3";
     AuthInterop = class {
       constructor(auth) {
         this.auth = auth;
@@ -86864,19 +87207,19 @@ function getModularInstance2(service) {
     return service;
   }
 }
-var CONSTANTS, ERROR_NAME2, FirebaseError2, ErrorFactory2, PATTERN2, MAX_VALUE_MILLIS;
+var CONSTANTS2, ERROR_NAME2, FirebaseError2, ErrorFactory2, PATTERN2, MAX_VALUE_MILLIS;
 var init_index_node_esm = __esm({
   "node_modules/@firebase/util/dist/node-esm/index.node.esm.js"() {
     init_shims();
-    CONSTANTS = {
+    CONSTANTS2 = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
       SDK_VERSION: "${JSCORE_VERSION}"
     };
     ERROR_NAME2 = "FirebaseError";
     FirebaseError2 = class extends Error {
-      constructor(code, message, customData) {
-        super(message);
+      constructor(code, message2, customData) {
+        super(message2);
         this.code = code;
         this.customData = customData;
         this.name = ERROR_NAME2;
@@ -86896,15 +87239,15 @@ var init_index_node_esm = __esm({
         const customData = data[0] || {};
         const fullCode = `${this.service}/${code}`;
         const template2 = this.errors[code];
-        const message = template2 ? replaceTemplate2(template2, customData) : "Error";
-        const fullMessage = `${this.serviceName}: ${message} (${fullCode}).`;
-        const error3 = new FirebaseError2(fullCode, fullMessage, customData);
-        return error3;
+        const message2 = template2 ? replaceTemplate2(template2, customData) : "Error";
+        const fullMessage = `${this.serviceName}: ${message2} (${fullCode}).`;
+        const error4 = new FirebaseError2(fullCode, fullMessage, customData);
+        return error4;
       }
     };
     PATTERN2 = /\{\$([^}]+)}/g;
     MAX_VALUE_MILLIS = 4 * 60 * 60 * 1e3;
-    CONSTANTS.NODE_CLIENT = true;
+    CONSTANTS2.NODE_CLIENT = true;
   }
 });
 
@@ -86915,8 +87258,8 @@ var init_index_esm2017 = __esm({
     init_shims();
     init_index_node_esm();
     Component2 = class {
-      constructor(name5, instanceFactory, type) {
-        this.name = name5;
+      constructor(name7, instanceFactory, type) {
+        this.name = name7;
         this.instanceFactory = instanceFactory;
         this.type = type;
         this.multipleInstances = false;
@@ -86974,21 +87317,21 @@ var init_index_esm20172 = __esm({
       [LogLevel2.WARN]: "warn",
       [LogLevel2.ERROR]: "error"
     };
-    defaultLogHandler2 = (instance, logType, ...args) => {
-      if (logType < instance.logLevel) {
+    defaultLogHandler2 = (instance2, logType, ...args) => {
+      if (logType < instance2.logLevel) {
         return;
       }
       const now = new Date().toISOString();
       const method = ConsoleMethod2[logType];
       if (method) {
-        console[method](`[${now}]  ${instance.name}:`, ...args);
+        console[method](`[${now}]  ${instance2.name}:`, ...args);
       } else {
         throw new Error(`Attempted to log a message with an invalid logType (value: ${logType})`);
       }
     };
     Logger2 = class {
-      constructor(name5) {
-        this.name = name5;
+      constructor(name7) {
+        this.name = name7;
         this._logLevel = defaultLogLevel2;
         this._logHandler = defaultLogHandler2;
         this._userLogHandler = null;
@@ -87069,27 +87412,27 @@ function _registerComponent2(component) {
   }
   return true;
 }
-function _getProvider(app, name5) {
-  return app.container.getProvider(name5);
+function _getProvider(app, name7) {
+  return app.container.getProvider(name7);
 }
-function getApp(name5 = DEFAULT_ENTRY_NAME) {
-  const app = _apps2.get(name5);
+function getApp(name7 = DEFAULT_ENTRY_NAME) {
+  const app = _apps2.get(name7);
   if (!app) {
-    throw ERROR_FACTORY.create("no-app", { appName: name5 });
+    throw ERROR_FACTORY.create("no-app", { appName: name7 });
   }
   return app;
 }
-function registerVersion2(libraryKeyOrName, version5, variant) {
+function registerVersion2(libraryKeyOrName, version7, variant) {
   var _a;
   let library = (_a = PLATFORM_LOG_STRING2[libraryKeyOrName]) !== null && _a !== void 0 ? _a : libraryKeyOrName;
   if (variant) {
     library += `-${variant}`;
   }
   const libraryMismatch = library.match(/\s|\//);
-  const versionMismatch = version5.match(/\s|\//);
+  const versionMismatch = version7.match(/\s|\//);
   if (libraryMismatch || versionMismatch) {
     const warning = [
-      `Unable to register library "${library}" with version "${version5}":`
+      `Unable to register library "${library}" with version "${version7}":`
     ];
     if (libraryMismatch) {
       warning.push(`library name "${library}" contains illegal characters (whitespace or "/")`);
@@ -87098,20 +87441,20 @@ function registerVersion2(libraryKeyOrName, version5, variant) {
       warning.push("and");
     }
     if (versionMismatch) {
-      warning.push(`version name "${version5}" contains illegal characters (whitespace or "/")`);
+      warning.push(`version name "${version7}" contains illegal characters (whitespace or "/")`);
     }
     logger2.warn(warning.join(" "));
     return;
   }
-  _registerComponent2(new Component2(`${library}-version`, () => ({ library, version: version5 }), "VERSION"));
+  _registerComponent2(new Component2(`${library}-version`, () => ({ library, version: version7 }), "VERSION"));
 }
 function registerCoreComponents2(variant) {
   _registerComponent2(new Component2("platform-logger", (container) => new PlatformLoggerServiceImpl2(container), "PRIVATE"));
-  registerVersion2(name$o2, version$12, variant);
-  registerVersion2(name$o2, version$12, "esm2017");
+  registerVersion2(name$o2, version$13, variant);
+  registerVersion2(name$o2, version$13, "esm2017");
   registerVersion2("fire-js", "");
 }
-var PlatformLoggerServiceImpl2, name$o2, version$12, logger2, name$n2, name$m2, name$l2, name$k2, name$j2, name$i2, name$h2, name$g2, name$f2, name$e2, name$d2, name$c2, name$b2, name$a2, name$92, name$82, name$72, name$62, name$52, name$42, name$32, name$22, name$12, name2, version2, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING2, _apps2, _components2, ERRORS2, ERROR_FACTORY, SDK_VERSION2;
+var PlatformLoggerServiceImpl2, name$o2, version$13, logger2, name$n2, name$m2, name$l2, name$k2, name$j2, name$i2, name$h2, name$g2, name$f2, name$e2, name$d2, name$c2, name$b2, name$a2, name$92, name$82, name$72, name$62, name$52, name$42, name$32, name$22, name$13, name3, version3, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING2, _apps2, _components2, ERRORS2, ERROR_FACTORY, SDK_VERSION2;
 var init_index_esm20173 = __esm({
   "node_modules/@firebase/app/dist/esm/index.esm2017.js"() {
     init_shims();
@@ -87136,7 +87479,7 @@ var init_index_esm20173 = __esm({
       }
     };
     name$o2 = "@firebase/app";
-    version$12 = "0.7.9";
+    version$13 = "0.7.9";
     logger2 = new Logger2("@firebase/app");
     name$n2 = "@firebase/app-compat";
     name$m2 = "@firebase/analytics-compat";
@@ -87160,9 +87503,9 @@ var init_index_esm20173 = __esm({
     name$42 = "@firebase/storage";
     name$32 = "@firebase/storage-compat";
     name$22 = "@firebase/firestore";
-    name$12 = "@firebase/firestore-compat";
-    name2 = "firebase";
-    version2 = "9.5.0";
+    name$13 = "@firebase/firestore-compat";
+    name3 = "firebase";
+    version3 = "9.5.0";
     DEFAULT_ENTRY_NAME = "[DEFAULT]";
     PLATFORM_LOG_STRING2 = {
       [name$o2]: "fire-core",
@@ -87188,9 +87531,9 @@ var init_index_esm20173 = __esm({
       [name$42]: "fire-gcs",
       [name$32]: "fire-gcs-compat",
       [name$22]: "fire-fst",
-      [name$12]: "fire-fst-compat",
+      [name$13]: "fire-fst-compat",
       "fire-js": "fire-js",
-      [name2]: "fire-js-all"
+      [name3]: "fire-js-all"
     };
     _apps2 = new Map();
     _components2 = new Map();
@@ -87203,7 +87546,7 @@ var init_index_esm20173 = __esm({
       ["invalid-log-argument"]: "First argument to `onLog` must be null or a function."
     };
     ERROR_FACTORY = new ErrorFactory2("app", "Firebase", ERRORS2);
-    SDK_VERSION2 = version2;
+    SDK_VERSION2 = version3;
     registerCoreComponents2("");
   }
 });
@@ -87268,14 +87611,14 @@ var require_logging = __commonJS({
     exports2.trace = exports2.log = exports2.setLoggerVerbosity = exports2.setLogger = exports2.getLogger = void 0;
     var constants_1 = require_constants();
     var DEFAULT_LOGGER = {
-      error: (message, ...optionalParams) => {
-        console.error("E " + message, ...optionalParams);
+      error: (message2, ...optionalParams) => {
+        console.error("E " + message2, ...optionalParams);
       },
-      info: (message, ...optionalParams) => {
-        console.error("I " + message, ...optionalParams);
+      info: (message2, ...optionalParams) => {
+        console.error("I " + message2, ...optionalParams);
       },
-      debug: (message, ...optionalParams) => {
-        console.error("D " + message, ...optionalParams);
+      debug: (message2, ...optionalParams) => {
+        console.error("D " + message2, ...optionalParams);
       }
     };
     var _logger = DEFAULT_LOGGER;
@@ -87299,8 +87642,8 @@ var require_logging = __commonJS({
     exports2.getLogger = () => {
       return _logger;
     };
-    exports2.setLogger = (logger3) => {
-      _logger = logger3;
+    exports2.setLogger = (logger4) => {
+      _logger = logger4;
     };
     exports2.setLoggerVerbosity = (verbosity) => {
       _logVerbosity = verbosity;
@@ -87486,13 +87829,13 @@ var require_metadata = __commonJS({
         }
         return result;
       }
-      static fromHttp2Headers(headers) {
+      static fromHttp2Headers(headers2) {
         const result = new Metadata2();
-        Object.keys(headers).forEach((key) => {
+        Object.keys(headers2).forEach((key) => {
           if (key.charAt(0) === ":") {
             return;
           }
-          const values = headers[key];
+          const values = headers2[key];
           try {
             if (isBinaryKey(key)) {
               if (Array.isArray(values)) {
@@ -87517,9 +87860,9 @@ var require_metadata = __commonJS({
                 result.add(key, values);
               }
             }
-          } catch (error3) {
-            const message = `Failed to add metadata entry ${key}: ${values}. ${error3.message}. For more information see https://github.com/grpc/grpc-node/issues/1173`;
-            logging_1.log(constants_1.LogVerbosity.ERROR, message);
+          } catch (error4) {
+            const message2 = `Failed to add metadata entry ${key}: ${values}. ${error4.message}. For more information see https://github.com/grpc/grpc-node/issues/1173`;
+            logging_1.log(constants_1.LogVerbosity.ERROR, message2);
           }
         });
         return result;
@@ -87537,8 +87880,8 @@ var require_call_credentials = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CallCredentials = void 0;
     var metadata_1 = require_metadata();
-    function isCurrentOauth2Client(client) {
-      return "getRequestHeaders" in client && typeof client.getRequestHeaders === "function";
+    function isCurrentOauth2Client(client2) {
+      return "getRequestHeaders" in client2 && typeof client2.getRequestHeaders === "function";
     }
     var CallCredentials = class {
       static createFromMetadataGenerator(metadataGenerator) {
@@ -87551,19 +87894,19 @@ var require_call_credentials = __commonJS({
             getHeaders3 = googleCredentials.getRequestHeaders(options2.service_url);
           } else {
             getHeaders3 = new Promise((resolve3, reject) => {
-              googleCredentials.getRequestMetadata(options2.service_url, (err, headers) => {
+              googleCredentials.getRequestMetadata(options2.service_url, (err, headers2) => {
                 if (err) {
                   reject(err);
                   return;
                 }
-                resolve3(headers);
+                resolve3(headers2);
               });
             });
           }
-          getHeaders3.then((headers) => {
+          getHeaders3.then((headers2) => {
             const metadata = new metadata_1.Metadata();
-            for (const key of Object.keys(headers)) {
-              metadata.add(key, headers[key]);
+            for (const key of Object.keys(headers2)) {
+              metadata.add(key, headers2[key]);
             }
             callback(null, metadata);
           }, (err) => {
@@ -87582,12 +87925,12 @@ var require_call_credentials = __commonJS({
         this.creds = creds;
       }
       async generateMetadata(options2) {
-        const base2 = new metadata_1.Metadata();
+        const base3 = new metadata_1.Metadata();
         const generated = await Promise.all(this.creds.map((cred) => cred.generateMetadata(options2)));
         for (const gen of generated) {
-          base2.merge(gen);
+          base3.merge(gen);
         }
-        return base2;
+        return base3;
       }
       compose(other) {
         return new ComposedCallCredentials(this.creds.concat([other]));
@@ -87697,9 +88040,9 @@ var require_stream_decoder = __commonJS({
                 if (this.readMessageRemaining > 0) {
                   this.readState = ReadState.READING_MESSAGE;
                 } else {
-                  const message = Buffer.concat([this.readCompressFlag, this.readPartialSize], 5);
+                  const message2 = Buffer.concat([this.readCompressFlag, this.readPartialSize], 5);
                   this.readState = ReadState.NO_DATA;
-                  result.push(message);
+                  result.push(message2);
                 }
               }
               break;
@@ -87746,9 +88089,9 @@ var require_call_stream = __commonJS({
     var TRACER_NAME = "call_stream";
     var { HTTP2_HEADER_STATUS, HTTP2_HEADER_CONTENT_TYPE, NGHTTP2_CANCEL } = http22.constants;
     function getSystemErrorName(errno) {
-      for (const [name5, num] of Object.entries(os.constants.errno)) {
+      for (const [name7, num] of Object.entries(os.constants.errno)) {
         if (num === errno) {
-          return name5;
+          return name7;
         }
       }
       return "Unknown system error " + errno;
@@ -87779,9 +88122,9 @@ var require_call_stream = __commonJS({
           this.nextListener.onReceiveMetadata(metadata2);
         });
       }
-      onReceiveMessage(message) {
+      onReceiveMessage(message2) {
         this.processingMessage = true;
-        this.listener.onReceiveMessage(message, (msg) => {
+        this.listener.onReceiveMessage(message2, (msg) => {
           this.processingMessage = false;
           this.nextListener.onReceiveMessage(msg);
           if (this.pendingStatus) {
@@ -87877,22 +88220,22 @@ var require_call_stream = __commonJS({
           }
         }
       }
-      push(message) {
-        this.trace("pushing to reader message of length " + (message instanceof Buffer ? message.length : null));
+      push(message2) {
+        this.trace("pushing to reader message of length " + (message2 instanceof Buffer ? message2.length : null));
         this.canPush = false;
         process.nextTick(() => {
           var _a;
           if (this.statusOutput) {
             return;
           }
-          (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveMessage(message);
+          (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveMessage(message2);
           this.maybeOutputStatus();
         });
       }
-      handleFilterError(error3) {
-        this.cancelWithStatus(constants_1.Status.INTERNAL, error3.message);
+      handleFilterError(error4) {
+        this.cancelWithStatus(constants_1.Status.INTERNAL, error4.message);
       }
-      handleFilteredRead(message) {
+      handleFilteredRead(message2) {
         if (this.finalStatus !== null && this.finalStatus.code !== constants_1.Status.OK) {
           this.maybeOutputStatus();
           return;
@@ -87900,10 +88243,10 @@ var require_call_stream = __commonJS({
         this.isReadFilterPending = false;
         if (this.canPush) {
           this.http2Stream.pause();
-          this.push(message);
+          this.push(message2);
         } else {
-          this.trace("unpushedReadMessages.push message of length " + message.length);
-          this.unpushedReadMessages.push(message);
+          this.trace("unpushedReadMessages.push message of length " + message2.length);
+          this.unpushedReadMessages.push(message2);
         }
         if (this.unfilteredReadMessages.length > 0) {
           const nextMessage = this.unfilteredReadMessages.shift();
@@ -87927,16 +88270,16 @@ var require_call_stream = __commonJS({
           this.filterReceivedMessage(messageBytes);
         }
       }
-      handleTrailers(headers) {
+      handleTrailers(headers2) {
         this.streamEndWatchers.forEach((watcher) => watcher(true));
         let headersString = "";
-        for (const header of Object.keys(headers)) {
-          headersString += "		" + header + ": " + headers[header] + "\n";
+        for (const header of Object.keys(headers2)) {
+          headersString += "		" + header + ": " + headers2[header] + "\n";
         }
         this.trace("Received server trailers:\n" + headersString);
         let metadata;
         try {
-          metadata = metadata_1.Metadata.fromHttp2Headers(headers);
+          metadata = metadata_1.Metadata.fromHttp2Headers(headers2);
         } catch (e) {
           metadata = new metadata_1.Metadata();
         }
@@ -87959,10 +88302,10 @@ var require_call_stream = __commonJS({
         const status = { code, details, metadata };
         this.endCall(status);
       }
-      writeMessageToStream(message, callback) {
+      writeMessageToStream(message2, callback) {
         var _a;
         (_a = this.callStatsTracker) === null || _a === void 0 ? void 0 : _a.addMessageSent();
-        this.http2Stream.write(message, callback);
+        this.http2Stream.write(message2, callback);
       }
       attachHttp2Stream(stream, subchannel, extraFilters, callStatsTracker) {
         this.filterStack.push(extraFilters);
@@ -87975,14 +88318,14 @@ var require_call_stream = __commonJS({
           this.callStatsTracker = callStatsTracker;
           subchannel.addDisconnectListener(this.disconnectListener);
           subchannel.callRef();
-          stream.on("response", (headers, flags) => {
+          stream.on("response", (headers2, flags) => {
             var _a;
             let headersString = "";
-            for (const header of Object.keys(headers)) {
-              headersString += "		" + header + ": " + headers[header] + "\n";
+            for (const header of Object.keys(headers2)) {
+              headersString += "		" + header + ": " + headers2[header] + "\n";
             }
             this.trace("Received server headers:\n" + headersString);
-            switch (headers[":status"]) {
+            switch (headers2[":status"]) {
               case 400:
                 this.mappedStatusCode = constants_1.Status.INTERNAL;
                 break;
@@ -88005,15 +88348,15 @@ var require_call_stream = __commonJS({
                 this.mappedStatusCode = constants_1.Status.UNKNOWN;
             }
             if (flags & http22.constants.NGHTTP2_FLAG_END_STREAM) {
-              this.handleTrailers(headers);
+              this.handleTrailers(headers2);
             } else {
               let metadata;
               try {
-                metadata = metadata_1.Metadata.fromHttp2Headers(headers);
-              } catch (error3) {
+                metadata = metadata_1.Metadata.fromHttp2Headers(headers2);
+              } catch (error4) {
                 this.endCall({
                   code: constants_1.Status.UNKNOWN,
-                  details: error3.message,
+                  details: error4.message,
                   metadata: new metadata_1.Metadata()
                 });
                 return;
@@ -88021,10 +88364,10 @@ var require_call_stream = __commonJS({
               try {
                 const finalMetadata = this.filterStack.receiveMetadata(metadata);
                 (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveMetadata(finalMetadata);
-              } catch (error3) {
+              } catch (error4) {
                 this.endCall({
                   code: constants_1.Status.UNKNOWN,
-                  details: error3.message,
+                  details: error4.message,
                   metadata: new metadata_1.Metadata()
                 });
               }
@@ -88034,10 +88377,10 @@ var require_call_stream = __commonJS({
           stream.on("data", (data) => {
             this.trace("receive HTTP/2 data frame of length " + data.length);
             const messages = this.decoder.write(data);
-            for (const message of messages) {
-              this.trace("parsed message of length " + message.length);
+            for (const message2 of messages) {
+              this.trace("parsed message of length " + message2.length);
               this.callStatsTracker.addMessageReceived();
-              this.tryPush(message);
+              this.tryPush(message2);
             }
           });
           stream.on("end", () => {
@@ -88114,10 +88457,10 @@ var require_call_stream = __commonJS({
             this.trace("sending data chunk of length " + this.pendingWrite.length + " (deferred)");
             try {
               this.writeMessageToStream(this.pendingWrite, this.pendingWriteCallback);
-            } catch (error3) {
+            } catch (error4) {
               this.endCall({
                 code: constants_1.Status.UNAVAILABLE,
-                details: `Write failed with error ${error3.message}`,
+                details: `Write failed with error ${error4.message}`,
                 metadata: new metadata_1.Metadata()
               });
             }
@@ -88212,30 +88555,30 @@ var require_call_stream = __commonJS({
           this.http2Stream.end();
         }
       }
-      sendMessageWithContext(context2, message) {
+      sendMessageWithContext(context2, message2) {
         var _a;
-        this.trace("write() called with message of length " + message.length);
+        this.trace("write() called with message of length " + message2.length);
         const writeObj = {
-          message,
+          message: message2,
           flags: context2.flags
         };
         const cb = (_a = context2.callback) !== null && _a !== void 0 ? _a : () => {
         };
         this.isWriteFilterPending = true;
-        this.filterStack.sendMessage(Promise.resolve(writeObj)).then((message2) => {
+        this.filterStack.sendMessage(Promise.resolve(writeObj)).then((message3) => {
           this.isWriteFilterPending = false;
           if (this.http2Stream === null) {
-            this.trace("deferring writing data chunk of length " + message2.message.length);
-            this.pendingWrite = message2.message;
+            this.trace("deferring writing data chunk of length " + message3.message.length);
+            this.pendingWrite = message3.message;
             this.pendingWriteCallback = cb;
           } else {
-            this.trace("sending data chunk of length " + message2.message.length);
+            this.trace("sending data chunk of length " + message3.message.length);
             try {
-              this.writeMessageToStream(message2.message, cb);
-            } catch (error3) {
+              this.writeMessageToStream(message3.message, cb);
+            } catch (error4) {
               this.endCall({
                 code: constants_1.Status.UNAVAILABLE,
-                details: `Write failed with error ${error3.message}`,
+                details: `Write failed with error ${error4.message}`,
                 metadata: new metadata_1.Metadata()
               });
             }
@@ -88534,8 +88877,8 @@ var require_service_config = __commonJS({
       if (!("name" in obj) || !Array.isArray(obj.name)) {
         throw new Error("Invalid method config: invalid name array");
       }
-      for (const name5 of obj.name) {
-        result.name.push(validateName3(name5));
+      for (const name7 of obj.name) {
+        result.name.push(validateName3(name7));
       }
       if ("waitForReady" in obj) {
         if (typeof obj.waitForReady !== "boolean") {
@@ -88606,13 +88949,13 @@ var require_service_config = __commonJS({
       }
       const seenMethodNames = [];
       for (const methodConfig of result.methodConfig) {
-        for (const name5 of methodConfig.name) {
+        for (const name7 of methodConfig.name) {
           for (const seenName of seenMethodNames) {
-            if (name5.service === seenName.service && name5.method === seenName.method) {
-              throw new Error(`Invalid service config: duplicate name ${name5.service}/${name5.method}`);
+            if (name7.service === seenName.service && name7.method === seenName.method) {
+              throw new Error(`Invalid service config: duplicate name ${name7.service}/${name7.method}`);
             }
           }
-          seenMethodNames.push(name5);
+          seenMethodNames.push(name7);
         }
       }
       return result;
@@ -89172,8 +89515,8 @@ var require_resolving_load_balancer = __commonJS({
         const method = (_b = splitName[1]) !== null && _b !== void 0 ? _b : "";
         if (serviceConfig && serviceConfig.methodConfig) {
           for (const methodConfig of serviceConfig.methodConfig) {
-            for (const name5 of methodConfig.name) {
-              if (name5.service === service && (name5.method === void 0 || name5.method === method)) {
+            for (const name7 of methodConfig.name) {
+              if (name7.service === service && (name7.method === void 0 || name7.method === method)) {
                 return {
                   methodConfig,
                   pickInformation: {},
@@ -89263,8 +89606,8 @@ var require_resolving_load_balancer = __commonJS({
             const finalServiceConfig = workingServiceConfig !== null && workingServiceConfig !== void 0 ? workingServiceConfig : this.defaultServiceConfig;
             this.onSuccessfulResolution(configSelector !== null && configSelector !== void 0 ? configSelector : getDefaultConfigSelector(finalServiceConfig));
           },
-          onError: (error3) => {
-            this.handleResolutionFailure(error3);
+          onError: (error4) => {
+            this.handleResolutionFailure(error4);
           }
         }, channelOptions);
         this.backoffTimeout = new backoff_timeout_1.BackoffTimeout(() => {
@@ -89291,10 +89634,10 @@ var require_resolving_load_balancer = __commonJS({
         this.currentState = connectivityState;
         this.channelControlHelper.updateState(connectivityState, picker);
       }
-      handleResolutionFailure(error3) {
+      handleResolutionFailure(error4) {
         if (this.latestChildState === connectivity_state_1.ConnectivityState.IDLE) {
-          this.updateState(connectivity_state_1.ConnectivityState.TRANSIENT_FAILURE, new picker_1.UnavailablePicker(error3));
-          this.onFailedResolution(error3);
+          this.updateState(connectivity_state_1.ConnectivityState.TRANSIENT_FAILURE, new picker_1.UnavailablePicker(error4));
+          this.onFailedResolution(error4);
         }
         this.backoffTimeout.runOnce();
       }
@@ -89431,7 +89774,7 @@ var require_http_proxy = __commonJS({
     var constants_1 = require_constants();
     var resolver_1 = require_resolver();
     var http4 = require("http");
-    var tls = require("tls");
+    var tls2 = require("tls");
     var logging = require_logging();
     var subchannel_address_1 = require_subchannel_address();
     var uri_parser_1 = require_uri_parser();
@@ -89555,7 +89898,7 @@ var require_http_proxy = __commonJS({
         method: "CONNECT",
         path: parsedTarget.path
       };
-      const headers = {
+      const headers2 = {
         Host: parsedTarget.path
       };
       if (subchannel_address_1.isTcpSubchannelAddress(address)) {
@@ -89565,9 +89908,9 @@ var require_http_proxy = __commonJS({
         options2.socketPath = address.path;
       }
       if ("grpc.http_connect_creds" in channelOptions) {
-        headers["Proxy-Authorization"] = "Basic " + Buffer.from(channelOptions["grpc.http_connect_creds"]).toString("base64");
+        headers2["Proxy-Authorization"] = "Basic " + Buffer.from(channelOptions["grpc.http_connect_creds"]).toString("base64");
       }
-      options2.headers = headers;
+      options2.headers = headers2;
       const proxyAddressString = subchannel_address_1.subchannelAddressToString(address);
       trace("Using proxy " + proxyAddressString + " to connect to " + options2.path);
       return new Promise((resolve3, reject) => {
@@ -89582,12 +89925,12 @@ var require_http_proxy = __commonJS({
               const targetPath = resolver_1.getDefaultAuthority(parsedTarget);
               const hostPort = uri_parser_1.splitHostPort(targetPath);
               const remoteHost = (_a = hostPort === null || hostPort === void 0 ? void 0 : hostPort.host) !== null && _a !== void 0 ? _a : targetPath;
-              const cts = tls.connect(Object.assign({ host: remoteHost, servername: remoteHost, socket }, connectionOptions), () => {
+              const cts = tls2.connect(Object.assign({ host: remoteHost, servername: remoteHost, socket }, connectionOptions), () => {
                 trace("Successfully established a TLS connection to " + options2.path + " through proxy " + proxyAddressString);
                 resolve3({ socket: cts, realTarget: parsedTarget });
               });
-              cts.on("error", (error3) => {
-                trace("Failed to establish a TLS connection to " + options2.path + " through proxy " + proxyAddressString + " with error " + error3.message);
+              cts.on("error", (error4) => {
+                trace("Failed to establish a TLS connection to " + options2.path + " through proxy " + proxyAddressString + " with error " + error4.message);
                 reject();
               });
             } else {
@@ -89626,9 +89969,9 @@ var require_admin = __commonJS({
       registeredAdminServices.push({ getServiceDefinition, getHandlers });
     }
     exports2.registerAdminService = registerAdminService;
-    function addAdminServicesToServer(server) {
+    function addAdminServicesToServer(server2) {
       for (const { getServiceDefinition, getHandlers } of registeredAdminServices) {
-        server.addService(getServiceDefinition(), getHandlers());
+        server2.addService(getServiceDefinition(), getHandlers());
       }
     }
     exports2.addAdminServicesToServer = addAdminServicesToServer;
@@ -89646,8 +89989,8 @@ var require_call = __commonJS({
     var stream_1 = require("stream");
     var constants_1 = require_constants();
     function callErrorFromStatus(status) {
-      const message = `${status.code} ${constants_1.Status[status.code]}: ${status.details}`;
-      return Object.assign(new Error(message), status);
+      const message2 = `${status.code} ${constants_1.Status[status.code]}: ${status.details}`;
+      return Object.assign(new Error(message2), status);
     }
     exports2.callErrorFromStatus = callErrorFromStatus;
     var ClientUnaryCallImpl = class extends events_1.EventEmitter {
@@ -89764,8 +90107,8 @@ var require_client_interceptors = __commonJS({
     var call_stream_1 = require_call_stream();
     var constants_1 = require_constants();
     var InterceptorConfigurationError = class extends Error {
-      constructor(message) {
-        super(message);
+      constructor(message2) {
+        super(message2);
         this.name = "InterceptorConfigurationError";
         Error.captureStackTrace(this, InterceptorConfigurationError);
       }
@@ -89835,8 +90178,8 @@ var require_client_interceptors = __commonJS({
       onReceiveMetadata: (metadata, next) => {
         next(metadata);
       },
-      onReceiveMessage: (message, next) => {
-        next(message);
+      onReceiveMessage: (message2, next) => {
+        next(message2);
       },
       onReceiveStatus: (status, next) => {
         next(status);
@@ -89846,8 +90189,8 @@ var require_client_interceptors = __commonJS({
       start: (metadata, listener, next) => {
         next(metadata, listener);
       },
-      sendMessage: (message, next) => {
-        next(message);
+      sendMessage: (message2, next) => {
+        next(message2);
       },
       halfClose: (next) => {
         next();
@@ -89886,7 +90229,7 @@ var require_client_interceptors = __commonJS({
         const fullInterceptingListener = {
           onReceiveMetadata: (_b = (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.bind(interceptingListener)) !== null && _b !== void 0 ? _b : (metadata2) => {
           },
-          onReceiveMessage: (_d = (_c = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMessage) === null || _c === void 0 ? void 0 : _c.bind(interceptingListener)) !== null && _d !== void 0 ? _d : (message) => {
+          onReceiveMessage: (_d = (_c = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMessage) === null || _c === void 0 ? void 0 : _c.bind(interceptingListener)) !== null && _d !== void 0 ? _d : (message2) => {
           },
           onReceiveStatus: (_f = (_e = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveStatus) === null || _e === void 0 ? void 0 : _e.bind(interceptingListener)) !== null && _f !== void 0 ? _f : (status) => {
           }
@@ -89907,9 +90250,9 @@ var require_client_interceptors = __commonJS({
           this.nextCall.start(md, finalInterceptingListener);
         });
       }
-      sendMessageWithContext(context2, message) {
+      sendMessageWithContext(context2, message2) {
         this.processingMessage = true;
-        this.requester.sendMessage(message, (finalMessage) => {
+        this.requester.sendMessage(message2, (finalMessage) => {
           this.processingMessage = false;
           this.nextCall.sendMessageWithContext(context2, finalMessage);
           if (this.pendingHalfClose) {
@@ -89917,8 +90260,8 @@ var require_client_interceptors = __commonJS({
           }
         });
       }
-      sendMessage(message) {
-        this.sendMessageWithContext({}, message);
+      sendMessage(message2) {
+        this.sendMessageWithContext({}, message2);
       }
       startRead() {
         this.nextCall.startRead();
@@ -89964,18 +90307,18 @@ var require_client_interceptors = __commonJS({
       setCredentials(credentials2) {
         this.call.setCredentials(credentials2);
       }
-      sendMessageWithContext(context2, message) {
+      sendMessageWithContext(context2, message2) {
         let serialized;
         try {
-          serialized = this.methodDefinition.requestSerialize(message);
+          serialized = this.methodDefinition.requestSerialize(message2);
         } catch (e) {
           this.call.cancelWithStatus(constants_1.Status.INTERNAL, `Request message serialization failure: ${e.message}`);
           return;
         }
         this.call.sendMessageWithContext(context2, serialized);
       }
-      sendMessage(message) {
-        this.sendMessageWithContext({}, message);
+      sendMessage(message2) {
+        this.sendMessageWithContext({}, message2);
       }
       start(metadata, interceptingListener) {
         let readError = null;
@@ -89984,11 +90327,11 @@ var require_client_interceptors = __commonJS({
             var _a;
             (_a = interceptingListener === null || interceptingListener === void 0 ? void 0 : interceptingListener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.call(interceptingListener, metadata2);
           },
-          onReceiveMessage: (message) => {
+          onReceiveMessage: (message2) => {
             var _a;
             let deserialized;
             try {
-              deserialized = this.methodDefinition.responseDeserialize(message);
+              deserialized = this.methodDefinition.responseDeserialize(message2);
             } catch (e) {
               readError = {
                 code: constants_1.Status.INTERNAL,
@@ -90027,10 +90370,10 @@ var require_client_interceptors = __commonJS({
         const wrapperListener = {
           onReceiveMetadata: (_b = (_a = listener === null || listener === void 0 ? void 0 : listener.onReceiveMetadata) === null || _a === void 0 ? void 0 : _a.bind(listener)) !== null && _b !== void 0 ? _b : (metadata2) => {
           },
-          onReceiveMessage: (message) => {
+          onReceiveMessage: (message2) => {
             var _a2;
             receivedMessage = true;
-            (_a2 = listener === null || listener === void 0 ? void 0 : listener.onReceiveMessage) === null || _a2 === void 0 ? void 0 : _a2.call(listener, message);
+            (_a2 = listener === null || listener === void 0 ? void 0 : listener.onReceiveMessage) === null || _a2 === void 0 ? void 0 : _a2.call(listener, message2);
           },
           onReceiveStatus: (status) => {
             var _a2, _b2;
@@ -90099,7 +90442,7 @@ var require_client = __commonJS({
     function isFunction(arg) {
       return typeof arg === "function";
     }
-    var Client = class {
+    var Client2 = class {
       constructor(address, credentials2, options2 = {}) {
         var _a, _b;
         options2 = Object.assign({}, options2);
@@ -90209,11 +90552,11 @@ var require_client = __commonJS({
           onReceiveMetadata: (metadata2) => {
             emitter.emit("metadata", metadata2);
           },
-          onReceiveMessage(message) {
+          onReceiveMessage(message2) {
             if (responseMessage !== null) {
               call.cancelWithStatus(constants_1.Status.INTERNAL, "Too many responses received");
             }
-            responseMessage = message;
+            responseMessage = message2;
           },
           onReceiveStatus(status) {
             if (receivedStatus) {
@@ -90271,11 +90614,11 @@ var require_client = __commonJS({
           onReceiveMetadata: (metadata2) => {
             emitter.emit("metadata", metadata2);
           },
-          onReceiveMessage(message) {
+          onReceiveMessage(message2) {
             if (responseMessage !== null) {
               call.cancelWithStatus(constants_1.Status.INTERNAL, "Too many responses received");
             }
-            responseMessage = message;
+            responseMessage = message2;
           },
           onReceiveStatus(status) {
             if (receivedStatus) {
@@ -90350,8 +90693,8 @@ var require_client = __commonJS({
           onReceiveMetadata(metadata2) {
             stream.emit("metadata", metadata2);
           },
-          onReceiveMessage(message) {
-            stream.push(message);
+          onReceiveMessage(message2) {
+            stream.push(message2);
           },
           onReceiveStatus(status) {
             if (receivedStatus) {
@@ -90406,8 +90749,8 @@ var require_client = __commonJS({
           onReceiveMetadata(metadata2) {
             stream.emit("metadata", metadata2);
           },
-          onReceiveMessage(message) {
-            stream.push(message);
+          onReceiveMessage(message2) {
+            stream.push(message2);
           },
           onReceiveStatus(status) {
             if (receivedStatus) {
@@ -90424,7 +90767,7 @@ var require_client = __commonJS({
         return stream;
       }
     };
-    exports2.Client = Client;
+    exports2.Client = Client2;
   }
 });
 
@@ -90445,19 +90788,19 @@ var require_make_client = __commonJS({
     function isPrototypePolluted(key) {
       return ["__proto__", "prototype", "constructor"].includes(key);
     }
-    function makeClientConstructor(methods, serviceName, classOptions) {
+    function makeClientConstructor(methods2, serviceName, classOptions) {
       if (!classOptions) {
         classOptions = {};
       }
       class ServiceClientImpl extends client_1.Client {
       }
-      Object.keys(methods).forEach((name5) => {
-        if (isPrototypePolluted(name5)) {
+      Object.keys(methods2).forEach((name7) => {
+        if (isPrototypePolluted(name7)) {
           return;
         }
-        const attrs = methods[name5];
+        const attrs = methods2[name7];
         let methodType;
-        if (typeof name5 === "string" && name5.charAt(0) === "$") {
+        if (typeof name7 === "string" && name7.charAt(0) === "$") {
           throw new Error("Method names cannot start with $");
         }
         if (attrs.requestStream) {
@@ -90476,13 +90819,13 @@ var require_make_client = __commonJS({
         const serialize = attrs.requestSerialize;
         const deserialize = attrs.responseDeserialize;
         const methodFunc = partial(requesterFuncs[methodType], attrs.path, serialize, deserialize);
-        ServiceClientImpl.prototype[name5] = methodFunc;
-        Object.assign(ServiceClientImpl.prototype[name5], attrs);
+        ServiceClientImpl.prototype[name7] = methodFunc;
+        Object.assign(ServiceClientImpl.prototype[name7], attrs);
         if (attrs.originalName && !isPrototypePolluted(attrs.originalName)) {
-          ServiceClientImpl.prototype[attrs.originalName] = ServiceClientImpl.prototype[name5];
+          ServiceClientImpl.prototype[attrs.originalName] = ServiceClientImpl.prototype[name7];
         }
       });
-      ServiceClientImpl.service = methods;
+      ServiceClientImpl.service = methods2;
       return ServiceClientImpl;
     }
     exports2.makeClientConstructor = makeClientConstructor;
@@ -90996,7 +91339,7 @@ var require_base64 = __commonJS({
       return String.fromCharCode.apply(String, chunk.slice(0, i2));
     };
     var invalidEncoding = "invalid encoding";
-    base642.decode = function decode(string, buffer, offset) {
+    base642.decode = function decode2(string, buffer, offset) {
       var start2 = offset;
       var j = 0, t;
       for (var i2 = 0; i2 < string.length; ) {
@@ -91041,18 +91384,18 @@ var require_eventemitter = __commonJS({
   "node_modules/@protobufjs/eventemitter/index.js"(exports2, module3) {
     init_shims();
     "use strict";
-    module3.exports = EventEmitter;
-    function EventEmitter() {
+    module3.exports = EventEmitter2;
+    function EventEmitter2() {
       this._listeners = {};
     }
-    EventEmitter.prototype.on = function on(evt, fn, ctx) {
+    EventEmitter2.prototype.on = function on(evt, fn, ctx) {
       (this._listeners[evt] || (this._listeners[evt] = [])).push({
         fn,
         ctx: ctx || this
       });
       return this;
     };
-    EventEmitter.prototype.off = function off(evt, fn) {
+    EventEmitter2.prototype.off = function off(evt, fn) {
       if (evt === void 0)
         this._listeners = {};
       else {
@@ -91069,7 +91412,7 @@ var require_eventemitter = __commonJS({
       }
       return this;
     };
-    EventEmitter.prototype.emit = function emit(evt) {
+    EventEmitter2.prototype.emit = function emit(evt) {
       var listeners = this._listeners[evt];
       if (listeners) {
         var args = [], i = 1;
@@ -91399,7 +91742,7 @@ var require_longbits = __commonJS({
     init_shims();
     "use strict";
     module3.exports = LongBits;
-    var util = require_minimal();
+    var util2 = require_minimal();
     function LongBits(lo, hi) {
       this.lo = lo >>> 0;
       this.hi = hi >>> 0;
@@ -91436,9 +91779,9 @@ var require_longbits = __commonJS({
     LongBits.from = function from(value) {
       if (typeof value === "number")
         return LongBits.fromNumber(value);
-      if (util.isString(value)) {
-        if (util.Long)
-          value = util.Long.fromString(value);
+      if (util2.isString(value)) {
+        if (util2.Long)
+          value = util2.Long.fromString(value);
         else
           return LongBits.fromNumber(parseInt(value, 10));
       }
@@ -91454,7 +91797,7 @@ var require_longbits = __commonJS({
       return this.lo + this.hi * 4294967296;
     };
     LongBits.prototype.toLong = function toLong(unsigned) {
-      return util.Long ? new util.Long(this.lo | 0, this.hi | 0, Boolean(unsigned)) : { low: this.lo | 0, high: this.hi | 0, unsigned: Boolean(unsigned) };
+      return util2.Long ? new util2.Long(this.lo | 0, this.hi | 0, Boolean(unsigned)) : { low: this.lo | 0, high: this.hi | 0, unsigned: Boolean(unsigned) };
     };
     var charCodeAt = String.prototype.charCodeAt;
     LongBits.fromHash = function fromHash(hash2) {
@@ -91489,59 +91832,59 @@ var require_minimal = __commonJS({
   "node_modules/protobufjs/src/util/minimal.js"(exports2) {
     init_shims();
     "use strict";
-    var util = exports2;
-    util.asPromise = require_aspromise();
-    util.base64 = require_base64();
-    util.EventEmitter = require_eventemitter();
-    util.float = require_float();
-    util.inquire = require_inquire();
-    util.utf8 = require_utf8();
-    util.pool = require_pool();
-    util.LongBits = require_longbits();
-    util.isNode = Boolean(typeof global !== "undefined" && global && global.process && global.process.versions && global.process.versions.node);
-    util.global = util.isNode && global || typeof window !== "undefined" && window || typeof self !== "undefined" && self || exports2;
-    util.emptyArray = Object.freeze ? Object.freeze([]) : [];
-    util.emptyObject = Object.freeze ? Object.freeze({}) : {};
-    util.isInteger = Number.isInteger || function isInteger2(value) {
+    var util2 = exports2;
+    util2.asPromise = require_aspromise();
+    util2.base64 = require_base64();
+    util2.EventEmitter = require_eventemitter();
+    util2.float = require_float();
+    util2.inquire = require_inquire();
+    util2.utf8 = require_utf8();
+    util2.pool = require_pool();
+    util2.LongBits = require_longbits();
+    util2.isNode = Boolean(typeof global !== "undefined" && global && global.process && global.process.versions && global.process.versions.node);
+    util2.global = util2.isNode && global || typeof window !== "undefined" && window || typeof self !== "undefined" && self || exports2;
+    util2.emptyArray = Object.freeze ? Object.freeze([]) : [];
+    util2.emptyObject = Object.freeze ? Object.freeze({}) : {};
+    util2.isInteger = Number.isInteger || function isInteger2(value) {
       return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
     };
-    util.isString = function isString(value) {
+    util2.isString = function isString(value) {
       return typeof value === "string" || value instanceof String;
     };
-    util.isObject = function isObject(value) {
+    util2.isObject = function isObject(value) {
       return value && typeof value === "object";
     };
-    util.isset = util.isSet = function isSet(obj, prop) {
+    util2.isset = util2.isSet = function isSet(obj, prop) {
       var value = obj[prop];
       if (value != null && obj.hasOwnProperty(prop))
         return typeof value !== "object" || (Array.isArray(value) ? value.length : Object.keys(value).length) > 0;
       return false;
     };
-    util.Buffer = function() {
+    util2.Buffer = function() {
       try {
-        var Buffer2 = util.inquire("buffer").Buffer;
+        var Buffer2 = util2.inquire("buffer").Buffer;
         return Buffer2.prototype.utf8Write ? Buffer2 : null;
       } catch (e) {
         return null;
       }
     }();
-    util._Buffer_from = null;
-    util._Buffer_allocUnsafe = null;
-    util.newBuffer = function newBuffer(sizeOrArray) {
-      return typeof sizeOrArray === "number" ? util.Buffer ? util._Buffer_allocUnsafe(sizeOrArray) : new util.Array(sizeOrArray) : util.Buffer ? util._Buffer_from(sizeOrArray) : typeof Uint8Array === "undefined" ? sizeOrArray : new Uint8Array(sizeOrArray);
+    util2._Buffer_from = null;
+    util2._Buffer_allocUnsafe = null;
+    util2.newBuffer = function newBuffer(sizeOrArray) {
+      return typeof sizeOrArray === "number" ? util2.Buffer ? util2._Buffer_allocUnsafe(sizeOrArray) : new util2.Array(sizeOrArray) : util2.Buffer ? util2._Buffer_from(sizeOrArray) : typeof Uint8Array === "undefined" ? sizeOrArray : new Uint8Array(sizeOrArray);
     };
-    util.Array = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
-    util.Long = util.global.dcodeIO && util.global.dcodeIO.Long || util.global.Long || util.inquire("long");
-    util.key2Re = /^true|false|0|1$/;
-    util.key32Re = /^-?(?:0|[1-9][0-9]*)$/;
-    util.key64Re = /^(?:[\\x00-\\xff]{8}|-?(?:0|[1-9][0-9]*))$/;
-    util.longToHash = function longToHash(value) {
-      return value ? util.LongBits.from(value).toHash() : util.LongBits.zeroHash;
+    util2.Array = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
+    util2.Long = util2.global.dcodeIO && util2.global.dcodeIO.Long || util2.global.Long || util2.inquire("long");
+    util2.key2Re = /^true|false|0|1$/;
+    util2.key32Re = /^-?(?:0|[1-9][0-9]*)$/;
+    util2.key64Re = /^(?:[\\x00-\\xff]{8}|-?(?:0|[1-9][0-9]*))$/;
+    util2.longToHash = function longToHash(value) {
+      return value ? util2.LongBits.from(value).toHash() : util2.LongBits.zeroHash;
     };
-    util.longFromHash = function longFromHash(hash2, unsigned) {
-      var bits = util.LongBits.fromHash(hash2);
-      if (util.Long)
-        return util.Long.fromBits(bits.lo, bits.hi, unsigned);
+    util2.longFromHash = function longFromHash(hash2, unsigned) {
+      var bits = util2.LongBits.fromHash(hash2);
+      if (util2.Long)
+        return util2.Long.fromBits(bits.lo, bits.hi, unsigned);
       return bits.toNumber(Boolean(unsigned));
     };
     function merge(dst, src2, ifNotSet) {
@@ -91550,16 +91893,16 @@ var require_minimal = __commonJS({
           dst[keys[i]] = src2[keys[i]];
       return dst;
     }
-    util.merge = merge;
-    util.lcFirst = function lcFirst(str) {
+    util2.merge = merge;
+    util2.lcFirst = function lcFirst(str) {
       return str.charAt(0).toLowerCase() + str.substring(1);
     };
-    function newError(name5) {
-      function CustomError(message, properties) {
+    function newError(name7) {
+      function CustomError(message2, properties) {
         if (!(this instanceof CustomError))
-          return new CustomError(message, properties);
+          return new CustomError(message2, properties);
         Object.defineProperty(this, "message", { get: function() {
-          return message;
+          return message2;
         } });
         if (Error.captureStackTrace)
           Error.captureStackTrace(this, CustomError);
@@ -91570,16 +91913,16 @@ var require_minimal = __commonJS({
       }
       (CustomError.prototype = Object.create(Error.prototype)).constructor = CustomError;
       Object.defineProperty(CustomError.prototype, "name", { get: function() {
-        return name5;
+        return name7;
       } });
       CustomError.prototype.toString = function toString() {
         return this.name + ": " + this.message;
       };
       return CustomError;
     }
-    util.newError = newError;
-    util.ProtocolError = newError("ProtocolError");
-    util.oneOfGetter = function getOneOf(fieldNames) {
+    util2.newError = newError;
+    util2.ProtocolError = newError("ProtocolError");
+    util2.oneOfGetter = function getOneOf(fieldNames) {
       var fieldMap = {};
       for (var i = 0; i < fieldNames.length; ++i)
         fieldMap[fieldNames[i]] = 1;
@@ -91589,29 +91932,29 @@ var require_minimal = __commonJS({
             return keys[i2];
       };
     };
-    util.oneOfSetter = function setOneOf(fieldNames) {
-      return function(name5) {
+    util2.oneOfSetter = function setOneOf(fieldNames) {
+      return function(name7) {
         for (var i = 0; i < fieldNames.length; ++i)
-          if (fieldNames[i] !== name5)
+          if (fieldNames[i] !== name7)
             delete this[fieldNames[i]];
       };
     };
-    util.toJSONOptions = {
+    util2.toJSONOptions = {
       longs: String,
       enums: String,
       bytes: String,
       json: true
     };
-    util._configure = function() {
-      var Buffer2 = util.Buffer;
+    util2._configure = function() {
+      var Buffer2 = util2.Buffer;
       if (!Buffer2) {
-        util._Buffer_from = util._Buffer_allocUnsafe = null;
+        util2._Buffer_from = util2._Buffer_allocUnsafe = null;
         return;
       }
-      util._Buffer_from = Buffer2.from !== Uint8Array.from && Buffer2.from || function Buffer_from(value, encoding) {
+      util2._Buffer_from = Buffer2.from !== Uint8Array.from && Buffer2.from || function Buffer_from(value, encoding) {
         return new Buffer2(value, encoding);
       };
-      util._Buffer_allocUnsafe = Buffer2.allocUnsafe || function Buffer_allocUnsafe(size) {
+      util2._Buffer_allocUnsafe = Buffer2.allocUnsafe || function Buffer_allocUnsafe(size) {
         return new Buffer2(size);
       };
     };
@@ -91624,11 +91967,11 @@ var require_writer = __commonJS({
     init_shims();
     "use strict";
     module3.exports = Writer;
-    var util = require_minimal();
+    var util2 = require_minimal();
     var BufferWriter;
-    var LongBits = util.LongBits;
-    var base642 = util.base64;
-    var utf8 = util.utf8;
+    var LongBits = util2.LongBits;
+    var base642 = util2.base64;
+    var utf8 = util2.utf8;
     function Op(fn, len, val) {
       this.fn = fn;
       this.len = len;
@@ -91650,7 +91993,7 @@ var require_writer = __commonJS({
       this.states = null;
     }
     var create = function create2() {
-      return util.Buffer ? function create_buffer_setup() {
+      return util2.Buffer ? function create_buffer_setup() {
         return (Writer.create = function create_buffer() {
           return new BufferWriter();
         })();
@@ -91660,10 +92003,10 @@ var require_writer = __commonJS({
     };
     Writer.create = create();
     Writer.alloc = function alloc(size) {
-      return new util.Array(size);
+      return new util2.Array(size);
     };
-    if (util.Array !== Array)
-      Writer.alloc = util.pool(Writer.alloc, util.Array.prototype.subarray);
+    if (util2.Array !== Array)
+      Writer.alloc = util2.pool(Writer.alloc, util2.Array.prototype.subarray);
     Writer.prototype._push = function push(fn, len, val) {
       this.tail = this.tail.next = new Op(fn, len, val);
       this.len += len;
@@ -91736,12 +92079,12 @@ var require_writer = __commonJS({
     };
     Writer.prototype.sfixed64 = Writer.prototype.fixed64;
     Writer.prototype.float = function write_float(value) {
-      return this._push(util.float.writeFloatLE, 4, value);
+      return this._push(util2.float.writeFloatLE, 4, value);
     };
     Writer.prototype.double = function write_double(value) {
-      return this._push(util.float.writeDoubleLE, 8, value);
+      return this._push(util2.float.writeDoubleLE, 8, value);
     };
-    var writeBytes = util.Array.prototype.set ? function writeBytes_set(val, buf, pos) {
+    var writeBytes = util2.Array.prototype.set ? function writeBytes_set(val, buf, pos) {
       buf.set(val, pos);
     } : function writeBytes_for(val, buf, pos) {
       for (var i = 0; i < val.length; ++i)
@@ -91751,7 +92094,7 @@ var require_writer = __commonJS({
       var len = value.length >>> 0;
       if (!len)
         return this._push(writeByte, 1, 0);
-      if (util.isString(value)) {
+      if (util2.isString(value)) {
         var buf = Writer.alloc(len = base642.length(value));
         base642.decode(value, buf, 0);
         value = buf;
@@ -91815,13 +92158,13 @@ var require_writer_buffer = __commonJS({
     module3.exports = BufferWriter;
     var Writer = require_writer();
     (BufferWriter.prototype = Object.create(Writer.prototype)).constructor = BufferWriter;
-    var util = require_minimal();
+    var util2 = require_minimal();
     function BufferWriter() {
       Writer.call(this);
     }
     BufferWriter._configure = function() {
-      BufferWriter.alloc = util._Buffer_allocUnsafe;
-      BufferWriter.writeBytesBuffer = util.Buffer && util.Buffer.prototype instanceof Uint8Array && util.Buffer.prototype.set.name === "set" ? function writeBytesBuffer_set(val, buf, pos) {
+      BufferWriter.alloc = util2._Buffer_allocUnsafe;
+      BufferWriter.writeBytesBuffer = util2.Buffer && util2.Buffer.prototype instanceof Uint8Array && util2.Buffer.prototype.set.name === "set" ? function writeBytesBuffer_set(val, buf, pos) {
         buf.set(val, pos);
       } : function writeBytesBuffer_copy(val, buf, pos) {
         if (val.copy)
@@ -91832,8 +92175,8 @@ var require_writer_buffer = __commonJS({
       };
     };
     BufferWriter.prototype.bytes = function write_bytes_buffer(value) {
-      if (util.isString(value))
-        value = util._Buffer_from(value, "base64");
+      if (util2.isString(value))
+        value = util2._Buffer_from(value, "base64");
       var len = value.length >>> 0;
       this.uint32(len);
       if (len)
@@ -91842,14 +92185,14 @@ var require_writer_buffer = __commonJS({
     };
     function writeStringBuffer(val, buf, pos) {
       if (val.length < 40)
-        util.utf8.write(val, buf, pos);
+        util2.utf8.write(val, buf, pos);
       else if (buf.utf8Write)
         buf.utf8Write(val, pos);
       else
         buf.write(val, pos);
     }
     BufferWriter.prototype.string = function write_string_buffer(value) {
-      var len = util.Buffer.byteLength(value);
+      var len = util2.Buffer.byteLength(value);
       this.uint32(len);
       if (len)
         this._push(writeStringBuffer, len, value);
@@ -91864,38 +92207,38 @@ var require_reader = __commonJS({
   "node_modules/protobufjs/src/reader.js"(exports2, module3) {
     init_shims();
     "use strict";
-    module3.exports = Reader;
-    var util = require_minimal();
+    module3.exports = Reader2;
+    var util2 = require_minimal();
     var BufferReader;
-    var LongBits = util.LongBits;
-    var utf8 = util.utf8;
+    var LongBits = util2.LongBits;
+    var utf8 = util2.utf8;
     function indexOutOfRange(reader, writeLength) {
       return RangeError("index out of range: " + reader.pos + " + " + (writeLength || 1) + " > " + reader.len);
     }
-    function Reader(buffer) {
+    function Reader2(buffer) {
       this.buf = buffer;
       this.pos = 0;
       this.len = buffer.length;
     }
     var create_array = typeof Uint8Array !== "undefined" ? function create_typed_array(buffer) {
       if (buffer instanceof Uint8Array || Array.isArray(buffer))
-        return new Reader(buffer);
+        return new Reader2(buffer);
       throw Error("illegal buffer");
     } : function create_array2(buffer) {
       if (Array.isArray(buffer))
-        return new Reader(buffer);
+        return new Reader2(buffer);
       throw Error("illegal buffer");
     };
     var create = function create2() {
-      return util.Buffer ? function create_buffer_setup(buffer) {
-        return (Reader.create = function create_buffer(buffer2) {
-          return util.Buffer.isBuffer(buffer2) ? new BufferReader(buffer2) : create_array(buffer2);
+      return util2.Buffer ? function create_buffer_setup(buffer) {
+        return (Reader2.create = function create_buffer(buffer2) {
+          return util2.Buffer.isBuffer(buffer2) ? new BufferReader(buffer2) : create_array(buffer2);
         })(buffer);
       } : create_array;
     };
-    Reader.create = create();
-    Reader.prototype._slice = util.Array.prototype.subarray || util.Array.prototype.slice;
-    Reader.prototype.uint32 = function read_uint32_setup() {
+    Reader2.create = create();
+    Reader2.prototype._slice = util2.Array.prototype.subarray || util2.Array.prototype.slice;
+    Reader2.prototype.uint32 = function read_uint32_setup() {
       var value = 4294967295;
       return function read_uint32() {
         value = (this.buf[this.pos] & 127) >>> 0;
@@ -91920,10 +92263,10 @@ var require_reader = __commonJS({
         return value;
       };
     }();
-    Reader.prototype.int32 = function read_int32() {
+    Reader2.prototype.int32 = function read_int32() {
       return this.uint32() | 0;
     };
-    Reader.prototype.sint32 = function read_sint32() {
+    Reader2.prototype.sint32 = function read_sint32() {
       var value = this.uint32();
       return value >>> 1 ^ -(value & 1) | 0;
     };
@@ -91969,18 +92312,18 @@ var require_reader = __commonJS({
       }
       throw Error("invalid varint encoding");
     }
-    Reader.prototype.bool = function read_bool() {
+    Reader2.prototype.bool = function read_bool() {
       return this.uint32() !== 0;
     };
     function readFixed32_end(buf, end) {
       return (buf[end - 4] | buf[end - 3] << 8 | buf[end - 2] << 16 | buf[end - 1] << 24) >>> 0;
     }
-    Reader.prototype.fixed32 = function read_fixed32() {
+    Reader2.prototype.fixed32 = function read_fixed32() {
       if (this.pos + 4 > this.len)
         throw indexOutOfRange(this, 4);
       return readFixed32_end(this.buf, this.pos += 4);
     };
-    Reader.prototype.sfixed32 = function read_sfixed32() {
+    Reader2.prototype.sfixed32 = function read_sfixed32() {
       if (this.pos + 4 > this.len)
         throw indexOutOfRange(this, 4);
       return readFixed32_end(this.buf, this.pos += 4) | 0;
@@ -91990,21 +92333,21 @@ var require_reader = __commonJS({
         throw indexOutOfRange(this, 8);
       return new LongBits(readFixed32_end(this.buf, this.pos += 4), readFixed32_end(this.buf, this.pos += 4));
     }
-    Reader.prototype.float = function read_float() {
+    Reader2.prototype.float = function read_float() {
       if (this.pos + 4 > this.len)
         throw indexOutOfRange(this, 4);
-      var value = util.float.readFloatLE(this.buf, this.pos);
+      var value = util2.float.readFloatLE(this.buf, this.pos);
       this.pos += 4;
       return value;
     };
-    Reader.prototype.double = function read_double() {
+    Reader2.prototype.double = function read_double() {
       if (this.pos + 8 > this.len)
         throw indexOutOfRange(this, 4);
-      var value = util.float.readDoubleLE(this.buf, this.pos);
+      var value = util2.float.readDoubleLE(this.buf, this.pos);
       this.pos += 8;
       return value;
     };
-    Reader.prototype.bytes = function read_bytes() {
+    Reader2.prototype.bytes = function read_bytes() {
       var length = this.uint32(), start2 = this.pos, end = this.pos + length;
       if (end > this.len)
         throw indexOutOfRange(this, length);
@@ -92013,11 +92356,11 @@ var require_reader = __commonJS({
         return this.buf.slice(start2, end);
       return start2 === end ? new this.buf.constructor(0) : this._slice.call(this.buf, start2, end);
     };
-    Reader.prototype.string = function read_string() {
+    Reader2.prototype.string = function read_string() {
       var bytes = this.bytes();
       return utf8.read(bytes, 0, bytes.length);
     };
-    Reader.prototype.skip = function skip(length) {
+    Reader2.prototype.skip = function skip(length) {
       if (typeof length === "number") {
         if (this.pos + length > this.len)
           throw indexOutOfRange(this, length);
@@ -92030,7 +92373,7 @@ var require_reader = __commonJS({
       }
       return this;
     };
-    Reader.prototype.skipType = function(wireType) {
+    Reader2.prototype.skipType = function(wireType) {
       switch (wireType) {
         case 0:
           this.skip();
@@ -92054,12 +92397,12 @@ var require_reader = __commonJS({
       }
       return this;
     };
-    Reader._configure = function(BufferReader_) {
+    Reader2._configure = function(BufferReader_) {
       BufferReader = BufferReader_;
-      Reader.create = create();
+      Reader2.create = create();
       BufferReader._configure();
-      var fn = util.Long ? "toLong" : "toNumber";
-      util.merge(Reader.prototype, {
+      var fn = util2.Long ? "toLong" : "toNumber";
+      util2.merge(Reader2.prototype, {
         int64: function read_int64() {
           return readLongVarint.call(this)[fn](false);
         },
@@ -92086,15 +92429,15 @@ var require_reader_buffer = __commonJS({
     init_shims();
     "use strict";
     module3.exports = BufferReader;
-    var Reader = require_reader();
-    (BufferReader.prototype = Object.create(Reader.prototype)).constructor = BufferReader;
-    var util = require_minimal();
+    var Reader2 = require_reader();
+    (BufferReader.prototype = Object.create(Reader2.prototype)).constructor = BufferReader;
+    var util2 = require_minimal();
     function BufferReader(buffer) {
-      Reader.call(this, buffer);
+      Reader2.call(this, buffer);
     }
     BufferReader._configure = function() {
-      if (util.Buffer)
-        BufferReader.prototype._slice = util.Buffer.prototype.slice;
+      if (util2.Buffer)
+        BufferReader.prototype._slice = util2.Buffer.prototype.slice;
     };
     BufferReader.prototype.string = function read_string_buffer() {
       var len = this.uint32();
@@ -92110,12 +92453,12 @@ var require_service = __commonJS({
     init_shims();
     "use strict";
     module3.exports = Service;
-    var util = require_minimal();
-    (Service.prototype = Object.create(util.EventEmitter.prototype)).constructor = Service;
+    var util2 = require_minimal();
+    (Service.prototype = Object.create(util2.EventEmitter.prototype)).constructor = Service;
     function Service(rpcImpl, requestDelimited, responseDelimited) {
       if (typeof rpcImpl !== "function")
         throw TypeError("rpcImpl must be a function");
-      util.EventEmitter.call(this);
+      util2.EventEmitter.call(this);
       this.rpcImpl = rpcImpl;
       this.requestDelimited = Boolean(requestDelimited);
       this.responseDelimited = Boolean(responseDelimited);
@@ -92125,7 +92468,7 @@ var require_service = __commonJS({
         throw TypeError("request must be specified");
       var self2 = this;
       if (!callback)
-        return util.asPromise(rpcCall, self2, method, requestCtor, responseCtor, request);
+        return util2.asPromise(rpcCall, self2, method, requestCtor, responseCtor, request);
       if (!self2.rpcImpl) {
         setTimeout(function() {
           callback(Error("already ended"));
@@ -92378,7 +92721,7 @@ var require_types = __commonJS({
     init_shims();
     "use strict";
     var types2 = exports2;
-    var util = require_util();
+    var util2 = require_util();
     var s2 = [
       "double",
       "float",
@@ -92435,7 +92778,7 @@ var require_types = __commonJS({
       0,
       false,
       "",
-      util.emptyArray,
+      util2.emptyArray,
       null
     ]);
     types2.long = bake([
@@ -92487,30 +92830,30 @@ var require_field = __commonJS({
     ((Field.prototype = Object.create(ReflectionObject.prototype)).constructor = Field).className = "Field";
     var Enum = require_enum();
     var types2 = require_types();
-    var util = require_util();
+    var util2 = require_util();
     var Type;
     var ruleRe = /^required|optional|repeated$/;
-    Field.fromJSON = function fromJSON(name5, json) {
-      return new Field(name5, json.id, json.type, json.rule, json.extend, json.options, json.comment);
+    Field.fromJSON = function fromJSON(name7, json) {
+      return new Field(name7, json.id, json.type, json.rule, json.extend, json.options, json.comment);
     };
-    function Field(name5, id, type, rule, extend, options2, comment) {
-      if (util.isObject(rule)) {
+    function Field(name7, id, type, rule, extend, options2, comment) {
+      if (util2.isObject(rule)) {
         comment = extend;
         options2 = rule;
         rule = extend = void 0;
-      } else if (util.isObject(extend)) {
+      } else if (util2.isObject(extend)) {
         comment = options2;
         options2 = extend;
         extend = void 0;
       }
-      ReflectionObject.call(this, name5, options2);
-      if (!util.isInteger(id) || id < 0)
+      ReflectionObject.call(this, name7, options2);
+      if (!util2.isInteger(id) || id < 0)
         throw TypeError("id must be a non-negative integer");
-      if (!util.isString(type))
+      if (!util2.isString(type))
         throw TypeError("type must be a string");
       if (rule !== void 0 && !ruleRe.test(rule = rule.toString().toLowerCase()))
         throw TypeError("rule must be a string rule");
-      if (extend !== void 0 && !util.isString(extend))
+      if (extend !== void 0 && !util2.isString(extend))
         throw TypeError("extend must be a string");
       if (rule === "proto3_optional") {
         rule = "optional";
@@ -92527,7 +92870,7 @@ var require_field = __commonJS({
       this.partOf = null;
       this.typeDefault = null;
       this.defaultValue = null;
-      this.long = util.Long ? types2.long[type] !== void 0 : false;
+      this.long = util2.Long ? types2.long[type] !== void 0 : false;
       this.bytes = type === "bytes";
       this.resolvedType = null;
       this.extensionField = null;
@@ -92542,14 +92885,14 @@ var require_field = __commonJS({
         return this._packed;
       }
     });
-    Field.prototype.setOption = function setOption(name5, value, ifNotSet) {
-      if (name5 === "packed")
+    Field.prototype.setOption = function setOption(name7, value, ifNotSet) {
+      if (name7 === "packed")
         this._packed = null;
-      return ReflectionObject.prototype.setOption.call(this, name5, value, ifNotSet);
+      return ReflectionObject.prototype.setOption.call(this, name7, value, ifNotSet);
     };
     Field.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
-      return util.toObject([
+      return util2.toObject([
         "rule",
         this.rule !== "optional" && this.rule || void 0,
         "type",
@@ -92586,21 +92929,21 @@ var require_field = __commonJS({
           this.options = void 0;
       }
       if (this.long) {
-        this.typeDefault = util.Long.fromNumber(this.typeDefault, this.type.charAt(0) === "u");
+        this.typeDefault = util2.Long.fromNumber(this.typeDefault, this.type.charAt(0) === "u");
         if (Object.freeze)
           Object.freeze(this.typeDefault);
       } else if (this.bytes && typeof this.typeDefault === "string") {
         var buf;
-        if (util.base64.test(this.typeDefault))
-          util.base64.decode(this.typeDefault, buf = util.newBuffer(util.base64.length(this.typeDefault)), 0);
+        if (util2.base64.test(this.typeDefault))
+          util2.base64.decode(this.typeDefault, buf = util2.newBuffer(util2.base64.length(this.typeDefault)), 0);
         else
-          util.utf8.write(this.typeDefault, buf = util.newBuffer(util.utf8.length(this.typeDefault)), 0);
+          util2.utf8.write(this.typeDefault, buf = util2.newBuffer(util2.utf8.length(this.typeDefault)), 0);
         this.typeDefault = buf;
       }
       if (this.map)
-        this.defaultValue = util.emptyObject;
+        this.defaultValue = util2.emptyObject;
       else if (this.repeated)
-        this.defaultValue = util.emptyArray;
+        this.defaultValue = util2.emptyArray;
       else
         this.defaultValue = this.typeDefault;
       if (this.parent instanceof Type)
@@ -92609,11 +92952,11 @@ var require_field = __commonJS({
     };
     Field.d = function decorateField(fieldId, fieldType, fieldRule, defaultValue) {
       if (typeof fieldType === "function")
-        fieldType = util.decorateType(fieldType).name;
+        fieldType = util2.decorateType(fieldType).name;
       else if (fieldType && typeof fieldType === "object")
-        fieldType = util.decorateEnum(fieldType).name;
+        fieldType = util2.decorateEnum(fieldType).name;
       return function fieldDecorator(prototype, fieldName) {
-        util.decorateType(prototype.constructor).add(new Field(fieldName, fieldId, fieldType, fieldRule, { "default": defaultValue }));
+        util2.decorateType(prototype.constructor).add(new Field(fieldName, fieldId, fieldType, fieldRule, { "default": defaultValue }));
       };
     };
     Field._configure = function configure(Type_) {
@@ -92631,25 +92974,25 @@ var require_oneof = __commonJS({
     var ReflectionObject = require_object();
     ((OneOf.prototype = Object.create(ReflectionObject.prototype)).constructor = OneOf).className = "OneOf";
     var Field = require_field();
-    var util = require_util();
-    function OneOf(name5, fieldNames, options2, comment) {
+    var util2 = require_util();
+    function OneOf(name7, fieldNames, options2, comment) {
       if (!Array.isArray(fieldNames)) {
         options2 = fieldNames;
         fieldNames = void 0;
       }
-      ReflectionObject.call(this, name5, options2);
+      ReflectionObject.call(this, name7, options2);
       if (!(fieldNames === void 0 || Array.isArray(fieldNames)))
         throw TypeError("fieldNames must be an Array");
       this.oneof = fieldNames || [];
       this.fieldsArray = [];
       this.comment = comment;
     }
-    OneOf.fromJSON = function fromJSON(name5, json) {
-      return new OneOf(name5, json.oneof, json.options, json.comment);
+    OneOf.fromJSON = function fromJSON(name7, json) {
+      return new OneOf(name7, json.oneof, json.options, json.comment);
     };
     OneOf.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
-      return util.toObject([
+      return util2.toObject([
         "options",
         this.options,
         "oneof",
@@ -92712,10 +93055,10 @@ var require_oneof = __commonJS({
       while (index < arguments.length)
         fieldNames[index] = arguments[index++];
       return function oneOfDecorator(prototype, oneofName) {
-        util.decorateType(prototype.constructor).add(new OneOf(oneofName, fieldNames));
+        util2.decorateType(prototype.constructor).add(new OneOf(oneofName, fieldNames));
         Object.defineProperty(prototype, oneofName, {
-          get: util.oneOfGetter(fieldNames),
-          set: util.oneOfSetter(fieldNames)
+          get: util2.oneOfGetter(fieldNames),
+          set: util2.oneOfSetter(fieldNames)
         });
       };
     };
@@ -92732,12 +93075,12 @@ var require_namespace = __commonJS({
     ((Namespace.prototype = Object.create(ReflectionObject.prototype)).constructor = Namespace).className = "Namespace";
     var Field = require_field();
     var OneOf = require_oneof();
-    var util = require_util();
+    var util2 = require_util();
     var Type;
     var Service;
     var Enum;
-    Namespace.fromJSON = function fromJSON(name5, json) {
-      return new Namespace(name5, json.options).addJSON(json.nested);
+    Namespace.fromJSON = function fromJSON(name7, json) {
+      return new Namespace(name7, json.options).addJSON(json.nested);
     };
     function arrayToJSON(array, toJSONOptions) {
       if (!(array && array.length))
@@ -92756,16 +93099,16 @@ var require_namespace = __commonJS({
       }
       return false;
     };
-    Namespace.isReservedName = function isReservedName(reserved2, name5) {
+    Namespace.isReservedName = function isReservedName(reserved2, name7) {
       if (reserved2) {
         for (var i = 0; i < reserved2.length; ++i)
-          if (reserved2[i] === name5)
+          if (reserved2[i] === name7)
             return true;
       }
       return false;
     };
-    function Namespace(name5, options2) {
-      ReflectionObject.call(this, name5, options2);
+    function Namespace(name7, options2) {
+      ReflectionObject.call(this, name7, options2);
       this.nested = void 0;
       this._nestedArray = null;
     }
@@ -92775,11 +93118,11 @@ var require_namespace = __commonJS({
     }
     Object.defineProperty(Namespace.prototype, "nestedArray", {
       get: function() {
-        return this._nestedArray || (this._nestedArray = util.toArray(this.nested));
+        return this._nestedArray || (this._nestedArray = util2.toArray(this.nested));
       }
     });
     Namespace.prototype.toJSON = function toJSON(toJSONOptions) {
-      return util.toObject([
+      return util2.toObject([
         "options",
         this.options,
         "nested",
@@ -92796,13 +93139,13 @@ var require_namespace = __commonJS({
       }
       return this;
     };
-    Namespace.prototype.get = function get(name5) {
-      return this.nested && this.nested[name5] || null;
+    Namespace.prototype.get = function get(name7) {
+      return this.nested && this.nested[name7] || null;
     };
-    Namespace.prototype.getEnum = function getEnum(name5) {
-      if (this.nested && this.nested[name5] instanceof Enum)
-        return this.nested[name5].values;
-      throw Error("no such enum: " + name5);
+    Namespace.prototype.getEnum = function getEnum(name7) {
+      if (this.nested && this.nested[name7] instanceof Enum)
+        return this.nested[name7].values;
+      throw Error("no such enum: " + name7);
     };
     Namespace.prototype.add = function add(object) {
       if (!(object instanceof Field && object.extend !== void 0 || object instanceof Type || object instanceof Enum || object instanceof Service || object instanceof Namespace || object instanceof OneOf))
@@ -92840,7 +93183,7 @@ var require_namespace = __commonJS({
       return clearCache(this);
     };
     Namespace.prototype.define = function define(path, json) {
-      if (util.isString(path))
+      if (util2.isString(path))
         path = path.split(".");
       else if (!Array.isArray(path))
         throw TypeError("illegal path");
@@ -92875,7 +93218,7 @@ var require_namespace = __commonJS({
         filterTypes = void 0;
       } else if (filterTypes && !Array.isArray(filterTypes))
         filterTypes = [filterTypes];
-      if (util.isString(path) && path.length) {
+      if (util2.isString(path) && path.length) {
         if (path === ".")
           return this.root;
         path = path.split(".");
@@ -92939,21 +93282,21 @@ var require_mapfield = __commonJS({
     var Field = require_field();
     ((MapField.prototype = Object.create(Field.prototype)).constructor = MapField).className = "MapField";
     var types2 = require_types();
-    var util = require_util();
-    function MapField(name5, id, keyType, type, options2, comment) {
-      Field.call(this, name5, id, type, void 0, void 0, options2, comment);
-      if (!util.isString(keyType))
+    var util2 = require_util();
+    function MapField(name7, id, keyType, type, options2, comment) {
+      Field.call(this, name7, id, type, void 0, void 0, options2, comment);
+      if (!util2.isString(keyType))
         throw TypeError("keyType must be a string");
       this.keyType = keyType;
       this.resolvedKeyType = null;
       this.map = true;
     }
-    MapField.fromJSON = function fromJSON(name5, json) {
-      return new MapField(name5, json.id, json.keyType, json.type, json.options, json.comment);
+    MapField.fromJSON = function fromJSON(name7, json) {
+      return new MapField(name7, json.id, json.keyType, json.type, json.options, json.comment);
     };
     MapField.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
-      return util.toObject([
+      return util2.toObject([
         "keyType",
         this.keyType,
         "type",
@@ -92977,11 +93320,11 @@ var require_mapfield = __commonJS({
     };
     MapField.d = function decorateMapField(fieldId, fieldKeyType, fieldValueType) {
       if (typeof fieldValueType === "function")
-        fieldValueType = util.decorateType(fieldValueType).name;
+        fieldValueType = util2.decorateType(fieldValueType).name;
       else if (fieldValueType && typeof fieldValueType === "object")
-        fieldValueType = util.decorateEnum(fieldValueType).name;
+        fieldValueType = util2.decorateEnum(fieldValueType).name;
       return function mapFieldDecorator(prototype, fieldName) {
-        util.decorateType(prototype.constructor).add(new MapField(fieldName, fieldId, fieldKeyType, fieldValueType));
+        util2.decorateType(prototype.constructor).add(new MapField(fieldName, fieldId, fieldKeyType, fieldValueType));
       };
     };
   }
@@ -92995,22 +93338,22 @@ var require_method = __commonJS({
     module3.exports = Method;
     var ReflectionObject = require_object();
     ((Method.prototype = Object.create(ReflectionObject.prototype)).constructor = Method).className = "Method";
-    var util = require_util();
-    function Method(name5, type, requestType, responseType, requestStream, responseStream, options2, comment, parsedOptions) {
-      if (util.isObject(requestStream)) {
+    var util2 = require_util();
+    function Method(name7, type, requestType, responseType, requestStream, responseStream, options2, comment, parsedOptions) {
+      if (util2.isObject(requestStream)) {
         options2 = requestStream;
         requestStream = responseStream = void 0;
-      } else if (util.isObject(responseStream)) {
+      } else if (util2.isObject(responseStream)) {
         options2 = responseStream;
         responseStream = void 0;
       }
-      if (!(type === void 0 || util.isString(type)))
+      if (!(type === void 0 || util2.isString(type)))
         throw TypeError("type must be a string");
-      if (!util.isString(requestType))
+      if (!util2.isString(requestType))
         throw TypeError("requestType must be a string");
-      if (!util.isString(responseType))
+      if (!util2.isString(responseType))
         throw TypeError("responseType must be a string");
-      ReflectionObject.call(this, name5, options2);
+      ReflectionObject.call(this, name7, options2);
       this.type = type || "rpc";
       this.requestType = requestType;
       this.requestStream = requestStream ? true : void 0;
@@ -93021,12 +93364,12 @@ var require_method = __commonJS({
       this.comment = comment;
       this.parsedOptions = parsedOptions;
     }
-    Method.fromJSON = function fromJSON(name5, json) {
-      return new Method(name5, json.type, json.requestType, json.responseType, json.requestStream, json.responseStream, json.options, json.comment, json.parsedOptions);
+    Method.fromJSON = function fromJSON(name7, json) {
+      return new Method(name7, json.type, json.requestType, json.responseType, json.requestStream, json.responseStream, json.options, json.comment, json.parsedOptions);
     };
     Method.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
-      return util.toObject([
+      return util2.toObject([
         "type",
         this.type !== "rpc" && this.type || void 0,
         "requestType",
@@ -93064,15 +93407,15 @@ var require_service2 = __commonJS({
     var Namespace = require_namespace();
     ((Service.prototype = Object.create(Namespace.prototype)).constructor = Service).className = "Service";
     var Method = require_method();
-    var util = require_util();
+    var util2 = require_util();
     var rpc = require_rpc();
-    function Service(name5, options2) {
-      Namespace.call(this, name5, options2);
+    function Service(name7, options2) {
+      Namespace.call(this, name7, options2);
       this.methods = {};
       this._methodsArray = null;
     }
-    Service.fromJSON = function fromJSON(name5, json) {
-      var service = new Service(name5, json.options);
+    Service.fromJSON = function fromJSON(name7, json) {
+      var service = new Service(name7, json.options);
       if (json.methods)
         for (var names = Object.keys(json.methods), i = 0; i < names.length; ++i)
           service.add(Method.fromJSON(names[i], json.methods[names[i]]));
@@ -93084,7 +93427,7 @@ var require_service2 = __commonJS({
     Service.prototype.toJSON = function toJSON(toJSONOptions) {
       var inherited = Namespace.prototype.toJSON.call(this, toJSONOptions);
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
-      return util.toObject([
+      return util2.toObject([
         "options",
         inherited && inherited.options || void 0,
         "methods",
@@ -93097,20 +93440,20 @@ var require_service2 = __commonJS({
     };
     Object.defineProperty(Service.prototype, "methodsArray", {
       get: function() {
-        return this._methodsArray || (this._methodsArray = util.toArray(this.methods));
+        return this._methodsArray || (this._methodsArray = util2.toArray(this.methods));
       }
     });
     function clearCache(service) {
       service._methodsArray = null;
       return service;
     }
-    Service.prototype.get = function get(name5) {
-      return this.methods[name5] || Namespace.prototype.get.call(this, name5);
+    Service.prototype.get = function get(name7) {
+      return this.methods[name7] || Namespace.prototype.get.call(this, name7);
     };
     Service.prototype.resolveAll = function resolveAll() {
-      var methods = this.methodsArray;
-      for (var i = 0; i < methods.length; ++i)
-        methods[i].resolve();
+      var methods2 = this.methodsArray;
+      for (var i = 0; i < methods2.length; ++i)
+        methods2[i].resolve();
       return Namespace.prototype.resolve.call(this);
     };
     Service.prototype.add = function add(object) {
@@ -93136,8 +93479,8 @@ var require_service2 = __commonJS({
     Service.prototype.create = function create(rpcImpl, requestDelimited, responseDelimited) {
       var rpcService = new rpc.Service(rpcImpl, requestDelimited, responseDelimited);
       for (var i = 0, method; i < this.methodsArray.length; ++i) {
-        var methodName = util.lcFirst((method = this._methodsArray[i]).resolve().name).replace(/[^$\w_]/g, "");
-        rpcService[methodName] = util.codegen(["r", "c"], util.isReserved(methodName) ? methodName + "_" : methodName)("return this.rpcCall(m,q,s,r,c)")({
+        var methodName = util2.lcFirst((method = this._methodsArray[i]).resolve().name).replace(/[^$\w_]/g, "");
+        rpcService[methodName] = util2.codegen(["r", "c"], util2.isReserved(methodName) ? methodName + "_" : methodName)("return this.rpcCall(m,q,s,r,c)")({
           m: method,
           q: method.resolvedRequestType.ctor,
           s: method.resolvedResponseType.ctor
@@ -93153,39 +93496,39 @@ var require_message = __commonJS({
   "node_modules/protobufjs/src/message.js"(exports2, module3) {
     init_shims();
     "use strict";
-    module3.exports = Message;
-    var util = require_minimal();
-    function Message(properties) {
+    module3.exports = Message2;
+    var util2 = require_minimal();
+    function Message2(properties) {
       if (properties)
         for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
           this[keys[i]] = properties[keys[i]];
     }
-    Message.create = function create(properties) {
+    Message2.create = function create(properties) {
       return this.$type.create(properties);
     };
-    Message.encode = function encode(message, writer) {
-      return this.$type.encode(message, writer);
+    Message2.encode = function encode(message2, writer) {
+      return this.$type.encode(message2, writer);
     };
-    Message.encodeDelimited = function encodeDelimited(message, writer) {
-      return this.$type.encodeDelimited(message, writer);
+    Message2.encodeDelimited = function encodeDelimited(message2, writer) {
+      return this.$type.encodeDelimited(message2, writer);
     };
-    Message.decode = function decode(reader) {
+    Message2.decode = function decode2(reader) {
       return this.$type.decode(reader);
     };
-    Message.decodeDelimited = function decodeDelimited(reader) {
+    Message2.decodeDelimited = function decodeDelimited(reader) {
       return this.$type.decodeDelimited(reader);
     };
-    Message.verify = function verify(message) {
-      return this.$type.verify(message);
+    Message2.verify = function verify(message2) {
+      return this.$type.verify(message2);
     };
-    Message.fromObject = function fromObject(object) {
+    Message2.fromObject = function fromObject(object) {
       return this.$type.fromObject(object);
     };
-    Message.toObject = function toObject(message, options2) {
-      return this.$type.toObject(message, options2);
+    Message2.toObject = function toObject(message2, options2) {
+      return this.$type.toObject(message2, options2);
     };
-    Message.prototype.toJSON = function toJSON() {
-      return this.$type.toObject(this, util.toJSONOptions);
+    Message2.prototype.toJSON = function toJSON() {
+      return this.$type.toObject(this, util2.toJSONOptions);
     };
   }
 });
@@ -93198,12 +93541,12 @@ var require_decoder = __commonJS({
     module3.exports = decoder;
     var Enum = require_enum();
     var types2 = require_types();
-    var util = require_util();
+    var util2 = require_util();
     function missing(field) {
       return "missing required '" + field.name + "'";
     }
     function decoder(mtype) {
-      var gen = util.codegen(["r", "l"], mtype.name + "$decode")("if(!(r instanceof Reader))")("r=Reader.create(r)")("var c=l===undefined?r.len:r.pos+l,m=new this.ctor" + (mtype.fieldsArray.filter(function(field2) {
+      var gen = util2.codegen(["r", "l"], mtype.name + "$decode")("if(!(r instanceof Reader))")("r=Reader.create(r)")("var c=l===undefined?r.len:r.pos+l,m=new this.ctor" + (mtype.fieldsArray.filter(function(field2) {
         return field2.map;
       }).length ? ",k,value" : ""))("while(r.pos<c){")("var t=r.uint32()");
       if (mtype.group)
@@ -93211,7 +93554,7 @@ var require_decoder = __commonJS({
       gen("switch(t>>>3){");
       var i = 0;
       for (; i < mtype.fieldsArray.length; ++i) {
-        var field = mtype._fieldsArray[i].resolve(), type = field.resolvedType instanceof Enum ? "int32" : field.type, ref = "m" + util.safeProp(field.name);
+        var field = mtype._fieldsArray[i].resolve(), type = field.resolvedType instanceof Enum ? "int32" : field.type, ref = "m" + util2.safeProp(field.name);
         gen("case %i:", field.id);
         if (field.map) {
           gen("if(%s===util.emptyObject)", ref)("%s={}", ref)("var c2 = r.uint32()+r.pos");
@@ -93265,7 +93608,7 @@ var require_verifier = __commonJS({
     "use strict";
     module3.exports = verifier;
     var Enum = require_enum();
-    var util = require_util();
+    var util2 = require_util();
     function invalid(field, expected) {
       return field.name + ": " + expected + (field.repeated && expected !== "array" ? "[]" : field.map && expected !== "object" ? "{k:" + field.keyType + "}" : "") + " expected";
     }
@@ -93335,12 +93678,12 @@ var require_verifier = __commonJS({
       return gen;
     }
     function verifier(mtype) {
-      var gen = util.codegen(["m"], mtype.name + "$verify")('if(typeof m!=="object"||m===null)')("return%j", "object expected");
+      var gen = util2.codegen(["m"], mtype.name + "$verify")('if(typeof m!=="object"||m===null)')("return%j", "object expected");
       var oneofs = mtype.oneofsArray, seenFirstField = {};
       if (oneofs.length)
         gen("var p={}");
       for (var i = 0; i < mtype.fieldsArray.length; ++i) {
-        var field = mtype._fieldsArray[i].resolve(), ref = "m" + util.safeProp(field.name);
+        var field = mtype._fieldsArray[i].resolve(), ref = "m" + util2.safeProp(field.name);
         if (field.optional)
           gen("if(%s!=null&&m.hasOwnProperty(%j)){", ref, field.name);
         if (field.map) {
@@ -93352,7 +93695,7 @@ var require_verifier = __commonJS({
           genVerifyValue(gen, field, i, ref + "[i]")("}");
         } else {
           if (field.partOf) {
-            var oneofProp = util.safeProp(field.partOf.name);
+            var oneofProp = util2.safeProp(field.partOf.name);
             if (seenFirstField[field.partOf.name] === 1)
               gen("if(p%s===1)", oneofProp)("return%j", field.partOf.name + ": multiple values");
             seenFirstField[field.partOf.name] = 1;
@@ -93375,7 +93718,7 @@ var require_converter = __commonJS({
     "use strict";
     var converter = exports2;
     var Enum = require_enum();
-    var util = require_util();
+    var util2 = require_util();
     function genValuePartial_fromObject(gen, field, fieldIndex, prop) {
       if (field.resolvedType) {
         if (field.resolvedType instanceof Enum) {
@@ -93427,12 +93770,12 @@ var require_converter = __commonJS({
     }
     converter.fromObject = function fromObject(mtype) {
       var fields = mtype.fieldsArray;
-      var gen = util.codegen(["d"], mtype.name + "$fromObject")("if(d instanceof this.ctor)")("return d");
+      var gen = util2.codegen(["d"], mtype.name + "$fromObject")("if(d instanceof this.ctor)")("return d");
       if (!fields.length)
         return gen("return new this.ctor");
       gen("var m=new this.ctor");
       for (var i = 0; i < fields.length; ++i) {
-        var field = fields[i].resolve(), prop = util.safeProp(field.name);
+        var field = fields[i].resolve(), prop = util2.safeProp(field.name);
         if (field.map) {
           gen("if(d%s){", prop)('if(typeof d%s!=="object")', prop)("throw TypeError(%j)", field.fullName + ": object expected")("m%s={}", prop)("for(var ks=Object.keys(d%s),i=0;i<ks.length;++i){", prop);
           genValuePartial_fromObject(gen, field, i, prop + "[ks[i]]")("}")("}");
@@ -93481,10 +93824,10 @@ var require_converter = __commonJS({
       return gen;
     }
     converter.toObject = function toObject(mtype) {
-      var fields = mtype.fieldsArray.slice().sort(util.compareFieldsById);
+      var fields = mtype.fieldsArray.slice().sort(util2.compareFieldsById);
       if (!fields.length)
-        return util.codegen()("return {}");
-      var gen = util.codegen(["m", "o"], mtype.name + "$toObject")("if(!o)")("o={}")("var d={}");
+        return util2.codegen()("return {}");
+      var gen = util2.codegen(["m", "o"], mtype.name + "$toObject")("if(!o)")("o={}")("var d={}");
       var repeatedFields = [], mapFields = [], normalFields = [], i = 0;
       for (; i < fields.length; ++i)
         if (!fields[i].partOf)
@@ -93492,19 +93835,19 @@ var require_converter = __commonJS({
       if (repeatedFields.length) {
         gen("if(o.arrays||o.defaults){");
         for (i = 0; i < repeatedFields.length; ++i)
-          gen("d%s=[]", util.safeProp(repeatedFields[i].name));
+          gen("d%s=[]", util2.safeProp(repeatedFields[i].name));
         gen("}");
       }
       if (mapFields.length) {
         gen("if(o.objects||o.defaults){");
         for (i = 0; i < mapFields.length; ++i)
-          gen("d%s={}", util.safeProp(mapFields[i].name));
+          gen("d%s={}", util2.safeProp(mapFields[i].name));
         gen("}");
       }
       if (normalFields.length) {
         gen("if(o.defaults){");
         for (i = 0; i < normalFields.length; ++i) {
-          var field = normalFields[i], prop = util.safeProp(field.name);
+          var field = normalFields[i], prop = util2.safeProp(field.name);
           if (field.resolvedType instanceof Enum)
             gen("d%s=o.enums===String?%j:%j", prop, field.resolvedType.valuesById[field.typeDefault], field.typeDefault);
           else if (field.long)
@@ -93519,7 +93862,7 @@ var require_converter = __commonJS({
       }
       var hasKs2 = false;
       for (i = 0; i < fields.length; ++i) {
-        var field = fields[i], index = mtype._fieldsArray.indexOf(field), prop = util.safeProp(field.name);
+        var field = fields[i], index = mtype._fieldsArray.indexOf(field), prop = util2.safeProp(field.name);
         if (field.map) {
           if (!hasKs2) {
             hasKs2 = true;
@@ -93534,7 +93877,7 @@ var require_converter = __commonJS({
           gen("if(m%s!=null&&m.hasOwnProperty(%j)){", prop, field.name);
           genValuePartial_toObject(gen, field, index, prop);
           if (field.partOf)
-            gen("if(o.oneofs)")("d%s=%j", util.safeProp(field.partOf.name), field.name);
+            gen("if(o.oneofs)")("d%s=%j", util2.safeProp(field.partOf.name), field.name);
         }
         gen("}");
       }
@@ -93549,12 +93892,12 @@ var require_wrappers = __commonJS({
     init_shims();
     "use strict";
     var wrappers = exports2;
-    var Message = require_message();
+    var Message2 = require_message();
     wrappers[".google.protobuf.Any"] = {
       fromObject: function(object) {
         if (object && object["@type"]) {
-          var name5 = object["@type"].substring(object["@type"].lastIndexOf("/") + 1);
-          var type = this.lookup(name5);
+          var name7 = object["@type"].substring(object["@type"].lastIndexOf("/") + 1);
+          var type = this.lookup(name7);
           if (type) {
             var type_url = object["@type"].charAt(0) === "." ? object["@type"].substr(1) : object["@type"];
             if (type_url.indexOf("/") === -1) {
@@ -93568,28 +93911,28 @@ var require_wrappers = __commonJS({
         }
         return this.fromObject(object);
       },
-      toObject: function(message, options2) {
+      toObject: function(message2, options2) {
         var googleApi = "type.googleapis.com/";
         var prefix = "";
-        var name5 = "";
-        if (options2 && options2.json && message.type_url && message.value) {
-          name5 = message.type_url.substring(message.type_url.lastIndexOf("/") + 1);
-          prefix = message.type_url.substring(0, message.type_url.lastIndexOf("/") + 1);
-          var type = this.lookup(name5);
+        var name7 = "";
+        if (options2 && options2.json && message2.type_url && message2.value) {
+          name7 = message2.type_url.substring(message2.type_url.lastIndexOf("/") + 1);
+          prefix = message2.type_url.substring(0, message2.type_url.lastIndexOf("/") + 1);
+          var type = this.lookup(name7);
           if (type)
-            message = type.decode(message.value);
+            message2 = type.decode(message2.value);
         }
-        if (!(message instanceof this.ctor) && message instanceof Message) {
-          var object = message.$type.toObject(message, options2);
-          var messageName = message.$type.fullName[0] === "." ? message.$type.fullName.substr(1) : message.$type.fullName;
+        if (!(message2 instanceof this.ctor) && message2 instanceof Message2) {
+          var object = message2.$type.toObject(message2, options2);
+          var messageName = message2.$type.fullName[0] === "." ? message2.$type.fullName.substr(1) : message2.$type.fullName;
           if (prefix === "") {
             prefix = googleApi;
           }
-          name5 = prefix + messageName;
-          object["@type"] = name5;
+          name7 = prefix + messageName;
+          object["@type"] = name7;
           return object;
         }
-        return this.toObject(message, options2);
+        return this.toObject(message2, options2);
       }
     };
   }
@@ -93608,17 +93951,17 @@ var require_type = __commonJS({
     var Field = require_field();
     var MapField = require_mapfield();
     var Service = require_service2();
-    var Message = require_message();
-    var Reader = require_reader();
+    var Message2 = require_message();
+    var Reader2 = require_reader();
     var Writer = require_writer();
-    var util = require_util();
+    var util2 = require_util();
     var encoder = require_encoder();
     var decoder = require_decoder();
     var verifier = require_verifier();
     var converter = require_converter();
     var wrappers = require_wrappers();
-    function Type(name5, options2) {
-      Namespace.call(this, name5, options2);
+    function Type(name7, options2) {
+      Namespace.call(this, name7, options2);
       this.fields = {};
       this.oneofs = void 0;
       this.extensions = void 0;
@@ -93646,12 +93989,12 @@ var require_type = __commonJS({
       },
       fieldsArray: {
         get: function() {
-          return this._fieldsArray || (this._fieldsArray = util.toArray(this.fields));
+          return this._fieldsArray || (this._fieldsArray = util2.toArray(this.fields));
         }
       },
       oneofsArray: {
         get: function() {
-          return this._oneofsArray || (this._oneofsArray = util.toArray(this.oneofs));
+          return this._oneofsArray || (this._oneofsArray = util2.toArray(this.oneofs));
         }
       },
       ctor: {
@@ -93660,12 +94003,12 @@ var require_type = __commonJS({
         },
         set: function(ctor) {
           var prototype = ctor.prototype;
-          if (!(prototype instanceof Message)) {
-            (ctor.prototype = new Message()).constructor = ctor;
-            util.merge(ctor.prototype, prototype);
+          if (!(prototype instanceof Message2)) {
+            (ctor.prototype = new Message2()).constructor = ctor;
+            util2.merge(ctor.prototype, prototype);
           }
           ctor.$type = ctor.prototype.$type = this;
-          util.merge(ctor, Message, true);
+          util2.merge(ctor, Message2, true);
           this._ctor = ctor;
           var i = 0;
           for (; i < this.fieldsArray.length; ++i)
@@ -93673,8 +94016,8 @@ var require_type = __commonJS({
           var ctorProperties = {};
           for (i = 0; i < this.oneofsArray.length; ++i)
             ctorProperties[this._oneofsArray[i].resolve().name] = {
-              get: util.oneOfGetter(this._oneofsArray[i].oneof),
-              set: util.oneOfSetter(this._oneofsArray[i].oneof)
+              get: util2.oneOfGetter(this._oneofsArray[i].oneof),
+              set: util2.oneOfSetter(this._oneofsArray[i].oneof)
             };
           if (i)
             Object.defineProperties(ctor.prototype, ctorProperties);
@@ -93682,12 +94025,12 @@ var require_type = __commonJS({
       }
     });
     Type.generateConstructor = function generateConstructor(mtype) {
-      var gen = util.codegen(["p"], mtype.name);
+      var gen = util2.codegen(["p"], mtype.name);
       for (var i = 0, field; i < mtype.fieldsArray.length; ++i)
         if ((field = mtype._fieldsArray[i]).map)
-          gen("this%s={}", util.safeProp(field.name));
+          gen("this%s={}", util2.safeProp(field.name));
         else if (field.repeated)
-          gen("this%s=[]", util.safeProp(field.name));
+          gen("this%s=[]", util2.safeProp(field.name));
       return gen("if(p)for(var ks=Object.keys(p),i=0;i<ks.length;++i)if(p[ks[i]]!=null)")("this[ks[i]]=p[ks[i]]");
     };
     function clearCache(type) {
@@ -93697,8 +94040,8 @@ var require_type = __commonJS({
       delete type.verify;
       return type;
     }
-    Type.fromJSON = function fromJSON(name5, json) {
-      var type = new Type(name5, json.options);
+    Type.fromJSON = function fromJSON(name7, json) {
+      var type = new Type(name7, json.options);
       type.extensions = json.extensions;
       type.reserved = json.reserved;
       var names = Object.keys(json.fields), i = 0;
@@ -93725,7 +94068,7 @@ var require_type = __commonJS({
     Type.prototype.toJSON = function toJSON(toJSONOptions) {
       var inherited = Namespace.prototype.toJSON.call(this, toJSONOptions);
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
-      return util.toObject([
+      return util2.toObject([
         "options",
         inherited && inherited.options || void 0,
         "oneofs",
@@ -93756,8 +94099,8 @@ var require_type = __commonJS({
         oneofs[i++].resolve();
       return Namespace.prototype.resolveAll.call(this);
     };
-    Type.prototype.get = function get(name5) {
-      return this.fields[name5] || this.oneofs && this.oneofs[name5] || this.nested && this.nested[name5] || null;
+    Type.prototype.get = function get(name7) {
+      return this.fields[name7] || this.oneofs && this.oneofs[name7] || this.nested && this.nested[name7] || null;
     };
     Type.prototype.add = function add(object) {
       if (this.get(object.name))
@@ -93807,8 +94150,8 @@ var require_type = __commonJS({
     Type.prototype.isReservedId = function isReservedId(id) {
       return Namespace.isReservedId(this.reserved, id);
     };
-    Type.prototype.isReservedName = function isReservedName(name5) {
-      return Namespace.isReservedName(this.reserved, name5);
+    Type.prototype.isReservedName = function isReservedName(name7) {
+      return Namespace.isReservedName(this.reserved, name7);
     };
     Type.prototype.create = function create(properties) {
       return new this.ctor(properties);
@@ -93820,24 +94163,24 @@ var require_type = __commonJS({
       this.encode = encoder(this)({
         Writer,
         types: types2,
-        util
+        util: util2
       });
       this.decode = decoder(this)({
-        Reader,
+        Reader: Reader2,
         types: types2,
-        util
+        util: util2
       });
       this.verify = verifier(this)({
         types: types2,
-        util
+        util: util2
       });
       this.fromObject = converter.fromObject(this)({
         types: types2,
-        util
+        util: util2
       });
       this.toObject = converter.toObject(this)({
         types: types2,
-        util
+        util: util2
       });
       var wrapper = wrappers[fullName];
       if (wrapper) {
@@ -93849,32 +94192,32 @@ var require_type = __commonJS({
       }
       return this;
     };
-    Type.prototype.encode = function encode_setup(message, writer) {
-      return this.setup().encode(message, writer);
+    Type.prototype.encode = function encode_setup(message2, writer) {
+      return this.setup().encode(message2, writer);
     };
-    Type.prototype.encodeDelimited = function encodeDelimited(message, writer) {
-      return this.encode(message, writer && writer.len ? writer.fork() : writer).ldelim();
+    Type.prototype.encodeDelimited = function encodeDelimited(message2, writer) {
+      return this.encode(message2, writer && writer.len ? writer.fork() : writer).ldelim();
     };
     Type.prototype.decode = function decode_setup(reader, length) {
       return this.setup().decode(reader, length);
     };
     Type.prototype.decodeDelimited = function decodeDelimited(reader) {
-      if (!(reader instanceof Reader))
-        reader = Reader.create(reader);
+      if (!(reader instanceof Reader2))
+        reader = Reader2.create(reader);
       return this.decode(reader, reader.uint32());
     };
-    Type.prototype.verify = function verify_setup(message) {
-      return this.setup().verify(message);
+    Type.prototype.verify = function verify_setup(message2) {
+      return this.setup().verify(message2);
     };
     Type.prototype.fromObject = function fromObject(object) {
       return this.setup().fromObject(object);
     };
-    Type.prototype.toObject = function toObject(message, options2) {
-      return this.setup().toObject(message, options2);
+    Type.prototype.toObject = function toObject(message2, options2) {
+      return this.setup().toObject(message2, options2);
     };
     Type.d = function decorateType(typeName) {
       return function typeDecorator(target) {
-        util.decorateType(target, typeName);
+        util2.decorateType(target, typeName);
       };
     };
   }
@@ -93891,7 +94234,7 @@ var require_root = __commonJS({
     var Field = require_field();
     var Enum = require_enum();
     var OneOf = require_oneof();
-    var util = require_util();
+    var util2 = require_util();
     var Type;
     var parse;
     var common;
@@ -93907,18 +94250,18 @@ var require_root = __commonJS({
         root.setOptions(json.options);
       return root.addJSON(json.nested);
     };
-    Root2.prototype.resolvePath = util.path.resolve;
-    Root2.prototype.fetch = util.fetch;
+    Root2.prototype.resolvePath = util2.path.resolve;
+    Root2.prototype.fetch = util2.fetch;
     function SYNC() {
     }
-    Root2.prototype.load = function load5(filename, options2, callback) {
+    Root2.prototype.load = function load4(filename, options2, callback) {
       if (typeof options2 === "function") {
         callback = options2;
         options2 = void 0;
       }
       var self2 = this;
       if (!callback)
-        return util.asPromise(load5, self2, filename, options2);
+        return util2.asPromise(load4, self2, filename, options2);
       var sync = callback === SYNC;
       function finish(err, root) {
         if (!callback)
@@ -93940,9 +94283,9 @@ var require_root = __commonJS({
       }
       function process2(filename2, source) {
         try {
-          if (util.isString(source) && source.charAt(0) === "{")
+          if (util2.isString(source) && source.charAt(0) === "{")
             source = JSON.parse(source);
-          if (!util.isString(source))
+          if (!util2.isString(source))
             self2.setOptions(source.options).addJSON(source.nested);
           else {
             parse.filename = filename2;
@@ -93983,7 +94326,7 @@ var require_root = __commonJS({
         if (sync) {
           var source;
           try {
-            source = util.fs.readFileSync(filename2).toString("utf8");
+            source = util2.fs.readFileSync(filename2).toString("utf8");
           } catch (err) {
             if (!weak)
               finish(err);
@@ -94008,7 +94351,7 @@ var require_root = __commonJS({
         }
       }
       var queued = 0;
-      if (util.isString(filename))
+      if (util2.isString(filename))
         filename = [filename];
       for (var i = 0, resolved; i < filename.length; ++i)
         if (resolved = self2.resolvePath("", filename[i]))
@@ -94020,7 +94363,7 @@ var require_root = __commonJS({
       return void 0;
     };
     Root2.prototype.loadSync = function loadSync2(filename, options2) {
-      if (!util.isNode)
+      if (!util2.isNode)
         throw Error("not supported");
       return this.load(filename, options2, SYNC);
     };
@@ -94100,15 +94443,15 @@ var require_util = __commonJS({
   "node_modules/protobufjs/src/util.js"(exports2, module3) {
     init_shims();
     "use strict";
-    var util = module3.exports = require_minimal();
+    var util2 = module3.exports = require_minimal();
     var roots = require_roots();
     var Type;
     var Enum;
-    util.codegen = require_codegen();
-    util.fetch = require_fetch();
-    util.path = require_path();
-    util.fs = util.inquire("fs");
-    util.toArray = function toArray(object) {
+    util2.codegen = require_codegen();
+    util2.fetch = require_fetch();
+    util2.path = require_path();
+    util2.fs = util2.inquire("fs");
+    util2.toArray = function toArray(object) {
       if (object) {
         var keys = Object.keys(object), array = new Array(keys.length), index = 0;
         while (index < keys.length)
@@ -94117,7 +94460,7 @@ var require_util = __commonJS({
       }
       return [];
     };
-    util.toObject = function toObject(array) {
+    util2.toObject = function toObject(array) {
       var object = {}, index = 0;
       while (index < array.length) {
         var key = array[index++], val = array[index++];
@@ -94128,56 +94471,56 @@ var require_util = __commonJS({
     };
     var safePropBackslashRe = /\\/g;
     var safePropQuoteRe = /"/g;
-    util.isReserved = function isReserved(name5) {
-      return /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/.test(name5);
+    util2.isReserved = function isReserved(name7) {
+      return /^(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$/.test(name7);
     };
-    util.safeProp = function safeProp2(prop) {
-      if (!/^[$\w_]+$/.test(prop) || util.isReserved(prop))
+    util2.safeProp = function safeProp2(prop) {
+      if (!/^[$\w_]+$/.test(prop) || util2.isReserved(prop))
         return '["' + prop.replace(safePropBackslashRe, "\\\\").replace(safePropQuoteRe, '\\"') + '"]';
       return "." + prop;
     };
-    util.ucFirst = function ucFirst(str) {
+    util2.ucFirst = function ucFirst(str) {
       return str.charAt(0).toUpperCase() + str.substring(1);
     };
     var camelCaseRe = /_([a-z])/g;
-    util.camelCase = function camelCase(str) {
+    util2.camelCase = function camelCase(str) {
       return str.substring(0, 1) + str.substring(1).replace(camelCaseRe, function($0, $1) {
         return $1.toUpperCase();
       });
     };
-    util.compareFieldsById = function compareFieldsById(a, b) {
+    util2.compareFieldsById = function compareFieldsById(a, b) {
       return a.id - b.id;
     };
-    util.decorateType = function decorateType(ctor, typeName) {
+    util2.decorateType = function decorateType(ctor, typeName) {
       if (ctor.$type) {
         if (typeName && ctor.$type.name !== typeName) {
-          util.decorateRoot.remove(ctor.$type);
+          util2.decorateRoot.remove(ctor.$type);
           ctor.$type.name = typeName;
-          util.decorateRoot.add(ctor.$type);
+          util2.decorateRoot.add(ctor.$type);
         }
         return ctor.$type;
       }
       if (!Type)
         Type = require_type();
       var type = new Type(typeName || ctor.name);
-      util.decorateRoot.add(type);
+      util2.decorateRoot.add(type);
       type.ctor = ctor;
       Object.defineProperty(ctor, "$type", { value: type, enumerable: false });
       Object.defineProperty(ctor.prototype, "$type", { value: type, enumerable: false });
       return type;
     };
     var decorateEnumIndex = 0;
-    util.decorateEnum = function decorateEnum(object) {
+    util2.decorateEnum = function decorateEnum(object) {
       if (object.$type)
         return object.$type;
       if (!Enum)
         Enum = require_enum();
       var enm = new Enum("Enum" + decorateEnumIndex++, object);
-      util.decorateRoot.add(enm);
+      util2.decorateRoot.add(enm);
       Object.defineProperty(object, "$type", { value: enm, enumerable: false });
       return enm;
     };
-    util.setProperty = function setProperty(dst, path, value) {
+    util2.setProperty = function setProperty(dst, path, value) {
       function setProp(dst2, path2, value2) {
         var part = path2.shift();
         if (path2.length > 0) {
@@ -94197,7 +94540,7 @@ var require_util = __commonJS({
       path = path.split(".");
       return setProp(dst, path, value);
     };
-    Object.defineProperty(util, "decorateRoot", {
+    Object.defineProperty(util2, "decorateRoot", {
       get: function() {
         return roots["decorated"] || (roots["decorated"] = new (require_root())());
       }
@@ -94212,16 +94555,16 @@ var require_object = __commonJS({
     "use strict";
     module3.exports = ReflectionObject;
     ReflectionObject.className = "ReflectionObject";
-    var util = require_util();
+    var util2 = require_util();
     var Root2;
-    function ReflectionObject(name5, options2) {
-      if (!util.isString(name5))
+    function ReflectionObject(name7, options2) {
+      if (!util2.isString(name7))
         throw TypeError("name must be a string");
-      if (options2 && !util.isObject(options2))
+      if (options2 && !util2.isObject(options2))
         throw TypeError("options must be an object");
       this.options = options2;
       this.parsedOptions = null;
-      this.name = name5;
+      this.name = name7;
       this.parent = null;
       this.resolved = false;
       this.comment = null;
@@ -94273,36 +94616,36 @@ var require_object = __commonJS({
         this.resolved = true;
       return this;
     };
-    ReflectionObject.prototype.getOption = function getOption(name5) {
+    ReflectionObject.prototype.getOption = function getOption(name7) {
       if (this.options)
-        return this.options[name5];
+        return this.options[name7];
       return void 0;
     };
-    ReflectionObject.prototype.setOption = function setOption(name5, value, ifNotSet) {
-      if (!ifNotSet || !this.options || this.options[name5] === void 0)
-        (this.options || (this.options = {}))[name5] = value;
+    ReflectionObject.prototype.setOption = function setOption(name7, value, ifNotSet) {
+      if (!ifNotSet || !this.options || this.options[name7] === void 0)
+        (this.options || (this.options = {}))[name7] = value;
       return this;
     };
-    ReflectionObject.prototype.setParsedOption = function setParsedOption(name5, value, propName) {
+    ReflectionObject.prototype.setParsedOption = function setParsedOption(name7, value, propName) {
       if (!this.parsedOptions) {
         this.parsedOptions = [];
       }
       var parsedOptions = this.parsedOptions;
       if (propName) {
         var opt = parsedOptions.find(function(opt2) {
-          return Object.prototype.hasOwnProperty.call(opt2, name5);
+          return Object.prototype.hasOwnProperty.call(opt2, name7);
         });
         if (opt) {
-          var newValue = opt[name5];
-          util.setProperty(newValue, propName, value);
+          var newValue = opt[name7];
+          util2.setProperty(newValue, propName, value);
         } else {
           opt = {};
-          opt[name5] = util.setProperty({}, propName, value);
+          opt[name7] = util2.setProperty({}, propName, value);
           parsedOptions.push(opt);
         }
       } else {
         var newOpt = {};
-        newOpt[name5] = value;
+        newOpt[name7] = value;
         parsedOptions.push(newOpt);
       }
       return this;
@@ -94334,9 +94677,9 @@ var require_enum = __commonJS({
     var ReflectionObject = require_object();
     ((Enum.prototype = Object.create(ReflectionObject.prototype)).constructor = Enum).className = "Enum";
     var Namespace = require_namespace();
-    var util = require_util();
-    function Enum(name5, values, options2, comment, comments) {
-      ReflectionObject.call(this, name5, options2);
+    var util2 = require_util();
+    function Enum(name7, values, options2, comment, comments) {
+      ReflectionObject.call(this, name7, options2);
       if (values && typeof values !== "object")
         throw TypeError("values must be an object");
       this.valuesById = {};
@@ -94350,14 +94693,14 @@ var require_enum = __commonJS({
             this.valuesById[this.values[keys[i]] = values[keys[i]]] = keys[i];
       }
     }
-    Enum.fromJSON = function fromJSON(name5, json) {
-      var enm = new Enum(name5, json.values, json.options, json.comment, json.comments);
+    Enum.fromJSON = function fromJSON(name7, json) {
+      var enm = new Enum(name7, json.values, json.options, json.comment, json.comments);
       enm.reserved = json.reserved;
       return enm;
     };
     Enum.prototype.toJSON = function toJSON(toJSONOptions) {
       var keepComments = toJSONOptions ? Boolean(toJSONOptions.keepComments) : false;
-      return util.toObject([
+      return util2.toObject([
         "options",
         this.options,
         "values",
@@ -94370,42 +94713,42 @@ var require_enum = __commonJS({
         keepComments ? this.comments : void 0
       ]);
     };
-    Enum.prototype.add = function add(name5, id, comment) {
-      if (!util.isString(name5))
+    Enum.prototype.add = function add(name7, id, comment) {
+      if (!util2.isString(name7))
         throw TypeError("name must be a string");
-      if (!util.isInteger(id))
+      if (!util2.isInteger(id))
         throw TypeError("id must be an integer");
-      if (this.values[name5] !== void 0)
-        throw Error("duplicate name '" + name5 + "' in " + this);
+      if (this.values[name7] !== void 0)
+        throw Error("duplicate name '" + name7 + "' in " + this);
       if (this.isReservedId(id))
         throw Error("id " + id + " is reserved in " + this);
-      if (this.isReservedName(name5))
-        throw Error("name '" + name5 + "' is reserved in " + this);
+      if (this.isReservedName(name7))
+        throw Error("name '" + name7 + "' is reserved in " + this);
       if (this.valuesById[id] !== void 0) {
         if (!(this.options && this.options.allow_alias))
           throw Error("duplicate id " + id + " in " + this);
-        this.values[name5] = id;
+        this.values[name7] = id;
       } else
-        this.valuesById[this.values[name5] = id] = name5;
-      this.comments[name5] = comment || null;
+        this.valuesById[this.values[name7] = id] = name7;
+      this.comments[name7] = comment || null;
       return this;
     };
-    Enum.prototype.remove = function remove(name5) {
-      if (!util.isString(name5))
+    Enum.prototype.remove = function remove(name7) {
+      if (!util2.isString(name7))
         throw TypeError("name must be a string");
-      var val = this.values[name5];
+      var val = this.values[name7];
       if (val == null)
-        throw Error("name '" + name5 + "' does not exist in " + this);
+        throw Error("name '" + name7 + "' does not exist in " + this);
       delete this.valuesById[val];
-      delete this.values[name5];
-      delete this.comments[name5];
+      delete this.values[name7];
+      delete this.comments[name7];
       return this;
     };
     Enum.prototype.isReservedId = function isReservedId(id) {
       return Namespace.isReservedId(this.reserved, id);
     };
-    Enum.prototype.isReservedName = function isReservedName(name5) {
-      return Namespace.isReservedName(this.reserved, name5);
+    Enum.prototype.isReservedName = function isReservedName(name7) {
+      return Namespace.isReservedName(this.reserved, name7);
     };
   }
 });
@@ -94418,17 +94761,17 @@ var require_encoder = __commonJS({
     module3.exports = encoder;
     var Enum = require_enum();
     var types2 = require_types();
-    var util = require_util();
+    var util2 = require_util();
     function genTypePartial(gen, field, fieldIndex, ref) {
       return field.resolvedType.group ? gen("types[%i].encode(%s,w.uint32(%i)).uint32(%i)", fieldIndex, ref, (field.id << 3 | 3) >>> 0, (field.id << 3 | 4) >>> 0) : gen("types[%i].encode(%s,w.uint32(%i).fork()).ldelim()", fieldIndex, ref, (field.id << 3 | 2) >>> 0);
     }
     function encoder(mtype) {
-      var gen = util.codegen(["m", "w"], mtype.name + "$encode")("if(!w)")("w=Writer.create()");
+      var gen = util2.codegen(["m", "w"], mtype.name + "$encode")("if(!w)")("w=Writer.create()");
       var i, ref;
-      var fields = mtype.fieldsArray.slice().sort(util.compareFieldsById);
+      var fields = mtype.fieldsArray.slice().sort(util2.compareFieldsById);
       for (var i = 0; i < fields.length; ++i) {
         var field = fields[i].resolve(), index = mtype._fieldsArray.indexOf(field), type = field.resolvedType instanceof Enum ? "int32" : field.type, wireType = types2.basic[type];
-        ref = "m" + util.safeProp(field.name);
+        ref = "m" + util2.safeProp(field.name);
         if (field.map) {
           gen("if(%s!=null&&Object.hasOwnProperty.call(m,%j)){", ref, field.name)("for(var ks=Object.keys(%s),i=0;i<ks.length;++i){", ref)("w.uint32(%i).fork().uint32(%i).%s(ks[i])", (field.id << 3 | 2) >>> 0, 8 | types2.mapKey[field.keyType], field.keyType);
           if (wireType === void 0)
@@ -94469,7 +94812,7 @@ var require_index_light = __commonJS({
     "use strict";
     var protobuf = module3.exports = require_index_minimal();
     protobuf.build = "light";
-    function load5(filename, root, callback) {
+    function load4(filename, root, callback) {
       if (typeof root === "function") {
         callback = root;
         root = new protobuf.Root();
@@ -94477,7 +94820,7 @@ var require_index_light = __commonJS({
         root = new protobuf.Root();
       return root.load(filename, callback);
     }
-    protobuf.load = load5;
+    protobuf.load = load4;
     function loadSync2(filename, root) {
       if (!root)
         root = new protobuf.Root();
@@ -94761,7 +95104,7 @@ var require_parse = __commonJS({
     var Service = require_service2();
     var Method = require_method();
     var types2 = require_types();
-    var util = require_util();
+    var util2 = require_util();
     var base10Re = /^[1-9][0-9]*$/;
     var base10NegRe = /^-?[1-9][0-9]*$/;
     var base16Re = /^0[x][0-9a-fA-F]+$/;
@@ -94783,14 +95126,14 @@ var require_parse = __commonJS({
       var tn = tokenize(source, options2.alternateCommentMode || false), next = tn.next, push = tn.push, peek = tn.peek, skip = tn.skip, cmnt = tn.cmnt;
       var head = true, pkg, imports, weakImports, syntax, isProto3 = false;
       var ptr = root;
-      var applyCase = options2.keepCase ? function(name5) {
-        return name5;
-      } : util.camelCase;
-      function illegal(token2, name5, insideTryCatch) {
+      var applyCase = options2.keepCase ? function(name7) {
+        return name7;
+      } : util2.camelCase;
+      function illegal(token2, name7, insideTryCatch) {
         var filename = parse.filename;
         if (!insideTryCatch)
           parse.filename = null;
-        return Error("illegal " + (name5 || "token") + " '" + token2 + "' (" + (filename ? filename + ", " : "") + "line " + tn.line + ")");
+        return Error("illegal " + (name7 || "token") + " '" + token2 + "' (" + (filename ? filename + ", " : "") + "line " + tn.line + ")");
       }
       function readString() {
         var values = [], token2;
@@ -95009,12 +95352,12 @@ var require_parse = __commonJS({
         }
         if (!typeRefRe.test(type))
           throw illegal(type, "type");
-        var name5 = next();
-        if (!nameRe.test(name5))
-          throw illegal(name5, "name");
-        name5 = applyCase(name5);
+        var name7 = next();
+        if (!nameRe.test(name7))
+          throw illegal(name7, "name");
+        name7 = applyCase(name7);
         skip("=");
-        var field = new Field(name5, parseId(next()), type, rule, extend);
+        var field = new Field(name7, parseId(next()), type, rule, extend);
         ifBlock(field, function parseField_block(token2) {
           if (token2 === "option") {
             parseOption(field, token2);
@@ -95025,7 +95368,7 @@ var require_parse = __commonJS({
           parseInlineOptions(field);
         });
         if (rule === "proto3_optional") {
-          var oneof = new OneOf("_" + name5);
+          var oneof = new OneOf("_" + name7);
           field.setOption("proto3_optional", true);
           oneof.add(field);
           parent2.add(oneof);
@@ -95036,17 +95379,17 @@ var require_parse = __commonJS({
           field.setOption("packed", false, true);
       }
       function parseGroup(parent2, rule) {
-        var name5 = next();
-        if (!nameRe.test(name5))
-          throw illegal(name5, "name");
-        var fieldName = util.lcFirst(name5);
-        if (name5 === fieldName)
-          name5 = util.ucFirst(name5);
+        var name7 = next();
+        if (!nameRe.test(name7))
+          throw illegal(name7, "name");
+        var fieldName = util2.lcFirst(name7);
+        if (name7 === fieldName)
+          name7 = util2.ucFirst(name7);
         skip("=");
         var id = parseId(next());
-        var type = new Type(name5);
+        var type = new Type(name7);
         type.group = true;
-        var field = new Field(fieldName, id, name5, rule);
+        var field = new Field(fieldName, id, name7, rule);
         field.filename = parse.filename;
         ifBlock(type, function parseGroup_block(token2) {
           switch (token2) {
@@ -95081,11 +95424,11 @@ var require_parse = __commonJS({
         if (!typeRefRe.test(valueType))
           throw illegal(valueType, "type");
         skip(">");
-        var name5 = next();
-        if (!nameRe.test(name5))
-          throw illegal(name5, "name");
+        var name7 = next();
+        if (!nameRe.test(name7))
+          throw illegal(name7, "name");
         skip("=");
-        var field = new MapField(applyCase(name5), parseId(next()), keyType, valueType);
+        var field = new MapField(applyCase(name7), parseId(next()), keyType, valueType);
         ifBlock(field, function parseMapField_block(token2) {
           if (token2 === "option") {
             parseOption(field, token2);
@@ -95151,25 +95494,25 @@ var require_parse = __commonJS({
         var isCustom = skip("(", true);
         if (!typeRefRe.test(token2 = next()))
           throw illegal(token2, "name");
-        var name5 = token2;
-        var option = name5;
+        var name7 = token2;
+        var option = name7;
         var propName;
         if (isCustom) {
           skip(")");
-          name5 = "(" + name5 + ")";
-          option = name5;
+          name7 = "(" + name7 + ")";
+          option = name7;
           token2 = peek();
           if (fqTypeRefRe.test(token2)) {
             propName = token2.substr(1);
-            name5 += token2;
+            name7 += token2;
             next();
           }
         }
         skip("=");
-        var optionValue = parseOptionValue(parent2, name5);
+        var optionValue = parseOptionValue(parent2, name7);
         setParsedOption(parent2, option, optionValue, propName);
       }
-      function parseOptionValue(parent2, name5) {
+      function parseOptionValue(parent2, name7) {
         if (skip("{", true)) {
           var result = {};
           while (!skip("}", true)) {
@@ -95178,14 +95521,14 @@ var require_parse = __commonJS({
             var value;
             var propName = token;
             if (peek() === "{")
-              value = parseOptionValue(parent2, name5 + "." + token);
+              value = parseOptionValue(parent2, name7 + "." + token);
             else {
               skip(":");
               if (peek() === "{")
-                value = parseOptionValue(parent2, name5 + "." + token);
+                value = parseOptionValue(parent2, name7 + "." + token);
               else {
                 value = readValue(true);
-                setOption(parent2, name5 + "." + token, value);
+                setOption(parent2, name7 + "." + token, value);
               }
             }
             var prevValue = result[propName];
@@ -95197,16 +95540,16 @@ var require_parse = __commonJS({
           return result;
         }
         var simpleValue = readValue(true);
-        setOption(parent2, name5, simpleValue);
+        setOption(parent2, name7, simpleValue);
         return simpleValue;
       }
-      function setOption(parent2, name5, value) {
+      function setOption(parent2, name7, value) {
         if (parent2.setOption)
-          parent2.setOption(name5, value);
+          parent2.setOption(name7, value);
       }
-      function setParsedOption(parent2, name5, value, propName) {
+      function setParsedOption(parent2, name7, value, propName) {
         if (parent2.setParsedOption)
-          parent2.setParsedOption(name5, value, propName);
+          parent2.setParsedOption(name7, value, propName);
       }
       function parseInlineOptions(parent2) {
         if (skip("[", true)) {
@@ -95236,7 +95579,7 @@ var require_parse = __commonJS({
         var type = token2;
         if (!nameRe.test(token2 = next()))
           throw illegal(token2, "name");
-        var name5 = token2, requestType, requestStream, responseType, responseStream;
+        var name7 = token2, requestType, requestStream, responseType, responseStream;
         skip("(");
         if (skip("stream", true))
           requestStream = true;
@@ -95252,7 +95595,7 @@ var require_parse = __commonJS({
           throw illegal(token2);
         responseType = token2;
         skip(")");
-        var method = new Method(name5, type, requestType, responseType, requestStream, responseStream);
+        var method = new Method(name7, type, requestType, responseType, requestStream, responseStream);
         method.comment = commentText;
         ifBlock(method, function parseMethod_block(token3) {
           if (token3 === "option") {
@@ -95338,12 +95681,12 @@ var require_common = __commonJS({
     "use strict";
     module3.exports = common;
     var commonRe = /\/|\./;
-    function common(name5, json) {
-      if (!commonRe.test(name5)) {
-        name5 = "google/protobuf/" + name5 + ".proto";
+    function common(name7, json) {
+      if (!commonRe.test(name7)) {
+        name7 = "google/protobuf/" + name7 + ".proto";
         json = { nested: { google: { nested: { protobuf: { nested: json } } } } };
       }
-      common[name5] = json;
+      common[name7] = json;
     }
     common("any", {
       Any: {
@@ -96573,8 +96916,8 @@ var require_descriptor2 = __commonJS({
       var values = {};
       if (descriptor.value)
         for (var i = 0; i < descriptor.value.length; ++i) {
-          var name5 = descriptor.value[i].name, value = descriptor.value[i].number || 0;
-          values[name5 && name5.length ? name5 : "NAME" + value] = value;
+          var name7 = descriptor.value[i].name, value = descriptor.value[i].number || 0;
+          values[name7 && name7.length ? name7 : "NAME" + value] = value;
         }
       return new Enum(descriptor.name && descriptor.name.length ? descriptor.name : "Enum" + unnamedEnumIndex++, values, fromDescriptorOptions(descriptor.options, exports2.EnumOptions));
     };
@@ -96610,12 +96953,12 @@ var require_descriptor2 = __commonJS({
       return service;
     };
     Service.prototype.toDescriptor = function toDescriptor() {
-      var methods = [];
+      var methods2 = [];
       for (var i = 0; i < this.methodsArray.length; ++i)
-        methods.push(this._methodsArray[i].toDescriptor());
+        methods2.push(this._methodsArray[i].toDescriptor());
       return exports2.ServiceDescriptorProto.create({
         name: this.name,
-        method: methods,
+        method: methods2,
         options: toDescriptorOptions(this.options, exports2.ServiceOptions)
       });
     };
@@ -97231,11 +97574,11 @@ var require_src2 = __commonJS({
       oneofs: true,
       json: true
     };
-    function joinName(baseName, name5) {
+    function joinName(baseName, name7) {
       if (baseName === "") {
-        return name5;
+        return name7;
       } else {
-        return baseName + "." + name5;
+        return baseName + "." + name7;
       }
     }
     function isHandledReflectionObject(obj) {
@@ -97250,8 +97593,8 @@ var require_src2 = __commonJS({
         return [[objName, obj]];
       } else {
         if (isNamespaceBase(obj) && typeof obj.nested !== "undefined") {
-          return Object.keys(obj.nested).map((name5) => {
-            return getAllHandledReflectionObjects(obj.nested[name5], objName);
+          return Object.keys(obj.nested).map((name7) => {
+            return getAllHandledReflectionObjects(obj.nested[name7], objName);
           }).reduce((accumulator, currentValue) => accumulator.concat(currentValue), []);
         }
       }
@@ -97267,8 +97610,8 @@ var require_src2 = __commonJS({
         if (Array.isArray(arg)) {
           throw new Error(`Failed to serialize message: expected object with ${cls.name} structure, got array instead`);
         }
-        const message = cls.fromObject(arg);
-        return cls.encode(message).finish();
+        const message2 = cls.fromObject(arg);
+        return cls.encode(message2).finish();
       };
     }
     function createMethodDefinition(method, serviceName, options2, fileDescriptors) {
@@ -97287,15 +97630,15 @@ var require_src2 = __commonJS({
         responseType: createMessageDefinition(responseType, fileDescriptors)
       };
     }
-    function createServiceDefinition(service, name5, options2, fileDescriptors) {
+    function createServiceDefinition(service, name7, options2, fileDescriptors) {
       const def = {};
       for (const method of service.methodsArray) {
-        def[method.name] = createMethodDefinition(method, name5, options2, fileDescriptors);
+        def[method.name] = createMethodDefinition(method, name7, options2, fileDescriptors);
       }
       return def;
     }
-    function createMessageDefinition(message, fileDescriptors) {
-      const messageDescriptor = message.toDescriptor("proto3");
+    function createMessageDefinition(message2, fileDescriptors) {
+      const messageDescriptor = message2.toDescriptor("proto3");
       return {
         format: "Protocol Buffer 3 DescriptorProto",
         type: messageDescriptor.$type.toObject(messageDescriptor, descriptorOptions),
@@ -97310,9 +97653,9 @@ var require_src2 = __commonJS({
         fileDescriptorProtos: fileDescriptors
       };
     }
-    function createDefinition(obj, name5, options2, fileDescriptors) {
+    function createDefinition(obj, name7, options2, fileDescriptors) {
       if (obj instanceof Protobuf.Service) {
-        return createServiceDefinition(obj, name5, options2, fileDescriptors);
+        return createServiceDefinition(obj, name7, options2, fileDescriptors);
       } else if (obj instanceof Protobuf.Type) {
         return createMessageDefinition(obj, fileDescriptors);
       } else if (obj instanceof Protobuf.Enum) {
@@ -97326,8 +97669,8 @@ var require_src2 = __commonJS({
       root.resolveAll();
       const descriptorList = root.toDescriptor("proto3").file;
       const bufferList = descriptorList.map((value) => Buffer.from(descriptor.FileDescriptorProto.encode(value).finish()));
-      for (const [name5, obj] of getAllHandledReflectionObjects(root, "")) {
-        def[name5] = createDefinition(obj, name5, options2, bufferList);
+      for (const [name7, obj] of getAllHandledReflectionObjects(root, "")) {
+        def[name7] = createDefinition(obj, name7, options2, bufferList);
       }
       return def;
     }
@@ -97337,12 +97680,12 @@ var require_src2 = __commonJS({
       root.resolveAll();
       return createPackageDefinition(root, options2);
     }
-    function load5(filename, options2) {
+    function load4(filename, options2) {
       return util_1.loadProtosWithOptions(filename, options2).then((loadedRoot) => {
         return createPackageDefinition(loadedRoot, options2);
       });
     }
-    exports2.load = load5;
+    exports2.load = load4;
     function loadSync2(filename, options2) {
       const loadedRoot = util_1.loadProtosWithOptionsSync(filename, options2);
       return createPackageDefinition(loadedRoot, options2);
@@ -97430,13 +97773,13 @@ var require_channelz = __commonJS({
         return {
           creation_timestamp: dateToProtoTimestamp(this.creationTimestamp),
           num_events_logged: this.eventsLogged,
-          events: this.events.map((event) => {
+          events: this.events.map((event2) => {
             return {
-              description: event.description,
-              severity: event.severity,
-              timestamp: dateToProtoTimestamp(event.timestamp),
-              channel_ref: event.childChannel ? channelRefToMessage(event.childChannel) : null,
-              subchannel_ref: event.childSubchannel ? subchannelRefToMessage(event.childSubchannel) : null
+              description: event2.description,
+              severity: event2.severity,
+              timestamp: dateToProtoTimestamp(event2.timestamp),
+              channel_ref: event2.childChannel ? channelRefToMessage(event2.childChannel) : null,
+              subchannel_ref: event2.childSubchannel ? subchannelRefToMessage(event2.childSubchannel) : null
             };
           })
         };
@@ -97556,16 +97899,16 @@ var require_channelz = __commonJS({
     var subchannels = [];
     var servers = [];
     var sockets = [];
-    function registerChannelzChannel(name5, getInfo) {
+    function registerChannelzChannel(name7, getInfo) {
       const id = getNextId();
-      const ref = { id, name: name5, kind: "channel" };
+      const ref = { id, name: name7, kind: "channel" };
       channels[id] = { ref, getInfo };
       return ref;
     }
     exports2.registerChannelzChannel = registerChannelzChannel;
-    function registerChannelzSubchannel(name5, getInfo) {
+    function registerChannelzSubchannel(name7, getInfo) {
       const id = getNextId();
-      const ref = { id, name: name5, kind: "subchannel" };
+      const ref = { id, name: name7, kind: "subchannel" };
       subchannels[id] = { ref, getInfo };
       return ref;
     }
@@ -97577,9 +97920,9 @@ var require_channelz = __commonJS({
       return ref;
     }
     exports2.registerChannelzServer = registerChannelzServer;
-    function registerChannelzSocket(name5, getInfo) {
+    function registerChannelzSocket(name7, getInfo) {
       const id = getNextId();
-      const ref = { id, name: name5, kind: "socket" };
+      const ref = { id, name: name7, kind: "socket" };
       sockets[id] = { ref, getInfo };
       return ref;
     }
@@ -98023,7 +98366,7 @@ var require_subchannel = __commonJS({
     var logging = require_logging();
     var constants_1 = require_constants();
     var http_proxy_1 = require_http_proxy();
-    var net = require("net");
+    var net2 = require("net");
     var uri_parser_1 = require_uri_parser();
     var subchannel_address_1 = require_subchannel_address();
     var channelz_1 = require_channelz();
@@ -98258,7 +98601,7 @@ var require_subchannel = __commonJS({
             if (proxyConnectionResult.socket) {
               return proxyConnectionResult.socket;
             } else {
-              return net.connect(this.subchannelAddress);
+              return net2.connect(this.subchannelAddress);
             }
           };
         }
@@ -98292,8 +98635,8 @@ var require_subchannel = __commonJS({
             this.transitionToState([connectivity_state_1.ConnectivityState.CONNECTING, connectivity_state_1.ConnectivityState.READY], connectivity_state_1.ConnectivityState.IDLE);
           }
         });
-        session.once("error", (error3) => {
-          this.trace("connection closed with error " + error3.message);
+        session.once("error", (error4) => {
+          this.trace("connection closed with error " + error4.message);
         });
       }
       startConnectingInternal() {
@@ -98434,23 +98777,23 @@ var require_subchannel = __commonJS({
         return false;
       }
       startCallStream(metadata, callStream, extraFilters) {
-        const headers = metadata.toHttp2Headers();
-        headers[HTTP2_HEADER_AUTHORITY] = callStream.getHost();
-        headers[HTTP2_HEADER_USER_AGENT] = this.userAgent;
-        headers[HTTP2_HEADER_CONTENT_TYPE] = "application/grpc";
-        headers[HTTP2_HEADER_METHOD] = "POST";
-        headers[HTTP2_HEADER_PATH] = callStream.getMethod();
-        headers[HTTP2_HEADER_TE] = "trailers";
+        const headers2 = metadata.toHttp2Headers();
+        headers2[HTTP2_HEADER_AUTHORITY] = callStream.getHost();
+        headers2[HTTP2_HEADER_USER_AGENT] = this.userAgent;
+        headers2[HTTP2_HEADER_CONTENT_TYPE] = "application/grpc";
+        headers2[HTTP2_HEADER_METHOD] = "POST";
+        headers2[HTTP2_HEADER_PATH] = callStream.getMethod();
+        headers2[HTTP2_HEADER_TE] = "trailers";
         let http2Stream;
         try {
-          http2Stream = this.session.request(headers);
+          http2Stream = this.session.request(headers2);
         } catch (e) {
           this.transitionToState([connectivity_state_1.ConnectivityState.READY], connectivity_state_1.ConnectivityState.TRANSIENT_FAILURE);
           throw e;
         }
         let headersString = "";
-        for (const header of Object.keys(headers)) {
-          headersString += "		" + header + ": " + headers[header] + "\n";
+        for (const header of Object.keys(headers2)) {
+          headersString += "		" + header + ": " + headers2[header] + "\n";
         }
         logging.trace(constants_1.LogVerbosity.DEBUG, "call_stream", "Starting stream on subchannel (" + this.channelzRef.id + ") " + this.subchannelAddressString + " with headers\n" + headersString);
         const streamSession = this.session;
@@ -98643,15 +98986,15 @@ var require_filter_stack = __commonJS({
         }
         return result;
       }
-      sendMessage(message) {
-        let result = message;
+      sendMessage(message2) {
+        let result = message2;
         for (let i = 0; i < this.filters.length; i++) {
           result = this.filters[i].sendMessage(result);
         }
         return result;
       }
-      receiveMessage(message) {
-        let result = message;
+      receiveMessage(message2) {
+        let result = message2;
         for (let i = this.filters.length - 1; i >= 0; i--) {
           result = this.filters[i].receiveMessage(result);
         }
@@ -98706,11 +99049,11 @@ var require_filter = __commonJS({
       receiveMetadata(metadata) {
         return metadata;
       }
-      async sendMessage(message) {
-        return message;
+      async sendMessage(message2) {
+        return message2;
       }
-      async receiveMessage(message) {
-        return message;
+      async receiveMessage(message2) {
+        return message2;
       }
       receiveTrailers(status) {
         return status;
@@ -98756,8 +99099,8 @@ var require_call_credentials_filter = __commonJS({
         const resultMetadata = await metadata;
         try {
           resultMetadata.merge(await credsMetadata);
-        } catch (error3) {
-          this.stream.cancelWithStatus(constants_1.Status.UNAUTHENTICATED, `Failed to retrieve auth metadata with error: ${error3.message}`);
+        } catch (error4) {
+          this.stream.cancelWithStatus(constants_1.Status.UNAUTHENTICATED, `Failed to retrieve auth metadata with error: ${error4.message}`);
           return Promise.reject("Failed to retrieve auth metadata");
         }
         if (resultMetadata.get("authorization").length > 1) {
@@ -98886,8 +99229,8 @@ var require_compression_filter = __commonJS({
     var zlib3 = require("zlib");
     var filter_1 = require_filter();
     var CompressionHandler = class {
-      async writeMessage(message, compress) {
-        let messageBuffer = message;
+      async writeMessage(message2, compress) {
+        let messageBuffer = message2;
         if (compress) {
           messageBuffer = await this.compressMessage(messageBuffer);
         }
@@ -98907,24 +99250,24 @@ var require_compression_filter = __commonJS({
       }
     };
     var IdentityHandler = class extends CompressionHandler {
-      async compressMessage(message) {
-        return message;
+      async compressMessage(message2) {
+        return message2;
       }
-      async writeMessage(message, compress) {
-        const output = Buffer.allocUnsafe(message.length + 5);
+      async writeMessage(message2, compress) {
+        const output = Buffer.allocUnsafe(message2.length + 5);
         output.writeUInt8(0, 0);
-        output.writeUInt32BE(message.length, 1);
-        message.copy(output, 5);
+        output.writeUInt32BE(message2.length, 1);
+        message2.copy(output, 5);
         return output;
       }
-      decompressMessage(message) {
+      decompressMessage(message2) {
         return Promise.reject(new Error('Received compressed message but "grpc-encoding" header was identity'));
       }
     };
     var DeflateHandler = class extends CompressionHandler {
-      compressMessage(message) {
+      compressMessage(message2) {
         return new Promise((resolve3, reject) => {
-          zlib3.deflate(message, (err, output) => {
+          zlib3.deflate(message2, (err, output) => {
             if (err) {
               reject(err);
             } else {
@@ -98933,9 +99276,9 @@ var require_compression_filter = __commonJS({
           });
         });
       }
-      decompressMessage(message) {
+      decompressMessage(message2) {
         return new Promise((resolve3, reject) => {
-          zlib3.inflate(message, (err, output) => {
+          zlib3.inflate(message2, (err, output) => {
             if (err) {
               reject(err);
             } else {
@@ -98946,9 +99289,9 @@ var require_compression_filter = __commonJS({
       }
     };
     var GzipHandler = class extends CompressionHandler {
-      compressMessage(message) {
+      compressMessage(message2) {
         return new Promise((resolve3, reject) => {
-          zlib3.gzip(message, (err, output) => {
+          zlib3.gzip(message2, (err, output) => {
             if (err) {
               reject(err);
             } else {
@@ -98957,9 +99300,9 @@ var require_compression_filter = __commonJS({
           });
         });
       }
-      decompressMessage(message) {
+      decompressMessage(message2) {
         return new Promise((resolve3, reject) => {
-          zlib3.unzip(message, (err, output) => {
+          zlib3.unzip(message2, (err, output) => {
             if (err) {
               reject(err);
             } else {
@@ -98974,10 +99317,10 @@ var require_compression_filter = __commonJS({
         super();
         this.compressionName = compressionName;
       }
-      compressMessage(message) {
+      compressMessage(message2) {
         return Promise.reject(new Error(`Received message compressed with unsupported compression method ${this.compressionName}`));
       }
-      decompressMessage(message) {
+      decompressMessage(message2) {
         return Promise.reject(new Error(`Compression method not supported: ${this.compressionName}`));
       }
     };
@@ -99000,10 +99343,10 @@ var require_compression_filter = __commonJS({
         this.receiveCompression = new IdentityHandler();
       }
       async sendMetadata(metadata) {
-        const headers = await metadata;
-        headers.set("grpc-accept-encoding", "identity,deflate,gzip");
-        headers.set("accept-encoding", "identity");
-        return headers;
+        const headers2 = await metadata;
+        headers2.set("grpc-accept-encoding", "identity,deflate,gzip");
+        headers2.set("accept-encoding", "identity");
+        return headers2;
       }
       receiveMetadata(metadata) {
         const receiveEncoding = metadata.get("grpc-encoding");
@@ -99017,16 +99360,16 @@ var require_compression_filter = __commonJS({
         metadata.remove("grpc-accept-encoding");
         return metadata;
       }
-      async sendMessage(message) {
-        const resolvedMessage = await message;
+      async sendMessage(message2) {
+        const resolvedMessage = await message2;
         const compress = resolvedMessage.flags === void 0 ? false : (resolvedMessage.flags & 2) === 0;
         return {
           message: await this.sendCompression.writeMessage(resolvedMessage.message, compress),
           flags: resolvedMessage.flags
         };
       }
-      async receiveMessage(message) {
-        return this.receiveCompression.readMessage(await message);
+      async receiveMessage(message2) {
+        return this.receiveCompression.readMessage(await message2);
       }
     };
     exports2.CompressionFilter = CompressionFilter;
@@ -99065,11 +99408,11 @@ var require_max_message_size_filter = __commonJS({
           this.maxReceiveMessageSize = options2["grpc.max_receive_message_length"];
         }
       }
-      async sendMessage(message) {
+      async sendMessage(message2) {
         if (this.maxSendMessageSize === -1) {
-          return message;
+          return message2;
         } else {
-          const concreteMessage = await message;
+          const concreteMessage = await message2;
           if (concreteMessage.message.length > this.maxSendMessageSize) {
             this.callStream.cancelWithStatus(constants_1.Status.RESOURCE_EXHAUSTED, `Sent message larger than max (${concreteMessage.message.length} vs. ${this.maxSendMessageSize})`);
             return Promise.reject("Message too large");
@@ -99078,11 +99421,11 @@ var require_max_message_size_filter = __commonJS({
           }
         }
       }
-      async receiveMessage(message) {
+      async receiveMessage(message2) {
         if (this.maxReceiveMessageSize === -1) {
-          return message;
+          return message2;
         } else {
-          const concreteMessage = await message;
+          const concreteMessage = await message2;
           if (concreteMessage.length > this.maxReceiveMessageSize) {
             this.callStream.cancelWithStatus(constants_1.Status.RESOURCE_EXHAUSTED, `Received message larger than max (${concreteMessage.length} vs. ${this.maxReceiveMessageSize})`);
             return Promise.reject("Message too large");
@@ -99328,21 +99671,21 @@ var require_channel = __commonJS({
                     pickResult.subchannel.startCallStream(finalMetadata, callStream, [...dynamicFilters, ...pickExtraFilters]);
                     (_a2 = callConfig.onCommitted) === null || _a2 === void 0 ? void 0 : _a2.call(callConfig);
                     (_b2 = pickResult.onCallStarted) === null || _b2 === void 0 ? void 0 : _b2.call(pickResult);
-                  } catch (error3) {
-                    if (error3.code === "ERR_HTTP2_GOAWAY_SESSION") {
-                      this.trace("Failed to start call on picked subchannel " + pickResult.subchannel.getAddress() + " with error " + error3.message + ". Retrying pick", constants_1.LogVerbosity.INFO);
+                  } catch (error4) {
+                    if (error4.code === "ERR_HTTP2_GOAWAY_SESSION") {
+                      this.trace("Failed to start call on picked subchannel " + pickResult.subchannel.getAddress() + " with error " + error4.message + ". Retrying pick", constants_1.LogVerbosity.INFO);
                       this.tryPick(callStream, callMetadata, callConfig, dynamicFilters);
                     } else {
-                      this.trace("Failed to start call on picked subchanel " + pickResult.subchannel.getAddress() + " with error " + error3.message + ". Ending call", constants_1.LogVerbosity.INFO);
-                      callStream.cancelWithStatus(constants_1.Status.INTERNAL, `Failed to start HTTP/2 stream with error: ${error3.message}`);
+                      this.trace("Failed to start call on picked subchanel " + pickResult.subchannel.getAddress() + " with error " + error4.message + ". Ending call", constants_1.LogVerbosity.INFO);
+                      callStream.cancelWithStatus(constants_1.Status.INTERNAL, `Failed to start HTTP/2 stream with error: ${error4.message}`);
                     }
                   }
                 } else {
                   this.trace("Picked subchannel " + pickResult.subchannel.getAddress() + " has state " + connectivity_state_1.ConnectivityState[subchannelState] + " after metadata filters. Retrying pick", constants_1.LogVerbosity.INFO);
                   this.tryPick(callStream, callMetadata, callConfig, dynamicFilters);
                 }
-              }, (error3) => {
-                callStream.cancelWithStatus(typeof error3.code === "number" ? error3.code : constants_1.Status.UNKNOWN, `Getting metadata from plugin failed with error: ${error3.message}`);
+              }, (error4) => {
+                callStream.cancelWithStatus(typeof error4.code === "number" ? error4.code : constants_1.Status.UNKNOWN, `Getting metadata from plugin failed with error: ${error4.message}`);
               });
             }
             break;
@@ -99738,11 +100081,11 @@ var require_server_call = __commonJS({
         }
         this.metadataSent = true;
         const custom = customMetadata ? customMetadata.toHttp2Headers() : null;
-        const headers = Object.assign({}, defaultResponseHeaders, custom);
-        this.stream.respond(headers, defaultResponseOptions);
+        const headers2 = Object.assign({}, defaultResponseHeaders, custom);
+        this.stream.respond(headers2, defaultResponseOptions);
       }
-      receiveMetadata(headers) {
-        const metadata = metadata_1.Metadata.fromHttp2Headers(headers);
+      receiveMetadata(headers2) {
+        const metadata = metadata_1.Metadata.fromHttp2Headers(headers2);
         const timeoutHeader = metadata.get(GRPC_TIMEOUT_HEADER);
         if (timeoutHeader.length > 0) {
           const match = timeoutHeader[0].toString().match(DEADLINE_REGEX);
@@ -99852,16 +100195,16 @@ var require_server_call = __commonJS({
           this.stream.end();
         }
       }
-      sendError(error3) {
+      sendError(error4) {
         const status = {
           code: constants_1.Status.UNKNOWN,
-          details: "message" in error3 ? error3.message : "Unknown Error",
-          metadata: "metadata" in error3 && error3.metadata !== void 0 ? error3.metadata : new metadata_1.Metadata()
+          details: "message" in error4 ? error4.message : "Unknown Error",
+          metadata: "metadata" in error4 && error4.metadata !== void 0 ? error4.metadata : new metadata_1.Metadata()
         };
-        if ("code" in error3 && typeof error3.code === "number" && Number.isInteger(error3.code)) {
-          status.code = error3.code;
-          if ("details" in error3 && typeof error3.details === "string") {
-            status.details = error3.details;
+        if ("code" in error4 && typeof error4.code === "number" && Number.isInteger(error4.code)) {
+          status.code = error4.code;
+          if ("details" in error4 && typeof error4.details === "string") {
+            status.details = error4.details;
           }
         }
         this.sendStatus(status);
@@ -99894,16 +100237,16 @@ var require_server_call = __commonJS({
         const decoder = new stream_decoder_1.StreamDecoder();
         this.stream.on("data", async (data) => {
           const messages = decoder.write(data);
-          for (const message of messages) {
-            if (this.maxReceiveMessageSize !== -1 && message.length > this.maxReceiveMessageSize) {
+          for (const message2 of messages) {
+            if (this.maxReceiveMessageSize !== -1 && message2.length > this.maxReceiveMessageSize) {
               this.sendError({
                 code: constants_1.Status.RESOURCE_EXHAUSTED,
-                details: `Received message larger than max (${message.length} vs. ${this.maxReceiveMessageSize})`
+                details: `Received message larger than max (${message2.length} vs. ${this.maxReceiveMessageSize})`
               });
               return;
             }
             this.emit("receiveMessage");
-            this.pushOrBufferMessage(readable, message);
+            this.pushOrBufferMessage(readable, message2);
           }
         });
         this.stream.once("end", () => {
@@ -99949,12 +100292,12 @@ var require_server_call = __commonJS({
           } else {
             this.messagesToPush.push(deserialized);
           }
-        } catch (error3) {
+        } catch (error4) {
           this.bufferedMessages.length = 0;
-          if (!("code" in error3 && typeof error3.code === "number" && Number.isInteger(error3.code) && error3.code >= constants_1.Status.OK && error3.code <= constants_1.Status.UNAUTHENTICATED)) {
-            error3.code = constants_1.Status.INTERNAL;
+          if (!("code" in error4 && typeof error4.code === "number" && Number.isInteger(error4.code) && error4.code >= constants_1.Status.OK && error4.code <= constants_1.Status.UNAUTHENTICATED)) {
+            error4.code = constants_1.Status.INTERNAL;
           }
-          readable.emit("error", error3);
+          readable.emit("error", error4);
         }
         this.isPushPending = false;
         if (this.bufferedMessages.length > 0) {
@@ -100109,7 +100452,7 @@ var require_server = __commonJS({
           throw new Error(`Invalid handlerType ${handlerType}`);
       }
     }
-    var Server = class {
+    var Server2 = class {
       constructor(options2) {
         this.http2ServerList = [];
         this.handlers = new Map();
@@ -100200,8 +100543,8 @@ var require_server = __commonJS({
         if (serviceKeys.length === 0) {
           throw new Error("Cannot add an empty service to a server");
         }
-        serviceKeys.forEach((name5) => {
-          const attrs = service[name5];
+        serviceKeys.forEach((name7) => {
+          const attrs = service[name7];
           let methodType;
           if (attrs.requestStream) {
             if (attrs.responseStream) {
@@ -100216,7 +100559,7 @@ var require_server = __commonJS({
               methodType = "unary";
             }
           }
-          let implFn = implementation[name5];
+          let implFn = implementation[name7];
           let impl;
           if (implFn === void 0 && typeof attrs.originalName === "string") {
             implFn = implementation[attrs.originalName];
@@ -100224,7 +100567,7 @@ var require_server = __commonJS({
           if (implFn !== void 0) {
             impl = implFn.bind(implementation);
           } else {
-            impl = getDefaultHandler(methodType, name5);
+            impl = getDefaultHandler(methodType, name7);
           }
           const success = this.register(attrs.path, impl, attrs.responseSerialize, attrs.requestDeserialize, methodType);
           if (success === false) {
@@ -100237,8 +100580,8 @@ var require_server = __commonJS({
           throw new Error("removeService() requires object as argument");
         }
         const serviceKeys = Object.keys(service);
-        serviceKeys.forEach((name5) => {
-          const attrs = service[name5];
+        serviceKeys.forEach((name7) => {
+          const attrs = service[name7];
           this.unregister(attrs.path);
         });
       }
@@ -100277,8 +100620,8 @@ var require_server = __commonJS({
             maxConcurrentStreams: this.options["grpc.max_concurrent_streams"]
           };
         }
-        const deferredCallback = (error3, port2) => {
-          process.nextTick(() => callback(error3, port2));
+        const deferredCallback = (error4, port2) => {
+          process.nextTick(() => callback(error4, port2));
         };
         const setupServer = () => {
           let http2Server;
@@ -100445,14 +100788,14 @@ var require_server = __commonJS({
                 }
                 deferredCallback(null, bindResult.port);
               }
-            }, (error3) => {
+            }, (error4) => {
               const errorString = `No address added out of total ${addressList.length} resolved`;
               logging.log(constants_1.LogVerbosity.ERROR, errorString);
               deferredCallback(new Error(errorString), 0);
             });
           },
-          onError: (error3) => {
-            deferredCallback(new Error(error3.details), 0);
+          onError: (error4) => {
+            deferredCallback(new Error(error4.details), 0);
           }
         };
         const resolver = resolver_1.createResolver(portUri, resolverListener, this.options);
@@ -100474,21 +100817,21 @@ var require_server = __commonJS({
         this.sessions.clear();
         channelz_1.unregisterChannelzRef(this.channelzRef);
       }
-      register(name5, handler, serialize, deserialize, type) {
-        if (this.handlers.has(name5)) {
+      register(name7, handler, serialize, deserialize, type) {
+        if (this.handlers.has(name7)) {
           return false;
         }
-        this.handlers.set(name5, {
+        this.handlers.set(name7, {
           func: handler,
           serialize,
           deserialize,
           type,
-          path: name5
+          path: name7
         });
         return true;
       }
-      unregister(name5) {
-        return this.handlers.delete(name5);
+      unregister(name7) {
+        return this.handlers.delete(name7);
       }
       start() {
         if (this.http2ServerList.length === 0 || this.http2ServerList.every(({ server: http2Server }) => http2Server.listening !== true)) {
@@ -100503,9 +100846,9 @@ var require_server = __commonJS({
         this.started = true;
       }
       tryShutdown(callback) {
-        const wrappedCallback = (error3) => {
+        const wrappedCallback = (error4) => {
           channelz_1.unregisterChannelzRef(this.channelzRef);
-          callback(error3);
+          callback(error4);
         };
         let pendingChecks = 0;
         function maybeCallback() {
@@ -100545,11 +100888,11 @@ var require_server = __commonJS({
         if (http2Server === null) {
           return;
         }
-        http2Server.on("stream", (stream, headers) => {
+        http2Server.on("stream", (stream, headers2) => {
           const channelzSessionInfo = this.sessions.get(stream.session);
           this.callTracker.addCallStarted();
           channelzSessionInfo === null || channelzSessionInfo === void 0 ? void 0 : channelzSessionInfo.streamTracker.addCallStarted();
-          const contentType = headers[http22.constants.HTTP2_HEADER_CONTENT_TYPE];
+          const contentType = headers2[http22.constants.HTTP2_HEADER_CONTENT_TYPE];
           if (typeof contentType !== "string" || !contentType.startsWith("application/grpc")) {
             stream.respond({
               [http22.constants.HTTP2_HEADER_STATUS]: http22.constants.HTTP_STATUS_UNSUPPORTED_MEDIA_TYPE
@@ -100560,7 +100903,7 @@ var require_server = __commonJS({
           }
           let call = null;
           try {
-            const path = headers[http22.constants.HTTP2_HEADER_PATH];
+            const path = headers2[http22.constants.HTTP2_HEADER_PATH];
             const serverAddress = http2Server.address();
             let serverAddressString = "null";
             if (serverAddress) {
@@ -100601,7 +100944,7 @@ var require_server = __commonJS({
                 channelzSessionInfo.lastMessageReceivedTimestamp = new Date();
               });
             }
-            const metadata = call.receiveMetadata(headers);
+            const metadata = call.receiveMetadata(headers2);
             switch (handler.type) {
               case "unary":
                 handleUnary(call, handler, metadata);
@@ -100662,7 +101005,7 @@ var require_server = __commonJS({
         });
       }
     };
-    exports2.Server = Server;
+    exports2.Server = Server2;
     async function handleUnary(call, handler, metadata) {
       const request = await call.receiveUnaryMessage();
       if (request === void 0 || call.cancelled) {
@@ -100823,7 +101166,7 @@ var require_resolver_dns = __commonJS({
     exports2.setup = void 0;
     var resolver_1 = require_resolver();
     var dns = require("dns");
-    var util = require("util");
+    var util2 = require("util");
     var service_config_1 = require_service_config();
     var constants_1 = require_constants();
     var metadata_1 = require_metadata();
@@ -100836,8 +101179,8 @@ var require_resolver_dns = __commonJS({
       logging.trace(constants_2.LogVerbosity.DEBUG, TRACER_NAME, text);
     }
     var DEFAULT_PORT = 443;
-    var resolveTxtPromise = util.promisify(dns.resolveTxt);
-    var dnsLookupPromise = util.promisify(dns.lookup);
+    var resolveTxtPromise = util2.promisify(dns.resolveTxt);
+    var dnsLookupPromise = util2.promisify(dns.lookup);
     function mergeArrays(...arrays) {
       const result = [];
       for (let i = 0; i < Math.max.apply(null, arrays.map((array) => array.length)); i++) {
@@ -101597,22 +101940,22 @@ var require_src3 = __commonJS({
       createFromGoogleCredential: call_credentials_1.CallCredentials.createFromGoogleCredential,
       createEmpty: call_credentials_1.CallCredentials.createEmpty
     };
-    exports2.closeClient = (client) => client.close();
-    exports2.waitForClientReady = (client, deadline, callback) => client.waitForReady(deadline, callback);
+    exports2.closeClient = (client2) => client2.close();
+    exports2.waitForClientReady = (client2, deadline, callback) => client2.waitForReady(deadline, callback);
     exports2.loadObject = (value, options2) => {
       throw new Error("Not available in this library. Use @grpc/proto-loader and loadPackageDefinition instead");
     };
     exports2.load = (filename, format2, options2) => {
       throw new Error("Not available in this library. Use @grpc/proto-loader and loadPackageDefinition instead");
     };
-    exports2.setLogger = (logger3) => {
-      logging.setLogger(logger3);
+    exports2.setLogger = (logger4) => {
+      logging.setLogger(logger4);
     };
     exports2.setLogVerbosity = (verbosity) => {
       logging.setLoggerVerbosity(verbosity);
     };
-    exports2.getClientChannel = (client) => {
-      return client_1.Client.prototype.getChannel.call(client);
+    exports2.getClientChannel = (client2) => {
+      return client_1.Client.prototype.getChannel.call(client2);
     };
     var client_interceptors_1 = require_client_interceptors();
     Object.defineProperty(exports2, "ListenerBuilder", { enumerable: true, get: function() {
@@ -101660,8 +102003,8 @@ var require_src3 = __commonJS({
 });
 
 // node_modules/@firebase/firestore/dist/index.node.mjs
-function setSDKVersion(version5) {
-  SDK_VERSION3 = version5;
+function setSDKVersion(version7) {
+  SDK_VERSION3 = version7;
 }
 function formatJSON(value) {
   return (0, import_util5.inspect)(value, { depth: 100 });
@@ -101699,11 +102042,11 @@ function argToString(obj) {
   }
 }
 function fail(failure = "Unexpected state") {
-  const message = `FIRESTORE (${SDK_VERSION3}) INTERNAL ASSERTION FAILED: ` + failure;
-  logError(message);
-  throw new Error(message);
+  const message2 = `FIRESTORE (${SDK_VERSION3}) INTERNAL ASSERTION FAILED: ` + failure;
+  logError(message2);
+  throw new Error(message2);
 }
-function hardAssert(assertion, message) {
+function hardAssert(assertion, message2) {
   if (!assertion) {
     fail();
   }
@@ -101717,9 +102060,9 @@ function makeCredentialsProvider(credentials2) {
   }
   switch (credentials2["type"]) {
     case "gapi":
-      const client = credentials2["client"];
-      hardAssert(!!(typeof client === "object" && client !== null && client["auth"] && client["auth"]["getAuthHeaderValueForFirstParty"]));
-      return new FirstPartyCredentialsProvider(client, credentials2["sessionIndex"] || "0", credentials2["iamToken"] || null);
+      const client2 = credentials2["client"];
+      hardAssert(!!(typeof client2 === "object" && client2 !== null && client2["auth"] && client2["auth"]["getAuthHeaderValueForFirstParty"]));
+      return new FirstPartyCredentialsProvider(client2, credentials2["sessionIndex"] || "0", credentials2["iamToken"] || null);
     case "provider":
       return credentials2["client"];
     default:
@@ -101794,7 +102137,7 @@ function forEach(obj, fn) {
     }
   }
 }
-function isEmpty(obj) {
+function isEmpty2(obj) {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       return false;
@@ -102963,26 +103306,26 @@ function fromBytes(serializer, value) {
     return ByteString.fromUint8Array(value ? value : new Uint8Array());
   }
 }
-function toVersion(serializer, version5) {
-  return toTimestamp(serializer, version5.toTimestamp());
+function toVersion(serializer, version7) {
+  return toTimestamp(serializer, version7.toTimestamp());
 }
-function fromVersion(version5) {
-  hardAssert(!!version5);
-  return SnapshotVersion.fromTimestamp(fromTimestamp(version5));
+function fromVersion(version7) {
+  hardAssert(!!version7);
+  return SnapshotVersion.fromTimestamp(fromTimestamp(version7));
 }
 function toResourceName(databaseId, path) {
   return fullyQualifiedPrefixPath(databaseId).child("documents").child(path).canonicalString();
 }
-function fromResourceName(name5) {
-  const resource = ResourcePath.fromString(name5);
+function fromResourceName(name7) {
+  const resource = ResourcePath.fromString(name7);
   hardAssert(isValidResourceName(resource));
   return resource;
 }
 function toName(serializer, key) {
   return toResourceName(serializer.databaseId, key.path);
 }
-function fromName(serializer, name5) {
-  const resource = fromResourceName(name5);
+function fromName(serializer, name7) {
+  const resource = fromResourceName(name7);
   if (resource.get(1) !== serializer.databaseId.projectId) {
     throw new FirestoreError(Code.INVALID_ARGUMENT, "Tried to deserialize key from different project: " + resource.get(1) + " vs " + serializer.databaseId.projectId);
   }
@@ -102994,8 +103337,8 @@ function fromName(serializer, name5) {
 function toQueryPath(serializer, path) {
   return toResourceName(serializer.databaseId, path);
 }
-function fromQueryPath(name5) {
-  const resourceName = fromResourceName(name5);
+function fromQueryPath(name7) {
+  const resourceName = fromResourceName(name7);
   if (resourceName.length === 4) {
     return ResourcePath.emptyPath();
   }
@@ -103045,11 +103388,11 @@ function fromWatchChange(serializer, change) {
     assertPresent(entityChange.document.name);
     assertPresent(entityChange.document.updateTime);
     const key = fromName(serializer, entityChange.document.name);
-    const version5 = fromVersion(entityChange.document.updateTime);
+    const version7 = fromVersion(entityChange.document.updateTime);
     const data = new ObjectValue({
       mapValue: { fields: entityChange.document.fields }
     });
-    const doc2 = MutableDocument.newFoundDocument(key, version5, data);
+    const doc2 = MutableDocument.newFoundDocument(key, version7, data);
     const updatedTargetIds = entityChange.targetIds || [];
     const removedTargetIds = entityChange.removedTargetIds || [];
     watchChange = new DocumentWatchChange(updatedTargetIds, removedTargetIds, doc2.key, doc2);
@@ -103058,8 +103401,8 @@ function fromWatchChange(serializer, change) {
     const docDelete = change.documentDelete;
     assertPresent(docDelete.document);
     const key = fromName(serializer, docDelete.document);
-    const version5 = docDelete.readTime ? fromVersion(docDelete.readTime) : SnapshotVersion.min();
-    const doc2 = MutableDocument.newNoDocument(key, version5);
+    const version7 = docDelete.readTime ? fromVersion(docDelete.readTime) : SnapshotVersion.min();
+    const doc2 = MutableDocument.newNoDocument(key, version7);
     const removedTargetIds = docDelete.removedTargetIds || [];
     watchChange = new DocumentWatchChange([], removedTargetIds, doc2.key, doc2);
   } else if ("documentRemove" in change) {
@@ -103150,11 +103493,11 @@ function toPrecondition(serializer, precondition) {
   }
 }
 function fromWriteResult(proto, commitTime) {
-  let version5 = proto.updateTime ? fromVersion(proto.updateTime) : fromVersion(commitTime);
-  if (version5.isEqual(SnapshotVersion.min())) {
-    version5 = fromVersion(commitTime);
+  let version7 = proto.updateTime ? fromVersion(proto.updateTime) : fromVersion(commitTime);
+  if (version7.isEqual(SnapshotVersion.min())) {
+    version7 = fromVersion(commitTime);
   }
-  return new MutationResult(version5, proto.transformResults || []);
+  return new MutationResult(version7, proto.transformResults || []);
 }
 function fromWriteResults(protos, commitTime) {
   if (protos && protos.length > 0) {
@@ -103826,9 +104169,9 @@ function newMemoryRemoteDocumentCache(indexManager, sizer) {
 }
 function nodePromise(action) {
   return new Promise((resolve3, reject) => {
-    action((error3, value) => {
-      if (error3) {
-        reject(error3);
+    action((error4, value) => {
+      if (error4) {
+        reject(error4);
       } else {
         resolve3(value);
       }
@@ -103962,10 +104305,10 @@ async function onWatchStreamOpen(remoteStoreImpl) {
     sendWatchRequest(remoteStoreImpl, targetData);
   });
 }
-async function onWatchStreamClose(remoteStoreImpl, error3) {
+async function onWatchStreamClose(remoteStoreImpl, error4) {
   cleanUpWatchStreamState(remoteStoreImpl);
   if (shouldStartWatchStream(remoteStoreImpl)) {
-    remoteStoreImpl.onlineStateTracker.handleWatchStreamFailure(error3);
+    remoteStoreImpl.onlineStateTracker.handleWatchStreamFailure(error4);
     startWatchStream(remoteStoreImpl);
   } else {
     remoteStoreImpl.onlineStateTracker.set("Unknown");
@@ -104045,10 +104388,10 @@ function raiseWatchSnapshot(remoteStoreImpl, snapshotVersion) {
   return remoteStoreImpl.remoteSyncer.applyRemoteEvent(remoteEvent);
 }
 async function handleTargetError(remoteStoreImpl, watchChange) {
-  const error3 = watchChange.cause;
+  const error4 = watchChange.cause;
   for (const targetId of watchChange.targetIds) {
     if (remoteStoreImpl.listenTargets.has(targetId)) {
-      await remoteStoreImpl.remoteSyncer.rejectListen(targetId, error3);
+      await remoteStoreImpl.remoteSyncer.rejectListen(targetId, error4);
       remoteStoreImpl.listenTargets.delete(targetId);
       remoteStoreImpl.watchChangeAggregator.removeTarget(targetId);
     }
@@ -104109,19 +104452,19 @@ async function onMutationResult(remoteStoreImpl, commitVersion, results) {
   await executeWithRecovery(remoteStoreImpl, () => remoteStoreImpl.remoteSyncer.applySuccessfulWrite(success));
   await fillWritePipeline(remoteStoreImpl);
 }
-async function onWriteStreamClose(remoteStoreImpl, error3) {
-  if (error3 && ensureWriteStream(remoteStoreImpl).handshakeComplete) {
-    await handleWriteError(remoteStoreImpl, error3);
+async function onWriteStreamClose(remoteStoreImpl, error4) {
+  if (error4 && ensureWriteStream(remoteStoreImpl).handshakeComplete) {
+    await handleWriteError(remoteStoreImpl, error4);
   }
   if (shouldStartWriteStream(remoteStoreImpl)) {
     startWriteStream(remoteStoreImpl);
   }
 }
-async function handleWriteError(remoteStoreImpl, error3) {
-  if (isPermanentWriteError(error3.code)) {
+async function handleWriteError(remoteStoreImpl, error4) {
+  if (isPermanentWriteError(error4.code)) {
     const batch = remoteStoreImpl.writePipeline.shift();
     ensureWriteStream(remoteStoreImpl).inhibitBackoff();
-    await executeWithRecovery(remoteStoreImpl, () => remoteStoreImpl.remoteSyncer.rejectFailedWrite(batch.batchId, error3));
+    await executeWithRecovery(remoteStoreImpl, () => remoteStoreImpl.remoteSyncer.rejectFailedWrite(batch.batchId, error4));
     await fillWritePipeline(remoteStoreImpl);
   }
 }
@@ -104279,12 +104622,12 @@ function eventManagerOnWatchChange(eventManager, viewSnaps) {
     raiseSnapshotsInSyncEvent(eventManagerImpl);
   }
 }
-function eventManagerOnWatchError(eventManager, query2, error3) {
+function eventManagerOnWatchError(eventManager, query2, error4) {
   const eventManagerImpl = debugCast(eventManager);
   const queryInfo = eventManagerImpl.queries.get(query2);
   if (queryInfo) {
     for (const listener of queryInfo.listeners) {
-      listener.onError(error3);
+      listener.onError(error4);
     }
   }
   eventManagerImpl.queries.delete(query2);
@@ -104403,8 +104746,8 @@ async function syncEngineWrite(syncEngine, batch, userCallback) {
     await syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, result.changes);
     await fillWritePipeline(syncEngineImpl.remoteStore);
   } catch (e) {
-    const error3 = wrapInUserErrorIfRecoverable(e, `Failed to persist write`);
-    userCallback.reject(error3);
+    const error4 = wrapInUserErrorIfRecoverable(e, `Failed to persist write`);
+    userCallback.reject(error4);
   }
 }
 async function syncEngineApplyRemoteEvent(syncEngine, remoteEvent) {
@@ -104427,8 +104770,8 @@ async function syncEngineApplyRemoteEvent(syncEngine, remoteEvent) {
       }
     });
     await syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, changes, remoteEvent);
-  } catch (error3) {
-    await ignoreIfPrimaryLeaseLoss(error3);
+  } catch (error4) {
+    await ignoreIfPrimaryLeaseLoss(error4);
   }
 }
 function syncEngineApplyOnlineStateChange(syncEngine, onlineState, source) {
@@ -104460,8 +104803,8 @@ async function syncEngineRejectListen(syncEngine, targetId, err) {
     let documentUpdates = new SortedMap(DocumentKey.comparator);
     documentUpdates = documentUpdates.insert(limboKey, MutableDocument.newNoDocument(limboKey, SnapshotVersion.min()));
     const resolvedLimboDocuments = documentKeySet().add(limboKey);
-    const event = new RemoteEvent(SnapshotVersion.min(), new Map(), new SortedSet(primitiveComparator), documentUpdates, resolvedLimboDocuments);
-    await syncEngineApplyRemoteEvent(syncEngineImpl, event);
+    const event2 = new RemoteEvent(SnapshotVersion.min(), new Map(), new SortedSet(primitiveComparator), documentUpdates, resolvedLimboDocuments);
+    await syncEngineApplyRemoteEvent(syncEngineImpl, event2);
     syncEngineImpl.activeLimboTargetsByKey = syncEngineImpl.activeLimboTargetsByKey.remove(limboKey);
     syncEngineImpl.activeLimboResolutionsByTarget.delete(targetId);
     pumpEnqueuedLimboResolutions(syncEngineImpl);
@@ -104478,20 +104821,20 @@ async function syncEngineApplySuccessfulWrite(syncEngine, mutationBatchResult) {
     triggerPendingWritesCallbacks(syncEngineImpl, batchId);
     syncEngineImpl.sharedClientState.updateMutationState(batchId, "acknowledged");
     await syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, changes);
-  } catch (error3) {
-    await ignoreIfPrimaryLeaseLoss(error3);
+  } catch (error4) {
+    await ignoreIfPrimaryLeaseLoss(error4);
   }
 }
-async function syncEngineRejectFailedWrite(syncEngine, batchId, error3) {
+async function syncEngineRejectFailedWrite(syncEngine, batchId, error4) {
   const syncEngineImpl = debugCast(syncEngine);
   try {
     const changes = await localStoreRejectBatch(syncEngineImpl.localStore, batchId);
-    processUserCallback(syncEngineImpl, batchId, error3);
+    processUserCallback(syncEngineImpl, batchId, error4);
     triggerPendingWritesCallbacks(syncEngineImpl, batchId);
-    syncEngineImpl.sharedClientState.updateMutationState(batchId, "rejected", error3);
+    syncEngineImpl.sharedClientState.updateMutationState(batchId, "rejected", error4);
     await syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, changes);
-  } catch (error4) {
-    await ignoreIfPrimaryLeaseLoss(error4);
+  } catch (error5) {
+    await ignoreIfPrimaryLeaseLoss(error5);
   }
 }
 function triggerPendingWritesCallbacks(syncEngineImpl, batchId) {
@@ -104516,14 +104859,14 @@ function addMutationCallback(syncEngineImpl, batchId, callback) {
   newCallbacks = newCallbacks.insert(batchId, callback);
   syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()] = newCallbacks;
 }
-function processUserCallback(syncEngine, batchId, error3) {
+function processUserCallback(syncEngine, batchId, error4) {
   const syncEngineImpl = debugCast(syncEngine);
   let newCallbacks = syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()];
   if (newCallbacks) {
     const callback = newCallbacks.get(batchId);
     if (callback) {
-      if (error3) {
-        callback.reject(error3);
+      if (error4) {
+        callback.reject(error4);
       } else {
         callback.resolve();
       }
@@ -104532,12 +104875,12 @@ function processUserCallback(syncEngine, batchId, error3) {
     syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()] = newCallbacks;
   }
 }
-function removeAndCleanupTarget(syncEngineImpl, targetId, error3 = null) {
+function removeAndCleanupTarget(syncEngineImpl, targetId, error4 = null) {
   syncEngineImpl.sharedClientState.removeLocalQueryTarget(targetId);
   for (const query2 of syncEngineImpl.queriesByTarget.get(targetId)) {
     syncEngineImpl.queryViewsByQuery.delete(query2);
-    if (error3) {
-      syncEngineImpl.syncEngineListener.onWatchError(query2, error3);
+    if (error4) {
+      syncEngineImpl.syncEngineListener.onWatchError(query2, error4);
     }
   }
   syncEngineImpl.queriesByTarget.delete(targetId);
@@ -104752,89 +105095,89 @@ function cast(obj, constructor) {
   }
   return obj;
 }
-async function setOfflineComponentProvider(client, offlineComponentProvider) {
-  client.asyncQueue.verifyOperationInProgress();
+async function setOfflineComponentProvider(client2, offlineComponentProvider) {
+  client2.asyncQueue.verifyOperationInProgress();
   logDebug(LOG_TAG$2, "Initializing OfflineComponentProvider");
-  const configuration = await client.getConfiguration();
+  const configuration = await client2.getConfiguration();
   await offlineComponentProvider.initialize(configuration);
   let currentUser = configuration.initialUser;
-  client.setCredentialChangeListener(async (user2) => {
+  client2.setCredentialChangeListener(async (user2) => {
     if (!currentUser.isEqual(user2)) {
       await localStoreHandleUserChange(offlineComponentProvider.localStore, user2);
       currentUser = user2;
     }
   });
-  offlineComponentProvider.persistence.setDatabaseDeletedListener(() => client.terminate());
-  client.offlineComponents = offlineComponentProvider;
+  offlineComponentProvider.persistence.setDatabaseDeletedListener(() => client2.terminate());
+  client2.offlineComponents = offlineComponentProvider;
 }
-async function setOnlineComponentProvider(client, onlineComponentProvider) {
-  client.asyncQueue.verifyOperationInProgress();
-  const offlineComponentProvider = await ensureOfflineComponents(client);
+async function setOnlineComponentProvider(client2, onlineComponentProvider) {
+  client2.asyncQueue.verifyOperationInProgress();
+  const offlineComponentProvider = await ensureOfflineComponents(client2);
   logDebug(LOG_TAG$2, "Initializing OnlineComponentProvider");
-  const configuration = await client.getConfiguration();
+  const configuration = await client2.getConfiguration();
   await onlineComponentProvider.initialize(offlineComponentProvider, configuration);
-  client.setCredentialChangeListener((user2) => remoteStoreHandleCredentialChange(onlineComponentProvider.remoteStore, user2));
-  client.onlineComponents = onlineComponentProvider;
+  client2.setCredentialChangeListener((user2) => remoteStoreHandleCredentialChange(onlineComponentProvider.remoteStore, user2));
+  client2.onlineComponents = onlineComponentProvider;
 }
-async function ensureOfflineComponents(client) {
-  if (!client.offlineComponents) {
+async function ensureOfflineComponents(client2) {
+  if (!client2.offlineComponents) {
     logDebug(LOG_TAG$2, "Using default OfflineComponentProvider");
-    await setOfflineComponentProvider(client, new MemoryOfflineComponentProvider());
+    await setOfflineComponentProvider(client2, new MemoryOfflineComponentProvider());
   }
-  return client.offlineComponents;
+  return client2.offlineComponents;
 }
-async function ensureOnlineComponents(client) {
-  if (!client.onlineComponents) {
+async function ensureOnlineComponents(client2) {
+  if (!client2.onlineComponents) {
     logDebug(LOG_TAG$2, "Using default OnlineComponentProvider");
-    await setOnlineComponentProvider(client, new OnlineComponentProvider());
+    await setOnlineComponentProvider(client2, new OnlineComponentProvider());
   }
-  return client.onlineComponents;
+  return client2.onlineComponents;
 }
-function getSyncEngine(client) {
-  return ensureOnlineComponents(client).then((c) => c.syncEngine);
+function getSyncEngine(client2) {
+  return ensureOnlineComponents(client2).then((c) => c.syncEngine);
 }
-async function getEventManager(client) {
-  const onlineComponentProvider = await ensureOnlineComponents(client);
+async function getEventManager(client2) {
+  const onlineComponentProvider = await ensureOnlineComponents(client2);
   const eventManager = onlineComponentProvider.eventManager;
   eventManager.onListen = syncEngineListen.bind(null, onlineComponentProvider.syncEngine);
   eventManager.onUnlisten = syncEngineUnlisten.bind(null, onlineComponentProvider.syncEngine);
   return eventManager;
 }
-function firestoreClientListen(client, query2, options2, observer) {
+function firestoreClientListen(client2, query2, options2, observer) {
   const wrappedObserver = new AsyncObserver(observer);
   const listener = new QueryListener(query2, wrappedObserver, options2);
-  client.asyncQueue.enqueueAndForget(async () => {
-    const eventManager = await getEventManager(client);
+  client2.asyncQueue.enqueueAndForget(async () => {
+    const eventManager = await getEventManager(client2);
     return eventManagerListen(eventManager, listener);
   });
   return () => {
     wrappedObserver.mute();
-    client.asyncQueue.enqueueAndForget(async () => {
-      const eventManager = await getEventManager(client);
+    client2.asyncQueue.enqueueAndForget(async () => {
+      const eventManager = await getEventManager(client2);
       return eventManagerUnlisten(eventManager, listener);
     });
   };
 }
-function firestoreClientGetDocumentViaSnapshotListener(client, key, options2 = {}) {
-  const deferred = new Deferred2();
-  client.asyncQueue.enqueueAndForget(async () => {
-    const eventManager = await getEventManager(client);
-    return readDocumentViaSnapshotListener(eventManager, client.asyncQueue, key, options2, deferred);
+function firestoreClientGetDocumentViaSnapshotListener(client2, key, options2 = {}) {
+  const deferred = new Deferred3();
+  client2.asyncQueue.enqueueAndForget(async () => {
+    const eventManager = await getEventManager(client2);
+    return readDocumentViaSnapshotListener(eventManager, client2.asyncQueue, key, options2, deferred);
   });
   return deferred.promise;
 }
-function firestoreClientGetDocumentsViaSnapshotListener(client, query2, options2 = {}) {
-  const deferred = new Deferred2();
-  client.asyncQueue.enqueueAndForget(async () => {
-    const eventManager = await getEventManager(client);
-    return executeQueryViaSnapshotListener(eventManager, client.asyncQueue, query2, options2, deferred);
+function firestoreClientGetDocumentsViaSnapshotListener(client2, query2, options2 = {}) {
+  const deferred = new Deferred3();
+  client2.asyncQueue.enqueueAndForget(async () => {
+    const eventManager = await getEventManager(client2);
+    return executeQueryViaSnapshotListener(eventManager, client2.asyncQueue, query2, options2, deferred);
   });
   return deferred.promise;
 }
-function firestoreClientWrite(client, mutations) {
-  const deferred = new Deferred2();
-  client.asyncQueue.enqueueAndForget(async () => {
-    const syncEngine = await getSyncEngine(client);
+function firestoreClientWrite(client2, mutations) {
+  const deferred = new Deferred3();
+  client2.asyncQueue.enqueueAndForget(async () => {
+    const syncEngine = await getSyncEngine(client2);
     return syncEngineWrite(syncEngine, mutations, deferred);
   });
   return deferred.promise;
@@ -104933,16 +105276,16 @@ function doc(parent2, path, ...pathSegments) {
 function newAsyncQueue() {
   return new AsyncQueueImpl();
 }
-function getMessageOrStack(error3) {
-  let message = error3.message || "";
-  if (error3.stack) {
-    if (error3.stack.includes(error3.message)) {
-      message = error3.stack;
+function getMessageOrStack(error4) {
+  let message2 = error4.message || "";
+  if (error4.stack) {
+    if (error4.stack.includes(error4.message)) {
+      message2 = error4.stack;
     } else {
-      message = error3.message + "\n" + error3.stack;
+      message2 = error4.message + "\n" + error4.stack;
     }
   }
-  return message;
+  return message2;
 }
 function getFirestore(app = getApp()) {
   return _getProvider(app, "firestore").getImmediate();
@@ -104969,8 +105312,8 @@ function registerFirestore(variant, useFetchStreams = true) {
     firestoreInstance._setSettings(settings);
     return firestoreInstance;
   }, "PUBLIC"));
-  registerVersion2(name3, version$13, variant);
-  registerVersion2(name3, version$13, "esm2017");
+  registerVersion2(name4, version$14, variant);
+  registerVersion2(name4, version$14, "esm2017");
 }
 function isWrite(dataSource) {
   switch (dataSource) {
@@ -105099,7 +105442,7 @@ function parseData(input, context2) {
 }
 function parseObject(obj, context2) {
   const fields = {};
-  if (isEmpty(obj)) {
+  if (isEmpty2(obj)) {
     if (context2.path && context2.path.length > 0) {
       context2.fieldMask.push(context2.path);
     }
@@ -105183,13 +105526,13 @@ function parseScalarValue(value, context2) {
 function looksLikeJsonObject(input) {
   return typeof input === "object" && input !== null && !(input instanceof Array) && !(input instanceof Date) && !(input instanceof Timestamp) && !(input instanceof GeoPoint) && !(input instanceof Bytes) && !(input instanceof DocumentReference) && !(input instanceof FieldValue);
 }
-function validatePlainObject(message, context2, input) {
+function validatePlainObject(message2, context2, input) {
   if (!looksLikeJsonObject(input) || !isPlainObject(input)) {
     const description = valueDescription(input);
     if (description === "an object") {
-      throw context2.createError(message + " a custom object");
+      throw context2.createError(message2 + " a custom object");
     } else {
-      throw context2.createError(message + " " + description);
+      throw context2.createError(message2 + " " + description);
     }
   }
 }
@@ -105200,8 +105543,8 @@ function fieldPathFromArgument$1(methodName, path, targetDoc) {
   } else if (typeof path === "string") {
     return fieldPathFromDotSeparatedString(methodName, path);
   } else {
-    const message = "Field path arguments must be of type string or FieldPath.";
-    throw createError(message, methodName, false, void 0, targetDoc);
+    const message2 = "Field path arguments must be of type string or FieldPath.";
+    throw createError(message2, methodName, false, void 0, targetDoc);
   }
 }
 function fieldPathFromDotSeparatedString(methodName, path, targetDoc) {
@@ -105218,11 +105561,11 @@ function fieldPathFromDotSeparatedString(methodName, path, targetDoc) {
 function createError(reason, methodName, hasConverter, path, targetDoc) {
   const hasPath = path && !path.isEmpty();
   const hasDocument = targetDoc !== void 0;
-  let message = `Function ${methodName}() called with invalid data`;
+  let message2 = `Function ${methodName}() called with invalid data`;
   if (hasConverter) {
-    message += " (via `toFirestore()`)";
+    message2 += " (via `toFirestore()`)";
   }
-  message += ". ";
+  message2 += ". ";
   let description = "";
   if (hasPath || hasDocument) {
     description += " (found";
@@ -105234,7 +105577,7 @@ function createError(reason, methodName, hasConverter, path, targetDoc) {
     }
     description += ")";
   }
-  return new FirestoreError(Code.INVALID_ARGUMENT, message + reason + description);
+  return new FirestoreError(Code.INVALID_ARGUMENT, message2 + reason + description);
 }
 function fieldMaskContains(haystack, needle) {
   return haystack.some((v) => v.isEqual(needle));
@@ -105360,12 +105703,12 @@ function validateReference(documentRef, firestore) {
 function isPartialObserver(obj) {
   return implementsAnyMethods2(obj, ["next", "error", "complete"]);
 }
-function implementsAnyMethods2(obj, methods) {
+function implementsAnyMethods2(obj, methods2) {
   if (typeof obj !== "object" || obj === null) {
     return false;
   }
   const object = obj;
-  for (const method of methods) {
+  for (const method of methods2) {
     if (method in object && typeof object[method] === "function") {
       return true;
     }
@@ -105375,16 +105718,16 @@ function implementsAnyMethods2(obj, methods) {
 function getDoc(reference) {
   reference = cast(reference, DocumentReference);
   const firestore = cast(reference.firestore, Firestore);
-  const client = ensureFirestoreConfigured(firestore);
-  return firestoreClientGetDocumentViaSnapshotListener(client, reference._key).then((snapshot) => convertToDocSnapshot(firestore, reference, snapshot));
+  const client2 = ensureFirestoreConfigured(firestore);
+  return firestoreClientGetDocumentViaSnapshotListener(client2, reference._key).then((snapshot) => convertToDocSnapshot(firestore, reference, snapshot));
 }
 function getDocs(query2) {
   query2 = cast(query2, Query);
   const firestore = cast(query2.firestore, Firestore);
-  const client = ensureFirestoreConfigured(firestore);
+  const client2 = ensureFirestoreConfigured(firestore);
   const userDataWriter = new ExpUserDataWriter(firestore);
   validateHasExplicitOrderByForLimitToLast(query2._query);
-  return firestoreClientGetDocumentsViaSnapshotListener(client, query2._query).then((snapshot) => new QuerySnapshot(firestore, userDataWriter, query2, snapshot));
+  return firestoreClientGetDocumentsViaSnapshotListener(client2, query2._query).then((snapshot) => new QuerySnapshot(firestore, userDataWriter, query2, snapshot));
 }
 function setDoc(reference, data, options2) {
   reference = cast(reference, DocumentReference);
@@ -105446,12 +105789,12 @@ function onSnapshot(reference, ...args) {
     };
     validateHasExplicitOrderByForLimitToLast(reference._query);
   }
-  const client = ensureFirestoreConfigured(firestore);
-  return firestoreClientListen(client, internalQuery, internalOptions, observer);
+  const client2 = ensureFirestoreConfigured(firestore);
+  return firestoreClientListen(client2, internalQuery, internalOptions, observer);
 }
 function executeWrite(firestore, mutations) {
-  const client = ensureFirestoreConfigured(firestore);
-  return firestoreClientWrite(client, mutations);
+  const client2 = ensureFirestoreConfigured(firestore);
+  return firestoreClientWrite(client2, mutations);
 }
 function convertToDocSnapshot(firestore, ref, snapshot) {
   const doc2 = snapshot.docs.get(ref._key);
@@ -105466,7 +105809,7 @@ function writeBatch(firestore) {
   ensureFirestoreConfigured(firestore);
   return new WriteBatch(firestore, (mutations) => executeWrite(firestore, mutations));
 }
-var import_util5, import_crypto2, import_module, import_grpc_js, import_path, import_url3, import_proto_loader, import_meta, name3, version$13, User, version3, SDK_VERSION3, logClient2, Code, FirestoreError, Deferred2, OAuthToken, EmptyCredentialsProvider, FirebaseCredentialsProvider, FirstPartyToken, FirstPartyCredentialsProvider, ListenSequence, DOCUMENT_KEY_NAME, BasePath, ResourcePath, identifierRegExp, FieldPath$1, escapeChar, encodedSeparatorChar, encodedNul, encodedEscape, DbPrimaryClient, DbMutationQueue, DbMutationBatch, DbDocumentMutation, DbRemoteDocument, DbRemoteDocumentGlobal, DbTarget, DbTargetDocument, DbTargetGlobal, DbCollectionParent, DbClientMetadata, DbBundle, DbNamedQuery, V1_STORES, V3_STORES, V4_STORES, V6_STORES, V8_STORES, V11_STORES, PRIMARY_LEASE_LOST_ERROR_MSG, PersistenceTransaction, PersistencePromise, AutoId, MIN_SECONDS, MS_TO_NANOS, Timestamp, SnapshotVersion, FieldMask, ByteString, ISO_TIMESTAMP_REG_EXP, SERVER_TIMESTAMP_SENTINEL, TYPE_KEY, PREVIOUS_VALUE_KEY, LOCAL_WRITE_TIME_KEY, BATCHID_UNKNOWN, DocumentKey, ObjectValue, MutableDocument, TargetImpl, Filter, FieldFilter, KeyFieldFilter, KeyFieldInFilter, KeyFieldNotInFilter, ArrayContainsFilter, InFilter, NotInFilter, ArrayContainsAnyFilter, Bound, OrderBy, QueryImpl, SortedMap, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedSet, SortedSetIterator, EMPTY_MUTABLE_DOCUMENT_MAP, EMPTY_DOCUMENT_MAP, EMPTY_DOCUMENT_VERSION_MAP, EMPTY_DOCUMENT_KEY_SET, EMPTY_TARGET_ID_SET, TransformOperation, ServerTimestampTransform, ArrayUnionTransformOperation, ArrayRemoveTransformOperation, NumericIncrementTransformOperation, FieldTransform, MutationResult, Precondition, Mutation, SetMutation, PatchMutation, DeleteMutation, VerifyMutation, MutationBatch, MutationBatchResult, ExistenceFilter, RpcCode, RemoteEvent, TargetChange, DocumentWatchChange, ExistenceFilterChange, WatchTargetChange, TargetState, LOG_TAG$f, WatchChangeAggregator, DIRECTIONS, OPERATORS, JsonProtoSerializer, TargetData, LocalSerializer, MemoryIndexManager, MemoryCollectionParentIndex, OFFSET, TargetIdGenerator, LRU_COLLECTION_DISABLED, LRU_DEFAULT_CACHE_SIZE_BYTES, LruParams, LRU_MINIMUM_CACHE_SIZE_BYTES, INITIAL_GC_DELAY_MS, REGULAR_GC_DELAY_MS, ObjectMap, RemoteDocumentChangeBuffer, MAX_CLIENT_AGE_MS, LocalDocumentsView, LOG_TAG$c, RESUME_TOKEN_MAX_AGE_MICROS, LocalStoreImpl, MemoryBundleCache, ReferenceSet, DocReference, MemoryMutationQueue, MemoryRemoteDocumentCacheImpl, MemoryRemoteDocumentChangeBuffer, MemoryTargetCache, LOG_TAG$b, MemoryPersistence, MemoryTransaction, MemoryEagerDelegate, QueryEngine, LocalClientState, MemorySharedClientState, NoopConnectivityMonitor, StreamBridge, require2, grpcVersion, LOG_TAG$9, X_GOOG_API_CLIENT_VALUE, GrpcConnection, __filename, __dirname2, protoLoaderOptions, LOG_TAG$8, DEFAULT_BACKOFF_INITIAL_DELAY_MS, DEFAULT_BACKOFF_FACTOR, DEFAULT_BACKOFF_MAX_DELAY_MS, ExponentialBackoff, LOG_TAG$7, IDLE_TIMEOUT_MS, HEALTHY_TIMEOUT_MS, PersistentStream, PersistentListenStream, PersistentWriteStream, Datastore, DatastoreImpl, LOG_TAG$6, MAX_WATCH_STREAM_FAILURES, ONLINE_STATE_TIMEOUT_MS, OnlineStateTracker, LOG_TAG$5, MAX_PENDING_WRITES, RemoteStoreImpl, LOG_TAG$4, DelayedOperation, DocumentSet, DocumentChangeSet, ViewSnapshot, QueryListenersInfo, EventManagerImpl, QueryListener, LocalViewChanges, AddedLimboDocument, RemovedLimboDocument, View, LOG_TAG$3, QueryView, LimboResolution, SyncEngineImpl, MemoryOfflineComponentProvider, OnlineComponentProvider, AsyncObserver, LOG_TAG$2, MAX_CONCURRENT_LIMBO_RESOLUTIONS, FirestoreClient, DatabaseInfo, DEFAULT_DATABASE_NAME, DatabaseId, LOG_TAG$1, datastoreInstances, DEFAULT_HOST, DEFAULT_SSL, FirestoreSettingsImpl, Firestore$1, DocumentReference, Query, CollectionReference, LOG_TAG, AsyncQueueImpl, Firestore, FieldPath, Bytes, FieldValue, GeoPoint, RESERVED_FIELD_REGEX, ParsedSetData, ParsedUpdateData, ParseContextImpl, UserDataReader, DeleteFieldValueImpl, ServerTimestampFieldValueImpl, FIELD_PATH_RESERVED, DocumentSnapshot$1, QueryDocumentSnapshot$1, SnapshotMetadata, DocumentSnapshot, QueryDocumentSnapshot, QuerySnapshot, QueryConstraint, QueryOrderByConstraint, AbstractUserDataWriter, WriteBatch, ExpUserDataWriter;
+var import_util5, import_crypto2, import_module, import_grpc_js, import_path, import_url3, import_proto_loader, import_meta, name4, version$14, User, version4, SDK_VERSION3, logClient2, Code, FirestoreError, Deferred3, OAuthToken, EmptyCredentialsProvider, FirebaseCredentialsProvider, FirstPartyToken, FirstPartyCredentialsProvider, ListenSequence, DOCUMENT_KEY_NAME, BasePath, ResourcePath, identifierRegExp, FieldPath$1, escapeChar, encodedSeparatorChar, encodedNul, encodedEscape, DbPrimaryClient, DbMutationQueue, DbMutationBatch, DbDocumentMutation, DbRemoteDocument, DbRemoteDocumentGlobal, DbTarget, DbTargetDocument, DbTargetGlobal, DbCollectionParent, DbClientMetadata, DbBundle, DbNamedQuery, V1_STORES, V3_STORES, V4_STORES, V6_STORES, V8_STORES, V11_STORES, PRIMARY_LEASE_LOST_ERROR_MSG, PersistenceTransaction, PersistencePromise, AutoId, MIN_SECONDS, MS_TO_NANOS, Timestamp, SnapshotVersion, FieldMask, ByteString, ISO_TIMESTAMP_REG_EXP, SERVER_TIMESTAMP_SENTINEL, TYPE_KEY, PREVIOUS_VALUE_KEY, LOCAL_WRITE_TIME_KEY, BATCHID_UNKNOWN, DocumentKey, ObjectValue, MutableDocument, TargetImpl, Filter, FieldFilter, KeyFieldFilter, KeyFieldInFilter, KeyFieldNotInFilter, ArrayContainsFilter, InFilter, NotInFilter, ArrayContainsAnyFilter, Bound, OrderBy, QueryImpl, SortedMap, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedSet, SortedSetIterator, EMPTY_MUTABLE_DOCUMENT_MAP, EMPTY_DOCUMENT_MAP, EMPTY_DOCUMENT_VERSION_MAP, EMPTY_DOCUMENT_KEY_SET, EMPTY_TARGET_ID_SET, TransformOperation, ServerTimestampTransform, ArrayUnionTransformOperation, ArrayRemoveTransformOperation, NumericIncrementTransformOperation, FieldTransform, MutationResult, Precondition, Mutation, SetMutation, PatchMutation, DeleteMutation, VerifyMutation, MutationBatch, MutationBatchResult, ExistenceFilter, RpcCode, RemoteEvent, TargetChange, DocumentWatchChange, ExistenceFilterChange, WatchTargetChange, TargetState, LOG_TAG$f, WatchChangeAggregator, DIRECTIONS, OPERATORS, JsonProtoSerializer, TargetData, LocalSerializer, MemoryIndexManager, MemoryCollectionParentIndex, OFFSET, TargetIdGenerator, LRU_COLLECTION_DISABLED, LRU_DEFAULT_CACHE_SIZE_BYTES, LruParams, LRU_MINIMUM_CACHE_SIZE_BYTES, INITIAL_GC_DELAY_MS, REGULAR_GC_DELAY_MS, ObjectMap, RemoteDocumentChangeBuffer, MAX_CLIENT_AGE_MS, LocalDocumentsView, LOG_TAG$c, RESUME_TOKEN_MAX_AGE_MICROS, LocalStoreImpl, MemoryBundleCache, ReferenceSet, DocReference, MemoryMutationQueue, MemoryRemoteDocumentCacheImpl, MemoryRemoteDocumentChangeBuffer, MemoryTargetCache, LOG_TAG$b, MemoryPersistence, MemoryTransaction, MemoryEagerDelegate, QueryEngine, LocalClientState, MemorySharedClientState, NoopConnectivityMonitor, StreamBridge, require2, grpcVersion, LOG_TAG$9, X_GOOG_API_CLIENT_VALUE, GrpcConnection, __filename, __dirname2, protoLoaderOptions, LOG_TAG$8, DEFAULT_BACKOFF_INITIAL_DELAY_MS, DEFAULT_BACKOFF_FACTOR, DEFAULT_BACKOFF_MAX_DELAY_MS, ExponentialBackoff, LOG_TAG$7, IDLE_TIMEOUT_MS, HEALTHY_TIMEOUT_MS, PersistentStream, PersistentListenStream, PersistentWriteStream, Datastore, DatastoreImpl, LOG_TAG$6, MAX_WATCH_STREAM_FAILURES, ONLINE_STATE_TIMEOUT_MS, OnlineStateTracker, LOG_TAG$5, MAX_PENDING_WRITES, RemoteStoreImpl, LOG_TAG$4, DelayedOperation, DocumentSet, DocumentChangeSet, ViewSnapshot, QueryListenersInfo, EventManagerImpl, QueryListener, LocalViewChanges, AddedLimboDocument, RemovedLimboDocument, View, LOG_TAG$3, QueryView, LimboResolution, SyncEngineImpl, MemoryOfflineComponentProvider, OnlineComponentProvider, AsyncObserver, LOG_TAG$2, MAX_CONCURRENT_LIMBO_RESOLUTIONS, FirestoreClient, DatabaseInfo, DEFAULT_DATABASE_NAME, DatabaseId, LOG_TAG$1, datastoreInstances, DEFAULT_HOST, DEFAULT_SSL, FirestoreSettingsImpl, Firestore$1, DocumentReference, Query, CollectionReference, LOG_TAG, AsyncQueueImpl, Firestore, FieldPath, Bytes, FieldValue, GeoPoint, RESERVED_FIELD_REGEX, ParsedSetData, ParsedUpdateData, ParseContextImpl, UserDataReader, DeleteFieldValueImpl, ServerTimestampFieldValueImpl, FIELD_PATH_RESERVED, DocumentSnapshot$1, QueryDocumentSnapshot$1, SnapshotMetadata, DocumentSnapshot, QueryDocumentSnapshot, QuerySnapshot, QueryConstraint, QueryOrderByConstraint, AbstractUserDataWriter, WriteBatch, ExpUserDataWriter;
 var init_index_node = __esm({
   "node_modules/@firebase/firestore/dist/index.node.mjs"() {
     init_shims();
@@ -105482,8 +105825,8 @@ var init_index_node = __esm({
     import_url3 = __toModule(require("url"));
     import_proto_loader = __toModule(require_src2());
     import_meta = {};
-    name3 = "@firebase/firestore";
-    version$13 = "3.3.1";
+    name4 = "@firebase/firestore";
+    version$14 = "3.3.1";
     User = class {
       constructor(uid) {
         this.uid = uid;
@@ -105506,8 +105849,8 @@ var init_index_node = __esm({
     User.GOOGLE_CREDENTIALS = new User("google-credentials-uid");
     User.FIRST_PARTY = new User("first-party-uid");
     User.MOCK_USER = new User("mock-user");
-    version3 = "9.5.0";
-    SDK_VERSION3 = version3;
+    version4 = "9.5.0";
+    SDK_VERSION3 = version4;
     logClient2 = new Logger2("@firebase/firestore");
     Code = {
       OK: "ok",
@@ -105529,15 +105872,15 @@ var init_index_node = __esm({
       DATA_LOSS: "data-loss"
     };
     FirestoreError = class extends Error {
-      constructor(code, message) {
-        super(message);
+      constructor(code, message2) {
+        super(message2);
         this.code = code;
-        this.message = message;
+        this.message = message2;
         this.name = "FirebaseError";
         this.toString = () => `${this.name}: [code=${this.code}]: ${this.message}`;
       }
     };
-    Deferred2 = class {
+    Deferred3 = class {
       constructor() {
         this.promise = new Promise((resolve3, reject) => {
           this.resolve = resolve3;
@@ -105583,12 +105926,12 @@ var init_index_node = __esm({
             return Promise.resolve();
           }
         };
-        let nextToken = new Deferred2();
+        let nextToken = new Deferred3();
         this.tokenListener = () => {
           this.tokenCounter++;
           this.currentUser = this.getUser();
           nextToken.resolve();
-          nextToken = new Deferred2();
+          nextToken = new Deferred3();
           asyncQueue.enqueueRetryable(() => guardedChangeListener(this.currentUser));
         };
         const awaitNextToken = () => {
@@ -105613,7 +105956,7 @@ var init_index_node = __esm({
             } else {
               logDebug("FirebaseCredentialsProvider", "Auth not yet detected");
               nextToken.resolve();
-              nextToken = new Deferred2();
+              nextToken = new Deferred3();
             }
           }
         }, 0);
@@ -105663,17 +106006,17 @@ var init_index_node = __esm({
         this.user = User.FIRST_PARTY;
       }
       get authHeaders() {
-        const headers = {
+        const headers2 = {
           "X-Goog-AuthUser": this.sessionIndex
         };
         const authHeader = this.gapi["auth"]["getAuthHeaderValueForFirstParty"]([]);
         if (authHeader) {
-          headers["Authorization"] = authHeader;
+          headers2["Authorization"] = authHeader;
         }
         if (this.iamToken) {
-          headers["X-Goog-Iam-Authorization-Token"] = this.iamToken;
+          headers2["X-Goog-Iam-Authorization-Token"] = this.iamToken;
         }
-        return headers;
+        return headers2;
       }
     };
     FirstPartyCredentialsProvider = class {
@@ -106043,17 +106386,17 @@ var init_index_node = __esm({
     DbClientMetadata.store = "clientMetadata";
     DbClientMetadata.keyPath = "clientId";
     DbBundle = class {
-      constructor(bundleId, createTime, version5) {
+      constructor(bundleId, createTime, version7) {
         this.bundleId = bundleId;
         this.createTime = createTime;
-        this.version = version5;
+        this.version = version7;
       }
     };
     DbBundle.store = "bundles";
     DbBundle.keyPath = "bundleId";
     DbNamedQuery = class {
-      constructor(name5, readTime, bundledQuery) {
-        this.name = name5;
+      constructor(name7, readTime, bundledQuery) {
+        this.name = name7;
         this.readTime = readTime;
         this.bundledQuery = bundledQuery;
       }
@@ -106101,11 +106444,11 @@ var init_index_node = __esm({
           if (this.nextCallback) {
             this.nextCallback(value);
           }
-        }, (error3) => {
+        }, (error4) => {
           this.isDone = true;
-          this.error = error3;
+          this.error = error4;
           if (this.catchCallback) {
-            this.catchCallback(error3);
+            this.catchCallback(error4);
           }
         });
       }
@@ -106128,8 +106471,8 @@ var init_index_node = __esm({
             this.nextCallback = (value) => {
               this.wrapSuccess(nextFn, value).next(resolve3, reject);
             };
-            this.catchCallback = (error3) => {
-              this.wrapFailure(catchFn, error3).next(resolve3, reject);
+            this.catchCallback = (error4) => {
+              this.wrapFailure(catchFn, error4).next(resolve3, reject);
             };
           });
         }
@@ -106158,11 +106501,11 @@ var init_index_node = __esm({
           return PersistencePromise.resolve(value);
         }
       }
-      wrapFailure(catchFn, error3) {
+      wrapFailure(catchFn, error4) {
         if (catchFn) {
-          return this.wrapUserFunction(() => catchFn(error3));
+          return this.wrapUserFunction(() => catchFn(error4));
         } else {
-          return PersistencePromise.reject(error3);
+          return PersistencePromise.reject(error4);
         }
       }
       static resolve(result) {
@@ -106170,9 +106513,9 @@ var init_index_node = __esm({
           resolve3(result);
         });
       }
-      static reject(error3) {
+      static reject(error4) {
         return new PersistencePromise((resolve3, reject) => {
-          reject(error3);
+          reject(error4);
         });
       }
       static waitFor(all) {
@@ -106376,8 +106719,8 @@ var init_index_node = __esm({
       static fromPath(path) {
         return new DocumentKey(ResourcePath.fromString(path));
       }
-      static fromName(name5) {
-        return new DocumentKey(ResourcePath.fromString(name5).popFirst(5));
+      static fromName(name7) {
+        return new DocumentKey(ResourcePath.fromString(name7).popFirst(5));
       }
       hasCollectionId(collectionId) {
         return this.path.length >= 2 && this.path.get(this.path.length - 2) === collectionId;
@@ -106480,41 +106823,41 @@ var init_index_node = __esm({
       }
     };
     MutableDocument = class {
-      constructor(key, documentType, version5, data, documentState) {
+      constructor(key, documentType, version7, data, documentState) {
         this.key = key;
         this.documentType = documentType;
-        this.version = version5;
+        this.version = version7;
         this.data = data;
         this.documentState = documentState;
       }
       static newInvalidDocument(documentKey) {
         return new MutableDocument(documentKey, 0, SnapshotVersion.min(), ObjectValue.empty(), 0);
       }
-      static newFoundDocument(documentKey, version5, value) {
-        return new MutableDocument(documentKey, 1, version5, value, 0);
+      static newFoundDocument(documentKey, version7, value) {
+        return new MutableDocument(documentKey, 1, version7, value, 0);
       }
-      static newNoDocument(documentKey, version5) {
-        return new MutableDocument(documentKey, 2, version5, ObjectValue.empty(), 0);
+      static newNoDocument(documentKey, version7) {
+        return new MutableDocument(documentKey, 2, version7, ObjectValue.empty(), 0);
       }
-      static newUnknownDocument(documentKey, version5) {
-        return new MutableDocument(documentKey, 3, version5, ObjectValue.empty(), 2);
+      static newUnknownDocument(documentKey, version7) {
+        return new MutableDocument(documentKey, 3, version7, ObjectValue.empty(), 2);
       }
-      convertToFoundDocument(version5, value) {
-        this.version = version5;
+      convertToFoundDocument(version7, value) {
+        this.version = version7;
         this.documentType = 1;
         this.data = value;
         this.documentState = 0;
         return this;
       }
-      convertToNoDocument(version5) {
-        this.version = version5;
+      convertToNoDocument(version7) {
+        this.version = version7;
         this.documentType = 2;
         this.data = ObjectValue.empty();
         this.documentState = 0;
         return this;
       }
-      convertToUnknownDocument(version5) {
-        this.version = version5;
+      convertToUnknownDocument(version7) {
+        this.version = version7;
         this.documentType = 3;
         this.data = ObjectValue.empty();
         this.documentState = 2;
@@ -107265,8 +107608,8 @@ var init_index_node = __esm({
       }
     };
     MutationResult = class {
-      constructor(version5, transformResults) {
-        this.version = version5;
+      constructor(version7, transformResults) {
+        this.version = version7;
         this.transformResults = transformResults;
       }
     };
@@ -107281,8 +107624,8 @@ var init_index_node = __esm({
       static exists(exists) {
         return new Precondition(void 0, exists);
       }
-      static updateTime(version5) {
-        return new Precondition(version5);
+      static updateTime(version7) {
+        return new Precondition(version7);
       }
       get isNone() {
         return this.updateTime === void 0 && this.exists === void 0;
@@ -107928,7 +108271,7 @@ var init_index_node = __esm({
         });
       }
       isEmpty() {
-        return isEmpty(this.inner);
+        return isEmpty2(this.inner);
       }
     };
     RemoteDocumentChangeBuffer = class {
@@ -108762,13 +109105,13 @@ var init_index_node = __esm({
       }
       addPendingMutation(batchId) {
       }
-      updateMutationState(batchId, state, error3) {
+      updateMutationState(batchId, state, error4) {
       }
       addLocalQueryTarget(targetId) {
         this.localState.addQueryTarget(targetId);
         return this.queryState[targetId] || "not-current";
       }
-      updateQueryState(targetId, state, error3) {
+      updateQueryState(targetId, state, error4) {
         this.queryState[targetId] = state;
       }
       removeLocalQueryTarget(targetId) {
@@ -108875,7 +109218,7 @@ var init_index_node = __esm({
       }
       invokeStreamingRPC(rpcName, path, request, token) {
         const results = [];
-        const responseDeferred = new Deferred2();
+        const responseDeferred = new Deferred3();
         logDebug(LOG_TAG$9, `RPC '${rpcName}' invoked (streaming) with request:`, request);
         const stub = this.ensureActiveStub();
         const metadata = createMetadata(this.databasePath, token, this.databaseInfo.appId);
@@ -109084,18 +109427,18 @@ var init_index_node = __esm({
           this.healthCheck = null;
         }
       }
-      async close(finalState, error3) {
+      async close(finalState, error4) {
         this.cancelIdleCheck();
         this.cancelHealthCheck();
         this.backoff.cancel();
         this.closeCount++;
         if (finalState !== 4) {
           this.backoff.reset();
-        } else if (error3 && error3.code === Code.RESOURCE_EXHAUSTED) {
-          logError(error3.toString());
+        } else if (error4 && error4.code === Code.RESOURCE_EXHAUSTED) {
+          logError(error4.toString());
           logError("Using maximum backoff delay to prevent overloading the backend.");
           this.backoff.resetToMax();
-        } else if (error3 && error3.code === Code.UNAUTHENTICATED && this.state !== 3) {
+        } else if (error4 && error4.code === Code.UNAUTHENTICATED && this.state !== 3) {
           this.credentialsProvider.invalidateToken();
         }
         if (this.stream !== null) {
@@ -109104,7 +109447,7 @@ var init_index_node = __esm({
           this.stream = null;
         }
         this.state = finalState;
-        await this.listener.onClose(error3);
+        await this.listener.onClose(error4);
       }
       tearDown() {
       }
@@ -109116,9 +109459,9 @@ var init_index_node = __esm({
           if (this.closeCount === closeCount) {
             this.startStream(token);
           }
-        }, (error3) => {
+        }, (error4) => {
           dispatchIfNotClosed(() => {
-            const rpcError = new FirestoreError(Code.UNKNOWN, "Fetching auth token failed: " + error3.message);
+            const rpcError = new FirestoreError(Code.UNKNOWN, "Fetching auth token failed: " + error4.message);
             return this.handleStreamClose(rpcError);
           });
         });
@@ -109138,9 +109481,9 @@ var init_index_node = __esm({
             return this.listener.onOpen();
           });
         });
-        this.stream.onClose((error3) => {
+        this.stream.onClose((error4) => {
           dispatchIfNotClosed(() => {
-            return this.handleStreamClose(error3);
+            return this.handleStreamClose(error4);
           });
         });
         this.stream.onMessage((msg) => {
@@ -109156,10 +109499,10 @@ var init_index_node = __esm({
           this.start();
         });
       }
-      handleStreamClose(error3) {
-        logDebug(LOG_TAG$7, `close with error: ${error3}`);
+      handleStreamClose(error4) {
+        logDebug(LOG_TAG$7, `close with error: ${error4}`);
         this.stream = null;
-        return this.close(4, error3);
+        return this.close(4, error4);
       }
       getCloseGuardedDispatcher(startCloseCount) {
         return (fn) => {
@@ -109273,14 +109616,14 @@ var init_index_node = __esm({
         this.verifyInitialized();
         return this.credentials.getToken().then((token) => {
           return this.connection.invokeRPC(rpcName, path, request, token);
-        }).catch((error3) => {
-          if (error3.name === "FirebaseError") {
-            if (error3.code === Code.UNAUTHENTICATED) {
+        }).catch((error4) => {
+          if (error4.name === "FirebaseError") {
+            if (error4.code === Code.UNAUTHENTICATED) {
               this.credentials.invalidateToken();
             }
-            throw error3;
+            throw error4;
           } else {
-            throw new FirestoreError(Code.UNKNOWN, error3.toString());
+            throw new FirestoreError(Code.UNKNOWN, error4.toString());
           }
         });
       }
@@ -109288,14 +109631,14 @@ var init_index_node = __esm({
         this.verifyInitialized();
         return this.credentials.getToken().then((token) => {
           return this.connection.invokeStreamingRPC(rpcName, path, request, token);
-        }).catch((error3) => {
-          if (error3.name === "FirebaseError") {
-            if (error3.code === Code.UNAUTHENTICATED) {
+        }).catch((error4) => {
+          if (error4.name === "FirebaseError") {
+            if (error4.code === Code.UNAUTHENTICATED) {
               this.credentials.invalidateToken();
             }
-            throw error3;
+            throw error4;
           } else {
-            throw new FirestoreError(Code.UNKNOWN, error3.toString());
+            throw new FirestoreError(Code.UNKNOWN, error4.toString());
           }
         });
       }
@@ -109326,14 +109669,14 @@ var init_index_node = __esm({
           });
         }
       }
-      handleWatchStreamFailure(error3) {
+      handleWatchStreamFailure(error4) {
         if (this.state === "Online") {
           this.setAndBroadcast("Unknown");
         } else {
           this.watchStreamFailures++;
           if (this.watchStreamFailures >= MAX_WATCH_STREAM_FAILURES) {
             this.clearOnlineStateTimer();
-            this.logClientOfflineWarningIfNecessary(`Connection failed ${MAX_WATCH_STREAM_FAILURES} times. Most recent error: ${error3.toString()}`);
+            this.logClientOfflineWarningIfNecessary(`Connection failed ${MAX_WATCH_STREAM_FAILURES} times. Most recent error: ${error4.toString()}`);
             this.setAndBroadcast("Offline");
           }
         }
@@ -109353,13 +109696,13 @@ var init_index_node = __esm({
         }
       }
       logClientOfflineWarningIfNecessary(details) {
-        const message = `Could not reach Cloud Firestore backend. ${details}
+        const message2 = `Could not reach Cloud Firestore backend. ${details}
 This typically indicates that your device does not have a healthy Internet connection at the moment. The client will operate in offline mode until it is able to successfully connect to the backend.`;
         if (this.shouldWarnClientIsOffline) {
-          logError(message);
+          logError(message2);
           this.shouldWarnClientIsOffline = false;
         } else {
-          logDebug(LOG_TAG$6, message);
+          logDebug(LOG_TAG$6, message2);
         }
       }
       clearOnlineStateTimer() {
@@ -109401,7 +109744,7 @@ This typically indicates that your device does not have a healthy Internet conne
         this.targetTimeMs = targetTimeMs;
         this.op = op;
         this.removalCallback = removalCallback;
-        this.deferred = new Deferred2();
+        this.deferred = new Deferred3();
         this.then = this.deferred.promise.then.bind(this.deferred.promise);
         this.deferred.promise.catch((err) => {
         });
@@ -109668,8 +110011,8 @@ This typically indicates that your device does not have a healthy Internet conne
         this.snap = snap;
         return raisedEvent;
       }
-      onError(error3) {
-        this.queryObserver.error(error3);
+      onError(error4) {
+        this.queryObserver.error(error4);
       }
       applyOnlineStateChange(onlineState) {
         this.onlineState = onlineState;
@@ -110032,21 +110375,21 @@ This typically indicates that your device does not have a healthy Internet conne
           this.scheduleEvent(this.observer.next, value);
         }
       }
-      error(error3) {
+      error(error4) {
         if (this.observer.error) {
-          this.scheduleEvent(this.observer.error, error3);
+          this.scheduleEvent(this.observer.error, error4);
         } else {
-          console.error("Uncaught Error in snapshot listener:", error3);
+          console.error("Uncaught Error in snapshot listener:", error4);
         }
       }
       mute() {
         this.muted = true;
       }
-      scheduleEvent(eventHandler, event) {
+      scheduleEvent(eventHandler, event2) {
         if (!this.muted) {
           setTimeout(() => {
             if (!this.muted) {
-              eventHandler(event);
+              eventHandler(event2);
             }
           }, 0);
         }
@@ -110088,7 +110431,7 @@ This typically indicates that your device does not have a healthy Internet conne
       }
       terminate() {
         this.asyncQueue.enterRestrictedMode();
-        const deferred = new Deferred2();
+        const deferred = new Deferred3();
         this.asyncQueue.enqueueAndForgetEvenWhileRestricted(async () => {
           try {
             if (this.onlineComponents) {
@@ -110325,7 +110668,7 @@ This typically indicates that your device does not have a healthy Internet conne
           return new Promise(() => {
           });
         }
-        const task = new Deferred2();
+        const task = new Deferred3();
         return this.enqueueInternal(() => {
           if (this._isShuttingDown && this.skipNonRestrictedTasks) {
             return Promise.resolve();
@@ -110362,12 +110705,12 @@ This typically indicates that your device does not have a healthy Internet conne
       enqueueInternal(op) {
         const newTail = this.tail.then(() => {
           this.operationInProgress = true;
-          return op().catch((error3) => {
-            this.failure = error3;
+          return op().catch((error4) => {
+            this.failure = error4;
             this.operationInProgress = false;
-            const message = getMessageOrStack(error3);
-            logError("INTERNAL UNHANDLED ERROR: ", message);
-            throw error3;
+            const message2 = getMessageOrStack(error4);
+            logError("INTERNAL UNHANDLED ERROR: ", message2);
+            throw error4;
           }).then((result) => {
             this.operationInProgress = false;
             return result;
@@ -110836,8 +111179,8 @@ This typically indicates that your device does not have a healthy Internet conne
         const normalizedValue = normalizeTimestamp(value);
         return new Timestamp(normalizedValue.seconds, normalizedValue.nanos);
       }
-      convertDocumentKey(name5, expectedDatabaseId) {
-        const resourcePath = ResourcePath.fromString(name5);
+      convertDocumentKey(name7, expectedDatabaseId) {
+        const resourcePath = ResourcePath.fromString(name7);
         hardAssert(isValidResourceName(resourcePath));
         const databaseId = new DatabaseId(resourcePath.get(1), resourcePath.get(3));
         const key = new DocumentKey(resourcePath.popFirst(5));
@@ -110904,8 +111247,8 @@ This typically indicates that your device does not have a healthy Internet conne
       convertBytes(bytes) {
         return new Bytes(bytes);
       }
-      convertReference(name5) {
-        const key = this.convertDocumentKey(name5, this.firestore._databaseId);
+      convertReference(name7) {
+        const key = this.convertDocumentKey(name7, this.firestore._databaseId);
         return new DocumentReference(this.firestore, null, key);
       }
     };
@@ -110913,19 +111256,19 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-74105f31.js
-var layout_74105f31_exports = {};
-__export(layout_74105f31_exports, {
+// .svelte-kit/output/server/chunks/__layout-79a7e30c.js
+var layout_79a7e30c_exports = {};
+__export(layout_79a7e30c_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_74105f31 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-74105f31.js"() {
+var init_layout_79a7e30c = __esm({
+  ".svelte-kit/output/server/chunks/__layout-79a7e30c.js"() {
     init_shims();
-    init_app_fe0490a9();
-    init_index_c327074d_39b2c669();
+    init_app_02afcaab();
+    init_index_c327074d_6185bbbf();
+    init_store_b4dcaf75();
     init_index_node();
-    init_store_46a11b64();
     import_cookie = __toModule(require_cookie());
     init_dist();
     import_stream3 = __toModule(require("stream"));
@@ -110938,51 +111281,51 @@ var init_layout_74105f31 = __esm({
       let $hasFetchedUser, $$unsubscribe_hasFetchedUser;
       $$unsubscribe_hasFetchedUser = subscribe(hasFetchedUser, (value) => $hasFetchedUser = value);
       $$unsubscribe_hasFetchedUser();
-      return `${!$hasFetchedUser ? `<h2>Fetching user data...</h2>` : `${slots.default ? slots.default({}) : `
+      return `${!$hasFetchedUser ? `<h3>Fetching user data...</h3>` : `${slots.default ? slots.default({}) : `
 
   `}`}`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/error-59e32339.js
-var error_59e32339_exports = {};
-__export(error_59e32339_exports, {
+// .svelte-kit/output/server/chunks/error-587e6256.js
+var error_587e6256_exports = {};
+__export(error_587e6256_exports, {
   default: () => Error2,
   load: () => load
 });
-function load({ error: error3, status }) {
-  return { props: { error: error3, status } };
+function load({ error: error4, status }) {
+  return { props: { error: error4, status } };
 }
 var import_cookie2, Error2;
-var init_error_59e32339 = __esm({
-  ".svelte-kit/output/server/chunks/error-59e32339.js"() {
+var init_error_587e6256 = __esm({
+  ".svelte-kit/output/server/chunks/error-587e6256.js"() {
     init_shims();
-    init_app_fe0490a9();
+    init_app_02afcaab();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { status } = $$props;
-      let { error: error3 } = $$props;
+      let { error: error4 } = $$props;
       if ($$props.status === void 0 && $$bindings.status && status !== void 0)
         $$bindings.status(status);
-      if ($$props.error === void 0 && $$bindings.error && error3 !== void 0)
-        $$bindings.error(error3);
+      if ($$props.error === void 0 && $$bindings.error && error4 !== void 0)
+        $$bindings.error(error4);
       return `<h1>${escape(status)}</h1>
 
-<pre>${escape(error3.message)}</pre>
+<pre>${escape(error4.message)}</pre>
 
 
 
-${error3.frame ? `<pre>${escape(error3.frame)}</pre>` : ``}
-${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
+${error4.frame ? `<pre>${escape(error4.frame)}</pre>` : ``}
+${error4.stack ? `<pre>${escape(error4.stack)}</pre>` : ``}`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/classAdderBuilder-90a388cb.js
+// .svelte-kit/output/server/chunks/classAdderBuilder-ba943ae0.js
 function classMap(classObj) {
-  return Object.entries(classObj).filter(([name5, value]) => name5 !== "" && value).map(([name5]) => name5).join(" ");
+  return Object.entries(classObj).filter(([name7, value]) => name7 !== "" && value).map(([name7]) => name7).join(" ");
 }
 function forwardEventsBuilder(component) {
   let $on;
@@ -111180,8 +111523,8 @@ function estimateScrollWidth(element) {
   document.documentElement.removeChild(clone4);
   return scrollWidth;
 }
-function Ripple(node, { ripple = true, surface = false, unbounded = false, disabled = false, color, active, rippleElement, eventTarget, activeTarget, addClass = (className) => node.classList.add(className), removeClass = (className) => node.classList.remove(className), addStyle = (name5, value) => node.style.setProperty(name5, value), initPromise = Promise.resolve() } = {}) {
-  let instance;
+function Ripple(node, { ripple = true, surface = false, unbounded = false, disabled = false, color, active, rippleElement, eventTarget, activeTarget, addClass = (className) => node.classList.add(className), removeClass = (className) => node.classList.remove(className), addStyle = (name7, value) => node.style.setProperty(name7, value), initPromise = Promise.resolve() } = {}) {
+  let instance2;
   let addLayoutListener = getContext("SMUI:addLayoutListener");
   let removeLayoutListener;
   let oldActive = active;
@@ -111201,16 +111544,16 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
         removeClass("smui-ripple-surface--secondary");
       }
     }
-    if (instance && oldActive !== active) {
+    if (instance2 && oldActive !== active) {
       oldActive = active;
       if (active) {
-        instance.activate();
+        instance2.activate();
       } else if (active === false) {
-        instance.deactivate();
+        instance2.deactivate();
       }
     }
-    if (ripple && !instance) {
-      instance = new MDCRippleFoundation({
+    if (ripple && !instance2) {
+      instance2 = new MDCRippleFoundation({
         addClass,
         browserSupportsCssVars: () => supportsCssVariables(window),
         computeBoundingRect: () => (rippleElement || node).getBoundingClientRect(),
@@ -111232,27 +111575,27 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
         updateCssVariable: addStyle
       });
       initPromise.then(() => {
-        if (instance) {
-          instance.init();
-          instance.setUnbounded(unbounded);
+        if (instance2) {
+          instance2.init();
+          instance2.setUnbounded(unbounded);
         }
       });
-    } else if (instance && !ripple) {
+    } else if (instance2 && !ripple) {
       initPromise.then(() => {
-        if (instance) {
-          instance.destroy();
-          instance = void 0;
+        if (instance2) {
+          instance2.destroy();
+          instance2 = void 0;
         }
       });
     }
-    if (instance && (oldEventTarget !== eventTarget || oldActiveTarget !== activeTarget)) {
+    if (instance2 && (oldEventTarget !== eventTarget || oldActiveTarget !== activeTarget)) {
       oldEventTarget = eventTarget;
       oldActiveTarget = activeTarget;
-      instance.destroy();
+      instance2.destroy();
       requestAnimationFrame(() => {
-        if (instance) {
-          instance.init();
-          instance.setUnbounded(unbounded);
+        if (instance2) {
+          instance2.init();
+          instance2.setUnbounded(unbounded);
         }
       });
     }
@@ -111265,8 +111608,8 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
     removeLayoutListener = addLayoutListener(layout);
   }
   function layout() {
-    if (instance) {
-      instance.layout();
+    if (instance2) {
+      instance2.layout();
     }
   }
   return {
@@ -111285,13 +111628,13 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
         removeClass,
         addStyle,
         initPromise
-      } = Object.assign({ ripple: true, surface: false, unbounded: false, disabled: false, color: void 0, active: void 0, rippleElement: void 0, eventTarget: void 0, activeTarget: void 0, addClass: (className) => node.classList.add(className), removeClass: (className) => node.classList.remove(className), addStyle: (name5, value) => node.style.setProperty(name5, value), initPromise: Promise.resolve() }, props));
+      } = Object.assign({ ripple: true, surface: false, unbounded: false, disabled: false, color: void 0, active: void 0, rippleElement: void 0, eventTarget: void 0, activeTarget: void 0, addClass: (className) => node.classList.add(className), removeClass: (className) => node.classList.remove(className), addStyle: (name7, value) => node.style.setProperty(name7, value), initPromise: Promise.resolve() }, props));
       handleProps();
     },
     destroy() {
-      if (instance) {
-        instance.destroy();
-        instance = void 0;
+      if (instance2) {
+        instance2.destroy();
+        instance2 = void 0;
         removeClass("mdc-ripple-surface");
         removeClass("smui-ripple-surface--primary");
         removeClass("smui-ripple-surface--secondary");
@@ -111315,11 +111658,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, Button_1, Object_1, internals, ClassAdder, defaults;
-var init_classAdderBuilder_90a388cb = __esm({
-  ".svelte-kit/output/server/chunks/classAdderBuilder-90a388cb.js"() {
+var init_classAdderBuilder_ba943ae0 = __esm({
+  ".svelte-kit/output/server/chunks/classAdderBuilder-ba943ae0.js"() {
     init_shims();
-    init_app_fe0490a9();
-    init_store_46a11b64();
+    init_app_02afcaab();
+    init_store_b4dcaf75();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112105,13 +112448,13 @@ var init_classAdderBuilder_90a388cb = __esm({
           internalClasses[className2] = false;
         }
       }
-      function addStyle(name5, value) {
-        if (internalStyles[name5] != value) {
+      function addStyle(name7, value) {
+        if (internalStyles[name7] != value) {
           if (value === "" || value == null) {
-            delete internalStyles[name5];
+            delete internalStyles[name7];
             internalStyles = internalStyles;
           } else {
-            internalStyles[name5] = value;
+            internalStyles[name7] = value;
           }
         }
       }
@@ -112189,7 +112532,7 @@ var init_classAdderBuilder_90a388cb = __esm({
             ...internalClasses
           })
         }, {
-          style: Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" ")
+          style: Object.entries(internalStyles).map(([name7, value]) => `${name7}: ${value};`).concat([style]).join(" ")
         }, actionProp, defaultProp, secondaryProp, { href }, $$restProps, { this: element }), {
           this: ($$value) => {
             element = $$value;
@@ -112221,11 +112564,11 @@ var init_classAdderBuilder_90a388cb = __esm({
       const contexts = internals.contexts;
       const props = internals.props;
       let { component = internals.component } = $$props;
-      Object.entries(internals.classMap).forEach(([name5, context2]) => {
+      Object.entries(internals.classMap).forEach(([name7, context2]) => {
         const store = getContext(context2);
         if (store && "subscribe" in store) {
           smuiClassUnsubscribes.push(store.subscribe((value) => {
-            smuiClassMap[name5] = value;
+            smuiClassMap[name7] = value;
           }));
         }
       });
@@ -112276,20 +112619,20 @@ var init_classAdderBuilder_90a388cb = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/navigation-d5543fac.js
+// .svelte-kit/output/server/chunks/navigation-a8983d54.js
 function exclude(obj, keys) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
   for (let i = 0; i < names.length; i++) {
-    const name5 = names[i];
-    const cashIndex = name5.indexOf("$");
-    if (cashIndex !== -1 && keys.indexOf(name5.substring(0, cashIndex + 1)) !== -1) {
+    const name7 = names[i];
+    const cashIndex = name7.indexOf("$");
+    if (cashIndex !== -1 && keys.indexOf(name7.substring(0, cashIndex + 1)) !== -1) {
       continue;
     }
-    if (keys.indexOf(name5) !== -1) {
+    if (keys.indexOf(name7) !== -1) {
       continue;
     }
-    newObj[name5] = obj[name5];
+    newObj[name7] = obj[name7];
   }
   return newObj;
 }
@@ -112297,25 +112640,25 @@ function prefixFilter(obj, prefix) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
   for (let i = 0; i < names.length; i++) {
-    const name5 = names[i];
-    if (name5.substring(0, prefix.length) === prefix) {
-      newObj[name5.substring(prefix.length)] = obj[name5];
+    const name7 = names[i];
+    if (name7.substring(0, prefix.length) === prefix) {
+      newObj[name7.substring(prefix.length)] = obj[name7];
     }
   }
   return newObj;
 }
-function guard(name5) {
+function guard(name7) {
   return () => {
-    throw new Error(`Cannot call ${name5}(...) on the server`);
+    throw new Error(`Cannot call ${name7}(...) on the server`);
   };
 }
 var ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto;
-var init_navigation_d5543fac = __esm({
-  ".svelte-kit/output/server/chunks/navigation-d5543fac.js"() {
+var init_navigation_a8983d54 = __esm({
+  ".svelte-kit/output/server/chunks/navigation-a8983d54.js"() {
     init_shims();
-    init_app_fe0490a9();
-    init_classAdderBuilder_90a388cb();
-    init_store_46a11b64();
+    init_app_02afcaab();
+    init_classAdderBuilder_ba943ae0();
+    init_store_b4dcaf75();
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
       let { key } = $$props;
@@ -112359,12 +112702,12 @@ var init_navigation_d5543fac = __esm({
       let { required = false } = $$props;
       let { wrapped = false } = $$props;
       let element;
-      let instance;
+      let instance2;
       let internalClasses = {};
       let internalStyles = {};
       let inputProps = (_a = getContext("SMUI:generic:input:props")) !== null && _a !== void 0 ? _a : {};
       function shake(shouldShake) {
-        instance.shake(shouldShake);
+        instance2.shake(shouldShake);
       }
       function float(shouldFloat) {
         floatAbove = shouldFloat;
@@ -112373,7 +112716,7 @@ var init_navigation_d5543fac = __esm({
         required = isRequired;
       }
       function getWidth() {
-        return instance.getWidth();
+        return instance2.getWidth();
       }
       function getElement() {
         return element;
@@ -112413,7 +112756,7 @@ var init_navigation_d5543fac = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name7, value]) => `${name7}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>` : `<label${spread([
@@ -112427,7 +112770,7 @@ var init_navigation_d5543fac = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name7, value]) => `${name7}: ${value};`).concat([style]).join(" "))
         },
         {
           for: escape_attribute_value(forId || (inputProps ? inputProps.id : void 0))
@@ -112452,17 +112795,17 @@ var init_navigation_d5543fac = __esm({
       let { style = "" } = $$props;
       let { active = false } = $$props;
       let element;
-      let instance;
+      let instance2;
       let internalClasses = {};
       let internalStyles = {};
       function activate() {
-        instance.activate();
+        instance2.activate();
       }
       function deactivate() {
-        instance.deactivate();
+        instance2.deactivate();
       }
       function setRippleCenter(xCoordinate) {
-        instance.setRippleCenter(xCoordinate);
+        instance2.setRippleCenter(xCoordinate);
       }
       function getElement() {
         return element;
@@ -112493,7 +112836,7 @@ var init_navigation_d5543fac = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name7, value]) => `${name7}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}></div>`;
@@ -112506,7 +112849,7 @@ var init_navigation_d5543fac = __esm({
       let { notched = false } = $$props;
       let { noLabel = false } = $$props;
       let element;
-      let instance;
+      let instance2;
       let internalClasses = {};
       let notchStyles = {};
       function removeClass(className2) {
@@ -112515,10 +112858,10 @@ var init_navigation_d5543fac = __esm({
         }
       }
       function notch(notchWidth) {
-        instance.notch(notchWidth);
+        instance2.notch(notchWidth);
       }
       function closeNotch() {
-        instance.closeNotch();
+        instance2.closeNotch();
       }
       function getElement() {
         return element;
@@ -112554,7 +112897,7 @@ var init_navigation_d5543fac = __esm({
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}><div class="${"mdc-notched-outline__leading"}"></div>
-  ${!noLabel ? `<div class="${"mdc-notched-outline__notch"}"${add_attribute("style", Object.entries(notchStyles).map(([name5, value]) => `${name5}: ${value};`).join(" "), 0)}>${slots.default ? slots.default({}) : ``}</div>` : ``}
+  ${!noLabel ? `<div class="${"mdc-notched-outline__notch"}"${add_attribute("style", Object.entries(notchStyles).map(([name7, value]) => `${name7}: ${value};`).join(" "), 0)}>${slots.default ? slots.default({}) : ``}</div>` : ``}
   <div class="${"mdc-notched-outline__trailing"}"></div>
 </div>`;
     });
@@ -112604,18 +112947,18 @@ var init_navigation_d5543fac = __esm({
       let element;
       let internalAttrs = {};
       let valueProp = {};
-      function getAttr(name5) {
+      function getAttr(name7) {
         var _a;
-        return name5 in internalAttrs ? (_a = internalAttrs[name5]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name5);
+        return name7 in internalAttrs ? (_a = internalAttrs[name7]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name7);
       }
-      function addAttr(name5, value2) {
-        if (internalAttrs[name5] !== value2) {
-          internalAttrs[name5] = value2;
+      function addAttr(name7, value2) {
+        if (internalAttrs[name7] !== value2) {
+          internalAttrs[name7] = value2;
         }
       }
-      function removeAttr(name5) {
-        if (!(name5 in internalAttrs) || internalAttrs[name5] != null) {
-          internalAttrs[name5] = void 0;
+      function removeAttr(name7) {
+        if (!(name7 in internalAttrs) || internalAttrs[name7] != null) {
+          internalAttrs[name7] = void 0;
         }
       }
       function focus() {
@@ -112707,18 +113050,18 @@ var init_navigation_d5543fac = __esm({
       let { resizable = true } = $$props;
       let element;
       let internalAttrs = {};
-      function getAttr(name5) {
+      function getAttr(name7) {
         var _a;
-        return name5 in internalAttrs ? (_a = internalAttrs[name5]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name5);
+        return name7 in internalAttrs ? (_a = internalAttrs[name7]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name7);
       }
-      function addAttr(name5, value2) {
-        if (internalAttrs[name5] !== value2) {
-          internalAttrs[name5] = value2;
+      function addAttr(name7, value2) {
+        if (internalAttrs[name7] !== value2) {
+          internalAttrs[name7] = value2;
         }
       }
-      function removeAttr(name5) {
-        if (!(name5 in internalAttrs) || internalAttrs[name5] != null) {
-          internalAttrs[name5] = void 0;
+      function removeAttr(name7) {
+        if (!(name7 in internalAttrs) || internalAttrs[name7] != null) {
+          internalAttrs[name7] = void 0;
         }
       }
       function focus() {
@@ -112949,7 +113292,7 @@ var init_navigation_d5543fac = __esm({
             }))
           },
           {
-            style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value2]) => `${name5}: ${value2};`).concat([style]).join(" "))
+            style: escape_attribute_value(Object.entries(internalStyles).map(([name7, value2]) => `${name7}: ${value2};`).concat([style]).join(" "))
           },
           {
             for: escape_attribute_value(void 0)
@@ -113067,7 +113410,7 @@ var init_navigation_d5543fac = __esm({
             }))
           },
           {
-            style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value2]) => `${name5}: ${value2};`).concat([style]).join(" "))
+            style: escape_attribute_value(Object.entries(internalStyles).map(([name7, value2]) => `${name7}: ${value2};`).concat([style]).join(" "))
           },
           escape_object(exclude($$restProps, ["input$", "label$", "ripple$", "outline$", "helperLine$"]))
         ])}${add_attribute("this", element, 0)}>${slots.label ? slots.label({}) : ``}
@@ -113095,25 +113438,21 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
   }
 });
 
-// .svelte-kit/output/server/chunks/index-24bcd3cd.js
-var index_24bcd3cd_exports = {};
-__export(index_24bcd3cd_exports, {
-  default: () => Routes,
-  load: () => load2
+// .svelte-kit/output/server/chunks/index-668aea5b.js
+var index_668aea5b_exports = {};
+__export(index_668aea5b_exports, {
+  default: () => Routes
 });
-function load2() {
-  return {};
-}
 var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, counter, HelperText, Routes;
-var init_index_24bcd3cd = __esm({
-  ".svelte-kit/output/server/chunks/index-24bcd3cd.js"() {
+var init_index_668aea5b = __esm({
+  ".svelte-kit/output/server/chunks/index-668aea5b.js"() {
     init_shims();
-    init_app_fe0490a9();
-    init_classAdderBuilder_90a388cb();
-    init_navigation_d5543fac();
-    init_index_c327074d_39b2c669();
+    init_app_02afcaab();
+    init_classAdderBuilder_ba943ae0();
+    init_navigation_a8983d54();
+    init_index_c327074d_6185bbbf();
+    init_store_b4dcaf75();
     init_index_node();
-    init_store_46a11b64();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
     import_stream4 = __toModule(require("stream"));
@@ -113222,27 +113561,2026 @@ var init_index_24bcd3cd = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-320bcac9.js
-var layout_320bcac9_exports = {};
-__export(layout_320bcac9_exports, {
+// .svelte-kit/output/server/chunks/__layout-11fb1e31.js
+var layout_11fb1e31_exports = {};
+__export(layout_11fb1e31_exports, {
   default: () => _layout2,
-  load: () => load3
+  load: () => load2
 });
 function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
   if (typeof Event !== "undefined" && element) {
-    const event = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
-    element === null || element === void 0 ? void 0 : element.dispatchEvent(event);
+    const event2 = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
+    element === null || element === void 0 ? void 0 : element.dispatchEvent(event2);
     if (duplicateEventForMDC && eventType.startsWith("SMUI")) {
       const duplicateEvent = new CustomEvent(eventType.replace(/^SMUI/g, () => "MDC"), Object.assign(Object.assign({}, eventInit), { detail }));
       element === null || element === void 0 ? void 0 : element.dispatchEvent(duplicateEvent);
       if (duplicateEvent.defaultPrevented) {
-        event.preventDefault();
+        event2.preventDefault();
       }
     }
-    return event;
+    return event2;
   }
 }
-function load3({ page }) {
+function HTTPParser(type) {
+  assert2.ok(type === HTTPParser.REQUEST || type === HTTPParser.RESPONSE || type === void 0);
+  if (type === void 0)
+    ;
+  else {
+    this.initialize(type);
+  }
+}
+function parseErrorCode(code) {
+  var err = new Error("Parse Error");
+  err.code = code;
+  return err;
+}
+function each2(obj, fn) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      fn(key, obj[key]);
+    }
+  }
+}
+function repoInfoNeedsQueryParam(repoInfo) {
+  return repoInfo.host !== repoInfo.internalHost || repoInfo.isCustomHost() || repoInfo.includeNamespaceInQueryParams;
+}
+function repoInfoConnectionURL(repoInfo, type, params) {
+  assert(typeof type === "string", "typeof type must == string");
+  assert(typeof params === "object", "typeof params must == object");
+  let connURL;
+  if (type === WEBSOCKET) {
+    connURL = (repoInfo.secure ? "wss://" : "ws://") + repoInfo.internalHost + "/.ws?";
+  } else if (type === LONG_POLLING) {
+    connURL = (repoInfo.secure ? "https://" : "http://") + repoInfo.internalHost + "/.lp?";
+  } else {
+    throw new Error("Unknown connection type: " + type);
+  }
+  if (repoInfoNeedsQueryParam(repoInfo)) {
+    params["ns"] = repoInfo.namespace;
+  }
+  const pairs = [];
+  each2(params, (key, value) => {
+    pairs.push(key + "=" + value);
+  });
+  return connURL + pairs.join("&");
+}
+function statsManagerGetCollection(repoInfo) {
+  const hashString = repoInfo.toString();
+  if (!collections[hashString]) {
+    collections[hashString] = new StatsCollection();
+  }
+  return collections[hashString];
+}
+function statsManagerGetOrCreateReporter(repoInfo, creatorFunction) {
+  const hashString = repoInfo.toString();
+  if (!reporters[hashString]) {
+    reporters[hashString] = creatorFunction();
+  }
+  return reporters[hashString];
+}
+function setSDKVersion2(version22) {
+  SDK_VERSION4 = version22;
+}
+function setWebSocketImpl(impl) {
+  WebSocketImpl = impl;
+}
+function newEmptyPath() {
+  return new Path("");
+}
+function pathGetFront(path) {
+  if (path.pieceNum_ >= path.pieces_.length) {
+    return null;
+  }
+  return path.pieces_[path.pieceNum_];
+}
+function pathGetLength(path) {
+  return path.pieces_.length - path.pieceNum_;
+}
+function pathPopFront(path) {
+  let pieceNum = path.pieceNum_;
+  if (pieceNum < path.pieces_.length) {
+    pieceNum++;
+  }
+  return new Path(path.pieces_, pieceNum);
+}
+function pathGetBack(path) {
+  if (path.pieceNum_ < path.pieces_.length) {
+    return path.pieces_[path.pieces_.length - 1];
+  }
+  return null;
+}
+function pathToUrlEncodedString(path) {
+  let pathString = "";
+  for (let i = path.pieceNum_; i < path.pieces_.length; i++) {
+    if (path.pieces_[i] !== "") {
+      pathString += "/" + encodeURIComponent(String(path.pieces_[i]));
+    }
+  }
+  return pathString || "/";
+}
+function pathSlice(path, begin = 0) {
+  return path.pieces_.slice(path.pieceNum_ + begin);
+}
+function pathParent(path) {
+  if (path.pieceNum_ >= path.pieces_.length) {
+    return null;
+  }
+  const pieces = [];
+  for (let i = path.pieceNum_; i < path.pieces_.length - 1; i++) {
+    pieces.push(path.pieces_[i]);
+  }
+  return new Path(pieces, 0);
+}
+function pathChild(path, childPathObj) {
+  const pieces = [];
+  for (let i = path.pieceNum_; i < path.pieces_.length; i++) {
+    pieces.push(path.pieces_[i]);
+  }
+  if (childPathObj instanceof Path) {
+    for (let i = childPathObj.pieceNum_; i < childPathObj.pieces_.length; i++) {
+      pieces.push(childPathObj.pieces_[i]);
+    }
+  } else {
+    const childPieces = childPathObj.split("/");
+    for (let i = 0; i < childPieces.length; i++) {
+      if (childPieces[i].length > 0) {
+        pieces.push(childPieces[i]);
+      }
+    }
+  }
+  return new Path(pieces, 0);
+}
+function pathIsEmpty(path) {
+  return path.pieceNum_ >= path.pieces_.length;
+}
+function newRelativePath(outerPath, innerPath) {
+  const outer = pathGetFront(outerPath), inner = pathGetFront(innerPath);
+  if (outer === null) {
+    return innerPath;
+  } else if (outer === inner) {
+    return newRelativePath(pathPopFront(outerPath), pathPopFront(innerPath));
+  } else {
+    throw new Error("INTERNAL ERROR: innerPath (" + innerPath + ") is not within outerPath (" + outerPath + ")");
+  }
+}
+function pathEquals(path, other) {
+  if (pathGetLength(path) !== pathGetLength(other)) {
+    return false;
+  }
+  for (let i = path.pieceNum_, j = other.pieceNum_; i <= path.pieces_.length; i++, j++) {
+    if (path.pieces_[i] !== other.pieces_[j]) {
+      return false;
+    }
+  }
+  return true;
+}
+function pathContains(path, other) {
+  let i = path.pieceNum_;
+  let j = other.pieceNum_;
+  if (pathGetLength(path) > pathGetLength(other)) {
+    return false;
+  }
+  while (i < path.pieces_.length) {
+    if (path.pieces_[i] !== other.pieces_[j]) {
+      return false;
+    }
+    ++i;
+    ++j;
+  }
+  return true;
+}
+function validationPathPush(validationPath, child) {
+  if (validationPath.parts_.length > 0) {
+    validationPath.byteLength_ += 1;
+  }
+  validationPath.parts_.push(child);
+  validationPath.byteLength_ += stringLength(child);
+  validationPathCheckValid(validationPath);
+}
+function validationPathPop(validationPath) {
+  const last = validationPath.parts_.pop();
+  validationPath.byteLength_ -= stringLength(last);
+  if (validationPath.parts_.length > 0) {
+    validationPath.byteLength_ -= 1;
+  }
+}
+function validationPathCheckValid(validationPath) {
+  if (validationPath.byteLength_ > MAX_PATH_LENGTH_BYTES) {
+    throw new Error(validationPath.errorPrefix_ + "has a key path longer than " + MAX_PATH_LENGTH_BYTES + " bytes (" + validationPath.byteLength_ + ").");
+  }
+  if (validationPath.parts_.length > MAX_PATH_DEPTH) {
+    throw new Error(validationPath.errorPrefix_ + "path specified exceeds the maximum depth that can be written (" + MAX_PATH_DEPTH + ") or object contains a cycle " + validationPathToErrorString(validationPath));
+  }
+}
+function validationPathToErrorString(validationPath) {
+  if (validationPath.parts_.length === 0) {
+    return "";
+  }
+  return "in property '" + validationPath.parts_.join(".") + "'";
+}
+function NAME_ONLY_COMPARATOR(left, right) {
+  return nameCompare(left.name, right.name);
+}
+function NAME_COMPARATOR(left, right) {
+  return nameCompare(left, right);
+}
+function setMaxNode$1(val) {
+  MAX_NODE$2 = val;
+}
+function setNodeFromJSON(val) {
+  nodeFromJSON$1 = val;
+}
+function setMaxNode(val) {
+  MAX_NODE$1 = val;
+}
+function nodeFromJSON(json, priority = null) {
+  if (json === null) {
+    return ChildrenNode.EMPTY_NODE;
+  }
+  if (typeof json === "object" && ".priority" in json) {
+    priority = json[".priority"];
+  }
+  assert(priority === null || typeof priority === "string" || typeof priority === "number" || typeof priority === "object" && ".sv" in priority, "Invalid priority type found: " + typeof priority);
+  if (typeof json === "object" && ".value" in json && json[".value"] !== null) {
+    json = json[".value"];
+  }
+  if (typeof json !== "object" || ".sv" in json) {
+    const jsonLeaf = json;
+    return new LeafNode(jsonLeaf, nodeFromJSON(priority));
+  }
+  if (!(json instanceof Array) && USE_HINZE) {
+    const children = [];
+    let childrenHavePriority = false;
+    const hinzeJsonObj = json;
+    each2(hinzeJsonObj, (key, child) => {
+      if (key.substring(0, 1) !== ".") {
+        const childNode = nodeFromJSON(child);
+        if (!childNode.isEmpty()) {
+          childrenHavePriority = childrenHavePriority || !childNode.getPriority().isEmpty();
+          children.push(new NamedNode(key, childNode));
+        }
+      }
+    });
+    if (children.length === 0) {
+      return ChildrenNode.EMPTY_NODE;
+    }
+    const childSet = buildChildSet(children, NAME_ONLY_COMPARATOR, (namedNode) => namedNode.name, NAME_COMPARATOR);
+    if (childrenHavePriority) {
+      const sortedChildSet = buildChildSet(children, PRIORITY_INDEX.getCompare());
+      return new ChildrenNode(childSet, nodeFromJSON(priority), new IndexMap({ ".priority": sortedChildSet }, { ".priority": PRIORITY_INDEX }));
+    } else {
+      return new ChildrenNode(childSet, nodeFromJSON(priority), IndexMap.Default);
+    }
+  } else {
+    let node = ChildrenNode.EMPTY_NODE;
+    each2(json, (key, childData) => {
+      if (contains(json, key)) {
+        if (key.substring(0, 1) !== ".") {
+          const childNode = nodeFromJSON(childData);
+          if (childNode.isLeafNode() || !childNode.isEmpty()) {
+            node = node.updateImmediateChild(key, childNode);
+          }
+        }
+      }
+    });
+    return node.updatePriority(nodeFromJSON(priority));
+  }
+}
+function changeValue(snapshotNode) {
+  return { type: "value", snapshotNode };
+}
+function changeChildAdded(childName, snapshotNode) {
+  return { type: "child_added", snapshotNode, childName };
+}
+function changeChildRemoved(childName, snapshotNode) {
+  return { type: "child_removed", snapshotNode, childName };
+}
+function changeChildChanged(childName, snapshotNode, oldSnap) {
+  return {
+    type: "child_changed",
+    snapshotNode,
+    childName,
+    oldSnap
+  };
+}
+function changeChildMoved(childName, snapshotNode) {
+  return { type: "child_moved", snapshotNode, childName };
+}
+function queryParamsToRestQueryStringParameters(queryParams) {
+  const qs = {};
+  if (queryParams.isDefault()) {
+    return qs;
+  }
+  let orderBy2;
+  if (queryParams.index_ === PRIORITY_INDEX) {
+    orderBy2 = "$priority";
+  } else if (queryParams.index_ === VALUE_INDEX) {
+    orderBy2 = "$value";
+  } else if (queryParams.index_ === KEY_INDEX) {
+    orderBy2 = "$key";
+  } else {
+    assert(queryParams.index_ instanceof PathIndex, "Unrecognized index type!");
+    orderBy2 = queryParams.index_.toString();
+  }
+  qs["orderBy"] = stringify(orderBy2);
+  if (queryParams.startSet_) {
+    qs["startAt"] = stringify(queryParams.indexStartValue_);
+    if (queryParams.startNameSet_) {
+      qs["startAt"] += "," + stringify(queryParams.indexStartName_);
+    }
+  }
+  if (queryParams.endSet_) {
+    qs["endAt"] = stringify(queryParams.indexEndValue_);
+    if (queryParams.endNameSet_) {
+      qs["endAt"] += "," + stringify(queryParams.indexEndName_);
+    }
+  }
+  if (queryParams.limitSet_) {
+    if (queryParams.isViewFromLeft()) {
+      qs["limitToFirst"] = queryParams.limit_;
+    } else {
+      qs["limitToLast"] = queryParams.limit_;
+    }
+  }
+  return qs;
+}
+function queryParamsGetQueryObject(queryParams) {
+  const obj = {};
+  if (queryParams.startSet_) {
+    obj["sp"] = queryParams.indexStartValue_;
+    if (queryParams.startNameSet_) {
+      obj["sn"] = queryParams.indexStartName_;
+    }
+  }
+  if (queryParams.endSet_) {
+    obj["ep"] = queryParams.indexEndValue_;
+    if (queryParams.endNameSet_) {
+      obj["en"] = queryParams.indexEndName_;
+    }
+  }
+  if (queryParams.limitSet_) {
+    obj["l"] = queryParams.limit_;
+    let viewFrom = queryParams.viewFrom_;
+    if (viewFrom === "") {
+      if (queryParams.isViewFromLeft()) {
+        viewFrom = "l";
+      } else {
+        viewFrom = "r";
+      }
+    }
+    obj["vf"] = viewFrom;
+  }
+  if (queryParams.index_ !== PRIORITY_INDEX) {
+    obj["i"] = queryParams.index_.toString();
+  }
+  return obj;
+}
+function newSparseSnapshotTree() {
+  return {
+    value: null,
+    children: new Map()
+  };
+}
+function sparseSnapshotTreeRemember(sparseSnapshotTree, path, data) {
+  if (pathIsEmpty(path)) {
+    sparseSnapshotTree.value = data;
+    sparseSnapshotTree.children.clear();
+  } else if (sparseSnapshotTree.value !== null) {
+    sparseSnapshotTree.value = sparseSnapshotTree.value.updateChild(path, data);
+  } else {
+    const childKey = pathGetFront(path);
+    if (!sparseSnapshotTree.children.has(childKey)) {
+      sparseSnapshotTree.children.set(childKey, newSparseSnapshotTree());
+    }
+    const child = sparseSnapshotTree.children.get(childKey);
+    path = pathPopFront(path);
+    sparseSnapshotTreeRemember(child, path, data);
+  }
+}
+function sparseSnapshotTreeForEachTree(sparseSnapshotTree, prefixPath, func) {
+  if (sparseSnapshotTree.value !== null) {
+    func(prefixPath, sparseSnapshotTree.value);
+  } else {
+    sparseSnapshotTreeForEachChild(sparseSnapshotTree, (key, tree) => {
+      const path = new Path(prefixPath.toString() + "/" + key);
+      sparseSnapshotTreeForEachTree(tree, path, func);
+    });
+  }
+}
+function sparseSnapshotTreeForEachChild(sparseSnapshotTree, func) {
+  sparseSnapshotTree.children.forEach((tree, key) => {
+    func(key, tree);
+  });
+}
+function newOperationSourceUser() {
+  return {
+    fromUser: true,
+    fromServer: false,
+    queryId: null,
+    tagged: false
+  };
+}
+function newOperationSourceServer() {
+  return {
+    fromUser: false,
+    fromServer: true,
+    queryId: null,
+    tagged: false
+  };
+}
+function newOperationSourceServerTaggedQuery(queryId) {
+  return {
+    fromUser: false,
+    fromServer: true,
+    queryId,
+    tagged: true
+  };
+}
+function eventGeneratorGenerateEventsForChanges(eventGenerator, changes, eventCache, eventRegistrations) {
+  const events2 = [];
+  const moves = [];
+  changes.forEach((change) => {
+    if (change.type === "child_changed" && eventGenerator.index_.indexedValueChanged(change.oldSnap, change.snapshotNode)) {
+      moves.push(changeChildMoved(change.childName, change.snapshotNode));
+    }
+  });
+  eventGeneratorGenerateEventsForType(eventGenerator, events2, "child_removed", changes, eventRegistrations, eventCache);
+  eventGeneratorGenerateEventsForType(eventGenerator, events2, "child_added", changes, eventRegistrations, eventCache);
+  eventGeneratorGenerateEventsForType(eventGenerator, events2, "child_moved", moves, eventRegistrations, eventCache);
+  eventGeneratorGenerateEventsForType(eventGenerator, events2, "child_changed", changes, eventRegistrations, eventCache);
+  eventGeneratorGenerateEventsForType(eventGenerator, events2, "value", changes, eventRegistrations, eventCache);
+  return events2;
+}
+function eventGeneratorGenerateEventsForType(eventGenerator, events2, eventType, changes, registrations, eventCache) {
+  const filteredChanges = changes.filter((change) => change.type === eventType);
+  filteredChanges.sort((a, b) => eventGeneratorCompareChanges(eventGenerator, a, b));
+  filteredChanges.forEach((change) => {
+    const materializedChange = eventGeneratorMaterializeSingleChange(eventGenerator, change, eventCache);
+    registrations.forEach((registration) => {
+      if (registration.respondsTo(change.type)) {
+        events2.push(registration.createEvent(materializedChange, eventGenerator.query_));
+      }
+    });
+  });
+}
+function eventGeneratorMaterializeSingleChange(eventGenerator, change, eventCache) {
+  if (change.type === "value" || change.type === "child_removed") {
+    return change;
+  } else {
+    change.prevName = eventCache.getPredecessorChildName(change.childName, change.snapshotNode, eventGenerator.index_);
+    return change;
+  }
+}
+function eventGeneratorCompareChanges(eventGenerator, a, b) {
+  if (a.childName == null || b.childName == null) {
+    throw assertionError("Should only compare child_ events.");
+  }
+  const aWrapped = new NamedNode(a.childName, a.snapshotNode);
+  const bWrapped = new NamedNode(b.childName, b.snapshotNode);
+  return eventGenerator.index_.compare(aWrapped, bWrapped);
+}
+function newViewCache(eventCache, serverCache) {
+  return { eventCache, serverCache };
+}
+function viewCacheUpdateEventSnap(viewCache, eventSnap, complete, filtered) {
+  return newViewCache(new CacheNode(eventSnap, complete, filtered), viewCache.serverCache);
+}
+function viewCacheUpdateServerSnap(viewCache, serverSnap, complete, filtered) {
+  return newViewCache(viewCache.eventCache, new CacheNode(serverSnap, complete, filtered));
+}
+function viewCacheGetCompleteEventSnap(viewCache) {
+  return viewCache.eventCache.isFullyInitialized() ? viewCache.eventCache.getNode() : null;
+}
+function viewCacheGetCompleteServerSnap(viewCache) {
+  return viewCache.serverCache.isFullyInitialized() ? viewCache.serverCache.getNode() : null;
+}
+function compoundWriteAddWrite(compoundWrite, path, node) {
+  if (pathIsEmpty(path)) {
+    return new CompoundWrite(new ImmutableTree(node));
+  } else {
+    const rootmost = compoundWrite.writeTree_.findRootMostValueAndPath(path);
+    if (rootmost != null) {
+      const rootMostPath = rootmost.path;
+      let value = rootmost.value;
+      const relativePath = newRelativePath(rootMostPath, path);
+      value = value.updateChild(relativePath, node);
+      return new CompoundWrite(compoundWrite.writeTree_.set(rootMostPath, value));
+    } else {
+      const subtree = new ImmutableTree(node);
+      const newWriteTree2 = compoundWrite.writeTree_.setTree(path, subtree);
+      return new CompoundWrite(newWriteTree2);
+    }
+  }
+}
+function compoundWriteAddWrites(compoundWrite, path, updates) {
+  let newWrite = compoundWrite;
+  each2(updates, (childKey, node) => {
+    newWrite = compoundWriteAddWrite(newWrite, pathChild(path, childKey), node);
+  });
+  return newWrite;
+}
+function compoundWriteRemoveWrite(compoundWrite, path) {
+  if (pathIsEmpty(path)) {
+    return CompoundWrite.empty();
+  } else {
+    const newWriteTree2 = compoundWrite.writeTree_.setTree(path, new ImmutableTree(null));
+    return new CompoundWrite(newWriteTree2);
+  }
+}
+function compoundWriteHasCompleteWrite(compoundWrite, path) {
+  return compoundWriteGetCompleteNode(compoundWrite, path) != null;
+}
+function compoundWriteGetCompleteNode(compoundWrite, path) {
+  const rootmost = compoundWrite.writeTree_.findRootMostValueAndPath(path);
+  if (rootmost != null) {
+    return compoundWrite.writeTree_.get(rootmost.path).getChild(newRelativePath(rootmost.path, path));
+  } else {
+    return null;
+  }
+}
+function compoundWriteGetCompleteChildren(compoundWrite) {
+  const children = [];
+  const node = compoundWrite.writeTree_.value;
+  if (node != null) {
+    if (!node.isLeafNode()) {
+      node.forEachChild(PRIORITY_INDEX, (childName, childNode) => {
+        children.push(new NamedNode(childName, childNode));
+      });
+    }
+  } else {
+    compoundWrite.writeTree_.children.inorderTraversal((childName, childTree) => {
+      if (childTree.value != null) {
+        children.push(new NamedNode(childName, childTree.value));
+      }
+    });
+  }
+  return children;
+}
+function compoundWriteChildCompoundWrite(compoundWrite, path) {
+  if (pathIsEmpty(path)) {
+    return compoundWrite;
+  } else {
+    const shadowingNode = compoundWriteGetCompleteNode(compoundWrite, path);
+    if (shadowingNode != null) {
+      return new CompoundWrite(new ImmutableTree(shadowingNode));
+    } else {
+      return new CompoundWrite(compoundWrite.writeTree_.subtree(path));
+    }
+  }
+}
+function compoundWriteIsEmpty(compoundWrite) {
+  return compoundWrite.writeTree_.isEmpty();
+}
+function compoundWriteApply(compoundWrite, node) {
+  return applySubtreeWrite(newEmptyPath(), compoundWrite.writeTree_, node);
+}
+function applySubtreeWrite(relativePath, writeTree, node) {
+  if (writeTree.value != null) {
+    return node.updateChild(relativePath, writeTree.value);
+  } else {
+    let priorityWrite = null;
+    writeTree.children.inorderTraversal((childKey, childTree) => {
+      if (childKey === ".priority") {
+        assert(childTree.value !== null, "Priority writes must always be leaf nodes");
+        priorityWrite = childTree.value;
+      } else {
+        node = applySubtreeWrite(pathChild(relativePath, childKey), childTree, node);
+      }
+    });
+    if (!node.getChild(relativePath).isEmpty() && priorityWrite !== null) {
+      node = node.updateChild(pathChild(relativePath, ".priority"), priorityWrite);
+    }
+    return node;
+  }
+}
+function writeTreeChildWrites(writeTree, path) {
+  return newWriteTreeRef(path, writeTree);
+}
+function writeTreeAddOverwrite(writeTree, path, snap, writeId, visible) {
+  assert(writeId > writeTree.lastWriteId, "Stacking an older write on top of newer ones");
+  if (visible === void 0) {
+    visible = true;
+  }
+  writeTree.allWrites.push({
+    path,
+    snap,
+    writeId,
+    visible
+  });
+  if (visible) {
+    writeTree.visibleWrites = compoundWriteAddWrite(writeTree.visibleWrites, path, snap);
+  }
+  writeTree.lastWriteId = writeId;
+}
+function writeTreeGetWrite(writeTree, writeId) {
+  for (let i = 0; i < writeTree.allWrites.length; i++) {
+    const record = writeTree.allWrites[i];
+    if (record.writeId === writeId) {
+      return record;
+    }
+  }
+  return null;
+}
+function writeTreeRemoveWrite(writeTree, writeId) {
+  const idx = writeTree.allWrites.findIndex((s2) => {
+    return s2.writeId === writeId;
+  });
+  assert(idx >= 0, "removeWrite called with nonexistent writeId.");
+  const writeToRemove = writeTree.allWrites[idx];
+  writeTree.allWrites.splice(idx, 1);
+  let removedWriteWasVisible = writeToRemove.visible;
+  let removedWriteOverlapsWithOtherWrites = false;
+  let i = writeTree.allWrites.length - 1;
+  while (removedWriteWasVisible && i >= 0) {
+    const currentWrite = writeTree.allWrites[i];
+    if (currentWrite.visible) {
+      if (i >= idx && writeTreeRecordContainsPath_(currentWrite, writeToRemove.path)) {
+        removedWriteWasVisible = false;
+      } else if (pathContains(writeToRemove.path, currentWrite.path)) {
+        removedWriteOverlapsWithOtherWrites = true;
+      }
+    }
+    i--;
+  }
+  if (!removedWriteWasVisible) {
+    return false;
+  } else if (removedWriteOverlapsWithOtherWrites) {
+    writeTreeResetTree_(writeTree);
+    return true;
+  } else {
+    if (writeToRemove.snap) {
+      writeTree.visibleWrites = compoundWriteRemoveWrite(writeTree.visibleWrites, writeToRemove.path);
+    } else {
+      const children = writeToRemove.children;
+      each2(children, (childName) => {
+        writeTree.visibleWrites = compoundWriteRemoveWrite(writeTree.visibleWrites, pathChild(writeToRemove.path, childName));
+      });
+    }
+    return true;
+  }
+}
+function writeTreeRecordContainsPath_(writeRecord, path) {
+  if (writeRecord.snap) {
+    return pathContains(writeRecord.path, path);
+  } else {
+    for (const childName in writeRecord.children) {
+      if (writeRecord.children.hasOwnProperty(childName) && pathContains(pathChild(writeRecord.path, childName), path)) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+function writeTreeResetTree_(writeTree) {
+  writeTree.visibleWrites = writeTreeLayerTree_(writeTree.allWrites, writeTreeDefaultFilter_, newEmptyPath());
+  if (writeTree.allWrites.length > 0) {
+    writeTree.lastWriteId = writeTree.allWrites[writeTree.allWrites.length - 1].writeId;
+  } else {
+    writeTree.lastWriteId = -1;
+  }
+}
+function writeTreeDefaultFilter_(write) {
+  return write.visible;
+}
+function writeTreeLayerTree_(writes, filter, treeRoot) {
+  let compoundWrite = CompoundWrite.empty();
+  for (let i = 0; i < writes.length; ++i) {
+    const write = writes[i];
+    if (filter(write)) {
+      const writePath = write.path;
+      let relativePath;
+      if (write.snap) {
+        if (pathContains(treeRoot, writePath)) {
+          relativePath = newRelativePath(treeRoot, writePath);
+          compoundWrite = compoundWriteAddWrite(compoundWrite, relativePath, write.snap);
+        } else if (pathContains(writePath, treeRoot)) {
+          relativePath = newRelativePath(writePath, treeRoot);
+          compoundWrite = compoundWriteAddWrite(compoundWrite, newEmptyPath(), write.snap.getChild(relativePath));
+        } else
+          ;
+      } else if (write.children) {
+        if (pathContains(treeRoot, writePath)) {
+          relativePath = newRelativePath(treeRoot, writePath);
+          compoundWrite = compoundWriteAddWrites(compoundWrite, relativePath, write.children);
+        } else if (pathContains(writePath, treeRoot)) {
+          relativePath = newRelativePath(writePath, treeRoot);
+          if (pathIsEmpty(relativePath)) {
+            compoundWrite = compoundWriteAddWrites(compoundWrite, newEmptyPath(), write.children);
+          } else {
+            const child = safeGet(write.children, pathGetFront(relativePath));
+            if (child) {
+              const deepNode = child.getChild(pathPopFront(relativePath));
+              compoundWrite = compoundWriteAddWrite(compoundWrite, newEmptyPath(), deepNode);
+            }
+          }
+        } else
+          ;
+      } else {
+        throw assertionError("WriteRecord should have .snap or .children");
+      }
+    }
+  }
+  return compoundWrite;
+}
+function writeTreeCalcCompleteEventCache(writeTree, treePath, completeServerCache, writeIdsToExclude, includeHiddenWrites) {
+  if (!writeIdsToExclude && !includeHiddenWrites) {
+    const shadowingNode = compoundWriteGetCompleteNode(writeTree.visibleWrites, treePath);
+    if (shadowingNode != null) {
+      return shadowingNode;
+    } else {
+      const subMerge = compoundWriteChildCompoundWrite(writeTree.visibleWrites, treePath);
+      if (compoundWriteIsEmpty(subMerge)) {
+        return completeServerCache;
+      } else if (completeServerCache == null && !compoundWriteHasCompleteWrite(subMerge, newEmptyPath())) {
+        return null;
+      } else {
+        const layeredCache = completeServerCache || ChildrenNode.EMPTY_NODE;
+        return compoundWriteApply(subMerge, layeredCache);
+      }
+    }
+  } else {
+    const merge = compoundWriteChildCompoundWrite(writeTree.visibleWrites, treePath);
+    if (!includeHiddenWrites && compoundWriteIsEmpty(merge)) {
+      return completeServerCache;
+    } else {
+      if (!includeHiddenWrites && completeServerCache == null && !compoundWriteHasCompleteWrite(merge, newEmptyPath())) {
+        return null;
+      } else {
+        const filter = function(write) {
+          return (write.visible || includeHiddenWrites) && (!writeIdsToExclude || !~writeIdsToExclude.indexOf(write.writeId)) && (pathContains(write.path, treePath) || pathContains(treePath, write.path));
+        };
+        const mergeAtPath = writeTreeLayerTree_(writeTree.allWrites, filter, treePath);
+        const layeredCache = completeServerCache || ChildrenNode.EMPTY_NODE;
+        return compoundWriteApply(mergeAtPath, layeredCache);
+      }
+    }
+  }
+}
+function writeTreeCalcCompleteEventChildren(writeTree, treePath, completeServerChildren) {
+  let completeChildren = ChildrenNode.EMPTY_NODE;
+  const topLevelSet = compoundWriteGetCompleteNode(writeTree.visibleWrites, treePath);
+  if (topLevelSet) {
+    if (!topLevelSet.isLeafNode()) {
+      topLevelSet.forEachChild(PRIORITY_INDEX, (childName, childSnap) => {
+        completeChildren = completeChildren.updateImmediateChild(childName, childSnap);
+      });
+    }
+    return completeChildren;
+  } else if (completeServerChildren) {
+    const merge = compoundWriteChildCompoundWrite(writeTree.visibleWrites, treePath);
+    completeServerChildren.forEachChild(PRIORITY_INDEX, (childName, childNode) => {
+      const node = compoundWriteApply(compoundWriteChildCompoundWrite(merge, new Path(childName)), childNode);
+      completeChildren = completeChildren.updateImmediateChild(childName, node);
+    });
+    compoundWriteGetCompleteChildren(merge).forEach((namedNode) => {
+      completeChildren = completeChildren.updateImmediateChild(namedNode.name, namedNode.node);
+    });
+    return completeChildren;
+  } else {
+    const merge = compoundWriteChildCompoundWrite(writeTree.visibleWrites, treePath);
+    compoundWriteGetCompleteChildren(merge).forEach((namedNode) => {
+      completeChildren = completeChildren.updateImmediateChild(namedNode.name, namedNode.node);
+    });
+    return completeChildren;
+  }
+}
+function writeTreeCalcEventCacheAfterServerOverwrite(writeTree, treePath, childPath, existingEventSnap, existingServerSnap) {
+  assert(existingEventSnap || existingServerSnap, "Either existingEventSnap or existingServerSnap must exist");
+  const path = pathChild(treePath, childPath);
+  if (compoundWriteHasCompleteWrite(writeTree.visibleWrites, path)) {
+    return null;
+  } else {
+    const childMerge = compoundWriteChildCompoundWrite(writeTree.visibleWrites, path);
+    if (compoundWriteIsEmpty(childMerge)) {
+      return existingServerSnap.getChild(childPath);
+    } else {
+      return compoundWriteApply(childMerge, existingServerSnap.getChild(childPath));
+    }
+  }
+}
+function writeTreeCalcCompleteChild(writeTree, treePath, childKey, existingServerSnap) {
+  const path = pathChild(treePath, childKey);
+  const shadowingNode = compoundWriteGetCompleteNode(writeTree.visibleWrites, path);
+  if (shadowingNode != null) {
+    return shadowingNode;
+  } else {
+    if (existingServerSnap.isCompleteForChild(childKey)) {
+      const childMerge = compoundWriteChildCompoundWrite(writeTree.visibleWrites, path);
+      return compoundWriteApply(childMerge, existingServerSnap.getNode().getImmediateChild(childKey));
+    } else {
+      return null;
+    }
+  }
+}
+function writeTreeShadowingWrite(writeTree, path) {
+  return compoundWriteGetCompleteNode(writeTree.visibleWrites, path);
+}
+function writeTreeCalcIndexedSlice(writeTree, treePath, completeServerData, startPost, count, reverse, index) {
+  let toIterate;
+  const merge = compoundWriteChildCompoundWrite(writeTree.visibleWrites, treePath);
+  const shadowingNode = compoundWriteGetCompleteNode(merge, newEmptyPath());
+  if (shadowingNode != null) {
+    toIterate = shadowingNode;
+  } else if (completeServerData != null) {
+    toIterate = compoundWriteApply(merge, completeServerData);
+  } else {
+    return [];
+  }
+  toIterate = toIterate.withIndex(index);
+  if (!toIterate.isEmpty() && !toIterate.isLeafNode()) {
+    const nodes = [];
+    const cmp = index.getCompare();
+    const iter = reverse ? toIterate.getReverseIteratorFrom(startPost, index) : toIterate.getIteratorFrom(startPost, index);
+    let next = iter.getNext();
+    while (next && nodes.length < count) {
+      if (cmp(next, startPost) !== 0) {
+        nodes.push(next);
+      }
+      next = iter.getNext();
+    }
+    return nodes;
+  } else {
+    return [];
+  }
+}
+function newWriteTree() {
+  return {
+    visibleWrites: CompoundWrite.empty(),
+    allWrites: [],
+    lastWriteId: -1
+  };
+}
+function writeTreeRefCalcCompleteEventCache(writeTreeRef, completeServerCache, writeIdsToExclude, includeHiddenWrites) {
+  return writeTreeCalcCompleteEventCache(writeTreeRef.writeTree, writeTreeRef.treePath, completeServerCache, writeIdsToExclude, includeHiddenWrites);
+}
+function writeTreeRefCalcCompleteEventChildren(writeTreeRef, completeServerChildren) {
+  return writeTreeCalcCompleteEventChildren(writeTreeRef.writeTree, writeTreeRef.treePath, completeServerChildren);
+}
+function writeTreeRefCalcEventCacheAfterServerOverwrite(writeTreeRef, path, existingEventSnap, existingServerSnap) {
+  return writeTreeCalcEventCacheAfterServerOverwrite(writeTreeRef.writeTree, writeTreeRef.treePath, path, existingEventSnap, existingServerSnap);
+}
+function writeTreeRefShadowingWrite(writeTreeRef, path) {
+  return writeTreeShadowingWrite(writeTreeRef.writeTree, pathChild(writeTreeRef.treePath, path));
+}
+function writeTreeRefCalcIndexedSlice(writeTreeRef, completeServerData, startPost, count, reverse, index) {
+  return writeTreeCalcIndexedSlice(writeTreeRef.writeTree, writeTreeRef.treePath, completeServerData, startPost, count, reverse, index);
+}
+function writeTreeRefCalcCompleteChild(writeTreeRef, childKey, existingServerCache) {
+  return writeTreeCalcCompleteChild(writeTreeRef.writeTree, writeTreeRef.treePath, childKey, existingServerCache);
+}
+function writeTreeRefChild(writeTreeRef, childName) {
+  return newWriteTreeRef(pathChild(writeTreeRef.treePath, childName), writeTreeRef.writeTree);
+}
+function newWriteTreeRef(path, writeTree) {
+  return {
+    treePath: path,
+    writeTree
+  };
+}
+function viewProcessorAssertIndexed(viewProcessor, viewCache) {
+  assert(viewCache.eventCache.getNode().isIndexed(viewProcessor.filter.getIndex()), "Event snap not indexed");
+  assert(viewCache.serverCache.getNode().isIndexed(viewProcessor.filter.getIndex()), "Server snap not indexed");
+}
+function viewProcessorApplyOperation(viewProcessor, oldViewCache, operation, writesCache, completeCache) {
+  const accumulator = new ChildChangeAccumulator();
+  let newViewCache2, filterServerNode;
+  if (operation.type === OperationType.OVERWRITE) {
+    const overwrite = operation;
+    if (overwrite.source.fromUser) {
+      newViewCache2 = viewProcessorApplyUserOverwrite(viewProcessor, oldViewCache, overwrite.path, overwrite.snap, writesCache, completeCache, accumulator);
+    } else {
+      assert(overwrite.source.fromServer, "Unknown source.");
+      filterServerNode = overwrite.source.tagged || oldViewCache.serverCache.isFiltered() && !pathIsEmpty(overwrite.path);
+      newViewCache2 = viewProcessorApplyServerOverwrite(viewProcessor, oldViewCache, overwrite.path, overwrite.snap, writesCache, completeCache, filterServerNode, accumulator);
+    }
+  } else if (operation.type === OperationType.MERGE) {
+    const merge = operation;
+    if (merge.source.fromUser) {
+      newViewCache2 = viewProcessorApplyUserMerge(viewProcessor, oldViewCache, merge.path, merge.children, writesCache, completeCache, accumulator);
+    } else {
+      assert(merge.source.fromServer, "Unknown source.");
+      filterServerNode = merge.source.tagged || oldViewCache.serverCache.isFiltered();
+      newViewCache2 = viewProcessorApplyServerMerge(viewProcessor, oldViewCache, merge.path, merge.children, writesCache, completeCache, filterServerNode, accumulator);
+    }
+  } else if (operation.type === OperationType.ACK_USER_WRITE) {
+    const ackUserWrite = operation;
+    if (!ackUserWrite.revert) {
+      newViewCache2 = viewProcessorAckUserWrite(viewProcessor, oldViewCache, ackUserWrite.path, ackUserWrite.affectedTree, writesCache, completeCache, accumulator);
+    } else {
+      newViewCache2 = viewProcessorRevertUserWrite(viewProcessor, oldViewCache, ackUserWrite.path, writesCache, completeCache, accumulator);
+    }
+  } else if (operation.type === OperationType.LISTEN_COMPLETE) {
+    newViewCache2 = viewProcessorListenComplete(viewProcessor, oldViewCache, operation.path, writesCache, accumulator);
+  } else {
+    throw assertionError("Unknown operation type: " + operation.type);
+  }
+  const changes = accumulator.getChanges();
+  viewProcessorMaybeAddValueEvent(oldViewCache, newViewCache2, changes);
+  return { viewCache: newViewCache2, changes };
+}
+function viewProcessorMaybeAddValueEvent(oldViewCache, newViewCache2, accumulator) {
+  const eventSnap = newViewCache2.eventCache;
+  if (eventSnap.isFullyInitialized()) {
+    const isLeafOrEmpty = eventSnap.getNode().isLeafNode() || eventSnap.getNode().isEmpty();
+    const oldCompleteSnap = viewCacheGetCompleteEventSnap(oldViewCache);
+    if (accumulator.length > 0 || !oldViewCache.eventCache.isFullyInitialized() || isLeafOrEmpty && !eventSnap.getNode().equals(oldCompleteSnap) || !eventSnap.getNode().getPriority().equals(oldCompleteSnap.getPriority())) {
+      accumulator.push(changeValue(viewCacheGetCompleteEventSnap(newViewCache2)));
+    }
+  }
+}
+function viewProcessorGenerateEventCacheAfterServerEvent(viewProcessor, viewCache, changePath, writesCache, source, accumulator) {
+  const oldEventSnap = viewCache.eventCache;
+  if (writeTreeRefShadowingWrite(writesCache, changePath) != null) {
+    return viewCache;
+  } else {
+    let newEventCache, serverNode;
+    if (pathIsEmpty(changePath)) {
+      assert(viewCache.serverCache.isFullyInitialized(), "If change path is empty, we must have complete server data");
+      if (viewCache.serverCache.isFiltered()) {
+        const serverCache = viewCacheGetCompleteServerSnap(viewCache);
+        const completeChildren = serverCache instanceof ChildrenNode ? serverCache : ChildrenNode.EMPTY_NODE;
+        const completeEventChildren = writeTreeRefCalcCompleteEventChildren(writesCache, completeChildren);
+        newEventCache = viewProcessor.filter.updateFullNode(viewCache.eventCache.getNode(), completeEventChildren, accumulator);
+      } else {
+        const completeNode = writeTreeRefCalcCompleteEventCache(writesCache, viewCacheGetCompleteServerSnap(viewCache));
+        newEventCache = viewProcessor.filter.updateFullNode(viewCache.eventCache.getNode(), completeNode, accumulator);
+      }
+    } else {
+      const childKey = pathGetFront(changePath);
+      if (childKey === ".priority") {
+        assert(pathGetLength(changePath) === 1, "Can't have a priority with additional path components");
+        const oldEventNode = oldEventSnap.getNode();
+        serverNode = viewCache.serverCache.getNode();
+        const updatedPriority = writeTreeRefCalcEventCacheAfterServerOverwrite(writesCache, changePath, oldEventNode, serverNode);
+        if (updatedPriority != null) {
+          newEventCache = viewProcessor.filter.updatePriority(oldEventNode, updatedPriority);
+        } else {
+          newEventCache = oldEventSnap.getNode();
+        }
+      } else {
+        const childChangePath = pathPopFront(changePath);
+        let newEventChild;
+        if (oldEventSnap.isCompleteForChild(childKey)) {
+          serverNode = viewCache.serverCache.getNode();
+          const eventChildUpdate = writeTreeRefCalcEventCacheAfterServerOverwrite(writesCache, changePath, oldEventSnap.getNode(), serverNode);
+          if (eventChildUpdate != null) {
+            newEventChild = oldEventSnap.getNode().getImmediateChild(childKey).updateChild(childChangePath, eventChildUpdate);
+          } else {
+            newEventChild = oldEventSnap.getNode().getImmediateChild(childKey);
+          }
+        } else {
+          newEventChild = writeTreeRefCalcCompleteChild(writesCache, childKey, viewCache.serverCache);
+        }
+        if (newEventChild != null) {
+          newEventCache = viewProcessor.filter.updateChild(oldEventSnap.getNode(), childKey, newEventChild, childChangePath, source, accumulator);
+        } else {
+          newEventCache = oldEventSnap.getNode();
+        }
+      }
+    }
+    return viewCacheUpdateEventSnap(viewCache, newEventCache, oldEventSnap.isFullyInitialized() || pathIsEmpty(changePath), viewProcessor.filter.filtersNodes());
+  }
+}
+function viewProcessorApplyServerOverwrite(viewProcessor, oldViewCache, changePath, changedSnap, writesCache, completeCache, filterServerNode, accumulator) {
+  const oldServerSnap = oldViewCache.serverCache;
+  let newServerCache;
+  const serverFilter = filterServerNode ? viewProcessor.filter : viewProcessor.filter.getIndexedFilter();
+  if (pathIsEmpty(changePath)) {
+    newServerCache = serverFilter.updateFullNode(oldServerSnap.getNode(), changedSnap, null);
+  } else if (serverFilter.filtersNodes() && !oldServerSnap.isFiltered()) {
+    const newServerNode = oldServerSnap.getNode().updateChild(changePath, changedSnap);
+    newServerCache = serverFilter.updateFullNode(oldServerSnap.getNode(), newServerNode, null);
+  } else {
+    const childKey = pathGetFront(changePath);
+    if (!oldServerSnap.isCompleteForPath(changePath) && pathGetLength(changePath) > 1) {
+      return oldViewCache;
+    }
+    const childChangePath = pathPopFront(changePath);
+    const childNode = oldServerSnap.getNode().getImmediateChild(childKey);
+    const newChildNode = childNode.updateChild(childChangePath, changedSnap);
+    if (childKey === ".priority") {
+      newServerCache = serverFilter.updatePriority(oldServerSnap.getNode(), newChildNode);
+    } else {
+      newServerCache = serverFilter.updateChild(oldServerSnap.getNode(), childKey, newChildNode, childChangePath, NO_COMPLETE_CHILD_SOURCE, null);
+    }
+  }
+  const newViewCache2 = viewCacheUpdateServerSnap(oldViewCache, newServerCache, oldServerSnap.isFullyInitialized() || pathIsEmpty(changePath), serverFilter.filtersNodes());
+  const source = new WriteTreeCompleteChildSource(writesCache, newViewCache2, completeCache);
+  return viewProcessorGenerateEventCacheAfterServerEvent(viewProcessor, newViewCache2, changePath, writesCache, source, accumulator);
+}
+function viewProcessorApplyUserOverwrite(viewProcessor, oldViewCache, changePath, changedSnap, writesCache, completeCache, accumulator) {
+  const oldEventSnap = oldViewCache.eventCache;
+  let newViewCache2, newEventCache;
+  const source = new WriteTreeCompleteChildSource(writesCache, oldViewCache, completeCache);
+  if (pathIsEmpty(changePath)) {
+    newEventCache = viewProcessor.filter.updateFullNode(oldViewCache.eventCache.getNode(), changedSnap, accumulator);
+    newViewCache2 = viewCacheUpdateEventSnap(oldViewCache, newEventCache, true, viewProcessor.filter.filtersNodes());
+  } else {
+    const childKey = pathGetFront(changePath);
+    if (childKey === ".priority") {
+      newEventCache = viewProcessor.filter.updatePriority(oldViewCache.eventCache.getNode(), changedSnap);
+      newViewCache2 = viewCacheUpdateEventSnap(oldViewCache, newEventCache, oldEventSnap.isFullyInitialized(), oldEventSnap.isFiltered());
+    } else {
+      const childChangePath = pathPopFront(changePath);
+      const oldChild = oldEventSnap.getNode().getImmediateChild(childKey);
+      let newChild;
+      if (pathIsEmpty(childChangePath)) {
+        newChild = changedSnap;
+      } else {
+        const childNode = source.getCompleteChild(childKey);
+        if (childNode != null) {
+          if (pathGetBack(childChangePath) === ".priority" && childNode.getChild(pathParent(childChangePath)).isEmpty()) {
+            newChild = childNode;
+          } else {
+            newChild = childNode.updateChild(childChangePath, changedSnap);
+          }
+        } else {
+          newChild = ChildrenNode.EMPTY_NODE;
+        }
+      }
+      if (!oldChild.equals(newChild)) {
+        const newEventSnap = viewProcessor.filter.updateChild(oldEventSnap.getNode(), childKey, newChild, childChangePath, source, accumulator);
+        newViewCache2 = viewCacheUpdateEventSnap(oldViewCache, newEventSnap, oldEventSnap.isFullyInitialized(), viewProcessor.filter.filtersNodes());
+      } else {
+        newViewCache2 = oldViewCache;
+      }
+    }
+  }
+  return newViewCache2;
+}
+function viewProcessorCacheHasChild(viewCache, childKey) {
+  return viewCache.eventCache.isCompleteForChild(childKey);
+}
+function viewProcessorApplyUserMerge(viewProcessor, viewCache, path, changedChildren, writesCache, serverCache, accumulator) {
+  let curViewCache = viewCache;
+  changedChildren.foreach((relativePath, childNode) => {
+    const writePath = pathChild(path, relativePath);
+    if (viewProcessorCacheHasChild(viewCache, pathGetFront(writePath))) {
+      curViewCache = viewProcessorApplyUserOverwrite(viewProcessor, curViewCache, writePath, childNode, writesCache, serverCache, accumulator);
+    }
+  });
+  changedChildren.foreach((relativePath, childNode) => {
+    const writePath = pathChild(path, relativePath);
+    if (!viewProcessorCacheHasChild(viewCache, pathGetFront(writePath))) {
+      curViewCache = viewProcessorApplyUserOverwrite(viewProcessor, curViewCache, writePath, childNode, writesCache, serverCache, accumulator);
+    }
+  });
+  return curViewCache;
+}
+function viewProcessorApplyMerge(viewProcessor, node, merge) {
+  merge.foreach((relativePath, childNode) => {
+    node = node.updateChild(relativePath, childNode);
+  });
+  return node;
+}
+function viewProcessorApplyServerMerge(viewProcessor, viewCache, path, changedChildren, writesCache, serverCache, filterServerNode, accumulator) {
+  if (viewCache.serverCache.getNode().isEmpty() && !viewCache.serverCache.isFullyInitialized()) {
+    return viewCache;
+  }
+  let curViewCache = viewCache;
+  let viewMergeTree;
+  if (pathIsEmpty(path)) {
+    viewMergeTree = changedChildren;
+  } else {
+    viewMergeTree = new ImmutableTree(null).setTree(path, changedChildren);
+  }
+  const serverNode = viewCache.serverCache.getNode();
+  viewMergeTree.children.inorderTraversal((childKey, childTree) => {
+    if (serverNode.hasChild(childKey)) {
+      const serverChild = viewCache.serverCache.getNode().getImmediateChild(childKey);
+      const newChild = viewProcessorApplyMerge(viewProcessor, serverChild, childTree);
+      curViewCache = viewProcessorApplyServerOverwrite(viewProcessor, curViewCache, new Path(childKey), newChild, writesCache, serverCache, filterServerNode, accumulator);
+    }
+  });
+  viewMergeTree.children.inorderTraversal((childKey, childMergeTree) => {
+    const isUnknownDeepMerge = !viewCache.serverCache.isCompleteForChild(childKey) && childMergeTree.value === void 0;
+    if (!serverNode.hasChild(childKey) && !isUnknownDeepMerge) {
+      const serverChild = viewCache.serverCache.getNode().getImmediateChild(childKey);
+      const newChild = viewProcessorApplyMerge(viewProcessor, serverChild, childMergeTree);
+      curViewCache = viewProcessorApplyServerOverwrite(viewProcessor, curViewCache, new Path(childKey), newChild, writesCache, serverCache, filterServerNode, accumulator);
+    }
+  });
+  return curViewCache;
+}
+function viewProcessorAckUserWrite(viewProcessor, viewCache, ackPath, affectedTree, writesCache, completeCache, accumulator) {
+  if (writeTreeRefShadowingWrite(writesCache, ackPath) != null) {
+    return viewCache;
+  }
+  const filterServerNode = viewCache.serverCache.isFiltered();
+  const serverCache = viewCache.serverCache;
+  if (affectedTree.value != null) {
+    if (pathIsEmpty(ackPath) && serverCache.isFullyInitialized() || serverCache.isCompleteForPath(ackPath)) {
+      return viewProcessorApplyServerOverwrite(viewProcessor, viewCache, ackPath, serverCache.getNode().getChild(ackPath), writesCache, completeCache, filterServerNode, accumulator);
+    } else if (pathIsEmpty(ackPath)) {
+      let changedChildren = new ImmutableTree(null);
+      serverCache.getNode().forEachChild(KEY_INDEX, (name22, node) => {
+        changedChildren = changedChildren.set(new Path(name22), node);
+      });
+      return viewProcessorApplyServerMerge(viewProcessor, viewCache, ackPath, changedChildren, writesCache, completeCache, filterServerNode, accumulator);
+    } else {
+      return viewCache;
+    }
+  } else {
+    let changedChildren = new ImmutableTree(null);
+    affectedTree.foreach((mergePath, value) => {
+      const serverCachePath = pathChild(ackPath, mergePath);
+      if (serverCache.isCompleteForPath(serverCachePath)) {
+        changedChildren = changedChildren.set(mergePath, serverCache.getNode().getChild(serverCachePath));
+      }
+    });
+    return viewProcessorApplyServerMerge(viewProcessor, viewCache, ackPath, changedChildren, writesCache, completeCache, filterServerNode, accumulator);
+  }
+}
+function viewProcessorListenComplete(viewProcessor, viewCache, path, writesCache, accumulator) {
+  const oldServerNode = viewCache.serverCache;
+  const newViewCache2 = viewCacheUpdateServerSnap(viewCache, oldServerNode.getNode(), oldServerNode.isFullyInitialized() || pathIsEmpty(path), oldServerNode.isFiltered());
+  return viewProcessorGenerateEventCacheAfterServerEvent(viewProcessor, newViewCache2, path, writesCache, NO_COMPLETE_CHILD_SOURCE, accumulator);
+}
+function viewProcessorRevertUserWrite(viewProcessor, viewCache, path, writesCache, completeServerCache, accumulator) {
+  let complete;
+  if (writeTreeRefShadowingWrite(writesCache, path) != null) {
+    return viewCache;
+  } else {
+    const source = new WriteTreeCompleteChildSource(writesCache, viewCache, completeServerCache);
+    const oldEventCache = viewCache.eventCache.getNode();
+    let newEventCache;
+    if (pathIsEmpty(path) || pathGetFront(path) === ".priority") {
+      let newNode;
+      if (viewCache.serverCache.isFullyInitialized()) {
+        newNode = writeTreeRefCalcCompleteEventCache(writesCache, viewCacheGetCompleteServerSnap(viewCache));
+      } else {
+        const serverChildren = viewCache.serverCache.getNode();
+        assert(serverChildren instanceof ChildrenNode, "serverChildren would be complete if leaf node");
+        newNode = writeTreeRefCalcCompleteEventChildren(writesCache, serverChildren);
+      }
+      newNode = newNode;
+      newEventCache = viewProcessor.filter.updateFullNode(oldEventCache, newNode, accumulator);
+    } else {
+      const childKey = pathGetFront(path);
+      let newChild = writeTreeRefCalcCompleteChild(writesCache, childKey, viewCache.serverCache);
+      if (newChild == null && viewCache.serverCache.isCompleteForChild(childKey)) {
+        newChild = oldEventCache.getImmediateChild(childKey);
+      }
+      if (newChild != null) {
+        newEventCache = viewProcessor.filter.updateChild(oldEventCache, childKey, newChild, pathPopFront(path), source, accumulator);
+      } else if (viewCache.eventCache.getNode().hasChild(childKey)) {
+        newEventCache = viewProcessor.filter.updateChild(oldEventCache, childKey, ChildrenNode.EMPTY_NODE, pathPopFront(path), source, accumulator);
+      } else {
+        newEventCache = oldEventCache;
+      }
+      if (newEventCache.isEmpty() && viewCache.serverCache.isFullyInitialized()) {
+        complete = writeTreeRefCalcCompleteEventCache(writesCache, viewCacheGetCompleteServerSnap(viewCache));
+        if (complete.isLeafNode()) {
+          newEventCache = viewProcessor.filter.updateFullNode(newEventCache, complete, accumulator);
+        }
+      }
+    }
+    complete = viewCache.serverCache.isFullyInitialized() || writeTreeRefShadowingWrite(writesCache, newEmptyPath()) != null;
+    return viewCacheUpdateEventSnap(viewCache, newEventCache, complete, viewProcessor.filter.filtersNodes());
+  }
+}
+function viewGetCompleteServerCache(view, path) {
+  const cache = viewCacheGetCompleteServerSnap(view.viewCache_);
+  if (cache) {
+    if (view.query._queryParams.loadsAllData() || !pathIsEmpty(path) && !cache.getImmediateChild(pathGetFront(path)).isEmpty()) {
+      return cache.getChild(path);
+    }
+  }
+  return null;
+}
+function viewApplyOperation(view, operation, writesCache, completeServerCache) {
+  if (operation.type === OperationType.MERGE && operation.source.queryId !== null) {
+    assert(viewCacheGetCompleteServerSnap(view.viewCache_), "We should always have a full cache before handling merges");
+    assert(viewCacheGetCompleteEventSnap(view.viewCache_), "Missing event cache, even though we have a server cache");
+  }
+  const oldViewCache = view.viewCache_;
+  const result = viewProcessorApplyOperation(view.processor_, oldViewCache, operation, writesCache, completeServerCache);
+  viewProcessorAssertIndexed(view.processor_, result.viewCache);
+  assert(result.viewCache.serverCache.isFullyInitialized() || !oldViewCache.serverCache.isFullyInitialized(), "Once a server snap is complete, it should never go back");
+  view.viewCache_ = result.viewCache;
+  return viewGenerateEventsForChanges_(view, result.changes, result.viewCache.eventCache.getNode(), null);
+}
+function viewGenerateEventsForChanges_(view, changes, eventCache, eventRegistration) {
+  const registrations = eventRegistration ? [eventRegistration] : view.eventRegistrations_;
+  return eventGeneratorGenerateEventsForChanges(view.eventGenerator_, changes, eventCache, registrations);
+}
+function syncPointSetReferenceConstructor(val) {
+  assert(!referenceConstructor$1, "__referenceConstructor has already been defined");
+  referenceConstructor$1 = val;
+}
+function syncPointApplyOperation(syncPoint, operation, writesCache, optCompleteServerCache) {
+  const queryId = operation.source.queryId;
+  if (queryId !== null) {
+    const view = syncPoint.views.get(queryId);
+    assert(view != null, "SyncTree gave us an op for an invalid query.");
+    return viewApplyOperation(view, operation, writesCache, optCompleteServerCache);
+  } else {
+    let events2 = [];
+    for (const view of syncPoint.views.values()) {
+      events2 = events2.concat(viewApplyOperation(view, operation, writesCache, optCompleteServerCache));
+    }
+    return events2;
+  }
+}
+function syncPointGetCompleteServerCache(syncPoint, path) {
+  let serverCache = null;
+  for (const view of syncPoint.views.values()) {
+    serverCache = serverCache || viewGetCompleteServerCache(view, path);
+  }
+  return serverCache;
+}
+function syncTreeSetReferenceConstructor(val) {
+  assert(!referenceConstructor, "__referenceConstructor has already been defined");
+  referenceConstructor = val;
+}
+function syncTreeApplyUserOverwrite(syncTree, path, newData, writeId, visible) {
+  writeTreeAddOverwrite(syncTree.pendingWriteTree_, path, newData, writeId, visible);
+  if (!visible) {
+    return [];
+  } else {
+    return syncTreeApplyOperationToSyncPoints_(syncTree, new Overwrite(newOperationSourceUser(), path, newData));
+  }
+}
+function syncTreeAckUserWrite(syncTree, writeId, revert = false) {
+  const write = writeTreeGetWrite(syncTree.pendingWriteTree_, writeId);
+  const needToReevaluate = writeTreeRemoveWrite(syncTree.pendingWriteTree_, writeId);
+  if (!needToReevaluate) {
+    return [];
+  } else {
+    let affectedTree = new ImmutableTree(null);
+    if (write.snap != null) {
+      affectedTree = affectedTree.set(newEmptyPath(), true);
+    } else {
+      each2(write.children, (pathString) => {
+        affectedTree = affectedTree.set(new Path(pathString), true);
+      });
+    }
+    return syncTreeApplyOperationToSyncPoints_(syncTree, new AckUserWrite(write.path, affectedTree, revert));
+  }
+}
+function syncTreeApplyServerOverwrite(syncTree, path, newData) {
+  return syncTreeApplyOperationToSyncPoints_(syncTree, new Overwrite(newOperationSourceServer(), path, newData));
+}
+function syncTreeApplyServerMerge(syncTree, path, changedChildren) {
+  const changeTree = ImmutableTree.fromObject(changedChildren);
+  return syncTreeApplyOperationToSyncPoints_(syncTree, new Merge(newOperationSourceServer(), path, changeTree));
+}
+function syncTreeApplyTaggedQueryOverwrite(syncTree, path, snap, tag) {
+  const queryKey = syncTreeQueryKeyForTag_(syncTree, tag);
+  if (queryKey != null) {
+    const r = syncTreeParseQueryKey_(queryKey);
+    const queryPath = r.path, queryId = r.queryId;
+    const relativePath = newRelativePath(queryPath, path);
+    const op = new Overwrite(newOperationSourceServerTaggedQuery(queryId), relativePath, snap);
+    return syncTreeApplyTaggedOperation_(syncTree, queryPath, op);
+  } else {
+    return [];
+  }
+}
+function syncTreeApplyTaggedQueryMerge(syncTree, path, changedChildren, tag) {
+  const queryKey = syncTreeQueryKeyForTag_(syncTree, tag);
+  if (queryKey) {
+    const r = syncTreeParseQueryKey_(queryKey);
+    const queryPath = r.path, queryId = r.queryId;
+    const relativePath = newRelativePath(queryPath, path);
+    const changeTree = ImmutableTree.fromObject(changedChildren);
+    const op = new Merge(newOperationSourceServerTaggedQuery(queryId), relativePath, changeTree);
+    return syncTreeApplyTaggedOperation_(syncTree, queryPath, op);
+  } else {
+    return [];
+  }
+}
+function syncTreeCalcCompleteEventCache(syncTree, path, writeIdsToExclude) {
+  const includeHiddenSets = true;
+  const writeTree = syncTree.pendingWriteTree_;
+  const serverCache = syncTree.syncPointTree_.findOnPath(path, (pathSoFar, syncPoint) => {
+    const relativePath = newRelativePath(pathSoFar, path);
+    const serverCache2 = syncPointGetCompleteServerCache(syncPoint, relativePath);
+    if (serverCache2) {
+      return serverCache2;
+    }
+  });
+  return writeTreeCalcCompleteEventCache(writeTree, path, serverCache, writeIdsToExclude, includeHiddenSets);
+}
+function syncTreeApplyOperationToSyncPoints_(syncTree, operation) {
+  return syncTreeApplyOperationHelper_(operation, syncTree.syncPointTree_, null, writeTreeChildWrites(syncTree.pendingWriteTree_, newEmptyPath()));
+}
+function syncTreeApplyOperationHelper_(operation, syncPointTree, serverCache, writesCache) {
+  if (pathIsEmpty(operation.path)) {
+    return syncTreeApplyOperationDescendantsHelper_(operation, syncPointTree, serverCache, writesCache);
+  } else {
+    const syncPoint = syncPointTree.get(newEmptyPath());
+    if (serverCache == null && syncPoint != null) {
+      serverCache = syncPointGetCompleteServerCache(syncPoint, newEmptyPath());
+    }
+    let events2 = [];
+    const childName = pathGetFront(operation.path);
+    const childOperation = operation.operationForChild(childName);
+    const childTree = syncPointTree.children.get(childName);
+    if (childTree && childOperation) {
+      const childServerCache = serverCache ? serverCache.getImmediateChild(childName) : null;
+      const childWritesCache = writeTreeRefChild(writesCache, childName);
+      events2 = events2.concat(syncTreeApplyOperationHelper_(childOperation, childTree, childServerCache, childWritesCache));
+    }
+    if (syncPoint) {
+      events2 = events2.concat(syncPointApplyOperation(syncPoint, operation, writesCache, serverCache));
+    }
+    return events2;
+  }
+}
+function syncTreeApplyOperationDescendantsHelper_(operation, syncPointTree, serverCache, writesCache) {
+  const syncPoint = syncPointTree.get(newEmptyPath());
+  if (serverCache == null && syncPoint != null) {
+    serverCache = syncPointGetCompleteServerCache(syncPoint, newEmptyPath());
+  }
+  let events2 = [];
+  syncPointTree.children.inorderTraversal((childName, childTree) => {
+    const childServerCache = serverCache ? serverCache.getImmediateChild(childName) : null;
+    const childWritesCache = writeTreeRefChild(writesCache, childName);
+    const childOperation = operation.operationForChild(childName);
+    if (childOperation) {
+      events2 = events2.concat(syncTreeApplyOperationDescendantsHelper_(childOperation, childTree, childServerCache, childWritesCache));
+    }
+  });
+  if (syncPoint) {
+    events2 = events2.concat(syncPointApplyOperation(syncPoint, operation, writesCache, serverCache));
+  }
+  return events2;
+}
+function syncTreeQueryKeyForTag_(syncTree, tag) {
+  return syncTree.tagToQueryMap.get(tag);
+}
+function syncTreeParseQueryKey_(queryKey) {
+  const splitIndex = queryKey.indexOf("$");
+  assert(splitIndex !== -1 && splitIndex < queryKey.length - 1, "Bad queryKey.");
+  return {
+    queryId: queryKey.substr(splitIndex + 1),
+    path: new Path(queryKey.substr(0, splitIndex))
+  };
+}
+function syncTreeApplyTaggedOperation_(syncTree, queryPath, operation) {
+  const syncPoint = syncTree.syncPointTree_.get(queryPath);
+  assert(syncPoint, "Missing sync point for query tag that we're tracking");
+  const writesCache = writeTreeChildWrites(syncTree.pendingWriteTree_, queryPath);
+  return syncPointApplyOperation(syncPoint, operation, writesCache, null);
+}
+function resolveDeferredValue(node, existingVal, serverValues) {
+  const rawPri = node.getPriority().val();
+  const priority = resolveDeferredLeafValue(rawPri, existingVal.getImmediateChild(".priority"), serverValues);
+  let newNode;
+  if (node.isLeafNode()) {
+    const leafNode = node;
+    const value = resolveDeferredLeafValue(leafNode.getValue(), existingVal, serverValues);
+    if (value !== leafNode.getValue() || priority !== leafNode.getPriority().val()) {
+      return new LeafNode(value, nodeFromJSON(priority));
+    } else {
+      return node;
+    }
+  } else {
+    const childrenNode = node;
+    newNode = childrenNode;
+    if (priority !== childrenNode.getPriority().val()) {
+      newNode = newNode.updatePriority(new LeafNode(priority));
+    }
+    childrenNode.forEachChild(PRIORITY_INDEX, (childName, childNode) => {
+      const newChildNode = resolveDeferredValue(childNode, existingVal.getImmediateChild(childName), serverValues);
+      if (newChildNode !== childNode) {
+        newNode = newNode.updateImmediateChild(childName, newChildNode);
+      }
+    });
+    return newNode;
+  }
+}
+function treeSubTree(tree, pathObj) {
+  let path = pathObj instanceof Path ? pathObj : new Path(pathObj);
+  let child = tree, next = pathGetFront(path);
+  while (next !== null) {
+    const childNode = safeGet(child.node.children, next) || {
+      children: {},
+      childCount: 0
+    };
+    child = new Tree(next, child, childNode);
+    path = pathPopFront(path);
+    next = pathGetFront(path);
+  }
+  return child;
+}
+function treeGetValue(tree) {
+  return tree.node.value;
+}
+function treeSetValue(tree, value) {
+  tree.node.value = value;
+  treeUpdateParents(tree);
+}
+function treeHasChildren(tree) {
+  return tree.node.childCount > 0;
+}
+function treeIsEmpty(tree) {
+  return treeGetValue(tree) === void 0 && !treeHasChildren(tree);
+}
+function treeForEachChild(tree, action) {
+  each2(tree.node.children, (child, childTree) => {
+    action(new Tree(child, tree, childTree));
+  });
+}
+function treeForEachDescendant(tree, action, includeSelf, childrenFirst) {
+  if (includeSelf && !childrenFirst) {
+    action(tree);
+  }
+  treeForEachChild(tree, (child) => {
+    treeForEachDescendant(child, action, true, childrenFirst);
+  });
+  if (includeSelf && childrenFirst) {
+    action(tree);
+  }
+}
+function treeForEachAncestor(tree, action, includeSelf) {
+  let node = includeSelf ? tree : tree.parent;
+  while (node !== null) {
+    if (action(node)) {
+      return true;
+    }
+    node = node.parent;
+  }
+  return false;
+}
+function treeGetPath(tree) {
+  return new Path(tree.parent === null ? tree.name : treeGetPath(tree.parent) + "/" + tree.name);
+}
+function treeUpdateParents(tree) {
+  if (tree.parent !== null) {
+    treeUpdateChild(tree.parent, tree.name, tree);
+  }
+}
+function treeUpdateChild(tree, childName, child) {
+  const childEmpty = treeIsEmpty(child);
+  const childExists = contains(tree.node.children, childName);
+  if (childEmpty && childExists) {
+    delete tree.node.children[childName];
+    tree.node.childCount--;
+    treeUpdateParents(tree);
+  } else if (!childEmpty && !childExists) {
+    tree.node.children[childName] = child.node;
+    tree.node.childCount++;
+    treeUpdateParents(tree);
+  }
+}
+function eventQueueQueueEvents(eventQueue, eventDataList) {
+  let currList = null;
+  for (let i = 0; i < eventDataList.length; i++) {
+    const data = eventDataList[i];
+    const path = data.getPath();
+    if (currList !== null && !pathEquals(path, currList.path)) {
+      eventQueue.eventLists_.push(currList);
+      currList = null;
+    }
+    if (currList === null) {
+      currList = { events: [], path };
+    }
+    currList.events.push(data);
+  }
+  if (currList) {
+    eventQueue.eventLists_.push(currList);
+  }
+}
+function eventQueueRaiseEventsForChangedPath(eventQueue, changedPath, eventDataList) {
+  eventQueueQueueEvents(eventQueue, eventDataList);
+  eventQueueRaiseQueuedEventsMatchingPredicate(eventQueue, (eventPath) => pathContains(eventPath, changedPath) || pathContains(changedPath, eventPath));
+}
+function eventQueueRaiseQueuedEventsMatchingPredicate(eventQueue, predicate) {
+  eventQueue.recursionDepth_++;
+  let sentAll = true;
+  for (let i = 0; i < eventQueue.eventLists_.length; i++) {
+    const eventList = eventQueue.eventLists_[i];
+    if (eventList) {
+      const eventPath = eventList.path;
+      if (predicate(eventPath)) {
+        eventListRaise(eventQueue.eventLists_[i]);
+        eventQueue.eventLists_[i] = null;
+      } else {
+        sentAll = false;
+      }
+    }
+  }
+  if (sentAll) {
+    eventQueue.eventLists_ = [];
+  }
+  eventQueue.recursionDepth_--;
+}
+function eventListRaise(eventList) {
+  for (let i = 0; i < eventList.events.length; i++) {
+    const eventData = eventList.events[i];
+    if (eventData !== null) {
+      eventList.events[i] = null;
+      const eventFn = eventData.getEventRunner();
+      if (logger3) {
+        log("event: " + eventData.toString());
+      }
+      exceptionGuard(eventFn);
+    }
+  }
+}
+function repoStart(repo, appId, authOverride) {
+  repo.stats_ = statsManagerGetCollection(repo.repoInfo_);
+  if (repo.forceRestClient_ || beingCrawled()) {
+    repo.server_ = new ReadonlyRestClient(repo.repoInfo_, (pathString, data, isMerge, tag) => {
+      repoOnDataUpdate(repo, pathString, data, isMerge, tag);
+    }, repo.authTokenProvider_, repo.appCheckProvider_);
+    setTimeout(() => repoOnConnectStatus(repo, true), 0);
+  } else {
+    if (typeof authOverride !== "undefined" && authOverride !== null) {
+      if (typeof authOverride !== "object") {
+        throw new Error("Only objects are supported for option databaseAuthVariableOverride");
+      }
+      try {
+        stringify(authOverride);
+      } catch (e) {
+        throw new Error("Invalid authOverride provided: " + e);
+      }
+    }
+    repo.persistentConnection_ = new PersistentConnection(repo.repoInfo_, appId, (pathString, data, isMerge, tag) => {
+      repoOnDataUpdate(repo, pathString, data, isMerge, tag);
+    }, (connectStatus) => {
+      repoOnConnectStatus(repo, connectStatus);
+    }, (updates) => {
+      repoOnServerInfoUpdate(repo, updates);
+    }, repo.authTokenProvider_, repo.appCheckProvider_, authOverride);
+    repo.server_ = repo.persistentConnection_;
+  }
+  repo.authTokenProvider_.addTokenChangeListener((token) => {
+    repo.server_.refreshAuthToken(token);
+  });
+  repo.appCheckProvider_.addTokenChangeListener((result) => {
+    repo.server_.refreshAppCheckToken(result.token);
+  });
+  repo.statsReporter_ = statsManagerGetOrCreateReporter(repo.repoInfo_, () => new StatsReporter(repo.stats_, repo.server_));
+  repo.infoData_ = new SnapshotHolder();
+  repo.infoSyncTree_ = new SyncTree({
+    startListening: (query2, tag, currentHashFn, onComplete) => {
+      let infoEvents = [];
+      const node = repo.infoData_.getNode(query2._path);
+      if (!node.isEmpty()) {
+        infoEvents = syncTreeApplyServerOverwrite(repo.infoSyncTree_, query2._path, node);
+        setTimeout(() => {
+          onComplete("ok");
+        }, 0);
+      }
+      return infoEvents;
+    },
+    stopListening: () => {
+    }
+  });
+  repoUpdateInfo(repo, "connected", false);
+  repo.serverSyncTree_ = new SyncTree({
+    startListening: (query2, tag, currentHashFn, onComplete) => {
+      repo.server_.listen(query2, currentHashFn, tag, (status, data) => {
+        const events2 = onComplete(status, data);
+        eventQueueRaiseEventsForChangedPath(repo.eventQueue_, query2._path, events2);
+      });
+      return [];
+    },
+    stopListening: (query2, tag) => {
+      repo.server_.unlisten(query2, tag);
+    }
+  });
+}
+function repoServerTime(repo) {
+  const offsetNode = repo.infoData_.getNode(new Path(".info/serverTimeOffset"));
+  const offset = offsetNode.val() || 0;
+  return new Date().getTime() + offset;
+}
+function repoGenerateServerValues(repo) {
+  return generateWithValues({
+    timestamp: repoServerTime(repo)
+  });
+}
+function repoOnDataUpdate(repo, pathString, data, isMerge, tag) {
+  repo.dataUpdateCount++;
+  const path = new Path(pathString);
+  data = repo.interceptServerDataCallback_ ? repo.interceptServerDataCallback_(pathString, data) : data;
+  let events2 = [];
+  if (tag) {
+    if (isMerge) {
+      const taggedChildren = map(data, (raw) => nodeFromJSON(raw));
+      events2 = syncTreeApplyTaggedQueryMerge(repo.serverSyncTree_, path, taggedChildren, tag);
+    } else {
+      const taggedSnap = nodeFromJSON(data);
+      events2 = syncTreeApplyTaggedQueryOverwrite(repo.serverSyncTree_, path, taggedSnap, tag);
+    }
+  } else if (isMerge) {
+    const changedChildren = map(data, (raw) => nodeFromJSON(raw));
+    events2 = syncTreeApplyServerMerge(repo.serverSyncTree_, path, changedChildren);
+  } else {
+    const snap = nodeFromJSON(data);
+    events2 = syncTreeApplyServerOverwrite(repo.serverSyncTree_, path, snap);
+  }
+  let affectedPath = path;
+  if (events2.length > 0) {
+    affectedPath = repoRerunTransactions(repo, path);
+  }
+  eventQueueRaiseEventsForChangedPath(repo.eventQueue_, affectedPath, events2);
+}
+function repoOnConnectStatus(repo, connectStatus) {
+  repoUpdateInfo(repo, "connected", connectStatus);
+  if (connectStatus === false) {
+    repoRunOnDisconnectEvents(repo);
+  }
+}
+function repoOnServerInfoUpdate(repo, updates) {
+  each2(updates, (key, value) => {
+    repoUpdateInfo(repo, key, value);
+  });
+}
+function repoUpdateInfo(repo, pathString, value) {
+  const path = new Path("/.info/" + pathString);
+  const newNode = nodeFromJSON(value);
+  repo.infoData_.updateSnapshot(path, newNode);
+  const events2 = syncTreeApplyServerOverwrite(repo.infoSyncTree_, path, newNode);
+  eventQueueRaiseEventsForChangedPath(repo.eventQueue_, path, events2);
+}
+function repoGetNextWriteId(repo) {
+  return repo.nextWriteId_++;
+}
+function repoRunOnDisconnectEvents(repo) {
+  repoLog(repo, "onDisconnectEvents");
+  const serverValues = repoGenerateServerValues(repo);
+  const resolvedOnDisconnectTree = newSparseSnapshotTree();
+  sparseSnapshotTreeForEachTree(repo.onDisconnect_, newEmptyPath(), (path, node) => {
+    const resolved = resolveDeferredValueTree(path, node, repo.serverSyncTree_, serverValues);
+    sparseSnapshotTreeRemember(resolvedOnDisconnectTree, path, resolved);
+  });
+  let events2 = [];
+  sparseSnapshotTreeForEachTree(resolvedOnDisconnectTree, newEmptyPath(), (path, snap) => {
+    events2 = events2.concat(syncTreeApplyServerOverwrite(repo.serverSyncTree_, path, snap));
+    const affectedPath = repoAbortTransactions(repo, path);
+    repoRerunTransactions(repo, affectedPath);
+  });
+  repo.onDisconnect_ = newSparseSnapshotTree();
+  eventQueueRaiseEventsForChangedPath(repo.eventQueue_, newEmptyPath(), events2);
+}
+function repoInterrupt(repo) {
+  if (repo.persistentConnection_) {
+    repo.persistentConnection_.interrupt(INTERRUPT_REASON);
+  }
+}
+function repoLog(repo, ...varArgs) {
+  let prefix = "";
+  if (repo.persistentConnection_) {
+    prefix = repo.persistentConnection_.id + ":";
+  }
+  log(prefix, ...varArgs);
+}
+function repoGetLatestState(repo, path, excludeSets) {
+  return syncTreeCalcCompleteEventCache(repo.serverSyncTree_, path, excludeSets) || ChildrenNode.EMPTY_NODE;
+}
+function repoSendReadyTransactions(repo, node = repo.transactionQueueTree_) {
+  if (!node) {
+    repoPruneCompletedTransactionsBelowNode(repo, node);
+  }
+  if (treeGetValue(node)) {
+    const queue = repoBuildTransactionQueue(repo, node);
+    assert(queue.length > 0, "Sending zero length transaction queue");
+    const allRun = queue.every((transaction) => transaction.status === 0);
+    if (allRun) {
+      repoSendTransactionQueue(repo, treeGetPath(node), queue);
+    }
+  } else if (treeHasChildren(node)) {
+    treeForEachChild(node, (childNode) => {
+      repoSendReadyTransactions(repo, childNode);
+    });
+  }
+}
+function repoSendTransactionQueue(repo, path, queue) {
+  const setsToIgnore = queue.map((txn) => {
+    return txn.currentWriteId;
+  });
+  const latestState = repoGetLatestState(repo, path, setsToIgnore);
+  let snapToSend = latestState;
+  const latestHash = latestState.hash();
+  for (let i = 0; i < queue.length; i++) {
+    const txn = queue[i];
+    assert(txn.status === 0, "tryToSendTransactionQueue_: items in queue should all be run.");
+    txn.status = 1;
+    txn.retryCount++;
+    const relativePath = newRelativePath(path, txn.path);
+    snapToSend = snapToSend.updateChild(relativePath, txn.currentOutputSnapshotRaw);
+  }
+  const dataToSend = snapToSend.val(true);
+  const pathToSend = path;
+  repo.server_.put(pathToSend.toString(), dataToSend, (status) => {
+    repoLog(repo, "transaction put response", {
+      path: pathToSend.toString(),
+      status
+    });
+    let events2 = [];
+    if (status === "ok") {
+      const callbacks = [];
+      for (let i = 0; i < queue.length; i++) {
+        queue[i].status = 2;
+        events2 = events2.concat(syncTreeAckUserWrite(repo.serverSyncTree_, queue[i].currentWriteId));
+        if (queue[i].onComplete) {
+          callbacks.push(() => queue[i].onComplete(null, true, queue[i].currentOutputSnapshotResolved));
+        }
+        queue[i].unwatcher();
+      }
+      repoPruneCompletedTransactionsBelowNode(repo, treeSubTree(repo.transactionQueueTree_, path));
+      repoSendReadyTransactions(repo, repo.transactionQueueTree_);
+      eventQueueRaiseEventsForChangedPath(repo.eventQueue_, path, events2);
+      for (let i = 0; i < callbacks.length; i++) {
+        exceptionGuard(callbacks[i]);
+      }
+    } else {
+      if (status === "datastale") {
+        for (let i = 0; i < queue.length; i++) {
+          if (queue[i].status === 3) {
+            queue[i].status = 4;
+          } else {
+            queue[i].status = 0;
+          }
+        }
+      } else {
+        warn("transaction at " + pathToSend.toString() + " failed: " + status);
+        for (let i = 0; i < queue.length; i++) {
+          queue[i].status = 4;
+          queue[i].abortReason = status;
+        }
+      }
+      repoRerunTransactions(repo, path);
+    }
+  }, latestHash);
+}
+function repoRerunTransactions(repo, changedPath) {
+  const rootMostTransactionNode = repoGetAncestorTransactionNode(repo, changedPath);
+  const path = treeGetPath(rootMostTransactionNode);
+  const queue = repoBuildTransactionQueue(repo, rootMostTransactionNode);
+  repoRerunTransactionQueue(repo, queue, path);
+  return path;
+}
+function repoRerunTransactionQueue(repo, queue, path) {
+  if (queue.length === 0) {
+    return;
+  }
+  const callbacks = [];
+  let events2 = [];
+  const txnsToRerun = queue.filter((q) => {
+    return q.status === 0;
+  });
+  const setsToIgnore = txnsToRerun.map((q) => {
+    return q.currentWriteId;
+  });
+  for (let i = 0; i < queue.length; i++) {
+    const transaction = queue[i];
+    const relativePath = newRelativePath(path, transaction.path);
+    let abortTransaction = false, abortReason;
+    assert(relativePath !== null, "rerunTransactionsUnderNode_: relativePath should not be null.");
+    if (transaction.status === 4) {
+      abortTransaction = true;
+      abortReason = transaction.abortReason;
+      events2 = events2.concat(syncTreeAckUserWrite(repo.serverSyncTree_, transaction.currentWriteId, true));
+    } else if (transaction.status === 0) {
+      if (transaction.retryCount >= MAX_TRANSACTION_RETRIES) {
+        abortTransaction = true;
+        abortReason = "maxretry";
+        events2 = events2.concat(syncTreeAckUserWrite(repo.serverSyncTree_, transaction.currentWriteId, true));
+      } else {
+        const currentNode = repoGetLatestState(repo, transaction.path, setsToIgnore);
+        transaction.currentInputSnapshot = currentNode;
+        const newData = queue[i].update(currentNode.val());
+        if (newData !== void 0) {
+          validateFirebaseData("transaction failed: Data returned ", newData, transaction.path);
+          let newDataNode = nodeFromJSON(newData);
+          const hasExplicitPriority = typeof newData === "object" && newData != null && contains(newData, ".priority");
+          if (!hasExplicitPriority) {
+            newDataNode = newDataNode.updatePriority(currentNode.getPriority());
+          }
+          const oldWriteId = transaction.currentWriteId;
+          const serverValues = repoGenerateServerValues(repo);
+          const newNodeResolved = resolveDeferredValueSnapshot(newDataNode, currentNode, serverValues);
+          transaction.currentOutputSnapshotRaw = newDataNode;
+          transaction.currentOutputSnapshotResolved = newNodeResolved;
+          transaction.currentWriteId = repoGetNextWriteId(repo);
+          setsToIgnore.splice(setsToIgnore.indexOf(oldWriteId), 1);
+          events2 = events2.concat(syncTreeApplyUserOverwrite(repo.serverSyncTree_, transaction.path, newNodeResolved, transaction.currentWriteId, transaction.applyLocally));
+          events2 = events2.concat(syncTreeAckUserWrite(repo.serverSyncTree_, oldWriteId, true));
+        } else {
+          abortTransaction = true;
+          abortReason = "nodata";
+          events2 = events2.concat(syncTreeAckUserWrite(repo.serverSyncTree_, transaction.currentWriteId, true));
+        }
+      }
+    }
+    eventQueueRaiseEventsForChangedPath(repo.eventQueue_, path, events2);
+    events2 = [];
+    if (abortTransaction) {
+      queue[i].status = 2;
+      (function(unwatcher) {
+        setTimeout(unwatcher, Math.floor(0));
+      })(queue[i].unwatcher);
+      if (queue[i].onComplete) {
+        if (abortReason === "nodata") {
+          callbacks.push(() => queue[i].onComplete(null, false, queue[i].currentInputSnapshot));
+        } else {
+          callbacks.push(() => queue[i].onComplete(new Error(abortReason), false, null));
+        }
+      }
+    }
+  }
+  repoPruneCompletedTransactionsBelowNode(repo, repo.transactionQueueTree_);
+  for (let i = 0; i < callbacks.length; i++) {
+    exceptionGuard(callbacks[i]);
+  }
+  repoSendReadyTransactions(repo, repo.transactionQueueTree_);
+}
+function repoGetAncestorTransactionNode(repo, path) {
+  let front;
+  let transactionNode = repo.transactionQueueTree_;
+  front = pathGetFront(path);
+  while (front !== null && treeGetValue(transactionNode) === void 0) {
+    transactionNode = treeSubTree(transactionNode, front);
+    path = pathPopFront(path);
+    front = pathGetFront(path);
+  }
+  return transactionNode;
+}
+function repoBuildTransactionQueue(repo, transactionNode) {
+  const transactionQueue = [];
+  repoAggregateTransactionQueuesForNode(repo, transactionNode, transactionQueue);
+  transactionQueue.sort((a, b) => a.order - b.order);
+  return transactionQueue;
+}
+function repoAggregateTransactionQueuesForNode(repo, node, queue) {
+  const nodeQueue = treeGetValue(node);
+  if (nodeQueue) {
+    for (let i = 0; i < nodeQueue.length; i++) {
+      queue.push(nodeQueue[i]);
+    }
+  }
+  treeForEachChild(node, (child) => {
+    repoAggregateTransactionQueuesForNode(repo, child, queue);
+  });
+}
+function repoPruneCompletedTransactionsBelowNode(repo, node) {
+  const queue = treeGetValue(node);
+  if (queue) {
+    let to = 0;
+    for (let from = 0; from < queue.length; from++) {
+      if (queue[from].status !== 2) {
+        queue[to] = queue[from];
+        to++;
+      }
+    }
+    queue.length = to;
+    treeSetValue(node, queue.length > 0 ? queue : void 0);
+  }
+  treeForEachChild(node, (childNode) => {
+    repoPruneCompletedTransactionsBelowNode(repo, childNode);
+  });
+}
+function repoAbortTransactions(repo, path) {
+  const affectedPath = treeGetPath(repoGetAncestorTransactionNode(repo, path));
+  const transactionNode = treeSubTree(repo.transactionQueueTree_, path);
+  treeForEachAncestor(transactionNode, (node) => {
+    repoAbortTransactionsOnNode(repo, node);
+  });
+  repoAbortTransactionsOnNode(repo, transactionNode);
+  treeForEachDescendant(transactionNode, (node) => {
+    repoAbortTransactionsOnNode(repo, node);
+  });
+  return affectedPath;
+}
+function repoAbortTransactionsOnNode(repo, node) {
+  const queue = treeGetValue(node);
+  if (queue) {
+    const callbacks = [];
+    let events2 = [];
+    let lastSent = -1;
+    for (let i = 0; i < queue.length; i++) {
+      if (queue[i].status === 3)
+        ;
+      else if (queue[i].status === 1) {
+        assert(lastSent === i - 1, "All SENT items should be at beginning of queue.");
+        lastSent = i;
+        queue[i].status = 3;
+        queue[i].abortReason = "set";
+      } else {
+        assert(queue[i].status === 0, "Unexpected transaction status in abort");
+        queue[i].unwatcher();
+        events2 = events2.concat(syncTreeAckUserWrite(repo.serverSyncTree_, queue[i].currentWriteId, true));
+        if (queue[i].onComplete) {
+          callbacks.push(queue[i].onComplete.bind(null, new Error("set"), false, null));
+        }
+      }
+    }
+    if (lastSent === -1) {
+      treeSetValue(node, void 0);
+    } else {
+      queue.length = lastSent + 1;
+    }
+    eventQueueRaiseEventsForChangedPath(repo.eventQueue_, treeGetPath(node), events2);
+    for (let i = 0; i < callbacks.length; i++) {
+      exceptionGuard(callbacks[i]);
+    }
+  }
+}
+function decodePath(pathString) {
+  let pathStringDecoded = "";
+  const pieces = pathString.split("/");
+  for (let i = 0; i < pieces.length; i++) {
+    if (pieces[i].length > 0) {
+      let piece = pieces[i];
+      try {
+        piece = decodeURIComponent(piece.replace(/\+/g, " "));
+      } catch (e) {
+      }
+      pathStringDecoded += "/" + piece;
+    }
+  }
+  return pathStringDecoded;
+}
+function decodeQuery(queryString) {
+  const results = {};
+  if (queryString.charAt(0) === "?") {
+    queryString = queryString.substring(1);
+  }
+  for (const segment of queryString.split("&")) {
+    if (segment.length === 0) {
+      continue;
+    }
+    const kv = segment.split("=");
+    if (kv.length === 2) {
+      results[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1]);
+    } else {
+      warn(`Invalid query segment '${segment}' in query '${queryString}'`);
+    }
+  }
+  return results;
+}
+function repoManagerDatabaseFromApp(app, authProvider, appCheckProvider, url2, nodeAdmin) {
+  let dbUrl = url2 || app.options.databaseURL;
+  if (dbUrl === void 0) {
+    if (!app.options.projectId) {
+      fatal("Can't determine Firebase Database URL. Be sure to include  a Project ID when calling firebase.initializeApp().");
+    }
+    log("Using default host for project ", app.options.projectId);
+    dbUrl = `${app.options.projectId}-default-rtdb.firebaseio.com`;
+  }
+  let parsedUrl = parseRepoInfo(dbUrl, nodeAdmin);
+  let repoInfo = parsedUrl.repoInfo;
+  let isEmulator;
+  let dbEmulatorHost = void 0;
+  if (typeof process !== "undefined") {
+    dbEmulatorHost = process.env[FIREBASE_DATABASE_EMULATOR_HOST_VAR];
+  }
+  if (dbEmulatorHost) {
+    isEmulator = true;
+    dbUrl = `http://${dbEmulatorHost}?ns=${repoInfo.namespace}`;
+    parsedUrl = parseRepoInfo(dbUrl, nodeAdmin);
+    repoInfo = parsedUrl.repoInfo;
+  } else {
+    isEmulator = !parsedUrl.repoInfo.secure;
+  }
+  const authTokenProvider = nodeAdmin && isEmulator ? new EmulatorTokenProvider(EmulatorTokenProvider.OWNER) : new FirebaseAuthTokenProvider(app.name, app.options, authProvider);
+  validateUrl("Invalid Firebase Database URL", parsedUrl);
+  if (!pathIsEmpty(parsedUrl.path)) {
+    fatal("Database URL must point to the root of a Firebase Database (not including a child path).");
+  }
+  const repo = repoManagerCreateRepo(repoInfo, app, authTokenProvider, new AppCheckTokenProvider(app.name, appCheckProvider));
+  return new Database(repo, app);
+}
+function repoManagerDeleteRepo(repo, appName) {
+  const appRepos = repos[appName];
+  if (!appRepos || appRepos[repo.key] !== repo) {
+    fatal(`Database ${appName}(${repo.repoInfo_}) has already been deleted.`);
+  }
+  repoInterrupt(repo);
+  delete appRepos[repo.key];
+}
+function repoManagerCreateRepo(repoInfo, app, authTokenProvider, appCheckProvider) {
+  let appRepos = repos[app.name];
+  if (!appRepos) {
+    appRepos = {};
+    repos[app.name] = appRepos;
+  }
+  let repo = appRepos[repoInfo.toURLString()];
+  if (repo) {
+    fatal("Database initialized multiple times. Please make sure the format of the database URL matches with each database() call.");
+  }
+  repo = new Repo(repoInfo, useRestClient, authTokenProvider, appCheckProvider);
+  appRepos[repoInfo.toURLString()] = repo;
+  return repo;
+}
+function registerDatabase(variant) {
+  setSDKVersion2(SDK_VERSION);
+  _registerComponent(new Component("database", (container, { instanceIdentifier: url2 }) => {
+    const app = container.getProvider("app").getImmediate();
+    const authProvider = container.getProvider("auth-internal");
+    const appCheckProvider = container.getProvider("app-check-internal");
+    return repoManagerDatabaseFromApp(app, authProvider, appCheckProvider, url2);
+  }, "PUBLIC").setMultipleInstances(true));
+  registerVersion(name5, version5, variant);
+  registerVersion(name5, version5, "esm2017");
+}
+function load2({ page }) {
   return {
     props: {
       classID: page.params.class,
@@ -113250,13 +115588,22 @@ function load3({ page }) {
     }
   };
 }
-var import_cookie4, MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css$1, LeftDrawer, css, _layout2;
-var init_layout_320bcac9 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-320bcac9.js"() {
+var import_util7, import_buffer, import_events, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_cookie4, MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css$1, LeftDrawer, safeBuffer, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$4, event, Event$3, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$2, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event$1, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, css, _layout2;
+var init_layout_11fb1e31 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-11fb1e31.js"() {
     init_shims();
-    init_app_fe0490a9();
-    init_classAdderBuilder_90a388cb();
-    init_store_46a11b64();
+    init_app_02afcaab();
+    init_classAdderBuilder_ba943ae0();
+    init_store_b4dcaf75();
+    import_util7 = __toModule(require("util"));
+    import_buffer = __toModule(require("buffer"));
+    import_events = __toModule(require("events"));
+    import_stream5 = __toModule(require("stream"));
+    import_crypto3 = __toModule(require("crypto"));
+    import_url6 = __toModule(require("url"));
+    import_assert = __toModule(require("assert"));
+    import_net = __toModule(require("net"));
+    import_tls = __toModule(require("tls"));
     init_index_node();
     import_cookie4 = __toModule(require_cookie());
     init_dist();
@@ -113299,7 +115646,7 @@ var init_layout_320bcac9 = __esm({
       let { maxHeight = 0 } = $$props;
       let { horizontallyCenteredOnViewport = false } = $$props;
       let element;
-      let instance;
+      let instance2;
       let internalClasses = {};
       let internalStyles = {};
       setContext("SMUI:list:role", "menu");
@@ -113313,13 +115660,13 @@ var init_layout_320bcac9 = __esm({
         open = value;
       }
       function setAbsolutePosition(x, y) {
-        return instance.setAbsolutePosition(x, y);
+        return instance2.setAbsolutePosition(x, y);
       }
       function setIsHoisted(isHoisted) {
-        return instance.setIsHoisted(isHoisted);
+        return instance2.setIsHoisted(isHoisted);
       }
       function isFixed() {
-        return instance.isFixed();
+        return instance2.isFixed();
       }
       function getElement() {
         return element;
@@ -113379,7 +115726,7 @@ var init_layout_320bcac9 = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name22, value]) => `${name22}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}
@@ -113402,7 +115749,7 @@ var init_layout_320bcac9 = __esm({
       let { class: className = "" } = $$props;
       let { open = false } = $$props;
       let element;
-      let instance;
+      let instance2;
       function isOpen() {
         return open;
       }
@@ -113410,10 +115757,10 @@ var init_layout_320bcac9 = __esm({
         open = value;
       }
       function setDefaultFocusState(focusState) {
-        instance.setDefaultFocusState(focusState);
+        instance2.setDefaultFocusState(focusState);
       }
       function getSelectedIndex() {
-        return instance.getSelectedIndex();
+        return instance2.getSelectedIndex();
       }
       function getElement() {
         return element.getElement();
@@ -113507,7 +115854,7 @@ var init_layout_320bcac9 = __esm({
       let { checkList = false } = $$props;
       let { hasTypeahead = false } = $$props;
       let element;
-      let instance;
+      let instance2;
       let role = getContext("SMUI:list:role");
       let nav = getContext("SMUI:list:nav");
       let selectionDialog = getContext("SMUI:dialog:selection");
@@ -113540,19 +115887,19 @@ var init_layout_320bcac9 = __esm({
         }
       });
       function layout() {
-        return instance.layout();
+        return instance2.layout();
       }
       function setEnabled(itemIndex, isEnabled) {
-        return instance.setEnabled(itemIndex, isEnabled);
+        return instance2.setEnabled(itemIndex, isEnabled);
       }
       function getTypeaheadInProgress() {
-        return instance.isTypeaheadInProgress();
+        return instance2.isTypeaheadInProgress();
       }
       function getSelectedIndex() {
-        return instance.getSelectedIndex();
+        return instance2.getSelectedIndex();
       }
       function getFocusedItemIndex() {
-        return instance.getFocusedItemIndex();
+        return instance2.getFocusedItemIndex();
       }
       function getElement() {
         return element.getElement();
@@ -113706,13 +116053,13 @@ var init_layout_320bcac9 = __esm({
           internalClasses[className2] = false;
         }
       }
-      function addStyle(name5, value) {
-        if (internalStyles[name5] != value) {
+      function addStyle(name22, value) {
+        if (internalStyles[name22] != value) {
           if (value === "" || value == null) {
-            delete internalStyles[name5];
+            delete internalStyles[name22];
             internalStyles = internalStyles;
           } else {
-            internalStyles[name5] = value;
+            internalStyles[name22] = value;
           }
         }
       }
@@ -113802,7 +116149,7 @@ var init_layout_320bcac9 = __esm({
             ...internalClasses
           })
         }, {
-          style: Object.entries(internalStyles).map(([name5, value]) => `${name5}: ${value};`).concat([style]).join(" ")
+          style: Object.entries(internalStyles).map(([name22, value]) => `${name22}: ${value};`).concat([style]).join(" ")
         }, nav && activated ? { "aria-current": "page" } : {}, !nav ? { role } : {}, !nav && role === "option" ? {
           "aria-selected": selected ? "true" : "false"
         } : {}, !nav && (role === "radio" || role === "checkbox") ? {
@@ -113886,7 +116233,9 @@ var init_layout_320bcac9 = __esm({
       let $$rendered;
       do {
         $$settled = true;
-        $$rendered = `${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Change server` })}
+        $$rendered = `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+          default: () => `<h1 style="${"color: black; font-weight: 400"}">6.036</h1>`
+        })}
 ${validate_component(Menu, "Menu").$$render($$result, {
           style: "left: 100px; top: 50px; width: 300px",
           this: menu
@@ -114093,7 +116442,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       let { open = false } = $$props;
       let { fixed = true } = $$props;
       let element;
-      let instance = void 0;
+      let instance2 = void 0;
       let internalClasses = {};
       let previousFocus = null;
       let focusTrap;
@@ -114103,7 +116452,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       setContext("SMUI:list:wrapFocus", true);
       let oldVariant = variant;
       onDestroy(() => {
-        instance && instance.destroy();
+        instance2 && instance2.destroy();
         scrim && scrim.removeEventListener("SMUIDrawerScrim:click", handleScrimClick);
       });
       function getInstance() {
@@ -114161,7 +116510,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         }
       }
       function handleScrimClick() {
-        instance && "handleScrimClick" in instance && instance.handleScrimClick();
+        instance2 && "handleScrimClick" in instance2 && instance2.handleScrimClick();
       }
       function setOpen(value) {
         open = value;
@@ -114191,18 +116540,18 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       {
         if (oldVariant !== variant) {
           oldVariant = variant;
-          instance && instance.destroy();
+          instance2 && instance2.destroy();
           internalClasses = {};
-          instance = getInstance();
-          instance && instance.init();
+          instance2 = getInstance();
+          instance2 && instance2.init();
         }
       }
       {
-        if (instance && instance.isOpen() !== open) {
+        if (instance2 && instance2.isOpen() !== open) {
           if (open) {
-            instance.open();
+            instance2.open();
           } else {
-            instance.close();
+            instance2.close();
           }
         }
       }
@@ -114319,11 +116668,7203 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       })}
 </div>`;
     });
+    safeBuffer = { exports: {} };
+    (function(module3, exports2) {
+      var buffer = import_buffer.default;
+      var Buffer2 = buffer.Buffer;
+      function copyProps(src2, dst) {
+        for (var key in src2) {
+          dst[key] = src2[key];
+        }
+      }
+      if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
+        module3.exports = buffer;
+      } else {
+        copyProps(buffer, exports2);
+        exports2.Buffer = SafeBuffer;
+      }
+      function SafeBuffer(arg, encodingOrOffset, length) {
+        return Buffer2(arg, encodingOrOffset, length);
+      }
+      copyProps(Buffer2, SafeBuffer);
+      SafeBuffer.from = function(arg, encodingOrOffset, length) {
+        if (typeof arg === "number") {
+          throw new TypeError("Argument must not be a number");
+        }
+        return Buffer2(arg, encodingOrOffset, length);
+      };
+      SafeBuffer.alloc = function(size, fill, encoding) {
+        if (typeof size !== "number") {
+          throw new TypeError("Argument must be a number");
+        }
+        var buf = Buffer2(size);
+        if (fill !== void 0) {
+          if (typeof encoding === "string") {
+            buf.fill(fill, encoding);
+          } else {
+            buf.fill(fill);
+          }
+        } else {
+          buf.fill(0);
+        }
+        return buf;
+      };
+      SafeBuffer.allocUnsafe = function(size) {
+        if (typeof size !== "number") {
+          throw new TypeError("Argument must be a number");
+        }
+        return Buffer2(size);
+      };
+      SafeBuffer.allocUnsafeSlow = function(size) {
+        if (typeof size !== "number") {
+          throw new TypeError("Argument must be a number");
+        }
+        return buffer.SlowBuffer(size);
+      };
+    })(safeBuffer, safeBuffer.exports);
+    streams$1 = {};
+    Stream$3 = import_stream5.default.Stream;
+    util$b = import_util7.default;
+    IO = function(driver2) {
+      this.readable = this.writable = true;
+      this._paused = false;
+      this._driver = driver2;
+    };
+    util$b.inherits(IO, Stream$3);
+    IO.prototype.pause = function() {
+      this._paused = true;
+      this._driver.messages._paused = true;
+    };
+    IO.prototype.resume = function() {
+      this._paused = false;
+      this.emit("drain");
+      var messages = this._driver.messages;
+      messages._paused = false;
+      messages.emit("drain");
+    };
+    IO.prototype.write = function(chunk) {
+      if (!this.writable)
+        return false;
+      this._driver.parse(chunk);
+      return !this._paused;
+    };
+    IO.prototype.end = function(chunk) {
+      if (!this.writable)
+        return;
+      if (chunk !== void 0)
+        this.write(chunk);
+      this.writable = false;
+      var messages = this._driver.messages;
+      if (messages.readable) {
+        messages.readable = messages.writable = false;
+        messages.emit("end");
+      }
+    };
+    IO.prototype.destroy = function() {
+      this.end();
+    };
+    Messages = function(driver2) {
+      this.readable = this.writable = true;
+      this._paused = false;
+      this._driver = driver2;
+    };
+    util$b.inherits(Messages, Stream$3);
+    Messages.prototype.pause = function() {
+      this._driver.io._paused = true;
+    };
+    Messages.prototype.resume = function() {
+      this._driver.io._paused = false;
+      this._driver.io.emit("drain");
+    };
+    Messages.prototype.write = function(message2) {
+      if (!this.writable)
+        return false;
+      if (typeof message2 === "string")
+        this._driver.text(message2);
+      else
+        this._driver.binary(message2);
+      return !this._paused;
+    };
+    Messages.prototype.end = function(message2) {
+      if (message2 !== void 0)
+        this.write(message2);
+    };
+    Messages.prototype.destroy = function() {
+    };
+    streams$1.IO = IO;
+    streams$1.Messages = Messages;
+    Headers$3 = function() {
+      this.clear();
+    };
+    Headers$3.prototype.ALLOWED_DUPLICATES = ["set-cookie", "set-cookie2", "warning", "www-authenticate"];
+    Headers$3.prototype.clear = function() {
+      this._sent = {};
+      this._lines = [];
+    };
+    Headers$3.prototype.set = function(name22, value) {
+      if (value === void 0)
+        return;
+      name22 = this._strip(name22);
+      value = this._strip(value);
+      var key = name22.toLowerCase();
+      if (!this._sent.hasOwnProperty(key) || this.ALLOWED_DUPLICATES.indexOf(key) >= 0) {
+        this._sent[key] = true;
+        this._lines.push(name22 + ": " + value + "\r\n");
+      }
+    };
+    Headers$3.prototype.toString = function() {
+      return this._lines.join("");
+    };
+    Headers$3.prototype._strip = function(string) {
+      return string.toString().replace(/^ */, "").replace(/ *$/, "");
+    };
+    headers = Headers$3;
+    Buffer$9 = safeBuffer.exports.Buffer;
+    StreamReader = function() {
+      this._queue = [];
+      this._queueSize = 0;
+      this._offset = 0;
+    };
+    StreamReader.prototype.put = function(buffer) {
+      if (!buffer || buffer.length === 0)
+        return;
+      if (!Buffer$9.isBuffer(buffer))
+        buffer = Buffer$9.from(buffer);
+      this._queue.push(buffer);
+      this._queueSize += buffer.length;
+    };
+    StreamReader.prototype.read = function(length) {
+      if (length > this._queueSize)
+        return null;
+      if (length === 0)
+        return Buffer$9.alloc(0);
+      this._queueSize -= length;
+      var queue = this._queue, remain = length, first = queue[0], buffers, buffer;
+      if (first.length >= length) {
+        if (first.length === length) {
+          return queue.shift();
+        } else {
+          buffer = first.slice(0, length);
+          queue[0] = first.slice(length);
+          return buffer;
+        }
+      }
+      for (var i = 0, n = queue.length; i < n; i++) {
+        if (remain < queue[i].length)
+          break;
+        remain -= queue[i].length;
+      }
+      buffers = queue.splice(0, i);
+      if (remain > 0 && queue.length > 0) {
+        buffers.push(queue[0].slice(0, remain));
+        queue[0] = queue[0].slice(remain);
+      }
+      return Buffer$9.concat(buffers, length);
+    };
+    StreamReader.prototype.eachByte = function(callback, context2) {
+      var buffer, n, index;
+      while (this._queue.length > 0) {
+        buffer = this._queue[0];
+        n = buffer.length;
+        while (this._offset < n) {
+          index = this._offset;
+          this._offset += 1;
+          callback.call(context2, buffer[index]);
+        }
+        this._offset = 0;
+        this._queue.shift();
+      }
+    };
+    stream_reader = StreamReader;
+    Buffer$8 = safeBuffer.exports.Buffer;
+    Emitter = import_events.default.EventEmitter;
+    util$a = import_util7.default;
+    streams = streams$1;
+    Headers$2 = headers;
+    Reader = stream_reader;
+    Base$7 = function(request, url2, options2) {
+      Emitter.call(this);
+      Base$7.validateOptions(options2 || {}, ["maxLength", "masking", "requireMasking", "protocols"]);
+      this._request = request;
+      this._reader = new Reader();
+      this._options = options2 || {};
+      this._maxLength = this._options.maxLength || this.MAX_LENGTH;
+      this._headers = new Headers$2();
+      this.__queue = [];
+      this.readyState = 0;
+      this.url = url2;
+      this.io = new streams.IO(this);
+      this.messages = new streams.Messages(this);
+      this._bindEventListeners();
+    };
+    util$a.inherits(Base$7, Emitter);
+    Base$7.isWebSocket = function(request) {
+      var connection = request.headers.connection || "", upgrade = request.headers.upgrade || "";
+      return request.method === "GET" && connection.toLowerCase().split(/ *, */).indexOf("upgrade") >= 0 && upgrade.toLowerCase() === "websocket";
+    };
+    Base$7.validateOptions = function(options2, validKeys) {
+      for (var key in options2) {
+        if (validKeys.indexOf(key) < 0)
+          throw new Error("Unrecognized option: " + key);
+      }
+    };
+    instance$b = {
+      MAX_LENGTH: 67108863,
+      STATES: ["connecting", "open", "closing", "closed"],
+      _bindEventListeners: function() {
+        var self2 = this;
+        this.messages.on("error", function() {
+        });
+        this.on("message", function(event2) {
+          var messages = self2.messages;
+          if (messages.readable)
+            messages.emit("data", event2.data);
+        });
+        this.on("error", function(error22) {
+          var messages = self2.messages;
+          if (messages.readable)
+            messages.emit("error", error22);
+        });
+        this.on("close", function() {
+          var messages = self2.messages;
+          if (!messages.readable)
+            return;
+          messages.readable = messages.writable = false;
+          messages.emit("end");
+        });
+      },
+      getState: function() {
+        return this.STATES[this.readyState] || null;
+      },
+      addExtension: function(extension) {
+        return false;
+      },
+      setHeader: function(name22, value) {
+        if (this.readyState > 0)
+          return false;
+        this._headers.set(name22, value);
+        return true;
+      },
+      start: function() {
+        if (this.readyState !== 0)
+          return false;
+        if (!Base$7.isWebSocket(this._request))
+          return this._failHandshake(new Error("Not a WebSocket request"));
+        var response;
+        try {
+          response = this._handshakeResponse();
+        } catch (error22) {
+          return this._failHandshake(error22);
+        }
+        this._write(response);
+        if (this._stage !== -1)
+          this._open();
+        return true;
+      },
+      _failHandshake: function(error22) {
+        var headers2 = new Headers$2();
+        headers2.set("Content-Type", "text/plain");
+        headers2.set("Content-Length", Buffer$8.byteLength(error22.message, "utf8"));
+        headers2 = ["HTTP/1.1 400 Bad Request", headers2.toString(), error22.message];
+        this._write(Buffer$8.from(headers2.join("\r\n"), "utf8"));
+        this._fail("protocol_error", error22.message);
+        return false;
+      },
+      text: function(message2) {
+        return this.frame(message2);
+      },
+      binary: function(message2) {
+        return false;
+      },
+      ping: function() {
+        return false;
+      },
+      pong: function() {
+        return false;
+      },
+      close: function(reason, code) {
+        if (this.readyState !== 1)
+          return false;
+        this.readyState = 3;
+        this.emit("close", new Base$7.CloseEvent(null, null));
+        return true;
+      },
+      _open: function() {
+        this.readyState = 1;
+        this.__queue.forEach(function(args) {
+          this.frame.apply(this, args);
+        }, this);
+        this.__queue = [];
+        this.emit("open", new Base$7.OpenEvent());
+      },
+      _queue: function(message2) {
+        this.__queue.push(message2);
+        return true;
+      },
+      _write: function(chunk) {
+        var io = this.io;
+        if (io.readable)
+          io.emit("data", chunk);
+      },
+      _fail: function(type, message2) {
+        this.readyState = 2;
+        this.emit("error", new Error(message2));
+        this.close();
+      }
+    };
+    for (key$b in instance$b)
+      Base$7.prototype[key$b] = instance$b[key$b];
+    Base$7.ConnectEvent = function() {
+    };
+    Base$7.OpenEvent = function() {
+    };
+    Base$7.CloseEvent = function(code, reason) {
+      this.code = code;
+      this.reason = reason;
+    };
+    Base$7.MessageEvent = function(data) {
+      this.data = data;
+    };
+    Base$7.PingEvent = function(data) {
+      this.data = data;
+    };
+    Base$7.PongEvent = function(data) {
+      this.data = data;
+    };
+    base = Base$7;
+    httpParser = {};
+    assert2 = import_assert.default;
+    httpParser.HTTPParser = HTTPParser;
+    HTTPParser.prototype.initialize = function(type, async_resource) {
+      assert2.ok(type === HTTPParser.REQUEST || type === HTTPParser.RESPONSE);
+      this.type = type;
+      this.state = type + "_LINE";
+      this.info = {
+        headers: [],
+        upgrade: false
+      };
+      this.trailers = [];
+      this.line = "";
+      this.isChunked = false;
+      this.connection = "";
+      this.headerSize = 0;
+      this.body_bytes = null;
+      this.isUserCall = false;
+      this.hadError = false;
+    };
+    HTTPParser.encoding = "ascii";
+    HTTPParser.maxHeaderSize = 80 * 1024;
+    HTTPParser.REQUEST = "REQUEST";
+    HTTPParser.RESPONSE = "RESPONSE";
+    kOnHeaders = HTTPParser.kOnHeaders = 1;
+    kOnHeadersComplete = HTTPParser.kOnHeadersComplete = 2;
+    kOnBody = HTTPParser.kOnBody = 3;
+    kOnMessageComplete = HTTPParser.kOnMessageComplete = 4;
+    HTTPParser.prototype[kOnHeaders] = HTTPParser.prototype[kOnHeadersComplete] = HTTPParser.prototype[kOnBody] = HTTPParser.prototype[kOnMessageComplete] = function() {
+    };
+    compatMode0_12 = true;
+    Object.defineProperty(HTTPParser, "kOnExecute", {
+      get: function() {
+        compatMode0_12 = false;
+        return 99;
+      }
+    });
+    methods = httpParser.methods = HTTPParser.methods = [
+      "DELETE",
+      "GET",
+      "HEAD",
+      "POST",
+      "PUT",
+      "CONNECT",
+      "OPTIONS",
+      "TRACE",
+      "COPY",
+      "LOCK",
+      "MKCOL",
+      "MOVE",
+      "PROPFIND",
+      "PROPPATCH",
+      "SEARCH",
+      "UNLOCK",
+      "BIND",
+      "REBIND",
+      "UNBIND",
+      "ACL",
+      "REPORT",
+      "MKACTIVITY",
+      "CHECKOUT",
+      "MERGE",
+      "M-SEARCH",
+      "NOTIFY",
+      "SUBSCRIBE",
+      "UNSUBSCRIBE",
+      "PATCH",
+      "PURGE",
+      "MKCALENDAR",
+      "LINK",
+      "UNLINK"
+    ];
+    method_connect = methods.indexOf("CONNECT");
+    HTTPParser.prototype.reinitialize = HTTPParser;
+    HTTPParser.prototype.close = HTTPParser.prototype.pause = HTTPParser.prototype.resume = HTTPParser.prototype.free = function() {
+    };
+    HTTPParser.prototype._compatMode0_11 = false;
+    HTTPParser.prototype.getAsyncId = function() {
+      return 0;
+    };
+    headerState = {
+      REQUEST_LINE: true,
+      RESPONSE_LINE: true,
+      HEADER: true
+    };
+    HTTPParser.prototype.execute = function(chunk, start2, length) {
+      if (!(this instanceof HTTPParser)) {
+        throw new TypeError("not a HTTPParser");
+      }
+      start2 = start2 || 0;
+      length = typeof length === "number" ? length : chunk.length;
+      this.chunk = chunk;
+      this.offset = start2;
+      var end = this.end = start2 + length;
+      try {
+        while (this.offset < end) {
+          if (this[this.state]()) {
+            break;
+          }
+        }
+      } catch (err) {
+        if (this.isUserCall) {
+          throw err;
+        }
+        this.hadError = true;
+        return err;
+      }
+      this.chunk = null;
+      length = this.offset - start2;
+      if (headerState[this.state]) {
+        this.headerSize += length;
+        if (this.headerSize > HTTPParser.maxHeaderSize) {
+          return new Error("max header size exceeded");
+        }
+      }
+      return length;
+    };
+    stateFinishAllowed = {
+      REQUEST_LINE: true,
+      RESPONSE_LINE: true,
+      BODY_RAW: true
+    };
+    HTTPParser.prototype.finish = function() {
+      if (this.hadError) {
+        return;
+      }
+      if (!stateFinishAllowed[this.state]) {
+        return new Error("invalid state for EOF");
+      }
+      if (this.state === "BODY_RAW") {
+        this.userCall()(this[kOnMessageComplete]());
+      }
+    };
+    HTTPParser.prototype.consume = HTTPParser.prototype.unconsume = HTTPParser.prototype.getCurrentBuffer = function() {
+    };
+    HTTPParser.prototype.userCall = function() {
+      this.isUserCall = true;
+      var self2 = this;
+      return function(ret) {
+        self2.isUserCall = false;
+        return ret;
+      };
+    };
+    HTTPParser.prototype.nextRequest = function() {
+      this.userCall()(this[kOnMessageComplete]());
+      this.reinitialize(this.type);
+    };
+    HTTPParser.prototype.consumeLine = function() {
+      var end = this.end, chunk = this.chunk;
+      for (var i = this.offset; i < end; i++) {
+        if (chunk[i] === 10) {
+          var line = this.line + chunk.toString(HTTPParser.encoding, this.offset, i);
+          if (line.charAt(line.length - 1) === "\r") {
+            line = line.substr(0, line.length - 1);
+          }
+          this.line = "";
+          this.offset = i + 1;
+          return line;
+        }
+      }
+      this.line += chunk.toString(HTTPParser.encoding, this.offset, this.end);
+      this.offset = this.end;
+    };
+    headerExp = /^([^: \t]+):[ \t]*((?:.*[^ \t])|)/;
+    headerContinueExp = /^[ \t]+(.*[^ \t])/;
+    HTTPParser.prototype.parseHeader = function(line, headers2) {
+      if (line.indexOf("\r") !== -1) {
+        throw parseErrorCode("HPE_LF_EXPECTED");
+      }
+      var match = headerExp.exec(line);
+      var k = match && match[1];
+      if (k) {
+        headers2.push(k);
+        headers2.push(match[2]);
+      } else {
+        var matchContinue = headerContinueExp.exec(line);
+        if (matchContinue && headers2.length) {
+          if (headers2[headers2.length - 1]) {
+            headers2[headers2.length - 1] += " ";
+          }
+          headers2[headers2.length - 1] += matchContinue[1];
+        }
+      }
+    };
+    requestExp = /^([A-Z-]+) ([^ ]+) HTTP\/(\d)\.(\d)$/;
+    HTTPParser.prototype.REQUEST_LINE = function() {
+      var line = this.consumeLine();
+      if (!line) {
+        return;
+      }
+      var match = requestExp.exec(line);
+      if (match === null) {
+        throw parseErrorCode("HPE_INVALID_CONSTANT");
+      }
+      this.info.method = this._compatMode0_11 ? match[1] : methods.indexOf(match[1]);
+      if (this.info.method === -1) {
+        throw new Error("invalid request method");
+      }
+      this.info.url = match[2];
+      this.info.versionMajor = +match[3];
+      this.info.versionMinor = +match[4];
+      this.body_bytes = 0;
+      this.state = "HEADER";
+    };
+    responseExp = /^HTTP\/(\d)\.(\d) (\d{3}) ?(.*)$/;
+    HTTPParser.prototype.RESPONSE_LINE = function() {
+      var line = this.consumeLine();
+      if (!line) {
+        return;
+      }
+      var match = responseExp.exec(line);
+      if (match === null) {
+        throw parseErrorCode("HPE_INVALID_CONSTANT");
+      }
+      this.info.versionMajor = +match[1];
+      this.info.versionMinor = +match[2];
+      var statusCode = this.info.statusCode = +match[3];
+      this.info.statusMessage = match[4];
+      if ((statusCode / 100 | 0) === 1 || statusCode === 204 || statusCode === 304) {
+        this.body_bytes = 0;
+      }
+      this.state = "HEADER";
+    };
+    HTTPParser.prototype.shouldKeepAlive = function() {
+      if (this.info.versionMajor > 0 && this.info.versionMinor > 0) {
+        if (this.connection.indexOf("close") !== -1) {
+          return false;
+        }
+      } else if (this.connection.indexOf("keep-alive") === -1) {
+        return false;
+      }
+      if (this.body_bytes !== null || this.isChunked) {
+        return true;
+      }
+      return false;
+    };
+    HTTPParser.prototype.HEADER = function() {
+      var line = this.consumeLine();
+      if (line === void 0) {
+        return;
+      }
+      var info = this.info;
+      if (line) {
+        this.parseHeader(line, info.headers);
+      } else {
+        var headers2 = info.headers;
+        var hasContentLength = false;
+        var currentContentLengthValue;
+        var hasUpgradeHeader = false;
+        for (var i = 0; i < headers2.length; i += 2) {
+          switch (headers2[i].toLowerCase()) {
+            case "transfer-encoding":
+              this.isChunked = headers2[i + 1].toLowerCase() === "chunked";
+              break;
+            case "content-length":
+              currentContentLengthValue = +headers2[i + 1];
+              if (hasContentLength) {
+                if (currentContentLengthValue !== this.body_bytes) {
+                  throw parseErrorCode("HPE_UNEXPECTED_CONTENT_LENGTH");
+                }
+              } else {
+                hasContentLength = true;
+                this.body_bytes = currentContentLengthValue;
+              }
+              break;
+            case "connection":
+              this.connection += headers2[i + 1].toLowerCase();
+              break;
+            case "upgrade":
+              hasUpgradeHeader = true;
+              break;
+          }
+        }
+        if (this.isChunked && hasContentLength) {
+          hasContentLength = false;
+          this.body_bytes = null;
+        }
+        if (hasUpgradeHeader && this.connection.indexOf("upgrade") != -1) {
+          info.upgrade = this.type === HTTPParser.REQUEST || info.statusCode === 101;
+        } else {
+          info.upgrade = info.method === method_connect;
+        }
+        if (this.isChunked && info.upgrade) {
+          this.isChunked = false;
+        }
+        info.shouldKeepAlive = this.shouldKeepAlive();
+        var skipBody;
+        if (compatMode0_12) {
+          skipBody = this.userCall()(this[kOnHeadersComplete](info));
+        } else {
+          skipBody = this.userCall()(this[kOnHeadersComplete](info.versionMajor, info.versionMinor, info.headers, info.method, info.url, info.statusCode, info.statusMessage, info.upgrade, info.shouldKeepAlive));
+        }
+        if (skipBody === 2) {
+          this.nextRequest();
+          return true;
+        } else if (this.isChunked && !skipBody) {
+          this.state = "BODY_CHUNKHEAD";
+        } else if (skipBody || this.body_bytes === 0) {
+          this.nextRequest();
+          return info.upgrade;
+        } else if (this.body_bytes === null) {
+          this.state = "BODY_RAW";
+        } else {
+          this.state = "BODY_SIZED";
+        }
+      }
+    };
+    HTTPParser.prototype.BODY_CHUNKHEAD = function() {
+      var line = this.consumeLine();
+      if (line === void 0) {
+        return;
+      }
+      this.body_bytes = parseInt(line, 16);
+      if (!this.body_bytes) {
+        this.state = "BODY_CHUNKTRAILERS";
+      } else {
+        this.state = "BODY_CHUNK";
+      }
+    };
+    HTTPParser.prototype.BODY_CHUNK = function() {
+      var length = Math.min(this.end - this.offset, this.body_bytes);
+      this.userCall()(this[kOnBody](this.chunk, this.offset, length));
+      this.offset += length;
+      this.body_bytes -= length;
+      if (!this.body_bytes) {
+        this.state = "BODY_CHUNKEMPTYLINE";
+      }
+    };
+    HTTPParser.prototype.BODY_CHUNKEMPTYLINE = function() {
+      var line = this.consumeLine();
+      if (line === void 0) {
+        return;
+      }
+      assert2.equal(line, "");
+      this.state = "BODY_CHUNKHEAD";
+    };
+    HTTPParser.prototype.BODY_CHUNKTRAILERS = function() {
+      var line = this.consumeLine();
+      if (line === void 0) {
+        return;
+      }
+      if (line) {
+        this.parseHeader(line, this.trailers);
+      } else {
+        if (this.trailers.length) {
+          this.userCall()(this[kOnHeaders](this.trailers, ""));
+        }
+        this.nextRequest();
+      }
+    };
+    HTTPParser.prototype.BODY_RAW = function() {
+      var length = this.end - this.offset;
+      this.userCall()(this[kOnBody](this.chunk, this.offset, length));
+      this.offset = this.end;
+    };
+    HTTPParser.prototype.BODY_SIZED = function() {
+      var length = Math.min(this.end - this.offset, this.body_bytes);
+      this.userCall()(this[kOnBody](this.chunk, this.offset, length));
+      this.offset += length;
+      this.body_bytes -= length;
+      if (!this.body_bytes) {
+        this.nextRequest();
+      }
+    };
+    ["Headers", "HeadersComplete", "Body", "MessageComplete"].forEach(function(name22) {
+      var k = HTTPParser["kOn" + name22];
+      Object.defineProperty(HTTPParser.prototype, "on" + name22, {
+        get: function() {
+          return this[k];
+        },
+        set: function(to) {
+          this._compatMode0_11 = true;
+          method_connect = "CONNECT";
+          return this[k] = to;
+        }
+      });
+    });
+    NodeHTTPParser = httpParser.HTTPParser;
+    Buffer$7 = safeBuffer.exports.Buffer;
+    TYPES = {
+      request: NodeHTTPParser.REQUEST || "request",
+      response: NodeHTTPParser.RESPONSE || "response"
+    };
+    HttpParser$3 = function(type) {
+      this._type = type;
+      this._parser = new NodeHTTPParser(TYPES[type]);
+      this._complete = false;
+      this.headers = {};
+      var current = null, self2 = this;
+      this._parser.onHeaderField = function(b, start2, length) {
+        current = b.toString("utf8", start2, start2 + length).toLowerCase();
+      };
+      this._parser.onHeaderValue = function(b, start2, length) {
+        var value = b.toString("utf8", start2, start2 + length);
+        if (self2.headers.hasOwnProperty(current))
+          self2.headers[current] += ", " + value;
+        else
+          self2.headers[current] = value;
+      };
+      this._parser.onHeadersComplete = this._parser[NodeHTTPParser.kOnHeadersComplete] = function(majorVersion, minorVersion, headers2, method, pathname, statusCode) {
+        var info = arguments[0];
+        if (typeof info === "object") {
+          method = info.method;
+          pathname = info.url;
+          statusCode = info.statusCode;
+          headers2 = info.headers;
+        }
+        self2.method = typeof method === "number" ? HttpParser$3.METHODS[method] : method;
+        self2.statusCode = statusCode;
+        self2.url = pathname;
+        if (!headers2)
+          return;
+        for (var i = 0, n = headers2.length, key, value; i < n; i += 2) {
+          key = headers2[i].toLowerCase();
+          value = headers2[i + 1];
+          if (self2.headers.hasOwnProperty(key))
+            self2.headers[key] += ", " + value;
+          else
+            self2.headers[key] = value;
+        }
+        self2._complete = true;
+      };
+    };
+    HttpParser$3.METHODS = {
+      0: "DELETE",
+      1: "GET",
+      2: "HEAD",
+      3: "POST",
+      4: "PUT",
+      5: "CONNECT",
+      6: "OPTIONS",
+      7: "TRACE",
+      8: "COPY",
+      9: "LOCK",
+      10: "MKCOL",
+      11: "MOVE",
+      12: "PROPFIND",
+      13: "PROPPATCH",
+      14: "SEARCH",
+      15: "UNLOCK",
+      16: "BIND",
+      17: "REBIND",
+      18: "UNBIND",
+      19: "ACL",
+      20: "REPORT",
+      21: "MKACTIVITY",
+      22: "CHECKOUT",
+      23: "MERGE",
+      24: "M-SEARCH",
+      25: "NOTIFY",
+      26: "SUBSCRIBE",
+      27: "UNSUBSCRIBE",
+      28: "PATCH",
+      29: "PURGE",
+      30: "MKCALENDAR",
+      31: "LINK",
+      32: "UNLINK"
+    };
+    VERSION = process.version ? process.version.match(/[0-9]+/g).map(function(n) {
+      return parseInt(n, 10);
+    }) : [];
+    if (VERSION[0] === 0 && VERSION[1] === 12) {
+      HttpParser$3.METHODS[16] = "REPORT";
+      HttpParser$3.METHODS[17] = "MKACTIVITY";
+      HttpParser$3.METHODS[18] = "CHECKOUT";
+      HttpParser$3.METHODS[19] = "MERGE";
+      HttpParser$3.METHODS[20] = "M-SEARCH";
+      HttpParser$3.METHODS[21] = "NOTIFY";
+      HttpParser$3.METHODS[22] = "SUBSCRIBE";
+      HttpParser$3.METHODS[23] = "UNSUBSCRIBE";
+      HttpParser$3.METHODS[24] = "PATCH";
+      HttpParser$3.METHODS[25] = "PURGE";
+    }
+    HttpParser$3.prototype.isComplete = function() {
+      return this._complete;
+    };
+    HttpParser$3.prototype.parse = function(chunk) {
+      var consumed = this._parser.execute(chunk, 0, chunk.length);
+      if (typeof consumed !== "number") {
+        this.error = consumed;
+        this._complete = true;
+        return;
+      }
+      if (this._complete)
+        this.body = consumed < chunk.length ? chunk.slice(consumed) : Buffer$7.alloc(0);
+    };
+    http_parser = HttpParser$3;
+    TOKEN = /([!#\$%&'\*\+\-\.\^_`\|~0-9A-Za-z]+)/;
+    NOTOKEN = /([^!#\$%&'\*\+\-\.\^_`\|~0-9A-Za-z])/g;
+    QUOTED = /"((?:\\[\x00-\x7f]|[^\x00-\x08\x0a-\x1f\x7f"\\])*)"/;
+    PARAM = new RegExp(TOKEN.source + "(?:=(?:" + TOKEN.source + "|" + QUOTED.source + "))?");
+    EXT = new RegExp(TOKEN.source + "(?: *; *" + PARAM.source + ")*", "g");
+    EXT_LIST = new RegExp("^" + EXT.source + "(?: *, *" + EXT.source + ")*$");
+    NUMBER = /^-?(0|[1-9][0-9]*)(\.[0-9]+)?$/;
+    hasOwnProperty = Object.prototype.hasOwnProperty;
+    Parser$1 = {
+      parseHeader: function(header) {
+        var offers = new Offers();
+        if (header === "" || header === void 0)
+          return offers;
+        if (!EXT_LIST.test(header))
+          throw new SyntaxError("Invalid Sec-WebSocket-Extensions header: " + header);
+        var values = header.match(EXT);
+        values.forEach(function(value) {
+          var params = value.match(new RegExp(PARAM.source, "g")), name22 = params.shift(), offer = {};
+          params.forEach(function(param) {
+            var args = param.match(PARAM), key = args[1], data;
+            if (args[2] !== void 0) {
+              data = args[2];
+            } else if (args[3] !== void 0) {
+              data = args[3].replace(/\\/g, "");
+            } else {
+              data = true;
+            }
+            if (NUMBER.test(data))
+              data = parseFloat(data);
+            if (hasOwnProperty.call(offer, key)) {
+              offer[key] = [].concat(offer[key]);
+              offer[key].push(data);
+            } else {
+              offer[key] = data;
+            }
+          }, this);
+          offers.push(name22, offer);
+        }, this);
+        return offers;
+      },
+      serializeParams: function(name22, params) {
+        var values = [];
+        var print = function(key2, value) {
+          if (value instanceof Array) {
+            value.forEach(function(v) {
+              print(key2, v);
+            });
+          } else if (value === true) {
+            values.push(key2);
+          } else if (typeof value === "number") {
+            values.push(key2 + "=" + value);
+          } else if (NOTOKEN.test(value)) {
+            values.push(key2 + '="' + value.replace(/"/g, '\\"') + '"');
+          } else {
+            values.push(key2 + "=" + value);
+          }
+        };
+        for (var key in params)
+          print(key, params[key]);
+        return [name22].concat(values).join("; ");
+      }
+    };
+    Offers = function() {
+      this._byName = {};
+      this._inOrder = [];
+    };
+    Offers.prototype.push = function(name22, params) {
+      if (!hasOwnProperty.call(this._byName, name22))
+        this._byName[name22] = [];
+      this._byName[name22].push(params);
+      this._inOrder.push({ name: name22, params });
+    };
+    Offers.prototype.eachOffer = function(callback, context2) {
+      var list = this._inOrder;
+      for (var i = 0, n = list.length; i < n; i++)
+        callback.call(context2, list[i].name, list[i].params);
+    };
+    Offers.prototype.byName = function(name22) {
+      return this._byName[name22] || [];
+    };
+    Offers.prototype.toArray = function() {
+      return this._inOrder.slice();
+    };
+    parser = Parser$1;
+    RingBuffer$2 = function(bufferSize) {
+      this._bufferSize = bufferSize;
+      this.clear();
+    };
+    RingBuffer$2.prototype.clear = function() {
+      this._buffer = new Array(this._bufferSize);
+      this._ringOffset = 0;
+      this._ringSize = this._bufferSize;
+      this._head = 0;
+      this._tail = 0;
+      this.length = 0;
+    };
+    RingBuffer$2.prototype.push = function(value) {
+      var expandBuffer = false, expandRing = false;
+      if (this._ringSize < this._bufferSize) {
+        expandBuffer = this._tail === 0;
+      } else if (this._ringOffset === this._ringSize) {
+        expandBuffer = true;
+        expandRing = this._tail === 0;
+      }
+      if (expandBuffer) {
+        this._tail = this._bufferSize;
+        this._buffer = this._buffer.concat(new Array(this._bufferSize));
+        this._bufferSize = this._buffer.length;
+        if (expandRing)
+          this._ringSize = this._bufferSize;
+      }
+      this._buffer[this._tail] = value;
+      this.length += 1;
+      if (this._tail < this._ringSize)
+        this._ringOffset += 1;
+      this._tail = (this._tail + 1) % this._bufferSize;
+    };
+    RingBuffer$2.prototype.peek = function() {
+      if (this.length === 0)
+        return void 0;
+      return this._buffer[this._head];
+    };
+    RingBuffer$2.prototype.shift = function() {
+      if (this.length === 0)
+        return void 0;
+      var value = this._buffer[this._head];
+      this._buffer[this._head] = void 0;
+      this.length -= 1;
+      this._ringOffset -= 1;
+      if (this._ringOffset === 0 && this.length > 0) {
+        this._head = this._ringSize;
+        this._ringOffset = this.length;
+        this._ringSize = this._bufferSize;
+      } else {
+        this._head = (this._head + 1) % this._ringSize;
+      }
+      return value;
+    };
+    ring_buffer = RingBuffer$2;
+    RingBuffer$1 = ring_buffer;
+    Functor$1 = function(session, method) {
+      this._session = session;
+      this._method = method;
+      this._queue = new RingBuffer$1(Functor$1.QUEUE_SIZE);
+      this._stopped = false;
+      this.pending = 0;
+    };
+    Functor$1.QUEUE_SIZE = 8;
+    Functor$1.prototype.call = function(error22, message2, callback, context2) {
+      if (this._stopped)
+        return;
+      var record = { error: error22, message: message2, callback, context: context2, done: false }, called = false, self2 = this;
+      this._queue.push(record);
+      if (record.error) {
+        record.done = true;
+        this._stop();
+        return this._flushQueue();
+      }
+      var handler = function(err, msg) {
+        if (!(called ^ (called = true)))
+          return;
+        if (err) {
+          self2._stop();
+          record.error = err;
+          record.message = null;
+        } else {
+          record.message = msg;
+        }
+        record.done = true;
+        self2._flushQueue();
+      };
+      try {
+        this._session[this._method](message2, handler);
+      } catch (err) {
+        handler(err);
+      }
+    };
+    Functor$1.prototype._stop = function() {
+      this.pending = this._queue.length;
+      this._stopped = true;
+    };
+    Functor$1.prototype._flushQueue = function() {
+      var queue = this._queue, record;
+      while (queue.length > 0 && queue.peek().done) {
+        record = queue.shift();
+        if (record.error) {
+          this.pending = 0;
+          queue.clear();
+        } else {
+          this.pending -= 1;
+        }
+        record.callback.call(record.context, record.error, record.message);
+      }
+    };
+    functor = Functor$1;
+    RingBuffer = ring_buffer;
+    Pledge$2 = function() {
+      this._complete = false;
+      this._callbacks = new RingBuffer(Pledge$2.QUEUE_SIZE);
+    };
+    Pledge$2.QUEUE_SIZE = 4;
+    Pledge$2.all = function(list) {
+      var pledge2 = new Pledge$2(), pending = list.length, n = pending;
+      if (pending === 0)
+        pledge2.done();
+      while (n--)
+        list[n].then(function() {
+          pending -= 1;
+          if (pending === 0)
+            pledge2.done();
+        });
+      return pledge2;
+    };
+    Pledge$2.prototype.then = function(callback) {
+      if (this._complete)
+        callback();
+      else
+        this._callbacks.push(callback);
+    };
+    Pledge$2.prototype.done = function() {
+      this._complete = true;
+      var callbacks = this._callbacks, callback;
+      while (callback = callbacks.shift())
+        callback();
+    };
+    pledge = Pledge$2;
+    Functor = functor;
+    Pledge$1 = pledge;
+    Cell$1 = function(tuple) {
+      this._ext = tuple[0];
+      this._session = tuple[1];
+      this._functors = {
+        incoming: new Functor(this._session, "processIncomingMessage"),
+        outgoing: new Functor(this._session, "processOutgoingMessage")
+      };
+    };
+    Cell$1.prototype.pending = function(direction) {
+      var functor2 = this._functors[direction];
+      if (!functor2._stopped)
+        functor2.pending += 1;
+    };
+    Cell$1.prototype.incoming = function(error22, message2, callback, context2) {
+      this._exec("incoming", error22, message2, callback, context2);
+    };
+    Cell$1.prototype.outgoing = function(error22, message2, callback, context2) {
+      this._exec("outgoing", error22, message2, callback, context2);
+    };
+    Cell$1.prototype.close = function() {
+      this._closed = this._closed || new Pledge$1();
+      this._doClose();
+      return this._closed;
+    };
+    Cell$1.prototype._exec = function(direction, error22, message2, callback, context2) {
+      this._functors[direction].call(error22, message2, function(err, msg) {
+        if (err)
+          err.message = this._ext.name + ": " + err.message;
+        callback.call(context2, err, msg);
+        this._doClose();
+      }, this);
+    };
+    Cell$1.prototype._doClose = function() {
+      var fin = this._functors.incoming, fout = this._functors.outgoing;
+      if (!this._closed || fin.pending + fout.pending !== 0)
+        return;
+      if (this._session)
+        this._session.close();
+      this._session = null;
+      this._closed.done();
+    };
+    cell = Cell$1;
+    Cell = cell;
+    Pledge = pledge;
+    Pipeline$1 = function(sessions) {
+      this._cells = sessions.map(function(session) {
+        return new Cell(session);
+      });
+      this._stopped = { incoming: false, outgoing: false };
+    };
+    Pipeline$1.prototype.processIncomingMessage = function(message2, callback, context2) {
+      if (this._stopped.incoming)
+        return;
+      this._loop("incoming", this._cells.length - 1, -1, -1, message2, callback, context2);
+    };
+    Pipeline$1.prototype.processOutgoingMessage = function(message2, callback, context2) {
+      if (this._stopped.outgoing)
+        return;
+      this._loop("outgoing", 0, this._cells.length, 1, message2, callback, context2);
+    };
+    Pipeline$1.prototype.close = function(callback, context2) {
+      this._stopped = { incoming: true, outgoing: true };
+      var closed = this._cells.map(function(a) {
+        return a.close();
+      });
+      if (callback)
+        Pledge.all(closed).then(function() {
+          callback.call(context2);
+        });
+    };
+    Pipeline$1.prototype._loop = function(direction, start2, end, step, message2, callback, context2) {
+      var cells = this._cells, n = cells.length, self2 = this;
+      while (n--)
+        cells[n].pending(direction);
+      var pipe = function(index, error22, msg) {
+        if (index === end)
+          return callback.call(context2, error22, msg);
+        cells[index][direction](error22, msg, function(err, m) {
+          if (err)
+            self2._stopped[direction] = true;
+          pipe(index + step, err, m);
+        });
+      };
+      pipe(start2, null, message2);
+    };
+    pipeline2 = Pipeline$1;
+    Parser = parser;
+    Pipeline = pipeline2;
+    Extensions$1 = function() {
+      this._rsv1 = this._rsv2 = this._rsv3 = null;
+      this._byName = {};
+      this._inOrder = [];
+      this._sessions = [];
+      this._index = {};
+    };
+    Extensions$1.MESSAGE_OPCODES = [1, 2];
+    instance$a = {
+      add: function(ext) {
+        if (typeof ext.name !== "string")
+          throw new TypeError("extension.name must be a string");
+        if (ext.type !== "permessage")
+          throw new TypeError('extension.type must be "permessage"');
+        if (typeof ext.rsv1 !== "boolean")
+          throw new TypeError("extension.rsv1 must be true or false");
+        if (typeof ext.rsv2 !== "boolean")
+          throw new TypeError("extension.rsv2 must be true or false");
+        if (typeof ext.rsv3 !== "boolean")
+          throw new TypeError("extension.rsv3 must be true or false");
+        if (this._byName.hasOwnProperty(ext.name))
+          throw new TypeError('An extension with name "' + ext.name + '" is already registered');
+        this._byName[ext.name] = ext;
+        this._inOrder.push(ext);
+      },
+      generateOffer: function() {
+        var sessions = [], offer = [], index = {};
+        this._inOrder.forEach(function(ext) {
+          var session = ext.createClientSession();
+          if (!session)
+            return;
+          var record = [ext, session];
+          sessions.push(record);
+          index[ext.name] = record;
+          var offers = session.generateOffer();
+          offers = offers ? [].concat(offers) : [];
+          offers.forEach(function(off) {
+            offer.push(Parser.serializeParams(ext.name, off));
+          }, this);
+        }, this);
+        this._sessions = sessions;
+        this._index = index;
+        return offer.length > 0 ? offer.join(", ") : null;
+      },
+      activate: function(header) {
+        var responses = Parser.parseHeader(header), sessions = [];
+        responses.eachOffer(function(name22, params) {
+          var record = this._index[name22];
+          if (!record)
+            throw new Error('Server sent an extension response for unknown extension "' + name22 + '"');
+          var ext = record[0], session = record[1], reserved2 = this._reserved(ext);
+          if (reserved2)
+            throw new Error("Server sent two extension responses that use the RSV" + reserved2[0] + ' bit: "' + reserved2[1] + '" and "' + ext.name + '"');
+          if (session.activate(params) !== true)
+            throw new Error("Server sent unacceptable extension parameters: " + Parser.serializeParams(name22, params));
+          this._reserve(ext);
+          sessions.push(record);
+        }, this);
+        this._sessions = sessions;
+        this._pipeline = new Pipeline(sessions);
+      },
+      generateResponse: function(header) {
+        var sessions = [], response = [], offers = Parser.parseHeader(header);
+        this._inOrder.forEach(function(ext) {
+          var offer = offers.byName(ext.name);
+          if (offer.length === 0 || this._reserved(ext))
+            return;
+          var session = ext.createServerSession(offer);
+          if (!session)
+            return;
+          this._reserve(ext);
+          sessions.push([ext, session]);
+          response.push(Parser.serializeParams(ext.name, session.generateResponse()));
+        }, this);
+        this._sessions = sessions;
+        this._pipeline = new Pipeline(sessions);
+        return response.length > 0 ? response.join(", ") : null;
+      },
+      validFrameRsv: function(frame2) {
+        var allowed = { rsv1: false, rsv2: false, rsv3: false }, ext;
+        if (Extensions$1.MESSAGE_OPCODES.indexOf(frame2.opcode) >= 0) {
+          for (var i = 0, n = this._sessions.length; i < n; i++) {
+            ext = this._sessions[i][0];
+            allowed.rsv1 = allowed.rsv1 || ext.rsv1;
+            allowed.rsv2 = allowed.rsv2 || ext.rsv2;
+            allowed.rsv3 = allowed.rsv3 || ext.rsv3;
+          }
+        }
+        return (allowed.rsv1 || !frame2.rsv1) && (allowed.rsv2 || !frame2.rsv2) && (allowed.rsv3 || !frame2.rsv3);
+      },
+      processIncomingMessage: function(message2, callback, context2) {
+        this._pipeline.processIncomingMessage(message2, callback, context2);
+      },
+      processOutgoingMessage: function(message2, callback, context2) {
+        this._pipeline.processOutgoingMessage(message2, callback, context2);
+      },
+      close: function(callback, context2) {
+        if (!this._pipeline)
+          return callback.call(context2);
+        this._pipeline.close(callback, context2);
+      },
+      _reserve: function(ext) {
+        this._rsv1 = this._rsv1 || ext.rsv1 && ext.name;
+        this._rsv2 = this._rsv2 || ext.rsv2 && ext.name;
+        this._rsv3 = this._rsv3 || ext.rsv3 && ext.name;
+      },
+      _reserved: function(ext) {
+        if (this._rsv1 && ext.rsv1)
+          return [1, this._rsv1];
+        if (this._rsv2 && ext.rsv2)
+          return [2, this._rsv2];
+        if (this._rsv3 && ext.rsv3)
+          return [3, this._rsv3];
+        return false;
+      }
+    };
+    for (key$a in instance$a)
+      Extensions$1.prototype[key$a] = instance$a[key$a];
+    websocket_extensions = Extensions$1;
+    Frame$1 = function() {
+    };
+    instance$9 = {
+      final: false,
+      rsv1: false,
+      rsv2: false,
+      rsv3: false,
+      opcode: null,
+      masked: false,
+      maskingKey: null,
+      lengthBytes: 1,
+      length: 0,
+      payload: null
+    };
+    for (key$9 in instance$9)
+      Frame$1.prototype[key$9] = instance$9[key$9];
+    frame = Frame$1;
+    Buffer$6 = safeBuffer.exports.Buffer;
+    Message$1 = function() {
+      this.rsv1 = false;
+      this.rsv2 = false;
+      this.rsv3 = false;
+      this.opcode = null;
+      this.length = 0;
+      this._chunks = [];
+    };
+    instance$8 = {
+      read: function() {
+        return this.data = this.data || Buffer$6.concat(this._chunks, this.length);
+      },
+      pushFrame: function(frame2) {
+        this.rsv1 = this.rsv1 || frame2.rsv1;
+        this.rsv2 = this.rsv2 || frame2.rsv2;
+        this.rsv3 = this.rsv3 || frame2.rsv3;
+        if (this.opcode === null)
+          this.opcode = frame2.opcode;
+        this._chunks.push(frame2.payload);
+        this.length += frame2.length;
+      }
+    };
+    for (key$8 in instance$8)
+      Message$1.prototype[key$8] = instance$8[key$8];
+    message = Message$1;
+    Buffer$5 = safeBuffer.exports.Buffer;
+    crypto$2 = import_crypto3.default;
+    util$9 = import_util7.default;
+    Extensions = websocket_extensions;
+    Base$6 = base;
+    Frame = frame;
+    Message = message;
+    Hybi$2 = function(request, url2, options2) {
+      Base$6.apply(this, arguments);
+      this._extensions = new Extensions();
+      this._stage = 0;
+      this._masking = this._options.masking;
+      this._protocols = this._options.protocols || [];
+      this._requireMasking = this._options.requireMasking;
+      this._pingCallbacks = {};
+      if (typeof this._protocols === "string")
+        this._protocols = this._protocols.split(/ *, */);
+      if (!this._request)
+        return;
+      var protos = this._request.headers["sec-websocket-protocol"], supported = this._protocols;
+      if (protos !== void 0) {
+        if (typeof protos === "string")
+          protos = protos.split(/ *, */);
+        this.protocol = protos.filter(function(p) {
+          return supported.indexOf(p) >= 0;
+        })[0];
+      }
+      this.version = "hybi-" + Hybi$2.VERSION;
+    };
+    util$9.inherits(Hybi$2, Base$6);
+    Hybi$2.VERSION = "13";
+    Hybi$2.mask = function(payload, mask, offset) {
+      if (!mask || mask.length === 0)
+        return payload;
+      offset = offset || 0;
+      for (var i = 0, n = payload.length - offset; i < n; i++) {
+        payload[offset + i] = payload[offset + i] ^ mask[i % 4];
+      }
+      return payload;
+    };
+    Hybi$2.generateAccept = function(key) {
+      var sha12 = crypto$2.createHash("sha1");
+      sha12.update(key + Hybi$2.GUID);
+      return sha12.digest("base64");
+    };
+    Hybi$2.GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+    instance$7 = {
+      FIN: 128,
+      MASK: 128,
+      RSV1: 64,
+      RSV2: 32,
+      RSV3: 16,
+      OPCODE: 15,
+      LENGTH: 127,
+      OPCODES: {
+        continuation: 0,
+        text: 1,
+        binary: 2,
+        close: 8,
+        ping: 9,
+        pong: 10
+      },
+      OPCODE_CODES: [0, 1, 2, 8, 9, 10],
+      MESSAGE_OPCODES: [0, 1, 2],
+      OPENING_OPCODES: [1, 2],
+      ERRORS: {
+        normal_closure: 1e3,
+        going_away: 1001,
+        protocol_error: 1002,
+        unacceptable: 1003,
+        encoding_error: 1007,
+        policy_violation: 1008,
+        too_large: 1009,
+        extension_error: 1010,
+        unexpected_condition: 1011
+      },
+      ERROR_CODES: [1e3, 1001, 1002, 1003, 1007, 1008, 1009, 1010, 1011],
+      DEFAULT_ERROR_CODE: 1e3,
+      MIN_RESERVED_ERROR: 3e3,
+      MAX_RESERVED_ERROR: 4999,
+      UTF8_MATCH: /^([\x00-\x7F]|[\xC2-\xDF][\x80-\xBF]|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}|\xED[\x80-\x9F][\x80-\xBF]|\xF0[\x90-\xBF][\x80-\xBF]{2}|[\xF1-\xF3][\x80-\xBF]{3}|\xF4[\x80-\x8F][\x80-\xBF]{2})*$/,
+      addExtension: function(extension) {
+        this._extensions.add(extension);
+        return true;
+      },
+      parse: function(chunk) {
+        this._reader.put(chunk);
+        var buffer = true;
+        while (buffer) {
+          switch (this._stage) {
+            case 0:
+              buffer = this._reader.read(1);
+              if (buffer)
+                this._parseOpcode(buffer[0]);
+              break;
+            case 1:
+              buffer = this._reader.read(1);
+              if (buffer)
+                this._parseLength(buffer[0]);
+              break;
+            case 2:
+              buffer = this._reader.read(this._frame.lengthBytes);
+              if (buffer)
+                this._parseExtendedLength(buffer);
+              break;
+            case 3:
+              buffer = this._reader.read(4);
+              if (buffer) {
+                this._stage = 4;
+                this._frame.maskingKey = buffer;
+              }
+              break;
+            case 4:
+              buffer = this._reader.read(this._frame.length);
+              if (buffer) {
+                this._stage = 0;
+                this._emitFrame(buffer);
+              }
+              break;
+            default:
+              buffer = null;
+          }
+        }
+      },
+      text: function(message2) {
+        if (this.readyState > 1)
+          return false;
+        return this.frame(message2, "text");
+      },
+      binary: function(message2) {
+        if (this.readyState > 1)
+          return false;
+        return this.frame(message2, "binary");
+      },
+      ping: function(message2, callback) {
+        if (this.readyState > 1)
+          return false;
+        message2 = message2 || "";
+        if (callback)
+          this._pingCallbacks[message2] = callback;
+        return this.frame(message2, "ping");
+      },
+      pong: function(message2) {
+        if (this.readyState > 1)
+          return false;
+        message2 = message2 || "";
+        return this.frame(message2, "pong");
+      },
+      close: function(reason, code) {
+        reason = reason || "";
+        code = code || this.ERRORS.normal_closure;
+        if (this.readyState <= 0) {
+          this.readyState = 3;
+          this.emit("close", new Base$6.CloseEvent(code, reason));
+          return true;
+        } else if (this.readyState === 1) {
+          this.readyState = 2;
+          this._extensions.close(function() {
+            this.frame(reason, "close", code);
+          }, this);
+          return true;
+        } else {
+          return false;
+        }
+      },
+      frame: function(buffer, type, code) {
+        if (this.readyState <= 0)
+          return this._queue([buffer, type, code]);
+        if (this.readyState > 2)
+          return false;
+        if (buffer instanceof Array)
+          buffer = Buffer$5.from(buffer);
+        if (typeof buffer === "number")
+          buffer = buffer.toString();
+        var message2 = new Message(), isText = typeof buffer === "string", payload, copy;
+        message2.rsv1 = message2.rsv2 = message2.rsv3 = false;
+        message2.opcode = this.OPCODES[type || (isText ? "text" : "binary")];
+        payload = isText ? Buffer$5.from(buffer, "utf8") : buffer;
+        if (code) {
+          copy = payload;
+          payload = Buffer$5.allocUnsafe(2 + copy.length);
+          payload.writeUInt16BE(code, 0);
+          copy.copy(payload, 2);
+        }
+        message2.data = payload;
+        var onMessageReady = function(message3) {
+          var frame2 = new Frame();
+          frame2.final = true;
+          frame2.rsv1 = message3.rsv1;
+          frame2.rsv2 = message3.rsv2;
+          frame2.rsv3 = message3.rsv3;
+          frame2.opcode = message3.opcode;
+          frame2.masked = !!this._masking;
+          frame2.length = message3.data.length;
+          frame2.payload = message3.data;
+          if (frame2.masked)
+            frame2.maskingKey = crypto$2.randomBytes(4);
+          this._sendFrame(frame2);
+        };
+        if (this.MESSAGE_OPCODES.indexOf(message2.opcode) >= 0)
+          this._extensions.processOutgoingMessage(message2, function(error22, message3) {
+            if (error22)
+              return this._fail("extension_error", error22.message);
+            onMessageReady.call(this, message3);
+          }, this);
+        else
+          onMessageReady.call(this, message2);
+        return true;
+      },
+      _sendFrame: function(frame2) {
+        var length = frame2.length, header = length <= 125 ? 2 : length <= 65535 ? 4 : 10, offset = header + (frame2.masked ? 4 : 0), buffer = Buffer$5.allocUnsafe(offset + length), masked = frame2.masked ? this.MASK : 0;
+        buffer[0] = (frame2.final ? this.FIN : 0) | (frame2.rsv1 ? this.RSV1 : 0) | (frame2.rsv2 ? this.RSV2 : 0) | (frame2.rsv3 ? this.RSV3 : 0) | frame2.opcode;
+        if (length <= 125) {
+          buffer[1] = masked | length;
+        } else if (length <= 65535) {
+          buffer[1] = masked | 126;
+          buffer.writeUInt16BE(length, 2);
+        } else {
+          buffer[1] = masked | 127;
+          buffer.writeUInt32BE(Math.floor(length / 4294967296), 2);
+          buffer.writeUInt32BE(length % 4294967296, 6);
+        }
+        frame2.payload.copy(buffer, offset);
+        if (frame2.masked) {
+          frame2.maskingKey.copy(buffer, header);
+          Hybi$2.mask(buffer, frame2.maskingKey, offset);
+        }
+        this._write(buffer);
+      },
+      _handshakeResponse: function() {
+        var secKey = this._request.headers["sec-websocket-key"], version22 = this._request.headers["sec-websocket-version"];
+        if (version22 !== Hybi$2.VERSION)
+          throw new Error("Unsupported WebSocket version: " + version22);
+        if (typeof secKey !== "string")
+          throw new Error("Missing handshake request header: Sec-WebSocket-Key");
+        this._headers.set("Upgrade", "websocket");
+        this._headers.set("Connection", "Upgrade");
+        this._headers.set("Sec-WebSocket-Accept", Hybi$2.generateAccept(secKey));
+        if (this.protocol)
+          this._headers.set("Sec-WebSocket-Protocol", this.protocol);
+        var extensions = this._extensions.generateResponse(this._request.headers["sec-websocket-extensions"]);
+        if (extensions)
+          this._headers.set("Sec-WebSocket-Extensions", extensions);
+        var start2 = "HTTP/1.1 101 Switching Protocols", headers2 = [start2, this._headers.toString(), ""];
+        return Buffer$5.from(headers2.join("\r\n"), "utf8");
+      },
+      _shutdown: function(code, reason, error22) {
+        delete this._frame;
+        delete this._message;
+        this._stage = 5;
+        var sendCloseFrame = this.readyState === 1;
+        this.readyState = 2;
+        this._extensions.close(function() {
+          if (sendCloseFrame)
+            this.frame(reason, "close", code);
+          this.readyState = 3;
+          if (error22)
+            this.emit("error", new Error(reason));
+          this.emit("close", new Base$6.CloseEvent(code, reason));
+        }, this);
+      },
+      _fail: function(type, message2) {
+        if (this.readyState > 1)
+          return;
+        this._shutdown(this.ERRORS[type], message2, true);
+      },
+      _parseOpcode: function(octet) {
+        var rsvs = [this.RSV1, this.RSV2, this.RSV3].map(function(rsv) {
+          return (octet & rsv) === rsv;
+        });
+        var frame2 = this._frame = new Frame();
+        frame2.final = (octet & this.FIN) === this.FIN;
+        frame2.rsv1 = rsvs[0];
+        frame2.rsv2 = rsvs[1];
+        frame2.rsv3 = rsvs[2];
+        frame2.opcode = octet & this.OPCODE;
+        this._stage = 1;
+        if (!this._extensions.validFrameRsv(frame2))
+          return this._fail("protocol_error", "One or more reserved bits are on: reserved1 = " + (frame2.rsv1 ? 1 : 0) + ", reserved2 = " + (frame2.rsv2 ? 1 : 0) + ", reserved3 = " + (frame2.rsv3 ? 1 : 0));
+        if (this.OPCODE_CODES.indexOf(frame2.opcode) < 0)
+          return this._fail("protocol_error", "Unrecognized frame opcode: " + frame2.opcode);
+        if (this.MESSAGE_OPCODES.indexOf(frame2.opcode) < 0 && !frame2.final)
+          return this._fail("protocol_error", "Received fragmented control frame: opcode = " + frame2.opcode);
+        if (this._message && this.OPENING_OPCODES.indexOf(frame2.opcode) >= 0)
+          return this._fail("protocol_error", "Received new data frame but previous continuous frame is unfinished");
+      },
+      _parseLength: function(octet) {
+        var frame2 = this._frame;
+        frame2.masked = (octet & this.MASK) === this.MASK;
+        frame2.length = octet & this.LENGTH;
+        if (frame2.length >= 0 && frame2.length <= 125) {
+          this._stage = frame2.masked ? 3 : 4;
+          if (!this._checkFrameLength())
+            return;
+        } else {
+          this._stage = 2;
+          frame2.lengthBytes = frame2.length === 126 ? 2 : 8;
+        }
+        if (this._requireMasking && !frame2.masked)
+          return this._fail("unacceptable", "Received unmasked frame but masking is required");
+      },
+      _parseExtendedLength: function(buffer) {
+        var frame2 = this._frame;
+        frame2.length = this._readUInt(buffer);
+        this._stage = frame2.masked ? 3 : 4;
+        if (this.MESSAGE_OPCODES.indexOf(frame2.opcode) < 0 && frame2.length > 125)
+          return this._fail("protocol_error", "Received control frame having too long payload: " + frame2.length);
+        if (!this._checkFrameLength())
+          return;
+      },
+      _checkFrameLength: function() {
+        var length = this._message ? this._message.length : 0;
+        if (length + this._frame.length > this._maxLength) {
+          this._fail("too_large", "WebSocket frame length too large");
+          return false;
+        } else {
+          return true;
+        }
+      },
+      _emitFrame: function(buffer) {
+        var frame2 = this._frame, payload = frame2.payload = Hybi$2.mask(buffer, frame2.maskingKey), opcode = frame2.opcode, message2, code, reason, callbacks, callback;
+        delete this._frame;
+        if (opcode === this.OPCODES.continuation) {
+          if (!this._message)
+            return this._fail("protocol_error", "Received unexpected continuation frame");
+          this._message.pushFrame(frame2);
+        }
+        if (opcode === this.OPCODES.text || opcode === this.OPCODES.binary) {
+          this._message = new Message();
+          this._message.pushFrame(frame2);
+        }
+        if (frame2.final && this.MESSAGE_OPCODES.indexOf(opcode) >= 0)
+          return this._emitMessage(this._message);
+        if (opcode === this.OPCODES.close) {
+          code = payload.length >= 2 ? payload.readUInt16BE(0) : null;
+          reason = payload.length > 2 ? this._encode(payload.slice(2)) : null;
+          if (!(payload.length === 0) && !(code !== null && code >= this.MIN_RESERVED_ERROR && code <= this.MAX_RESERVED_ERROR) && this.ERROR_CODES.indexOf(code) < 0)
+            code = this.ERRORS.protocol_error;
+          if (payload.length > 125 || payload.length > 2 && !reason)
+            code = this.ERRORS.protocol_error;
+          this._shutdown(code || this.DEFAULT_ERROR_CODE, reason || "");
+        }
+        if (opcode === this.OPCODES.ping) {
+          this.frame(payload, "pong");
+          this.emit("ping", new Base$6.PingEvent(payload.toString()));
+        }
+        if (opcode === this.OPCODES.pong) {
+          callbacks = this._pingCallbacks;
+          message2 = this._encode(payload);
+          callback = callbacks[message2];
+          delete callbacks[message2];
+          if (callback)
+            callback();
+          this.emit("pong", new Base$6.PongEvent(payload.toString()));
+        }
+      },
+      _emitMessage: function(message2) {
+        var message2 = this._message;
+        message2.read();
+        delete this._message;
+        this._extensions.processIncomingMessage(message2, function(error22, message3) {
+          if (error22)
+            return this._fail("extension_error", error22.message);
+          var payload = message3.data;
+          if (message3.opcode === this.OPCODES.text)
+            payload = this._encode(payload);
+          if (payload === null)
+            return this._fail("encoding_error", "Could not decode a text frame as UTF-8");
+          else
+            this.emit("message", new Base$6.MessageEvent(payload));
+        }, this);
+      },
+      _encode: function(buffer) {
+        try {
+          var string = buffer.toString("binary", 0, buffer.length);
+          if (!this.UTF8_MATCH.test(string))
+            return null;
+        } catch (e) {
+        }
+        return buffer.toString("utf8", 0, buffer.length);
+      },
+      _readUInt: function(buffer) {
+        if (buffer.length === 2)
+          return buffer.readUInt16BE(0);
+        return buffer.readUInt32BE(0) * 4294967296 + buffer.readUInt32BE(4);
+      }
+    };
+    for (key$7 in instance$7)
+      Hybi$2.prototype[key$7] = instance$7[key$7];
+    hybi = Hybi$2;
+    Buffer$4 = safeBuffer.exports.Buffer;
+    Stream$2 = import_stream5.default.Stream;
+    url$2 = import_url6.default;
+    util$8 = import_util7.default;
+    Base$5 = base;
+    Headers$1 = headers;
+    HttpParser$2 = http_parser;
+    PORTS = { "ws:": 80, "wss:": 443 };
+    Proxy$1 = function(client2, origin, options2) {
+      this._client = client2;
+      this._http = new HttpParser$2("response");
+      this._origin = typeof client2.url === "object" ? client2.url : url$2.parse(client2.url);
+      this._url = typeof origin === "object" ? origin : url$2.parse(origin);
+      this._options = options2 || {};
+      this._state = 0;
+      this.readable = this.writable = true;
+      this._paused = false;
+      this._headers = new Headers$1();
+      this._headers.set("Host", this._origin.host);
+      this._headers.set("Connection", "keep-alive");
+      this._headers.set("Proxy-Connection", "keep-alive");
+      var auth = this._url.auth && Buffer$4.from(this._url.auth, "utf8").toString("base64");
+      if (auth)
+        this._headers.set("Proxy-Authorization", "Basic " + auth);
+    };
+    util$8.inherits(Proxy$1, Stream$2);
+    instance$6 = {
+      setHeader: function(name22, value) {
+        if (this._state !== 0)
+          return false;
+        this._headers.set(name22, value);
+        return true;
+      },
+      start: function() {
+        if (this._state !== 0)
+          return false;
+        this._state = 1;
+        var origin = this._origin, port = origin.port || PORTS[origin.protocol], start2 = "CONNECT " + origin.hostname + ":" + port + " HTTP/1.1";
+        var headers2 = [start2, this._headers.toString(), ""];
+        this.emit("data", Buffer$4.from(headers2.join("\r\n"), "utf8"));
+        return true;
+      },
+      pause: function() {
+        this._paused = true;
+      },
+      resume: function() {
+        this._paused = false;
+        this.emit("drain");
+      },
+      write: function(chunk) {
+        if (!this.writable)
+          return false;
+        this._http.parse(chunk);
+        if (!this._http.isComplete())
+          return !this._paused;
+        this.statusCode = this._http.statusCode;
+        this.headers = this._http.headers;
+        if (this.statusCode === 200) {
+          this.emit("connect", new Base$5.ConnectEvent());
+        } else {
+          var message2 = "Can't establish a connection to the server at " + this._origin.href;
+          this.emit("error", new Error(message2));
+        }
+        this.end();
+        return !this._paused;
+      },
+      end: function(chunk) {
+        if (!this.writable)
+          return;
+        if (chunk !== void 0)
+          this.write(chunk);
+        this.readable = this.writable = false;
+        this.emit("close");
+        this.emit("end");
+      },
+      destroy: function() {
+        this.end();
+      }
+    };
+    for (key$6 in instance$6)
+      Proxy$1.prototype[key$6] = instance$6[key$6];
+    proxy = Proxy$1;
+    Buffer$3 = safeBuffer.exports.Buffer;
+    crypto$1 = import_crypto3.default;
+    url$1 = import_url6.default;
+    util$7 = import_util7.default;
+    HttpParser$1 = http_parser;
+    Base$4 = base;
+    Hybi$1 = hybi;
+    Proxy2 = proxy;
+    Client$2 = function(_url, options2) {
+      this.version = "hybi-" + Hybi$1.VERSION;
+      Hybi$1.call(this, null, _url, options2);
+      this.readyState = -1;
+      this._key = Client$2.generateKey();
+      this._accept = Hybi$1.generateAccept(this._key);
+      this._http = new HttpParser$1("response");
+      var uri = url$1.parse(this.url), auth = uri.auth && Buffer$3.from(uri.auth, "utf8").toString("base64");
+      if (this.VALID_PROTOCOLS.indexOf(uri.protocol) < 0)
+        throw new Error(this.url + " is not a valid WebSocket URL");
+      this._pathname = (uri.pathname || "/") + (uri.search || "");
+      this._headers.set("Host", uri.host);
+      this._headers.set("Upgrade", "websocket");
+      this._headers.set("Connection", "Upgrade");
+      this._headers.set("Sec-WebSocket-Key", this._key);
+      this._headers.set("Sec-WebSocket-Version", Hybi$1.VERSION);
+      if (this._protocols.length > 0)
+        this._headers.set("Sec-WebSocket-Protocol", this._protocols.join(", "));
+      if (auth)
+        this._headers.set("Authorization", "Basic " + auth);
+    };
+    util$7.inherits(Client$2, Hybi$1);
+    Client$2.generateKey = function() {
+      return crypto$1.randomBytes(16).toString("base64");
+    };
+    instance$5 = {
+      VALID_PROTOCOLS: ["ws:", "wss:"],
+      proxy: function(origin, options2) {
+        return new Proxy2(this, origin, options2);
+      },
+      start: function() {
+        if (this.readyState !== -1)
+          return false;
+        this._write(this._handshakeRequest());
+        this.readyState = 0;
+        return true;
+      },
+      parse: function(chunk) {
+        if (this.readyState === 3)
+          return;
+        if (this.readyState > 0)
+          return Hybi$1.prototype.parse.call(this, chunk);
+        this._http.parse(chunk);
+        if (!this._http.isComplete())
+          return;
+        this._validateHandshake();
+        if (this.readyState === 3)
+          return;
+        this._open();
+        this.parse(this._http.body);
+      },
+      _handshakeRequest: function() {
+        var extensions = this._extensions.generateOffer();
+        if (extensions)
+          this._headers.set("Sec-WebSocket-Extensions", extensions);
+        var start2 = "GET " + this._pathname + " HTTP/1.1", headers2 = [start2, this._headers.toString(), ""];
+        return Buffer$3.from(headers2.join("\r\n"), "utf8");
+      },
+      _failHandshake: function(message2) {
+        message2 = "Error during WebSocket handshake: " + message2;
+        this.readyState = 3;
+        this.emit("error", new Error(message2));
+        this.emit("close", new Base$4.CloseEvent(this.ERRORS.protocol_error, message2));
+      },
+      _validateHandshake: function() {
+        this.statusCode = this._http.statusCode;
+        this.headers = this._http.headers;
+        if (this._http.error)
+          return this._failHandshake(this._http.error.message);
+        if (this._http.statusCode !== 101)
+          return this._failHandshake("Unexpected response code: " + this._http.statusCode);
+        var headers2 = this._http.headers, upgrade = headers2["upgrade"] || "", connection = headers2["connection"] || "", accept = headers2["sec-websocket-accept"] || "", protocol = headers2["sec-websocket-protocol"] || "";
+        if (upgrade === "")
+          return this._failHandshake("'Upgrade' header is missing");
+        if (upgrade.toLowerCase() !== "websocket")
+          return this._failHandshake("'Upgrade' header value is not 'WebSocket'");
+        if (connection === "")
+          return this._failHandshake("'Connection' header is missing");
+        if (connection.toLowerCase() !== "upgrade")
+          return this._failHandshake("'Connection' header value is not 'Upgrade'");
+        if (accept !== this._accept)
+          return this._failHandshake("Sec-WebSocket-Accept mismatch");
+        this.protocol = null;
+        if (protocol !== "") {
+          if (this._protocols.indexOf(protocol) < 0)
+            return this._failHandshake("Sec-WebSocket-Protocol mismatch");
+          else
+            this.protocol = protocol;
+        }
+        try {
+          this._extensions.activate(this.headers["sec-websocket-extensions"]);
+        } catch (e) {
+          return this._failHandshake(e.message);
+        }
+      }
+    };
+    for (key$5 in instance$5)
+      Client$2.prototype[key$5] = instance$5[key$5];
+    client$1 = Client$2;
+    Buffer$2 = safeBuffer.exports.Buffer;
+    Base$3 = base;
+    util$6 = import_util7.default;
+    Draft75$2 = function(request, url2, options2) {
+      Base$3.apply(this, arguments);
+      this._stage = 0;
+      this.version = "hixie-75";
+      this._headers.set("Upgrade", "WebSocket");
+      this._headers.set("Connection", "Upgrade");
+      this._headers.set("WebSocket-Origin", this._request.headers.origin);
+      this._headers.set("WebSocket-Location", this.url);
+    };
+    util$6.inherits(Draft75$2, Base$3);
+    instance$4 = {
+      close: function() {
+        if (this.readyState === 3)
+          return false;
+        this.readyState = 3;
+        this.emit("close", new Base$3.CloseEvent(null, null));
+        return true;
+      },
+      parse: function(chunk) {
+        if (this.readyState > 1)
+          return;
+        this._reader.put(chunk);
+        this._reader.eachByte(function(octet) {
+          var message2;
+          switch (this._stage) {
+            case -1:
+              this._body.push(octet);
+              this._sendHandshakeBody();
+              break;
+            case 0:
+              this._parseLeadingByte(octet);
+              break;
+            case 1:
+              this._length = (octet & 127) + 128 * this._length;
+              if (this._closing && this._length === 0) {
+                return this.close();
+              } else if ((octet & 128) !== 128) {
+                if (this._length === 0) {
+                  this._stage = 0;
+                } else {
+                  this._skipped = 0;
+                  this._stage = 2;
+                }
+              }
+              break;
+            case 2:
+              if (octet === 255) {
+                this._stage = 0;
+                message2 = Buffer$2.from(this._buffer).toString("utf8", 0, this._buffer.length);
+                this.emit("message", new Base$3.MessageEvent(message2));
+              } else {
+                if (this._length) {
+                  this._skipped += 1;
+                  if (this._skipped === this._length)
+                    this._stage = 0;
+                } else {
+                  this._buffer.push(octet);
+                  if (this._buffer.length > this._maxLength)
+                    return this.close();
+                }
+              }
+              break;
+          }
+        }, this);
+      },
+      frame: function(buffer) {
+        if (this.readyState === 0)
+          return this._queue([buffer]);
+        if (this.readyState > 1)
+          return false;
+        if (typeof buffer !== "string")
+          buffer = buffer.toString();
+        var length = Buffer$2.byteLength(buffer), frame2 = Buffer$2.allocUnsafe(length + 2);
+        frame2[0] = 0;
+        frame2.write(buffer, 1);
+        frame2[frame2.length - 1] = 255;
+        this._write(frame2);
+        return true;
+      },
+      _handshakeResponse: function() {
+        var start2 = "HTTP/1.1 101 Web Socket Protocol Handshake", headers2 = [start2, this._headers.toString(), ""];
+        return Buffer$2.from(headers2.join("\r\n"), "utf8");
+      },
+      _parseLeadingByte: function(octet) {
+        if ((octet & 128) === 128) {
+          this._length = 0;
+          this._stage = 1;
+        } else {
+          delete this._length;
+          delete this._skipped;
+          this._buffer = [];
+          this._stage = 2;
+        }
+      }
+    };
+    for (key$4 in instance$4)
+      Draft75$2.prototype[key$4] = instance$4[key$4];
+    draft75 = Draft75$2;
+    Buffer$1 = safeBuffer.exports.Buffer;
+    Base$2 = base;
+    Draft75$1 = draft75;
+    crypto = import_crypto3.default;
+    util$5 = import_util7.default;
+    numberFromKey = function(key) {
+      return parseInt((key.match(/[0-9]/g) || []).join(""), 10);
+    };
+    spacesInKey = function(key) {
+      return (key.match(/ /g) || []).length;
+    };
+    Draft76$1 = function(request, url2, options2) {
+      Draft75$1.apply(this, arguments);
+      this._stage = -1;
+      this._body = [];
+      this.version = "hixie-76";
+      this._headers.clear();
+      this._headers.set("Upgrade", "WebSocket");
+      this._headers.set("Connection", "Upgrade");
+      this._headers.set("Sec-WebSocket-Origin", this._request.headers.origin);
+      this._headers.set("Sec-WebSocket-Location", this.url);
+    };
+    util$5.inherits(Draft76$1, Draft75$1);
+    instance$3 = {
+      BODY_SIZE: 8,
+      start: function() {
+        if (!Draft75$1.prototype.start.call(this))
+          return false;
+        this._started = true;
+        this._sendHandshakeBody();
+        return true;
+      },
+      close: function() {
+        if (this.readyState === 3)
+          return false;
+        if (this.readyState === 1)
+          this._write(Buffer$1.from([255, 0]));
+        this.readyState = 3;
+        this.emit("close", new Base$2.CloseEvent(null, null));
+        return true;
+      },
+      _handshakeResponse: function() {
+        var headers2 = this._request.headers, key1 = headers2["sec-websocket-key1"], key2 = headers2["sec-websocket-key2"];
+        if (!key1)
+          throw new Error("Missing required header: Sec-WebSocket-Key1");
+        if (!key2)
+          throw new Error("Missing required header: Sec-WebSocket-Key2");
+        var number1 = numberFromKey(key1), spaces1 = spacesInKey(key1), number2 = numberFromKey(key2), spaces2 = spacesInKey(key2);
+        if (number1 % spaces1 !== 0 || number2 % spaces2 !== 0)
+          throw new Error("Client sent invalid Sec-WebSocket-Key headers");
+        this._keyValues = [number1 / spaces1, number2 / spaces2];
+        var start2 = "HTTP/1.1 101 WebSocket Protocol Handshake", headers2 = [start2, this._headers.toString(), ""];
+        return Buffer$1.from(headers2.join("\r\n"), "binary");
+      },
+      _handshakeSignature: function() {
+        if (this._body.length < this.BODY_SIZE)
+          return null;
+        var md5 = crypto.createHash("md5"), buffer = Buffer$1.allocUnsafe(8 + this.BODY_SIZE);
+        buffer.writeUInt32BE(this._keyValues[0], 0);
+        buffer.writeUInt32BE(this._keyValues[1], 4);
+        Buffer$1.from(this._body).copy(buffer, 8, 0, this.BODY_SIZE);
+        md5.update(buffer);
+        return Buffer$1.from(md5.digest("binary"), "binary");
+      },
+      _sendHandshakeBody: function() {
+        if (!this._started)
+          return;
+        var signature = this._handshakeSignature();
+        if (!signature)
+          return;
+        this._write(signature);
+        this._stage = 0;
+        this._open();
+        if (this._body.length > this.BODY_SIZE)
+          this.parse(this._body.slice(this.BODY_SIZE));
+      },
+      _parseLeadingByte: function(octet) {
+        if (octet !== 255)
+          return Draft75$1.prototype._parseLeadingByte.call(this, octet);
+        this._closing = true;
+        this._length = 0;
+        this._stage = 1;
+      }
+    };
+    for (key$3 in instance$3)
+      Draft76$1.prototype[key$3] = instance$3[key$3];
+    draft76 = Draft76$1;
+    util$4 = import_util7.default;
+    HttpParser = http_parser;
+    Base$1 = base;
+    Draft75 = draft75;
+    Draft76 = draft76;
+    Hybi = hybi;
+    Server$1 = function(options2) {
+      Base$1.call(this, null, null, options2);
+      this._http = new HttpParser("request");
+    };
+    util$4.inherits(Server$1, Base$1);
+    instance$2 = {
+      EVENTS: ["open", "message", "error", "close", "ping", "pong"],
+      _bindEventListeners: function() {
+        this.messages.on("error", function() {
+        });
+        this.on("error", function() {
+        });
+      },
+      parse: function(chunk) {
+        if (this._delegate)
+          return this._delegate.parse(chunk);
+        this._http.parse(chunk);
+        if (!this._http.isComplete())
+          return;
+        this.method = this._http.method;
+        this.url = this._http.url;
+        this.headers = this._http.headers;
+        this.body = this._http.body;
+        var self2 = this;
+        this._delegate = Server$1.http(this, this._options);
+        this._delegate.messages = this.messages;
+        this._delegate.io = this.io;
+        this._open();
+        this.EVENTS.forEach(function(event2) {
+          this._delegate.on(event2, function(e) {
+            self2.emit(event2, e);
+          });
+        }, this);
+        this.protocol = this._delegate.protocol;
+        this.version = this._delegate.version;
+        this.parse(this._http.body);
+        this.emit("connect", new Base$1.ConnectEvent());
+      },
+      _open: function() {
+        this.__queue.forEach(function(msg) {
+          this._delegate[msg[0]].apply(this._delegate, msg[1]);
+        }, this);
+        this.__queue = [];
+      }
+    };
+    ["addExtension", "setHeader", "start", "frame", "text", "binary", "ping", "close"].forEach(function(method) {
+      instance$2[method] = function() {
+        if (this._delegate) {
+          return this._delegate[method].apply(this._delegate, arguments);
+        } else {
+          this.__queue.push([method, arguments]);
+          return true;
+        }
+      };
+    });
+    for (key$2 in instance$2)
+      Server$1.prototype[key$2] = instance$2[key$2];
+    Server$1.isSecureRequest = function(request) {
+      if (request.connection && request.connection.authorized !== void 0)
+        return true;
+      if (request.socket && request.socket.secure)
+        return true;
+      var headers2 = request.headers;
+      if (!headers2)
+        return false;
+      if (headers2["https"] === "on")
+        return true;
+      if (headers2["x-forwarded-ssl"] === "on")
+        return true;
+      if (headers2["x-forwarded-scheme"] === "https")
+        return true;
+      if (headers2["x-forwarded-proto"] === "https")
+        return true;
+      return false;
+    };
+    Server$1.determineUrl = function(request) {
+      var scheme2 = this.isSecureRequest(request) ? "wss:" : "ws:";
+      return scheme2 + "//" + request.headers.host + request.url;
+    };
+    Server$1.http = function(request, options2) {
+      options2 = options2 || {};
+      if (options2.requireMasking === void 0)
+        options2.requireMasking = true;
+      var headers2 = request.headers, version22 = headers2["sec-websocket-version"], key = headers2["sec-websocket-key"], key1 = headers2["sec-websocket-key1"], key2 = headers2["sec-websocket-key2"], url2 = this.determineUrl(request);
+      if (version22 || key)
+        return new Hybi(request, url2, options2);
+      else if (key1 || key2)
+        return new Draft76(request, url2, options2);
+      else
+        return new Draft75(request, url2, options2);
+    };
+    server = Server$1;
+    Base = base;
+    Client$1 = client$1;
+    Server = server;
+    Driver = {
+      client: function(url2, options2) {
+        options2 = options2 || {};
+        if (options2.masking === void 0)
+          options2.masking = true;
+        return new Client$1(url2, options2);
+      },
+      server: function(options2) {
+        options2 = options2 || {};
+        if (options2.requireMasking === void 0)
+          options2.requireMasking = true;
+        return new Server(options2);
+      },
+      http: function() {
+        return Server.http.apply(Server, arguments);
+      },
+      isSecureRequest: function(request) {
+        return Server.isSecureRequest(request);
+      },
+      isWebSocket: function(request) {
+        return Base.isWebSocket(request);
+      },
+      validateOptions: function(options2, validKeys) {
+        Base.validateOptions(options2, validKeys);
+      }
+    };
+    driver$4 = Driver;
+    Event$4 = function(eventType, options2) {
+      this.type = eventType;
+      for (var key in options2)
+        this[key] = options2[key];
+    };
+    Event$4.prototype.initEvent = function(eventType, canBubble, cancelable) {
+      this.type = eventType;
+      this.bubbles = canBubble;
+      this.cancelable = cancelable;
+    };
+    Event$4.prototype.stopPropagation = function() {
+    };
+    Event$4.prototype.preventDefault = function() {
+    };
+    Event$4.CAPTURING_PHASE = 1;
+    Event$4.AT_TARGET = 2;
+    Event$4.BUBBLING_PHASE = 3;
+    event = Event$4;
+    Event$3 = event;
+    EventTarget$2 = {
+      onopen: null,
+      onmessage: null,
+      onerror: null,
+      onclose: null,
+      addEventListener: function(eventType, listener, useCapture) {
+        this.on(eventType, listener);
+      },
+      removeEventListener: function(eventType, listener, useCapture) {
+        this.removeListener(eventType, listener);
+      },
+      dispatchEvent: function(event2) {
+        event2.target = event2.currentTarget = this;
+        event2.eventPhase = Event$3.AT_TARGET;
+        if (this["on" + event2.type])
+          this["on" + event2.type](event2);
+        this.emit(event2.type, event2);
+      }
+    };
+    event_target = EventTarget$2;
+    Stream$1 = import_stream5.default.Stream;
+    util$3 = import_util7.default;
+    driver$3 = driver$4;
+    EventTarget$1 = event_target;
+    Event$2 = event;
+    API$3 = function(options2) {
+      options2 = options2 || {};
+      driver$3.validateOptions(options2, ["headers", "extensions", "maxLength", "ping", "proxy", "tls", "ca"]);
+      this.readable = this.writable = true;
+      var headers2 = options2.headers;
+      if (headers2) {
+        for (var name22 in headers2)
+          this._driver.setHeader(name22, headers2[name22]);
+      }
+      var extensions = options2.extensions;
+      if (extensions) {
+        [].concat(extensions).forEach(this._driver.addExtension, this._driver);
+      }
+      this._ping = options2.ping;
+      this._pingId = 0;
+      this.readyState = API$3.CONNECTING;
+      this.bufferedAmount = 0;
+      this.protocol = "";
+      this.url = this._driver.url;
+      this.version = this._driver.version;
+      var self2 = this;
+      this._driver.on("open", function(e) {
+        self2._open();
+      });
+      this._driver.on("message", function(e) {
+        self2._receiveMessage(e.data);
+      });
+      this._driver.on("close", function(e) {
+        self2._beginClose(e.reason, e.code);
+      });
+      this._driver.on("error", function(error22) {
+        self2._emitError(error22.message);
+      });
+      this.on("error", function() {
+      });
+      this._driver.messages.on("drain", function() {
+        self2.emit("drain");
+      });
+      if (this._ping)
+        this._pingTimer = setInterval(function() {
+          self2._pingId += 1;
+          self2.ping(self2._pingId.toString());
+        }, this._ping * 1e3);
+      this._configureStream();
+      if (!this._proxy) {
+        this._stream.pipe(this._driver.io);
+        this._driver.io.pipe(this._stream);
+      }
+    };
+    util$3.inherits(API$3, Stream$1);
+    API$3.CONNECTING = 0;
+    API$3.OPEN = 1;
+    API$3.CLOSING = 2;
+    API$3.CLOSED = 3;
+    API$3.CLOSE_TIMEOUT = 3e4;
+    instance$1 = {
+      write: function(data) {
+        return this.send(data);
+      },
+      end: function(data) {
+        if (data !== void 0)
+          this.send(data);
+        this.close();
+      },
+      pause: function() {
+        return this._driver.messages.pause();
+      },
+      resume: function() {
+        return this._driver.messages.resume();
+      },
+      send: function(data) {
+        if (this.readyState > API$3.OPEN)
+          return false;
+        if (!(data instanceof Buffer))
+          data = String(data);
+        return this._driver.messages.write(data);
+      },
+      ping: function(message2, callback) {
+        if (this.readyState > API$3.OPEN)
+          return false;
+        return this._driver.ping(message2, callback);
+      },
+      close: function(code, reason) {
+        if (code === void 0)
+          code = 1e3;
+        if (reason === void 0)
+          reason = "";
+        if (code !== 1e3 && (code < 3e3 || code > 4999))
+          throw new Error("Failed to execute 'close' on WebSocket: The code must be either 1000, or between 3000 and 4999. " + code + " is neither.");
+        if (this.readyState < API$3.CLOSING) {
+          var self2 = this;
+          this._closeTimer = setTimeout(function() {
+            self2._beginClose("", 1006);
+          }, API$3.CLOSE_TIMEOUT);
+        }
+        if (this.readyState !== API$3.CLOSED)
+          this.readyState = API$3.CLOSING;
+        this._driver.close(reason, code);
+      },
+      _configureStream: function() {
+        var self2 = this;
+        this._stream.setTimeout(0);
+        this._stream.setNoDelay(true);
+        ["close", "end"].forEach(function(event2) {
+          this._stream.on(event2, function() {
+            self2._finalizeClose();
+          });
+        }, this);
+        this._stream.on("error", function(error22) {
+          self2._emitError("Network error: " + self2.url + ": " + error22.message);
+          self2._finalizeClose();
+        });
+      },
+      _open: function() {
+        if (this.readyState !== API$3.CONNECTING)
+          return;
+        this.readyState = API$3.OPEN;
+        this.protocol = this._driver.protocol || "";
+        var event2 = new Event$2("open");
+        event2.initEvent("open", false, false);
+        this.dispatchEvent(event2);
+      },
+      _receiveMessage: function(data) {
+        if (this.readyState > API$3.OPEN)
+          return false;
+        if (this.readable)
+          this.emit("data", data);
+        var event2 = new Event$2("message", { data });
+        event2.initEvent("message", false, false);
+        this.dispatchEvent(event2);
+      },
+      _emitError: function(message2) {
+        if (this.readyState >= API$3.CLOSING)
+          return;
+        var event2 = new Event$2("error", { message: message2 });
+        event2.initEvent("error", false, false);
+        this.dispatchEvent(event2);
+      },
+      _beginClose: function(reason, code) {
+        if (this.readyState === API$3.CLOSED)
+          return;
+        this.readyState = API$3.CLOSING;
+        this._closeParams = [reason, code];
+        if (this._stream) {
+          this._stream.destroy();
+          if (!this._stream.readable)
+            this._finalizeClose();
+        }
+      },
+      _finalizeClose: function() {
+        if (this.readyState === API$3.CLOSED)
+          return;
+        this.readyState = API$3.CLOSED;
+        if (this._closeTimer)
+          clearTimeout(this._closeTimer);
+        if (this._pingTimer)
+          clearInterval(this._pingTimer);
+        if (this._stream)
+          this._stream.end();
+        if (this.readable)
+          this.emit("end");
+        this.readable = this.writable = false;
+        var reason = this._closeParams ? this._closeParams[0] : "", code = this._closeParams ? this._closeParams[1] : 1006;
+        var event2 = new Event$2("close", { code, reason });
+        event2.initEvent("close", false, false);
+        this.dispatchEvent(event2);
+      }
+    };
+    for (method$1 in instance$1)
+      API$3.prototype[method$1] = instance$1[method$1];
+    for (key$1 in EventTarget$1)
+      API$3.prototype[key$1] = EventTarget$1[key$1];
+    api = API$3;
+    util$2 = import_util7.default;
+    net = import_net.default;
+    tls = import_tls.default;
+    url = import_url6.default;
+    driver$2 = driver$4;
+    API$2 = api;
+    DEFAULT_PORTS = { "http:": 80, "https:": 443, "ws:": 80, "wss:": 443 };
+    SECURE_PROTOCOLS = ["https:", "wss:"];
+    Client = function(_url, protocols, options2) {
+      options2 = options2 || {};
+      this.url = _url;
+      this._driver = driver$2.client(this.url, { maxLength: options2.maxLength, protocols });
+      ["open", "error"].forEach(function(event2) {
+        this._driver.on(event2, function() {
+          self2.headers = self2._driver.headers;
+          self2.statusCode = self2._driver.statusCode;
+        });
+      }, this);
+      var proxy2 = options2.proxy || {}, endpoint = url.parse(proxy2.origin || this.url), port = endpoint.port || DEFAULT_PORTS[endpoint.protocol], secure = SECURE_PROTOCOLS.indexOf(endpoint.protocol) >= 0, onConnect = function() {
+        self2._onConnect();
+      }, netOptions = options2.net || {}, originTLS = options2.tls || {}, socketTLS = proxy2.origin ? proxy2.tls || {} : originTLS, self2 = this;
+      netOptions.host = socketTLS.host = endpoint.hostname;
+      netOptions.port = socketTLS.port = port;
+      originTLS.ca = originTLS.ca || options2.ca;
+      socketTLS.servername = socketTLS.servername || endpoint.hostname;
+      this._stream = secure ? tls.connect(socketTLS, onConnect) : net.connect(netOptions, onConnect);
+      if (proxy2.origin)
+        this._configureProxy(proxy2, originTLS);
+      API$2.call(this, options2);
+    };
+    util$2.inherits(Client, API$2);
+    Client.prototype._onConnect = function() {
+      var worker = this._proxy || this._driver;
+      worker.start();
+    };
+    Client.prototype._configureProxy = function(proxy2, originTLS) {
+      var uri = url.parse(this.url), secure = SECURE_PROTOCOLS.indexOf(uri.protocol) >= 0, self2 = this, name22;
+      this._proxy = this._driver.proxy(proxy2.origin);
+      if (proxy2.headers) {
+        for (name22 in proxy2.headers)
+          this._proxy.setHeader(name22, proxy2.headers[name22]);
+      }
+      this._proxy.pipe(this._stream, { end: false });
+      this._stream.pipe(this._proxy);
+      this._proxy.on("connect", function() {
+        if (secure) {
+          var options2 = { socket: self2._stream, servername: uri.hostname };
+          for (name22 in originTLS)
+            options2[name22] = originTLS[name22];
+          self2._stream = tls.connect(options2);
+          self2._configureStream();
+        }
+        self2._driver.io.pipe(self2._stream);
+        self2._stream.pipe(self2._driver.io);
+        self2._driver.start();
+      });
+      this._proxy.on("error", function(error22) {
+        self2._driver.emit("error", error22);
+      });
+    };
+    client = Client;
+    Stream3 = import_stream5.default.Stream;
+    util$1 = import_util7.default;
+    driver$1 = driver$4;
+    Headers3 = headers;
+    API$1 = api;
+    EventTarget = event_target;
+    Event$1 = event;
+    EventSource = function(request, response, options2) {
+      this.writable = true;
+      options2 = options2 || {};
+      this._stream = response.socket;
+      this._ping = options2.ping || this.DEFAULT_PING;
+      this._retry = options2.retry || this.DEFAULT_RETRY;
+      var scheme2 = driver$1.isSecureRequest(request) ? "https:" : "http:";
+      this.url = scheme2 + "//" + request.headers.host + request.url;
+      this.lastEventId = request.headers["last-event-id"] || "";
+      this.readyState = API$1.CONNECTING;
+      var headers2 = new Headers3(), self2 = this;
+      if (options2.headers) {
+        for (var key in options2.headers)
+          headers2.set(key, options2.headers[key]);
+      }
+      if (!this._stream || !this._stream.writable)
+        return;
+      process.nextTick(function() {
+        self2._open();
+      });
+      this._stream.setTimeout(0);
+      this._stream.setNoDelay(true);
+      var handshake = "HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\nCache-Control: no-cache, no-store\r\nConnection: close\r\n" + headers2.toString() + "\r\nretry: " + Math.floor(this._retry * 1e3) + "\r\n\r\n";
+      this._write(handshake);
+      this._stream.on("drain", function() {
+        self2.emit("drain");
+      });
+      if (this._ping)
+        this._pingTimer = setInterval(function() {
+          self2.ping();
+        }, this._ping * 1e3);
+      ["error", "end"].forEach(function(event2) {
+        self2._stream.on(event2, function() {
+          self2.close();
+        });
+      });
+    };
+    util$1.inherits(EventSource, Stream3);
+    EventSource.isEventSource = function(request) {
+      if (request.method !== "GET")
+        return false;
+      var accept = (request.headers.accept || "").split(/\s*,\s*/);
+      return accept.indexOf("text/event-stream") >= 0;
+    };
+    instance = {
+      DEFAULT_PING: 10,
+      DEFAULT_RETRY: 5,
+      _write: function(chunk) {
+        if (!this.writable)
+          return false;
+        try {
+          return this._stream.write(chunk, "utf8");
+        } catch (e) {
+          return false;
+        }
+      },
+      _open: function() {
+        if (this.readyState !== API$1.CONNECTING)
+          return;
+        this.readyState = API$1.OPEN;
+        var event2 = new Event$1("open");
+        event2.initEvent("open", false, false);
+        this.dispatchEvent(event2);
+      },
+      write: function(message2) {
+        return this.send(message2);
+      },
+      end: function(message2) {
+        if (message2 !== void 0)
+          this.write(message2);
+        this.close();
+      },
+      send: function(message2, options2) {
+        if (this.readyState > API$1.OPEN)
+          return false;
+        message2 = String(message2).replace(/(\r\n|\r|\n)/g, "$1data: ");
+        options2 = options2 || {};
+        var frame2 = "";
+        if (options2.event)
+          frame2 += "event: " + options2.event + "\r\n";
+        if (options2.id)
+          frame2 += "id: " + options2.id + "\r\n";
+        frame2 += "data: " + message2 + "\r\n\r\n";
+        return this._write(frame2);
+      },
+      ping: function() {
+        return this._write(":\r\n\r\n");
+      },
+      close: function() {
+        if (this.readyState > API$1.OPEN)
+          return false;
+        this.readyState = API$1.CLOSED;
+        this.writable = false;
+        if (this._pingTimer)
+          clearInterval(this._pingTimer);
+        if (this._stream)
+          this._stream.end();
+        var event2 = new Event$1("close");
+        event2.initEvent("close", false, false);
+        this.dispatchEvent(event2);
+        return true;
+      }
+    };
+    for (method in instance)
+      EventSource.prototype[method] = instance[method];
+    for (key in EventTarget)
+      EventSource.prototype[key] = EventTarget[key];
+    eventsource = EventSource;
+    util = import_util7.default;
+    driver = driver$4;
+    API = api;
+    WebSocket$1 = function(request, socket, body, protocols, options2) {
+      options2 = options2 || {};
+      this._stream = socket;
+      this._driver = driver.http(request, { maxLength: options2.maxLength, protocols });
+      var self2 = this;
+      if (!this._stream || !this._stream.writable)
+        return;
+      if (!this._stream.readable)
+        return this._stream.end();
+      var catchup = function() {
+        self2._stream.removeListener("data", catchup);
+      };
+      this._stream.on("data", catchup);
+      API.call(this, options2);
+      process.nextTick(function() {
+        self2._driver.start();
+        self2._driver.io.write(body);
+      });
+    };
+    util.inherits(WebSocket$1, API);
+    WebSocket$1.isWebSocket = function(request) {
+      return driver.isWebSocket(request);
+    };
+    WebSocket$1.validateOptions = function(options2, validKeys) {
+      driver.validateOptions(options2, validKeys);
+    };
+    WebSocket$1.WebSocket = WebSocket$1;
+    WebSocket$1.Client = client;
+    WebSocket$1.EventSource = eventsource;
+    websocket = WebSocket$1;
+    PROTOCOL_VERSION = "5";
+    VERSION_PARAM = "v";
+    TRANSPORT_SESSION_PARAM = "s";
+    REFERER_PARAM = "r";
+    FORGE_REF = "f";
+    FORGE_DOMAIN_RE = /(console\.firebase|firebase-console-\w+\.corp|firebase\.corp)\.google\.com/;
+    LAST_SESSION_PARAM = "ls";
+    APPLICATION_ID_PARAM = "p";
+    APP_CHECK_TOKEN_PARAM = "ac";
+    WEBSOCKET = "websocket";
+    LONG_POLLING = "long_polling";
+    DOMStorageWrapper = class {
+      constructor(domStorage_) {
+        this.domStorage_ = domStorage_;
+        this.prefix_ = "firebase:";
+      }
+      set(key, value) {
+        if (value == null) {
+          this.domStorage_.removeItem(this.prefixedName_(key));
+        } else {
+          this.domStorage_.setItem(this.prefixedName_(key), stringify(value));
+        }
+      }
+      get(key) {
+        const storedVal = this.domStorage_.getItem(this.prefixedName_(key));
+        if (storedVal == null) {
+          return null;
+        } else {
+          return jsonEval(storedVal);
+        }
+      }
+      remove(key) {
+        this.domStorage_.removeItem(this.prefixedName_(key));
+      }
+      prefixedName_(name22) {
+        return this.prefix_ + name22;
+      }
+      toString() {
+        return this.domStorage_.toString();
+      }
+    };
+    MemoryStorage = class {
+      constructor() {
+        this.cache_ = {};
+        this.isInMemoryStorage = true;
+      }
+      set(key, value) {
+        if (value == null) {
+          delete this.cache_[key];
+        } else {
+          this.cache_[key] = value;
+        }
+      }
+      get(key) {
+        if (contains(this.cache_, key)) {
+          return this.cache_[key];
+        }
+        return null;
+      }
+      remove(key) {
+        delete this.cache_[key];
+      }
+    };
+    createStoragefor = function(domStorageName) {
+      try {
+        if (typeof window !== "undefined" && typeof window[domStorageName] !== "undefined") {
+          const domStorage = window[domStorageName];
+          domStorage.setItem("firebase:sentinel", "cache");
+          domStorage.removeItem("firebase:sentinel");
+          return new DOMStorageWrapper(domStorage);
+        }
+      } catch (e) {
+      }
+      return new MemoryStorage();
+    };
+    PersistentStorage = createStoragefor("localStorage");
+    SessionStorage = createStoragefor("sessionStorage");
+    logClient3 = new Logger("@firebase/database");
+    LUIDGenerator = function() {
+      let id = 1;
+      return function() {
+        return id++;
+      };
+    }();
+    sha1 = function(str) {
+      const utf8Bytes = stringToByteArray(str);
+      const sha12 = new Sha1();
+      sha12.update(utf8Bytes);
+      const sha1Bytes = sha12.digest();
+      return base64.encodeByteArray(sha1Bytes);
+    };
+    buildLogMessage_ = function(...varArgs) {
+      let message2 = "";
+      for (let i = 0; i < varArgs.length; i++) {
+        const arg = varArgs[i];
+        if (Array.isArray(arg) || arg && typeof arg === "object" && typeof arg.length === "number") {
+          message2 += buildLogMessage_.apply(null, arg);
+        } else if (typeof arg === "object") {
+          message2 += stringify(arg);
+        } else {
+          message2 += arg;
+        }
+        message2 += " ";
+      }
+      return message2;
+    };
+    logger3 = null;
+    firstLog_ = true;
+    enableLogging$1 = function(logger_, persistent) {
+      assert(!persistent || logger_ === true || logger_ === false, "Can't turn on custom loggers persistently.");
+      if (logger_ === true) {
+        logClient3.logLevel = LogLevel.VERBOSE;
+        logger3 = logClient3.log.bind(logClient3);
+        if (persistent) {
+          SessionStorage.set("logging_enabled", true);
+        }
+      } else if (typeof logger_ === "function") {
+        logger3 = logger_;
+      } else {
+        logger3 = null;
+        SessionStorage.remove("logging_enabled");
+      }
+    };
+    log = function(...varArgs) {
+      if (firstLog_ === true) {
+        firstLog_ = false;
+        if (logger3 === null && SessionStorage.get("logging_enabled") === true) {
+          enableLogging$1(true);
+        }
+      }
+      if (logger3) {
+        const message2 = buildLogMessage_.apply(null, varArgs);
+        logger3(message2);
+      }
+    };
+    logWrapper = function(prefix) {
+      return function(...varArgs) {
+        log(prefix, ...varArgs);
+      };
+    };
+    error = function(...varArgs) {
+      const message2 = "FIREBASE INTERNAL ERROR: " + buildLogMessage_(...varArgs);
+      logClient3.error(message2);
+    };
+    fatal = function(...varArgs) {
+      const message2 = `FIREBASE FATAL ERROR: ${buildLogMessage_(...varArgs)}`;
+      logClient3.error(message2);
+      throw new Error(message2);
+    };
+    warn = function(...varArgs) {
+      const message2 = "FIREBASE WARNING: " + buildLogMessage_(...varArgs);
+      logClient3.warn(message2);
+    };
+    warnIfPageIsSecure = function() {
+      if (typeof window !== "undefined" && window.location && window.location.protocol && window.location.protocol.indexOf("https:") !== -1) {
+        warn("Insecure Firebase access from a secure page. Please use https in calls to new Firebase().");
+      }
+    };
+    isInvalidJSONNumber = function(data) {
+      return typeof data === "number" && (data !== data || data === Number.POSITIVE_INFINITY || data === Number.NEGATIVE_INFINITY);
+    };
+    executeWhenDOMReady = function(fn) {
+      if (isNodeSdk() || document.readyState === "complete") {
+        fn();
+      } else {
+        let called = false;
+        const wrappedFn = function() {
+          if (!document.body) {
+            setTimeout(wrappedFn, Math.floor(10));
+            return;
+          }
+          if (!called) {
+            called = true;
+            fn();
+          }
+        };
+        if (document.addEventListener) {
+          document.addEventListener("DOMContentLoaded", wrappedFn, false);
+          window.addEventListener("load", wrappedFn, false);
+        } else if (document.attachEvent) {
+          document.attachEvent("onreadystatechange", () => {
+            if (document.readyState === "complete") {
+              wrappedFn();
+            }
+          });
+          window.attachEvent("onload", wrappedFn);
+        }
+      }
+    };
+    MIN_NAME = "[MIN_NAME]";
+    MAX_NAME = "[MAX_NAME]";
+    nameCompare = function(a, b) {
+      if (a === b) {
+        return 0;
+      } else if (a === MIN_NAME || b === MAX_NAME) {
+        return -1;
+      } else if (b === MIN_NAME || a === MAX_NAME) {
+        return 1;
+      } else {
+        const aAsInt = tryParseInt(a), bAsInt = tryParseInt(b);
+        if (aAsInt !== null) {
+          if (bAsInt !== null) {
+            return aAsInt - bAsInt === 0 ? a.length - b.length : aAsInt - bAsInt;
+          } else {
+            return -1;
+          }
+        } else if (bAsInt !== null) {
+          return 1;
+        } else {
+          return a < b ? -1 : 1;
+        }
+      }
+    };
+    stringCompare = function(a, b) {
+      if (a === b) {
+        return 0;
+      } else if (a < b) {
+        return -1;
+      } else {
+        return 1;
+      }
+    };
+    requireKey = function(key, obj) {
+      if (obj && key in obj) {
+        return obj[key];
+      } else {
+        throw new Error("Missing required key (" + key + ") in object: " + stringify(obj));
+      }
+    };
+    ObjectToUniqueKey = function(obj) {
+      if (typeof obj !== "object" || obj === null) {
+        return stringify(obj);
+      }
+      const keys = [];
+      for (const k in obj) {
+        keys.push(k);
+      }
+      keys.sort();
+      let key = "{";
+      for (let i = 0; i < keys.length; i++) {
+        if (i !== 0) {
+          key += ",";
+        }
+        key += stringify(keys[i]);
+        key += ":";
+        key += ObjectToUniqueKey(obj[keys[i]]);
+      }
+      key += "}";
+      return key;
+    };
+    splitStringBySize = function(str, segsize) {
+      const len = str.length;
+      if (len <= segsize) {
+        return [str];
+      }
+      const dataSegs = [];
+      for (let c = 0; c < len; c += segsize) {
+        if (c + segsize > len) {
+          dataSegs.push(str.substring(c, len));
+        } else {
+          dataSegs.push(str.substring(c, c + segsize));
+        }
+      }
+      return dataSegs;
+    };
+    doubleToIEEE754String = function(v) {
+      assert(!isInvalidJSONNumber(v), "Invalid JSON number");
+      const ebits = 11, fbits = 52;
+      const bias = (1 << ebits - 1) - 1;
+      let s2, e, f, ln, i;
+      if (v === 0) {
+        e = 0;
+        f = 0;
+        s2 = 1 / v === -Infinity ? 1 : 0;
+      } else {
+        s2 = v < 0;
+        v = Math.abs(v);
+        if (v >= Math.pow(2, 1 - bias)) {
+          ln = Math.min(Math.floor(Math.log(v) / Math.LN2), bias);
+          e = ln + bias;
+          f = Math.round(v * Math.pow(2, fbits - ln) - Math.pow(2, fbits));
+        } else {
+          e = 0;
+          f = Math.round(v / Math.pow(2, 1 - bias - fbits));
+        }
+      }
+      const bits = [];
+      for (i = fbits; i; i -= 1) {
+        bits.push(f % 2 ? 1 : 0);
+        f = Math.floor(f / 2);
+      }
+      for (i = ebits; i; i -= 1) {
+        bits.push(e % 2 ? 1 : 0);
+        e = Math.floor(e / 2);
+      }
+      bits.push(s2 ? 1 : 0);
+      bits.reverse();
+      const str = bits.join("");
+      let hexByteString = "";
+      for (i = 0; i < 64; i += 8) {
+        let hexByte = parseInt(str.substr(i, 8), 2).toString(16);
+        if (hexByte.length === 1) {
+          hexByte = "0" + hexByte;
+        }
+        hexByteString = hexByteString + hexByte;
+      }
+      return hexByteString.toLowerCase();
+    };
+    isChromeExtensionContentScript = function() {
+      return !!(typeof window === "object" && window["chrome"] && window["chrome"]["extension"] && !/^chrome/.test(window.location.href));
+    };
+    isWindowsStoreApp = function() {
+      return typeof Windows === "object" && typeof Windows.UI === "object";
+    };
+    INTEGER_REGEXP_ = new RegExp("^-?(0*)\\d{1,10}$");
+    INTEGER_32_MIN = -2147483648;
+    INTEGER_32_MAX = 2147483647;
+    tryParseInt = function(str) {
+      if (INTEGER_REGEXP_.test(str)) {
+        const intVal = Number(str);
+        if (intVal >= INTEGER_32_MIN && intVal <= INTEGER_32_MAX) {
+          return intVal;
+        }
+      }
+      return null;
+    };
+    exceptionGuard = function(fn) {
+      try {
+        fn();
+      } catch (e) {
+        setTimeout(() => {
+          const stack = e.stack || "";
+          warn("Exception was thrown by user callback.", stack);
+          throw e;
+        }, Math.floor(0));
+      }
+    };
+    beingCrawled = function() {
+      const userAgent = typeof window === "object" && window["navigator"] && window["navigator"]["userAgent"] || "";
+      return userAgent.search(/googlebot|google webmaster tools|bingbot|yahoo! slurp|baiduspider|yandexbot|duckduckbot/i) >= 0;
+    };
+    setTimeoutNonBlocking = function(fn, time) {
+      const timeout = setTimeout(fn, time);
+      if (typeof timeout === "object" && timeout["unref"]) {
+        timeout["unref"]();
+      }
+      return timeout;
+    };
+    RepoInfo = class {
+      constructor(host, secure, namespace, webSocketOnly, nodeAdmin = false, persistenceKey = "", includeNamespaceInQueryParams = false) {
+        this.secure = secure;
+        this.namespace = namespace;
+        this.webSocketOnly = webSocketOnly;
+        this.nodeAdmin = nodeAdmin;
+        this.persistenceKey = persistenceKey;
+        this.includeNamespaceInQueryParams = includeNamespaceInQueryParams;
+        this._host = host.toLowerCase();
+        this._domain = this._host.substr(this._host.indexOf(".") + 1);
+        this.internalHost = PersistentStorage.get("host:" + host) || this._host;
+      }
+      isCacheableHost() {
+        return this.internalHost.substr(0, 2) === "s-";
+      }
+      isCustomHost() {
+        return this._domain !== "firebaseio.com" && this._domain !== "firebaseio-demo.com";
+      }
+      get host() {
+        return this._host;
+      }
+      set host(newHost) {
+        if (newHost !== this.internalHost) {
+          this.internalHost = newHost;
+          if (this.isCacheableHost()) {
+            PersistentStorage.set("host:" + this._host, this.internalHost);
+          }
+        }
+      }
+      toString() {
+        let str = this.toURLString();
+        if (this.persistenceKey) {
+          str += "<" + this.persistenceKey + ">";
+        }
+        return str;
+      }
+      toURLString() {
+        const protocol = this.secure ? "https://" : "http://";
+        const query2 = this.includeNamespaceInQueryParams ? `?ns=${this.namespace}` : "";
+        return `${protocol}${this.host}/${query2}`;
+      }
+    };
+    StatsCollection = class {
+      constructor() {
+        this.counters_ = {};
+      }
+      incrementCounter(name22, amount = 1) {
+        if (!contains(this.counters_, name22)) {
+          this.counters_[name22] = 0;
+        }
+        this.counters_[name22] += amount;
+      }
+      get() {
+        return deepCopy(this.counters_);
+      }
+    };
+    collections = {};
+    reporters = {};
+    SDK_VERSION4 = "";
+    WEBSOCKET_MAX_FRAME_SIZE = 16384;
+    WEBSOCKET_KEEPALIVE_INTERVAL = 45e3;
+    WebSocketImpl = null;
+    if (typeof MozWebSocket !== "undefined") {
+      WebSocketImpl = MozWebSocket;
+    } else if (typeof WebSocket !== "undefined") {
+      WebSocketImpl = WebSocket;
+    }
+    WebSocketConnection = class {
+      constructor(connId, repoInfo, applicationId, appCheckToken, authToken, transportSessionId, lastSessionId) {
+        this.connId = connId;
+        this.applicationId = applicationId;
+        this.appCheckToken = appCheckToken;
+        this.authToken = authToken;
+        this.keepaliveTimer = null;
+        this.frames = null;
+        this.totalFrames = 0;
+        this.bytesSent = 0;
+        this.bytesReceived = 0;
+        this.log_ = logWrapper(this.connId);
+        this.stats_ = statsManagerGetCollection(repoInfo);
+        this.connURL = WebSocketConnection.connectionURL_(repoInfo, transportSessionId, lastSessionId, appCheckToken);
+        this.nodeAdmin = repoInfo.nodeAdmin;
+      }
+      static connectionURL_(repoInfo, transportSessionId, lastSessionId, appCheckToken) {
+        const urlParams = {};
+        urlParams[VERSION_PARAM] = PROTOCOL_VERSION;
+        if (!isNodeSdk() && typeof location !== "undefined" && location.hostname && FORGE_DOMAIN_RE.test(location.hostname)) {
+          urlParams[REFERER_PARAM] = FORGE_REF;
+        }
+        if (transportSessionId) {
+          urlParams[TRANSPORT_SESSION_PARAM] = transportSessionId;
+        }
+        if (lastSessionId) {
+          urlParams[LAST_SESSION_PARAM] = lastSessionId;
+        }
+        if (appCheckToken) {
+          urlParams[APP_CHECK_TOKEN_PARAM] = appCheckToken;
+        }
+        return repoInfoConnectionURL(repoInfo, WEBSOCKET, urlParams);
+      }
+      open(onMessage, onDisconnect) {
+        this.onDisconnect = onDisconnect;
+        this.onMessage = onMessage;
+        this.log_("Websocket connecting to " + this.connURL);
+        this.everConnected_ = false;
+        PersistentStorage.set("previous_websocket_failure", true);
+        try {
+          if (isNodeSdk()) {
+            const device = this.nodeAdmin ? "AdminNode" : "Node";
+            const options2 = {
+              headers: {
+                "User-Agent": `Firebase/${PROTOCOL_VERSION}/${SDK_VERSION4}/${process.platform}/${device}`,
+                "X-Firebase-GMPID": this.applicationId || ""
+              }
+            };
+            if (this.authToken) {
+              options2.headers["Authorization"] = `Bearer ${this.authToken}`;
+            }
+            if (this.appCheckToken) {
+              options2.headers["X-Firebase-AppCheck"] = this.appCheckToken;
+            }
+            const env = process["env"];
+            const proxy2 = this.connURL.indexOf("wss://") === 0 ? env["HTTPS_PROXY"] || env["https_proxy"] : env["HTTP_PROXY"] || env["http_proxy"];
+            if (proxy2) {
+              options2["proxy"] = { origin: proxy2 };
+            }
+            this.mySock = new WebSocketImpl(this.connURL, [], options2);
+          } else {
+            const options2 = {
+              headers: {
+                "X-Firebase-GMPID": this.applicationId || "",
+                "X-Firebase-AppCheck": this.appCheckToken || ""
+              }
+            };
+            this.mySock = new WebSocketImpl(this.connURL, [], options2);
+          }
+        } catch (e) {
+          this.log_("Error instantiating WebSocket.");
+          const error22 = e.message || e.data;
+          if (error22) {
+            this.log_(error22);
+          }
+          this.onClosed_();
+          return;
+        }
+        this.mySock.onopen = () => {
+          this.log_("Websocket connected.");
+          this.everConnected_ = true;
+        };
+        this.mySock.onclose = () => {
+          this.log_("Websocket connection was disconnected.");
+          this.mySock = null;
+          this.onClosed_();
+        };
+        this.mySock.onmessage = (m) => {
+          this.handleIncomingFrame(m);
+        };
+        this.mySock.onerror = (e) => {
+          this.log_("WebSocket error.  Closing connection.");
+          const error22 = e.message || e.data;
+          if (error22) {
+            this.log_(error22);
+          }
+          this.onClosed_();
+        };
+      }
+      start() {
+      }
+      static forceDisallow() {
+        WebSocketConnection.forceDisallow_ = true;
+      }
+      static isAvailable() {
+        let isOldAndroid = false;
+        if (typeof navigator !== "undefined" && navigator.userAgent) {
+          const oldAndroidRegex = /Android ([0-9]{0,}\.[0-9]{0,})/;
+          const oldAndroidMatch = navigator.userAgent.match(oldAndroidRegex);
+          if (oldAndroidMatch && oldAndroidMatch.length > 1) {
+            if (parseFloat(oldAndroidMatch[1]) < 4.4) {
+              isOldAndroid = true;
+            }
+          }
+        }
+        return !isOldAndroid && WebSocketImpl !== null && !WebSocketConnection.forceDisallow_;
+      }
+      static previouslyFailed() {
+        return PersistentStorage.isInMemoryStorage || PersistentStorage.get("previous_websocket_failure") === true;
+      }
+      markConnectionHealthy() {
+        PersistentStorage.remove("previous_websocket_failure");
+      }
+      appendFrame_(data) {
+        this.frames.push(data);
+        if (this.frames.length === this.totalFrames) {
+          const fullMess = this.frames.join("");
+          this.frames = null;
+          const jsonMess = jsonEval(fullMess);
+          this.onMessage(jsonMess);
+        }
+      }
+      handleNewFrameCount_(frameCount) {
+        this.totalFrames = frameCount;
+        this.frames = [];
+      }
+      extractFrameCount_(data) {
+        assert(this.frames === null, "We already have a frame buffer");
+        if (data.length <= 6) {
+          const frameCount = Number(data);
+          if (!isNaN(frameCount)) {
+            this.handleNewFrameCount_(frameCount);
+            return null;
+          }
+        }
+        this.handleNewFrameCount_(1);
+        return data;
+      }
+      handleIncomingFrame(mess) {
+        if (this.mySock === null) {
+          return;
+        }
+        const data = mess["data"];
+        this.bytesReceived += data.length;
+        this.stats_.incrementCounter("bytes_received", data.length);
+        this.resetKeepAlive();
+        if (this.frames !== null) {
+          this.appendFrame_(data);
+        } else {
+          const remainingData = this.extractFrameCount_(data);
+          if (remainingData !== null) {
+            this.appendFrame_(remainingData);
+          }
+        }
+      }
+      send(data) {
+        this.resetKeepAlive();
+        const dataStr = stringify(data);
+        this.bytesSent += dataStr.length;
+        this.stats_.incrementCounter("bytes_sent", dataStr.length);
+        const dataSegs = splitStringBySize(dataStr, WEBSOCKET_MAX_FRAME_SIZE);
+        if (dataSegs.length > 1) {
+          this.sendString_(String(dataSegs.length));
+        }
+        for (let i = 0; i < dataSegs.length; i++) {
+          this.sendString_(dataSegs[i]);
+        }
+      }
+      shutdown_() {
+        this.isClosed_ = true;
+        if (this.keepaliveTimer) {
+          clearInterval(this.keepaliveTimer);
+          this.keepaliveTimer = null;
+        }
+        if (this.mySock) {
+          this.mySock.close();
+          this.mySock = null;
+        }
+      }
+      onClosed_() {
+        if (!this.isClosed_) {
+          this.log_("WebSocket is closing itself");
+          this.shutdown_();
+          if (this.onDisconnect) {
+            this.onDisconnect(this.everConnected_);
+            this.onDisconnect = null;
+          }
+        }
+      }
+      close() {
+        if (!this.isClosed_) {
+          this.log_("WebSocket is being closed");
+          this.shutdown_();
+        }
+      }
+      resetKeepAlive() {
+        clearInterval(this.keepaliveTimer);
+        this.keepaliveTimer = setInterval(() => {
+          if (this.mySock) {
+            this.sendString_("0");
+          }
+          this.resetKeepAlive();
+        }, Math.floor(WEBSOCKET_KEEPALIVE_INTERVAL));
+      }
+      sendString_(str) {
+        try {
+          this.mySock.send(str);
+        } catch (e) {
+          this.log_("Exception thrown from WebSocket.send():", e.message || e.data, "Closing connection.");
+          setTimeout(this.onClosed_.bind(this), 0);
+        }
+      }
+    };
+    WebSocketConnection.responsesRequiredToBeHealthy = 2;
+    WebSocketConnection.healthyTimeout = 3e4;
+    name5 = "@firebase/database";
+    version5 = "0.12.4";
+    AppCheckTokenProvider = class {
+      constructor(appName_, appCheckProvider) {
+        this.appName_ = appName_;
+        this.appCheckProvider = appCheckProvider;
+        this.appCheck = appCheckProvider === null || appCheckProvider === void 0 ? void 0 : appCheckProvider.getImmediate({ optional: true });
+        if (!this.appCheck) {
+          appCheckProvider === null || appCheckProvider === void 0 ? void 0 : appCheckProvider.get().then((appCheck) => this.appCheck = appCheck);
+        }
+      }
+      getToken(forceRefresh) {
+        if (!this.appCheck) {
+          return new Promise((resolve3, reject) => {
+            setTimeout(() => {
+              if (this.appCheck) {
+                this.getToken(forceRefresh).then(resolve3, reject);
+              } else {
+                resolve3(null);
+              }
+            }, 0);
+          });
+        }
+        return this.appCheck.getToken(forceRefresh);
+      }
+      addTokenChangeListener(listener) {
+        var _a;
+        (_a = this.appCheckProvider) === null || _a === void 0 ? void 0 : _a.get().then((appCheck) => appCheck.addTokenListener(listener));
+      }
+      notifyForInvalidToken() {
+        warn(`Provided AppCheck credentials for the app named "${this.appName_}" are invalid. This usually indicates your app was not initialized correctly.`);
+      }
+    };
+    FirebaseAuthTokenProvider = class {
+      constructor(appName_, firebaseOptions_, authProvider_) {
+        this.appName_ = appName_;
+        this.firebaseOptions_ = firebaseOptions_;
+        this.authProvider_ = authProvider_;
+        this.auth_ = null;
+        this.auth_ = authProvider_.getImmediate({ optional: true });
+        if (!this.auth_) {
+          authProvider_.onInit((auth) => this.auth_ = auth);
+        }
+      }
+      getToken(forceRefresh) {
+        if (!this.auth_) {
+          return new Promise((resolve3, reject) => {
+            setTimeout(() => {
+              if (this.auth_) {
+                this.getToken(forceRefresh).then(resolve3, reject);
+              } else {
+                resolve3(null);
+              }
+            }, 0);
+          });
+        }
+        return this.auth_.getToken(forceRefresh).catch((error22) => {
+          if (error22 && error22.code === "auth/token-not-initialized") {
+            log("Got auth/token-not-initialized error.  Treating as null token.");
+            return null;
+          } else {
+            return Promise.reject(error22);
+          }
+        });
+      }
+      addTokenChangeListener(listener) {
+        if (this.auth_) {
+          this.auth_.addAuthTokenListener(listener);
+        } else {
+          this.authProvider_.get().then((auth) => auth.addAuthTokenListener(listener));
+        }
+      }
+      removeTokenChangeListener(listener) {
+        this.authProvider_.get().then((auth) => auth.removeAuthTokenListener(listener));
+      }
+      notifyForInvalidToken() {
+        let errorMessage = 'Provided authentication credentials for the app named "' + this.appName_ + '" are invalid. This usually indicates your app was not initialized correctly. ';
+        if ("credential" in this.firebaseOptions_) {
+          errorMessage += 'Make sure the "credential" property provided to initializeApp() is authorized to access the specified "databaseURL" and is from the correct project.';
+        } else if ("serviceAccount" in this.firebaseOptions_) {
+          errorMessage += 'Make sure the "serviceAccount" property provided to initializeApp() is authorized to access the specified "databaseURL" and is from the correct project.';
+        } else {
+          errorMessage += 'Make sure the "apiKey" and "databaseURL" properties provided to initializeApp() match the values provided for your app at https://console.firebase.google.com/.';
+        }
+        warn(errorMessage);
+      }
+    };
+    EmulatorTokenProvider = class {
+      constructor(accessToken) {
+        this.accessToken = accessToken;
+      }
+      getToken(forceRefresh) {
+        return Promise.resolve({
+          accessToken: this.accessToken
+        });
+      }
+      addTokenChangeListener(listener) {
+        listener(this.accessToken);
+      }
+      removeTokenChangeListener(listener) {
+      }
+      notifyForInvalidToken() {
+      }
+    };
+    EmulatorTokenProvider.OWNER = "owner";
+    PacketReceiver = class {
+      constructor(onMessage_) {
+        this.onMessage_ = onMessage_;
+        this.pendingResponses = [];
+        this.currentResponseNum = 0;
+        this.closeAfterResponse = -1;
+        this.onClose = null;
+      }
+      closeAfter(responseNum, callback) {
+        this.closeAfterResponse = responseNum;
+        this.onClose = callback;
+        if (this.closeAfterResponse < this.currentResponseNum) {
+          this.onClose();
+          this.onClose = null;
+        }
+      }
+      handleResponse(requestNum, data) {
+        this.pendingResponses[requestNum] = data;
+        while (this.pendingResponses[this.currentResponseNum]) {
+          const toProcess = this.pendingResponses[this.currentResponseNum];
+          delete this.pendingResponses[this.currentResponseNum];
+          for (let i = 0; i < toProcess.length; ++i) {
+            if (toProcess[i]) {
+              exceptionGuard(() => {
+                this.onMessage_(toProcess[i]);
+              });
+            }
+          }
+          if (this.currentResponseNum === this.closeAfterResponse) {
+            if (this.onClose) {
+              this.onClose();
+              this.onClose = null;
+            }
+            break;
+          }
+          this.currentResponseNum++;
+        }
+      }
+    };
+    FIREBASE_LONGPOLL_START_PARAM = "start";
+    FIREBASE_LONGPOLL_CLOSE_COMMAND = "close";
+    FIREBASE_LONGPOLL_COMMAND_CB_NAME = "pLPCommand";
+    FIREBASE_LONGPOLL_DATA_CB_NAME = "pRTLPCB";
+    FIREBASE_LONGPOLL_ID_PARAM = "id";
+    FIREBASE_LONGPOLL_PW_PARAM = "pw";
+    FIREBASE_LONGPOLL_SERIAL_PARAM = "ser";
+    FIREBASE_LONGPOLL_CALLBACK_ID_PARAM = "cb";
+    FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM = "seg";
+    FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET = "ts";
+    FIREBASE_LONGPOLL_DATA_PARAM = "d";
+    FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM = "dframe";
+    MAX_URL_DATA_SIZE = 1870;
+    SEG_HEADER_SIZE = 30;
+    MAX_PAYLOAD_SIZE = MAX_URL_DATA_SIZE - SEG_HEADER_SIZE;
+    KEEPALIVE_REQUEST_INTERVAL = 25e3;
+    LP_CONNECT_TIMEOUT = 3e4;
+    BrowserPollConnection = class {
+      constructor(connId, repoInfo, applicationId, appCheckToken, authToken, transportSessionId, lastSessionId) {
+        this.connId = connId;
+        this.repoInfo = repoInfo;
+        this.applicationId = applicationId;
+        this.appCheckToken = appCheckToken;
+        this.authToken = authToken;
+        this.transportSessionId = transportSessionId;
+        this.lastSessionId = lastSessionId;
+        this.bytesSent = 0;
+        this.bytesReceived = 0;
+        this.everConnected_ = false;
+        this.log_ = logWrapper(connId);
+        this.stats_ = statsManagerGetCollection(repoInfo);
+        this.urlFn = (params) => {
+          if (this.appCheckToken) {
+            params[APP_CHECK_TOKEN_PARAM] = this.appCheckToken;
+          }
+          return repoInfoConnectionURL(repoInfo, LONG_POLLING, params);
+        };
+      }
+      open(onMessage, onDisconnect) {
+        this.curSegmentNum = 0;
+        this.onDisconnect_ = onDisconnect;
+        this.myPacketOrderer = new PacketReceiver(onMessage);
+        this.isClosed_ = false;
+        this.connectTimeoutTimer_ = setTimeout(() => {
+          this.log_("Timed out trying to connect.");
+          this.onClosed_();
+          this.connectTimeoutTimer_ = null;
+        }, Math.floor(LP_CONNECT_TIMEOUT));
+        executeWhenDOMReady(() => {
+          if (this.isClosed_) {
+            return;
+          }
+          this.scriptTagHolder = new FirebaseIFrameScriptHolder((...args) => {
+            const [command, arg1, arg2, arg3, arg4] = args;
+            this.incrementIncomingBytes_(args);
+            if (!this.scriptTagHolder) {
+              return;
+            }
+            if (this.connectTimeoutTimer_) {
+              clearTimeout(this.connectTimeoutTimer_);
+              this.connectTimeoutTimer_ = null;
+            }
+            this.everConnected_ = true;
+            if (command === FIREBASE_LONGPOLL_START_PARAM) {
+              this.id = arg1;
+              this.password = arg2;
+            } else if (command === FIREBASE_LONGPOLL_CLOSE_COMMAND) {
+              if (arg1) {
+                this.scriptTagHolder.sendNewPolls = false;
+                this.myPacketOrderer.closeAfter(arg1, () => {
+                  this.onClosed_();
+                });
+              } else {
+                this.onClosed_();
+              }
+            } else {
+              throw new Error("Unrecognized command received: " + command);
+            }
+          }, (...args) => {
+            const [pN, data] = args;
+            this.incrementIncomingBytes_(args);
+            this.myPacketOrderer.handleResponse(pN, data);
+          }, () => {
+            this.onClosed_();
+          }, this.urlFn);
+          const urlParams = {};
+          urlParams[FIREBASE_LONGPOLL_START_PARAM] = "t";
+          urlParams[FIREBASE_LONGPOLL_SERIAL_PARAM] = Math.floor(Math.random() * 1e8);
+          if (this.scriptTagHolder.uniqueCallbackIdentifier) {
+            urlParams[FIREBASE_LONGPOLL_CALLBACK_ID_PARAM] = this.scriptTagHolder.uniqueCallbackIdentifier;
+          }
+          urlParams[VERSION_PARAM] = PROTOCOL_VERSION;
+          if (this.transportSessionId) {
+            urlParams[TRANSPORT_SESSION_PARAM] = this.transportSessionId;
+          }
+          if (this.lastSessionId) {
+            urlParams[LAST_SESSION_PARAM] = this.lastSessionId;
+          }
+          if (this.applicationId) {
+            urlParams[APPLICATION_ID_PARAM] = this.applicationId;
+          }
+          if (this.appCheckToken) {
+            urlParams[APP_CHECK_TOKEN_PARAM] = this.appCheckToken;
+          }
+          if (typeof location !== "undefined" && location.hostname && FORGE_DOMAIN_RE.test(location.hostname)) {
+            urlParams[REFERER_PARAM] = FORGE_REF;
+          }
+          const connectURL = this.urlFn(urlParams);
+          this.log_("Connecting via long-poll to " + connectURL);
+          this.scriptTagHolder.addTag(connectURL, () => {
+          });
+        });
+      }
+      start() {
+        this.scriptTagHolder.startLongPoll(this.id, this.password);
+        this.addDisconnectPingFrame(this.id, this.password);
+      }
+      static forceAllow() {
+        BrowserPollConnection.forceAllow_ = true;
+      }
+      static forceDisallow() {
+        BrowserPollConnection.forceDisallow_ = true;
+      }
+      static isAvailable() {
+        if (isNodeSdk()) {
+          return false;
+        } else if (BrowserPollConnection.forceAllow_) {
+          return true;
+        } else {
+          return !BrowserPollConnection.forceDisallow_ && typeof document !== "undefined" && document.createElement != null && !isChromeExtensionContentScript() && !isWindowsStoreApp();
+        }
+      }
+      markConnectionHealthy() {
+      }
+      shutdown_() {
+        this.isClosed_ = true;
+        if (this.scriptTagHolder) {
+          this.scriptTagHolder.close();
+          this.scriptTagHolder = null;
+        }
+        if (this.myDisconnFrame) {
+          document.body.removeChild(this.myDisconnFrame);
+          this.myDisconnFrame = null;
+        }
+        if (this.connectTimeoutTimer_) {
+          clearTimeout(this.connectTimeoutTimer_);
+          this.connectTimeoutTimer_ = null;
+        }
+      }
+      onClosed_() {
+        if (!this.isClosed_) {
+          this.log_("Longpoll is closing itself");
+          this.shutdown_();
+          if (this.onDisconnect_) {
+            this.onDisconnect_(this.everConnected_);
+            this.onDisconnect_ = null;
+          }
+        }
+      }
+      close() {
+        if (!this.isClosed_) {
+          this.log_("Longpoll is being closed.");
+          this.shutdown_();
+        }
+      }
+      send(data) {
+        const dataStr = stringify(data);
+        this.bytesSent += dataStr.length;
+        this.stats_.incrementCounter("bytes_sent", dataStr.length);
+        const base64data = base64Encode(dataStr);
+        const dataSegs = splitStringBySize(base64data, MAX_PAYLOAD_SIZE);
+        for (let i = 0; i < dataSegs.length; i++) {
+          this.scriptTagHolder.enqueueSegment(this.curSegmentNum, dataSegs.length, dataSegs[i]);
+          this.curSegmentNum++;
+        }
+      }
+      addDisconnectPingFrame(id, pw) {
+        if (isNodeSdk()) {
+          return;
+        }
+        this.myDisconnFrame = document.createElement("iframe");
+        const urlParams = {};
+        urlParams[FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM] = "t";
+        urlParams[FIREBASE_LONGPOLL_ID_PARAM] = id;
+        urlParams[FIREBASE_LONGPOLL_PW_PARAM] = pw;
+        this.myDisconnFrame.src = this.urlFn(urlParams);
+        this.myDisconnFrame.style.display = "none";
+        document.body.appendChild(this.myDisconnFrame);
+      }
+      incrementIncomingBytes_(args) {
+        const bytesReceived = stringify(args).length;
+        this.bytesReceived += bytesReceived;
+        this.stats_.incrementCounter("bytes_received", bytesReceived);
+      }
+    };
+    FirebaseIFrameScriptHolder = class {
+      constructor(commandCB, onMessageCB, onDisconnect, urlFn) {
+        this.onDisconnect = onDisconnect;
+        this.urlFn = urlFn;
+        this.outstandingRequests = new Set();
+        this.pendingSegs = [];
+        this.currentSerial = Math.floor(Math.random() * 1e8);
+        this.sendNewPolls = true;
+        if (!isNodeSdk()) {
+          this.uniqueCallbackIdentifier = LUIDGenerator();
+          window[FIREBASE_LONGPOLL_COMMAND_CB_NAME + this.uniqueCallbackIdentifier] = commandCB;
+          window[FIREBASE_LONGPOLL_DATA_CB_NAME + this.uniqueCallbackIdentifier] = onMessageCB;
+          this.myIFrame = FirebaseIFrameScriptHolder.createIFrame_();
+          let script = "";
+          if (this.myIFrame.src && this.myIFrame.src.substr(0, "javascript:".length) === "javascript:") {
+            const currentDomain = document.domain;
+            script = '<script>document.domain="' + currentDomain + '";<\/script>';
+          }
+          const iframeContents = "<html><body>" + script + "</body></html>";
+          try {
+            this.myIFrame.doc.open();
+            this.myIFrame.doc.write(iframeContents);
+            this.myIFrame.doc.close();
+          } catch (e) {
+            log("frame writing exception");
+            if (e.stack) {
+              log(e.stack);
+            }
+            log(e);
+          }
+        } else {
+          this.commandCB = commandCB;
+          this.onMessageCB = onMessageCB;
+        }
+      }
+      static createIFrame_() {
+        const iframe = document.createElement("iframe");
+        iframe.style.display = "none";
+        if (document.body) {
+          document.body.appendChild(iframe);
+          try {
+            const a = iframe.contentWindow.document;
+            if (!a) {
+              log("No IE domain setting required");
+            }
+          } catch (e) {
+            const domain = document.domain;
+            iframe.src = "javascript:void((function(){document.open();document.domain='" + domain + "';document.close();})())";
+          }
+        } else {
+          throw "Document body has not initialized. Wait to initialize Firebase until after the document is ready.";
+        }
+        if (iframe.contentDocument) {
+          iframe.doc = iframe.contentDocument;
+        } else if (iframe.contentWindow) {
+          iframe.doc = iframe.contentWindow.document;
+        } else if (iframe.document) {
+          iframe.doc = iframe.document;
+        }
+        return iframe;
+      }
+      close() {
+        this.alive = false;
+        if (this.myIFrame) {
+          this.myIFrame.doc.body.innerHTML = "";
+          setTimeout(() => {
+            if (this.myIFrame !== null) {
+              document.body.removeChild(this.myIFrame);
+              this.myIFrame = null;
+            }
+          }, Math.floor(0));
+        }
+        const onDisconnect = this.onDisconnect;
+        if (onDisconnect) {
+          this.onDisconnect = null;
+          onDisconnect();
+        }
+      }
+      startLongPoll(id, pw) {
+        this.myID = id;
+        this.myPW = pw;
+        this.alive = true;
+        while (this.newRequest_()) {
+        }
+      }
+      newRequest_() {
+        if (this.alive && this.sendNewPolls && this.outstandingRequests.size < (this.pendingSegs.length > 0 ? 2 : 1)) {
+          this.currentSerial++;
+          const urlParams = {};
+          urlParams[FIREBASE_LONGPOLL_ID_PARAM] = this.myID;
+          urlParams[FIREBASE_LONGPOLL_PW_PARAM] = this.myPW;
+          urlParams[FIREBASE_LONGPOLL_SERIAL_PARAM] = this.currentSerial;
+          let theURL = this.urlFn(urlParams);
+          let curDataString = "";
+          let i = 0;
+          while (this.pendingSegs.length > 0) {
+            const nextSeg = this.pendingSegs[0];
+            if (nextSeg.d.length + SEG_HEADER_SIZE + curDataString.length <= MAX_URL_DATA_SIZE) {
+              const theSeg = this.pendingSegs.shift();
+              curDataString = curDataString + "&" + FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM + i + "=" + theSeg.seg + "&" + FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET + i + "=" + theSeg.ts + "&" + FIREBASE_LONGPOLL_DATA_PARAM + i + "=" + theSeg.d;
+              i++;
+            } else {
+              break;
+            }
+          }
+          theURL = theURL + curDataString;
+          this.addLongPollTag_(theURL, this.currentSerial);
+          return true;
+        } else {
+          return false;
+        }
+      }
+      enqueueSegment(segnum, totalsegs, data) {
+        this.pendingSegs.push({ seg: segnum, ts: totalsegs, d: data });
+        if (this.alive) {
+          this.newRequest_();
+        }
+      }
+      addLongPollTag_(url2, serial) {
+        this.outstandingRequests.add(serial);
+        const doNewRequest = () => {
+          this.outstandingRequests.delete(serial);
+          this.newRequest_();
+        };
+        const keepaliveTimeout = setTimeout(doNewRequest, Math.floor(KEEPALIVE_REQUEST_INTERVAL));
+        const readyStateCB = () => {
+          clearTimeout(keepaliveTimeout);
+          doNewRequest();
+        };
+        this.addTag(url2, readyStateCB);
+      }
+      addTag(url2, loadCB) {
+        if (isNodeSdk()) {
+          this.doNodeLongPoll(url2, loadCB);
+        } else {
+          setTimeout(() => {
+            try {
+              if (!this.sendNewPolls) {
+                return;
+              }
+              const newScript = this.myIFrame.doc.createElement("script");
+              newScript.type = "text/javascript";
+              newScript.async = true;
+              newScript.src = url2;
+              newScript.onload = newScript.onreadystatechange = function() {
+                const rstate = newScript.readyState;
+                if (!rstate || rstate === "loaded" || rstate === "complete") {
+                  newScript.onload = newScript.onreadystatechange = null;
+                  if (newScript.parentNode) {
+                    newScript.parentNode.removeChild(newScript);
+                  }
+                  loadCB();
+                }
+              };
+              newScript.onerror = () => {
+                log("Long-poll script failed to load: " + url2);
+                this.sendNewPolls = false;
+                this.close();
+              };
+              this.myIFrame.doc.body.appendChild(newScript);
+            } catch (e) {
+            }
+          }, Math.floor(1));
+        }
+      }
+    };
+    TransportManager = class {
+      constructor(repoInfo) {
+        this.initTransports_(repoInfo);
+      }
+      static get ALL_TRANSPORTS() {
+        return [BrowserPollConnection, WebSocketConnection];
+      }
+      initTransports_(repoInfo) {
+        const isWebSocketsAvailable = WebSocketConnection && WebSocketConnection["isAvailable"]();
+        let isSkipPollConnection = isWebSocketsAvailable && !WebSocketConnection.previouslyFailed();
+        if (repoInfo.webSocketOnly) {
+          if (!isWebSocketsAvailable) {
+            warn("wss:// URL used, but browser isn't known to support websockets.  Trying anyway.");
+          }
+          isSkipPollConnection = true;
+        }
+        if (isSkipPollConnection) {
+          this.transports_ = [WebSocketConnection];
+        } else {
+          const transports = this.transports_ = [];
+          for (const transport of TransportManager.ALL_TRANSPORTS) {
+            if (transport && transport["isAvailable"]()) {
+              transports.push(transport);
+            }
+          }
+        }
+      }
+      initialTransport() {
+        if (this.transports_.length > 0) {
+          return this.transports_[0];
+        } else {
+          throw new Error("No transports available");
+        }
+      }
+      upgradeTransport() {
+        if (this.transports_.length > 1) {
+          return this.transports_[1];
+        } else {
+          return null;
+        }
+      }
+    };
+    UPGRADE_TIMEOUT = 6e4;
+    DELAY_BEFORE_SENDING_EXTRA_REQUESTS = 5e3;
+    BYTES_SENT_HEALTHY_OVERRIDE = 10 * 1024;
+    BYTES_RECEIVED_HEALTHY_OVERRIDE = 100 * 1024;
+    MESSAGE_TYPE = "t";
+    MESSAGE_DATA = "d";
+    CONTROL_SHUTDOWN = "s";
+    CONTROL_RESET = "r";
+    CONTROL_ERROR = "e";
+    CONTROL_PONG = "o";
+    SWITCH_ACK = "a";
+    END_TRANSMISSION = "n";
+    PING = "p";
+    SERVER_HELLO = "h";
+    Connection = class {
+      constructor(id, repoInfo_, applicationId_, appCheckToken_, authToken_, onMessage_, onReady_, onDisconnect_, onKill_, lastSessionId) {
+        this.id = id;
+        this.repoInfo_ = repoInfo_;
+        this.applicationId_ = applicationId_;
+        this.appCheckToken_ = appCheckToken_;
+        this.authToken_ = authToken_;
+        this.onMessage_ = onMessage_;
+        this.onReady_ = onReady_;
+        this.onDisconnect_ = onDisconnect_;
+        this.onKill_ = onKill_;
+        this.lastSessionId = lastSessionId;
+        this.connectionCount = 0;
+        this.pendingDataMessages = [];
+        this.state_ = 0;
+        this.log_ = logWrapper("c:" + this.id + ":");
+        this.transportManager_ = new TransportManager(repoInfo_);
+        this.log_("Connection created");
+        this.start_();
+      }
+      start_() {
+        const conn = this.transportManager_.initialTransport();
+        this.conn_ = new conn(this.nextTransportId_(), this.repoInfo_, this.applicationId_, this.appCheckToken_, this.authToken_, null, this.lastSessionId);
+        this.primaryResponsesRequired_ = conn["responsesRequiredToBeHealthy"] || 0;
+        const onMessageReceived = this.connReceiver_(this.conn_);
+        const onConnectionLost = this.disconnReceiver_(this.conn_);
+        this.tx_ = this.conn_;
+        this.rx_ = this.conn_;
+        this.secondaryConn_ = null;
+        this.isHealthy_ = false;
+        setTimeout(() => {
+          this.conn_ && this.conn_.open(onMessageReceived, onConnectionLost);
+        }, Math.floor(0));
+        const healthyTimeoutMS = conn["healthyTimeout"] || 0;
+        if (healthyTimeoutMS > 0) {
+          this.healthyTimeout_ = setTimeoutNonBlocking(() => {
+            this.healthyTimeout_ = null;
+            if (!this.isHealthy_) {
+              if (this.conn_ && this.conn_.bytesReceived > BYTES_RECEIVED_HEALTHY_OVERRIDE) {
+                this.log_("Connection exceeded healthy timeout but has received " + this.conn_.bytesReceived + " bytes.  Marking connection healthy.");
+                this.isHealthy_ = true;
+                this.conn_.markConnectionHealthy();
+              } else if (this.conn_ && this.conn_.bytesSent > BYTES_SENT_HEALTHY_OVERRIDE) {
+                this.log_("Connection exceeded healthy timeout but has sent " + this.conn_.bytesSent + " bytes.  Leaving connection alive.");
+              } else {
+                this.log_("Closing unhealthy connection after timeout.");
+                this.close();
+              }
+            }
+          }, Math.floor(healthyTimeoutMS));
+        }
+      }
+      nextTransportId_() {
+        return "c:" + this.id + ":" + this.connectionCount++;
+      }
+      disconnReceiver_(conn) {
+        return (everConnected) => {
+          if (conn === this.conn_) {
+            this.onConnectionLost_(everConnected);
+          } else if (conn === this.secondaryConn_) {
+            this.log_("Secondary connection lost.");
+            this.onSecondaryConnectionLost_();
+          } else {
+            this.log_("closing an old connection");
+          }
+        };
+      }
+      connReceiver_(conn) {
+        return (message2) => {
+          if (this.state_ !== 2) {
+            if (conn === this.rx_) {
+              this.onPrimaryMessageReceived_(message2);
+            } else if (conn === this.secondaryConn_) {
+              this.onSecondaryMessageReceived_(message2);
+            } else {
+              this.log_("message on old connection");
+            }
+          }
+        };
+      }
+      sendRequest(dataMsg) {
+        const msg = { t: "d", d: dataMsg };
+        this.sendData_(msg);
+      }
+      tryCleanupConnection() {
+        if (this.tx_ === this.secondaryConn_ && this.rx_ === this.secondaryConn_) {
+          this.log_("cleaning up and promoting a connection: " + this.secondaryConn_.connId);
+          this.conn_ = this.secondaryConn_;
+          this.secondaryConn_ = null;
+        }
+      }
+      onSecondaryControl_(controlData) {
+        if (MESSAGE_TYPE in controlData) {
+          const cmd = controlData[MESSAGE_TYPE];
+          if (cmd === SWITCH_ACK) {
+            this.upgradeIfSecondaryHealthy_();
+          } else if (cmd === CONTROL_RESET) {
+            this.log_("Got a reset on secondary, closing it");
+            this.secondaryConn_.close();
+            if (this.tx_ === this.secondaryConn_ || this.rx_ === this.secondaryConn_) {
+              this.close();
+            }
+          } else if (cmd === CONTROL_PONG) {
+            this.log_("got pong on secondary.");
+            this.secondaryResponsesRequired_--;
+            this.upgradeIfSecondaryHealthy_();
+          }
+        }
+      }
+      onSecondaryMessageReceived_(parsedData) {
+        const layer = requireKey("t", parsedData);
+        const data = requireKey("d", parsedData);
+        if (layer === "c") {
+          this.onSecondaryControl_(data);
+        } else if (layer === "d") {
+          this.pendingDataMessages.push(data);
+        } else {
+          throw new Error("Unknown protocol layer: " + layer);
+        }
+      }
+      upgradeIfSecondaryHealthy_() {
+        if (this.secondaryResponsesRequired_ <= 0) {
+          this.log_("Secondary connection is healthy.");
+          this.isHealthy_ = true;
+          this.secondaryConn_.markConnectionHealthy();
+          this.proceedWithUpgrade_();
+        } else {
+          this.log_("sending ping on secondary.");
+          this.secondaryConn_.send({ t: "c", d: { t: PING, d: {} } });
+        }
+      }
+      proceedWithUpgrade_() {
+        this.secondaryConn_.start();
+        this.log_("sending client ack on secondary");
+        this.secondaryConn_.send({ t: "c", d: { t: SWITCH_ACK, d: {} } });
+        this.log_("Ending transmission on primary");
+        this.conn_.send({ t: "c", d: { t: END_TRANSMISSION, d: {} } });
+        this.tx_ = this.secondaryConn_;
+        this.tryCleanupConnection();
+      }
+      onPrimaryMessageReceived_(parsedData) {
+        const layer = requireKey("t", parsedData);
+        const data = requireKey("d", parsedData);
+        if (layer === "c") {
+          this.onControl_(data);
+        } else if (layer === "d") {
+          this.onDataMessage_(data);
+        }
+      }
+      onDataMessage_(message2) {
+        this.onPrimaryResponse_();
+        this.onMessage_(message2);
+      }
+      onPrimaryResponse_() {
+        if (!this.isHealthy_) {
+          this.primaryResponsesRequired_--;
+          if (this.primaryResponsesRequired_ <= 0) {
+            this.log_("Primary connection is healthy.");
+            this.isHealthy_ = true;
+            this.conn_.markConnectionHealthy();
+          }
+        }
+      }
+      onControl_(controlData) {
+        const cmd = requireKey(MESSAGE_TYPE, controlData);
+        if (MESSAGE_DATA in controlData) {
+          const payload = controlData[MESSAGE_DATA];
+          if (cmd === SERVER_HELLO) {
+            this.onHandshake_(payload);
+          } else if (cmd === END_TRANSMISSION) {
+            this.log_("recvd end transmission on primary");
+            this.rx_ = this.secondaryConn_;
+            for (let i = 0; i < this.pendingDataMessages.length; ++i) {
+              this.onDataMessage_(this.pendingDataMessages[i]);
+            }
+            this.pendingDataMessages = [];
+            this.tryCleanupConnection();
+          } else if (cmd === CONTROL_SHUTDOWN) {
+            this.onConnectionShutdown_(payload);
+          } else if (cmd === CONTROL_RESET) {
+            this.onReset_(payload);
+          } else if (cmd === CONTROL_ERROR) {
+            error("Server Error: " + payload);
+          } else if (cmd === CONTROL_PONG) {
+            this.log_("got pong on primary.");
+            this.onPrimaryResponse_();
+            this.sendPingOnPrimaryIfNecessary_();
+          } else {
+            error("Unknown control packet command: " + cmd);
+          }
+        }
+      }
+      onHandshake_(handshake) {
+        const timestamp = handshake.ts;
+        const version22 = handshake.v;
+        const host = handshake.h;
+        this.sessionId = handshake.s;
+        this.repoInfo_.host = host;
+        if (this.state_ === 0) {
+          this.conn_.start();
+          this.onConnectionEstablished_(this.conn_, timestamp);
+          if (PROTOCOL_VERSION !== version22) {
+            warn("Protocol version mismatch detected");
+          }
+          this.tryStartUpgrade_();
+        }
+      }
+      tryStartUpgrade_() {
+        const conn = this.transportManager_.upgradeTransport();
+        if (conn) {
+          this.startUpgrade_(conn);
+        }
+      }
+      startUpgrade_(conn) {
+        this.secondaryConn_ = new conn(this.nextTransportId_(), this.repoInfo_, this.applicationId_, this.appCheckToken_, this.authToken_, this.sessionId);
+        this.secondaryResponsesRequired_ = conn["responsesRequiredToBeHealthy"] || 0;
+        const onMessage = this.connReceiver_(this.secondaryConn_);
+        const onDisconnect = this.disconnReceiver_(this.secondaryConn_);
+        this.secondaryConn_.open(onMessage, onDisconnect);
+        setTimeoutNonBlocking(() => {
+          if (this.secondaryConn_) {
+            this.log_("Timed out trying to upgrade.");
+            this.secondaryConn_.close();
+          }
+        }, Math.floor(UPGRADE_TIMEOUT));
+      }
+      onReset_(host) {
+        this.log_("Reset packet received.  New host: " + host);
+        this.repoInfo_.host = host;
+        if (this.state_ === 1) {
+          this.close();
+        } else {
+          this.closeConnections_();
+          this.start_();
+        }
+      }
+      onConnectionEstablished_(conn, timestamp) {
+        this.log_("Realtime connection established.");
+        this.conn_ = conn;
+        this.state_ = 1;
+        if (this.onReady_) {
+          this.onReady_(timestamp, this.sessionId);
+          this.onReady_ = null;
+        }
+        if (this.primaryResponsesRequired_ === 0) {
+          this.log_("Primary connection is healthy.");
+          this.isHealthy_ = true;
+        } else {
+          setTimeoutNonBlocking(() => {
+            this.sendPingOnPrimaryIfNecessary_();
+          }, Math.floor(DELAY_BEFORE_SENDING_EXTRA_REQUESTS));
+        }
+      }
+      sendPingOnPrimaryIfNecessary_() {
+        if (!this.isHealthy_ && this.state_ === 1) {
+          this.log_("sending ping on primary.");
+          this.sendData_({ t: "c", d: { t: PING, d: {} } });
+        }
+      }
+      onSecondaryConnectionLost_() {
+        const conn = this.secondaryConn_;
+        this.secondaryConn_ = null;
+        if (this.tx_ === conn || this.rx_ === conn) {
+          this.close();
+        }
+      }
+      onConnectionLost_(everConnected) {
+        this.conn_ = null;
+        if (!everConnected && this.state_ === 0) {
+          this.log_("Realtime connection failed.");
+          if (this.repoInfo_.isCacheableHost()) {
+            PersistentStorage.remove("host:" + this.repoInfo_.host);
+            this.repoInfo_.internalHost = this.repoInfo_.host;
+          }
+        } else if (this.state_ === 1) {
+          this.log_("Realtime connection lost.");
+        }
+        this.close();
+      }
+      onConnectionShutdown_(reason) {
+        this.log_("Connection shutdown command received. Shutting down...");
+        if (this.onKill_) {
+          this.onKill_(reason);
+          this.onKill_ = null;
+        }
+        this.onDisconnect_ = null;
+        this.close();
+      }
+      sendData_(data) {
+        if (this.state_ !== 1) {
+          throw "Connection is not connected";
+        } else {
+          this.tx_.send(data);
+        }
+      }
+      close() {
+        if (this.state_ !== 2) {
+          this.log_("Closing realtime connection.");
+          this.state_ = 2;
+          this.closeConnections_();
+          if (this.onDisconnect_) {
+            this.onDisconnect_();
+            this.onDisconnect_ = null;
+          }
+        }
+      }
+      closeConnections_() {
+        this.log_("Shutting down all connections");
+        if (this.conn_) {
+          this.conn_.close();
+          this.conn_ = null;
+        }
+        if (this.secondaryConn_) {
+          this.secondaryConn_.close();
+          this.secondaryConn_ = null;
+        }
+        if (this.healthyTimeout_) {
+          clearTimeout(this.healthyTimeout_);
+          this.healthyTimeout_ = null;
+        }
+      }
+    };
+    ServerActions = class {
+      put(pathString, data, onComplete, hash2) {
+      }
+      merge(pathString, data, onComplete, hash2) {
+      }
+      refreshAuthToken(token) {
+      }
+      refreshAppCheckToken(token) {
+      }
+      onDisconnectPut(pathString, data, onComplete) {
+      }
+      onDisconnectMerge(pathString, data, onComplete) {
+      }
+      onDisconnectCancel(pathString, onComplete) {
+      }
+      reportStats(stats) {
+      }
+    };
+    EventEmitter = class {
+      constructor(allowedEvents_) {
+        this.allowedEvents_ = allowedEvents_;
+        this.listeners_ = {};
+        assert(Array.isArray(allowedEvents_) && allowedEvents_.length > 0, "Requires a non-empty array");
+      }
+      trigger(eventType, ...varArgs) {
+        if (Array.isArray(this.listeners_[eventType])) {
+          const listeners = [...this.listeners_[eventType]];
+          for (let i = 0; i < listeners.length; i++) {
+            listeners[i].callback.apply(listeners[i].context, varArgs);
+          }
+        }
+      }
+      on(eventType, callback, context2) {
+        this.validateEventType_(eventType);
+        this.listeners_[eventType] = this.listeners_[eventType] || [];
+        this.listeners_[eventType].push({ callback, context: context2 });
+        const eventData = this.getInitialEvent(eventType);
+        if (eventData) {
+          callback.apply(context2, eventData);
+        }
+      }
+      off(eventType, callback, context2) {
+        this.validateEventType_(eventType);
+        const listeners = this.listeners_[eventType] || [];
+        for (let i = 0; i < listeners.length; i++) {
+          if (listeners[i].callback === callback && (!context2 || context2 === listeners[i].context)) {
+            listeners.splice(i, 1);
+            return;
+          }
+        }
+      }
+      validateEventType_(eventType) {
+        assert(this.allowedEvents_.find((et) => {
+          return et === eventType;
+        }), "Unknown event: " + eventType);
+      }
+    };
+    OnlineMonitor = class extends EventEmitter {
+      constructor() {
+        super(["online"]);
+        this.online_ = true;
+        if (typeof window !== "undefined" && typeof window.addEventListener !== "undefined" && !isMobileCordova()) {
+          window.addEventListener("online", () => {
+            if (!this.online_) {
+              this.online_ = true;
+              this.trigger("online", true);
+            }
+          }, false);
+          window.addEventListener("offline", () => {
+            if (this.online_) {
+              this.online_ = false;
+              this.trigger("online", false);
+            }
+          }, false);
+        }
+      }
+      static getInstance() {
+        return new OnlineMonitor();
+      }
+      getInitialEvent(eventType) {
+        assert(eventType === "online", "Unknown event type: " + eventType);
+        return [this.online_];
+      }
+      currentlyOnline() {
+        return this.online_;
+      }
+    };
+    MAX_PATH_DEPTH = 32;
+    MAX_PATH_LENGTH_BYTES = 768;
+    Path = class {
+      constructor(pathOrString, pieceNum) {
+        if (pieceNum === void 0) {
+          this.pieces_ = pathOrString.split("/");
+          let copyTo = 0;
+          for (let i = 0; i < this.pieces_.length; i++) {
+            if (this.pieces_[i].length > 0) {
+              this.pieces_[copyTo] = this.pieces_[i];
+              copyTo++;
+            }
+          }
+          this.pieces_.length = copyTo;
+          this.pieceNum_ = 0;
+        } else {
+          this.pieces_ = pathOrString;
+          this.pieceNum_ = pieceNum;
+        }
+      }
+      toString() {
+        let pathString = "";
+        for (let i = this.pieceNum_; i < this.pieces_.length; i++) {
+          if (this.pieces_[i] !== "") {
+            pathString += "/" + this.pieces_[i];
+          }
+        }
+        return pathString || "/";
+      }
+    };
+    ValidationPath = class {
+      constructor(path, errorPrefix_) {
+        this.errorPrefix_ = errorPrefix_;
+        this.parts_ = pathSlice(path, 0);
+        this.byteLength_ = Math.max(1, this.parts_.length);
+        for (let i = 0; i < this.parts_.length; i++) {
+          this.byteLength_ += stringLength(this.parts_[i]);
+        }
+        validationPathCheckValid(this);
+      }
+    };
+    VisibilityMonitor = class extends EventEmitter {
+      constructor() {
+        super(["visible"]);
+        let hidden;
+        let visibilityChange;
+        if (typeof document !== "undefined" && typeof document.addEventListener !== "undefined") {
+          if (typeof document["hidden"] !== "undefined") {
+            visibilityChange = "visibilitychange";
+            hidden = "hidden";
+          } else if (typeof document["mozHidden"] !== "undefined") {
+            visibilityChange = "mozvisibilitychange";
+            hidden = "mozHidden";
+          } else if (typeof document["msHidden"] !== "undefined") {
+            visibilityChange = "msvisibilitychange";
+            hidden = "msHidden";
+          } else if (typeof document["webkitHidden"] !== "undefined") {
+            visibilityChange = "webkitvisibilitychange";
+            hidden = "webkitHidden";
+          }
+        }
+        this.visible_ = true;
+        if (visibilityChange) {
+          document.addEventListener(visibilityChange, () => {
+            const visible = !document[hidden];
+            if (visible !== this.visible_) {
+              this.visible_ = visible;
+              this.trigger("visible", visible);
+            }
+          }, false);
+        }
+      }
+      static getInstance() {
+        return new VisibilityMonitor();
+      }
+      getInitialEvent(eventType) {
+        assert(eventType === "visible", "Unknown event type: " + eventType);
+        return [this.visible_];
+      }
+    };
+    RECONNECT_MIN_DELAY = 1e3;
+    RECONNECT_MAX_DELAY_DEFAULT = 60 * 5 * 1e3;
+    GET_CONNECT_TIMEOUT = 3 * 1e3;
+    RECONNECT_MAX_DELAY_FOR_ADMINS = 30 * 1e3;
+    RECONNECT_DELAY_MULTIPLIER = 1.3;
+    RECONNECT_DELAY_RESET_TIMEOUT = 3e4;
+    SERVER_KILL_INTERRUPT_REASON = "server_kill";
+    INVALID_TOKEN_THRESHOLD = 3;
+    PersistentConnection = class extends ServerActions {
+      constructor(repoInfo_, applicationId_, onDataUpdate_, onConnectStatus_, onServerInfoUpdate_, authTokenProvider_, appCheckTokenProvider_, authOverride_) {
+        super();
+        this.repoInfo_ = repoInfo_;
+        this.applicationId_ = applicationId_;
+        this.onDataUpdate_ = onDataUpdate_;
+        this.onConnectStatus_ = onConnectStatus_;
+        this.onServerInfoUpdate_ = onServerInfoUpdate_;
+        this.authTokenProvider_ = authTokenProvider_;
+        this.appCheckTokenProvider_ = appCheckTokenProvider_;
+        this.authOverride_ = authOverride_;
+        this.id = PersistentConnection.nextPersistentConnectionId_++;
+        this.log_ = logWrapper("p:" + this.id + ":");
+        this.interruptReasons_ = {};
+        this.listens = new Map();
+        this.outstandingPuts_ = [];
+        this.outstandingGets_ = [];
+        this.outstandingPutCount_ = 0;
+        this.outstandingGetCount_ = 0;
+        this.onDisconnectRequestQueue_ = [];
+        this.connected_ = false;
+        this.reconnectDelay_ = RECONNECT_MIN_DELAY;
+        this.maxReconnectDelay_ = RECONNECT_MAX_DELAY_DEFAULT;
+        this.securityDebugCallback_ = null;
+        this.lastSessionId = null;
+        this.establishConnectionTimer_ = null;
+        this.visible_ = false;
+        this.requestCBHash_ = {};
+        this.requestNumber_ = 0;
+        this.realtime_ = null;
+        this.authToken_ = null;
+        this.appCheckToken_ = null;
+        this.forceTokenRefresh_ = false;
+        this.invalidAuthTokenCount_ = 0;
+        this.invalidAppCheckTokenCount_ = 0;
+        this.firstConnection_ = true;
+        this.lastConnectionAttemptTime_ = null;
+        this.lastConnectionEstablishedTime_ = null;
+        if (authOverride_ && !isNodeSdk()) {
+          throw new Error("Auth override specified in options, but not supported on non Node.js platforms");
+        }
+        VisibilityMonitor.getInstance().on("visible", this.onVisible_, this);
+        if (repoInfo_.host.indexOf("fblocal") === -1) {
+          OnlineMonitor.getInstance().on("online", this.onOnline_, this);
+        }
+      }
+      sendRequest(action, body, onResponse) {
+        const curReqNum = ++this.requestNumber_;
+        const msg = { r: curReqNum, a: action, b: body };
+        this.log_(stringify(msg));
+        assert(this.connected_, "sendRequest call when we're not connected not allowed.");
+        this.realtime_.sendRequest(msg);
+        if (onResponse) {
+          this.requestCBHash_[curReqNum] = onResponse;
+        }
+      }
+      get(query2) {
+        this.initConnection_();
+        const deferred = new Deferred();
+        const request = {
+          p: query2._path.toString(),
+          q: query2._queryObject
+        };
+        const outstandingGet = {
+          action: "g",
+          request,
+          onComplete: (message2) => {
+            const payload = message2["d"];
+            if (message2["s"] === "ok") {
+              this.onDataUpdate_(request["p"], payload, false, null);
+              deferred.resolve(payload);
+            } else {
+              deferred.reject(payload);
+            }
+          }
+        };
+        this.outstandingGets_.push(outstandingGet);
+        this.outstandingGetCount_++;
+        const index = this.outstandingGets_.length - 1;
+        if (!this.connected_) {
+          setTimeout(() => {
+            const get = this.outstandingGets_[index];
+            if (get === void 0 || outstandingGet !== get) {
+              return;
+            }
+            delete this.outstandingGets_[index];
+            this.outstandingGetCount_--;
+            if (this.outstandingGetCount_ === 0) {
+              this.outstandingGets_ = [];
+            }
+            this.log_("get " + index + " timed out on connection");
+            deferred.reject(new Error("Client is offline."));
+          }, GET_CONNECT_TIMEOUT);
+        }
+        if (this.connected_) {
+          this.sendGet_(index);
+        }
+        return deferred.promise;
+      }
+      listen(query2, currentHashFn, tag, onComplete) {
+        this.initConnection_();
+        const queryId = query2._queryIdentifier;
+        const pathString = query2._path.toString();
+        this.log_("Listen called for " + pathString + " " + queryId);
+        if (!this.listens.has(pathString)) {
+          this.listens.set(pathString, new Map());
+        }
+        assert(query2._queryParams.isDefault() || !query2._queryParams.loadsAllData(), "listen() called for non-default but complete query");
+        assert(!this.listens.get(pathString).has(queryId), "listen() called twice for same path/queryId.");
+        const listenSpec = {
+          onComplete,
+          hashFn: currentHashFn,
+          query: query2,
+          tag
+        };
+        this.listens.get(pathString).set(queryId, listenSpec);
+        if (this.connected_) {
+          this.sendListen_(listenSpec);
+        }
+      }
+      sendGet_(index) {
+        const get = this.outstandingGets_[index];
+        this.sendRequest("g", get.request, (message2) => {
+          delete this.outstandingGets_[index];
+          this.outstandingGetCount_--;
+          if (this.outstandingGetCount_ === 0) {
+            this.outstandingGets_ = [];
+          }
+          if (get.onComplete) {
+            get.onComplete(message2);
+          }
+        });
+      }
+      sendListen_(listenSpec) {
+        const query2 = listenSpec.query;
+        const pathString = query2._path.toString();
+        const queryId = query2._queryIdentifier;
+        this.log_("Listen on " + pathString + " for " + queryId);
+        const req = { p: pathString };
+        const action = "q";
+        if (listenSpec.tag) {
+          req["q"] = query2._queryObject;
+          req["t"] = listenSpec.tag;
+        }
+        req["h"] = listenSpec.hashFn();
+        this.sendRequest(action, req, (message2) => {
+          const payload = message2["d"];
+          const status = message2["s"];
+          PersistentConnection.warnOnListenWarnings_(payload, query2);
+          const currentListenSpec = this.listens.get(pathString) && this.listens.get(pathString).get(queryId);
+          if (currentListenSpec === listenSpec) {
+            this.log_("listen response", message2);
+            if (status !== "ok") {
+              this.removeListen_(pathString, queryId);
+            }
+            if (listenSpec.onComplete) {
+              listenSpec.onComplete(status, payload);
+            }
+          }
+        });
+      }
+      static warnOnListenWarnings_(payload, query2) {
+        if (payload && typeof payload === "object" && contains(payload, "w")) {
+          const warnings = safeGet(payload, "w");
+          if (Array.isArray(warnings) && ~warnings.indexOf("no_index")) {
+            const indexSpec = '".indexOn": "' + query2._queryParams.getIndex().toString() + '"';
+            const indexPath = query2._path.toString();
+            warn(`Using an unspecified index. Your data will be downloaded and filtered on the client. Consider adding ${indexSpec} at ${indexPath} to your security rules for better performance.`);
+          }
+        }
+      }
+      refreshAuthToken(token) {
+        this.authToken_ = token;
+        this.log_("Auth token refreshed");
+        if (this.authToken_) {
+          this.tryAuth();
+        } else {
+          if (this.connected_) {
+            this.sendRequest("unauth", {}, () => {
+            });
+          }
+        }
+        this.reduceReconnectDelayIfAdminCredential_(token);
+      }
+      reduceReconnectDelayIfAdminCredential_(credential) {
+        const isFirebaseSecret = credential && credential.length === 40;
+        if (isFirebaseSecret || isAdmin(credential)) {
+          this.log_("Admin auth credential detected.  Reducing max reconnect time.");
+          this.maxReconnectDelay_ = RECONNECT_MAX_DELAY_FOR_ADMINS;
+        }
+      }
+      refreshAppCheckToken(token) {
+        this.appCheckToken_ = token;
+        this.log_("App check token refreshed");
+        if (this.appCheckToken_) {
+          this.tryAppCheck();
+        } else {
+          if (this.connected_) {
+            this.sendRequest("unappeck", {}, () => {
+            });
+          }
+        }
+      }
+      tryAuth() {
+        if (this.connected_ && this.authToken_) {
+          const token = this.authToken_;
+          const authMethod = isValidFormat(token) ? "auth" : "gauth";
+          const requestData = { cred: token };
+          if (this.authOverride_ === null) {
+            requestData["noauth"] = true;
+          } else if (typeof this.authOverride_ === "object") {
+            requestData["authvar"] = this.authOverride_;
+          }
+          this.sendRequest(authMethod, requestData, (res) => {
+            const status = res["s"];
+            const data = res["d"] || "error";
+            if (this.authToken_ === token) {
+              if (status === "ok") {
+                this.invalidAuthTokenCount_ = 0;
+              } else {
+                this.onAuthRevoked_(status, data);
+              }
+            }
+          });
+        }
+      }
+      tryAppCheck() {
+        if (this.connected_ && this.appCheckToken_) {
+          this.sendRequest("appcheck", { "token": this.appCheckToken_ }, (res) => {
+            const status = res["s"];
+            const data = res["d"] || "error";
+            if (status === "ok") {
+              this.invalidAppCheckTokenCount_ = 0;
+            } else {
+              this.onAppCheckRevoked_(status, data);
+            }
+          });
+        }
+      }
+      unlisten(query2, tag) {
+        const pathString = query2._path.toString();
+        const queryId = query2._queryIdentifier;
+        this.log_("Unlisten called for " + pathString + " " + queryId);
+        assert(query2._queryParams.isDefault() || !query2._queryParams.loadsAllData(), "unlisten() called for non-default but complete query");
+        const listen2 = this.removeListen_(pathString, queryId);
+        if (listen2 && this.connected_) {
+          this.sendUnlisten_(pathString, queryId, query2._queryObject, tag);
+        }
+      }
+      sendUnlisten_(pathString, queryId, queryObj, tag) {
+        this.log_("Unlisten on " + pathString + " for " + queryId);
+        const req = { p: pathString };
+        const action = "n";
+        if (tag) {
+          req["q"] = queryObj;
+          req["t"] = tag;
+        }
+        this.sendRequest(action, req);
+      }
+      onDisconnectPut(pathString, data, onComplete) {
+        this.initConnection_();
+        if (this.connected_) {
+          this.sendOnDisconnect_("o", pathString, data, onComplete);
+        } else {
+          this.onDisconnectRequestQueue_.push({
+            pathString,
+            action: "o",
+            data,
+            onComplete
+          });
+        }
+      }
+      onDisconnectMerge(pathString, data, onComplete) {
+        this.initConnection_();
+        if (this.connected_) {
+          this.sendOnDisconnect_("om", pathString, data, onComplete);
+        } else {
+          this.onDisconnectRequestQueue_.push({
+            pathString,
+            action: "om",
+            data,
+            onComplete
+          });
+        }
+      }
+      onDisconnectCancel(pathString, onComplete) {
+        this.initConnection_();
+        if (this.connected_) {
+          this.sendOnDisconnect_("oc", pathString, null, onComplete);
+        } else {
+          this.onDisconnectRequestQueue_.push({
+            pathString,
+            action: "oc",
+            data: null,
+            onComplete
+          });
+        }
+      }
+      sendOnDisconnect_(action, pathString, data, onComplete) {
+        const request = { p: pathString, d: data };
+        this.log_("onDisconnect " + action, request);
+        this.sendRequest(action, request, (response) => {
+          if (onComplete) {
+            setTimeout(() => {
+              onComplete(response["s"], response["d"]);
+            }, Math.floor(0));
+          }
+        });
+      }
+      put(pathString, data, onComplete, hash2) {
+        this.putInternal("p", pathString, data, onComplete, hash2);
+      }
+      merge(pathString, data, onComplete, hash2) {
+        this.putInternal("m", pathString, data, onComplete, hash2);
+      }
+      putInternal(action, pathString, data, onComplete, hash2) {
+        this.initConnection_();
+        const request = {
+          p: pathString,
+          d: data
+        };
+        if (hash2 !== void 0) {
+          request["h"] = hash2;
+        }
+        this.outstandingPuts_.push({
+          action,
+          request,
+          onComplete
+        });
+        this.outstandingPutCount_++;
+        const index = this.outstandingPuts_.length - 1;
+        if (this.connected_) {
+          this.sendPut_(index);
+        } else {
+          this.log_("Buffering put: " + pathString);
+        }
+      }
+      sendPut_(index) {
+        const action = this.outstandingPuts_[index].action;
+        const request = this.outstandingPuts_[index].request;
+        const onComplete = this.outstandingPuts_[index].onComplete;
+        this.outstandingPuts_[index].queued = this.connected_;
+        this.sendRequest(action, request, (message2) => {
+          this.log_(action + " response", message2);
+          delete this.outstandingPuts_[index];
+          this.outstandingPutCount_--;
+          if (this.outstandingPutCount_ === 0) {
+            this.outstandingPuts_ = [];
+          }
+          if (onComplete) {
+            onComplete(message2["s"], message2["d"]);
+          }
+        });
+      }
+      reportStats(stats) {
+        if (this.connected_) {
+          const request = { c: stats };
+          this.log_("reportStats", request);
+          this.sendRequest("s", request, (result) => {
+            const status = result["s"];
+            if (status !== "ok") {
+              const errorReason = result["d"];
+              this.log_("reportStats", "Error sending stats: " + errorReason);
+            }
+          });
+        }
+      }
+      onDataMessage_(message2) {
+        if ("r" in message2) {
+          this.log_("from server: " + stringify(message2));
+          const reqNum = message2["r"];
+          const onResponse = this.requestCBHash_[reqNum];
+          if (onResponse) {
+            delete this.requestCBHash_[reqNum];
+            onResponse(message2["b"]);
+          }
+        } else if ("error" in message2) {
+          throw "A server-side error has occurred: " + message2["error"];
+        } else if ("a" in message2) {
+          this.onDataPush_(message2["a"], message2["b"]);
+        }
+      }
+      onDataPush_(action, body) {
+        this.log_("handleServerMessage", action, body);
+        if (action === "d") {
+          this.onDataUpdate_(body["p"], body["d"], false, body["t"]);
+        } else if (action === "m") {
+          this.onDataUpdate_(body["p"], body["d"], true, body["t"]);
+        } else if (action === "c") {
+          this.onListenRevoked_(body["p"], body["q"]);
+        } else if (action === "ac") {
+          this.onAuthRevoked_(body["s"], body["d"]);
+        } else if (action === "apc") {
+          this.onAppCheckRevoked_(body["s"], body["d"]);
+        } else if (action === "sd") {
+          this.onSecurityDebugPacket_(body);
+        } else {
+          error("Unrecognized action received from server: " + stringify(action) + "\nAre you using the latest client?");
+        }
+      }
+      onReady_(timestamp, sessionId) {
+        this.log_("connection ready");
+        this.connected_ = true;
+        this.lastConnectionEstablishedTime_ = new Date().getTime();
+        this.handleTimestamp_(timestamp);
+        this.lastSessionId = sessionId;
+        if (this.firstConnection_) {
+          this.sendConnectStats_();
+        }
+        this.restoreState_();
+        this.firstConnection_ = false;
+        this.onConnectStatus_(true);
+      }
+      scheduleConnect_(timeout) {
+        assert(!this.realtime_, "Scheduling a connect when we're already connected/ing?");
+        if (this.establishConnectionTimer_) {
+          clearTimeout(this.establishConnectionTimer_);
+        }
+        this.establishConnectionTimer_ = setTimeout(() => {
+          this.establishConnectionTimer_ = null;
+          this.establishConnection_();
+        }, Math.floor(timeout));
+      }
+      initConnection_() {
+        if (!this.realtime_ && this.firstConnection_) {
+          this.scheduleConnect_(0);
+        }
+      }
+      onVisible_(visible) {
+        if (visible && !this.visible_ && this.reconnectDelay_ === this.maxReconnectDelay_) {
+          this.log_("Window became visible.  Reducing delay.");
+          this.reconnectDelay_ = RECONNECT_MIN_DELAY;
+          if (!this.realtime_) {
+            this.scheduleConnect_(0);
+          }
+        }
+        this.visible_ = visible;
+      }
+      onOnline_(online) {
+        if (online) {
+          this.log_("Browser went online.");
+          this.reconnectDelay_ = RECONNECT_MIN_DELAY;
+          if (!this.realtime_) {
+            this.scheduleConnect_(0);
+          }
+        } else {
+          this.log_("Browser went offline.  Killing connection.");
+          if (this.realtime_) {
+            this.realtime_.close();
+          }
+        }
+      }
+      onRealtimeDisconnect_() {
+        this.log_("data client disconnected");
+        this.connected_ = false;
+        this.realtime_ = null;
+        this.cancelSentTransactions_();
+        this.requestCBHash_ = {};
+        if (this.shouldReconnect_()) {
+          if (!this.visible_) {
+            this.log_("Window isn't visible.  Delaying reconnect.");
+            this.reconnectDelay_ = this.maxReconnectDelay_;
+            this.lastConnectionAttemptTime_ = new Date().getTime();
+          } else if (this.lastConnectionEstablishedTime_) {
+            const timeSinceLastConnectSucceeded = new Date().getTime() - this.lastConnectionEstablishedTime_;
+            if (timeSinceLastConnectSucceeded > RECONNECT_DELAY_RESET_TIMEOUT) {
+              this.reconnectDelay_ = RECONNECT_MIN_DELAY;
+            }
+            this.lastConnectionEstablishedTime_ = null;
+          }
+          const timeSinceLastConnectAttempt = new Date().getTime() - this.lastConnectionAttemptTime_;
+          let reconnectDelay = Math.max(0, this.reconnectDelay_ - timeSinceLastConnectAttempt);
+          reconnectDelay = Math.random() * reconnectDelay;
+          this.log_("Trying to reconnect in " + reconnectDelay + "ms");
+          this.scheduleConnect_(reconnectDelay);
+          this.reconnectDelay_ = Math.min(this.maxReconnectDelay_, this.reconnectDelay_ * RECONNECT_DELAY_MULTIPLIER);
+        }
+        this.onConnectStatus_(false);
+      }
+      async establishConnection_() {
+        if (this.shouldReconnect_()) {
+          this.log_("Making a connection attempt");
+          this.lastConnectionAttemptTime_ = new Date().getTime();
+          this.lastConnectionEstablishedTime_ = null;
+          const onDataMessage = this.onDataMessage_.bind(this);
+          const onReady = this.onReady_.bind(this);
+          const onDisconnect = this.onRealtimeDisconnect_.bind(this);
+          const connId = this.id + ":" + PersistentConnection.nextConnectionId_++;
+          const lastSessionId = this.lastSessionId;
+          let canceled2 = false;
+          let connection = null;
+          const closeFn = function() {
+            if (connection) {
+              connection.close();
+            } else {
+              canceled2 = true;
+              onDisconnect();
+            }
+          };
+          const sendRequestFn = function(msg) {
+            assert(connection, "sendRequest call when we're not connected not allowed.");
+            connection.sendRequest(msg);
+          };
+          this.realtime_ = {
+            close: closeFn,
+            sendRequest: sendRequestFn
+          };
+          const forceRefresh = this.forceTokenRefresh_;
+          this.forceTokenRefresh_ = false;
+          try {
+            const [authToken, appCheckToken] = await Promise.all([
+              this.authTokenProvider_.getToken(forceRefresh),
+              this.appCheckTokenProvider_.getToken(forceRefresh)
+            ]);
+            if (!canceled2) {
+              log("getToken() completed. Creating connection.");
+              this.authToken_ = authToken && authToken.accessToken;
+              this.appCheckToken_ = appCheckToken && appCheckToken.token;
+              connection = new Connection(connId, this.repoInfo_, this.applicationId_, this.appCheckToken_, this.authToken_, onDataMessage, onReady, onDisconnect, (reason) => {
+                warn(reason + " (" + this.repoInfo_.toString() + ")");
+                this.interrupt(SERVER_KILL_INTERRUPT_REASON);
+              }, lastSessionId);
+            } else {
+              log("getToken() completed but was canceled");
+            }
+          } catch (error22) {
+            this.log_("Failed to get token: " + error22);
+            if (!canceled2) {
+              if (this.repoInfo_.nodeAdmin) {
+                warn(error22);
+              }
+              closeFn();
+            }
+          }
+        }
+      }
+      interrupt(reason) {
+        log("Interrupting connection for reason: " + reason);
+        this.interruptReasons_[reason] = true;
+        if (this.realtime_) {
+          this.realtime_.close();
+        } else {
+          if (this.establishConnectionTimer_) {
+            clearTimeout(this.establishConnectionTimer_);
+            this.establishConnectionTimer_ = null;
+          }
+          if (this.connected_) {
+            this.onRealtimeDisconnect_();
+          }
+        }
+      }
+      resume(reason) {
+        log("Resuming connection for reason: " + reason);
+        delete this.interruptReasons_[reason];
+        if (isEmpty(this.interruptReasons_)) {
+          this.reconnectDelay_ = RECONNECT_MIN_DELAY;
+          if (!this.realtime_) {
+            this.scheduleConnect_(0);
+          }
+        }
+      }
+      handleTimestamp_(timestamp) {
+        const delta = timestamp - new Date().getTime();
+        this.onServerInfoUpdate_({ serverTimeOffset: delta });
+      }
+      cancelSentTransactions_() {
+        for (let i = 0; i < this.outstandingPuts_.length; i++) {
+          const put = this.outstandingPuts_[i];
+          if (put && "h" in put.request && put.queued) {
+            if (put.onComplete) {
+              put.onComplete("disconnect");
+            }
+            delete this.outstandingPuts_[i];
+            this.outstandingPutCount_--;
+          }
+        }
+        if (this.outstandingPutCount_ === 0) {
+          this.outstandingPuts_ = [];
+        }
+      }
+      onListenRevoked_(pathString, query2) {
+        let queryId;
+        if (!query2) {
+          queryId = "default";
+        } else {
+          queryId = query2.map((q) => ObjectToUniqueKey(q)).join("$");
+        }
+        const listen2 = this.removeListen_(pathString, queryId);
+        if (listen2 && listen2.onComplete) {
+          listen2.onComplete("permission_denied");
+        }
+      }
+      removeListen_(pathString, queryId) {
+        const normalizedPathString = new Path(pathString).toString();
+        let listen2;
+        if (this.listens.has(normalizedPathString)) {
+          const map2 = this.listens.get(normalizedPathString);
+          listen2 = map2.get(queryId);
+          map2.delete(queryId);
+          if (map2.size === 0) {
+            this.listens.delete(normalizedPathString);
+          }
+        } else {
+          listen2 = void 0;
+        }
+        return listen2;
+      }
+      onAuthRevoked_(statusCode, explanation) {
+        log("Auth token revoked: " + statusCode + "/" + explanation);
+        this.authToken_ = null;
+        this.forceTokenRefresh_ = true;
+        this.realtime_.close();
+        if (statusCode === "invalid_token" || statusCode === "permission_denied") {
+          this.invalidAuthTokenCount_++;
+          if (this.invalidAuthTokenCount_ >= INVALID_TOKEN_THRESHOLD) {
+            this.reconnectDelay_ = RECONNECT_MAX_DELAY_FOR_ADMINS;
+            this.authTokenProvider_.notifyForInvalidToken();
+          }
+        }
+      }
+      onAppCheckRevoked_(statusCode, explanation) {
+        log("App check token revoked: " + statusCode + "/" + explanation);
+        this.appCheckToken_ = null;
+        this.forceTokenRefresh_ = true;
+        if (statusCode === "invalid_token" || statusCode === "permission_denied") {
+          this.invalidAppCheckTokenCount_++;
+          if (this.invalidAppCheckTokenCount_ >= INVALID_TOKEN_THRESHOLD) {
+            this.appCheckTokenProvider_.notifyForInvalidToken();
+          }
+        }
+      }
+      onSecurityDebugPacket_(body) {
+        if (this.securityDebugCallback_) {
+          this.securityDebugCallback_(body);
+        } else {
+          if ("msg" in body) {
+            console.log("FIREBASE: " + body["msg"].replace("\n", "\nFIREBASE: "));
+          }
+        }
+      }
+      restoreState_() {
+        this.tryAuth();
+        this.tryAppCheck();
+        for (const queries of this.listens.values()) {
+          for (const listenSpec of queries.values()) {
+            this.sendListen_(listenSpec);
+          }
+        }
+        for (let i = 0; i < this.outstandingPuts_.length; i++) {
+          if (this.outstandingPuts_[i]) {
+            this.sendPut_(i);
+          }
+        }
+        while (this.onDisconnectRequestQueue_.length) {
+          const request = this.onDisconnectRequestQueue_.shift();
+          this.sendOnDisconnect_(request.action, request.pathString, request.data, request.onComplete);
+        }
+        for (let i = 0; i < this.outstandingGets_.length; i++) {
+          if (this.outstandingGets_[i]) {
+            this.sendGet_(i);
+          }
+        }
+      }
+      sendConnectStats_() {
+        const stats = {};
+        let clientName = "js";
+        if (isNodeSdk()) {
+          if (this.repoInfo_.nodeAdmin) {
+            clientName = "admin_node";
+          } else {
+            clientName = "node";
+          }
+        }
+        stats["sdk." + clientName + "." + SDK_VERSION4.replace(/\./g, "-")] = 1;
+        if (isMobileCordova()) {
+          stats["framework.cordova"] = 1;
+        } else if (isReactNative()) {
+          stats["framework.reactnative"] = 1;
+        }
+        this.reportStats(stats);
+      }
+      shouldReconnect_() {
+        const online = OnlineMonitor.getInstance().currentlyOnline();
+        return isEmpty(this.interruptReasons_) && online;
+      }
+    };
+    PersistentConnection.nextPersistentConnectionId_ = 0;
+    PersistentConnection.nextConnectionId_ = 0;
+    NamedNode = class {
+      constructor(name22, node) {
+        this.name = name22;
+        this.node = node;
+      }
+      static Wrap(name22, node) {
+        return new NamedNode(name22, node);
+      }
+    };
+    Index = class {
+      getCompare() {
+        return this.compare.bind(this);
+      }
+      indexedValueChanged(oldNode, newNode) {
+        const oldWrapped = new NamedNode(MIN_NAME, oldNode);
+        const newWrapped = new NamedNode(MIN_NAME, newNode);
+        return this.compare(oldWrapped, newWrapped) !== 0;
+      }
+      minPost() {
+        return NamedNode.MIN;
+      }
+    };
+    KeyIndex = class extends Index {
+      static get __EMPTY_NODE() {
+        return __EMPTY_NODE;
+      }
+      static set __EMPTY_NODE(val) {
+        __EMPTY_NODE = val;
+      }
+      compare(a, b) {
+        return nameCompare(a.name, b.name);
+      }
+      isDefinedOn(node) {
+        throw assertionError("KeyIndex.isDefinedOn not expected to be called.");
+      }
+      indexedValueChanged(oldNode, newNode) {
+        return false;
+      }
+      minPost() {
+        return NamedNode.MIN;
+      }
+      maxPost() {
+        return new NamedNode(MAX_NAME, __EMPTY_NODE);
+      }
+      makePost(indexValue, name22) {
+        assert(typeof indexValue === "string", "KeyIndex indexValue must always be a string.");
+        return new NamedNode(indexValue, __EMPTY_NODE);
+      }
+      toString() {
+        return ".key";
+      }
+    };
+    KEY_INDEX = new KeyIndex();
+    SortedMapIterator2 = class {
+      constructor(node, startKey, comparator, isReverse_, resultGenerator_ = null) {
+        this.isReverse_ = isReverse_;
+        this.resultGenerator_ = resultGenerator_;
+        this.nodeStack_ = [];
+        let cmp = 1;
+        while (!node.isEmpty()) {
+          node = node;
+          cmp = startKey ? comparator(node.key, startKey) : 1;
+          if (isReverse_) {
+            cmp *= -1;
+          }
+          if (cmp < 0) {
+            if (this.isReverse_) {
+              node = node.left;
+            } else {
+              node = node.right;
+            }
+          } else if (cmp === 0) {
+            this.nodeStack_.push(node);
+            break;
+          } else {
+            this.nodeStack_.push(node);
+            if (this.isReverse_) {
+              node = node.right;
+            } else {
+              node = node.left;
+            }
+          }
+        }
+      }
+      getNext() {
+        if (this.nodeStack_.length === 0) {
+          return null;
+        }
+        let node = this.nodeStack_.pop();
+        let result;
+        if (this.resultGenerator_) {
+          result = this.resultGenerator_(node.key, node.value);
+        } else {
+          result = { key: node.key, value: node.value };
+        }
+        if (this.isReverse_) {
+          node = node.left;
+          while (!node.isEmpty()) {
+            this.nodeStack_.push(node);
+            node = node.right;
+          }
+        } else {
+          node = node.right;
+          while (!node.isEmpty()) {
+            this.nodeStack_.push(node);
+            node = node.left;
+          }
+        }
+        return result;
+      }
+      hasNext() {
+        return this.nodeStack_.length > 0;
+      }
+      peek() {
+        if (this.nodeStack_.length === 0) {
+          return null;
+        }
+        const node = this.nodeStack_[this.nodeStack_.length - 1];
+        if (this.resultGenerator_) {
+          return this.resultGenerator_(node.key, node.value);
+        } else {
+          return { key: node.key, value: node.value };
+        }
+      }
+    };
+    LLRBNode2 = class {
+      constructor(key, value, color, left, right) {
+        this.key = key;
+        this.value = value;
+        this.color = color != null ? color : LLRBNode2.RED;
+        this.left = left != null ? left : SortedMap2.EMPTY_NODE;
+        this.right = right != null ? right : SortedMap2.EMPTY_NODE;
+      }
+      copy(key, value, color, left, right) {
+        return new LLRBNode2(key != null ? key : this.key, value != null ? value : this.value, color != null ? color : this.color, left != null ? left : this.left, right != null ? right : this.right);
+      }
+      count() {
+        return this.left.count() + 1 + this.right.count();
+      }
+      isEmpty() {
+        return false;
+      }
+      inorderTraversal(action) {
+        return this.left.inorderTraversal(action) || !!action(this.key, this.value) || this.right.inorderTraversal(action);
+      }
+      reverseTraversal(action) {
+        return this.right.reverseTraversal(action) || action(this.key, this.value) || this.left.reverseTraversal(action);
+      }
+      min_() {
+        if (this.left.isEmpty()) {
+          return this;
+        } else {
+          return this.left.min_();
+        }
+      }
+      minKey() {
+        return this.min_().key;
+      }
+      maxKey() {
+        if (this.right.isEmpty()) {
+          return this.key;
+        } else {
+          return this.right.maxKey();
+        }
+      }
+      insert(key, value, comparator) {
+        let n = this;
+        const cmp = comparator(key, n.key);
+        if (cmp < 0) {
+          n = n.copy(null, null, null, n.left.insert(key, value, comparator), null);
+        } else if (cmp === 0) {
+          n = n.copy(null, value, null, null, null);
+        } else {
+          n = n.copy(null, null, null, null, n.right.insert(key, value, comparator));
+        }
+        return n.fixUp_();
+      }
+      removeMin_() {
+        if (this.left.isEmpty()) {
+          return SortedMap2.EMPTY_NODE;
+        }
+        let n = this;
+        if (!n.left.isRed_() && !n.left.left.isRed_()) {
+          n = n.moveRedLeft_();
+        }
+        n = n.copy(null, null, null, n.left.removeMin_(), null);
+        return n.fixUp_();
+      }
+      remove(key, comparator) {
+        let n, smallest;
+        n = this;
+        if (comparator(key, n.key) < 0) {
+          if (!n.left.isEmpty() && !n.left.isRed_() && !n.left.left.isRed_()) {
+            n = n.moveRedLeft_();
+          }
+          n = n.copy(null, null, null, n.left.remove(key, comparator), null);
+        } else {
+          if (n.left.isRed_()) {
+            n = n.rotateRight_();
+          }
+          if (!n.right.isEmpty() && !n.right.isRed_() && !n.right.left.isRed_()) {
+            n = n.moveRedRight_();
+          }
+          if (comparator(key, n.key) === 0) {
+            if (n.right.isEmpty()) {
+              return SortedMap2.EMPTY_NODE;
+            } else {
+              smallest = n.right.min_();
+              n = n.copy(smallest.key, smallest.value, null, null, n.right.removeMin_());
+            }
+          }
+          n = n.copy(null, null, null, null, n.right.remove(key, comparator));
+        }
+        return n.fixUp_();
+      }
+      isRed_() {
+        return this.color;
+      }
+      fixUp_() {
+        let n = this;
+        if (n.right.isRed_() && !n.left.isRed_()) {
+          n = n.rotateLeft_();
+        }
+        if (n.left.isRed_() && n.left.left.isRed_()) {
+          n = n.rotateRight_();
+        }
+        if (n.left.isRed_() && n.right.isRed_()) {
+          n = n.colorFlip_();
+        }
+        return n;
+      }
+      moveRedLeft_() {
+        let n = this.colorFlip_();
+        if (n.right.left.isRed_()) {
+          n = n.copy(null, null, null, null, n.right.rotateRight_());
+          n = n.rotateLeft_();
+          n = n.colorFlip_();
+        }
+        return n;
+      }
+      moveRedRight_() {
+        let n = this.colorFlip_();
+        if (n.left.left.isRed_()) {
+          n = n.rotateRight_();
+          n = n.colorFlip_();
+        }
+        return n;
+      }
+      rotateLeft_() {
+        const nl = this.copy(null, null, LLRBNode2.RED, null, this.right.left);
+        return this.right.copy(null, null, this.color, nl, null);
+      }
+      rotateRight_() {
+        const nr = this.copy(null, null, LLRBNode2.RED, this.left.right, null);
+        return this.left.copy(null, null, this.color, null, nr);
+      }
+      colorFlip_() {
+        const left = this.left.copy(null, null, !this.left.color, null, null);
+        const right = this.right.copy(null, null, !this.right.color, null, null);
+        return this.copy(null, null, !this.color, left, right);
+      }
+      checkMaxDepth_() {
+        const blackDepth = this.check_();
+        return Math.pow(2, blackDepth) <= this.count() + 1;
+      }
+      check_() {
+        if (this.isRed_() && this.left.isRed_()) {
+          throw new Error("Red node has red child(" + this.key + "," + this.value + ")");
+        }
+        if (this.right.isRed_()) {
+          throw new Error("Right child of (" + this.key + "," + this.value + ") is red");
+        }
+        const blackDepth = this.left.check_();
+        if (blackDepth !== this.right.check_()) {
+          throw new Error("Black depths differ");
+        } else {
+          return blackDepth + (this.isRed_() ? 0 : 1);
+        }
+      }
+    };
+    LLRBNode2.RED = true;
+    LLRBNode2.BLACK = false;
+    LLRBEmptyNode2 = class {
+      copy(key, value, color, left, right) {
+        return this;
+      }
+      insert(key, value, comparator) {
+        return new LLRBNode2(key, value, null);
+      }
+      remove(key, comparator) {
+        return this;
+      }
+      count() {
+        return 0;
+      }
+      isEmpty() {
+        return true;
+      }
+      inorderTraversal(action) {
+        return false;
+      }
+      reverseTraversal(action) {
+        return false;
+      }
+      minKey() {
+        return null;
+      }
+      maxKey() {
+        return null;
+      }
+      check_() {
+        return 0;
+      }
+      isRed_() {
+        return false;
+      }
+    };
+    SortedMap2 = class {
+      constructor(comparator_, root_ = SortedMap2.EMPTY_NODE) {
+        this.comparator_ = comparator_;
+        this.root_ = root_;
+      }
+      insert(key, value) {
+        return new SortedMap2(this.comparator_, this.root_.insert(key, value, this.comparator_).copy(null, null, LLRBNode2.BLACK, null, null));
+      }
+      remove(key) {
+        return new SortedMap2(this.comparator_, this.root_.remove(key, this.comparator_).copy(null, null, LLRBNode2.BLACK, null, null));
+      }
+      get(key) {
+        let cmp;
+        let node = this.root_;
+        while (!node.isEmpty()) {
+          cmp = this.comparator_(key, node.key);
+          if (cmp === 0) {
+            return node.value;
+          } else if (cmp < 0) {
+            node = node.left;
+          } else if (cmp > 0) {
+            node = node.right;
+          }
+        }
+        return null;
+      }
+      getPredecessorKey(key) {
+        let cmp, node = this.root_, rightParent = null;
+        while (!node.isEmpty()) {
+          cmp = this.comparator_(key, node.key);
+          if (cmp === 0) {
+            if (!node.left.isEmpty()) {
+              node = node.left;
+              while (!node.right.isEmpty()) {
+                node = node.right;
+              }
+              return node.key;
+            } else if (rightParent) {
+              return rightParent.key;
+            } else {
+              return null;
+            }
+          } else if (cmp < 0) {
+            node = node.left;
+          } else if (cmp > 0) {
+            rightParent = node;
+            node = node.right;
+          }
+        }
+        throw new Error("Attempted to find predecessor key for a nonexistent key.  What gives?");
+      }
+      isEmpty() {
+        return this.root_.isEmpty();
+      }
+      count() {
+        return this.root_.count();
+      }
+      minKey() {
+        return this.root_.minKey();
+      }
+      maxKey() {
+        return this.root_.maxKey();
+      }
+      inorderTraversal(action) {
+        return this.root_.inorderTraversal(action);
+      }
+      reverseTraversal(action) {
+        return this.root_.reverseTraversal(action);
+      }
+      getIterator(resultGenerator) {
+        return new SortedMapIterator2(this.root_, null, this.comparator_, false, resultGenerator);
+      }
+      getIteratorFrom(key, resultGenerator) {
+        return new SortedMapIterator2(this.root_, key, this.comparator_, false, resultGenerator);
+      }
+      getReverseIteratorFrom(key, resultGenerator) {
+        return new SortedMapIterator2(this.root_, key, this.comparator_, true, resultGenerator);
+      }
+      getReverseIterator(resultGenerator) {
+        return new SortedMapIterator2(this.root_, null, this.comparator_, true, resultGenerator);
+      }
+    };
+    SortedMap2.EMPTY_NODE = new LLRBEmptyNode2();
+    priorityHashText = function(priority) {
+      if (typeof priority === "number") {
+        return "number:" + doubleToIEEE754String(priority);
+      } else {
+        return "string:" + priority;
+      }
+    };
+    validatePriorityNode = function(priorityNode) {
+      if (priorityNode.isLeafNode()) {
+        const val = priorityNode.val();
+        assert(typeof val === "string" || typeof val === "number" || typeof val === "object" && contains(val, ".sv"), "Priority must be a string or number.");
+      } else {
+        assert(priorityNode === MAX_NODE$2 || priorityNode.isEmpty(), "priority of unexpected type.");
+      }
+      assert(priorityNode === MAX_NODE$2 || priorityNode.getPriority().isEmpty(), "Priority nodes can't have a priority of their own.");
+    };
+    LeafNode = class {
+      constructor(value_, priorityNode_ = LeafNode.__childrenNodeConstructor.EMPTY_NODE) {
+        this.value_ = value_;
+        this.priorityNode_ = priorityNode_;
+        this.lazyHash_ = null;
+        assert(this.value_ !== void 0 && this.value_ !== null, "LeafNode shouldn't be created with null/undefined value.");
+        validatePriorityNode(this.priorityNode_);
+      }
+      static set __childrenNodeConstructor(val) {
+        __childrenNodeConstructor = val;
+      }
+      static get __childrenNodeConstructor() {
+        return __childrenNodeConstructor;
+      }
+      isLeafNode() {
+        return true;
+      }
+      getPriority() {
+        return this.priorityNode_;
+      }
+      updatePriority(newPriorityNode) {
+        return new LeafNode(this.value_, newPriorityNode);
+      }
+      getImmediateChild(childName) {
+        if (childName === ".priority") {
+          return this.priorityNode_;
+        } else {
+          return LeafNode.__childrenNodeConstructor.EMPTY_NODE;
+        }
+      }
+      getChild(path) {
+        if (pathIsEmpty(path)) {
+          return this;
+        } else if (pathGetFront(path) === ".priority") {
+          return this.priorityNode_;
+        } else {
+          return LeafNode.__childrenNodeConstructor.EMPTY_NODE;
+        }
+      }
+      hasChild() {
+        return false;
+      }
+      getPredecessorChildName(childName, childNode) {
+        return null;
+      }
+      updateImmediateChild(childName, newChildNode) {
+        if (childName === ".priority") {
+          return this.updatePriority(newChildNode);
+        } else if (newChildNode.isEmpty() && childName !== ".priority") {
+          return this;
+        } else {
+          return LeafNode.__childrenNodeConstructor.EMPTY_NODE.updateImmediateChild(childName, newChildNode).updatePriority(this.priorityNode_);
+        }
+      }
+      updateChild(path, newChildNode) {
+        const front = pathGetFront(path);
+        if (front === null) {
+          return newChildNode;
+        } else if (newChildNode.isEmpty() && front !== ".priority") {
+          return this;
+        } else {
+          assert(front !== ".priority" || pathGetLength(path) === 1, ".priority must be the last token in a path");
+          return this.updateImmediateChild(front, LeafNode.__childrenNodeConstructor.EMPTY_NODE.updateChild(pathPopFront(path), newChildNode));
+        }
+      }
+      isEmpty() {
+        return false;
+      }
+      numChildren() {
+        return 0;
+      }
+      forEachChild(index, action) {
+        return false;
+      }
+      val(exportFormat) {
+        if (exportFormat && !this.getPriority().isEmpty()) {
+          return {
+            ".value": this.getValue(),
+            ".priority": this.getPriority().val()
+          };
+        } else {
+          return this.getValue();
+        }
+      }
+      hash() {
+        if (this.lazyHash_ === null) {
+          let toHash = "";
+          if (!this.priorityNode_.isEmpty()) {
+            toHash += "priority:" + priorityHashText(this.priorityNode_.val()) + ":";
+          }
+          const type = typeof this.value_;
+          toHash += type + ":";
+          if (type === "number") {
+            toHash += doubleToIEEE754String(this.value_);
+          } else {
+            toHash += this.value_;
+          }
+          this.lazyHash_ = sha1(toHash);
+        }
+        return this.lazyHash_;
+      }
+      getValue() {
+        return this.value_;
+      }
+      compareTo(other) {
+        if (other === LeafNode.__childrenNodeConstructor.EMPTY_NODE) {
+          return 1;
+        } else if (other instanceof LeafNode.__childrenNodeConstructor) {
+          return -1;
+        } else {
+          assert(other.isLeafNode(), "Unknown node type");
+          return this.compareToLeafNode_(other);
+        }
+      }
+      compareToLeafNode_(otherLeaf) {
+        const otherLeafType = typeof otherLeaf.value_;
+        const thisLeafType = typeof this.value_;
+        const otherIndex = LeafNode.VALUE_TYPE_ORDER.indexOf(otherLeafType);
+        const thisIndex = LeafNode.VALUE_TYPE_ORDER.indexOf(thisLeafType);
+        assert(otherIndex >= 0, "Unknown leaf type: " + otherLeafType);
+        assert(thisIndex >= 0, "Unknown leaf type: " + thisLeafType);
+        if (otherIndex === thisIndex) {
+          if (thisLeafType === "object") {
+            return 0;
+          } else {
+            if (this.value_ < otherLeaf.value_) {
+              return -1;
+            } else if (this.value_ === otherLeaf.value_) {
+              return 0;
+            } else {
+              return 1;
+            }
+          }
+        } else {
+          return thisIndex - otherIndex;
+        }
+      }
+      withIndex() {
+        return this;
+      }
+      isIndexed() {
+        return true;
+      }
+      equals(other) {
+        if (other === this) {
+          return true;
+        } else if (other.isLeafNode()) {
+          const otherLeaf = other;
+          return this.value_ === otherLeaf.value_ && this.priorityNode_.equals(otherLeaf.priorityNode_);
+        } else {
+          return false;
+        }
+      }
+    };
+    LeafNode.VALUE_TYPE_ORDER = ["object", "boolean", "number", "string"];
+    PriorityIndex = class extends Index {
+      compare(a, b) {
+        const aPriority = a.node.getPriority();
+        const bPriority = b.node.getPriority();
+        const indexCmp = aPriority.compareTo(bPriority);
+        if (indexCmp === 0) {
+          return nameCompare(a.name, b.name);
+        } else {
+          return indexCmp;
+        }
+      }
+      isDefinedOn(node) {
+        return !node.getPriority().isEmpty();
+      }
+      indexedValueChanged(oldNode, newNode) {
+        return !oldNode.getPriority().equals(newNode.getPriority());
+      }
+      minPost() {
+        return NamedNode.MIN;
+      }
+      maxPost() {
+        return new NamedNode(MAX_NAME, new LeafNode("[PRIORITY-POST]", MAX_NODE$1));
+      }
+      makePost(indexValue, name22) {
+        const priorityNode = nodeFromJSON$1(indexValue);
+        return new NamedNode(name22, new LeafNode("[PRIORITY-POST]", priorityNode));
+      }
+      toString() {
+        return ".priority";
+      }
+    };
+    PRIORITY_INDEX = new PriorityIndex();
+    LOG_2 = Math.log(2);
+    Base12Num = class {
+      constructor(length) {
+        const logBase2 = (num) => parseInt(Math.log(num) / LOG_2, 10);
+        const bitMask = (bits) => parseInt(Array(bits + 1).join("1"), 2);
+        this.count = logBase2(length + 1);
+        this.current_ = this.count - 1;
+        const mask = bitMask(this.count);
+        this.bits_ = length + 1 & mask;
+      }
+      nextBitIsOne() {
+        const result = !(this.bits_ & 1 << this.current_);
+        this.current_--;
+        return result;
+      }
+    };
+    buildChildSet = function(childList, cmp, keyFn, mapSortFn) {
+      childList.sort(cmp);
+      const buildBalancedTree = function(low, high) {
+        const length = high - low;
+        let namedNode;
+        let key;
+        if (length === 0) {
+          return null;
+        } else if (length === 1) {
+          namedNode = childList[low];
+          key = keyFn ? keyFn(namedNode) : namedNode;
+          return new LLRBNode2(key, namedNode.node, LLRBNode2.BLACK, null, null);
+        } else {
+          const middle = parseInt(length / 2, 10) + low;
+          const left = buildBalancedTree(low, middle);
+          const right = buildBalancedTree(middle + 1, high);
+          namedNode = childList[middle];
+          key = keyFn ? keyFn(namedNode) : namedNode;
+          return new LLRBNode2(key, namedNode.node, LLRBNode2.BLACK, left, right);
+        }
+      };
+      const buildFrom12Array = function(base122) {
+        let node = null;
+        let root2 = null;
+        let index = childList.length;
+        const buildPennant = function(chunkSize, color) {
+          const low = index - chunkSize;
+          const high = index;
+          index -= chunkSize;
+          const childTree = buildBalancedTree(low + 1, high);
+          const namedNode = childList[low];
+          const key = keyFn ? keyFn(namedNode) : namedNode;
+          attachPennant(new LLRBNode2(key, namedNode.node, color, null, childTree));
+        };
+        const attachPennant = function(pennant) {
+          if (node) {
+            node.left = pennant;
+            node = pennant;
+          } else {
+            root2 = pennant;
+            node = pennant;
+          }
+        };
+        for (let i = 0; i < base122.count; ++i) {
+          const isOne = base122.nextBitIsOne();
+          const chunkSize = Math.pow(2, base122.count - (i + 1));
+          if (isOne) {
+            buildPennant(chunkSize, LLRBNode2.BLACK);
+          } else {
+            buildPennant(chunkSize, LLRBNode2.BLACK);
+            buildPennant(chunkSize, LLRBNode2.RED);
+          }
+        }
+        return root2;
+      };
+      const base12 = new Base12Num(childList.length);
+      const root = buildFrom12Array(base12);
+      return new SortedMap2(mapSortFn || cmp, root);
+    };
+    fallbackObject = {};
+    IndexMap = class {
+      constructor(indexes_, indexSet_) {
+        this.indexes_ = indexes_;
+        this.indexSet_ = indexSet_;
+      }
+      static get Default() {
+        assert(fallbackObject && PRIORITY_INDEX, "ChildrenNode.ts has not been loaded");
+        _defaultIndexMap = _defaultIndexMap || new IndexMap({ ".priority": fallbackObject }, { ".priority": PRIORITY_INDEX });
+        return _defaultIndexMap;
+      }
+      get(indexKey) {
+        const sortedMap = safeGet(this.indexes_, indexKey);
+        if (!sortedMap) {
+          throw new Error("No index defined for " + indexKey);
+        }
+        if (sortedMap instanceof SortedMap2) {
+          return sortedMap;
+        } else {
+          return null;
+        }
+      }
+      hasIndex(indexDefinition) {
+        return contains(this.indexSet_, indexDefinition.toString());
+      }
+      addIndex(indexDefinition, existingChildren) {
+        assert(indexDefinition !== KEY_INDEX, "KeyIndex always exists and isn't meant to be added to the IndexMap.");
+        const childList = [];
+        let sawIndexedValue = false;
+        const iter = existingChildren.getIterator(NamedNode.Wrap);
+        let next = iter.getNext();
+        while (next) {
+          sawIndexedValue = sawIndexedValue || indexDefinition.isDefinedOn(next.node);
+          childList.push(next);
+          next = iter.getNext();
+        }
+        let newIndex;
+        if (sawIndexedValue) {
+          newIndex = buildChildSet(childList, indexDefinition.getCompare());
+        } else {
+          newIndex = fallbackObject;
+        }
+        const indexName = indexDefinition.toString();
+        const newIndexSet = Object.assign({}, this.indexSet_);
+        newIndexSet[indexName] = indexDefinition;
+        const newIndexes = Object.assign({}, this.indexes_);
+        newIndexes[indexName] = newIndex;
+        return new IndexMap(newIndexes, newIndexSet);
+      }
+      addToIndexes(namedNode, existingChildren) {
+        const newIndexes = map(this.indexes_, (indexedChildren, indexName) => {
+          const index = safeGet(this.indexSet_, indexName);
+          assert(index, "Missing index implementation for " + indexName);
+          if (indexedChildren === fallbackObject) {
+            if (index.isDefinedOn(namedNode.node)) {
+              const childList = [];
+              const iter = existingChildren.getIterator(NamedNode.Wrap);
+              let next = iter.getNext();
+              while (next) {
+                if (next.name !== namedNode.name) {
+                  childList.push(next);
+                }
+                next = iter.getNext();
+              }
+              childList.push(namedNode);
+              return buildChildSet(childList, index.getCompare());
+            } else {
+              return fallbackObject;
+            }
+          } else {
+            const existingSnap = existingChildren.get(namedNode.name);
+            let newChildren = indexedChildren;
+            if (existingSnap) {
+              newChildren = newChildren.remove(new NamedNode(namedNode.name, existingSnap));
+            }
+            return newChildren.insert(namedNode, namedNode.node);
+          }
+        });
+        return new IndexMap(newIndexes, this.indexSet_);
+      }
+      removeFromIndexes(namedNode, existingChildren) {
+        const newIndexes = map(this.indexes_, (indexedChildren) => {
+          if (indexedChildren === fallbackObject) {
+            return indexedChildren;
+          } else {
+            const existingSnap = existingChildren.get(namedNode.name);
+            if (existingSnap) {
+              return indexedChildren.remove(new NamedNode(namedNode.name, existingSnap));
+            } else {
+              return indexedChildren;
+            }
+          }
+        });
+        return new IndexMap(newIndexes, this.indexSet_);
+      }
+    };
+    ChildrenNode = class {
+      constructor(children_, priorityNode_, indexMap_) {
+        this.children_ = children_;
+        this.priorityNode_ = priorityNode_;
+        this.indexMap_ = indexMap_;
+        this.lazyHash_ = null;
+        if (this.priorityNode_) {
+          validatePriorityNode(this.priorityNode_);
+        }
+        if (this.children_.isEmpty()) {
+          assert(!this.priorityNode_ || this.priorityNode_.isEmpty(), "An empty node cannot have a priority");
+        }
+      }
+      static get EMPTY_NODE() {
+        return EMPTY_NODE || (EMPTY_NODE = new ChildrenNode(new SortedMap2(NAME_COMPARATOR), null, IndexMap.Default));
+      }
+      isLeafNode() {
+        return false;
+      }
+      getPriority() {
+        return this.priorityNode_ || EMPTY_NODE;
+      }
+      updatePriority(newPriorityNode) {
+        if (this.children_.isEmpty()) {
+          return this;
+        } else {
+          return new ChildrenNode(this.children_, newPriorityNode, this.indexMap_);
+        }
+      }
+      getImmediateChild(childName) {
+        if (childName === ".priority") {
+          return this.getPriority();
+        } else {
+          const child = this.children_.get(childName);
+          return child === null ? EMPTY_NODE : child;
+        }
+      }
+      getChild(path) {
+        const front = pathGetFront(path);
+        if (front === null) {
+          return this;
+        }
+        return this.getImmediateChild(front).getChild(pathPopFront(path));
+      }
+      hasChild(childName) {
+        return this.children_.get(childName) !== null;
+      }
+      updateImmediateChild(childName, newChildNode) {
+        assert(newChildNode, "We should always be passing snapshot nodes");
+        if (childName === ".priority") {
+          return this.updatePriority(newChildNode);
+        } else {
+          const namedNode = new NamedNode(childName, newChildNode);
+          let newChildren, newIndexMap;
+          if (newChildNode.isEmpty()) {
+            newChildren = this.children_.remove(childName);
+            newIndexMap = this.indexMap_.removeFromIndexes(namedNode, this.children_);
+          } else {
+            newChildren = this.children_.insert(childName, newChildNode);
+            newIndexMap = this.indexMap_.addToIndexes(namedNode, this.children_);
+          }
+          const newPriority = newChildren.isEmpty() ? EMPTY_NODE : this.priorityNode_;
+          return new ChildrenNode(newChildren, newPriority, newIndexMap);
+        }
+      }
+      updateChild(path, newChildNode) {
+        const front = pathGetFront(path);
+        if (front === null) {
+          return newChildNode;
+        } else {
+          assert(pathGetFront(path) !== ".priority" || pathGetLength(path) === 1, ".priority must be the last token in a path");
+          const newImmediateChild = this.getImmediateChild(front).updateChild(pathPopFront(path), newChildNode);
+          return this.updateImmediateChild(front, newImmediateChild);
+        }
+      }
+      isEmpty() {
+        return this.children_.isEmpty();
+      }
+      numChildren() {
+        return this.children_.count();
+      }
+      val(exportFormat) {
+        if (this.isEmpty()) {
+          return null;
+        }
+        const obj = {};
+        let numKeys = 0, maxKey = 0, allIntegerKeys = true;
+        this.forEachChild(PRIORITY_INDEX, (key, childNode) => {
+          obj[key] = childNode.val(exportFormat);
+          numKeys++;
+          if (allIntegerKeys && ChildrenNode.INTEGER_REGEXP_.test(key)) {
+            maxKey = Math.max(maxKey, Number(key));
+          } else {
+            allIntegerKeys = false;
+          }
+        });
+        if (!exportFormat && allIntegerKeys && maxKey < 2 * numKeys) {
+          const array = [];
+          for (const key in obj) {
+            array[key] = obj[key];
+          }
+          return array;
+        } else {
+          if (exportFormat && !this.getPriority().isEmpty()) {
+            obj[".priority"] = this.getPriority().val();
+          }
+          return obj;
+        }
+      }
+      hash() {
+        if (this.lazyHash_ === null) {
+          let toHash = "";
+          if (!this.getPriority().isEmpty()) {
+            toHash += "priority:" + priorityHashText(this.getPriority().val()) + ":";
+          }
+          this.forEachChild(PRIORITY_INDEX, (key, childNode) => {
+            const childHash = childNode.hash();
+            if (childHash !== "") {
+              toHash += ":" + key + ":" + childHash;
+            }
+          });
+          this.lazyHash_ = toHash === "" ? "" : sha1(toHash);
+        }
+        return this.lazyHash_;
+      }
+      getPredecessorChildName(childName, childNode, index) {
+        const idx = this.resolveIndex_(index);
+        if (idx) {
+          const predecessor = idx.getPredecessorKey(new NamedNode(childName, childNode));
+          return predecessor ? predecessor.name : null;
+        } else {
+          return this.children_.getPredecessorKey(childName);
+        }
+      }
+      getFirstChildName(indexDefinition) {
+        const idx = this.resolveIndex_(indexDefinition);
+        if (idx) {
+          const minKey = idx.minKey();
+          return minKey && minKey.name;
+        } else {
+          return this.children_.minKey();
+        }
+      }
+      getFirstChild(indexDefinition) {
+        const minKey = this.getFirstChildName(indexDefinition);
+        if (minKey) {
+          return new NamedNode(minKey, this.children_.get(minKey));
+        } else {
+          return null;
+        }
+      }
+      getLastChildName(indexDefinition) {
+        const idx = this.resolveIndex_(indexDefinition);
+        if (idx) {
+          const maxKey = idx.maxKey();
+          return maxKey && maxKey.name;
+        } else {
+          return this.children_.maxKey();
+        }
+      }
+      getLastChild(indexDefinition) {
+        const maxKey = this.getLastChildName(indexDefinition);
+        if (maxKey) {
+          return new NamedNode(maxKey, this.children_.get(maxKey));
+        } else {
+          return null;
+        }
+      }
+      forEachChild(index, action) {
+        const idx = this.resolveIndex_(index);
+        if (idx) {
+          return idx.inorderTraversal((wrappedNode) => {
+            return action(wrappedNode.name, wrappedNode.node);
+          });
+        } else {
+          return this.children_.inorderTraversal(action);
+        }
+      }
+      getIterator(indexDefinition) {
+        return this.getIteratorFrom(indexDefinition.minPost(), indexDefinition);
+      }
+      getIteratorFrom(startPost, indexDefinition) {
+        const idx = this.resolveIndex_(indexDefinition);
+        if (idx) {
+          return idx.getIteratorFrom(startPost, (key) => key);
+        } else {
+          const iterator = this.children_.getIteratorFrom(startPost.name, NamedNode.Wrap);
+          let next = iterator.peek();
+          while (next != null && indexDefinition.compare(next, startPost) < 0) {
+            iterator.getNext();
+            next = iterator.peek();
+          }
+          return iterator;
+        }
+      }
+      getReverseIterator(indexDefinition) {
+        return this.getReverseIteratorFrom(indexDefinition.maxPost(), indexDefinition);
+      }
+      getReverseIteratorFrom(endPost, indexDefinition) {
+        const idx = this.resolveIndex_(indexDefinition);
+        if (idx) {
+          return idx.getReverseIteratorFrom(endPost, (key) => {
+            return key;
+          });
+        } else {
+          const iterator = this.children_.getReverseIteratorFrom(endPost.name, NamedNode.Wrap);
+          let next = iterator.peek();
+          while (next != null && indexDefinition.compare(next, endPost) > 0) {
+            iterator.getNext();
+            next = iterator.peek();
+          }
+          return iterator;
+        }
+      }
+      compareTo(other) {
+        if (this.isEmpty()) {
+          if (other.isEmpty()) {
+            return 0;
+          } else {
+            return -1;
+          }
+        } else if (other.isLeafNode() || other.isEmpty()) {
+          return 1;
+        } else if (other === MAX_NODE) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+      withIndex(indexDefinition) {
+        if (indexDefinition === KEY_INDEX || this.indexMap_.hasIndex(indexDefinition)) {
+          return this;
+        } else {
+          const newIndexMap = this.indexMap_.addIndex(indexDefinition, this.children_);
+          return new ChildrenNode(this.children_, this.priorityNode_, newIndexMap);
+        }
+      }
+      isIndexed(index) {
+        return index === KEY_INDEX || this.indexMap_.hasIndex(index);
+      }
+      equals(other) {
+        if (other === this) {
+          return true;
+        } else if (other.isLeafNode()) {
+          return false;
+        } else {
+          const otherChildrenNode = other;
+          if (!this.getPriority().equals(otherChildrenNode.getPriority())) {
+            return false;
+          } else if (this.children_.count() === otherChildrenNode.children_.count()) {
+            const thisIter = this.getIterator(PRIORITY_INDEX);
+            const otherIter = otherChildrenNode.getIterator(PRIORITY_INDEX);
+            let thisCurrent = thisIter.getNext();
+            let otherCurrent = otherIter.getNext();
+            while (thisCurrent && otherCurrent) {
+              if (thisCurrent.name !== otherCurrent.name || !thisCurrent.node.equals(otherCurrent.node)) {
+                return false;
+              }
+              thisCurrent = thisIter.getNext();
+              otherCurrent = otherIter.getNext();
+            }
+            return thisCurrent === null && otherCurrent === null;
+          } else {
+            return false;
+          }
+        }
+      }
+      resolveIndex_(indexDefinition) {
+        if (indexDefinition === KEY_INDEX) {
+          return null;
+        } else {
+          return this.indexMap_.get(indexDefinition.toString());
+        }
+      }
+    };
+    ChildrenNode.INTEGER_REGEXP_ = /^(0|[1-9]\d*)$/;
+    MaxNode = class extends ChildrenNode {
+      constructor() {
+        super(new SortedMap2(NAME_COMPARATOR), ChildrenNode.EMPTY_NODE, IndexMap.Default);
+      }
+      compareTo(other) {
+        if (other === this) {
+          return 0;
+        } else {
+          return 1;
+        }
+      }
+      equals(other) {
+        return other === this;
+      }
+      getPriority() {
+        return this;
+      }
+      getImmediateChild(childName) {
+        return ChildrenNode.EMPTY_NODE;
+      }
+      isEmpty() {
+        return false;
+      }
+    };
+    MAX_NODE = new MaxNode();
+    Object.defineProperties(NamedNode, {
+      MIN: {
+        value: new NamedNode(MIN_NAME, ChildrenNode.EMPTY_NODE)
+      },
+      MAX: {
+        value: new NamedNode(MAX_NAME, MAX_NODE)
+      }
+    });
+    KeyIndex.__EMPTY_NODE = ChildrenNode.EMPTY_NODE;
+    LeafNode.__childrenNodeConstructor = ChildrenNode;
+    setMaxNode$1(MAX_NODE);
+    setMaxNode(MAX_NODE);
+    USE_HINZE = true;
+    setNodeFromJSON(nodeFromJSON);
+    PathIndex = class extends Index {
+      constructor(indexPath_) {
+        super();
+        this.indexPath_ = indexPath_;
+        assert(!pathIsEmpty(indexPath_) && pathGetFront(indexPath_) !== ".priority", "Can't create PathIndex with empty path or .priority key");
+      }
+      extractChild(snap) {
+        return snap.getChild(this.indexPath_);
+      }
+      isDefinedOn(node) {
+        return !node.getChild(this.indexPath_).isEmpty();
+      }
+      compare(a, b) {
+        const aChild = this.extractChild(a.node);
+        const bChild = this.extractChild(b.node);
+        const indexCmp = aChild.compareTo(bChild);
+        if (indexCmp === 0) {
+          return nameCompare(a.name, b.name);
+        } else {
+          return indexCmp;
+        }
+      }
+      makePost(indexValue, name22) {
+        const valueNode = nodeFromJSON(indexValue);
+        const node = ChildrenNode.EMPTY_NODE.updateChild(this.indexPath_, valueNode);
+        return new NamedNode(name22, node);
+      }
+      maxPost() {
+        const node = ChildrenNode.EMPTY_NODE.updateChild(this.indexPath_, MAX_NODE);
+        return new NamedNode(MAX_NAME, node);
+      }
+      toString() {
+        return pathSlice(this.indexPath_, 0).join("/");
+      }
+    };
+    ValueIndex = class extends Index {
+      compare(a, b) {
+        const indexCmp = a.node.compareTo(b.node);
+        if (indexCmp === 0) {
+          return nameCompare(a.name, b.name);
+        } else {
+          return indexCmp;
+        }
+      }
+      isDefinedOn(node) {
+        return true;
+      }
+      indexedValueChanged(oldNode, newNode) {
+        return !oldNode.equals(newNode);
+      }
+      minPost() {
+        return NamedNode.MIN;
+      }
+      maxPost() {
+        return NamedNode.MAX;
+      }
+      makePost(indexValue, name22) {
+        const valueNode = nodeFromJSON(indexValue);
+        return new NamedNode(name22, valueNode);
+      }
+      toString() {
+        return ".value";
+      }
+    };
+    VALUE_INDEX = new ValueIndex();
+    QueryParams = class {
+      constructor() {
+        this.limitSet_ = false;
+        this.startSet_ = false;
+        this.startNameSet_ = false;
+        this.startAfterSet_ = false;
+        this.endSet_ = false;
+        this.endNameSet_ = false;
+        this.endBeforeSet_ = false;
+        this.limit_ = 0;
+        this.viewFrom_ = "";
+        this.indexStartValue_ = null;
+        this.indexStartName_ = "";
+        this.indexEndValue_ = null;
+        this.indexEndName_ = "";
+        this.index_ = PRIORITY_INDEX;
+      }
+      hasStart() {
+        return this.startSet_;
+      }
+      hasStartAfter() {
+        return this.startAfterSet_;
+      }
+      hasEndBefore() {
+        return this.endBeforeSet_;
+      }
+      isViewFromLeft() {
+        if (this.viewFrom_ === "") {
+          return this.startSet_;
+        } else {
+          return this.viewFrom_ === "l";
+        }
+      }
+      getIndexStartValue() {
+        assert(this.startSet_, "Only valid if start has been set");
+        return this.indexStartValue_;
+      }
+      getIndexStartName() {
+        assert(this.startSet_, "Only valid if start has been set");
+        if (this.startNameSet_) {
+          return this.indexStartName_;
+        } else {
+          return MIN_NAME;
+        }
+      }
+      hasEnd() {
+        return this.endSet_;
+      }
+      getIndexEndValue() {
+        assert(this.endSet_, "Only valid if end has been set");
+        return this.indexEndValue_;
+      }
+      getIndexEndName() {
+        assert(this.endSet_, "Only valid if end has been set");
+        if (this.endNameSet_) {
+          return this.indexEndName_;
+        } else {
+          return MAX_NAME;
+        }
+      }
+      hasLimit() {
+        return this.limitSet_;
+      }
+      hasAnchoredLimit() {
+        return this.limitSet_ && this.viewFrom_ !== "";
+      }
+      getLimit() {
+        assert(this.limitSet_, "Only valid if limit has been set");
+        return this.limit_;
+      }
+      getIndex() {
+        return this.index_;
+      }
+      loadsAllData() {
+        return !(this.startSet_ || this.endSet_ || this.limitSet_);
+      }
+      isDefault() {
+        return this.loadsAllData() && this.index_ === PRIORITY_INDEX;
+      }
+      copy() {
+        const copy = new QueryParams();
+        copy.limitSet_ = this.limitSet_;
+        copy.limit_ = this.limit_;
+        copy.startSet_ = this.startSet_;
+        copy.indexStartValue_ = this.indexStartValue_;
+        copy.startNameSet_ = this.startNameSet_;
+        copy.indexStartName_ = this.indexStartName_;
+        copy.endSet_ = this.endSet_;
+        copy.indexEndValue_ = this.indexEndValue_;
+        copy.endNameSet_ = this.endNameSet_;
+        copy.indexEndName_ = this.indexEndName_;
+        copy.index_ = this.index_;
+        copy.viewFrom_ = this.viewFrom_;
+        return copy;
+      }
+    };
+    ReadonlyRestClient = class extends ServerActions {
+      constructor(repoInfo_, onDataUpdate_, authTokenProvider_, appCheckTokenProvider_) {
+        super();
+        this.repoInfo_ = repoInfo_;
+        this.onDataUpdate_ = onDataUpdate_;
+        this.authTokenProvider_ = authTokenProvider_;
+        this.appCheckTokenProvider_ = appCheckTokenProvider_;
+        this.log_ = logWrapper("p:rest:");
+        this.listens_ = {};
+      }
+      reportStats(stats) {
+        throw new Error("Method not implemented.");
+      }
+      static getListenId_(query2, tag) {
+        if (tag !== void 0) {
+          return "tag$" + tag;
+        } else {
+          assert(query2._queryParams.isDefault(), "should have a tag if it's not a default query.");
+          return query2._path.toString();
+        }
+      }
+      listen(query2, currentHashFn, tag, onComplete) {
+        const pathString = query2._path.toString();
+        this.log_("Listen called for " + pathString + " " + query2._queryIdentifier);
+        const listenId = ReadonlyRestClient.getListenId_(query2, tag);
+        const thisListen = {};
+        this.listens_[listenId] = thisListen;
+        const queryStringParameters = queryParamsToRestQueryStringParameters(query2._queryParams);
+        this.restRequest_(pathString + ".json", queryStringParameters, (error22, result) => {
+          let data = result;
+          if (error22 === 404) {
+            data = null;
+            error22 = null;
+          }
+          if (error22 === null) {
+            this.onDataUpdate_(pathString, data, false, tag);
+          }
+          if (safeGet(this.listens_, listenId) === thisListen) {
+            let status;
+            if (!error22) {
+              status = "ok";
+            } else if (error22 === 401) {
+              status = "permission_denied";
+            } else {
+              status = "rest_error:" + error22;
+            }
+            onComplete(status, null);
+          }
+        });
+      }
+      unlisten(query2, tag) {
+        const listenId = ReadonlyRestClient.getListenId_(query2, tag);
+        delete this.listens_[listenId];
+      }
+      get(query2) {
+        const queryStringParameters = queryParamsToRestQueryStringParameters(query2._queryParams);
+        const pathString = query2._path.toString();
+        const deferred = new Deferred();
+        this.restRequest_(pathString + ".json", queryStringParameters, (error22, result) => {
+          let data = result;
+          if (error22 === 404) {
+            data = null;
+            error22 = null;
+          }
+          if (error22 === null) {
+            this.onDataUpdate_(pathString, data, false, null);
+            deferred.resolve(data);
+          } else {
+            deferred.reject(new Error(data));
+          }
+        });
+        return deferred.promise;
+      }
+      refreshAuthToken(token) {
+      }
+      restRequest_(pathString, queryStringParameters = {}, callback) {
+        queryStringParameters["format"] = "export";
+        return Promise.all([
+          this.authTokenProvider_.getToken(false),
+          this.appCheckTokenProvider_.getToken(false)
+        ]).then(([authToken, appCheckToken]) => {
+          if (authToken && authToken.accessToken) {
+            queryStringParameters["auth"] = authToken.accessToken;
+          }
+          if (appCheckToken && appCheckToken.token) {
+            queryStringParameters["ac"] = appCheckToken.token;
+          }
+          const url2 = (this.repoInfo_.secure ? "https://" : "http://") + this.repoInfo_.host + pathString + "?ns=" + this.repoInfo_.namespace + querystring(queryStringParameters);
+          this.log_("Sending REST request for " + url2);
+          const xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = () => {
+            if (callback && xhr.readyState === 4) {
+              this.log_("REST Response for " + url2 + " received. status:", xhr.status, "response:", xhr.responseText);
+              let res = null;
+              if (xhr.status >= 200 && xhr.status < 300) {
+                try {
+                  res = jsonEval(xhr.responseText);
+                } catch (e) {
+                  warn("Failed to parse JSON response for " + url2 + ": " + xhr.responseText);
+                }
+                callback(null, res);
+              } else {
+                if (xhr.status !== 401 && xhr.status !== 404) {
+                  warn("Got unsuccessful REST response for " + url2 + " Status: " + xhr.status);
+                }
+                callback(xhr.status);
+              }
+              callback = null;
+            }
+          };
+          xhr.open("GET", url2, true);
+          xhr.send();
+        });
+      }
+    };
+    SnapshotHolder = class {
+      constructor() {
+        this.rootNode_ = ChildrenNode.EMPTY_NODE;
+      }
+      getNode(path) {
+        return this.rootNode_.getChild(path);
+      }
+      updateSnapshot(path, newSnapshotNode) {
+        this.rootNode_ = this.rootNode_.updateChild(path, newSnapshotNode);
+      }
+    };
+    StatsListener = class {
+      constructor(collection_) {
+        this.collection_ = collection_;
+        this.last_ = null;
+      }
+      get() {
+        const newStats = this.collection_.get();
+        const delta = Object.assign({}, newStats);
+        if (this.last_) {
+          each2(this.last_, (stat, value) => {
+            delta[stat] = delta[stat] - value;
+          });
+        }
+        this.last_ = newStats;
+        return delta;
+      }
+    };
+    FIRST_STATS_MIN_TIME = 10 * 1e3;
+    FIRST_STATS_MAX_TIME = 30 * 1e3;
+    REPORT_STATS_INTERVAL = 5 * 60 * 1e3;
+    StatsReporter = class {
+      constructor(collection2, server_) {
+        this.server_ = server_;
+        this.statsToReport_ = {};
+        this.statsListener_ = new StatsListener(collection2);
+        const timeout = FIRST_STATS_MIN_TIME + (FIRST_STATS_MAX_TIME - FIRST_STATS_MIN_TIME) * Math.random();
+        setTimeoutNonBlocking(this.reportStats_.bind(this), Math.floor(timeout));
+      }
+      reportStats_() {
+        const stats = this.statsListener_.get();
+        const reportedStats = {};
+        let haveStatsToReport = false;
+        each2(stats, (stat, value) => {
+          if (value > 0 && contains(this.statsToReport_, stat)) {
+            reportedStats[stat] = value;
+            haveStatsToReport = true;
+          }
+        });
+        if (haveStatsToReport) {
+          this.server_.reportStats(reportedStats);
+        }
+        setTimeoutNonBlocking(this.reportStats_.bind(this), Math.floor(Math.random() * 2 * REPORT_STATS_INTERVAL));
+      }
+    };
+    (function(OperationType2) {
+      OperationType2[OperationType2["OVERWRITE"] = 0] = "OVERWRITE";
+      OperationType2[OperationType2["MERGE"] = 1] = "MERGE";
+      OperationType2[OperationType2["ACK_USER_WRITE"] = 2] = "ACK_USER_WRITE";
+      OperationType2[OperationType2["LISTEN_COMPLETE"] = 3] = "LISTEN_COMPLETE";
+    })(OperationType || (OperationType = {}));
+    AckUserWrite = class {
+      constructor(path, affectedTree, revert) {
+        this.path = path;
+        this.affectedTree = affectedTree;
+        this.revert = revert;
+        this.type = OperationType.ACK_USER_WRITE;
+        this.source = newOperationSourceUser();
+      }
+      operationForChild(childName) {
+        if (!pathIsEmpty(this.path)) {
+          assert(pathGetFront(this.path) === childName, "operationForChild called for unrelated child.");
+          return new AckUserWrite(pathPopFront(this.path), this.affectedTree, this.revert);
+        } else if (this.affectedTree.value != null) {
+          assert(this.affectedTree.children.isEmpty(), "affectedTree should not have overlapping affected paths.");
+          return this;
+        } else {
+          const childTree = this.affectedTree.subtree(new Path(childName));
+          return new AckUserWrite(newEmptyPath(), childTree, this.revert);
+        }
+      }
+    };
+    Overwrite = class {
+      constructor(source, path, snap) {
+        this.source = source;
+        this.path = path;
+        this.snap = snap;
+        this.type = OperationType.OVERWRITE;
+      }
+      operationForChild(childName) {
+        if (pathIsEmpty(this.path)) {
+          return new Overwrite(this.source, newEmptyPath(), this.snap.getImmediateChild(childName));
+        } else {
+          return new Overwrite(this.source, pathPopFront(this.path), this.snap);
+        }
+      }
+    };
+    Merge = class {
+      constructor(source, path, children) {
+        this.source = source;
+        this.path = path;
+        this.children = children;
+        this.type = OperationType.MERGE;
+      }
+      operationForChild(childName) {
+        if (pathIsEmpty(this.path)) {
+          const childTree = this.children.subtree(new Path(childName));
+          if (childTree.isEmpty()) {
+            return null;
+          } else if (childTree.value) {
+            return new Overwrite(this.source, newEmptyPath(), childTree.value);
+          } else {
+            return new Merge(this.source, newEmptyPath(), childTree);
+          }
+        } else {
+          assert(pathGetFront(this.path) === childName, "Can't get a merge for a child not on the path of the operation");
+          return new Merge(this.source, pathPopFront(this.path), this.children);
+        }
+      }
+      toString() {
+        return "Operation(" + this.path + ": " + this.source.toString() + " merge: " + this.children.toString() + ")";
+      }
+    };
+    CacheNode = class {
+      constructor(node_, fullyInitialized_, filtered_) {
+        this.node_ = node_;
+        this.fullyInitialized_ = fullyInitialized_;
+        this.filtered_ = filtered_;
+      }
+      isFullyInitialized() {
+        return this.fullyInitialized_;
+      }
+      isFiltered() {
+        return this.filtered_;
+      }
+      isCompleteForPath(path) {
+        if (pathIsEmpty(path)) {
+          return this.isFullyInitialized() && !this.filtered_;
+        }
+        const childKey = pathGetFront(path);
+        return this.isCompleteForChild(childKey);
+      }
+      isCompleteForChild(key) {
+        return this.isFullyInitialized() && !this.filtered_ || this.node_.hasChild(key);
+      }
+      getNode() {
+        return this.node_;
+      }
+    };
+    EmptyChildren = () => {
+      if (!emptyChildrenSingleton) {
+        emptyChildrenSingleton = new SortedMap2(stringCompare);
+      }
+      return emptyChildrenSingleton;
+    };
+    ImmutableTree = class {
+      constructor(value, children = EmptyChildren()) {
+        this.value = value;
+        this.children = children;
+      }
+      static fromObject(obj) {
+        let tree = new ImmutableTree(null);
+        each2(obj, (childPath, childSnap) => {
+          tree = tree.set(new Path(childPath), childSnap);
+        });
+        return tree;
+      }
+      isEmpty() {
+        return this.value === null && this.children.isEmpty();
+      }
+      findRootMostMatchingPathAndValue(relativePath, predicate) {
+        if (this.value != null && predicate(this.value)) {
+          return { path: newEmptyPath(), value: this.value };
+        } else {
+          if (pathIsEmpty(relativePath)) {
+            return null;
+          } else {
+            const front = pathGetFront(relativePath);
+            const child = this.children.get(front);
+            if (child !== null) {
+              const childExistingPathAndValue = child.findRootMostMatchingPathAndValue(pathPopFront(relativePath), predicate);
+              if (childExistingPathAndValue != null) {
+                const fullPath = pathChild(new Path(front), childExistingPathAndValue.path);
+                return { path: fullPath, value: childExistingPathAndValue.value };
+              } else {
+                return null;
+              }
+            } else {
+              return null;
+            }
+          }
+        }
+      }
+      findRootMostValueAndPath(relativePath) {
+        return this.findRootMostMatchingPathAndValue(relativePath, () => true);
+      }
+      subtree(relativePath) {
+        if (pathIsEmpty(relativePath)) {
+          return this;
+        } else {
+          const front = pathGetFront(relativePath);
+          const childTree = this.children.get(front);
+          if (childTree !== null) {
+            return childTree.subtree(pathPopFront(relativePath));
+          } else {
+            return new ImmutableTree(null);
+          }
+        }
+      }
+      set(relativePath, toSet) {
+        if (pathIsEmpty(relativePath)) {
+          return new ImmutableTree(toSet, this.children);
+        } else {
+          const front = pathGetFront(relativePath);
+          const child = this.children.get(front) || new ImmutableTree(null);
+          const newChild = child.set(pathPopFront(relativePath), toSet);
+          const newChildren = this.children.insert(front, newChild);
+          return new ImmutableTree(this.value, newChildren);
+        }
+      }
+      remove(relativePath) {
+        if (pathIsEmpty(relativePath)) {
+          if (this.children.isEmpty()) {
+            return new ImmutableTree(null);
+          } else {
+            return new ImmutableTree(null, this.children);
+          }
+        } else {
+          const front = pathGetFront(relativePath);
+          const child = this.children.get(front);
+          if (child) {
+            const newChild = child.remove(pathPopFront(relativePath));
+            let newChildren;
+            if (newChild.isEmpty()) {
+              newChildren = this.children.remove(front);
+            } else {
+              newChildren = this.children.insert(front, newChild);
+            }
+            if (this.value === null && newChildren.isEmpty()) {
+              return new ImmutableTree(null);
+            } else {
+              return new ImmutableTree(this.value, newChildren);
+            }
+          } else {
+            return this;
+          }
+        }
+      }
+      get(relativePath) {
+        if (pathIsEmpty(relativePath)) {
+          return this.value;
+        } else {
+          const front = pathGetFront(relativePath);
+          const child = this.children.get(front);
+          if (child) {
+            return child.get(pathPopFront(relativePath));
+          } else {
+            return null;
+          }
+        }
+      }
+      setTree(relativePath, newTree) {
+        if (pathIsEmpty(relativePath)) {
+          return newTree;
+        } else {
+          const front = pathGetFront(relativePath);
+          const child = this.children.get(front) || new ImmutableTree(null);
+          const newChild = child.setTree(pathPopFront(relativePath), newTree);
+          let newChildren;
+          if (newChild.isEmpty()) {
+            newChildren = this.children.remove(front);
+          } else {
+            newChildren = this.children.insert(front, newChild);
+          }
+          return new ImmutableTree(this.value, newChildren);
+        }
+      }
+      fold(fn) {
+        return this.fold_(newEmptyPath(), fn);
+      }
+      fold_(pathSoFar, fn) {
+        const accum = {};
+        this.children.inorderTraversal((childKey, childTree) => {
+          accum[childKey] = childTree.fold_(pathChild(pathSoFar, childKey), fn);
+        });
+        return fn(pathSoFar, this.value, accum);
+      }
+      findOnPath(path, f) {
+        return this.findOnPath_(path, newEmptyPath(), f);
+      }
+      findOnPath_(pathToFollow, pathSoFar, f) {
+        const result = this.value ? f(pathSoFar, this.value) : false;
+        if (result) {
+          return result;
+        } else {
+          if (pathIsEmpty(pathToFollow)) {
+            return null;
+          } else {
+            const front = pathGetFront(pathToFollow);
+            const nextChild = this.children.get(front);
+            if (nextChild) {
+              return nextChild.findOnPath_(pathPopFront(pathToFollow), pathChild(pathSoFar, front), f);
+            } else {
+              return null;
+            }
+          }
+        }
+      }
+      foreachOnPath(path, f) {
+        return this.foreachOnPath_(path, newEmptyPath(), f);
+      }
+      foreachOnPath_(pathToFollow, currentRelativePath, f) {
+        if (pathIsEmpty(pathToFollow)) {
+          return this;
+        } else {
+          if (this.value) {
+            f(currentRelativePath, this.value);
+          }
+          const front = pathGetFront(pathToFollow);
+          const nextChild = this.children.get(front);
+          if (nextChild) {
+            return nextChild.foreachOnPath_(pathPopFront(pathToFollow), pathChild(currentRelativePath, front), f);
+          } else {
+            return new ImmutableTree(null);
+          }
+        }
+      }
+      foreach(f) {
+        this.foreach_(newEmptyPath(), f);
+      }
+      foreach_(currentRelativePath, f) {
+        this.children.inorderTraversal((childName, childTree) => {
+          childTree.foreach_(pathChild(currentRelativePath, childName), f);
+        });
+        if (this.value) {
+          f(currentRelativePath, this.value);
+        }
+      }
+      foreachChild(f) {
+        this.children.inorderTraversal((childName, childTree) => {
+          if (childTree.value) {
+            f(childName, childTree.value);
+          }
+        });
+      }
+    };
+    CompoundWrite = class {
+      constructor(writeTree_) {
+        this.writeTree_ = writeTree_;
+      }
+      static empty() {
+        return new CompoundWrite(new ImmutableTree(null));
+      }
+    };
+    ChildChangeAccumulator = class {
+      constructor() {
+        this.changeMap = new Map();
+      }
+      trackChildChange(change) {
+        const type = change.type;
+        const childKey = change.childName;
+        assert(type === "child_added" || type === "child_changed" || type === "child_removed", "Only child changes supported for tracking");
+        assert(childKey !== ".priority", "Only non-priority child changes can be tracked.");
+        const oldChange = this.changeMap.get(childKey);
+        if (oldChange) {
+          const oldType = oldChange.type;
+          if (type === "child_added" && oldType === "child_removed") {
+            this.changeMap.set(childKey, changeChildChanged(childKey, change.snapshotNode, oldChange.snapshotNode));
+          } else if (type === "child_removed" && oldType === "child_added") {
+            this.changeMap.delete(childKey);
+          } else if (type === "child_removed" && oldType === "child_changed") {
+            this.changeMap.set(childKey, changeChildRemoved(childKey, oldChange.oldSnap));
+          } else if (type === "child_changed" && oldType === "child_added") {
+            this.changeMap.set(childKey, changeChildAdded(childKey, change.snapshotNode));
+          } else if (type === "child_changed" && oldType === "child_changed") {
+            this.changeMap.set(childKey, changeChildChanged(childKey, change.snapshotNode, oldChange.oldSnap));
+          } else {
+            throw assertionError("Illegal combination of changes: " + change + " occurred after " + oldChange);
+          }
+        } else {
+          this.changeMap.set(childKey, change);
+        }
+      }
+      getChanges() {
+        return Array.from(this.changeMap.values());
+      }
+    };
+    NoCompleteChildSource_ = class {
+      getCompleteChild(childKey) {
+        return null;
+      }
+      getChildAfterChild(index, child, reverse) {
+        return null;
+      }
+    };
+    NO_COMPLETE_CHILD_SOURCE = new NoCompleteChildSource_();
+    WriteTreeCompleteChildSource = class {
+      constructor(writes_, viewCache_, optCompleteServerCache_ = null) {
+        this.writes_ = writes_;
+        this.viewCache_ = viewCache_;
+        this.optCompleteServerCache_ = optCompleteServerCache_;
+      }
+      getCompleteChild(childKey) {
+        const node = this.viewCache_.eventCache;
+        if (node.isCompleteForChild(childKey)) {
+          return node.getNode().getImmediateChild(childKey);
+        } else {
+          const serverNode = this.optCompleteServerCache_ != null ? new CacheNode(this.optCompleteServerCache_, true, false) : this.viewCache_.serverCache;
+          return writeTreeRefCalcCompleteChild(this.writes_, childKey, serverNode);
+        }
+      }
+      getChildAfterChild(index, child, reverse) {
+        const completeServerData = this.optCompleteServerCache_ != null ? this.optCompleteServerCache_ : viewCacheGetCompleteServerSnap(this.viewCache_);
+        const nodes = writeTreeRefCalcIndexedSlice(this.writes_, completeServerData, child, 1, reverse, index);
+        if (nodes.length === 0) {
+          return null;
+        } else {
+          return nodes[0];
+        }
+      }
+    };
+    SyncTree = class {
+      constructor(listenProvider_) {
+        this.listenProvider_ = listenProvider_;
+        this.syncPointTree_ = new ImmutableTree(null);
+        this.pendingWriteTree_ = newWriteTree();
+        this.tagToQueryMap = new Map();
+        this.queryToTagMap = new Map();
+      }
+    };
+    ExistingValueProvider = class {
+      constructor(node_) {
+        this.node_ = node_;
+      }
+      getImmediateChild(childName) {
+        const child = this.node_.getImmediateChild(childName);
+        return new ExistingValueProvider(child);
+      }
+      node() {
+        return this.node_;
+      }
+    };
+    DeferredValueProvider = class {
+      constructor(syncTree, path) {
+        this.syncTree_ = syncTree;
+        this.path_ = path;
+      }
+      getImmediateChild(childName) {
+        const childPath = pathChild(this.path_, childName);
+        return new DeferredValueProvider(this.syncTree_, childPath);
+      }
+      node() {
+        return syncTreeCalcCompleteEventCache(this.syncTree_, this.path_);
+      }
+    };
+    generateWithValues = function(values) {
+      values = values || {};
+      values["timestamp"] = values["timestamp"] || new Date().getTime();
+      return values;
+    };
+    resolveDeferredLeafValue = function(value, existingVal, serverValues) {
+      if (!value || typeof value !== "object") {
+        return value;
+      }
+      assert(".sv" in value, "Unexpected leaf node or priority contents");
+      if (typeof value[".sv"] === "string") {
+        return resolveScalarDeferredValue(value[".sv"], existingVal, serverValues);
+      } else if (typeof value[".sv"] === "object") {
+        return resolveComplexDeferredValue(value[".sv"], existingVal);
+      } else {
+        assert(false, "Unexpected server value: " + JSON.stringify(value, null, 2));
+      }
+    };
+    resolveScalarDeferredValue = function(op, existing, serverValues) {
+      switch (op) {
+        case "timestamp":
+          return serverValues["timestamp"];
+        default:
+          assert(false, "Unexpected server value: " + op);
+      }
+    };
+    resolveComplexDeferredValue = function(op, existing, unused) {
+      if (!op.hasOwnProperty("increment")) {
+        assert(false, "Unexpected server value: " + JSON.stringify(op, null, 2));
+      }
+      const delta = op["increment"];
+      if (typeof delta !== "number") {
+        assert(false, "Unexpected increment value: " + delta);
+      }
+      const existingNode = existing.node();
+      assert(existingNode !== null && typeof existingNode !== "undefined", "Expected ChildrenNode.EMPTY_NODE for nulls");
+      if (!existingNode.isLeafNode()) {
+        return delta;
+      }
+      const leaf = existingNode;
+      const existingVal = leaf.getValue();
+      if (typeof existingVal !== "number") {
+        return delta;
+      }
+      return existingVal + delta;
+    };
+    resolveDeferredValueTree = function(path, node, syncTree, serverValues) {
+      return resolveDeferredValue(node, new DeferredValueProvider(syncTree, path), serverValues);
+    };
+    resolveDeferredValueSnapshot = function(node, existing, serverValues) {
+      return resolveDeferredValue(node, new ExistingValueProvider(existing), serverValues);
+    };
+    Tree = class {
+      constructor(name22 = "", parent2 = null, node = { children: {}, childCount: 0 }) {
+        this.name = name22;
+        this.parent = parent2;
+        this.node = node;
+      }
+    };
+    INVALID_KEY_REGEX_ = /[\[\].#$\/\u0000-\u001F\u007F]/;
+    INVALID_PATH_REGEX_ = /[\[\].#$\u0000-\u001F\u007F]/;
+    MAX_LEAF_SIZE_ = 10 * 1024 * 1024;
+    isValidKey2 = function(key) {
+      return typeof key === "string" && key.length !== 0 && !INVALID_KEY_REGEX_.test(key);
+    };
+    isValidPathString = function(pathString) {
+      return typeof pathString === "string" && pathString.length !== 0 && !INVALID_PATH_REGEX_.test(pathString);
+    };
+    isValidRootPathString = function(pathString) {
+      if (pathString) {
+        pathString = pathString.replace(/^\/*\.info(\/|$)/, "/");
+      }
+      return isValidPathString(pathString);
+    };
+    validateFirebaseData = function(errorPrefix2, data, path_) {
+      const path = path_ instanceof Path ? new ValidationPath(path_, errorPrefix2) : path_;
+      if (data === void 0) {
+        throw new Error(errorPrefix2 + "contains undefined " + validationPathToErrorString(path));
+      }
+      if (typeof data === "function") {
+        throw new Error(errorPrefix2 + "contains a function " + validationPathToErrorString(path) + " with contents = " + data.toString());
+      }
+      if (isInvalidJSONNumber(data)) {
+        throw new Error(errorPrefix2 + "contains " + data.toString() + " " + validationPathToErrorString(path));
+      }
+      if (typeof data === "string" && data.length > MAX_LEAF_SIZE_ / 3 && stringLength(data) > MAX_LEAF_SIZE_) {
+        throw new Error(errorPrefix2 + "contains a string greater than " + MAX_LEAF_SIZE_ + " utf8 bytes " + validationPathToErrorString(path) + " ('" + data.substring(0, 50) + "...')");
+      }
+      if (data && typeof data === "object") {
+        let hasDotValue = false;
+        let hasActualChild = false;
+        each2(data, (key, value) => {
+          if (key === ".value") {
+            hasDotValue = true;
+          } else if (key !== ".priority" && key !== ".sv") {
+            hasActualChild = true;
+            if (!isValidKey2(key)) {
+              throw new Error(errorPrefix2 + " contains an invalid key (" + key + ") " + validationPathToErrorString(path) + `.  Keys must be non-empty strings and can't contain ".", "#", "$", "/", "[", or "]"`);
+            }
+          }
+          validationPathPush(path, key);
+          validateFirebaseData(errorPrefix2, value, path);
+          validationPathPop(path);
+        });
+        if (hasDotValue && hasActualChild) {
+          throw new Error(errorPrefix2 + ' contains ".value" child ' + validationPathToErrorString(path) + " in addition to actual children.");
+        }
+      }
+    };
+    validateUrl = function(fnName, parsedUrl) {
+      const pathString = parsedUrl.path.toString();
+      if (!(typeof parsedUrl.repoInfo.host === "string") || parsedUrl.repoInfo.host.length === 0 || !isValidKey2(parsedUrl.repoInfo.namespace) && parsedUrl.repoInfo.host.split(":")[0] !== "localhost" || pathString.length !== 0 && !isValidRootPathString(pathString)) {
+        throw new Error(errorPrefix(fnName, "url") + `must be a valid firebase URL and the path can't contain ".", "#", "$", "[", or "]".`);
+      }
+    };
+    EventQueue = class {
+      constructor() {
+        this.eventLists_ = [];
+        this.recursionDepth_ = 0;
+      }
+    };
+    INTERRUPT_REASON = "repo_interrupt";
+    MAX_TRANSACTION_RETRIES = 25;
+    Repo = class {
+      constructor(repoInfo_, forceRestClient_, authTokenProvider_, appCheckProvider_) {
+        this.repoInfo_ = repoInfo_;
+        this.forceRestClient_ = forceRestClient_;
+        this.authTokenProvider_ = authTokenProvider_;
+        this.appCheckProvider_ = appCheckProvider_;
+        this.dataUpdateCount = 0;
+        this.statsListener_ = null;
+        this.eventQueue_ = new EventQueue();
+        this.nextWriteId_ = 1;
+        this.interceptServerDataCallback_ = null;
+        this.onDisconnect_ = newSparseSnapshotTree();
+        this.transactionQueueTree_ = new Tree();
+        this.persistentConnection_ = null;
+        this.key = this.repoInfo_.toURLString();
+      }
+      toString() {
+        return (this.repoInfo_.secure ? "https://" : "http://") + this.repoInfo_.host;
+      }
+    };
+    parseRepoInfo = function(dataURL, nodeAdmin) {
+      const parsedUrl = parseDatabaseURL(dataURL), namespace = parsedUrl.namespace;
+      if (parsedUrl.domain === "firebase.com") {
+        fatal(parsedUrl.host + " is no longer supported. Please use <YOUR FIREBASE>.firebaseio.com instead");
+      }
+      if ((!namespace || namespace === "undefined") && parsedUrl.domain !== "localhost") {
+        fatal("Cannot parse Firebase url. Please use https://<YOUR FIREBASE>.firebaseio.com");
+      }
+      if (!parsedUrl.secure) {
+        warnIfPageIsSecure();
+      }
+      const webSocketOnly = parsedUrl.scheme === "ws" || parsedUrl.scheme === "wss";
+      return {
+        repoInfo: new RepoInfo(parsedUrl.host, parsedUrl.secure, namespace, nodeAdmin, webSocketOnly, "", namespace !== parsedUrl.subdomain),
+        path: new Path(parsedUrl.pathString)
+      };
+    };
+    parseDatabaseURL = function(dataURL) {
+      let host = "", domain = "", subdomain = "", pathString = "", namespace = "";
+      let secure = true, scheme2 = "https", port = 443;
+      if (typeof dataURL === "string") {
+        let colonInd = dataURL.indexOf("//");
+        if (colonInd >= 0) {
+          scheme2 = dataURL.substring(0, colonInd - 1);
+          dataURL = dataURL.substring(colonInd + 2);
+        }
+        let slashInd = dataURL.indexOf("/");
+        if (slashInd === -1) {
+          slashInd = dataURL.length;
+        }
+        let questionMarkInd = dataURL.indexOf("?");
+        if (questionMarkInd === -1) {
+          questionMarkInd = dataURL.length;
+        }
+        host = dataURL.substring(0, Math.min(slashInd, questionMarkInd));
+        if (slashInd < questionMarkInd) {
+          pathString = decodePath(dataURL.substring(slashInd, questionMarkInd));
+        }
+        const queryParams = decodeQuery(dataURL.substring(Math.min(dataURL.length, questionMarkInd)));
+        colonInd = host.indexOf(":");
+        if (colonInd >= 0) {
+          secure = scheme2 === "https" || scheme2 === "wss";
+          port = parseInt(host.substring(colonInd + 1), 10);
+        } else {
+          colonInd = host.length;
+        }
+        const hostWithoutPort = host.slice(0, colonInd);
+        if (hostWithoutPort.toLowerCase() === "localhost") {
+          domain = "localhost";
+        } else if (hostWithoutPort.split(".").length <= 2) {
+          domain = hostWithoutPort;
+        } else {
+          const dotInd = host.indexOf(".");
+          subdomain = host.substring(0, dotInd).toLowerCase();
+          domain = host.substring(dotInd + 1);
+          namespace = subdomain;
+        }
+        if ("ns" in queryParams) {
+          namespace = queryParams["ns"];
+        }
+      }
+      return {
+        host,
+        port,
+        domain,
+        subdomain,
+        secure,
+        scheme: scheme2,
+        pathString,
+        namespace
+      };
+    };
+    QueryImpl2 = class {
+      constructor(_repo, _path, _queryParams, _orderByCalled) {
+        this._repo = _repo;
+        this._path = _path;
+        this._queryParams = _queryParams;
+        this._orderByCalled = _orderByCalled;
+      }
+      get key() {
+        if (pathIsEmpty(this._path)) {
+          return null;
+        } else {
+          return pathGetBack(this._path);
+        }
+      }
+      get ref() {
+        return new ReferenceImpl(this._repo, this._path);
+      }
+      get _queryIdentifier() {
+        const obj = queryParamsGetQueryObject(this._queryParams);
+        const id = ObjectToUniqueKey(obj);
+        return id === "{}" ? "default" : id;
+      }
+      get _queryObject() {
+        return queryParamsGetQueryObject(this._queryParams);
+      }
+      isEqual(other) {
+        other = getModularInstance(other);
+        if (!(other instanceof QueryImpl2)) {
+          return false;
+        }
+        const sameRepo = this._repo === other._repo;
+        const samePath = pathEquals(this._path, other._path);
+        const sameQueryIdentifier = this._queryIdentifier === other._queryIdentifier;
+        return sameRepo && samePath && sameQueryIdentifier;
+      }
+      toJSON() {
+        return this.toString();
+      }
+      toString() {
+        return this._repo.toString() + pathToUrlEncodedString(this._path);
+      }
+    };
+    ReferenceImpl = class extends QueryImpl2 {
+      constructor(repo, path) {
+        super(repo, path, new QueryParams(), false);
+      }
+      get parent() {
+        const parentPath = pathParent(this._path);
+        return parentPath === null ? null : new ReferenceImpl(this._repo, parentPath);
+      }
+      get root() {
+        let ref = this;
+        while (ref.parent !== null) {
+          ref = ref.parent;
+        }
+        return ref;
+      }
+    };
+    syncPointSetReferenceConstructor(ReferenceImpl);
+    syncTreeSetReferenceConstructor(ReferenceImpl);
+    FIREBASE_DATABASE_EMULATOR_HOST_VAR = "FIREBASE_DATABASE_EMULATOR_HOST";
+    repos = {};
+    useRestClient = false;
+    Database = class {
+      constructor(_repoInternal, app) {
+        this._repoInternal = _repoInternal;
+        this.app = app;
+        this["type"] = "database";
+        this._instanceStarted = false;
+      }
+      get _repo() {
+        if (!this._instanceStarted) {
+          repoStart(this._repoInternal, this.app.options.appId, this.app.options["databaseAuthVariableOverride"]);
+          this._instanceStarted = true;
+        }
+        return this._repoInternal;
+      }
+      get _root() {
+        if (!this._rootInternal) {
+          this._rootInternal = new ReferenceImpl(this._repo, newEmptyPath());
+        }
+        return this._rootInternal;
+      }
+      _delete() {
+        if (this._rootInternal !== null) {
+          repoManagerDeleteRepo(this._repo, this.app.name);
+          this._repoInternal = null;
+          this._rootInternal = null;
+        }
+        return Promise.resolve();
+      }
+      _checkNotDeleted(apiName) {
+        if (this._rootInternal === null) {
+          fatal("Cannot call " + apiName + " on a deleted database.");
+        }
+      }
+    };
+    PersistentConnection.prototype.simpleListen = function(pathString, onComplete) {
+      this.sendRequest("q", { p: pathString }, onComplete);
+    };
+    PersistentConnection.prototype.echo = function(data, onEcho) {
+      this.sendRequest("echo", { d: data }, onEcho);
+    };
+    setWebSocketImpl(websocket.Client);
+    registerDatabase("node");
+    RenderlessMyDocUpdater = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_user;
+      $$unsubscribe_user = subscribe(user, (value) => value);
+      let { classID } = $$props;
+      let { roomID } = $$props;
+      onDestroy(() => {
+      });
+      if ($$props.classID === void 0 && $$bindings.classID && classID !== void 0)
+        $$bindings.classID(classID);
+      if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
+        $$bindings.roomID(roomID);
+      $$unsubscribe_user();
+      return ``;
+    });
     css = {
       code: ".question-item.svelte-t9y9x2{color:red}",
       map: null
     };
     _layout2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $roomToPeople, $$unsubscribe_roomToPeople;
+      $$unsubscribe_roomToPeople = subscribe(roomToPeople, (value) => $roomToPeople = value);
       let { classID } = $$props;
       let { roomID } = $$props;
       let rooms;
@@ -114335,16 +123876,6 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       let unsubFuncs = [];
       const participantsRef = collection(getFirestore(), `classes/${classID}/participants`);
       const roomsRef = collection(getFirestore(), `classes/${classID}/rooms`);
-      unsubFuncs.push(onSnapshot(participantsRef, (snapshot) => {
-        const docs = [];
-        snapshot.forEach((doc2) => {
-          docs.push({
-            id: doc2.id,
-            ref: doc2.ref.path,
-            ...doc2.data()
-          });
-        });
-      }));
       unsubFuncs.push(onSnapshot(roomsRef, (snapshot) => {
         const docs = [];
         snapshot.forEach((doc2) => {
@@ -114356,19 +123887,59 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         });
         rooms = docs;
       }));
+      unsubFuncs.push(onSnapshot(participantsRef, (snapshot) => {
+        const docs = [];
+        snapshot.docChanges().forEach((change) => {
+          const person = change.doc.data();
+          const roomID2 = person.currentRoomID;
+          switch (change.type) {
+            case "added":
+              if (!$roomToPeople[roomID2])
+                set_store_value(roomToPeople, $roomToPeople[roomID2] = [], $roomToPeople);
+              $roomToPeople[roomID2].push(person);
+              return;
+            case "modified":
+              for (const id of Object.keys($roomToPeople)) {
+                for (const p of $roomToPeople[id]) {
+                  if (p.uid === person.uid) {
+                    set_store_value(roomToPeople, $roomToPeople[id] = $roomToPeople[id].filter((p2) => p2.uid !== person.uid), $roomToPeople);
+                  }
+                }
+              }
+              if (!$roomToPeople[roomID2])
+                set_store_value(roomToPeople, $roomToPeople[roomID2] = [], $roomToPeople);
+              $roomToPeople[roomID2].push(person);
+              return;
+            case "removed":
+              set_store_value(roomToPeople, $roomToPeople[roomID2] = $roomToPeople[roomID2].filter((p) => p.uid !== person.uid), $roomToPeople);
+          }
+        });
+        snapshot.forEach((doc2) => {
+          docs.push({
+            id: doc2.id,
+            ref: doc2.ref.path,
+            ...doc2.data()
+          });
+        });
+      }));
       if ($$props.classID === void 0 && $$bindings.classID && classID !== void 0)
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
       $$result.css.add(css);
-      return `${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, {}, {}, {
+      $$unsubscribe_roomToPeople();
+      return `${validate_component(RenderlessMyDocUpdater, "RenderlessMyDocUpdater").$$render($$result, { classID, roomID }, {}, {})}
+
+${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, {}, {}, {
         default: () => `${rooms ? `<div>${each(rooms, (room) => `
         ${room.name !== void 0 ? `${validate_component(Item, "Item").$$render($$result, { selected: room.id === roomID }, {}, {
           default: () => `${room.name ? `<div class="${[
             "svelte-t9y9x2",
             room.name.charAt(room.name.length - 1) === "?" ? "question-item" : ""
-          ].join(" ").trim()}">${escape(room.name)}</div>
-            ` : `${room.name === "" ? `<div>(no title)</div>` : ``}`}
+          ].join(" ").trim()}">${escape(room.name)}
+              </div>` : `${room.name === "" ? `<div>(no title)</div>` : ``}`}
+
+            ${$roomToPeople[room.id] ? `${each($roomToPeople[room.id], (person) => `<div>${escape(person.name)}</div>`)}` : ``}
           `
         })}` : ``}`)}</div>` : ``}`
       })}
@@ -114448,7 +124019,7 @@ var init_wave_encoder = __esm({
 });
 
 // node_modules/audio-recorder-polyfill/index.js
-var AudioContext, createWorker, error, context, MediaRecorder2;
+var AudioContext, createWorker, error2, context, MediaRecorder2;
 var init_audio_recorder_polyfill = __esm({
   "node_modules/audio-recorder-polyfill/index.js"() {
     init_shims();
@@ -114459,10 +124030,10 @@ var init_audio_recorder_polyfill = __esm({
       let blob = new Blob([js]);
       return new Worker(URL.createObjectURL(blob));
     };
-    error = (method) => {
-      let event = new Event("error");
-      event.data = new Error("Wrong state for " + method);
-      return event;
+    error2 = (method) => {
+      let event2 = new Event("error");
+      event2.data = new Error("Wrong state for " + method);
+      return event2;
     };
     MediaRecorder2 = class {
       constructor(stream, config = null) {
@@ -114473,9 +124044,9 @@ var init_audio_recorder_polyfill = __esm({
         this.encoder = createWorker(MediaRecorder2.encoder);
         let recorder = this;
         this.encoder.addEventListener("message", (e) => {
-          let event = new Event("dataavailable");
-          event.data = new Blob([e.data], { type: recorder.mimeType });
-          recorder.em.dispatchEvent(event);
+          let event2 = new Event("dataavailable");
+          event2.data = new Blob([e.data], { type: recorder.mimeType });
+          recorder.em.dispatchEvent(event2);
           if (recorder.state === "inactive") {
             recorder.em.dispatchEvent(new Event("stop"));
           }
@@ -114483,7 +124054,7 @@ var init_audio_recorder_polyfill = __esm({
       }
       start(timeslice) {
         if (this.state !== "inactive") {
-          return this.em.dispatchEvent(error("start"));
+          return this.em.dispatchEvent(error2("start"));
         }
         this.state = "recording";
         if (!context) {
@@ -114511,7 +124082,7 @@ var init_audio_recorder_polyfill = __esm({
       }
       stop() {
         if (this.state === "inactive") {
-          return this.em.dispatchEvent(error("stop"));
+          return this.em.dispatchEvent(error2("stop"));
         }
         this.requestData();
         this.state = "inactive";
@@ -114524,21 +124095,21 @@ var init_audio_recorder_polyfill = __esm({
       }
       pause() {
         if (this.state !== "recording") {
-          return this.em.dispatchEvent(error("pause"));
+          return this.em.dispatchEvent(error2("pause"));
         }
         this.state = "paused";
         return this.em.dispatchEvent(new Event("pause"));
       }
       resume() {
         if (this.state !== "paused") {
-          return this.em.dispatchEvent(error("resume"));
+          return this.em.dispatchEvent(error2("resume"));
         }
         this.state = "recording";
         return this.em.dispatchEvent(new Event("resume"));
       }
       requestData() {
         if (this.state === "inactive") {
-          return this.em.dispatchEvent(error("requestData"));
+          return this.em.dispatchEvent(error2("requestData"));
         }
         return this.encoder.postMessage(["dump", context.sampleRate]);
       }
@@ -114561,11 +124132,11 @@ var init_audio_recorder_polyfill = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-6aebc046.js
-var index_6aebc046_exports = {};
-__export(index_6aebc046_exports, {
+// .svelte-kit/output/server/chunks/index-357e982a.js
+var index_357e982a_exports = {};
+__export(index_357e982a_exports, {
   default: () => U5Broomu5D,
-  load: () => load4
+  load: () => load3
 });
 async function fetchDocs(dbPath) {
   return new Promise(async (resolve3) => {
@@ -114592,9 +124163,9 @@ function convertDocToStroke(doc2) {
   }
   return strokeObject;
 }
-function FetchError3(message, type, systemError) {
-  Error.call(this, message);
-  this.message = message;
+function FetchError3(message2, type, systemError) {
+  Error.call(this, message2);
+  this.message = message2;
   this.type = type;
   if (systemError) {
     this.code = this.errno = systemError.code;
@@ -114619,7 +124190,7 @@ function Body3(body) {
     body = Buffer.from(body);
   } else if (ArrayBuffer.isView(body)) {
     body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
-  } else if (body instanceof import_stream5.default)
+  } else if (body instanceof import_stream6.default)
     ;
   else {
     body = Buffer.from(String(body));
@@ -114631,10 +124202,10 @@ function Body3(body) {
   };
   this.size = size;
   this.timeout = timeout;
-  if (body instanceof import_stream5.default) {
+  if (body instanceof import_stream6.default) {
     body.on("error", function(err) {
-      const error3 = err.name === "AbortError" ? err : new FetchError3(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
-      _this[INTERNALS3].error = error3;
+      const error4 = err.name === "AbortError" ? err : new FetchError3(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+      _this[INTERNALS3].error = error4;
     });
   }
 }
@@ -114657,7 +124228,7 @@ function consumeBody3() {
   if (Buffer.isBuffer(body)) {
     return Body3.Promise.resolve(body);
   }
-  if (!(body instanceof import_stream5.default)) {
+  if (!(body instanceof import_stream6.default)) {
     return Body3.Promise.resolve(Buffer.alloc(0));
   }
   let accum = [];
@@ -114704,11 +124275,11 @@ function consumeBody3() {
     });
   });
 }
-function convertBody2(buffer, headers) {
+function convertBody2(buffer, headers2) {
   if (typeof convert2 !== "function") {
     throw new Error("The package `encoding` must be installed to use the textConverted() function");
   }
-  const ct = headers.get("content-type");
+  const ct = headers2.get("content-type");
   let charset = "utf-8";
   let res, str;
   if (ct) {
@@ -114750,18 +124321,18 @@ function isURLSearchParams2(obj) {
 function isBlob3(obj) {
   return typeof obj === "object" && typeof obj.arrayBuffer === "function" && typeof obj.type === "string" && typeof obj.stream === "function" && typeof obj.constructor === "function" && typeof obj.constructor.name === "string" && /^(Blob|File)$/.test(obj.constructor.name) && /^(Blob|File)$/.test(obj[Symbol.toStringTag]);
 }
-function clone3(instance) {
+function clone3(instance2) {
   let p1, p2;
-  let body = instance.body;
-  if (instance.bodyUsed) {
+  let body = instance2.body;
+  if (instance2.bodyUsed) {
     throw new Error("cannot clone body after it is used");
   }
-  if (body instanceof import_stream5.default && typeof body.getBoundary !== "function") {
+  if (body instanceof import_stream6.default && typeof body.getBoundary !== "function") {
     p1 = new PassThrough3();
     p2 = new PassThrough3();
     body.pipe(p1);
     body.pipe(p2);
-    instance[INTERNALS3].body = p1;
+    instance2[INTERNALS3].body = p1;
     body = p2;
   }
   return body;
@@ -114783,7 +124354,7 @@ function extractContentType3(body) {
     return null;
   } else if (typeof body.getBoundary === "function") {
     return `multipart/form-data;boundary=${body.getBoundary()}`;
-  } else if (body instanceof import_stream5.default) {
+  } else if (body instanceof import_stream6.default) {
     return null;
   } else {
     return "text/plain;charset=UTF-8";
@@ -114801,24 +124372,24 @@ function validateValue2(value) {
     throw new TypeError(`${value} is not a legal HTTP header value`);
   }
 }
-function find2(map, name22) {
+function find2(map2, name22) {
   name22 = name22.toLowerCase();
-  for (const key in map) {
+  for (const key in map2) {
     if (key.toLowerCase() === name22) {
       return key;
     }
   }
   return void 0;
 }
-function getHeaders2(headers) {
+function getHeaders2(headers2) {
   let kind = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key+value";
-  const keys = Object.keys(headers[MAP2]).sort();
+  const keys = Object.keys(headers2[MAP2]).sort();
   return keys.map(kind === "key" ? function(k) {
     return k.toLowerCase();
   } : kind === "value" ? function(k) {
-    return headers[MAP2][k].join(", ");
+    return headers2[MAP2][k].join(", ");
   } : function(k) {
-    return [k.toLowerCase(), headers[MAP2][k].join(", ")];
+    return [k.toLowerCase(), headers2[MAP2][k].join(", ")];
   });
 }
 function createHeadersIterator2(target, kind) {
@@ -114843,18 +124414,18 @@ function isAbortSignal3(signal) {
   const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
   return !!(proto && proto.constructor.name === "AbortSignal");
 }
-function AbortError3(message) {
-  Error.call(this, message);
+function AbortError3(message2) {
+  Error.call(this, message2);
   this.type = "aborted";
-  this.message = message;
+  this.message = message2;
   Error.captureStackTrace(this, this.constructor);
 }
 function prependCode(code) {
   return "storage/" + code;
 }
 function unknown() {
-  const message = "An unknown error occurred, please check the error payload for server response.";
-  return new StorageError("unknown", message);
+  const message2 = "An unknown error occurred, please check the error payload for server response.";
+  return new StorageError("unknown", message2);
 }
 function retryLimitExceeded() {
   return new StorageError("retry-limit-exceeded", "Max retry time for operation exceeded, please try again.");
@@ -114862,14 +124433,14 @@ function retryLimitExceeded() {
 function canceled() {
   return new StorageError("canceled", "User canceled the upload/download.");
 }
-function invalidUrl(url) {
-  return new StorageError("invalid-url", "Invalid URL '" + url + "'.");
+function invalidUrl(url2) {
+  return new StorageError("invalid-url", "Invalid URL '" + url2 + "'.");
 }
 function invalidDefaultBucket(bucket) {
   return new StorageError("invalid-default-bucket", "Invalid default bucket '" + bucket + "'.");
 }
-function invalidArgument(message) {
-  return new StorageError("invalid-argument", message);
+function invalidArgument(message2) {
+  return new StorageError("invalid-argument", message2);
 }
 function appDeleted() {
   return new StorageError("app-deleted", "The Firebase app was deleted.");
@@ -114987,33 +124558,33 @@ function makeQueryString(params) {
   queryPart = queryPart.slice(0, -1);
   return queryPart;
 }
-function addAuthHeader_(headers, authToken) {
+function addAuthHeader_(headers2, authToken) {
   if (authToken !== null && authToken.length > 0) {
-    headers["Authorization"] = "Firebase " + authToken;
+    headers2["Authorization"] = "Firebase " + authToken;
   }
 }
-function addVersionHeader_(headers, firebaseVersion) {
-  headers["X-Firebase-Storage-Version"] = "webjs/" + (firebaseVersion !== null && firebaseVersion !== void 0 ? firebaseVersion : "AppManager");
+function addVersionHeader_(headers2, firebaseVersion) {
+  headers2["X-Firebase-Storage-Version"] = "webjs/" + (firebaseVersion !== null && firebaseVersion !== void 0 ? firebaseVersion : "AppManager");
 }
-function addGmpidHeader_(headers, appId) {
+function addGmpidHeader_(headers2, appId) {
   if (appId) {
-    headers["X-Firebase-GMPID"] = appId;
+    headers2["X-Firebase-GMPID"] = appId;
   }
 }
-function addAppCheckHeader_(headers, appCheckToken) {
+function addAppCheckHeader_(headers2, appCheckToken) {
   if (appCheckToken !== null) {
-    headers["X-Firebase-AppCheck"] = appCheckToken;
+    headers2["X-Firebase-AppCheck"] = appCheckToken;
   }
 }
 function makeRequest(requestInfo, appId, authToken, appCheckToken, requestFactory, firebaseVersion) {
   const queryPart = makeQueryString(requestInfo.urlParams);
-  const url = requestInfo.url + queryPart;
-  const headers = Object.assign({}, requestInfo.headers);
-  addGmpidHeader_(headers, appId);
-  addAuthHeader_(headers, authToken);
-  addVersionHeader_(headers, firebaseVersion);
-  addAppCheckHeader_(headers, appCheckToken);
-  return new NetworkRequest(url, requestInfo.method, headers, requestInfo.body, requestInfo.successCodes, requestInfo.additionalRetryCodes, requestInfo.handler, requestInfo.errorHandler, requestInfo.timeout, requestInfo.progressCallback, requestFactory);
+  const url2 = requestInfo.url + queryPart;
+  const headers2 = Object.assign({}, requestInfo.headers);
+  addGmpidHeader_(headers2, appId);
+  addAuthHeader_(headers2, authToken);
+  addVersionHeader_(headers2, firebaseVersion);
+  addAppCheckHeader_(headers2, appCheckToken);
+  return new NetworkRequest(url2, requestInfo.method, headers2, requestInfo.body, requestInfo.successCodes, requestInfo.additionalRetryCodes, requestInfo.handler, requestInfo.errorHandler, requestInfo.timeout, requestInfo.progressCallback, requestFactory);
 }
 function parent(path) {
   if (path.length === 0) {
@@ -115041,18 +124612,18 @@ function extractBucket(host, config) {
   }
   return Location.makeFromBucketSpec(bucketString, host);
 }
-function factory(container, { instanceIdentifier: url }) {
+function factory(container, { instanceIdentifier: url2 }) {
   const app = container.getProvider("app").getImmediate();
   const authProvider = container.getProvider("auth-internal");
   const appCheckProvider = container.getProvider("app-check-internal");
-  return new FirebaseStorageImpl(app, authProvider, appCheckProvider, url, SDK_VERSION);
+  return new FirebaseStorageImpl(app, authProvider, appCheckProvider, url2, SDK_VERSION);
 }
 function registerStorage() {
   _registerComponent(new Component(STORAGE_TYPE, factory, "PUBLIC").setMultipleInstances(true));
-  registerVersion(name4, version4, "node");
-  registerVersion(name4, version4, "esm2017");
+  registerVersion(name6, version6, "node");
+  registerVersion(name6, version6, "esm2017");
 }
-function load4({ page }) {
+function load3({ page }) {
   return {
     props: {
       classID: page.params.class,
@@ -115060,20 +124631,20 @@ function load4({ page }) {
     }
   };
 }
-var import_stream5, import_http5, import_url6, import_https5, import_zlib5, import_cookie5, import_punycode4, RenderlessBoardMethods, RenderlessAudioRecorder, BlackboardToolbar, Blackboard, DoodleVideo, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers3, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name4, version4, STORAGE_TYPE, css2, U5Broomu5D;
-var init_index_6aebc046 = __esm({
-  ".svelte-kit/output/server/chunks/index-6aebc046.js"() {
+var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, RenderlessBoardMethods, RenderlessAudioRecorder, BlackboardToolbar, Blackboard, DoodleVideo, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css2, U5Broomu5D;
+var init_index_357e982a = __esm({
+  ".svelte-kit/output/server/chunks/index-357e982a.js"() {
     init_shims();
-    init_app_fe0490a9();
-    init_index_c327074d_39b2c669();
+    init_app_02afcaab();
+    init_index_c327074d_6185bbbf();
+    init_store_b4dcaf75();
     init_index_node();
     init_audio_recorder_polyfill();
-    init_store_46a11b64();
-    init_classAdderBuilder_90a388cb();
-    init_navigation_d5543fac();
-    import_stream5 = __toModule(require("stream"));
+    init_classAdderBuilder_ba943ae0();
+    init_navigation_a8983d54();
+    import_stream6 = __toModule(require("stream"));
     import_http5 = __toModule(require("http"));
-    import_url6 = __toModule(require("url"));
+    import_url7 = __toModule(require("url"));
     import_https5 = __toModule(require("https"));
     import_zlib5 = __toModule(require("zlib"));
     import_cookie5 = __toModule(require_cookie());
@@ -115131,8 +124702,8 @@ var init_index_6aebc046 = __esm({
         strokesArray.push(stroke);
         try {
           setDoc(doc(getFirestore(), `${dbPath}/strokes/${stroke.id}`), { timestamp: serverTimestamp(), ...stroke });
-        } catch (error3) {
-          alert(error3);
+        } catch (error4) {
+          alert(error4);
         }
       }
       async function deleteAllStrokesFromDb() {
@@ -115234,12 +124805,12 @@ ${slots.default ? slots.default({}) : `
 `}`;
     });
     Blackboard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$unsubscribe_currentTool;
       let $canvasHeight, $$unsubscribe_canvasHeight;
       let $canvasWidth, $$unsubscribe_canvasWidth;
-      $$unsubscribe_currentTool = subscribe(currentTool, (value) => value);
+      let $$unsubscribe_currentTool;
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_currentTool = subscribe(currentTool, (value) => value);
       let { strokesArray } = $$props;
       let { currentTime = 0 } = $$props;
       createEventDispatcher();
@@ -115248,9 +124819,9 @@ ${slots.default ? slots.default({}) : `
         $$bindings.strokesArray(strokesArray);
       if ($$props.currentTime === void 0 && $$bindings.currentTime && currentTime !== void 0)
         $$bindings.currentTime(currentTime);
-      $$unsubscribe_currentTool();
       $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
+      $$unsubscribe_currentTool();
       return `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
         default: () => `${slots.default ? slots.default({}) : `
 
@@ -115283,7 +124854,7 @@ ${slots.default ? slots.default({}) : `
 
 <audio${add_attribute("src", audioDownloadURL, 0)} controls style="${"width: 100%;"}"${add_attribute("this", AudioPlayer, 0)}></audio>`;
     });
-    Readable2 = import_stream5.default.Readable;
+    Readable2 = import_stream6.default.Readable;
     BUFFER3 = Symbol("buffer");
     TYPE2 = Symbol("type");
     Blob5 = class {
@@ -115391,7 +124962,7 @@ ${slots.default ? slots.default({}) : `
     } catch (e) {
     }
     INTERNALS3 = Symbol("Body internals");
-    PassThrough3 = import_stream5.default.PassThrough;
+    PassThrough3 = import_stream6.default.PassThrough;
     Body3.prototype = {
       get body() {
         return this[INTERNALS3].body;
@@ -115459,11 +125030,11 @@ ${slots.default ? slots.default({}) : `
     invalidTokenRegex2 = /[^\^_`a-zA-Z\-0-9!#$%&'*+.|~]/;
     invalidHeaderCharRegex2 = /[^\t\x20-\x7e\x80-\xff]/;
     MAP2 = Symbol("map");
-    Headers3 = class {
+    Headers4 = class {
       constructor() {
         let init2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
         this[MAP2] = Object.create(null);
-        if (init2 instanceof Headers3) {
+        if (init2 instanceof Headers4) {
           const rawHeaders = init2.raw();
           const headerNames = Object.keys(rawHeaders);
           for (const headerName of headerNames) {
@@ -115571,14 +125142,14 @@ ${slots.default ? slots.default({}) : `
         return createHeadersIterator2(this, "key+value");
       }
     };
-    Headers3.prototype.entries = Headers3.prototype[Symbol.iterator];
-    Object.defineProperty(Headers3.prototype, Symbol.toStringTag, {
+    Headers4.prototype.entries = Headers4.prototype[Symbol.iterator];
+    Object.defineProperty(Headers4.prototype, Symbol.toStringTag, {
       value: "Headers",
       writable: false,
       enumerable: false,
       configurable: true
     });
-    Object.defineProperties(Headers3.prototype, {
+    Object.defineProperties(Headers4.prototype, {
       get: { enumerable: true },
       forEach: { enumerable: true },
       set: { enumerable: true },
@@ -115626,18 +125197,18 @@ ${slots.default ? slots.default({}) : `
         let opts = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
         Body3.call(this, body, opts);
         const status = opts.status || 200;
-        const headers = new Headers3(opts.headers);
-        if (body != null && !headers.has("Content-Type")) {
+        const headers2 = new Headers4(opts.headers);
+        if (body != null && !headers2.has("Content-Type")) {
           const contentType = extractContentType3(body);
           if (contentType) {
-            headers.append("Content-Type", contentType);
+            headers2.append("Content-Type", contentType);
           }
         }
         this[INTERNALS$13] = {
           url: opts.url,
           status,
           statusText: opts.statusText || STATUS_CODES2[status],
-          headers,
+          headers: headers2,
           counter: opts.counter
         };
       }
@@ -115688,9 +125259,9 @@ ${slots.default ? slots.default({}) : `
     });
     INTERNALS$23 = Symbol("Request internals");
     URL3 = publicApi.URL;
-    parse_url2 = import_url6.default.parse;
-    format_url2 = import_url6.default.format;
-    "destroy" in import_stream5.default.Readable.prototype;
+    parse_url2 = import_url7.default.parse;
+    format_url2 = import_url7.default.format;
+    "destroy" in import_stream6.default.Readable.prototype;
     Request3 = class {
       constructor(input) {
         let init2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
@@ -115715,11 +125286,11 @@ ${slots.default ? slots.default({}) : `
           timeout: init2.timeout || input.timeout || 0,
           size: init2.size || input.size || 0
         });
-        const headers = new Headers3(init2.headers || input.headers || {});
-        if (inputBody != null && !headers.has("Content-Type")) {
+        const headers2 = new Headers4(init2.headers || input.headers || {});
+        if (inputBody != null && !headers2.has("Content-Type")) {
           const contentType = extractContentType3(inputBody);
           if (contentType) {
-            headers.append("Content-Type", contentType);
+            headers2.append("Content-Type", contentType);
           }
         }
         let signal = isRequest3(input) ? input.signal : null;
@@ -115731,7 +125302,7 @@ ${slots.default ? slots.default({}) : `
         this[INTERNALS$23] = {
           method,
           redirect: init2.redirect || input.redirect || "follow",
-          headers,
+          headers: headers2,
           parsedURL,
           signal
         };
@@ -115777,15 +125348,15 @@ ${slots.default ? slots.default({}) : `
     AbortError3.prototype = Object.create(Error.prototype);
     AbortError3.prototype.constructor = AbortError3;
     AbortError3.prototype.name = "AbortError";
-    import_stream5.default.PassThrough;
-    import_url6.default.resolve;
+    import_stream6.default.PassThrough;
+    import_url7.default.resolve;
     DEFAULT_HOST2 = "firebasestorage.googleapis.com";
     CONFIG_STORAGE_BUCKET_KEY = "storageBucket";
     DEFAULT_MAX_OPERATION_RETRY_TIME = 2 * 60 * 1e3;
     DEFAULT_MAX_UPLOAD_RETRY_TIME = 10 * 60 * 1e3;
     StorageError = class extends FirebaseError {
-      constructor(code, message) {
-        super(prependCode(code), `Firebase Storage: ${message} (${prependCode(code)})`);
+      constructor(code, message2) {
+        super(prependCode(code), `Firebase Storage: ${message2} (${prependCode(code)})`);
         this.customData = { serverResponse: null };
         this._baseMessage = this.message;
         Object.setPrototypeOf(this, StorageError.prototype);
@@ -115838,8 +125409,8 @@ ${this.customData.serverResponse}`;
           throw invalidDefaultBucket(bucketString);
         }
       }
-      static makeFromUrl(url, host) {
-        let location = null;
+      static makeFromUrl(url2, host) {
+        let location2 = null;
         const bucketDomain = "([A-Za-z0-9.\\-_]+)";
         function gsModify(loc) {
           if (loc.path.charAt(loc.path.length - 1) === "/") {
@@ -115876,27 +125447,27 @@ ${this.customData.serverResponse}`;
         ];
         for (let i = 0; i < groups.length; i++) {
           const group = groups[i];
-          const captures = group.regex.exec(url);
+          const captures = group.regex.exec(url2);
           if (captures) {
             const bucketValue = captures[group.indices.bucket];
             let pathValue = captures[group.indices.path];
             if (!pathValue) {
               pathValue = "";
             }
-            location = new Location(bucketValue, pathValue);
-            group.postModify(location);
+            location2 = new Location(bucketValue, pathValue);
+            group.postModify(location2);
             break;
           }
         }
-        if (location == null) {
-          throw invalidUrl(url);
+        if (location2 == null) {
+          throw invalidUrl(url2);
         }
-        return location;
+        return location2;
       }
     };
     FailRequest = class {
-      constructor(error3) {
-        this.promise_ = Promise.reject(error3);
+      constructor(error4) {
+        this.promise_ = Promise.reject(error4);
       }
       getPromise() {
         return this.promise_;
@@ -116039,23 +125610,23 @@ ${this.customData.serverResponse}`;
       }
     };
     Reference = class {
-      constructor(_service, location) {
+      constructor(_service, location2) {
         this._service = _service;
-        if (location instanceof Location) {
-          this._location = location;
+        if (location2 instanceof Location) {
+          this._location = location2;
         } else {
-          this._location = Location.makeFromUrl(location, _service.host);
+          this._location = Location.makeFromUrl(location2, _service.host);
         }
       }
       toString() {
         return "gs://" + this._location.bucket + "/" + this._location.path;
       }
-      _newRef(service, location) {
-        return new Reference(service, location);
+      _newRef(service, location2) {
+        return new Reference(service, location2);
       }
       get root() {
-        const location = new Location(this._location.bucket, "");
-        return this._newRef(this._service, location);
+        const location2 = new Location(this._location.bucket, "");
+        return this._newRef(this._service, location2);
       }
       get bucket() {
         return this._location.bucket;
@@ -116074,8 +125645,8 @@ ${this.customData.serverResponse}`;
         if (newPath === null) {
           return null;
         }
-        const location = new Location(this._location.bucket, newPath);
-        return new Reference(this._service, location);
+        const location2 = new Location(this._location.bucket, newPath);
+        return new Reference(this._service, location2);
       }
       _throwIfRoot(name22) {
         if (this._location.path === "") {
@@ -116179,8 +125750,8 @@ ${this.customData.serverResponse}`;
         return this._makeRequest(requestInfo, requestFactory, authToken, appCheckToken).getPromise();
       }
     };
-    name4 = "@firebase/storage";
-    version4 = "0.9.0";
+    name6 = "@firebase/storage";
+    version6 = "0.9.0";
     STORAGE_TYPE = "storage";
     registerStorage();
     css2 = {
@@ -116199,9 +125770,7 @@ ${this.customData.serverResponse}`;
       let roomDoc;
       const boardsDbPath = `classes/${classID}/blackboards/`;
       const roomsDbPath = `classes/${classID}/rooms/`;
-      doc(getFirestore(), roomsDbPath + roomID);
       if (!$user.uid) {
-        console.log("redirecting to tutorial");
         goto("/");
       }
       async function updateRoomDoc() {
@@ -116212,24 +125781,27 @@ ${this.customData.serverResponse}`;
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
       $$result.css.add(css2);
+      doc(getFirestore(), roomsDbPath + roomID);
       {
         updateRoomDoc();
       }
       $$unsubscribe_user();
       $$unsubscribe_canvasHeight();
       $$unsubscribe_recordState();
-      return `
-${roomDoc ? `<div style="${"height: 100vh"}" class="${[
+      return `${roomDoc ? `
+	<div style="${"height: 100vh"}" class="${[
         "svelte-8vfgqd",
         roomDoc.name.charAt(roomDoc.name.length - 1) === "?" ? "question-room" : ""
-      ].join(" ").trim()}">${validate_component(Textfield, "Textfield").$$render($$result, {
+      ].join(" ").trim()}">
+    ${validate_component(Textfield, "Textfield").$$render($$result, {
         value: roomDoc.name,
-        style: "width: 100%"
+        style: "width: 100%; margin-bottom: 20px;"
       }, {}, {})}
 		${each(roomDoc.blackboards, (boardID) => `${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-        default: ({ boardDoc, fetchStrokes, listenToStrokes, isFetchingStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${validate_component(Textfield, "Textfield").$$render($$result, {
+        default: ({ boardDoc, fetchStrokes, listenToStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${validate_component(Textfield, "Textfield").$$render($$result, {
           textarea: true,
-          value: boardDoc.description || ""
+          value: boardDoc.description || "",
+          style: "width: 100%; margin-bottom: 10px"
         }, {}, {})}
 
           ${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: 100%; height: ${$canvasHeight + 80}px`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
@@ -116244,17 +125816,8 @@ ${roomDoc ? `<div style="${"height: 100vh"}" class="${[
         })}` : ``}
             </div>` : `<div${add_attribute("style", `width: 100%; height: ${$canvasHeight + 80}px`, 0)}>${strokesArray ? `${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
           default: ({ startRecording, stopRecording, currentTime }) => `${validate_component(Blackboard, "Blackboard").$$render($$result, { strokesArray, currentTime }, {}, {
-            default: () => `${$recordState === "pre_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-              default: () => `Record
-                      `
-            })}          
-                      ${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-              default: () => `Wipe board
-                      `
-            })}` : `${$recordState === "mid_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-              default: () => `Stop
-                      `
-            })}` : `Uploading...`}`}
+            default: () => `${$recordState === "pre_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Record` })}          
+                      ${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Wipe board` })}` : `${$recordState === "mid_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Stop` })}` : `Uploading...`}`}
                   `
           })}
                 `
@@ -116266,9 +125829,9 @@ ${roomDoc ? `<div style="${"height: 100vh"}" class="${[
   }
 });
 
-// .svelte-kit/output/server/chunks/app-fe0490a9.js
-function get_single_valued_header(headers, key) {
-  const value = headers[key];
+// .svelte-kit/output/server/chunks/app-02afcaab.js
+function get_single_valued_header(headers2, key) {
+  const value = headers2[key];
   if (Array.isArray(value)) {
     if (value.length === 0) {
       return void 0;
@@ -116280,15 +125843,15 @@ function get_single_valued_header(headers, key) {
   }
   return value;
 }
-function resolve2(base2, path) {
+function resolve2(base22, path) {
   if (scheme.test(path))
     return path;
-  const base_match = absolute.exec(base2);
+  const base_match = absolute.exec(base22);
   const path_match = absolute.exec(path);
   if (!base_match) {
-    throw new Error(`bad base path: "${base2}"`);
+    throw new Error(`bad base path: "${base22}"`);
   }
-  const baseparts = path_match ? [] : base2.slice(base_match[0].length).split("/");
+  const baseparts = path_match ? [] : base22.slice(base_match[0].length).split("/");
   const pathparts = path_match ? path.slice(path_match[0].length).split("/") : path.split("/");
   baseparts.pop();
   for (let i = 0; i < pathparts.length; i += 1) {
@@ -116316,7 +125879,7 @@ function lowercase_keys(obj) {
   }
   return clone4;
 }
-function error2(body) {
+function error3(body) {
   return {
     status: 500,
     body,
@@ -116345,23 +125908,23 @@ async function render_endpoint(request, route, match) {
     return;
   }
   if (typeof response !== "object") {
-    return error2(`${preface}: expected an object, got ${typeof response}`);
+    return error3(`${preface}: expected an object, got ${typeof response}`);
   }
-  let { status = 200, body, headers = {} } = response;
-  headers = lowercase_keys(headers);
-  const type = get_single_valued_header(headers, "content-type");
+  let { status = 200, body, headers: headers2 = {} } = response;
+  headers2 = lowercase_keys(headers2);
+  const type = get_single_valued_header(headers2, "content-type");
   const is_type_textual = is_content_type_textual(type);
   if (!is_type_textual && !(body instanceof Uint8Array || is_string(body))) {
-    return error2(`${preface}: body must be an instance of string or Uint8Array if content-type is not a supported textual content-type`);
+    return error3(`${preface}: body must be an instance of string or Uint8Array if content-type is not a supported textual content-type`);
   }
   let normalized_body;
   if ((typeof body === "object" || typeof body === "undefined") && !(body instanceof Uint8Array) && (!type || type.startsWith("application/json"))) {
-    headers = { ...headers, "content-type": "application/json; charset=utf-8" };
+    headers2 = { ...headers2, "content-type": "application/json; charset=utf-8" };
     normalized_body = JSON.stringify(typeof body === "undefined" ? {} : body);
   } else {
     normalized_body = body;
   }
-  return { status, body: normalized_body, headers };
+  return { status, body: normalized_body, headers: headers2 };
 }
 function devalue(value) {
   var counts = new Map();
@@ -116413,7 +125976,7 @@ function devalue(value) {
   }).forEach(function(entry, i) {
     names.set(entry[0], getName(i));
   });
-  function stringify(thing) {
+  function stringify2(thing) {
     if (names.has(thing)) {
       return names.get(thing);
     }
@@ -116425,23 +125988,23 @@ function devalue(value) {
       case "Number":
       case "String":
       case "Boolean":
-        return "Object(" + stringify(thing.valueOf()) + ")";
+        return "Object(" + stringify2(thing.valueOf()) + ")";
       case "RegExp":
         return "new RegExp(" + stringifyString(thing.source) + ', "' + thing.flags + '")';
       case "Date":
         return "new Date(" + thing.getTime() + ")";
       case "Array":
         var members = thing.map(function(v, i) {
-          return i in thing ? stringify(v) : "";
+          return i in thing ? stringify2(v) : "";
         });
         var tail = thing.length === 0 || thing.length - 1 in thing ? "" : ",";
         return "[" + members.join(",") + tail + "]";
       case "Set":
       case "Map":
-        return "new " + type + "([" + Array.from(thing).map(stringify).join(",") + "])";
+        return "new " + type + "([" + Array.from(thing).map(stringify2).join(",") + "])";
       default:
         var obj = "{" + Object.keys(thing).map(function(key) {
-          return safeKey(key) + ":" + stringify(thing[key]);
+          return safeKey(key) + ":" + stringify2(thing[key]);
         }).join(",") + "}";
         var proto = Object.getPrototypeOf(thing);
         if (proto === null) {
@@ -116450,13 +126013,13 @@ function devalue(value) {
         return obj;
     }
   }
-  var str = stringify(value);
+  var str = stringify2(value);
   if (names.size) {
     var params_1 = [];
     var statements_1 = [];
     var values_1 = [];
-    names.forEach(function(name5, thing) {
-      params_1.push(name5);
+    names.forEach(function(name7, thing) {
+      params_1.push(name7);
       if (isPrimitive(thing)) {
         values_1.push(stringifyPrimitive(thing));
         return;
@@ -116466,7 +126029,7 @@ function devalue(value) {
         case "Number":
         case "String":
         case "Boolean":
-          values_1.push("Object(" + stringify(thing.valueOf()) + ")");
+          values_1.push("Object(" + stringify2(thing.valueOf()) + ")");
           break;
         case "RegExp":
           values_1.push(thing.toString());
@@ -116477,26 +126040,26 @@ function devalue(value) {
         case "Array":
           values_1.push("Array(" + thing.length + ")");
           thing.forEach(function(v, i) {
-            statements_1.push(name5 + "[" + i + "]=" + stringify(v));
+            statements_1.push(name7 + "[" + i + "]=" + stringify2(v));
           });
           break;
         case "Set":
           values_1.push("new Set");
-          statements_1.push(name5 + "." + Array.from(thing).map(function(v) {
-            return "add(" + stringify(v) + ")";
+          statements_1.push(name7 + "." + Array.from(thing).map(function(v) {
+            return "add(" + stringify2(v) + ")";
           }).join("."));
           break;
         case "Map":
           values_1.push("new Map");
-          statements_1.push(name5 + "." + Array.from(thing).map(function(_a) {
+          statements_1.push(name7 + "." + Array.from(thing).map(function(_a) {
             var k = _a[0], v = _a[1];
-            return "set(" + stringify(k) + ", " + stringify(v) + ")";
+            return "set(" + stringify2(k) + ", " + stringify2(v) + ")";
           }).join("."));
           break;
         default:
           values_1.push(Object.getPrototypeOf(thing) === null ? "Object.create(null)" : "{}");
           Object.keys(thing).forEach(function(key) {
-            statements_1.push("" + name5 + safeProp(key) + "=" + stringify(thing[key]));
+            statements_1.push("" + name7 + safeProp(key) + "=" + stringify2(thing[key]));
           });
       }
     });
@@ -116507,12 +126070,12 @@ function devalue(value) {
   }
 }
 function getName(num) {
-  var name5 = "";
+  var name7 = "";
   do {
-    name5 = chars[num % chars.length] + name5;
+    name7 = chars[num % chars.length] + name7;
     num = ~~(num / chars.length) - 1;
   } while (num >= 0);
-  return reserved.test(name5) ? name5 + "_" : name5;
+  return reserved.test(name7) ? name7 + "_" : name7;
 }
 function isPrimitive(thing) {
   return Object(thing) !== thing;
@@ -116673,9 +126236,9 @@ async function render_response({
   if (page_config.ssr) {
     branch.forEach(({ node, loaded, fetched, uses_credentials }) => {
       if (node.css)
-        node.css.forEach((url) => css22.add(url));
+        node.css.forEach((url2) => css22.add(url2));
       if (node.js)
-        node.js.forEach((url) => js.add(url));
+        node.js.forEach((url2) => js.add(url2));
       if (node.styles)
         node.styles.forEach((content) => styles.add(content));
       if (fetched && page_config.hydrate)
@@ -116731,8 +126294,8 @@ async function render_response({
 			start({
 				target: ${options2.target ? `document.querySelector(${s$1(options2.target)})` : "document.body"},
 				paths: ${s$1(options2.paths)},
-				session: ${try_serialize($session, (error3) => {
-      throw new Error(`Failed to serialize session data: ${error3.message}`);
+				session: ${try_serialize($session, (error32) => {
+      throw new Error(`Failed to serialize session data: ${error32.message}`);
     })},
 				host: ${page && page.host ? s$1(page.host) : "location.host"},
 				route: ${!!page_config.router},
@@ -116746,12 +126309,12 @@ async function render_response({
 					],
 					page: {
 						host: ${page && page.host ? s$1(page.host) : "location.host"}, // TODO this is redundant
-						path: ${page && page.path ? try_serialize(page.path, (error3) => {
-      throw new Error(`Failed to serialize page.path: ${error3.message}`);
+						path: ${page && page.path ? try_serialize(page.path, (error32) => {
+      throw new Error(`Failed to serialize page.path: ${error32.message}`);
     }) : null},
 						query: new URLSearchParams(${page && page.query ? s$1(page.query.toString()) : ""}),
-						params: ${page && page.params ? try_serialize(page.params, (error3) => {
-      throw new Error(`Failed to serialize page.params: ${error3.message}`);
+						params: ${page && page.params ? try_serialize(page.params, (error32) => {
+      throw new Error(`Failed to serialize page.params: ${error32.message}`);
     }) : null}
 					}
 				}` : "null"}
@@ -116773,25 +126336,25 @@ async function render_response({
   ].join("\n\n		");
   const body = options2.amp ? rendered.html : `${rendered.html}
 
-			${serialized_data.map(({ url, body: body2, json }) => {
-    let attributes = `type="application/json" data-type="svelte-data" data-url=${escape_html_attr(url)}`;
+			${serialized_data.map(({ url: url2, body: body2, json }) => {
+    let attributes = `type="application/json" data-type="svelte-data" data-url=${escape_html_attr(url2)}`;
     if (body2)
       attributes += ` data-body="${hash(body2)}"`;
     return `<script ${attributes}>${json}<\/script>`;
   }).join("\n\n	")}
 		`;
-  const headers = {
+  const headers2 = {
     "content-type": "text/html"
   };
   if (maxage) {
-    headers["cache-control"] = `${is_private ? "private" : "public"}, max-age=${maxage}`;
+    headers2["cache-control"] = `${is_private ? "private" : "public"}, max-age=${maxage}`;
   }
   if (!options2.floc) {
-    headers["permissions-policy"] = "interest-cohort=()";
+    headers2["permissions-policy"] = "interest-cohort=()";
   }
   return {
     status,
-    headers,
+    headers: headers2,
     body: options2.template({ head, body })
   };
 }
@@ -116809,8 +126372,8 @@ function serialize_error(error22) {
     return null;
   let serialized = try_serialize(error22);
   if (!serialized) {
-    const { name: name5, message, stack } = error22;
-    serialized = try_serialize({ ...error22, name: name5, message, stack });
+    const { name: name7, message: message2, stack } = error22;
+    serialized = try_serialize({ ...error22, name: name7, message: message2, stack });
   }
   if (!serialized) {
     serialized = "{}";
@@ -116895,11 +126458,11 @@ async function load_node({
         return $session;
       },
       fetch: async (resource, opts = {}) => {
-        let url;
+        let url2;
         if (typeof resource === "string") {
-          url = resource;
+          url2 = resource;
         } else {
-          url = resource.url;
+          url2 = resource.url;
           opts = {
             method: resource.method,
             headers: resource.headers,
@@ -116913,7 +126476,7 @@ async function load_node({
             ...opts
           };
         }
-        const resolved = resolve2(request.path, url.split("?")[0]);
+        const resolved = resolve2(request.path, url2.split("?")[0]);
         let response;
         const prefix = options2.paths.assets || options2.paths.base;
         const filename = (resolved.startsWith(prefix) ? resolved.slice(prefix.length) : resolved).slice(1);
@@ -116925,29 +126488,29 @@ async function load_node({
           }) : await fetch(`http://${page.host}/${asset.file}`, opts);
         } else if (is_root_relative(resolved)) {
           const relative = resolved;
-          const headers = {
+          const headers2 = {
             ...opts.headers
           };
           if (opts.credentials !== "omit") {
             uses_credentials = true;
-            headers.cookie = request.headers.cookie;
-            if (!headers.authorization) {
-              headers.authorization = request.headers.authorization;
+            headers2.cookie = request.headers.cookie;
+            if (!headers2.authorization) {
+              headers2.authorization = request.headers.authorization;
             }
           }
           if (opts.body && typeof opts.body !== "string") {
             throw new Error("Request body must be a string");
           }
-          const search = url.includes("?") ? url.slice(url.indexOf("?") + 1) : "";
+          const search = url2.includes("?") ? url2.slice(url2.indexOf("?") + 1) : "";
           const rendered = await respond({
             host: request.host,
             method: opts.method || "GET",
-            headers,
+            headers: headers2,
             path: relative,
             rawBody: opts.body == null ? null : new TextEncoder().encode(opts.body),
             query: new URLSearchParams(search)
           }, options2, {
-            fetched: url,
+            fetched: url2,
             initiator: route
           });
           if (rendered) {
@@ -116961,10 +126524,10 @@ async function load_node({
           }
         } else {
           if (resolved.startsWith("//")) {
-            throw new Error(`Cannot request protocol-relative URL (${url}) in server-side fetch`);
+            throw new Error(`Cannot request protocol-relative URL (${url2}) in server-side fetch`);
           }
           if (typeof request.host !== "undefined") {
-            const { hostname: fetch_hostname } = new URL(url);
+            const { hostname: fetch_hostname } = new URL(url2);
             const [server_hostname] = request.host.split(":");
             if (`.${fetch_hostname}`.endsWith(`.${server_hostname}`) && opts.credentials !== "omit") {
               uses_credentials = true;
@@ -116974,27 +126537,27 @@ async function load_node({
               };
             }
           }
-          const external_request = new Request(url, opts);
+          const external_request = new Request(url2, opts);
           response = await options2.hooks.externalFetch.call(null, external_request);
         }
         if (response) {
-          const proxy = new Proxy(response, {
+          const proxy2 = new Proxy(response, {
             get(response2, key, _receiver) {
               async function text() {
                 const body = await response2.text();
-                const headers = {};
+                const headers2 = {};
                 for (const [key2, value] of response2.headers) {
                   if (key2 === "set-cookie") {
                     set_cookie_headers = set_cookie_headers.concat(value);
                   } else if (key2 !== "etag") {
-                    headers[key2] = value;
+                    headers2[key2] = value;
                   }
                 }
                 if (!opts.body || typeof opts.body === "string") {
                   fetched.push({
-                    url,
+                    url: url2,
                     body: opts.body,
-                    json: `{"status":${response2.status},"statusText":${s(response2.statusText)},"headers":${s(headers)},"body":"${escape_json_string_in_html(body)}"}`
+                    json: `{"status":${response2.status},"statusText":${s(response2.statusText)},"headers":${s(headers2)},"body":"${escape_json_string_in_html(body)}"}`
                   });
                 }
                 return body;
@@ -117010,7 +126573,7 @@ async function load_node({
               return Reflect.get(response2, key, response2);
             }
           });
-          return proxy;
+          return proxy2;
         }
         return response || new Response("Not found", {
           status: 404
@@ -117095,12 +126658,12 @@ async function respond_with_error({ request, options: options2, state, $session,
       page
     });
   } catch (err) {
-    const error3 = coalesce_to_error(err);
-    options2.handle_error(error3, request);
+    const error32 = coalesce_to_error(err);
+    options2.handle_error(error32, request);
     return {
       status: 500,
       headers: {},
-      body: error3.stack
+      body: error32.stack
     };
   }
 }
@@ -117113,15 +126676,15 @@ async function respond$1(opts) {
   try {
     nodes = await Promise.all(route.a.map((id) => id ? options2.load_component(id) : void 0));
   } catch (err) {
-    const error3 = coalesce_to_error(err);
-    options2.handle_error(error3, request);
+    const error32 = coalesce_to_error(err);
+    options2.handle_error(error32, request);
     return await respond_with_error({
       request,
       options: options2,
       state,
       $session,
       status: 500,
-      error: error3
+      error: error32
     });
   }
   const leaf = nodes[nodes.length - 1].module;
@@ -117235,12 +126798,12 @@ async function respond$1(opts) {
       branch: branch.filter(Boolean)
     }), set_cookie_headers);
   } catch (err) {
-    const error3 = coalesce_to_error(err);
-    options2.handle_error(error3, request);
+    const error32 = coalesce_to_error(err);
+    options2.handle_error(error32, request);
     return with_cookies(await respond_with_error({
       ...opts,
       status: 500,
-      error: error3
+      error: error32
     }), set_cookie_headers);
   }
 }
@@ -117293,24 +126856,24 @@ async function render_page(request, route, match, options2, state) {
   }
 }
 function read_only_form_data() {
-  const map = new Map();
+  const map2 = new Map();
   return {
     append(key, value) {
-      if (map.has(key)) {
-        (map.get(key) || []).push(value);
+      if (map2.has(key)) {
+        (map2.get(key) || []).push(value);
       } else {
-        map.set(key, [value]);
+        map2.set(key, [value]);
       }
     },
-    data: new ReadOnlyFormData(map)
+    data: new ReadOnlyFormData(map2)
   };
 }
-function parse_body(raw, headers) {
+function parse_body(raw, headers2) {
   if (!raw)
     return raw;
-  const content_type = headers["content-type"];
+  const content_type = headers2["content-type"];
   const [type, ...directives] = content_type ? content_type.split(/;\s*/) : [];
-  const text = () => new TextDecoder(headers["content-encoding"] || "utf-8").decode(raw);
+  const text = () => new TextDecoder(headers2["content-encoding"] || "utf-8").decode(raw);
   switch (type) {
     case "text/plain":
       return text();
@@ -117350,18 +126913,18 @@ function get_multipart(text, boundary) {
     const raw_headers = match[1];
     const body = match[2].trim();
     let key;
-    const headers = {};
+    const headers2 = {};
     raw_headers.split("\r\n").forEach((str) => {
       const [raw_header, ...raw_directives] = str.split("; ");
-      let [name5, value] = raw_header.split(": ");
-      name5 = name5.toLowerCase();
-      headers[name5] = value;
+      let [name7, value] = raw_header.split(": ");
+      name7 = name7.toLowerCase();
+      headers2[name7] = value;
       const directives = {};
       raw_directives.forEach((raw_directive) => {
         const [name22, value2] = raw_directive.split("=");
         directives[name22] = JSON.parse(value2);
       });
-      if (name5 === "content-disposition") {
+      if (name7 === "content-disposition") {
         if (value !== "form-data")
           throw new Error("Malformed form data");
         if (directives.filename) {
@@ -117392,11 +126955,11 @@ async function respond(incoming, options2, state = {}) {
       };
     }
   }
-  const headers = lowercase_keys(incoming.headers);
+  const headers2 = lowercase_keys(incoming.headers);
   const request = {
     ...incoming,
-    headers,
-    body: parse_body(incoming.rawBody, headers),
+    headers: headers2,
+    body: parse_body(incoming.rawBody, headers2),
     params: {},
     locals: {}
   };
@@ -117501,20 +127064,20 @@ function set_store_value(store, ret, value) {
   store.set(value);
   return ret;
 }
-function listen(node, event, handler, options2) {
-  node.addEventListener(event, handler, options2);
-  return () => node.removeEventListener(event, handler, options2);
+function listen(node, event2, handler, options2) {
+  node.addEventListener(event2, handler, options2);
+  return () => node.removeEventListener(event2, handler, options2);
 }
 function prevent_default(fn) {
-  return function(event) {
-    event.preventDefault();
-    return fn.call(this, event);
+  return function(event2) {
+    event2.preventDefault();
+    return fn.call(this, event2);
   };
 }
 function stop_propagation(fn) {
-  return function(event) {
-    event.stopPropagation();
-    return fn.call(this, event);
+  return function(event2) {
+    event2.stopPropagation();
+    return fn.call(this, event2);
   };
 }
 function custom_event(type, detail, bubbles = false) {
@@ -117538,9 +127101,9 @@ function createEventDispatcher() {
   return (type, detail) => {
     const callbacks = component.$$.callbacks[type];
     if (callbacks) {
-      const event = custom_event(type, detail);
+      const event2 = custom_event(type, detail);
       callbacks.slice().forEach((fn) => {
-        fn.call(component, event);
+        fn.call(component, event2);
       });
     }
   };
@@ -117551,10 +127114,10 @@ function setContext(key, context2) {
 function getContext(key) {
   return get_current_component().$$.context.get(key);
 }
-function bubble(component, event) {
-  const callbacks = component.$$.callbacks[event.type];
+function bubble(component, event2) {
+  const callbacks = component.$$.callbacks[event2.type];
   if (callbacks) {
-    callbacks.slice().forEach((fn) => fn.call(this, event));
+    callbacks.slice().forEach((fn) => fn.call(this, event2));
   }
 }
 function schedule_update() {
@@ -117620,17 +127183,17 @@ function spread(args, classes_to_add) {
     }
   }
   let str = "";
-  Object.keys(attributes).forEach((name5) => {
-    if (invalid_attribute_name_character.test(name5))
+  Object.keys(attributes).forEach((name7) => {
+    if (invalid_attribute_name_character.test(name7))
       return;
-    const value = attributes[name5];
+    const value = attributes[name7];
     if (value === true)
-      str += " " + name5;
-    else if (boolean_attributes.has(name5.toLowerCase())) {
+      str += " " + name7;
+    else if (boolean_attributes.has(name7.toLowerCase())) {
       if (value)
-        str += " " + name5;
+        str += " " + name7;
     } else if (value != null) {
-      str += ` ${name5}="${value}"`;
+      str += ` ${name7}="${value}"`;
     }
   });
   return str;
@@ -117655,11 +127218,11 @@ function each(items, fn) {
   }
   return str;
 }
-function validate_component(component, name5) {
+function validate_component(component, name7) {
   if (!component || !component.$$render) {
-    if (name5 === "svelte:component")
-      name5 += " this={...}";
-    throw new Error(`<${name5}> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules`);
+    if (name7 === "svelte:component")
+      name7 += " this={...}";
+    throw new Error(`<${name7}> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules`);
   }
   return component;
 }
@@ -117697,16 +127260,16 @@ function create_ssr_component(fn) {
     $$render
   };
 }
-function add_attribute(name5, value, boolean) {
+function add_attribute(name7, value, boolean) {
   if (value == null || boolean && !value)
     return "";
-  return ` ${name5}${value === true ? "" : `=${typeof value === "string" ? JSON.stringify(escape(value)) : `"${value}"`}`}`;
+  return ` ${name7}${value === true ? "" : `=${typeof value === "string" ? JSON.stringify(escape(value)) : `"${value}"`}`}`;
 }
 function afterUpdate() {
 }
 function set_paths(paths) {
-  base = paths.base;
-  assets = paths.assets || base;
+  base2 = paths.base;
+  assets = paths.assets || base2;
 }
 function set_prerendering(value) {
 }
@@ -117718,9 +127281,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-97d63ddc.js",
+      file: assets + "/_app/start-603b0ea3.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-97d63ddc.js", assets + "/_app/chunks/vendor-55a52f70.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-603b0ea3.js", assets + "/_app/chunks/vendor-2c66186c.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -117763,9 +127326,9 @@ function render(request, {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css3, Root, base, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_fe0490a9 = __esm({
-  ".svelte-kit/output/server/chunks/app-fe0490a9.js"() {
+var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css3, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
+var init_app_02afcaab = __esm({
+  ".svelte-kit/output/server/chunks/app-02afcaab.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -117832,9 +127395,9 @@ var init_app_fe0490a9 = __esm({
     s$1 = JSON.stringify;
     s = JSON.stringify;
     ReadOnlyFormData = class {
-      constructor(map) {
+      constructor(map2) {
         __privateAdd(this, _map, void 0);
-        __privateSet(this, _map, map);
+        __privateSet(this, _map, map2);
       }
       get(key) {
         const value = __privateGet(this, _map).get(key);
@@ -117964,7 +127527,7 @@ ${validate_component(components[0] || missing_component, "svelte:component").$$r
 
 ${``}`;
     });
-    base = "";
+    base2 = "";
     assets = "";
     handle = async ({ request, resolve: resolve22 }) => {
       const cookies = import_cookie6.default.parse(request.headers.cookie || "");
@@ -118019,13 +127582,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_74105f31(), layout_74105f31_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_59e32339(), error_59e32339_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_24bcd3cd(), index_24bcd3cd_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_320bcac9(), layout_320bcac9_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_6aebc046(), index_6aebc046_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_79a7e30c(), layout_79a7e30c_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_587e6256(), error_587e6256_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_668aea5b(), index_668aea5b_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_11fb1e31(), layout_11fb1e31_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_357e982a(), index_357e982a_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-29332d54.js", "css": ["assets/pages/__layout.svelte-68eb443a.css"], "js": ["pages/__layout.svelte-29332d54.js", "chunks/vendor-55a52f70.js", "chunks/database-a36dd1eb.js", "chunks/store-2964d983.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-75c03261.js", "css": [], "js": ["error.svelte-75c03261.js", "chunks/vendor-55a52f70.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-1c48c9dd.js", "css": [], "js": ["pages/index.svelte-1c48c9dd.js", "chunks/vendor-55a52f70.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-2964d983.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-d5345179.js", "css": ["assets/pages/_class_/__layout.svelte-0bf132d8.css"], "js": ["pages/_class_/__layout.svelte-d5345179.js", "chunks/vendor-55a52f70.js", "chunks/store-2964d983.js", "chunks/canvas-dc2dc66e.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-8602f397.js", "css": ["assets/pages/_class_/_room_/index.svelte-500a8c23.css"], "js": ["pages/_class_/_room_/index.svelte-8602f397.js", "chunks/vendor-55a52f70.js", "chunks/database-a36dd1eb.js", "chunks/store-2964d983.js", "chunks/canvas-dc2dc66e.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-11541255.js", "css": ["assets/pages/__layout.svelte-68eb443a.css"], "js": ["pages/__layout.svelte-11541255.js", "chunks/vendor-2c66186c.js", "chunks/database-2896136c.js", "chunks/store-addbe31a.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-f56a6737.js", "css": [], "js": ["error.svelte-f56a6737.js", "chunks/vendor-2c66186c.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-46b78be7.js", "css": [], "js": ["pages/index.svelte-46b78be7.js", "chunks/vendor-2c66186c.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-addbe31a.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-8dace66b.js", "css": ["assets/pages/_class_/__layout.svelte-0bf132d8.css"], "js": ["pages/_class_/__layout.svelte-8dace66b.js", "chunks/vendor-2c66186c.js", "chunks/store-addbe31a.js", "chunks/canvas-ec00c90d.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-4a5ff9cc.js", "css": ["assets/pages/_class_/_room_/index.svelte-500a8c23.css"], "js": ["pages/_class_/_room_/index.svelte-4a5ff9cc.js", "chunks/vendor-2c66186c.js", "chunks/database-2896136c.js", "chunks/store-addbe31a.js", "chunks/canvas-ec00c90d.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
   }
 });
 
@@ -118078,7 +127641,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_fe0490a9();
+init_app_02afcaab();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 
@@ -118101,8 +127664,8 @@ var entry_default = async (req, res) => {
     rawBody: body
   });
   if (rendered) {
-    const { status, headers, body: body2 } = rendered;
-    return res.writeHead(status, headers).end(body2);
+    const { status, headers: headers2, body: body2 } = rendered;
+    return res.writeHead(status, headers2).end(body2);
   }
   return res.writeHead(404).end();
 };

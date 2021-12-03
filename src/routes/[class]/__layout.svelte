@@ -9,10 +9,12 @@
   }  
 </script>
 
+<RenderlessMyDocUpdater {classID} {roomID}/>
+
 <LeftDrawer>
 	{#if rooms}
 		<div use:portal={'side-drawer-list'}>
-			{#each rooms as room (room.id)}
+			{#each rooms as room ('room' + room.id)}
         <!-- temporary measure -->
         {#if room.name !== undefined }
           <Item 
@@ -23,9 +25,15 @@
               <div class:question-item={'?' === room.name.charAt(room.name.length - 1)}>
                 {room.name}
               </div>
-            <!-- Do not allow `null` -->
+              
             {:else if room.name === ''}
               <div>(no title)</div>
+            {/if}
+
+            {#if $roomToPeople[room.id]}
+              {#each $roomToPeople[room.id] as person ('person' + person.uid)}
+                <div>{person.name}</div>
+              {/each}
             {/if}
           </Item>
         {/if}
@@ -41,18 +49,18 @@
 
 <script>
 	import LeftDrawer from '$lib/LeftDrawer.svelte'
+  import RenderlessMyDocUpdater from '$lib/RenderlessMyDocUpdater.svelte'
   import { onDestroy, onMount } from 'svelte'
-  import List, { Item, Text } from '@smui/list'
+  import List, { Item, Text, SecondaryText } from '@smui/list'
   import { portal } from '../../helpers/actions.js'
   import { goto } from '$app/navigation'
   import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
   import { browser } from '$app/env'
-  import { canvasHeight, canvasWidth } from '../../store.js'
+  import { canvasHeight, canvasWidth, roomToPeople  } from '../../store.js'
 
   export let classID;
   export let roomID;
-  let participants
   let rooms
 
 	// START OF RESIZE LOGIC 
@@ -67,10 +75,13 @@
   })
 
   onMount(() => {
-    window.addEventListener('resize', debouncedResizeHandler)
+    if (browser) {
+      window.addEventListener('resize', debouncedResizeHandler)
+    }
     debouncedResizeHandler()
   })
 
+  // TODO: rename the function 
   function resizeCanvas () {
     const { height, width } = calculateCanvasDimensions()
     canvasHeight.set(height)
@@ -94,19 +105,6 @@
     `classes/${classID}/rooms`
   )
   unsubFuncs.push(
-		onSnapshot(participantsRef, snapshot => { // onSnapshot does NOT return a promise
-      const docs = []
-      snapshot.forEach(doc => { 
-        docs.push({ 
-          id: doc.id, 
-          ref: doc.ref.path, 
-          ...doc.data() 
-        })
-      });
-      participants = docs
-    })
-  )
-  unsubFuncs.push(
 		onSnapshot(roomsRef, snapshot => { // onSnapshot does NOT return a promise
 			const docs = []
 			snapshot.forEach(doc => { 
@@ -117,6 +115,45 @@
 				})
 			});
 			rooms = docs
+    })
+  )
+  unsubFuncs.push(
+		onSnapshot(participantsRef, (snapshot) => { // onSnapshot does NOT return a promise
+      const docs = []
+      snapshot.docChanges().forEach(change => {
+        const person = change.doc.data()
+        const roomID = person.currentRoomID
+        
+        switch (change.type) {
+          case 'added': 
+            if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
+            $roomToPeople[roomID].push(person)
+            return
+          case 'modified':
+            // first remove, inefficiently.
+            for (const id of Object.keys($roomToPeople)) {
+              for (const p of $roomToPeople[id]) {
+                if (p.uid === person.uid) {
+                  $roomToPeople[id] = $roomToPeople[id].filter(p => p.uid !== person.uid)
+                }
+              } 
+            }
+            // then add (identical to code above)
+            if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
+            $roomToPeople[roomID].push(person)
+            return
+          case 'removed':
+            $roomToPeople[roomID] = $roomToPeople[roomID].filter(p => p.uid !== person.uid)
+        }
+      })
+
+      snapshot.forEach(doc => { 
+        docs.push({ 
+          id: doc.id, 
+          ref: doc.ref.path, 
+          ...doc.data() 
+        })
+      });
     })
   )
 </script>

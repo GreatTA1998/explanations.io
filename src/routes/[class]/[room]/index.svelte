@@ -9,24 +9,24 @@
   }
 </script>
 
-<!-- Lazy loading -->
 {#if roomDoc}
+  <!-- Give a 5-seconds countdown UI feedback before pinging the server -->
 	<div use:portal={'main-content'} style="height: 100vh" class:question-room={'?' === roomDoc.name.charAt(roomDoc.name.length - 1)}>
-    <Textfield value={roomDoc.name} on:input={(e) => updateRoomName(e)} style="width: 100%">
-      
+    <!-- TODO: placeholder & larger text size -->
+    <Textfield value={roomDoc.name} on:input={(e) => updateRoomName(e)} style="width: 100%; margin-bottom: 20px;">
+
     </Textfield>
 		{#each roomDoc.blackboards as boardID (boardID) }
 			<RenderlessBoardMethods dbPath={boardsDbPath + boardID} 
 				let:boardDoc={boardDoc}
 				let:fetchStrokes={fetchStrokes}
         let:listenToStrokes={listenToStrokes}
-				let:isFetchingStrokes={isFetchingStrokes}
 				let:strokesArray={strokesArray}
         let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
         let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
 			>
         {#if boardDoc}
-          <Textfield textarea value={boardDoc.description || ''} on:input={(e) => updateBoardDescription(e, boardID)}>
+          <Textfield textarea value={boardDoc.description || ''} on:input={(e) => updateBoardDescription(e, boardID)} style="width: 100%; margin-bottom: 10px">
 
           </Textfield>
 
@@ -52,22 +52,12 @@
                   let:currentTime={currentTime}
                   on:record-end={(e) => saveVideo(e.detail.audioBlob, boardID)}
                 >
-                  <Blackboard 
-                    {strokesArray} 
-                    {currentTime}
-                    on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-                  > 
+                  <Blackboard {strokesArray} {currentTime} on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}> 
                     {#if $recordState === 'pre_record'}
-                      <Button on:click={startRecording}>
-                        Record
-                      </Button>          
-                      <Button on:click={deleteAllStrokesFromDb}>
-                        Wipe board
-                      </Button>
+                      <Button on:click={startRecording}>Record</Button>          
+                      <Button on:click={deleteAllStrokesFromDb}>Wipe board</Button>
                     {:else if $recordState === 'mid_record'}
-                      <Button on:click={stopRecording}>
-                        Stop
-                      </Button>
+                      <Button on:click={stopRecording}>Stop</Button>
                     {:else}
                       Uploading...
                     {/if}
@@ -102,17 +92,16 @@
   export let roomID
 
   let roomDoc
+  // reactivity not necessary: `classID` is constant here 
   const boardsDbPath = `classes/${classID}/blackboards/`
   const roomsDbPath = `classes/${classID}/rooms/`
-  const roomRef = doc(getFirestore(), roomsDbPath + roomID)
+  $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
 
   if (!$user.uid) {
-    console.log('redirecting to tutorial')
     goto('/')
   }
 
   async function updateRoomName (e) {
-    console.log('e =', e.srcElement.value)
     const { value } = e.srcElement
     await updateDoc(roomRef, {
       name: value
@@ -158,12 +147,14 @@
   }
 
   async function revertToBoard ({ id, audioRefFullPath }) {
-    const boardRef = doc(getFirestore(), boardsDbPath + id)
-    const audioRef = ref(getStorage(), audioRefFullPath)
     const promises = []
-    promises.push(
-      deleteObject(audioRef)
-    )
+    const boardRef = doc(getFirestore(), boardsDbPath + id)
+    if (audioRefFullPath) {
+      const audioRef = ref(getStorage(), audioRefFullPath)
+      promises.push(
+        deleteObject(audioRef)
+      )
+    }
     promises.push(
       updateDoc(boardRef, {
         creator: deleteField(),

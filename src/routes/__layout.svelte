@@ -1,5 +1,5 @@
 {#if !$hasFetchedUser}
-  <h2>Fetching user data...</h2>
+  <h3>Fetching user data...</h3>
 {:else}
   <slot>
 
@@ -30,10 +30,7 @@
         })
 
         // hydrate the user doc fully
-        const userRef = doc(
-          getFirestore(), 
-          'users/' + resultUser.uid
-        )
+        const userRef = doc(getFirestore(), 'users/' + resultUser.uid)
         let dbUserSnapshot = await getDoc(userRef)
         if (dbUserSnapshot.exists()) {
           console.log('user exists, data =', dbUserSnapshot.data())
@@ -51,7 +48,6 @@
       } 
       else {
         user.set({})
-        console.log('user is not logged in')
       }
     })
   })

@@ -1,5 +1,7 @@
 
-<Button on:click={() => menu.setOpen(true)}>Change server</Button>
+<Button on:click={() => menu.setOpen(true)}>
+  <h1 style="color: black; font-weight: 400">6.036</h1>
+</Button>
 <Menu bind:this={menu} style="left: 100px; top: 50px; width: 300px">
   <List>
     {#each mitClasses as mitClass }

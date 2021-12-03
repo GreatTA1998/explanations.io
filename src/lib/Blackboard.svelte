@@ -245,6 +245,6 @@
     }
 
     function wipeUI () {
-      ctx.clearRect(0, 0, canvas.scrollWidth, canvas.scrollHeight)
+      ctx.clearRect(0, 0, $canvasWidth, $canvasHeight)
     }
 </script>

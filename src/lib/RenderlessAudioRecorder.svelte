@@ -6,6 +6,7 @@
   import AudioRecorder from "audio-recorder-polyfill";
   import { dailyMicStream, recordState } from '../store.js'
   import { createEventDispatcher, onMount } from 'svelte'
+  import { browser } from '$app/env'
   // import mpegEncoder from "audio-recorder-polyfill/mpeg-encoder";
   // AudioRecorder.encoder = mpegEncoder;
   // AudioRecorder.prototype.mimeType = "audio/mpeg"; // mpeg is equivalent to mp3
@@ -14,7 +15,9 @@
   let timer
 
   onMount(() => {
-    window.MediaRecorder = AudioRecorder;
+    if (browser) {
+      window.MediaRecorder = AudioRecorder;
+    }
   })
 
   const dispatch = createEventDispatcher()

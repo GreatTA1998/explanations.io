@@ -15,3 +15,5 @@ export const currentTool = writable({
 export const recordState = writable('pre_record') // mid_record and post_record
 
 export const dailyMicStream = writable(null)
+
+export const roomToPeople = writable({})

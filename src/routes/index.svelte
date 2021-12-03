@@ -1,16 +1,3 @@
-<script context="module">
-	export function load () {
-		// console.log('load() from root, if not logged in redirect to tutorial')
-		return {
-
-		}
-		// return {
-		// 	redirect: '/',
-		// 	status: 302
-		// }
-	}
-</script>
-
 {#if !$user.uid}
 	<h1>Welcome to the Tutorial</h1>
 	<p>

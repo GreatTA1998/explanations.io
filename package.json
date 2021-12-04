@@ -20,6 +20,7 @@
     "@smui/linear-progress": "^6.0.0-beta.4",
     "@smui/menu": "^6.0.0-beta.4",
     "@smui/slider": "^6.0.0-beta.4",
+    "@smui/textfield": "^6.0.0-beta.4",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-vercel": "next",
     "@sveltejs/kit": "next",
@@ -28,9 +29,9 @@
   },
   "type": "module",
   "dependencies": {
+    "@daily-co/daily-js": "^0.21.0",
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
-    "@smui/textfield": "^6.0.0-beta.4",
     "audio-recorder-polyfill": "^0.4.1",
     "cookie": "^0.4.1",
     "firebase": "^9.5.0"

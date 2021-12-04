@@ -1,5 +1,5 @@
 <!-- <Button on:click={() => menu.setOpen(true)}> -->
-  <h1 style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 8px;">
+  <h1 style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 8px; margin-top: 10px; margin-bottom: 12px; font-size: 2.4rem">
     6.036
   </h1>
 <!-- </Button> -->

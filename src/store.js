@@ -1,4 +1,5 @@
-import { writable } from 'svelte/store';
+import { writable, readable } from 'svelte/store';
+import { getRandomID } from './helpers/utility.js'
 
 export const canvasHeight = writable(0)
 export const canvasWidth = writable(0)
@@ -17,3 +18,11 @@ export const recordState = writable('pre_record') // mid_record and post_record
 export const dailyMicStream = writable(null)
 
 export const roomToPeople = writable({})
+
+export const dailyRoomParticipants = writable({})
+
+export const browserTabID = readable(getRandomID())
+
+export const isMicOn = writable(false)
+
+export const isFirestoreDocCreated = writable(false)

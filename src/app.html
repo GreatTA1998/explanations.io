@@ -5,7 +5,10 @@
 		<meta name="description" content="Svelte demo app" />
 		<link rel="icon" href="/favicon.png" />
 
-
+		<script>
+			// fixes the `global is not defined` but with importing DailyJS (spent 3 hours)
+			var global = global || window;
+		</script>
 
 		<!-- Material Icons -->
 		<link

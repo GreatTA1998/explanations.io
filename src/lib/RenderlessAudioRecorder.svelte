@@ -14,6 +14,7 @@
   let currentTime = 0
   let timer
 
+  // technically this is overkill: see https://kit.svelte.dev/faq
   onMount(() => {
     if (browser && window) {
       window.MediaRecorder = AudioRecorder;

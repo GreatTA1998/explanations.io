@@ -137,9 +137,6 @@
       currentBatchSize += 1;
     }
     batchDeleteRequests.push(currentBatch.commit()); 
-    console.log("number of strokes =", strokesArray.length);
-    console.log("number of batches to be deleted =", currentBatchSize); 
-    
     await Promise.all(batchDeleteRequests);
   }
 

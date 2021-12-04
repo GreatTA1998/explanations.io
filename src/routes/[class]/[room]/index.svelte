@@ -1,5 +1,5 @@
 <script context="module">
-  export function load ({ page }) {
+  export async function load ({ page }) {
     return {
       props: {
         classID: page.params.class,
@@ -15,7 +15,7 @@
     
     <Textfield 
       value={roomDoc.name} on:input={(e) => updateRoomName(e)}
-      class={`room-title`} 
+      class="room-title" 
       style="width: 100%; margin-bottom: 20px;">
     </Textfield>
 
@@ -30,7 +30,7 @@
 			>
         {#if boardDoc}
           {#if strokesArray}
-            <Textfield textarea value={boardDoc.description || ''} on:input={(e) => updateBoardDescription(e, boardID)} style="width: 100%; margin-bottom: 10px">
+            <Textfield textarea value={boardDoc.description || ''} on:input={(e) => updateBoardDescription(e, boardID)} style={`width: ${$canvasWidth}px; margin-bottom: 10px`}>
 
             </Textfield>
           {/if}
@@ -87,7 +87,7 @@
   import Button from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
-  import { recordState, user, canvasHeight } from '../../../store.js'
+  import { recordState, user, canvasHeight, canvasWidth } from '../../../store.js'
   import { getRandomID } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot } from '@firebase/firestore';

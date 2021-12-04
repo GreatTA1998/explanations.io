@@ -3,9 +3,9 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
   import { getDatabase, ref, onDisconnect, onValue } from 'firebase/database'
-  import { getFirestore, doc, setDoc, deleteDoc } from '@firebase/firestore'
+  import { getFirestore, doc, updateDoc, setDoc, deleteDoc } from '@firebase/firestore'
   import { getRandomID } from '../helpers/utility.js'
-  import { user } from '../store.js'
+  import { browserTabID, user, isFirestoreDocCreated, roomToPeople } from '../store.js'
 
   export let classID
   export let roomID
@@ -15,25 +15,27 @@
   let isConnectedRef
   let onDisconnectRef
   let unsubIsConnected
-  let isFirestoreDocCreated
   let myName = `Beaver #${Math.floor(Math.random()*(999-100+1)+100)}`
 
-  $: if (isFirestoreDocCreated) {
+  $: if ($isFirestoreDocCreated) {
     // react to `roomID` changes]
-    setDoc(myFirestoreRef, {
-      uid: $user.uid,
-      currentRoomID: roomID,
-      name: myName
+    updateDoc(myFirestoreRef, {
+      currentRoomID: roomID
     })
   }
 
   onDestroy(() => {
     if (unsubIsConnected) unsubIsConnected(); // `.on()` and `.off()` are not asynchronous, so no need for an if statement
-    if (isFirestoreDocCreated) deleteDoc(myFirestoreRef)
+    if ($isFirestoreDocCreated) {
+      deleteDoc(myFirestoreRef)
+      isFirestoreDocCreated.set(false)
+      // doesn't truly matter if it's async
+    }
     if (onDisconnectRef) onDisconnectRef.cancel()
   })
 
   onMount(() => {
+    roomToPeople.set({}) // annoying, don't know why __layout is re-rendered
     isConnectedRef = ref(getDatabase(), '.info/connected')
     unsubIsConnected = onValue(isConnectedRef, async (snap) => {
       if (snap.val() === true) {
@@ -48,12 +50,13 @@
         myFirestoreRef = doc(getFirestore(), `classes/${classID}/participants/${disconnectID}`)
         setDoc(myFirestoreRef, {
           uid: $user.uid,
+          browserTabID: $browserTabID,
           currentRoomID: roomID,
           name: myName
           // currentBoardID: '',
           // currentBoardNumber: 1
         })
-        isFirestoreDocCreated = true
+        isFirestoreDocCreated.set(true)
       } else {
         // disconnected, Cloud Functions will remove my doc, so I'm done.
       }

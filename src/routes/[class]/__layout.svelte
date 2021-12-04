@@ -1,5 +1,6 @@
 <script context="module">
   export function load ({ page }) {
+    console.log('__layout load(), browser =', browser)
     return {
       props: {
         classID: page.params.class,
@@ -9,45 +10,66 @@
   }  
 </script>
 
-<RenderlessMyDocUpdater {classID} {roomID}/>
+<RenderlessMyDocUpdater 
+  {classID} 
+  {roomID}
+/>
 
-<LeftDrawer>
-	{#if rooms}
-		<div use:portal={'side-drawer-list'}>
-			{#each rooms as room ('room' + room.id)}
-        <!-- TODO: room.name can't be undefined, AF('') better -->
-        {#if room.name !== undefined }
-          <!-- <Item 
-            on:click={() => goto(`/${classID}/${room.id}`)}
-            selected={room.id === roomID}
-          >  -->
+<div id="container-for-audio-elements">
+
+</div>
+
+<DailyVideoConference {roomID}
+  let:isMicOn={isMicOn}
+  let:activeSpeakerID={activeSpeakerID}
+  let:toggleMic={toggleMic}
+  let:firestoreIDToDailyID={firestoreIDToDailyID}
+>
+  <LeftDrawer>
+    {#if rooms}
+      {#each rooms as room (room.id)}
+        {#if room.name !== undefined } <!-- TODO: room.name can't be undefined, AF('') better -->
           <div on:click={() => goto(`/${classID}/${room.id}`)}
-            class:selected={room.id === roomID} 
-            style="padding: 10px"
+            style="padding: 6px"
           >
-            <div>
+            <div class:selected={room.id === roomID} class:not-selected={room.id !== roomID} style="padding: 6px">
               {#if room.name}
                 <div class:question-item={'?' === room.name.charAt(room.name.length - 1)}>
                   {room.name}
                 </div>
-                
               {:else if room.name === ''}
                 <div>(no title)</div>
               {/if}
 
               {#if $roomToPeople[room.id]}
-                {#each $roomToPeople[room.id] as person ('person' + person.uid)}
-                  <div style="font-size: 0.7rem; margin-left: 4px;">{person.name}</div>
+                {#each $roomToPeople[room.id] as person (person.browserTabID)}
+                  <div style="display: flex">
+                    <div style="font-size: 0.7rem; margin-left: 4px;">
+                      {person.name}
+                    </div> 
+                    {#if Object.keys($dailyRoomParticipants).length > 0}
+                      {#if person.browserTabID === $browserTabID}     
+                        <div on:click|stopPropagation={toggleMic}>
+                          {$dailyRoomParticipants.local.audio ? 'mute' : 'unmute'}
+                        </div>
+                      {/if}
+                      {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}
+                        <div>isMicOn: {
+                          $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio
+                        }
+                        </div>
+                      {/if}
+                    {/if}
+                  </div>
                 {/each}
               {/if}
             </div>
           </div>
-          <!-- </Item> -->
         {/if}
-			{/each}
-		</div>
-	{/if}
-</LeftDrawer>
+      {/each}
+    {/if}
+  </LeftDrawer>
+</DailyVideoConference>
 
 <!-- <main></main> tag might be important -->
 <slot>
@@ -57,14 +79,16 @@
 <script>
 	import LeftDrawer from '$lib/LeftDrawer.svelte'
   import RenderlessMyDocUpdater from '$lib/RenderlessMyDocUpdater.svelte'
+  import DailyVideoConference from '$lib/DailyVideoConference.svelte'
+  import Button from '@smui/button'
   import { onDestroy, onMount } from 'svelte'
-  import List, { Item, Text, SecondaryText } from '@smui/list'
   import { portal } from '../../helpers/actions.js'
   import { goto } from '$app/navigation'
   import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
   import { browser } from '$app/env'
-  import { canvasHeight, canvasWidth, roomToPeople  } from '../../store.js'
+  import { canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants } from '../../store.js'
+  // import List, { Item, Text, SecondaryText } from '@smui/list'
 
   export let classID;
   export let roomID;
@@ -82,6 +106,7 @@
   })
 
   onMount(() => {
+    console.log("__layout mounted, but should only be done once")
     if (browser) {
       window.addEventListener('resize', debouncedResizeHandler)
     }
@@ -126,7 +151,6 @@
   )
   unsubFuncs.push(
 		onSnapshot(participantsRef, (snapshot) => { // onSnapshot does NOT return a promise
-      const docs = []
       snapshot.docChanges().forEach(change => {
         const person = change.doc.data()
         const roomID = person.currentRoomID
@@ -135,32 +159,27 @@
           case 'added': 
             if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
             $roomToPeople[roomID].push(person)
-            return
+            break
           case 'modified':
             // first remove, inefficiently.
             for (const id of Object.keys($roomToPeople)) {
               for (const p of $roomToPeople[id]) {
-                if (p.uid === person.uid) {
-                  $roomToPeople[id] = $roomToPeople[id].filter(p => p.uid !== person.uid)
+                if (p.browserTabID === person.browserTabID) {
+                  console.log("removing from array")
+                  $roomToPeople[id] = $roomToPeople[id].filter(p => p.browserTabID !== person.browserTabID)
                 }
               } 
             }
             // then add (identical to code above)
             if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
             $roomToPeople[roomID].push(person)
-            return
+            break
           case 'removed':
-            $roomToPeople[roomID] = $roomToPeople[roomID].filter(p => p.uid !== person.uid)
+            $roomToPeople[roomID] = $roomToPeople[roomID].filter(p => p.browserTabID !== person.browserTabID)
+            break
         }
+        console.log('$roomToPeople =', $roomToPeople)
       })
-
-      snapshot.forEach(doc => { 
-        docs.push({ 
-          id: doc.id, 
-          ref: doc.ref.path, 
-          ...doc.data() 
-        })
-      });
     })
   )
 </script>
@@ -171,7 +190,12 @@
   }
 
   .selected {
-    background-color:rgb(136, 233, 233);
+    font-weight: 500;
+    background-color:rgb(188, 248, 248);
+  }
+
+  .not-selected {
+    opacity: 80%;
   }
 </style>
 

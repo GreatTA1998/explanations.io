@@ -111,7 +111,7 @@
         const response = await fetch("https://api.daily.co/v1/rooms", {
           "method": "POST",
           "headers": {
-            "content-type": "application/json", // remove this allows your room to beb created
+            "content-type": "application/json", // remove this allows your room to be created
             "Authorization": "Bearer " + API_KEY_SECRET
           },
           // mode: "cors",

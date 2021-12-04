@@ -6,7 +6,6 @@ import { doc, collection, getDocs, getDoc, query, where, setDoc, deleteDoc, onSn
 export function initializeDatabase () {
   initializeApp({
     apiKey: "AIzaSyB7XsbhYEd_4DQigc_hfnmdpcwlvzugPOw",
-    authDomain: "feynman-mvp.firebaseapp.com",
     databaseURL: "https://feynman-mvp.firebaseio.com",
     projectId: "feynman-mvp",
     storageBucket: "feynman-mvp.appspot.com",

@@ -4,7 +4,7 @@
 
 <script>
   import DailyIframe from '@daily-co/daily-js'
-  import { API_KEY_SECRET } from './dailyCreds.js'
+  import { API_KEY_SECRET } from './environmentSecrets.js'
   import { dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID } from '../store.js'
   import { onDestroy, onMount } from 'svelte'
 

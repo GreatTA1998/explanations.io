@@ -154,15 +154,15 @@ async function consumeBody(data) {
   try {
     for await (const chunk of body) {
       if (data.size > 0 && accumBytes + chunk.length > data.size) {
-        const error4 = new FetchError(`content size at ${data.url} over limit: ${data.size}`, "max-size");
-        body.destroy(error4);
-        throw error4;
+        const error3 = new FetchError(`content size at ${data.url} over limit: ${data.size}`, "max-size");
+        body.destroy(error3);
+        throw error3;
       }
       accumBytes += chunk.length;
       accum.push(chunk);
     }
-  } catch (error4) {
-    const error_ = error4 instanceof FetchBaseError ? error4 : new FetchError(`Invalid response body while trying to fetch ${data.url}: ${error4.message}`, "system", error4);
+  } catch (error3) {
+    const error_ = error3 instanceof FetchBaseError ? error3 : new FetchError(`Invalid response body while trying to fetch ${data.url}: ${error3.message}`, "system", error3);
     throw error_;
   }
   if (body.readableEnded === true || body._readableState.ended === true) {
@@ -171,8 +171,8 @@ async function consumeBody(data) {
         return Buffer.from(accum.join(""));
       }
       return Buffer.concat(accum, accumBytes);
-    } catch (error4) {
-      throw new FetchError(`Could not create Buffer from response body for ${data.url}: ${error4.message}`, "system", error4);
+    } catch (error3) {
+      throw new FetchError(`Could not create Buffer from response body for ${data.url}: ${error3.message}`, "system", error3);
     }
   } else {
     throw new FetchError(`Premature close of server response while trying to fetch ${data.url}`);
@@ -211,15 +211,15 @@ async function fetch(url2, options_) {
     const { signal } = request;
     let response = null;
     const abort = () => {
-      const error4 = new AbortError("The operation was aborted.");
-      reject(error4);
+      const error3 = new AbortError("The operation was aborted.");
+      reject(error3);
       if (request.body && request.body instanceof import_stream.default.Readable) {
-        request.body.destroy(error4);
+        request.body.destroy(error3);
       }
       if (!response || !response.body) {
         return;
       }
-      response.body.emit("error", error4);
+      response.body.emit("error", error3);
     };
     if (signal && signal.aborted) {
       abort();
@@ -239,12 +239,12 @@ async function fetch(url2, options_) {
         signal.removeEventListener("abort", abortAndFinalize);
       }
     };
-    request_.on("error", (error4) => {
-      reject(new FetchError(`request to ${request.url} failed, reason: ${error4.message}`, "system", error4));
+    request_.on("error", (error3) => {
+      reject(new FetchError(`request to ${request.url} failed, reason: ${error3.message}`, "system", error3));
       finalize();
     });
-    fixResponseChunkedTransferBadEnding(request_, (error4) => {
-      response.body.destroy(error4);
+    fixResponseChunkedTransferBadEnding(request_, (error3) => {
+      response.body.destroy(error3);
     });
     if (process.version < "v14") {
       request_.on("socket", (s2) => {
@@ -254,9 +254,9 @@ async function fetch(url2, options_) {
         });
         s2.prependListener("close", (hadError) => {
           if (response && endedWithEventsCount < s2._eventsCount && !hadError) {
-            const error4 = new Error("Premature close");
-            error4.code = "ERR_STREAM_PREMATURE_CLOSE";
-            response.body.emit("error", error4);
+            const error3 = new Error("Premature close");
+            error3.code = "ERR_STREAM_PREMATURE_CLOSE";
+            response.body.emit("error", error3);
           }
         });
       });
@@ -382,9 +382,9 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
   request.on("socket", (socket) => {
     const onSocketClose = () => {
       if (isChunkedTransfer && !properLastChunkReceived) {
-        const error4 = new Error("Premature close");
-        error4.code = "ERR_STREAM_PREMATURE_CLOSE";
-        errorCallback(error4);
+        const error3 = new Error("Premature close");
+        error3.code = "ERR_STREAM_PREMATURE_CLOSE";
+        errorCallback(error3);
       }
     };
     socket.prependListener("close", onSocketClose);
@@ -400,7 +400,7 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
     });
   });
 }
-var import_http, import_https, import_zlib, import_stream, import_util, import_crypto, import_url, commonjsGlobal, src, dataUriToBuffer$1, ponyfill_es2018, POOL_SIZE$1, POOL_SIZE, _Blob, Blob3, Blob$1, FetchBaseError, FetchError, NAME, isURLSearchParameters, isBlob, isAbortSignal, carriage, dashes, carriageLength, getFooter, getBoundary, INTERNALS$2, Body, clone, extractContentType, getTotalBytes, writeToStream, validateHeaderName, validateHeaderValue, Headers, redirectStatus, isRedirect, INTERNALS$1, Response, getSearch, INTERNALS, isRequest, Request, getNodeRequestOptions, AbortError, supportedSchemas;
+var import_http, import_https, import_zlib, import_stream, import_util, import_crypto, import_url, commonjsGlobal, src, dataUriToBuffer$1, ponyfill_es2018, POOL_SIZE$1, POOL_SIZE, _Blob, Blob2, Blob$1, FetchBaseError, FetchError, NAME, isURLSearchParameters, isBlob, isAbortSignal, carriage, dashes, carriageLength, getFooter, getBoundary, INTERNALS$2, Body, clone, extractContentType, getTotalBytes, writeToStream, validateHeaderName, validateHeaderValue, Headers, redirectStatus, isRedirect, INTERNALS$1, Response, getSearch, INTERNALS, isRequest, Request, getNodeRequestOptions, AbortError, supportedSchemas;
 var init_install_fetch = __esm({
   "node_modules/@sveltejs/kit/dist/install-fetch.js"() {
     init_shims();
@@ -638,32 +638,32 @@ var init_install_fetch = __esm({
         function isDictionary(x) {
           return typeof x === "object" || typeof x === "function";
         }
-        function assertDictionary(obj, context2) {
+        function assertDictionary(obj, context) {
           if (obj !== void 0 && !isDictionary(obj)) {
-            throw new TypeError(`${context2} is not an object.`);
+            throw new TypeError(`${context} is not an object.`);
           }
         }
-        function assertFunction(x, context2) {
+        function assertFunction(x, context) {
           if (typeof x !== "function") {
-            throw new TypeError(`${context2} is not a function.`);
+            throw new TypeError(`${context} is not a function.`);
           }
         }
         function isObject(x) {
           return typeof x === "object" && x !== null || typeof x === "function";
         }
-        function assertObject(x, context2) {
+        function assertObject(x, context) {
           if (!isObject(x)) {
-            throw new TypeError(`${context2} is not an object.`);
+            throw new TypeError(`${context} is not an object.`);
           }
         }
-        function assertRequiredArgument(x, position, context2) {
+        function assertRequiredArgument(x, position, context) {
           if (x === void 0) {
-            throw new TypeError(`Parameter ${position} is required in '${context2}'.`);
+            throw new TypeError(`Parameter ${position} is required in '${context}'.`);
           }
         }
-        function assertRequiredField(x, field, context2) {
+        function assertRequiredField(x, field, context) {
           if (x === void 0) {
-            throw new TypeError(`${field} is required in '${context2}'.`);
+            throw new TypeError(`${field} is required in '${context}'.`);
           }
         }
         function convertUnrestrictedDouble(value) {
@@ -675,26 +675,26 @@ var init_install_fetch = __esm({
         function integerPart(x) {
           return censorNegativeZero(MathTrunc(x));
         }
-        function convertUnsignedLongLongWithEnforceRange(value, context2) {
+        function convertUnsignedLongLongWithEnforceRange(value, context) {
           const lowerBound = 0;
           const upperBound = Number.MAX_SAFE_INTEGER;
           let x = Number(value);
           x = censorNegativeZero(x);
           if (!NumberIsFinite(x)) {
-            throw new TypeError(`${context2} is not a finite number`);
+            throw new TypeError(`${context} is not a finite number`);
           }
           x = integerPart(x);
           if (x < lowerBound || x > upperBound) {
-            throw new TypeError(`${context2} is outside the accepted range of ${lowerBound} to ${upperBound}, inclusive`);
+            throw new TypeError(`${context} is outside the accepted range of ${lowerBound} to ${upperBound}, inclusive`);
           }
           if (!NumberIsFinite(x) || x === 0) {
             return 0;
           }
           return x;
         }
-        function assertReadableStream(x, context2) {
+        function assertReadableStream(x, context) {
           if (!IsReadableStream(x)) {
-            throw new TypeError(`${context2} is not a ReadableStream.`);
+            throw new TypeError(`${context} is not a ReadableStream.`);
           }
         }
         function AcquireReadableStreamDefaultReader(stream) {
@@ -1721,53 +1721,53 @@ var init_install_fetch = __esm({
           }
           return size;
         }
-        function convertQueuingStrategy(init2, context2) {
-          assertDictionary(init2, context2);
+        function convertQueuingStrategy(init2, context) {
+          assertDictionary(init2, context);
           const highWaterMark = init2 === null || init2 === void 0 ? void 0 : init2.highWaterMark;
           const size = init2 === null || init2 === void 0 ? void 0 : init2.size;
           return {
             highWaterMark: highWaterMark === void 0 ? void 0 : convertUnrestrictedDouble(highWaterMark),
-            size: size === void 0 ? void 0 : convertQueuingStrategySize(size, `${context2} has member 'size' that`)
+            size: size === void 0 ? void 0 : convertQueuingStrategySize(size, `${context} has member 'size' that`)
           };
         }
-        function convertQueuingStrategySize(fn, context2) {
-          assertFunction(fn, context2);
+        function convertQueuingStrategySize(fn, context) {
+          assertFunction(fn, context);
           return (chunk) => convertUnrestrictedDouble(fn(chunk));
         }
-        function convertUnderlyingSink(original, context2) {
-          assertDictionary(original, context2);
+        function convertUnderlyingSink(original, context) {
+          assertDictionary(original, context);
           const abort = original === null || original === void 0 ? void 0 : original.abort;
           const close = original === null || original === void 0 ? void 0 : original.close;
           const start2 = original === null || original === void 0 ? void 0 : original.start;
           const type = original === null || original === void 0 ? void 0 : original.type;
           const write = original === null || original === void 0 ? void 0 : original.write;
           return {
-            abort: abort === void 0 ? void 0 : convertUnderlyingSinkAbortCallback(abort, original, `${context2} has member 'abort' that`),
-            close: close === void 0 ? void 0 : convertUnderlyingSinkCloseCallback(close, original, `${context2} has member 'close' that`),
-            start: start2 === void 0 ? void 0 : convertUnderlyingSinkStartCallback(start2, original, `${context2} has member 'start' that`),
-            write: write === void 0 ? void 0 : convertUnderlyingSinkWriteCallback(write, original, `${context2} has member 'write' that`),
+            abort: abort === void 0 ? void 0 : convertUnderlyingSinkAbortCallback(abort, original, `${context} has member 'abort' that`),
+            close: close === void 0 ? void 0 : convertUnderlyingSinkCloseCallback(close, original, `${context} has member 'close' that`),
+            start: start2 === void 0 ? void 0 : convertUnderlyingSinkStartCallback(start2, original, `${context} has member 'start' that`),
+            write: write === void 0 ? void 0 : convertUnderlyingSinkWriteCallback(write, original, `${context} has member 'write' that`),
             type
           };
         }
-        function convertUnderlyingSinkAbortCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertUnderlyingSinkAbortCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (reason) => promiseCall(fn, original, [reason]);
         }
-        function convertUnderlyingSinkCloseCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertUnderlyingSinkCloseCallback(fn, original, context) {
+          assertFunction(fn, context);
           return () => promiseCall(fn, original, []);
         }
-        function convertUnderlyingSinkStartCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertUnderlyingSinkStartCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (controller) => reflectCall(fn, original, [controller]);
         }
-        function convertUnderlyingSinkWriteCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertUnderlyingSinkWriteCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (chunk, controller) => promiseCall(fn, original, [chunk, controller]);
         }
-        function assertWritableStream(x, context2) {
+        function assertWritableStream(x, context) {
           if (!IsWritableStream(x)) {
-            throw new TypeError(`${context2} is not a WritableStream.`);
+            throw new TypeError(`${context} is not a WritableStream.`);
           }
         }
         function isAbortSignal4(value) {
@@ -1951,10 +1951,10 @@ var init_install_fetch = __esm({
           });
           return promise;
         }
-        function WritableStreamDealWithRejection(stream, error4) {
+        function WritableStreamDealWithRejection(stream, error3) {
           const state = stream._state;
           if (state === "writable") {
-            WritableStreamStartErroring(stream, error4);
+            WritableStreamStartErroring(stream, error3);
             return;
           }
           WritableStreamFinishErroring(stream);
@@ -2003,10 +2003,10 @@ var init_install_fetch = __esm({
           stream._inFlightWriteRequest._resolve(void 0);
           stream._inFlightWriteRequest = void 0;
         }
-        function WritableStreamFinishInFlightWriteWithError(stream, error4) {
-          stream._inFlightWriteRequest._reject(error4);
+        function WritableStreamFinishInFlightWriteWithError(stream, error3) {
+          stream._inFlightWriteRequest._reject(error3);
           stream._inFlightWriteRequest = void 0;
-          WritableStreamDealWithRejection(stream, error4);
+          WritableStreamDealWithRejection(stream, error3);
         }
         function WritableStreamFinishInFlightClose(stream) {
           stream._inFlightCloseRequest._resolve(void 0);
@@ -2025,14 +2025,14 @@ var init_install_fetch = __esm({
             defaultWriterClosedPromiseResolve(writer);
           }
         }
-        function WritableStreamFinishInFlightCloseWithError(stream, error4) {
-          stream._inFlightCloseRequest._reject(error4);
+        function WritableStreamFinishInFlightCloseWithError(stream, error3) {
+          stream._inFlightCloseRequest._reject(error3);
           stream._inFlightCloseRequest = void 0;
           if (stream._pendingAbortRequest !== void 0) {
-            stream._pendingAbortRequest._reject(error4);
+            stream._pendingAbortRequest._reject(error3);
             stream._pendingAbortRequest = void 0;
           }
-          WritableStreamDealWithRejection(stream, error4);
+          WritableStreamDealWithRejection(stream, error3);
         }
         function WritableStreamCloseQueuedOrInFlight(stream) {
           if (stream._closeRequest === void 0 && stream._inFlightCloseRequest === void 0) {
@@ -2209,18 +2209,18 @@ var init_install_fetch = __esm({
           }
           return WritableStreamDefaultWriterClose(writer);
         }
-        function WritableStreamDefaultWriterEnsureClosedPromiseRejected(writer, error4) {
+        function WritableStreamDefaultWriterEnsureClosedPromiseRejected(writer, error3) {
           if (writer._closedPromiseState === "pending") {
-            defaultWriterClosedPromiseReject(writer, error4);
+            defaultWriterClosedPromiseReject(writer, error3);
           } else {
-            defaultWriterClosedPromiseResetToRejected(writer, error4);
+            defaultWriterClosedPromiseResetToRejected(writer, error3);
           }
         }
-        function WritableStreamDefaultWriterEnsureReadyPromiseRejected(writer, error4) {
+        function WritableStreamDefaultWriterEnsureReadyPromiseRejected(writer, error3) {
           if (writer._readyPromiseState === "pending") {
-            defaultWriterReadyPromiseReject(writer, error4);
+            defaultWriterReadyPromiseReject(writer, error3);
           } else {
-            defaultWriterReadyPromiseResetToRejected(writer, error4);
+            defaultWriterReadyPromiseResetToRejected(writer, error3);
           }
         }
         function WritableStreamDefaultWriterGetDesiredSize(writer) {
@@ -2424,9 +2424,9 @@ var init_install_fetch = __esm({
             WritableStreamDefaultControllerProcessWrite(controller, value);
           }
         }
-        function WritableStreamDefaultControllerErrorIfNeeded(controller, error4) {
+        function WritableStreamDefaultControllerErrorIfNeeded(controller, error3) {
           if (controller._controlledWritableStream._state === "writable") {
-            WritableStreamDefaultControllerError(controller, error4);
+            WritableStreamDefaultControllerError(controller, error3);
           }
         }
         function WritableStreamDefaultControllerProcessClose(controller) {
@@ -2465,10 +2465,10 @@ var init_install_fetch = __esm({
           const desiredSize = WritableStreamDefaultControllerGetDesiredSize(controller);
           return desiredSize <= 0;
         }
-        function WritableStreamDefaultControllerError(controller, error4) {
+        function WritableStreamDefaultControllerError(controller, error3) {
           const stream = controller._controlledWritableStream;
           WritableStreamDefaultControllerClearAlgorithms(controller);
-          WritableStreamStartErroring(stream, error4);
+          WritableStreamStartErroring(stream, error3);
         }
         function streamBrandCheckException$2(name7) {
           return new TypeError(`WritableStream.prototype.${name7} can only be used on a WritableStream`);
@@ -2594,12 +2594,12 @@ var init_install_fetch = __esm({
             let abortAlgorithm;
             if (signal !== void 0) {
               abortAlgorithm = () => {
-                const error4 = new DOMException$1("Aborted", "AbortError");
+                const error3 = new DOMException$1("Aborted", "AbortError");
                 const actions = [];
                 if (!preventAbort) {
                   actions.push(() => {
                     if (dest._state === "writable") {
-                      return WritableStreamAbort(dest, error4);
+                      return WritableStreamAbort(dest, error3);
                     }
                     return promiseResolvedWith(void 0);
                   });
@@ -2607,12 +2607,12 @@ var init_install_fetch = __esm({
                 if (!preventCancel) {
                   actions.push(() => {
                     if (source._state === "readable") {
-                      return ReadableStreamCancel(source, error4);
+                      return ReadableStreamCancel(source, error3);
                     }
                     return promiseResolvedWith(void 0);
                   });
                 }
-                shutdownWithAction(() => Promise.all(actions.map((action) => action())), true, error4);
+                shutdownWithAction(() => Promise.all(actions.map((action) => action())), true, error3);
               };
               if (signal.aborted) {
                 abortAlgorithm();
@@ -2711,25 +2711,25 @@ var init_install_fetch = __esm({
                 uponPromise(action(), () => finalize(originalIsError, originalError), (newError) => finalize(true, newError));
               }
             }
-            function shutdown(isError, error4) {
+            function shutdown(isError, error3) {
               if (shuttingDown) {
                 return;
               }
               shuttingDown = true;
               if (dest._state === "writable" && !WritableStreamCloseQueuedOrInFlight(dest)) {
-                uponFulfillment(waitForWritesToFinish(), () => finalize(isError, error4));
+                uponFulfillment(waitForWritesToFinish(), () => finalize(isError, error3));
               } else {
-                finalize(isError, error4);
+                finalize(isError, error3);
               }
             }
-            function finalize(isError, error4) {
+            function finalize(isError, error3) {
               WritableStreamDefaultWriterRelease(writer);
               ReadableStreamReaderGenericRelease(reader);
               if (signal !== void 0) {
                 signal.removeEventListener("abort", abortAlgorithm);
               }
               if (isError) {
-                reject(error4);
+                reject(error3);
               } else {
                 resolve3(void 0);
               }
@@ -3249,8 +3249,8 @@ var init_install_fetch = __esm({
           forwardReaderError(reader);
           return [branch1, branch2];
         }
-        function convertUnderlyingDefaultOrByteSource(source, context2) {
-          assertDictionary(source, context2);
+        function convertUnderlyingDefaultOrByteSource(source, context) {
+          assertDictionary(source, context);
           const original = source;
           const autoAllocateChunkSize = original === null || original === void 0 ? void 0 : original.autoAllocateChunkSize;
           const cancel = original === null || original === void 0 ? void 0 : original.cancel;
@@ -3258,59 +3258,59 @@ var init_install_fetch = __esm({
           const start2 = original === null || original === void 0 ? void 0 : original.start;
           const type = original === null || original === void 0 ? void 0 : original.type;
           return {
-            autoAllocateChunkSize: autoAllocateChunkSize === void 0 ? void 0 : convertUnsignedLongLongWithEnforceRange(autoAllocateChunkSize, `${context2} has member 'autoAllocateChunkSize' that`),
-            cancel: cancel === void 0 ? void 0 : convertUnderlyingSourceCancelCallback(cancel, original, `${context2} has member 'cancel' that`),
-            pull: pull === void 0 ? void 0 : convertUnderlyingSourcePullCallback(pull, original, `${context2} has member 'pull' that`),
-            start: start2 === void 0 ? void 0 : convertUnderlyingSourceStartCallback(start2, original, `${context2} has member 'start' that`),
-            type: type === void 0 ? void 0 : convertReadableStreamType(type, `${context2} has member 'type' that`)
+            autoAllocateChunkSize: autoAllocateChunkSize === void 0 ? void 0 : convertUnsignedLongLongWithEnforceRange(autoAllocateChunkSize, `${context} has member 'autoAllocateChunkSize' that`),
+            cancel: cancel === void 0 ? void 0 : convertUnderlyingSourceCancelCallback(cancel, original, `${context} has member 'cancel' that`),
+            pull: pull === void 0 ? void 0 : convertUnderlyingSourcePullCallback(pull, original, `${context} has member 'pull' that`),
+            start: start2 === void 0 ? void 0 : convertUnderlyingSourceStartCallback(start2, original, `${context} has member 'start' that`),
+            type: type === void 0 ? void 0 : convertReadableStreamType(type, `${context} has member 'type' that`)
           };
         }
-        function convertUnderlyingSourceCancelCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertUnderlyingSourceCancelCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (reason) => promiseCall(fn, original, [reason]);
         }
-        function convertUnderlyingSourcePullCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertUnderlyingSourcePullCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (controller) => promiseCall(fn, original, [controller]);
         }
-        function convertUnderlyingSourceStartCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertUnderlyingSourceStartCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (controller) => reflectCall(fn, original, [controller]);
         }
-        function convertReadableStreamType(type, context2) {
+        function convertReadableStreamType(type, context) {
           type = `${type}`;
           if (type !== "bytes") {
-            throw new TypeError(`${context2} '${type}' is not a valid enumeration value for ReadableStreamType`);
+            throw new TypeError(`${context} '${type}' is not a valid enumeration value for ReadableStreamType`);
           }
           return type;
         }
-        function convertReaderOptions(options2, context2) {
-          assertDictionary(options2, context2);
+        function convertReaderOptions(options2, context) {
+          assertDictionary(options2, context);
           const mode = options2 === null || options2 === void 0 ? void 0 : options2.mode;
           return {
-            mode: mode === void 0 ? void 0 : convertReadableStreamReaderMode(mode, `${context2} has member 'mode' that`)
+            mode: mode === void 0 ? void 0 : convertReadableStreamReaderMode(mode, `${context} has member 'mode' that`)
           };
         }
-        function convertReadableStreamReaderMode(mode, context2) {
+        function convertReadableStreamReaderMode(mode, context) {
           mode = `${mode}`;
           if (mode !== "byob") {
-            throw new TypeError(`${context2} '${mode}' is not a valid enumeration value for ReadableStreamReaderMode`);
+            throw new TypeError(`${context} '${mode}' is not a valid enumeration value for ReadableStreamReaderMode`);
           }
           return mode;
         }
-        function convertIteratorOptions(options2, context2) {
-          assertDictionary(options2, context2);
+        function convertIteratorOptions(options2, context) {
+          assertDictionary(options2, context);
           const preventCancel = options2 === null || options2 === void 0 ? void 0 : options2.preventCancel;
           return { preventCancel: Boolean(preventCancel) };
         }
-        function convertPipeOptions(options2, context2) {
-          assertDictionary(options2, context2);
+        function convertPipeOptions(options2, context) {
+          assertDictionary(options2, context);
           const preventAbort = options2 === null || options2 === void 0 ? void 0 : options2.preventAbort;
           const preventCancel = options2 === null || options2 === void 0 ? void 0 : options2.preventCancel;
           const preventClose = options2 === null || options2 === void 0 ? void 0 : options2.preventClose;
           const signal = options2 === null || options2 === void 0 ? void 0 : options2.signal;
           if (signal !== void 0) {
-            assertAbortSignal(signal, `${context2} has member 'signal' that`);
+            assertAbortSignal(signal, `${context} has member 'signal' that`);
           }
           return {
             preventAbort: Boolean(preventAbort),
@@ -3319,19 +3319,19 @@ var init_install_fetch = __esm({
             signal
           };
         }
-        function assertAbortSignal(signal, context2) {
+        function assertAbortSignal(signal, context) {
           if (!isAbortSignal4(signal)) {
-            throw new TypeError(`${context2} is not an AbortSignal.`);
+            throw new TypeError(`${context} is not an AbortSignal.`);
           }
         }
-        function convertReadableWritablePair(pair, context2) {
-          assertDictionary(pair, context2);
+        function convertReadableWritablePair(pair, context) {
+          assertDictionary(pair, context);
           const readable2 = pair === null || pair === void 0 ? void 0 : pair.readable;
           assertRequiredField(readable2, "readable", "ReadableWritablePair");
-          assertReadableStream(readable2, `${context2} has member 'readable' that`);
+          assertReadableStream(readable2, `${context} has member 'readable' that`);
           const writable3 = pair === null || pair === void 0 ? void 0 : pair.writable;
           assertRequiredField(writable3, "writable", "ReadableWritablePair");
-          assertWritableStream(writable3, `${context2} has member 'writable' that`);
+          assertWritableStream(writable3, `${context} has member 'writable' that`);
           return { readable: readable2, writable: writable3 };
         }
         class ReadableStream2 {
@@ -3550,8 +3550,8 @@ var init_install_fetch = __esm({
         function streamBrandCheckException$1(name7) {
           return new TypeError(`ReadableStream.prototype.${name7} can only be used on a ReadableStream`);
         }
-        function convertQueuingStrategyInit(init2, context2) {
-          assertDictionary(init2, context2);
+        function convertQueuingStrategyInit(init2, context) {
+          assertDictionary(init2, context);
           const highWaterMark = init2 === null || init2 === void 0 ? void 0 : init2.highWaterMark;
           assertRequiredField(highWaterMark, "highWaterMark", "QueuingStrategyInit");
           return {
@@ -3654,31 +3654,31 @@ var init_install_fetch = __esm({
           }
           return x instanceof CountQueuingStrategy;
         }
-        function convertTransformer(original, context2) {
-          assertDictionary(original, context2);
+        function convertTransformer(original, context) {
+          assertDictionary(original, context);
           const flush2 = original === null || original === void 0 ? void 0 : original.flush;
           const readableType = original === null || original === void 0 ? void 0 : original.readableType;
           const start2 = original === null || original === void 0 ? void 0 : original.start;
           const transform = original === null || original === void 0 ? void 0 : original.transform;
           const writableType = original === null || original === void 0 ? void 0 : original.writableType;
           return {
-            flush: flush2 === void 0 ? void 0 : convertTransformerFlushCallback(flush2, original, `${context2} has member 'flush' that`),
+            flush: flush2 === void 0 ? void 0 : convertTransformerFlushCallback(flush2, original, `${context} has member 'flush' that`),
             readableType,
-            start: start2 === void 0 ? void 0 : convertTransformerStartCallback(start2, original, `${context2} has member 'start' that`),
-            transform: transform === void 0 ? void 0 : convertTransformerTransformCallback(transform, original, `${context2} has member 'transform' that`),
+            start: start2 === void 0 ? void 0 : convertTransformerStartCallback(start2, original, `${context} has member 'start' that`),
+            transform: transform === void 0 ? void 0 : convertTransformerTransformCallback(transform, original, `${context} has member 'transform' that`),
             writableType
           };
         }
-        function convertTransformerFlushCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertTransformerFlushCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (controller) => promiseCall(fn, original, [controller]);
         }
-        function convertTransformerStartCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertTransformerStartCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (controller) => reflectCall(fn, original, [controller]);
         }
-        function convertTransformerTransformCallback(fn, original, context2) {
-          assertFunction(fn, context2);
+        function convertTransformerTransformCallback(fn, original, context) {
+          assertFunction(fn, context);
           return (chunk, controller) => promiseCall(fn, original, [chunk, controller]);
         }
         class TransformStream {
@@ -3902,8 +3902,8 @@ var init_install_fetch = __esm({
           const stream = controller._controlledTransformStream;
           const readableController = stream._readable._readableStreamController;
           ReadableStreamDefaultControllerClose(readableController);
-          const error4 = new TypeError("TransformStream terminated");
-          TransformStreamErrorWritableAndUnblockWrite(stream, error4);
+          const error3 = new TypeError("TransformStream terminated");
+          TransformStreamErrorWritableAndUnblockWrite(stream, error3);
         }
         function TransformStreamDefaultSinkWriteAlgorithm(stream, chunk) {
           const controller = stream._transformStreamController;
@@ -3975,18 +3975,18 @@ var init_install_fetch = __esm({
           };
           Object.assign(globalThis, require("node:stream/web"));
           process2.emitWarning = emitWarning;
-        } catch (error4) {
+        } catch (error3) {
           process2.emitWarning = emitWarning;
-          throw error4;
+          throw error3;
         }
-      } catch (error4) {
+      } catch (error3) {
         Object.assign(globalThis, ponyfill_es2018.exports);
       }
     }
     try {
-      const { Blob: Blob6 } = require("buffer");
-      if (Blob6 && !Blob6.prototype.stream) {
-        Blob6.prototype.stream = function name7(params) {
+      const { Blob: Blob5 } = require("buffer");
+      if (Blob5 && !Blob5.prototype.stream) {
+        Blob5.prototype.stream = function name7(params) {
           let position = 0;
           const blob = this;
           return new ReadableStream({
@@ -4003,10 +4003,10 @@ var init_install_fetch = __esm({
           });
         };
       }
-    } catch (error4) {
+    } catch (error3) {
     }
     POOL_SIZE = 65536;
-    _Blob = class Blob2 {
+    _Blob = class Blob {
       #parts = [];
       #type = "";
       #size = 0;
@@ -4029,7 +4029,7 @@ var init_install_fetch = __esm({
             part = new Uint8Array(element.buffer.slice(element.byteOffset, element.byteOffset + element.byteLength));
           } else if (element instanceof ArrayBuffer) {
             part = new Uint8Array(element.slice(0));
-          } else if (element instanceof Blob2) {
+          } else if (element instanceof Blob) {
             part = element;
           } else {
             part = encoder.encode(element);
@@ -4107,7 +4107,7 @@ var init_install_fetch = __esm({
             relativeStart = 0;
           }
         }
-        const blob = new Blob2([], { type: String(type).toLowerCase() });
+        const blob = new Blob([], { type: String(type).toLowerCase() });
         blob.#size = span;
         blob.#parts = blobParts;
         return blob;
@@ -4124,8 +4124,8 @@ var init_install_fetch = __esm({
       type: { enumerable: true },
       slice: { enumerable: true }
     });
-    Blob3 = _Blob;
-    Blob$1 = Blob3;
+    Blob2 = _Blob;
+    Blob$1 = Blob2;
     FetchBaseError = class extends Error {
       constructor(message2, type) {
         super(message2);
@@ -4198,8 +4198,8 @@ var init_install_fetch = __esm({
         this.size = size;
         if (body instanceof import_stream.default) {
           body.on("error", (error_) => {
-            const error4 = error_ instanceof FetchBaseError ? error_ : new FetchError(`Invalid response body while trying to fetch ${this.url}: ${error_.message}`, "system", error_);
-            this[INTERNALS$2].error = error4;
+            const error3 = error_ instanceof FetchBaseError ? error_ : new FetchError(`Invalid response body while trying to fetch ${this.url}: ${error_.message}`, "system", error_);
+            this[INTERNALS$2].error = error3;
           });
         }
       }
@@ -4317,16 +4317,16 @@ var init_install_fetch = __esm({
     };
     validateHeaderName = typeof import_http.default.validateHeaderName === "function" ? import_http.default.validateHeaderName : (name7) => {
       if (!/^[\^`\-\w!#$%&'*+.|~]+$/.test(name7)) {
-        const error4 = new TypeError(`Header name must be a valid HTTP token [${name7}]`);
-        Object.defineProperty(error4, "code", { value: "ERR_INVALID_HTTP_TOKEN" });
-        throw error4;
+        const error3 = new TypeError(`Header name must be a valid HTTP token [${name7}]`);
+        Object.defineProperty(error3, "code", { value: "ERR_INVALID_HTTP_TOKEN" });
+        throw error3;
       }
     };
     validateHeaderValue = typeof import_http.default.validateHeaderValue === "function" ? import_http.default.validateHeaderValue : (name7, value) => {
       if (/[^\t\u0020-\u007E\u0080-\u00FF]/.test(value)) {
-        const error4 = new TypeError(`Invalid character in header content ["${name7}"]`);
-        Object.defineProperty(error4, "code", { value: "ERR_INVALID_CHAR" });
-        throw error4;
+        const error3 = new TypeError(`Invalid character in header content ["${name7}"]`);
+        Object.defineProperty(error3, "code", { value: "ERR_INVALID_CHAR" });
+        throw error3;
       }
     };
     Headers = class extends URLSearchParams {
@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_767f7ce7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-074fb7e7.js
+// .svelte-kit/output/server/chunks/store-60722d3a.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5157,10 +5157,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_074fb7e7 = __esm({
-  ".svelte-kit/output/server/chunks/store-074fb7e7.js"() {
+var init_store_60722d3a = __esm({
+  ".svelte-kit/output/server/chunks/store-60722d3a.js"() {
     init_shims();
-    init_app_60dba192();
+    init_app_b0873259();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -5349,9 +5349,9 @@ var init_store_074fb7e7 = __esm({
         });
       }
       wrapCallback(callback) {
-        return (error4, value) => {
-          if (error4) {
-            this.reject(error4);
+        return (error3, value) => {
+          if (error3) {
+            this.reject(error3);
           } else {
             this.resolve(value);
           }
@@ -5359,9 +5359,9 @@ var init_store_074fb7e7 = __esm({
             this.promise.catch(() => {
             });
             if (callback.length === 1) {
-              callback(error4);
+              callback(error3);
             } else {
-              callback(error4, value);
+              callback(error3, value);
             }
           }
         };
@@ -5392,8 +5392,8 @@ var init_store_074fb7e7 = __esm({
         const template2 = this.errors[code];
         const message2 = template2 ? replaceTemplate(template2, customData) : "Error";
         const fullMessage = `${this.serviceName}: ${message2} (${fullCode}).`;
-        const error4 = new FirebaseError(fullCode, fullMessage, customData);
-        return error4;
+        const error3 = new FirebaseError(fullCode, fullMessage, customData);
+        return error3;
       }
     };
     PATTERN = /\{\$([^}]+)}/g;
@@ -5591,11 +5591,11 @@ var init_store_074fb7e7 = __esm({
           observer.next(value);
         });
       }
-      error(error4) {
+      error(error3) {
         this.forEachObserver((observer) => {
-          observer.error(error4);
+          observer.error(error3);
         });
-        this.close(error4);
+        this.close(error3);
       }
       complete() {
         this.forEachObserver((observer) => {
@@ -5603,9 +5603,9 @@ var init_store_074fb7e7 = __esm({
         });
         this.close();
       }
-      subscribe(nextOrObserver, error4, complete) {
+      subscribe(nextOrObserver, error3, complete) {
         let observer;
-        if (nextOrObserver === void 0 && error4 === void 0 && complete === void 0) {
+        if (nextOrObserver === void 0 && error3 === void 0 && complete === void 0) {
           throw new Error("Missing Observer.");
         }
         if (implementsAnyMethods(nextOrObserver, [
@@ -5617,7 +5617,7 @@ var init_store_074fb7e7 = __esm({
         } else {
           observer = {
             next: nextOrObserver,
-            error: error4,
+            error: error3,
             complete
           };
         }
@@ -5985,7 +5985,7 @@ var init_store_074fb7e7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-3deb0f8c.js
+// .svelte-kit/output/server/chunks/index-c327074d-040214c6.js
 function sign(x) {
   return x < 0 ? -1 : 1;
 }
@@ -6119,21 +6119,21 @@ function validateLabel(label, processing_option) {
   if (label.substr(0, 4) === "xn--") {
     label = punycode.toUnicode(label);
   }
-  var error4 = false;
+  var error3 = false;
   if (normalize(label) !== label || label[3] === "-" && label[4] === "-" || label[0] === "-" || label[label.length - 1] === "-" || label.indexOf(".") !== -1 || label.search(combiningMarksRegex) === 0) {
-    error4 = true;
+    error3 = true;
   }
   var len = countSymbols(label);
   for (var i = 0; i < len; ++i) {
     var status = findStatus(label.codePointAt(i));
     if (processing === PROCESSING_OPTIONS.TRANSITIONAL && status[1] !== "valid" || processing === PROCESSING_OPTIONS.NONTRANSITIONAL && status[1] !== "valid" && status[1] !== "deviation") {
-      error4 = true;
+      error3 = true;
       break;
     }
   }
   return {
     label,
-    error: error4
+    error: error3
   };
 }
 function processing(domain_name, useSTD3, processing_option) {
@@ -6195,8 +6195,8 @@ function Body2(body) {
   this.timeout = timeout;
   if (body instanceof import_stream2.default) {
     body.on("error", function(err) {
-      const error4 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
-      _this[INTERNALS2].error = error4;
+      const error3 = err.name === "AbortError" ? err : new FetchError2(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+      _this[INTERNALS2].error = error3;
     });
   }
 }
@@ -6531,14 +6531,14 @@ function fetch2(url2, opts) {
     const signal = request.signal;
     let response = null;
     const abort = function abort2() {
-      let error4 = new AbortError2("The user aborted a request.");
-      reject(error4);
+      let error3 = new AbortError2("The user aborted a request.");
+      reject(error3);
       if (request.body && request.body instanceof import_stream2.default.Readable) {
-        request.body.destroy(error4);
+        request.body.destroy(error3);
       }
       if (!response || !response.body)
         return;
-      response.body.emit("error", error4);
+      response.body.emit("error", error3);
     };
     if (signal && signal.aborted) {
       abort();
@@ -6860,9 +6860,9 @@ function _makeTaggedError(auth, code, response) {
   if (response.phoneNumber) {
     errorParams.phoneNumber = response.phoneNumber;
   }
-  const error4 = _createError(auth, code, errorParams);
-  error4.customData._tokenResponse = response;
-  return error4;
+  const error3 = _createError(auth, code, errorParams);
+  error3.customData._tokenResponse = response;
+  return error3;
 }
 async function deleteAccount(auth, request) {
   return _performApiRequest(auth, "POST", "/v1/accounts:delete", request);
@@ -7145,11 +7145,11 @@ function registerAuth(clientPlatform) {
   registerVersion(name2, version2, getVersionForPlatform(clientPlatform));
   registerVersion(name2, version2, "esm2017");
 }
-var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob4, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop;
-var init_index_c327074d_3deb0f8c = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-3deb0f8c.js"() {
+var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob3, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop;
+var init_index_c327074d_040214c6 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-040214c6.js"() {
     init_shims();
-    init_store_074fb7e7();
+    init_store_60722d3a();
     import_stream2 = __toModule(require("stream"));
     import_http2 = __toModule(require("http"));
     import_url2 = __toModule(require("url"));
@@ -85827,7 +85827,7 @@ var init_index_c327074d_3deb0f8c = __esm({
     Readable = import_stream2.default.Readable;
     BUFFER2 = Symbol("buffer");
     TYPE = Symbol("type");
-    Blob4 = class {
+    Blob3 = class {
       constructor() {
         this[TYPE] = "";
         const blobParts = arguments[0];
@@ -85846,7 +85846,7 @@ var init_index_c327074d_3deb0f8c = __esm({
               buffer = Buffer.from(element.buffer, element.byteOffset, element.byteLength);
             } else if (element instanceof ArrayBuffer) {
               buffer = Buffer.from(element);
-            } else if (element instanceof Blob4) {
+            } else if (element instanceof Blob3) {
               buffer = element[BUFFER2];
             } else {
               buffer = Buffer.from(typeof element === "string" ? element : String(element));
@@ -85908,17 +85908,17 @@ var init_index_c327074d_3deb0f8c = __esm({
         const span = Math.max(relativeEnd - relativeStart, 0);
         const buffer = this[BUFFER2];
         const slicedBuffer = buffer.slice(relativeStart, relativeStart + span);
-        const blob = new Blob4([], { type: arguments[2] });
+        const blob = new Blob3([], { type: arguments[2] });
         blob[BUFFER2] = slicedBuffer;
         return blob;
       }
     };
-    Object.defineProperties(Blob4.prototype, {
+    Object.defineProperties(Blob3.prototype, {
       size: { enumerable: true },
       type: { enumerable: true },
       slice: { enumerable: true }
     });
-    Object.defineProperty(Blob4.prototype, Symbol.toStringTag, {
+    Object.defineProperty(Blob3.prototype, Symbol.toStringTag, {
       value: "Blob",
       writable: false,
       enumerable: false,
@@ -85948,7 +85948,7 @@ var init_index_c327074d_3deb0f8c = __esm({
       blob() {
         let ct = this.headers && this.headers.get("content-type") || "";
         return consumeBody2.call(this).then(function(buf) {
-          return Object.assign(new Blob4([], {
+          return Object.assign(new Blob3([], {
             type: ct.toLowerCase()
           }), {
             [BUFFER2]: buf
@@ -87037,11 +87037,11 @@ var init_index_c327074d_3deb0f8c = __esm({
       _updateErrorMap(errorMap) {
         this._errorFactory = new ErrorFactory("auth", "Firebase", errorMap());
       }
-      onAuthStateChanged(nextOrObserver, error4, completed) {
-        return this.registerStateListener(this.authStateSubscription, nextOrObserver, error4, completed);
+      onAuthStateChanged(nextOrObserver, error3, completed) {
+        return this.registerStateListener(this.authStateSubscription, nextOrObserver, error3, completed);
       }
-      onIdTokenChanged(nextOrObserver, error4, completed) {
-        return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error4, completed);
+      onIdTokenChanged(nextOrObserver, error3, completed) {
+        return this.registerStateListener(this.idTokenSubscription, nextOrObserver, error3, completed);
       }
       toJSON() {
         var _a;
@@ -87119,7 +87119,7 @@ var init_index_c327074d_3deb0f8c = __esm({
           this.authStateSubscription.next(this.currentUser);
         }
       }
-      registerStateListener(subscription, nextOrObserver, error4, completed) {
+      registerStateListener(subscription, nextOrObserver, error3, completed) {
         if (this._deleted) {
           return () => {
           };
@@ -87129,7 +87129,7 @@ var init_index_c327074d_3deb0f8c = __esm({
         _assert(promise, this, "internal-error");
         promise.then(() => cb(this.currentUser));
         if (typeof nextOrObserver === "function") {
-          return subscription.addObserver(nextOrObserver, error4, completed);
+          return subscription.addObserver(nextOrObserver, error3, completed);
         } else {
           return subscription.addObserver(nextOrObserver);
         }
@@ -87292,8 +87292,8 @@ var init_index_node_esm = __esm({
         const template2 = this.errors[code];
         const message2 = template2 ? replaceTemplate2(template2, customData) : "Error";
         const fullMessage = `${this.serviceName}: ${message2} (${fullCode}).`;
-        const error4 = new FirebaseError2(fullCode, fullMessage, customData);
-        return error4;
+        const error3 = new FirebaseError2(fullCode, fullMessage, customData);
+        return error3;
       }
     };
     PATTERN2 = /\{\$([^}]+)}/g;
@@ -87911,8 +87911,8 @@ var require_metadata = __commonJS({
                 result.add(key, values);
               }
             }
-          } catch (error4) {
-            const message2 = `Failed to add metadata entry ${key}: ${values}. ${error4.message}. For more information see https://github.com/grpc/grpc-node/issues/1173`;
+          } catch (error3) {
+            const message2 = `Failed to add metadata entry ${key}: ${values}. ${error3.message}. For more information see https://github.com/grpc/grpc-node/issues/1173`;
             logging_1.log(constants_1.LogVerbosity.ERROR, message2);
           }
         });
@@ -88283,8 +88283,8 @@ var require_call_stream = __commonJS({
           this.maybeOutputStatus();
         });
       }
-      handleFilterError(error4) {
-        this.cancelWithStatus(constants_1.Status.INTERNAL, error4.message);
+      handleFilterError(error3) {
+        this.cancelWithStatus(constants_1.Status.INTERNAL, error3.message);
       }
       handleFilteredRead(message2) {
         if (this.finalStatus !== null && this.finalStatus.code !== constants_1.Status.OK) {
@@ -88404,10 +88404,10 @@ var require_call_stream = __commonJS({
               let metadata;
               try {
                 metadata = metadata_1.Metadata.fromHttp2Headers(headers2);
-              } catch (error4) {
+              } catch (error3) {
                 this.endCall({
                   code: constants_1.Status.UNKNOWN,
-                  details: error4.message,
+                  details: error3.message,
                   metadata: new metadata_1.Metadata()
                 });
                 return;
@@ -88415,10 +88415,10 @@ var require_call_stream = __commonJS({
               try {
                 const finalMetadata = this.filterStack.receiveMetadata(metadata);
                 (_a = this.listener) === null || _a === void 0 ? void 0 : _a.onReceiveMetadata(finalMetadata);
-              } catch (error4) {
+              } catch (error3) {
                 this.endCall({
                   code: constants_1.Status.UNKNOWN,
-                  details: error4.message,
+                  details: error3.message,
                   metadata: new metadata_1.Metadata()
                 });
               }
@@ -88508,10 +88508,10 @@ var require_call_stream = __commonJS({
             this.trace("sending data chunk of length " + this.pendingWrite.length + " (deferred)");
             try {
               this.writeMessageToStream(this.pendingWrite, this.pendingWriteCallback);
-            } catch (error4) {
+            } catch (error3) {
               this.endCall({
                 code: constants_1.Status.UNAVAILABLE,
-                details: `Write failed with error ${error4.message}`,
+                details: `Write failed with error ${error3.message}`,
                 metadata: new metadata_1.Metadata()
               });
             }
@@ -88606,14 +88606,14 @@ var require_call_stream = __commonJS({
           this.http2Stream.end();
         }
       }
-      sendMessageWithContext(context2, message2) {
+      sendMessageWithContext(context, message2) {
         var _a;
         this.trace("write() called with message of length " + message2.length);
         const writeObj = {
           message: message2,
-          flags: context2.flags
+          flags: context.flags
         };
-        const cb = (_a = context2.callback) !== null && _a !== void 0 ? _a : () => {
+        const cb = (_a = context.callback) !== null && _a !== void 0 ? _a : () => {
         };
         this.isWriteFilterPending = true;
         this.filterStack.sendMessage(Promise.resolve(writeObj)).then((message3) => {
@@ -88626,10 +88626,10 @@ var require_call_stream = __commonJS({
             this.trace("sending data chunk of length " + message3.message.length);
             try {
               this.writeMessageToStream(message3.message, cb);
-            } catch (error4) {
+            } catch (error3) {
               this.endCall({
                 code: constants_1.Status.UNAVAILABLE,
-                details: `Write failed with error ${error4.message}`,
+                details: `Write failed with error ${error3.message}`,
                 metadata: new metadata_1.Metadata()
               });
             }
@@ -89657,8 +89657,8 @@ var require_resolving_load_balancer = __commonJS({
             const finalServiceConfig = workingServiceConfig !== null && workingServiceConfig !== void 0 ? workingServiceConfig : this.defaultServiceConfig;
             this.onSuccessfulResolution(configSelector !== null && configSelector !== void 0 ? configSelector : getDefaultConfigSelector(finalServiceConfig));
           },
-          onError: (error4) => {
-            this.handleResolutionFailure(error4);
+          onError: (error3) => {
+            this.handleResolutionFailure(error3);
           }
         }, channelOptions);
         this.backoffTimeout = new backoff_timeout_1.BackoffTimeout(() => {
@@ -89685,10 +89685,10 @@ var require_resolving_load_balancer = __commonJS({
         this.currentState = connectivityState;
         this.channelControlHelper.updateState(connectivityState, picker);
       }
-      handleResolutionFailure(error4) {
+      handleResolutionFailure(error3) {
         if (this.latestChildState === connectivity_state_1.ConnectivityState.IDLE) {
-          this.updateState(connectivity_state_1.ConnectivityState.TRANSIENT_FAILURE, new picker_1.UnavailablePicker(error4));
-          this.onFailedResolution(error4);
+          this.updateState(connectivity_state_1.ConnectivityState.TRANSIENT_FAILURE, new picker_1.UnavailablePicker(error3));
+          this.onFailedResolution(error3);
         }
         this.backoffTimeout.runOnce();
       }
@@ -89980,8 +89980,8 @@ var require_http_proxy = __commonJS({
                 trace("Successfully established a TLS connection to " + options2.path + " through proxy " + proxyAddressString);
                 resolve3({ socket: cts, realTarget: parsedTarget });
               });
-              cts.on("error", (error4) => {
-                trace("Failed to establish a TLS connection to " + options2.path + " through proxy " + proxyAddressString + " with error " + error4.message);
+              cts.on("error", (error3) => {
+                trace("Failed to establish a TLS connection to " + options2.path + " through proxy " + proxyAddressString + " with error " + error3.message);
                 reject();
               });
             } else {
@@ -90092,14 +90092,14 @@ var require_call = __commonJS({
       }
       _write(chunk, encoding, cb) {
         var _a;
-        const context2 = {
+        const context = {
           callback: cb
         };
         const flags = Number(encoding);
         if (!Number.isNaN(flags)) {
-          context2.flags = flags;
+          context.flags = flags;
         }
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.sendMessageWithContext(context2, chunk);
+        (_a = this.call) === null || _a === void 0 ? void 0 : _a.sendMessageWithContext(context, chunk);
       }
       _final(cb) {
         var _a;
@@ -90128,14 +90128,14 @@ var require_call = __commonJS({
       }
       _write(chunk, encoding, cb) {
         var _a;
-        const context2 = {
+        const context = {
           callback: cb
         };
         const flags = Number(encoding);
         if (!Number.isNaN(flags)) {
-          context2.flags = flags;
+          context.flags = flags;
         }
-        (_a = this.call) === null || _a === void 0 ? void 0 : _a.sendMessageWithContext(context2, chunk);
+        (_a = this.call) === null || _a === void 0 ? void 0 : _a.sendMessageWithContext(context, chunk);
       }
       _final(cb) {
         var _a;
@@ -90301,11 +90301,11 @@ var require_client_interceptors = __commonJS({
           this.nextCall.start(md, finalInterceptingListener);
         });
       }
-      sendMessageWithContext(context2, message2) {
+      sendMessageWithContext(context, message2) {
         this.processingMessage = true;
         this.requester.sendMessage(message2, (finalMessage) => {
           this.processingMessage = false;
-          this.nextCall.sendMessageWithContext(context2, finalMessage);
+          this.nextCall.sendMessageWithContext(context, finalMessage);
           if (this.pendingHalfClose) {
             this.nextCall.halfClose();
           }
@@ -90358,7 +90358,7 @@ var require_client_interceptors = __commonJS({
       setCredentials(credentials2) {
         this.call.setCredentials(credentials2);
       }
-      sendMessageWithContext(context2, message2) {
+      sendMessageWithContext(context, message2) {
         let serialized;
         try {
           serialized = this.methodDefinition.requestSerialize(message2);
@@ -90366,7 +90366,7 @@ var require_client_interceptors = __commonJS({
           this.call.cancelWithStatus(constants_1.Status.INTERNAL, `Request message serialization failure: ${e.message}`);
           return;
         }
-        this.call.sendMessageWithContext(context2, serialized);
+        this.call.sendMessageWithContext(context, serialized);
       }
       sendMessage(message2) {
         this.sendMessageWithContext({}, message2);
@@ -98686,8 +98686,8 @@ var require_subchannel = __commonJS({
             this.transitionToState([connectivity_state_1.ConnectivityState.CONNECTING, connectivity_state_1.ConnectivityState.READY], connectivity_state_1.ConnectivityState.IDLE);
           }
         });
-        session.once("error", (error4) => {
-          this.trace("connection closed with error " + error4.message);
+        session.once("error", (error3) => {
+          this.trace("connection closed with error " + error3.message);
         });
       }
       startConnectingInternal() {
@@ -99150,8 +99150,8 @@ var require_call_credentials_filter = __commonJS({
         const resultMetadata = await metadata;
         try {
           resultMetadata.merge(await credsMetadata);
-        } catch (error4) {
-          this.stream.cancelWithStatus(constants_1.Status.UNAUTHENTICATED, `Failed to retrieve auth metadata with error: ${error4.message}`);
+        } catch (error3) {
+          this.stream.cancelWithStatus(constants_1.Status.UNAUTHENTICATED, `Failed to retrieve auth metadata with error: ${error3.message}`);
           return Promise.reject("Failed to retrieve auth metadata");
         }
         if (resultMetadata.get("authorization").length > 1) {
@@ -99722,21 +99722,21 @@ var require_channel = __commonJS({
                     pickResult.subchannel.startCallStream(finalMetadata, callStream, [...dynamicFilters, ...pickExtraFilters]);
                     (_a2 = callConfig.onCommitted) === null || _a2 === void 0 ? void 0 : _a2.call(callConfig);
                     (_b2 = pickResult.onCallStarted) === null || _b2 === void 0 ? void 0 : _b2.call(pickResult);
-                  } catch (error4) {
-                    if (error4.code === "ERR_HTTP2_GOAWAY_SESSION") {
-                      this.trace("Failed to start call on picked subchannel " + pickResult.subchannel.getAddress() + " with error " + error4.message + ". Retrying pick", constants_1.LogVerbosity.INFO);
+                  } catch (error3) {
+                    if (error3.code === "ERR_HTTP2_GOAWAY_SESSION") {
+                      this.trace("Failed to start call on picked subchannel " + pickResult.subchannel.getAddress() + " with error " + error3.message + ". Retrying pick", constants_1.LogVerbosity.INFO);
                       this.tryPick(callStream, callMetadata, callConfig, dynamicFilters);
                     } else {
-                      this.trace("Failed to start call on picked subchanel " + pickResult.subchannel.getAddress() + " with error " + error4.message + ". Ending call", constants_1.LogVerbosity.INFO);
-                      callStream.cancelWithStatus(constants_1.Status.INTERNAL, `Failed to start HTTP/2 stream with error: ${error4.message}`);
+                      this.trace("Failed to start call on picked subchanel " + pickResult.subchannel.getAddress() + " with error " + error3.message + ". Ending call", constants_1.LogVerbosity.INFO);
+                      callStream.cancelWithStatus(constants_1.Status.INTERNAL, `Failed to start HTTP/2 stream with error: ${error3.message}`);
                     }
                   }
                 } else {
                   this.trace("Picked subchannel " + pickResult.subchannel.getAddress() + " has state " + connectivity_state_1.ConnectivityState[subchannelState] + " after metadata filters. Retrying pick", constants_1.LogVerbosity.INFO);
                   this.tryPick(callStream, callMetadata, callConfig, dynamicFilters);
                 }
-              }, (error4) => {
-                callStream.cancelWithStatus(typeof error4.code === "number" ? error4.code : constants_1.Status.UNKNOWN, `Getting metadata from plugin failed with error: ${error4.message}`);
+              }, (error3) => {
+                callStream.cancelWithStatus(typeof error3.code === "number" ? error3.code : constants_1.Status.UNKNOWN, `Getting metadata from plugin failed with error: ${error3.message}`);
               });
             }
             break;
@@ -100246,16 +100246,16 @@ var require_server_call = __commonJS({
           this.stream.end();
         }
       }
-      sendError(error4) {
+      sendError(error3) {
         const status = {
           code: constants_1.Status.UNKNOWN,
-          details: "message" in error4 ? error4.message : "Unknown Error",
-          metadata: "metadata" in error4 && error4.metadata !== void 0 ? error4.metadata : new metadata_1.Metadata()
+          details: "message" in error3 ? error3.message : "Unknown Error",
+          metadata: "metadata" in error3 && error3.metadata !== void 0 ? error3.metadata : new metadata_1.Metadata()
         };
-        if ("code" in error4 && typeof error4.code === "number" && Number.isInteger(error4.code)) {
-          status.code = error4.code;
-          if ("details" in error4 && typeof error4.details === "string") {
-            status.details = error4.details;
+        if ("code" in error3 && typeof error3.code === "number" && Number.isInteger(error3.code)) {
+          status.code = error3.code;
+          if ("details" in error3 && typeof error3.details === "string") {
+            status.details = error3.details;
           }
         }
         this.sendStatus(status);
@@ -100343,12 +100343,12 @@ var require_server_call = __commonJS({
           } else {
             this.messagesToPush.push(deserialized);
           }
-        } catch (error4) {
+        } catch (error3) {
           this.bufferedMessages.length = 0;
-          if (!("code" in error4 && typeof error4.code === "number" && Number.isInteger(error4.code) && error4.code >= constants_1.Status.OK && error4.code <= constants_1.Status.UNAUTHENTICATED)) {
-            error4.code = constants_1.Status.INTERNAL;
+          if (!("code" in error3 && typeof error3.code === "number" && Number.isInteger(error3.code) && error3.code >= constants_1.Status.OK && error3.code <= constants_1.Status.UNAUTHENTICATED)) {
+            error3.code = constants_1.Status.INTERNAL;
           }
-          readable2.emit("error", error4);
+          readable2.emit("error", error3);
         }
         this.isPushPending = false;
         if (this.bufferedMessages.length > 0) {
@@ -100671,8 +100671,8 @@ var require_server = __commonJS({
             maxConcurrentStreams: this.options["grpc.max_concurrent_streams"]
           };
         }
-        const deferredCallback = (error4, port2) => {
-          process.nextTick(() => callback(error4, port2));
+        const deferredCallback = (error3, port2) => {
+          process.nextTick(() => callback(error3, port2));
         };
         const setupServer = () => {
           let http2Server;
@@ -100839,14 +100839,14 @@ var require_server = __commonJS({
                 }
                 deferredCallback(null, bindResult.port);
               }
-            }, (error4) => {
+            }, (error3) => {
               const errorString = `No address added out of total ${addressList.length} resolved`;
               logging.log(constants_1.LogVerbosity.ERROR, errorString);
               deferredCallback(new Error(errorString), 0);
             });
           },
-          onError: (error4) => {
-            deferredCallback(new Error(error4.details), 0);
+          onError: (error3) => {
+            deferredCallback(new Error(error3.details), 0);
           }
         };
         const resolver = resolver_1.createResolver(portUri, resolverListener, this.options);
@@ -100897,9 +100897,9 @@ var require_server = __commonJS({
         this.started = true;
       }
       tryShutdown(callback) {
-        const wrappedCallback = (error4) => {
+        const wrappedCallback = (error3) => {
           channelz_1.unregisterChannelzRef(this.channelzRef);
-          callback(error4);
+          callback(error3);
         };
         let pendingChecks = 0;
         function maybeCallback() {
@@ -104220,9 +104220,9 @@ function newMemoryRemoteDocumentCache(indexManager, sizer) {
 }
 function nodePromise(action) {
   return new Promise((resolve3, reject) => {
-    action((error4, value) => {
-      if (error4) {
-        reject(error4);
+    action((error3, value) => {
+      if (error3) {
+        reject(error3);
       } else {
         resolve3(value);
       }
@@ -104356,10 +104356,10 @@ async function onWatchStreamOpen(remoteStoreImpl) {
     sendWatchRequest(remoteStoreImpl, targetData);
   });
 }
-async function onWatchStreamClose(remoteStoreImpl, error4) {
+async function onWatchStreamClose(remoteStoreImpl, error3) {
   cleanUpWatchStreamState(remoteStoreImpl);
   if (shouldStartWatchStream(remoteStoreImpl)) {
-    remoteStoreImpl.onlineStateTracker.handleWatchStreamFailure(error4);
+    remoteStoreImpl.onlineStateTracker.handleWatchStreamFailure(error3);
     startWatchStream(remoteStoreImpl);
   } else {
     remoteStoreImpl.onlineStateTracker.set("Unknown");
@@ -104439,10 +104439,10 @@ function raiseWatchSnapshot(remoteStoreImpl, snapshotVersion) {
   return remoteStoreImpl.remoteSyncer.applyRemoteEvent(remoteEvent);
 }
 async function handleTargetError(remoteStoreImpl, watchChange) {
-  const error4 = watchChange.cause;
+  const error3 = watchChange.cause;
   for (const targetId of watchChange.targetIds) {
     if (remoteStoreImpl.listenTargets.has(targetId)) {
-      await remoteStoreImpl.remoteSyncer.rejectListen(targetId, error4);
+      await remoteStoreImpl.remoteSyncer.rejectListen(targetId, error3);
       remoteStoreImpl.listenTargets.delete(targetId);
       remoteStoreImpl.watchChangeAggregator.removeTarget(targetId);
     }
@@ -104503,19 +104503,19 @@ async function onMutationResult(remoteStoreImpl, commitVersion, results) {
   await executeWithRecovery(remoteStoreImpl, () => remoteStoreImpl.remoteSyncer.applySuccessfulWrite(success));
   await fillWritePipeline(remoteStoreImpl);
 }
-async function onWriteStreamClose(remoteStoreImpl, error4) {
-  if (error4 && ensureWriteStream(remoteStoreImpl).handshakeComplete) {
-    await handleWriteError(remoteStoreImpl, error4);
+async function onWriteStreamClose(remoteStoreImpl, error3) {
+  if (error3 && ensureWriteStream(remoteStoreImpl).handshakeComplete) {
+    await handleWriteError(remoteStoreImpl, error3);
   }
   if (shouldStartWriteStream(remoteStoreImpl)) {
     startWriteStream(remoteStoreImpl);
   }
 }
-async function handleWriteError(remoteStoreImpl, error4) {
-  if (isPermanentWriteError(error4.code)) {
+async function handleWriteError(remoteStoreImpl, error3) {
+  if (isPermanentWriteError(error3.code)) {
     const batch = remoteStoreImpl.writePipeline.shift();
     ensureWriteStream(remoteStoreImpl).inhibitBackoff();
-    await executeWithRecovery(remoteStoreImpl, () => remoteStoreImpl.remoteSyncer.rejectFailedWrite(batch.batchId, error4));
+    await executeWithRecovery(remoteStoreImpl, () => remoteStoreImpl.remoteSyncer.rejectFailedWrite(batch.batchId, error3));
     await fillWritePipeline(remoteStoreImpl);
   }
 }
@@ -104673,12 +104673,12 @@ function eventManagerOnWatchChange(eventManager, viewSnaps) {
     raiseSnapshotsInSyncEvent(eventManagerImpl);
   }
 }
-function eventManagerOnWatchError(eventManager, query2, error4) {
+function eventManagerOnWatchError(eventManager, query2, error3) {
   const eventManagerImpl = debugCast(eventManager);
   const queryInfo = eventManagerImpl.queries.get(query2);
   if (queryInfo) {
     for (const listener of queryInfo.listeners) {
-      listener.onError(error4);
+      listener.onError(error3);
     }
   }
   eventManagerImpl.queries.delete(query2);
@@ -104797,8 +104797,8 @@ async function syncEngineWrite(syncEngine, batch, userCallback) {
     await syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, result.changes);
     await fillWritePipeline(syncEngineImpl.remoteStore);
   } catch (e) {
-    const error4 = wrapInUserErrorIfRecoverable(e, `Failed to persist write`);
-    userCallback.reject(error4);
+    const error3 = wrapInUserErrorIfRecoverable(e, `Failed to persist write`);
+    userCallback.reject(error3);
   }
 }
 async function syncEngineApplyRemoteEvent(syncEngine, remoteEvent) {
@@ -104821,8 +104821,8 @@ async function syncEngineApplyRemoteEvent(syncEngine, remoteEvent) {
       }
     });
     await syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, changes, remoteEvent);
-  } catch (error4) {
-    await ignoreIfPrimaryLeaseLoss(error4);
+  } catch (error3) {
+    await ignoreIfPrimaryLeaseLoss(error3);
   }
 }
 function syncEngineApplyOnlineStateChange(syncEngine, onlineState, source) {
@@ -104872,20 +104872,20 @@ async function syncEngineApplySuccessfulWrite(syncEngine, mutationBatchResult) {
     triggerPendingWritesCallbacks(syncEngineImpl, batchId);
     syncEngineImpl.sharedClientState.updateMutationState(batchId, "acknowledged");
     await syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, changes);
-  } catch (error4) {
-    await ignoreIfPrimaryLeaseLoss(error4);
+  } catch (error3) {
+    await ignoreIfPrimaryLeaseLoss(error3);
   }
 }
-async function syncEngineRejectFailedWrite(syncEngine, batchId, error4) {
+async function syncEngineRejectFailedWrite(syncEngine, batchId, error3) {
   const syncEngineImpl = debugCast(syncEngine);
   try {
     const changes = await localStoreRejectBatch(syncEngineImpl.localStore, batchId);
-    processUserCallback(syncEngineImpl, batchId, error4);
+    processUserCallback(syncEngineImpl, batchId, error3);
     triggerPendingWritesCallbacks(syncEngineImpl, batchId);
-    syncEngineImpl.sharedClientState.updateMutationState(batchId, "rejected", error4);
+    syncEngineImpl.sharedClientState.updateMutationState(batchId, "rejected", error3);
     await syncEngineEmitNewSnapsAndNotifyLocalStore(syncEngineImpl, changes);
-  } catch (error5) {
-    await ignoreIfPrimaryLeaseLoss(error5);
+  } catch (error4) {
+    await ignoreIfPrimaryLeaseLoss(error4);
   }
 }
 function triggerPendingWritesCallbacks(syncEngineImpl, batchId) {
@@ -104910,14 +104910,14 @@ function addMutationCallback(syncEngineImpl, batchId, callback) {
   newCallbacks = newCallbacks.insert(batchId, callback);
   syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()] = newCallbacks;
 }
-function processUserCallback(syncEngine, batchId, error4) {
+function processUserCallback(syncEngine, batchId, error3) {
   const syncEngineImpl = debugCast(syncEngine);
   let newCallbacks = syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()];
   if (newCallbacks) {
     const callback = newCallbacks.get(batchId);
     if (callback) {
-      if (error4) {
-        callback.reject(error4);
+      if (error3) {
+        callback.reject(error3);
       } else {
         callback.resolve();
       }
@@ -104926,12 +104926,12 @@ function processUserCallback(syncEngine, batchId, error4) {
     syncEngineImpl.mutationUserCallbacks[syncEngineImpl.currentUser.toKey()] = newCallbacks;
   }
 }
-function removeAndCleanupTarget(syncEngineImpl, targetId, error4 = null) {
+function removeAndCleanupTarget(syncEngineImpl, targetId, error3 = null) {
   syncEngineImpl.sharedClientState.removeLocalQueryTarget(targetId);
   for (const query2 of syncEngineImpl.queriesByTarget.get(targetId)) {
     syncEngineImpl.queryViewsByQuery.delete(query2);
-    if (error4) {
-      syncEngineImpl.syncEngineListener.onWatchError(query2, error4);
+    if (error3) {
+      syncEngineImpl.syncEngineListener.onWatchError(query2, error3);
     }
   }
   syncEngineImpl.queriesByTarget.delete(targetId);
@@ -105327,13 +105327,13 @@ function doc(parent2, path, ...pathSegments) {
 function newAsyncQueue() {
   return new AsyncQueueImpl();
 }
-function getMessageOrStack(error4) {
-  let message2 = error4.message || "";
-  if (error4.stack) {
-    if (error4.stack.includes(error4.message)) {
-      message2 = error4.stack;
+function getMessageOrStack(error3) {
+  let message2 = error3.message || "";
+  if (error3.stack) {
+    if (error3.stack.includes(error3.message)) {
+      message2 = error3.stack;
     } else {
-      message2 = error4.message + "\n" + error4.stack;
+      message2 = error3.message + "\n" + error3.stack;
     }
   }
   return message2;
@@ -105385,19 +105385,19 @@ function newUserDataReader(firestore) {
   return new UserDataReader(firestore._databaseId, !!settings.ignoreUndefinedProperties, serializer);
 }
 function parseSetData(userDataReader, methodName, targetDoc, input, hasConverter, options2 = {}) {
-  const context2 = userDataReader.createContext(options2.merge || options2.mergeFields ? 2 : 0, methodName, targetDoc, hasConverter);
-  validatePlainObject("Data must be an object, but it was:", context2, input);
-  const updateData = parseObject(input, context2);
+  const context = userDataReader.createContext(options2.merge || options2.mergeFields ? 2 : 0, methodName, targetDoc, hasConverter);
+  validatePlainObject("Data must be an object, but it was:", context, input);
+  const updateData = parseObject(input, context);
   let fieldMask;
   let fieldTransforms;
   if (options2.merge) {
-    fieldMask = new FieldMask(context2.fieldMask);
-    fieldTransforms = context2.fieldTransforms;
+    fieldMask = new FieldMask(context.fieldMask);
+    fieldTransforms = context.fieldTransforms;
   } else if (options2.mergeFields) {
     const validatedFieldPaths = [];
     for (const stringOrFieldPath of options2.mergeFields) {
       const fieldPath = fieldPathFromArgument$1(methodName, stringOrFieldPath, targetDoc);
-      if (!context2.contains(fieldPath)) {
+      if (!context.contains(fieldPath)) {
         throw new FirestoreError(Code.INVALID_ARGUMENT, `Field '${fieldPath}' is specified in your field mask but missing from your input data.`);
       }
       if (!fieldMaskContains(validatedFieldPaths, fieldPath)) {
@@ -105405,22 +105405,22 @@ function parseSetData(userDataReader, methodName, targetDoc, input, hasConverter
       }
     }
     fieldMask = new FieldMask(validatedFieldPaths);
-    fieldTransforms = context2.fieldTransforms.filter((transform) => fieldMask.covers(transform.field));
+    fieldTransforms = context.fieldTransforms.filter((transform) => fieldMask.covers(transform.field));
   } else {
     fieldMask = null;
-    fieldTransforms = context2.fieldTransforms;
+    fieldTransforms = context.fieldTransforms;
   }
   return new ParsedSetData(new ObjectValue(updateData), fieldMask, fieldTransforms);
 }
 function parseUpdateData(userDataReader, methodName, targetDoc, input) {
-  const context2 = userDataReader.createContext(1, methodName, targetDoc);
-  validatePlainObject("Data must be an object, but it was:", context2, input);
+  const context = userDataReader.createContext(1, methodName, targetDoc);
+  validatePlainObject("Data must be an object, but it was:", context, input);
   const fieldMaskPaths = [];
   const updateData = ObjectValue.empty();
   forEach(input, (key, value) => {
     const path = fieldPathFromDotSeparatedString(methodName, key, targetDoc);
     value = getModularInstance2(value);
-    const childContext = context2.childContextForFieldPath(path);
+    const childContext = context.childContextForFieldPath(path);
     if (value instanceof DeleteFieldValueImpl) {
       fieldMaskPaths.push(path);
     } else {
@@ -105432,10 +105432,10 @@ function parseUpdateData(userDataReader, methodName, targetDoc, input) {
     }
   });
   const mask = new FieldMask(fieldMaskPaths);
-  return new ParsedUpdateData(updateData, mask, context2.fieldTransforms);
+  return new ParsedUpdateData(updateData, mask, context.fieldTransforms);
 }
 function parseUpdateVarargs(userDataReader, methodName, targetDoc, field, value, moreFieldsAndValues) {
-  const context2 = userDataReader.createContext(1, methodName, targetDoc);
+  const context = userDataReader.createContext(1, methodName, targetDoc);
   const keys = [fieldPathFromArgument$1(methodName, field, targetDoc)];
   const values = [value];
   if (moreFieldsAndValues.length % 2 !== 0) {
@@ -105452,7 +105452,7 @@ function parseUpdateVarargs(userDataReader, methodName, targetDoc, field, value,
       const path = keys[i];
       let value2 = values[i];
       value2 = getModularInstance2(value2);
-      const childContext = context2.childContextForFieldPath(path);
+      const childContext = context.childContextForFieldPath(path);
       if (value2 instanceof DeleteFieldValueImpl) {
         fieldMaskPaths.push(path);
       } else {
@@ -105465,41 +105465,41 @@ function parseUpdateVarargs(userDataReader, methodName, targetDoc, field, value,
     }
   }
   const mask = new FieldMask(fieldMaskPaths);
-  return new ParsedUpdateData(updateData, mask, context2.fieldTransforms);
+  return new ParsedUpdateData(updateData, mask, context.fieldTransforms);
 }
-function parseData(input, context2) {
+function parseData(input, context) {
   input = getModularInstance2(input);
   if (looksLikeJsonObject(input)) {
-    validatePlainObject("Unsupported field value:", context2, input);
-    return parseObject(input, context2);
+    validatePlainObject("Unsupported field value:", context, input);
+    return parseObject(input, context);
   } else if (input instanceof FieldValue) {
-    parseSentinelFieldValue(input, context2);
+    parseSentinelFieldValue(input, context);
     return null;
-  } else if (input === void 0 && context2.ignoreUndefinedProperties) {
+  } else if (input === void 0 && context.ignoreUndefinedProperties) {
     return null;
   } else {
-    if (context2.path) {
-      context2.fieldMask.push(context2.path);
+    if (context.path) {
+      context.fieldMask.push(context.path);
     }
     if (input instanceof Array) {
-      if (context2.settings.arrayElement && context2.dataSource !== 4) {
-        throw context2.createError("Nested arrays are not supported");
+      if (context.settings.arrayElement && context.dataSource !== 4) {
+        throw context.createError("Nested arrays are not supported");
       }
-      return parseArray(input, context2);
+      return parseArray(input, context);
     } else {
-      return parseScalarValue(input, context2);
+      return parseScalarValue(input, context);
     }
   }
 }
-function parseObject(obj, context2) {
+function parseObject(obj, context) {
   const fields = {};
   if (isEmpty2(obj)) {
-    if (context2.path && context2.path.length > 0) {
-      context2.fieldMask.push(context2.path);
+    if (context.path && context.path.length > 0) {
+      context.fieldMask.push(context.path);
     }
   } else {
     forEach(obj, (key, val) => {
-      const parsedValue = parseData(val, context2.childContextForField(key));
+      const parsedValue = parseData(val, context.childContextForField(key));
       if (parsedValue != null) {
         fields[key] = parsedValue;
       }
@@ -105507,11 +105507,11 @@ function parseObject(obj, context2) {
   }
   return { mapValue: { fields } };
 }
-function parseArray(array, context2) {
+function parseArray(array, context) {
   const values = [];
   let entryIndex = 0;
   for (const entry of array) {
-    let parsedEntry = parseData(entry, context2.childContextForArray(entryIndex));
+    let parsedEntry = parseData(entry, context.childContextForArray(entryIndex));
     if (parsedEntry == null) {
       parsedEntry = { nullValue: "NULL_VALUE" };
     }
@@ -105520,24 +105520,24 @@ function parseArray(array, context2) {
   }
   return { arrayValue: { values } };
 }
-function parseSentinelFieldValue(value, context2) {
-  if (!isWrite(context2.dataSource)) {
-    throw context2.createError(`${value._methodName}() can only be used with update() and set()`);
+function parseSentinelFieldValue(value, context) {
+  if (!isWrite(context.dataSource)) {
+    throw context.createError(`${value._methodName}() can only be used with update() and set()`);
   }
-  if (!context2.path) {
-    throw context2.createError(`${value._methodName}() is not currently supported inside arrays`);
+  if (!context.path) {
+    throw context.createError(`${value._methodName}() is not currently supported inside arrays`);
   }
-  const fieldTransform = value._toFieldTransform(context2);
+  const fieldTransform = value._toFieldTransform(context);
   if (fieldTransform) {
-    context2.fieldTransforms.push(fieldTransform);
+    context.fieldTransforms.push(fieldTransform);
   }
 }
-function parseScalarValue(value, context2) {
+function parseScalarValue(value, context) {
   value = getModularInstance2(value);
   if (value === null) {
     return { nullValue: "NULL_VALUE" };
   } else if (typeof value === "number") {
-    return toNumber(context2.serializer, value);
+    return toNumber(context.serializer, value);
   } else if (typeof value === "boolean") {
     return { booleanValue: value };
   } else if (typeof value === "string") {
@@ -105545,12 +105545,12 @@ function parseScalarValue(value, context2) {
   } else if (value instanceof Date) {
     const timestamp = Timestamp.fromDate(value);
     return {
-      timestampValue: toTimestamp(context2.serializer, timestamp)
+      timestampValue: toTimestamp(context.serializer, timestamp)
     };
   } else if (value instanceof Timestamp) {
     const timestamp = new Timestamp(value.seconds, Math.floor(value.nanoseconds / 1e3) * 1e3);
     return {
-      timestampValue: toTimestamp(context2.serializer, timestamp)
+      timestampValue: toTimestamp(context.serializer, timestamp)
     };
   } else if (value instanceof GeoPoint) {
     return {
@@ -105560,30 +105560,30 @@ function parseScalarValue(value, context2) {
       }
     };
   } else if (value instanceof Bytes) {
-    return { bytesValue: toBytes(context2.serializer, value._byteString) };
+    return { bytesValue: toBytes(context.serializer, value._byteString) };
   } else if (value instanceof DocumentReference) {
-    const thisDb = context2.databaseId;
+    const thisDb = context.databaseId;
     const otherDb = value.firestore._databaseId;
     if (!otherDb.isEqual(thisDb)) {
-      throw context2.createError(`Document reference is for database ${otherDb.projectId}/${otherDb.database} but should be for database ${thisDb.projectId}/${thisDb.database}`);
+      throw context.createError(`Document reference is for database ${otherDb.projectId}/${otherDb.database} but should be for database ${thisDb.projectId}/${thisDb.database}`);
     }
     return {
-      referenceValue: toResourceName(value.firestore._databaseId || context2.databaseId, value._key.path)
+      referenceValue: toResourceName(value.firestore._databaseId || context.databaseId, value._key.path)
     };
   } else {
-    throw context2.createError(`Unsupported field value: ${valueDescription(value)}`);
+    throw context.createError(`Unsupported field value: ${valueDescription(value)}`);
   }
 }
 function looksLikeJsonObject(input) {
   return typeof input === "object" && input !== null && !(input instanceof Array) && !(input instanceof Date) && !(input instanceof Timestamp) && !(input instanceof GeoPoint) && !(input instanceof Bytes) && !(input instanceof DocumentReference) && !(input instanceof FieldValue);
 }
-function validatePlainObject(message2, context2, input) {
+function validatePlainObject(message2, context, input) {
   if (!looksLikeJsonObject(input) || !isPlainObject(input)) {
     const description = valueDescription(input);
     if (description === "an object") {
-      throw context2.createError(message2 + " a custom object");
+      throw context.createError(message2 + " a custom object");
     } else {
-      throw context2.createError(message2 + " " + description);
+      throw context.createError(message2 + " " + description);
     }
   }
 }
@@ -106514,11 +106514,11 @@ var init_index_node = __esm({
           if (this.nextCallback) {
             this.nextCallback(value);
           }
-        }, (error4) => {
+        }, (error3) => {
           this.isDone = true;
-          this.error = error4;
+          this.error = error3;
           if (this.catchCallback) {
-            this.catchCallback(error4);
+            this.catchCallback(error3);
           }
         });
       }
@@ -106541,8 +106541,8 @@ var init_index_node = __esm({
             this.nextCallback = (value) => {
               this.wrapSuccess(nextFn, value).next(resolve3, reject);
             };
-            this.catchCallback = (error4) => {
-              this.wrapFailure(catchFn, error4).next(resolve3, reject);
+            this.catchCallback = (error3) => {
+              this.wrapFailure(catchFn, error3).next(resolve3, reject);
             };
           });
         }
@@ -106571,11 +106571,11 @@ var init_index_node = __esm({
           return PersistencePromise.resolve(value);
         }
       }
-      wrapFailure(catchFn, error4) {
+      wrapFailure(catchFn, error3) {
         if (catchFn) {
-          return this.wrapUserFunction(() => catchFn(error4));
+          return this.wrapUserFunction(() => catchFn(error3));
         } else {
-          return PersistencePromise.reject(error4);
+          return PersistencePromise.reject(error3);
         }
       }
       static resolve(result) {
@@ -106583,9 +106583,9 @@ var init_index_node = __esm({
           resolve3(result);
         });
       }
-      static reject(error4) {
+      static reject(error3) {
         return new PersistencePromise((resolve3, reject) => {
-          reject(error4);
+          reject(error3);
         });
       }
       static waitFor(all) {
@@ -109175,13 +109175,13 @@ var init_index_node = __esm({
       }
       addPendingMutation(batchId) {
       }
-      updateMutationState(batchId, state, error4) {
+      updateMutationState(batchId, state, error3) {
       }
       addLocalQueryTarget(targetId) {
         this.localState.addQueryTarget(targetId);
         return this.queryState[targetId] || "not-current";
       }
-      updateQueryState(targetId, state, error4) {
+      updateQueryState(targetId, state, error3) {
         this.queryState[targetId] = state;
       }
       removeLocalQueryTarget(targetId) {
@@ -109497,18 +109497,18 @@ var init_index_node = __esm({
           this.healthCheck = null;
         }
       }
-      async close(finalState, error4) {
+      async close(finalState, error3) {
         this.cancelIdleCheck();
         this.cancelHealthCheck();
         this.backoff.cancel();
         this.closeCount++;
         if (finalState !== 4) {
           this.backoff.reset();
-        } else if (error4 && error4.code === Code.RESOURCE_EXHAUSTED) {
-          logError(error4.toString());
+        } else if (error3 && error3.code === Code.RESOURCE_EXHAUSTED) {
+          logError(error3.toString());
           logError("Using maximum backoff delay to prevent overloading the backend.");
           this.backoff.resetToMax();
-        } else if (error4 && error4.code === Code.UNAUTHENTICATED && this.state !== 3) {
+        } else if (error3 && error3.code === Code.UNAUTHENTICATED && this.state !== 3) {
           this.credentialsProvider.invalidateToken();
         }
         if (this.stream !== null) {
@@ -109517,7 +109517,7 @@ var init_index_node = __esm({
           this.stream = null;
         }
         this.state = finalState;
-        await this.listener.onClose(error4);
+        await this.listener.onClose(error3);
       }
       tearDown() {
       }
@@ -109529,9 +109529,9 @@ var init_index_node = __esm({
           if (this.closeCount === closeCount) {
             this.startStream(token);
           }
-        }, (error4) => {
+        }, (error3) => {
           dispatchIfNotClosed(() => {
-            const rpcError = new FirestoreError(Code.UNKNOWN, "Fetching auth token failed: " + error4.message);
+            const rpcError = new FirestoreError(Code.UNKNOWN, "Fetching auth token failed: " + error3.message);
             return this.handleStreamClose(rpcError);
           });
         });
@@ -109551,9 +109551,9 @@ var init_index_node = __esm({
             return this.listener.onOpen();
           });
         });
-        this.stream.onClose((error4) => {
+        this.stream.onClose((error3) => {
           dispatchIfNotClosed(() => {
-            return this.handleStreamClose(error4);
+            return this.handleStreamClose(error3);
           });
         });
         this.stream.onMessage((msg) => {
@@ -109569,10 +109569,10 @@ var init_index_node = __esm({
           this.start();
         });
       }
-      handleStreamClose(error4) {
-        logDebug(LOG_TAG$7, `close with error: ${error4}`);
+      handleStreamClose(error3) {
+        logDebug(LOG_TAG$7, `close with error: ${error3}`);
         this.stream = null;
-        return this.close(4, error4);
+        return this.close(4, error3);
       }
       getCloseGuardedDispatcher(startCloseCount) {
         return (fn) => {
@@ -109686,14 +109686,14 @@ var init_index_node = __esm({
         this.verifyInitialized();
         return this.credentials.getToken().then((token) => {
           return this.connection.invokeRPC(rpcName, path, request, token);
-        }).catch((error4) => {
-          if (error4.name === "FirebaseError") {
-            if (error4.code === Code.UNAUTHENTICATED) {
+        }).catch((error3) => {
+          if (error3.name === "FirebaseError") {
+            if (error3.code === Code.UNAUTHENTICATED) {
               this.credentials.invalidateToken();
             }
-            throw error4;
+            throw error3;
           } else {
-            throw new FirestoreError(Code.UNKNOWN, error4.toString());
+            throw new FirestoreError(Code.UNKNOWN, error3.toString());
           }
         });
       }
@@ -109701,14 +109701,14 @@ var init_index_node = __esm({
         this.verifyInitialized();
         return this.credentials.getToken().then((token) => {
           return this.connection.invokeStreamingRPC(rpcName, path, request, token);
-        }).catch((error4) => {
-          if (error4.name === "FirebaseError") {
-            if (error4.code === Code.UNAUTHENTICATED) {
+        }).catch((error3) => {
+          if (error3.name === "FirebaseError") {
+            if (error3.code === Code.UNAUTHENTICATED) {
               this.credentials.invalidateToken();
             }
-            throw error4;
+            throw error3;
           } else {
-            throw new FirestoreError(Code.UNKNOWN, error4.toString());
+            throw new FirestoreError(Code.UNKNOWN, error3.toString());
           }
         });
       }
@@ -109739,14 +109739,14 @@ var init_index_node = __esm({
           });
         }
       }
-      handleWatchStreamFailure(error4) {
+      handleWatchStreamFailure(error3) {
         if (this.state === "Online") {
           this.setAndBroadcast("Unknown");
         } else {
           this.watchStreamFailures++;
           if (this.watchStreamFailures >= MAX_WATCH_STREAM_FAILURES) {
             this.clearOnlineStateTimer();
-            this.logClientOfflineWarningIfNecessary(`Connection failed ${MAX_WATCH_STREAM_FAILURES} times. Most recent error: ${error4.toString()}`);
+            this.logClientOfflineWarningIfNecessary(`Connection failed ${MAX_WATCH_STREAM_FAILURES} times. Most recent error: ${error3.toString()}`);
             this.setAndBroadcast("Offline");
           }
         }
@@ -110081,8 +110081,8 @@ This typically indicates that your device does not have a healthy Internet conne
         this.snap = snap;
         return raisedEvent;
       }
-      onError(error4) {
-        this.queryObserver.error(error4);
+      onError(error3) {
+        this.queryObserver.error(error3);
       }
       applyOnlineStateChange(onlineState) {
         this.onlineState = onlineState;
@@ -110445,11 +110445,11 @@ This typically indicates that your device does not have a healthy Internet conne
           this.scheduleEvent(this.observer.next, value);
         }
       }
-      error(error4) {
+      error(error3) {
         if (this.observer.error) {
-          this.scheduleEvent(this.observer.error, error4);
+          this.scheduleEvent(this.observer.error, error3);
         } else {
-          console.error("Uncaught Error in snapshot listener:", error4);
+          console.error("Uncaught Error in snapshot listener:", error3);
         }
       }
       mute() {
@@ -110775,12 +110775,12 @@ This typically indicates that your device does not have a healthy Internet conne
       enqueueInternal(op) {
         const newTail = this.tail.then(() => {
           this.operationInProgress = true;
-          return op().catch((error4) => {
-            this.failure = error4;
+          return op().catch((error3) => {
+            this.failure = error3;
             this.operationInProgress = false;
-            const message2 = getMessageOrStack(error4);
+            const message2 = getMessageOrStack(error3);
             logError("INTERNAL UNHANDLED ERROR: ", message2);
-            throw error4;
+            throw error3;
           }).then((result) => {
             this.operationInProgress = false;
             return result;
@@ -110975,16 +110975,16 @@ This typically indicates that your device does not have a healthy Internet conne
       childContextForField(field) {
         var _a;
         const childPath = (_a = this.path) === null || _a === void 0 ? void 0 : _a.child(field);
-        const context2 = this.contextWith({ path: childPath, arrayElement: false });
-        context2.validatePathSegment(field);
-        return context2;
+        const context = this.contextWith({ path: childPath, arrayElement: false });
+        context.validatePathSegment(field);
+        return context;
       }
       childContextForFieldPath(field) {
         var _a;
         const childPath = (_a = this.path) === null || _a === void 0 ? void 0 : _a.child(field);
-        const context2 = this.contextWith({ path: childPath, arrayElement: false });
-        context2.validatePath();
-        return context2;
+        const context = this.contextWith({ path: childPath, arrayElement: false });
+        context.validatePath();
+        return context;
       }
       childContextForArray(index) {
         return this.contextWith({ path: void 0, arrayElement: true });
@@ -111030,13 +111030,13 @@ This typically indicates that your device does not have a healthy Internet conne
       }
     };
     DeleteFieldValueImpl = class extends FieldValue {
-      _toFieldTransform(context2) {
-        if (context2.dataSource === 2) {
-          context2.fieldMask.push(context2.path);
-        } else if (context2.dataSource === 1) {
-          throw context2.createError(`${this._methodName}() can only appear at the top level of your update data`);
+      _toFieldTransform(context) {
+        if (context.dataSource === 2) {
+          context.fieldMask.push(context.path);
+        } else if (context.dataSource === 1) {
+          throw context.createError(`${this._methodName}() can only appear at the top level of your update data`);
         } else {
-          throw context2.createError(`${this._methodName}() cannot be used with set() unless you pass {merge:true}`);
+          throw context.createError(`${this._methodName}() cannot be used with set() unless you pass {merge:true}`);
         }
         return null;
       }
@@ -111045,8 +111045,8 @@ This typically indicates that your device does not have a healthy Internet conne
       }
     };
     ServerTimestampFieldValueImpl = class extends FieldValue {
-      _toFieldTransform(context2) {
-        return new FieldTransform(context2.path, new ServerTimestampTransform());
+      _toFieldTransform(context) {
+        return new FieldTransform(context.path, new ServerTimestampTransform());
       }
       isEqual(other) {
         return other instanceof ServerTimestampFieldValueImpl;
@@ -111326,18 +111326,18 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-7b12bb57.js
-var layout_7b12bb57_exports = {};
-__export(layout_7b12bb57_exports, {
+// .svelte-kit/output/server/chunks/__layout-5356071c.js
+var layout_5356071c_exports = {};
+__export(layout_5356071c_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_7b12bb57 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-7b12bb57.js"() {
+var init_layout_5356071c = __esm({
+  ".svelte-kit/output/server/chunks/__layout-5356071c.js"() {
     init_shims();
-    init_app_60dba192();
-    init_index_c327074d_3deb0f8c();
-    init_store_074fb7e7();
+    init_app_b0873259();
+    init_index_c327074d_040214c6();
+    init_store_60722d3a();
     init_index_node();
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -111358,42 +111358,42 @@ var init_layout_7b12bb57 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-8f94f63c.js
-var error_8f94f63c_exports = {};
-__export(error_8f94f63c_exports, {
+// .svelte-kit/output/server/chunks/error-c6702a15.js
+var error_c6702a15_exports = {};
+__export(error_c6702a15_exports, {
   default: () => Error2,
   load: () => load
 });
-function load({ error: error4, status }) {
-  return { props: { error: error4, status } };
+function load({ error: error3, status }) {
+  return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_8f94f63c = __esm({
-  ".svelte-kit/output/server/chunks/error-8f94f63c.js"() {
+var init_error_c6702a15 = __esm({
+  ".svelte-kit/output/server/chunks/error-c6702a15.js"() {
     init_shims();
-    init_app_60dba192();
+    init_app_b0873259();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { status } = $$props;
-      let { error: error4 } = $$props;
+      let { error: error3 } = $$props;
       if ($$props.status === void 0 && $$bindings.status && status !== void 0)
         $$bindings.status(status);
-      if ($$props.error === void 0 && $$bindings.error && error4 !== void 0)
-        $$bindings.error(error4);
+      if ($$props.error === void 0 && $$bindings.error && error3 !== void 0)
+        $$bindings.error(error3);
       return `<h1>${escape(status)}</h1>
 
-<pre>${escape(error4.message)}</pre>
+<pre>${escape(error3.message)}</pre>
 
 
 
-${error4.frame ? `<pre>${escape(error4.frame)}</pre>` : ``}
-${error4.stack ? `<pre>${escape(error4.stack)}</pre>` : ``}`;
+${error3.frame ? `<pre>${escape(error3.frame)}</pre>` : ``}
+${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/classAdderBuilder-af57cfdf.js
+// .svelte-kit/output/server/chunks/classAdderBuilder-cd0d0327.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name7, value]) => name7 !== "" && value).map(([name7]) => name7).join(" ");
 }
@@ -111755,11 +111755,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, internals, ClassAdder, defaults;
-var init_classAdderBuilder_af57cfdf = __esm({
-  ".svelte-kit/output/server/chunks/classAdderBuilder-af57cfdf.js"() {
+var init_classAdderBuilder_cd0d0327 = __esm({
+  ".svelte-kit/output/server/chunks/classAdderBuilder-cd0d0327.js"() {
     init_shims();
-    init_app_60dba192();
-    init_store_074fb7e7();
+    init_app_b0873259();
+    init_store_60722d3a();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112515,8 +112515,8 @@ var init_classAdderBuilder_af57cfdf = __esm({
       const contexts = internals.contexts;
       const props = internals.props;
       let { component = internals.component } = $$props;
-      Object.entries(internals.classMap).forEach(([name7, context2]) => {
-        const store2 = getContext(context2);
+      Object.entries(internals.classMap).forEach(([name7, context]) => {
+        const store2 = getContext(context);
         if (store2 && "subscribe" in store2) {
           smuiClassUnsubscribes.push(store2.subscribe((value) => {
             smuiClassMap[name7] = value;
@@ -112524,9 +112524,9 @@ var init_classAdderBuilder_af57cfdf = __esm({
         }
       });
       const forwardEvents = forwardEventsBuilder(get_current_component());
-      for (let context2 in contexts) {
-        if (contexts.hasOwnProperty(context2)) {
-          setContext(context2, contexts[context2]);
+      for (let context in contexts) {
+        if (contexts.hasOwnProperty(context)) {
+          setContext(context, contexts[context]);
         }
       }
       onDestroy(() => {
@@ -112570,194 +112570,19 @@ var init_classAdderBuilder_af57cfdf = __esm({
   }
 });
 
-// node_modules/audio-recorder-polyfill/wave-encoder/index.js
-var wave_encoder_default;
-var init_wave_encoder = __esm({
-  "node_modules/audio-recorder-polyfill/wave-encoder/index.js"() {
-    init_shims();
-    wave_encoder_default = () => {
-      let BYTES_PER_SAMPLE = 2;
-      let recorded = [];
-      function encode(buffer) {
-        let length = buffer.length;
-        let data = new Uint8Array(length * BYTES_PER_SAMPLE);
-        for (let i = 0; i < length; i++) {
-          let index = i * BYTES_PER_SAMPLE;
-          let sample = buffer[i];
-          if (sample > 1) {
-            sample = 1;
-          } else if (sample < -1) {
-            sample = -1;
-          }
-          sample = sample * 32768;
-          data[index] = sample;
-          data[index + 1] = sample >> 8;
-        }
-        recorded.push(data);
-      }
-      function dump(sampleRate) {
-        let bufferLength = recorded.length ? recorded[0].length : 0;
-        let length = recorded.length * bufferLength;
-        let wav = new Uint8Array(44 + length);
-        let view = new DataView(wav.buffer);
-        view.setUint32(0, 1380533830, false);
-        view.setUint32(4, 36 + length, true);
-        view.setUint32(8, 1463899717, false);
-        view.setUint32(12, 1718449184, false);
-        view.setUint32(16, 16, true);
-        view.setUint16(20, 1, true);
-        view.setUint16(22, 1, true);
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, sampleRate * BYTES_PER_SAMPLE, true);
-        view.setUint16(32, BYTES_PER_SAMPLE, true);
-        view.setUint16(34, 8 * BYTES_PER_SAMPLE, true);
-        view.setUint32(36, 1684108385, false);
-        view.setUint32(40, length, true);
-        for (let i = 0; i < recorded.length; i++) {
-          wav.set(recorded[i], i * bufferLength + 44);
-        }
-        recorded = [];
-        postMessage(wav.buffer, [wav.buffer]);
-      }
-      onmessage = (e) => {
-        if (e.data[0] === "encode") {
-          encode(e.data[1]);
-        } else if (e.data[0] === "dump") {
-          dump(e.data[1]);
-        }
-      };
-    };
-  }
-});
-
-// node_modules/audio-recorder-polyfill/index.js
-var AudioContext, createWorker, error, context, MediaRecorder2;
-var init_audio_recorder_polyfill = __esm({
-  "node_modules/audio-recorder-polyfill/index.js"() {
-    init_shims();
-    init_wave_encoder();
-    AudioContext = window.AudioContext || window.webkitAudioContext;
-    createWorker = (fn) => {
-      let js = fn.toString().replace(/^(\(\)\s*=>|function\s*\(\))\s*{/, "").replace(/}$/, "");
-      let blob = new Blob([js]);
-      return new Worker(URL.createObjectURL(blob));
-    };
-    error = (method) => {
-      let event2 = new Event("error");
-      event2.data = new Error("Wrong state for " + method);
-      return event2;
-    };
-    MediaRecorder2 = class {
-      constructor(stream, config = null) {
-        this.stream = stream;
-        this.config = config;
-        this.state = "inactive";
-        this.em = document.createDocumentFragment();
-        this.encoder = createWorker(MediaRecorder2.encoder);
-        let recorder = this;
-        this.encoder.addEventListener("message", (e) => {
-          let event2 = new Event("dataavailable");
-          event2.data = new Blob([e.data], { type: recorder.mimeType });
-          recorder.em.dispatchEvent(event2);
-          if (recorder.state === "inactive") {
-            recorder.em.dispatchEvent(new Event("stop"));
-          }
-        });
-      }
-      start(timeslice) {
-        if (this.state !== "inactive") {
-          return this.em.dispatchEvent(error("start"));
-        }
-        this.state = "recording";
-        if (!context) {
-          context = new AudioContext(this.config);
-        }
-        this.clone = this.stream.clone();
-        this.input = context.createMediaStreamSource(this.clone);
-        this.processor = context.createScriptProcessor(2048, 1, 1);
-        this.encoder.postMessage(["init", context.sampleRate]);
-        this.processor.onaudioprocess = (e) => {
-          if (this.state === "recording") {
-            this.encoder.postMessage(["encode", e.inputBuffer.getChannelData(0)]);
-          }
-        };
-        this.input.connect(this.processor);
-        this.processor.connect(context.destination);
-        this.em.dispatchEvent(new Event("start"));
-        if (timeslice) {
-          this.slicing = setInterval(() => {
-            if (this.state === "recording")
-              this.requestData();
-          }, timeslice);
-        }
-        return void 0;
-      }
-      stop() {
-        if (this.state === "inactive") {
-          return this.em.dispatchEvent(error("stop"));
-        }
-        this.requestData();
-        this.state = "inactive";
-        this.clone.getTracks().forEach((track) => {
-          track.stop();
-        });
-        this.processor.disconnect();
-        this.input.disconnect();
-        return clearInterval(this.slicing);
-      }
-      pause() {
-        if (this.state !== "recording") {
-          return this.em.dispatchEvent(error("pause"));
-        }
-        this.state = "paused";
-        return this.em.dispatchEvent(new Event("pause"));
-      }
-      resume() {
-        if (this.state !== "paused") {
-          return this.em.dispatchEvent(error("resume"));
-        }
-        this.state = "recording";
-        return this.em.dispatchEvent(new Event("resume"));
-      }
-      requestData() {
-        if (this.state === "inactive") {
-          return this.em.dispatchEvent(error("requestData"));
-        }
-        return this.encoder.postMessage(["dump", context.sampleRate]);
-      }
-      addEventListener(...args) {
-        this.em.addEventListener(...args);
-      }
-      removeEventListener(...args) {
-        this.em.removeEventListener(...args);
-      }
-      dispatchEvent(...args) {
-        this.em.dispatchEvent(...args);
-      }
-    };
-    MediaRecorder2.prototype.mimeType = "audio/wav";
-    MediaRecorder2.isTypeSupported = (mimeType) => {
-      return MediaRecorder2.prototype.mimeType === mimeType;
-    };
-    MediaRecorder2.notSupported = !navigator.mediaDevices || !AudioContext;
-    MediaRecorder2.encoder = wave_encoder_default;
-  }
-});
-
-// .svelte-kit/output/server/chunks/RenderlessAudioRecorder-7c2a3e9b.js
+// .svelte-kit/output/server/chunks/RenderlessAudioRecorder-39e56ded.js
 function guard(name7) {
   return () => {
     throw new Error(`Cannot call ${name7}(...) on the server`);
   };
 }
 var Object_1$1, Button_1, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, css, BlackboardToolbar, Blackboard, RenderlessAudioRecorder;
-var init_RenderlessAudioRecorder_7c2a3e9b = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessAudioRecorder-7c2a3e9b.js"() {
+var init_RenderlessAudioRecorder_39e56ded = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessAudioRecorder-39e56ded.js"() {
     init_shims();
-    init_app_60dba192();
-    init_classAdderBuilder_af57cfdf();
-    init_store_074fb7e7();
-    init_audio_recorder_polyfill();
+    init_app_b0873259();
+    init_classAdderBuilder_cd0d0327();
+    init_store_60722d3a();
     ({ Object: Object_1$1 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -112793,7 +112618,7 @@ var init_RenderlessAudioRecorder_7c2a3e9b = __esm({
       let element;
       let internalClasses = {};
       let internalStyles = {};
-      let context2 = getContext("SMUI:button:context");
+      let context = getContext("SMUI:button:context");
       let { component = href == null ? Button : A } = $$props;
       setContext("SMUI:label:context", "button");
       setContext("SMUI:icon:context", "button");
@@ -112850,9 +112675,9 @@ var init_RenderlessAudioRecorder_7c2a3e9b = __esm({
       let $$rendered;
       do {
         $$settled = true;
-        actionProp = context2 === "dialog:action" && action != null ? { "data-mdc-dialog-action": action } : { action: $$props.action };
-        defaultProp = context2 === "dialog:action" && defaultAction ? { "data-mdc-dialog-button-default": "" } : { default: $$props.default };
-        secondaryProp = context2 === "banner" ? {} : { secondary: $$props.secondary };
+        actionProp = context === "dialog:action" && action != null ? { "data-mdc-dialog-action": action } : { action: $$props.action };
+        defaultProp = context === "dialog:action" && defaultAction ? { "data-mdc-dialog-button-default": "" } : { default: $$props.default };
+        secondaryProp = context === "banner" ? {} : { secondary: $$props.secondary };
         $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1$1.assign({
           use: [
             [
@@ -112879,15 +112704,15 @@ var init_RenderlessAudioRecorder_7c2a3e9b = __esm({
             "mdc-button--outlined": variant === "outlined",
             "smui-button--color-secondary": color === "secondary",
             "mdc-button--touch": touch,
-            "mdc-card__action": context2 === "card:action",
-            "mdc-card__action--button": context2 === "card:action",
-            "mdc-dialog__button": context2 === "dialog:action",
-            "mdc-top-app-bar__navigation-icon": context2 === "top-app-bar:navigation",
-            "mdc-top-app-bar__action-item": context2 === "top-app-bar:action",
-            "mdc-snackbar__action": context2 === "snackbar:actions",
-            "mdc-banner__secondary-action": context2 === "banner" && secondary,
-            "mdc-banner__primary-action": context2 === "banner" && !secondary,
-            "mdc-tooltip__action": context2 === "tooltip:rich-actions",
+            "mdc-card__action": context === "card:action",
+            "mdc-card__action--button": context === "card:action",
+            "mdc-dialog__button": context === "dialog:action",
+            "mdc-top-app-bar__navigation-icon": context === "top-app-bar:navigation",
+            "mdc-top-app-bar__action-item": context === "top-app-bar:action",
+            "mdc-snackbar__action": context === "snackbar:actions",
+            "mdc-banner__secondary-action": context === "banner" && secondary,
+            "mdc-banner__primary-action": context === "banner" && !secondary,
+            "mdc-tooltip__action": context === "tooltip:rich-actions",
             ...internalClasses
           })
         }, {
@@ -113792,24 +113617,23 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
   }
 });
 
-// .svelte-kit/output/server/chunks/index-de20c644.js
-var index_de20c644_exports = {};
-__export(index_de20c644_exports, {
+// .svelte-kit/output/server/chunks/index-bee79742.js
+var index_bee79742_exports = {};
+__export(index_bee79742_exports, {
   default: () => Routes
 });
 var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, counter, HelperText, css2, Routes;
-var init_index_de20c644 = __esm({
-  ".svelte-kit/output/server/chunks/index-de20c644.js"() {
+var init_index_bee79742 = __esm({
+  ".svelte-kit/output/server/chunks/index-bee79742.js"() {
     init_shims();
-    init_app_60dba192();
-    init_RenderlessAudioRecorder_7c2a3e9b();
-    init_classAdderBuilder_af57cfdf();
-    init_index_c327074d_3deb0f8c();
-    init_store_074fb7e7();
+    init_app_b0873259();
+    init_RenderlessAudioRecorder_39e56ded();
+    init_classAdderBuilder_cd0d0327();
+    init_index_c327074d_040214c6();
+    init_store_60722d3a();
     init_index_node();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
-    init_audio_recorder_polyfill();
     import_stream4 = __toModule(require("stream"));
     import_http4 = __toModule(require("http"));
     import_url5 = __toModule(require("url"));
@@ -118748,9 +118572,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-659e0dcd.js
-var layout_659e0dcd_exports = {};
-__export(layout_659e0dcd_exports, {
+// .svelte-kit/output/server/chunks/__layout-1939f0bc.js
+var layout_1939f0bc_exports = {};
+__export(layout_1939f0bc_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -120931,13 +120755,13 @@ function load2({ page }) {
     }
   };
 }
-var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, browser2, MenuSurface, Menu, List, Object_13, counter$1, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css$1, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$4, event, Event$3, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$2, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event$1, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error2, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, Switch, counter2, FormField, css3, _layout2;
-var init_layout_659e0dcd = __esm({
-  ".svelte-kit/output/server/chunks/__layout-659e0dcd.js"() {
+var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, browser2, MenuSurface, Menu, List, Object_13, counter$1, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css$1, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$4, event, Event$3, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$2, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event$1, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, Switch, counter2, FormField, css3, _layout2;
+var init_layout_1939f0bc = __esm({
+  ".svelte-kit/output/server/chunks/__layout-1939f0bc.js"() {
     init_shims();
-    init_app_60dba192();
-    init_classAdderBuilder_af57cfdf();
-    init_store_074fb7e7();
+    init_app_b0873259();
+    init_classAdderBuilder_cd0d0327();
+    init_store_60722d3a();
     import_util7 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream5 = __toModule(require("stream"));
@@ -122416,7 +122240,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       }
       return Buffer$9.concat(buffers, length);
     };
-    StreamReader.prototype.eachByte = function(callback, context2) {
+    StreamReader.prototype.eachByte = function(callback, context) {
       var buffer, n, index;
       while (this._queue.length > 0) {
         buffer = this._queue[0];
@@ -122424,7 +122248,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         while (this._offset < n) {
           index = this._offset;
           this._offset += 1;
-          callback.call(context2, buffer[index]);
+          callback.call(context, buffer[index]);
         }
         this._offset = 0;
         this._queue.shift();
@@ -123146,10 +122970,10 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       this._byName[name22].push(params);
       this._inOrder.push({ name: name22, params });
     };
-    Offers.prototype.eachOffer = function(callback, context2) {
+    Offers.prototype.eachOffer = function(callback, context) {
       var list = this._inOrder;
       for (var i = 0, n = list.length; i < n; i++)
-        callback.call(context2, list[i].name, list[i].params);
+        callback.call(context, list[i].name, list[i].params);
     };
     Offers.prototype.byName = function(name22) {
       return this._byName[name22] || [];
@@ -123222,10 +123046,10 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       this.pending = 0;
     };
     Functor$1.QUEUE_SIZE = 8;
-    Functor$1.prototype.call = function(error22, message2, callback, context2) {
+    Functor$1.prototype.call = function(error22, message2, callback, context) {
       if (this._stopped)
         return;
-      var record = { error: error22, message: message2, callback, context: context2, done: false }, called = false, self2 = this;
+      var record = { error: error22, message: message2, callback, context, done: false }, called = false, self2 = this;
       this._queue.push(record);
       if (record.error) {
         record.done = true;
@@ -123315,22 +123139,22 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       if (!functor2._stopped)
         functor2.pending += 1;
     };
-    Cell$1.prototype.incoming = function(error22, message2, callback, context2) {
-      this._exec("incoming", error22, message2, callback, context2);
+    Cell$1.prototype.incoming = function(error22, message2, callback, context) {
+      this._exec("incoming", error22, message2, callback, context);
     };
-    Cell$1.prototype.outgoing = function(error22, message2, callback, context2) {
-      this._exec("outgoing", error22, message2, callback, context2);
+    Cell$1.prototype.outgoing = function(error22, message2, callback, context) {
+      this._exec("outgoing", error22, message2, callback, context);
     };
     Cell$1.prototype.close = function() {
       this._closed = this._closed || new Pledge$1();
       this._doClose();
       return this._closed;
     };
-    Cell$1.prototype._exec = function(direction, error22, message2, callback, context2) {
+    Cell$1.prototype._exec = function(direction, error22, message2, callback, context) {
       this._functors[direction].call(error22, message2, function(err, msg) {
         if (err)
           err.message = this._ext.name + ": " + err.message;
-        callback.call(context2, err, msg);
+        callback.call(context, err, msg);
         this._doClose();
       }, this);
     };
@@ -123352,33 +123176,33 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       });
       this._stopped = { incoming: false, outgoing: false };
     };
-    Pipeline$1.prototype.processIncomingMessage = function(message2, callback, context2) {
+    Pipeline$1.prototype.processIncomingMessage = function(message2, callback, context) {
       if (this._stopped.incoming)
         return;
-      this._loop("incoming", this._cells.length - 1, -1, -1, message2, callback, context2);
+      this._loop("incoming", this._cells.length - 1, -1, -1, message2, callback, context);
     };
-    Pipeline$1.prototype.processOutgoingMessage = function(message2, callback, context2) {
+    Pipeline$1.prototype.processOutgoingMessage = function(message2, callback, context) {
       if (this._stopped.outgoing)
         return;
-      this._loop("outgoing", 0, this._cells.length, 1, message2, callback, context2);
+      this._loop("outgoing", 0, this._cells.length, 1, message2, callback, context);
     };
-    Pipeline$1.prototype.close = function(callback, context2) {
+    Pipeline$1.prototype.close = function(callback, context) {
       this._stopped = { incoming: true, outgoing: true };
       var closed = this._cells.map(function(a) {
         return a.close();
       });
       if (callback)
         Pledge.all(closed).then(function() {
-          callback.call(context2);
+          callback.call(context);
         });
     };
-    Pipeline$1.prototype._loop = function(direction, start2, end, step, message2, callback, context2) {
+    Pipeline$1.prototype._loop = function(direction, start2, end, step, message2, callback, context) {
       var cells = this._cells, n = cells.length, self2 = this;
       while (n--)
         cells[n].pending(direction);
       var pipe = function(index, error22, msg) {
         if (index === end)
-          return callback.call(context2, error22, msg);
+          return callback.call(context, error22, msg);
         cells[index][direction](error22, msg, function(err, m) {
           if (err)
             self2._stopped[direction] = true;
@@ -123480,16 +123304,16 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         }
         return (allowed.rsv1 || !frame2.rsv1) && (allowed.rsv2 || !frame2.rsv2) && (allowed.rsv3 || !frame2.rsv3);
       },
-      processIncomingMessage: function(message2, callback, context2) {
-        this._pipeline.processIncomingMessage(message2, callback, context2);
+      processIncomingMessage: function(message2, callback, context) {
+        this._pipeline.processIncomingMessage(message2, callback, context);
       },
-      processOutgoingMessage: function(message2, callback, context2) {
-        this._pipeline.processOutgoingMessage(message2, callback, context2);
+      processOutgoingMessage: function(message2, callback, context) {
+        this._pipeline.processOutgoingMessage(message2, callback, context);
       },
-      close: function(callback, context2) {
+      close: function(callback, context) {
         if (!this._pipeline)
-          return callback.call(context2);
-        this._pipeline.close(callback, context2);
+          return callback.call(context);
+        this._pipeline.close(callback, context);
       },
       _reserve: function(ext) {
         this._rsv1 = this._rsv1 || ext.rsv1 && ext.name;
@@ -125013,7 +124837,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         log(prefix, ...varArgs);
       };
     };
-    error2 = function(...varArgs) {
+    error = function(...varArgs) {
       const message2 = "FIREBASE INTERNAL ERROR: " + buildLogMessage_(...varArgs);
       logClient3.error(message2);
     };
@@ -126256,13 +126080,13 @@ ${validate_component(Menu, "Menu").$$render($$result, {
           } else if (cmd === CONTROL_RESET) {
             this.onReset_(payload);
           } else if (cmd === CONTROL_ERROR) {
-            error2("Server Error: " + payload);
+            error("Server Error: " + payload);
           } else if (cmd === CONTROL_PONG) {
             this.log_("got pong on primary.");
             this.onPrimaryResponse_();
             this.sendPingOnPrimaryIfNecessary_();
           } else {
-            error2("Unknown control packet command: " + cmd);
+            error("Unknown control packet command: " + cmd);
           }
         }
       }
@@ -126428,20 +126252,20 @@ ${validate_component(Menu, "Menu").$$render($$result, {
           }
         }
       }
-      on(eventType, callback, context2) {
+      on(eventType, callback, context) {
         this.validateEventType_(eventType);
         this.listeners_[eventType] = this.listeners_[eventType] || [];
-        this.listeners_[eventType].push({ callback, context: context2 });
+        this.listeners_[eventType].push({ callback, context });
         const eventData = this.getInitialEvent(eventType);
         if (eventData) {
-          callback.apply(context2, eventData);
+          callback.apply(context, eventData);
         }
       }
-      off(eventType, callback, context2) {
+      off(eventType, callback, context) {
         this.validateEventType_(eventType);
         const listeners2 = this.listeners_[eventType] || [];
         for (let i = 0; i < listeners2.length; i++) {
-          if (listeners2[i].callback === callback && (!context2 || context2 === listeners2[i].context)) {
+          if (listeners2[i].callback === callback && (!context || context === listeners2[i].context)) {
             listeners2.splice(i, 1);
             return;
           }
@@ -126968,7 +126792,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         } else if (action === "sd") {
           this.onSecurityDebugPacket_(body);
         } else {
-          error2("Unrecognized action received from server: " + stringify(action) + "\nAre you using the latest client?");
+          error("Unrecognized action received from server: " + stringify(action) + "\nAre you using the latest client?");
         }
       }
       onReady_(timestamp, sessionId) {
@@ -129795,9 +129619,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-1f74e669.js
-var index_1f74e669_exports = {};
-__export(index_1f74e669_exports, {
+// .svelte-kit/output/server/chunks/index-624528a6.js
+var index_624528a6_exports = {};
+__export(index_624528a6_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -129867,8 +129691,8 @@ function Body3(body) {
   this.timeout = timeout;
   if (body instanceof import_stream6.default) {
     body.on("error", function(err) {
-      const error4 = err.name === "AbortError" ? err : new FetchError3(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
-      _this[INTERNALS3].error = error4;
+      const error3 = err.name === "AbortError" ? err : new FetchError3(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+      _this[INTERNALS3].error = error3;
     });
   }
 }
@@ -130294,16 +130118,16 @@ async function load3({ page }) {
     }
   };
 }
-var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, CommonLabel, Label, css$12, DoodleVideo, RenderlessBoardMethods, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css4, U5Broomu5D;
-var init_index_1f74e669 = __esm({
-  ".svelte-kit/output/server/chunks/index-1f74e669.js"() {
+var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, CommonLabel, Label, css$12, DoodleVideo, RenderlessBoardMethods, Readable2, BUFFER3, TYPE2, Blob4, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css4, U5Broomu5D;
+var init_index_624528a6 = __esm({
+  ".svelte-kit/output/server/chunks/index-624528a6.js"() {
     init_shims();
-    init_app_60dba192();
-    init_index_c327074d_3deb0f8c();
-    init_store_074fb7e7();
+    init_app_b0873259();
+    init_index_c327074d_040214c6();
+    init_store_60722d3a();
     init_index_node();
-    init_RenderlessAudioRecorder_7c2a3e9b();
-    init_classAdderBuilder_af57cfdf();
+    init_RenderlessAudioRecorder_39e56ded();
+    init_classAdderBuilder_cd0d0327();
     import_stream6 = __toModule(require("stream"));
     import_http5 = __toModule(require("http"));
     import_url7 = __toModule(require("url"));
@@ -130312,7 +130136,6 @@ var init_index_1f74e669 = __esm({
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     import_punycode4 = __toModule(require("punycode"));
-    init_audio_recorder_polyfill();
     CommonLabel = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["use", "class", "component", "getElement"]);
       const forwardEvents = forwardEventsBuilder(get_current_component());
@@ -130320,7 +130143,7 @@ var init_index_1f74e669 = __esm({
       let { class: className = "" } = $$props;
       let element;
       let { component = Span$1 } = $$props;
-      const context2 = getContext("SMUI:label:context");
+      const context = getContext("SMUI:label:context");
       const tabindex = getContext("SMUI:label:tabindex");
       function getElement() {
         return element.getElement();
@@ -130340,17 +130163,17 @@ var init_index_1f74e669 = __esm({
         $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object.assign({ use: [forwardEvents, ...use] }, {
           class: classMap({
             [className]: true,
-            "mdc-button__label": context2 === "button",
-            "mdc-fab__label": context2 === "fab",
-            "mdc-tab__text-label": context2 === "tab",
-            "mdc-image-list__label": context2 === "image-list",
-            "mdc-snackbar__label": context2 === "snackbar",
-            "mdc-banner__text": context2 === "banner",
-            "mdc-segmented-button__label": context2 === "segmented-button",
-            "mdc-data-table__pagination-rows-per-page-label": context2 === "data-table:pagination",
-            "mdc-data-table__header-cell-label": context2 === "data-table:sortable-header-cell"
+            "mdc-button__label": context === "button",
+            "mdc-fab__label": context === "fab",
+            "mdc-tab__text-label": context === "tab",
+            "mdc-image-list__label": context === "image-list",
+            "mdc-snackbar__label": context === "snackbar",
+            "mdc-banner__text": context === "banner",
+            "mdc-segmented-button__label": context === "segmented-button",
+            "mdc-data-table__pagination-rows-per-page-label": context === "data-table:pagination",
+            "mdc-data-table__header-cell-label": context === "data-table:sortable-header-cell"
           })
-        }, context2 === "snackbar" ? { "aria-atomic": "false" } : {}, { tabindex }, $$restProps, { this: element }), {
+        }, context === "snackbar" ? { "aria-atomic": "false" } : {}, { tabindex }, $$restProps, { this: element }), {
           this: ($$value) => {
             element = $$value;
             $$settled = false;
@@ -130451,8 +130274,8 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
         strokesArray.push(stroke);
         try {
           setDoc(doc(getFirestore(), `${dbPath}/strokes/${stroke.id}`), { timestamp: serverTimestamp(), ...stroke });
-        } catch (error4) {
-          alert(error4);
+        } catch (error3) {
+          alert(error3);
         }
       }
       async function deleteAllStrokesFromDb() {
@@ -130491,7 +130314,7 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
     Readable2 = import_stream6.default.Readable;
     BUFFER3 = Symbol("buffer");
     TYPE2 = Symbol("type");
-    Blob5 = class {
+    Blob4 = class {
       constructor() {
         this[TYPE2] = "";
         const blobParts = arguments[0];
@@ -130510,7 +130333,7 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
               buffer = Buffer.from(element.buffer, element.byteOffset, element.byteLength);
             } else if (element instanceof ArrayBuffer) {
               buffer = Buffer.from(element);
-            } else if (element instanceof Blob5) {
+            } else if (element instanceof Blob4) {
               buffer = element[BUFFER3];
             } else {
               buffer = Buffer.from(typeof element === "string" ? element : String(element));
@@ -130572,17 +130395,17 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
         const span = Math.max(relativeEnd - relativeStart, 0);
         const buffer = this[BUFFER3];
         const slicedBuffer = buffer.slice(relativeStart, relativeStart + span);
-        const blob = new Blob5([], { type: arguments[2] });
+        const blob = new Blob4([], { type: arguments[2] });
         blob[BUFFER3] = slicedBuffer;
         return blob;
       }
     };
-    Object.defineProperties(Blob5.prototype, {
+    Object.defineProperties(Blob4.prototype, {
       size: { enumerable: true },
       type: { enumerable: true },
       slice: { enumerable: true }
     });
-    Object.defineProperty(Blob5.prototype, Symbol.toStringTag, {
+    Object.defineProperty(Blob4.prototype, Symbol.toStringTag, {
       value: "Blob",
       writable: false,
       enumerable: false,
@@ -130612,7 +130435,7 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
       blob() {
         let ct = this.headers && this.headers.get("content-type") || "";
         return consumeBody3.call(this).then(function(buf) {
-          return Object.assign(new Blob5([], {
+          return Object.assign(new Blob4([], {
             type: ct.toLowerCase()
           }), {
             [BUFFER3]: buf
@@ -131100,8 +130923,8 @@ ${this.customData.serverResponse}`;
       }
     };
     FailRequest = class {
-      constructor(error4) {
-        this.promise_ = Promise.reject(error4);
+      constructor(error3) {
+        this.promise_ = Promise.reject(error3);
       }
       getPromise() {
         return this.promise_;
@@ -131474,7 +131297,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-60dba192.js
+// .svelte-kit/output/server/chunks/app-b0873259.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -131524,7 +131347,7 @@ function lowercase_keys(obj) {
   }
   return clone4;
 }
-function error3(body) {
+function error2(body) {
   return {
     status: 500,
     body,
@@ -131553,14 +131376,14 @@ async function render_endpoint(request, route, match) {
     return;
   }
   if (typeof response !== "object") {
-    return error3(`${preface}: expected an object, got ${typeof response}`);
+    return error2(`${preface}: expected an object, got ${typeof response}`);
   }
   let { status = 200, body, headers: headers2 = {} } = response;
   headers2 = lowercase_keys(headers2);
   const type = get_single_valued_header(headers2, "content-type");
   const is_type_textual = is_content_type_textual(type);
   if (!is_type_textual && !(body instanceof Uint8Array || is_string(body))) {
-    return error3(`${preface}: body must be an instance of string or Uint8Array if content-type is not a supported textual content-type`);
+    return error2(`${preface}: body must be an instance of string or Uint8Array if content-type is not a supported textual content-type`);
   }
   let normalized_body;
   if ((typeof body === "object" || typeof body === "undefined") && !(body instanceof Uint8Array) && (!type || type.startsWith("application/json"))) {
@@ -131939,8 +131762,8 @@ async function render_response({
 			start({
 				target: ${options2.target ? `document.querySelector(${s$1(options2.target)})` : "document.body"},
 				paths: ${s$1(options2.paths)},
-				session: ${try_serialize($session, (error32) => {
-      throw new Error(`Failed to serialize session data: ${error32.message}`);
+				session: ${try_serialize($session, (error3) => {
+      throw new Error(`Failed to serialize session data: ${error3.message}`);
     })},
 				host: ${page && page.host ? s$1(page.host) : "location.host"},
 				route: ${!!page_config.router},
@@ -131954,12 +131777,12 @@ async function render_response({
 					],
 					page: {
 						host: ${page && page.host ? s$1(page.host) : "location.host"}, // TODO this is redundant
-						path: ${page && page.path ? try_serialize(page.path, (error32) => {
-      throw new Error(`Failed to serialize page.path: ${error32.message}`);
+						path: ${page && page.path ? try_serialize(page.path, (error3) => {
+      throw new Error(`Failed to serialize page.path: ${error3.message}`);
     }) : null},
 						query: new URLSearchParams(${page && page.query ? s$1(page.query.toString()) : ""}),
-						params: ${page && page.params ? try_serialize(page.params, (error32) => {
-      throw new Error(`Failed to serialize page.params: ${error32.message}`);
+						params: ${page && page.params ? try_serialize(page.params, (error3) => {
+      throw new Error(`Failed to serialize page.params: ${error3.message}`);
     }) : null}
 					}
 				}` : "null"}
@@ -132303,12 +132126,12 @@ async function respond_with_error({ request, options: options2, state, $session,
       page
     });
   } catch (err) {
-    const error32 = coalesce_to_error(err);
-    options2.handle_error(error32, request);
+    const error3 = coalesce_to_error(err);
+    options2.handle_error(error3, request);
     return {
       status: 500,
       headers: {},
-      body: error32.stack
+      body: error3.stack
     };
   }
 }
@@ -132321,15 +132144,15 @@ async function respond$1(opts) {
   try {
     nodes = await Promise.all(route.a.map((id) => id ? options2.load_component(id) : void 0));
   } catch (err) {
-    const error32 = coalesce_to_error(err);
-    options2.handle_error(error32, request);
+    const error3 = coalesce_to_error(err);
+    options2.handle_error(error3, request);
     return await respond_with_error({
       request,
       options: options2,
       state,
       $session,
       status: 500,
-      error: error32
+      error: error3
     });
   }
   const leaf = nodes[nodes.length - 1].module;
@@ -132443,12 +132266,12 @@ async function respond$1(opts) {
       branch: branch.filter(Boolean)
     }), set_cookie_headers);
   } catch (err) {
-    const error32 = coalesce_to_error(err);
-    options2.handle_error(error32, request);
+    const error3 = coalesce_to_error(err);
+    options2.handle_error(error3, request);
     return with_cookies(await respond_with_error({
       ...opts,
       status: 500,
-      error: error32
+      error: error3
     }), set_cookie_headers);
   }
 }
@@ -132756,8 +132579,8 @@ function createEventDispatcher() {
     }
   };
 }
-function setContext(key, context2) {
-  get_current_component().$$.context.set(key, context2);
+function setContext(key, context) {
+  get_current_component().$$.context.set(key, context);
 }
 function getContext(key) {
   return get_current_component().$$.context.get(key);
@@ -132875,11 +132698,11 @@ function validate_component(component, name7) {
   return component;
 }
 function create_ssr_component(fn) {
-  function $$render(result, props, bindings, slots, context2) {
+  function $$render(result, props, bindings, slots, context) {
     const parent_component = current_component;
     const $$ = {
       on_destroy,
-      context: new Map(context2 || (parent_component ? parent_component.$$.context : [])),
+      context: new Map(context || (parent_component ? parent_component.$$.context : [])),
       on_mount: [],
       before_update: [],
       after_update: [],
@@ -132891,10 +132714,10 @@ function create_ssr_component(fn) {
     return html;
   }
   return {
-    render: (props = {}, { $$slots = {}, context: context2 = new Map() } = {}) => {
+    render: (props = {}, { $$slots = {}, context = new Map() } = {}) => {
       on_destroy = [];
       const result = { title: "", head: "", css: new Set() };
-      const html = $$render(result, props, {}, $$slots, context2);
+      const html = $$render(result, props, {}, $$slots, context);
       run_all(on_destroy);
       return {
         html,
@@ -132932,9 +132755,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-f0cfca87.js",
+      file: assets + "/_app/start-92f31e35.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-f0cfca87.js", assets + "/_app/chunks/vendor-225c581b.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-92f31e35.js", assets + "/_app/chunks/vendor-9a185f2a.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -132978,8 +132801,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_60dba192 = __esm({
-  ".svelte-kit/output/server/chunks/app-60dba192.js"() {
+var init_app_b0873259 = __esm({
+  ".svelte-kit/output/server/chunks/app-b0873259.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -133245,13 +133068,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_7b12bb57(), layout_7b12bb57_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_8f94f63c(), error_8f94f63c_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_de20c644(), index_de20c644_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_659e0dcd(), layout_659e0dcd_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_1f74e669(), index_1f74e669_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_5356071c(), layout_5356071c_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_c6702a15(), error_c6702a15_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_bee79742(), index_bee79742_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_1939f0bc(), layout_1939f0bc_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_624528a6(), index_624528a6_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-4575f636.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-4575f636.js", "chunks/vendor-225c581b.js", "chunks/database-b8a53219.js", "chunks/store-799b1df9.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-29ff5852.js", "css": [], "js": ["error.svelte-29ff5852.js", "chunks/vendor-225c581b.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-dc38ab38.js", "css": ["assets/pages/index.svelte-6f35bf7c.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/index.svelte-dc38ab38.js", "chunks/vendor-225c581b.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/store-799b1df9.js", "chunks/RenderlessBoardMethods-dcb94a2f.js", "chunks/database-b8a53219.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-23a1fc92.js", "css": ["assets/pages/_class_/__layout.svelte-abebba15.css"], "js": ["pages/_class_/__layout.svelte-23a1fc92.js", "chunks/vendor-225c581b.js", "chunks/store-799b1df9.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-f2a38c96.js", "css": ["assets/pages/index.svelte-6f35bf7c.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/_class_/_room_/index.svelte-f2a38c96.js", "chunks/vendor-225c581b.js", "chunks/RenderlessBoardMethods-dcb94a2f.js", "chunks/store-799b1df9.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/database-b8a53219.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-3700551f.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-3700551f.js", "chunks/vendor-9a185f2a.js", "chunks/database-9b97f416.js", "chunks/store-cdeddc4e.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-805542d9.js", "css": [], "js": ["error.svelte-805542d9.js", "chunks/vendor-9a185f2a.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-d1debb3c.js", "css": ["assets/pages/index.svelte-6f35bf7c.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/index.svelte-d1debb3c.js", "chunks/vendor-9a185f2a.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/store-cdeddc4e.js", "chunks/RenderlessBoardMethods-e6c6cf5f.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-9b97f416.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-b40f1358.js", "css": ["assets/pages/_class_/__layout.svelte-abebba15.css"], "js": ["pages/_class_/__layout.svelte-b40f1358.js", "chunks/vendor-9a185f2a.js", "chunks/store-cdeddc4e.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-31b0c268.js", "css": ["assets/pages/index.svelte-6f35bf7c.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/_class_/_room_/index.svelte-31b0c268.js", "chunks/vendor-9a185f2a.js", "chunks/RenderlessBoardMethods-e6c6cf5f.js", "chunks/store-cdeddc4e.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-9b97f416.js"], "styles": [] } };
   }
 });
 
@@ -133304,7 +133127,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_60dba192();
+init_app_b0873259();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

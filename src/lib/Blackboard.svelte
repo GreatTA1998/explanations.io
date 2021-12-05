@@ -9,7 +9,7 @@
   on:touchmove={touchMove}
   on:touchend={touchEnd}
   bind:this={canvas}
-  style={`background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`}
+  style={`position: absolute; margin-top: 0; margin-left: 0; background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`}
 >
 </canvas>
 
@@ -18,7 +18,7 @@
   import { connectTwoPoints, drawStroke } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, createEventDispatcher } from 'svelte'
-  import { currentTool, canvasWidth, canvasHeight } from '../store.js'
+  import { currentTool, canvasWidth, canvasHeight, onlyAllowApplePencil } from '../store.js'
 
   export let strokesArray
   export let currentTime = 0
@@ -29,7 +29,6 @@
   let localStrokesArray = []
   let canvas
   let isInMiddleOfStroke = false
-  let onlyAllowApplePencil = false
   let prevPoint = {
     x: -1, 
     y: -1
@@ -126,7 +125,7 @@
       return;
     }
     const isApplePencil = e.touches[0].touchType === "stylus"
-    if (onlyAllowApplePencil && !isApplePencil)   {
+    if ($onlyAllowApplePencil && !isApplePencil)   {
       console.log('error: cannot use finger during Apple Pencil mode');
       return;
     }
@@ -142,7 +141,7 @@
       return;
     }
     const isApplePencil = e.touches[0].touchType === "stylus"
-    if (onlyAllowApplePencil && !isApplePencil)   {
+    if ($onlyAllowApplePencil && !isApplePencil)   {
       console.log('error: cannot use finger during Apple Pencil mode');
       return;
     }
@@ -160,7 +159,7 @@
       }
       // normal check for Apple Pencil (note changedTouches)
       const isApplePencil = e.changedTouches[0].touchType === "stylus"
-      if (onlyAllowApplePencil && !isApplePencil)   {
+      if ($onlyAllowApplePencil && !isApplePencil)   {
         console.log('error: cannot use finger during Apple Pencil mode');
         return;
       }

@@ -55,11 +55,10 @@
       for (const e of participantEvents) {
         CallObject.on(e, () => {
           dailyRoomParticipants.set(CallObject.participants())
-          // note we bind Firestore's browserTabID to Daily's `user_name`
+          // note we bind browserTabID to Daily's `user_name`
           const temp = {} 
           for (const dailyID of Object.keys($dailyRoomParticipants)) {
             const dailyParticipant = $dailyRoomParticipants[dailyID]
-            console.log('user_name, user_id =', dailyParticipant.user_name, dailyParticipant.user_id)
             const browserTabID = dailyParticipant.user_name
             if (browserTabID) { 
               temp[browserTabID] = dailyParticipant.user_id 
@@ -145,7 +144,6 @@
   function joinDailyRoom (roomURL) {
     return new Promise(async (resolve, reject) => {
       try {
-        console.log('CallObject =', CallObject)
         await CallObject.join({
           url: roomURL,
           userName: $browserTabID

@@ -15,7 +15,9 @@
   import { fetchDoc, fetchDocs } from '../database.js'
   import { onDestroy, tick } from 'svelte'
   import { query, collection, getFirestore, orderBy, onSnapshot, doc, setDoc, serverTimestamp, writeBatch, onSnapshotsInSync } from 'firebase/firestore'
+ 
   export let dbPath
+  export let autoFetchStrokes = false
 
   let strokesArray // null means unfetched, [] means empty board
   let isFetchingStrokes = false
@@ -27,6 +29,10 @@
   onSnapshot(boardRef, (snapshot) => {
     boardDoc = { id: snapshot.id, ...snapshot.data() }
   })
+
+  if (autoFetchStrokes) {
+    fetchStrokes()
+  }
 
   onDestroy(() => {
     if (unsubStrokesListener) {

@@ -32,7 +32,8 @@
           <div on:click={() => goto(`/${classID}/${room.id}`)}
             style="padding: 6px"
           >
-            <div class:selected={room.id === roomID} class:not-selected={room.id !== roomID} style="padding: 6px">
+            <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
+            <div class={room.id === roomID ? 'selected' : '' } style="padding: 6px; opacity: 90%">
               {#if room.name}
                 <div class:question-item={'?' === room.name.charAt(room.name.length - 1)}>
                   {room.name}
@@ -49,15 +50,23 @@
                     </div> 
                     {#if Object.keys($dailyRoomParticipants).length > 0}
                       {#if person.browserTabID === $browserTabID}     
-                        <div on:click|stopPropagation={toggleMic}>
-                          {$dailyRoomParticipants.local.audio ? 'mute' : 'unmute'}
-                        </div>
+                        <div on:click|preventDefault|stopPropagation={toggleMic} style="margin-right: 0; margin-left: auto">
+                          <FormField >
+                            <Switch checked={$dailyRoomParticipants.local.audio} />
+                            <span slot="label">{ $dailyRoomParticipants.local.audio ? 'voice on' : 'muted' }</span>
+                          </FormField>
+                        </div>                    
                       {/if}
-                      {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}
-                        <div>isMicOn: {
-                          $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio
-                        }
-                        </div>
+                      {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}                      
+                        {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio} 
+                          <span class="material-icons" style="margin-right: 0; margin-left: auto">
+                            mic
+                          </span>
+                        {:else}
+                          <span class="material-icons" style="margin-right: 0; margin-left: auto">
+                            mic_off
+                          </span>
+                        {/if}
                       {/if}
                     {/if}
                   </div>
@@ -89,7 +98,9 @@
   import { browser } from '$app/env'
   import { canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants } from '../../store.js'
   // import List, { Item, Text, SecondaryText } from '@smui/list'
-
+  import Switch from '@smui/switch';
+  import FormField from '@smui/form-field';
+  
   export let classID;
   export let roomID;
   let rooms
@@ -165,7 +176,6 @@
             for (const id of Object.keys($roomToPeople)) {
               for (const p of $roomToPeople[id]) {
                 if (p.browserTabID === person.browserTabID) {
-                  console.log("removing from array")
                   $roomToPeople[id] = $roomToPeople[id].filter(p => p.browserTabID !== person.browserTabID)
                 }
               } 
@@ -178,7 +188,6 @@
             $roomToPeople[roomID] = $roomToPeople[roomID].filter(p => p.browserTabID !== person.browserTabID)
             break
         }
-        console.log('$roomToPeople =', $roomToPeople)
       })
     })
   )
@@ -194,9 +203,9 @@
     background-color:rgb(188, 248, 248);
   }
 
-  .not-selected {
+  /* .not-selected {
     opacity: 80%;
-  }
+  } */
 </style>
 
 <!-- <style>

@@ -12,11 +12,11 @@
 {#if roomDoc}
   <!-- Give a 5-seconds countdown UI feedback before pinging the server -->
 	<div use:portal={'main-content'} style="padding: 16px;" class:question={'?' === roomDoc.name.charAt(roomDoc.name.length - 1)}>
-    
     <Textfield 
       value={roomDoc.name} on:input={(e) => updateRoomName(e)}
       class="room-title" 
-      style="width: 100%; margin-bottom: 20px;">
+      style="width: 100%; margin-bottom: 20px;"
+    >
     </Textfield>
 
 		{#each roomDoc.blackboards as boardID (boardID) }
@@ -36,7 +36,7 @@
           {/if}
 
           {#if boardDoc.audioDownloadURL }
-            <div use:lazyCallable={fetchStrokes} style={`width: 100%; height: ${$canvasHeight + 80}px`}>
+            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`}>
               {#if strokesArray}
                 <DoodleVideo 
                   {strokesArray} 
@@ -49,7 +49,7 @@
               {/if}
             </div>
           {:else}
-            <div use:lazyCallable={listenToStrokes} style={`width: 100%; height: ${$canvasHeight + 80}px`}>
+            <div use:lazyCallable={listenToStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`}>
               {#if strokesArray}
                 <RenderlessAudioRecorder
                   let:startRecording={startRecording} 
@@ -74,6 +74,15 @@
         {/if}
       </RenderlessBoardMethods>
 		{/each}
+
+    <Button
+      on:click={createNewBlackboard}
+      variant="unelevated"
+      color="#2e3131"
+      style={`width: ${$canvasWidth}px; margin-top: 40px`}
+    >
+      <Label>New blackboard</Label>
+    </Button>
 	</div>
 {/if}
 
@@ -83,14 +92,14 @@
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import { fetchDoc, fetchDocs } from '../../../database.js'
-  import { onMount } from 'svelte'
-  import Button from '@smui/button'
+  import { onMount, tick } from 'svelte'
+  import Button, { Group, Label }from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
   import { recordState, user, canvasHeight, canvasWidth } from '../../../store.js'
   import { getRandomID } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-  import { doc, getFirestore, updateDoc, deleteField, onSnapshot } from '@firebase/firestore';
+  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion } from '@firebase/firestore';
   import Textfield from '@smui/textfield'
 
   export let classID
@@ -170,6 +179,20 @@
       })
     )
     await Promise.all(promises)
+  }
+
+  async function createNewBlackboard () {
+    const newID = getRandomID();  
+    const blackboardRef = doc(getFirestore(), boardsDbPath + newID)
+    // TODO: use batch operation
+    await Promise.all([
+      setDoc(blackboardRef, {}),
+      updateDoc(roomRef, {
+        blackboards: arrayUnion(newID)
+      })
+    ]);  
+    await tick()
+    // this.scrollToThisBoard(newID)
   }
 </script>
 

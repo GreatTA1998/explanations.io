@@ -1,11 +1,17 @@
 <slot>
 
 </slot>
+
+{#if !recursiveSyncer && isPlaying === false}
+  <span on:click={startAudioPlayer} class="material-icons overlay-center" style="color: white; font-size: 6rem; width: 120px; height: 120px">
+    play_circle
+  </span>
+{/if}
+
 <canvas 
   bind:this={canvas} 
   style={`background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`}
 >
-
 </canvas>
 
 <audio 
@@ -14,19 +20,23 @@
   bind:this={AudioPlayer} 
   src={audioDownloadURL} 
   controls 
-  style="width: 100%;">
+  style={`width: ${$canvasWidth}px`}>
 </audio>
 
 <script>
-  import { connectTwoPoints } from '../helpers/canvas.js'
+  import { connectTwoPoints, drawStroke } from '../helpers/canvas.js'
   import { onMount, onDestroy } from 'svelte'
   import { canvasWidth, canvasHeight } from '../store.js'
+  // import IconButton from '@smui/icon-button';
 
   export let strokesArray
   export let audioDownloadURL
+ 
+  let hasPlayedOnce = false
+  let isPlaying = false
 
   let allFrames
-  let nextFrameIdx = 0
+  let nextFrameIdx
   let canvas
   let ctx
   let AudioPlayer
@@ -34,7 +44,7 @@
   let playbackSpeed = 1
 
   // handle resizing
-  $: if (ctx && AudioPlayer) {
+  $: if (ctx) {
     canvas.width = $canvasWidth
     canvas.height = $canvasHeight
     handleResize()
@@ -46,6 +56,11 @@
 
   onMount(() => {
     ctx = canvas.getContext('2d')
+    console.log("initial preview")
+    for (const stroke of strokesArray) {
+      drawStroke(stroke, null, ctx, canvas)
+    }
+    console.log('strokesArray =', strokesArray)
 
     const allPoints = [];
     for (let i = 0; i < strokesArray.length; i++) {
@@ -60,6 +75,10 @@
     allFrames = allPoints.sort((p1, p2) => p1.startTime - p2.startTime);
   })
 
+  function startAudioPlayer () {
+    AudioPlayer.play()
+  }
+
   function getStartTime ({ strokeIndex, pointIndex }) {
     const stroke = strokesArray[strokeIndex];
     return stroke.startTime + (pointIndex - 1) * getPointDuration(stroke);
@@ -71,6 +90,7 @@
   }
 
   function initSyncing () {
+    isPlaying = true
     nextFrameIdx = 0;
     ctx.clearRect(0, 0, $canvasWidth, $canvasHeight) // video could already be rendered as an initial preview or completed video
     syncRecursively()
@@ -130,10 +150,26 @@
         // video was playing: resume to previous progress
         nextFrameIdx = 0;
         syncStrokesToAudio();
-      } else {
+      } else if (hasPlayedOnce) {
         renderFramesUntilCurrentTime()
+      } else {
+        for (const stroke of strokesArray) {
+          drawStroke(stroke, null, ctx, canvas)
+        }
       }
       resolve();
     })
   }
 </script>
+
+<style>
+.overlay-center {
+  position: absolute; width: 20px; height: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto; 
+  color: white
+}
+</style>

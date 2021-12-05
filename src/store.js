@@ -13,6 +13,8 @@ export const currentTool = writable({
     lineWidth: 3
 })
 
+export const onlyAllowApplePencil = writable(true)
+
 export const recordState = writable('pre_record') // mid_record and post_record
 
 export const dailyMicStream = writable(null)

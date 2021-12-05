@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_767f7ce7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-a90867fb.js
+// .svelte-kit/output/server/chunks/store-074fb7e7.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5156,11 +5156,11 @@ function getRandomID() {
   }
   return autoId;
 }
-var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_a90867fb = __esm({
-  ".svelte-kit/output/server/chunks/store-a90867fb.js"() {
+var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
+var init_store_074fb7e7 = __esm({
+  ".svelte-kit/output/server/chunks/store-074fb7e7.js"() {
     init_shims();
-    init_app_ab8ef003();
+    init_app_60dba192();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -5975,6 +5975,7 @@ var init_store_a90867fb = __esm({
       color: "white",
       lineWidth: 3
     });
+    onlyAllowApplePencil = writable(true);
     recordState = writable("pre_record");
     dailyMicStream = writable(null);
     roomToPeople = writable({});
@@ -5984,7 +5985,7 @@ var init_store_a90867fb = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-c840c486.js
+// .svelte-kit/output/server/chunks/index-c327074d-3deb0f8c.js
 function sign(x) {
   return x < 0 ? -1 : 1;
 }
@@ -7145,10 +7146,10 @@ function registerAuth(clientPlatform) {
   registerVersion(name2, version2, "esm2017");
 }
 var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob4, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop;
-var init_index_c327074d_c840c486 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-c840c486.js"() {
+var init_index_c327074d_3deb0f8c = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-3deb0f8c.js"() {
     init_shims();
-    init_store_a90867fb();
+    init_store_074fb7e7();
     import_stream2 = __toModule(require("stream"));
     import_http2 = __toModule(require("http"));
     import_url2 = __toModule(require("url"));
@@ -111325,18 +111326,18 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-1dc0011a.js
-var layout_1dc0011a_exports = {};
-__export(layout_1dc0011a_exports, {
+// .svelte-kit/output/server/chunks/__layout-7b12bb57.js
+var layout_7b12bb57_exports = {};
+__export(layout_7b12bb57_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_1dc0011a = __esm({
-  ".svelte-kit/output/server/chunks/__layout-1dc0011a.js"() {
+var init_layout_7b12bb57 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-7b12bb57.js"() {
     init_shims();
-    init_app_ab8ef003();
-    init_index_c327074d_c840c486();
-    init_store_a90867fb();
+    init_app_60dba192();
+    init_index_c327074d_3deb0f8c();
+    init_store_074fb7e7();
     init_index_node();
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -111357,9 +111358,9 @@ var init_layout_1dc0011a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-16933945.js
-var error_16933945_exports = {};
-__export(error_16933945_exports, {
+// .svelte-kit/output/server/chunks/error-8f94f63c.js
+var error_8f94f63c_exports = {};
+__export(error_8f94f63c_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -111367,10 +111368,10 @@ function load({ error: error4, status }) {
   return { props: { error: error4, status } };
 }
 var import_cookie2, Error2;
-var init_error_16933945 = __esm({
-  ".svelte-kit/output/server/chunks/error-16933945.js"() {
+var init_error_8f94f63c = __esm({
+  ".svelte-kit/output/server/chunks/error-8f94f63c.js"() {
     init_shims();
-    init_app_ab8ef003();
+    init_app_60dba192();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -111392,9 +111393,25 @@ ${error4.stack ? `<pre>${escape(error4.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/classAdderBuilder-e16f5e0c.js
+// .svelte-kit/output/server/chunks/classAdderBuilder-af57cfdf.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name7, value]) => name7 !== "" && value).map(([name7]) => name7).join(" ");
+}
+function exclude(obj, keys) {
+  let names = Object.getOwnPropertyNames(obj);
+  const newObj = {};
+  for (let i = 0; i < names.length; i++) {
+    const name7 = names[i];
+    const cashIndex = name7.indexOf("$");
+    if (cashIndex !== -1 && keys.indexOf(name7.substring(0, cashIndex + 1)) !== -1) {
+      continue;
+    }
+    if (keys.indexOf(name7) !== -1) {
+      continue;
+    }
+    newObj[name7] = obj[name7];
+  }
+  return newObj;
 }
 function forwardEventsBuilder(component) {
   let $on;
@@ -111493,6 +111510,17 @@ function forwardEventsBuilder(component) {
       }
     };
   };
+}
+function prefixFilter(obj, prefix) {
+  let names = Object.getOwnPropertyNames(obj);
+  const newObj = {};
+  for (let i = 0; i < names.length; i++) {
+    const name7 = names[i];
+    if (name7.substring(0, prefix.length) === prefix) {
+      newObj[name7.substring(prefix.length)] = obj[name7];
+    }
+  }
+  return newObj;
 }
 function supportsCssVariables(windowObj, forceRefresh) {
   if (forceRefresh === void 0) {
@@ -111727,11 +111755,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, internals, ClassAdder, defaults;
-var init_classAdderBuilder_e16f5e0c = __esm({
-  ".svelte-kit/output/server/chunks/classAdderBuilder-e16f5e0c.js"() {
+var init_classAdderBuilder_af57cfdf = __esm({
+  ".svelte-kit/output/server/chunks/classAdderBuilder-af57cfdf.js"() {
     init_shims();
-    init_app_ab8ef003();
-    init_store_a90867fb();
+    init_app_60dba192();
+    init_store_074fb7e7();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112542,46 +112570,194 @@ var init_classAdderBuilder_e16f5e0c = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/DoodleVideo-e8a00c7c.js
-function exclude(obj, keys) {
-  let names = Object.getOwnPropertyNames(obj);
-  const newObj = {};
-  for (let i = 0; i < names.length; i++) {
-    const name7 = names[i];
-    const cashIndex = name7.indexOf("$");
-    if (cashIndex !== -1 && keys.indexOf(name7.substring(0, cashIndex + 1)) !== -1) {
-      continue;
-    }
-    if (keys.indexOf(name7) !== -1) {
-      continue;
-    }
-    newObj[name7] = obj[name7];
+// node_modules/audio-recorder-polyfill/wave-encoder/index.js
+var wave_encoder_default;
+var init_wave_encoder = __esm({
+  "node_modules/audio-recorder-polyfill/wave-encoder/index.js"() {
+    init_shims();
+    wave_encoder_default = () => {
+      let BYTES_PER_SAMPLE = 2;
+      let recorded = [];
+      function encode(buffer) {
+        let length = buffer.length;
+        let data = new Uint8Array(length * BYTES_PER_SAMPLE);
+        for (let i = 0; i < length; i++) {
+          let index = i * BYTES_PER_SAMPLE;
+          let sample = buffer[i];
+          if (sample > 1) {
+            sample = 1;
+          } else if (sample < -1) {
+            sample = -1;
+          }
+          sample = sample * 32768;
+          data[index] = sample;
+          data[index + 1] = sample >> 8;
+        }
+        recorded.push(data);
+      }
+      function dump(sampleRate) {
+        let bufferLength = recorded.length ? recorded[0].length : 0;
+        let length = recorded.length * bufferLength;
+        let wav = new Uint8Array(44 + length);
+        let view = new DataView(wav.buffer);
+        view.setUint32(0, 1380533830, false);
+        view.setUint32(4, 36 + length, true);
+        view.setUint32(8, 1463899717, false);
+        view.setUint32(12, 1718449184, false);
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, 1, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, sampleRate * BYTES_PER_SAMPLE, true);
+        view.setUint16(32, BYTES_PER_SAMPLE, true);
+        view.setUint16(34, 8 * BYTES_PER_SAMPLE, true);
+        view.setUint32(36, 1684108385, false);
+        view.setUint32(40, length, true);
+        for (let i = 0; i < recorded.length; i++) {
+          wav.set(recorded[i], i * bufferLength + 44);
+        }
+        recorded = [];
+        postMessage(wav.buffer, [wav.buffer]);
+      }
+      onmessage = (e) => {
+        if (e.data[0] === "encode") {
+          encode(e.data[1]);
+        } else if (e.data[0] === "dump") {
+          dump(e.data[1]);
+        }
+      };
+    };
   }
-  return newObj;
-}
-function prefixFilter(obj, prefix) {
-  let names = Object.getOwnPropertyNames(obj);
-  const newObj = {};
-  for (let i = 0; i < names.length; i++) {
-    const name7 = names[i];
-    if (name7.substring(0, prefix.length) === prefix) {
-      newObj[name7.substring(prefix.length)] = obj[name7];
-    }
+});
+
+// node_modules/audio-recorder-polyfill/index.js
+var AudioContext, createWorker, error, context, MediaRecorder2;
+var init_audio_recorder_polyfill = __esm({
+  "node_modules/audio-recorder-polyfill/index.js"() {
+    init_shims();
+    init_wave_encoder();
+    AudioContext = window.AudioContext || window.webkitAudioContext;
+    createWorker = (fn) => {
+      let js = fn.toString().replace(/^(\(\)\s*=>|function\s*\(\))\s*{/, "").replace(/}$/, "");
+      let blob = new Blob([js]);
+      return new Worker(URL.createObjectURL(blob));
+    };
+    error = (method) => {
+      let event2 = new Event("error");
+      event2.data = new Error("Wrong state for " + method);
+      return event2;
+    };
+    MediaRecorder2 = class {
+      constructor(stream, config = null) {
+        this.stream = stream;
+        this.config = config;
+        this.state = "inactive";
+        this.em = document.createDocumentFragment();
+        this.encoder = createWorker(MediaRecorder2.encoder);
+        let recorder = this;
+        this.encoder.addEventListener("message", (e) => {
+          let event2 = new Event("dataavailable");
+          event2.data = new Blob([e.data], { type: recorder.mimeType });
+          recorder.em.dispatchEvent(event2);
+          if (recorder.state === "inactive") {
+            recorder.em.dispatchEvent(new Event("stop"));
+          }
+        });
+      }
+      start(timeslice) {
+        if (this.state !== "inactive") {
+          return this.em.dispatchEvent(error("start"));
+        }
+        this.state = "recording";
+        if (!context) {
+          context = new AudioContext(this.config);
+        }
+        this.clone = this.stream.clone();
+        this.input = context.createMediaStreamSource(this.clone);
+        this.processor = context.createScriptProcessor(2048, 1, 1);
+        this.encoder.postMessage(["init", context.sampleRate]);
+        this.processor.onaudioprocess = (e) => {
+          if (this.state === "recording") {
+            this.encoder.postMessage(["encode", e.inputBuffer.getChannelData(0)]);
+          }
+        };
+        this.input.connect(this.processor);
+        this.processor.connect(context.destination);
+        this.em.dispatchEvent(new Event("start"));
+        if (timeslice) {
+          this.slicing = setInterval(() => {
+            if (this.state === "recording")
+              this.requestData();
+          }, timeslice);
+        }
+        return void 0;
+      }
+      stop() {
+        if (this.state === "inactive") {
+          return this.em.dispatchEvent(error("stop"));
+        }
+        this.requestData();
+        this.state = "inactive";
+        this.clone.getTracks().forEach((track) => {
+          track.stop();
+        });
+        this.processor.disconnect();
+        this.input.disconnect();
+        return clearInterval(this.slicing);
+      }
+      pause() {
+        if (this.state !== "recording") {
+          return this.em.dispatchEvent(error("pause"));
+        }
+        this.state = "paused";
+        return this.em.dispatchEvent(new Event("pause"));
+      }
+      resume() {
+        if (this.state !== "paused") {
+          return this.em.dispatchEvent(error("resume"));
+        }
+        this.state = "recording";
+        return this.em.dispatchEvent(new Event("resume"));
+      }
+      requestData() {
+        if (this.state === "inactive") {
+          return this.em.dispatchEvent(error("requestData"));
+        }
+        return this.encoder.postMessage(["dump", context.sampleRate]);
+      }
+      addEventListener(...args) {
+        this.em.addEventListener(...args);
+      }
+      removeEventListener(...args) {
+        this.em.removeEventListener(...args);
+      }
+      dispatchEvent(...args) {
+        this.em.dispatchEvent(...args);
+      }
+    };
+    MediaRecorder2.prototype.mimeType = "audio/wav";
+    MediaRecorder2.isTypeSupported = (mimeType) => {
+      return MediaRecorder2.prototype.mimeType === mimeType;
+    };
+    MediaRecorder2.notSupported = !navigator.mediaDevices || !AudioContext;
+    MediaRecorder2.encoder = wave_encoder_default;
   }
-  return newObj;
-}
+});
+
+// .svelte-kit/output/server/chunks/RenderlessAudioRecorder-7c2a3e9b.js
 function guard(name7) {
   return () => {
     throw new Error(`Cannot call ${name7}(...) on the server`);
   };
 }
-var Object_1$1, Button_1, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, BlackboardToolbar, Blackboard, DoodleVideo;
-var init_DoodleVideo_e8a00c7c = __esm({
-  ".svelte-kit/output/server/chunks/DoodleVideo-e8a00c7c.js"() {
+var Object_1$1, Button_1, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, css, BlackboardToolbar, Blackboard, RenderlessAudioRecorder;
+var init_RenderlessAudioRecorder_7c2a3e9b = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessAudioRecorder-7c2a3e9b.js"() {
     init_shims();
-    init_app_ab8ef003();
-    init_classAdderBuilder_e16f5e0c();
-    init_store_a90867fb();
+    init_app_60dba192();
+    init_classAdderBuilder_af57cfdf();
+    init_store_074fb7e7();
+    init_audio_recorder_polyfill();
     ({ Object: Object_1$1 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -113504,31 +113680,48 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
       return $$rendered;
     });
     goto = guard("goto");
+    css = {
+      code: "svg.svelte-ln95yv{max-height:30px}",
+      map: null
+    };
     BlackboardToolbar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $user, $$unsubscribe_user;
+      let $onlyAllowApplePencil, $$unsubscribe_onlyAllowApplePencil;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => $onlyAllowApplePencil = value);
+      $$result.css.add(css);
       $$unsubscribe_user();
-      return `${Object.keys($user).length > 0 ? `${each($user.pencilColors, (color) => `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-        default: () => `<svg preserveAspectRatio="${"none"}" version="${"1.1"}" id="${"Layer_1"}" xmlns="${"http://www.w3.org/2000/svg"}" xmlns:xlink="${"http://www.w3.org/1999/xlink"}" x="${"0px"}" y="${"0px"}" width="${"16px"}" height="${"35px"}" :viewbox="${"`0 0 100 230`"}" style="${"enable-background:new 0 0 100 230;"}" xml:space="${"preserve"}"><g><path d="${"M0,0v72.377c0,1.588,0.234,3.169,0.698,4.706l45.416,150.032C46.633,228.828,48.212,230,50,230s3.367-1.172,3.886-2.883\r\n            L99.31,77.079c0.457-1.525,0.69-3.108,0.69-4.702V0.002"}"></path><polygon${add_attribute("style", `fill: ${color};`, 0)} points="${"50,211.978 38.879,175.24 61.122,175.24"}"></polygon><path style="${"fill:#424242;"}" d="${"M63.581,167.118H36.42L8.765,75.761l10.924-9.63l12.5,11.015c1.54,1.353,3.835,1.35,5.375-0.002\r\n              l12.468-11.007l12.464,11.005c1.54,1.357,3.839,1.357,5.377,0l12.465-11.005l10.9,9.623L63.581,167.118z"}"></path><path${add_attribute("style", `fill: ${color};`, 0)} d="${"M91.878,0v65.486l-8.852-7.813c-1.539-1.353-3.838-1.354-5.377,0.002L65.185,68.679L52.72,57.674\r\n              c-1.539-1.356-3.838-1.354-5.377-0.002L34.871,68.683L22.375,57.67c-0.769-0.676-1.725-1.013-2.685-1.013\r\n              c-0.959,0-1.919,0.339-2.685,1.013L8.121,65.5L8.098,0.024L91.878,0z"}"></path></g></svg> 
-    `
-      })}`)}` : ``}
+      $$unsubscribe_onlyAllowApplePencil();
+      return `<div style="${"position: absolute; right: 0; top: 0; bottom: auto; left: auto; z-index: 100; background-color: grey;"}">${Object.keys($user).length > 0 ? `${each($user.pencilColors, (color) => `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+        default: () => `<svg preserveAspectRatio="${"none"}" version="${"1.1"}" id="${"Layer_1"}" xmlns="${"http://www.w3.org/2000/svg"}" xmlns:xlink="${"http://www.w3.org/1999/xlink"}" x="${"0px"}" y="${"0px"}" width="${"16px"}" height="${"30px"}" viewBox="${"0 0 100 230"}" style="${"enable-background:new 0 0 100 230;"}" xml:space="${"preserve"}" class="${"svelte-ln95yv"}"><g><path d="${"M0,0v72.377c0,1.588,0.234,3.169,0.698,4.706l45.416,150.032C46.633,228.828,48.212,230,50,230s3.367-1.172,3.886-2.883\r\n              L99.31,77.079c0.457-1.525,0.69-3.108,0.69-4.702V0.002"}"></path><polygon${add_attribute("style", `fill: ${color};`, 0)} points="${"50,211.978 38.879,175.24 61.122,175.24"}"></polygon><path style="${"fill:#424242;"}" d="${"M63.581,167.118H36.42L8.765,75.761l10.924-9.63l12.5,11.015c1.54,1.353,3.835,1.35,5.375-0.002\r\n                l12.468-11.007l12.464,11.005c1.54,1.357,3.839,1.357,5.377,0l12.465-11.005l10.9,9.623L63.581,167.118z"}"></path><path${add_attribute("style", `fill: ${color};`, 0)} d="${"M91.878,0v65.486l-8.852-7.813c-1.539-1.353-3.838-1.354-5.377,0.002L65.185,68.679L52.72,57.674\r\n                c-1.539-1.356-3.838-1.354-5.377-0.002L34.871,68.683L22.375,57.67c-0.769-0.676-1.725-1.013-2.685-1.013\r\n                c-0.959,0-1.919,0.339-2.685,1.013L8.121,65.5L8.098,0.024L91.878,0z"}"></path></g></svg> 
+      `
+      })}`)}
 
-${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+    ${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
         default: () => `Eraser
-`
+    `
+      })}` : ``}
+
+  ${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+        default: () => `${escape($onlyAllowApplePencil ? "Enable touch" : "Disable touch")}`
       })}
 
-${slots.default ? slots.default({}) : `
-  
-`}`;
+  ${slots.default ? slots.default({}) : `
+
+    
+  `}
+
+</div>`;
     });
     Blackboard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $canvasHeight, $$unsubscribe_canvasHeight;
       let $canvasWidth, $$unsubscribe_canvasWidth;
       let $$unsubscribe_currentTool;
+      let $$unsubscribe_onlyAllowApplePencil;
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
       $$unsubscribe_currentTool = subscribe(currentTool, (value) => value);
+      $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => value);
       let { strokesArray } = $$props;
       let { currentTime = 0 } = $$props;
       createEventDispatcher();
@@ -113540,58 +113733,83 @@ ${slots.default ? slots.default({}) : `
       $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_currentTool();
+      $$unsubscribe_onlyAllowApplePencil();
       return `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
         default: () => `${slots.default ? slots.default({}) : `
 
   `}`
       })}
 
-<canvas${add_attribute("style", `background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`, 0)}${add_attribute("this", canvas, 0)}></canvas>`;
+<canvas${add_attribute("style", `position: absolute; margin-top: 0; margin-left: 0; background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`, 0)}${add_attribute("this", canvas, 0)}></canvas>`;
     });
-    DoodleVideo = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $canvasHeight, $$unsubscribe_canvasHeight;
-      let $canvasWidth, $$unsubscribe_canvasWidth;
-      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
-      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
-      let { strokesArray } = $$props;
-      let { audioDownloadURL } = $$props;
-      let canvas;
-      let AudioPlayer;
-      onDestroy(() => {
-      });
-      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray !== void 0)
-        $$bindings.strokesArray(strokesArray);
-      if ($$props.audioDownloadURL === void 0 && $$bindings.audioDownloadURL && audioDownloadURL !== void 0)
-        $$bindings.audioDownloadURL(audioDownloadURL);
-      $$unsubscribe_canvasHeight();
-      $$unsubscribe_canvasWidth();
-      return `${slots.default ? slots.default({}) : `
+    RenderlessAudioRecorder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $dailyMicStream, $$unsubscribe_dailyMicStream;
+      $$unsubscribe_dailyMicStream = subscribe(dailyMicStream, (value) => $dailyMicStream = value);
+      let currentTime = 0;
+      let timer;
+      const dispatch2 = createEventDispatcher();
+      let recorder = null;
+      function startRecording() {
+        return new Promise(async (resolve3) => {
+          if (!$dailyMicStream) {
+            const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            dailyMicStream.set(micStream);
+          }
+          const micStreamCopy = $dailyMicStream.clone();
+          recorder = new MediaRecorder(micStreamCopy);
+          recorder.start();
+          timer = setInterval(() => currentTime += 0.1, 100);
+          dispatch2("record-start");
+          recordState.set("mid_record");
+          resolve3();
+        });
+      }
+      function stopRecording() {
+        return new Promise((resolve3, reject) => {
+          clearTimeout(timer);
+          recordState.set("post_record");
+          recorder.addEventListener("dataavailable", (e) => {
+            const audioBlob = e.data;
+            dispatch2("record-end", { audioBlob });
+            resolve3();
+            recordState.set("pre_record");
+          });
+          recorder.stop();
+          for (const track of recorder.stream.getTracks()) {
+            track.stop();
+          }
+        });
+      }
+      $$unsubscribe_dailyMicStream();
+      return `${slots.default ? slots.default({
+        startRecording,
+        stopRecording,
+        currentTime
+      }) : `
 
-`}
-<canvas${add_attribute("style", `background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`, 0)}${add_attribute("this", canvas, 0)}></canvas>
-
-<audio${add_attribute("src", audioDownloadURL, 0)} controls style="${"width: 100%;"}"${add_attribute("this", AudioPlayer, 0)}></audio>`;
+`}`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c4c79891.js
-var index_c4c79891_exports = {};
-__export(index_c4c79891_exports, {
+// .svelte-kit/output/server/chunks/index-de20c644.js
+var index_de20c644_exports = {};
+__export(index_de20c644_exports, {
   default: () => Routes
 });
-var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, counter, HelperText, css, Routes;
-var init_index_c4c79891 = __esm({
-  ".svelte-kit/output/server/chunks/index-c4c79891.js"() {
+var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, counter, HelperText, css2, Routes;
+var init_index_de20c644 = __esm({
+  ".svelte-kit/output/server/chunks/index-de20c644.js"() {
     init_shims();
-    init_app_ab8ef003();
-    init_DoodleVideo_e8a00c7c();
-    init_classAdderBuilder_e16f5e0c();
-    init_index_c327074d_c840c486();
-    init_store_a90867fb();
+    init_app_60dba192();
+    init_RenderlessAudioRecorder_7c2a3e9b();
+    init_classAdderBuilder_af57cfdf();
+    init_index_c327074d_3deb0f8c();
+    init_store_074fb7e7();
     init_index_node();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
+    init_audio_recorder_polyfill();
     import_stream4 = __toModule(require("stream"));
     import_http4 = __toModule(require("http"));
     import_url5 = __toModule(require("url"));
@@ -113644,7 +113862,7 @@ var init_index_c4c79891 = __esm({
       ])}${add_attribute("this", element, 0)}>${`${slots.default ? slots.default({}) : ``}`}
 </div>`;
     });
-    css = {
+    css2 = {
       code: ".room-title input{font-size:2rem}.question input{color:red !important}",
       map: null
     };
@@ -113652,20 +113870,20 @@ var init_index_c4c79891 = __esm({
       let isQuestionMode;
       let $user, $$unsubscribe_user;
       let $canvasWidth, $$unsubscribe_canvasWidth;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
+      let $recordState, $$unsubscribe_recordState;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      $$unsubscribe_recordState = subscribe(recordState, (value) => $recordState = value);
       let currentTime = 10;
-      let titleValue = "Welcome to the tutorial!";
-      let phoneNumSegment1 = "";
-      let phoneNumSegment2 = "";
-      let phoneNumSegment3 = "";
-      let hasAnsweredQuestion = false;
-      let hasWatchedVideo = false;
+      let titleValue = "Solo tutorial";
+      let localStrokesArray = [];
       let timer;
       if ($user.uid) {
         goto("lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn");
       }
-      $$result.css.add(css);
+      $$result.css.add(css2);
       let $$settled;
       let $$rendered;
       do {
@@ -113674,29 +113892,7 @@ var init_index_c4c79891 = __esm({
         {
           if (currentTime.toFixed(0) === "0") {
             console.log("end of timer, currentTime =", currentTime);
-            hasAnsweredQuestion = true;
             clearInterval(timer);
-            tick().then(() => {
-              const elem = document.getElementById("caleb-video-section");
-              elem.scrollIntoView({
-                block: "start",
-                inline: "nearest",
-                behavior: "smooth"
-              });
-            });
-            setTimeout(() => hasWatchedVideo = true, 1e4);
-          }
-        }
-        {
-          if (hasWatchedVideo) {
-            tick().then(() => {
-              const elem = document.getElementById("sign-up-section");
-              elem.scrollIntoView({
-                block: "start",
-                inline: "nearest",
-                behavior: "smooth"
-              });
-            });
           }
         }
         $$rendered = `<div id="${"tutorial-content"}" style="${"padding: 25px;"}">${!$user.uid ? `<div${add_classes([isQuestionMode ? "question" : ""].join(" ").trim())}>${validate_component(Textfield, "Textfield").$$render($$result, {
@@ -113710,66 +113906,32 @@ var init_index_c4c79891 = __esm({
           }
         }, {
           helper: () => `${validate_component(HelperText, "HelperText").$$render($$result, { slot: "helper", persistent: true }, {}, {
-            default: () => `${`<div style="${"font-size: 1rem;"}">Ask a question by editing the title above
+            default: () => `${`<div style="${"font-size: 0.9rem;"}">Welcome! To learn how to ask questions, click the title above
 						</div>`}`
           })}`
         })}</div>
 		
-		${isQuestionMode ? `<div>${validate_component(Textfield, "Textfield").$$render($$result, {
+		${isQuestionMode ? `${`<div>${validate_component(Textfield, "Textfield").$$render($$result, {
           textarea: true,
           style: `width: ${$canvasWidth}px; margin-top: 20px; min-height: 100px`,
-          value: `Below is a blackboard: use it to create powerful visual explanations. This tutorial is offline, so you must help yourself for now, young Padawan. Press REC to start, you have ${currentTime.toFixed(0)} seconds remaining...`
+          value: `Young Padawan, for now, you must help yourself. Use the blackboard below to create powerful visual explanations. Press REC to start, you have ${currentTime.toFixed(0)} seconds remaining...`
         }, {}, {})}</div>
 
-			${validate_component(Blackboard, "Blackboard").$$render($$result, { strokesArray: [] }, {}, {})}
-			
-
-			${hasAnsweredQuestion ? `<div id="${"caleb-video-section"}">
-						${validate_component(Textfield, "Textfield").$$render($$result, {
-          textarea: true,
-          style: `width: ${$canvasWidth}px; margin-top: 20px; min-height: 100px`,
-          value: "It's a miracle! Someone from a distant galaxy answered your question! What? I hard-coded the video from the 6.006 server? Don't be ridiculous haha... Anyway, press play and use the slider to experience the smooth back-and-forth of lightweight videos"
-        }, {}, {})}
-						${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, { strokesArray: [] }, {}, {})}</div>
-
-					${hasWatchedVideo ? `<div id="${"sign-up-section"}" style="${"height: 100vh"}">${validate_component(Textfield, "Textfield").$$render($$result, {
-          textarea: true,
-          style: `width: ${$canvasWidth}px; margin-top: 20px; min-height: 100px`,
-          value: `Congratulations, you're ready to save the galaxy with your fellow comrades - whenever someone requests help, others will be notified by text. Sign up with phone number below`
-        }, {}, {})}
-							${`<div style="${"display: flex"}">${validate_component(Textfield, "Textfield").$$render($$result, {
-          variant: "filled",
-          value: phoneNumSegment1
-        }, {
-          value: ($$value) => {
-            phoneNumSegment1 = $$value;
-            $$settled = false;
-          }
-        }, {})}
-									<div>-</div>
-									${validate_component(Textfield, "Textfield").$$render($$result, {
-          variant: "filled",
-          value: phoneNumSegment2
-        }, {
-          value: ($$value) => {
-            phoneNumSegment2 = $$value;
-            $$settled = false;
-          }
-        }, {})}
-									<div>-</div>
-									${validate_component(Textfield, "Textfield").$$render($$result, {
-          variant: "filled",
-          value: phoneNumSegment3
-        }, {
-          value: ($$value) => {
-            phoneNumSegment3 = $$value;
-            $$settled = false;
-          }
-        }, {})}
-									${validate_component(Button_1, "Button").$$render($$result, { id: "sign-in-button" }, {}, {
-          default: () => `Sign in with phone number
-									`
-        })}</div>`}</div>` : ``}` : ``}` : ``}` : ``}</div>
+				<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight}px`, 0)}>${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
+          default: ({ startRecording, stopRecording, currentTime: currentTime2 }) => `${validate_component(Blackboard, "Blackboard").$$render($$result, {
+            currentTime: currentTime2,
+            strokesArray: localStrokesArray
+          }, {}, {
+            default: () => `${$recordState === "pre_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+              default: () => `REC
+								`
+            })}` : `${$recordState === "mid_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+              default: () => `Finish
+								`
+            })}` : ``}`}`
+          })}`
+        })}</div>
+			`}` : ``}` : ``}</div>
 
 
 
@@ -113780,6 +113942,8 @@ var init_index_c4c79891 = __esm({
       } while (!$$settled);
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
+      $$unsubscribe_canvasHeight();
+      $$unsubscribe_recordState();
       return $$rendered;
     });
   }
@@ -118584,9 +118748,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-4de0bef5.js
-var layout_4de0bef5_exports = {};
-__export(layout_4de0bef5_exports, {
+// .svelte-kit/output/server/chunks/__layout-659e0dcd.js
+var layout_659e0dcd_exports = {};
+__export(layout_659e0dcd_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -120767,13 +120931,13 @@ function load2({ page }) {
     }
   };
 }
-var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css$1, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$4, event, Event$3, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$2, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event$1, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, browser2, css2, _layout2;
-var init_layout_4de0bef5 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-4de0bef5.js"() {
+var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, browser2, MenuSurface, Menu, List, Object_13, counter$1, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css$1, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$4, event, Event$3, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$2, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event$1, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error2, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, Switch, counter2, FormField, css3, _layout2;
+var init_layout_659e0dcd = __esm({
+  ".svelte-kit/output/server/chunks/__layout-659e0dcd.js"() {
     init_shims();
-    init_app_ab8ef003();
-    init_classAdderBuilder_e16f5e0c();
-    init_store_a90867fb();
+    init_app_60dba192();
+    init_classAdderBuilder_af57cfdf();
+    init_store_074fb7e7();
     import_util7 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream5 = __toModule(require("stream"));
@@ -120786,6 +120950,7 @@ var init_layout_4de0bef5 = __esm({
     import_daily_js = __toModule(require_daily_iframe());
     import_cookie4 = __toModule(require_cookie());
     init_dist();
+    browser2 = false;
     MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -121166,7 +121331,7 @@ var init_layout_4de0bef5 = __esm({
       return $$rendered;
     });
     ({ Object: Object_13 } = globals);
-    counter2 = 0;
+    counter$1 = 0;
     Item$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let tabindex;
       let $$restProps = compute_rest_props($$props, [
@@ -121209,7 +121374,7 @@ var init_layout_4de0bef5 = __esm({
       let { disabled = false } = $$props;
       let { skipRestoreFocus = false } = $$props;
       let { tabindex: tabindexProp = uninitializedValue } = $$props;
-      let { inputId = "SMUI-form-field-list-" + counter2++ } = $$props;
+      let { inputId = "SMUI-form-field-list-" + counter$1++ } = $$props;
       let { href = void 0 } = $$props;
       let element;
       let internalClasses = {};
@@ -124848,7 +125013,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         log(prefix, ...varArgs);
       };
     };
-    error = function(...varArgs) {
+    error2 = function(...varArgs) {
       const message2 = "FIREBASE INTERNAL ERROR: " + buildLogMessage_(...varArgs);
       logClient3.error(message2);
     };
@@ -126091,13 +126256,13 @@ ${validate_component(Menu, "Menu").$$render($$result, {
           } else if (cmd === CONTROL_RESET) {
             this.onReset_(payload);
           } else if (cmd === CONTROL_ERROR) {
-            error("Server Error: " + payload);
+            error2("Server Error: " + payload);
           } else if (cmd === CONTROL_PONG) {
             this.log_("got pong on primary.");
             this.onPrimaryResponse_();
             this.sendPingOnPrimaryIfNecessary_();
           } else {
-            error("Unknown control packet command: " + cmd);
+            error2("Unknown control packet command: " + cmd);
           }
         }
       }
@@ -126803,7 +126968,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         } else if (action === "sd") {
           this.onSecurityDebugPacket_(body);
         } else {
-          error("Unrecognized action received from server: " + stringify(action) + "\nAre you using the latest client?");
+          error2("Unrecognized action received from server: " + stringify(action) + "\nAre you using the latest client?");
         }
       }
       onReady_(timestamp, sessionId) {
@@ -129295,9 +129460,228 @@ ${validate_component(Menu, "Menu").$$render($$result, {
 
 `}`;
     });
-    browser2 = false;
-    css2 = {
-      code: ".question-item.svelte-2jizi9{color:red}.selected.svelte-2jizi9{font-weight:500;background-color:rgb(188, 248, 248)}.not-selected.svelte-2jizi9{opacity:80%}",
+    Switch = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "disabled",
+        "color",
+        "group",
+        "checked",
+        "value",
+        "processing",
+        "icons",
+        "icons$use",
+        "icons$class",
+        "getId",
+        "getElement"
+      ]);
+      var _a;
+      forwardEventsBuilder(get_current_component());
+      let uninitializedValue = () => {
+      };
+      function isUninitializedValue(value2) {
+        return value2 === uninitializedValue;
+      }
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { disabled = false } = $$props;
+      let { color = "primary" } = $$props;
+      let { group = uninitializedValue } = $$props;
+      let { checked = uninitializedValue } = $$props;
+      let { value = null } = $$props;
+      let { processing: processing2 = false } = $$props;
+      let { icons = true } = $$props;
+      let { icons$use = [] } = $$props;
+      let { icons$class = "" } = $$props;
+      let element;
+      let internalClasses = {};
+      let rippleElement;
+      let inputProps = (_a = getContext("SMUI:generic:input:props")) !== null && _a !== void 0 ? _a : {};
+      let selected = isUninitializedValue(group) ? isUninitializedValue(checked) ? false : checked : group.indexOf(value) !== -1;
+      let state = {
+        get disabled() {
+          return disabled;
+        },
+        set disabled(value2) {
+          disabled = value2;
+        },
+        get processing() {
+          return processing2;
+        },
+        set processing(value2) {
+          processing2 = value2;
+        },
+        get selected() {
+          return selected;
+        },
+        set selected(value2) {
+          selected = value2;
+        }
+      };
+      let previousChecked = checked;
+      let previousGroup = isUninitializedValue(group) ? [] : [...group];
+      let previousSelected = selected;
+      function getId() {
+        return inputProps && inputProps.id;
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
+        $$bindings.disabled(disabled);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.group === void 0 && $$bindings.group && group !== void 0)
+        $$bindings.group(group);
+      if ($$props.checked === void 0 && $$bindings.checked && checked !== void 0)
+        $$bindings.checked(checked);
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      if ($$props.processing === void 0 && $$bindings.processing && processing2 !== void 0)
+        $$bindings.processing(processing2);
+      if ($$props.icons === void 0 && $$bindings.icons && icons !== void 0)
+        $$bindings.icons(icons);
+      if ($$props.icons$use === void 0 && $$bindings.icons$use && icons$use !== void 0)
+        $$bindings.icons$use(icons$use);
+      if ($$props.icons$class === void 0 && $$bindings.icons$class && icons$class !== void 0)
+        $$bindings.icons$class(icons$class);
+      if ($$props.getId === void 0 && $$bindings.getId && getId !== void 0)
+        $$bindings.getId(getId);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      {
+        {
+          let notifyChange = false;
+          if (!isUninitializedValue(group)) {
+            if (previousSelected !== selected) {
+              const idx = group.indexOf(value);
+              if (selected && idx === -1) {
+                group.push(value);
+                group = group;
+              } else if (!selected && idx !== -1) {
+                group.splice(idx, 1);
+                group = group;
+              }
+              notifyChange = true;
+            } else {
+              const idxPrev = previousGroup.indexOf(value);
+              const idx = group.indexOf(value);
+              if (idxPrev > -1 && idx === -1) {
+                state.selected = false;
+              } else if (idx > -1 && idxPrev === -1) {
+                state.selected = true;
+              }
+            }
+          }
+          if (isUninitializedValue(checked)) {
+            if (previousSelected !== selected) {
+              notifyChange = true;
+            }
+          } else if (checked !== selected) {
+            if (checked === previousChecked) {
+              checked = selected;
+              notifyChange = true;
+            } else {
+              state.selected = checked;
+            }
+          }
+          previousChecked = checked;
+          previousGroup = isUninitializedValue(group) ? [] : [...group];
+          previousSelected = selected;
+          if (notifyChange && element) {
+            dispatch(element, "SMUISwitch:change", { selected, value });
+          }
+        }
+      }
+      return `<button${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-switch": true,
+            "mdc-switch--unselected": !selected,
+            "mdc-switch--selected": selected,
+            "mdc-switch--processing": processing2,
+            "smui-switch--color-secondary": color === "secondary",
+            ...internalClasses
+          }))
+        },
+        { type: "button" },
+        { role: "switch" },
+        {
+          "aria-checked": escape_attribute_value(selected ? "true" : "false")
+        },
+        { disabled: disabled || null },
+        escape_object(inputProps),
+        escape_object(exclude($$restProps, ["icons$"]))
+      ])}${add_attribute("this", element, 0)}><div class="${"mdc-switch__track"}"></div>
+  <div class="${"mdc-switch__handle-track"}"><div class="${"mdc-switch__handle"}"><div class="${"mdc-switch__shadow"}"><div class="${"mdc-elevation-overlay"}"></div></div>
+      <div class="${"mdc-switch__ripple"}"${add_attribute("this", rippleElement, 0)}></div>
+      ${icons ? `<div${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [icons$class]: true,
+            "mdc-switch__icons": true
+          }))
+        },
+        escape_object(prefixFilter($$restProps, "icons$"))
+      ])}><svg class="${"mdc-switch__icon mdc-switch__icon--on"}" viewBox="${"0 0 24 24"}"><path d="${"M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z"}"></path></svg>
+          <svg class="${"mdc-switch__icon mdc-switch__icon--off"}" viewBox="${"0 0 24 24"}"><path d="${"M20 13H4v-2h16v2z"}"></path></svg></div>` : ``}</div></div>
+</button>`;
+    });
+    counter2 = 0;
+    FormField = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["use", "class", "align", "noWrap", "inputId", "label$use", "getElement"]);
+      forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { align = "start" } = $$props;
+      let { noWrap = false } = $$props;
+      let { inputId = "SMUI-form-field-" + counter2++ } = $$props;
+      let { label$use = [] } = $$props;
+      let element;
+      let label;
+      setContext("SMUI:generic:input:props", { id: inputId });
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.align === void 0 && $$bindings.align && align !== void 0)
+        $$bindings.align(align);
+      if ($$props.noWrap === void 0 && $$bindings.noWrap && noWrap !== void 0)
+        $$bindings.noWrap(noWrap);
+      if ($$props.inputId === void 0 && $$bindings.inputId && inputId !== void 0)
+        $$bindings.inputId(inputId);
+      if ($$props.label$use === void 0 && $$bindings.label$use && label$use !== void 0)
+        $$bindings.label$use(label$use);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `<div${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-form-field": true,
+            "mdc-form-field--align-end": align === "end",
+            "mdc-form-field--nowrap": noWrap
+          }))
+        },
+        escape_object(exclude($$restProps, ["label$"]))
+      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}
+  <label${spread([
+        { for: escape_attribute_value(inputId) },
+        escape_object(prefixFilter($$restProps, "label$"))
+      ])}${add_attribute("this", label, 0)}>${slots.label ? slots.label({}) : ``}</label>
+</div>`;
+    });
+    css3 = {
+      code: ".question-item.svelte-ismk6d{color:red}.selected.svelte-ismk6d{font-weight:500;background-color:rgb(188, 248, 248)}",
       map: null
     };
     _layout2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -129343,7 +129727,6 @@ ${validate_component(Menu, "Menu").$$render($$result, {
               for (const id of Object.keys($roomToPeople)) {
                 for (const p of $roomToPeople[id]) {
                   if (p.browserTabID === person.browserTabID) {
-                    console.log("removing from array");
                     set_store_value(roomToPeople, $roomToPeople[id] = $roomToPeople[id].filter((p2) => p2.browserTabID !== person.browserTabID), $roomToPeople);
                   }
                 }
@@ -129356,14 +129739,13 @@ ${validate_component(Menu, "Menu").$$render($$result, {
               set_store_value(roomToPeople, $roomToPeople[roomID2] = $roomToPeople[roomID2].filter((p) => p.browserTabID !== person.browserTabID), $roomToPeople);
               break;
           }
-          console.log("$roomToPeople =", $roomToPeople);
         });
       }));
       if ($$props.classID === void 0 && $$bindings.classID && classID !== void 0)
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
-      $$result.css.add(css2);
+      $$result.css.add(css3);
       $$unsubscribe_roomToPeople();
       $$unsubscribe_dailyRoomParticipants();
       $$unsubscribe_browserTabID();
@@ -129374,20 +129756,26 @@ ${validate_component(Menu, "Menu").$$render($$result, {
 ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$result, { roomID }, {}, {
         default: ({ isMicOn, activeSpeakerID, toggleMic, firestoreIDToDailyID }) => `${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, {}, {}, {
           default: () => `${rooms ? `${each(rooms, (room) => `${room.name !== void 0 ? `
-          <div style="${"padding: 6px"}"><div style="${"padding: 6px"}" class="${[
-            "svelte-2jizi9",
-            (room.id === roomID ? "selected" : "") + " " + (room.id !== roomID ? "not-selected" : "")
-          ].join(" ").trim()}">${room.name ? `<div class="${[
-            "svelte-2jizi9",
+          <div style="${"padding: 6px"}">
+            <div class="${escape(null_to_empty(room.id === roomID ? "selected" : "")) + " svelte-ismk6d"}" style="${"padding: 6px; opacity: 90%"}">${room.name ? `<div class="${[
+            "svelte-ismk6d",
             room.name.charAt(room.name.length - 1) === "?" ? "question-item" : ""
           ].join(" ").trim()}">${escape(room.name)}
                 </div>` : `${room.name === "" ? `<div>(no title)</div>` : ``}`}
 
               ${$roomToPeople[room.id] ? `${each($roomToPeople[room.id], (person) => `<div style="${"display: flex"}"><div style="${"font-size: 0.7rem; margin-left: 4px;"}">${escape(person.name)}</div> 
-                    ${Object.keys($dailyRoomParticipants).length > 0 ? `${person.browserTabID === $browserTabID ? `<div>${escape($dailyRoomParticipants.local.audio ? "mute" : "unmute")}
+                    ${Object.keys($dailyRoomParticipants).length > 0 ? `${person.browserTabID === $browserTabID ? `<div style="${"margin-right: 0; margin-left: auto"}">${validate_component(FormField, "FormField").$$render($$result, {}, {}, {
+            label: () => `<span slot="${"label"}">${escape($dailyRoomParticipants.local.audio ? "voice on" : "muted")}</span>`,
+            default: () => `${validate_component(Switch, "Switch").$$render($$result, {
+              checked: $dailyRoomParticipants.local.audio
+            }, {}, {})}
+                            
+                          `
+          })}
                         </div>` : ``}
-                      ${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]] ? `<div>isMicOn: ${escape($dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio)}
-                        </div>` : ``}` : ``}
+                      ${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]] ? `${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio ? `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto"}">mic
+                          </span>` : `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto"}">mic_off
+                          </span>`}` : ``}` : ``}
                   </div>`)}` : ``}</div>
           </div>` : ``}`)}` : ``}`
         })}`
@@ -129407,183 +129795,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// node_modules/audio-recorder-polyfill/wave-encoder/index.js
-var wave_encoder_default;
-var init_wave_encoder = __esm({
-  "node_modules/audio-recorder-polyfill/wave-encoder/index.js"() {
-    init_shims();
-    wave_encoder_default = () => {
-      let BYTES_PER_SAMPLE = 2;
-      let recorded = [];
-      function encode(buffer) {
-        let length = buffer.length;
-        let data = new Uint8Array(length * BYTES_PER_SAMPLE);
-        for (let i = 0; i < length; i++) {
-          let index = i * BYTES_PER_SAMPLE;
-          let sample = buffer[i];
-          if (sample > 1) {
-            sample = 1;
-          } else if (sample < -1) {
-            sample = -1;
-          }
-          sample = sample * 32768;
-          data[index] = sample;
-          data[index + 1] = sample >> 8;
-        }
-        recorded.push(data);
-      }
-      function dump(sampleRate) {
-        let bufferLength = recorded.length ? recorded[0].length : 0;
-        let length = recorded.length * bufferLength;
-        let wav = new Uint8Array(44 + length);
-        let view = new DataView(wav.buffer);
-        view.setUint32(0, 1380533830, false);
-        view.setUint32(4, 36 + length, true);
-        view.setUint32(8, 1463899717, false);
-        view.setUint32(12, 1718449184, false);
-        view.setUint32(16, 16, true);
-        view.setUint16(20, 1, true);
-        view.setUint16(22, 1, true);
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, sampleRate * BYTES_PER_SAMPLE, true);
-        view.setUint16(32, BYTES_PER_SAMPLE, true);
-        view.setUint16(34, 8 * BYTES_PER_SAMPLE, true);
-        view.setUint32(36, 1684108385, false);
-        view.setUint32(40, length, true);
-        for (let i = 0; i < recorded.length; i++) {
-          wav.set(recorded[i], i * bufferLength + 44);
-        }
-        recorded = [];
-        postMessage(wav.buffer, [wav.buffer]);
-      }
-      onmessage = (e) => {
-        if (e.data[0] === "encode") {
-          encode(e.data[1]);
-        } else if (e.data[0] === "dump") {
-          dump(e.data[1]);
-        }
-      };
-    };
-  }
-});
-
-// node_modules/audio-recorder-polyfill/index.js
-var AudioContext, createWorker, error2, context, MediaRecorder2;
-var init_audio_recorder_polyfill = __esm({
-  "node_modules/audio-recorder-polyfill/index.js"() {
-    init_shims();
-    init_wave_encoder();
-    AudioContext = window.AudioContext || window.webkitAudioContext;
-    createWorker = (fn) => {
-      let js = fn.toString().replace(/^(\(\)\s*=>|function\s*\(\))\s*{/, "").replace(/}$/, "");
-      let blob = new Blob([js]);
-      return new Worker(URL.createObjectURL(blob));
-    };
-    error2 = (method) => {
-      let event2 = new Event("error");
-      event2.data = new Error("Wrong state for " + method);
-      return event2;
-    };
-    MediaRecorder2 = class {
-      constructor(stream, config = null) {
-        this.stream = stream;
-        this.config = config;
-        this.state = "inactive";
-        this.em = document.createDocumentFragment();
-        this.encoder = createWorker(MediaRecorder2.encoder);
-        let recorder = this;
-        this.encoder.addEventListener("message", (e) => {
-          let event2 = new Event("dataavailable");
-          event2.data = new Blob([e.data], { type: recorder.mimeType });
-          recorder.em.dispatchEvent(event2);
-          if (recorder.state === "inactive") {
-            recorder.em.dispatchEvent(new Event("stop"));
-          }
-        });
-      }
-      start(timeslice) {
-        if (this.state !== "inactive") {
-          return this.em.dispatchEvent(error2("start"));
-        }
-        this.state = "recording";
-        if (!context) {
-          context = new AudioContext(this.config);
-        }
-        this.clone = this.stream.clone();
-        this.input = context.createMediaStreamSource(this.clone);
-        this.processor = context.createScriptProcessor(2048, 1, 1);
-        this.encoder.postMessage(["init", context.sampleRate]);
-        this.processor.onaudioprocess = (e) => {
-          if (this.state === "recording") {
-            this.encoder.postMessage(["encode", e.inputBuffer.getChannelData(0)]);
-          }
-        };
-        this.input.connect(this.processor);
-        this.processor.connect(context.destination);
-        this.em.dispatchEvent(new Event("start"));
-        if (timeslice) {
-          this.slicing = setInterval(() => {
-            if (this.state === "recording")
-              this.requestData();
-          }, timeslice);
-        }
-        return void 0;
-      }
-      stop() {
-        if (this.state === "inactive") {
-          return this.em.dispatchEvent(error2("stop"));
-        }
-        this.requestData();
-        this.state = "inactive";
-        this.clone.getTracks().forEach((track) => {
-          track.stop();
-        });
-        this.processor.disconnect();
-        this.input.disconnect();
-        return clearInterval(this.slicing);
-      }
-      pause() {
-        if (this.state !== "recording") {
-          return this.em.dispatchEvent(error2("pause"));
-        }
-        this.state = "paused";
-        return this.em.dispatchEvent(new Event("pause"));
-      }
-      resume() {
-        if (this.state !== "paused") {
-          return this.em.dispatchEvent(error2("resume"));
-        }
-        this.state = "recording";
-        return this.em.dispatchEvent(new Event("resume"));
-      }
-      requestData() {
-        if (this.state === "inactive") {
-          return this.em.dispatchEvent(error2("requestData"));
-        }
-        return this.encoder.postMessage(["dump", context.sampleRate]);
-      }
-      addEventListener(...args) {
-        this.em.addEventListener(...args);
-      }
-      removeEventListener(...args) {
-        this.em.removeEventListener(...args);
-      }
-      dispatchEvent(...args) {
-        this.em.dispatchEvent(...args);
-      }
-    };
-    MediaRecorder2.prototype.mimeType = "audio/wav";
-    MediaRecorder2.isTypeSupported = (mimeType) => {
-      return MediaRecorder2.prototype.mimeType === mimeType;
-    };
-    MediaRecorder2.notSupported = !navigator.mediaDevices || !AudioContext;
-    MediaRecorder2.encoder = wave_encoder_default;
-  }
-});
-
-// .svelte-kit/output/server/chunks/index-b068766c.js
-var index_b068766c_exports = {};
-__export(index_b068766c_exports, {
+// .svelte-kit/output/server/chunks/index-1f74e669.js
+var index_1f74e669_exports = {};
+__export(index_1f74e669_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -130080,16 +130294,16 @@ async function load3({ page }) {
     }
   };
 }
-var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, RenderlessBoardMethods, RenderlessAudioRecorder, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css3, U5Broomu5D;
-var init_index_b068766c = __esm({
-  ".svelte-kit/output/server/chunks/index-b068766c.js"() {
+var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, CommonLabel, Label, css$12, DoodleVideo, RenderlessBoardMethods, Readable2, BUFFER3, TYPE2, Blob5, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css4, U5Broomu5D;
+var init_index_1f74e669 = __esm({
+  ".svelte-kit/output/server/chunks/index-1f74e669.js"() {
     init_shims();
-    init_app_ab8ef003();
-    init_index_c327074d_c840c486();
-    init_store_a90867fb();
+    init_app_60dba192();
+    init_index_c327074d_3deb0f8c();
+    init_store_074fb7e7();
     init_index_node();
-    init_audio_recorder_polyfill();
-    init_DoodleVideo_e8a00c7c();
+    init_RenderlessAudioRecorder_7c2a3e9b();
+    init_classAdderBuilder_af57cfdf();
     import_stream6 = __toModule(require("stream"));
     import_http5 = __toModule(require("http"));
     import_url7 = __toModule(require("url"));
@@ -130098,9 +130312,92 @@ var init_index_b068766c = __esm({
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     import_punycode4 = __toModule(require("punycode"));
-    init_classAdderBuilder_e16f5e0c();
+    init_audio_recorder_polyfill();
+    CommonLabel = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["use", "class", "component", "getElement"]);
+      const forwardEvents = forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let element;
+      let { component = Span$1 } = $$props;
+      const context2 = getContext("SMUI:label:context");
+      const tabindex = getContext("SMUI:label:tabindex");
+      function getElement() {
+        return element.getElement();
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
+        $$bindings.component(component);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object.assign({ use: [forwardEvents, ...use] }, {
+          class: classMap({
+            [className]: true,
+            "mdc-button__label": context2 === "button",
+            "mdc-fab__label": context2 === "fab",
+            "mdc-tab__text-label": context2 === "tab",
+            "mdc-image-list__label": context2 === "image-list",
+            "mdc-snackbar__label": context2 === "snackbar",
+            "mdc-banner__text": context2 === "banner",
+            "mdc-segmented-button__label": context2 === "segmented-button",
+            "mdc-data-table__pagination-rows-per-page-label": context2 === "data-table:pagination",
+            "mdc-data-table__header-cell-label": context2 === "data-table:sortable-header-cell"
+          })
+        }, context2 === "snackbar" ? { "aria-atomic": "false" } : {}, { tabindex }, $$restProps, { this: element }), {
+          this: ($$value) => {
+            element = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `${slots.default ? slots.default({}) : ``}`
+        })}`;
+      } while (!$$settled);
+      return $$rendered;
+    });
+    Label = CommonLabel;
+    css$12 = {
+      code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
+      map: null
+    };
+    DoodleVideo = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $canvasHeight, $$unsubscribe_canvasHeight;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      let { strokesArray } = $$props;
+      let { audioDownloadURL } = $$props;
+      let canvas;
+      let AudioPlayer;
+      onDestroy(() => {
+      });
+      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray !== void 0)
+        $$bindings.strokesArray(strokesArray);
+      if ($$props.audioDownloadURL === void 0 && $$bindings.audioDownloadURL && audioDownloadURL !== void 0)
+        $$bindings.audioDownloadURL(audioDownloadURL);
+      $$result.css.add(css$12);
+      $$unsubscribe_canvasHeight();
+      $$unsubscribe_canvasWidth();
+      return `${slots.default ? slots.default({}) : `
+
+`}
+
+${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"color: white; font-size: 6rem; width: 120px; height: 120px"}">play_circle
+  </span>`}
+
+<canvas${add_attribute("style", `background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`, 0)}${add_attribute("this", canvas, 0)}></canvas>
+
+<audio${add_attribute("src", audioDownloadURL, 0)} controls${add_attribute("style", `width: ${$canvasWidth}px`, 0)}${add_attribute("this", AudioPlayer, 0)}></audio>`;
+    });
     RenderlessBoardMethods = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { dbPath } = $$props;
+      let { autoFetchStrokes = false } = $$props;
       let strokesArray;
       let isFetchingStrokes = false;
       let boardDoc;
@@ -130110,6 +130407,9 @@ var init_index_b068766c = __esm({
       onSnapshot(boardRef, (snapshot) => {
         boardDoc = { id: snapshot.id, ...snapshot.data() };
       });
+      if (autoFetchStrokes) {
+        fetchStrokes();
+      }
       onDestroy(() => {
         if (unsubStrokesListener) {
           unsubStrokesListener();
@@ -130174,6 +130474,8 @@ var init_index_b068766c = __esm({
       }
       if ($$props.dbPath === void 0 && $$bindings.dbPath && dbPath !== void 0)
         $$bindings.dbPath(dbPath);
+      if ($$props.autoFetchStrokes === void 0 && $$bindings.autoFetchStrokes && autoFetchStrokes !== void 0)
+        $$bindings.autoFetchStrokes(autoFetchStrokes);
       return `${slots.default ? slots.default({
         boardDoc,
         fetchStrokes,
@@ -130182,53 +130484,6 @@ var init_index_b068766c = __esm({
         strokesArray,
         handleNewlyDrawnStroke,
         deleteAllStrokesFromDb
-      }) : `
-
-`}`;
-    });
-    RenderlessAudioRecorder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $dailyMicStream, $$unsubscribe_dailyMicStream;
-      $$unsubscribe_dailyMicStream = subscribe(dailyMicStream, (value) => $dailyMicStream = value);
-      let currentTime = 0;
-      let timer;
-      const dispatch2 = createEventDispatcher();
-      let recorder = null;
-      function startRecording() {
-        return new Promise(async (resolve3) => {
-          if (!$dailyMicStream) {
-            const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            dailyMicStream.set(micStream);
-          }
-          const micStreamCopy = $dailyMicStream.clone();
-          recorder = new MediaRecorder(micStreamCopy);
-          recorder.start();
-          timer = setInterval(() => currentTime += 0.1, 100);
-          dispatch2("record-start");
-          recordState.set("mid_record");
-          resolve3();
-        });
-      }
-      function stopRecording() {
-        return new Promise((resolve3, reject) => {
-          clearTimeout(timer);
-          recordState.set("post_record");
-          recorder.addEventListener("dataavailable", (e) => {
-            const audioBlob = e.data;
-            dispatch2("record-end", { audioBlob });
-            resolve3();
-            recordState.set("pre_record");
-          });
-          recorder.stop();
-          for (const track of recorder.stream.getTracks()) {
-            track.stop();
-          }
-        });
-      }
-      $$unsubscribe_dailyMicStream();
-      return `${slots.default ? slots.default({
-        startRecording,
-        stopRecording,
-        currentTime
       }) : `
 
 `}`;
@@ -131133,7 +131388,7 @@ ${this.customData.serverResponse}`;
     version6 = "0.9.0";
     STORAGE_TYPE = "storage";
     registerStorage();
-    css3 = {
+    css4 = {
       code: ".room-title input{font-size:2rem}.question input{color:red !important}",
       map: null
     };
@@ -131161,7 +131416,7 @@ ${this.customData.serverResponse}`;
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
-      $$result.css.add(css3);
+      $$result.css.add(css4);
       doc(getFirestore(), roomsDbPath + roomID);
       {
         updateRoomDoc();
@@ -131186,7 +131441,7 @@ ${this.customData.serverResponse}`;
           style: `width: ${$canvasWidth}px; margin-bottom: 10px`
         }, {}, {})}` : ``}
 
-          ${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: 100%; height: ${$canvasHeight + 80}px`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+          ${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
           strokesArray,
           audioDownloadURL: boardDoc.audioDownloadURL
         }, {}, {
@@ -131196,7 +131451,7 @@ ${this.customData.serverResponse}`;
           })}
                 `
         })}` : ``}
-            </div>` : `<div${add_attribute("style", `width: 100%; height: ${$canvasHeight + 80}px`, 0)}>${strokesArray ? `${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
+            </div>` : `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`, 0)}>${strokesArray ? `${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
           default: ({ startRecording, stopRecording, currentTime }) => `${validate_component(Blackboard, "Blackboard").$$render($$result, { strokesArray, currentTime }, {}, {
             default: () => `${$recordState === "pre_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Record` })}          
                       ${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Wipe board` })}` : `${$recordState === "mid_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Stop` })}` : `Uploading...`}`}
@@ -131206,12 +131461,20 @@ ${this.customData.serverResponse}`;
         })}` : ``}
             </div>`}` : ``}
       `
-      })}`)}</div>` : ``}`;
+      })}`)}
+
+    ${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "unelevated",
+        color: "#2e3131",
+        style: `width: ${$canvasWidth}px; margin-top: 40px`
+      }, {}, {
+        default: () => `${validate_component(Label, "Label").$$render($$result, {}, {}, { default: () => `New blackboard` })}`
+      })}</div>` : ``}`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/app-ab8ef003.js
+// .svelte-kit/output/server/chunks/app-60dba192.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -132442,6 +132705,9 @@ function compute_slots(slots) {
   }
   return result;
 }
+function null_to_empty(value) {
+  return value == null ? "" : value;
+}
 function set_store_value(store2, ret, value) {
   store2.set(value);
   return ret;
@@ -132666,9 +132932,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-a15c93a9.js",
+      file: assets + "/_app/start-f0cfca87.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-a15c93a9.js", assets + "/_app/chunks/vendor-e4153bd8.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-f0cfca87.js", assets + "/_app/chunks/vendor-225c581b.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -132711,9 +132977,9 @@ function render(request, {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css4, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_ab8ef003 = __esm({
-  ".svelte-kit/output/server/chunks/app-ab8ef003.js"() {
+var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
+var init_app_60dba192 = __esm({
+  ".svelte-kit/output/server/chunks/app-60dba192.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -132867,7 +133133,7 @@ var init_app_ab8ef003 = __esm({
     missing_component = {
       $$render: () => ""
     };
-    css4 = {
+    css5 = {
       code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
       map: null
     };
@@ -132895,7 +133161,7 @@ var init_app_ab8ef003 = __esm({
         $$bindings.props_2(props_2);
       if ($$props.props_3 === void 0 && $$bindings.props_3 && props_3 !== void 0)
         $$bindings.props_3(props_3);
-      $$result.css.add(css4);
+      $$result.css.add(css5);
       {
         stores.page.set(page);
       }
@@ -132934,13 +133200,13 @@ ${``}`;
       [Symbol.toStringTag]: "Module",
       handle
     });
-    template = ({ head, body }) => '<!DOCTYPE html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<meta name="description" content="Svelte demo app" />\r\n		<link rel="icon" href="/favicon.png" />\r\n\r\n		<script>\r\n			// fixes the `global is not defined` but with importing DailyJS (spent 3 hours)\r\n			var global = global || window;\r\n		<\/script>\r\n\r\n		<!-- Material Icons -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/icon?family=Material+Icons"\r\n		/>\r\n		<!-- Roboto -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"\r\n		/>\r\n		<!-- Roboto Mono -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto+Mono"\r\n		/>\r\n\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://cdn.jsdelivr.net/npm/svelte-material-ui@6.0.0/bare.min.css"\r\n		/>\r\n\r\n		<!-- SMUI Styles -->\r\n		<link rel="stylesheet" href="/smui.css" media="(prefers-color-scheme: light)" />\r\n		<link\r\n			rel="stylesheet"\r\n			href="/smui-dark.css"\r\n			media="screen and (prefers-color-scheme: dark)"\r\n		/>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		' + head + '\r\n	</head>\r\n	<body>\r\n		<div id="svelte">' + body + "</div>\r\n	</body>\r\n</html>\r\n";
+    template = ({ head, body }) => '<!DOCTYPE html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<meta name="description" content="Svelte demo app" />\r\n		<link rel="icon" href="/favicon.png" />\r\n\r\n		<script>\r\n			// fixes the `global is not defined` but with importing DailyJS (spent 3 hours)\r\n			var global = global || window;\r\n		<\/script>\r\n\r\n		<!-- Material Icons -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/icon?family=Material+Icons"\r\n		/>\r\n		<!-- Roboto -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"\r\n		/>\r\n		<!-- Roboto Mono -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto+Mono"\r\n		/>\r\n\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://cdn.jsdelivr.net/npm/svelte-material-ui@6.0.0/bare.css"\r\n		/>\r\n\r\n		<!-- SMUI Styles -->\r\n		<link rel="stylesheet" href="/smui.css" media="(prefers-color-scheme: light)" />\r\n		<link\r\n			rel="stylesheet"\r\n			href="/smui-dark.css"\r\n			media="screen and (prefers-color-scheme: dark)"\r\n		/>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		' + head + '\r\n	</head>\r\n	<body>\r\n		<div id="svelte">' + body + "</div>\r\n	</body>\r\n</html>\r\n";
     options = null;
     default_settings = { paths: { "base": "", "assets": "" } };
     d = (s2) => s2.replace(/%23/g, "#").replace(/%3[Bb]/g, ";").replace(/%2[Cc]/g, ",").replace(/%2[Ff]/g, "/").replace(/%3[Ff]/g, "?").replace(/%3[Aa]/g, ":").replace(/%40/g, "@").replace(/%26/g, "&").replace(/%3[Dd]/g, "=").replace(/%2[Bb]/g, "+").replace(/%24/g, "$");
     empty = () => ({});
     manifest = {
-      assets: [{ "file": "favicon.ico", "size": 15406, "type": "image/vnd.microsoft.icon" }, { "file": "favicon.png", "size": 1571, "type": "image/png" }, { "file": "logo.png", "size": 38761, "type": "image/png" }, { "file": "robots.txt", "size": 70, "type": "text/plain" }, { "file": "smui-dark.css", "size": 227805, "type": "text/css" }, { "file": "smui.css", "size": 227474, "type": "text/css" }, { "file": "svelte-welcome.png", "size": 360807, "type": "image/png" }, { "file": "svelte-welcome.webp", "size": 115470, "type": "image/webp" }],
+      assets: [{ "file": "favicon.ico", "size": 15406, "type": "image/vnd.microsoft.icon" }, { "file": "favicon.png", "size": 1571, "type": "image/png" }, { "file": "logo.png", "size": 38761, "type": "image/png" }, { "file": "robots.txt", "size": 70, "type": "text/plain" }, { "file": "smui-dark.css", "size": 246765, "type": "text/css" }, { "file": "smui.css", "size": 246456, "type": "text/css" }, { "file": "svelte-welcome.png", "size": 360807, "type": "image/png" }, { "file": "svelte-welcome.webp", "size": 115470, "type": "image/webp" }],
       layout: "src/routes/__layout.svelte",
       error: ".svelte-kit/build/components/error.svelte",
       routes: [
@@ -132979,13 +133245,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_1dc0011a(), layout_1dc0011a_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_16933945(), error_16933945_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_c4c79891(), index_c4c79891_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_4de0bef5(), layout_4de0bef5_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_b068766c(), index_b068766c_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_7b12bb57(), layout_7b12bb57_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_8f94f63c(), error_8f94f63c_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_de20c644(), index_de20c644_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_659e0dcd(), layout_659e0dcd_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_1f74e669(), index_1f74e669_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-aff13304.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-aff13304.js", "chunks/vendor-e4153bd8.js", "chunks/database-3727f2a6.js", "chunks/store-acbdb0b4.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-2865f5bf.js", "css": [], "js": ["error.svelte-2865f5bf.js", "chunks/vendor-e4153bd8.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-c7847951.js", "css": ["assets/pages/_class_/_room_/index.svelte-7cf131b8.css"], "js": ["pages/index.svelte-c7847951.js", "chunks/vendor-e4153bd8.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/store-acbdb0b4.js", "chunks/DoodleVideo-c1ad5f2b.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-81746e98.js", "css": ["assets/pages/_class_/__layout.svelte-ce976e02.css"], "js": ["pages/_class_/__layout.svelte-81746e98.js", "chunks/vendor-e4153bd8.js", "chunks/store-acbdb0b4.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-aff7c417.js", "css": ["assets/pages/_class_/_room_/index.svelte-7cf131b8.css"], "js": ["pages/_class_/_room_/index.svelte-aff7c417.js", "chunks/vendor-e4153bd8.js", "chunks/database-3727f2a6.js", "chunks/store-acbdb0b4.js", "chunks/DoodleVideo-c1ad5f2b.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-4575f636.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-4575f636.js", "chunks/vendor-225c581b.js", "chunks/database-b8a53219.js", "chunks/store-799b1df9.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-29ff5852.js", "css": [], "js": ["error.svelte-29ff5852.js", "chunks/vendor-225c581b.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-dc38ab38.js", "css": ["assets/pages/index.svelte-6f35bf7c.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/index.svelte-dc38ab38.js", "chunks/vendor-225c581b.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/store-799b1df9.js", "chunks/RenderlessBoardMethods-dcb94a2f.js", "chunks/database-b8a53219.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-23a1fc92.js", "css": ["assets/pages/_class_/__layout.svelte-abebba15.css"], "js": ["pages/_class_/__layout.svelte-23a1fc92.js", "chunks/vendor-225c581b.js", "chunks/store-799b1df9.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-f2a38c96.js", "css": ["assets/pages/index.svelte-6f35bf7c.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/_class_/_room_/index.svelte-f2a38c96.js", "chunks/vendor-225c581b.js", "chunks/RenderlessBoardMethods-dcb94a2f.js", "chunks/store-799b1df9.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/database-b8a53219.js"], "styles": [] } };
   }
 });
 
@@ -133038,7 +133304,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_ab8ef003();
+init_app_60dba192();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

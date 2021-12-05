@@ -19,8 +19,6 @@
       // https://stackoverflow.com/a/58859327
       AudioRecorder = await import("audio-recorder-polyfill")
       window.MediaRecorder = AudioRecorder.default;
-      console.log("AudioRecorder initialized =", AudioRecorder)
-      console.log(window.MediaRecorder)
     }
   })
 

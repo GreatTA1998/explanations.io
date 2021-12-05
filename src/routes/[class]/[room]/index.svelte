@@ -15,7 +15,7 @@
     <Textfield 
       value={roomDoc.name} on:input={(e) => updateRoomName(e)}
       class="room-title" 
-      style="width: 100%; margin-bottom: 20px;"
+      style={`width: ${$canvasWidth}px; margin-bottom: 20px;`}
     >
     </Textfield>
 

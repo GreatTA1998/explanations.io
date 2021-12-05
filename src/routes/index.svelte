@@ -1,26 +1,27 @@
 
-<div id="tutorial-content" style="padding: 25px;">
+<div id="tutorial-content" style="padding: 10px;">
 	{#if !$user.uid}
 		<div class:question={isQuestionMode}>
-			<Textfield bind:value={titleValue} class="room-title" style="width: 80%;" 
+			<Textfield bind:value={titleValue} class="room-title" style={`width: ${$canvasWidth}px`} 
 				on:click={() => { 
 					hasClickedTitle = true; 
-					titleValue === 'Solo tutorial' ? startTypingAnimation() : '' 
+					titleValue === 'Welcome!' ? startTypingAnimation() : '' 
 				}
 			}
 			>	
 				<HelperText slot="helper" persistent>
 					{#if !hasClickedTitle}
 						<div style="font-size: 0.9rem;">
-							Welcome! To learn how to ask questions, click the title above
+							ihtfp.app lets everyone help each other with proper blackboard explanations.
+							How? Click the title above...
 						</div>
 					{:else if !isQuestionMode}
 						<div style="font-size: 0.9rem">
-							Add a question mark "?" to make it a server question
+							To request help, just type ?
 						</div>
 					{:else}
 						<div style="font-size: 0.9rem">
-							Success, but this is an offine server...
+							Text notifying the server...
 						</div>
 					{/if}
 				</HelperText>
@@ -28,11 +29,26 @@
 		</div>
 		
 		{#if isQuestionMode}			
-			{#if !hasAnsweredQuestion}
-				<div use:startAnswerTimer>
+			<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} value="Someone answered! What - I hard-coded this to happen? Ridiculous, why'd I do that! Try sliding around the video"/>
+			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px`} id="caleb-video-section">
+				<RenderlessBoardMethods dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
+					let:boardDoc={boardDoc}
+					let:fetchStrokes={fetchStrokes}
+					let:strokesArray={strokesArray}
+					autoFetchStrokes={true}
+				>
+					{#if boardDoc && strokesArray}
+						<DoodleVideo strokesArray={strokesArray} audioDownloadURL={boardDoc.audioDownloadURL}/>
+					{/if}
+				</RenderlessBoardMethods>
+			</div>
+
+			<!-- This is your own video, preserve it for comparison -->
+			{#if !hasRecordedVideo}
+				<div use:startRecordCountdown id="make-your-own-video">
 					<Textfield 
-						textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 100px`} 
-						value={`Young Padawan, for now, you must help yourself. Use the blackboard below to create powerful visual explanations. Press REC to start, you have ${currentTime.toFixed(0)} seconds remaining...`}>
+						textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} 
+						value={`Wondering how the video was made? Just press REC, then draw and talk like in real-life. You have ${currentTime.toFixed(0)} seconds to play around...`}>
 					</Textfield>
 				</div>
 
@@ -60,60 +76,44 @@
 						</Blackboard>
 					</RenderlessAudioRecorder>
 				</div>
-			<!-- This is your own video, preserve it for comparison -->
 			{:else}
-				<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 100px`} value="You will notice videos here upload near-instantly. Press play and slide around the video, but quick, we're running out of time..."/>
+				<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} value="Reusable explanations upload near-instantly, in-place, and benefits the entire server."/>
 				<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px`}>
-					<!-- hard-coded caleb's explanation -->
 					<DoodleVideo strokesArray={localStrokesArray} audioDownloadURL={audioBlobURL}>
 					
 					</DoodleVideo>
 				</div>
+			{/if}
 
-				<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 100px`} value="It's a miracle! A recitation TA from a distant galaxy answered your question! What? I stole the video from the 6.006 server? Don't be ridiculous!"/>
-				<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px`} id="caleb-video-section">
-					<RenderlessBoardMethods dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
-						let:boardDoc={boardDoc}
-						let:fetchStrokes={fetchStrokes}
-						let:strokesArray={strokesArray}
-						autoFetchStrokes={true}
-					>
-						{#if boardDoc && strokesArray}
-							<DoodleVideo strokesArray={strokesArray} audioDownloadURL={boardDoc.audioDownloadURL}/>
-						{/if}
-					</RenderlessBoardMethods>
+			{#if hasRecordedVideo}
+				<div id="sign-up-section" style="height: 400px">
+					<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} value={`In a real server, each question is in fact a voice room. This makes it easy to help quickly while everybody is there.`}>
+
+					</Textfield>
+
+					{#if !phoneConfirmationResult}
+						<div style="display: flex; align-items: center; margin-top: 24px">
+							<div style="margin-right: 10px;">+1 </div>
+							<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="339" bind:value={phoneNumSegment1} style="width: 30px; margin-right: 10px">
+
+							<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="676" bind:value={phoneNumSegment2} style="width: 30px; margin-right: 10px">
+
+							<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="1234" bind:value={phoneNumSegment3} style="width: 40px">
+
+							<!-- First validate the request -->
+							<Button id="sign-in-button" on:click={signInWithPhone}>
+								Sign in with phone
+							</Button>
+						</div>
+					{:else}
+						<div style="display: flex">
+							<Textfield variant="filled" bind:value={phoneConfirmCode} label="6-digit code">
+								<HelperText slot="helper"></HelperText>
+							</Textfield>
+							<Button on:click={verifyConfirmationCode}>Confirm code</Button>
+						</div>
+					{/if}
 				</div>
-
-				{#if hasWatchedVideo}
-					<div id="sign-up-section" style="height: 100vh">
-						<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 100px`} value={`Congratulations, you're ready to join a proper 6.036 server, where you will learn real-time Q&A with perpetual voice chat.`}>
-
-						</Textfield>
-						{#if !phoneConfirmationResult}
-							<div style="display: flex; align-items: center; margin-top: 24px">
-								<Textfield variant="filled" bind:value={phoneNumSegment1} prefix="+1 " label="3 digits" style="width: 90px; margin-right: 6px">
-								</Textfield>
-								
-								<Textfield variant="filled" bind:value={phoneNumSegment2} prefix="-" label="3 digits" style="width: 90px; margin-right: 6px">
-								</Textfield>
-							
-								<Textfield variant="filled" bind:value={phoneNumSegment3} prefix="-" label="4 digits" style="width: 120px; margin-right: 6px">
-
-								</Textfield>
-								<Button id="sign-in-button" on:click={signInWithPhone}>
-									Sign in with phone
-								</Button>
-							</div>
-						{:else}
-							<div style="display: flex">
-								<Textfield variant="filled" bind:value={phoneConfirmCode} label="6-digit code">
-									<HelperText slot="helper"></HelperText>
-								</Textfield>
-								<Button on:click={verifyConfirmationCode}>Confirm code</Button>
-							</div>
-						{/if}
-					</div>
-				{/if}
 			{/if}
 		{/if}
 	{/if}
@@ -134,7 +134,7 @@
 	import RenderlessBoardMethods from '$lib/RenderlessBoardMethods.svelte'
 
 	let currentTime = 10
-	let titleValue = 'Solo tutorial'
+	let titleValue = 'Welcome!'
 	let i = 0
 	let typewriter
 
@@ -147,31 +147,21 @@
 
 	let appVerifier
 	const print = console.log
-	$: isQuestionMode = '?' === titleValue.charAt(titleValue.length - 1)
 	let hasClickedTitle = false
-	let localStrokesArray = []
-	let hasAnsweredQuestion = false
-	let audioBlobURL = ''
-	let hasRecordedVideo = false
-	let hasWatchedVideo = false
+	$: isQuestionMode = '?' === titleValue.charAt(titleValue.length - 1)
 	let hasWatchedExemplar = false
+	let hasRecordedVideo = false
+	let localStrokesArray = []
+	let audioBlobURL = ''
+	let hasWatchedVideo = false
 	let timer
 
 	function startTypingAnimation () {
 		titleValue = ''
 		const values = [
-			'F',
-			'Fi',
-			'Fin',
-			'Fina',
-			'Final',
-			'Finals',
-			'Finals 2',
-			'Finals 20',
-			'Finals 202',
-			'Finals 2020',
-			'Finals 2020 Q',
-			'Finals 2020 Q1'
+			'Re-explain gradient descent',
+			'Finals 2019',
+			"Explain 2b visually",
 		]
 		typewriter = setInterval(() => {
 			titleValue = values[i]
@@ -179,9 +169,14 @@
 			if (i === values.length) {
 				clearInterval(typewriter)
 			}
-		}, 50)
+		}, 400)
 	}
 
+	$:if (isQuestionMode) {
+		setTimeout(() => {
+			hasWatchedExemplar = true
+		}, 5000)
+	}
 
 	$: if (currentTime.toFixed(0) === '0') {
 		console.log('end of timer, currentTime =', currentTime)
@@ -189,32 +184,37 @@
 	}
 
 	$: if (hasWatchedVideo) {
-		console.log("has watched video")
-		tick().then(() => {
-			const elem = document.getElementById('caleb-video-section')
-			elem.scrollIntoView({ 
-				block: "center", // vertical alignment
-				inline: "nearest", // horizontal alignment
-				behavior: "smooth"
-			})
-		})
-		setTimeout(() => hasWatchedExemplar = true, 1000)
-	}
-
-	$: if (hasWatchedExemplar) {
 		tick().then(() => {
 			const elem = document.getElementById('sign-up-section')
 			elem.scrollIntoView({ 
 				block: "center", // vertical alignment
 				inline: "nearest", // horizontal alignment
+				// behavior: "smooth"
+			})
+		})
+	}
+
+	$: if (hasWatchedExemplar) {
+		tick().then(() => {
+			const elem = document.getElementById('make-your-own-video')
+			elem.scrollIntoView({ 
+				block: "center", // vertical alignment
+				inline: "nearest", // horizontal alignment
 				behavior: "smooth"
 			})
 		})
 	}
 
+	$: if (phoneNumSegment1.length === 3) {
+		document.getElementById('phone-input-2').focus()
+	}
+	$: if (phoneNumSegment2.length === 3) {
+		document.getElementById('phone-input-3').focus()
+	}
+
 	function saveVideoLocally (audioBlob) {
 		audioBlobURL = URL.createObjectURL(audioBlob)
-		hasAnsweredQuestion = true
+		hasRecordedVideo = true
 		setTimeout(() => hasWatchedVideo = true, 5000)
 	}
 
@@ -224,12 +224,12 @@
 
 	onMount(() => {
 		const elem = document.getElementById('tutorial-content')
-		canvasHeight.set(elem.scrollWidth * 3/4)
 		canvasWidth.set(elem.scrollWidth * 9/10)
+		canvasHeight.set(elem.scrollWidth * 3/4)
 	})
 
 
-	function startAnswerTimer (element) {
+	function startRecordCountdown (element) {
 		timer = setInterval(() => currentTime -= 1, 1000)	
 	}
 
@@ -302,7 +302,7 @@
 }
 
 :global(.question input) {
-  color: red !important;
+  color: rgb(19, 145, 230) !important;
 }
 </style>
 

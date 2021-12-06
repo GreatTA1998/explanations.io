@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_767f7ce7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-1a2000f6.js
+// .svelte-kit/output/server/chunks/store-09b5f31d.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5157,10 +5157,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_1a2000f6 = __esm({
-  ".svelte-kit/output/server/chunks/store-1a2000f6.js"() {
+var init_store_09b5f31d = __esm({
+  ".svelte-kit/output/server/chunks/store-09b5f31d.js"() {
     init_shims();
-    init_app_31845fcc();
+    init_app_eae13053();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -5985,7 +5985,7 @@ var init_store_1a2000f6 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-45c55d1e.js
+// .svelte-kit/output/server/chunks/index-c327074d-48d19497.js
 function sign(x) {
   return x < 0 ? -1 : 1;
 }
@@ -7146,10 +7146,10 @@ function registerAuth(clientPlatform) {
   registerVersion(name2, version2, "esm2017");
 }
 var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob3, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop;
-var init_index_c327074d_45c55d1e = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-45c55d1e.js"() {
+var init_index_c327074d_48d19497 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-48d19497.js"() {
     init_shims();
-    init_store_1a2000f6();
+    init_store_09b5f31d();
     import_stream2 = __toModule(require("stream"));
     import_http2 = __toModule(require("http"));
     import_url2 = __toModule(require("url"));
@@ -111326,18 +111326,18 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-5a8a2a29.js
-var layout_5a8a2a29_exports = {};
-__export(layout_5a8a2a29_exports, {
+// .svelte-kit/output/server/chunks/__layout-307a77a1.js
+var layout_307a77a1_exports = {};
+__export(layout_307a77a1_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_5a8a2a29 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-5a8a2a29.js"() {
+var init_layout_307a77a1 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-307a77a1.js"() {
     init_shims();
-    init_app_31845fcc();
-    init_index_c327074d_45c55d1e();
-    init_store_1a2000f6();
+    init_app_eae13053();
+    init_index_c327074d_48d19497();
+    init_store_09b5f31d();
     init_index_node();
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -111358,9 +111358,9 @@ var init_layout_5a8a2a29 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-318f3ae1.js
-var error_318f3ae1_exports = {};
-__export(error_318f3ae1_exports, {
+// .svelte-kit/output/server/chunks/error-9c37b010.js
+var error_9c37b010_exports = {};
+__export(error_9c37b010_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -111368,10 +111368,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_318f3ae1 = __esm({
-  ".svelte-kit/output/server/chunks/error-318f3ae1.js"() {
+var init_error_9c37b010 = __esm({
+  ".svelte-kit/output/server/chunks/error-9c37b010.js"() {
     init_shims();
-    init_app_31845fcc();
+    init_app_eae13053();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -111393,9 +111393,23 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/classAdderBuilder-c7fb77c1.js
+// .svelte-kit/output/server/chunks/Switch-13e34890.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name7, value]) => name7 !== "" && value).map(([name7]) => name7).join(" ");
+}
+function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
+  if (typeof Event !== "undefined" && element) {
+    const event2 = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
+    element === null || element === void 0 ? void 0 : element.dispatchEvent(event2);
+    if (duplicateEventForMDC && eventType.startsWith("SMUI")) {
+      const duplicateEvent = new CustomEvent(eventType.replace(/^SMUI/g, () => "MDC"), Object.assign(Object.assign({}, eventInit), { detail }));
+      element === null || element === void 0 ? void 0 : element.dispatchEvent(duplicateEvent);
+      if (duplicateEvent.defaultPrevented) {
+        event2.preventDefault();
+      }
+    }
+    return event2;
+  }
 }
 function exclude(obj, keys) {
   let names = Object.getOwnPropertyNames(obj);
@@ -111754,12 +111768,12 @@ function classAdderBuilder(props) {
     }
   });
 }
-var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, internals, ClassAdder, defaults;
-var init_classAdderBuilder_c7fb77c1 = __esm({
-  ".svelte-kit/output/server/chunks/classAdderBuilder-c7fb77c1.js"() {
+var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, internals, ClassAdder, defaults, Switch;
+var init_Switch_13e34890 = __esm({
+  ".svelte-kit/output/server/chunks/Switch-13e34890.js"() {
     init_shims();
-    init_app_31845fcc();
-    init_store_1a2000f6();
+    init_app_eae13053();
+    init_store_09b5f31d();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112567,10 +112581,183 @@ var init_classAdderBuilder_c7fb77c1 = __esm({
       return $$rendered;
     });
     defaults = Object.assign({}, internals);
+    Switch = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "disabled",
+        "color",
+        "group",
+        "checked",
+        "value",
+        "processing",
+        "icons",
+        "icons$use",
+        "icons$class",
+        "getId",
+        "getElement"
+      ]);
+      var _a;
+      forwardEventsBuilder(get_current_component());
+      let uninitializedValue = () => {
+      };
+      function isUninitializedValue(value2) {
+        return value2 === uninitializedValue;
+      }
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { disabled = false } = $$props;
+      let { color = "primary" } = $$props;
+      let { group = uninitializedValue } = $$props;
+      let { checked = uninitializedValue } = $$props;
+      let { value = null } = $$props;
+      let { processing: processing2 = false } = $$props;
+      let { icons = true } = $$props;
+      let { icons$use = [] } = $$props;
+      let { icons$class = "" } = $$props;
+      let element;
+      let internalClasses = {};
+      let rippleElement;
+      let inputProps = (_a = getContext("SMUI:generic:input:props")) !== null && _a !== void 0 ? _a : {};
+      let selected = isUninitializedValue(group) ? isUninitializedValue(checked) ? false : checked : group.indexOf(value) !== -1;
+      let state = {
+        get disabled() {
+          return disabled;
+        },
+        set disabled(value2) {
+          disabled = value2;
+        },
+        get processing() {
+          return processing2;
+        },
+        set processing(value2) {
+          processing2 = value2;
+        },
+        get selected() {
+          return selected;
+        },
+        set selected(value2) {
+          selected = value2;
+        }
+      };
+      let previousChecked = checked;
+      let previousGroup = isUninitializedValue(group) ? [] : [...group];
+      let previousSelected = selected;
+      function getId() {
+        return inputProps && inputProps.id;
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
+        $$bindings.disabled(disabled);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.group === void 0 && $$bindings.group && group !== void 0)
+        $$bindings.group(group);
+      if ($$props.checked === void 0 && $$bindings.checked && checked !== void 0)
+        $$bindings.checked(checked);
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      if ($$props.processing === void 0 && $$bindings.processing && processing2 !== void 0)
+        $$bindings.processing(processing2);
+      if ($$props.icons === void 0 && $$bindings.icons && icons !== void 0)
+        $$bindings.icons(icons);
+      if ($$props.icons$use === void 0 && $$bindings.icons$use && icons$use !== void 0)
+        $$bindings.icons$use(icons$use);
+      if ($$props.icons$class === void 0 && $$bindings.icons$class && icons$class !== void 0)
+        $$bindings.icons$class(icons$class);
+      if ($$props.getId === void 0 && $$bindings.getId && getId !== void 0)
+        $$bindings.getId(getId);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      {
+        {
+          let notifyChange = false;
+          if (!isUninitializedValue(group)) {
+            if (previousSelected !== selected) {
+              const idx = group.indexOf(value);
+              if (selected && idx === -1) {
+                group.push(value);
+                group = group;
+              } else if (!selected && idx !== -1) {
+                group.splice(idx, 1);
+                group = group;
+              }
+              notifyChange = true;
+            } else {
+              const idxPrev = previousGroup.indexOf(value);
+              const idx = group.indexOf(value);
+              if (idxPrev > -1 && idx === -1) {
+                state.selected = false;
+              } else if (idx > -1 && idxPrev === -1) {
+                state.selected = true;
+              }
+            }
+          }
+          if (isUninitializedValue(checked)) {
+            if (previousSelected !== selected) {
+              notifyChange = true;
+            }
+          } else if (checked !== selected) {
+            if (checked === previousChecked) {
+              checked = selected;
+              notifyChange = true;
+            } else {
+              state.selected = checked;
+            }
+          }
+          previousChecked = checked;
+          previousGroup = isUninitializedValue(group) ? [] : [...group];
+          previousSelected = selected;
+          if (notifyChange && element) {
+            dispatch(element, "SMUISwitch:change", { selected, value });
+          }
+        }
+      }
+      return `<button${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-switch": true,
+            "mdc-switch--unselected": !selected,
+            "mdc-switch--selected": selected,
+            "mdc-switch--processing": processing2,
+            "smui-switch--color-secondary": color === "secondary",
+            ...internalClasses
+          }))
+        },
+        { type: "button" },
+        { role: "switch" },
+        {
+          "aria-checked": escape_attribute_value(selected ? "true" : "false")
+        },
+        { disabled: disabled || null },
+        escape_object(inputProps),
+        escape_object(exclude($$restProps, ["icons$"]))
+      ])}${add_attribute("this", element, 0)}><div class="${"mdc-switch__track"}"></div>
+  <div class="${"mdc-switch__handle-track"}"><div class="${"mdc-switch__handle"}"><div class="${"mdc-switch__shadow"}"><div class="${"mdc-elevation-overlay"}"></div></div>
+      <div class="${"mdc-switch__ripple"}"${add_attribute("this", rippleElement, 0)}></div>
+      ${icons ? `<div${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [icons$class]: true,
+            "mdc-switch__icons": true
+          }))
+        },
+        escape_object(prefixFilter($$restProps, "icons$"))
+      ])}><svg class="${"mdc-switch__icon mdc-switch__icon--on"}" viewBox="${"0 0 24 24"}"><path d="${"M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z"}"></path></svg>
+          <svg class="${"mdc-switch__icon mdc-switch__icon--off"}" viewBox="${"0 0 24 24"}"><path d="${"M20 13H4v-2h16v2z"}"></path></svg></div>` : ``}</div></div>
+</button>`;
+    });
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessBoardMethods-97cde0d7.js
+// .svelte-kit/output/server/chunks/RenderlessBoardMethods-2de1872d.js
 async function fetchDocs(dbPath) {
   return new Promise(async (resolve3) => {
     const snapshot = await getDocs(collection(getFirestore(), dbPath));
@@ -112602,13 +112789,13 @@ function convertDocToStroke(doc2) {
   return strokeObject;
 }
 var Object_1$1, Button_1, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, css$1, BlackboardToolbar, Blackboard, css, DoodleVideo, RenderlessAudioRecorder, RenderlessBoardMethods;
-var init_RenderlessBoardMethods_97cde0d7 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessBoardMethods-97cde0d7.js"() {
+var init_RenderlessBoardMethods_2de1872d = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessBoardMethods-2de1872d.js"() {
     init_shims();
-    init_app_31845fcc();
-    init_classAdderBuilder_c7fb77c1();
-    init_store_1a2000f6();
-    init_index_c327074d_45c55d1e();
+    init_app_eae13053();
+    init_Switch_13e34890();
+    init_store_09b5f31d();
+    init_index_c327074d_48d19497();
     init_index_node();
     ({ Object: Object_1$1 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -113537,32 +113724,29 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
       map: null
     };
     BlackboardToolbar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_onlyAllowApplePencil;
       let $user, $$unsubscribe_user;
-      let $onlyAllowApplePencil, $$unsubscribe_onlyAllowApplePencil;
+      $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => value);
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => $onlyAllowApplePencil = value);
       $$result.css.add(css$1);
-      $$unsubscribe_user();
       $$unsubscribe_onlyAllowApplePencil();
-      return `<div style="${"position: absolute; right: 0; top: 0; bottom: auto; left: auto; z-index: 100; background-color: grey;"}">${Object.keys($user).length > 0 ? `${each($user.pencilColors, (color) => `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-        default: () => `<svg preserveAspectRatio="${"none"}" version="${"1.1"}" id="${"Layer_1"}" xmlns="${"http://www.w3.org/2000/svg"}" xmlns:xlink="${"http://www.w3.org/1999/xlink"}" x="${"0px"}" y="${"0px"}" width="${"16px"}" height="${"30px"}" viewBox="${"0 0 100 230"}" style="${"enable-background:new 0 0 100 230;"}" xml:space="${"preserve"}" class="${"svelte-ln95yv"}"><g><path d="${"M0,0v72.377c0,1.588,0.234,3.169,0.698,4.706l45.416,150.032C46.633,228.828,48.212,230,50,230s3.367-1.172,3.886-2.883\r\n              L99.31,77.079c0.457-1.525,0.69-3.108,0.69-4.702V0.002"}"></path><polygon${add_attribute("style", `fill: ${color};`, 0)} points="${"50,211.978 38.879,175.24 61.122,175.24"}"></polygon><path style="${"fill:#424242;"}" d="${"M63.581,167.118H36.42L8.765,75.761l10.924-9.63l12.5,11.015c1.54,1.353,3.835,1.35,5.375-0.002\r\n                l12.468-11.007l12.464,11.005c1.54,1.357,3.839,1.357,5.377,0l12.465-11.005l10.9,9.623L63.581,167.118z"}"></path><path${add_attribute("style", `fill: ${color};`, 0)} d="${"M91.878,0v65.486l-8.852-7.813c-1.539-1.353-3.838-1.354-5.377,0.002L65.185,68.679L52.72,57.674\r\n                c-1.539-1.356-3.838-1.354-5.377-0.002L34.871,68.683L22.375,57.67c-0.769-0.676-1.725-1.013-2.685-1.013\r\n                c-0.959,0-1.919,0.339-2.685,1.013L8.121,65.5L8.098,0.024L91.878,0z"}"></path></g></svg> 
-      `
-      })}`)}
+      $$unsubscribe_user();
+      return `<div style="${"position: absolute; display: flex; align-items: center; height: 50px; right: 0; top: 0; bottom: auto; left: auto; z-index: 100; background-color: grey; padding-left: 10px"}">${validate_component(Switch, "Switch").$$render($$result, {
+        icons: false,
+        checked: !onlyAllowApplePencil,
+        style: "margin: 0 !important"
+      }, {}, {})}
+  <div style="${"margin-left: 6px; font-size: 0.65rem; font-family: Roboto,sans-serif; color: white;"}">Touch draw
+  </div>
+  ${Object.keys($user).length > 0 ? `${each($user.pencilColors, (color) => `<div style="${"margin: 0 8px"}"><svg preserveAspectRatio="${"none"}" version="${"1.1"}" id="${"Layer_1"}" xmlns="${"http://www.w3.org/2000/svg"}" xmlns:xlink="${"http://www.w3.org/1999/xlink"}" x="${"0px"}" y="${"0px"}" width="${"16px"}" height="${"30px"}" viewBox="${"0 0 100 230"}" style="${"enable-background:new 0 0 100 230;"}" xml:space="${"preserve"}" class="${"svelte-ln95yv"}"><g><path d="${"M0,0v72.377c0,1.588,0.234,3.169,0.698,4.706l45.416,150.032C46.633,228.828,48.212,230,50,230s3.367-1.172,3.886-2.883\r\n              L99.31,77.079c0.457-1.525,0.69-3.108,0.69-4.702V0.002"}"></path><polygon${add_attribute("style", `fill: ${color};`, 0)} points="${"50,211.978 38.879,175.24 61.122,175.24"}"></polygon><path style="${"fill:#424242;"}" d="${"M63.581,167.118H36.42L8.765,75.761l10.924-9.63l12.5,11.015c1.54,1.353,3.835,1.35,5.375-0.002\r\n                l12.468-11.007l12.464,11.005c1.54,1.357,3.839,1.357,5.377,0l12.465-11.005l10.9,9.623L63.581,167.118z"}"></path><path${add_attribute("style", `fill: ${color};`, 0)} d="${"M91.878,0v65.486l-8.852-7.813c-1.539-1.353-3.838-1.354-5.377,0.002L65.185,68.679L52.72,57.674\r\n                c-1.539-1.356-3.838-1.354-5.377-0.002L34.871,68.683L22.375,57.67c-0.769-0.676-1.725-1.013-2.685-1.013\r\n                c-0.959,0-1.919,0.339-2.685,1.013L8.121,65.5L8.098,0.024L91.878,0z"}"></path></g></svg> 
+      </div>`)}
 
-    ${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-        default: () => `Eraser
-    `
-      })}` : ``}
-
-  ${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-        default: () => `${escape($onlyAllowApplePencil ? "Enable touch" : "Disable touch")}`
-      })}
+    <img width="${"40"}" height="${"30"}" src="${"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"}">` : ``}
 
   ${slots.default ? slots.default({}) : `
 
     
   `}
-
 </div>`;
     });
     Blackboard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -113770,20 +113954,20 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
   }
 });
 
-// .svelte-kit/output/server/chunks/index-eebce6d6.js
-var index_eebce6d6_exports = {};
-__export(index_eebce6d6_exports, {
+// .svelte-kit/output/server/chunks/index-7e586b20.js
+var index_7e586b20_exports = {};
+__export(index_7e586b20_exports, {
   default: () => Routes
 });
 var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, counter, HelperText, css2, Routes;
-var init_index_eebce6d6 = __esm({
-  ".svelte-kit/output/server/chunks/index-eebce6d6.js"() {
+var init_index_7e586b20 = __esm({
+  ".svelte-kit/output/server/chunks/index-7e586b20.js"() {
     init_shims();
-    init_app_31845fcc();
-    init_RenderlessBoardMethods_97cde0d7();
-    init_classAdderBuilder_c7fb77c1();
-    init_index_c327074d_45c55d1e();
-    init_store_1a2000f6();
+    init_app_eae13053();
+    init_RenderlessBoardMethods_2de1872d();
+    init_Switch_13e34890();
+    init_index_c327074d_48d19497();
+    init_store_09b5f31d();
     init_index_node();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
@@ -113972,6 +114156,635 @@ var init_index_eebce6d6 = __esm({
       $$unsubscribe_canvasHeight();
       $$unsubscribe_recordState();
       return $$rendered;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-1b1c66e0.js
+var MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic;
+var init_SelectionGroupIcon_1b1c66e0 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-1b1c66e0.js"() {
+    init_shims();
+    init_app_eae13053();
+    init_Switch_13e34890();
+    MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "style",
+        "static",
+        "anchor",
+        "fixed",
+        "open",
+        "fullWidth",
+        "quickOpen",
+        "anchorElement",
+        "anchorCorner",
+        "anchorMargin",
+        "maxHeight",
+        "horizontallyCenteredOnViewport",
+        "isOpen",
+        "setOpen",
+        "setAbsolutePosition",
+        "setIsHoisted",
+        "isFixed",
+        "getElement"
+      ]);
+      forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { style = "" } = $$props;
+      let { static: isStatic = false } = $$props;
+      let { anchor = true } = $$props;
+      let { fixed = false } = $$props;
+      let { open = isStatic } = $$props;
+      let { fullWidth = false } = $$props;
+      let { quickOpen = false } = $$props;
+      let { anchorElement = void 0 } = $$props;
+      let { anchorCorner = void 0 } = $$props;
+      let { anchorMargin = { top: 0, right: 0, bottom: 0, left: 0 } } = $$props;
+      let { maxHeight = 0 } = $$props;
+      let { horizontallyCenteredOnViewport = false } = $$props;
+      let element;
+      let instance2;
+      let internalClasses = {};
+      let internalStyles = {};
+      setContext("SMUI:list:role", "menu");
+      setContext("SMUI:list:item:role", "menuitem");
+      onDestroy(() => {
+      });
+      function isOpen() {
+        return open;
+      }
+      function setOpen(value) {
+        open = value;
+      }
+      function setAbsolutePosition(x, y) {
+        return instance2.setAbsolutePosition(x, y);
+      }
+      function setIsHoisted(isHoisted) {
+        return instance2.setIsHoisted(isHoisted);
+      }
+      function isFixed() {
+        return instance2.isFixed();
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+        $$bindings.style(style);
+      if ($$props.static === void 0 && $$bindings.static && isStatic !== void 0)
+        $$bindings.static(isStatic);
+      if ($$props.anchor === void 0 && $$bindings.anchor && anchor !== void 0)
+        $$bindings.anchor(anchor);
+      if ($$props.fixed === void 0 && $$bindings.fixed && fixed !== void 0)
+        $$bindings.fixed(fixed);
+      if ($$props.open === void 0 && $$bindings.open && open !== void 0)
+        $$bindings.open(open);
+      if ($$props.fullWidth === void 0 && $$bindings.fullWidth && fullWidth !== void 0)
+        $$bindings.fullWidth(fullWidth);
+      if ($$props.quickOpen === void 0 && $$bindings.quickOpen && quickOpen !== void 0)
+        $$bindings.quickOpen(quickOpen);
+      if ($$props.anchorElement === void 0 && $$bindings.anchorElement && anchorElement !== void 0)
+        $$bindings.anchorElement(anchorElement);
+      if ($$props.anchorCorner === void 0 && $$bindings.anchorCorner && anchorCorner !== void 0)
+        $$bindings.anchorCorner(anchorCorner);
+      if ($$props.anchorMargin === void 0 && $$bindings.anchorMargin && anchorMargin !== void 0)
+        $$bindings.anchorMargin(anchorMargin);
+      if ($$props.maxHeight === void 0 && $$bindings.maxHeight && maxHeight !== void 0)
+        $$bindings.maxHeight(maxHeight);
+      if ($$props.horizontallyCenteredOnViewport === void 0 && $$bindings.horizontallyCenteredOnViewport && horizontallyCenteredOnViewport !== void 0)
+        $$bindings.horizontallyCenteredOnViewport(horizontallyCenteredOnViewport);
+      if ($$props.isOpen === void 0 && $$bindings.isOpen && isOpen !== void 0)
+        $$bindings.isOpen(isOpen);
+      if ($$props.setOpen === void 0 && $$bindings.setOpen && setOpen !== void 0)
+        $$bindings.setOpen(setOpen);
+      if ($$props.setAbsolutePosition === void 0 && $$bindings.setAbsolutePosition && setAbsolutePosition !== void 0)
+        $$bindings.setAbsolutePosition(setAbsolutePosition);
+      if ($$props.setIsHoisted === void 0 && $$bindings.setIsHoisted && setIsHoisted !== void 0)
+        $$bindings.setIsHoisted(setIsHoisted);
+      if ($$props.isFixed === void 0 && $$bindings.isFixed && isFixed !== void 0)
+        $$bindings.isFixed(isFixed);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `
+
+<div${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-menu-surface": true,
+            "mdc-menu-surface--fixed": fixed,
+            "mdc-menu-surface--open": isStatic,
+            "smui-menu-surface--static": isStatic,
+            "mdc-menu-surface--fullwidth": fullWidth,
+            ...internalClasses
+          }))
+        },
+        {
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name7, value]) => `${name7}: ${value};`).concat([style]).join(" "))
+        },
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}
+</div>`;
+    });
+    Menu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let usePass;
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "open",
+        "isOpen",
+        "setOpen",
+        "setDefaultFocusState",
+        "getSelectedIndex",
+        "getElement"
+      ]);
+      const forwardEvents = forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { open = false } = $$props;
+      let element;
+      let instance2;
+      function isOpen() {
+        return open;
+      }
+      function setOpen(value) {
+        open = value;
+      }
+      function setDefaultFocusState(focusState) {
+        instance2.setDefaultFocusState(focusState);
+      }
+      function getSelectedIndex() {
+        return instance2.getSelectedIndex();
+      }
+      function getElement() {
+        return element.getElement();
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.open === void 0 && $$bindings.open && open !== void 0)
+        $$bindings.open(open);
+      if ($$props.isOpen === void 0 && $$bindings.isOpen && isOpen !== void 0)
+        $$bindings.isOpen(isOpen);
+      if ($$props.setOpen === void 0 && $$bindings.setOpen && setOpen !== void 0)
+        $$bindings.setOpen(setOpen);
+      if ($$props.setDefaultFocusState === void 0 && $$bindings.setDefaultFocusState && setDefaultFocusState !== void 0)
+        $$bindings.setDefaultFocusState(setDefaultFocusState);
+      if ($$props.getSelectedIndex === void 0 && $$bindings.getSelectedIndex && getSelectedIndex !== void 0)
+        $$bindings.getSelectedIndex(getSelectedIndex);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        usePass = [forwardEvents, ...use];
+        $$rendered = `${validate_component(MenuSurface, "MenuSurface").$$render($$result, Object.assign({ use: usePass }, {
+          class: classMap({ [className]: true, "mdc-menu": true })
+        }, $$restProps, { this: element }, { open }), {
+          this: ($$value) => {
+            element = $$value;
+            $$settled = false;
+          },
+          open: ($$value) => {
+            open = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `${slots.default ? slots.default({}) : ``}`
+        })}`;
+      } while (!$$settled);
+      return $$rendered;
+    });
+    List = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "nonInteractive",
+        "dense",
+        "textualList",
+        "avatarList",
+        "iconList",
+        "imageList",
+        "thumbnailList",
+        "videoList",
+        "twoLine",
+        "threeLine",
+        "vertical",
+        "wrapFocus",
+        "singleSelection",
+        "selectedIndex",
+        "radioList",
+        "checkList",
+        "hasTypeahead",
+        "component",
+        "layout",
+        "setEnabled",
+        "getTypeaheadInProgress",
+        "getSelectedIndex",
+        "getFocusedItemIndex",
+        "getElement"
+      ]);
+      var _a;
+      const forwardEvents = forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { nonInteractive = false } = $$props;
+      let { dense = false } = $$props;
+      let { textualList = false } = $$props;
+      let { avatarList = false } = $$props;
+      let { iconList = false } = $$props;
+      let { imageList = false } = $$props;
+      let { thumbnailList = false } = $$props;
+      let { videoList = false } = $$props;
+      let { twoLine = false } = $$props;
+      let { threeLine = false } = $$props;
+      let { vertical = true } = $$props;
+      let { wrapFocus = (_a = getContext("SMUI:list:wrapFocus")) !== null && _a !== void 0 ? _a : false } = $$props;
+      let { singleSelection = false } = $$props;
+      let { selectedIndex = -1 } = $$props;
+      let { radioList = false } = $$props;
+      let { checkList = false } = $$props;
+      let { hasTypeahead = false } = $$props;
+      let element;
+      let instance2;
+      let role = getContext("SMUI:list:role");
+      let nav = getContext("SMUI:list:nav");
+      let selectionDialog = getContext("SMUI:dialog:selection");
+      let addLayoutListener = getContext("SMUI:addLayoutListener");
+      let removeLayoutListener;
+      let { component = nav ? Nav : Ul } = $$props;
+      setContext("SMUI:list:nonInteractive", nonInteractive);
+      setContext("SMUI:separator:context", "list");
+      if (!role) {
+        if (singleSelection) {
+          role = "listbox";
+          setContext("SMUI:list:item:role", "option");
+        } else if (radioList) {
+          role = "radiogroup";
+          setContext("SMUI:list:item:role", "radio");
+        } else if (checkList) {
+          role = "group";
+          setContext("SMUI:list:item:role", "checkbox");
+        } else {
+          role = "list";
+          setContext("SMUI:list:item:role", void 0);
+        }
+      }
+      if (addLayoutListener) {
+        removeLayoutListener = addLayoutListener(layout);
+      }
+      onDestroy(() => {
+        if (removeLayoutListener) {
+          removeLayoutListener();
+        }
+      });
+      function layout() {
+        return instance2.layout();
+      }
+      function setEnabled(itemIndex, isEnabled) {
+        return instance2.setEnabled(itemIndex, isEnabled);
+      }
+      function getTypeaheadInProgress() {
+        return instance2.isTypeaheadInProgress();
+      }
+      function getSelectedIndex() {
+        return instance2.getSelectedIndex();
+      }
+      function getFocusedItemIndex() {
+        return instance2.getFocusedItemIndex();
+      }
+      function getElement() {
+        return element.getElement();
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.nonInteractive === void 0 && $$bindings.nonInteractive && nonInteractive !== void 0)
+        $$bindings.nonInteractive(nonInteractive);
+      if ($$props.dense === void 0 && $$bindings.dense && dense !== void 0)
+        $$bindings.dense(dense);
+      if ($$props.textualList === void 0 && $$bindings.textualList && textualList !== void 0)
+        $$bindings.textualList(textualList);
+      if ($$props.avatarList === void 0 && $$bindings.avatarList && avatarList !== void 0)
+        $$bindings.avatarList(avatarList);
+      if ($$props.iconList === void 0 && $$bindings.iconList && iconList !== void 0)
+        $$bindings.iconList(iconList);
+      if ($$props.imageList === void 0 && $$bindings.imageList && imageList !== void 0)
+        $$bindings.imageList(imageList);
+      if ($$props.thumbnailList === void 0 && $$bindings.thumbnailList && thumbnailList !== void 0)
+        $$bindings.thumbnailList(thumbnailList);
+      if ($$props.videoList === void 0 && $$bindings.videoList && videoList !== void 0)
+        $$bindings.videoList(videoList);
+      if ($$props.twoLine === void 0 && $$bindings.twoLine && twoLine !== void 0)
+        $$bindings.twoLine(twoLine);
+      if ($$props.threeLine === void 0 && $$bindings.threeLine && threeLine !== void 0)
+        $$bindings.threeLine(threeLine);
+      if ($$props.vertical === void 0 && $$bindings.vertical && vertical !== void 0)
+        $$bindings.vertical(vertical);
+      if ($$props.wrapFocus === void 0 && $$bindings.wrapFocus && wrapFocus !== void 0)
+        $$bindings.wrapFocus(wrapFocus);
+      if ($$props.singleSelection === void 0 && $$bindings.singleSelection && singleSelection !== void 0)
+        $$bindings.singleSelection(singleSelection);
+      if ($$props.selectedIndex === void 0 && $$bindings.selectedIndex && selectedIndex !== void 0)
+        $$bindings.selectedIndex(selectedIndex);
+      if ($$props.radioList === void 0 && $$bindings.radioList && radioList !== void 0)
+        $$bindings.radioList(radioList);
+      if ($$props.checkList === void 0 && $$bindings.checkList && checkList !== void 0)
+        $$bindings.checkList(checkList);
+      if ($$props.hasTypeahead === void 0 && $$bindings.hasTypeahead && hasTypeahead !== void 0)
+        $$bindings.hasTypeahead(hasTypeahead);
+      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
+        $$bindings.component(component);
+      if ($$props.layout === void 0 && $$bindings.layout && layout !== void 0)
+        $$bindings.layout(layout);
+      if ($$props.setEnabled === void 0 && $$bindings.setEnabled && setEnabled !== void 0)
+        $$bindings.setEnabled(setEnabled);
+      if ($$props.getTypeaheadInProgress === void 0 && $$bindings.getTypeaheadInProgress && getTypeaheadInProgress !== void 0)
+        $$bindings.getTypeaheadInProgress(getTypeaheadInProgress);
+      if ($$props.getSelectedIndex === void 0 && $$bindings.getSelectedIndex && getSelectedIndex !== void 0)
+        $$bindings.getSelectedIndex(getSelectedIndex);
+      if ($$props.getFocusedItemIndex === void 0 && $$bindings.getFocusedItemIndex && getFocusedItemIndex !== void 0)
+        $$bindings.getFocusedItemIndex(getFocusedItemIndex);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object.assign({ use: [forwardEvents, ...use] }, {
+          class: classMap({
+            [className]: true,
+            "mdc-deprecated-list": true,
+            "mdc-deprecated-list--non-interactive": nonInteractive,
+            "mdc-deprecated-list--dense": dense,
+            "mdc-deprecated-list--textual-list": textualList,
+            "mdc-deprecated-list--avatar-list": avatarList || selectionDialog,
+            "mdc-deprecated-list--icon-list": iconList,
+            "mdc-deprecated-list--image-list": imageList,
+            "mdc-deprecated-list--thumbnail-list": thumbnailList,
+            "mdc-deprecated-list--video-list": videoList,
+            "mdc-deprecated-list--two-line": twoLine,
+            "smui-list--three-line": threeLine && !twoLine
+          })
+        }, { role }, $$restProps, { this: element }), {
+          this: ($$value) => {
+            element = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `${slots.default ? slots.default({}) : ``}`
+        })}`;
+      } while (!$$settled);
+      return $$rendered;
+    });
+    ({ Object: Object_13 } = globals);
+    counter2 = 0;
+    Item$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let tabindex;
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "style",
+        "color",
+        "nonInteractive",
+        "ripple",
+        "activated",
+        "role",
+        "selected",
+        "disabled",
+        "skipRestoreFocus",
+        "tabindex",
+        "inputId",
+        "href",
+        "component",
+        "getPrimaryText",
+        "getElement"
+      ]);
+      var _a;
+      const forwardEvents = forwardEventsBuilder(get_current_component());
+      let uninitializedValue = () => {
+      };
+      function isUninitializedValue(value) {
+        return value === uninitializedValue;
+      }
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { style = "" } = $$props;
+      let { color = void 0 } = $$props;
+      let { nonInteractive = (_a = getContext("SMUI:list:nonInteractive")) !== null && _a !== void 0 ? _a : false } = $$props;
+      setContext("SMUI:list:nonInteractive", void 0);
+      let { ripple = !nonInteractive } = $$props;
+      let { activated = false } = $$props;
+      let { role = getContext("SMUI:list:item:role") } = $$props;
+      setContext("SMUI:list:item:role", void 0);
+      let { selected = false } = $$props;
+      let { disabled = false } = $$props;
+      let { skipRestoreFocus = false } = $$props;
+      let { tabindex: tabindexProp = uninitializedValue } = $$props;
+      let { inputId = "SMUI-form-field-list-" + counter2++ } = $$props;
+      let { href = void 0 } = $$props;
+      let element;
+      let internalClasses = {};
+      let internalStyles = {};
+      let internalAttrs = {};
+      let input;
+      let nav = getContext("SMUI:list:item:nav");
+      let { component = nav ? href ? A : Span : Li } = $$props;
+      setContext("SMUI:generic:input:props", { id: inputId });
+      setContext("SMUI:separator:context", void 0);
+      onDestroy(() => {
+      });
+      function addClass(className2) {
+        if (!internalClasses[className2]) {
+          internalClasses[className2] = true;
+        }
+      }
+      function removeClass(className2) {
+        if (!(className2 in internalClasses) || internalClasses[className2]) {
+          internalClasses[className2] = false;
+        }
+      }
+      function addStyle(name7, value) {
+        if (internalStyles[name7] != value) {
+          if (value === "" || value == null) {
+            delete internalStyles[name7];
+            internalStyles = internalStyles;
+          } else {
+            internalStyles[name7] = value;
+          }
+        }
+      }
+      function getPrimaryText() {
+        var _a2, _b, _c;
+        const element2 = getElement();
+        const primaryText = element2.querySelector(".mdc-deprecated-list-item__primary-text");
+        if (primaryText) {
+          return (_a2 = primaryText.textContent) !== null && _a2 !== void 0 ? _a2 : "";
+        }
+        const text = element2.querySelector(".mdc-deprecated-list-item__text");
+        if (text) {
+          return (_b = text.textContent) !== null && _b !== void 0 ? _b : "";
+        }
+        return (_c = element2.textContent) !== null && _c !== void 0 ? _c : "";
+      }
+      function getElement() {
+        return element.getElement();
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+        $$bindings.style(style);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.nonInteractive === void 0 && $$bindings.nonInteractive && nonInteractive !== void 0)
+        $$bindings.nonInteractive(nonInteractive);
+      if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
+        $$bindings.ripple(ripple);
+      if ($$props.activated === void 0 && $$bindings.activated && activated !== void 0)
+        $$bindings.activated(activated);
+      if ($$props.role === void 0 && $$bindings.role && role !== void 0)
+        $$bindings.role(role);
+      if ($$props.selected === void 0 && $$bindings.selected && selected !== void 0)
+        $$bindings.selected(selected);
+      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
+        $$bindings.disabled(disabled);
+      if ($$props.skipRestoreFocus === void 0 && $$bindings.skipRestoreFocus && skipRestoreFocus !== void 0)
+        $$bindings.skipRestoreFocus(skipRestoreFocus);
+      if ($$props.tabindex === void 0 && $$bindings.tabindex && tabindexProp !== void 0)
+        $$bindings.tabindex(tabindexProp);
+      if ($$props.inputId === void 0 && $$bindings.inputId && inputId !== void 0)
+        $$bindings.inputId(inputId);
+      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
+        $$bindings.href(href);
+      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
+        $$bindings.component(component);
+      if ($$props.getPrimaryText === void 0 && $$bindings.getPrimaryText && getPrimaryText !== void 0)
+        $$bindings.getPrimaryText(getPrimaryText);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        tabindex = isUninitializedValue(tabindexProp) ? !nonInteractive && !disabled && (selected || input) ? 0 : -1 : tabindexProp;
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_13.assign({
+          use: [
+            ...nonInteractive ? [] : [
+              [
+                Ripple,
+                {
+                  ripple: !input,
+                  unbounded: false,
+                  color: (activated || selected) && color == null ? "primary" : color,
+                  disabled,
+                  addClass,
+                  removeClass,
+                  addStyle
+                }
+              ]
+            ],
+            forwardEvents,
+            ...use
+          ]
+        }, {
+          class: classMap({
+            [className]: true,
+            "mdc-deprecated-list-item": true,
+            "mdc-deprecated-list-item--activated": activated,
+            "mdc-deprecated-list-item--selected": selected,
+            "mdc-deprecated-list-item--disabled": disabled,
+            "mdc-menu-item--selected": !nav && role === "menuitem" && selected,
+            "smui-menu-item--non-interactive": nonInteractive,
+            ...internalClasses
+          })
+        }, {
+          style: Object.entries(internalStyles).map(([name7, value]) => `${name7}: ${value};`).concat([style]).join(" ")
+        }, nav && activated ? { "aria-current": "page" } : {}, !nav ? { role } : {}, !nav && role === "option" ? {
+          "aria-selected": selected ? "true" : "false"
+        } : {}, !nav && (role === "radio" || role === "checkbox") ? {
+          "aria-checked": "false"
+        } : {}, !nav ? {
+          "aria-disabled": disabled ? "true" : "false"
+        } : {}, {
+          "data-menu-item-skip-restore-focus": skipRestoreFocus || void 0
+        }, { tabindex }, { href }, internalAttrs, $$restProps, { this: element }), {
+          this: ($$value) => {
+            element = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `${ripple ? `<span class="${"mdc-deprecated-list-item__ripple"}"></span>` : ``}${slots.default ? slots.default({}) : ``}`
+        })}`;
+      } while (!$$settled);
+      return $$rendered;
+    });
+    classAdderBuilder({
+      class: "mdc-deprecated-list-item__text",
+      component: Span
+    });
+    classAdderBuilder({
+      class: "mdc-deprecated-list-item__primary-text",
+      component: Span
+    });
+    classAdderBuilder({
+      class: "mdc-deprecated-list-item__secondary-text",
+      component: Span
+    });
+    Graphic$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["use", "class", "getElement"]);
+      forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let element;
+      let menuSelectionGroup = getContext("SMUI:list:graphic:menu-selection-group");
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `<span${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-deprecated-list-item__graphic": true,
+            "mdc-menu__selection-group-icon": menuSelectionGroup
+          }))
+        },
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>`;
+    });
+    classAdderBuilder({
+      class: "mdc-deprecated-list-item__meta",
+      component: Span
+    });
+    classAdderBuilder({
+      class: "mdc-deprecated-list-group",
+      component: Div
+    });
+    classAdderBuilder({
+      class: "mdc-deprecated-list-group__subheader",
+      component: H3
+    });
+    Item = Item$1;
+    Graphic = Graphic$1;
+    classAdderBuilder({
+      class: "mdc-menu__selection-group-icon",
+      component: Graphic
     });
   }
 });
@@ -118775,26 +119588,12 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-902b396f.js
-var layout_902b396f_exports = {};
-__export(layout_902b396f_exports, {
+// .svelte-kit/output/server/chunks/__layout-9595d922.js
+var layout_9595d922_exports = {};
+__export(layout_9595d922_exports, {
   default: () => _layout2,
   load: () => load2
 });
-function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
-  if (typeof Event !== "undefined" && element) {
-    const event2 = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
-    element === null || element === void 0 ? void 0 : element.dispatchEvent(event2);
-    if (duplicateEventForMDC && eventType.startsWith("SMUI")) {
-      const duplicateEvent = new CustomEvent(eventType.replace(/^SMUI/g, () => "MDC"), Object.assign(Object.assign({}, eventInit), { detail }));
-      element === null || element === void 0 ? void 0 : element.dispatchEvent(duplicateEvent);
-      if (duplicateEvent.defaultPrevented) {
-        event2.preventDefault();
-      }
-    }
-    return event2;
-  }
-}
 function ProcessEmitWarning(warning) {
   if (console && console.warn)
     console.warn(warning);
@@ -120950,7 +121749,6 @@ function registerDatabase(variant) {
   registerVersion(name5, version5, "esm2017");
 }
 function load2({ page }) {
-  console.log("__layout load(), browser =", browser2);
   return {
     props: {
       classID: page.params.class,
@@ -120958,13 +121756,14 @@ function load2({ page }) {
     }
   };
 }
-var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, browser2, MenuSurface, Menu, List, Object_13, counter$1, Item$1, Graphic$1, Item, Graphic, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, Card, css$12, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$4, event, Event$3, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$2, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event$1, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, Switch, counter2, FormField, css3, _layout2;
-var init_layout_902b396f = __esm({
-  ".svelte-kit/output/server/chunks/__layout-902b396f.js"() {
+var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$12, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event2, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, css3, _layout2;
+var init_layout_9595d922 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-9595d922.js"() {
     init_shims();
-    init_app_31845fcc();
-    init_classAdderBuilder_c7fb77c1();
-    init_store_1a2000f6();
+    init_app_eae13053();
+    init_SelectionGroupIcon_1b1c66e0();
+    init_Switch_13e34890();
+    init_store_09b5f31d();
     import_util7 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream5 = __toModule(require("stream"));
@@ -120977,626 +121776,6 @@ var init_layout_902b396f = __esm({
     import_daily_js = __toModule(require_daily_iframe());
     import_cookie4 = __toModule(require_cookie());
     init_dist();
-    browser2 = false;
-    MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "style",
-        "static",
-        "anchor",
-        "fixed",
-        "open",
-        "fullWidth",
-        "quickOpen",
-        "anchorElement",
-        "anchorCorner",
-        "anchorMargin",
-        "maxHeight",
-        "horizontallyCenteredOnViewport",
-        "isOpen",
-        "setOpen",
-        "setAbsolutePosition",
-        "setIsHoisted",
-        "isFixed",
-        "getElement"
-      ]);
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { style = "" } = $$props;
-      let { static: isStatic = false } = $$props;
-      let { anchor = true } = $$props;
-      let { fixed = false } = $$props;
-      let { open = isStatic } = $$props;
-      let { fullWidth = false } = $$props;
-      let { quickOpen = false } = $$props;
-      let { anchorElement = void 0 } = $$props;
-      let { anchorCorner = void 0 } = $$props;
-      let { anchorMargin = { top: 0, right: 0, bottom: 0, left: 0 } } = $$props;
-      let { maxHeight = 0 } = $$props;
-      let { horizontallyCenteredOnViewport = false } = $$props;
-      let element;
-      let instance2;
-      let internalClasses = {};
-      let internalStyles = {};
-      setContext("SMUI:list:role", "menu");
-      setContext("SMUI:list:item:role", "menuitem");
-      onDestroy(() => {
-      });
-      function isOpen() {
-        return open;
-      }
-      function setOpen(value) {
-        open = value;
-      }
-      function setAbsolutePosition(x, y) {
-        return instance2.setAbsolutePosition(x, y);
-      }
-      function setIsHoisted(isHoisted) {
-        return instance2.setIsHoisted(isHoisted);
-      }
-      function isFixed() {
-        return instance2.isFixed();
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-        $$bindings.style(style);
-      if ($$props.static === void 0 && $$bindings.static && isStatic !== void 0)
-        $$bindings.static(isStatic);
-      if ($$props.anchor === void 0 && $$bindings.anchor && anchor !== void 0)
-        $$bindings.anchor(anchor);
-      if ($$props.fixed === void 0 && $$bindings.fixed && fixed !== void 0)
-        $$bindings.fixed(fixed);
-      if ($$props.open === void 0 && $$bindings.open && open !== void 0)
-        $$bindings.open(open);
-      if ($$props.fullWidth === void 0 && $$bindings.fullWidth && fullWidth !== void 0)
-        $$bindings.fullWidth(fullWidth);
-      if ($$props.quickOpen === void 0 && $$bindings.quickOpen && quickOpen !== void 0)
-        $$bindings.quickOpen(quickOpen);
-      if ($$props.anchorElement === void 0 && $$bindings.anchorElement && anchorElement !== void 0)
-        $$bindings.anchorElement(anchorElement);
-      if ($$props.anchorCorner === void 0 && $$bindings.anchorCorner && anchorCorner !== void 0)
-        $$bindings.anchorCorner(anchorCorner);
-      if ($$props.anchorMargin === void 0 && $$bindings.anchorMargin && anchorMargin !== void 0)
-        $$bindings.anchorMargin(anchorMargin);
-      if ($$props.maxHeight === void 0 && $$bindings.maxHeight && maxHeight !== void 0)
-        $$bindings.maxHeight(maxHeight);
-      if ($$props.horizontallyCenteredOnViewport === void 0 && $$bindings.horizontallyCenteredOnViewport && horizontallyCenteredOnViewport !== void 0)
-        $$bindings.horizontallyCenteredOnViewport(horizontallyCenteredOnViewport);
-      if ($$props.isOpen === void 0 && $$bindings.isOpen && isOpen !== void 0)
-        $$bindings.isOpen(isOpen);
-      if ($$props.setOpen === void 0 && $$bindings.setOpen && setOpen !== void 0)
-        $$bindings.setOpen(setOpen);
-      if ($$props.setAbsolutePosition === void 0 && $$bindings.setAbsolutePosition && setAbsolutePosition !== void 0)
-        $$bindings.setAbsolutePosition(setAbsolutePosition);
-      if ($$props.setIsHoisted === void 0 && $$bindings.setIsHoisted && setIsHoisted !== void 0)
-        $$bindings.setIsHoisted(setIsHoisted);
-      if ($$props.isFixed === void 0 && $$bindings.isFixed && isFixed !== void 0)
-        $$bindings.isFixed(isFixed);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `
-
-<div${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-menu-surface": true,
-            "mdc-menu-surface--fixed": fixed,
-            "mdc-menu-surface--open": isStatic,
-            "smui-menu-surface--static": isStatic,
-            "mdc-menu-surface--fullwidth": fullWidth,
-            ...internalClasses
-          }))
-        },
-        {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name22, value]) => `${name22}: ${value};`).concat([style]).join(" "))
-        },
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}
-</div>`;
-    });
-    Menu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let usePass;
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "open",
-        "isOpen",
-        "setOpen",
-        "setDefaultFocusState",
-        "getSelectedIndex",
-        "getElement"
-      ]);
-      const forwardEvents = forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { open = false } = $$props;
-      let element;
-      let instance2;
-      function isOpen() {
-        return open;
-      }
-      function setOpen(value) {
-        open = value;
-      }
-      function setDefaultFocusState(focusState) {
-        instance2.setDefaultFocusState(focusState);
-      }
-      function getSelectedIndex() {
-        return instance2.getSelectedIndex();
-      }
-      function getElement() {
-        return element.getElement();
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.open === void 0 && $$bindings.open && open !== void 0)
-        $$bindings.open(open);
-      if ($$props.isOpen === void 0 && $$bindings.isOpen && isOpen !== void 0)
-        $$bindings.isOpen(isOpen);
-      if ($$props.setOpen === void 0 && $$bindings.setOpen && setOpen !== void 0)
-        $$bindings.setOpen(setOpen);
-      if ($$props.setDefaultFocusState === void 0 && $$bindings.setDefaultFocusState && setDefaultFocusState !== void 0)
-        $$bindings.setDefaultFocusState(setDefaultFocusState);
-      if ($$props.getSelectedIndex === void 0 && $$bindings.getSelectedIndex && getSelectedIndex !== void 0)
-        $$bindings.getSelectedIndex(getSelectedIndex);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        usePass = [forwardEvents, ...use];
-        $$rendered = `${validate_component(MenuSurface, "MenuSurface").$$render($$result, Object.assign({ use: usePass }, {
-          class: classMap({ [className]: true, "mdc-menu": true })
-        }, $$restProps, { this: element }, { open }), {
-          this: ($$value) => {
-            element = $$value;
-            $$settled = false;
-          },
-          open: ($$value) => {
-            open = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `${slots.default ? slots.default({}) : ``}`
-        })}`;
-      } while (!$$settled);
-      return $$rendered;
-    });
-    List = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "nonInteractive",
-        "dense",
-        "textualList",
-        "avatarList",
-        "iconList",
-        "imageList",
-        "thumbnailList",
-        "videoList",
-        "twoLine",
-        "threeLine",
-        "vertical",
-        "wrapFocus",
-        "singleSelection",
-        "selectedIndex",
-        "radioList",
-        "checkList",
-        "hasTypeahead",
-        "component",
-        "layout",
-        "setEnabled",
-        "getTypeaheadInProgress",
-        "getSelectedIndex",
-        "getFocusedItemIndex",
-        "getElement"
-      ]);
-      var _a;
-      const forwardEvents = forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { nonInteractive = false } = $$props;
-      let { dense = false } = $$props;
-      let { textualList = false } = $$props;
-      let { avatarList = false } = $$props;
-      let { iconList = false } = $$props;
-      let { imageList = false } = $$props;
-      let { thumbnailList = false } = $$props;
-      let { videoList = false } = $$props;
-      let { twoLine = false } = $$props;
-      let { threeLine = false } = $$props;
-      let { vertical = true } = $$props;
-      let { wrapFocus = (_a = getContext("SMUI:list:wrapFocus")) !== null && _a !== void 0 ? _a : false } = $$props;
-      let { singleSelection = false } = $$props;
-      let { selectedIndex = -1 } = $$props;
-      let { radioList = false } = $$props;
-      let { checkList = false } = $$props;
-      let { hasTypeahead = false } = $$props;
-      let element;
-      let instance2;
-      let role = getContext("SMUI:list:role");
-      let nav = getContext("SMUI:list:nav");
-      let selectionDialog = getContext("SMUI:dialog:selection");
-      let addLayoutListener = getContext("SMUI:addLayoutListener");
-      let removeLayoutListener;
-      let { component = nav ? Nav : Ul } = $$props;
-      setContext("SMUI:list:nonInteractive", nonInteractive);
-      setContext("SMUI:separator:context", "list");
-      if (!role) {
-        if (singleSelection) {
-          role = "listbox";
-          setContext("SMUI:list:item:role", "option");
-        } else if (radioList) {
-          role = "radiogroup";
-          setContext("SMUI:list:item:role", "radio");
-        } else if (checkList) {
-          role = "group";
-          setContext("SMUI:list:item:role", "checkbox");
-        } else {
-          role = "list";
-          setContext("SMUI:list:item:role", void 0);
-        }
-      }
-      if (addLayoutListener) {
-        removeLayoutListener = addLayoutListener(layout);
-      }
-      onDestroy(() => {
-        if (removeLayoutListener) {
-          removeLayoutListener();
-        }
-      });
-      function layout() {
-        return instance2.layout();
-      }
-      function setEnabled(itemIndex, isEnabled) {
-        return instance2.setEnabled(itemIndex, isEnabled);
-      }
-      function getTypeaheadInProgress() {
-        return instance2.isTypeaheadInProgress();
-      }
-      function getSelectedIndex() {
-        return instance2.getSelectedIndex();
-      }
-      function getFocusedItemIndex() {
-        return instance2.getFocusedItemIndex();
-      }
-      function getElement() {
-        return element.getElement();
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.nonInteractive === void 0 && $$bindings.nonInteractive && nonInteractive !== void 0)
-        $$bindings.nonInteractive(nonInteractive);
-      if ($$props.dense === void 0 && $$bindings.dense && dense !== void 0)
-        $$bindings.dense(dense);
-      if ($$props.textualList === void 0 && $$bindings.textualList && textualList !== void 0)
-        $$bindings.textualList(textualList);
-      if ($$props.avatarList === void 0 && $$bindings.avatarList && avatarList !== void 0)
-        $$bindings.avatarList(avatarList);
-      if ($$props.iconList === void 0 && $$bindings.iconList && iconList !== void 0)
-        $$bindings.iconList(iconList);
-      if ($$props.imageList === void 0 && $$bindings.imageList && imageList !== void 0)
-        $$bindings.imageList(imageList);
-      if ($$props.thumbnailList === void 0 && $$bindings.thumbnailList && thumbnailList !== void 0)
-        $$bindings.thumbnailList(thumbnailList);
-      if ($$props.videoList === void 0 && $$bindings.videoList && videoList !== void 0)
-        $$bindings.videoList(videoList);
-      if ($$props.twoLine === void 0 && $$bindings.twoLine && twoLine !== void 0)
-        $$bindings.twoLine(twoLine);
-      if ($$props.threeLine === void 0 && $$bindings.threeLine && threeLine !== void 0)
-        $$bindings.threeLine(threeLine);
-      if ($$props.vertical === void 0 && $$bindings.vertical && vertical !== void 0)
-        $$bindings.vertical(vertical);
-      if ($$props.wrapFocus === void 0 && $$bindings.wrapFocus && wrapFocus !== void 0)
-        $$bindings.wrapFocus(wrapFocus);
-      if ($$props.singleSelection === void 0 && $$bindings.singleSelection && singleSelection !== void 0)
-        $$bindings.singleSelection(singleSelection);
-      if ($$props.selectedIndex === void 0 && $$bindings.selectedIndex && selectedIndex !== void 0)
-        $$bindings.selectedIndex(selectedIndex);
-      if ($$props.radioList === void 0 && $$bindings.radioList && radioList !== void 0)
-        $$bindings.radioList(radioList);
-      if ($$props.checkList === void 0 && $$bindings.checkList && checkList !== void 0)
-        $$bindings.checkList(checkList);
-      if ($$props.hasTypeahead === void 0 && $$bindings.hasTypeahead && hasTypeahead !== void 0)
-        $$bindings.hasTypeahead(hasTypeahead);
-      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-        $$bindings.component(component);
-      if ($$props.layout === void 0 && $$bindings.layout && layout !== void 0)
-        $$bindings.layout(layout);
-      if ($$props.setEnabled === void 0 && $$bindings.setEnabled && setEnabled !== void 0)
-        $$bindings.setEnabled(setEnabled);
-      if ($$props.getTypeaheadInProgress === void 0 && $$bindings.getTypeaheadInProgress && getTypeaheadInProgress !== void 0)
-        $$bindings.getTypeaheadInProgress(getTypeaheadInProgress);
-      if ($$props.getSelectedIndex === void 0 && $$bindings.getSelectedIndex && getSelectedIndex !== void 0)
-        $$bindings.getSelectedIndex(getSelectedIndex);
-      if ($$props.getFocusedItemIndex === void 0 && $$bindings.getFocusedItemIndex && getFocusedItemIndex !== void 0)
-        $$bindings.getFocusedItemIndex(getFocusedItemIndex);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object.assign({ use: [forwardEvents, ...use] }, {
-          class: classMap({
-            [className]: true,
-            "mdc-deprecated-list": true,
-            "mdc-deprecated-list--non-interactive": nonInteractive,
-            "mdc-deprecated-list--dense": dense,
-            "mdc-deprecated-list--textual-list": textualList,
-            "mdc-deprecated-list--avatar-list": avatarList || selectionDialog,
-            "mdc-deprecated-list--icon-list": iconList,
-            "mdc-deprecated-list--image-list": imageList,
-            "mdc-deprecated-list--thumbnail-list": thumbnailList,
-            "mdc-deprecated-list--video-list": videoList,
-            "mdc-deprecated-list--two-line": twoLine,
-            "smui-list--three-line": threeLine && !twoLine
-          })
-        }, { role }, $$restProps, { this: element }), {
-          this: ($$value) => {
-            element = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `${slots.default ? slots.default({}) : ``}`
-        })}`;
-      } while (!$$settled);
-      return $$rendered;
-    });
-    ({ Object: Object_13 } = globals);
-    counter$1 = 0;
-    Item$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let tabindex;
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "style",
-        "color",
-        "nonInteractive",
-        "ripple",
-        "activated",
-        "role",
-        "selected",
-        "disabled",
-        "skipRestoreFocus",
-        "tabindex",
-        "inputId",
-        "href",
-        "component",
-        "getPrimaryText",
-        "getElement"
-      ]);
-      var _a;
-      const forwardEvents = forwardEventsBuilder(get_current_component());
-      let uninitializedValue = () => {
-      };
-      function isUninitializedValue(value) {
-        return value === uninitializedValue;
-      }
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { style = "" } = $$props;
-      let { color = void 0 } = $$props;
-      let { nonInteractive = (_a = getContext("SMUI:list:nonInteractive")) !== null && _a !== void 0 ? _a : false } = $$props;
-      setContext("SMUI:list:nonInteractive", void 0);
-      let { ripple = !nonInteractive } = $$props;
-      let { activated = false } = $$props;
-      let { role = getContext("SMUI:list:item:role") } = $$props;
-      setContext("SMUI:list:item:role", void 0);
-      let { selected = false } = $$props;
-      let { disabled = false } = $$props;
-      let { skipRestoreFocus = false } = $$props;
-      let { tabindex: tabindexProp = uninitializedValue } = $$props;
-      let { inputId = "SMUI-form-field-list-" + counter$1++ } = $$props;
-      let { href = void 0 } = $$props;
-      let element;
-      let internalClasses = {};
-      let internalStyles = {};
-      let internalAttrs = {};
-      let input;
-      let nav = getContext("SMUI:list:item:nav");
-      let { component = nav ? href ? A : Span : Li } = $$props;
-      setContext("SMUI:generic:input:props", { id: inputId });
-      setContext("SMUI:separator:context", void 0);
-      onDestroy(() => {
-      });
-      function addClass(className2) {
-        if (!internalClasses[className2]) {
-          internalClasses[className2] = true;
-        }
-      }
-      function removeClass(className2) {
-        if (!(className2 in internalClasses) || internalClasses[className2]) {
-          internalClasses[className2] = false;
-        }
-      }
-      function addStyle(name22, value) {
-        if (internalStyles[name22] != value) {
-          if (value === "" || value == null) {
-            delete internalStyles[name22];
-            internalStyles = internalStyles;
-          } else {
-            internalStyles[name22] = value;
-          }
-        }
-      }
-      function getPrimaryText() {
-        var _a2, _b, _c;
-        const element2 = getElement();
-        const primaryText = element2.querySelector(".mdc-deprecated-list-item__primary-text");
-        if (primaryText) {
-          return (_a2 = primaryText.textContent) !== null && _a2 !== void 0 ? _a2 : "";
-        }
-        const text = element2.querySelector(".mdc-deprecated-list-item__text");
-        if (text) {
-          return (_b = text.textContent) !== null && _b !== void 0 ? _b : "";
-        }
-        return (_c = element2.textContent) !== null && _c !== void 0 ? _c : "";
-      }
-      function getElement() {
-        return element.getElement();
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-        $$bindings.style(style);
-      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-        $$bindings.color(color);
-      if ($$props.nonInteractive === void 0 && $$bindings.nonInteractive && nonInteractive !== void 0)
-        $$bindings.nonInteractive(nonInteractive);
-      if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
-        $$bindings.ripple(ripple);
-      if ($$props.activated === void 0 && $$bindings.activated && activated !== void 0)
-        $$bindings.activated(activated);
-      if ($$props.role === void 0 && $$bindings.role && role !== void 0)
-        $$bindings.role(role);
-      if ($$props.selected === void 0 && $$bindings.selected && selected !== void 0)
-        $$bindings.selected(selected);
-      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
-        $$bindings.disabled(disabled);
-      if ($$props.skipRestoreFocus === void 0 && $$bindings.skipRestoreFocus && skipRestoreFocus !== void 0)
-        $$bindings.skipRestoreFocus(skipRestoreFocus);
-      if ($$props.tabindex === void 0 && $$bindings.tabindex && tabindexProp !== void 0)
-        $$bindings.tabindex(tabindexProp);
-      if ($$props.inputId === void 0 && $$bindings.inputId && inputId !== void 0)
-        $$bindings.inputId(inputId);
-      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
-        $$bindings.href(href);
-      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-        $$bindings.component(component);
-      if ($$props.getPrimaryText === void 0 && $$bindings.getPrimaryText && getPrimaryText !== void 0)
-        $$bindings.getPrimaryText(getPrimaryText);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        tabindex = isUninitializedValue(tabindexProp) ? !nonInteractive && !disabled && (selected || input) ? 0 : -1 : tabindexProp;
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_13.assign({
-          use: [
-            ...nonInteractive ? [] : [
-              [
-                Ripple,
-                {
-                  ripple: !input,
-                  unbounded: false,
-                  color: (activated || selected) && color == null ? "primary" : color,
-                  disabled,
-                  addClass,
-                  removeClass,
-                  addStyle
-                }
-              ]
-            ],
-            forwardEvents,
-            ...use
-          ]
-        }, {
-          class: classMap({
-            [className]: true,
-            "mdc-deprecated-list-item": true,
-            "mdc-deprecated-list-item--activated": activated,
-            "mdc-deprecated-list-item--selected": selected,
-            "mdc-deprecated-list-item--disabled": disabled,
-            "mdc-menu-item--selected": !nav && role === "menuitem" && selected,
-            "smui-menu-item--non-interactive": nonInteractive,
-            ...internalClasses
-          })
-        }, {
-          style: Object.entries(internalStyles).map(([name22, value]) => `${name22}: ${value};`).concat([style]).join(" ")
-        }, nav && activated ? { "aria-current": "page" } : {}, !nav ? { role } : {}, !nav && role === "option" ? {
-          "aria-selected": selected ? "true" : "false"
-        } : {}, !nav && (role === "radio" || role === "checkbox") ? {
-          "aria-checked": "false"
-        } : {}, !nav ? {
-          "aria-disabled": disabled ? "true" : "false"
-        } : {}, {
-          "data-menu-item-skip-restore-focus": skipRestoreFocus || void 0
-        }, { tabindex }, { href }, internalAttrs, $$restProps, { this: element }), {
-          this: ($$value) => {
-            element = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `${ripple ? `<span class="${"mdc-deprecated-list-item__ripple"}"></span>` : ``}${slots.default ? slots.default({}) : ``}`
-        })}`;
-      } while (!$$settled);
-      return $$rendered;
-    });
-    classAdderBuilder({
-      class: "mdc-deprecated-list-item__text",
-      component: Span
-    });
-    classAdderBuilder({
-      class: "mdc-deprecated-list-item__primary-text",
-      component: Span
-    });
-    classAdderBuilder({
-      class: "mdc-deprecated-list-item__secondary-text",
-      component: Span
-    });
-    Graphic$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["use", "class", "getElement"]);
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let element;
-      let menuSelectionGroup = getContext("SMUI:list:graphic:menu-selection-group");
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `<span${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-deprecated-list-item__graphic": true,
-            "mdc-menu__selection-group-icon": menuSelectionGroup
-          }))
-        },
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>`;
-    });
-    classAdderBuilder({
-      class: "mdc-deprecated-list-item__meta",
-      component: Span
-    });
-    classAdderBuilder({
-      class: "mdc-deprecated-list-group",
-      component: Div
-    });
-    classAdderBuilder({
-      class: "mdc-deprecated-list-group__subheader",
-      component: H3
-    });
-    Item = Item$1;
-    Graphic = Graphic$1;
-    classAdderBuilder({
-      class: "mdc-menu__selection-group-icon",
-      component: Graphic
-    });
     ClassDropdownMenu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let mitClasses = [{ name: "6.006" }, { name: "6.036" }];
       let menu;
@@ -121605,7 +121784,7 @@ var init_layout_902b396f = __esm({
       do {
         $$settled = true;
         $$rendered = `
-  <h1 style="${"font-family: Roboto, sans-serif; font-weight: 400; margin-left: 8px; margin-top: 10px; margin-bottom: 12px; font-size: 2.4rem"}">6.036
+  <h1 style="${"font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem"}">6.036
   </h1>
 
 ${validate_component(Menu, "Menu").$$render($$result, {
@@ -121962,40 +122141,6 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       class: "mdc-drawer__subtitle",
       component: H2
     });
-    Card = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["use", "class", "variant", "padded", "getElement"]);
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { variant = "raised" } = $$props;
-      let { padded = false } = $$props;
-      let element;
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.variant === void 0 && $$bindings.variant && variant !== void 0)
-        $$bindings.variant(variant);
-      if ($$props.padded === void 0 && $$bindings.padded && padded !== void 0)
-        $$bindings.padded(padded);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `<div${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-card": true,
-            "mdc-card--outlined": variant === "outlined",
-            "smui-card--padded": padded
-          }))
-        },
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}
-</div>`;
-    });
     classAdderBuilder({
       class: "smui-card__content",
       component: Div
@@ -122017,21 +122162,16 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       map: null
     };
     LeftDrawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $user, $$unsubscribe_user;
-      $$unsubscribe_user = subscribe(user, (value) => $user = value);
       $$result.css.add(css$12);
-      $$unsubscribe_user();
       return `<div class="${"drawer-container svelte-f4hgt4"}">${validate_component(Drawer, "Drawer").$$render($$result, {
-        style: "overflow-y: scroll; height: 100%;"
+        style: "overflow-y: scroll; height: 100%;",
+        class: "mdc-elevation--z" + 5
       }, {}, {
         default: () => `${validate_component(Content, "Content").$$render($$result, {}, {}, {
-          default: () => `<div class="${"card-container svelte-f4hgt4"}">${validate_component(Card, "Card").$$render($$result, {
-            padded: true,
-            style: "padding-top: 0; padding-bottom: 0"
-          }, {}, {
-            default: () => `<div style="${"display: flex; align-items: center"}" class="${"svelte-f4hgt4"}"><img src="${"/logo.png"}" width="${"55"}" height="${"50"}" alt="${"web-logo"}" class="${"svelte-f4hgt4"}">
-            ${$user ? `${validate_component(ClassDropdownMenu, "ClassDropdownMenu").$$render($$result, {}, {}, {})}` : `<div id="${"sign-up-area"}" class="${"svelte-f4hgt4"}"></div>`}</div>`
-          })}</div>
+          default: () => `<div style="${"margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;"}" class="${"mdc-elevation--z" + escape(4) + " svelte-f4hgt4"}"><div style="${"display: flex; align-items: center"}" class="${"svelte-f4hgt4"}"><img src="${"/logo.png"}" width="${"60"}" height="${"54"}" alt="${"web-logo"}" class="${"svelte-f4hgt4"}">
+          <div class="${"svelte-f4hgt4"}">${validate_component(ClassDropdownMenu, "ClassDropdownMenu").$$render($$result, {}, {}, {})}
+            <div style="${"font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px"}" class="${"svelte-f4hgt4"}">Intro to Machine Learning
+            </div></div></div></div>
       ${validate_component(List, "List").$$render($$result, {}, {}, {
             default: () => `${slots.default ? slots.default({}) : `
 
@@ -124474,25 +124614,25 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       }
     };
     driver$4 = Driver;
-    Event$4 = function(eventType, options2) {
+    Event$3 = function(eventType, options2) {
       this.type = eventType;
       for (var key in options2)
         this[key] = options2[key];
     };
-    Event$4.prototype.initEvent = function(eventType, canBubble, cancelable) {
+    Event$3.prototype.initEvent = function(eventType, canBubble, cancelable) {
       this.type = eventType;
       this.bubbles = canBubble;
       this.cancelable = cancelable;
     };
-    Event$4.prototype.stopPropagation = function() {
+    Event$3.prototype.stopPropagation = function() {
     };
-    Event$4.prototype.preventDefault = function() {
+    Event$3.prototype.preventDefault = function() {
     };
-    Event$4.CAPTURING_PHASE = 1;
-    Event$4.AT_TARGET = 2;
-    Event$4.BUBBLING_PHASE = 3;
-    event = Event$4;
-    Event$3 = event;
+    Event$3.CAPTURING_PHASE = 1;
+    Event$3.AT_TARGET = 2;
+    Event$3.BUBBLING_PHASE = 3;
+    event = Event$3;
+    Event$2 = event;
     EventTarget$2 = {
       onopen: null,
       onmessage: null,
@@ -124506,7 +124646,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
       },
       dispatchEvent: function(event2) {
         event2.target = event2.currentTarget = this;
-        event2.eventPhase = Event$3.AT_TARGET;
+        event2.eventPhase = Event$2.AT_TARGET;
         if (this["on" + event2.type])
           this["on" + event2.type](event2);
         this.emit(event2.type, event2);
@@ -124517,7 +124657,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
     util$3 = import_util7.default;
     driver$3 = driver$4;
     EventTarget$1 = event_target;
-    Event$2 = event;
+    Event$1 = event;
     API$3 = function(options2) {
       options2 = options2 || {};
       driver$3.validateOptions(options2, ["headers", "extensions", "maxLength", "ping", "proxy", "tls", "ca"]);
@@ -124636,7 +124776,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
           return;
         this.readyState = API$3.OPEN;
         this.protocol = this._driver.protocol || "";
-        var event2 = new Event$2("open");
+        var event2 = new Event$1("open");
         event2.initEvent("open", false, false);
         this.dispatchEvent(event2);
       },
@@ -124645,14 +124785,14 @@ ${validate_component(Menu, "Menu").$$render($$result, {
           return false;
         if (this.readable)
           this.emit("data", data);
-        var event2 = new Event$2("message", { data });
+        var event2 = new Event$1("message", { data });
         event2.initEvent("message", false, false);
         this.dispatchEvent(event2);
       },
       _emitError: function(message2) {
         if (this.readyState >= API$3.CLOSING)
           return;
-        var event2 = new Event$2("error", { message: message2 });
+        var event2 = new Event$1("error", { message: message2 });
         event2.initEvent("error", false, false);
         this.dispatchEvent(event2);
       },
@@ -124681,7 +124821,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
           this.emit("end");
         this.readable = this.writable = false;
         var reason = this._closeParams ? this._closeParams[0] : "", code = this._closeParams ? this._closeParams[1] : 1006;
-        var event2 = new Event$2("close", { code, reason });
+        var event2 = new Event$1("close", { code, reason });
         event2.initEvent("close", false, false);
         this.dispatchEvent(event2);
       }
@@ -124758,7 +124898,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
     Headers3 = headers;
     API$1 = api;
     EventTarget = event_target;
-    Event$1 = event;
+    Event2 = event;
     EventSource = function(request, response, options2) {
       this.writable = true;
       options2 = options2 || {};
@@ -124819,7 +124959,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
         if (this.readyState !== API$1.CONNECTING)
           return;
         this.readyState = API$1.OPEN;
-        var event2 = new Event$1("open");
+        var event2 = new Event2("open");
         event2.initEvent("open", false, false);
         this.dispatchEvent(event2);
       },
@@ -124856,7 +124996,7 @@ ${validate_component(Menu, "Menu").$$render($$result, {
           clearInterval(this._pingTimer);
         if (this._stream)
           this._stream.end();
-        var event2 = new Event$1("close");
+        var event2 = new Event2("close");
         event2.initEvent("close", false, false);
         this.dispatchEvent(event2);
         return true;
@@ -129487,228 +129627,8 @@ ${validate_component(Menu, "Menu").$$render($$result, {
 
 `}`;
     });
-    Switch = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "disabled",
-        "color",
-        "group",
-        "checked",
-        "value",
-        "processing",
-        "icons",
-        "icons$use",
-        "icons$class",
-        "getId",
-        "getElement"
-      ]);
-      var _a;
-      forwardEventsBuilder(get_current_component());
-      let uninitializedValue = () => {
-      };
-      function isUninitializedValue(value2) {
-        return value2 === uninitializedValue;
-      }
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { disabled = false } = $$props;
-      let { color = "primary" } = $$props;
-      let { group = uninitializedValue } = $$props;
-      let { checked = uninitializedValue } = $$props;
-      let { value = null } = $$props;
-      let { processing: processing2 = false } = $$props;
-      let { icons = true } = $$props;
-      let { icons$use = [] } = $$props;
-      let { icons$class = "" } = $$props;
-      let element;
-      let internalClasses = {};
-      let rippleElement;
-      let inputProps = (_a = getContext("SMUI:generic:input:props")) !== null && _a !== void 0 ? _a : {};
-      let selected = isUninitializedValue(group) ? isUninitializedValue(checked) ? false : checked : group.indexOf(value) !== -1;
-      let state = {
-        get disabled() {
-          return disabled;
-        },
-        set disabled(value2) {
-          disabled = value2;
-        },
-        get processing() {
-          return processing2;
-        },
-        set processing(value2) {
-          processing2 = value2;
-        },
-        get selected() {
-          return selected;
-        },
-        set selected(value2) {
-          selected = value2;
-        }
-      };
-      let previousChecked = checked;
-      let previousGroup = isUninitializedValue(group) ? [] : [...group];
-      let previousSelected = selected;
-      function getId() {
-        return inputProps && inputProps.id;
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
-        $$bindings.disabled(disabled);
-      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-        $$bindings.color(color);
-      if ($$props.group === void 0 && $$bindings.group && group !== void 0)
-        $$bindings.group(group);
-      if ($$props.checked === void 0 && $$bindings.checked && checked !== void 0)
-        $$bindings.checked(checked);
-      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-        $$bindings.value(value);
-      if ($$props.processing === void 0 && $$bindings.processing && processing2 !== void 0)
-        $$bindings.processing(processing2);
-      if ($$props.icons === void 0 && $$bindings.icons && icons !== void 0)
-        $$bindings.icons(icons);
-      if ($$props.icons$use === void 0 && $$bindings.icons$use && icons$use !== void 0)
-        $$bindings.icons$use(icons$use);
-      if ($$props.icons$class === void 0 && $$bindings.icons$class && icons$class !== void 0)
-        $$bindings.icons$class(icons$class);
-      if ($$props.getId === void 0 && $$bindings.getId && getId !== void 0)
-        $$bindings.getId(getId);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      {
-        {
-          let notifyChange = false;
-          if (!isUninitializedValue(group)) {
-            if (previousSelected !== selected) {
-              const idx = group.indexOf(value);
-              if (selected && idx === -1) {
-                group.push(value);
-                group = group;
-              } else if (!selected && idx !== -1) {
-                group.splice(idx, 1);
-                group = group;
-              }
-              notifyChange = true;
-            } else {
-              const idxPrev = previousGroup.indexOf(value);
-              const idx = group.indexOf(value);
-              if (idxPrev > -1 && idx === -1) {
-                state.selected = false;
-              } else if (idx > -1 && idxPrev === -1) {
-                state.selected = true;
-              }
-            }
-          }
-          if (isUninitializedValue(checked)) {
-            if (previousSelected !== selected) {
-              notifyChange = true;
-            }
-          } else if (checked !== selected) {
-            if (checked === previousChecked) {
-              checked = selected;
-              notifyChange = true;
-            } else {
-              state.selected = checked;
-            }
-          }
-          previousChecked = checked;
-          previousGroup = isUninitializedValue(group) ? [] : [...group];
-          previousSelected = selected;
-          if (notifyChange && element) {
-            dispatch(element, "SMUISwitch:change", { selected, value });
-          }
-        }
-      }
-      return `<button${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-switch": true,
-            "mdc-switch--unselected": !selected,
-            "mdc-switch--selected": selected,
-            "mdc-switch--processing": processing2,
-            "smui-switch--color-secondary": color === "secondary",
-            ...internalClasses
-          }))
-        },
-        { type: "button" },
-        { role: "switch" },
-        {
-          "aria-checked": escape_attribute_value(selected ? "true" : "false")
-        },
-        { disabled: disabled || null },
-        escape_object(inputProps),
-        escape_object(exclude($$restProps, ["icons$"]))
-      ])}${add_attribute("this", element, 0)}><div class="${"mdc-switch__track"}"></div>
-  <div class="${"mdc-switch__handle-track"}"><div class="${"mdc-switch__handle"}"><div class="${"mdc-switch__shadow"}"><div class="${"mdc-elevation-overlay"}"></div></div>
-      <div class="${"mdc-switch__ripple"}"${add_attribute("this", rippleElement, 0)}></div>
-      ${icons ? `<div${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [icons$class]: true,
-            "mdc-switch__icons": true
-          }))
-        },
-        escape_object(prefixFilter($$restProps, "icons$"))
-      ])}><svg class="${"mdc-switch__icon mdc-switch__icon--on"}" viewBox="${"0 0 24 24"}"><path d="${"M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z"}"></path></svg>
-          <svg class="${"mdc-switch__icon mdc-switch__icon--off"}" viewBox="${"0 0 24 24"}"><path d="${"M20 13H4v-2h16v2z"}"></path></svg></div>` : ``}</div></div>
-</button>`;
-    });
-    counter2 = 0;
-    FormField = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["use", "class", "align", "noWrap", "inputId", "label$use", "getElement"]);
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { align = "start" } = $$props;
-      let { noWrap = false } = $$props;
-      let { inputId = "SMUI-form-field-" + counter2++ } = $$props;
-      let { label$use = [] } = $$props;
-      let element;
-      let label;
-      setContext("SMUI:generic:input:props", { id: inputId });
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.align === void 0 && $$bindings.align && align !== void 0)
-        $$bindings.align(align);
-      if ($$props.noWrap === void 0 && $$bindings.noWrap && noWrap !== void 0)
-        $$bindings.noWrap(noWrap);
-      if ($$props.inputId === void 0 && $$bindings.inputId && inputId !== void 0)
-        $$bindings.inputId(inputId);
-      if ($$props.label$use === void 0 && $$bindings.label$use && label$use !== void 0)
-        $$bindings.label$use(label$use);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `<div${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-form-field": true,
-            "mdc-form-field--align-end": align === "end",
-            "mdc-form-field--nowrap": noWrap
-          }))
-        },
-        escape_object(exclude($$restProps, ["label$"]))
-      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}
-  <label${spread([
-        { for: escape_attribute_value(inputId) },
-        escape_object(prefixFilter($$restProps, "label$"))
-      ])}${add_attribute("this", label, 0)}>${slots.label ? slots.label({}) : ``}</label>
-</div>`;
-    });
     css3 = {
-      code: ".question-item.svelte-ismk6d{color:red}.selected.svelte-ismk6d{font-weight:500;background-color:rgb(188, 248, 248)}",
+      code: ".question-item.svelte-twz7iw{color:rgb(19, 145, 230)}.selected.svelte-twz7iw{font-weight:500;background-color:rgb(148, 221, 159)}.speaking.svelte-twz7iw{font-weight:800}",
       map: null
     };
     _layout2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -129781,27 +129701,27 @@ ${validate_component(Menu, "Menu").$$render($$result, {
 <div id="${"container-for-audio-elements"}"></div>
 
 ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$result, { roomID }, {}, {
-        default: ({ isMicOn, activeSpeakerID, toggleMic, firestoreIDToDailyID }) => `${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, {}, {}, {
+        default: ({ activeSpeakerID, toggleMic, firestoreIDToDailyID }) => `${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, {}, {}, {
           default: () => `${rooms ? `${each(rooms, (room) => `${room.name !== void 0 ? `
-          <div style="${"padding: 6px"}">
-            <div class="${escape(null_to_empty(room.id === roomID ? "selected" : "")) + " svelte-ismk6d"}" style="${"padding: 6px; opacity: 90%"}">${room.name ? `<div class="${[
-            "svelte-ismk6d",
+          <div style="${"padding: 6px;"}">
+            <div class="${escape(null_to_empty(room.id === roomID ? "selected" : "")) + " svelte-twz7iw"}" style="${"padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;"}">${room.name ? `<div style="${"white-space: nowrap; overflow: hidden; text-overflow: ellipsis margin-bottom: 2px; "}" class="${[
+            "svelte-twz7iw",
             room.name.charAt(room.name.length - 1) === "?" ? "question-item" : ""
           ].join(" ").trim()}">${escape(room.name)}
-                </div>` : `${room.name === "" ? `<div>(no title)</div>` : ``}`}
+                </div>` : `${room.name === "" ? `<div style="${"margin-bottom: 2px;"}">(no title)</div>` : ``}`}
 
-              ${$roomToPeople[room.id] ? `${each($roomToPeople[room.id], (person) => `<div style="${"display: flex"}"><div style="${"font-size: 0.7rem; margin-left: 4px;"}">${escape(person.name)}</div> 
-                    ${Object.keys($dailyRoomParticipants).length > 0 ? `${person.browserTabID === $browserTabID ? `<div style="${"margin-right: 0; margin-left: auto"}">${validate_component(FormField, "FormField").$$render($$result, {}, {}, {
-            label: () => `<span slot="${"label"}">${escape($dailyRoomParticipants.local.audio ? "voice on" : "muted")}</span>`,
-            default: () => `${validate_component(Switch, "Switch").$$render($$result, {
-              checked: $dailyRoomParticipants.local.audio
-            }, {}, {})}
-                            
-                          `
-          })}
+              ${$roomToPeople[room.id] ? `${each($roomToPeople[room.id], (person) => `<div style="${"display: flex; align-items: center"}"><div style="${"font-size: 0.7rem; margin-left: 6px;"}" class="${[
+            "svelte-twz7iw",
+            firestoreIDToDailyID && firestoreIDToDailyID[person.browserTabID] && firestoreIDToDailyID[person.browserTabID] === activeSpeakerID ? "speaking" : ""
+          ].join(" ").trim()}">${escape(person.name)}</div> 
+                    ${Object.keys($dailyRoomParticipants).length > 0 ? `${person.browserTabID === $browserTabID ? `<div style="${"display: flex; align-items: center; margin-right: 0; margin-left: auto"}"><div style="${"margin-right: 0; margin-left: auto; padding-top: 3px"}">${validate_component(Switch, "Switch").$$render($$result, {
+            checked: $dailyRoomParticipants.local.audio,
+            style: "margin: 0 !important"
+          }, {}, {})}</div>
+                          ${$dailyRoomParticipants.local.audio ? `<div style="${"font-size: 0.8rem; margin-left: 6px; color: green"}">voice on</div>` : `<div style="${"font-size: 0.8rem; margin-left: 6px; color: red"}">muted</div>`}
                         </div>` : ``}
-                      ${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]] ? `${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio ? `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto"}">mic
-                          </span>` : `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto"}">mic_off
+                      ${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]] ? `${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio ? `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto; font-size: 1.2rem; color: " + escape(firestoreIDToDailyID && firestoreIDToDailyID[person.browserTabID] && firestoreIDToDailyID[person.browserTabID] === activeSpeakerID ? "white" : "")}">mic
+                          </span>` : `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto; font-size: 1.2rem; color: red"}">mic_off
                           </span>`}` : ``}` : ``}
                   </div>`)}` : ``}</div>
           </div>` : ``}`)}` : ``}`
@@ -129822,9 +129742,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-d81ccd72.js
-var index_d81ccd72_exports = {};
-__export(index_d81ccd72_exports, {
+// .svelte-kit/output/server/chunks/index-3b72b001.js
+var index_3b72b001_exports = {};
+__export(index_3b72b001_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -130297,20 +130217,21 @@ async function load3({ page }) {
   };
 }
 var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, CommonLabel, Label, Readable2, BUFFER3, TYPE2, Blob4, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css4, U5Broomu5D;
-var init_index_d81ccd72 = __esm({
-  ".svelte-kit/output/server/chunks/index-d81ccd72.js"() {
+var init_index_3b72b001 = __esm({
+  ".svelte-kit/output/server/chunks/index-3b72b001.js"() {
     init_shims();
-    init_app_31845fcc();
-    init_RenderlessBoardMethods_97cde0d7();
-    init_classAdderBuilder_c7fb77c1();
-    init_store_1a2000f6();
+    init_app_eae13053();
+    init_RenderlessBoardMethods_2de1872d();
+    init_Switch_13e34890();
+    init_store_09b5f31d();
     import_stream6 = __toModule(require("stream"));
     import_http5 = __toModule(require("http"));
     import_url7 = __toModule(require("url"));
-    init_index_c327074d_45c55d1e();
+    init_index_c327074d_48d19497();
     import_https5 = __toModule(require("https"));
     import_zlib5 = __toModule(require("zlib"));
     init_index_node();
+    init_SelectionGroupIcon_1b1c66e0();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     import_punycode4 = __toModule(require("punycode"));
@@ -131264,7 +131185,7 @@ ${this.customData.serverResponse}`;
     STORAGE_TYPE = "storage";
     registerStorage();
     css4 = {
-      code: ".room-title input{font-size:2rem}.question input{color:red !important}",
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important}",
       map: null
     };
     U5Broomu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -131278,6 +131199,7 @@ ${this.customData.serverResponse}`;
       $$unsubscribe_recordState = subscribe(recordState, (value) => $recordState = value);
       let { classID } = $$props;
       let { roomID } = $$props;
+      let blackboardMenu;
       let roomDoc;
       const boardsDbPath = `classes/${classID}/blackboards/`;
       const roomsDbPath = `classes/${classID}/rooms/`;
@@ -131292,64 +131214,93 @@ ${this.customData.serverResponse}`;
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
       $$result.css.add(css4);
-      doc(getFirestore(), roomsDbPath + roomID);
-      {
-        updateRoomDoc();
-      }
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        doc(getFirestore(), roomsDbPath + roomID);
+        {
+          updateRoomDoc();
+        }
+        $$rendered = `${roomDoc ? `
+	<div style="${"padding: 16px;"}"${add_classes([
+          roomDoc.name.charAt(roomDoc.name.length - 1) === "?" ? "question" : ""
+        ].join(" ").trim())}>${validate_component(Textfield, "Textfield").$$render($$result, {
+          value: roomDoc.name,
+          class: "room-title",
+          style: `width: ${$canvasWidth}px; margin-bottom: 20px;`
+        }, {}, {})}
+
+		${each(roomDoc.blackboards, (boardID) => `${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
+          default: ({ boardDoc, fetchStrokes, listenToStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${strokesArray ? `${validate_component(Textfield, "Textfield").$$render($$result, {
+            textarea: true,
+            value: boardDoc.description || "",
+            style: `width: ${$canvasWidth}px; margin-bottom: 10px`
+          }, {}, {})}` : ``}
+
+          ${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray,
+            audioDownloadURL: boardDoc.audioDownloadURL
+          }, {}, {
+            default: () => `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+              default: () => `Revert to board
+                  `
+            })}
+                `
+          })}` : ``}
+            </div>` : `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`, 0)}>${strokesArray ? `${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
+            default: ({ startRecording, stopRecording, currentTime }) => `${validate_component(Blackboard, "Blackboard").$$render($$result, { strokesArray, currentTime }, {}, {
+              default: () => `${$recordState === "pre_record" ? `${validate_component(Button_1, "Button").$$render($$result, { style: "color: #f5862c" }, {}, { default: () => `Record` })}    
+                      
+                      <span class="${"material-icons"}" style="${"margin-right: 10px; color: white;"}">more_horiz
+                      </span>
+                      ${validate_component(Menu, "Menu").$$render($$result, {
+                style: "left: 100px; top: 50px; width: 300px",
+                this: blackboardMenu
+              }, {
+                this: ($$value) => {
+                  blackboardMenu = $$value;
+                  $$settled = false;
+                }
+              }, {
+                default: () => `${validate_component(List, "List").$$render($$result, {}, {}, {
+                  default: () => `
+                          
+                            ${validate_component(Item, "Item").$$render($$result, {}, {}, {
+                    default: () => `Wipe board
+                            `
+                  })}
+                          
+                        `
+                })}
+                      `
+              })}` : `${$recordState === "mid_record" ? `${validate_component(Button_1, "Button").$$render($$result, { color: "secondary" }, {}, { default: () => `Stop` })}` : `Uploading...`}`}
+                  `
+            })}
+                `
+          })}` : ``}
+            </div>`}` : ``}
+      `
+        })}`)}
+
+    ${validate_component(Button_1, "Button").$$render($$result, {
+          variant: "unelevated",
+          color: "#2e3131",
+          style: `width: ${$canvasWidth}px; margin-top: 40px`
+        }, {}, {
+          default: () => `${validate_component(Label, "Label").$$render($$result, {}, {}, { default: () => `New blackboard` })}`
+        })}</div>` : ``}`;
+      } while (!$$settled);
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
       $$unsubscribe_recordState();
-      return `${roomDoc ? `
-	<div style="${"padding: 16px;"}"${add_classes([
-        roomDoc.name.charAt(roomDoc.name.length - 1) === "?" ? "question" : ""
-      ].join(" ").trim())}>${validate_component(Textfield, "Textfield").$$render($$result, {
-        value: roomDoc.name,
-        class: "room-title",
-        style: `width: ${$canvasWidth}px; margin-bottom: 20px;`
-      }, {}, {})}
-
-		${each(roomDoc.blackboards, (boardID) => `${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-        default: ({ boardDoc, fetchStrokes, listenToStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${strokesArray ? `${validate_component(Textfield, "Textfield").$$render($$result, {
-          textarea: true,
-          value: boardDoc.description || "",
-          style: `width: ${$canvasWidth}px; margin-bottom: 10px`
-        }, {}, {})}` : ``}
-
-          ${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-          strokesArray,
-          audioDownloadURL: boardDoc.audioDownloadURL
-        }, {}, {
-          default: () => `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
-            default: () => `Revert to board
-                  `
-          })}
-                `
-        })}` : ``}
-            </div>` : `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`, 0)}>${strokesArray ? `${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
-          default: ({ startRecording, stopRecording, currentTime }) => `${validate_component(Blackboard, "Blackboard").$$render($$result, { strokesArray, currentTime }, {}, {
-            default: () => `${$recordState === "pre_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Record` })}          
-                      ${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Wipe board` })}` : `${$recordState === "mid_record" ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Stop` })}` : `Uploading...`}`}
-                  `
-          })}
-                `
-        })}` : ``}
-            </div>`}` : ``}
-      `
-      })}`)}
-
-    ${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "unelevated",
-        color: "#2e3131",
-        style: `width: ${$canvasWidth}px; margin-top: 40px`
-      }, {}, {
-        default: () => `${validate_component(Label, "Label").$$render($$result, {}, {}, { default: () => `New blackboard` })}`
-      })}</div>` : ``}`;
+      return $$rendered;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/app-31845fcc.js
+// .svelte-kit/output/server/chunks/app-eae13053.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -132807,9 +132758,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-f1d20999.js",
+      file: assets + "/_app/start-bcff6def.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-f1d20999.js", assets + "/_app/chunks/vendor-f8cad246.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-bcff6def.js", assets + "/_app/chunks/vendor-60dbf49e.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -132853,8 +132804,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_31845fcc = __esm({
-  ".svelte-kit/output/server/chunks/app-31845fcc.js"() {
+var init_app_eae13053 = __esm({
+  ".svelte-kit/output/server/chunks/app-eae13053.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -133081,7 +133032,7 @@ ${``}`;
     d = (s2) => s2.replace(/%23/g, "#").replace(/%3[Bb]/g, ";").replace(/%2[Cc]/g, ",").replace(/%2[Ff]/g, "/").replace(/%3[Ff]/g, "?").replace(/%3[Aa]/g, ":").replace(/%40/g, "@").replace(/%26/g, "&").replace(/%3[Dd]/g, "=").replace(/%2[Bb]/g, "+").replace(/%24/g, "$");
     empty = () => ({});
     manifest = {
-      assets: [{ "file": "favicon.ico", "size": 15406, "type": "image/vnd.microsoft.icon" }, { "file": "favicon.png", "size": 1571, "type": "image/png" }, { "file": "logo.png", "size": 38761, "type": "image/png" }, { "file": "robots.txt", "size": 70, "type": "text/plain" }, { "file": "smui-dark.css", "size": 246765, "type": "text/css" }, { "file": "smui.css", "size": 246456, "type": "text/css" }, { "file": "svelte-welcome.png", "size": 360807, "type": "image/png" }, { "file": "svelte-welcome.webp", "size": 115470, "type": "image/webp" }],
+      assets: [{ "file": "favicon.ico", "size": 15406, "type": "image/vnd.microsoft.icon" }, { "file": "favicon.png", "size": 1571, "type": "image/png" }, { "file": "logo.png", "size": 38761, "type": "image/png" }, { "file": "robots.txt", "size": 70, "type": "text/plain" }, { "file": "smui-dark.css", "size": 246765, "type": "text/css" }, { "file": "smui.css", "size": 246512, "type": "text/css" }, { "file": "svelte-welcome.png", "size": 360807, "type": "image/png" }, { "file": "svelte-welcome.webp", "size": 115470, "type": "image/webp" }],
       layout: "src/routes/__layout.svelte",
       error: ".svelte-kit/build/components/error.svelte",
       routes: [
@@ -133120,13 +133071,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_5a8a2a29(), layout_5a8a2a29_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_318f3ae1(), error_318f3ae1_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_eebce6d6(), index_eebce6d6_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_902b396f(), layout_902b396f_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_d81ccd72(), index_d81ccd72_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_307a77a1(), layout_307a77a1_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_9c37b010(), error_9c37b010_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_7e586b20(), index_7e586b20_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_9595d922(), layout_9595d922_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_3b72b001(), index_3b72b001_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-0cb6c1d8.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-0cb6c1d8.js", "chunks/vendor-f8cad246.js", "chunks/database-eeac199e.js", "chunks/store-5bda137e.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-faa8526f.js", "css": [], "js": ["error.svelte-faa8526f.js", "chunks/vendor-f8cad246.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-59d6d41b.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/index.svelte-59d6d41b.js", "chunks/vendor-f8cad246.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/store-5bda137e.js", "chunks/RenderlessBoardMethods-c4cd2380.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-eeac199e.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-9ff57172.js", "css": ["assets/pages/_class_/__layout.svelte-abebba15.css"], "js": ["pages/_class_/__layout.svelte-9ff57172.js", "chunks/vendor-f8cad246.js", "chunks/store-5bda137e.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-073783a3.js", "css": ["assets/pages/_class_/_room_/index.svelte-7cf131b8.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/_class_/_room_/index.svelte-073783a3.js", "chunks/vendor-f8cad246.js", "chunks/RenderlessBoardMethods-c4cd2380.js", "chunks/store-5bda137e.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-eeac199e.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-2ac57f03.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-2ac57f03.js", "chunks/vendor-60dbf49e.js", "chunks/database-63c5af1e.js", "chunks/store-620103ad.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-83e4d3b0.js", "css": [], "js": ["error.svelte-83e4d3b0.js", "chunks/vendor-60dbf49e.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-aac6dcdb.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/index.svelte-aac6dcdb.js", "chunks/vendor-60dbf49e.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/store-620103ad.js", "chunks/RenderlessBoardMethods-20d1f17d.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-e2e7f714.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-e2e7f714.js", "chunks/vendor-60dbf49e.js", "chunks/store-620103ad.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-1613a6c2.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/_class_/_room_/index.svelte-1613a6c2.js", "chunks/vendor-60dbf49e.js", "chunks/RenderlessBoardMethods-20d1f17d.js", "chunks/store-620103ad.js", "chunks/canvas-257efe3e.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] } };
   }
 });
 
@@ -133179,7 +133130,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_31845fcc();
+init_app_eae13053();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

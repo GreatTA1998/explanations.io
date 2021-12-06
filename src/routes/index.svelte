@@ -48,7 +48,7 @@
 				<div use:startRecordCountdown id="make-your-own-video">
 					<Textfield 
 						textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} 
-						value={`Wondering how the video was made? Just press REC, then draw and talk like in real-life. You have ${currentTime.toFixed(0)} seconds to play around...`}>
+						value={`Wondering how the video was made? Just press REC, then draw and talk like in real-life (note: mouse drawing isn't supported)`}>
 					</Textfield>
 				</div>
 
@@ -132,6 +132,7 @@
 	import DoodleVideo from '$lib/DoodleVideo.svelte'
 	import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
 	import RenderlessBoardMethods from '$lib/RenderlessBoardMethods.svelte'
+	import { calculateCanvasDimensions } from '../helpers/canvas.js'
 
 	let currentTime = 10
 	let titleValue = 'Welcome!'
@@ -223,9 +224,9 @@
 	}
 
 	onMount(() => {
-		const elem = document.getElementById('tutorial-content')
-		canvasWidth.set(elem.scrollWidth * 9/10)
-		canvasHeight.set(elem.scrollWidth * 3/4)
+		const { width, height } = calculateCanvasDimensions()
+		canvasWidth.set(width) 
+		canvasHeight.set(height - 100) // so the user can preview the scrollbar
 	})
 
 

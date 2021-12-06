@@ -1,6 +1,5 @@
 <script context="module">
   export function load ({ page }) {
-    console.log('__layout load(), browser =', browser)
     return {
       props: {
         classID: page.params.class,
@@ -20,50 +19,61 @@
 </div>
 
 <DailyVideoConference {roomID}
-  let:isMicOn={isMicOn}
   let:activeSpeakerID={activeSpeakerID}
   let:toggleMic={toggleMic}
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer>
     {#if rooms}
-      {#each rooms as room (room.id)}
+      {#each rooms as room (room.id + roomID)}
         {#if room.name !== undefined } <!-- TODO: room.name can't be undefined, AF('') better -->
           <div on:click={() => goto(`/${classID}/${room.id}`)}
-            style="padding: 6px"
+            style="padding: 6px;" 
           >
             <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
-            <div class={room.id === roomID ? 'selected' : '' } style="padding: 6px; opacity: 90%">
+            <div class={room.id === roomID ? 'selected' : '' } style="padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;">
               {#if room.name}
-                <div class:question-item={'?' === room.name.charAt(room.name.length - 1)}>
+                <div class:question-item={'?' === room.name.charAt(room.name.length - 1)} 
+                  style="
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis
+                    margin-bottom: 2px;
+                  "
+                >
                   {room.name}
                 </div>
               {:else if room.name === ''}
-                <div>(no title)</div>
+                <div style="margin-bottom: 2px;">(no title)</div>
               {/if}
 
               {#if $roomToPeople[room.id]}
                 {#each $roomToPeople[room.id] as person (person.browserTabID)}
-                  <div style="display: flex">
-                    <div style="font-size: 0.7rem; margin-left: 4px;">
-                      {person.name}
+                  <div style="display: flex; align-items: center">
+                    <div style="font-size: 0.7rem; margin-left: 6px;" 
+                      class:speaking={firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID}>
+                      {person.name} 
                     </div> 
                     {#if Object.keys($dailyRoomParticipants).length > 0}
                       {#if person.browserTabID === $browserTabID}     
-                        <div on:click|preventDefault|stopPropagation={toggleMic} style="margin-right: 0; margin-left: auto">
-                          <FormField >
-                            <Switch checked={$dailyRoomParticipants.local.audio} />
-                            <span slot="label">{ $dailyRoomParticipants.local.audio ? 'voice on' : 'muted' }</span>
-                          </FormField>
-                        </div>                    
+                        <div style="display: flex; align-items: center; margin-right: 0; margin-left: auto">
+                          <div on:click|preventDefault|stopPropagation={toggleMic} style="margin-right: 0; margin-left: auto; padding-top: 3px">
+                            <Switch checked={$dailyRoomParticipants.local.audio} style="margin: 0 !important"/>
+                          </div>
+                          {#if $dailyRoomParticipants.local.audio}
+                            <div style="font-size: 0.8rem; margin-left: 6px; color: green">voice on</div>
+                          {:else}
+                            <div style="font-size: 0.8rem; margin-left: 6px; color: red">muted</div>
+                          {/if}
+                        </div>             
                       {/if}
                       {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}                      
                         {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio} 
-                          <span class="material-icons" style="margin-right: 0; margin-left: auto">
+                          <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.2rem; color: {(firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID) ? 'white' : ''}">
                             mic
                           </span>
                         {:else}
-                          <span class="material-icons" style="margin-right: 0; margin-left: auto">
+                          <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.2rem; color: red">
                             mic_off
                           </span>
                         {/if}
@@ -195,12 +205,16 @@
 
 <style>
   .question-item {
-    color: red;
+    color: rgb(19, 145, 230);
   }
 
   .selected {
     font-weight: 500;
-    background-color:rgb(188, 248, 248);
+    background-color:rgb(148, 221, 159);
+  }
+
+  .speaking {
+    font-weight: 800;
   }
 
   /* .not-selected {

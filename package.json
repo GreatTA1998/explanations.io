@@ -11,6 +11,7 @@
     "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
   },
   "devDependencies": {
+    "@material/elevation": "^13.0.0",
     "@smui/button": "^6.0.0-beta.4",
     "@smui/card": "^6.0.0-beta.4",
     "@smui/common": "^6.0.0-beta.4",

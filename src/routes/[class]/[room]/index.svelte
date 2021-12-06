@@ -59,10 +59,24 @@
                 >
                   <Blackboard {strokesArray} {currentTime} on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}> 
                     {#if $recordState === 'pre_record'}
-                      <Button on:click={startRecording}>Record</Button>          
-                      <Button on:click={deleteAllStrokesFromDb}>Wipe board</Button>
+                      <Button on:click={startRecording} style="color: #f5862c">Record</Button>    
+                      
+                      <span on:click={() => blackboardMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white;">
+                        more_horiz
+                      </span>
+                      <Menu bind:this={blackboardMenu} style="left: 100px; top: 50px; width: 300px">
+                        <List>
+                          <!-- <Button on:click={deleteAllStrokesFromDb} color="secondary">Wipe</Button> -->
+                          <!-- {#each mitClasses as mitClass } -->
+                            <Item on:SMUI:action={deleteAllStrokesFromDb}>
+                              Wipe board
+                            </Item>
+                          <!-- {/each} -->
+                        </List>
+                      </Menu>
+
                     {:else if $recordState === 'mid_record'}
-                      <Button on:click={stopRecording}>Stop</Button>
+                      <Button on:click={stopRecording} color="secondary">Stop</Button>
                     {:else}
                       Uploading...
                     {/if}
@@ -101,9 +115,13 @@
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion } from '@firebase/firestore';
   import Textfield from '@smui/textfield'
+  import Menu from '@smui/menu';
+  import List, { Item, Text } from '@smui/list'
 
   export let classID
   export let roomID
+
+  let blackboardMenu
 
   let roomDoc
   // reactivity not necessary: `classID` is constant here 
@@ -202,7 +220,7 @@
 }
 
 :global(.question input) {
-  color: red !important;
+  color: rgb(19, 145, 230) !important;
 }
 </style>
 

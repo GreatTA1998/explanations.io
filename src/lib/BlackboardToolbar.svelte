@@ -1,7 +1,15 @@
-<div style="position: absolute; right: 0; top: 0; bottom: auto; left: auto; z-index: 100; background-color: grey;" >
+<div style="position: absolute; display: flex; align-items: center; height: 50px; right: 0; top: 0; bottom: auto; left: auto; z-index: 100; background-color: grey; padding-left: 10px" >
+  <Switch 
+    icons={false}
+    checked={!onlyAllowApplePencil} 
+    on:click={() => onlyAllowApplePencil.set(!$onlyAllowApplePencil)} style="margin: 0 !important"
+  />
+  <div style="margin-left: 6px; font-size: 0.65rem; font-family: Roboto,sans-serif; color: white;">
+    Touch draw
+  </div>
   {#if Object.keys($user).length > 0}
     {#each $user.pencilColors as color }
-      <Button on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })}>
+      <div on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })} style="margin: 0 8px">
         <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="16px" height="30px" viewBox="0 0 100 230" style="enable-background:new 0 0 100 230;" xml:space="preserve"
         >
@@ -25,28 +33,25 @@
             />
           </g>
         </svg> 
-      </Button>
+      </div>
     {/each}
 
-    <Button on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}>
-      Eraser
-    </Button>
+    <img 
+      on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}
+      width="40" height="30"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"
+    >
   {/if}
-
-  <Button on:click={() => onlyAllowApplePencil.set(!$onlyAllowApplePencil)}>
-    {$onlyAllowApplePencil ? 'Enable touch' : 'Disable touch' }
-  </Button>
 
   <slot>
 
     
   </slot>
-
 </div>
 
 <script>
-  import Button from '@smui/button'
   import { user, currentTool, onlyAllowApplePencil } from '../store.js'
+  import Switch from '@smui/switch';
 </script>
 
 <style>

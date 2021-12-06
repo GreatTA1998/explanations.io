@@ -1,21 +1,16 @@
 <div class="drawer-container">
-  
-  <Drawer style="overflow-y: scroll; height: 100%;">
+  <Drawer style="overflow-y: scroll; height: 100%;" class="mdc-elevation--z{5}">
     <Content>
-      <div class="card-container">
-        <Card padded style="padding-top: 0; padding-bottom: 0">
-          <div style="display: flex; align-items: center">
-            <img src="/logo.png" width="55" height="50" alt="web-logo">
-            {#if $user}
-              <ClassDropdownMenu/>
-            
-            {:else}
-              <div id="sign-up-area">
-
-              </div>
-            {/if}
+      <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;" class="mdc-elevation--z{4}">
+        <div style="display: flex; align-items: center">
+          <img src="/logo.png" width="60" height="54" alt="web-logo">
+          <div>
+            <ClassDropdownMenu/>
+            <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
+              Intro to Machine Learning
+            </div>
           </div>
-        </Card>
+        </div>
       </div>
       <List>
         <slot>
@@ -35,6 +30,7 @@
 </div>
  
 <script lang="ts">
+  import './_Elevation.scss'
   import ClassDropdownMenu from '$lib/ClassDropdownMenu.svelte'
   import Drawer, { AppContent, Content } from '@smui/drawer';
   import Card from '@smui/card'

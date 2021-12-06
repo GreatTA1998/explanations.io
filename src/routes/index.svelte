@@ -12,8 +12,8 @@
 				<HelperText slot="helper" persistent>
 					{#if !hasClickedTitle}
 						<div style="font-size: 0.9rem;">
-							ihtfp.app lets everyone help each other with proper blackboard explanations.
-							How? Click the title above...
+							Here we can help each other efficiently with blackboard explanations.
+							Click the title above...
 						</div>
 					{:else if !isQuestionMode}
 						<div style="font-size: 0.9rem">
@@ -65,11 +65,11 @@
 							on:stroke-drawn={(e) => localStrokesArray = [...localStrokesArray, e.detail.newStroke]}
 						>
 							{#if $recordState === 'pre_record'}
-								<Button on:click={startRecording}>
+								<Button on:click={startRecording} color="secondary">
 									REC
 								</Button>
-							{:else if $recordState === 'mid_record'}
-								<Button on:click={stopRecording}>
+							{:else if $recordState === 'mid_record'} 
+								<Button on:click={stopRecording} color="secondary">
 									Finish
 								</Button>
 							{/if}

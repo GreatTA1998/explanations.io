@@ -1,8 +1,9 @@
 
 export function calculateCanvasDimensions () {
   const appElement = document.getElementById('main-content') || document.getElementById('root-layout-div')
-  const availableHeight = appElement.clientHeight
-  const availableWidth = appElement.clientWidth
+  const marginSpace = 20
+  const availableHeight = appElement.clientHeight - marginSpace
+  const availableWidth = appElement.clientWidth - marginSpace
   const aspectRatio = 4/3
 
   let dimensions = {}

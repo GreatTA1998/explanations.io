@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-d30ca296.js
+// .svelte-kit/output/server/chunks/store-7a07743c.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5197,10 +5197,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_d30ca296 = __esm({
-  ".svelte-kit/output/server/chunks/store-d30ca296.js"() {
+var init_store_7a07743c = __esm({
+  ".svelte-kit/output/server/chunks/store-7a07743c.js"() {
     init_shims();
-    init_app_ec369d5a();
+    init_app_0647791c();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -6037,7 +6037,7 @@ var init_store_d30ca296 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-cac2f5f6.js
+// .svelte-kit/output/server/chunks/index-c327074d-59fefdc0.js
 function sign(x) {
   return x < 0 ? -1 : 1;
 }
@@ -7222,10 +7222,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob3, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_cac2f5f6 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-cac2f5f6.js"() {
+var init_index_c327074d_59fefdc0 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-59fefdc0.js"() {
     init_shims();
-    init_store_d30ca296();
+    init_store_7a07743c();
     import_stream2 = __toModule(require("stream"));
     import_http2 = __toModule(require("http"));
     import_url2 = __toModule(require("url"));
@@ -111409,18 +111409,18 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-d52451f9.js
-var layout_d52451f9_exports = {};
-__export(layout_d52451f9_exports, {
+// .svelte-kit/output/server/chunks/__layout-1fc2b9c5.js
+var layout_1fc2b9c5_exports = {};
+__export(layout_1fc2b9c5_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_d52451f9 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-d52451f9.js"() {
+var init_layout_1fc2b9c5 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-1fc2b9c5.js"() {
     init_shims();
-    init_app_ec369d5a();
-    init_index_c327074d_cac2f5f6();
-    init_store_d30ca296();
+    init_app_0647791c();
+    init_index_c327074d_59fefdc0();
+    init_store_7a07743c();
     init_index_node();
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -111441,9 +111441,9 @@ var init_layout_d52451f9 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-17091fc0.js
-var error_17091fc0_exports = {};
-__export(error_17091fc0_exports, {
+// .svelte-kit/output/server/chunks/error-2c826a2f.js
+var error_2c826a2f_exports = {};
+__export(error_2c826a2f_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -111451,10 +111451,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_17091fc0 = __esm({
-  ".svelte-kit/output/server/chunks/error-17091fc0.js"() {
+var init_error_2c826a2f = __esm({
+  ".svelte-kit/output/server/chunks/error-2c826a2f.js"() {
     init_shims();
-    init_app_ec369d5a();
+    init_app_0647791c();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -111476,7 +111476,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/Switch-8a2105f6.js
+// .svelte-kit/output/server/chunks/Switch-d0a23fd8.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name7, value]) => name7 !== "" && value).map(([name7]) => name7).join(" ");
 }
@@ -111852,11 +111852,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, internals, ClassAdder, defaults, Switch;
-var init_Switch_8a2105f6 = __esm({
-  ".svelte-kit/output/server/chunks/Switch-8a2105f6.js"() {
+var init_Switch_d0a23fd8 = __esm({
+  ".svelte-kit/output/server/chunks/Switch-d0a23fd8.js"() {
     init_shims();
-    init_app_ec369d5a();
-    init_store_d30ca296();
+    init_app_0647791c();
+    init_store_7a07743c();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112840,7 +112840,7 @@ var init_Switch_8a2105f6 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/TextAreaAutoResizing-0029dc8a.js
+// .svelte-kit/output/server/chunks/TextAreaAutoResizing-cd43fa16.js
 async function fetchDocs(dbPath) {
   return new Promise(async (resolve3) => {
     const snapshot = await getDocs(collection(getFirestore(), dbPath));
@@ -112872,13 +112872,13 @@ function convertDocToStroke(doc2) {
   return strokeObject;
 }
 var Object_1$1, Button_1, ContextFragment, counter, HelperText, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, css$2, BlackboardToolbar, Blackboard, css$1, DoodleVideo, RenderlessAudioRecorder, RenderlessBoardMethods, css, TextAreaAutoResizing;
-var init_TextAreaAutoResizing_0029dc8a = __esm({
-  ".svelte-kit/output/server/chunks/TextAreaAutoResizing-0029dc8a.js"() {
+var init_TextAreaAutoResizing_cd43fa16 = __esm({
+  ".svelte-kit/output/server/chunks/TextAreaAutoResizing-cd43fa16.js"() {
     init_shims();
-    init_app_ec369d5a();
-    init_Switch_8a2105f6();
-    init_store_d30ca296();
-    init_index_c327074d_cac2f5f6();
+    init_app_0647791c();
+    init_Switch_d0a23fd8();
+    init_store_7a07743c();
+    init_index_c327074d_59fefdc0();
     init_index_node();
     ({ Object: Object_1$1 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -114102,23 +114102,23 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
   }
 });
 
-// .svelte-kit/output/server/chunks/index-777b099d.js
-var index_777b099d_exports = {};
-__export(index_777b099d_exports, {
+// .svelte-kit/output/server/chunks/index-652f5f07.js
+var index_652f5f07_exports = {};
+__export(index_652f5f07_exports, {
   default: () => Routes
 });
 var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, css2, Routes;
-var init_index_777b099d = __esm({
-  ".svelte-kit/output/server/chunks/index-777b099d.js"() {
+var init_index_652f5f07 = __esm({
+  ".svelte-kit/output/server/chunks/index-652f5f07.js"() {
     init_shims();
-    init_app_ec369d5a();
-    init_TextAreaAutoResizing_0029dc8a();
-    init_index_c327074d_cac2f5f6();
-    init_store_d30ca296();
+    init_app_0647791c();
+    init_TextAreaAutoResizing_cd43fa16();
+    init_index_c327074d_59fefdc0();
+    init_store_7a07743c();
     init_index_node();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
-    init_Switch_8a2105f6();
+    init_Switch_d0a23fd8();
     import_stream4 = __toModule(require("stream"));
     import_http4 = __toModule(require("http"));
     import_url5 = __toModule(require("url"));
@@ -114154,7 +114154,7 @@ var init_index_777b099d = __esm({
       }
       function signInWithPhone() {
         console.log("before, window.verifier =", window.recaptchaVerifier);
-        if (window.recaptchaVerifier) {
+        if (!window.recaptchaVerifier) {
           window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
             "size": "invisible",
             "callback": (response) => {
@@ -114294,13 +114294,13 @@ var init_index_777b099d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-218773bc.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-d95fafd7.js
 var MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_218773bc = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-218773bc.js"() {
+var init_SelectionGroupIcon_d95fafd7 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-d95fafd7.js"() {
     init_shims();
-    init_app_ec369d5a();
-    init_Switch_8a2105f6();
+    init_app_0647791c();
+    init_Switch_d0a23fd8();
     MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -119722,9 +119722,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-609181b0.js
-var layout_609181b0_exports = {};
-__export(layout_609181b0_exports, {
+// .svelte-kit/output/server/chunks/__layout-eb027742.js
+var layout_eb027742_exports = {};
+__export(layout_eb027742_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -121891,13 +121891,13 @@ function load2({ page }) {
   };
 }
 var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$12, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event2, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, css3, _layout2;
-var init_layout_609181b0 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-609181b0.js"() {
+var init_layout_eb027742 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-eb027742.js"() {
     init_shims();
-    init_app_ec369d5a();
-    init_SelectionGroupIcon_218773bc();
-    init_Switch_8a2105f6();
-    init_store_d30ca296();
+    init_app_0647791c();
+    init_SelectionGroupIcon_d95fafd7();
+    init_Switch_d0a23fd8();
+    init_store_7a07743c();
     import_util7 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream5 = __toModule(require("stream"));
@@ -129876,9 +129876,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-0e809843.js
-var index_0e809843_exports = {};
-__export(index_0e809843_exports, {
+// .svelte-kit/output/server/chunks/index-d85a1d73.js
+var index_d85a1d73_exports = {};
+__export(index_d85a1d73_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -130354,21 +130354,21 @@ function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
 var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, CommonLabel, Label, Readable2, BUFFER3, TYPE2, Blob4, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css4, U5Broomu5D;
-var init_index_0e809843 = __esm({
-  ".svelte-kit/output/server/chunks/index-0e809843.js"() {
+var init_index_d85a1d73 = __esm({
+  ".svelte-kit/output/server/chunks/index-d85a1d73.js"() {
     init_shims();
-    init_app_ec369d5a();
-    init_TextAreaAutoResizing_0029dc8a();
-    init_Switch_8a2105f6();
-    init_store_d30ca296();
+    init_app_0647791c();
+    init_TextAreaAutoResizing_cd43fa16();
+    init_Switch_d0a23fd8();
+    init_store_7a07743c();
     import_stream6 = __toModule(require("stream"));
     import_http5 = __toModule(require("http"));
     import_url7 = __toModule(require("url"));
-    init_index_c327074d_cac2f5f6();
+    init_index_c327074d_59fefdc0();
     import_https5 = __toModule(require("https"));
     import_zlib5 = __toModule(require("zlib"));
     init_index_node();
-    init_SelectionGroupIcon_218773bc();
+    init_SelectionGroupIcon_d95fafd7();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     import_punycode4 = __toModule(require("punycode"));
@@ -131439,7 +131439,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-ec369d5a.js
+// .svelte-kit/output/server/chunks/app-0647791c.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -132897,9 +132897,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-aa321c2d.js",
+      file: assets + "/_app/start-7a824dc9.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-aa321c2d.js", assets + "/_app/chunks/vendor-60dbf49e.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-7a824dc9.js", assets + "/_app/chunks/vendor-60dbf49e.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -132943,8 +132943,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_ec369d5a = __esm({
-  ".svelte-kit/output/server/chunks/app-ec369d5a.js"() {
+var init_app_0647791c = __esm({
+  ".svelte-kit/output/server/chunks/app-0647791c.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -133210,13 +133210,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_d52451f9(), layout_d52451f9_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_17091fc0(), error_17091fc0_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_777b099d(), index_777b099d_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_609181b0(), layout_609181b0_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_0e809843(), index_0e809843_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_1fc2b9c5(), layout_1fc2b9c5_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_2c826a2f(), error_2c826a2f_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_652f5f07(), index_652f5f07_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_eb027742(), layout_eb027742_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_d85a1d73(), index_d85a1d73_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-c30e9e61.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-c30e9e61.js", "chunks/vendor-60dbf49e.js", "chunks/database-63c5af1e.js", "chunks/store-cb2cb867.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-83e4d3b0.js", "css": [], "js": ["error.svelte-83e4d3b0.js", "chunks/vendor-60dbf49e.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-a8dc73f7.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/index.svelte-a8dc73f7.js", "chunks/vendor-60dbf49e.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/store-cb2cb867.js", "chunks/TextAreaAutoResizing-1a438244.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-9b11245e.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-9b11245e.js", "chunks/vendor-60dbf49e.js", "chunks/store-cb2cb867.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-a2818786.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/_class_/_room_/index.svelte-a2818786.js", "chunks/vendor-60dbf49e.js", "chunks/TextAreaAutoResizing-1a438244.js", "chunks/store-cb2cb867.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-c30e9e61.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-c30e9e61.js", "chunks/vendor-60dbf49e.js", "chunks/database-63c5af1e.js", "chunks/store-cb2cb867.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-83e4d3b0.js", "css": [], "js": ["error.svelte-83e4d3b0.js", "chunks/vendor-60dbf49e.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-293f92be.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/index.svelte-293f92be.js", "chunks/vendor-60dbf49e.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/store-cb2cb867.js", "chunks/TextAreaAutoResizing-1a438244.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-9b11245e.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-9b11245e.js", "chunks/vendor-60dbf49e.js", "chunks/store-cb2cb867.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-a2818786.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/_class_/_room_/index.svelte-a2818786.js", "chunks/vendor-60dbf49e.js", "chunks/TextAreaAutoResizing-1a438244.js", "chunks/store-cb2cb867.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] } };
   }
 });
 
@@ -133269,7 +133269,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_ec369d5a();
+init_app_0647791c();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-629cd264.js
+// .svelte-kit/output/server/chunks/store-5974bad6.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5197,10 +5197,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_629cd264 = __esm({
-  ".svelte-kit/output/server/chunks/store-629cd264.js"() {
+var init_store_5974bad6 = __esm({
+  ".svelte-kit/output/server/chunks/store-5974bad6.js"() {
     init_shims();
-    init_app_3d371eda();
+    init_app_b135a8ca();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -6037,7 +6037,7 @@ var init_store_629cd264 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-dde87de4.js
+// .svelte-kit/output/server/chunks/index-c327074d-0f66d48e.js
 function sign(x) {
   return x < 0 ? -1 : 1;
 }
@@ -7222,10 +7222,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob3, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_dde87de4 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-dde87de4.js"() {
+var init_index_c327074d_0f66d48e = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-0f66d48e.js"() {
     init_shims();
-    init_store_629cd264();
+    init_store_5974bad6();
     import_stream2 = __toModule(require("stream"));
     import_http2 = __toModule(require("http"));
     import_url2 = __toModule(require("url"));
@@ -92761,25 +92761,25 @@ var require_fetch = __commonJS({
   "node_modules/@protobufjs/fetch/index.js"(exports2, module3) {
     init_shims();
     "use strict";
-    module3.exports = fetch3;
+    module3.exports = fetch4;
     var asPromise = require_aspromise();
     var inquire2 = require_inquire();
     var fs = inquire2("fs");
-    function fetch3(filename, options2, callback) {
+    function fetch4(filename, options2, callback) {
       if (typeof options2 === "function") {
         callback = options2;
         options2 = {};
       } else if (!options2)
         options2 = {};
       if (!callback)
-        return asPromise(fetch3, this, filename, options2);
+        return asPromise(fetch4, this, filename, options2);
       if (!options2.xhr && fs && fs.readFile)
         return fs.readFile(filename, function fetchReadFileCallback(err, contents) {
-          return err && typeof XMLHttpRequest !== "undefined" ? fetch3.xhr(filename, options2, callback) : err ? callback(err) : callback(null, options2.binary ? contents : contents.toString("utf8"));
+          return err && typeof XMLHttpRequest !== "undefined" ? fetch4.xhr(filename, options2, callback) : err ? callback(err) : callback(null, options2.binary ? contents : contents.toString("utf8"));
         });
-      return fetch3.xhr(filename, options2, callback);
+      return fetch4.xhr(filename, options2, callback);
     }
-    fetch3.xhr = function fetch_xhr(filename, options2, callback) {
+    fetch4.xhr = function fetch_xhr(filename, options2, callback) {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function fetchOnReadyStateChange() {
         if (xhr.readyState !== 4)
@@ -94427,12 +94427,12 @@ var require_root = __commonJS({
             if (parsed.imports) {
               for (; i2 < parsed.imports.length; ++i2)
                 if (resolved2 = getBundledFileName(parsed.imports[i2]) || self2.resolvePath(filename2, parsed.imports[i2]))
-                  fetch3(resolved2);
+                  fetch4(resolved2);
             }
             if (parsed.weakImports) {
               for (i2 = 0; i2 < parsed.weakImports.length; ++i2)
                 if (resolved2 = getBundledFileName(parsed.weakImports[i2]) || self2.resolvePath(filename2, parsed.weakImports[i2]))
-                  fetch3(resolved2, true);
+                  fetch4(resolved2, true);
             }
           }
         } catch (err) {
@@ -94441,7 +94441,7 @@ var require_root = __commonJS({
         if (!sync && !queued)
           finish(null, self2);
       }
-      function fetch3(filename2, weak) {
+      function fetch4(filename2, weak) {
         if (self2.files.indexOf(filename2) > -1)
           return;
         self2.files.push(filename2);
@@ -94489,7 +94489,7 @@ var require_root = __commonJS({
         filename = [filename];
       for (var i = 0, resolved; i < filename.length; ++i)
         if (resolved = self2.resolvePath("", filename[i]))
-          fetch3(resolved);
+          fetch4(resolved);
       if (sync)
         return self2;
       if (!queued)
@@ -99360,7 +99360,7 @@ var require_compression_filter = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CompressionFilterFactory = exports2.CompressionFilter = void 0;
-    var zlib3 = require("zlib");
+    var zlib4 = require("zlib");
     var filter_1 = require_filter();
     var CompressionHandler = class {
       async writeMessage(message2, compress) {
@@ -99401,7 +99401,7 @@ var require_compression_filter = __commonJS({
     var DeflateHandler = class extends CompressionHandler {
       compressMessage(message2) {
         return new Promise((resolve3, reject) => {
-          zlib3.deflate(message2, (err, output) => {
+          zlib4.deflate(message2, (err, output) => {
             if (err) {
               reject(err);
             } else {
@@ -99412,7 +99412,7 @@ var require_compression_filter = __commonJS({
       }
       decompressMessage(message2) {
         return new Promise((resolve3, reject) => {
-          zlib3.inflate(message2, (err, output) => {
+          zlib4.inflate(message2, (err, output) => {
             if (err) {
               reject(err);
             } else {
@@ -99425,7 +99425,7 @@ var require_compression_filter = __commonJS({
     var GzipHandler = class extends CompressionHandler {
       compressMessage(message2) {
         return new Promise((resolve3, reject) => {
-          zlib3.gzip(message2, (err, output) => {
+          zlib4.gzip(message2, (err, output) => {
             if (err) {
               reject(err);
             } else {
@@ -99436,7 +99436,7 @@ var require_compression_filter = __commonJS({
       }
       decompressMessage(message2) {
         return new Promise((resolve3, reject) => {
-          zlib3.unzip(message2, (err, output) => {
+          zlib4.unzip(message2, (err, output) => {
             if (err) {
               reject(err);
             } else {
@@ -111409,18 +111409,18 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-0c98efe3.js
-var layout_0c98efe3_exports = {};
-__export(layout_0c98efe3_exports, {
+// .svelte-kit/output/server/chunks/__layout-8bfdc102.js
+var layout_8bfdc102_exports = {};
+__export(layout_8bfdc102_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_0c98efe3 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-0c98efe3.js"() {
+var init_layout_8bfdc102 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-8bfdc102.js"() {
     init_shims();
-    init_app_3d371eda();
-    init_index_c327074d_dde87de4();
-    init_store_629cd264();
+    init_app_b135a8ca();
+    init_index_c327074d_0f66d48e();
+    init_store_5974bad6();
     init_index_node();
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -111441,9 +111441,9 @@ var init_layout_0c98efe3 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-56b33432.js
-var error_56b33432_exports = {};
-__export(error_56b33432_exports, {
+// .svelte-kit/output/server/chunks/error-92f19d2d.js
+var error_92f19d2d_exports = {};
+__export(error_92f19d2d_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -111451,10 +111451,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_56b33432 = __esm({
-  ".svelte-kit/output/server/chunks/error-56b33432.js"() {
+var init_error_92f19d2d = __esm({
+  ".svelte-kit/output/server/chunks/error-92f19d2d.js"() {
     init_shims();
-    init_app_3d371eda();
+    init_app_b135a8ca();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -111476,7 +111476,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/Switch-343b4108.js
+// .svelte-kit/output/server/chunks/Switch-67548264.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name7, value]) => name7 !== "" && value).map(([name7]) => name7).join(" ");
 }
@@ -111852,11 +111852,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, Button_1, Object_1, internals, ClassAdder, defaults, Switch;
-var init_Switch_343b4108 = __esm({
-  ".svelte-kit/output/server/chunks/Switch-343b4108.js"() {
+var init_Switch_67548264 = __esm({
+  ".svelte-kit/output/server/chunks/Switch-67548264.js"() {
     init_shims();
-    init_app_3d371eda();
-    init_store_629cd264();
+    init_app_b135a8ca();
+    init_store_5974bad6();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112986,7 +112986,7 @@ var init_Switch_343b4108 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/TextAreaAutoResizing-c7cb8cec.js
+// .svelte-kit/output/server/chunks/TextAreaAutoResizing-c30c349d.js
 async function fetchDocs(dbPath) {
   return new Promise(async (resolve3) => {
     const snapshot = await getDocs(collection(getFirestore(), dbPath));
@@ -113018,13 +113018,13 @@ function convertDocToStroke(doc2) {
   return strokeObject;
 }
 var ContextFragment, counter, HelperText, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, css$2, BlackboardToolbar, Blackboard, css$1, DoodleVideo, RenderlessAudioRecorder, RenderlessBoardMethods, css, TextAreaAutoResizing;
-var init_TextAreaAutoResizing_c7cb8cec = __esm({
-  ".svelte-kit/output/server/chunks/TextAreaAutoResizing-c7cb8cec.js"() {
+var init_TextAreaAutoResizing_c30c349d = __esm({
+  ".svelte-kit/output/server/chunks/TextAreaAutoResizing-c30c349d.js"() {
     init_shims();
-    init_app_3d371eda();
-    init_Switch_343b4108();
-    init_store_629cd264();
-    init_index_c327074d_dde87de4();
+    init_app_b135a8ca();
+    init_Switch_67548264();
+    init_store_5974bad6();
+    init_index_c327074d_0f66d48e();
     init_index_node();
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -114102,20 +114102,20 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
   }
 });
 
-// .svelte-kit/output/server/chunks/index-2da7be63.js
-var index_2da7be63_exports = {};
-__export(index_2da7be63_exports, {
+// .svelte-kit/output/server/chunks/index-acfd22f3.js
+var index_acfd22f3_exports = {};
+__export(index_acfd22f3_exports, {
   default: () => Routes
 });
 var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, css2, Routes;
-var init_index_2da7be63 = __esm({
-  ".svelte-kit/output/server/chunks/index-2da7be63.js"() {
+var init_index_acfd22f3 = __esm({
+  ".svelte-kit/output/server/chunks/index-acfd22f3.js"() {
     init_shims();
-    init_app_3d371eda();
-    init_Switch_343b4108();
-    init_TextAreaAutoResizing_c7cb8cec();
-    init_index_c327074d_dde87de4();
-    init_store_629cd264();
+    init_app_b135a8ca();
+    init_Switch_67548264();
+    init_TextAreaAutoResizing_c30c349d();
+    init_index_c327074d_0f66d48e();
+    init_store_5974bad6();
     init_index_node();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
@@ -114294,13 +114294,13 @@ var init_index_2da7be63 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-5b21d9af.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-3fc41524.js
 var MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_5b21d9af = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-5b21d9af.js"() {
+var init_SelectionGroupIcon_3fc41524 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-3fc41524.js"() {
     init_shims();
-    init_app_3d371eda();
-    init_Switch_343b4108();
+    init_app_b135a8ca();
+    init_Switch_67548264();
     MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -119722,9 +119722,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-be4ae1dc.js
-var layout_be4ae1dc_exports = {};
-__export(layout_be4ae1dc_exports, {
+// .svelte-kit/output/server/chunks/__layout-5ef84a5c.js
+var layout_5ef84a5c_exports = {};
+__export(layout_5ef84a5c_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -121891,13 +121891,13 @@ function load2({ page }) {
   };
 }
 var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$12, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event2, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, css3, _layout2;
-var init_layout_be4ae1dc = __esm({
-  ".svelte-kit/output/server/chunks/__layout-be4ae1dc.js"() {
+var init_layout_5ef84a5c = __esm({
+  ".svelte-kit/output/server/chunks/__layout-5ef84a5c.js"() {
     init_shims();
-    init_app_3d371eda();
-    init_SelectionGroupIcon_5b21d9af();
-    init_Switch_343b4108();
-    init_store_629cd264();
+    init_app_b135a8ca();
+    init_SelectionGroupIcon_3fc41524();
+    init_Switch_67548264();
+    init_store_5974bad6();
     import_util7 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream5 = __toModule(require("stream"));
@@ -129885,13 +129885,13 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-b1e5b3fc.js
-var index_b1e5b3fc_exports = {};
-__export(index_b1e5b3fc_exports, {
+// .svelte-kit/output/server/chunks/index-031b0bf4.js
+var index_031b0bf4_exports = {};
+__export(index_031b0bf4_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
-function FetchError3(message2, type, systemError) {
+function FetchError$1(message2, type, systemError) {
   Error.call(this, message2);
   this.message = message2;
   this.type = type;
@@ -129900,7 +129900,7 @@ function FetchError3(message2, type, systemError) {
   }
   Error.captureStackTrace(this, this.constructor);
 }
-function Body3(body) {
+function Body$1(body) {
   var _this = this;
   var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$size = _ref.size;
   let size = _ref$size === void 0 ? 0 : _ref$size;
@@ -129908,9 +129908,9 @@ function Body3(body) {
   let timeout = _ref$timeout === void 0 ? 0 : _ref$timeout;
   if (body == null) {
     body = null;
-  } else if (isURLSearchParams2(body)) {
+  } else if (isURLSearchParams$1(body)) {
     body = Buffer.from(body.toString());
-  } else if (isBlob3(body))
+  } else if (isBlob$1(body))
     ;
   else if (Buffer.isBuffer(body))
     ;
@@ -129923,7 +129923,7 @@ function Body3(body) {
   else {
     body = Buffer.from(String(body));
   }
-  this[INTERNALS3] = {
+  this[INTERNALS$3] = {
     body,
     disturbed: false,
     error: null
@@ -129932,42 +129932,42 @@ function Body3(body) {
   this.timeout = timeout;
   if (body instanceof import_stream6.default) {
     body.on("error", function(err) {
-      const error3 = err.name === "AbortError" ? err : new FetchError3(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
-      _this[INTERNALS3].error = error3;
+      const error3 = err.name === "AbortError" ? err : new FetchError$1(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+      _this[INTERNALS$3].error = error3;
     });
   }
 }
-function consumeBody3() {
+function consumeBody$1() {
   var _this4 = this;
-  if (this[INTERNALS3].disturbed) {
-    return Body3.Promise.reject(new TypeError(`body used already for: ${this.url}`));
+  if (this[INTERNALS$3].disturbed) {
+    return Body$1.Promise.reject(new TypeError(`body used already for: ${this.url}`));
   }
-  this[INTERNALS3].disturbed = true;
-  if (this[INTERNALS3].error) {
-    return Body3.Promise.reject(this[INTERNALS3].error);
+  this[INTERNALS$3].disturbed = true;
+  if (this[INTERNALS$3].error) {
+    return Body$1.Promise.reject(this[INTERNALS$3].error);
   }
   let body = this.body;
   if (body === null) {
-    return Body3.Promise.resolve(Buffer.alloc(0));
+    return Body$1.Promise.resolve(Buffer.alloc(0));
   }
-  if (isBlob3(body)) {
+  if (isBlob$1(body)) {
     body = body.stream();
   }
   if (Buffer.isBuffer(body)) {
-    return Body3.Promise.resolve(body);
+    return Body$1.Promise.resolve(body);
   }
   if (!(body instanceof import_stream6.default)) {
-    return Body3.Promise.resolve(Buffer.alloc(0));
+    return Body$1.Promise.resolve(Buffer.alloc(0));
   }
   let accum = [];
   let accumBytes = 0;
   let abort = false;
-  return new Body3.Promise(function(resolve3, reject) {
+  return new Body$1.Promise(function(resolve3, reject) {
     let resTimeout;
     if (_this4.timeout) {
       resTimeout = setTimeout(function() {
         abort = true;
-        reject(new FetchError3(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
+        reject(new FetchError$1(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
       }, _this4.timeout);
     }
     body.on("error", function(err) {
@@ -129975,7 +129975,7 @@ function consumeBody3() {
         abort = true;
         reject(err);
       } else {
-        reject(new FetchError3(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
+        reject(new FetchError$1(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
       }
     });
     body.on("data", function(chunk) {
@@ -129984,7 +129984,7 @@ function consumeBody3() {
       }
       if (_this4.size && accumBytes + chunk.length > _this4.size) {
         abort = true;
-        reject(new FetchError3(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
+        reject(new FetchError$1(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
         return;
       }
       accumBytes += chunk.length;
@@ -129998,13 +129998,13 @@ function consumeBody3() {
       try {
         resolve3(Buffer.concat(accum, accumBytes));
       } catch (err) {
-        reject(new FetchError3(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
+        reject(new FetchError$1(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
       }
     });
   });
 }
-function convertBody2(buffer, headers2) {
-  if (typeof convert2 !== "function") {
+function convertBody$1(buffer, headers2) {
+  if (typeof convert$1 !== "function") {
     throw new Error("The package `encoding` must be installed to use the textConverted() function");
   }
   const ct = headers2.get("content-type");
@@ -130038,41 +130038,41 @@ function convertBody2(buffer, headers2) {
       charset = "gb18030";
     }
   }
-  return convert2(buffer, "UTF-8", charset).toString();
+  return convert$1(buffer, "UTF-8", charset).toString();
 }
-function isURLSearchParams2(obj) {
+function isURLSearchParams$1(obj) {
   if (typeof obj !== "object" || typeof obj.append !== "function" || typeof obj.delete !== "function" || typeof obj.get !== "function" || typeof obj.getAll !== "function" || typeof obj.has !== "function" || typeof obj.set !== "function") {
     return false;
   }
   return obj.constructor.name === "URLSearchParams" || Object.prototype.toString.call(obj) === "[object URLSearchParams]" || typeof obj.sort === "function";
 }
-function isBlob3(obj) {
+function isBlob$1(obj) {
   return typeof obj === "object" && typeof obj.arrayBuffer === "function" && typeof obj.type === "string" && typeof obj.stream === "function" && typeof obj.constructor === "function" && typeof obj.constructor.name === "string" && /^(Blob|File)$/.test(obj.constructor.name) && /^(Blob|File)$/.test(obj[Symbol.toStringTag]);
 }
-function clone3(instance2) {
+function clone$1(instance2) {
   let p1, p2;
   let body = instance2.body;
   if (instance2.bodyUsed) {
     throw new Error("cannot clone body after it is used");
   }
   if (body instanceof import_stream6.default && typeof body.getBoundary !== "function") {
-    p1 = new PassThrough3();
-    p2 = new PassThrough3();
+    p1 = new PassThrough$2();
+    p2 = new PassThrough$2();
     body.pipe(p1);
     body.pipe(p2);
-    instance2[INTERNALS3].body = p1;
+    instance2[INTERNALS$3].body = p1;
     body = p2;
   }
   return body;
 }
-function extractContentType3(body) {
+function extractContentType$1(body) {
   if (body === null) {
     return null;
   } else if (typeof body === "string") {
     return "text/plain;charset=UTF-8";
-  } else if (isURLSearchParams2(body)) {
+  } else if (isURLSearchParams$1(body)) {
     return "application/x-www-form-urlencoded;charset=UTF-8";
-  } else if (isBlob3(body)) {
+  } else if (isBlob$1(body)) {
     return body.type || null;
   } else if (Buffer.isBuffer(body)) {
     return null;
@@ -130088,19 +130088,19 @@ function extractContentType3(body) {
     return "text/plain;charset=UTF-8";
   }
 }
-function validateName2(name22) {
+function validateName$1(name22) {
   name22 = `${name22}`;
-  if (invalidTokenRegex2.test(name22) || name22 === "") {
+  if (invalidTokenRegex$1.test(name22) || name22 === "") {
     throw new TypeError(`${name22} is not a legal HTTP header name`);
   }
 }
-function validateValue2(value) {
+function validateValue$1(value) {
   value = `${value}`;
-  if (invalidHeaderCharRegex2.test(value)) {
+  if (invalidHeaderCharRegex$1.test(value)) {
     throw new TypeError(`${value} is not a legal HTTP header value`);
   }
 }
-function find2(map2, name22) {
+function find$1(map2, name22) {
   name22 = name22.toLowerCase();
   for (const key in map2) {
     if (key.toLowerCase() === name22) {
@@ -130109,40 +130109,40 @@ function find2(map2, name22) {
   }
   return void 0;
 }
-function getHeaders2(headers2) {
+function getHeaders$1(headers2) {
   let kind = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key+value";
-  const keys = Object.keys(headers2[MAP2]).sort();
+  const keys = Object.keys(headers2[MAP$1]).sort();
   return keys.map(kind === "key" ? function(k) {
     return k.toLowerCase();
   } : kind === "value" ? function(k) {
-    return headers2[MAP2][k].join(", ");
+    return headers2[MAP$1][k].join(", ");
   } : function(k) {
-    return [k.toLowerCase(), headers2[MAP2][k].join(", ")];
+    return [k.toLowerCase(), headers2[MAP$1][k].join(", ")];
   });
 }
-function createHeadersIterator2(target, kind) {
-  const iterator = Object.create(HeadersIteratorPrototype2);
-  iterator[INTERNAL2] = {
+function createHeadersIterator$1(target, kind) {
+  const iterator = Object.create(HeadersIteratorPrototype$1);
+  iterator[INTERNAL$1] = {
     target,
     kind,
     index: 0
   };
   return iterator;
 }
-function parseURL2(urlStr) {
+function parseURL$1(urlStr) {
   if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.exec(urlStr)) {
-    urlStr = new URL3(urlStr).toString();
+    urlStr = new URL$2(urlStr).toString();
   }
-  return parse_url2(urlStr);
+  return parse_url$1(urlStr);
 }
-function isRequest3(input) {
-  return typeof input === "object" && typeof input[INTERNALS$23] === "object";
+function isRequest$1(input) {
+  return typeof input === "object" && typeof input[INTERNALS$2$1] === "object";
 }
-function isAbortSignal3(signal) {
+function isAbortSignal$1(signal) {
   const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
   return !!(proto && proto.constructor.name === "AbortSignal");
 }
-function AbortError3(message2) {
+function AbortError$1(message2) {
   Error.call(this, message2);
   this.type = "aborted";
   this.message = message2;
@@ -130348,7 +130348,547 @@ function factory(container, { instanceIdentifier: url2 }) {
 }
 function registerStorage() {
   _registerComponent(new Component(STORAGE_TYPE, factory, "PUBLIC").setMultipleInstances(true));
-  registerVersion(name6, version6, "node");
+  registerVersion(name$14, version$15, "node");
+  registerVersion(name$14, version$15, "esm2017");
+}
+function FetchError3(message2, type, systemError) {
+  Error.call(this, message2);
+  this.message = message2;
+  this.type = type;
+  if (systemError) {
+    this.code = this.errno = systemError.code;
+  }
+  Error.captureStackTrace(this, this.constructor);
+}
+function Body3(body) {
+  var _this = this;
+  var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$size = _ref.size;
+  let size = _ref$size === void 0 ? 0 : _ref$size;
+  var _ref$timeout = _ref.timeout;
+  let timeout = _ref$timeout === void 0 ? 0 : _ref$timeout;
+  if (body == null) {
+    body = null;
+  } else if (isURLSearchParams2(body)) {
+    body = Buffer.from(body.toString());
+  } else if (isBlob3(body))
+    ;
+  else if (Buffer.isBuffer(body))
+    ;
+  else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
+    body = Buffer.from(body);
+  } else if (ArrayBuffer.isView(body)) {
+    body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
+  } else if (body instanceof import_stream6.default)
+    ;
+  else {
+    body = Buffer.from(String(body));
+  }
+  this[INTERNALS3] = {
+    body,
+    disturbed: false,
+    error: null
+  };
+  this.size = size;
+  this.timeout = timeout;
+  if (body instanceof import_stream6.default) {
+    body.on("error", function(err) {
+      const error3 = err.name === "AbortError" ? err : new FetchError3(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
+      _this[INTERNALS3].error = error3;
+    });
+  }
+}
+function consumeBody3() {
+  var _this4 = this;
+  if (this[INTERNALS3].disturbed) {
+    return Body3.Promise.reject(new TypeError(`body used already for: ${this.url}`));
+  }
+  this[INTERNALS3].disturbed = true;
+  if (this[INTERNALS3].error) {
+    return Body3.Promise.reject(this[INTERNALS3].error);
+  }
+  let body = this.body;
+  if (body === null) {
+    return Body3.Promise.resolve(Buffer.alloc(0));
+  }
+  if (isBlob3(body)) {
+    body = body.stream();
+  }
+  if (Buffer.isBuffer(body)) {
+    return Body3.Promise.resolve(body);
+  }
+  if (!(body instanceof import_stream6.default)) {
+    return Body3.Promise.resolve(Buffer.alloc(0));
+  }
+  let accum = [];
+  let accumBytes = 0;
+  let abort = false;
+  return new Body3.Promise(function(resolve3, reject) {
+    let resTimeout;
+    if (_this4.timeout) {
+      resTimeout = setTimeout(function() {
+        abort = true;
+        reject(new FetchError3(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
+      }, _this4.timeout);
+    }
+    body.on("error", function(err) {
+      if (err.name === "AbortError") {
+        abort = true;
+        reject(err);
+      } else {
+        reject(new FetchError3(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
+      }
+    });
+    body.on("data", function(chunk) {
+      if (abort || chunk === null) {
+        return;
+      }
+      if (_this4.size && accumBytes + chunk.length > _this4.size) {
+        abort = true;
+        reject(new FetchError3(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
+        return;
+      }
+      accumBytes += chunk.length;
+      accum.push(chunk);
+    });
+    body.on("end", function() {
+      if (abort) {
+        return;
+      }
+      clearTimeout(resTimeout);
+      try {
+        resolve3(Buffer.concat(accum, accumBytes));
+      } catch (err) {
+        reject(new FetchError3(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
+      }
+    });
+  });
+}
+function convertBody2(buffer, headers2) {
+  if (typeof convert2 !== "function") {
+    throw new Error("The package `encoding` must be installed to use the textConverted() function");
+  }
+  const ct = headers2.get("content-type");
+  let charset = "utf-8";
+  let res, str;
+  if (ct) {
+    res = /charset=([^;]*)/i.exec(ct);
+  }
+  str = buffer.slice(0, 1024).toString();
+  if (!res && str) {
+    res = /<meta.+?charset=(['"])(.+?)\1/i.exec(str);
+  }
+  if (!res && str) {
+    res = /<meta[\s]+?http-equiv=(['"])content-type\1[\s]+?content=(['"])(.+?)\2/i.exec(str);
+    if (!res) {
+      res = /<meta[\s]+?content=(['"])(.+?)\1[\s]+?http-equiv=(['"])content-type\3/i.exec(str);
+      if (res) {
+        res.pop();
+      }
+    }
+    if (res) {
+      res = /charset=(.*)/i.exec(res.pop());
+    }
+  }
+  if (!res && str) {
+    res = /<\?xml.+?encoding=(['"])(.+?)\1/i.exec(str);
+  }
+  if (res) {
+    charset = res.pop();
+    if (charset === "gb2312" || charset === "gbk") {
+      charset = "gb18030";
+    }
+  }
+  return convert2(buffer, "UTF-8", charset).toString();
+}
+function isURLSearchParams2(obj) {
+  if (typeof obj !== "object" || typeof obj.append !== "function" || typeof obj.delete !== "function" || typeof obj.get !== "function" || typeof obj.getAll !== "function" || typeof obj.has !== "function" || typeof obj.set !== "function") {
+    return false;
+  }
+  return obj.constructor.name === "URLSearchParams" || Object.prototype.toString.call(obj) === "[object URLSearchParams]" || typeof obj.sort === "function";
+}
+function isBlob3(obj) {
+  return typeof obj === "object" && typeof obj.arrayBuffer === "function" && typeof obj.type === "string" && typeof obj.stream === "function" && typeof obj.constructor === "function" && typeof obj.constructor.name === "string" && /^(Blob|File)$/.test(obj.constructor.name) && /^(Blob|File)$/.test(obj[Symbol.toStringTag]);
+}
+function clone3(instance2) {
+  let p1, p2;
+  let body = instance2.body;
+  if (instance2.bodyUsed) {
+    throw new Error("cannot clone body after it is used");
+  }
+  if (body instanceof import_stream6.default && typeof body.getBoundary !== "function") {
+    p1 = new PassThrough3();
+    p2 = new PassThrough3();
+    body.pipe(p1);
+    body.pipe(p2);
+    instance2[INTERNALS3].body = p1;
+    body = p2;
+  }
+  return body;
+}
+function extractContentType3(body) {
+  if (body === null) {
+    return null;
+  } else if (typeof body === "string") {
+    return "text/plain;charset=UTF-8";
+  } else if (isURLSearchParams2(body)) {
+    return "application/x-www-form-urlencoded;charset=UTF-8";
+  } else if (isBlob3(body)) {
+    return body.type || null;
+  } else if (Buffer.isBuffer(body)) {
+    return null;
+  } else if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") {
+    return null;
+  } else if (ArrayBuffer.isView(body)) {
+    return null;
+  } else if (typeof body.getBoundary === "function") {
+    return `multipart/form-data;boundary=${body.getBoundary()}`;
+  } else if (body instanceof import_stream6.default) {
+    return null;
+  } else {
+    return "text/plain;charset=UTF-8";
+  }
+}
+function getTotalBytes3(instance2) {
+  const body = instance2.body;
+  if (body === null) {
+    return 0;
+  } else if (isBlob3(body)) {
+    return body.size;
+  } else if (Buffer.isBuffer(body)) {
+    return body.length;
+  } else if (body && typeof body.getLengthSync === "function") {
+    if (body._lengthRetrievers && body._lengthRetrievers.length == 0 || body.hasKnownLength && body.hasKnownLength()) {
+      return body.getLengthSync();
+    }
+    return null;
+  } else {
+    return null;
+  }
+}
+function writeToStream3(dest, instance2) {
+  const body = instance2.body;
+  if (body === null) {
+    dest.end();
+  } else if (isBlob3(body)) {
+    body.stream().pipe(dest);
+  } else if (Buffer.isBuffer(body)) {
+    dest.write(body);
+    dest.end();
+  } else {
+    body.pipe(dest);
+  }
+}
+function validateName2(name22) {
+  name22 = `${name22}`;
+  if (invalidTokenRegex2.test(name22) || name22 === "") {
+    throw new TypeError(`${name22} is not a legal HTTP header name`);
+  }
+}
+function validateValue2(value) {
+  value = `${value}`;
+  if (invalidHeaderCharRegex2.test(value)) {
+    throw new TypeError(`${value} is not a legal HTTP header value`);
+  }
+}
+function find2(map2, name22) {
+  name22 = name22.toLowerCase();
+  for (const key in map2) {
+    if (key.toLowerCase() === name22) {
+      return key;
+    }
+  }
+  return void 0;
+}
+function getHeaders2(headers2) {
+  let kind = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key+value";
+  const keys = Object.keys(headers2[MAP2]).sort();
+  return keys.map(kind === "key" ? function(k) {
+    return k.toLowerCase();
+  } : kind === "value" ? function(k) {
+    return headers2[MAP2][k].join(", ");
+  } : function(k) {
+    return [k.toLowerCase(), headers2[MAP2][k].join(", ")];
+  });
+}
+function createHeadersIterator2(target, kind) {
+  const iterator = Object.create(HeadersIteratorPrototype2);
+  iterator[INTERNAL2] = {
+    target,
+    kind,
+    index: 0
+  };
+  return iterator;
+}
+function exportNodeCompatibleHeaders2(headers2) {
+  const obj = Object.assign({ __proto__: null }, headers2[MAP2]);
+  const hostHeaderKey = find2(headers2[MAP2], "Host");
+  if (hostHeaderKey !== void 0) {
+    obj[hostHeaderKey] = obj[hostHeaderKey][0];
+  }
+  return obj;
+}
+function createHeadersLenient2(obj) {
+  const headers2 = new Headers4();
+  for (const name22 of Object.keys(obj)) {
+    if (invalidTokenRegex2.test(name22)) {
+      continue;
+    }
+    if (Array.isArray(obj[name22])) {
+      for (const val of obj[name22]) {
+        if (invalidHeaderCharRegex2.test(val)) {
+          continue;
+        }
+        if (headers2[MAP2][name22] === void 0) {
+          headers2[MAP2][name22] = [val];
+        } else {
+          headers2[MAP2][name22].push(val);
+        }
+      }
+    } else if (!invalidHeaderCharRegex2.test(obj[name22])) {
+      headers2[MAP2][name22] = [obj[name22]];
+    }
+  }
+  return headers2;
+}
+function parseURL2(urlStr) {
+  if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.exec(urlStr)) {
+    urlStr = new URL$12(urlStr).toString();
+  }
+  return parse_url2(urlStr);
+}
+function isRequest3(input) {
+  return typeof input === "object" && typeof input[INTERNALS$23] === "object";
+}
+function isAbortSignal3(signal) {
+  const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
+  return !!(proto && proto.constructor.name === "AbortSignal");
+}
+function getNodeRequestOptions3(request) {
+  const parsedURL = request[INTERNALS$23].parsedURL;
+  const headers2 = new Headers4(request[INTERNALS$23].headers);
+  if (!headers2.has("Accept")) {
+    headers2.set("Accept", "*/*");
+  }
+  if (!parsedURL.protocol || !parsedURL.hostname) {
+    throw new TypeError("Only absolute URLs are supported");
+  }
+  if (!/^https?:$/.test(parsedURL.protocol)) {
+    throw new TypeError("Only HTTP(S) protocols are supported");
+  }
+  if (request.signal && request.body instanceof import_stream6.default.Readable && !streamDestructionSupported2) {
+    throw new Error("Cancellation of streamed requests with AbortSignal is not supported in node < 8");
+  }
+  let contentLengthValue = null;
+  if (request.body == null && /^(POST|PUT)$/i.test(request.method)) {
+    contentLengthValue = "0";
+  }
+  if (request.body != null) {
+    const totalBytes = getTotalBytes3(request);
+    if (typeof totalBytes === "number") {
+      contentLengthValue = String(totalBytes);
+    }
+  }
+  if (contentLengthValue) {
+    headers2.set("Content-Length", contentLengthValue);
+  }
+  if (!headers2.has("User-Agent")) {
+    headers2.set("User-Agent", "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)");
+  }
+  if (request.compress && !headers2.has("Accept-Encoding")) {
+    headers2.set("Accept-Encoding", "gzip,deflate");
+  }
+  let agent = request.agent;
+  if (typeof agent === "function") {
+    agent = agent(parsedURL);
+  }
+  if (!headers2.has("Connection") && !agent) {
+    headers2.set("Connection", "close");
+  }
+  return Object.assign({}, parsedURL, {
+    method: request.method,
+    headers: exportNodeCompatibleHeaders2(headers2),
+    agent
+  });
+}
+function AbortError3(message2) {
+  Error.call(this, message2);
+  this.type = "aborted";
+  this.message = message2;
+  Error.captureStackTrace(this, this.constructor);
+}
+function fetch3(url2, opts) {
+  if (!fetch3.Promise) {
+    throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
+  }
+  Body3.Promise = fetch3.Promise;
+  return new fetch3.Promise(function(resolve3, reject) {
+    const request = new Request3(url2, opts);
+    const options2 = getNodeRequestOptions3(request);
+    const send = (options2.protocol === "https:" ? import_https5.default : import_http5.default).request;
+    const signal = request.signal;
+    let response = null;
+    const abort = function abort2() {
+      let error3 = new AbortError3("The user aborted a request.");
+      reject(error3);
+      if (request.body && request.body instanceof import_stream6.default.Readable) {
+        request.body.destroy(error3);
+      }
+      if (!response || !response.body)
+        return;
+      response.body.emit("error", error3);
+    };
+    if (signal && signal.aborted) {
+      abort();
+      return;
+    }
+    const abortAndFinalize = function abortAndFinalize2() {
+      abort();
+      finalize();
+    };
+    const req = send(options2);
+    let reqTimeout;
+    if (signal) {
+      signal.addEventListener("abort", abortAndFinalize);
+    }
+    function finalize() {
+      req.abort();
+      if (signal)
+        signal.removeEventListener("abort", abortAndFinalize);
+      clearTimeout(reqTimeout);
+    }
+    if (request.timeout) {
+      req.once("socket", function(socket) {
+        reqTimeout = setTimeout(function() {
+          reject(new FetchError3(`network timeout at: ${request.url}`, "request-timeout"));
+          finalize();
+        }, request.timeout);
+      });
+    }
+    req.on("error", function(err) {
+      reject(new FetchError3(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
+      finalize();
+    });
+    req.on("response", function(res) {
+      clearTimeout(reqTimeout);
+      const headers2 = createHeadersLenient2(res.headers);
+      if (fetch3.isRedirect(res.statusCode)) {
+        const location2 = headers2.get("Location");
+        const locationURL = location2 === null ? null : resolve_url2(request.url, location2);
+        switch (request.redirect) {
+          case "error":
+            reject(new FetchError3(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
+            finalize();
+            return;
+          case "manual":
+            if (locationURL !== null) {
+              try {
+                headers2.set("Location", locationURL);
+              } catch (err) {
+                reject(err);
+              }
+            }
+            break;
+          case "follow":
+            if (locationURL === null) {
+              break;
+            }
+            if (request.counter >= request.follow) {
+              reject(new FetchError3(`maximum redirect reached at: ${request.url}`, "max-redirect"));
+              finalize();
+              return;
+            }
+            const requestOpts = {
+              headers: new Headers4(request.headers),
+              follow: request.follow,
+              counter: request.counter + 1,
+              agent: request.agent,
+              compress: request.compress,
+              method: request.method,
+              body: request.body,
+              signal: request.signal,
+              timeout: request.timeout,
+              size: request.size
+            };
+            if (res.statusCode !== 303 && request.body && getTotalBytes3(request) === null) {
+              reject(new FetchError3("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
+              finalize();
+              return;
+            }
+            if (res.statusCode === 303 || (res.statusCode === 301 || res.statusCode === 302) && request.method === "POST") {
+              requestOpts.method = "GET";
+              requestOpts.body = void 0;
+              requestOpts.headers.delete("content-length");
+            }
+            resolve3(fetch3(new Request3(locationURL, requestOpts)));
+            finalize();
+            return;
+        }
+      }
+      res.once("end", function() {
+        if (signal)
+          signal.removeEventListener("abort", abortAndFinalize);
+      });
+      let body = res.pipe(new PassThrough$12());
+      const response_options = {
+        url: request.url,
+        status: res.statusCode,
+        statusText: res.statusMessage,
+        headers: headers2,
+        size: request.size,
+        timeout: request.timeout,
+        counter: request.counter
+      };
+      const codings = headers2.get("Content-Encoding");
+      if (!request.compress || request.method === "HEAD" || codings === null || res.statusCode === 204 || res.statusCode === 304) {
+        response = new Response3(body, response_options);
+        resolve3(response);
+        return;
+      }
+      const zlibOptions = {
+        flush: import_zlib5.default.Z_SYNC_FLUSH,
+        finishFlush: import_zlib5.default.Z_SYNC_FLUSH
+      };
+      if (codings == "gzip" || codings == "x-gzip") {
+        body = body.pipe(import_zlib5.default.createGunzip(zlibOptions));
+        response = new Response3(body, response_options);
+        resolve3(response);
+        return;
+      }
+      if (codings == "deflate" || codings == "x-deflate") {
+        const raw = res.pipe(new PassThrough$12());
+        raw.once("data", function(chunk) {
+          if ((chunk[0] & 15) === 8) {
+            body = body.pipe(import_zlib5.default.createInflate());
+          } else {
+            body = body.pipe(import_zlib5.default.createInflateRaw());
+          }
+          response = new Response3(body, response_options);
+          resolve3(response);
+        });
+        return;
+      }
+      if (codings == "br" && typeof import_zlib5.default.createBrotliDecompress === "function") {
+        body = body.pipe(import_zlib5.default.createBrotliDecompress());
+        response = new Response3(body, response_options);
+        resolve3(response);
+        return;
+      }
+      response = new Response3(body, response_options);
+      resolve3(response);
+    });
+    writeToStream3(req, request);
+  });
+}
+function registerFunctions(fetchImpl, variant) {
+  const factory2 = (container, { instanceIdentifier: regionOrCustomDomain }) => {
+    const app = container.getProvider("app").getImmediate();
+    const authProvider = container.getProvider(AUTH_INTERNAL_NAME);
+    const messagingProvider = container.getProvider(MESSAGING_INTERNAL_NAME);
+    const appCheckProvider = container.getProvider(APP_CHECK_INTERNAL_NAME);
+    return new FunctionsService(app, authProvider, messagingProvider, appCheckProvider, regionOrCustomDomain, fetchImpl);
+  };
+  _registerComponent(new Component(FUNCTIONS_TYPE, factory2, "PUBLIC").setMultipleInstances(true));
+  registerVersion(name6, version6, variant);
   registerVersion(name6, version6, "esm2017");
 }
 async function load3({ page }) {
@@ -130362,22 +130902,22 @@ async function load3({ page }) {
 function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
-var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, CommonLabel, Label, Readable2, BUFFER3, TYPE2, Blob4, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css4, U5Broomu5D;
-var init_index_b1e5b3fc = __esm({
-  ".svelte-kit/output/server/chunks/index-b1e5b3fc.js"() {
+var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, CommonLabel, Label, Readable$1, BUFFER$1, TYPE$1, Blob$12, convert$1, INTERNALS$3, PassThrough$2, invalidTokenRegex$1, invalidHeaderCharRegex$1, MAP$1, Headers$12, INTERNAL$1, HeadersIteratorPrototype$1, INTERNALS$1$1, STATUS_CODES$1, Response$1, INTERNALS$2$1, URL$2, parse_url$1, format_url$1, Request$1, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$14, version$15, STORAGE_TYPE, Readable2, BUFFER3, TYPE2, Blob4, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL$12, parse_url2, format_url2, streamDestructionSupported2, Request3, PassThrough$12, resolve_url2, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name6, version6, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css4, U5Broomu5D;
+var init_index_031b0bf4 = __esm({
+  ".svelte-kit/output/server/chunks/index-031b0bf4.js"() {
     init_shims();
-    init_app_3d371eda();
-    init_TextAreaAutoResizing_c7cb8cec();
-    init_Switch_343b4108();
-    init_store_629cd264();
+    init_app_b135a8ca();
+    init_TextAreaAutoResizing_c30c349d();
+    init_Switch_67548264();
+    init_store_5974bad6();
     import_stream6 = __toModule(require("stream"));
     import_http5 = __toModule(require("http"));
     import_url7 = __toModule(require("url"));
-    init_index_c327074d_dde87de4();
+    init_index_c327074d_0f66d48e();
     import_https5 = __toModule(require("https"));
     import_zlib5 = __toModule(require("zlib"));
     init_index_node();
-    init_SelectionGroupIcon_5b21d9af();
+    init_SelectionGroupIcon_3fc41524();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     import_punycode4 = __toModule(require("punycode"));
@@ -130430,6 +130970,906 @@ var init_index_b1e5b3fc = __esm({
       return $$rendered;
     });
     Label = CommonLabel;
+    Readable$1 = import_stream6.default.Readable;
+    BUFFER$1 = Symbol("buffer");
+    TYPE$1 = Symbol("type");
+    Blob$12 = class {
+      constructor() {
+        this[TYPE$1] = "";
+        const blobParts = arguments[0];
+        const options2 = arguments[1];
+        const buffers = [];
+        let size = 0;
+        if (blobParts) {
+          const a = blobParts;
+          const length = Number(a.length);
+          for (let i = 0; i < length; i++) {
+            const element = a[i];
+            let buffer;
+            if (element instanceof Buffer) {
+              buffer = element;
+            } else if (ArrayBuffer.isView(element)) {
+              buffer = Buffer.from(element.buffer, element.byteOffset, element.byteLength);
+            } else if (element instanceof ArrayBuffer) {
+              buffer = Buffer.from(element);
+            } else if (element instanceof Blob$12) {
+              buffer = element[BUFFER$1];
+            } else {
+              buffer = Buffer.from(typeof element === "string" ? element : String(element));
+            }
+            size += buffer.length;
+            buffers.push(buffer);
+          }
+        }
+        this[BUFFER$1] = Buffer.concat(buffers);
+        let type = options2 && options2.type !== void 0 && String(options2.type).toLowerCase();
+        if (type && !/[^\u0020-\u007E]/.test(type)) {
+          this[TYPE$1] = type;
+        }
+      }
+      get size() {
+        return this[BUFFER$1].length;
+      }
+      get type() {
+        return this[TYPE$1];
+      }
+      text() {
+        return Promise.resolve(this[BUFFER$1].toString());
+      }
+      arrayBuffer() {
+        const buf = this[BUFFER$1];
+        const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+        return Promise.resolve(ab);
+      }
+      stream() {
+        const readable2 = new Readable$1();
+        readable2._read = function() {
+        };
+        readable2.push(this[BUFFER$1]);
+        readable2.push(null);
+        return readable2;
+      }
+      toString() {
+        return "[object Blob]";
+      }
+      slice() {
+        const size = this.size;
+        const start2 = arguments[0];
+        const end = arguments[1];
+        let relativeStart, relativeEnd;
+        if (start2 === void 0) {
+          relativeStart = 0;
+        } else if (start2 < 0) {
+          relativeStart = Math.max(size + start2, 0);
+        } else {
+          relativeStart = Math.min(start2, size);
+        }
+        if (end === void 0) {
+          relativeEnd = size;
+        } else if (end < 0) {
+          relativeEnd = Math.max(size + end, 0);
+        } else {
+          relativeEnd = Math.min(end, size);
+        }
+        const span = Math.max(relativeEnd - relativeStart, 0);
+        const buffer = this[BUFFER$1];
+        const slicedBuffer = buffer.slice(relativeStart, relativeStart + span);
+        const blob = new Blob$12([], { type: arguments[2] });
+        blob[BUFFER$1] = slicedBuffer;
+        return blob;
+      }
+    };
+    Object.defineProperties(Blob$12.prototype, {
+      size: { enumerable: true },
+      type: { enumerable: true },
+      slice: { enumerable: true }
+    });
+    Object.defineProperty(Blob$12.prototype, Symbol.toStringTag, {
+      value: "Blob",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    FetchError$1.prototype = Object.create(Error.prototype);
+    FetchError$1.prototype.constructor = FetchError$1;
+    FetchError$1.prototype.name = "FetchError";
+    try {
+      convert$1 = require("encoding").convert;
+    } catch (e) {
+    }
+    INTERNALS$3 = Symbol("Body internals");
+    PassThrough$2 = import_stream6.default.PassThrough;
+    Body$1.prototype = {
+      get body() {
+        return this[INTERNALS$3].body;
+      },
+      get bodyUsed() {
+        return this[INTERNALS$3].disturbed;
+      },
+      arrayBuffer() {
+        return consumeBody$1.call(this).then(function(buf) {
+          return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+        });
+      },
+      blob() {
+        let ct = this.headers && this.headers.get("content-type") || "";
+        return consumeBody$1.call(this).then(function(buf) {
+          return Object.assign(new Blob$12([], {
+            type: ct.toLowerCase()
+          }), {
+            [BUFFER$1]: buf
+          });
+        });
+      },
+      json() {
+        var _this2 = this;
+        return consumeBody$1.call(this).then(function(buffer) {
+          try {
+            return JSON.parse(buffer.toString());
+          } catch (err) {
+            return Body$1.Promise.reject(new FetchError$1(`invalid json response body at ${_this2.url} reason: ${err.message}`, "invalid-json"));
+          }
+        });
+      },
+      text() {
+        return consumeBody$1.call(this).then(function(buffer) {
+          return buffer.toString();
+        });
+      },
+      buffer() {
+        return consumeBody$1.call(this);
+      },
+      textConverted() {
+        var _this3 = this;
+        return consumeBody$1.call(this).then(function(buffer) {
+          return convertBody$1(buffer, _this3.headers);
+        });
+      }
+    };
+    Object.defineProperties(Body$1.prototype, {
+      body: { enumerable: true },
+      bodyUsed: { enumerable: true },
+      arrayBuffer: { enumerable: true },
+      blob: { enumerable: true },
+      json: { enumerable: true },
+      text: { enumerable: true }
+    });
+    Body$1.mixIn = function(proto) {
+      for (const name22 of Object.getOwnPropertyNames(Body$1.prototype)) {
+        if (!(name22 in proto)) {
+          const desc = Object.getOwnPropertyDescriptor(Body$1.prototype, name22);
+          Object.defineProperty(proto, name22, desc);
+        }
+      }
+    };
+    Body$1.Promise = global.Promise;
+    invalidTokenRegex$1 = /[^\^_`a-zA-Z\-0-9!#$%&'*+.|~]/;
+    invalidHeaderCharRegex$1 = /[^\t\x20-\x7e\x80-\xff]/;
+    MAP$1 = Symbol("map");
+    Headers$12 = class {
+      constructor() {
+        let init2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
+        this[MAP$1] = Object.create(null);
+        if (init2 instanceof Headers$12) {
+          const rawHeaders = init2.raw();
+          const headerNames = Object.keys(rawHeaders);
+          for (const headerName of headerNames) {
+            for (const value of rawHeaders[headerName]) {
+              this.append(headerName, value);
+            }
+          }
+          return;
+        }
+        if (init2 == null)
+          ;
+        else if (typeof init2 === "object") {
+          const method = init2[Symbol.iterator];
+          if (method != null) {
+            if (typeof method !== "function") {
+              throw new TypeError("Header pairs must be iterable");
+            }
+            const pairs = [];
+            for (const pair of init2) {
+              if (typeof pair !== "object" || typeof pair[Symbol.iterator] !== "function") {
+                throw new TypeError("Each header pair must be iterable");
+              }
+              pairs.push(Array.from(pair));
+            }
+            for (const pair of pairs) {
+              if (pair.length !== 2) {
+                throw new TypeError("Each header pair must be a name/value tuple");
+              }
+              this.append(pair[0], pair[1]);
+            }
+          } else {
+            for (const key of Object.keys(init2)) {
+              const value = init2[key];
+              this.append(key, value);
+            }
+          }
+        } else {
+          throw new TypeError("Provided initializer must be an object");
+        }
+      }
+      get(name22) {
+        name22 = `${name22}`;
+        validateName$1(name22);
+        const key = find$1(this[MAP$1], name22);
+        if (key === void 0) {
+          return null;
+        }
+        return this[MAP$1][key].join(", ");
+      }
+      forEach(callback) {
+        let thisArg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : void 0;
+        let pairs = getHeaders$1(this);
+        let i = 0;
+        while (i < pairs.length) {
+          var _pairs$i = pairs[i];
+          const name22 = _pairs$i[0], value = _pairs$i[1];
+          callback.call(thisArg, value, name22, this);
+          pairs = getHeaders$1(this);
+          i++;
+        }
+      }
+      set(name22, value) {
+        name22 = `${name22}`;
+        value = `${value}`;
+        validateName$1(name22);
+        validateValue$1(value);
+        const key = find$1(this[MAP$1], name22);
+        this[MAP$1][key !== void 0 ? key : name22] = [value];
+      }
+      append(name22, value) {
+        name22 = `${name22}`;
+        value = `${value}`;
+        validateName$1(name22);
+        validateValue$1(value);
+        const key = find$1(this[MAP$1], name22);
+        if (key !== void 0) {
+          this[MAP$1][key].push(value);
+        } else {
+          this[MAP$1][name22] = [value];
+        }
+      }
+      has(name22) {
+        name22 = `${name22}`;
+        validateName$1(name22);
+        return find$1(this[MAP$1], name22) !== void 0;
+      }
+      delete(name22) {
+        name22 = `${name22}`;
+        validateName$1(name22);
+        const key = find$1(this[MAP$1], name22);
+        if (key !== void 0) {
+          delete this[MAP$1][key];
+        }
+      }
+      raw() {
+        return this[MAP$1];
+      }
+      keys() {
+        return createHeadersIterator$1(this, "key");
+      }
+      values() {
+        return createHeadersIterator$1(this, "value");
+      }
+      [Symbol.iterator]() {
+        return createHeadersIterator$1(this, "key+value");
+      }
+    };
+    Headers$12.prototype.entries = Headers$12.prototype[Symbol.iterator];
+    Object.defineProperty(Headers$12.prototype, Symbol.toStringTag, {
+      value: "Headers",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperties(Headers$12.prototype, {
+      get: { enumerable: true },
+      forEach: { enumerable: true },
+      set: { enumerable: true },
+      append: { enumerable: true },
+      has: { enumerable: true },
+      delete: { enumerable: true },
+      keys: { enumerable: true },
+      values: { enumerable: true },
+      entries: { enumerable: true }
+    });
+    INTERNAL$1 = Symbol("internal");
+    HeadersIteratorPrototype$1 = Object.setPrototypeOf({
+      next() {
+        if (!this || Object.getPrototypeOf(this) !== HeadersIteratorPrototype$1) {
+          throw new TypeError("Value of `this` is not a HeadersIterator");
+        }
+        var _INTERNAL = this[INTERNAL$1];
+        const target = _INTERNAL.target, kind = _INTERNAL.kind, index = _INTERNAL.index;
+        const values = getHeaders$1(target, kind);
+        const len = values.length;
+        if (index >= len) {
+          return {
+            value: void 0,
+            done: true
+          };
+        }
+        this[INTERNAL$1].index = index + 1;
+        return {
+          value: values[index],
+          done: false
+        };
+      }
+    }, Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]())));
+    Object.defineProperty(HeadersIteratorPrototype$1, Symbol.toStringTag, {
+      value: "HeadersIterator",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    INTERNALS$1$1 = Symbol("Response internals");
+    STATUS_CODES$1 = import_http5.default.STATUS_CODES;
+    Response$1 = class {
+      constructor() {
+        let body = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
+        let opts = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+        Body$1.call(this, body, opts);
+        const status = opts.status || 200;
+        const headers2 = new Headers$12(opts.headers);
+        if (body != null && !headers2.has("Content-Type")) {
+          const contentType = extractContentType$1(body);
+          if (contentType) {
+            headers2.append("Content-Type", contentType);
+          }
+        }
+        this[INTERNALS$1$1] = {
+          url: opts.url,
+          status,
+          statusText: opts.statusText || STATUS_CODES$1[status],
+          headers: headers2,
+          counter: opts.counter
+        };
+      }
+      get url() {
+        return this[INTERNALS$1$1].url || "";
+      }
+      get status() {
+        return this[INTERNALS$1$1].status;
+      }
+      get ok() {
+        return this[INTERNALS$1$1].status >= 200 && this[INTERNALS$1$1].status < 300;
+      }
+      get redirected() {
+        return this[INTERNALS$1$1].counter > 0;
+      }
+      get statusText() {
+        return this[INTERNALS$1$1].statusText;
+      }
+      get headers() {
+        return this[INTERNALS$1$1].headers;
+      }
+      clone() {
+        return new Response$1(clone$1(this), {
+          url: this.url,
+          status: this.status,
+          statusText: this.statusText,
+          headers: this.headers,
+          ok: this.ok,
+          redirected: this.redirected
+        });
+      }
+    };
+    Body$1.mixIn(Response$1.prototype);
+    Object.defineProperties(Response$1.prototype, {
+      url: { enumerable: true },
+      status: { enumerable: true },
+      ok: { enumerable: true },
+      redirected: { enumerable: true },
+      statusText: { enumerable: true },
+      headers: { enumerable: true },
+      clone: { enumerable: true }
+    });
+    Object.defineProperty(Response$1.prototype, Symbol.toStringTag, {
+      value: "Response",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    INTERNALS$2$1 = Symbol("Request internals");
+    URL$2 = publicApi.URL;
+    parse_url$1 = import_url7.default.parse;
+    format_url$1 = import_url7.default.format;
+    "destroy" in import_stream6.default.Readable.prototype;
+    Request$1 = class {
+      constructor(input) {
+        let init2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+        let parsedURL;
+        if (!isRequest$1(input)) {
+          if (input && input.href) {
+            parsedURL = parseURL$1(input.href);
+          } else {
+            parsedURL = parseURL$1(`${input}`);
+          }
+          input = {};
+        } else {
+          parsedURL = parseURL$1(input.url);
+        }
+        let method = init2.method || input.method || "GET";
+        method = method.toUpperCase();
+        if ((init2.body != null || isRequest$1(input) && input.body !== null) && (method === "GET" || method === "HEAD")) {
+          throw new TypeError("Request with GET/HEAD method cannot have body");
+        }
+        let inputBody = init2.body != null ? init2.body : isRequest$1(input) && input.body !== null ? clone$1(input) : null;
+        Body$1.call(this, inputBody, {
+          timeout: init2.timeout || input.timeout || 0,
+          size: init2.size || input.size || 0
+        });
+        const headers2 = new Headers$12(init2.headers || input.headers || {});
+        if (inputBody != null && !headers2.has("Content-Type")) {
+          const contentType = extractContentType$1(inputBody);
+          if (contentType) {
+            headers2.append("Content-Type", contentType);
+          }
+        }
+        let signal = isRequest$1(input) ? input.signal : null;
+        if ("signal" in init2)
+          signal = init2.signal;
+        if (signal != null && !isAbortSignal$1(signal)) {
+          throw new TypeError("Expected signal to be an instanceof AbortSignal");
+        }
+        this[INTERNALS$2$1] = {
+          method,
+          redirect: init2.redirect || input.redirect || "follow",
+          headers: headers2,
+          parsedURL,
+          signal
+        };
+        this.follow = init2.follow !== void 0 ? init2.follow : input.follow !== void 0 ? input.follow : 20;
+        this.compress = init2.compress !== void 0 ? init2.compress : input.compress !== void 0 ? input.compress : true;
+        this.counter = init2.counter || input.counter || 0;
+        this.agent = init2.agent || input.agent;
+      }
+      get method() {
+        return this[INTERNALS$2$1].method;
+      }
+      get url() {
+        return format_url$1(this[INTERNALS$2$1].parsedURL);
+      }
+      get headers() {
+        return this[INTERNALS$2$1].headers;
+      }
+      get redirect() {
+        return this[INTERNALS$2$1].redirect;
+      }
+      get signal() {
+        return this[INTERNALS$2$1].signal;
+      }
+      clone() {
+        return new Request$1(this);
+      }
+    };
+    Body$1.mixIn(Request$1.prototype);
+    Object.defineProperty(Request$1.prototype, Symbol.toStringTag, {
+      value: "Request",
+      writable: false,
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperties(Request$1.prototype, {
+      method: { enumerable: true },
+      url: { enumerable: true },
+      headers: { enumerable: true },
+      redirect: { enumerable: true },
+      clone: { enumerable: true },
+      signal: { enumerable: true }
+    });
+    AbortError$1.prototype = Object.create(Error.prototype);
+    AbortError$1.prototype.constructor = AbortError$1;
+    AbortError$1.prototype.name = "AbortError";
+    import_stream6.default.PassThrough;
+    import_url7.default.resolve;
+    DEFAULT_HOST2 = "firebasestorage.googleapis.com";
+    CONFIG_STORAGE_BUCKET_KEY = "storageBucket";
+    DEFAULT_MAX_OPERATION_RETRY_TIME = 2 * 60 * 1e3;
+    DEFAULT_MAX_UPLOAD_RETRY_TIME = 10 * 60 * 1e3;
+    StorageError = class extends FirebaseError {
+      constructor(code, message2) {
+        super(prependCode(code), `Firebase Storage: ${message2} (${prependCode(code)})`);
+        this.customData = { serverResponse: null };
+        this._baseMessage = this.message;
+        Object.setPrototypeOf(this, StorageError.prototype);
+      }
+      _codeEquals(code) {
+        return prependCode(code) === this.code;
+      }
+      get serverResponse() {
+        return this.customData.serverResponse;
+      }
+      set serverResponse(serverResponse) {
+        this.customData.serverResponse = serverResponse;
+        if (this.customData.serverResponse) {
+          this.message = `${this._baseMessage}
+${this.customData.serverResponse}`;
+        } else {
+          this.message = this._baseMessage;
+        }
+      }
+    };
+    Location = class {
+      constructor(bucket, path) {
+        this.bucket = bucket;
+        this.path_ = path;
+      }
+      get path() {
+        return this.path_;
+      }
+      get isRoot() {
+        return this.path.length === 0;
+      }
+      fullServerUrl() {
+        const encode = encodeURIComponent;
+        return "/b/" + encode(this.bucket) + "/o/" + encode(this.path);
+      }
+      bucketOnlyServerUrl() {
+        const encode = encodeURIComponent;
+        return "/b/" + encode(this.bucket) + "/o";
+      }
+      static makeFromBucketSpec(bucketString, host) {
+        let bucketLocation;
+        try {
+          bucketLocation = Location.makeFromUrl(bucketString, host);
+        } catch (e) {
+          return new Location(bucketString, "");
+        }
+        if (bucketLocation.path === "") {
+          return bucketLocation;
+        } else {
+          throw invalidDefaultBucket(bucketString);
+        }
+      }
+      static makeFromUrl(url2, host) {
+        let location2 = null;
+        const bucketDomain = "([A-Za-z0-9.\\-_]+)";
+        function gsModify(loc) {
+          if (loc.path.charAt(loc.path.length - 1) === "/") {
+            loc.path_ = loc.path_.slice(0, -1);
+          }
+        }
+        const gsPath = "(/(.*))?$";
+        const gsRegex = new RegExp("^gs://" + bucketDomain + gsPath, "i");
+        const gsIndices = { bucket: 1, path: 3 };
+        function httpModify(loc) {
+          loc.path_ = decodeURIComponent(loc.path);
+        }
+        const version22 = "v[A-Za-z0-9_]+";
+        const firebaseStorageHost = host.replace(/[.]/g, "\\.");
+        const firebaseStoragePath = "(/([^?#]*).*)?$";
+        const firebaseStorageRegExp = new RegExp(`^https?://${firebaseStorageHost}/${version22}/b/${bucketDomain}/o${firebaseStoragePath}`, "i");
+        const firebaseStorageIndices = { bucket: 1, path: 3 };
+        const cloudStorageHost = host === DEFAULT_HOST2 ? "(?:storage.googleapis.com|storage.cloud.google.com)" : host;
+        const cloudStoragePath = "([^?#]*)";
+        const cloudStorageRegExp = new RegExp(`^https?://${cloudStorageHost}/${bucketDomain}/${cloudStoragePath}`, "i");
+        const cloudStorageIndices = { bucket: 1, path: 2 };
+        const groups = [
+          { regex: gsRegex, indices: gsIndices, postModify: gsModify },
+          {
+            regex: firebaseStorageRegExp,
+            indices: firebaseStorageIndices,
+            postModify: httpModify
+          },
+          {
+            regex: cloudStorageRegExp,
+            indices: cloudStorageIndices,
+            postModify: httpModify
+          }
+        ];
+        for (let i = 0; i < groups.length; i++) {
+          const group = groups[i];
+          const captures = group.regex.exec(url2);
+          if (captures) {
+            const bucketValue = captures[group.indices.bucket];
+            let pathValue = captures[group.indices.path];
+            if (!pathValue) {
+              pathValue = "";
+            }
+            location2 = new Location(bucketValue, pathValue);
+            group.postModify(location2);
+            break;
+          }
+        }
+        if (location2 == null) {
+          throw invalidUrl(url2);
+        }
+        return location2;
+      }
+    };
+    FailRequest = class {
+      constructor(error3) {
+        this.promise_ = Promise.reject(error3);
+      }
+      getPromise() {
+        return this.promise_;
+      }
+      cancel(_appDelete = false) {
+      }
+    };
+    (function(ErrorCode2) {
+      ErrorCode2[ErrorCode2["NO_ERROR"] = 0] = "NO_ERROR";
+      ErrorCode2[ErrorCode2["NETWORK_ERROR"] = 1] = "NETWORK_ERROR";
+      ErrorCode2[ErrorCode2["ABORT"] = 2] = "ABORT";
+    })(ErrorCode || (ErrorCode = {}));
+    NetworkRequest = class {
+      constructor(url_, method_, headers_, body_, successCodes_, additionalRetryCodes_, callback_, errorCallback_, timeout_, progressCallback_, connectionFactory_) {
+        this.url_ = url_;
+        this.method_ = method_;
+        this.headers_ = headers_;
+        this.body_ = body_;
+        this.successCodes_ = successCodes_;
+        this.additionalRetryCodes_ = additionalRetryCodes_;
+        this.callback_ = callback_;
+        this.errorCallback_ = errorCallback_;
+        this.timeout_ = timeout_;
+        this.progressCallback_ = progressCallback_;
+        this.connectionFactory_ = connectionFactory_;
+        this.pendingConnection_ = null;
+        this.backoffId_ = null;
+        this.canceled_ = false;
+        this.appDelete_ = false;
+        this.promise_ = new Promise((resolve3, reject) => {
+          this.resolve_ = resolve3;
+          this.reject_ = reject;
+          this.start_();
+        });
+      }
+      start_() {
+        const doTheRequest = (backoffCallback, canceled2) => {
+          if (canceled2) {
+            backoffCallback(false, new RequestEndStatus(false, null, true));
+            return;
+          }
+          const connection = this.connectionFactory_();
+          this.pendingConnection_ = connection;
+          const progressListener = (progressEvent) => {
+            const loaded = progressEvent.loaded;
+            const total = progressEvent.lengthComputable ? progressEvent.total : -1;
+            if (this.progressCallback_ !== null) {
+              this.progressCallback_(loaded, total);
+            }
+          };
+          if (this.progressCallback_ !== null) {
+            connection.addUploadProgressListener(progressListener);
+          }
+          connection.send(this.url_, this.method_, this.body_, this.headers_).then(() => {
+            if (this.progressCallback_ !== null) {
+              connection.removeUploadProgressListener(progressListener);
+            }
+            this.pendingConnection_ = null;
+            const hitServer = connection.getErrorCode() === ErrorCode.NO_ERROR;
+            const status = connection.getStatus();
+            if (!hitServer || this.isRetryStatusCode_(status)) {
+              const wasCanceled = connection.getErrorCode() === ErrorCode.ABORT;
+              backoffCallback(false, new RequestEndStatus(false, null, wasCanceled));
+              return;
+            }
+            const successCode = this.successCodes_.indexOf(status) !== -1;
+            backoffCallback(true, new RequestEndStatus(successCode, connection));
+          });
+        };
+        const backoffDone = (requestWentThrough, status) => {
+          const resolve3 = this.resolve_;
+          const reject = this.reject_;
+          const connection = status.connection;
+          if (status.wasSuccessCode) {
+            try {
+              const result = this.callback_(connection, connection.getResponse());
+              if (isJustDef(result)) {
+                resolve3(result);
+              } else {
+                resolve3();
+              }
+            } catch (e) {
+              reject(e);
+            }
+          } else {
+            if (connection !== null) {
+              const err = unknown();
+              err.serverResponse = connection.getErrorText();
+              if (this.errorCallback_) {
+                reject(this.errorCallback_(connection, err));
+              } else {
+                reject(err);
+              }
+            } else {
+              if (status.canceled) {
+                const err = this.appDelete_ ? appDeleted() : canceled();
+                reject(err);
+              } else {
+                const err = retryLimitExceeded();
+                reject(err);
+              }
+            }
+          }
+        };
+        if (this.canceled_) {
+          backoffDone(false, new RequestEndStatus(false, null, true));
+        } else {
+          this.backoffId_ = start(doTheRequest, backoffDone, this.timeout_);
+        }
+      }
+      getPromise() {
+        return this.promise_;
+      }
+      cancel(appDelete) {
+        this.canceled_ = true;
+        this.appDelete_ = appDelete || false;
+        if (this.backoffId_ !== null) {
+          stop(this.backoffId_);
+        }
+        if (this.pendingConnection_ !== null) {
+          this.pendingConnection_.abort();
+        }
+      }
+      isRetryStatusCode_(status) {
+        const isFiveHundredCode = status >= 500 && status < 600;
+        const extraRetryCodes = [
+          408,
+          429
+        ];
+        const isExtraRetryCode = extraRetryCodes.indexOf(status) !== -1;
+        const isRequestSpecificRetryCode = this.additionalRetryCodes_.indexOf(status) !== -1;
+        return isFiveHundredCode || isExtraRetryCode || isRequestSpecificRetryCode;
+      }
+    };
+    RequestEndStatus = class {
+      constructor(wasSuccessCode, connection, canceled2) {
+        this.wasSuccessCode = wasSuccessCode;
+        this.connection = connection;
+        this.canceled = !!canceled2;
+      }
+    };
+    Reference = class {
+      constructor(_service, location2) {
+        this._service = _service;
+        if (location2 instanceof Location) {
+          this._location = location2;
+        } else {
+          this._location = Location.makeFromUrl(location2, _service.host);
+        }
+      }
+      toString() {
+        return "gs://" + this._location.bucket + "/" + this._location.path;
+      }
+      _newRef(service, location2) {
+        return new Reference(service, location2);
+      }
+      get root() {
+        const location2 = new Location(this._location.bucket, "");
+        return this._newRef(this._service, location2);
+      }
+      get bucket() {
+        return this._location.bucket;
+      }
+      get fullPath() {
+        return this._location.path;
+      }
+      get name() {
+        return lastComponent(this._location.path);
+      }
+      get storage() {
+        return this._service;
+      }
+      get parent() {
+        const newPath = parent(this._location.path);
+        if (newPath === null) {
+          return null;
+        }
+        const location2 = new Location(this._location.bucket, newPath);
+        return new Reference(this._service, location2);
+      }
+      _throwIfRoot(name22) {
+        if (this._location.path === "") {
+          throw invalidRootOperation(name22);
+        }
+      }
+    };
+    FirebaseStorageImpl = class {
+      constructor(app, _authProvider, _appCheckProvider, _url, _firebaseVersion) {
+        this.app = app;
+        this._authProvider = _authProvider;
+        this._appCheckProvider = _appCheckProvider;
+        this._url = _url;
+        this._firebaseVersion = _firebaseVersion;
+        this._bucket = null;
+        this._host = DEFAULT_HOST2;
+        this._protocol = "https";
+        this._appId = null;
+        this._deleted = false;
+        this._maxOperationRetryTime = DEFAULT_MAX_OPERATION_RETRY_TIME;
+        this._maxUploadRetryTime = DEFAULT_MAX_UPLOAD_RETRY_TIME;
+        this._requests = new Set();
+        if (_url != null) {
+          this._bucket = Location.makeFromBucketSpec(_url, this._host);
+        } else {
+          this._bucket = extractBucket(this._host, this.app.options);
+        }
+      }
+      get host() {
+        return this._host;
+      }
+      set host(host) {
+        this._host = host;
+        if (this._url != null) {
+          this._bucket = Location.makeFromBucketSpec(this._url, host);
+        } else {
+          this._bucket = extractBucket(host, this.app.options);
+        }
+      }
+      get maxUploadRetryTime() {
+        return this._maxUploadRetryTime;
+      }
+      set maxUploadRetryTime(time) {
+        validateNumber("time", 0, Number.POSITIVE_INFINITY, time);
+        this._maxUploadRetryTime = time;
+      }
+      get maxOperationRetryTime() {
+        return this._maxOperationRetryTime;
+      }
+      set maxOperationRetryTime(time) {
+        validateNumber("time", 0, Number.POSITIVE_INFINITY, time);
+        this._maxOperationRetryTime = time;
+      }
+      async _getAuthToken() {
+        if (this._overrideAuthToken) {
+          return this._overrideAuthToken;
+        }
+        const auth = this._authProvider.getImmediate({ optional: true });
+        if (auth) {
+          const tokenData = await auth.getToken();
+          if (tokenData !== null) {
+            return tokenData.accessToken;
+          }
+        }
+        return null;
+      }
+      async _getAppCheckToken() {
+        const appCheck = this._appCheckProvider.getImmediate({ optional: true });
+        if (appCheck) {
+          const result = await appCheck.getToken();
+          return result.token;
+        }
+        return null;
+      }
+      _delete() {
+        if (!this._deleted) {
+          this._deleted = true;
+          this._requests.forEach((request) => request.cancel());
+          this._requests.clear();
+        }
+        return Promise.resolve();
+      }
+      _makeStorageReference(loc) {
+        return new Reference(this, loc);
+      }
+      _makeRequest(requestInfo, requestFactory, authToken, appCheckToken) {
+        if (!this._deleted) {
+          const request = makeRequest(requestInfo, this._appId, authToken, appCheckToken, requestFactory, this._firebaseVersion);
+          this._requests.add(request);
+          request.getPromise().then(() => this._requests.delete(request), () => this._requests.delete(request));
+          return request;
+        } else {
+          return new FailRequest(appDeleted());
+        }
+      }
+      async makeRequestWithTokens(requestInfo, requestFactory) {
+        const [authToken, appCheckToken] = await Promise.all([
+          this._getAuthToken(),
+          this._getAppCheckToken()
+        ]);
+        return this._makeRequest(requestInfo, requestFactory, authToken, appCheckToken).getPromise();
+      }
+    };
+    name$14 = "@firebase/storage";
+    version$15 = "0.9.0";
+    STORAGE_TYPE = "storage";
+    registerStorage();
     Readable2 = import_stream6.default.Readable;
     BUFFER3 = Symbol("buffer");
     TYPE2 = Symbol("type");
@@ -130834,10 +132274,10 @@ var init_index_b1e5b3fc = __esm({
       configurable: true
     });
     INTERNALS$23 = Symbol("Request internals");
-    URL3 = publicApi.URL;
+    URL$12 = publicApi.URL;
     parse_url2 = import_url7.default.parse;
     format_url2 = import_url7.default.format;
-    "destroy" in import_stream6.default.Readable.prototype;
+    streamDestructionSupported2 = "destroy" in import_stream6.default.Readable.prototype;
     Request3 = class {
       constructor(input) {
         let init2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
@@ -130924,412 +132364,115 @@ var init_index_b1e5b3fc = __esm({
     AbortError3.prototype = Object.create(Error.prototype);
     AbortError3.prototype.constructor = AbortError3;
     AbortError3.prototype.name = "AbortError";
-    import_stream6.default.PassThrough;
-    import_url7.default.resolve;
-    DEFAULT_HOST2 = "firebasestorage.googleapis.com";
-    CONFIG_STORAGE_BUCKET_KEY = "storageBucket";
-    DEFAULT_MAX_OPERATION_RETRY_TIME = 2 * 60 * 1e3;
-    DEFAULT_MAX_UPLOAD_RETRY_TIME = 10 * 60 * 1e3;
-    StorageError = class extends FirebaseError {
-      constructor(code, message2) {
-        super(prependCode(code), `Firebase Storage: ${message2} (${prependCode(code)})`);
-        this.customData = { serverResponse: null };
-        this._baseMessage = this.message;
-        Object.setPrototypeOf(this, StorageError.prototype);
-      }
-      _codeEquals(code) {
-        return prependCode(code) === this.code;
-      }
-      get serverResponse() {
-        return this.customData.serverResponse;
-      }
-      set serverResponse(serverResponse) {
-        this.customData.serverResponse = serverResponse;
-        if (this.customData.serverResponse) {
-          this.message = `${this._baseMessage}
-${this.customData.serverResponse}`;
-        } else {
-          this.message = this._baseMessage;
-        }
-      }
+    PassThrough$12 = import_stream6.default.PassThrough;
+    resolve_url2 = import_url7.default.resolve;
+    fetch3.isRedirect = function(code) {
+      return code === 301 || code === 302 || code === 303 || code === 307 || code === 308;
     };
-    Location = class {
-      constructor(bucket, path) {
-        this.bucket = bucket;
-        this.path_ = path;
-      }
-      get path() {
-        return this.path_;
-      }
-      get isRoot() {
-        return this.path.length === 0;
-      }
-      fullServerUrl() {
-        const encode = encodeURIComponent;
-        return "/b/" + encode(this.bucket) + "/o/" + encode(this.path);
-      }
-      bucketOnlyServerUrl() {
-        const encode = encodeURIComponent;
-        return "/b/" + encode(this.bucket) + "/o";
-      }
-      static makeFromBucketSpec(bucketString, host) {
-        let bucketLocation;
-        try {
-          bucketLocation = Location.makeFromUrl(bucketString, host);
-        } catch (e) {
-          return new Location(bucketString, "");
-        }
-        if (bucketLocation.path === "") {
-          return bucketLocation;
-        } else {
-          throw invalidDefaultBucket(bucketString);
-        }
-      }
-      static makeFromUrl(url2, host) {
-        let location2 = null;
-        const bucketDomain = "([A-Za-z0-9.\\-_]+)";
-        function gsModify(loc) {
-          if (loc.path.charAt(loc.path.length - 1) === "/") {
-            loc.path_ = loc.path_.slice(0, -1);
-          }
-        }
-        const gsPath = "(/(.*))?$";
-        const gsRegex = new RegExp("^gs://" + bucketDomain + gsPath, "i");
-        const gsIndices = { bucket: 1, path: 3 };
-        function httpModify(loc) {
-          loc.path_ = decodeURIComponent(loc.path);
-        }
-        const version22 = "v[A-Za-z0-9_]+";
-        const firebaseStorageHost = host.replace(/[.]/g, "\\.");
-        const firebaseStoragePath = "(/([^?#]*).*)?$";
-        const firebaseStorageRegExp = new RegExp(`^https?://${firebaseStorageHost}/${version22}/b/${bucketDomain}/o${firebaseStoragePath}`, "i");
-        const firebaseStorageIndices = { bucket: 1, path: 3 };
-        const cloudStorageHost = host === DEFAULT_HOST2 ? "(?:storage.googleapis.com|storage.cloud.google.com)" : host;
-        const cloudStoragePath = "([^?#]*)";
-        const cloudStorageRegExp = new RegExp(`^https?://${cloudStorageHost}/${bucketDomain}/${cloudStoragePath}`, "i");
-        const cloudStorageIndices = { bucket: 1, path: 2 };
-        const groups = [
-          { regex: gsRegex, indices: gsIndices, postModify: gsModify },
-          {
-            regex: firebaseStorageRegExp,
-            indices: firebaseStorageIndices,
-            postModify: httpModify
-          },
-          {
-            regex: cloudStorageRegExp,
-            indices: cloudStorageIndices,
-            postModify: httpModify
-          }
-        ];
-        for (let i = 0; i < groups.length; i++) {
-          const group = groups[i];
-          const captures = group.regex.exec(url2);
-          if (captures) {
-            const bucketValue = captures[group.indices.bucket];
-            let pathValue = captures[group.indices.path];
-            if (!pathValue) {
-              pathValue = "";
-            }
-            location2 = new Location(bucketValue, pathValue);
-            group.postModify(location2);
-            break;
-          }
-        }
-        if (location2 == null) {
-          throw invalidUrl(url2);
-        }
-        return location2;
-      }
-    };
-    FailRequest = class {
-      constructor(error3) {
-        this.promise_ = Promise.reject(error3);
-      }
-      getPromise() {
-        return this.promise_;
-      }
-      cancel(_appDelete = false) {
-      }
-    };
-    (function(ErrorCode2) {
-      ErrorCode2[ErrorCode2["NO_ERROR"] = 0] = "NO_ERROR";
-      ErrorCode2[ErrorCode2["NETWORK_ERROR"] = 1] = "NETWORK_ERROR";
-      ErrorCode2[ErrorCode2["ABORT"] = 2] = "ABORT";
-    })(ErrorCode || (ErrorCode = {}));
-    NetworkRequest = class {
-      constructor(url_, method_, headers_, body_, successCodes_, additionalRetryCodes_, callback_, errorCallback_, timeout_, progressCallback_, connectionFactory_) {
-        this.url_ = url_;
-        this.method_ = method_;
-        this.headers_ = headers_;
-        this.body_ = body_;
-        this.successCodes_ = successCodes_;
-        this.additionalRetryCodes_ = additionalRetryCodes_;
-        this.callback_ = callback_;
-        this.errorCallback_ = errorCallback_;
-        this.timeout_ = timeout_;
-        this.progressCallback_ = progressCallback_;
-        this.connectionFactory_ = connectionFactory_;
-        this.pendingConnection_ = null;
-        this.backoffId_ = null;
-        this.canceled_ = false;
-        this.appDelete_ = false;
-        this.promise_ = new Promise((resolve3, reject) => {
-          this.resolve_ = resolve3;
-          this.reject_ = reject;
-          this.start_();
+    fetch3.Promise = global.Promise;
+    FUNCTIONS_TYPE = "functions";
+    ContextProvider = class {
+      constructor(authProvider, messagingProvider, appCheckProvider) {
+        this.auth = null;
+        this.messaging = null;
+        this.appCheck = null;
+        this.auth = authProvider.getImmediate({ optional: true });
+        this.messaging = messagingProvider.getImmediate({
+          optional: true
         });
-      }
-      start_() {
-        const doTheRequest = (backoffCallback, canceled2) => {
-          if (canceled2) {
-            backoffCallback(false, new RequestEndStatus(false, null, true));
-            return;
-          }
-          const connection = this.connectionFactory_();
-          this.pendingConnection_ = connection;
-          const progressListener = (progressEvent) => {
-            const loaded = progressEvent.loaded;
-            const total = progressEvent.lengthComputable ? progressEvent.total : -1;
-            if (this.progressCallback_ !== null) {
-              this.progressCallback_(loaded, total);
-            }
-          };
-          if (this.progressCallback_ !== null) {
-            connection.addUploadProgressListener(progressListener);
-          }
-          connection.send(this.url_, this.method_, this.body_, this.headers_).then(() => {
-            if (this.progressCallback_ !== null) {
-              connection.removeUploadProgressListener(progressListener);
-            }
-            this.pendingConnection_ = null;
-            const hitServer = connection.getErrorCode() === ErrorCode.NO_ERROR;
-            const status = connection.getStatus();
-            if (!hitServer || this.isRetryStatusCode_(status)) {
-              const wasCanceled = connection.getErrorCode() === ErrorCode.ABORT;
-              backoffCallback(false, new RequestEndStatus(false, null, wasCanceled));
-              return;
-            }
-            const successCode = this.successCodes_.indexOf(status) !== -1;
-            backoffCallback(true, new RequestEndStatus(successCode, connection));
+        if (!this.auth) {
+          authProvider.get().then((auth) => this.auth = auth, () => {
           });
-        };
-        const backoffDone = (requestWentThrough, status) => {
-          const resolve3 = this.resolve_;
-          const reject = this.reject_;
-          const connection = status.connection;
-          if (status.wasSuccessCode) {
-            try {
-              const result = this.callback_(connection, connection.getResponse());
-              if (isJustDef(result)) {
-                resolve3(result);
-              } else {
-                resolve3();
-              }
-            } catch (e) {
-              reject(e);
-            }
-          } else {
-            if (connection !== null) {
-              const err = unknown();
-              err.serverResponse = connection.getErrorText();
-              if (this.errorCallback_) {
-                reject(this.errorCallback_(connection, err));
-              } else {
-                reject(err);
-              }
-            } else {
-              if (status.canceled) {
-                const err = this.appDelete_ ? appDeleted() : canceled();
-                reject(err);
-              } else {
-                const err = retryLimitExceeded();
-                reject(err);
-              }
-            }
+        }
+        if (!this.messaging) {
+          messagingProvider.get().then((messaging) => this.messaging = messaging, () => {
+          });
+        }
+        if (!this.appCheck) {
+          appCheckProvider.get().then((appCheck) => this.appCheck = appCheck, () => {
+          });
+        }
+      }
+      async getAuthToken() {
+        if (!this.auth) {
+          return void 0;
+        }
+        try {
+          const token = await this.auth.getToken();
+          return token === null || token === void 0 ? void 0 : token.accessToken;
+        } catch (e) {
+          return void 0;
+        }
+      }
+      async getMessagingToken() {
+        if (!this.messaging || !("Notification" in self) || Notification.permission !== "granted") {
+          return void 0;
+        }
+        try {
+          return await this.messaging.getToken();
+        } catch (e) {
+          return void 0;
+        }
+      }
+      async getAppCheckToken() {
+        if (this.appCheck) {
+          const result = await this.appCheck.getToken();
+          if (result.error) {
+            return null;
           }
-        };
-        if (this.canceled_) {
-          backoffDone(false, new RequestEndStatus(false, null, true));
-        } else {
-          this.backoffId_ = start(doTheRequest, backoffDone, this.timeout_);
-        }
-      }
-      getPromise() {
-        return this.promise_;
-      }
-      cancel(appDelete) {
-        this.canceled_ = true;
-        this.appDelete_ = appDelete || false;
-        if (this.backoffId_ !== null) {
-          stop(this.backoffId_);
-        }
-        if (this.pendingConnection_ !== null) {
-          this.pendingConnection_.abort();
-        }
-      }
-      isRetryStatusCode_(status) {
-        const isFiveHundredCode = status >= 500 && status < 600;
-        const extraRetryCodes = [
-          408,
-          429
-        ];
-        const isExtraRetryCode = extraRetryCodes.indexOf(status) !== -1;
-        const isRequestSpecificRetryCode = this.additionalRetryCodes_.indexOf(status) !== -1;
-        return isFiveHundredCode || isExtraRetryCode || isRequestSpecificRetryCode;
-      }
-    };
-    RequestEndStatus = class {
-      constructor(wasSuccessCode, connection, canceled2) {
-        this.wasSuccessCode = wasSuccessCode;
-        this.connection = connection;
-        this.canceled = !!canceled2;
-      }
-    };
-    Reference = class {
-      constructor(_service, location2) {
-        this._service = _service;
-        if (location2 instanceof Location) {
-          this._location = location2;
-        } else {
-          this._location = Location.makeFromUrl(location2, _service.host);
-        }
-      }
-      toString() {
-        return "gs://" + this._location.bucket + "/" + this._location.path;
-      }
-      _newRef(service, location2) {
-        return new Reference(service, location2);
-      }
-      get root() {
-        const location2 = new Location(this._location.bucket, "");
-        return this._newRef(this._service, location2);
-      }
-      get bucket() {
-        return this._location.bucket;
-      }
-      get fullPath() {
-        return this._location.path;
-      }
-      get name() {
-        return lastComponent(this._location.path);
-      }
-      get storage() {
-        return this._service;
-      }
-      get parent() {
-        const newPath = parent(this._location.path);
-        if (newPath === null) {
-          return null;
-        }
-        const location2 = new Location(this._location.bucket, newPath);
-        return new Reference(this._service, location2);
-      }
-      _throwIfRoot(name22) {
-        if (this._location.path === "") {
-          throw invalidRootOperation(name22);
-        }
-      }
-    };
-    FirebaseStorageImpl = class {
-      constructor(app, _authProvider, _appCheckProvider, _url, _firebaseVersion) {
-        this.app = app;
-        this._authProvider = _authProvider;
-        this._appCheckProvider = _appCheckProvider;
-        this._url = _url;
-        this._firebaseVersion = _firebaseVersion;
-        this._bucket = null;
-        this._host = DEFAULT_HOST2;
-        this._protocol = "https";
-        this._appId = null;
-        this._deleted = false;
-        this._maxOperationRetryTime = DEFAULT_MAX_OPERATION_RETRY_TIME;
-        this._maxUploadRetryTime = DEFAULT_MAX_UPLOAD_RETRY_TIME;
-        this._requests = new Set();
-        if (_url != null) {
-          this._bucket = Location.makeFromBucketSpec(_url, this._host);
-        } else {
-          this._bucket = extractBucket(this._host, this.app.options);
-        }
-      }
-      get host() {
-        return this._host;
-      }
-      set host(host) {
-        this._host = host;
-        if (this._url != null) {
-          this._bucket = Location.makeFromBucketSpec(this._url, host);
-        } else {
-          this._bucket = extractBucket(host, this.app.options);
-        }
-      }
-      get maxUploadRetryTime() {
-        return this._maxUploadRetryTime;
-      }
-      set maxUploadRetryTime(time) {
-        validateNumber("time", 0, Number.POSITIVE_INFINITY, time);
-        this._maxUploadRetryTime = time;
-      }
-      get maxOperationRetryTime() {
-        return this._maxOperationRetryTime;
-      }
-      set maxOperationRetryTime(time) {
-        validateNumber("time", 0, Number.POSITIVE_INFINITY, time);
-        this._maxOperationRetryTime = time;
-      }
-      async _getAuthToken() {
-        if (this._overrideAuthToken) {
-          return this._overrideAuthToken;
-        }
-        const auth = this._authProvider.getImmediate({ optional: true });
-        if (auth) {
-          const tokenData = await auth.getToken();
-          if (tokenData !== null) {
-            return tokenData.accessToken;
-          }
-        }
-        return null;
-      }
-      async _getAppCheckToken() {
-        const appCheck = this._appCheckProvider.getImmediate({ optional: true });
-        if (appCheck) {
-          const result = await appCheck.getToken();
           return result.token;
         }
         return null;
       }
-      _delete() {
-        if (!this._deleted) {
-          this._deleted = true;
-          this._requests.forEach((request) => request.cancel());
-          this._requests.clear();
-        }
-        return Promise.resolve();
-      }
-      _makeStorageReference(loc) {
-        return new Reference(this, loc);
-      }
-      _makeRequest(requestInfo, requestFactory, authToken, appCheckToken) {
-        if (!this._deleted) {
-          const request = makeRequest(requestInfo, this._appId, authToken, appCheckToken, requestFactory, this._firebaseVersion);
-          this._requests.add(request);
-          request.getPromise().then(() => this._requests.delete(request), () => this._requests.delete(request));
-          return request;
-        } else {
-          return new FailRequest(appDeleted());
-        }
-      }
-      async makeRequestWithTokens(requestInfo, requestFactory) {
-        const [authToken, appCheckToken] = await Promise.all([
-          this._getAuthToken(),
-          this._getAppCheckToken()
-        ]);
-        return this._makeRequest(requestInfo, requestFactory, authToken, appCheckToken).getPromise();
+      async getContext() {
+        const authToken = await this.getAuthToken();
+        const messagingToken = await this.getMessagingToken();
+        const appCheckToken = await this.getAppCheckToken();
+        return { authToken, messagingToken, appCheckToken };
       }
     };
-    name6 = "@firebase/storage";
-    version6 = "0.9.0";
-    STORAGE_TYPE = "storage";
-    registerStorage();
+    DEFAULT_REGION = "us-central1";
+    FunctionsService = class {
+      constructor(app, authProvider, messagingProvider, appCheckProvider, regionOrCustomDomain = DEFAULT_REGION, fetchImpl) {
+        this.app = app;
+        this.fetchImpl = fetchImpl;
+        this.emulatorOrigin = null;
+        this.contextProvider = new ContextProvider(authProvider, messagingProvider, appCheckProvider);
+        this.cancelAllRequests = new Promise((resolve3) => {
+          this.deleteService = () => {
+            return Promise.resolve(resolve3());
+          };
+        });
+        try {
+          const url2 = new URL(regionOrCustomDomain);
+          this.customDomain = url2.origin;
+          this.region = DEFAULT_REGION;
+        } catch (e) {
+          this.customDomain = null;
+          this.region = regionOrCustomDomain;
+        }
+      }
+      _delete() {
+        return this.deleteService();
+      }
+      _url(name22) {
+        const projectId = this.app.options.projectId;
+        if (this.emulatorOrigin !== null) {
+          const origin = this.emulatorOrigin;
+          return `${origin}/${projectId}/${this.region}/${name22}`;
+        }
+        if (this.customDomain !== null) {
+          return `${this.customDomain}/${name22}`;
+        }
+        return `https://${this.region}-${projectId}.cloudfunctions.net/${name22}`;
+      }
+    };
+    name6 = "@firebase/functions";
+    version6 = "0.7.6";
+    AUTH_INTERNAL_NAME = "auth-internal";
+    APP_CHECK_INTERNAL_NAME = "app-check-internal";
+    MESSAGING_INTERNAL_NAME = "messaging-internal";
+    registerFunctions(fetch3, "node");
     css4 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important}",
       map: null
@@ -131448,7 +132591,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-3d371eda.js
+// .svelte-kit/output/server/chunks/app-b135a8ca.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -132906,9 +134049,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-bb95882e.js",
+      file: assets + "/_app/start-d2f23368.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-bb95882e.js", assets + "/_app/chunks/vendor-1ece11ec.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-d2f23368.js", assets + "/_app/chunks/vendor-f3fe4aa6.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -132952,8 +134095,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_3d371eda = __esm({
-  ".svelte-kit/output/server/chunks/app-3d371eda.js"() {
+var init_app_b135a8ca = __esm({
+  ".svelte-kit/output/server/chunks/app-b135a8ca.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -133219,13 +134362,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_0c98efe3(), layout_0c98efe3_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_56b33432(), error_56b33432_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_2da7be63(), index_2da7be63_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_be4ae1dc(), layout_be4ae1dc_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_b1e5b3fc(), index_b1e5b3fc_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_8bfdc102(), layout_8bfdc102_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_92f19d2d(), error_92f19d2d_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_acfd22f3(), index_acfd22f3_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_5ef84a5c(), layout_5ef84a5c_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_031b0bf4(), index_031b0bf4_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-c4a633d1.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-c4a633d1.js", "chunks/vendor-1ece11ec.js", "chunks/database-56c0a89a.js", "chunks/store-0f76c09f.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-3f387780.js", "css": [], "js": ["error.svelte-3f387780.js", "chunks/vendor-1ece11ec.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-5dbe472b.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/index.svelte-5dbe472b.js", "chunks/vendor-1ece11ec.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/store-0f76c09f.js", "chunks/TextAreaAutoResizing-81596c41.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-56c0a89a.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-ab0302c4.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-ab0302c4.js", "chunks/vendor-1ece11ec.js", "chunks/store-0f76c09f.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-3202fddd.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/_class_/_room_/index.svelte-3202fddd.js", "chunks/vendor-1ece11ec.js", "chunks/TextAreaAutoResizing-81596c41.js", "chunks/store-0f76c09f.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-56c0a89a.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-52a2d815.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-52a2d815.js", "chunks/vendor-f3fe4aa6.js", "chunks/database-5b98777a.js", "chunks/store-35e1e792.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-18faddb3.js", "css": [], "js": ["error.svelte-18faddb3.js", "chunks/vendor-f3fe4aa6.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-9bbf98d9.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/index.svelte-9bbf98d9.js", "chunks/vendor-f3fe4aa6.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/store-35e1e792.js", "chunks/TextAreaAutoResizing-e45f7bc5.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-5b98777a.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-2ca99a8a.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-2ca99a8a.js", "chunks/vendor-f3fe4aa6.js", "chunks/store-35e1e792.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-fff648c7.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/_class_/_room_/index.svelte-fff648c7.js", "chunks/vendor-f3fe4aa6.js", "chunks/TextAreaAutoResizing-e45f7bc5.js", "chunks/store-35e1e792.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-5b98777a.js"], "styles": [] } };
   }
 });
 
@@ -133278,7 +134421,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_3d371eda();
+init_app_b135a8ca();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

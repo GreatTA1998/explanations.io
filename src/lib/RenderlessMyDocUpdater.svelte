@@ -15,12 +15,14 @@
   let isConnectedRef
   let onDisconnectRef
   let unsubIsConnected
-  let myName = `Beaver #${Math.floor(Math.random()*(999-100+1)+100)}`
+  $: myName = $user.name ? $user.name : 'Beaver #' 
 
-  $: if ($isFirestoreDocCreated) {
-    // react to `roomID` changes]
+  // react to `roomID` changes]
+  // $user.name reaction needed because we only partial hydrated it in the root __layout for speed
+  $: if ($isFirestoreDocCreated && $user.name) {
     updateDoc(myFirestoreRef, {
-      currentRoomID: roomID
+      currentRoomID: roomID,
+      name: $user.name
     })
   }
 

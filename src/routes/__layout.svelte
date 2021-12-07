@@ -1,5 +1,5 @@
 {#if !$hasFetchedUser}
-  <h3 style="margin-left: 10px; font-family: Roboto, sans-serif; opacity: 80%">Fetching your info...</h3>
+  <h4 style="margin-left: 10px; font-family: Roboto, sans-serif; opacity: 70%; font-weight: 400">Fetching your info...</h4>
 {:else}
   <slot>
 
@@ -35,8 +35,11 @@
         const userRef = doc(getFirestore(), 'users/' + resultUser.uid)
         let dbUserSnapshot = await getDoc(userRef)
         if (!dbUserSnapshot.exists()) {
+          const metadataSnap = await getDoc(
+            doc(getFirestore(), 'metadata/78tDSRCiMHGnf8zcXkQt')
+          )
           await setDoc(userRef, {
-            name: resultUser.displayName, 
+            name: `Beaver #${metadataSnap.data().numOfUsers}`, 
             uid: resultUser.uid,
             phoneNumber: resultUser.phoneNumber,
             pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"] 

@@ -127,8 +127,7 @@
         if (room.error === "invalid-request-error" && room.info === `a room named ${roomID} already exists`) {
           resolve({ url: `https://feynman.daily.co/${roomID}` }); 
         } else {
-          console.log('room =', room)
-          // alert('Cannot create conference room')
+          // successfully created room
           resolve(room); 
         }
       } catch (error) {

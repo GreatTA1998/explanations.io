@@ -226,7 +226,7 @@
 	}
 
 	if ($user.uid) {
-		goto('lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn')
+		goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7')
 	}
 
 	onMount(() => {
@@ -258,8 +258,6 @@
 		onSignInSubmit();
 
 		function onSignInSubmit () {
-			// console.log(`phoneNumber = +1 ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`)
-			// const phoneNumber = '+1 503-250-3868'
 			const phoneNumber = `+1 ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`
 			print(getAuth(), phoneNumber, appVerifier)
 			signInWithPhoneNumber(getAuth(), phoneNumber, appVerifier)
@@ -278,7 +276,6 @@
 					// ...
 			
 					// if it fails, reset 
-
 					// grecaptcha.reset(window.recaptchaWidgetId);
 			
 					// Or, if you haven't stored the widget ID:
@@ -289,10 +286,8 @@
 			}
 		}
 
+		// SIGN IN WITH CONFIRMATION CODE
 		function verifyConfirmationCode () {
-			console.log('value =', phoneConfirmCode)
-			// SIGN IN WITH CONFIRMATION CODE
-			// const code = getCodeFromUserInput();
 			console.log('phoneConfirmCode =', phoneConfirmCode)
 			window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
 				// User signed in successfully.

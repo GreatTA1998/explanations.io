@@ -242,7 +242,7 @@
 
 	function signInWithPhone () {
 		console.log('before, window.verifier =', window.recaptchaVerifier)
-		if (window.recaptchaVerifier) {
+		if (!window.recaptchaVerifier) {
 			window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
 				'size': 'invisible',
 				'callback': (response) => {

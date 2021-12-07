@@ -648,11 +648,11 @@ var init_install_fetch = __esm({
             throw new TypeError(`${context} is not a function.`);
           }
         }
-        function isObject(x) {
+        function isObject2(x) {
           return typeof x === "object" && x !== null || typeof x === "function";
         }
         function assertObject(x, context) {
-          if (!isObject(x)) {
+          if (!isObject2(x)) {
             throw new TypeError(`${context} is not an object.`);
           }
         }
@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_767f7ce7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-94a62d4b.js
+// .svelte-kit/output/server/chunks/store-ea17477e.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -4972,6 +4972,36 @@ function map(obj, fn, contextObj) {
   }
   return res;
 }
+function deepEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+  const aKeys = Object.keys(a);
+  const bKeys = Object.keys(b);
+  for (const k of aKeys) {
+    if (!bKeys.includes(k)) {
+      return false;
+    }
+    const aProp = a[k];
+    const bProp = b[k];
+    if (isObject(aProp) && isObject(bProp)) {
+      if (!deepEqual(aProp, bProp)) {
+        return false;
+      }
+    } else if (aProp !== bProp) {
+      return false;
+    }
+  }
+  for (const k of bKeys) {
+    if (!aKeys.includes(k)) {
+      return false;
+    }
+  }
+  return true;
+}
+function isObject(thing) {
+  return thing !== null && typeof thing === "object";
+}
 function querystring(querystringParams) {
   const params = [];
   for (const [key, value] of Object.entries(querystringParams)) {
@@ -5034,6 +5064,16 @@ function _registerComponent(component) {
     _addComponent(app, component);
   }
   return true;
+}
+function _getProvider(app, name22) {
+  return app.container.getProvider(name22);
+}
+function getApp(name22 = DEFAULT_ENTRY_NAME) {
+  const app = _apps.get(name22);
+  if (!app) {
+    throw ERROR_FACTORY.create("no-app", { appName: name22 });
+  }
+  return app;
 }
 function registerVersion(libraryKeyOrName, version22, variant) {
   var _a;
@@ -5156,11 +5196,11 @@ function getRandomID() {
   }
   return autoId;
 }
-var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, PLATFORM_LOG_STRING, _apps, _components, ERRORS, SDK_VERSION, extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_94a62d4b = __esm({
-  ".svelte-kit/output/server/chunks/store-94a62d4b.js"() {
+var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, extendStatics, __assign, subscriber_queue, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
+var init_store_ea17477e = __esm({
+  ".svelte-kit/output/server/chunks/store-ea17477e.js"() {
     init_shims();
-    init_app_2fb80129();
+    init_app_f5779eff();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -5902,6 +5942,7 @@ var init_store_94a62d4b = __esm({
     name$1 = "@firebase/firestore-compat";
     name = "firebase";
     version = "9.5.0";
+    DEFAULT_ENTRY_NAME = "[DEFAULT]";
     PLATFORM_LOG_STRING = {
       [name$o]: "fire-core",
       [name$n]: "fire-core-compat",
@@ -5940,7 +5981,7 @@ var init_store_94a62d4b = __esm({
       ["invalid-app-argument"]: "firebase.{$appName}() takes either no argument or a Firebase App instance.",
       ["invalid-log-argument"]: "First argument to `onLog` must be null or a function."
     };
-    new ErrorFactory("app", "Firebase", ERRORS);
+    ERROR_FACTORY = new ErrorFactory("app", "Firebase", ERRORS);
     SDK_VERSION = version;
     registerCoreComponents("");
     extendStatics = function(d2, b) {
@@ -5985,7 +6026,7 @@ var init_store_94a62d4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-578ae4e4.js
+// .svelte-kit/output/server/chunks/index-c327074d-63c80d8e.js
 function sign(x) {
   return x < 0 ? -1 : 1;
 }
@@ -6742,6 +6783,20 @@ function _getInstance(cls) {
   instanceCache.set(cls, instance2);
   return instance2;
 }
+function initializeAuth(app, deps) {
+  const provider = _getProvider(app, "auth");
+  if (provider.isInitialized()) {
+    const auth2 = provider.getImmediate();
+    const initialOptions = provider.getOptions();
+    if (deepEqual(initialOptions, deps !== null && deps !== void 0 ? deps : {})) {
+      return auth2;
+    } else {
+      _fail(auth2, "already-initialized");
+    }
+  }
+  const auth = provider.initialize({ options: deps });
+  return auth;
+}
 function _initializeAuthInstance(auth, deps) {
   const persistence = (deps === null || deps === void 0 ? void 0 : deps.persistence) || [];
   const hierarchy = (Array.isArray(persistence) ? persistence : [persistence]).map(_getInstance);
@@ -7145,11 +7200,21 @@ function registerAuth(clientPlatform) {
   registerVersion(name2, version2, getVersionForPlatform(clientPlatform));
   registerVersion(name2, version2, "esm2017");
 }
-var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob3, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop;
-var init_index_c327074d_578ae4e4 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-578ae4e4.js"() {
+function getAuth(app = getApp()) {
+  const provider = _getProvider(app, "auth");
+  if (provider.isInitialized()) {
+    return provider.getImmediate();
+  }
+  return initializeAuth(app);
+}
+async function fail() {
+  throw NOT_AVAILABLE_ERROR;
+}
+var import_stream2, import_http2, import_url2, import_punycode, import_https2, import_zlib2, name$12, version$12, publicApi, URL$1, conversions, lib, utils, URLImpl, urlStateMachine, tr46, require$$1, punycode, mappingTable, PROCESSING_OPTIONS, regexAstralSymbols, combiningMarksRegex, usm, Readable, BUFFER2, TYPE, Blob3, convert, INTERNALS2, PassThrough2, invalidTokenRegex, invalidHeaderCharRegex, MAP, Headers2, INTERNAL, HeadersIteratorPrototype, INTERNALS$12, STATUS_CODES, Response2, INTERNALS$22, URL2, parse_url, format_url, streamDestructionSupported, Request2, PassThrough$1, resolve_url, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
+var init_index_c327074d_63c80d8e = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-63c80d8e.js"() {
     init_shims();
-    init_store_94a62d4b();
+    init_store_ea17477e();
     import_stream2 = __toModule(require("stream"));
     import_http2 = __toModule(require("http"));
     import_url2 = __toModule(require("url"));
@@ -87238,7 +87303,14 @@ var init_index_c327074d_578ae4e4 = __esm({
     };
     FetchProvider.initialize(fetch2, Headers2, Response2);
     registerAuth("Node");
-    _createError("operation-not-supported-in-this-environment");
+    NOT_AVAILABLE_ERROR = _createError("operation-not-supported-in-this-environment");
+    FailClass = class {
+      constructor() {
+        throw NOT_AVAILABLE_ERROR;
+      }
+    };
+    signInWithPhoneNumber = fail;
+    RecaptchaVerifier = FailClass;
     AuthImpl.prototype.setPersistence = async () => {
     };
   }
@@ -87463,13 +87535,13 @@ function _registerComponent2(component) {
   }
   return true;
 }
-function _getProvider(app, name7) {
+function _getProvider2(app, name7) {
   return app.container.getProvider(name7);
 }
-function getApp(name7 = DEFAULT_ENTRY_NAME) {
+function getApp2(name7 = DEFAULT_ENTRY_NAME2) {
   const app = _apps2.get(name7);
   if (!app) {
-    throw ERROR_FACTORY.create("no-app", { appName: name7 });
+    throw ERROR_FACTORY2.create("no-app", { appName: name7 });
   }
   return app;
 }
@@ -87505,7 +87577,7 @@ function registerCoreComponents2(variant) {
   registerVersion2(name$o2, version$13, "esm2017");
   registerVersion2("fire-js", "");
 }
-var PlatformLoggerServiceImpl2, name$o2, version$13, logger2, name$n2, name$m2, name$l2, name$k2, name$j2, name$i2, name$h2, name$g2, name$f2, name$e2, name$d2, name$c2, name$b2, name$a2, name$92, name$82, name$72, name$62, name$52, name$42, name$32, name$22, name$13, name3, version3, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING2, _apps2, _components2, ERRORS2, ERROR_FACTORY, SDK_VERSION2;
+var PlatformLoggerServiceImpl2, name$o2, version$13, logger2, name$n2, name$m2, name$l2, name$k2, name$j2, name$i2, name$h2, name$g2, name$f2, name$e2, name$d2, name$c2, name$b2, name$a2, name$92, name$82, name$72, name$62, name$52, name$42, name$32, name$22, name$13, name3, version3, DEFAULT_ENTRY_NAME2, PLATFORM_LOG_STRING2, _apps2, _components2, ERRORS2, ERROR_FACTORY2, SDK_VERSION2;
 var init_index_esm20173 = __esm({
   "node_modules/@firebase/app/dist/esm/index.esm2017.js"() {
     init_shims();
@@ -87557,7 +87629,7 @@ var init_index_esm20173 = __esm({
     name$13 = "@firebase/firestore-compat";
     name3 = "firebase";
     version3 = "9.5.0";
-    DEFAULT_ENTRY_NAME = "[DEFAULT]";
+    DEFAULT_ENTRY_NAME2 = "[DEFAULT]";
     PLATFORM_LOG_STRING2 = {
       [name$o2]: "fire-core",
       [name$n2]: "fire-core-compat",
@@ -87596,7 +87668,7 @@ var init_index_esm20173 = __esm({
       ["invalid-app-argument"]: "firebase.{$appName}() takes either no argument or a Firebase App instance.",
       ["invalid-log-argument"]: "First argument to `onLog` must be null or a function."
     };
-    ERROR_FACTORY = new ErrorFactory2("app", "Firebase", ERRORS2);
+    ERROR_FACTORY2 = new ErrorFactory2("app", "Firebase", ERRORS2);
     SDK_VERSION2 = version3;
     registerCoreComponents2("");
   }
@@ -91902,7 +91974,7 @@ var require_minimal = __commonJS({
     util2.isString = function isString(value) {
       return typeof value === "string" || value instanceof String;
     };
-    util2.isObject = function isObject(value) {
+    util2.isObject = function isObject2(value) {
       return value && typeof value === "object";
     };
     util2.isset = util2.isSet = function isSet(obj, prop) {
@@ -102092,14 +102164,14 @@ function argToString(obj) {
     }
   }
 }
-function fail(failure = "Unexpected state") {
+function fail2(failure = "Unexpected state") {
   const message2 = `FIRESTORE (${SDK_VERSION3}) INTERNAL ASSERTION FAILED: ` + failure;
   logError(message2);
   throw new Error(message2);
 }
 function hardAssert(assertion, message2) {
   if (!assertion) {
-    fail();
+    fail2();
   }
 }
 function debugCast(obj, constructor) {
@@ -102324,7 +102396,7 @@ function typeOrder(value) {
     }
     return 10;
   } else {
-    return fail();
+    return fail2();
   }
 }
 function valueEquals(left, right) {
@@ -102357,7 +102429,7 @@ function valueEquals(left, right) {
     case 10:
       return objectEquals(left, right);
     default:
-      return fail();
+      return fail2();
   }
 }
 function timestampEquals(left, right) {
@@ -102436,7 +102508,7 @@ function valueCompare(left, right) {
     case 10:
       return compareMaps(left.mapValue, right.mapValue);
     default:
-      throw fail();
+      throw fail2();
   }
 }
 function compareNumbers(left, right) {
@@ -102548,7 +102620,7 @@ function canonifyValue(value) {
   } else if ("mapValue" in value) {
     return canonifyMap(value.mapValue);
   } else {
-    return fail();
+    return fail2();
   }
 }
 function canonifyByteString(byteString) {
@@ -102657,7 +102729,7 @@ function compareDocumentsByField(field, d1, d2) {
   if (v1 !== null && v2 !== null) {
     return valueCompare(v1, v2);
   } else {
-    return fail();
+    return fail2();
   }
 }
 function newTarget(path, collectionGroup = null, orderBy2 = [], filters = [], limit = null, startAt = null, endAt = null) {
@@ -102966,7 +103038,7 @@ function compareDocs(orderBy2, d1, d2) {
     case "desc":
       return -1 * comparison;
     default:
-      return fail();
+      return fail2();
   }
 }
 function mutableDocumentMap() {
@@ -103226,7 +103298,7 @@ function deleteMutationApplyToLocalView(mutation, document2) {
 function isPermanentError(code) {
   switch (code) {
     case Code.OK:
-      return fail();
+      return fail2();
     case Code.CANCELLED:
     case Code.UNKNOWN:
     case Code.DEADLINE_EXCEEDED:
@@ -103246,7 +103318,7 @@ function isPermanentError(code) {
     case Code.DATA_LOSS:
       return true;
     default:
-      return fail();
+      return fail2();
   }
 }
 function isPermanentWriteError(code) {
@@ -103293,7 +103365,7 @@ function mapCodeFromRpcCode(code) {
     case RpcCode.DATA_LOSS:
       return Code.DATA_LOSS;
     default:
-      return fail();
+      return fail2();
   }
 }
 function documentTargetMap() {
@@ -103472,7 +103544,7 @@ function fromWatchChange(serializer, change) {
     const targetId = filter.targetId;
     watchChange = new ExistenceFilterChange(targetId, existenceFilter);
   } else {
-    return fail();
+    return fail2();
   }
   return watchChange;
 }
@@ -103488,7 +103560,7 @@ function fromWatchTargetChangeState(state) {
   } else if (state === "RESET") {
     return 4;
   } else {
-    return fail();
+    return fail2();
   }
 }
 function versionFromListenResponse(change) {
@@ -103522,7 +103594,7 @@ function toMutation(serializer, mutation) {
       verify: toName(serializer, mutation.key)
     };
   } else {
-    return fail();
+    return fail2();
   }
   if (mutation.fieldTransforms.length > 0) {
     result.updateTransforms = mutation.fieldTransforms.map((transform) => toFieldTransform(serializer, transform));
@@ -103540,7 +103612,7 @@ function toPrecondition(serializer, precondition) {
   } else if (precondition.exists !== void 0) {
     return { exists: precondition.exists };
   } else {
-    return fail();
+    return fail2();
   }
 }
 function fromWriteResult(proto, commitTime) {
@@ -103585,7 +103657,7 @@ function toFieldTransform(serializer, fieldTransform) {
       increment: transform.operand
     };
   } else {
-    throw fail();
+    throw fail2();
   }
 }
 function toDocumentsTarget(serializer, target) {
@@ -103681,7 +103753,7 @@ function toLabel(serializer, purpose) {
     case 2:
       return "limbo-document";
     default:
-      return fail();
+      return fail2();
   }
 }
 function toTarget(serializer, targetData) {
@@ -103722,7 +103794,7 @@ function fromFilter(filter) {
   } else if (filter.compositeFilter !== void 0) {
     return filter.compositeFilter.filters.map((f) => fromFilter(f)).reduce((accum, current) => accum.concat(current));
   } else {
-    return fail();
+    return fail2();
   }
 }
 function toOrder(orderBys) {
@@ -103784,9 +103856,9 @@ function fromOperatorName(op) {
     case "ARRAY_CONTAINS_ANY":
       return "array-contains-any";
     case "OPERATOR_UNSPECIFIED":
-      return fail();
+      return fail2();
     default:
-      return fail();
+      return fail2();
   }
 }
 function toFieldPathReference(path) {
@@ -103872,9 +103944,9 @@ function fromUnaryFilter(filter) {
         nullValue: "NULL_VALUE"
       });
     case "OPERATOR_UNSPECIFIED":
-      return fail();
+      return fail2();
     default:
-      return fail();
+      return fail2();
   }
 }
 function toDocumentMask(fieldMask) {
@@ -104715,7 +104787,7 @@ function compareChangeType(c1, c2) {
       case 1:
         return 0;
       default:
-        return fail();
+        return fail2();
     }
   };
   return order(c1) - order(c2);
@@ -104969,7 +105041,7 @@ function updateTrackedLimbos(syncEngineImpl, targetId, limboChanges) {
         removeLimboTarget(syncEngineImpl, limboChange.key);
       }
     } else {
-      fail();
+      fail2();
     }
   }
 }
@@ -105123,7 +105195,7 @@ function valueDescription(input) {
   } else if (typeof input === "function") {
     return "a function";
   } else {
-    return fail();
+    return fail2();
   }
 }
 function tryGetCustomObjectType(input) {
@@ -105338,8 +105410,8 @@ function getMessageOrStack(error3) {
   }
   return message2;
 }
-function getFirestore(app = getApp()) {
-  return _getProvider(app, "firestore").getImmediate();
+function getFirestore(app = getApp2()) {
+  return _getProvider2(app, "firestore").getImmediate();
 }
 function ensureFirestoreConfigured(firestore) {
   if (!firestore._firestoreClient) {
@@ -105376,7 +105448,7 @@ function isWrite(dataSource) {
     case 4:
       return false;
     default:
-      throw fail();
+      throw fail2();
   }
 }
 function newUserDataReader(firestore) {
@@ -105687,7 +105759,7 @@ function resultChangeType(type) {
     case 1:
       return "removed";
     default:
-      return fail();
+      return fail2();
   }
 }
 function validateHasExplicitOrderByForLimitToLast(query2) {
@@ -106133,12 +106205,12 @@ var init_index_node = __esm({
         if (offset === void 0) {
           offset = 0;
         } else if (offset > segments.length) {
-          fail();
+          fail2();
         }
         if (length === void 0) {
           length = segments.length - offset;
         } else if (length > segments.length - offset) {
-          fail();
+          fail2();
         }
         this.segments = segments;
         this.offset = offset;
@@ -106527,7 +106599,7 @@ var init_index_node = __esm({
       }
       next(nextFn, catchFn) {
         if (this.callbackAttached) {
-          fail();
+          fail2();
         }
         this.callbackAttached = true;
         if (this.isDone) {
@@ -107037,7 +107109,7 @@ var init_index_node = __esm({
           case ">=":
             return comparison >= 0;
           default:
-            return fail();
+            return fail2();
         }
       }
       isInequality() {
@@ -107439,14 +107511,14 @@ var init_index_node = __esm({
       }
       check() {
         if (this.isRed() && this.left.isRed()) {
-          throw fail();
+          throw fail2();
         }
         if (this.right.isRed()) {
-          throw fail();
+          throw fail2();
         }
         const blackDepth = this.left.check();
         if (blackDepth !== this.right.check()) {
-          throw fail();
+          throw fail2();
         } else {
           return blackDepth + (this.isRed() ? 0 : 1);
         }
@@ -107460,19 +107532,19 @@ var init_index_node = __esm({
         this.size = 0;
       }
       get key() {
-        throw fail();
+        throw fail2();
       }
       get value() {
-        throw fail();
+        throw fail2();
       }
       get color() {
-        throw fail();
+        throw fail2();
       }
       get left() {
-        throw fail();
+        throw fail2();
       }
       get right() {
-        throw fail();
+        throw fail2();
       }
       copy(key, value, color, left, right) {
         return this;
@@ -107922,7 +107994,7 @@ var init_index_node = __esm({
               removedDocuments = removedDocuments.add(key);
               break;
             default:
-              fail();
+              fail2();
           }
         });
         return new TargetChange(this._resumeToken, this._current, addedDocuments, modifiedDocuments, removedDocuments);
@@ -108006,7 +108078,7 @@ var init_index_node = __esm({
               }
               break;
             default:
-              fail();
+              fail2();
           }
         });
       }
@@ -109030,7 +109102,7 @@ var init_index_node = __esm({
       }
       get orphanedDocuments() {
         if (!this._orphanedDocuments) {
-          throw fail();
+          throw fail2();
         } else {
           return this._orphanedDocuments;
         }
@@ -109987,7 +110059,7 @@ This typically indicates that your device does not have a healthy Internet conne
             doc: change.doc
           });
         } else {
-          fail();
+          fail2();
         }
       }
       getChanges() {
@@ -110800,7 +110872,7 @@ This typically indicates that your device does not have a healthy Internet conne
       }
       verifyNotFailed() {
         if (this.failure) {
-          fail();
+          fail2();
         }
       }
       verifyOperationInProgress() {
@@ -111215,7 +111287,7 @@ This typically indicates that your device does not have a healthy Internet conne
           case 10:
             return this.convertObject(value.mapValue, serverTimestampBehavior);
           default:
-            throw fail();
+            throw fail2();
         }
       }
       convertObject(mapValue, serverTimestampBehavior) {
@@ -111326,18 +111398,18 @@ This typically indicates that your device does not have a healthy Internet conne
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-2306fa26.js
-var layout_2306fa26_exports = {};
-__export(layout_2306fa26_exports, {
+// .svelte-kit/output/server/chunks/__layout-9e346943.js
+var layout_9e346943_exports = {};
+__export(layout_9e346943_exports, {
   default: () => _layout
 });
 var import_cookie, import_stream3, import_http3, import_url4, import_punycode2, import_https3, import_zlib3, _layout;
-var init_layout_2306fa26 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-2306fa26.js"() {
+var init_layout_9e346943 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-9e346943.js"() {
     init_shims();
-    init_app_2fb80129();
-    init_index_c327074d_578ae4e4();
-    init_store_94a62d4b();
+    init_app_f5779eff();
+    init_index_c327074d_63c80d8e();
+    init_store_ea17477e();
     init_index_node();
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -111358,9 +111430,9 @@ var init_layout_2306fa26 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-1703db89.js
-var error_1703db89_exports = {};
-__export(error_1703db89_exports, {
+// .svelte-kit/output/server/chunks/error-21dab855.js
+var error_21dab855_exports = {};
+__export(error_21dab855_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -111368,10 +111440,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_1703db89 = __esm({
-  ".svelte-kit/output/server/chunks/error-1703db89.js"() {
+var init_error_21dab855 = __esm({
+  ".svelte-kit/output/server/chunks/error-21dab855.js"() {
     init_shims();
-    init_app_2fb80129();
+    init_app_f5779eff();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -111393,7 +111465,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/Switch-5e801f18.js
+// .svelte-kit/output/server/chunks/Switch-d4eda950.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name7, value]) => name7 !== "" && value).map(([name7]) => name7).join(" ");
 }
@@ -111769,11 +111841,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, internals, ClassAdder, defaults, Switch;
-var init_Switch_5e801f18 = __esm({
-  ".svelte-kit/output/server/chunks/Switch-5e801f18.js"() {
+var init_Switch_d4eda950 = __esm({
+  ".svelte-kit/output/server/chunks/Switch-d4eda950.js"() {
     init_shims();
-    init_app_2fb80129();
-    init_store_94a62d4b();
+    init_app_f5779eff();
+    init_store_ea17477e();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -112757,7 +112829,7 @@ var init_Switch_5e801f18 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessBoardMethods-d036dbdf.js
+// .svelte-kit/output/server/chunks/TextAreaAutoResizing-762e8f15.js
 async function fetchDocs(dbPath) {
   return new Promise(async (resolve3) => {
     const snapshot = await getDocs(collection(getFirestore(), dbPath));
@@ -112788,14 +112860,14 @@ function convertDocToStroke(doc2) {
   }
   return strokeObject;
 }
-var Object_1$1, Button_1, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, css$1, BlackboardToolbar, Blackboard, css, DoodleVideo, RenderlessAudioRecorder, RenderlessBoardMethods;
-var init_RenderlessBoardMethods_d036dbdf = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessBoardMethods-d036dbdf.js"() {
+var Object_1$1, Button_1, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, css$2, BlackboardToolbar, Blackboard, css$1, DoodleVideo, RenderlessAudioRecorder, RenderlessBoardMethods, css, TextAreaAutoResizing;
+var init_TextAreaAutoResizing_762e8f15 = __esm({
+  ".svelte-kit/output/server/chunks/TextAreaAutoResizing-762e8f15.js"() {
     init_shims();
-    init_app_2fb80129();
-    init_Switch_5e801f18();
-    init_store_94a62d4b();
-    init_index_c327074d_578ae4e4();
+    init_app_f5779eff();
+    init_Switch_d4eda950();
+    init_store_ea17477e();
+    init_index_c327074d_63c80d8e();
     init_index_node();
     ({ Object: Object_1$1 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -113719,7 +113791,7 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
       return $$rendered;
     });
     goto = guard("goto");
-    css$1 = {
+    css$2 = {
       code: "svg.svelte-ln95yv{max-height:30px}",
       map: null
     };
@@ -113728,7 +113800,7 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
       let $user, $$unsubscribe_user;
       $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => value);
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$result.css.add(css$1);
+      $$result.css.add(css$2);
       $$unsubscribe_onlyAllowApplePencil();
       $$unsubscribe_user();
       return `<div style="${"position: absolute; display: flex; align-items: center; height: 50px; right: 0; top: 0; bottom: auto; left: auto; z-index: 100; background-color: grey; padding-left: 10px"}">${validate_component(Switch, "Switch").$$render($$result, {
@@ -113778,7 +113850,7 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
 
 <canvas${add_attribute("style", `position: absolute; margin-top: 0; margin-left: 0; background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`, 0)}${add_attribute("this", canvas, 0)}></canvas>`;
     });
-    css = {
+    css$1 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
     };
@@ -113797,7 +113869,7 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
         $$bindings.strokesArray(strokesArray);
       if ($$props.audioDownloadURL === void 0 && $$bindings.audioDownloadURL && audioDownloadURL !== void 0)
         $$bindings.audioDownloadURL(audioDownloadURL);
-      $$result.css.add(css);
+      $$result.css.add(css$1);
       $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
       return `${slots.default ? slots.default({}) : `
@@ -113809,7 +113881,7 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
 
 <canvas${add_attribute("style", `background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`, 0)}${add_attribute("this", canvas, 0)}></canvas>
 
-<audio${add_attribute("src", audioDownloadURL, 0)} controls${add_attribute("style", `width: ${$canvasWidth}px`, 0)}${add_attribute("this", AudioPlayer, 0)}></audio>`;
+<audio${add_attribute("src", audioDownloadURL, 0)} controls${add_attribute("style", `width: ${$canvasWidth}px; height: 40px`, 0)}${add_attribute("this", AudioPlayer, 0)}></audio>`;
     });
     RenderlessAudioRecorder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $dailyMicStream, $$unsubscribe_dailyMicStream;
@@ -113951,23 +114023,42 @@ ${`<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"col
 
 `}`;
     });
+    css = {
+      code: '.grow-wrap.svelte-tv3wak.svelte-tv3wak{display:grid}.grow-wrap.svelte-tv3wak.svelte-tv3wak::after{content:attr(data-replicated-value) " ";white-space:pre-wrap;visibility:hidden}.grow-wrap.svelte-tv3wak>textarea.svelte-tv3wak{resize:none;overflow:hidden}.grow-wrap.svelte-tv3wak>textarea.svelte-tv3wak,.grow-wrap.svelte-tv3wak.svelte-tv3wak::after{border:1px solid black;padding:0.5rem;font:inherit;grid-area:1 / 1 / 2 / 2}',
+      map: null
+    };
+    TextAreaAutoResizing = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value2) => $canvasWidth = value2);
+      let { value } = $$props;
+      let autogrowWrapper;
+      createEventDispatcher();
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      $$result.css.add(css);
+      $$unsubscribe_canvasWidth();
+      return `
+<div class="${"grow-wrap svelte-tv3wak"}" style="${"font-family: Roboto, sans-serif; margin: 10px 0px;"}"${add_attribute("this", autogrowWrapper, 0)}><textarea style="${"box-sizing: border-box; width: " + escape($canvasWidth) + "px; padding: 6px; border-radius: 2px; font-family: Roboto, sans-serif; color: rgb(60 55 56 / 87%);"}" class="${"svelte-tv3wak"}">${escape(value)}</textarea>
+  
+</div>`;
+    });
   }
 });
 
-// .svelte-kit/output/server/chunks/index-88771233.js
-var index_88771233_exports = {};
-__export(index_88771233_exports, {
+// .svelte-kit/output/server/chunks/index-5899c50b.js
+var index_5899c50b_exports = {};
+__export(index_5899c50b_exports, {
   default: () => Routes
 });
 var import_cookie3, import_stream4, import_http4, import_url5, import_punycode3, import_https4, import_zlib4, counter, HelperText, css2, Routes;
-var init_index_88771233 = __esm({
-  ".svelte-kit/output/server/chunks/index-88771233.js"() {
+var init_index_5899c50b = __esm({
+  ".svelte-kit/output/server/chunks/index-5899c50b.js"() {
     init_shims();
-    init_app_2fb80129();
-    init_RenderlessBoardMethods_d036dbdf();
-    init_Switch_5e801f18();
-    init_index_c327074d_578ae4e4();
-    init_store_94a62d4b();
+    init_app_f5779eff();
+    init_TextAreaAutoResizing_762e8f15();
+    init_Switch_d4eda950();
+    init_index_c327074d_63c80d8e();
+    init_store_ea17477e();
     init_index_node();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
@@ -114041,11 +114132,42 @@ var init_index_88771233 = __esm({
       let titleValue = "Welcome!";
       let phoneNumSegment1 = "";
       let phoneNumSegment2 = "";
+      let phoneNumSegment3 = "";
+      let appVerifier;
+      const print = console.log;
       let hasWatchedExemplar = false;
       let localStrokesArray = [];
       let timer;
       if ($user.uid) {
         goto("lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn");
+      }
+      function signInWithPhone() {
+        console.log("before, window.verifier =", window.recaptchaVerifier);
+        if (window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
+            "size": "invisible",
+            "callback": (response) => {
+              console.log("reCAPTCHA solved =", response);
+            }
+          }, getAuth());
+          appVerifier = window.recaptchaVerifier;
+          print("after, verifier =", window.recaptchaVerifier);
+        }
+        onSignInSubmit();
+        function onSignInSubmit() {
+          const phoneNumber = `+1 ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`;
+          print(getAuth(), phoneNumber, appVerifier);
+          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
+            console.log("confirmation result =", confirmationResult);
+            window.confirmationResult = confirmationResult;
+          }).catch((error3) => {
+            console.log("error =", error3);
+            grecaptcha.reset(window.recaptchaWidgetId);
+            window.recaptchaVerifier.render().then(function(widgetId) {
+              grecaptcha.reset(widgetId);
+            });
+          });
+        }
       }
       $$result.css.add(css2);
       let $$settled;
@@ -114088,6 +114210,11 @@ var init_index_88771233 = __esm({
             document.getElementById("phone-input-3").focus();
           }
         }
+        {
+          if (phoneNumSegment3.length === 4) {
+            signInWithPhone();
+          }
+        }
         $$rendered = `<div id="${"tutorial-content"}" style="${"padding: 10px;"}">${!$user.uid ? `<div${add_classes([isQuestionMode ? "question" : ""].join(" ").trim())}>${validate_component(Textfield, "Textfield").$$render($$result, {
           class: "room-title",
           style: `width: ${$canvasWidth}px`,
@@ -114105,12 +114232,10 @@ var init_index_88771233 = __esm({
           })}`
         })}</div>
 		
-		${isQuestionMode ? `${validate_component(Textfield, "Textfield").$$render($$result, {
-          textarea: true,
-          style: `width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`,
-          value: "Someone answered! What - I hard-coded this to happen? Ridiculous, why'd I do that! Try sliding around the video"
+		${isQuestionMode ? `${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, {
+          value: "Look - someone answered immediately! I hard-coded this to happen? Alright you got me, but it's the tutorial! Anyway try sliding around the video"
         }, {}, {})}
-			<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px`, 0)} id="${"caleb-video-section"}">${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, {
+			<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px`, 0)} id="${"caleb-video-section"}">${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, {
           dbPath: "/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q",
           autoFetchStrokes: true
         }, {}, {
@@ -114121,10 +114246,8 @@ var init_index_88771233 = __esm({
         })}</div>
 
 			
-			${`<div id="${"make-your-own-video"}">${validate_component(Textfield, "Textfield").$$render($$result, {
-          textarea: true,
-          style: `width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`,
-          value: `Wondering how the video was made? Just press REC, then draw and talk like in real-life (note: mouse drawing isn't supported)`
+			${`<div id="${"make-your-own-video"}">${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, {
+          value: "Wondering how the video was made? Just press REC, then draw and talk like in real-life (note: mouse drawing isn't supported)"
         }, {}, {})}</div>
 
 				<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight}px`, 0)}>${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
@@ -114160,13 +114283,13 @@ var init_index_88771233 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-71185b07.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-694d7590.js
 var MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_71185b07 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-71185b07.js"() {
+var init_SelectionGroupIcon_694d7590 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-694d7590.js"() {
     init_shims();
-    init_app_2fb80129();
-    init_Switch_5e801f18();
+    init_app_f5779eff();
+    init_Switch_d4eda950();
     MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -119588,9 +119711,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-d87870e1.js
-var layout_d87870e1_exports = {};
-__export(layout_d87870e1_exports, {
+// .svelte-kit/output/server/chunks/__layout-35b59ce3.js
+var layout_35b59ce3_exports = {};
+__export(layout_35b59ce3_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -121757,13 +121880,13 @@ function load2({ page }) {
   };
 }
 var import_util7, import_buffer, import_stream5, import_crypto3, import_url6, import_assert, import_net, import_tls, import_daily_js, import_cookie4, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$12, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream3, util$1, driver$1, Headers3, API$1, EventTarget, Event2, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, css3, _layout2;
-var init_layout_d87870e1 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-d87870e1.js"() {
+var init_layout_35b59ce3 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-35b59ce3.js"() {
     init_shims();
-    init_app_2fb80129();
-    init_SelectionGroupIcon_71185b07();
-    init_Switch_5e801f18();
-    init_store_94a62d4b();
+    init_app_f5779eff();
+    init_SelectionGroupIcon_694d7590();
+    init_Switch_d4eda950();
+    init_store_ea17477e();
     import_util7 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream5 = __toModule(require("stream"));
@@ -129742,9 +129865,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-305e179a.js
-var index_305e179a_exports = {};
-__export(index_305e179a_exports, {
+// .svelte-kit/output/server/chunks/index-a5cbb8d0.js
+var index_a5cbb8d0_exports = {};
+__export(index_a5cbb8d0_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -130217,21 +130340,21 @@ async function load3({ page }) {
   };
 }
 var import_stream6, import_http5, import_url7, import_https5, import_zlib5, import_cookie5, import_punycode4, CommonLabel, Label, Readable2, BUFFER3, TYPE2, Blob4, convert2, INTERNALS3, PassThrough3, invalidTokenRegex2, invalidHeaderCharRegex2, MAP2, Headers4, INTERNAL2, HeadersIteratorPrototype2, INTERNALS$13, STATUS_CODES2, Response3, INTERNALS$23, URL3, parse_url2, format_url2, Request3, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name6, version6, STORAGE_TYPE, css4, U5Broomu5D;
-var init_index_305e179a = __esm({
-  ".svelte-kit/output/server/chunks/index-305e179a.js"() {
+var init_index_a5cbb8d0 = __esm({
+  ".svelte-kit/output/server/chunks/index-a5cbb8d0.js"() {
     init_shims();
-    init_app_2fb80129();
-    init_RenderlessBoardMethods_d036dbdf();
-    init_Switch_5e801f18();
-    init_store_94a62d4b();
+    init_app_f5779eff();
+    init_TextAreaAutoResizing_762e8f15();
+    init_Switch_d4eda950();
+    init_store_ea17477e();
     import_stream6 = __toModule(require("stream"));
     import_http5 = __toModule(require("http"));
     import_url7 = __toModule(require("url"));
-    init_index_c327074d_578ae4e4();
+    init_index_c327074d_63c80d8e();
     import_https5 = __toModule(require("https"));
     import_zlib5 = __toModule(require("zlib"));
     init_index_node();
-    init_SelectionGroupIcon_71185b07();
+    init_SelectionGroupIcon_694d7590();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     import_punycode4 = __toModule(require("punycode"));
@@ -131232,11 +131355,7 @@ ${this.customData.serverResponse}`;
         }, {}, {})}
 
 		${each(roomDoc.blackboards, (boardID) => `${validate_component(RenderlessBoardMethods, "RenderlessBoardMethods").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-          default: ({ boardDoc, fetchStrokes, listenToStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${strokesArray ? `${validate_component(Textfield, "Textfield").$$render($$result, {
-            textarea: true,
-            value: boardDoc.description || "",
-            style: `width: ${$canvasWidth}px; margin-bottom: 10px`
-          }, {}, {})}` : ``}
+          default: ({ boardDoc, fetchStrokes, listenToStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `${boardDoc ? `${strokesArray ? `${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, { value: boardDoc.description || "" }, {}, {})}` : ``}
 
           ${boardDoc.audioDownloadURL ? `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`, 0)}>${strokesArray ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
             strokesArray,
@@ -131300,7 +131419,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-2fb80129.js
+// .svelte-kit/output/server/chunks/app-f5779eff.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -131829,12 +131948,12 @@ async function render_response({
     body: options2.template({ head, body })
   };
 }
-function try_serialize(data, fail2) {
+function try_serialize(data, fail3) {
   try {
     return devalue(data);
   } catch (err) {
-    if (fail2)
-      fail2(coalesce_to_error(err));
+    if (fail3)
+      fail3(coalesce_to_error(err));
     return null;
   }
 }
@@ -132758,9 +132877,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-fc17b2ea.js",
+      file: assets + "/_app/start-46e1080c.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-fc17b2ea.js", assets + "/_app/chunks/vendor-60dbf49e.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-46e1080c.js", assets + "/_app/chunks/vendor-60dbf49e.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -132804,8 +132923,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_2fb80129 = __esm({
-  ".svelte-kit/output/server/chunks/app-2fb80129.js"() {
+var init_app_f5779eff = __esm({
+  ".svelte-kit/output/server/chunks/app-f5779eff.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -133071,13 +133190,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_2306fa26(), layout_2306fa26_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_1703db89(), error_1703db89_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_88771233(), index_88771233_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_d87870e1(), layout_d87870e1_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_305e179a(), index_305e179a_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_9e346943(), layout_9e346943_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_21dab855(), error_21dab855_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_5899c50b(), index_5899c50b_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_35b59ce3(), layout_35b59ce3_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_a5cbb8d0(), index_a5cbb8d0_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-2ac57f03.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-2ac57f03.js", "chunks/vendor-60dbf49e.js", "chunks/database-63c5af1e.js", "chunks/store-620103ad.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-83e4d3b0.js", "css": [], "js": ["error.svelte-83e4d3b0.js", "chunks/vendor-60dbf49e.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-64bd0372.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/index.svelte-64bd0372.js", "chunks/vendor-60dbf49e.js", "chunks/canvas-e5ae1966.js", "chunks/singletons-12a22614.js", "chunks/store-620103ad.js", "chunks/RenderlessBoardMethods-8a36537a.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-363f6e16.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-363f6e16.js", "chunks/vendor-60dbf49e.js", "chunks/store-620103ad.js", "chunks/canvas-e5ae1966.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-34f78127.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/RenderlessBoardMethods-a2139d95.css"], "js": ["pages/_class_/_room_/index.svelte-34f78127.js", "chunks/vendor-60dbf49e.js", "chunks/RenderlessBoardMethods-8a36537a.js", "chunks/store-620103ad.js", "chunks/canvas-e5ae1966.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-7ef5e76f.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-7ef5e76f.js", "chunks/vendor-60dbf49e.js", "chunks/database-63c5af1e.js", "chunks/store-620103ad.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-83e4d3b0.js", "css": [], "js": ["error.svelte-83e4d3b0.js", "chunks/vendor-60dbf49e.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-c75f34a6.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/index.svelte-c75f34a6.js", "chunks/vendor-60dbf49e.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/store-620103ad.js", "chunks/TextAreaAutoResizing-a5d18062.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-a42d6345.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-a42d6345.js", "chunks/vendor-60dbf49e.js", "chunks/store-620103ad.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-1e55aee1.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-24e9a22b.css"], "js": ["pages/_class_/_room_/index.svelte-1e55aee1.js", "chunks/vendor-60dbf49e.js", "chunks/TextAreaAutoResizing-a5d18062.js", "chunks/store-620103ad.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-63c5af1e.js"], "styles": [] } };
   }
 });
 
@@ -133130,7 +133249,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_2fb80129();
+init_app_f5779eff();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

@@ -4,7 +4,7 @@
     {value}
     on:input={(e) => { 
       autogrowWrapper.dataset.replicatedValue = e.target.value; 
-      dispatch('input', e)
+      dispatch('input', e.target.value)
     }} 
     style="box-sizing: border-box; width: {$canvasWidth}px; padding: 6px; border-radius: 2px; 
       font-family: Roboto, sans-serif; color: rgb(60 55 56 / 87%);"

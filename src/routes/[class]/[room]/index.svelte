@@ -11,13 +11,26 @@
 
 {#if roomDoc}
   <!-- Give a 5-seconds countdown UI feedback before pinging the server -->
-	<div use:portal={'main-content'} style="padding: 16px;" class:question={'?' === roomDoc.name.charAt(roomDoc.name.length - 1)}>
+	<div use:portal={'main-content'} style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
     <Textfield 
+      disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID}
       value={roomDoc.name} on:input={(e) => updateRoomName(e)}
       class="room-title" 
-      style={`width: ${$canvasWidth}px; margin-bottom: 20px;`}
+      style={`width: ${$canvasWidth}px;`}
     >
+      <HelperText slot="helper" persistent>
+        {#if lockQuestionIntervalID}
+          Pinging server members in {lockQuestionCurrentTime}, cancel by backtracking the ?
+        {:else if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
+          Marked as question by {roomDoc.askerName} on {displayDate(roomDoc.dateAsked)}
+        {/if}
+        {#if roomDoc.dateResolved}
+          , resolved {displayDate(roomDoc.dateResolved)}
+        {/if}
+      </HelperText>
     </Textfield>
+
+    <div style="margin-bottom: 20px;"></div>
 
 		{#each roomDoc.blackboards as boardID (boardID) }
 			<RenderlessBoardMethods dbPath={boardsDbPath + boardID} 
@@ -114,10 +127,11 @@
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
   import { recordState, user, canvasHeight, canvasWidth } from '../../../store.js'
-  import { getRandomID } from '../../../helpers/utility.js'
+  import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion } from '@firebase/firestore';
   import Textfield from '@smui/textfield'
+  import HelperText from '@smui/textfield/helper-text'
   import Menu from '@smui/menu';
   import List, { Item, Text } from '@smui/list'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
@@ -131,25 +145,71 @@
   // reactivity not necessary: `classID` is constant here 
   const boardsDbPath = `classes/${classID}/blackboards/`
   const roomsDbPath = `classes/${classID}/rooms/`
-
   $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
+
+  let lockQuestionIntervalID = ''
+  let lockQuestionCurrentTime = 5
 
   if (!$user.uid) {
     goto('/')
   }
 
-  async function updateRoomName (e) {
-    const { value } = e.srcElement
-    await updateDoc(roomRef, {
-      name: value
+  function hasQuestionMark (string) {
+    return '?' === string.charAt(string.length - 1)
+  }
+
+  function isLockedAsQuestion (roomDoc) {
+    return roomDoc.askerName && roomDoc.dateAsked && roomDoc.askerUID
+  }
+
+  // reserve #10 numbers
+  async function updateRoomName ({ srcElement }) {
+    const { value } = srcElement
+    const roomUpdateObj = { name: value }
+    // user typed ? 
+    if (!hasQuestionMark(roomDoc.name) && hasQuestionMark(value) && !isLockedAsQuestion(roomDoc)) {
+      initLockQuestionCountdown()
+    }
+    // user backtracked ? 
+    else if (lockQuestionIntervalID && !hasQuestionMark(value)) {
+      resetQuestionCountdown()
+    }
+    // resolve a locked question
+    else if (!hasQuestionMark(value) && isLockedAsQuestion(roomDoc)) {
+      console.log('resolving')
+      roomUpdateObj.dateResolved = new Date().toISOString()
+    }
+    await updateDoc(roomRef, roomUpdateObj)
+  }
+
+  function initLockQuestionCountdown () {
+    lockQuestionCurrentTime = 5
+    lockQuestionIntervalID = setInterval(() => {
+      lockQuestionCurrentTime -= 1
+      if (lockQuestionCurrentTime === 0) {
+        lockRoomAsQuestion()
+        resetQuestionCountdown()
+      }
+    }, 1000)
+  }
+
+  function resetQuestionCountdown () {
+    clearTimeout(lockQuestionIntervalID)
+    lockQuestionIntervalID = ''
+  }
+
+  function lockRoomAsQuestion () {
+    updateDoc(roomRef, {
+      askerName: $user.name || 'Beaver #999',
+      askerUID: $user.uid,
+      dateAsked: new Date().toISOString()
     })
   }
 
-  async function updateBoardDescription (e, id) {
-    const { value } = e.srcElement 
+  async function updateBoardDescription ({ detail }, id) {
     const boardRef = doc(getFirestore(), boardsDbPath + id)
     await updateDoc(boardRef, {
-      description: value
+      description: detail
     })
   }
 
@@ -167,7 +227,6 @@
   }
 
   async function saveVideo (audioBlob, boardID) {
-    console.log('saveVideo(), audioBlob =', audioBlob)
     const storage = getStorage()
     const audioRef = ref(storage, `audio/${getRandomID()}`)
     await uploadBytes(audioRef, audioBlob)

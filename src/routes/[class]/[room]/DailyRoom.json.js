@@ -5,6 +5,6 @@ export function get () {
   // fetch
 }
 
-// EXAMPLECOD
+// EXAMPLE CODE
 // async function load ({ fetch })
 // const room = await fetch('DailyRoom.json')    

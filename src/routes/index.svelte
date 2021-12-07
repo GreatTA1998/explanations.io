@@ -49,7 +49,7 @@
 			{#if !hasRecordedVideo}
 				<div use:startRecordCountdown id="make-your-own-video">
 					<TextAreaAutoResizing 
-						value="Wondering how the video was made? Just press REC, then draw and talk like in real-life (note: mouse drawing isn't supported)"
+						value="Wondering how the video was made? Just press REC, then draw and talk like in real-life. Be messy and ramble - there's a lot of value in casually recorded videos (note: mouse drawing isn't supported)"
 					/>
 				</div>
 
@@ -91,7 +91,7 @@
 			{#if hasRecordedVideo}
 				<div id="sign-up-section" style="height: 400px">
 					<TextAreaAutoResizing
-						value="Reusable explanations upload near-instantly, in-place, and benefits the entire server."
+						value="In a real server, everyone is connected on voice chat, making it quick to hop in, get help, then hop out. Sign up for the closed-beta in 6.036 with a phone number to get text notifications iff members ask or answer questions. "
 					/>
 
 					{#if !phoneConfirmationResult}
@@ -99,9 +99,9 @@
 							<div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div>
 							<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="339" bind:value={phoneNumSegment1} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
-							<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="676" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem;margin-right: 10px">
+							<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="676" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
-							<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="1234" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem">
+							<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="1234" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
 							<Button id="sign-in-button" on:click={signInWithPhone}>
 								Sign Up
 							</Button>
@@ -146,7 +146,6 @@
 	let phoneNumSegment3 = ''
 	let phoneConfirmationResult
 	let phoneConfirmCode = ''
-
 
 	let appVerifier
 	const print = console.log
@@ -273,12 +272,14 @@
 					window.confirmationResult = confirmationResult
 					// ...
 				}).catch((error) => {
+					alert(error)
 					console.log('error =', error)
 					// Error; SMS not sent
 					// ...
 			
 					// if it fails, reset 
-					grecaptcha.reset(window.recaptchaWidgetId);
+
+					// grecaptcha.reset(window.recaptchaWidgetId);
 			
 					// Or, if you haven't stored the widget ID:
 					window.recaptchaVerifier.render().then(function(widgetId) {

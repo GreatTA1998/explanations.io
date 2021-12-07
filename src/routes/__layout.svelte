@@ -1,5 +1,5 @@
 {#if !$hasFetchedUser}
-  <h3 style="margin-left: 10px;">Fetching your info...</h3>
+  <h3 style="margin-left: 10px; font-family: Roboto, sans-serif; opacity: 80%">Fetching your info...</h3>
 {:else}
   <slot>
 
@@ -17,7 +17,7 @@
   import { browser } from '$app/env'
 
   onMount(async () => {
-    // if (!browser) return // can't handle authentication logic in the server, also database I'm GUESSING
+    if (!browser) return // can't handle authentication logic in the server, also database I'm GUESSING
     initializeDatabase()
 
     // USER LOGIN

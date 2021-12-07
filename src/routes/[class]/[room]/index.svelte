@@ -129,7 +129,8 @@
   import { recordState, user, canvasHeight, canvasWidth } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion } from '@firebase/firestore';
+  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs } from '@firebase/firestore';
+  import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
   import Menu from '@smui/menu';
@@ -176,7 +177,6 @@
     }
     // resolve a locked question
     else if (!hasQuestionMark(value) && isLockedAsQuestion(roomDoc)) {
-      console.log('resolving')
       roomUpdateObj.dateResolved = new Date().toISOString()
     }
     await updateDoc(roomRef, roomUpdateObj)
@@ -188,6 +188,7 @@
       lockQuestionCurrentTime -= 1
       if (lockQuestionCurrentTime === 0) {
         lockRoomAsQuestion()
+        textNotifyServerMembers()
         resetQuestionCountdown()
       }
     }, 1000)
@@ -204,6 +205,35 @@
       askerUID: $user.uid,
       dateAsked: new Date().toISOString()
     })
+  }
+
+  async function textNotifyServerMembers () {
+    const promises = []
+    const functions = getFunctions();
+    const sendTextMessage = httpsCallable(functions, 'sendTextMessage');
+    const usersRef = collection(getFirestore(), 'users')
+    const q = query(usersRef, where('willReceiveText', '==', true))
+    const snapshot = await getDocs(q)
+    if (snapshot.docs) {
+      for (const doc of snapshot.docs) {
+        console.log('phoneNumber =', doc.data().phoneNumber)
+        try {
+          // put it back in when actually trying
+          // if (doc.id !== $user.uid) {
+            promises.push(
+              sendTextMessage({ 
+                content: `${$user.name} asked: "${roomDoc.name || 'Fake question here'}"`,
+                toWho: doc.data().phoneNumber
+              })
+            )
+          // }       
+        } catch (error) {
+          alert(error)
+        }
+      }
+    }
+    await Promise.all(promises)
+    console.log('success, sent all texts.')
   }
 
   async function updateBoardDescription ({ detail }, id) {

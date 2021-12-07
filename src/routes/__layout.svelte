@@ -42,7 +42,8 @@
             name: `Beaver #${metadataSnap.data().numOfUsers}`, 
             uid: resultUser.uid,
             phoneNumber: resultUser.phoneNumber,
-            pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"] 
+            pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"],
+            willReceiveText: true // can be toggled
           })
           dbUserSnapshot = await getDoc(userRef) // seems like a redundant fetch, but keep for now
         } 

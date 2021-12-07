@@ -20,7 +20,7 @@
   bind:this={AudioPlayer} 
   src={audioDownloadURL} 
   controls 
-  style={`width: ${$canvasWidth}px`}>
+  style={`width: ${$canvasWidth}px; height: 40px`}>
 </audio>
 
 <script>
@@ -56,11 +56,9 @@
 
   onMount(() => {
     ctx = canvas.getContext('2d')
-    console.log("initial preview")
     for (const stroke of strokesArray) {
       drawStroke(stroke, null, ctx, canvas)
     }
-    console.log('strokesArray =', strokesArray)
 
     const allPoints = [];
     for (let i = 0; i < strokesArray.length; i++) {

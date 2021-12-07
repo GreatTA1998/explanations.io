@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@material/elevation": "^13.0.0",
+    "@originjs/vite-plugin-commonjs": "^1.0.1",
     "@smui/button": "^6.0.0-beta.4",
     "@smui/card": "^6.0.0-beta.4",
     "@smui/common": "^6.0.0-beta.4",

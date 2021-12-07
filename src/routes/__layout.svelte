@@ -14,8 +14,10 @@
   import { getFirestore, doc, deleteDoc, getDoc, setDoc } from 'firebase/firestore'
   import { hasFetchedUser, user } from '../store.js'
   import { onMount } from 'svelte'
+  import { browser } from '$app/env'
 
   onMount(async () => {
+    // if (!browser) return // can't handle authentication logic in the server, also database I'm GUESSING
     initializeDatabase()
 
     // USER LOGIN

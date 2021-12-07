@@ -5,9 +5,8 @@ export function calculateCanvasDimensions () {
   let availableWidth
   const aspectRatio = 4/3
   if (appElement) {
-    const marginSpace = 20
-    availableHeight = appElement.clientHeight - marginSpace
-    availableWidth = appElement.clientWidth - marginSpace
+    availableHeight = appElement.clientHeight
+    availableWidth = appElement.clientWidth
   }
   else {
     availableHeight = window.innerHeight
@@ -15,11 +14,12 @@ export function calculateCanvasDimensions () {
   }
 
   let dimensions = {}
+  // lose 5% of space to maintain slight separation and space for audio slider
   if (availableWidth * (1/aspectRatio) < availableHeight) {
-    dimensions.width = availableWidth;
+    dimensions.width = 0.95 * availableWidth;
     dimensions.height = dimensions.width * (1/aspectRatio);
   } else {
-    dimensions.height = availableHeight;
+    dimensions.height = 0.95 * availableHeight;
     dimensions.width = dimensions.height * aspectRatio;
   }
   return dimensions

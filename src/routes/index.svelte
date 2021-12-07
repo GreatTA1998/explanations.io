@@ -29,8 +29,10 @@
 		</div>
 		
 		{#if isQuestionMode}			
-			<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} value="Someone answered! What - I hard-coded this to happen? Ridiculous, why'd I do that! Try sliding around the video"/>
-			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px`} id="caleb-video-section">
+			<TextAreaAutoResizing
+				value="Look - someone answered immediately! I hard-coded this to happen? Alright you got me, but it's the tutorial! Anyway try sliding around the video"
+			/>
+			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px`} id="caleb-video-section">
 				<RenderlessBoardMethods dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
 					let:boardDoc={boardDoc}
 					let:fetchStrokes={fetchStrokes}
@@ -46,10 +48,9 @@
 			<!-- This is your own video, preserve it for comparison -->
 			{#if !hasRecordedVideo}
 				<div use:startRecordCountdown id="make-your-own-video">
-					<Textfield 
-						textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} 
-						value={`Wondering how the video was made? Just press REC, then draw and talk like in real-life (note: mouse drawing isn't supported)`}>
-					</Textfield>
+					<TextAreaAutoResizing 
+						value="Wondering how the video was made? Just press REC, then draw and talk like in real-life (note: mouse drawing isn't supported)"
+					/>
 				</div>
 
 				<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight}px`}>
@@ -77,8 +78,10 @@
 					</RenderlessAudioRecorder>
 				</div>
 			{:else}
-				<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} value="Reusable explanations upload near-instantly, in-place, and benefits the entire server."/>
-				<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px`}>
+				<TextAreaAutoResizing 
+					value="Reusable explanations upload near-instantly, in-place, and benefits the entire server."
+				/>
+				<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px`}>
 					<DoodleVideo strokesArray={localStrokesArray} audioDownloadURL={audioBlobURL}>
 					
 					</DoodleVideo>
@@ -87,22 +90,20 @@
 
 			{#if hasRecordedVideo}
 				<div id="sign-up-section" style="height: 400px">
-					<Textfield textarea style={`width: ${$canvasWidth}px; margin-top: 20px; min-height: 130px`} value={`In a real server, each question is in fact a voice room. This makes it easy to help quickly while everybody is there.`}>
-
-					</Textfield>
+					<TextAreaAutoResizing
+						value="Reusable explanations upload near-instantly, in-place, and benefits the entire server."
+					/>
 
 					{#if !phoneConfirmationResult}
-						<div style="display: flex; align-items: center; margin-top: 24px">
-							<div style="margin-right: 10px;">+1 </div>
-							<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="339" bind:value={phoneNumSegment1} style="width: 30px; margin-right: 10px">
+						<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px; margin-right: 6px; margin-left: auto;">
+							<div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div>
+							<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="339" bind:value={phoneNumSegment1} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
-							<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="676" bind:value={phoneNumSegment2} style="width: 30px; margin-right: 10px">
+							<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="676" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem;margin-right: 10px">
 
-							<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="1234" bind:value={phoneNumSegment3} style="width: 40px">
-
-							<!-- First validate the request -->
+							<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="1234" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem">
 							<Button id="sign-in-button" on:click={signInWithPhone}>
-								Sign in with phone
+								Sign Up
 							</Button>
 						</div>
 					{:else}
@@ -133,6 +134,7 @@
 	import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
 	import RenderlessBoardMethods from '$lib/RenderlessBoardMethods.svelte'
 	import { calculateCanvasDimensions } from '../helpers/canvas.js'
+	import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
 
 	let currentTime = 10
 	let titleValue = 'Welcome!'
@@ -160,8 +162,9 @@
 	function startTypingAnimation () {
 		titleValue = ''
 		const values = [
-			'Re-explain gradient descent',
+			'Gradient descent',
 			'Finals 2019',
+			'RNN example',
 			"Explain 2b visually",
 		]
 		typewriter = setInterval(() => {
@@ -170,7 +173,7 @@
 			if (i === values.length) {
 				clearInterval(typewriter)
 			}
-		}, 400)
+		}, 300)
 	}
 
 	$:if (isQuestionMode) {
@@ -213,6 +216,10 @@
 		document.getElementById('phone-input-3').focus()
 	}
 
+	$: if (phoneNumSegment3.length === 4) {
+		signInWithPhone()
+	}
+
 	function saveVideoLocally (audioBlob) {
 		audioBlobURL = URL.createObjectURL(audioBlob)
 		hasRecordedVideo = true
@@ -226,7 +233,7 @@
 	onMount(() => {
 		const { width, height } = calculateCanvasDimensions()
 		canvasWidth.set(width) 
-		canvasHeight.set(height - 100) // so the user can preview the scrollbar
+		canvasHeight.set(height)
 	})
 
 
@@ -236,16 +243,18 @@
 
 	function signInWithPhone () {
 		console.log('before, window.verifier =', window.recaptchaVerifier)
-		window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
-			'size': 'invisible',
-			'callback': (response) => {
-				// reCAPTCHA solved, allow signInWithPhoneNumber.
-				console.log('reCAPTCHA solved =', response)
-				// onSignInSubmit()
-			}
-		}, getAuth())
-		appVerifier = window.recaptchaVerifier;
-		print('after, verifier =', window.recaptchaVerifier)
+		if (window.recaptchaVerifier) {
+			window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
+				'size': 'invisible',
+				'callback': (response) => {
+					// reCAPTCHA solved, allow signInWithPhoneNumber.
+					console.log('reCAPTCHA solved =', response)
+					// onSignInSubmit()
+				}
+			}, getAuth())
+			appVerifier = window.recaptchaVerifier;
+			print('after, verifier =', window.recaptchaVerifier)
+		}
 
 		onSignInSubmit();
 
@@ -278,6 +287,7 @@
 				});
 			}
 		}
+
 		function verifyConfirmationCode () {
 			console.log('value =', phoneConfirmCode)
 			// SIGN IN WITH CONFIRMATION CODE

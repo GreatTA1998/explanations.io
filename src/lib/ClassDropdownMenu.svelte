@@ -1,10 +1,7 @@
 <!-- <Button on:click={() => menu.setOpen(true)}> -->
-  <!-- <h1 style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
+  <h1 style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
     6.036
-  </h1> -->
-  <div class="mdc-typography--headline4" style="margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
-    6.036
-  </div>
+  </h1>
 <!-- </Button> -->
 <Menu bind:this={menu} style="left: 100px; top: 50px; width: 300px">
   <List>
@@ -18,7 +15,6 @@
  
 <!-- Fetch the classes you have -->
 <script lang="ts">
-  import './_Typography.scss'
   import Menu from '@smui/menu';
   import List, { Item, Separator, Text } from '@smui/list';
   import Button from '@smui/button';

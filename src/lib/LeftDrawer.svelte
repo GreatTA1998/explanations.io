@@ -6,10 +6,9 @@
           <img src="/logo.png" width="60" height="54" alt="web-logo">
           <div>
             <ClassDropdownMenu/>
-            <!-- <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
+            <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
               Intro to Machine Learning
-            </div> -->
-            <div class="mdc-typography--caption" style="margin-left: 8px; margin-bottom: 12px; opacity: 70%">Intro to Machine Learning</div>
+            </div>>
           </div>
         </div>
       </div>
@@ -32,7 +31,6 @@
  
 <script lang="ts">
   import './_Elevation.scss'
-  import './_Typography.scss'
   import ClassDropdownMenu from '$lib/ClassDropdownMenu.svelte'
   import Drawer, { AppContent, Content } from '@smui/drawer';
   import Card from '@smui/card'

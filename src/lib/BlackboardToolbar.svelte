@@ -1,4 +1,4 @@
-<div style="position: absolute; display: flex; align-items: center; height: 50px; right: 0; top: 0; bottom: auto; left: auto; z-index: 100; background-color: grey; padding-left: 10px" >
+<div style="position: absolute; display: flex; align-items: center; height: 50px; left: 0; right: auto; top: 0; bottom: auto; z-index: 100; background-color: grey; padding-left: 10px" >
   <Switch 
     icons={false}
     checked={!onlyAllowApplePencil} 

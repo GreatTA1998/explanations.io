@@ -1,6 +1,8 @@
-<slot>
+<div style="position: absolute; right: 0; left: auto; display: flex; padding-top: 4px; padding-bottom: 4px;">
+  <slot>
 
-</slot>
+  </slot>
+</div>
 
 {#if !recursiveSyncer && isPlaying === false}
   <span on:click={startAudioPlayer} class="material-icons overlay-center" style="color: white; font-size: 6rem; width: 120px; height: 120px">

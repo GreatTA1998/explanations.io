@@ -1,23 +1,22 @@
 <div style="position: absolute; display: flex; align-items: center; height: 50px; left: 0; right: auto; top: 0; bottom: auto; z-index: 100; background-color: grey; padding-left: 10px" >
   <Switch 
-    icons={false}
     checked={!onlyAllowApplePencil} 
     on:click={() => onlyAllowApplePencil.set(!$onlyAllowApplePencil)} style="margin: 0 !important"
   />
   <div style="margin-left: 6px; font-size: 0.65rem; font-family: Roboto,sans-serif; color: white;">
-    Touch draw
+    {$onlyAllowApplePencil ? 'Touch draw' : 'No touch'}
   </div>
   {#if Object.keys($user).length > 0}
     {#each $user.pencilColors as color }
-      <div on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })} style="margin: 0 8px">
+      <div on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })} style="margin: 0 4px; width: 30px; height: 38px; border-radius: 3px; align-items: center; display: flex; justify-content: center;" class:pencil-selected={$currentTool.color === color}>
         <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="16px" height="30px" viewBox="0 0 100 230" style="enable-background:new 0 0 100 230;" xml:space="preserve"
         >
           <g>
             <path d="M0,0v72.377c0,1.588,0.234,3.169,0.698,4.706l45.416,150.032C46.633,228.828,48.212,230,50,230s3.367-1.172,3.886-2.883
-              L99.31,77.079c0.457-1.525,0.69-3.108,0.69-4.702V0.002"/>
+              L99.31,77.079c0.457-1.525,0.69-3.108,0.69-4.702V0.002"/>;
             <polygon 
-              style={`fill: ${color};`} 
+              style={`fill: ${color};`}
               points="50,211.978 38.879,175.24 61.122,175.24"
             />
             <path 
@@ -38,7 +37,9 @@
 
     <img 
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}
+      class:eraser-selected={$currentTool.type === 'eraser'}
       width="40" height="30"
+      style="margin-left: 8px;"
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"
       alt="eraser"
     >
@@ -58,5 +59,13 @@
 <style>
 svg {
   max-height: 30px;
+}
+
+.pencil-selected {
+  background-color: white;
+}
+
+.eraser-selected {
+  filter: invert(1)
 }
 </style>

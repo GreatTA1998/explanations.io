@@ -55,7 +55,8 @@
         const audioBlob = e.data
         dispatch('record-end', { audioBlob }); 
         resolve(); 
-        recordState.set('pre_record')
+        // quickfix: don't reset to pre_record when audio hasn't been uploaded to cloud 
+        // recordState.set('pre_record')
       })
       recorder.stop();
       for (const track of recorder.stream.getTracks()) {

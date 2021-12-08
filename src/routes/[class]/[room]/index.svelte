@@ -58,9 +58,11 @@
                   {strokesArray} 
                   audioDownloadURL={boardDoc.audioDownloadURL}
                 >
-                  <Button on:click={revertToBoard(boardDoc)}>
-                    Revert to board
-                  </Button>
+                  {#if $user.uid === boardDoc.creatorUID}
+                    <Button on:click={revertToBoard(boardDoc)} color="primary">
+                      Revert to board
+                    </Button>
+                  {/if}
                 </DoodleVideo>
               {/if}
             </div>
@@ -75,26 +77,42 @@
                 >
                   <Blackboard {strokesArray} {currentTime} on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}> 
                     {#if $recordState === 'pre_record'}
-                      <Button on:click={startRecording} style="color: #f5862c">Record</Button>    
+                      <span on:click={startRecording}
+                        class="material-icons" style="font-size: 2.5rem;
+                        color: cyan;
+                        margin-left: 20px; margin-right: 20px"
+                      >
+                        radio_button_checked
+                      </span>
                       
-                      <span on:click={() => blackboardMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white;">
+                      <span on:click={() => blackboardMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 1.5rem;">
                         more_horiz
                       </span>
                       <Menu bind:this={blackboardMenu} style="left: 100px; top: 50px; width: 300px">
                         <List>
-                          <!-- <Button on:click={deleteAllStrokesFromDb} color="secondary">Wipe</Button> -->
-                          <!-- {#each mitClasses as mitClass } -->
-                            <Item on:SMUI:action={deleteAllStrokesFromDb}>
-                              Wipe board
-                            </Item>
-                          <!-- {/each} -->
+                          <Item on:SMUI:action={deleteAllStrokesFromDb}>
+                            Wipe board
+                          </Item>
                         </List>
                       </Menu>
 
                     {:else if $recordState === 'mid_record'}
-                      <Button on:click={stopRecording} color="secondary">Stop</Button>
+                      <span on:click={stopRecording}
+                        class="material-icons" style="font-size: 2.5rem;
+                        color: cyan;
+                        margin-left: 20px; margin-right: 20px"
+                      >
+                        stop_circle
+                      </span>
                     {:else}
-                      Uploading...
+                      <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
+                        <CircularProgress
+                          class="my-four-colors"
+                          style="height: 32px; width: 32px;"
+                          indeterminate
+                          fourColor
+                        />
+                      </div>
                     {/if}
                   </Blackboard>
                 </RenderlessAudioRecorder>
@@ -117,6 +135,7 @@
 {/if}
 
 <script>
+  import '$lib/_FourColor.scss'
   import RenderlessBoardMethods from '$lib/RenderlessBoardMethods.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '../../../lib/Blackboard.svelte'
@@ -136,6 +155,7 @@
   import Menu from '@smui/menu';
   import List, { Item, Text } from '@smui/list'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import CircularProgress from '@smui/circular-progress' 
 
   export let classID
   export let roomID
@@ -270,6 +290,7 @@
       audioDownloadURL: downloadURL,
       audioRefFullPath: audioRef.fullPath
     })
+    recordState.set('pre_record')
   }
 
   async function revertToBoard ({ id, audioRefFullPath }) {

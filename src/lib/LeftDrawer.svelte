@@ -8,7 +8,7 @@
             <ClassDropdownMenu/>
             <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
               Intro to Machine Learning
-            </div>>
+            </div>
           </div>
         </div>
       </div>

@@ -40,6 +40,7 @@
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}
       width="40" height="30"
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"
+      alt="eraser"
     >
   {/if}
 

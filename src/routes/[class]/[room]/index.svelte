@@ -121,7 +121,7 @@
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
-  import { fetchDoc, fetchDocs } from '../../../database.js'
+  import { fetchDoc } from '../../../database.js'
   import { onMount, tick } from 'svelte'
   import Button, { Group, Label }from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
@@ -129,7 +129,7 @@
   import { recordState, user, canvasHeight, canvasWidth } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs } from '@firebase/firestore';
+  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs } from 'firebase/firestore';
   import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'

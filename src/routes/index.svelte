@@ -120,13 +120,12 @@
 	{/if}
 </div>
 
-<script>
+<script>	
+	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 	import Button, { Label } from '@smui/button';
 	import HelperText from '@smui/textfield/helper-text'
 	import Textfield from '@smui/textfield';
 	import { onMount, tick } from 'svelte'
-	import '../database.js'
-	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 	import { goto } from '$app/navigation'
 	import { canvasHeight, canvasWidth, user, recordState } from '../store.js'
 	import Blackboard from '$lib/Blackboard.svelte'

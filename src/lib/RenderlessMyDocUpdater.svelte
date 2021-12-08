@@ -3,7 +3,7 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
   import { getDatabase, ref, onDisconnect, onValue } from 'firebase/database'
-  import { getFirestore, doc, updateDoc, setDoc, deleteDoc } from '@firebase/firestore'
+  import { getFirestore, doc, updateDoc, setDoc, deleteDoc } from 'firebase/firestore'
   import { getRandomID } from '../helpers/utility.js'
   import { browserTabID, user, isFirestoreDocCreated, roomToPeople } from '../store.js'
 

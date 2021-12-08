@@ -293,7 +293,7 @@
 				// User signed in successfully.
 				const user = result.user;
 				console.log('redirecting, user =', user)
-				goto('/lvzQqyZIV1wjwYnRV9hn/lvzQqyZIV1wjwYnRV9hn', { replaceState: true })
+				goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
 				// ...
 			}).catch((error) => {
 				alert(error)

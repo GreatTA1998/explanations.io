@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-0f5a657e.js
+// .svelte-kit/output/server/chunks/store-7c4f6cd0.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5197,10 +5197,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_0f5a657e = __esm({
-  ".svelte-kit/output/server/chunks/store-0f5a657e.js"() {
+var init_store_7c4f6cd0 = __esm({
+  ".svelte-kit/output/server/chunks/store-7c4f6cd0.js"() {
     init_shims();
-    init_app_146dbf71();
+    init_app_f5b4470f();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -6037,12 +6037,12 @@ var init_store_0f5a657e = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-2be26bf9.js
+// .svelte-kit/output/server/chunks/index-9b791854.js
 var name2, version2;
-var init_index_2be26bf9 = __esm({
-  ".svelte-kit/output/server/chunks/index-2be26bf9.js"() {
+var init_index_9b791854 = __esm({
+  ".svelte-kit/output/server/chunks/index-9b791854.js"() {
     init_shims();
-    init_store_0f5a657e();
+    init_store_7c4f6cd0();
     name2 = "firebase";
     version2 = "9.5.0";
     registerVersion(name2, version2, "app");
@@ -32965,7 +32965,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-3eb8857d.js
+// .svelte-kit/output/server/chunks/index-c327074d-197c91a9.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -33454,10 +33454,10 @@ async function fail2() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient2, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name5, version5, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_3eb8857d = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-3eb8857d.js"() {
+var init_index_c327074d_197c91a9 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-197c91a9.js"() {
     init_shims();
-    init_store_0f5a657e();
+    init_store_7c4f6cd0();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -34386,20 +34386,20 @@ var init_index_c327074d_3eb8857d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-4f04e7c0.js
-var layout_4f04e7c0_exports = {};
-__export(layout_4f04e7c0_exports, {
+// .svelte-kit/output/server/chunks/__layout-a4ca542c.js
+var layout_a4ca542c_exports = {};
+__export(layout_a4ca542c_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, _layout;
-var init_layout_4f04e7c0 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-4f04e7c0.js"() {
+var init_layout_a4ca542c = __esm({
+  ".svelte-kit/output/server/chunks/__layout-a4ca542c.js"() {
     init_shims();
-    init_app_146dbf71();
-    init_index_2be26bf9();
+    init_app_f5b4470f();
+    init_index_9b791854();
     init_index_node();
-    init_index_c327074d_3eb8857d();
-    init_store_0f5a657e();
+    init_index_c327074d_197c91a9();
+    init_store_7c4f6cd0();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -34415,9 +34415,9 @@ var init_layout_4f04e7c0 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-bfd79ab3.js
-var error_bfd79ab3_exports = {};
-__export(error_bfd79ab3_exports, {
+// .svelte-kit/output/server/chunks/error-913f0634.js
+var error_913f0634_exports = {};
+__export(error_913f0634_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -34425,10 +34425,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_bfd79ab3 = __esm({
-  ".svelte-kit/output/server/chunks/error-bfd79ab3.js"() {
+var init_error_913f0634 = __esm({
+  ".svelte-kit/output/server/chunks/error-913f0634.js"() {
     init_shims();
-    init_app_146dbf71();
+    init_app_f5b4470f();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -34450,7 +34450,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/Switch-38f1d6e5.js
+// .svelte-kit/output/server/chunks/Switch-3d7ba147.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name8, value]) => name8 !== "" && value).map(([name8]) => name8).join(" ");
 }
@@ -34486,7 +34486,7 @@ function exclude(obj, keys) {
 }
 function forwardEventsBuilder(component) {
   let $on;
-  let events3 = [];
+  let events22 = [];
   component.$on = (fullEventType, callback) => {
     let eventType = fullEventType;
     let destructor = () => {
@@ -34494,7 +34494,7 @@ function forwardEventsBuilder(component) {
     if ($on) {
       destructor = $on(eventType, callback);
     } else {
-      events3.push([eventType, callback]);
+      events22.push([eventType, callback]);
     }
     const oldModifierMatch = eventType.match(oldModifierRegex);
     if (oldModifierMatch && console) {
@@ -34567,8 +34567,8 @@ function forwardEventsBuilder(component) {
       }
       return destructor;
     };
-    for (let i = 0; i < events3.length; i++) {
-      $on(events3[i][0], events3[i][1]);
+    for (let i = 0; i < events22.length; i++) {
+      $on(events22[i][0], events22[i][1]);
     }
     return {
       destroy: () => {
@@ -34593,6 +34593,226 @@ function prefixFilter(obj, prefix) {
   }
   return newObj;
 }
+function supportsCssVariables(windowObj, forceRefresh) {
+  if (forceRefresh === void 0) {
+    forceRefresh = false;
+  }
+  var CSS = windowObj.CSS;
+  var supportsCssVars = supportsCssVariables_;
+  if (typeof supportsCssVariables_ === "boolean" && !forceRefresh) {
+    return supportsCssVariables_;
+  }
+  var supportsFunctionPresent = CSS && typeof CSS.supports === "function";
+  if (!supportsFunctionPresent) {
+    return false;
+  }
+  var explicitlySupportsCssVars = CSS.supports("--css-vars", "yes");
+  var weAreFeatureDetectingSafari10plus = CSS.supports("(--css-vars: yes)") && CSS.supports("color", "#00000000");
+  supportsCssVars = explicitlySupportsCssVars || weAreFeatureDetectingSafari10plus;
+  if (!forceRefresh) {
+    supportsCssVariables_ = supportsCssVars;
+  }
+  return supportsCssVars;
+}
+function getNormalizedEventCoords(evt, pageOffset, clientRect) {
+  if (!evt) {
+    return { x: 0, y: 0 };
+  }
+  var x = pageOffset.x, y = pageOffset.y;
+  var documentX = x + clientRect.left;
+  var documentY = y + clientRect.top;
+  var normalizedX;
+  var normalizedY;
+  if (evt.type === "touchstart") {
+    var touchEvent = evt;
+    normalizedX = touchEvent.changedTouches[0].pageX - documentX;
+    normalizedY = touchEvent.changedTouches[0].pageY - documentY;
+  } else {
+    var mouseEvent = evt;
+    normalizedX = mouseEvent.pageX - documentX;
+    normalizedY = mouseEvent.pageY - documentY;
+  }
+  return { x: normalizedX, y: normalizedY };
+}
+function applyPassive$1(globalObj) {
+  if (globalObj === void 0) {
+    globalObj = window;
+  }
+  return supportsPassiveOption(globalObj) ? { passive: true } : false;
+}
+function supportsPassiveOption(globalObj) {
+  if (globalObj === void 0) {
+    globalObj = window;
+  }
+  var passiveSupported = false;
+  try {
+    var options2 = {
+      get passive() {
+        passiveSupported = true;
+        return false;
+      }
+    };
+    var handler = function() {
+    };
+    globalObj.document.addEventListener("test", handler, options2);
+    globalObj.document.removeEventListener("test", handler, options2);
+  } catch (err) {
+    passiveSupported = false;
+  }
+  return passiveSupported;
+}
+function closest(element, selector) {
+  if (element.closest) {
+    return element.closest(selector);
+  }
+  var el = element;
+  while (el) {
+    if (matches$1(el, selector)) {
+      return el;
+    }
+    el = el.parentElement;
+  }
+  return null;
+}
+function matches$1(element, selector) {
+  var nativeMatches = element.matches || element.webkitMatchesSelector || element.msMatchesSelector;
+  return nativeMatches.call(element, selector);
+}
+function estimateScrollWidth(element) {
+  var htmlEl = element;
+  if (htmlEl.offsetParent !== null) {
+    return htmlEl.scrollWidth;
+  }
+  var clone2 = htmlEl.cloneNode(true);
+  clone2.style.setProperty("position", "absolute");
+  clone2.style.setProperty("transform", "translate(-9999px, -9999px)");
+  document.documentElement.appendChild(clone2);
+  var scrollWidth = clone2.scrollWidth;
+  document.documentElement.removeChild(clone2);
+  return scrollWidth;
+}
+function Ripple(node, { ripple = true, surface = false, unbounded = false, disabled = false, color, active, rippleElement, eventTarget, activeTarget, addClass = (className) => node.classList.add(className), removeClass = (className) => node.classList.remove(className), addStyle = (name8, value) => node.style.setProperty(name8, value), initPromise = Promise.resolve() } = {}) {
+  let instance2;
+  let addLayoutListener = getContext("SMUI:addLayoutListener");
+  let removeLayoutListener;
+  let oldActive = active;
+  let oldEventTarget = eventTarget;
+  let oldActiveTarget = activeTarget;
+  function handleProps() {
+    if (surface) {
+      addClass("mdc-ripple-surface");
+      if (color === "primary") {
+        addClass("smui-ripple-surface--primary");
+        removeClass("smui-ripple-surface--secondary");
+      } else if (color === "secondary") {
+        removeClass("smui-ripple-surface--primary");
+        addClass("smui-ripple-surface--secondary");
+      } else {
+        removeClass("smui-ripple-surface--primary");
+        removeClass("smui-ripple-surface--secondary");
+      }
+    }
+    if (instance2 && oldActive !== active) {
+      oldActive = active;
+      if (active) {
+        instance2.activate();
+      } else if (active === false) {
+        instance2.deactivate();
+      }
+    }
+    if (ripple && !instance2) {
+      instance2 = new MDCRippleFoundation({
+        addClass,
+        browserSupportsCssVars: () => supportsCssVariables(window),
+        computeBoundingRect: () => (rippleElement || node).getBoundingClientRect(),
+        containsEventTarget: (target) => node.contains(target),
+        deregisterDocumentInteractionHandler: (evtType, handler) => document.documentElement.removeEventListener(evtType, handler, applyPassive()),
+        deregisterInteractionHandler: (evtType, handler) => (eventTarget || node).removeEventListener(evtType, handler, applyPassive()),
+        deregisterResizeHandler: (handler) => window.removeEventListener("resize", handler),
+        getWindowPageOffset: () => ({
+          x: window.pageXOffset,
+          y: window.pageYOffset
+        }),
+        isSurfaceActive: () => active == null ? matches(activeTarget || node, ":active") : active,
+        isSurfaceDisabled: () => !!disabled,
+        isUnbounded: () => !!unbounded,
+        registerDocumentInteractionHandler: (evtType, handler) => document.documentElement.addEventListener(evtType, handler, applyPassive()),
+        registerInteractionHandler: (evtType, handler) => (eventTarget || node).addEventListener(evtType, handler, applyPassive()),
+        registerResizeHandler: (handler) => window.addEventListener("resize", handler),
+        removeClass,
+        updateCssVariable: addStyle
+      });
+      initPromise.then(() => {
+        if (instance2) {
+          instance2.init();
+          instance2.setUnbounded(unbounded);
+        }
+      });
+    } else if (instance2 && !ripple) {
+      initPromise.then(() => {
+        if (instance2) {
+          instance2.destroy();
+          instance2 = void 0;
+        }
+      });
+    }
+    if (instance2 && (oldEventTarget !== eventTarget || oldActiveTarget !== activeTarget)) {
+      oldEventTarget = eventTarget;
+      oldActiveTarget = activeTarget;
+      instance2.destroy();
+      requestAnimationFrame(() => {
+        if (instance2) {
+          instance2.init();
+          instance2.setUnbounded(unbounded);
+        }
+      });
+    }
+    if (!ripple && unbounded) {
+      addClass("mdc-ripple-upgraded--unbounded");
+    }
+  }
+  handleProps();
+  if (addLayoutListener) {
+    removeLayoutListener = addLayoutListener(layout);
+  }
+  function layout() {
+    if (instance2) {
+      instance2.layout();
+    }
+  }
+  return {
+    update(props) {
+      ({
+        ripple,
+        surface,
+        unbounded,
+        disabled,
+        color,
+        active,
+        rippleElement,
+        eventTarget,
+        activeTarget,
+        addClass,
+        removeClass,
+        addStyle,
+        initPromise
+      } = Object.assign({ ripple: true, surface: false, unbounded: false, disabled: false, color: void 0, active: void 0, rippleElement: void 0, eventTarget: void 0, activeTarget: void 0, addClass: (className) => node.classList.add(className), removeClass: (className) => node.classList.remove(className), addStyle: (name8, value) => node.style.setProperty(name8, value), initPromise: Promise.resolve() }, props));
+      handleProps();
+    },
+    destroy() {
+      if (instance2) {
+        instance2.destroy();
+        instance2 = void 0;
+        removeClass("mdc-ripple-surface");
+        removeClass("smui-ripple-surface--primary");
+        removeClass("smui-ripple-surface--secondary");
+      }
+      if (removeLayoutListener) {
+        removeLayoutListener();
+      }
+    }
+  };
+}
 function classAdderBuilder(props) {
   return new Proxy(ClassAdder, {
     construct: function(target, args) {
@@ -34605,13 +34825,588 @@ function classAdderBuilder(props) {
     }
   });
 }
-var oldModifierRegex, newModifierRegex, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1, internals, ClassAdder, defaults, Switch;
-var init_Switch_38f1d6e5 = __esm({
-  ".svelte-kit/output/server/chunks/Switch-38f1d6e5.js"() {
+var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, Button_1, Object_1, internals, ClassAdder, defaults, Switch;
+var init_Switch_3d7ba147 = __esm({
+  ".svelte-kit/output/server/chunks/Switch-3d7ba147.js"() {
     init_shims();
-    init_app_146dbf71();
+    init_app_f5b4470f();
+    init_store_7c4f6cd0();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
+    MDCFoundation = function() {
+      function MDCFoundation2(adapter) {
+        if (adapter === void 0) {
+          adapter = {};
+        }
+        this.adapter = adapter;
+      }
+      Object.defineProperty(MDCFoundation2, "cssClasses", {
+        get: function() {
+          return {};
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(MDCFoundation2, "strings", {
+        get: function() {
+          return {};
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(MDCFoundation2, "numbers", {
+        get: function() {
+          return {};
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(MDCFoundation2, "defaultAdapter", {
+        get: function() {
+          return {};
+        },
+        enumerable: false,
+        configurable: true
+      });
+      MDCFoundation2.prototype.init = function() {
+      };
+      MDCFoundation2.prototype.destroy = function() {
+      };
+      return MDCFoundation2;
+    }();
+    events = /* @__PURE__ */ Object.freeze({
+      __proto__: null,
+      [Symbol.toStringTag]: "Module",
+      applyPassive: applyPassive$1
+    });
+    ponyfill = /* @__PURE__ */ Object.freeze({
+      __proto__: null,
+      [Symbol.toStringTag]: "Module",
+      closest,
+      matches: matches$1,
+      estimateScrollWidth
+    });
+    cssClasses = {
+      BG_FOCUSED: "mdc-ripple-upgraded--background-focused",
+      FG_ACTIVATION: "mdc-ripple-upgraded--foreground-activation",
+      FG_DEACTIVATION: "mdc-ripple-upgraded--foreground-deactivation",
+      ROOT: "mdc-ripple-upgraded",
+      UNBOUNDED: "mdc-ripple-upgraded--unbounded"
+    };
+    strings = {
+      VAR_FG_SCALE: "--mdc-ripple-fg-scale",
+      VAR_FG_SIZE: "--mdc-ripple-fg-size",
+      VAR_FG_TRANSLATE_END: "--mdc-ripple-fg-translate-end",
+      VAR_FG_TRANSLATE_START: "--mdc-ripple-fg-translate-start",
+      VAR_LEFT: "--mdc-ripple-left",
+      VAR_TOP: "--mdc-ripple-top"
+    };
+    numbers = {
+      DEACTIVATION_TIMEOUT_MS: 225,
+      FG_DEACTIVATION_MS: 150,
+      INITIAL_ORIGIN_SCALE: 0.6,
+      PADDING: 10,
+      TAP_DELAY_MS: 300
+    };
+    ACTIVATION_EVENT_TYPES = [
+      "touchstart",
+      "pointerdown",
+      "mousedown",
+      "keydown"
+    ];
+    POINTER_DEACTIVATION_EVENT_TYPES = [
+      "touchend",
+      "pointerup",
+      "mouseup",
+      "contextmenu"
+    ];
+    activatedTargets = [];
+    MDCRippleFoundation = function(_super) {
+      __extends(MDCRippleFoundation2, _super);
+      function MDCRippleFoundation2(adapter) {
+        var _this = _super.call(this, __assign(__assign({}, MDCRippleFoundation2.defaultAdapter), adapter)) || this;
+        _this.activationAnimationHasEnded = false;
+        _this.activationTimer = 0;
+        _this.fgDeactivationRemovalTimer = 0;
+        _this.fgScale = "0";
+        _this.frame = { width: 0, height: 0 };
+        _this.initialSize = 0;
+        _this.layoutFrame = 0;
+        _this.maxRadius = 0;
+        _this.unboundedCoords = { left: 0, top: 0 };
+        _this.activationState = _this.defaultActivationState();
+        _this.activationTimerCallback = function() {
+          _this.activationAnimationHasEnded = true;
+          _this.runDeactivationUXLogicIfReady();
+        };
+        _this.activateHandler = function(e) {
+          _this.activateImpl(e);
+        };
+        _this.deactivateHandler = function() {
+          _this.deactivateImpl();
+        };
+        _this.focusHandler = function() {
+          _this.handleFocus();
+        };
+        _this.blurHandler = function() {
+          _this.handleBlur();
+        };
+        _this.resizeHandler = function() {
+          _this.layout();
+        };
+        return _this;
+      }
+      Object.defineProperty(MDCRippleFoundation2, "cssClasses", {
+        get: function() {
+          return cssClasses;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(MDCRippleFoundation2, "strings", {
+        get: function() {
+          return strings;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(MDCRippleFoundation2, "numbers", {
+        get: function() {
+          return numbers;
+        },
+        enumerable: false,
+        configurable: true
+      });
+      Object.defineProperty(MDCRippleFoundation2, "defaultAdapter", {
+        get: function() {
+          return {
+            addClass: function() {
+              return void 0;
+            },
+            browserSupportsCssVars: function() {
+              return true;
+            },
+            computeBoundingRect: function() {
+              return { top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 };
+            },
+            containsEventTarget: function() {
+              return true;
+            },
+            deregisterDocumentInteractionHandler: function() {
+              return void 0;
+            },
+            deregisterInteractionHandler: function() {
+              return void 0;
+            },
+            deregisterResizeHandler: function() {
+              return void 0;
+            },
+            getWindowPageOffset: function() {
+              return { x: 0, y: 0 };
+            },
+            isSurfaceActive: function() {
+              return true;
+            },
+            isSurfaceDisabled: function() {
+              return true;
+            },
+            isUnbounded: function() {
+              return true;
+            },
+            registerDocumentInteractionHandler: function() {
+              return void 0;
+            },
+            registerInteractionHandler: function() {
+              return void 0;
+            },
+            registerResizeHandler: function() {
+              return void 0;
+            },
+            removeClass: function() {
+              return void 0;
+            },
+            updateCssVariable: function() {
+              return void 0;
+            }
+          };
+        },
+        enumerable: false,
+        configurable: true
+      });
+      MDCRippleFoundation2.prototype.init = function() {
+        var _this = this;
+        var supportsPressRipple = this.supportsPressRipple();
+        this.registerRootHandlers(supportsPressRipple);
+        if (supportsPressRipple) {
+          var _a = MDCRippleFoundation2.cssClasses, ROOT_1 = _a.ROOT, UNBOUNDED_1 = _a.UNBOUNDED;
+          requestAnimationFrame(function() {
+            _this.adapter.addClass(ROOT_1);
+            if (_this.adapter.isUnbounded()) {
+              _this.adapter.addClass(UNBOUNDED_1);
+              _this.layoutInternal();
+            }
+          });
+        }
+      };
+      MDCRippleFoundation2.prototype.destroy = function() {
+        var _this = this;
+        if (this.supportsPressRipple()) {
+          if (this.activationTimer) {
+            clearTimeout(this.activationTimer);
+            this.activationTimer = 0;
+            this.adapter.removeClass(MDCRippleFoundation2.cssClasses.FG_ACTIVATION);
+          }
+          if (this.fgDeactivationRemovalTimer) {
+            clearTimeout(this.fgDeactivationRemovalTimer);
+            this.fgDeactivationRemovalTimer = 0;
+            this.adapter.removeClass(MDCRippleFoundation2.cssClasses.FG_DEACTIVATION);
+          }
+          var _a = MDCRippleFoundation2.cssClasses, ROOT_2 = _a.ROOT, UNBOUNDED_2 = _a.UNBOUNDED;
+          requestAnimationFrame(function() {
+            _this.adapter.removeClass(ROOT_2);
+            _this.adapter.removeClass(UNBOUNDED_2);
+            _this.removeCssVars();
+          });
+        }
+        this.deregisterRootHandlers();
+        this.deregisterDeactivationHandlers();
+      };
+      MDCRippleFoundation2.prototype.activate = function(evt) {
+        this.activateImpl(evt);
+      };
+      MDCRippleFoundation2.prototype.deactivate = function() {
+        this.deactivateImpl();
+      };
+      MDCRippleFoundation2.prototype.layout = function() {
+        var _this = this;
+        if (this.layoutFrame) {
+          cancelAnimationFrame(this.layoutFrame);
+        }
+        this.layoutFrame = requestAnimationFrame(function() {
+          _this.layoutInternal();
+          _this.layoutFrame = 0;
+        });
+      };
+      MDCRippleFoundation2.prototype.setUnbounded = function(unbounded) {
+        var UNBOUNDED = MDCRippleFoundation2.cssClasses.UNBOUNDED;
+        if (unbounded) {
+          this.adapter.addClass(UNBOUNDED);
+        } else {
+          this.adapter.removeClass(UNBOUNDED);
+        }
+      };
+      MDCRippleFoundation2.prototype.handleFocus = function() {
+        var _this = this;
+        requestAnimationFrame(function() {
+          return _this.adapter.addClass(MDCRippleFoundation2.cssClasses.BG_FOCUSED);
+        });
+      };
+      MDCRippleFoundation2.prototype.handleBlur = function() {
+        var _this = this;
+        requestAnimationFrame(function() {
+          return _this.adapter.removeClass(MDCRippleFoundation2.cssClasses.BG_FOCUSED);
+        });
+      };
+      MDCRippleFoundation2.prototype.supportsPressRipple = function() {
+        return this.adapter.browserSupportsCssVars();
+      };
+      MDCRippleFoundation2.prototype.defaultActivationState = function() {
+        return {
+          activationEvent: void 0,
+          hasDeactivationUXRun: false,
+          isActivated: false,
+          isProgrammatic: false,
+          wasActivatedByPointer: false,
+          wasElementMadeActive: false
+        };
+      };
+      MDCRippleFoundation2.prototype.registerRootHandlers = function(supportsPressRipple) {
+        var e_1, _a;
+        if (supportsPressRipple) {
+          try {
+            for (var ACTIVATION_EVENT_TYPES_1 = __values(ACTIVATION_EVENT_TYPES), ACTIVATION_EVENT_TYPES_1_1 = ACTIVATION_EVENT_TYPES_1.next(); !ACTIVATION_EVENT_TYPES_1_1.done; ACTIVATION_EVENT_TYPES_1_1 = ACTIVATION_EVENT_TYPES_1.next()) {
+              var evtType = ACTIVATION_EVENT_TYPES_1_1.value;
+              this.adapter.registerInteractionHandler(evtType, this.activateHandler);
+            }
+          } catch (e_1_1) {
+            e_1 = { error: e_1_1 };
+          } finally {
+            try {
+              if (ACTIVATION_EVENT_TYPES_1_1 && !ACTIVATION_EVENT_TYPES_1_1.done && (_a = ACTIVATION_EVENT_TYPES_1.return))
+                _a.call(ACTIVATION_EVENT_TYPES_1);
+            } finally {
+              if (e_1)
+                throw e_1.error;
+            }
+          }
+          if (this.adapter.isUnbounded()) {
+            this.adapter.registerResizeHandler(this.resizeHandler);
+          }
+        }
+        this.adapter.registerInteractionHandler("focus", this.focusHandler);
+        this.adapter.registerInteractionHandler("blur", this.blurHandler);
+      };
+      MDCRippleFoundation2.prototype.registerDeactivationHandlers = function(evt) {
+        var e_2, _a;
+        if (evt.type === "keydown") {
+          this.adapter.registerInteractionHandler("keyup", this.deactivateHandler);
+        } else {
+          try {
+            for (var POINTER_DEACTIVATION_EVENT_TYPES_1 = __values(POINTER_DEACTIVATION_EVENT_TYPES), POINTER_DEACTIVATION_EVENT_TYPES_1_1 = POINTER_DEACTIVATION_EVENT_TYPES_1.next(); !POINTER_DEACTIVATION_EVENT_TYPES_1_1.done; POINTER_DEACTIVATION_EVENT_TYPES_1_1 = POINTER_DEACTIVATION_EVENT_TYPES_1.next()) {
+              var evtType = POINTER_DEACTIVATION_EVENT_TYPES_1_1.value;
+              this.adapter.registerDocumentInteractionHandler(evtType, this.deactivateHandler);
+            }
+          } catch (e_2_1) {
+            e_2 = { error: e_2_1 };
+          } finally {
+            try {
+              if (POINTER_DEACTIVATION_EVENT_TYPES_1_1 && !POINTER_DEACTIVATION_EVENT_TYPES_1_1.done && (_a = POINTER_DEACTIVATION_EVENT_TYPES_1.return))
+                _a.call(POINTER_DEACTIVATION_EVENT_TYPES_1);
+            } finally {
+              if (e_2)
+                throw e_2.error;
+            }
+          }
+        }
+      };
+      MDCRippleFoundation2.prototype.deregisterRootHandlers = function() {
+        var e_3, _a;
+        try {
+          for (var ACTIVATION_EVENT_TYPES_2 = __values(ACTIVATION_EVENT_TYPES), ACTIVATION_EVENT_TYPES_2_1 = ACTIVATION_EVENT_TYPES_2.next(); !ACTIVATION_EVENT_TYPES_2_1.done; ACTIVATION_EVENT_TYPES_2_1 = ACTIVATION_EVENT_TYPES_2.next()) {
+            var evtType = ACTIVATION_EVENT_TYPES_2_1.value;
+            this.adapter.deregisterInteractionHandler(evtType, this.activateHandler);
+          }
+        } catch (e_3_1) {
+          e_3 = { error: e_3_1 };
+        } finally {
+          try {
+            if (ACTIVATION_EVENT_TYPES_2_1 && !ACTIVATION_EVENT_TYPES_2_1.done && (_a = ACTIVATION_EVENT_TYPES_2.return))
+              _a.call(ACTIVATION_EVENT_TYPES_2);
+          } finally {
+            if (e_3)
+              throw e_3.error;
+          }
+        }
+        this.adapter.deregisterInteractionHandler("focus", this.focusHandler);
+        this.adapter.deregisterInteractionHandler("blur", this.blurHandler);
+        if (this.adapter.isUnbounded()) {
+          this.adapter.deregisterResizeHandler(this.resizeHandler);
+        }
+      };
+      MDCRippleFoundation2.prototype.deregisterDeactivationHandlers = function() {
+        var e_4, _a;
+        this.adapter.deregisterInteractionHandler("keyup", this.deactivateHandler);
+        try {
+          for (var POINTER_DEACTIVATION_EVENT_TYPES_2 = __values(POINTER_DEACTIVATION_EVENT_TYPES), POINTER_DEACTIVATION_EVENT_TYPES_2_1 = POINTER_DEACTIVATION_EVENT_TYPES_2.next(); !POINTER_DEACTIVATION_EVENT_TYPES_2_1.done; POINTER_DEACTIVATION_EVENT_TYPES_2_1 = POINTER_DEACTIVATION_EVENT_TYPES_2.next()) {
+            var evtType = POINTER_DEACTIVATION_EVENT_TYPES_2_1.value;
+            this.adapter.deregisterDocumentInteractionHandler(evtType, this.deactivateHandler);
+          }
+        } catch (e_4_1) {
+          e_4 = { error: e_4_1 };
+        } finally {
+          try {
+            if (POINTER_DEACTIVATION_EVENT_TYPES_2_1 && !POINTER_DEACTIVATION_EVENT_TYPES_2_1.done && (_a = POINTER_DEACTIVATION_EVENT_TYPES_2.return))
+              _a.call(POINTER_DEACTIVATION_EVENT_TYPES_2);
+          } finally {
+            if (e_4)
+              throw e_4.error;
+          }
+        }
+      };
+      MDCRippleFoundation2.prototype.removeCssVars = function() {
+        var _this = this;
+        var rippleStrings = MDCRippleFoundation2.strings;
+        var keys = Object.keys(rippleStrings);
+        keys.forEach(function(key) {
+          if (key.indexOf("VAR_") === 0) {
+            _this.adapter.updateCssVariable(rippleStrings[key], null);
+          }
+        });
+      };
+      MDCRippleFoundation2.prototype.activateImpl = function(evt) {
+        var _this = this;
+        if (this.adapter.isSurfaceDisabled()) {
+          return;
+        }
+        var activationState = this.activationState;
+        if (activationState.isActivated) {
+          return;
+        }
+        var previousActivationEvent = this.previousActivationEvent;
+        var isSameInteraction = previousActivationEvent && evt !== void 0 && previousActivationEvent.type !== evt.type;
+        if (isSameInteraction) {
+          return;
+        }
+        activationState.isActivated = true;
+        activationState.isProgrammatic = evt === void 0;
+        activationState.activationEvent = evt;
+        activationState.wasActivatedByPointer = activationState.isProgrammatic ? false : evt !== void 0 && (evt.type === "mousedown" || evt.type === "touchstart" || evt.type === "pointerdown");
+        var hasActivatedChild = evt !== void 0 && activatedTargets.length > 0 && activatedTargets.some(function(target) {
+          return _this.adapter.containsEventTarget(target);
+        });
+        if (hasActivatedChild) {
+          this.resetActivationState();
+          return;
+        }
+        if (evt !== void 0) {
+          activatedTargets.push(evt.target);
+          this.registerDeactivationHandlers(evt);
+        }
+        activationState.wasElementMadeActive = this.checkElementMadeActive(evt);
+        if (activationState.wasElementMadeActive) {
+          this.animateActivation();
+        }
+        requestAnimationFrame(function() {
+          activatedTargets = [];
+          if (!activationState.wasElementMadeActive && evt !== void 0 && (evt.key === " " || evt.keyCode === 32)) {
+            activationState.wasElementMadeActive = _this.checkElementMadeActive(evt);
+            if (activationState.wasElementMadeActive) {
+              _this.animateActivation();
+            }
+          }
+          if (!activationState.wasElementMadeActive) {
+            _this.activationState = _this.defaultActivationState();
+          }
+        });
+      };
+      MDCRippleFoundation2.prototype.checkElementMadeActive = function(evt) {
+        return evt !== void 0 && evt.type === "keydown" ? this.adapter.isSurfaceActive() : true;
+      };
+      MDCRippleFoundation2.prototype.animateActivation = function() {
+        var _this = this;
+        var _a = MDCRippleFoundation2.strings, VAR_FG_TRANSLATE_START = _a.VAR_FG_TRANSLATE_START, VAR_FG_TRANSLATE_END = _a.VAR_FG_TRANSLATE_END;
+        var _b = MDCRippleFoundation2.cssClasses, FG_DEACTIVATION = _b.FG_DEACTIVATION, FG_ACTIVATION = _b.FG_ACTIVATION;
+        var DEACTIVATION_TIMEOUT_MS = MDCRippleFoundation2.numbers.DEACTIVATION_TIMEOUT_MS;
+        this.layoutInternal();
+        var translateStart = "";
+        var translateEnd = "";
+        if (!this.adapter.isUnbounded()) {
+          var _c = this.getFgTranslationCoordinates(), startPoint = _c.startPoint, endPoint = _c.endPoint;
+          translateStart = startPoint.x + "px, " + startPoint.y + "px";
+          translateEnd = endPoint.x + "px, " + endPoint.y + "px";
+        }
+        this.adapter.updateCssVariable(VAR_FG_TRANSLATE_START, translateStart);
+        this.adapter.updateCssVariable(VAR_FG_TRANSLATE_END, translateEnd);
+        clearTimeout(this.activationTimer);
+        clearTimeout(this.fgDeactivationRemovalTimer);
+        this.rmBoundedActivationClasses();
+        this.adapter.removeClass(FG_DEACTIVATION);
+        this.adapter.computeBoundingRect();
+        this.adapter.addClass(FG_ACTIVATION);
+        this.activationTimer = setTimeout(function() {
+          _this.activationTimerCallback();
+        }, DEACTIVATION_TIMEOUT_MS);
+      };
+      MDCRippleFoundation2.prototype.getFgTranslationCoordinates = function() {
+        var _a = this.activationState, activationEvent = _a.activationEvent, wasActivatedByPointer = _a.wasActivatedByPointer;
+        var startPoint;
+        if (wasActivatedByPointer) {
+          startPoint = getNormalizedEventCoords(activationEvent, this.adapter.getWindowPageOffset(), this.adapter.computeBoundingRect());
+        } else {
+          startPoint = {
+            x: this.frame.width / 2,
+            y: this.frame.height / 2
+          };
+        }
+        startPoint = {
+          x: startPoint.x - this.initialSize / 2,
+          y: startPoint.y - this.initialSize / 2
+        };
+        var endPoint = {
+          x: this.frame.width / 2 - this.initialSize / 2,
+          y: this.frame.height / 2 - this.initialSize / 2
+        };
+        return { startPoint, endPoint };
+      };
+      MDCRippleFoundation2.prototype.runDeactivationUXLogicIfReady = function() {
+        var _this = this;
+        var FG_DEACTIVATION = MDCRippleFoundation2.cssClasses.FG_DEACTIVATION;
+        var _a = this.activationState, hasDeactivationUXRun = _a.hasDeactivationUXRun, isActivated = _a.isActivated;
+        var activationHasEnded = hasDeactivationUXRun || !isActivated;
+        if (activationHasEnded && this.activationAnimationHasEnded) {
+          this.rmBoundedActivationClasses();
+          this.adapter.addClass(FG_DEACTIVATION);
+          this.fgDeactivationRemovalTimer = setTimeout(function() {
+            _this.adapter.removeClass(FG_DEACTIVATION);
+          }, numbers.FG_DEACTIVATION_MS);
+        }
+      };
+      MDCRippleFoundation2.prototype.rmBoundedActivationClasses = function() {
+        var FG_ACTIVATION = MDCRippleFoundation2.cssClasses.FG_ACTIVATION;
+        this.adapter.removeClass(FG_ACTIVATION);
+        this.activationAnimationHasEnded = false;
+        this.adapter.computeBoundingRect();
+      };
+      MDCRippleFoundation2.prototype.resetActivationState = function() {
+        var _this = this;
+        this.previousActivationEvent = this.activationState.activationEvent;
+        this.activationState = this.defaultActivationState();
+        setTimeout(function() {
+          return _this.previousActivationEvent = void 0;
+        }, MDCRippleFoundation2.numbers.TAP_DELAY_MS);
+      };
+      MDCRippleFoundation2.prototype.deactivateImpl = function() {
+        var _this = this;
+        var activationState = this.activationState;
+        if (!activationState.isActivated) {
+          return;
+        }
+        var state = __assign({}, activationState);
+        if (activationState.isProgrammatic) {
+          requestAnimationFrame(function() {
+            _this.animateDeactivation(state);
+          });
+          this.resetActivationState();
+        } else {
+          this.deregisterDeactivationHandlers();
+          requestAnimationFrame(function() {
+            _this.activationState.hasDeactivationUXRun = true;
+            _this.animateDeactivation(state);
+            _this.resetActivationState();
+          });
+        }
+      };
+      MDCRippleFoundation2.prototype.animateDeactivation = function(_a) {
+        var wasActivatedByPointer = _a.wasActivatedByPointer, wasElementMadeActive = _a.wasElementMadeActive;
+        if (wasActivatedByPointer || wasElementMadeActive) {
+          this.runDeactivationUXLogicIfReady();
+        }
+      };
+      MDCRippleFoundation2.prototype.layoutInternal = function() {
+        var _this = this;
+        this.frame = this.adapter.computeBoundingRect();
+        var maxDim = Math.max(this.frame.height, this.frame.width);
+        var getBoundedRadius = function() {
+          var hypotenuse = Math.sqrt(Math.pow(_this.frame.width, 2) + Math.pow(_this.frame.height, 2));
+          return hypotenuse + MDCRippleFoundation2.numbers.PADDING;
+        };
+        this.maxRadius = this.adapter.isUnbounded() ? maxDim : getBoundedRadius();
+        var initialSize = Math.floor(maxDim * MDCRippleFoundation2.numbers.INITIAL_ORIGIN_SCALE);
+        if (this.adapter.isUnbounded() && initialSize % 2 !== 0) {
+          this.initialSize = initialSize - 1;
+        } else {
+          this.initialSize = initialSize;
+        }
+        this.fgScale = "" + this.maxRadius / this.initialSize;
+        this.updateLayoutCssVars();
+      };
+      MDCRippleFoundation2.prototype.updateLayoutCssVars = function() {
+        var _a = MDCRippleFoundation2.strings, VAR_FG_SIZE = _a.VAR_FG_SIZE, VAR_LEFT = _a.VAR_LEFT, VAR_TOP = _a.VAR_TOP, VAR_FG_SCALE = _a.VAR_FG_SCALE;
+        this.adapter.updateCssVariable(VAR_FG_SIZE, this.initialSize + "px");
+        this.adapter.updateCssVariable(VAR_FG_SCALE, this.fgScale);
+        if (this.adapter.isUnbounded()) {
+          this.unboundedCoords = {
+            left: Math.round(this.frame.width / 2 - this.initialSize / 2),
+            top: Math.round(this.frame.height / 2 - this.initialSize / 2)
+          };
+          this.adapter.updateCssVariable(VAR_LEFT, this.unboundedCoords.left + "px");
+          this.adapter.updateCssVariable(VAR_TOP, this.unboundedCoords.top + "px");
+        }
+      };
+      return MDCRippleFoundation2;
+    }(MDCFoundation);
+    ({ applyPassive } = events);
+    ({ matches } = ponyfill);
     A$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["use", "href", "getElement"]);
       let { use = [] } = $$props;
@@ -34772,6 +35567,152 @@ var init_Switch_38f1d6e5 = __esm({
     Nav = Nav$1;
     Span = Span$1;
     Ul = Ul$1;
+    ({ Object: Object_1$1 } = globals);
+    Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let actionProp;
+      let defaultProp;
+      let secondaryProp;
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "style",
+        "ripple",
+        "color",
+        "variant",
+        "touch",
+        "href",
+        "action",
+        "defaultAction",
+        "secondary",
+        "component",
+        "getElement"
+      ]);
+      const forwardEvents = forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { style = "" } = $$props;
+      let { ripple = true } = $$props;
+      let { color = "primary" } = $$props;
+      let { variant = "text" } = $$props;
+      let { touch = false } = $$props;
+      let { href = void 0 } = $$props;
+      let { action = "close" } = $$props;
+      let { defaultAction = false } = $$props;
+      let { secondary = false } = $$props;
+      let element;
+      let internalClasses = {};
+      let internalStyles = {};
+      let context = getContext("SMUI:button:context");
+      let { component = href == null ? Button : A } = $$props;
+      setContext("SMUI:label:context", "button");
+      setContext("SMUI:icon:context", "button");
+      function addClass(className2) {
+        if (!internalClasses[className2]) {
+          internalClasses[className2] = true;
+        }
+      }
+      function removeClass(className2) {
+        if (!(className2 in internalClasses) || internalClasses[className2]) {
+          internalClasses[className2] = false;
+        }
+      }
+      function addStyle(name8, value) {
+        if (internalStyles[name8] != value) {
+          if (value === "" || value == null) {
+            delete internalStyles[name8];
+            internalStyles = internalStyles;
+          } else {
+            internalStyles[name8] = value;
+          }
+        }
+      }
+      function getElement() {
+        return element.getElement();
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+        $$bindings.style(style);
+      if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
+        $$bindings.ripple(ripple);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.variant === void 0 && $$bindings.variant && variant !== void 0)
+        $$bindings.variant(variant);
+      if ($$props.touch === void 0 && $$bindings.touch && touch !== void 0)
+        $$bindings.touch(touch);
+      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
+        $$bindings.href(href);
+      if ($$props.action === void 0 && $$bindings.action && action !== void 0)
+        $$bindings.action(action);
+      if ($$props.defaultAction === void 0 && $$bindings.defaultAction && defaultAction !== void 0)
+        $$bindings.defaultAction(defaultAction);
+      if ($$props.secondary === void 0 && $$bindings.secondary && secondary !== void 0)
+        $$bindings.secondary(secondary);
+      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
+        $$bindings.component(component);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        actionProp = context === "dialog:action" && action != null ? { "data-mdc-dialog-action": action } : { action: $$props.action };
+        defaultProp = context === "dialog:action" && defaultAction ? { "data-mdc-dialog-button-default": "" } : { default: $$props.default };
+        secondaryProp = context === "banner" ? {} : { secondary: $$props.secondary };
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1$1.assign({
+          use: [
+            [
+              Ripple,
+              {
+                ripple,
+                unbounded: false,
+                color,
+                disabled: !!$$restProps.disabled,
+                addClass,
+                removeClass,
+                addStyle
+              }
+            ],
+            forwardEvents,
+            ...use
+          ]
+        }, {
+          class: classMap({
+            [className]: true,
+            "mdc-button": true,
+            "mdc-button--raised": variant === "raised",
+            "mdc-button--unelevated": variant === "unelevated",
+            "mdc-button--outlined": variant === "outlined",
+            "smui-button--color-secondary": color === "secondary",
+            "mdc-button--touch": touch,
+            "mdc-card__action": context === "card:action",
+            "mdc-card__action--button": context === "card:action",
+            "mdc-dialog__button": context === "dialog:action",
+            "mdc-top-app-bar__navigation-icon": context === "top-app-bar:navigation",
+            "mdc-top-app-bar__action-item": context === "top-app-bar:action",
+            "mdc-snackbar__action": context === "snackbar:actions",
+            "mdc-banner__secondary-action": context === "banner" && secondary,
+            "mdc-banner__primary-action": context === "banner" && !secondary,
+            "mdc-tooltip__action": context === "tooltip:rich-actions",
+            ...internalClasses
+          })
+        }, {
+          style: Object.entries(internalStyles).map(([name8, value]) => `${name8}: ${value};`).concat([style]).join(" ")
+        }, actionProp, defaultProp, secondaryProp, { href }, $$restProps, { this: element }), {
+          this: ($$value) => {
+            element = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `<div class="${"mdc-button__ripple"}"></div>
+  ${slots.default ? slots.default({}) : ``}${touch ? `<div class="${"mdc-button__touch"}"></div>` : ``}`
+        })}`;
+      } while (!$$settled);
+      return $$rendered;
+    });
     ({ Object: Object_1 } = globals);
     internals = {
       component: Div$1,
@@ -35019,7 +35960,7 @@ var init_Switch_38f1d6e5 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/TextAreaAutoResizing-d66db2a0.js
+// .svelte-kit/output/server/chunks/TextAreaAutoResizing-6a65dafd.js
 function guard(name8) {
   return () => {
     throw new Error(`Cannot call ${name8}(...) on the server`);
@@ -35035,12 +35976,12 @@ function convertDocToStroke(doc2) {
   return strokeObject;
 }
 var ContextFragment, counter, HelperText, FloatingLabel, LineRipple, NotchedOutline, HelperLine, Prefix, Suffix, Input, Textarea, Object_12, Textfield, goto, css$2, BlackboardToolbar, Blackboard, css$1, DoodleVideo, RenderlessAudioRecorder, RenderlessBoardMethods, css, TextAreaAutoResizing;
-var init_TextAreaAutoResizing_d66db2a0 = __esm({
-  ".svelte-kit/output/server/chunks/TextAreaAutoResizing-d66db2a0.js"() {
+var init_TextAreaAutoResizing_6a65dafd = __esm({
+  ".svelte-kit/output/server/chunks/TextAreaAutoResizing-6a65dafd.js"() {
     init_shims();
-    init_app_146dbf71();
-    init_Switch_38f1d6e5();
-    init_store_0f5a657e();
+    init_app_f5b4470f();
+    init_Switch_3d7ba147();
+    init_store_7c4f6cd0();
     init_index_node();
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -36135,23 +37076,23 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/index-f2ce2308.js
-var index_f2ce2308_exports = {};
-__export(index_f2ce2308_exports, {
+// .svelte-kit/output/server/chunks/index-f0dab015.js
+var index_f0dab015_exports = {};
+__export(index_f0dab015_exports, {
   default: () => Routes
 });
 var import_node_fetch2, import_cookie3, css2, Routes;
-var init_index_f2ce2308 = __esm({
-  ".svelte-kit/output/server/chunks/index-f2ce2308.js"() {
+var init_index_f0dab015 = __esm({
+  ".svelte-kit/output/server/chunks/index-f0dab015.js"() {
     init_shims();
-    init_app_146dbf71();
-    init_index_c327074d_3eb8857d();
-    init_store_0f5a657e();
+    init_app_f5b4470f();
+    init_index_c327074d_197c91a9();
+    init_store_7c4f6cd0();
     import_node_fetch2 = __toModule(require_lib2());
-    init_TextAreaAutoResizing_d66db2a0();
+    init_Switch_3d7ba147();
+    init_TextAreaAutoResizing_6a65dafd();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
-    init_Switch_38f1d6e5();
     init_index_node();
     css2 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important}",
@@ -36172,6 +37113,8 @@ var init_index_f2ce2308 = __esm({
       let phoneNumSegment1 = "";
       let phoneNumSegment2 = "";
       let phoneNumSegment3 = "";
+      let phoneConfirmationResult;
+      let phoneConfirmCode = "";
       let appVerifier;
       const print = console.log;
       let localStrokesArray = [];
@@ -36196,6 +37139,7 @@ var init_index_f2ce2308 = __esm({
           print(getAuth(), phoneNumber, appVerifier);
           signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
             console.log("confirmation result =", confirmationResult);
+            phoneConfirmationResult = confirmationResult;
             window.confirmationResult = confirmationResult;
           }).catch((error3) => {
             alert(error3);
@@ -36251,7 +37195,7 @@ var init_index_f2ce2308 = __esm({
         }, {
           helper: () => `${validate_component(HelperText, "HelperText").$$render($$result, { slot: "helper", persistent: true }, {}, {
             default: () => `${`Server members help each other with visual explanations.
-						How? Edit the title above`}`
+						How? Edit the title above to start the tutorial`}`
           })}`
         })}</div>
 		
@@ -36296,7 +37240,34 @@ var init_index_f2ce2308 = __esm({
           })}`
         })}</div>`}
 
-			${``}` : ``}` : ``}</div>
+			
+				<div id="${"sign-up-section"}" style="${"height: 400px"}">${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, {
+          value: "That's the end! Basically it's all about helping each other efficiently, creating a positive-sum game. Sign up to this 6.036 closed-beta with a phone number to get text notifications iff members ask or answer questions. "
+        }, {}, {})}
+
+					${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px; margin-right: 6px; margin-left: auto;"}"><div style="${"margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem"}">+1 </div>
+							<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"339"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment1, 0)}>
+
+							<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"676"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment2, 0)}>
+
+							<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"1234"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment3, 0)}>
+							${validate_component(Button_1, "Button").$$render($$result, { id: "sign-in-button" }, {}, {
+          default: () => `Sign Up
+							`
+        })}</div>` : `<div style="${"display: flex"}">${validate_component(Textfield, "Textfield").$$render($$result, {
+          variant: "filled",
+          label: "6-digit code",
+          value: phoneConfirmCode
+        }, {
+          value: ($$value) => {
+            phoneConfirmCode = $$value;
+            $$settled = false;
+          }
+        }, {
+          helper: () => `${validate_component(HelperText, "HelperText").$$render($$result, { slot: "helper" }, {}, {})}`
+        })}
+							${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Confirm code` })}</div>`}</div>
+			` : ``}` : ``}</div>
 
 
 
@@ -36314,954 +37285,13 @@ var init_index_f2ce2308 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-7629f896.js
-function supportsCssVariables(windowObj, forceRefresh) {
-  if (forceRefresh === void 0) {
-    forceRefresh = false;
-  }
-  var CSS = windowObj.CSS;
-  var supportsCssVars = supportsCssVariables_;
-  if (typeof supportsCssVariables_ === "boolean" && !forceRefresh) {
-    return supportsCssVariables_;
-  }
-  var supportsFunctionPresent = CSS && typeof CSS.supports === "function";
-  if (!supportsFunctionPresent) {
-    return false;
-  }
-  var explicitlySupportsCssVars = CSS.supports("--css-vars", "yes");
-  var weAreFeatureDetectingSafari10plus = CSS.supports("(--css-vars: yes)") && CSS.supports("color", "#00000000");
-  supportsCssVars = explicitlySupportsCssVars || weAreFeatureDetectingSafari10plus;
-  if (!forceRefresh) {
-    supportsCssVariables_ = supportsCssVars;
-  }
-  return supportsCssVars;
-}
-function getNormalizedEventCoords(evt, pageOffset, clientRect) {
-  if (!evt) {
-    return { x: 0, y: 0 };
-  }
-  var x = pageOffset.x, y = pageOffset.y;
-  var documentX = x + clientRect.left;
-  var documentY = y + clientRect.top;
-  var normalizedX;
-  var normalizedY;
-  if (evt.type === "touchstart") {
-    var touchEvent = evt;
-    normalizedX = touchEvent.changedTouches[0].pageX - documentX;
-    normalizedY = touchEvent.changedTouches[0].pageY - documentY;
-  } else {
-    var mouseEvent = evt;
-    normalizedX = mouseEvent.pageX - documentX;
-    normalizedY = mouseEvent.pageY - documentY;
-  }
-  return { x: normalizedX, y: normalizedY };
-}
-function applyPassive$1(globalObj) {
-  if (globalObj === void 0) {
-    globalObj = window;
-  }
-  return supportsPassiveOption(globalObj) ? { passive: true } : false;
-}
-function supportsPassiveOption(globalObj) {
-  if (globalObj === void 0) {
-    globalObj = window;
-  }
-  var passiveSupported = false;
-  try {
-    var options2 = {
-      get passive() {
-        passiveSupported = true;
-        return false;
-      }
-    };
-    var handler = function() {
-    };
-    globalObj.document.addEventListener("test", handler, options2);
-    globalObj.document.removeEventListener("test", handler, options2);
-  } catch (err) {
-    passiveSupported = false;
-  }
-  return passiveSupported;
-}
-function closest(element, selector) {
-  if (element.closest) {
-    return element.closest(selector);
-  }
-  var el = element;
-  while (el) {
-    if (matches$1(el, selector)) {
-      return el;
-    }
-    el = el.parentElement;
-  }
-  return null;
-}
-function matches$1(element, selector) {
-  var nativeMatches = element.matches || element.webkitMatchesSelector || element.msMatchesSelector;
-  return nativeMatches.call(element, selector);
-}
-function estimateScrollWidth(element) {
-  var htmlEl = element;
-  if (htmlEl.offsetParent !== null) {
-    return htmlEl.scrollWidth;
-  }
-  var clone2 = htmlEl.cloneNode(true);
-  clone2.style.setProperty("position", "absolute");
-  clone2.style.setProperty("transform", "translate(-9999px, -9999px)");
-  document.documentElement.appendChild(clone2);
-  var scrollWidth = clone2.scrollWidth;
-  document.documentElement.removeChild(clone2);
-  return scrollWidth;
-}
-function Ripple(node, { ripple = true, surface = false, unbounded = false, disabled = false, color, active, rippleElement, eventTarget, activeTarget, addClass = (className) => node.classList.add(className), removeClass = (className) => node.classList.remove(className), addStyle = (name8, value) => node.style.setProperty(name8, value), initPromise = Promise.resolve() } = {}) {
-  let instance2;
-  let addLayoutListener = getContext("SMUI:addLayoutListener");
-  let removeLayoutListener;
-  let oldActive = active;
-  let oldEventTarget = eventTarget;
-  let oldActiveTarget = activeTarget;
-  function handleProps() {
-    if (surface) {
-      addClass("mdc-ripple-surface");
-      if (color === "primary") {
-        addClass("smui-ripple-surface--primary");
-        removeClass("smui-ripple-surface--secondary");
-      } else if (color === "secondary") {
-        removeClass("smui-ripple-surface--primary");
-        addClass("smui-ripple-surface--secondary");
-      } else {
-        removeClass("smui-ripple-surface--primary");
-        removeClass("smui-ripple-surface--secondary");
-      }
-    }
-    if (instance2 && oldActive !== active) {
-      oldActive = active;
-      if (active) {
-        instance2.activate();
-      } else if (active === false) {
-        instance2.deactivate();
-      }
-    }
-    if (ripple && !instance2) {
-      instance2 = new MDCRippleFoundation({
-        addClass,
-        browserSupportsCssVars: () => supportsCssVariables(window),
-        computeBoundingRect: () => (rippleElement || node).getBoundingClientRect(),
-        containsEventTarget: (target) => node.contains(target),
-        deregisterDocumentInteractionHandler: (evtType, handler) => document.documentElement.removeEventListener(evtType, handler, applyPassive()),
-        deregisterInteractionHandler: (evtType, handler) => (eventTarget || node).removeEventListener(evtType, handler, applyPassive()),
-        deregisterResizeHandler: (handler) => window.removeEventListener("resize", handler),
-        getWindowPageOffset: () => ({
-          x: window.pageXOffset,
-          y: window.pageYOffset
-        }),
-        isSurfaceActive: () => active == null ? matches(activeTarget || node, ":active") : active,
-        isSurfaceDisabled: () => !!disabled,
-        isUnbounded: () => !!unbounded,
-        registerDocumentInteractionHandler: (evtType, handler) => document.documentElement.addEventListener(evtType, handler, applyPassive()),
-        registerInteractionHandler: (evtType, handler) => (eventTarget || node).addEventListener(evtType, handler, applyPassive()),
-        registerResizeHandler: (handler) => window.addEventListener("resize", handler),
-        removeClass,
-        updateCssVariable: addStyle
-      });
-      initPromise.then(() => {
-        if (instance2) {
-          instance2.init();
-          instance2.setUnbounded(unbounded);
-        }
-      });
-    } else if (instance2 && !ripple) {
-      initPromise.then(() => {
-        if (instance2) {
-          instance2.destroy();
-          instance2 = void 0;
-        }
-      });
-    }
-    if (instance2 && (oldEventTarget !== eventTarget || oldActiveTarget !== activeTarget)) {
-      oldEventTarget = eventTarget;
-      oldActiveTarget = activeTarget;
-      instance2.destroy();
-      requestAnimationFrame(() => {
-        if (instance2) {
-          instance2.init();
-          instance2.setUnbounded(unbounded);
-        }
-      });
-    }
-    if (!ripple && unbounded) {
-      addClass("mdc-ripple-upgraded--unbounded");
-    }
-  }
-  handleProps();
-  if (addLayoutListener) {
-    removeLayoutListener = addLayoutListener(layout);
-  }
-  function layout() {
-    if (instance2) {
-      instance2.layout();
-    }
-  }
-  return {
-    update(props) {
-      ({
-        ripple,
-        surface,
-        unbounded,
-        disabled,
-        color,
-        active,
-        rippleElement,
-        eventTarget,
-        activeTarget,
-        addClass,
-        removeClass,
-        addStyle,
-        initPromise
-      } = Object.assign({ ripple: true, surface: false, unbounded: false, disabled: false, color: void 0, active: void 0, rippleElement: void 0, eventTarget: void 0, activeTarget: void 0, addClass: (className) => node.classList.add(className), removeClass: (className) => node.classList.remove(className), addStyle: (name8, value) => node.style.setProperty(name8, value), initPromise: Promise.resolve() }, props));
-      handleProps();
-    },
-    destroy() {
-      if (instance2) {
-        instance2.destroy();
-        instance2 = void 0;
-        removeClass("mdc-ripple-surface");
-        removeClass("smui-ripple-surface--primary");
-        removeClass("smui-ripple-surface--secondary");
-      }
-      if (removeLayoutListener) {
-        removeLayoutListener();
-      }
-    }
-  };
-}
-var supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, Object_1$1, Button_1, MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_7629f896 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-7629f896.js"() {
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-5b97177c.js
+var MenuSurface, Menu, List, Object_13, counter2, Item$1, Graphic$1, Item, Graphic;
+var init_SelectionGroupIcon_5b97177c = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-5b97177c.js"() {
     init_shims();
-    init_app_146dbf71();
-    init_Switch_38f1d6e5();
-    init_store_0f5a657e();
-    MDCFoundation = function() {
-      function MDCFoundation2(adapter) {
-        if (adapter === void 0) {
-          adapter = {};
-        }
-        this.adapter = adapter;
-      }
-      Object.defineProperty(MDCFoundation2, "cssClasses", {
-        get: function() {
-          return {};
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(MDCFoundation2, "strings", {
-        get: function() {
-          return {};
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(MDCFoundation2, "numbers", {
-        get: function() {
-          return {};
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(MDCFoundation2, "defaultAdapter", {
-        get: function() {
-          return {};
-        },
-        enumerable: false,
-        configurable: true
-      });
-      MDCFoundation2.prototype.init = function() {
-      };
-      MDCFoundation2.prototype.destroy = function() {
-      };
-      return MDCFoundation2;
-    }();
-    events = /* @__PURE__ */ Object.freeze({
-      __proto__: null,
-      [Symbol.toStringTag]: "Module",
-      applyPassive: applyPassive$1
-    });
-    ponyfill = /* @__PURE__ */ Object.freeze({
-      __proto__: null,
-      [Symbol.toStringTag]: "Module",
-      closest,
-      matches: matches$1,
-      estimateScrollWidth
-    });
-    cssClasses = {
-      BG_FOCUSED: "mdc-ripple-upgraded--background-focused",
-      FG_ACTIVATION: "mdc-ripple-upgraded--foreground-activation",
-      FG_DEACTIVATION: "mdc-ripple-upgraded--foreground-deactivation",
-      ROOT: "mdc-ripple-upgraded",
-      UNBOUNDED: "mdc-ripple-upgraded--unbounded"
-    };
-    strings = {
-      VAR_FG_SCALE: "--mdc-ripple-fg-scale",
-      VAR_FG_SIZE: "--mdc-ripple-fg-size",
-      VAR_FG_TRANSLATE_END: "--mdc-ripple-fg-translate-end",
-      VAR_FG_TRANSLATE_START: "--mdc-ripple-fg-translate-start",
-      VAR_LEFT: "--mdc-ripple-left",
-      VAR_TOP: "--mdc-ripple-top"
-    };
-    numbers = {
-      DEACTIVATION_TIMEOUT_MS: 225,
-      FG_DEACTIVATION_MS: 150,
-      INITIAL_ORIGIN_SCALE: 0.6,
-      PADDING: 10,
-      TAP_DELAY_MS: 300
-    };
-    ACTIVATION_EVENT_TYPES = [
-      "touchstart",
-      "pointerdown",
-      "mousedown",
-      "keydown"
-    ];
-    POINTER_DEACTIVATION_EVENT_TYPES = [
-      "touchend",
-      "pointerup",
-      "mouseup",
-      "contextmenu"
-    ];
-    activatedTargets = [];
-    MDCRippleFoundation = function(_super) {
-      __extends(MDCRippleFoundation2, _super);
-      function MDCRippleFoundation2(adapter) {
-        var _this = _super.call(this, __assign(__assign({}, MDCRippleFoundation2.defaultAdapter), adapter)) || this;
-        _this.activationAnimationHasEnded = false;
-        _this.activationTimer = 0;
-        _this.fgDeactivationRemovalTimer = 0;
-        _this.fgScale = "0";
-        _this.frame = { width: 0, height: 0 };
-        _this.initialSize = 0;
-        _this.layoutFrame = 0;
-        _this.maxRadius = 0;
-        _this.unboundedCoords = { left: 0, top: 0 };
-        _this.activationState = _this.defaultActivationState();
-        _this.activationTimerCallback = function() {
-          _this.activationAnimationHasEnded = true;
-          _this.runDeactivationUXLogicIfReady();
-        };
-        _this.activateHandler = function(e) {
-          _this.activateImpl(e);
-        };
-        _this.deactivateHandler = function() {
-          _this.deactivateImpl();
-        };
-        _this.focusHandler = function() {
-          _this.handleFocus();
-        };
-        _this.blurHandler = function() {
-          _this.handleBlur();
-        };
-        _this.resizeHandler = function() {
-          _this.layout();
-        };
-        return _this;
-      }
-      Object.defineProperty(MDCRippleFoundation2, "cssClasses", {
-        get: function() {
-          return cssClasses;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(MDCRippleFoundation2, "strings", {
-        get: function() {
-          return strings;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(MDCRippleFoundation2, "numbers", {
-        get: function() {
-          return numbers;
-        },
-        enumerable: false,
-        configurable: true
-      });
-      Object.defineProperty(MDCRippleFoundation2, "defaultAdapter", {
-        get: function() {
-          return {
-            addClass: function() {
-              return void 0;
-            },
-            browserSupportsCssVars: function() {
-              return true;
-            },
-            computeBoundingRect: function() {
-              return { top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 };
-            },
-            containsEventTarget: function() {
-              return true;
-            },
-            deregisterDocumentInteractionHandler: function() {
-              return void 0;
-            },
-            deregisterInteractionHandler: function() {
-              return void 0;
-            },
-            deregisterResizeHandler: function() {
-              return void 0;
-            },
-            getWindowPageOffset: function() {
-              return { x: 0, y: 0 };
-            },
-            isSurfaceActive: function() {
-              return true;
-            },
-            isSurfaceDisabled: function() {
-              return true;
-            },
-            isUnbounded: function() {
-              return true;
-            },
-            registerDocumentInteractionHandler: function() {
-              return void 0;
-            },
-            registerInteractionHandler: function() {
-              return void 0;
-            },
-            registerResizeHandler: function() {
-              return void 0;
-            },
-            removeClass: function() {
-              return void 0;
-            },
-            updateCssVariable: function() {
-              return void 0;
-            }
-          };
-        },
-        enumerable: false,
-        configurable: true
-      });
-      MDCRippleFoundation2.prototype.init = function() {
-        var _this = this;
-        var supportsPressRipple = this.supportsPressRipple();
-        this.registerRootHandlers(supportsPressRipple);
-        if (supportsPressRipple) {
-          var _a = MDCRippleFoundation2.cssClasses, ROOT_1 = _a.ROOT, UNBOUNDED_1 = _a.UNBOUNDED;
-          requestAnimationFrame(function() {
-            _this.adapter.addClass(ROOT_1);
-            if (_this.adapter.isUnbounded()) {
-              _this.adapter.addClass(UNBOUNDED_1);
-              _this.layoutInternal();
-            }
-          });
-        }
-      };
-      MDCRippleFoundation2.prototype.destroy = function() {
-        var _this = this;
-        if (this.supportsPressRipple()) {
-          if (this.activationTimer) {
-            clearTimeout(this.activationTimer);
-            this.activationTimer = 0;
-            this.adapter.removeClass(MDCRippleFoundation2.cssClasses.FG_ACTIVATION);
-          }
-          if (this.fgDeactivationRemovalTimer) {
-            clearTimeout(this.fgDeactivationRemovalTimer);
-            this.fgDeactivationRemovalTimer = 0;
-            this.adapter.removeClass(MDCRippleFoundation2.cssClasses.FG_DEACTIVATION);
-          }
-          var _a = MDCRippleFoundation2.cssClasses, ROOT_2 = _a.ROOT, UNBOUNDED_2 = _a.UNBOUNDED;
-          requestAnimationFrame(function() {
-            _this.adapter.removeClass(ROOT_2);
-            _this.adapter.removeClass(UNBOUNDED_2);
-            _this.removeCssVars();
-          });
-        }
-        this.deregisterRootHandlers();
-        this.deregisterDeactivationHandlers();
-      };
-      MDCRippleFoundation2.prototype.activate = function(evt) {
-        this.activateImpl(evt);
-      };
-      MDCRippleFoundation2.prototype.deactivate = function() {
-        this.deactivateImpl();
-      };
-      MDCRippleFoundation2.prototype.layout = function() {
-        var _this = this;
-        if (this.layoutFrame) {
-          cancelAnimationFrame(this.layoutFrame);
-        }
-        this.layoutFrame = requestAnimationFrame(function() {
-          _this.layoutInternal();
-          _this.layoutFrame = 0;
-        });
-      };
-      MDCRippleFoundation2.prototype.setUnbounded = function(unbounded) {
-        var UNBOUNDED = MDCRippleFoundation2.cssClasses.UNBOUNDED;
-        if (unbounded) {
-          this.adapter.addClass(UNBOUNDED);
-        } else {
-          this.adapter.removeClass(UNBOUNDED);
-        }
-      };
-      MDCRippleFoundation2.prototype.handleFocus = function() {
-        var _this = this;
-        requestAnimationFrame(function() {
-          return _this.adapter.addClass(MDCRippleFoundation2.cssClasses.BG_FOCUSED);
-        });
-      };
-      MDCRippleFoundation2.prototype.handleBlur = function() {
-        var _this = this;
-        requestAnimationFrame(function() {
-          return _this.adapter.removeClass(MDCRippleFoundation2.cssClasses.BG_FOCUSED);
-        });
-      };
-      MDCRippleFoundation2.prototype.supportsPressRipple = function() {
-        return this.adapter.browserSupportsCssVars();
-      };
-      MDCRippleFoundation2.prototype.defaultActivationState = function() {
-        return {
-          activationEvent: void 0,
-          hasDeactivationUXRun: false,
-          isActivated: false,
-          isProgrammatic: false,
-          wasActivatedByPointer: false,
-          wasElementMadeActive: false
-        };
-      };
-      MDCRippleFoundation2.prototype.registerRootHandlers = function(supportsPressRipple) {
-        var e_1, _a;
-        if (supportsPressRipple) {
-          try {
-            for (var ACTIVATION_EVENT_TYPES_1 = __values(ACTIVATION_EVENT_TYPES), ACTIVATION_EVENT_TYPES_1_1 = ACTIVATION_EVENT_TYPES_1.next(); !ACTIVATION_EVENT_TYPES_1_1.done; ACTIVATION_EVENT_TYPES_1_1 = ACTIVATION_EVENT_TYPES_1.next()) {
-              var evtType = ACTIVATION_EVENT_TYPES_1_1.value;
-              this.adapter.registerInteractionHandler(evtType, this.activateHandler);
-            }
-          } catch (e_1_1) {
-            e_1 = { error: e_1_1 };
-          } finally {
-            try {
-              if (ACTIVATION_EVENT_TYPES_1_1 && !ACTIVATION_EVENT_TYPES_1_1.done && (_a = ACTIVATION_EVENT_TYPES_1.return))
-                _a.call(ACTIVATION_EVENT_TYPES_1);
-            } finally {
-              if (e_1)
-                throw e_1.error;
-            }
-          }
-          if (this.adapter.isUnbounded()) {
-            this.adapter.registerResizeHandler(this.resizeHandler);
-          }
-        }
-        this.adapter.registerInteractionHandler("focus", this.focusHandler);
-        this.adapter.registerInteractionHandler("blur", this.blurHandler);
-      };
-      MDCRippleFoundation2.prototype.registerDeactivationHandlers = function(evt) {
-        var e_2, _a;
-        if (evt.type === "keydown") {
-          this.adapter.registerInteractionHandler("keyup", this.deactivateHandler);
-        } else {
-          try {
-            for (var POINTER_DEACTIVATION_EVENT_TYPES_1 = __values(POINTER_DEACTIVATION_EVENT_TYPES), POINTER_DEACTIVATION_EVENT_TYPES_1_1 = POINTER_DEACTIVATION_EVENT_TYPES_1.next(); !POINTER_DEACTIVATION_EVENT_TYPES_1_1.done; POINTER_DEACTIVATION_EVENT_TYPES_1_1 = POINTER_DEACTIVATION_EVENT_TYPES_1.next()) {
-              var evtType = POINTER_DEACTIVATION_EVENT_TYPES_1_1.value;
-              this.adapter.registerDocumentInteractionHandler(evtType, this.deactivateHandler);
-            }
-          } catch (e_2_1) {
-            e_2 = { error: e_2_1 };
-          } finally {
-            try {
-              if (POINTER_DEACTIVATION_EVENT_TYPES_1_1 && !POINTER_DEACTIVATION_EVENT_TYPES_1_1.done && (_a = POINTER_DEACTIVATION_EVENT_TYPES_1.return))
-                _a.call(POINTER_DEACTIVATION_EVENT_TYPES_1);
-            } finally {
-              if (e_2)
-                throw e_2.error;
-            }
-          }
-        }
-      };
-      MDCRippleFoundation2.prototype.deregisterRootHandlers = function() {
-        var e_3, _a;
-        try {
-          for (var ACTIVATION_EVENT_TYPES_2 = __values(ACTIVATION_EVENT_TYPES), ACTIVATION_EVENT_TYPES_2_1 = ACTIVATION_EVENT_TYPES_2.next(); !ACTIVATION_EVENT_TYPES_2_1.done; ACTIVATION_EVENT_TYPES_2_1 = ACTIVATION_EVENT_TYPES_2.next()) {
-            var evtType = ACTIVATION_EVENT_TYPES_2_1.value;
-            this.adapter.deregisterInteractionHandler(evtType, this.activateHandler);
-          }
-        } catch (e_3_1) {
-          e_3 = { error: e_3_1 };
-        } finally {
-          try {
-            if (ACTIVATION_EVENT_TYPES_2_1 && !ACTIVATION_EVENT_TYPES_2_1.done && (_a = ACTIVATION_EVENT_TYPES_2.return))
-              _a.call(ACTIVATION_EVENT_TYPES_2);
-          } finally {
-            if (e_3)
-              throw e_3.error;
-          }
-        }
-        this.adapter.deregisterInteractionHandler("focus", this.focusHandler);
-        this.adapter.deregisterInteractionHandler("blur", this.blurHandler);
-        if (this.adapter.isUnbounded()) {
-          this.adapter.deregisterResizeHandler(this.resizeHandler);
-        }
-      };
-      MDCRippleFoundation2.prototype.deregisterDeactivationHandlers = function() {
-        var e_4, _a;
-        this.adapter.deregisterInteractionHandler("keyup", this.deactivateHandler);
-        try {
-          for (var POINTER_DEACTIVATION_EVENT_TYPES_2 = __values(POINTER_DEACTIVATION_EVENT_TYPES), POINTER_DEACTIVATION_EVENT_TYPES_2_1 = POINTER_DEACTIVATION_EVENT_TYPES_2.next(); !POINTER_DEACTIVATION_EVENT_TYPES_2_1.done; POINTER_DEACTIVATION_EVENT_TYPES_2_1 = POINTER_DEACTIVATION_EVENT_TYPES_2.next()) {
-            var evtType = POINTER_DEACTIVATION_EVENT_TYPES_2_1.value;
-            this.adapter.deregisterDocumentInteractionHandler(evtType, this.deactivateHandler);
-          }
-        } catch (e_4_1) {
-          e_4 = { error: e_4_1 };
-        } finally {
-          try {
-            if (POINTER_DEACTIVATION_EVENT_TYPES_2_1 && !POINTER_DEACTIVATION_EVENT_TYPES_2_1.done && (_a = POINTER_DEACTIVATION_EVENT_TYPES_2.return))
-              _a.call(POINTER_DEACTIVATION_EVENT_TYPES_2);
-          } finally {
-            if (e_4)
-              throw e_4.error;
-          }
-        }
-      };
-      MDCRippleFoundation2.prototype.removeCssVars = function() {
-        var _this = this;
-        var rippleStrings = MDCRippleFoundation2.strings;
-        var keys = Object.keys(rippleStrings);
-        keys.forEach(function(key) {
-          if (key.indexOf("VAR_") === 0) {
-            _this.adapter.updateCssVariable(rippleStrings[key], null);
-          }
-        });
-      };
-      MDCRippleFoundation2.prototype.activateImpl = function(evt) {
-        var _this = this;
-        if (this.adapter.isSurfaceDisabled()) {
-          return;
-        }
-        var activationState = this.activationState;
-        if (activationState.isActivated) {
-          return;
-        }
-        var previousActivationEvent = this.previousActivationEvent;
-        var isSameInteraction = previousActivationEvent && evt !== void 0 && previousActivationEvent.type !== evt.type;
-        if (isSameInteraction) {
-          return;
-        }
-        activationState.isActivated = true;
-        activationState.isProgrammatic = evt === void 0;
-        activationState.activationEvent = evt;
-        activationState.wasActivatedByPointer = activationState.isProgrammatic ? false : evt !== void 0 && (evt.type === "mousedown" || evt.type === "touchstart" || evt.type === "pointerdown");
-        var hasActivatedChild = evt !== void 0 && activatedTargets.length > 0 && activatedTargets.some(function(target) {
-          return _this.adapter.containsEventTarget(target);
-        });
-        if (hasActivatedChild) {
-          this.resetActivationState();
-          return;
-        }
-        if (evt !== void 0) {
-          activatedTargets.push(evt.target);
-          this.registerDeactivationHandlers(evt);
-        }
-        activationState.wasElementMadeActive = this.checkElementMadeActive(evt);
-        if (activationState.wasElementMadeActive) {
-          this.animateActivation();
-        }
-        requestAnimationFrame(function() {
-          activatedTargets = [];
-          if (!activationState.wasElementMadeActive && evt !== void 0 && (evt.key === " " || evt.keyCode === 32)) {
-            activationState.wasElementMadeActive = _this.checkElementMadeActive(evt);
-            if (activationState.wasElementMadeActive) {
-              _this.animateActivation();
-            }
-          }
-          if (!activationState.wasElementMadeActive) {
-            _this.activationState = _this.defaultActivationState();
-          }
-        });
-      };
-      MDCRippleFoundation2.prototype.checkElementMadeActive = function(evt) {
-        return evt !== void 0 && evt.type === "keydown" ? this.adapter.isSurfaceActive() : true;
-      };
-      MDCRippleFoundation2.prototype.animateActivation = function() {
-        var _this = this;
-        var _a = MDCRippleFoundation2.strings, VAR_FG_TRANSLATE_START = _a.VAR_FG_TRANSLATE_START, VAR_FG_TRANSLATE_END = _a.VAR_FG_TRANSLATE_END;
-        var _b = MDCRippleFoundation2.cssClasses, FG_DEACTIVATION = _b.FG_DEACTIVATION, FG_ACTIVATION = _b.FG_ACTIVATION;
-        var DEACTIVATION_TIMEOUT_MS = MDCRippleFoundation2.numbers.DEACTIVATION_TIMEOUT_MS;
-        this.layoutInternal();
-        var translateStart = "";
-        var translateEnd = "";
-        if (!this.adapter.isUnbounded()) {
-          var _c = this.getFgTranslationCoordinates(), startPoint = _c.startPoint, endPoint = _c.endPoint;
-          translateStart = startPoint.x + "px, " + startPoint.y + "px";
-          translateEnd = endPoint.x + "px, " + endPoint.y + "px";
-        }
-        this.adapter.updateCssVariable(VAR_FG_TRANSLATE_START, translateStart);
-        this.adapter.updateCssVariable(VAR_FG_TRANSLATE_END, translateEnd);
-        clearTimeout(this.activationTimer);
-        clearTimeout(this.fgDeactivationRemovalTimer);
-        this.rmBoundedActivationClasses();
-        this.adapter.removeClass(FG_DEACTIVATION);
-        this.adapter.computeBoundingRect();
-        this.adapter.addClass(FG_ACTIVATION);
-        this.activationTimer = setTimeout(function() {
-          _this.activationTimerCallback();
-        }, DEACTIVATION_TIMEOUT_MS);
-      };
-      MDCRippleFoundation2.prototype.getFgTranslationCoordinates = function() {
-        var _a = this.activationState, activationEvent = _a.activationEvent, wasActivatedByPointer = _a.wasActivatedByPointer;
-        var startPoint;
-        if (wasActivatedByPointer) {
-          startPoint = getNormalizedEventCoords(activationEvent, this.adapter.getWindowPageOffset(), this.adapter.computeBoundingRect());
-        } else {
-          startPoint = {
-            x: this.frame.width / 2,
-            y: this.frame.height / 2
-          };
-        }
-        startPoint = {
-          x: startPoint.x - this.initialSize / 2,
-          y: startPoint.y - this.initialSize / 2
-        };
-        var endPoint = {
-          x: this.frame.width / 2 - this.initialSize / 2,
-          y: this.frame.height / 2 - this.initialSize / 2
-        };
-        return { startPoint, endPoint };
-      };
-      MDCRippleFoundation2.prototype.runDeactivationUXLogicIfReady = function() {
-        var _this = this;
-        var FG_DEACTIVATION = MDCRippleFoundation2.cssClasses.FG_DEACTIVATION;
-        var _a = this.activationState, hasDeactivationUXRun = _a.hasDeactivationUXRun, isActivated = _a.isActivated;
-        var activationHasEnded = hasDeactivationUXRun || !isActivated;
-        if (activationHasEnded && this.activationAnimationHasEnded) {
-          this.rmBoundedActivationClasses();
-          this.adapter.addClass(FG_DEACTIVATION);
-          this.fgDeactivationRemovalTimer = setTimeout(function() {
-            _this.adapter.removeClass(FG_DEACTIVATION);
-          }, numbers.FG_DEACTIVATION_MS);
-        }
-      };
-      MDCRippleFoundation2.prototype.rmBoundedActivationClasses = function() {
-        var FG_ACTIVATION = MDCRippleFoundation2.cssClasses.FG_ACTIVATION;
-        this.adapter.removeClass(FG_ACTIVATION);
-        this.activationAnimationHasEnded = false;
-        this.adapter.computeBoundingRect();
-      };
-      MDCRippleFoundation2.prototype.resetActivationState = function() {
-        var _this = this;
-        this.previousActivationEvent = this.activationState.activationEvent;
-        this.activationState = this.defaultActivationState();
-        setTimeout(function() {
-          return _this.previousActivationEvent = void 0;
-        }, MDCRippleFoundation2.numbers.TAP_DELAY_MS);
-      };
-      MDCRippleFoundation2.prototype.deactivateImpl = function() {
-        var _this = this;
-        var activationState = this.activationState;
-        if (!activationState.isActivated) {
-          return;
-        }
-        var state = __assign({}, activationState);
-        if (activationState.isProgrammatic) {
-          requestAnimationFrame(function() {
-            _this.animateDeactivation(state);
-          });
-          this.resetActivationState();
-        } else {
-          this.deregisterDeactivationHandlers();
-          requestAnimationFrame(function() {
-            _this.activationState.hasDeactivationUXRun = true;
-            _this.animateDeactivation(state);
-            _this.resetActivationState();
-          });
-        }
-      };
-      MDCRippleFoundation2.prototype.animateDeactivation = function(_a) {
-        var wasActivatedByPointer = _a.wasActivatedByPointer, wasElementMadeActive = _a.wasElementMadeActive;
-        if (wasActivatedByPointer || wasElementMadeActive) {
-          this.runDeactivationUXLogicIfReady();
-        }
-      };
-      MDCRippleFoundation2.prototype.layoutInternal = function() {
-        var _this = this;
-        this.frame = this.adapter.computeBoundingRect();
-        var maxDim = Math.max(this.frame.height, this.frame.width);
-        var getBoundedRadius = function() {
-          var hypotenuse = Math.sqrt(Math.pow(_this.frame.width, 2) + Math.pow(_this.frame.height, 2));
-          return hypotenuse + MDCRippleFoundation2.numbers.PADDING;
-        };
-        this.maxRadius = this.adapter.isUnbounded() ? maxDim : getBoundedRadius();
-        var initialSize = Math.floor(maxDim * MDCRippleFoundation2.numbers.INITIAL_ORIGIN_SCALE);
-        if (this.adapter.isUnbounded() && initialSize % 2 !== 0) {
-          this.initialSize = initialSize - 1;
-        } else {
-          this.initialSize = initialSize;
-        }
-        this.fgScale = "" + this.maxRadius / this.initialSize;
-        this.updateLayoutCssVars();
-      };
-      MDCRippleFoundation2.prototype.updateLayoutCssVars = function() {
-        var _a = MDCRippleFoundation2.strings, VAR_FG_SIZE = _a.VAR_FG_SIZE, VAR_LEFT = _a.VAR_LEFT, VAR_TOP = _a.VAR_TOP, VAR_FG_SCALE = _a.VAR_FG_SCALE;
-        this.adapter.updateCssVariable(VAR_FG_SIZE, this.initialSize + "px");
-        this.adapter.updateCssVariable(VAR_FG_SCALE, this.fgScale);
-        if (this.adapter.isUnbounded()) {
-          this.unboundedCoords = {
-            left: Math.round(this.frame.width / 2 - this.initialSize / 2),
-            top: Math.round(this.frame.height / 2 - this.initialSize / 2)
-          };
-          this.adapter.updateCssVariable(VAR_LEFT, this.unboundedCoords.left + "px");
-          this.adapter.updateCssVariable(VAR_TOP, this.unboundedCoords.top + "px");
-        }
-      };
-      return MDCRippleFoundation2;
-    }(MDCFoundation);
-    ({ applyPassive } = events);
-    ({ matches } = ponyfill);
-    ({ Object: Object_1$1 } = globals);
-    Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let actionProp;
-      let defaultProp;
-      let secondaryProp;
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "style",
-        "ripple",
-        "color",
-        "variant",
-        "touch",
-        "href",
-        "action",
-        "defaultAction",
-        "secondary",
-        "component",
-        "getElement"
-      ]);
-      const forwardEvents = forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { style = "" } = $$props;
-      let { ripple = true } = $$props;
-      let { color = "primary" } = $$props;
-      let { variant = "text" } = $$props;
-      let { touch = false } = $$props;
-      let { href = void 0 } = $$props;
-      let { action = "close" } = $$props;
-      let { defaultAction = false } = $$props;
-      let { secondary = false } = $$props;
-      let element;
-      let internalClasses = {};
-      let internalStyles = {};
-      let context = getContext("SMUI:button:context");
-      let { component = href == null ? Button : A } = $$props;
-      setContext("SMUI:label:context", "button");
-      setContext("SMUI:icon:context", "button");
-      function addClass(className2) {
-        if (!internalClasses[className2]) {
-          internalClasses[className2] = true;
-        }
-      }
-      function removeClass(className2) {
-        if (!(className2 in internalClasses) || internalClasses[className2]) {
-          internalClasses[className2] = false;
-        }
-      }
-      function addStyle(name8, value) {
-        if (internalStyles[name8] != value) {
-          if (value === "" || value == null) {
-            delete internalStyles[name8];
-            internalStyles = internalStyles;
-          } else {
-            internalStyles[name8] = value;
-          }
-        }
-      }
-      function getElement() {
-        return element.getElement();
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-        $$bindings.style(style);
-      if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
-        $$bindings.ripple(ripple);
-      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-        $$bindings.color(color);
-      if ($$props.variant === void 0 && $$bindings.variant && variant !== void 0)
-        $$bindings.variant(variant);
-      if ($$props.touch === void 0 && $$bindings.touch && touch !== void 0)
-        $$bindings.touch(touch);
-      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
-        $$bindings.href(href);
-      if ($$props.action === void 0 && $$bindings.action && action !== void 0)
-        $$bindings.action(action);
-      if ($$props.defaultAction === void 0 && $$bindings.defaultAction && defaultAction !== void 0)
-        $$bindings.defaultAction(defaultAction);
-      if ($$props.secondary === void 0 && $$bindings.secondary && secondary !== void 0)
-        $$bindings.secondary(secondary);
-      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-        $$bindings.component(component);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        actionProp = context === "dialog:action" && action != null ? { "data-mdc-dialog-action": action } : { action: $$props.action };
-        defaultProp = context === "dialog:action" && defaultAction ? { "data-mdc-dialog-button-default": "" } : { default: $$props.default };
-        secondaryProp = context === "banner" ? {} : { secondary: $$props.secondary };
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1$1.assign({
-          use: [
-            [
-              Ripple,
-              {
-                ripple,
-                unbounded: false,
-                color,
-                disabled: !!$$restProps.disabled,
-                addClass,
-                removeClass,
-                addStyle
-              }
-            ],
-            forwardEvents,
-            ...use
-          ]
-        }, {
-          class: classMap({
-            [className]: true,
-            "mdc-button": true,
-            "mdc-button--raised": variant === "raised",
-            "mdc-button--unelevated": variant === "unelevated",
-            "mdc-button--outlined": variant === "outlined",
-            "smui-button--color-secondary": color === "secondary",
-            "mdc-button--touch": touch,
-            "mdc-card__action": context === "card:action",
-            "mdc-card__action--button": context === "card:action",
-            "mdc-dialog__button": context === "dialog:action",
-            "mdc-top-app-bar__navigation-icon": context === "top-app-bar:navigation",
-            "mdc-top-app-bar__action-item": context === "top-app-bar:action",
-            "mdc-snackbar__action": context === "snackbar:actions",
-            "mdc-banner__secondary-action": context === "banner" && secondary,
-            "mdc-banner__primary-action": context === "banner" && !secondary,
-            "mdc-tooltip__action": context === "tooltip:rich-actions",
-            ...internalClasses
-          })
-        }, {
-          style: Object.entries(internalStyles).map(([name8, value]) => `${name8}: ${value};`).concat([style]).join(" ")
-        }, actionProp, defaultProp, secondaryProp, { href }, $$restProps, { this: element }), {
-          this: ($$value) => {
-            element = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `<div class="${"mdc-button__ripple"}"></div>
-  ${slots.default ? slots.default({}) : ``}${touch ? `<div class="${"mdc-button__touch"}"></div>` : ``}`
-        })}`;
-      } while (!$$settled);
-      return $$rendered;
-    });
+    init_app_f5b4470f();
+    init_Switch_3d7ba147();
     MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -42683,9 +42713,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-13dbdf76.js
-var layout_13dbdf76_exports = {};
-__export(layout_13dbdf76_exports, {
+// .svelte-kit/output/server/chunks/__layout-c4c65bcd.js
+var layout_c4c65bcd_exports = {};
+__export(layout_c4c65bcd_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -44852,13 +44882,13 @@ function load2({ page }) {
   };
 }
 var import_util7, import_buffer, import_stream2, import_crypto3, import_url3, import_assert, import_net, import_tls, import_daily_js, import_cookie4, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$12, LeftDrawer, safeBuffer, events2, R, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event2, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient3, LUIDGenerator, sha1, buildLogMessage_, logger3, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION4, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name6, version6, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator2, LLRBNode2, LLRBEmptyNode2, SortedMap2, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl2, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, css3, _layout2;
-var init_layout_13dbdf76 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-13dbdf76.js"() {
+var init_layout_c4c65bcd = __esm({
+  ".svelte-kit/output/server/chunks/__layout-c4c65bcd.js"() {
     init_shims();
-    init_app_146dbf71();
-    init_SelectionGroupIcon_7629f896();
-    init_Switch_38f1d6e5();
-    init_store_0f5a657e();
+    init_app_f5b4470f();
+    init_SelectionGroupIcon_5b97177c();
+    init_Switch_3d7ba147();
+    init_store_7c4f6cd0();
     import_util7 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -52848,9 +52878,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-5f85421c.js
-var index_5f85421c_exports = {};
-__export(index_5f85421c_exports, {
+// .svelte-kit/output/server/chunks/index-6830c70c.js
+var index_6830c70c_exports = {};
+__export(index_6830c70c_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -53088,17 +53118,17 @@ function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
 var import_node_fetch3, import_cookie5, DEFAULT_HOST2, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$13, version$14, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name7, version7, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, CircularProgress, css4, U5Broomu5D;
-var init_index_5f85421c = __esm({
-  ".svelte-kit/output/server/chunks/index-5f85421c.js"() {
+var init_index_6830c70c = __esm({
+  ".svelte-kit/output/server/chunks/index-6830c70c.js"() {
     init_shims();
-    init_app_146dbf71();
-    init_TextAreaAutoResizing_d66db2a0();
-    init_index_2be26bf9();
+    init_app_f5b4470f();
+    init_TextAreaAutoResizing_6a65dafd();
+    init_index_9b791854();
     init_index_node();
-    init_SelectionGroupIcon_7629f896();
-    init_store_0f5a657e();
+    init_Switch_3d7ba147();
+    init_store_7c4f6cd0();
     import_node_fetch3 = __toModule(require_lib2());
-    init_Switch_38f1d6e5();
+    init_SelectionGroupIcon_5b97177c();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     DEFAULT_HOST2 = "firebasestorage.googleapis.com";
@@ -53801,7 +53831,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-146dbf71.js
+// .svelte-kit/output/server/chunks/app-f5b4470f.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -55259,9 +55289,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-e80876bb.js",
+      file: assets + "/_app/start-a496e76e.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-e80876bb.js", assets + "/_app/chunks/vendor-a41a25f2.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-a496e76e.js", assets + "/_app/chunks/vendor-a41a25f2.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -55305,8 +55335,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_146dbf71 = __esm({
-  ".svelte-kit/output/server/chunks/app-146dbf71.js"() {
+var init_app_f5b4470f = __esm({
+  ".svelte-kit/output/server/chunks/app-f5b4470f.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -55572,13 +55602,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_4f04e7c0(), layout_4f04e7c0_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_bfd79ab3(), error_bfd79ab3_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_f2ce2308(), index_f2ce2308_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_13dbdf76(), layout_13dbdf76_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_5f85421c(), index_5f85421c_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_a4ca542c(), layout_a4ca542c_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_913f0634(), error_913f0634_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_f0dab015(), index_f0dab015_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_c4c65bcd(), layout_c4c65bcd_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_6830c70c(), index_6830c70c_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-116a6211.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-116a6211.js", "chunks/vendor-a41a25f2.js", "chunks/database-a3300b05.js", "chunks/store-30c23496.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-6b82949a.js", "css": [], "js": ["error.svelte-6b82949a.js", "chunks/vendor-a41a25f2.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-facb92a9.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-fc528c08.css"], "js": ["pages/index.svelte-facb92a9.js", "chunks/vendor-a41a25f2.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/store-30c23496.js", "chunks/TextAreaAutoResizing-87522a85.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-07cf5192.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-07cf5192.js", "chunks/vendor-a41a25f2.js", "chunks/store-30c23496.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-f61845fe.js", "css": ["assets/pages/_class_/_room_/index.svelte-68a1df44.css", "assets/TextAreaAutoResizing-fc528c08.css"], "js": ["pages/_class_/_room_/index.svelte-f61845fe.js", "chunks/vendor-a41a25f2.js", "chunks/TextAreaAutoResizing-87522a85.js", "chunks/store-30c23496.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-a3300b05.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-116a6211.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-116a6211.js", "chunks/vendor-a41a25f2.js", "chunks/database-a3300b05.js", "chunks/store-30c23496.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-6b82949a.js", "css": [], "js": ["error.svelte-6b82949a.js", "chunks/vendor-a41a25f2.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-fb8d7437.js", "css": ["assets/pages/index.svelte-b59799c1.css", "assets/TextAreaAutoResizing-fc528c08.css"], "js": ["pages/index.svelte-fb8d7437.js", "chunks/vendor-a41a25f2.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/store-30c23496.js", "chunks/TextAreaAutoResizing-87522a85.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-07cf5192.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-07cf5192.js", "chunks/vendor-a41a25f2.js", "chunks/store-30c23496.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-f61845fe.js", "css": ["assets/pages/_class_/_room_/index.svelte-68a1df44.css", "assets/TextAreaAutoResizing-fc528c08.css"], "js": ["pages/_class_/_room_/index.svelte-f61845fe.js", "chunks/vendor-a41a25f2.js", "chunks/TextAreaAutoResizing-87522a85.js", "chunks/store-30c23496.js", "chunks/canvas-5b7b0e82.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js", "chunks/database-a3300b05.js"], "styles": [] } };
   }
 });
 
@@ -55631,7 +55661,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_146dbf71();
+init_app_f5b4470f();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

@@ -13,7 +13,7 @@
   import 'firebase/app'
   import { initializeDatabase } from '../database.js'
   import { getAuth, onAuthStateChanged } from 'firebase/auth'
-  import { getFirestore, doc, deleteDoc, getDoc, setDoc } from 'firebase/firestore'
+  import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore'
   import { hasFetchedUser, user } from '../store.js'
   import { onMount } from 'svelte'
  
@@ -35,15 +35,17 @@
         const userRef = doc(getFirestore(), 'users/' + resultUser.uid)
         let dbUserSnapshot = await getDoc(userRef)
         if (!dbUserSnapshot.exists()) {
-          const metadataSnap = await getDoc(
-            doc(getFirestore(), 'metadata/78tDSRCiMHGnf8zcXkQt')
-          )
+          const metadataRef = doc(getFirestore(), 'metadata/78tDSRCiMHGnf8zcXkQt')
+          const metadataSnap = await getDoc(metadataRef)
           await setDoc(userRef, {
             name: `Beaver #${metadataSnap.data().numOfUsers}`, 
             uid: resultUser.uid,
             phoneNumber: resultUser.phoneNumber,
             pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"],
             willReceiveText: true // can be toggled
+          })
+          updateDoc(metadataRef, {
+            numOfUsers: increment(1)
           })
           dbUserSnapshot = await getDoc(userRef) // seems like a redundant fetch, but keep for now
         } 

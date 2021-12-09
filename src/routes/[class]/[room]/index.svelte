@@ -259,15 +259,14 @@
       for (const doc of snapshot.docs) {
         console.log('phoneNumber =', doc.data().phoneNumber)
         try {
-          // put it back in when actually trying
-          // if (doc.id !== $user.uid) {
+          if (doc.id !== $user.uid) {
             promises.push(
               sendTextMessage({ 
                 content: `${$user.name} asked: "${roomDoc.name || 'Fake question here'}"`,
                 toWho: doc.data().phoneNumber
               })
             )
-          // }       
+          }       
         } catch (error) {
           alert(error)
         }

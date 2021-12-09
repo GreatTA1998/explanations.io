@@ -4,7 +4,8 @@
   </slot>
 </div>
 
-{#if !recursiveSyncer && isPlaying === false}
+<!-- The play button double-duties as an indication that the video has finished fetching -->
+{#if !recursiveSyncer && isPlaying === false && strokesArray}
   <span on:click={startAudioPlayer} class="material-icons overlay-center" style="color: white; font-size: 6rem; width: 120px; height: 120px">
     play_circle
   </span>
@@ -31,6 +32,10 @@
   import { canvasWidth, canvasHeight } from '../store.js'
   // import IconButton from '@smui/icon-button';
 
+  /**
+   * Assumes `strokesArray` gets hydrated EXACTLY once
+   */
+
   export let strokesArray
   export let audioDownloadURL
  
@@ -49,21 +54,35 @@
   $: if (ctx) {
     canvas.width = $canvasWidth
     canvas.height = $canvasHeight
-    handleResize()
+    if (strokesArray) handleResize() // sometimes resize happens when `strokesArray` is not yet hydrated
+  }
+
+  onMount(() => {
+    ctx = canvas.getContext('2d')
+  })
+
+  $: if (ctx && strokesArray && !allFrames) {
+    initDoodleVideo()
   }
 
   onDestroy(() => {
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
   })
 
-  onMount(() => {
-    ctx = canvas.getContext('2d')
+
+  function initDoodleVideo () {
     for (const stroke of strokesArray) {
       drawStroke(stroke, null, ctx, canvas)
     }
 
+    /**
+     * `allFrames` is computed only once, and stores INDICES, 
+     * so it relies on `strokesArray` staying the IMMUTABLE,
+     * otherwise strange errors happen when accesssing `strokesArray[index]`
+     */
     const allPoints = [];
     for (let i = 0; i < strokesArray.length; i++) {
+      // `pointIndex` cannot be 0, as `prevPoint` deducts 1 from it
       for (let j = 1; j < strokesArray[i].points.length; j++) {
         const frame = { strokeIndex: i, pointIndex: j };
         allPoints.push({ 
@@ -72,8 +91,10 @@
         }); 
       }
     }
+    // sorting is necessary because while you're drawing, others might draw in the middle of your stroke
+    // maybe disallow that behavior in the future?
     allFrames = allPoints.sort((p1, p2) => p1.startTime - p2.startTime);
-  })
+  }
 
   function startAudioPlayer () {
     AudioPlayer.play()

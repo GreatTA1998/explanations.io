@@ -10,7 +10,6 @@
 </script>
 
 {#if roomDoc}
-  <!-- Give a 5-seconds countdown UI feedback before pinging the server -->
 	<div use:portal={'main-content'} style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
     <Textfield 
       disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID}
@@ -21,6 +20,8 @@
       <HelperText slot="helper" persistent>
         {#if lockQuestionIntervalID}
           Pinging server members in {lockQuestionCurrentTime}, cancel by backtracking the ?
+        {:else if resolveQuestionIntervalID}
+          Resolving this question in {resolveQuestionCurrentTime}, cancel by re-adding ?
         {:else if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
           Marked as question by {roomDoc.askerName} on {displayDate(roomDoc.dateAsked)}
         {/if}
@@ -42,96 +43,88 @@
         let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
 			>
         {#if boardDoc}
-          {#if strokesArray}
-            <TextAreaAutoResizing 
-              value={boardDoc.description || ''} 
-              on:input={(e) => updateBoardDescription(e, boardID)}
-            >
-
-            </TextAreaAutoResizing>
-          {/if}
+          <TextAreaAutoResizing 
+            value={boardDoc.description || ''} 
+            on:input={(e) => updateBoardDescription(e, boardID)}
+          />
 
           {#if boardDoc.audioDownloadURL }
             <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`}>
-              {#if strokesArray}
-                <DoodleVideo 
-                  {strokesArray} 
-                  audioDownloadURL={boardDoc.audioDownloadURL}
-                >
-                  {#if $user.uid === boardDoc.creatorUID}
-                    <Button on:click={revertToBoard(boardDoc)} color="primary">
-                      Revert to board
-                    </Button>
-                  {/if}
-                </DoodleVideo>
-              {/if}
+              <DoodleVideo 
+                {strokesArray} 
+                audioDownloadURL={boardDoc.audioDownloadURL}
+              >
+                {#if $user.uid === boardDoc.creatorUID}
+                  <Button on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
+                    Delete video
+                  </Button>
+                {/if}
+              </DoodleVideo>
             </div>
           {:else}
             <div use:lazyCallable={listenToStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`}>
-              {#if strokesArray}
-                <RenderlessAudioRecorder
-                  let:startRecording={startRecording} 
-                  let:stopRecording={stopRecording}
-                  let:currentTime={currentTime}
-                  on:record-end={(e) => saveVideo(e.detail.audioBlob, boardID)}
-                >
-                  <Blackboard {strokesArray} {currentTime} on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}> 
-                    {#if $recordState === 'pre_record'}
-                      <span on:click={startRecording}
-                        class="material-icons" style="font-size: 2.5rem;
-                        color: cyan;
-                        margin-left: 20px; margin-right: 20px"
-                      >
-                        radio_button_checked
-                      </span>
-                      
-                      <span on:click={() => blackboardMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 1.5rem;">
-                        more_horiz
-                      </span>
-                      <Menu bind:this={blackboardMenu} style="left: 100px; top: 50px; width: 300px">
-                        <List>
-                          <Item on:SMUI:action={deleteAllStrokesFromDb}>
-                            Wipe board
-                          </Item>
-                        </List>
-                      </Menu>
+              <RenderlessAudioRecorder
+                let:startRecording={startRecording} 
+                let:stopRecording={stopRecording}
+                let:currentTime={currentTime}
+                on:record-end={(e) => saveVideo(e.detail.audioBlob, boardID)}
+              >
+                <Blackboard {strokesArray} {currentTime} on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}> 
+                  {#if $recordState === 'pre_record'}
+                    <span on:click={startRecording}
+                      class="material-icons" style="font-size: 2.5rem;
+                      color: cyan;
+                      margin-left: 24px; margin-right: 20px"
+                    >
+                      radio_button_checked
+                    </span>
+                    
+                    <span on:click={() => blackboardMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
+                      more_horiz
+                    </span>
+                    <Menu bind:this={blackboardMenu} style="left: 100px; top: 50px; width: 300px">
+                      <List>
+                        <Item on:SMUI:action={deleteAllStrokesFromDb}>
+                          Wipe board
+                        </Item>
+                      </List>
+                    </Menu>
 
-                    {:else if $recordState === 'mid_record'}
-                      <span on:click={stopRecording}
-                        class="material-icons" style="font-size: 2.5rem;
-                        color: cyan;
-                        margin-left: 20px; margin-right: 20px"
-                      >
-                        stop_circle
-                      </span>
-                    {:else}
-                      <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
-                        <CircularProgress
-                          class="my-four-colors"
-                          style="height: 32px; width: 32px;"
-                          indeterminate
-                          fourColor
-                        />
-                      </div>
-                    {/if}
-                  </Blackboard>
-                </RenderlessAudioRecorder>
-              {/if}
+                  {:else if $recordState === 'mid_record'}
+                    <span on:click={stopRecording}
+                      class="material-icons" style="font-size: 2.5rem;
+                      color: cyan;
+                      margin-left: 24px; margin-right: 20px"
+                    >
+                      stop_circle
+                    </span>
+                  {:else}
+                    <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
+                      <CircularProgress
+                        class="my-four-colors"
+                        style="height: 32px; width: 32px;"
+                        indeterminate
+                        fourColor
+                      />
+                    </div>
+                  {/if}
+                </Blackboard>
+              </RenderlessAudioRecorder>
             </div>
           {/if}
         {/if}
       </RenderlessBoardMethods>
-		{/each}
-
-    <Button
-      on:click={createNewBlackboard}
-      variant="unelevated"
-      color="#2e3131"
-      style={`width: ${$canvasWidth}px; margin-top: 40px`}
-    >
-      <Label>New blackboard</Label>
-    </Button>
-	</div>
+		{/each} 
+      
+    <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
+    <div style="display: flex; 
+                justify-content: center; 
+                align-items: center;
+                margin-top: 40px; background-color: #2e3131; font-family: Roboto, sans-serif; text-transform: uppercase;
+                height: 35px">
+       New blackboard
+    </div>
+  </div>
 {/if}
 
 <script>
@@ -171,6 +164,9 @@
   let lockQuestionIntervalID = ''
   let lockQuestionCurrentTime = 5
 
+  let resolveQuestionIntervalID
+  let resolveQuestionCurrentTime = 5
+
   if (!$user.uid) {
     goto('/')
   }
@@ -197,7 +193,11 @@
     }
     // resolve a locked question
     else if (!hasQuestionMark(value) && isLockedAsQuestion(roomDoc)) {
-      roomUpdateObj.dateResolved = new Date().toISOString()
+      initResolveQuestionCountdown()
+    }
+    // hasQuestionMark is probably not necessary
+    else if (resolveQuestionIntervalID && hasQuestionMark(value) && isLockedAsQuestion(roomDoc)) {
+      resetResolveQuestionCountdown()
     }
     await updateDoc(roomRef, roomUpdateObj)
   }
@@ -212,6 +212,27 @@
         resetQuestionCountdown()
       }
     }, 1000)
+  }
+
+  function initResolveQuestionCountdown () {
+    resolveQuestionCurrentTime = 5
+    resolveQuestionIntervalID = setInterval(() => {
+      resolveQuestionCurrentTime -= 1
+      if (resolveQuestionCurrentTime === 0) {
+        labelRoomAsResolved()
+      }
+    }, 1000)
+  }
+
+  function labelRoomAsResolved () {
+    updateDoc(roomRef, {
+      dateResolved: new Date().toISOString()
+    })
+  }
+
+  function resetResolveQuestionCountdown () {
+    clearTimeout(resolveQuestionIntervalID)
+    resolveQuestionIntervalID = ''
   }
 
   function resetQuestionCountdown () {
@@ -293,7 +314,7 @@
     recordState.set('pre_record')
   }
 
-  async function revertToBoard ({ id, audioRefFullPath }) {
+  async function revertToBoard ({ id, audioRefFullPath }, deleteAllStrokesFromDb) {
     const promises = []
     const boardRef = doc(getFirestore(), boardsDbPath + id)
     if (audioRefFullPath) {
@@ -311,6 +332,7 @@
         audioRefFullPath: deleteField()
       })
     )
+    promises.push(deleteAllStrokesFromDb())
     await Promise.all(promises)
   }
 

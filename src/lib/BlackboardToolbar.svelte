@@ -1,14 +1,26 @@
 <div style="position: absolute; display: flex; align-items: center; height: 50px; left: 0; right: auto; top: 0; bottom: auto; z-index: 100; background-color: grey; padding-left: 10px; border-radius: 2px;">
-  <Switch 
-    checked={!onlyAllowApplePencil} 
-    on:click={() => onlyAllowApplePencil.set(!$onlyAllowApplePencil)} style="margin: 0 !important"
-  />
-  <div style="margin-left: 6px; font-size: 0.65rem; font-family: Roboto,sans-serif; color: white;">
-    {$onlyAllowApplePencil ? 'Touch draw' : 'No touch'}
+  <div on:click|stopPropagation|preventDefault={func}
+    style="margin-right: 10px; text-align: center"
+  >
+    <!-- 
+      Don't put click listeners on Switch, 
+      some weird behavior happens that causes it to NOT flick
+      on the first click,
+      (and no, I don't use bind:checked={variable},
+       so should only determine its initial value)
+    -->
+    <Switch 
+      icons={false}
+      checked={!$onlyAllowApplePencil}
+      style="margin: 0 !important"
+    />
+    <div style="margin-top: 2px; font-size: 0.55rem; font-family: Roboto,sans-serif; color: white;">
+      {$onlyAllowApplePencil ? 'No touch' : 'Touch draw'}
+    </div>
   </div>
   {#if Object.keys($user).length > 0}
     {#each $user.pencilColors as color }
-      <div on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })} style="margin: 0 4px; width: 30px; height: 38px; border-radius: 3px; align-items: center; display: flex; justify-content: center;" class:pencil-selected={$currentTool.color === color}>
+      <div on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })} style="margin: 0 4px; width: 30px; height: 42px; border-radius: 3px; align-items: center; display: flex; justify-content: center;" class:pencil-selected={$currentTool.color === color}>
         <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="16px" height="30px" viewBox="0 0 100 230" style="enable-background:new 0 0 100 230;" xml:space="preserve"
         >
@@ -38,7 +50,7 @@
     <img 
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}
       class:eraser-selected={$currentTool.type === 'eraser'}
-      width="40" height="30"
+      width="46" height="33"
       style="margin-left: 8px;"
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"
       alt="eraser"
@@ -54,6 +66,10 @@
 <script>
   import { user, currentTool, onlyAllowApplePencil } from '../store.js'
   import Switch from '@smui/switch';
+
+  function func () {
+    onlyAllowApplePencil.set(!$onlyAllowApplePencil)
+  }
 </script>
 
 <style>

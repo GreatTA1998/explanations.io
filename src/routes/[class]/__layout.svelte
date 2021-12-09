@@ -55,13 +55,17 @@
                 {#if Object.keys($dailyRoomParticipants).length > 0}
                   {#if person.browserTabID === $browserTabID}     
                     <div style="display: flex; align-items: center; margin-right: 0; margin-left: auto">
-                      <div on:click|preventDefault|stopPropagation={toggleMic} style="margin-right: 0; margin-left: auto; padding-top: 3px">
+                      <div on:click|preventDefault|stopPropagation={toggleMic} style="margin-right: 0; margin-left: auto; padding-top: 5px">
                         <Switch checked={$dailyRoomParticipants.local.audio} style="margin: 0 !important"/>
                       </div>
                       {#if $dailyRoomParticipants.local.audio}
-                        <div style="font-size: 0.8rem; margin-left: 6px; color: green">voice on</div>
+                        <div style="font-size: 0.7rem; margin-left: 6px; color: green">
+                          voice on
+                        </div>
                       {:else}
-                        <div style="font-size: 0.8rem; margin-left: 6px; color: red">muted</div>
+                        <div style="font-size: 0.7rem; margin-left: 6px; color: red">
+                          muted
+                        </div>
                       {/if}
                     </div>             
                   {/if}

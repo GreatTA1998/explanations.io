@@ -21,10 +21,8 @@
   </Drawer>
  
   <AppContent class="app-content">
-    <main class="main-content" style="padding: 0">
-      <div id="main-content" style="height: 100vh;">
-        
-      </div>
+    <main class="main-content" id="main-content" style="padding: 0">
+
     </main>
   </AppContent>
 </div>

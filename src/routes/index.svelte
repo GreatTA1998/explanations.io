@@ -49,7 +49,7 @@
 			{#if !hasRecordedVideo}
 				<div use:startRecordCountdown id="make-your-own-video">
 					<TextAreaAutoResizing 
-						value="Wondering how the video was made? Just press REC, then draw and talk like in real-life. Be messy and ramble - there's a lot of value in casually recorded videos (note: mouse drawing isn't supported)"
+						value="Wondering how the video was made? Press the glowing blue button, then draw and talk like in real-life. Be messy and ramble - there's a lot of value in casually recorded videos (note: mouse drawing isn't supported)"
 					/>
 				</div>
 
@@ -66,13 +66,21 @@
 							on:stroke-drawn={(e) => localStrokesArray = [...localStrokesArray, e.detail.newStroke]}
 						>
 							{#if $recordState === 'pre_record'}
-								<Button on:click={startRecording} color="secondary">
-									REC
-								</Button>
+								<span on:click={startRecording}
+									class="material-icons" style="font-size: 2.5rem;
+									color: cyan;
+									margin-left: 11px; margin-right: 20px"
+								>
+									radio_button_checked
+								</span>
 							{:else if $recordState === 'mid_record'} 
-								<Button on:click={stopRecording} color="secondary">
-									Finish
-								</Button>
+								<span on:click={stopRecording}
+									class="material-icons" style="font-size: 2.5rem;
+									color: cyan;
+									margin-left: 11px; margin-right: 20px"
+								>
+									stop_circle
+								</span>
 							{/if}
 						</Blackboard>
 					</RenderlessAudioRecorder>
@@ -222,6 +230,8 @@
 		audioBlobURL = URL.createObjectURL(audioBlob)
 		hasRecordedVideo = true
 		setTimeout(() => hasWatchedVideo = true, 5000)
+		// quick-fix, otherwise when user logs in to a real server their blackboard is *shown* to be uploading for some reason
+		recordState.set('pre_record')
 	}
 
 	if ($user.uid) {

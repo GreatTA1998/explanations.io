@@ -11,18 +11,12 @@
 			>	
 				<HelperText slot="helper" persistent>
 					{#if !hasClickedTitle}
-						<div style="font-size: 0.9rem;">
-							Here we can help each other efficiently with blackboard explanations.
-							Click the title above...
-						</div>
+						Server members help each other with visual explanations.
+						How? Edit the title above
 					{:else if !isQuestionMode}
-						<div style="font-size: 0.9rem">
-							To request help, just type ?
-						</div>
+						Type ? to request help
 					{:else}
-						<div style="font-size: 0.9rem">
-							Text notifying the server...
-						</div>
+					  (In a real server people will be notified and look at your question)
 					{/if}
 				</HelperText>
 			</Textfield>
@@ -30,17 +24,35 @@
 		
 		{#if isQuestionMode}			
 			<TextAreaAutoResizing
-				value="Look - someone answered immediately! I hard-coded this to happen? Alright you got me, but it's the tutorial! Anyway try sliding around the video"
+				value="Look! Someone is drawing something (in a real server everyone is connected to voice chat). But scroll down, there's more!"
+			/>
+			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 20}px`}>
+				<RenderlessBoardMethods dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
+					let:boardDoc={boardDoc}
+					let:strokesArray={strokesArray}
+					autoFetchStrokes={true}
+				>
+					{#if boardDoc}
+						<Blackboard strokesArray={demoStrokesArray}>
+							{#if strokesArray}
+								<div use:startRealtimeDemo={strokesArray}></div>
+							{/if}
+						</Blackboard>	
+					{/if}
+				</RenderlessBoardMethods>
+			</div>
+			
+			<TextAreaAutoResizing
+				value="Someone else recorded a video for you! What, I hard-coded this to happen? Don't be ridiculous, haha..."
 			/>
 			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px`} id="caleb-video-section">
 				<RenderlessBoardMethods dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
 					let:boardDoc={boardDoc}
-					let:fetchStrokes={fetchStrokes}
 					let:strokesArray={strokesArray}
 					autoFetchStrokes={true}
 				>
-					{#if boardDoc && strokesArray}
-						<DoodleVideo strokesArray={strokesArray} audioDownloadURL={boardDoc.audioDownloadURL}/>
+					{#if boardDoc}
+						<DoodleVideo {strokesArray} audioDownloadURL={boardDoc.audioDownloadURL}/>
 					{/if}
 				</RenderlessBoardMethods>
 			</div>
@@ -99,7 +111,7 @@
 			{#if hasRecordedVideo}
 				<div id="sign-up-section" style="height: 400px">
 					<TextAreaAutoResizing
-						value="In a real server, everyone is connected on voice chat, making it quick to hop in, get help, then hop out. Sign up for the closed-beta in 6.036 with a phone number to get text notifications iff members ask or answer questions. "
+						value="That's the end! Basically it's all about helping each other efficiently, creating a positive-sum game. Sign up to this 6.036 closed-beta with a phone number to get text notifications iff members ask or answer questions. "
 					/>
 
 					{#if !phoneConfirmationResult}
@@ -165,6 +177,8 @@
 	let hasWatchedVideo = false
 	let timer
 
+	let demoStrokesArray = []
+
 	function startTypingAnimation () {
 		titleValue = ''
 		const values = [
@@ -204,16 +218,6 @@
 		})
 	}
 
-	$: if (hasWatchedExemplar) {
-		tick().then(() => {
-			const elem = document.getElementById('make-your-own-video')
-			elem.scrollIntoView({ 
-				block: "center", // vertical alignment
-				inline: "nearest", // horizontal alignment
-				behavior: "smooth"
-			})
-		})
-	}
 
 	$: if (phoneNumSegment1.length === 3) {
 		document.getElementById('phone-input-2').focus()
@@ -224,6 +228,13 @@
 
 	$: if (phoneNumSegment3.length === 4) {
 		signInWithPhone()
+	}
+
+	async function startRealtimeDemo (element, strokesArray) {
+		for (const stroke of strokesArray) {
+			demoStrokesArray = [...demoStrokesArray, stroke]
+			await new Promise(resolve => setTimeout(resolve, 100));
+		}
 	}
 
 	function saveVideoLocally (audioBlob) {
@@ -250,7 +261,6 @@
 	}
 
 	function signInWithPhone () {
-		console.log('before, window.verifier =', window.recaptchaVerifier)
 		if (!window.recaptchaVerifier) {
 			window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
 				'size': 'invisible',
@@ -261,7 +271,6 @@
 				}
 			}, getAuth())
 			appVerifier = window.recaptchaVerifier;
-			print('after, verifier =', window.recaptchaVerifier)
 		}
 
 		onSignInSubmit();

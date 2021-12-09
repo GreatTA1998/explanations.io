@@ -12,7 +12,7 @@
 				<HelperText slot="helper" persistent>
 					{#if !hasClickedTitle}
 						Server members help each other with visual explanations.
-						How? Edit the title above
+						How? Edit the title above to start the tutorial
 					{:else if !isQuestionMode}
 						Type ? to request help
 					{:else}
@@ -108,7 +108,7 @@
 				</div>
 			{/if}
 
-			{#if hasRecordedVideo}
+			<!-- {#if hasRecordedVideo} -->
 				<div id="sign-up-section" style="height: 400px">
 					<TextAreaAutoResizing
 						value="That's the end! Basically it's all about helping each other efficiently, creating a positive-sum game. Sign up to this 6.036 closed-beta with a phone number to get text notifications iff members ask or answer questions. "
@@ -135,7 +135,7 @@
 						</div>
 					{/if}
 				</div>
-			{/if}
+			<!-- {/if} -->
 		{/if}
 	{/if}
 </div>

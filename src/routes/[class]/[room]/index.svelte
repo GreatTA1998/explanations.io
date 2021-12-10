@@ -263,7 +263,7 @@
           if (doc.id !== $user.uid) {
             promises.push(
               sendTextMessage({ 
-                content: `${$user.name} asked: "${roomDoc.name || 'Fake question here'}"`,
+                content: `${$user.name} asked on https://ihtfp.app: "${roomDoc.name || 'Fake question here'}"`,
                 toWho: doc.data().phoneNumber
               })
             )

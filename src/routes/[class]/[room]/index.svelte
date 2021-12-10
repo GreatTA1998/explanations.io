@@ -117,7 +117,8 @@
 		{/each} 
       
     <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
-    <div style="display: flex; 
+    <div on:click={createNewBlackboard}
+        style="display: flex; 
                 justify-content: center; 
                 align-items: center;
                 margin-top: 40px; background-color: #2e3131; font-family: Roboto, sans-serif; text-transform: uppercase;
@@ -345,7 +346,8 @@
         blackboards: arrayUnion(newID)
       })
     ]);  
-    await tick()
+    updateRoomDoc()
+    // await tick()
     // this.scrollToThisBoard(newID)
   }
 </script>

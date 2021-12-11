@@ -23,7 +23,7 @@
         {:else if resolveQuestionIntervalID}
           Resolving this question in {resolveQuestionCurrentTime}, cancel by re-adding ?
         {:else if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
-          Marked as question by {roomDoc.askerName} on {displayDate(roomDoc.dateAsked)}
+          {roomDoc.askerName} asked on {displayDate(roomDoc.dateAsked)}
         {/if}
         {#if roomDoc.dateResolved}
           , resolved {displayDate(roomDoc.dateResolved)}
@@ -135,7 +135,7 @@
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import { fetchDoc } from '../../../database.js'
-  import { onMount, tick } from 'svelte'
+  import { onMount, tick, onDestroy } from 'svelte'
   import Button, { Group, Label }from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
@@ -155,6 +155,7 @@
   export let roomID
 
   let blackboardMenu
+  let unsubRoomListener
 
   let roomDoc
   // reactivity not necessary: `classID` is constant here 
@@ -284,18 +285,19 @@
     })
   }
 
-  // slugify the classID if it contains '.', convert to '-' regenerate 6.036 and 6.046's class
-  onMount(async () => {
-    onSnapshot(roomRef, (snapshot) => {
+  // reactive statements DO trigger on initial assignment
+  $: roomID, createRoomListener() 
+
+  async function createRoomListener () {
+    if (unsubRoomListener) unsubRoomListener() // assume it's not async
+    unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
       roomDoc = { id: snapshot.id, ...snapshot.data() }
     })
-  })
-
-  $: roomID, updateRoomDoc() 
-
-  async function updateRoomDoc () {
-    roomDoc = await fetchDoc(roomsDbPath + roomID)
   }
+  
+  onDestroy(() => {
+    unsubRoomListener()
+  })
 
   async function saveVideo (audioBlob, boardID) {
     const storage = getStorage()
@@ -346,7 +348,6 @@
         blackboards: arrayUnion(newID)
       })
     ]);  
-    updateRoomDoc()
     // await tick()
     // this.scrollToThisBoard(newID)
   }

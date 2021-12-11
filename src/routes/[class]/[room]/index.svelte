@@ -82,17 +82,6 @@
                       >
                         radio_button_checked
                       </span>
-                      
-                      <span on:click={() => blackboardMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
-                        more_horiz
-                      </span>
-                      <Menu bind:this={blackboardMenu} style="left: 100px; top: 50px; width: 300px">
-                        <List>
-                          <Item on:SMUI:action={deleteAllStrokesFromDb}>
-                            Wipe board
-                          </Item>
-                        </List>
-                      </Menu>
                     {:else if $recordState === 'mid_record'}
                       <span on:click={stopRecording}
                         class="material-icons" style="font-size: 2.5rem;
@@ -111,6 +100,10 @@
                         />
                       </div>
                     {/if}
+                    
+                    <Item slot="dropdown-menu" on:SMUI:action={deleteAllStrokesFromDb}>
+                      Wipe board
+                    </Item>     
                   </Blackboard>
                 </RenderlessAudioRecorder>
               </div>
@@ -149,7 +142,6 @@
   import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
-  import Menu from '@smui/menu';
   import List, { Item, Text } from '@smui/list'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import CircularProgress from '@smui/circular-progress' 
@@ -159,7 +151,6 @@
   export let classID
   export let roomID
 
-  let blackboardMenu
   let unsubRoomListener
 
   let roomDoc

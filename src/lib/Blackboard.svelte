@@ -6,6 +6,10 @@
     <slot>
 
     </slot>
+
+    <slot name="dropdown-menu" slot="dropdown-menu">
+
+    </slot>
   </BlackboardToolbar>
 {/if}
 

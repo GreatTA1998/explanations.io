@@ -48,7 +48,7 @@
   let ctx
   let AudioPlayer
   let recursiveSyncer
-  let playbackSpeed = 1
+  let playbackSpeed = 2
 
   // handle resizing
   $: if (ctx) {
@@ -97,6 +97,7 @@
   }
 
   function startAudioPlayer () {
+    AudioPlayer.playbackRate = playbackSpeed
     AudioPlayer.play()
   }
 

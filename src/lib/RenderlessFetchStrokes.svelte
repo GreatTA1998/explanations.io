@@ -20,16 +20,11 @@ export let autoFetchStrokes = false
 
  WARNING: 
  * This is unsafe when multiple people draw while recording
- * think of a better solution after launch. 
+ * think of a better solution after launch // i.e.`currentTime` && timeStamp, choose one, not both. 
  */
 let strokesArray // null means unfetched, [] means empty board
 const strokesRef = collection(getFirestore(), `${dbPath}/strokes`)
 const strokesQuery = query(strokesRef, orderBy('timestamp'))
-
-const boardRef = doc(getFirestore(), dbPath)
-onSnapshot(boardRef, (snapshot) => {
-  boardDoc = { id: snapshot.id, ...snapshot.data() }
-})
 
 if (autoFetchStrokes) {
   fetchStrokes()
@@ -37,20 +32,12 @@ if (autoFetchStrokes) {
 
 // for lazy-fetching
 async function fetchStrokes () {
-  // quick-fix for when <Blackboard/> turns into <DoodleVideo/>
-  // and yes, the snapshot listener for blackboard currently persists
-  if (strokesArray) return
-
-  isFetchingStrokes = true
-
   const strokesSnapshot = await getDocs(strokesQuery)
   const temp = []
   for (const doc of strokesSnapshot.docs) {
     temp.push({ id: doc.id, ...doc.data() })
   }
   strokesArray = temp
-
-  isFetchingStrokes = false
 }
 
 async function deleteAllStrokesFromDb () {

@@ -96,3 +96,37 @@ export function setStrokeProperties (color, lineWidth, isEraserStroke, ctx) {
   // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineCap
   ctx.lineCap = "round"; 
 }
+
+export function renderBackground (src, canvas, bgCtx) {
+  return new Promise(resolve => {
+    if (!src) resolve(); 
+
+    const image = new Image();
+    image.src = src;
+    
+    /* avoid the "tainted canvas may not be exported" error
+        https://stackoverflow.com/questions/22710627/tainted-canvases-may-not-be-exported */
+    image.crossOrigin="anonymous";
+
+    image.onload = () => { 
+      const boardWidth = canvas.scrollWidth 
+      const boardHeight = canvas.scrollHeight
+      const imageAspectRatio = image.width / image.height
+      // correctness argument: because each device's blackboard has the same aspect ratio,
+      // height-based scaling will not distort annotations
+      if (image.height > image.width) { // weak criteria, but assume it's a vertical PDF page
+        // image.width = boardWidth / 2
+        // image.height = image.width * 1/imageAspectRatio
+        image.height = boardHeight 
+        image.width = image.height * imageAspectRatio
+      } else { 
+        // slide ratio seems to be 3 * 4 
+        // increase size to 100%
+        image.width = boardWidth
+        image.height = image.width * 1/imageAspectRatio
+      }
+      bgCtx.drawImage(image, 0, 0, image.width, image.height); // (0, 0) specifies the top-left corner of the image
+      resolve();
+    };
+  });
+}

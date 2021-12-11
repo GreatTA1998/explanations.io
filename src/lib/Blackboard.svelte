@@ -13,30 +13,43 @@
   </BlackboardToolbar>
 {/if}
 
-<canvas 
+<canvas bind:this={canvas}
   on:touchstart={touchStart}
   on:touchmove={touchMove}
   on:touchend={touchEnd}
-  bind:this={canvas}
-  style={`position: absolute; margin-top: 0; margin-left: 0; background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`}
+  style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
 >
+</canvas>
+  
+<canvas bind:this={bgCanvas} 
+  style={`position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: block;
+  background-color: rgb(46, 49, 49); width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
+>
+
 </canvas>
 
 <script>
   import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
-  import { connectTwoPoints, drawStroke } from '../helpers/canvas.js'
+  import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, createEventDispatcher } from 'svelte'
   import { currentTool, canvasWidth, canvasHeight, onlyAllowApplePencil } from '../store.js'
 
   export let strokesArray
   export let currentTime = 0
+  export let backgroundImageDownloadURL = ''
   
 	const dispatch = createEventDispatcher()
 
   let ctx
-  let localStrokesArray = []
+  let bgCtx
   let canvas
+  let bgCanvas
+  let localStrokesArray = []
   let isInMiddleOfStroke = false
   let prevPoint = {
     x: -1, 
@@ -49,18 +62,27 @@
 
   onMount(() => {
     ctx = canvas.getContext('2d')
+    bgCtx = bgCanvas.getContext('2d')
   })
 
   // auto-resize
   $: if (ctx) {
     canvas.width = $canvasWidth
     canvas.height = $canvasHeight
+    bgCanvas.width = $canvasWidth
+    bgCanvas.height = $canvasHeight
     if (strokesArray) {
       for (const stroke of strokesArray) {
         drawStroke(stroke, null, ctx, canvas)
       }
     }
   }
+
+  // detect backgroundImageDownloadURL
+  $: if (bgCtx) {
+      bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
+      renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+    }
 
   /**
    * Reactive statement that triggers each time `strokesArray` changes

@@ -1,4 +1,4 @@
-<div style="position: absolute; right: 0; left: auto; display: flex; padding-top: 4px; padding-bottom: 4px;">
+<div style="position: absolute; right: 0; left: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5">
   <slot>
 
   </slot>
@@ -11,23 +11,41 @@
   </span>
 {/if}
 
-<canvas 
-  bind:this={canvas} 
-  style={`background-color: #2e3131; width: ${$canvasWidth}; height: ${$canvasHeight}`}
->
-</canvas>
+<!-- 
+  For reasons I don't understand, I need `position: absolute` 
+  otherwise pencil strokes are submerged by back canvas 
+-->
+<div style="position: relative">
+  <canvas bind:this={canvas} 
+    style={`position: absolute; z-index: 1; z-index: 1; margin-top: 0; margin-left: 0; width: ${$canvasWidth}px; height: ${$canvasHeight}px; background-color: transparent`}
+  >
 
-<audio 
-  on:play={initSyncing} 
-  on:seeking={syncStrokesToAudio}
-  bind:this={AudioPlayer} 
-  src={audioDownloadURL} 
-  controls 
-  style={`width: ${$canvasWidth}px; height: 40px`}>
-</audio>
+  </canvas>
+
+  <canvas bind:this={bgCanvas} 
+    style={`position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    display: block;
+    background-color: rgb(46, 49, 49); width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
+  >
+  </canvas>
+</div>
+
+<div>
+  <audio 
+    on:play={initSyncing} 
+    on:seeking={syncStrokesToAudio}
+    bind:this={AudioPlayer} 
+    src={audioDownloadURL} 
+    controls 
+    style={`width: ${$canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}>
+  </audio>
+</div>
 
 <script>
-  import { connectTwoPoints, drawStroke } from '../helpers/canvas.js'
+  import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { onMount, onDestroy } from 'svelte'
   import { canvasWidth, canvasHeight } from '../store.js'
   // import IconButton from '@smui/icon-button';
@@ -38,14 +56,17 @@
 
   export let strokesArray
   export let audioDownloadURL
- 
+  export let backgroundImageDownloadURL
+
   let hasPlayedOnce = false
   let isPlaying = false
 
   let allFrames
   let nextFrameIdx
   let canvas
+  let bgCanvas
   let ctx
+  let bgCtx
   let AudioPlayer
   let recursiveSyncer
   let playbackSpeed = 2
@@ -54,21 +75,30 @@
   $: if (ctx) {
     canvas.width = $canvasWidth
     canvas.height = $canvasHeight
-    if (strokesArray) handleResize() // sometimes resize happens when `strokesArray` is not yet hydrated
+    bgCanvas.width = $canvasWidth
+    bgCanvas.height = $canvasHeight
+    if (strokesArray) {
+      handleResize() // sometimes resize happens when `strokesArray` is not yet hydrated
+    } 
   }
 
   onMount(() => {
     ctx = canvas.getContext('2d')
+    bgCtx = bgCanvas.getContext('2d')
   })
 
   $: if (ctx && strokesArray && !allFrames) {
     initDoodleVideo()
   }
 
+  $: if (bgCtx) {
+    bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
+    renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+  }
+
   onDestroy(() => {
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
   })
-
 
   function initDoodleVideo () {
     for (const stroke of strokesArray) {

@@ -46,10 +46,11 @@
               let:strokesArray={strokesArray}
               let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
             >
-              <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`}>
+              <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
                 <DoodleVideo 
                   {strokesArray} 
                   audioDownloadURL={boardDoc.audioDownloadURL}
+                  backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                 >
                   {#if $user.uid === boardDoc.creatorUID}
                     <Button on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
@@ -73,7 +74,12 @@
                   let:currentTime={currentTime}
                   on:record-end={(e) => saveVideo(e.detail.audioBlob, boardID)}
                 >
-                  <Blackboard {strokesArray} {currentTime} on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}> 
+                  <Blackboard 
+                    {strokesArray} 
+                    {currentTime} 
+                    backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+                    on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+                  > 
                     {#if $recordState === 'pre_record'}
                       <span on:click={startRecording}
                         class="material-icons" style="font-size: 2.5rem;
@@ -101,9 +107,21 @@
                       </div>
                     {/if}
                     
-                    <Item slot="dropdown-menu" on:SMUI:action={deleteAllStrokesFromDb}>
-                      Wipe board
-                    </Item>     
+                    <div slot="dropdown-menu">
+                      <Item slot="dropdown-menu" on:SMUI:action={deleteAllStrokesFromDb}>
+                        Wipe board
+                      </Item>     
+                      <Item on:click={boardDoc.backgroundImageDownloadURL ? resetBackgroundImage(boardDoc.id) : clickHiddenInput(boardDoc.id)}>
+                        {boardDoc.backgroundImageDownloadURL ? 'Remove background' : 'Set background' }
+                        <input
+                          id="input-{boardDoc.id}"
+                          on:change={(e) => handleWhatUserUploaded(e, boardDoc.id)}
+                          style="display: none" 
+                          type="file" 
+                          accept="image/gif, image/jpeg, image/png" 
+                        >
+                      </Item>
+                    </div>
                   </Blackboard>
                 </RenderlessAudioRecorder>
               </div>
@@ -162,6 +180,37 @@
   if (!$user.uid) {
     goto('/')
   }
+
+  //// START of background image logic
+  function clickHiddenInput (boardID) {
+    document.getElementById(`input-${boardID}`).click()
+  }
+
+  async function handleWhatUserUploaded (e, boardID) {
+    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
+    const imageFile = e.target.files[0]; 
+    if (!imageFile) return; 
+    if (imageFile.type.split("/")[0] === 'image') {
+      // rewrite
+      const storage = getStorage()
+      const imageRef = ref(storage, `images/${getRandomID()}`)
+      await uploadBytes(imageRef, imageFile)
+      const downloadURL = await getDownloadURL(imageRef)
+      updateDoc(blackboardRef, {
+        backgroundImageDownloadURL: downloadURL
+      })
+    } else {
+      alert("Error: only images can be used")
+    }
+  }
+
+  function resetBackgroundImage (boardID) {
+    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
+    updateDoc(blackboardRef, {
+      backgroundImageDownloadURL: deleteField() // Svelte doesn't react to change to empty string, for some reason
+    })
+  }
+  //// END of background image logic
 
   let lockQuestionIntervalID = ''
   let lockQuestionCurrentTime = 5

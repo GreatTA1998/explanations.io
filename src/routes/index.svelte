@@ -14,7 +14,7 @@
 						Server members help each other with visual explanations.
 						How? Edit the title above to start the tutorial
 					{:else if !isQuestionMode}
-						Type ? to request help
+						To ask a question, use a question mark '?'
 					{:else}
 					  (In a real server people will be notified and look at your question)
 					{/if}
@@ -27,34 +27,38 @@
 				value="Look! Someone is drawing something (in a real server everyone is connected to voice chat). But scroll down, there's more!"
 			/>
 			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 20}px`}>
-				<RenderlessBoardMethods dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
+				<RenderlessListenToBoard dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
 					let:boardDoc={boardDoc}
-					let:strokesArray={strokesArray}
-					autoFetchStrokes={true}
 				>
-					{#if boardDoc}
-						<Blackboard strokesArray={demoStrokesArray}>
-							{#if strokesArray}
-								<div use:startRealtimeDemo={strokesArray}></div>
-							{/if}
-						</Blackboard>	
-					{/if}
-				</RenderlessBoardMethods>
+					<RenderlessFetchStrokes dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" autoFetchStrokes={true}
+						let:strokesArray={strokesArray}
+					>
+						{#if boardDoc}
+							<Blackboard strokesArray={demoStrokesArray}>
+								{#if strokesArray}
+									<div use:startRealtimeDemo={strokesArray}></div>
+								{/if}
+							</Blackboard>	
+						{/if}
+					</RenderlessFetchStrokes>
+				</RenderlessListenToBoard>
 			</div>
 			
 			<TextAreaAutoResizing
 				value="Someone else recorded a video for you! What, I hard-coded this to happen? Don't be ridiculous, haha..."
 			/>
 			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px`} id="caleb-video-section">
-				<RenderlessBoardMethods dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
+				<RenderlessListenToBoard dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
 					let:boardDoc={boardDoc}
-					let:strokesArray={strokesArray}
-					autoFetchStrokes={true}
 				>
-					{#if boardDoc}
-						<DoodleVideo {strokesArray} audioDownloadURL={boardDoc.audioDownloadURL}/>
-					{/if}
-				</RenderlessBoardMethods>
+					<RenderlessFetchStrokes dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" autoFetchStrokes={true}
+						let:strokesArray={strokesArray}
+					>
+						{#if boardDoc}
+							<DoodleVideo {strokesArray} audioDownloadURL={boardDoc.audioDownloadURL}/>
+						{/if}
+					</RenderlessFetchStrokes>
+				</RenderlessListenToBoard>
 			</div>
 
 			<!-- This is your own video, preserve it for comparison -->
@@ -111,7 +115,7 @@
 			<!-- {#if hasRecordedVideo} -->
 				<div id="sign-up-section" style="height: 400px">
 					<TextAreaAutoResizing
-						value="That's the end! Basically it's all about helping each other efficiently, creating a positive-sum game. Sign up to this 6.036 closed-beta with a phone number to get text notifications iff members ask or answer questions. "
+						value="That's the end! It's all about helping each other efficiently, creating a positive-sum game. Sign up to this 6.036 closed-beta with a phone number to get text notifications iff members ask or answer questions. "
 					/>
 
 					{#if !phoneConfirmationResult}
@@ -151,9 +155,10 @@
 	import Blackboard from '$lib/Blackboard.svelte'
 	import DoodleVideo from '$lib/DoodleVideo.svelte'
 	import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
-	import RenderlessBoardMethods from '$lib/RenderlessBoardMethods.svelte'
+	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import { calculateCanvasDimensions } from '../helpers/canvas.js'
 	import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
 
 	let currentTime = 10
 	let titleValue = 'Welcome!'
@@ -233,7 +238,7 @@
 	async function startRealtimeDemo (element, strokesArray) {
 		for (const stroke of strokesArray) {
 			demoStrokesArray = [...demoStrokesArray, stroke]
-			await new Promise(resolve => setTimeout(resolve, 100));
+			await new Promise(resolve => setTimeout(resolve, 200));
 		}
 	}
 

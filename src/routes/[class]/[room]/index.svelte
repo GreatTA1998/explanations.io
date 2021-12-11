@@ -34,86 +34,90 @@
     <div style="margin-bottom: 20px;"></div>
 
 		{#each roomDoc.blackboards as boardID (boardID) }
-			<RenderlessBoardMethods dbPath={boardsDbPath + boardID} 
-				let:boardDoc={boardDoc}
-				let:fetchStrokes={fetchStrokes}
-        let:listenToStrokes={listenToStrokes}
-				let:strokesArray={strokesArray}
-        let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
-        let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
-			>
+			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
         {#if boardDoc}
           <TextAreaAutoResizing 
             value={boardDoc.description || ''} 
             on:input={(e) => updateBoardDescription(e, boardID)}
           />
-
           {#if boardDoc.audioDownloadURL }
-            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`}>
-              <DoodleVideo 
-                {strokesArray} 
-                audioDownloadURL={boardDoc.audioDownloadURL}
-              >
-                {#if $user.uid === boardDoc.creatorUID}
-                  <Button on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
-                    Delete video
-                  </Button>
-                {/if}
-              </DoodleVideo>
-            </div>
-          {:else}
-            <div use:lazyCallable={listenToStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`}>
-              <RenderlessAudioRecorder
-                let:startRecording={startRecording} 
-                let:stopRecording={stopRecording}
-                let:currentTime={currentTime}
-                on:record-end={(e) => saveVideo(e.detail.audioBlob, boardID)}
-              >
-                <Blackboard {strokesArray} {currentTime} on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}> 
-                  {#if $recordState === 'pre_record'}
-                    <span on:click={startRecording}
-                      class="material-icons" style="font-size: 2.5rem;
-                      color: cyan;
-                      margin-left: 24px; margin-right: 20px"
-                    >
-                      radio_button_checked
-                    </span>
-                    
-                    <span on:click={() => blackboardMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
-                      more_horiz
-                    </span>
-                    <Menu bind:this={blackboardMenu} style="left: 100px; top: 50px; width: 300px">
-                      <List>
-                        <Item on:SMUI:action={deleteAllStrokesFromDb}>
-                          Wipe board
-                        </Item>
-                      </List>
-                    </Menu>
-
-                  {:else if $recordState === 'mid_record'}
-                    <span on:click={stopRecording}
-                      class="material-icons" style="font-size: 2.5rem;
-                      color: cyan;
-                      margin-left: 24px; margin-right: 20px"
-                    >
-                      stop_circle
-                    </span>
-                  {:else}
-                    <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
-                      <CircularProgress
-                        class="my-four-colors"
-                        style="height: 32px; width: 32px;"
-                        indeterminate
-                        fourColor
-                      />
-                    </div>
+            <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
+              let:fetchStrokes={fetchStrokes}
+              let:strokesArray={strokesArray}
+              let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
+            >
+              <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 80}px; position: relative`}>
+                <DoodleVideo 
+                  {strokesArray} 
+                  audioDownloadURL={boardDoc.audioDownloadURL}
+                >
+                  {#if $user.uid === boardDoc.creatorUID}
+                    <Button on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
+                      Delete video
+                    </Button>
                   {/if}
-                </Blackboard>
-              </RenderlessAudioRecorder>
-            </div>
+                </DoodleVideo>
+              </div>
+            </RenderlessFetchStrokes>
+          {:else}
+            <RenderlessListenToStrokes dbPath={boardsDbPath + boardID}
+              let:listenToStrokes={listenToStrokes} 
+              let:strokesArray={strokesArray}
+              let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
+              let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
+            >
+              <div use:lazyCallable={listenToStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`}>
+                <RenderlessAudioRecorder
+                  let:startRecording={startRecording} 
+                  let:stopRecording={stopRecording}
+                  let:currentTime={currentTime}
+                  on:record-end={(e) => saveVideo(e.detail.audioBlob, boardID)}
+                >
+                  <Blackboard {strokesArray} {currentTime} on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}> 
+                    {#if $recordState === 'pre_record'}
+                      <span on:click={startRecording}
+                        class="material-icons" style="font-size: 2.5rem;
+                        color: cyan;
+                        margin-left: 30px; margin-right: 26px"
+                      >
+                        radio_button_checked
+                      </span>
+                      
+                      <span on:click={() => blackboardMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
+                        more_horiz
+                      </span>
+                      <Menu bind:this={blackboardMenu} style="left: 100px; top: 50px; width: 300px">
+                        <List>
+                          <Item on:SMUI:action={deleteAllStrokesFromDb}>
+                            Wipe board
+                          </Item>
+                        </List>
+                      </Menu>
+                    {:else if $recordState === 'mid_record'}
+                      <span on:click={stopRecording}
+                        class="material-icons" style="font-size: 2.5rem;
+                        color: cyan;
+                        margin-left: 30px; margin-right: 26px"
+                      >
+                        stop_circle
+                      </span>
+                    {:else}
+                      <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
+                        <CircularProgress
+                          class="my-four-colors"
+                          style="height: 32px; width: 32px;"
+                          indeterminate
+                          fourColor
+                        />
+                      </div>
+                    {/if}
+                  </Blackboard>
+                </RenderlessAudioRecorder>
+              </div>
+            </RenderlessListenToStrokes>
           {/if}
         {/if}
-      </RenderlessBoardMethods>
+      </RenderlessListenToBoard>
 		{/each} 
       
     <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
@@ -130,11 +134,10 @@
 
 <script>
   import '$lib/_FourColor.scss'
-  import RenderlessBoardMethods from '$lib/RenderlessBoardMethods.svelte'
+  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
-  import { fetchDoc } from '../../../database.js'
   import { onMount, tick, onDestroy } from 'svelte'
   import Button, { Group, Label }from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
@@ -150,6 +153,8 @@
   import List, { Item, Text } from '@smui/list'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import CircularProgress from '@smui/circular-progress' 
+  import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
+  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
 
   export let classID
   export let roomID
@@ -163,15 +168,15 @@
   const roomsDbPath = `classes/${classID}/rooms/`
   $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
 
+  if (!$user.uid) {
+    goto('/')
+  }
+
   let lockQuestionIntervalID = ''
   let lockQuestionCurrentTime = 5
 
   let resolveQuestionIntervalID
   let resolveQuestionCurrentTime = 5
-
-  if (!$user.uid) {
-    goto('/')
-  }
 
   function hasQuestionMark (string) {
     return '?' === string.charAt(string.length - 1)

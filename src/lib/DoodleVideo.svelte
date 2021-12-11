@@ -6,7 +6,7 @@
 
 <!-- The play button double-duties as an indication that the video has finished fetching -->
 {#if !recursiveSyncer && isPlaying === false && strokesArray}
-  <span on:click={startAudioPlayer} class="material-icons overlay-center" style="color: white; font-size: 6rem; width: 120px; height: 120px">
+  <span on:click={startAudioPlayer} class="material-icons overlay-center" style="color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5">
     play_circle
   </span>
 {/if}

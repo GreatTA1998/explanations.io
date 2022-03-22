@@ -1,6 +1,53 @@
+<section style="height: 100vh; border-bottom: 1px solid #eee;">
+	<div style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+		<div style="padding-bottom: 90px;">
+			<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
+				<img src="logo.png" width="95" height="85">
+				<h1 id="logo" style="font-size: 5rem; color: rgb(0 0 0); padding-bottom: 19px; padding-left: 15px;">
+					explain.mit.edu
+				</h1>
+			</div>
+			<div style="display: flex; justify-content: center;">
+				<b style="color: grey" class="copied-from-koa">Blackboard-first explanation platform for MIT Computer Science classes</b>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+
+<section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;">
+	<div class="content">
+		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
+		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			explain.mit.edu is like Discord (voice chat) + KhanAcademy (blackboards). What's special about it is the <i>near-instant</i> sharing of blackboard videos. 
+			<br>
+			<br>
+			Students can request help any time conveniently, and TAs can give help efficiently by re-using video explanations. 
+		</p>
+	</div>
+</section>
+
+<section style="height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;">
+	<div class="content">
+		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Tutorial</h1>
+		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			Type a question below to ask for help
+			<br>
+			<br>
+			
+			We hire MIT graduate students from outside of class because:
+			  <li><b>Better incentives to teach well:</b> Within MIT, exceptional teaching is not financially rewarded because pay is fixed. Here, TAs are rewarded proportional to their impact, so they're motivated on multiple fronts.</li>
+				<li><b>Freedom in teaching style:</b> Classes can have restricted policies what a teacher can and cannot do. If a student is struggling despite of class resources, it's likely that they need something anti-correlated.</li>
+		</p>
+	</div>
+</section>
+
+
+
 
 <div id="tutorial-content" style="padding: 10px;">
-	{#if !$user.uid}
+	{#if !$user.uid} 
 		<div class:question={isQuestionMode}>
 			<Textfield bind:value={titleValue} class="room-title" style={`width: ${$canvasWidth}px`} 
 				on:click={() => { 
@@ -334,6 +381,24 @@
 :global(.question input) {
   color: rgb(19, 145, 230) !important;
 }
+
+.copied-from-koa {
+	font: 17px/1.5 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
+}
+/* increased 17px to 18px */
+
+#logo {
+    font: 150px 'Italiana', sans-serif;
+    text-transform: lowercase;
+}
+
+.content {
+	margin: 0 auto;
+	max-width: 750px;
+	text-align: left;
+}
+
+
 </style>
 
 <!-- 	<picture>

@@ -30,7 +30,7 @@
 <section style="height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			It's hard to get help efficiently
+			For difficult classes, it's hard to get help
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -45,7 +45,7 @@
 <section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<b style="color: rgb(15 186 191)">Try KhanAcademy-style group tutoring</b>
+			<b style="color: rgb(15 186 191)">KhanAcademy-style group tutoring makes it easy</b>
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">

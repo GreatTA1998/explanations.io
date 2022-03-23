@@ -115,19 +115,17 @@
 		</h1>
 		<br>
 		<br>
-		<h2 style="margin-top: 0; font: 20px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			Why not work with in-class TAs?
+		<h2 style="color: #33333d; margin-top: 0; font: 20px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			<b>Q: Why not work with in-class TAs?</b>
 		</h2>
-		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li>
-				<b>Stronger teaching incentives:</b>
-					AT MIT, great teaching is not financially rewarded because salaries are constant. TAs and professors are severely time-limited too: research, staff management, etc. which means inefficient outcomes for students.
-				
-				  Tutors (EECS grad.students) here are rewarded proportional to their impact, so they have skin-in-the-game to improve and provide as great an experience as possible.
-			</li>
-			<li><b>Freedom in teaching style:</b> 
-					Everybody learns slightly differently, so it's important to have alternatives if the default teaching style isn't working for someone.
-			</li>
+		<p style="font-size: 1.26rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			
+				<b>A: Stronger teaching incentives:</b>
+					Great teaching is not financially rewarded because salaries are constant. Moreover, staff members are severely time-limited too: research, staff management, etc. so it's costly for them to try new things.
+					<br><br>
+				  Outside tutors (EECS grad. students) - on the other hand - have fewer commitments, and are allowed to be rewarded proportional to their impact. This means skin-in-the-game to provide as great an experience as possible.
+			
+
 		</p>
 
 	</div>

@@ -35,7 +35,7 @@
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			<li><b>Office Hours</b>: "wait-time is 40 minutes, and by the way, we can only help you for 5 minutes"</li>
-			<li><b>Piazza</b>: "I answered your complex algorithms question with 2 sentences, does that help?"</li>	
+			<li><b>Piazza</b>: "I had to answer your complex question with only words and no pictures...?"</li>	
 			<li><b>HKN</b>: p(tutor available) = p(getting struck by lightning)</li>
 		</p>
 		<br>
@@ -126,8 +126,7 @@
 				  Tutors (EECS grad.students) here are rewarded proportional to their impact, so they have skin-in-the-game to improve and provide as great an experience as possible.
 			</li>
 			<li><b>Freedom in teaching style:</b> 
-					People learn differently, and when the default teaching style and philosophies is not working for some students, it's important to have room for alternative teaching styles. 
-					Outside TAs can operate more independently to class policies and do whatever they believe is best.
+					Everybody learns slightly differently, so it's important to have alternatives if the default teaching style isn't working for someone.
 			</li>
 		</p>
 

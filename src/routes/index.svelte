@@ -8,7 +8,7 @@
 				</h1>
 			</div>
 			<div style="display: flex; justify-content: center;">
-				<b style="color: grey" class="copied-from-koa">Blackboard-first explanation platform for MIT Computer Science classes</b>
+				<b style="color: grey" class="copied-from-koa">Blackboard-centric explanation platform for MIT classes</b>
 			</div>
 		</div>
 	</div>
@@ -16,180 +16,123 @@
 </section>
 
 
-<section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;">
+<section style="background: #FDFDF8; height: 120px; padding: 150px 100px; border-bottom: 1px solid #eee;">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			explain.mit.edu is like Discord (voice chat) + KhanAcademy (blackboards). What's special about it is the <i>near-instant</i> sharing of blackboard videos. 
+			explain.mit.edu is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
 			<br>
 			<br>
-			Students can request help any time conveniently, and TAs can give help efficiently by re-using video explanations. 
 		</p>
 	</div>
 </section>
 
 <section style="height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;">
 	<div class="content">
-		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Tutorial</h1>
+		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			It's hard to get help efficiently
+		</h1>
+
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			Type a question below to ask for help
+			<li><b>Office Hours</b>: "wait-time is 40 minutes, and by the way, we can only help you for 5 minutes"</li>
+			<li><b>Piazza</b>: "I answered your complex algorithms question with 2 sentences, does that help?"</li>	
+			<li><b>HKN</b>: p(tutor available) = p(getting struck by lightning)</li>
+		</p>
+		<br>
+	</div>
+</section>
+
+<section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
+	<div class="content">
+		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			<b style="color: rgb(15 186 191)">Try KhanAcademy-style group tutoring</b>
+		</h1>
+
+		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			<li>n students each pay $10/week to 1 tutor</li>
+			<li>You request real-time help anytime</li>
+			<li>Whenever anyone receives help, visual explanations accumulate on the server, benefitting everyone.</li>
+		</p>
+
+		<iframe width="680" height="400" src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+	</div>
+
+</section>
+
+<!-- Sign-up -->
+<section style="height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee">
+	<div class="content">
+		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			How to sign up
+		</h1>
+
+		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			<li>Venmo $10 and class number (e.g. 6.006) to elton-lin-2</li>
+			<li>Create an account with phone number to join the server</li>
+			<li>Refund anytime, any reason.</li>
+		</p>
+		
+	
+
+
+			<div id="sign-up-section" style="height: 100px">
+				{#if !phoneConfirmationResult}
+					<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px; margin-right: 6px; margin-left: auto;">
+						<div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div>
+						<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="339" bind:value={phoneNumSegment1} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+
+						<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="676" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+
+						<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="1234" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
+						<Button id="sign-in-button" on:click={signInWithPhone}>
+							Sign Up
+						</Button>
+					</div>
+				{:else}
+					<div style="display: flex">
+						<Textfield variant="filled" bind:value={phoneConfirmCode} label="6-digit code">
+							<HelperText slot="helper"></HelperText>
+						</Textfield>
+						<Button on:click={verifyConfirmationCode}>Confirm code</Button>
+					</div>
+				{/if}
+			</div>
+		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+		
 			<br>
 			<br>
-			
-			We hire MIT graduate students from outside of class because:
-			  <li><b>Better incentives to teach well:</b> Within MIT, exceptional teaching is not financially rewarded because pay is fixed. Here, TAs are rewarded proportional to their impact, so they're motivated on multiple fronts.</li>
-				<li><b>Freedom in teaching style:</b> Classes can have restricted policies what a teacher can and cannot do. If a student is struggling despite of class resources, it's likely that they need something anti-correlated.</li>
+
 		</p>
 	</div>
 </section>
 
+<!-- FAQ -->
+<section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
+	<div class="content">
+		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			Frequently Asked Questions
+		</h1>
+		<br>
+		<br>
+		<h2 style="margin-top: 0; font: 20px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			Why not work with in-class TAs?
+		</h2>
+		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			<li>
+				<b>Stronger teaching incentives:</b>
+					AT MIT, great teaching is not financially rewarded because salaries are constant. TAs and professors are severely time-limited too: research, staff management, etc. which means inefficient outcomes for students.
+				
+				  Tutors (EECS grad.students) here are rewarded proportional to their impact, so they have skin-in-the-game to improve and provide as great an experience as possible.
+			</li>
+			<li><b>Freedom in teaching style:</b> 
+					People learn differently, and when the default teaching style and philosophies is not working for some students, it's important to have room for alternative teaching styles. 
+					Outside TAs can operate more independently to class policies and do whatever they believe is best.
+			</li>
+		</p>
 
-
-
-<div id="tutorial-content" style="padding: 10px;">
-	{#if !$user.uid} 
-		<div class:question={isQuestionMode}>
-			<Textfield bind:value={titleValue} class="room-title" style={`width: ${$canvasWidth}px`} 
-				on:click={() => { 
-					hasClickedTitle = true; 
-					titleValue === 'Welcome!' ? startTypingAnimation() : '' 
-				}
-			}
-			>	
-				<HelperText slot="helper" persistent>
-					{#if !hasClickedTitle}
-						Server members help each other with visual explanations.
-						How? Edit the title above to start the tutorial
-					{:else if !isQuestionMode}
-						To ask a question, use a question mark '?'
-					{:else}
-					  (In a real server people will be notified and look at your question)
-					{/if}
-				</HelperText>
-			</Textfield>
-		</div>
-		
-		{#if isQuestionMode}			
-			<TextAreaAutoResizing
-				value="Look! Someone is drawing something (in a real server everyone is connected to voice chat). But scroll down, there's more!"
-			/>
-			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 20}px`}>
-				<RenderlessListenToBoard dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
-					let:boardDoc={boardDoc}
-				>
-					<RenderlessFetchStrokes dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" autoFetchStrokes={true}
-						let:strokesArray={strokesArray}
-					>
-						{#if boardDoc}
-							<Blackboard strokesArray={demoStrokesArray}>
-								{#if strokesArray}
-									<div use:startRealtimeDemo={strokesArray}></div>
-								{/if}
-							</Blackboard>	
-						{/if}
-					</RenderlessFetchStrokes>
-				</RenderlessListenToBoard>
-			</div>
-			
-			<TextAreaAutoResizing
-				value="Someone else recorded a video for you! What, I hard-coded this to happen? Don't be ridiculous, haha..."
-			/>
-			<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px`} id="caleb-video-section">
-				<RenderlessListenToBoard dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" 
-					let:boardDoc={boardDoc}
-				>
-					<RenderlessFetchStrokes dbPath="/classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q" autoFetchStrokes={true}
-						let:strokesArray={strokesArray}
-					>
-						{#if boardDoc}
-							<DoodleVideo {strokesArray} audioDownloadURL={boardDoc.audioDownloadURL}/>
-						{/if}
-					</RenderlessFetchStrokes>
-				</RenderlessListenToBoard>
-			</div>
-
-			<!-- This is your own video, preserve it for comparison -->
-			{#if !hasRecordedVideo}
-				<div use:startRecordCountdown id="make-your-own-video">
-					<TextAreaAutoResizing 
-						value="Wondering how the video was made? Press the glowing blue button, then draw and talk like in real-life. Be messy and ramble - there's a lot of value in casually recorded videos (note: mouse drawing isn't supported)"
-					/>
-				</div>
-
-				<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight}px`}>
-					<RenderlessAudioRecorder 
-						let:startRecording={startRecording}
-						let:stopRecording={stopRecording}
-						let:currentTime={currentTime}
-						on:record-end={(e) => saveVideoLocally(e.detail.audioBlob)}
-					>
-						<Blackboard 
-							currentTime={currentTime}
-							strokesArray={localStrokesArray} 
-							on:stroke-drawn={(e) => localStrokesArray = [...localStrokesArray, e.detail.newStroke]}
-						>
-							{#if $recordState === 'pre_record'}
-								<span on:click={startRecording}
-									class="material-icons" style="font-size: 2.5rem;
-									color: cyan;
-									margin-left: 11px; margin-right: 20px"
-								>
-									radio_button_checked
-								</span>
-							{:else if $recordState === 'mid_record'} 
-								<span on:click={stopRecording}
-									class="material-icons" style="font-size: 2.5rem;
-									color: cyan;
-									margin-left: 11px; margin-right: 20px"
-								>
-									stop_circle
-								</span>
-							{/if}
-						</Blackboard>
-					</RenderlessAudioRecorder>
-				</div>
-			{:else}
-				<TextAreaAutoResizing 
-					value="Reusable explanations upload near-instantly, in-place, and benefits the entire server."
-				/>
-				<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px`}>
-					<DoodleVideo strokesArray={localStrokesArray} audioDownloadURL={audioBlobURL}>
-					
-					</DoodleVideo>
-				</div>
-			{/if}
-
-			<!-- {#if hasRecordedVideo} -->
-				<div id="sign-up-section" style="height: 400px">
-					<TextAreaAutoResizing
-						value="That's the end! It's all about helping each other efficiently, creating a positive-sum game. Sign up to this 6.036 closed-beta with a phone number to get text notifications iff members ask or answer questions. "
-					/>
-
-					{#if !phoneConfirmationResult}
-						<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px; margin-right: 6px; margin-left: auto;">
-							<div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div>
-							<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="339" bind:value={phoneNumSegment1} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
-
-							<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="676" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
-
-							<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="1234" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
-							<Button id="sign-in-button" on:click={signInWithPhone}>
-								Sign Up
-							</Button>
-						</div>
-					{:else}
-						<div style="display: flex">
-							<Textfield variant="filled" bind:value={phoneConfirmCode} label="6-digit code">
-								<HelperText slot="helper"></HelperText>
-							</Textfield>
-							<Button on:click={verifyConfirmationCode}>Confirm code</Button>
-						</div>
-					{/if}
-				</div>
-			<!-- {/if} -->
-		{/if}
-	{/if}
-</div>
+	</div>
+</section>
 
 <script>	
 	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
@@ -398,6 +341,13 @@
 	text-align: left;
 }
 
+li {
+	margin-bottom: 2px;
+}
+
+#make-your-own-video {
+
+}
 
 </style>
 

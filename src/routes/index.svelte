@@ -34,8 +34,8 @@
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li><b>Office Hours</b>: "wait-time is 40 minutes, and by the way, we can only help you for 5 minutes"</li>
-			<li><b>Piazza</b>: "I had to answer your complex question with only words and no pictures...?"</li>	
+			<li><b>Office Hours</b>: "Wait-time is 40 minutes, and by the way, we can only help you for 5 minutes"</li>
+			<li><b>Piazza</b>: Good luck asking about Quantum Mechanics over async. text communication</li>	
 			<li><b>HKN</b>: p(tutor available) = p(getting struck by lightning)</li>
 		</p>
 		<br>

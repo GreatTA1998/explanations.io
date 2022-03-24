@@ -124,10 +124,14 @@
 					Great teaching is not financially rewarded because salaries are constant. Moreover, staff members are severely time-limited too: research, staff management, etc. so it's costly for them to try new things.
 					<br><br>
 				  Outside tutors (EECS grad. students) - on the other hand - have fewer commitments, and are allowed to be rewarded proportional to their impact. This means skin-in-the-game to provide as great an experience as possible.
-			
-
 		</p>
 
+		<br>
+		<br>
+
+		<p style="font-size: 1.26rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+			<b>For any other questions, ping the organizer eltonlin@mit.edu or 503 250 3868 anytime.</b>
+		</p>
 	</div>
 </section>
 

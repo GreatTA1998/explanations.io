@@ -3,8 +3,8 @@
 		<div style="padding-bottom: 90px;">
 			<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
 				<img src="logo.png" width="95" height="85">
-				<h1 id="logo" style="font-size: 5rem; color: rgb(0 0 0); padding-bottom: 19px; padding-left: 15px;">
-					explain.mit.edu
+				<h1 id="logo" style="font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 15px;">
+					ihtfp.app
 				</h1>
 			</div>
 			<div style="display: flex; justify-content: center;">
@@ -20,7 +20,7 @@
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			explain.mit.edu is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
+			ihtfp.app is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
 			<br>
 			<br>
 			Here's an example:

@@ -77,7 +77,9 @@
     canvas.height = $canvasHeight
     bgCanvas.width = $canvasWidth
     bgCanvas.height = $canvasHeight
+    
     if (strokesArray) {
+      // TODO: rename to `re-render strokes`
       handleResize() // sometimes resize happens when `strokesArray` is not yet hydrated
     } 
   }

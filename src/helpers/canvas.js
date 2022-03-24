@@ -25,6 +25,11 @@ export function calculateCanvasDimensions () {
   return dimensions
 }
 
+export function calculateCanvasDimensions2 () {
+  const normalD = calculateCanvasDimensions()
+  return { width: 0.64 * normalD.width, height: 0.64 * normalD.height}
+}
+
 export function drawStroke ({ points, color, lineWidth, isErasing }, pointPeriod = null, ctx, canvas) {
   return new Promise(async resolve => {
     for (let i = 1; i < points.length; i++) {

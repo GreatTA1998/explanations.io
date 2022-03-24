@@ -16,21 +16,40 @@
 </section>
 
 
-<section style="background: #FDFDF8; height: 120px; padding: 150px 100px; border-bottom: 1px solid #eee;">
+<section style="background: #FDFDF8; height: 880px; padding: 150px 100px; border-bottom: 1px solid #eee;">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			explain.mit.edu is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
 			<br>
 			<br>
+			Here's an example:
 		</p>
+	</div>
+
+	<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`} id="caleb-video-section">
+		<RenderlessListenToBoard dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+			let:boardDoc={boardDoc}
+		>
+			<RenderlessFetchStrokes dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7" autoFetchStrokes={true}
+				let:strokesArray={strokesArray}
+			>
+				{#if boardDoc}
+					<DoodleVideo 
+						{strokesArray} 
+						audioDownloadURL={boardDoc.audioDownloadURL} 
+						backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+					/>
+				{/if}
+			</RenderlessFetchStrokes>
+		</RenderlessListenToBoard>
 	</div>
 </section>
 
 <section style="height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			For difficult classes, it's hard to get help
+			For difficult classes, it's <b style="color: red">hard to get help</b>
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -45,7 +64,7 @@
 <section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<b style="color: rgb(15 186 191)">KhanAcademy-style group tutoring makes it easy</b>
+			<b style="color: rgb(15 186 191)">Try KhanAcademy-style group tutoring</b>
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -54,7 +73,7 @@
 			<li>Whenever anyone receives help, visual explanations accumulate on the server, benefitting everyone.</li>
 		</p>
 
-		<iframe width="680" height="400" src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		<iframe width="690" height="480" src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 	</div>
 
@@ -64,12 +83,12 @@
 <section style="height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			How to sign up
+			Get started
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li>Venmo $10 and class number (e.g. 6.006) to elton-lin-2</li>
-			<li>Create an account with phone number to join the server</li>
+			<li>Venmo $10 to elton-lin-2, don't forget to specify a class (e.g. 6.006)</li>
+			<li>Create a phone account to join the server</li>
 			<li>Refund anytime, any reason.</li>
 		</p>
 		
@@ -85,7 +104,7 @@
 						<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="676" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
 						<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="1234" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
-						<Button id="sign-in-button" on:click={signInWithPhone}>
+						<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(80 185 165)">
 							Sign Up
 						</Button>
 					</div>
@@ -121,7 +140,7 @@
 		<p style="font-size: 1.26rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			
 				<b>A: Stronger teaching incentives:</b>
-					Great teaching is not financially rewarded because salaries are constant. Moreover, staff members are severely time-limited too: research, staff management, etc. so it's costly for them to try new things.
+					Teaching more is not financially rewarded because salaries are constant. Moreover, staff members are severely time-limited too: research, staff management, etc. so it's costly to try new things.
 					<br><br>
 				  Outside tutors (EECS grad. students) - on the other hand - have fewer commitments, and are allowed to be rewarded proportional to their impact. This means skin-in-the-game to provide as great an experience as possible.
 		</p>
@@ -130,7 +149,7 @@
 		<br>
 
 		<p style="font-size: 1.26rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<b>For any other questions, ping the organizer eltonlin@mit.edu or 503 250 3868 anytime.</b>
+			<b>For other questions, ping the organizer eltonlin@mit.edu or 503 250 3868 anytime.</b>
 		</p>
 	</div>
 </section>
@@ -147,8 +166,7 @@
 	import DoodleVideo from '$lib/DoodleVideo.svelte'
 	import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-	import { calculateCanvasDimensions } from '../helpers/canvas.js'
-	import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
 
 	let currentTime = 10
@@ -246,7 +264,7 @@
 	}
 
 	onMount(() => {
-		const { width, height } = calculateCanvasDimensions()
+		const { width, height } = calculateCanvasDimensions2()
 		canvasWidth.set(width) 
 		canvasHeight.set(height)
 	})

@@ -53,9 +53,9 @@
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li><b>Office Hours</b>: "Wait-time is 40 minutes, and by the way, we can only help you for 5 minutes"</li>
-			<li><b>Piazza</b>: Good luck asking about Quantum Mechanics over async. text communication</li>	
-			<li><b>HKN</b>: p(tutor available) = p(getting struck by lightning)</li>
+			<li><b>Office Hours</b>: tends to be crowded</li>
+			<li><b>Piazza</b>: text is too limiting</li>	
+			<li><b>HKN</b>: demand for tutors > supply</li>
 		</p>
 		<br>
 	</div>
@@ -68,7 +68,7 @@
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li>n students each pay $10/week to 1 tutor</li>
+			<li>n students, 1 tutor</li>
 			<li>You request real-time help anytime</li>
 			<li>Whenever anyone receives help, visual explanations accumulate on the server, benefitting everyone.</li>
 		</p>
@@ -87,9 +87,9 @@
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li>Venmo $10 to elton-lin-2, don't forget to specify a class (e.g. 6.006)</li>
+			<!-- <li>Venmo $10 to elton-lin-2, don't forget to specify a class (e.g. 6.006)</li> -->
 			<li>Create a phone account to join the server</li>
-			<li>Refund anytime, any reason.</li>
+			<!-- <li>Refund anytime, any reason.</li> -->
 		</p>
 		
 	
@@ -140,7 +140,7 @@
 		<p style="font-size: 1.26rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			
 				<b>A: Stronger teaching incentives:</b>
-					Teaching more is not financially rewarded because salaries are constant. Moreover, staff members are severely time-limited too: research, staff management, etc. so it's costly to try new things.
+					Teaching more is not financially rewarded because salaries are constant. Moreover, staff members are severely time-limited: research, staff management, etc. so it's costly to try new things.
 					<br><br>
 				  Outside tutors (EECS grad. students) - on the other hand - have fewer commitments, and are allowed to be rewarded proportional to their impact. This means skin-in-the-game to provide as great an experience as possible.
 		</p>

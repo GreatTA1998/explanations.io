@@ -8,7 +8,7 @@
 				</h1>
 			</div>
 			<div style="display: flex; justify-content: center;">
-				<b style="color: grey" class="copied-from-koa">Blackboard-centric explanation platform for MIT classes</b>
+				<b style="color: grey" class="copied-from-koa">Visual, blackboard-centric explanation platform for MIT & Harvard</b>
 			</div>
 		</div>
 	</div>
@@ -68,9 +68,9 @@
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li>n students, 1 tutor</li>
+			<li>Each student contributes $10/week, server tutor earns $10n/week</li>
 			<li>You request real-time help anytime</li>
-			<li>Whenever anyone receives help, visual explanations accumulate on the server, benefitting everyone.</li>
+			<li>Visual explanations accumulate on the server, benefitting everyone.</li>
 		</p>
 
 		<iframe width="690" height="480" src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

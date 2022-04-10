@@ -5,10 +5,11 @@
         <div style="display: flex; align-items: center">
           <img src="/logo.png" width="60" height="54" alt="web-logo">
           <div>
-            <ClassDropdownMenu/>
-            <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
-              Intro to Machine Learning
-            </div>
+            <ClassDropdownMenu {nameOfClass} {descriptionOfClass}>
+            </ClassDropdownMenu>
+            <!-- <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
+              {descriptionOfClass}
+            </div> -->
           </div>
         </div>
       </div>
@@ -34,6 +35,10 @@
   import Card from '@smui/card'
   import List, { Item, Text } from '@smui/list';
   import { user } from '../store.js'
+
+  export let nameOfClass
+  export let descriptionOfClass
+
 </script>
  
 <style>

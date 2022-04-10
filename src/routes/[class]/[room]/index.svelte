@@ -25,6 +25,7 @@
         {:else if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
           {roomDoc.askerName} asked on {displayDate(roomDoc.dateAsked)}
         {/if}
+
         {#if roomDoc.dateResolved}
           , resolved {displayDate(roomDoc.dateResolved)}
         {/if}
@@ -219,6 +220,9 @@
   let resolveQuestionCurrentTime = 5
 
   function hasQuestionMark (string) {
+    // quickfix
+    if (!string) return false
+
     return '?' === string.charAt(string.length - 1)
   }
 

@@ -8,7 +8,7 @@
 				</h1>
 			</div>
 			<div style="display: flex; justify-content: center;">
-				<b style="color: grey" class="copied-from-koa">Visual, blackboard-centric explanation platform for MIT & Harvard</b>
+				<b style="color: grey" class="copied-from-koa">An alternative help resource for flagged students at MIT</b>
 			</div>
 		</div>
 	</div>
@@ -49,13 +49,14 @@
 <section style="height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			For difficult classes, it's <b style="color: red">hard to get help</b>
+			Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li><b>Office Hours</b>: tends to be crowded</li>
-			<li><b>Piazza</b>: text is too limiting</li>	
-			<li><b>HKN</b>: demand for tutors > supply</li>
+			In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+			<br>
+			<br>
+			So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
 		</p>
 		<br>
 	</div>
@@ -64,13 +65,21 @@
 <section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<b style="color: rgb(15 186 191)">Try KhanAcademy-style group tutoring</b>
+			<b style="color: rgb(15 186 191)">A KhanAcademy for MIT</b>
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<li>Each student contributes $10/week, server tutor earns $10n/week</li>
-			<li>You request real-time help anytime</li>
-			<li>Visual explanations accumulate on the server, benefitting everyone.</li>
+			Help can become an abundant resource if it is easy to re-use explanations. 
+			Teaching 500 students takes 500 hours. Teaching 500 students - with videos - takes only 1-2 hours.
+			Resuability frees up TA's time, so they can spend it on other things.
+	
+			<br>
+			<br>
+
+			Here's how you use this:
+			<li>You ask for help anytime (special hours have instant replies)</li>
+			<li>TAs get pinged by text notication, and joins the voice chat and shared blackboard </li>
+			<li>Recorded explanations accumulate over time, benefitting everyone.</li>
 		</p>
 
 		<iframe width="690" height="480" src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -88,12 +97,11 @@
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			<!-- <li>Venmo $10 to elton-lin-2, don't forget to specify a class (e.g. 6.006)</li> -->
-			<li>Create a phone account to join the server</li>
+			<li>Create a phone account to join the 8.01 server</li>
+			<li>For anything related to the website, contact eltonlin@mit.edu / 503 250 3868</li>
 			<!-- <li>Refund anytime, any reason.</li> -->
 		</p>
 		
-	
-
 
 			<div id="sign-up-section" style="height: 100px">
 				{#if !phoneConfirmationResult}
@@ -127,7 +135,7 @@
 </section>
 
 <!-- FAQ -->
-<section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
+<!-- <section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			Frequently Asked Questions
@@ -152,7 +160,7 @@
 			<b>For other questions, ping the organizer eltonlin@mit.edu or 503 250 3868 anytime.</b>
 		</p>
 	</div>
-</section>
+</section> -->
 
 <script>	
 	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
@@ -244,6 +252,18 @@
 		signInWithPhone()
 	}
 
+	$: if (phoneConfirmCode) {
+		if (phoneConfirmCode.length === 6) {
+			verifyConfirmationCode()
+		}
+	}
+
+	onMount(() => {
+		const { width, height } = calculateCanvasDimensions2()
+		canvasWidth.set(width) 
+		canvasHeight.set(height)
+	})
+
 	async function startRealtimeDemo (element, strokesArray) {
 		for (const stroke of strokesArray) {
 			demoStrokesArray = [...demoStrokesArray, stroke]
@@ -258,17 +278,6 @@
 		// quick-fix, otherwise when user logs in to a real server their blackboard is *shown* to be uploading for some reason
 		recordState.set('pre_record')
 	}
-
-	if ($user.uid) {
-		goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7')
-	}
-
-	onMount(() => {
-		const { width, height } = calculateCanvasDimensions2()
-		canvasWidth.set(width) 
-		canvasHeight.set(height)
-	})
-
 
 	function startRecordCountdown (element) {
 		timer = setInterval(() => currentTime -= 1, 1000)	
@@ -325,7 +334,8 @@
 				// User signed in successfully.
 				const user = result.user;
 				console.log('redirecting, user =', user)
-				goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
+				goto('O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
+				// goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
 				// ...
 			}).catch((error) => {
 				alert(error)

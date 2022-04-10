@@ -23,7 +23,7 @@
   let:toggleMic={toggleMic}
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
-  <LeftDrawer>
+  <LeftDrawer {nameOfClass} {descriptionOfClass}>
     {#each rooms as room (room.id + roomID)}
       <div on:click={() => goto(`/${classID}/${room.id}`)}
         style="padding: 6px;" 
@@ -111,7 +111,7 @@
   import { onDestroy, onMount } from 'svelte'
   import { portal } from '../../helpers/actions.js'
   import { goto } from '$app/navigation'
-  import { collection, doc, getFirestore, onSnapshot, orderBy, setDoc, query } from 'firebase/firestore'
+  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query } from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
   import { browser } from '$app/env'
   import { canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants } from '../../store.js'
@@ -122,6 +122,9 @@
   
   export let classID;
   export let roomID;
+
+  let nameOfClass = ''
+  let descriptionOfClass = ''
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
 
 	// START OF RESIZE LOGIC 
@@ -135,12 +138,18 @@
     }
   })
 
-  onMount(() => {
+  onMount(async () => {
     console.log('__layout mounted, but should only be done once')
     if (browser) {
       window.addEventListener('resize', debouncedResizeHandler)
     }
     debouncedResizeHandler()
+
+    // fetch the class document
+    const classDocRef = doc(getFirestore(), `classes/${classID}`)
+    const classDoc = await getDoc(classDocRef)
+    nameOfClass = classDoc.data().name
+    descriptionOfClass = classDoc.data().description
   })
 
   async function createNewRoom () {

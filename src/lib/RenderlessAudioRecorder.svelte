@@ -3,7 +3,7 @@
 </slot>
 
 <script>
-  import { dailyMicStream, recordState } from '../store.js'
+  import { dailyMicStream, recordState, dailyRoomParticipants } from '../store.js'
   import { createEventDispatcher, onMount } from 'svelte'
   import { browser } from '$app/env'
   // import mpegEncoder from "audio-recorder-polyfill/mpeg-encoder";
@@ -25,13 +25,19 @@
   const dispatch = createEventDispatcher()
   let recorder =  null
 
+  /**
+   * Assumes the user is already connected to voice chat. 
+   * This assumption is currently preserved by the design because Daily asks for mic permission on initial website load - the blackboards (and therefore the record buttons) don't render unless mic is allowed. 
+   */
   function startRecording () {
-    return new Promise(async resolve => {
-      if (!$dailyMicStream) {
-        const micStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-        dailyMicStream.set(micStream)
+    return new Promise(async (resolve, reject) => {
+      if (!$dailyRoomParticipants.local.audio) {
+        alert('Cannot start recording because your mic is muted - click the switch next to your "beaver #n" to unmute')
+        reject('Cannot start recording because mic stream is muted')
+        return
       }
-      // the same stream cannot used for video call, different recording sessions, etc. without
+
+      // need to use a copy because aliasing a stream for video call, different recording sessions, etc. causes
       // unpredictable issues on Safari iOS
       const micStreamCopy = $dailyMicStream.clone()
       recorder = new MediaRecorder(micStreamCopy); 

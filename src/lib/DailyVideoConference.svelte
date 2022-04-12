@@ -41,11 +41,21 @@
   })
 
   async function initCallObject () {
-    return new Promise(async (resolve) =>{
+    return new Promise(async (resolve, reject) => {      
       if (!$dailyMicStream) {
-        const micStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-        dailyMicStream.set(micStream)
+        try {
+          const micStream = await navigator.mediaDevices.getUserMedia({ audio: true })
+          console.log('micStream =', micStream)
+          dailyMicStream.set(micStream)
+          console.log('dailyMicStream =', $dailyMicStream)
+        } catch (error) {
+          alert("Mic. permission was denied by your browser - it's needed for voice chat and for recording voiced explanations. Reset your mic. settings, which is usually an icon button close to the website URL bar e.g. the left side of 'https://ihtfp.app'")
+          reject()
+        }
       }
+      // for localhost, $dailyMicStream can be "null" here. I don't know why - can be a nextTick issue,
+      // but a clue is, __layout is rendered twice, instead of once, and initCallObject is called twice as a result, instead of once. 
+      // ignore for now if the error isn't reproduced on a deployed version
       const [ micMediaStreamTrack ] = $dailyMicStream.getAudioTracks()
       CallObject = DailyIframe.createCallObject({
         audioSource: micMediaStreamTrack,

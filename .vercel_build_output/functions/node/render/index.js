@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-51d4d1f3.js
+// .svelte-kit/output/server/chunks/store-030d8f64.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -9059,10 +9059,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_51d4d1f3 = __esm({
-  ".svelte-kit/output/server/chunks/store-51d4d1f3.js"() {
+var init_store_030d8f64 = __esm({
+  ".svelte-kit/output/server/chunks/store-030d8f64.js"() {
     init_shims();
-    init_app_9f5e9fcc();
+    init_app_fff52741();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -17444,7 +17444,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-f778e07b.js
+// .svelte-kit/output/server/chunks/index-c327074d-c19d9f7a.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17933,10 +17933,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_f778e07b = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-f778e07b.js"() {
+var init_index_c327074d_c19d9f7a = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-c19d9f7a.js"() {
     init_shims();
-    init_store_51d4d1f3();
+    init_store_030d8f64();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18865,18 +18865,18 @@ var init_index_c327074d_f778e07b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-f85c6e3d.js
-var layout_f85c6e3d_exports = {};
-__export(layout_f85c6e3d_exports, {
+// .svelte-kit/output/server/chunks/__layout-b18b3c11.js
+var layout_b18b3c11_exports = {};
+__export(layout_b18b3c11_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, _layout;
-var init_layout_f85c6e3d = __esm({
-  ".svelte-kit/output/server/chunks/__layout-f85c6e3d.js"() {
+var init_layout_b18b3c11 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-b18b3c11.js"() {
     init_shims();
-    init_app_9f5e9fcc();
-    init_store_51d4d1f3();
-    init_index_c327074d_f778e07b();
+    init_app_fff52741();
+    init_store_030d8f64();
+    init_index_c327074d_c19d9f7a();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18895,9 +18895,9 @@ var init_layout_f85c6e3d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-8a3dbd49.js
-var error_8a3dbd49_exports = {};
-__export(error_8a3dbd49_exports, {
+// .svelte-kit/output/server/chunks/error-21dda3c4.js
+var error_21dda3c4_exports = {};
+__export(error_21dda3c4_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18905,10 +18905,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_8a3dbd49 = __esm({
-  ".svelte-kit/output/server/chunks/error-8a3dbd49.js"() {
+var init_error_21dda3c4 = __esm({
+  ".svelte-kit/output/server/chunks/error-21dda3c4.js"() {
     init_shims();
-    init_app_9f5e9fcc();
+    init_app_fff52741();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18930,12 +18930,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-6cff0a7c.js
-function guard(name6) {
-  return () => {
-    throw new Error(`Cannot call ${name6}(...) on the server`);
-  };
-}
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-d8cdfffd.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -18952,22 +18947,6 @@ function dispatch(element, eventType, detail, eventInit = { bubbles: true }, dup
     }
     return event2;
   }
-}
-function exclude(obj, keys) {
-  let names = Object.getOwnPropertyNames(obj);
-  const newObj = {};
-  for (let i = 0; i < names.length; i++) {
-    const name6 = names[i];
-    const cashIndex = name6.indexOf("$");
-    if (cashIndex !== -1 && keys.indexOf(name6.substring(0, cashIndex + 1)) !== -1) {
-      continue;
-    }
-    if (keys.indexOf(name6) !== -1) {
-      continue;
-    }
-    newObj[name6] = obj[name6];
-  }
-  return newObj;
 }
 function forwardEventsBuilder(component) {
   let $on;
@@ -19066,17 +19045,6 @@ function forwardEventsBuilder(component) {
       }
     };
   };
-}
-function prefixFilter(obj, prefix) {
-  let names = Object.getOwnPropertyNames(obj);
-  const newObj = {};
-  for (let i = 0; i < names.length; i++) {
-    const name6 = names[i];
-    if (name6.substring(0, prefix.length) === prefix) {
-      newObj[name6.substring(prefix.length)] = obj[name6];
-    }
-  }
-  return newObj;
 }
 function supportsCssVariables(windowObj, forceRefresh) {
   if (forceRefresh === void 0) {
@@ -19314,13 +19282,12 @@ function classAdderBuilder(props) {
     }
   });
 }
-var goto, oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$3, Button_1, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Object_1$2, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, Input, Textarea, Object_1$1, Textfield, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_6cff0a7c = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-6cff0a7c.js"() {
+var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$2, Button_1, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
+var init_SelectionGroupIcon_d8cdfffd = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-d8cdfffd.js"() {
     init_shims();
-    init_app_9f5e9fcc();
-    init_store_51d4d1f3();
-    goto = guard("goto");
+    init_app_fff52741();
+    init_store_030d8f64();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20057,7 +20024,7 @@ var init_SelectionGroupIcon_6cff0a7c = __esm({
     Nav = Nav$1;
     Span = Span$1;
     Ul = Ul$1;
-    ({ Object: Object_1$3 } = globals);
+    ({ Object: Object_1$2 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
       let defaultProp;
@@ -20152,7 +20119,7 @@ var init_SelectionGroupIcon_6cff0a7c = __esm({
         actionProp = context === "dialog:action" && action != null ? { "data-mdc-dialog-action": action } : { action: $$props.action };
         defaultProp = context === "dialog:action" && defaultAction ? { "data-mdc-dialog-button-default": "" } : { default: $$props.default };
         secondaryProp = context === "banner" ? {} : { secondary: $$props.secondary };
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1$3.assign({
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1$2.assign({
           use: [
             [
               Ripple,
@@ -20203,249 +20170,7 @@ var init_SelectionGroupIcon_6cff0a7c = __esm({
       } while (!$$settled);
       return $$rendered;
     });
-    ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $storeValue, $$unsubscribe_storeValue;
-      let { key } = $$props;
-      let { value } = $$props;
-      const storeValue = writable(value);
-      $$unsubscribe_storeValue = subscribe(storeValue, (value2) => $storeValue = value2);
-      setContext(key, storeValue);
-      onDestroy(() => {
-        storeValue.set(void 0);
-      });
-      if ($$props.key === void 0 && $$bindings.key && key !== void 0)
-        $$bindings.key(key);
-      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-        $$bindings.value(value);
-      set_store_value(storeValue, $storeValue = value, $storeValue);
-      $$unsubscribe_storeValue();
-      return `${slots.default ? slots.default({}) : ``}`;
-    });
-    FloatingLabel = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "style",
-        "for",
-        "floatAbove",
-        "required",
-        "wrapped",
-        "shake",
-        "float",
-        "setRequired",
-        "getWidth",
-        "getElement"
-      ]);
-      var _a2;
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { style = "" } = $$props;
-      let { for: forId = void 0 } = $$props;
-      let { floatAbove = false } = $$props;
-      let { required = false } = $$props;
-      let { wrapped = false } = $$props;
-      let element;
-      let instance2;
-      let internalClasses = {};
-      let internalStyles = {};
-      let inputProps = (_a2 = getContext("SMUI:generic:input:props")) !== null && _a2 !== void 0 ? _a2 : {};
-      function shake(shouldShake) {
-        instance2.shake(shouldShake);
-      }
-      function float(shouldFloat) {
-        floatAbove = shouldFloat;
-      }
-      function setRequired(isRequired) {
-        required = isRequired;
-      }
-      function getWidth() {
-        return instance2.getWidth();
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-        $$bindings.style(style);
-      if ($$props.for === void 0 && $$bindings.for && forId !== void 0)
-        $$bindings.for(forId);
-      if ($$props.floatAbove === void 0 && $$bindings.floatAbove && floatAbove !== void 0)
-        $$bindings.floatAbove(floatAbove);
-      if ($$props.required === void 0 && $$bindings.required && required !== void 0)
-        $$bindings.required(required);
-      if ($$props.wrapped === void 0 && $$bindings.wrapped && wrapped !== void 0)
-        $$bindings.wrapped(wrapped);
-      if ($$props.shake === void 0 && $$bindings.shake && shake !== void 0)
-        $$bindings.shake(shake);
-      if ($$props.float === void 0 && $$bindings.float && float !== void 0)
-        $$bindings.float(float);
-      if ($$props.setRequired === void 0 && $$bindings.setRequired && setRequired !== void 0)
-        $$bindings.setRequired(setRequired);
-      if ($$props.getWidth === void 0 && $$bindings.getWidth && getWidth !== void 0)
-        $$bindings.getWidth(getWidth);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `${wrapped ? `<span${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-floating-label": true,
-            "mdc-floating-label--float-above": floatAbove,
-            "mdc-floating-label--required": required,
-            ...internalClasses
-          }))
-        },
-        {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
-        },
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>` : `<label${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-floating-label": true,
-            "mdc-floating-label--float-above": floatAbove,
-            "mdc-floating-label--required": required,
-            ...internalClasses
-          }))
-        },
-        {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
-        },
-        {
-          for: escape_attribute_value(forId || (inputProps ? inputProps.id : void 0))
-        },
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</label>`}`;
-    });
-    LineRipple = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "style",
-        "active",
-        "activate",
-        "deactivate",
-        "setRippleCenter",
-        "getElement"
-      ]);
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { style = "" } = $$props;
-      let { active = false } = $$props;
-      let element;
-      let instance2;
-      let internalClasses = {};
-      let internalStyles = {};
-      function activate() {
-        instance2.activate();
-      }
-      function deactivate() {
-        instance2.deactivate();
-      }
-      function setRippleCenter(xCoordinate) {
-        instance2.setRippleCenter(xCoordinate);
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-        $$bindings.style(style);
-      if ($$props.active === void 0 && $$bindings.active && active !== void 0)
-        $$bindings.active(active);
-      if ($$props.activate === void 0 && $$bindings.activate && activate !== void 0)
-        $$bindings.activate(activate);
-      if ($$props.deactivate === void 0 && $$bindings.deactivate && deactivate !== void 0)
-        $$bindings.deactivate(deactivate);
-      if ($$props.setRippleCenter === void 0 && $$bindings.setRippleCenter && setRippleCenter !== void 0)
-        $$bindings.setRippleCenter(setRippleCenter);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `<div${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-line-ripple": true,
-            "mdc-line-ripple--active": active,
-            ...internalClasses
-          }))
-        },
-        {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
-        },
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}></div>`;
-    });
-    NotchedOutline = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["use", "class", "notched", "noLabel", "notch", "closeNotch", "getElement"]);
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { notched = false } = $$props;
-      let { noLabel = false } = $$props;
-      let element;
-      let instance2;
-      let internalClasses = {};
-      let notchStyles = {};
-      function removeClass(className2) {
-        if (!(className2 in internalClasses) || internalClasses[className2]) {
-          internalClasses[className2] = false;
-        }
-      }
-      function notch(notchWidth) {
-        instance2.notch(notchWidth);
-      }
-      function closeNotch() {
-        instance2.closeNotch();
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.notched === void 0 && $$bindings.notched && notched !== void 0)
-        $$bindings.notched(notched);
-      if ($$props.noLabel === void 0 && $$bindings.noLabel && noLabel !== void 0)
-        $$bindings.noLabel(noLabel);
-      if ($$props.notch === void 0 && $$bindings.notch && notch !== void 0)
-        $$bindings.notch(notch);
-      if ($$props.closeNotch === void 0 && $$bindings.closeNotch && closeNotch !== void 0)
-        $$bindings.closeNotch(closeNotch);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      {
-        {
-          removeClass("mdc-notched-outline--upgraded");
-        }
-      }
-      return `<div${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-notched-outline": true,
-            "mdc-notched-outline--notched": notched,
-            "mdc-notched-outline--no-label": noLabel,
-            ...internalClasses
-          }))
-        },
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}><div class="${"mdc-notched-outline__leading"}"></div>
-  ${!noLabel ? `<div class="${"mdc-notched-outline__notch"}"${add_attribute("style", Object.entries(notchStyles).map(([name6, value]) => `${name6}: ${value};`).join(" "), 0)}>${slots.default ? slots.default({}) : ``}</div>` : ``}
-  <div class="${"mdc-notched-outline__trailing"}"></div>
-</div>`;
-    });
-    ({ Object: Object_1$2 } = globals);
+    ({ Object: Object_1$1 } = globals);
     internals = {
       component: Div$1,
       class: "",
@@ -20498,7 +20223,7 @@ var init_SelectionGroupIcon_6cff0a7c = __esm({
       let $$rendered;
       do {
         $$settled = true;
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1$2.assign({ use: [forwardEvents, ...use] }, {
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1$1.assign({ use: [forwardEvents, ...use] }, {
           class: classMap({
             [className]: true,
             [smuiClass]: true,
@@ -20527,560 +20252,6 @@ var init_SelectionGroupIcon_6cff0a7c = __esm({
     Suffix = classAdderBuilder({
       class: "mdc-text-field__affix mdc-text-field__affix--suffix",
       component: Span
-    });
-    Input = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "type",
-        "placeholder",
-        "value",
-        "files",
-        "dirty",
-        "invalid",
-        "updateInvalid",
-        "emptyValueNull",
-        "emptyValueUndefined",
-        "getAttr",
-        "addAttr",
-        "removeAttr",
-        "focus",
-        "blur",
-        "getElement"
-      ]);
-      forwardEventsBuilder(get_current_component());
-      let uninitializedValue = () => {
-      };
-      function isUninitializedValue(value2) {
-        return value2 === uninitializedValue;
-      }
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { type = "text" } = $$props;
-      let { placeholder = " " } = $$props;
-      let { value = uninitializedValue } = $$props;
-      const valueUninitialized = isUninitializedValue(value);
-      if (valueUninitialized) {
-        value = "";
-      }
-      let { files = null } = $$props;
-      let { dirty = false } = $$props;
-      let { invalid = false } = $$props;
-      let { updateInvalid = true } = $$props;
-      let { emptyValueNull = value === null } = $$props;
-      if (valueUninitialized && emptyValueNull) {
-        value = null;
-      }
-      let { emptyValueUndefined = value === void 0 } = $$props;
-      if (valueUninitialized && emptyValueUndefined) {
-        value = void 0;
-      }
-      let element;
-      let internalAttrs = {};
-      let valueProp = {};
-      function getAttr(name6) {
-        var _a2;
-        return name6 in internalAttrs ? (_a2 = internalAttrs[name6]) !== null && _a2 !== void 0 ? _a2 : null : getElement().getAttribute(name6);
-      }
-      function addAttr(name6, value2) {
-        if (internalAttrs[name6] !== value2) {
-          internalAttrs[name6] = value2;
-        }
-      }
-      function removeAttr(name6) {
-        if (!(name6 in internalAttrs) || internalAttrs[name6] != null) {
-          internalAttrs[name6] = void 0;
-        }
-      }
-      function focus() {
-        getElement().focus();
-      }
-      function blur() {
-        getElement().blur();
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-        $$bindings.type(type);
-      if ($$props.placeholder === void 0 && $$bindings.placeholder && placeholder !== void 0)
-        $$bindings.placeholder(placeholder);
-      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-        $$bindings.value(value);
-      if ($$props.files === void 0 && $$bindings.files && files !== void 0)
-        $$bindings.files(files);
-      if ($$props.dirty === void 0 && $$bindings.dirty && dirty !== void 0)
-        $$bindings.dirty(dirty);
-      if ($$props.invalid === void 0 && $$bindings.invalid && invalid !== void 0)
-        $$bindings.invalid(invalid);
-      if ($$props.updateInvalid === void 0 && $$bindings.updateInvalid && updateInvalid !== void 0)
-        $$bindings.updateInvalid(updateInvalid);
-      if ($$props.emptyValueNull === void 0 && $$bindings.emptyValueNull && emptyValueNull !== void 0)
-        $$bindings.emptyValueNull(emptyValueNull);
-      if ($$props.emptyValueUndefined === void 0 && $$bindings.emptyValueUndefined && emptyValueUndefined !== void 0)
-        $$bindings.emptyValueUndefined(emptyValueUndefined);
-      if ($$props.getAttr === void 0 && $$bindings.getAttr && getAttr !== void 0)
-        $$bindings.getAttr(getAttr);
-      if ($$props.addAttr === void 0 && $$bindings.addAttr && addAttr !== void 0)
-        $$bindings.addAttr(addAttr);
-      if ($$props.removeAttr === void 0 && $$bindings.removeAttr && removeAttr !== void 0)
-        $$bindings.removeAttr(removeAttr);
-      if ($$props.focus === void 0 && $$bindings.focus && focus !== void 0)
-        $$bindings.focus(focus);
-      if ($$props.blur === void 0 && $$bindings.blur && blur !== void 0)
-        $$bindings.blur(blur);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      {
-        if (type === "file") {
-          delete valueProp.value;
-          valueProp = valueProp;
-        } else {
-          valueProp.value = value == null ? "" : value;
-        }
-      }
-      return `<input${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-text-field__input": true
-          }))
-        },
-        { type: escape_attribute_value(type) },
-        {
-          placeholder: escape_attribute_value(placeholder)
-        },
-        escape_object(valueProp),
-        escape_object(internalAttrs),
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}>`;
-    });
-    Textarea = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "style",
-        "value",
-        "dirty",
-        "invalid",
-        "updateInvalid",
-        "resizable",
-        "getAttr",
-        "addAttr",
-        "removeAttr",
-        "focus",
-        "blur",
-        "getElement"
-      ]);
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { style = "" } = $$props;
-      let { value = "" } = $$props;
-      let { dirty = false } = $$props;
-      let { invalid = false } = $$props;
-      let { updateInvalid = true } = $$props;
-      let { resizable = true } = $$props;
-      let element;
-      let internalAttrs = {};
-      function getAttr(name6) {
-        var _a2;
-        return name6 in internalAttrs ? (_a2 = internalAttrs[name6]) !== null && _a2 !== void 0 ? _a2 : null : getElement().getAttribute(name6);
-      }
-      function addAttr(name6, value2) {
-        if (internalAttrs[name6] !== value2) {
-          internalAttrs[name6] = value2;
-        }
-      }
-      function removeAttr(name6) {
-        if (!(name6 in internalAttrs) || internalAttrs[name6] != null) {
-          internalAttrs[name6] = void 0;
-        }
-      }
-      function focus() {
-        getElement().focus();
-      }
-      function blur() {
-        getElement().blur();
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-        $$bindings.style(style);
-      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-        $$bindings.value(value);
-      if ($$props.dirty === void 0 && $$bindings.dirty && dirty !== void 0)
-        $$bindings.dirty(dirty);
-      if ($$props.invalid === void 0 && $$bindings.invalid && invalid !== void 0)
-        $$bindings.invalid(invalid);
-      if ($$props.updateInvalid === void 0 && $$bindings.updateInvalid && updateInvalid !== void 0)
-        $$bindings.updateInvalid(updateInvalid);
-      if ($$props.resizable === void 0 && $$bindings.resizable && resizable !== void 0)
-        $$bindings.resizable(resizable);
-      if ($$props.getAttr === void 0 && $$bindings.getAttr && getAttr !== void 0)
-        $$bindings.getAttr(getAttr);
-      if ($$props.addAttr === void 0 && $$bindings.addAttr && addAttr !== void 0)
-        $$bindings.addAttr(addAttr);
-      if ($$props.removeAttr === void 0 && $$bindings.removeAttr && removeAttr !== void 0)
-        $$bindings.removeAttr(removeAttr);
-      if ($$props.focus === void 0 && $$bindings.focus && focus !== void 0)
-        $$bindings.focus(focus);
-      if ($$props.blur === void 0 && $$bindings.blur && blur !== void 0)
-        $$bindings.blur(blur);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `<textarea${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-text-field__input": true
-          }))
-        },
-        {
-          style: escape_attribute_value(`${resizable ? "" : "resize: none; "}${style}`)
-        },
-        escape_object(internalAttrs),
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}>${value || ""}</textarea>`;
-    });
-    ({ Object: Object_1$1 } = globals);
-    Textfield = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "style",
-        "ripple",
-        "disabled",
-        "required",
-        "textarea",
-        "variant",
-        "noLabel",
-        "label",
-        "type",
-        "value",
-        "files",
-        "invalid",
-        "updateInvalid",
-        "dirty",
-        "prefix",
-        "suffix",
-        "validateOnValueChange",
-        "useNativeValidation",
-        "withLeadingIcon",
-        "withTrailingIcon",
-        "input",
-        "floatingLabel",
-        "lineRipple",
-        "notchedOutline",
-        "focus",
-        "blur",
-        "layout",
-        "getElement"
-      ]);
-      let $$slots = compute_slots(slots);
-      forwardEventsBuilder(get_current_component());
-      let uninitializedValue = () => {
-      };
-      function isUninitializedValue(value2) {
-        return value2 === uninitializedValue;
-      }
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { style = "" } = $$props;
-      let { ripple = true } = $$props;
-      let { disabled = false } = $$props;
-      let { required = false } = $$props;
-      let { textarea = false } = $$props;
-      let { variant = textarea ? "outlined" : "standard" } = $$props;
-      let { noLabel = false } = $$props;
-      let { label = void 0 } = $$props;
-      let { type = "text" } = $$props;
-      let { value = $$restProps.input$emptyValueUndefined ? void 0 : uninitializedValue } = $$props;
-      let { files = uninitializedValue } = $$props;
-      const valued = !isUninitializedValue(value) || !isUninitializedValue(files);
-      if (isUninitializedValue(value)) {
-        value = void 0;
-      }
-      if (isUninitializedValue(files)) {
-        files = null;
-      }
-      let { invalid = uninitializedValue } = $$props;
-      let { updateInvalid = isUninitializedValue(invalid) } = $$props;
-      if (isUninitializedValue(invalid)) {
-        invalid = false;
-      }
-      let { dirty = false } = $$props;
-      let { prefix = void 0 } = $$props;
-      let { suffix = void 0 } = $$props;
-      let { validateOnValueChange = updateInvalid } = $$props;
-      let { useNativeValidation = updateInvalid } = $$props;
-      let { withLeadingIcon = uninitializedValue } = $$props;
-      let { withTrailingIcon = uninitializedValue } = $$props;
-      let { input = void 0 } = $$props;
-      let { floatingLabel = void 0 } = $$props;
-      let { lineRipple = void 0 } = $$props;
-      let { notchedOutline = void 0 } = $$props;
-      let element;
-      let internalClasses = {};
-      let internalStyles = {};
-      let helperId = void 0;
-      let addLayoutListener = getContext("SMUI:addLayoutListener");
-      let removeLayoutListener;
-      new Promise((resolve2) => resolve2);
-      if (addLayoutListener) {
-        removeLayoutListener = addLayoutListener(layout);
-      }
-      onDestroy(() => {
-        if (removeLayoutListener) {
-          removeLayoutListener();
-        }
-      });
-      function focus() {
-        input === null || input === void 0 ? void 0 : input.focus();
-      }
-      function blur() {
-        input === null || input === void 0 ? void 0 : input.blur();
-      }
-      function layout() {
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-        $$bindings.style(style);
-      if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
-        $$bindings.ripple(ripple);
-      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
-        $$bindings.disabled(disabled);
-      if ($$props.required === void 0 && $$bindings.required && required !== void 0)
-        $$bindings.required(required);
-      if ($$props.textarea === void 0 && $$bindings.textarea && textarea !== void 0)
-        $$bindings.textarea(textarea);
-      if ($$props.variant === void 0 && $$bindings.variant && variant !== void 0)
-        $$bindings.variant(variant);
-      if ($$props.noLabel === void 0 && $$bindings.noLabel && noLabel !== void 0)
-        $$bindings.noLabel(noLabel);
-      if ($$props.label === void 0 && $$bindings.label && label !== void 0)
-        $$bindings.label(label);
-      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-        $$bindings.type(type);
-      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-        $$bindings.value(value);
-      if ($$props.files === void 0 && $$bindings.files && files !== void 0)
-        $$bindings.files(files);
-      if ($$props.invalid === void 0 && $$bindings.invalid && invalid !== void 0)
-        $$bindings.invalid(invalid);
-      if ($$props.updateInvalid === void 0 && $$bindings.updateInvalid && updateInvalid !== void 0)
-        $$bindings.updateInvalid(updateInvalid);
-      if ($$props.dirty === void 0 && $$bindings.dirty && dirty !== void 0)
-        $$bindings.dirty(dirty);
-      if ($$props.prefix === void 0 && $$bindings.prefix && prefix !== void 0)
-        $$bindings.prefix(prefix);
-      if ($$props.suffix === void 0 && $$bindings.suffix && suffix !== void 0)
-        $$bindings.suffix(suffix);
-      if ($$props.validateOnValueChange === void 0 && $$bindings.validateOnValueChange && validateOnValueChange !== void 0)
-        $$bindings.validateOnValueChange(validateOnValueChange);
-      if ($$props.useNativeValidation === void 0 && $$bindings.useNativeValidation && useNativeValidation !== void 0)
-        $$bindings.useNativeValidation(useNativeValidation);
-      if ($$props.withLeadingIcon === void 0 && $$bindings.withLeadingIcon && withLeadingIcon !== void 0)
-        $$bindings.withLeadingIcon(withLeadingIcon);
-      if ($$props.withTrailingIcon === void 0 && $$bindings.withTrailingIcon && withTrailingIcon !== void 0)
-        $$bindings.withTrailingIcon(withTrailingIcon);
-      if ($$props.input === void 0 && $$bindings.input && input !== void 0)
-        $$bindings.input(input);
-      if ($$props.floatingLabel === void 0 && $$bindings.floatingLabel && floatingLabel !== void 0)
-        $$bindings.floatingLabel(floatingLabel);
-      if ($$props.lineRipple === void 0 && $$bindings.lineRipple && lineRipple !== void 0)
-        $$bindings.lineRipple(lineRipple);
-      if ($$props.notchedOutline === void 0 && $$bindings.notchedOutline && notchedOutline !== void 0)
-        $$bindings.notchedOutline(notchedOutline);
-      if ($$props.focus === void 0 && $$bindings.focus && focus !== void 0)
-        $$bindings.focus(focus);
-      if ($$props.blur === void 0 && $$bindings.blur && blur !== void 0)
-        $$bindings.blur(blur);
-      if ($$props.layout === void 0 && $$bindings.layout && layout !== void 0)
-        $$bindings.layout(layout);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        input && input.getElement();
-        $$rendered = `${valued ? `<label${spread([
-          {
-            class: escape_attribute_value(classMap({
-              [className]: true,
-              "mdc-text-field": true,
-              "mdc-text-field--disabled": disabled,
-              "mdc-text-field--textarea": textarea,
-              "mdc-text-field--filled": variant === "filled",
-              "mdc-text-field--outlined": variant === "outlined",
-              "smui-text-field--standard": variant === "standard" && !textarea,
-              "mdc-text-field--no-label": noLabel || label == null && !$$slots.label,
-              "mdc-text-field--label-floating": value != null && value !== "",
-              "mdc-text-field--with-leading-icon": isUninitializedValue(withLeadingIcon) ? $$slots.leadingIcon : withLeadingIcon,
-              "mdc-text-field--with-trailing-icon": isUninitializedValue(withTrailingIcon) ? $$slots.trailingIcon : withTrailingIcon,
-              "mdc-text-field--with-internal-counter": textarea && $$slots.internalCounter,
-              "mdc-text-field--invalid": invalid,
-              ...internalClasses
-            }))
-          },
-          {
-            style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value2]) => `${name6}: ${value2};`).concat([style]).join(" "))
-          },
-          {
-            for: escape_attribute_value(void 0)
-          },
-          escape_object(exclude($$restProps, ["input$", "label$", "ripple$", "outline$", "helperLine$"]))
-        ])}${add_attribute("this", element, 0)}>${!textarea && variant !== "outlined" ? `${variant === "filled" ? `<span class="${"mdc-text-field__ripple"}"></span>` : ``}
-      ${!noLabel && (label != null || $$slots.label) ? `${validate_component(FloatingLabel, "FloatingLabel").$$render($$result, Object_1$1.assign({
-          floatAbove: value != null && value !== ""
-        }, { required }, { wrapped: true }, prefixFilter($$restProps, "label$"), { this: floatingLabel }), {
-          this: ($$value) => {
-            floatingLabel = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `${escape(label == null ? "" : label)}${slots.label ? slots.label({}) : ``}`
-        })}` : ``}` : ``}
-    ${textarea || variant === "outlined" ? `${validate_component(NotchedOutline, "NotchedOutline").$$render($$result, Object_1$1.assign({
-          noLabel: noLabel || label == null && !$$slots.label
-        }, prefixFilter($$restProps, "outline$"), { this: notchedOutline }), {
-          this: ($$value) => {
-            notchedOutline = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `${!noLabel && (label != null || $$slots.label) ? `${validate_component(FloatingLabel, "FloatingLabel").$$render($$result, Object_1$1.assign({
-            floatAbove: value != null && value !== ""
-          }, { required }, { wrapped: true }, prefixFilter($$restProps, "label$"), { this: floatingLabel }), {
-            this: ($$value) => {
-              floatingLabel = $$value;
-              $$settled = false;
-            }
-          }, {
-            default: () => `${escape(label == null ? "" : label)}${slots.label ? slots.label({}) : ``}`
-          })}` : ``}`
-        })}` : ``}
-    ${validate_component(ContextFragment, "ContextFragment").$$render($$result, {
-          key: "SMUI:textfield:icon:leading",
-          value: true
-        }, {}, {
-          default: () => `${slots.leadingIcon ? slots.leadingIcon({}) : ``}`
-        })}
-    ${slots.default ? slots.default({}) : ``}
-    ${textarea && typeof value === "string" ? `<span${add_attribute("class", classMap({
-          "mdc-text-field__resizer": !("input$resizable" in $$restProps) || $$restProps.input$resizable
-        }), 0)}>${validate_component(Textarea, "Textarea").$$render($$result, Object_1$1.assign({ disabled }, { required }, { updateInvalid }, { "aria-controls": helperId }, { "aria-describedby": helperId }, prefixFilter($$restProps, "input$"), { this: input }, { value }, { dirty }, { invalid }), {
-          this: ($$value) => {
-            input = $$value;
-            $$settled = false;
-          },
-          value: ($$value) => {
-            value = $$value;
-            $$settled = false;
-          },
-          dirty: ($$value) => {
-            dirty = $$value;
-            $$settled = false;
-          },
-          invalid: ($$value) => {
-            invalid = $$value;
-            $$settled = false;
-          }
-        }, {})}
-        ${slots.internalCounter ? slots.internalCounter({}) : ``}</span>` : `${slots.prefix ? slots.prefix({}) : ``}
-      ${prefix != null ? `${validate_component(Prefix, "Prefix").$$render($$result, {}, {}, { default: () => `${escape(prefix)}` })}` : ``}
-      ${validate_component(Input, "Input").$$render($$result, Object_1$1.assign({ type }, { disabled }, { required }, { updateInvalid }, { "aria-controls": helperId }, { "aria-describedby": helperId }, noLabel && label != null ? { placeholder: label } : {}, prefixFilter($$restProps, "input$"), { this: input }, { value }, { files }, { dirty }, { invalid }), {
-          this: ($$value) => {
-            input = $$value;
-            $$settled = false;
-          },
-          value: ($$value) => {
-            value = $$value;
-            $$settled = false;
-          },
-          files: ($$value) => {
-            files = $$value;
-            $$settled = false;
-          },
-          dirty: ($$value) => {
-            dirty = $$value;
-            $$settled = false;
-          },
-          invalid: ($$value) => {
-            invalid = $$value;
-            $$settled = false;
-          }
-        }, {})}
-      ${suffix != null ? `${validate_component(Suffix, "Suffix").$$render($$result, {}, {}, { default: () => `${escape(suffix)}` })}` : ``}
-      ${slots.suffix ? slots.suffix({}) : ``}`}
-    ${validate_component(ContextFragment, "ContextFragment").$$render($$result, {
-          key: "SMUI:textfield:icon:leading",
-          value: false
-        }, {}, {
-          default: () => `${slots.trailingIcon ? slots.trailingIcon({}) : ``}`
-        })}
-    ${!textarea && variant !== "outlined" && ripple ? `${validate_component(LineRipple, "LineRipple").$$render($$result, Object_1$1.assign(prefixFilter($$restProps, "ripple$"), { this: lineRipple }), {
-          this: ($$value) => {
-            lineRipple = $$value;
-            $$settled = false;
-          }
-        }, {})}` : ``}</label>` : `<div${spread([
-          {
-            class: escape_attribute_value(classMap({
-              [className]: true,
-              "mdc-text-field": true,
-              "mdc-text-field--disabled": disabled,
-              "mdc-text-field--textarea": textarea,
-              "mdc-text-field--filled": variant === "filled",
-              "mdc-text-field--outlined": variant === "outlined",
-              "smui-text-field--standard": variant === "standard" && !textarea,
-              "mdc-text-field--no-label": noLabel || !$$slots.label,
-              "mdc-text-field--with-leading-icon": $$slots.leadingIcon,
-              "mdc-text-field--with-trailing-icon": $$slots.trailingIcon,
-              "mdc-text-field--invalid": invalid,
-              ...internalClasses
-            }))
-          },
-          {
-            style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value2]) => `${name6}: ${value2};`).concat([style]).join(" "))
-          },
-          escape_object(exclude($$restProps, ["input$", "label$", "ripple$", "outline$", "helperLine$"]))
-        ])}${add_attribute("this", element, 0)}>${slots.label ? slots.label({}) : ``}
-    ${validate_component(ContextFragment, "ContextFragment").$$render($$result, {
-          key: "SMUI:textfield:icon:leading",
-          value: true
-        }, {}, {
-          default: () => `${slots.leadingIcon ? slots.leadingIcon({}) : ``}`
-        })}
-    ${slots.default ? slots.default({}) : ``}
-    ${validate_component(ContextFragment, "ContextFragment").$$render($$result, {
-          key: "SMUI:textfield:icon:leading",
-          value: false
-        }, {}, {
-          default: () => `${slots.trailingIcon ? slots.trailingIcon({}) : ``}`
-        })}
-    ${slots.ripple ? slots.ripple({}) : ``}</div>`}
-${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$result, Object_1$1.assign(prefixFilter($$restProps, "helperLine$")), {}, {
-          default: () => `${slots.helper ? slots.helper({}) : ``}`
-        })}` : ``}`;
-      } while (!$$settled);
-      return $$rendered;
     });
     List = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
@@ -21516,60 +20687,13 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-8e3de36d.js
-var counter2, HelperText, css, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_8e3de36d = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-8e3de36d.js"() {
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-a7323137.js
+var css, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
+var init_RenderlessFetchStrokes_a7323137 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-a7323137.js"() {
     init_shims();
-    init_app_9f5e9fcc();
-    init_SelectionGroupIcon_6cff0a7c();
-    init_store_51d4d1f3();
-    counter2 = 0;
-    HelperText = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["use", "class", "id", "persistent", "validationMsg", "getElement"]);
-      forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { id: id2 = "SMUI-textfield-helper-text-" + counter2++ } = $$props;
-      let { persistent = false } = $$props;
-      let { validationMsg = false } = $$props;
-      let element;
-      let internalClasses = {};
-      let internalAttrs = {};
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.id === void 0 && $$bindings.id && id2 !== void 0)
-        $$bindings.id(id2);
-      if ($$props.persistent === void 0 && $$bindings.persistent && persistent !== void 0)
-        $$bindings.persistent(persistent);
-      if ($$props.validationMsg === void 0 && $$bindings.validationMsg && validationMsg !== void 0)
-        $$bindings.validationMsg(validationMsg);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `<div${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-text-field-helper-text": true,
-            "mdc-text-field-helper-text--persistent": persistent,
-            "mdc-text-field-helper-text--validation-msg": validationMsg,
-            ...internalClasses
-          }))
-        },
-        {
-          "aria-hidden": escape_attribute_value(persistent ? void 0 : "true")
-        },
-        { id: escape_attribute_value(id2) },
-        escape_object(internalAttrs),
-        escape_object($$restProps)
-      ])}${add_attribute("this", element, 0)}>${`${slots.default ? slots.default({}) : ``}`}
-</div>`;
-    });
+    init_app_fff52741();
+    init_store_030d8f64();
     css = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
@@ -21683,21 +20807,21 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/index-bceff79b.js
-var index_bceff79b_exports = {};
-__export(index_bceff79b_exports, {
+// .svelte-kit/output/server/chunks/index-35402a42.js
+var index_35402a42_exports = {};
+__export(index_35402a42_exports, {
   default: () => Routes
 });
 var import_node_fetch2, import_cookie3, css2, Routes;
-var init_index_bceff79b = __esm({
-  ".svelte-kit/output/server/chunks/index-bceff79b.js"() {
+var init_index_35402a42 = __esm({
+  ".svelte-kit/output/server/chunks/index-35402a42.js"() {
     init_shims();
-    init_app_9f5e9fcc();
-    init_index_c327074d_f778e07b();
-    init_store_51d4d1f3();
+    init_app_fff52741();
+    init_index_c327074d_c19d9f7a();
+    init_store_030d8f64();
     import_node_fetch2 = __toModule(require_lib2());
-    init_SelectionGroupIcon_6cff0a7c();
-    init_RenderlessFetchStrokes_8e3de36d();
+    init_SelectionGroupIcon_d8cdfffd();
+    init_RenderlessFetchStrokes_a7323137();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
     css2 = {
@@ -21748,60 +20872,56 @@ var init_index_bceff79b = __esm({
           });
         }
       }
-      function verifyConfirmationCode() {
-        console.log("phoneConfirmCode =", phoneConfirmCode);
-        window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
-          const user2 = result.user;
-          console.log("redirecting, user =", user2);
-          goto("O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe", { replaceState: true });
-        }).catch((error3) => {
-          alert(error3);
-        });
-      }
       $$result.css.add(css2);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
-        {
-          if (isQuestionMode) {
-            setTimeout(() => {
-            }, 5e3);
-          }
+      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
+      {
+        if (isQuestionMode) {
+          setTimeout(() => {
+          }, 5e3);
         }
-        {
-          if (currentTime.toFixed(0) === "0") {
-            console.log("end of timer, currentTime =", currentTime);
-            clearInterval(timer);
-          }
+      }
+      {
+        if (currentTime.toFixed(0) === "0") {
+          console.log("end of timer, currentTime =", currentTime);
+          clearInterval(timer);
         }
-        {
-          if (phoneNumSegment1.length === 3) {
-            document.getElementById("phone-input-2").focus();
-          }
+      }
+      {
+        if (phoneNumSegment1.length === 3) {
+          document.getElementById("phone-input-2").focus();
         }
-        {
-          if (phoneNumSegment2.length === 3) {
-            document.getElementById("phone-input-3").focus();
-          }
+      }
+      {
+        if (phoneNumSegment2.length === 3) {
+          document.getElementById("phone-input-3").focus();
         }
-        {
-          if (phoneNumSegment3.length === 4) {
-            signInWithPhone();
-          }
+      }
+      {
+        if (phoneNumSegment3.length === 4) {
+          signInWithPhone();
         }
-        {
-          if (phoneConfirmCode) {
-            if (phoneConfirmCode.length === 6) {
-              verifyConfirmationCode();
-            }
-          }
-        }
-        $$rendered = `<section style="${"height: 100vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 100vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"95"}" height="${"85"}">
+      }
+      $$unsubscribe_canvasWidth();
+      $$unsubscribe_canvasHeight();
+      return `<section style="${"height: 100vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 100vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"95"}" height="${"85"}">
 				<h1 id="${"logo"}" style="${"font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 15px;"}" class="${"svelte-udn0zu"}">ihtfp.app
 				</h1></div>
-			<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey"}" class="${"copied-from-koa svelte-udn0zu"}">An alternative help resource for flagged students at MIT</b></div></div></div></section>
+			<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey"}" class="${"copied-from-koa svelte-udn0zu"}">An alternative help resource for flagged students at MIT</b></div>
+
+			<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}"><div style="${"margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem"}">+1 </div>
+						<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment1, 0)}>
+
+						<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment2, 0)}>
+
+						<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment3, 0)}>
+						${validate_component(Button_1, "Button").$$render($$result, {
+        id: "sign-in-button",
+        style: "color: rgb(116 28 183)"
+      }, {}, {
+        default: () => `Sign Up
+						`
+      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
+						${validate_component(Button_1, "Button").$$render($$result, { style: "color: rgb(116 28 183)" }, {}, { default: () => `Confirm code` })}</div>`}</div></div></div></section>
 
 
 <section style="${"background: #FDFDF8; height: 880px; padding: 150px 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-udn0zu"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Introduction</h1>
@@ -21812,19 +20932,19 @@ var init_index_bceff79b = __esm({
 		</p></div>
 
 	<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`, 0)} id="${"caleb-video-section"}">${validate_component(RenderlessListenToBoard, "RenderlessListenToBoard").$$render($$result, {
-          dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+        dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+      }, {}, {
+        default: ({ boardDoc }) => `${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, {
+          dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
+          autoFetchStrokes: true
         }, {}, {
-          default: ({ boardDoc }) => `${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, {
-            dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
-            autoFetchStrokes: true
-          }, {}, {
-            default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-              strokesArray,
-              audioDownloadURL: boardDoc.audioDownloadURL,
-              backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
-            }, {}, {})}` : ``}`
-          })}`
-        })}</div></section>
+          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray,
+            audioDownloadURL: boardDoc.audioDownloadURL,
+            backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
+          }, {}, {})}` : ``}`
+        })}`
+      })}</div></section>
 
 <section style="${"height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-udn0zu"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Falling behind classes is like accumulating credit card debt - you need <b style="${"color: orange"}">proper help </b>to escape the cycle
 		</h1>
@@ -21836,12 +20956,11 @@ var init_index_bceff79b = __esm({
 		</p>
 		<br></div></section>
 
-<section style="${"background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee"}"><div class="${"content svelte-udn0zu"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}"><b style="${"color: rgb(15 186 191)"}">A KhanAcademy for MIT</b></h1>
+<section style="${"background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee"}"><div class="${"content svelte-udn0zu"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}"><b style="${"color: rgb(15 186 191)"}">The solution is make it as efficient as possible to give help</b></h1>
 
-		<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Help can become an abundant resource if it is easy to re-use explanations. 
-			Teaching 500 students takes 500 hours. Teaching 500 students - with videos - takes only 1-2 hours.
-			Resuability frees up TA&#39;s time, so they can spend it on other things.
-	
+		<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Help can become an abundant resource if it is easy to re-use explanations.
+			Great explanations are like SpaceX rockets - it&#39;s costly to not try to re-use them. 
+			Reusability frees up TA&#39;s time, so they can spend it on other things.
 			<br>
 			<br>
 
@@ -21853,42 +20972,7 @@ var init_index_bceff79b = __esm({
 		<iframe width="${"690"}" height="${"480"}" src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>
 
 
-<section style="${"height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee"}"><div class="${"content svelte-udn0zu"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
-		</h1>
 
-		<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">
-			<li class="${"svelte-udn0zu"}">Create a phone account to join the 8.01 server</li>
-			<li class="${"svelte-udn0zu"}">For anything related to the website, contact eltonlin@mit.edu / 503 250 3868</li>
-			</p>
-		
-
-			<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px; margin-right: 6px; margin-left: auto;"}"><div style="${"margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem"}">+1 </div>
-						<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"339"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment1, 0)}>
-
-						<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"676"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment2, 0)}>
-
-						<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"1234"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment3, 0)}>
-						${validate_component(Button_1, "Button").$$render($$result, {
-          id: "sign-in-button",
-          style: "color: rgb(80 185 165)"
-        }, {}, {
-          default: () => `Sign Up
-						`
-        })}</div>` : `<div style="${"display: flex"}">${validate_component(Textfield, "Textfield").$$render($$result, {
-          variant: "filled",
-          label: "6-digit code",
-          value: phoneConfirmCode
-        }, {
-          value: ($$value) => {
-            phoneConfirmCode = $$value;
-            $$settled = false;
-          }
-        }, {
-          helper: () => `${validate_component(HelperText, "HelperText").$$render($$result, { slot: "helper" }, {}, {})}`
-        })}
-						${validate_component(Button_1, "Button").$$render($$result, {}, {}, { default: () => `Confirm code` })}</div>`}</div>
-		<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}"><br>
-			<br></p></div></section>
 
 
 
@@ -21899,21 +20983,847 @@ var init_index_bceff79b = __esm({
 
 
 `;
-      } while (!$$settled);
-      $$unsubscribe_canvasWidth();
-      $$unsubscribe_canvasHeight();
-      return $$rendered;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/Menu-277e9a56.js
-var Switch, MenuSurface, Menu;
-var init_Menu_277e9a56 = __esm({
-  ".svelte-kit/output/server/chunks/Menu-277e9a56.js"() {
+// .svelte-kit/output/server/chunks/Menu-d7a23660.js
+function guard(name6) {
+  return () => {
+    throw new Error(`Cannot call ${name6}(...) on the server`);
+  };
+}
+function exclude(obj, keys) {
+  let names = Object.getOwnPropertyNames(obj);
+  const newObj = {};
+  for (let i = 0; i < names.length; i++) {
+    const name6 = names[i];
+    const cashIndex = name6.indexOf("$");
+    if (cashIndex !== -1 && keys.indexOf(name6.substring(0, cashIndex + 1)) !== -1) {
+      continue;
+    }
+    if (keys.indexOf(name6) !== -1) {
+      continue;
+    }
+    newObj[name6] = obj[name6];
+  }
+  return newObj;
+}
+function prefixFilter(obj, prefix) {
+  let names = Object.getOwnPropertyNames(obj);
+  const newObj = {};
+  for (let i = 0; i < names.length; i++) {
+    const name6 = names[i];
+    if (name6.substring(0, prefix.length) === prefix) {
+      newObj[name6.substring(prefix.length)] = obj[name6];
+    }
+  }
+  return newObj;
+}
+var goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_12, Textfield, Switch, MenuSurface, Menu;
+var init_Menu_d7a23660 = __esm({
+  ".svelte-kit/output/server/chunks/Menu-d7a23660.js"() {
     init_shims();
-    init_app_9f5e9fcc();
-    init_SelectionGroupIcon_6cff0a7c();
+    init_app_fff52741();
+    init_SelectionGroupIcon_d8cdfffd();
+    init_store_030d8f64();
+    goto = guard("goto");
+    ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $storeValue, $$unsubscribe_storeValue;
+      let { key } = $$props;
+      let { value } = $$props;
+      const storeValue = writable(value);
+      $$unsubscribe_storeValue = subscribe(storeValue, (value2) => $storeValue = value2);
+      setContext(key, storeValue);
+      onDestroy(() => {
+        storeValue.set(void 0);
+      });
+      if ($$props.key === void 0 && $$bindings.key && key !== void 0)
+        $$bindings.key(key);
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      set_store_value(storeValue, $storeValue = value, $storeValue);
+      $$unsubscribe_storeValue();
+      return `${slots.default ? slots.default({}) : ``}`;
+    });
+    FloatingLabel = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "style",
+        "for",
+        "floatAbove",
+        "required",
+        "wrapped",
+        "shake",
+        "float",
+        "setRequired",
+        "getWidth",
+        "getElement"
+      ]);
+      var _a2;
+      forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { style = "" } = $$props;
+      let { for: forId = void 0 } = $$props;
+      let { floatAbove = false } = $$props;
+      let { required = false } = $$props;
+      let { wrapped = false } = $$props;
+      let element;
+      let instance2;
+      let internalClasses = {};
+      let internalStyles = {};
+      let inputProps = (_a2 = getContext("SMUI:generic:input:props")) !== null && _a2 !== void 0 ? _a2 : {};
+      function shake(shouldShake) {
+        instance2.shake(shouldShake);
+      }
+      function float(shouldFloat) {
+        floatAbove = shouldFloat;
+      }
+      function setRequired(isRequired) {
+        required = isRequired;
+      }
+      function getWidth() {
+        return instance2.getWidth();
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+        $$bindings.style(style);
+      if ($$props.for === void 0 && $$bindings.for && forId !== void 0)
+        $$bindings.for(forId);
+      if ($$props.floatAbove === void 0 && $$bindings.floatAbove && floatAbove !== void 0)
+        $$bindings.floatAbove(floatAbove);
+      if ($$props.required === void 0 && $$bindings.required && required !== void 0)
+        $$bindings.required(required);
+      if ($$props.wrapped === void 0 && $$bindings.wrapped && wrapped !== void 0)
+        $$bindings.wrapped(wrapped);
+      if ($$props.shake === void 0 && $$bindings.shake && shake !== void 0)
+        $$bindings.shake(shake);
+      if ($$props.float === void 0 && $$bindings.float && float !== void 0)
+        $$bindings.float(float);
+      if ($$props.setRequired === void 0 && $$bindings.setRequired && setRequired !== void 0)
+        $$bindings.setRequired(setRequired);
+      if ($$props.getWidth === void 0 && $$bindings.getWidth && getWidth !== void 0)
+        $$bindings.getWidth(getWidth);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `${wrapped ? `<span${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-floating-label": true,
+            "mdc-floating-label--float-above": floatAbove,
+            "mdc-floating-label--required": required,
+            ...internalClasses
+          }))
+        },
+        {
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+        },
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>` : `<label${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-floating-label": true,
+            "mdc-floating-label--float-above": floatAbove,
+            "mdc-floating-label--required": required,
+            ...internalClasses
+          }))
+        },
+        {
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+        },
+        {
+          for: escape_attribute_value(forId || (inputProps ? inputProps.id : void 0))
+        },
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</label>`}`;
+    });
+    LineRipple = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "style",
+        "active",
+        "activate",
+        "deactivate",
+        "setRippleCenter",
+        "getElement"
+      ]);
+      forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { style = "" } = $$props;
+      let { active = false } = $$props;
+      let element;
+      let instance2;
+      let internalClasses = {};
+      let internalStyles = {};
+      function activate() {
+        instance2.activate();
+      }
+      function deactivate() {
+        instance2.deactivate();
+      }
+      function setRippleCenter(xCoordinate) {
+        instance2.setRippleCenter(xCoordinate);
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+        $$bindings.style(style);
+      if ($$props.active === void 0 && $$bindings.active && active !== void 0)
+        $$bindings.active(active);
+      if ($$props.activate === void 0 && $$bindings.activate && activate !== void 0)
+        $$bindings.activate(activate);
+      if ($$props.deactivate === void 0 && $$bindings.deactivate && deactivate !== void 0)
+        $$bindings.deactivate(deactivate);
+      if ($$props.setRippleCenter === void 0 && $$bindings.setRippleCenter && setRippleCenter !== void 0)
+        $$bindings.setRippleCenter(setRippleCenter);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `<div${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-line-ripple": true,
+            "mdc-line-ripple--active": active,
+            ...internalClasses
+          }))
+        },
+        {
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+        },
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}></div>`;
+    });
+    NotchedOutline = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["use", "class", "notched", "noLabel", "notch", "closeNotch", "getElement"]);
+      forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { notched = false } = $$props;
+      let { noLabel = false } = $$props;
+      let element;
+      let instance2;
+      let internalClasses = {};
+      let notchStyles = {};
+      function removeClass(className2) {
+        if (!(className2 in internalClasses) || internalClasses[className2]) {
+          internalClasses[className2] = false;
+        }
+      }
+      function notch(notchWidth) {
+        instance2.notch(notchWidth);
+      }
+      function closeNotch() {
+        instance2.closeNotch();
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.notched === void 0 && $$bindings.notched && notched !== void 0)
+        $$bindings.notched(notched);
+      if ($$props.noLabel === void 0 && $$bindings.noLabel && noLabel !== void 0)
+        $$bindings.noLabel(noLabel);
+      if ($$props.notch === void 0 && $$bindings.notch && notch !== void 0)
+        $$bindings.notch(notch);
+      if ($$props.closeNotch === void 0 && $$bindings.closeNotch && closeNotch !== void 0)
+        $$bindings.closeNotch(closeNotch);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      {
+        {
+          removeClass("mdc-notched-outline--upgraded");
+        }
+      }
+      return `<div${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-notched-outline": true,
+            "mdc-notched-outline--notched": notched,
+            "mdc-notched-outline--no-label": noLabel,
+            ...internalClasses
+          }))
+        },
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}><div class="${"mdc-notched-outline__leading"}"></div>
+  ${!noLabel ? `<div class="${"mdc-notched-outline__notch"}"${add_attribute("style", Object.entries(notchStyles).map(([name6, value]) => `${name6}: ${value};`).join(" "), 0)}>${slots.default ? slots.default({}) : ``}</div>` : ``}
+  <div class="${"mdc-notched-outline__trailing"}"></div>
+</div>`;
+    });
+    Input = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "type",
+        "placeholder",
+        "value",
+        "files",
+        "dirty",
+        "invalid",
+        "updateInvalid",
+        "emptyValueNull",
+        "emptyValueUndefined",
+        "getAttr",
+        "addAttr",
+        "removeAttr",
+        "focus",
+        "blur",
+        "getElement"
+      ]);
+      forwardEventsBuilder(get_current_component());
+      let uninitializedValue = () => {
+      };
+      function isUninitializedValue(value2) {
+        return value2 === uninitializedValue;
+      }
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { type = "text" } = $$props;
+      let { placeholder = " " } = $$props;
+      let { value = uninitializedValue } = $$props;
+      const valueUninitialized = isUninitializedValue(value);
+      if (valueUninitialized) {
+        value = "";
+      }
+      let { files = null } = $$props;
+      let { dirty = false } = $$props;
+      let { invalid = false } = $$props;
+      let { updateInvalid = true } = $$props;
+      let { emptyValueNull = value === null } = $$props;
+      if (valueUninitialized && emptyValueNull) {
+        value = null;
+      }
+      let { emptyValueUndefined = value === void 0 } = $$props;
+      if (valueUninitialized && emptyValueUndefined) {
+        value = void 0;
+      }
+      let element;
+      let internalAttrs = {};
+      let valueProp = {};
+      function getAttr(name6) {
+        var _a2;
+        return name6 in internalAttrs ? (_a2 = internalAttrs[name6]) !== null && _a2 !== void 0 ? _a2 : null : getElement().getAttribute(name6);
+      }
+      function addAttr(name6, value2) {
+        if (internalAttrs[name6] !== value2) {
+          internalAttrs[name6] = value2;
+        }
+      }
+      function removeAttr(name6) {
+        if (!(name6 in internalAttrs) || internalAttrs[name6] != null) {
+          internalAttrs[name6] = void 0;
+        }
+      }
+      function focus() {
+        getElement().focus();
+      }
+      function blur() {
+        getElement().blur();
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
+        $$bindings.type(type);
+      if ($$props.placeholder === void 0 && $$bindings.placeholder && placeholder !== void 0)
+        $$bindings.placeholder(placeholder);
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      if ($$props.files === void 0 && $$bindings.files && files !== void 0)
+        $$bindings.files(files);
+      if ($$props.dirty === void 0 && $$bindings.dirty && dirty !== void 0)
+        $$bindings.dirty(dirty);
+      if ($$props.invalid === void 0 && $$bindings.invalid && invalid !== void 0)
+        $$bindings.invalid(invalid);
+      if ($$props.updateInvalid === void 0 && $$bindings.updateInvalid && updateInvalid !== void 0)
+        $$bindings.updateInvalid(updateInvalid);
+      if ($$props.emptyValueNull === void 0 && $$bindings.emptyValueNull && emptyValueNull !== void 0)
+        $$bindings.emptyValueNull(emptyValueNull);
+      if ($$props.emptyValueUndefined === void 0 && $$bindings.emptyValueUndefined && emptyValueUndefined !== void 0)
+        $$bindings.emptyValueUndefined(emptyValueUndefined);
+      if ($$props.getAttr === void 0 && $$bindings.getAttr && getAttr !== void 0)
+        $$bindings.getAttr(getAttr);
+      if ($$props.addAttr === void 0 && $$bindings.addAttr && addAttr !== void 0)
+        $$bindings.addAttr(addAttr);
+      if ($$props.removeAttr === void 0 && $$bindings.removeAttr && removeAttr !== void 0)
+        $$bindings.removeAttr(removeAttr);
+      if ($$props.focus === void 0 && $$bindings.focus && focus !== void 0)
+        $$bindings.focus(focus);
+      if ($$props.blur === void 0 && $$bindings.blur && blur !== void 0)
+        $$bindings.blur(blur);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      {
+        if (type === "file") {
+          delete valueProp.value;
+          valueProp = valueProp;
+        } else {
+          valueProp.value = value == null ? "" : value;
+        }
+      }
+      return `<input${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-text-field__input": true
+          }))
+        },
+        { type: escape_attribute_value(type) },
+        {
+          placeholder: escape_attribute_value(placeholder)
+        },
+        escape_object(valueProp),
+        escape_object(internalAttrs),
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}>`;
+    });
+    Textarea = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "style",
+        "value",
+        "dirty",
+        "invalid",
+        "updateInvalid",
+        "resizable",
+        "getAttr",
+        "addAttr",
+        "removeAttr",
+        "focus",
+        "blur",
+        "getElement"
+      ]);
+      forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { style = "" } = $$props;
+      let { value = "" } = $$props;
+      let { dirty = false } = $$props;
+      let { invalid = false } = $$props;
+      let { updateInvalid = true } = $$props;
+      let { resizable = true } = $$props;
+      let element;
+      let internalAttrs = {};
+      function getAttr(name6) {
+        var _a2;
+        return name6 in internalAttrs ? (_a2 = internalAttrs[name6]) !== null && _a2 !== void 0 ? _a2 : null : getElement().getAttribute(name6);
+      }
+      function addAttr(name6, value2) {
+        if (internalAttrs[name6] !== value2) {
+          internalAttrs[name6] = value2;
+        }
+      }
+      function removeAttr(name6) {
+        if (!(name6 in internalAttrs) || internalAttrs[name6] != null) {
+          internalAttrs[name6] = void 0;
+        }
+      }
+      function focus() {
+        getElement().focus();
+      }
+      function blur() {
+        getElement().blur();
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+        $$bindings.style(style);
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      if ($$props.dirty === void 0 && $$bindings.dirty && dirty !== void 0)
+        $$bindings.dirty(dirty);
+      if ($$props.invalid === void 0 && $$bindings.invalid && invalid !== void 0)
+        $$bindings.invalid(invalid);
+      if ($$props.updateInvalid === void 0 && $$bindings.updateInvalid && updateInvalid !== void 0)
+        $$bindings.updateInvalid(updateInvalid);
+      if ($$props.resizable === void 0 && $$bindings.resizable && resizable !== void 0)
+        $$bindings.resizable(resizable);
+      if ($$props.getAttr === void 0 && $$bindings.getAttr && getAttr !== void 0)
+        $$bindings.getAttr(getAttr);
+      if ($$props.addAttr === void 0 && $$bindings.addAttr && addAttr !== void 0)
+        $$bindings.addAttr(addAttr);
+      if ($$props.removeAttr === void 0 && $$bindings.removeAttr && removeAttr !== void 0)
+        $$bindings.removeAttr(removeAttr);
+      if ($$props.focus === void 0 && $$bindings.focus && focus !== void 0)
+        $$bindings.focus(focus);
+      if ($$props.blur === void 0 && $$bindings.blur && blur !== void 0)
+        $$bindings.blur(blur);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `<textarea${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-text-field__input": true
+          }))
+        },
+        {
+          style: escape_attribute_value(`${resizable ? "" : "resize: none; "}${style}`)
+        },
+        escape_object(internalAttrs),
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}>${value || ""}</textarea>`;
+    });
+    ({ Object: Object_12 } = globals);
+    Textfield = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "style",
+        "ripple",
+        "disabled",
+        "required",
+        "textarea",
+        "variant",
+        "noLabel",
+        "label",
+        "type",
+        "value",
+        "files",
+        "invalid",
+        "updateInvalid",
+        "dirty",
+        "prefix",
+        "suffix",
+        "validateOnValueChange",
+        "useNativeValidation",
+        "withLeadingIcon",
+        "withTrailingIcon",
+        "input",
+        "floatingLabel",
+        "lineRipple",
+        "notchedOutline",
+        "focus",
+        "blur",
+        "layout",
+        "getElement"
+      ]);
+      let $$slots = compute_slots(slots);
+      forwardEventsBuilder(get_current_component());
+      let uninitializedValue = () => {
+      };
+      function isUninitializedValue(value2) {
+        return value2 === uninitializedValue;
+      }
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { style = "" } = $$props;
+      let { ripple = true } = $$props;
+      let { disabled = false } = $$props;
+      let { required = false } = $$props;
+      let { textarea = false } = $$props;
+      let { variant = textarea ? "outlined" : "standard" } = $$props;
+      let { noLabel = false } = $$props;
+      let { label = void 0 } = $$props;
+      let { type = "text" } = $$props;
+      let { value = $$restProps.input$emptyValueUndefined ? void 0 : uninitializedValue } = $$props;
+      let { files = uninitializedValue } = $$props;
+      const valued = !isUninitializedValue(value) || !isUninitializedValue(files);
+      if (isUninitializedValue(value)) {
+        value = void 0;
+      }
+      if (isUninitializedValue(files)) {
+        files = null;
+      }
+      let { invalid = uninitializedValue } = $$props;
+      let { updateInvalid = isUninitializedValue(invalid) } = $$props;
+      if (isUninitializedValue(invalid)) {
+        invalid = false;
+      }
+      let { dirty = false } = $$props;
+      let { prefix = void 0 } = $$props;
+      let { suffix = void 0 } = $$props;
+      let { validateOnValueChange = updateInvalid } = $$props;
+      let { useNativeValidation = updateInvalid } = $$props;
+      let { withLeadingIcon = uninitializedValue } = $$props;
+      let { withTrailingIcon = uninitializedValue } = $$props;
+      let { input = void 0 } = $$props;
+      let { floatingLabel = void 0 } = $$props;
+      let { lineRipple = void 0 } = $$props;
+      let { notchedOutline = void 0 } = $$props;
+      let element;
+      let internalClasses = {};
+      let internalStyles = {};
+      let helperId = void 0;
+      let addLayoutListener = getContext("SMUI:addLayoutListener");
+      let removeLayoutListener;
+      new Promise((resolve2) => resolve2);
+      if (addLayoutListener) {
+        removeLayoutListener = addLayoutListener(layout);
+      }
+      onDestroy(() => {
+        if (removeLayoutListener) {
+          removeLayoutListener();
+        }
+      });
+      function focus() {
+        input === null || input === void 0 ? void 0 : input.focus();
+      }
+      function blur() {
+        input === null || input === void 0 ? void 0 : input.blur();
+      }
+      function layout() {
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+        $$bindings.style(style);
+      if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
+        $$bindings.ripple(ripple);
+      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
+        $$bindings.disabled(disabled);
+      if ($$props.required === void 0 && $$bindings.required && required !== void 0)
+        $$bindings.required(required);
+      if ($$props.textarea === void 0 && $$bindings.textarea && textarea !== void 0)
+        $$bindings.textarea(textarea);
+      if ($$props.variant === void 0 && $$bindings.variant && variant !== void 0)
+        $$bindings.variant(variant);
+      if ($$props.noLabel === void 0 && $$bindings.noLabel && noLabel !== void 0)
+        $$bindings.noLabel(noLabel);
+      if ($$props.label === void 0 && $$bindings.label && label !== void 0)
+        $$bindings.label(label);
+      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
+        $$bindings.type(type);
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      if ($$props.files === void 0 && $$bindings.files && files !== void 0)
+        $$bindings.files(files);
+      if ($$props.invalid === void 0 && $$bindings.invalid && invalid !== void 0)
+        $$bindings.invalid(invalid);
+      if ($$props.updateInvalid === void 0 && $$bindings.updateInvalid && updateInvalid !== void 0)
+        $$bindings.updateInvalid(updateInvalid);
+      if ($$props.dirty === void 0 && $$bindings.dirty && dirty !== void 0)
+        $$bindings.dirty(dirty);
+      if ($$props.prefix === void 0 && $$bindings.prefix && prefix !== void 0)
+        $$bindings.prefix(prefix);
+      if ($$props.suffix === void 0 && $$bindings.suffix && suffix !== void 0)
+        $$bindings.suffix(suffix);
+      if ($$props.validateOnValueChange === void 0 && $$bindings.validateOnValueChange && validateOnValueChange !== void 0)
+        $$bindings.validateOnValueChange(validateOnValueChange);
+      if ($$props.useNativeValidation === void 0 && $$bindings.useNativeValidation && useNativeValidation !== void 0)
+        $$bindings.useNativeValidation(useNativeValidation);
+      if ($$props.withLeadingIcon === void 0 && $$bindings.withLeadingIcon && withLeadingIcon !== void 0)
+        $$bindings.withLeadingIcon(withLeadingIcon);
+      if ($$props.withTrailingIcon === void 0 && $$bindings.withTrailingIcon && withTrailingIcon !== void 0)
+        $$bindings.withTrailingIcon(withTrailingIcon);
+      if ($$props.input === void 0 && $$bindings.input && input !== void 0)
+        $$bindings.input(input);
+      if ($$props.floatingLabel === void 0 && $$bindings.floatingLabel && floatingLabel !== void 0)
+        $$bindings.floatingLabel(floatingLabel);
+      if ($$props.lineRipple === void 0 && $$bindings.lineRipple && lineRipple !== void 0)
+        $$bindings.lineRipple(lineRipple);
+      if ($$props.notchedOutline === void 0 && $$bindings.notchedOutline && notchedOutline !== void 0)
+        $$bindings.notchedOutline(notchedOutline);
+      if ($$props.focus === void 0 && $$bindings.focus && focus !== void 0)
+        $$bindings.focus(focus);
+      if ($$props.blur === void 0 && $$bindings.blur && blur !== void 0)
+        $$bindings.blur(blur);
+      if ($$props.layout === void 0 && $$bindings.layout && layout !== void 0)
+        $$bindings.layout(layout);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        input && input.getElement();
+        $$rendered = `${valued ? `<label${spread([
+          {
+            class: escape_attribute_value(classMap({
+              [className]: true,
+              "mdc-text-field": true,
+              "mdc-text-field--disabled": disabled,
+              "mdc-text-field--textarea": textarea,
+              "mdc-text-field--filled": variant === "filled",
+              "mdc-text-field--outlined": variant === "outlined",
+              "smui-text-field--standard": variant === "standard" && !textarea,
+              "mdc-text-field--no-label": noLabel || label == null && !$$slots.label,
+              "mdc-text-field--label-floating": value != null && value !== "",
+              "mdc-text-field--with-leading-icon": isUninitializedValue(withLeadingIcon) ? $$slots.leadingIcon : withLeadingIcon,
+              "mdc-text-field--with-trailing-icon": isUninitializedValue(withTrailingIcon) ? $$slots.trailingIcon : withTrailingIcon,
+              "mdc-text-field--with-internal-counter": textarea && $$slots.internalCounter,
+              "mdc-text-field--invalid": invalid,
+              ...internalClasses
+            }))
+          },
+          {
+            style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value2]) => `${name6}: ${value2};`).concat([style]).join(" "))
+          },
+          {
+            for: escape_attribute_value(void 0)
+          },
+          escape_object(exclude($$restProps, ["input$", "label$", "ripple$", "outline$", "helperLine$"]))
+        ])}${add_attribute("this", element, 0)}>${!textarea && variant !== "outlined" ? `${variant === "filled" ? `<span class="${"mdc-text-field__ripple"}"></span>` : ``}
+      ${!noLabel && (label != null || $$slots.label) ? `${validate_component(FloatingLabel, "FloatingLabel").$$render($$result, Object_12.assign({
+          floatAbove: value != null && value !== ""
+        }, { required }, { wrapped: true }, prefixFilter($$restProps, "label$"), { this: floatingLabel }), {
+          this: ($$value) => {
+            floatingLabel = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `${escape(label == null ? "" : label)}${slots.label ? slots.label({}) : ``}`
+        })}` : ``}` : ``}
+    ${textarea || variant === "outlined" ? `${validate_component(NotchedOutline, "NotchedOutline").$$render($$result, Object_12.assign({
+          noLabel: noLabel || label == null && !$$slots.label
+        }, prefixFilter($$restProps, "outline$"), { this: notchedOutline }), {
+          this: ($$value) => {
+            notchedOutline = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `${!noLabel && (label != null || $$slots.label) ? `${validate_component(FloatingLabel, "FloatingLabel").$$render($$result, Object_12.assign({
+            floatAbove: value != null && value !== ""
+          }, { required }, { wrapped: true }, prefixFilter($$restProps, "label$"), { this: floatingLabel }), {
+            this: ($$value) => {
+              floatingLabel = $$value;
+              $$settled = false;
+            }
+          }, {
+            default: () => `${escape(label == null ? "" : label)}${slots.label ? slots.label({}) : ``}`
+          })}` : ``}`
+        })}` : ``}
+    ${validate_component(ContextFragment, "ContextFragment").$$render($$result, {
+          key: "SMUI:textfield:icon:leading",
+          value: true
+        }, {}, {
+          default: () => `${slots.leadingIcon ? slots.leadingIcon({}) : ``}`
+        })}
+    ${slots.default ? slots.default({}) : ``}
+    ${textarea && typeof value === "string" ? `<span${add_attribute("class", classMap({
+          "mdc-text-field__resizer": !("input$resizable" in $$restProps) || $$restProps.input$resizable
+        }), 0)}>${validate_component(Textarea, "Textarea").$$render($$result, Object_12.assign({ disabled }, { required }, { updateInvalid }, { "aria-controls": helperId }, { "aria-describedby": helperId }, prefixFilter($$restProps, "input$"), { this: input }, { value }, { dirty }, { invalid }), {
+          this: ($$value) => {
+            input = $$value;
+            $$settled = false;
+          },
+          value: ($$value) => {
+            value = $$value;
+            $$settled = false;
+          },
+          dirty: ($$value) => {
+            dirty = $$value;
+            $$settled = false;
+          },
+          invalid: ($$value) => {
+            invalid = $$value;
+            $$settled = false;
+          }
+        }, {})}
+        ${slots.internalCounter ? slots.internalCounter({}) : ``}</span>` : `${slots.prefix ? slots.prefix({}) : ``}
+      ${prefix != null ? `${validate_component(Prefix, "Prefix").$$render($$result, {}, {}, { default: () => `${escape(prefix)}` })}` : ``}
+      ${validate_component(Input, "Input").$$render($$result, Object_12.assign({ type }, { disabled }, { required }, { updateInvalid }, { "aria-controls": helperId }, { "aria-describedby": helperId }, noLabel && label != null ? { placeholder: label } : {}, prefixFilter($$restProps, "input$"), { this: input }, { value }, { files }, { dirty }, { invalid }), {
+          this: ($$value) => {
+            input = $$value;
+            $$settled = false;
+          },
+          value: ($$value) => {
+            value = $$value;
+            $$settled = false;
+          },
+          files: ($$value) => {
+            files = $$value;
+            $$settled = false;
+          },
+          dirty: ($$value) => {
+            dirty = $$value;
+            $$settled = false;
+          },
+          invalid: ($$value) => {
+            invalid = $$value;
+            $$settled = false;
+          }
+        }, {})}
+      ${suffix != null ? `${validate_component(Suffix, "Suffix").$$render($$result, {}, {}, { default: () => `${escape(suffix)}` })}` : ``}
+      ${slots.suffix ? slots.suffix({}) : ``}`}
+    ${validate_component(ContextFragment, "ContextFragment").$$render($$result, {
+          key: "SMUI:textfield:icon:leading",
+          value: false
+        }, {}, {
+          default: () => `${slots.trailingIcon ? slots.trailingIcon({}) : ``}`
+        })}
+    ${!textarea && variant !== "outlined" && ripple ? `${validate_component(LineRipple, "LineRipple").$$render($$result, Object_12.assign(prefixFilter($$restProps, "ripple$"), { this: lineRipple }), {
+          this: ($$value) => {
+            lineRipple = $$value;
+            $$settled = false;
+          }
+        }, {})}` : ``}</label>` : `<div${spread([
+          {
+            class: escape_attribute_value(classMap({
+              [className]: true,
+              "mdc-text-field": true,
+              "mdc-text-field--disabled": disabled,
+              "mdc-text-field--textarea": textarea,
+              "mdc-text-field--filled": variant === "filled",
+              "mdc-text-field--outlined": variant === "outlined",
+              "smui-text-field--standard": variant === "standard" && !textarea,
+              "mdc-text-field--no-label": noLabel || !$$slots.label,
+              "mdc-text-field--with-leading-icon": $$slots.leadingIcon,
+              "mdc-text-field--with-trailing-icon": $$slots.trailingIcon,
+              "mdc-text-field--invalid": invalid,
+              ...internalClasses
+            }))
+          },
+          {
+            style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value2]) => `${name6}: ${value2};`).concat([style]).join(" "))
+          },
+          escape_object(exclude($$restProps, ["input$", "label$", "ripple$", "outline$", "helperLine$"]))
+        ])}${add_attribute("this", element, 0)}>${slots.label ? slots.label({}) : ``}
+    ${validate_component(ContextFragment, "ContextFragment").$$render($$result, {
+          key: "SMUI:textfield:icon:leading",
+          value: true
+        }, {}, {
+          default: () => `${slots.leadingIcon ? slots.leadingIcon({}) : ``}`
+        })}
+    ${slots.default ? slots.default({}) : ``}
+    ${validate_component(ContextFragment, "ContextFragment").$$render($$result, {
+          key: "SMUI:textfield:icon:leading",
+          value: false
+        }, {}, {
+          default: () => `${slots.trailingIcon ? slots.trailingIcon({}) : ``}`
+        })}
+    ${slots.ripple ? slots.ripple({}) : ``}</div>`}
+${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$result, Object_12.assign(prefixFilter($$restProps, "helperLine$")), {}, {
+          default: () => `${slots.helper ? slots.helper({}) : ``}`
+        })}` : ``}`;
+      } while (!$$settled);
+      return $$rendered;
+    });
     Switch = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -27089,9 +26999,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-5bc7be99.js
-var layout_5bc7be99_exports = {};
-__export(layout_5bc7be99_exports, {
+// .svelte-kit/output/server/chunks/__layout-b336d6ba.js
+var layout_b336d6ba_exports = {};
+__export(layout_b336d6ba_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -29258,13 +29168,13 @@ function load2({ page }) {
   };
 }
 var import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie4, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name4, version4, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, css3, _layout2;
-var init_layout_5bc7be99 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-5bc7be99.js"() {
+var init_layout_b336d6ba = __esm({
+  ".svelte-kit/output/server/chunks/__layout-b336d6ba.js"() {
     init_shims();
-    init_app_9f5e9fcc();
-    init_Menu_277e9a56();
-    init_SelectionGroupIcon_6cff0a7c();
-    init_store_51d4d1f3();
+    init_app_fff52741();
+    init_Menu_d7a23660();
+    init_SelectionGroupIcon_d8cdfffd();
+    init_store_030d8f64();
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -37659,9 +37569,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-ab2bc954.js
-var index_ab2bc954_exports = {};
-__export(index_ab2bc954_exports, {
+// .svelte-kit/output/server/chunks/index-b9d956f5.js
+var index_b9d956f5_exports = {};
+__export(index_b9d956f5_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -37902,18 +37812,64 @@ function hasQuestionMark(string) {
     return false;
   return string.charAt(string.length - 1) === "?";
 }
-var import_node_fetch3, import_cookie5, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name5, version5, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css4, U5Broomu5D;
-var init_index_ab2bc954 = __esm({
-  ".svelte-kit/output/server/chunks/index-ab2bc954.js"() {
+var import_node_fetch3, import_cookie5, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name5, version5, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css4, U5Broomu5D;
+var init_index_b9d956f5 = __esm({
+  ".svelte-kit/output/server/chunks/index-b9d956f5.js"() {
     init_shims();
-    init_app_9f5e9fcc();
-    init_RenderlessFetchStrokes_8e3de36d();
-    init_store_51d4d1f3();
-    init_Menu_277e9a56();
-    init_SelectionGroupIcon_6cff0a7c();
+    init_app_fff52741();
+    init_RenderlessFetchStrokes_a7323137();
+    init_store_030d8f64();
+    init_Menu_d7a23660();
+    init_SelectionGroupIcon_d8cdfffd();
     import_node_fetch3 = __toModule(require_lib2());
     import_cookie5 = __toModule(require_cookie());
     init_dist();
+    counter2 = 0;
+    HelperText = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["use", "class", "id", "persistent", "validationMsg", "getElement"]);
+      forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { id: id2 = "SMUI-textfield-helper-text-" + counter2++ } = $$props;
+      let { persistent = false } = $$props;
+      let { validationMsg = false } = $$props;
+      let element;
+      let internalClasses = {};
+      let internalAttrs = {};
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.id === void 0 && $$bindings.id && id2 !== void 0)
+        $$bindings.id(id2);
+      if ($$props.persistent === void 0 && $$bindings.persistent && persistent !== void 0)
+        $$bindings.persistent(persistent);
+      if ($$props.validationMsg === void 0 && $$bindings.validationMsg && validationMsg !== void 0)
+        $$bindings.validationMsg(validationMsg);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `<div${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-text-field-helper-text": true,
+            "mdc-text-field-helper-text--persistent": persistent,
+            "mdc-text-field-helper-text--validation-msg": validationMsg,
+            ...internalClasses
+          }))
+        },
+        {
+          "aria-hidden": escape_attribute_value(persistent ? void 0 : "true")
+        },
+        { id: escape_attribute_value(id2) },
+        escape_object(internalAttrs),
+        escape_object($$restProps)
+      ])}${add_attribute("this", element, 0)}>${`${slots.default ? slots.default({}) : ``}`}
+</div>`;
+    });
     css$2 = {
       code: "svg.svelte-1bgxyxs{max-height:30px}.pencil-selected.svelte-1bgxyxs{background-color:white}.eraser-selected.svelte-1bgxyxs{filter:invert(1)\r\n}",
       map: null
@@ -38864,7 +38820,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-9f5e9fcc.js
+// .svelte-kit/output/server/chunks/app-fff52741.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -40322,9 +40278,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-24cd2098.js",
+      file: assets + "/_app/start-a57bcf3f.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-24cd2098.js", assets + "/_app/chunks/vendor-3008e3e0.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-a57bcf3f.js", assets + "/_app/chunks/vendor-515370af.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40368,8 +40324,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_9f5e9fcc = __esm({
-  ".svelte-kit/output/server/chunks/app-9f5e9fcc.js"() {
+var init_app_fff52741 = __esm({
+  ".svelte-kit/output/server/chunks/app-fff52741.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -40635,13 +40591,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_f85c6e3d(), layout_f85c6e3d_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_8a3dbd49(), error_8a3dbd49_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_bceff79b(), index_bceff79b_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_5bc7be99(), layout_5bc7be99_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_ab2bc954(), index_ab2bc954_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_b18b3c11(), layout_b18b3c11_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_21dda3c4(), error_21dda3c4_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_35402a42(), index_35402a42_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_b336d6ba(), layout_b336d6ba_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_b9d956f5(), index_b9d956f5_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-aa40149d.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-aa40149d.js", "chunks/vendor-3008e3e0.js", "chunks/navigation-6099b534.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-391a4513.js", "css": [], "js": ["error.svelte-391a4513.js", "chunks/vendor-3008e3e0.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-932cc8e9.js", "css": ["assets/pages/index.svelte-3cf8a558.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/index.svelte-932cc8e9.js", "chunks/vendor-3008e3e0.js", "chunks/navigation-6099b534.js", "chunks/singletons-12a22614.js", "chunks/RenderlessFetchStrokes-492d51f3.js", "chunks/canvas-10fde0b2.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-941c3317.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-941c3317.js", "chunks/vendor-3008e3e0.js", "chunks/navigation-6099b534.js", "chunks/singletons-12a22614.js", "chunks/canvas-10fde0b2.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-490d3a30.js", "css": ["assets/pages/_class_/_room_/index.svelte-1ffcb44e.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/_class_/_room_/index.svelte-490d3a30.js", "chunks/vendor-3008e3e0.js", "chunks/RenderlessFetchStrokes-492d51f3.js", "chunks/canvas-10fde0b2.js", "chunks/navigation-6099b534.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-493125e2.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-493125e2.js", "chunks/vendor-515370af.js", "chunks/navigation-e50a9227.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-79d2f52a.js", "css": [], "js": ["error.svelte-79d2f52a.js", "chunks/vendor-515370af.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-d91b2016.js", "css": ["assets/pages/index.svelte-3cf8a558.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/index.svelte-d91b2016.js", "chunks/vendor-515370af.js", "chunks/navigation-e50a9227.js", "chunks/singletons-12a22614.js", "chunks/RenderlessFetchStrokes-a01ea781.js", "chunks/canvas-10fde0b2.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-208874bc.js", "css": ["assets/pages/_class_/__layout.svelte-57b7d6ce.css"], "js": ["pages/_class_/__layout.svelte-208874bc.js", "chunks/vendor-515370af.js", "chunks/navigation-e50a9227.js", "chunks/singletons-12a22614.js", "chunks/canvas-10fde0b2.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-263ab2de.js", "css": ["assets/pages/_class_/_room_/index.svelte-1ffcb44e.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/_class_/_room_/index.svelte-263ab2de.js", "chunks/vendor-515370af.js", "chunks/RenderlessFetchStrokes-a01ea781.js", "chunks/canvas-10fde0b2.js", "chunks/navigation-e50a9227.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
   }
 });
 
@@ -40694,7 +40650,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_9f5e9fcc();
+init_app_fff52741();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

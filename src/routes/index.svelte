@@ -20,33 +20,31 @@
 						<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
 						<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
-						<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(116 28 183)">
+						<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(116 28 183); margin-bottom: 2px">
 							Sign Up
 						</Button>
 					</div>
 				{:else}
 					<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px">
 						<input minlength="6" maxlength="6" placeholder="123456" bind:value={phoneConfirmCode} style="width: 111px; font-size: 2rem; margin-right: 10px">
-						<Button on:click={verifyConfirmationCode} style="color: rgb(116 28 183)">Confirm code</Button>
+						<Button on:click={verifyConfirmationCode} style="color: rgb(116 28 183); margin-bottom: 2px;">Confirm code</Button>
 					</div>
 				{/if}
 			</div>
 		</div>
-
-		
 	</div>
 	
 </section>
 
 
-<section style="background: #FDFDF8; height: 880px; padding: 150px 100px; border-bottom: 1px solid #eee;">
-	<div class="content">
+<section style="background: #FDFDF8; height: {$canvasHeight + 260}px; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
+	<div class="content" style="width: {$canvasWidth}px">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			ihtfp.app is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
 			<br>
 			<br>
-			Here's an example:
+			Here's an example video that was recorded on this website: 
 		</p>
 	</div>
 
@@ -69,8 +67,8 @@
 	</div>
 </section>
 
-<section style="height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee;">
-	<div class="content">
+<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
+	<div class="content" style="width: {$canvasWidth}px">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
 		</h1>
@@ -85,10 +83,10 @@
 	</div>
 </section>
 
-<section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
-	<div class="content">
+<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
+	<div class="content" style="width: {$canvasWidth}px">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<b style="color: rgb(15 186 191)">The solution is make it as efficient as possible to give help</b>
+			This website makes it <b style="color: rgb(15 186 191)">efficient to give & receive explanations</b>, so everyone can get enough help
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -104,10 +102,8 @@
 			<li>Recorded explanations accumulate over time, benefitting everyone.</li>
 		</p>
 
-		<iframe width="690" height="480" src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+		<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 	</div>
-
 </section>
 
 <!-- Sign-up -->
@@ -187,7 +183,7 @@
 	import Button, { Label } from '@smui/button';
 	import HelperText from '@smui/textfield/helper-text'
 	import Textfield from '@smui/textfield';
-	import { onMount, tick } from 'svelte'
+	import { onMount, tick, onDestroy } from 'svelte'
 	import { goto } from '$app/navigation'
 	import { canvasHeight, canvasWidth, user, recordState } from '../store.js'
 	import Blackboard from '$lib/Blackboard.svelte'
@@ -279,9 +275,17 @@
 	}
 
 	onMount(() => {
-		const { width, height } = calculateCanvasDimensions2()
-		canvasWidth.set(width) 
-		canvasHeight.set(height)
+		function adjustContentDimensions () {
+			const { width, height } = calculateCanvasDimensions2()
+			canvasWidth.set(width) 
+			canvasHeight.set(height)
+		}
+		window.addEventListener('resize', adjustContentDimensions)
+		adjustContentDimensions()
+	})
+
+	onDestroy(() => {
+		window.removeEventListener('resize', adjustContentDimensions)
 	})
 
 	async function startRealtimeDemo (element, strokesArray) {
@@ -371,11 +375,11 @@
 }
 
 :global(.question input) {
-  color: rgb(19, 145, 230) !important;
+  color: rgb(19, 145, 230) !important
 }
 
 .copied-from-koa {
-	font: 17px/1.5 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
+	font: 17px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
 }
 /* increased 17px to 18px */
 
@@ -386,7 +390,8 @@
 
 .content {
 	margin: 0 auto;
-	max-width: 750px;
+	/* min-width: 750px;
+	max-width: 750px; */
 	text-align: left;
 }
 

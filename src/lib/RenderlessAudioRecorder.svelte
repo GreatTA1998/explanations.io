@@ -37,9 +37,11 @@
         return
       }
 
-      // need to use a copy because aliasing a stream for video call, different recording sessions, etc. causes
-      // unpredictable issues on Safari iOS
+      // need to use a copy because:
+      //   1. aliasing a stream for video call, different recording sessions, etc. causes unpredictable issues on Safari iOS
+      //   2. By using a copy, we naturally handle the edge case where the user mutes voice in the MIDDLE of recording
       const micStreamCopy = $dailyMicStream.clone()
+
       recorder = new MediaRecorder(micStreamCopy); 
       recorder.start();
 

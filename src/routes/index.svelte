@@ -10,7 +10,30 @@
 			<div style="display: flex; justify-content: center;">
 				<b style="color: grey" class="copied-from-koa">An alternative help resource for flagged students at MIT</b>
 			</div>
+
+			<div id="sign-up-section" style="height: 100px">
+				{#if !phoneConfirmationResult}
+					<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
+						<div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div>
+						<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+
+						<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+
+						<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
+						<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(116 28 183)">
+							Sign Up
+						</Button>
+					</div>
+				{:else}
+					<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px">
+						<input minlength="6" maxlength="6" placeholder="123456" bind:value={phoneConfirmCode} style="width: 111px; font-size: 2rem; margin-right: 10px">
+						<Button on:click={verifyConfirmationCode} style="color: rgb(116 28 183)">Confirm code</Button>
+					</div>
+				{/if}
+			</div>
 		</div>
+
+		
 	</div>
 	
 </section>
@@ -65,14 +88,13 @@
 <section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<b style="color: rgb(15 186 191)">A KhanAcademy for MIT</b>
+			<b style="color: rgb(15 186 191)">The solution is make it as efficient as possible to give help</b>
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			Help can become an abundant resource if it is easy to re-use explanations. 
-			Teaching 500 students takes 500 hours. Teaching 500 students - with videos - takes only 1-2 hours.
-			Resuability frees up TA's time, so they can spend it on other things.
-	
+			Help can become an abundant resource if it is easy to re-use explanations.
+			Great explanations are like SpaceX rockets - it's costly to not try to re-use them. 
+			Reusability frees up TA's time, so they can spend it on other things.
 			<br>
 			<br>
 
@@ -89,17 +111,15 @@
 </section>
 
 <!-- Sign-up -->
-<section style="height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee">
+<!-- <section style="height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee">
 	<div class="content">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			Get started
 		</h1>
 
 		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			<!-- <li>Venmo $10 to elton-lin-2, don't forget to specify a class (e.g. 6.006)</li> -->
 			<li>Create a phone account to join the 8.01 server</li>
 			<li>For anything related to the website, contact eltonlin@mit.edu / 503 250 3868</li>
-			<!-- <li>Refund anytime, any reason.</li> -->
 		</p>
 		
 
@@ -132,7 +152,7 @@
 
 		</p>
 	</div>
-</section>
+</section> -->
 
 <!-- FAQ -->
 <!-- <section style="background: #FDFDF8; height: 100%; padding: 150px 100px; border-bottom: 1px solid #eee">

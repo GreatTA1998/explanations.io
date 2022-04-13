@@ -1,110 +1,112 @@
-<section style="height: 100vh; border-bottom: 1px solid #eee;">
-	<div style="height: 100vh; display: flex; justify-content: center; align-items: center;">
-		<div style="padding-bottom: 90px;">
-			<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
-				<img src="logo.png" width="95" height="85">
-				<h1 id="logo" style="font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 15px;">
-					ihtfp.app
-				</h1>
-			</div>
-			<div style="display: flex; justify-content: center;">
-				<b style="color: grey" class="copied-from-koa">An alternative help resource for flagged students at MIT</b>
-			</div>
+{#if Object.keys($user).length === 0}
+	<section style="height: 100vh; border-bottom: 1px solid #eee;">
+		<div style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+			<div style="padding-bottom: 90px;">
+				<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
+					<img src="logo.png" width="95" height="85">
+					<h1 id="logo" style="font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 15px;">
+						ihtfp.app
+					</h1>
+				</div>
+				<div style="display: flex; justify-content: center;">
+					<b style="color: grey" class="copied-from-koa">An alternative help resource for flagged students at MIT</b>
+				</div>
 
-			<div id="sign-up-section" style="height: 100px">
-				{#if !phoneConfirmationResult}
-					<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
-						<div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div>
-						<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+				<div id="sign-up-section" style="height: 100px">
+					{#if !phoneConfirmationResult}
+						<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
+							<div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div>
+							<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
-						<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+							<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
-						<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
-						<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(116 28 183); margin-bottom: 2px">
-							Sign Up
-						</Button>
-					</div>
-				{:else}
-					<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px">
-						<input minlength="6" maxlength="6" placeholder="123456" bind:value={phoneConfirmCode} style="width: 111px; font-size: 2rem; margin-right: 10px">
-						<Button on:click={verifyConfirmationCode} style="color: rgb(116 28 183); margin-bottom: 2px;">Confirm code</Button>
-					</div>
-				{/if}
+							<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
+							<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(116 28 183); margin-bottom: 2px">
+								Sign Up
+							</Button>
+						</div>
+					{:else}
+						<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px">
+							<input minlength="6" maxlength="6" placeholder="123456" bind:value={phoneConfirmCode} style="width: 111px; font-size: 2rem; margin-right: 10px">
+							<Button on:click={verifyConfirmationCode} style="color: rgb(116 28 183); margin-bottom: 2px;">Confirm code</Button>
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
-	</div>
-	
-</section>
+		
+	</section>
 
 
-<section style="background: #FDFDF8; height: {$canvasHeight + 260}px; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
-	<div class="content" style="width: {$canvasWidth}px">
-		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
-		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			ihtfp.app is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
-			<br>
-			<br>
-			Here's an example video that was recorded on this website: 
-		</p>
-	</div>
+	<section style="background: #FDFDF8; height: {$canvasHeight + 260}px; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
+			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				ihtfp.app is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
+				<br>
+				<br>
+				Here's an example video that was recorded on this website: 
+			</p>
+		</div>
 
-	<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`} id="caleb-video-section">
-		<RenderlessListenToBoard dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
-			let:boardDoc={boardDoc}
-		>
-			<RenderlessFetchStrokes dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7" autoFetchStrokes={true}
-				let:strokesArray={strokesArray}
+		<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`} id="caleb-video-section">
+			<RenderlessListenToBoard dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+				let:boardDoc={boardDoc}
 			>
-				{#if boardDoc}
-					<DoodleVideo 
-						{strokesArray} 
-						audioDownloadURL={boardDoc.audioDownloadURL} 
-						backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-					/>
-				{/if}
-			</RenderlessFetchStrokes>
-		</RenderlessListenToBoard>
-	</div>
-</section>
+				<RenderlessFetchStrokes dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7" autoFetchStrokes={true}
+					let:strokesArray={strokesArray}
+				>
+					{#if boardDoc}
+						<DoodleVideo 
+							{strokesArray} 
+							audioDownloadURL={boardDoc.audioDownloadURL} 
+							backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+						/>
+					{/if}
+				</RenderlessFetchStrokes>
+			</RenderlessListenToBoard>
+		</div>
+	</section>
 
-<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
-	<div class="content" style="width: {$canvasWidth}px">
-		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
-		</h1>
+	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
+			</h1>
 
-		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+				<br>
+				<br>
+				So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+			</p>
 			<br>
-			<br>
-			So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
-		</p>
-		<br>
-	</div>
-</section>
+		</div>
+	</section>
 
-<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
-	<div class="content" style="width: {$canvasWidth}px">
-		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			This website makes it <b style="color: rgb(15 186 191)">efficient to give & receive explanations</b>, so everyone can get enough help
-		</h1>
+	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				This website makes it <b style="color: rgb(15 186 191)">efficient to give & receive explanations</b>, so everyone can get enough help
+			</h1>
 
-		<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			Help can become an abundant resource if it is easy to re-use explanations.
-			Great explanations are like SpaceX rockets - it's costly to not try to re-use them. 
-			Reusability frees up TA's time, so they can spend it on other things.
-			<br>
-			<br>
+			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				Help can become an abundant resource if it is easy to re-use explanations.
+				Great explanations are like SpaceX rockets - it's costly to not try to re-use them. 
+				Reusability frees up TA's time, so they can spend it on other things.
+				<br>
+				<br>
 
-			Here's how you use this:
-			<li>You ask for help anytime (special hours have instant replies)</li>
-			<li>TAs get pinged by text notication, and joins the voice chat and shared blackboard </li>
-			<li>Recorded explanations accumulate over time, benefitting everyone.</li>
-		</p>
+				Here's how you use this:
+				<li>You ask for help anytime (special hours have instant replies)</li>
+				<li>TAs get pinged by text notication, and joins the voice chat and shared blackboard </li>
+				<li>Recorded explanations accumulate over time, benefitting everyone.</li>
+			</p>
 
-		<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
-</section>
+			<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+	</section>
+{/if}
 
 <!-- Sign-up -->
 <!-- <section style="height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee">
@@ -274,12 +276,13 @@
 		}
 	}
 
+	function adjustContentDimensions () {
+		const { width, height } = calculateCanvasDimensions2()
+		canvasWidth.set(width) 
+		canvasHeight.set(height)
+	}
+
 	onMount(() => {
-		function adjustContentDimensions () {
-			const { width, height } = calculateCanvasDimensions2()
-			canvasWidth.set(width) 
-			canvasHeight.set(height)
-		}
 		window.addEventListener('resize', adjustContentDimensions)
 		adjustContentDimensions()
 	})

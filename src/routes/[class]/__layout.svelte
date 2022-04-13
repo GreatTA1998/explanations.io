@@ -222,7 +222,7 @@
         switch (change.type) {
           case 'added': 
             if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
-            $roomToPeople[roomID].push(person)
+            $roomToPeople[roomID] = [...$roomToPeople[roomID], person]
             break
           case 'modified':
             // first remove, inefficiently.
@@ -235,7 +235,7 @@
             }
             // then add (identical to code above)
             if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
-            $roomToPeople[roomID].push(person)
+            $roomToPeople[roomID] = [...$roomToPeople[roomID], person]
             break
           case 'removed':
             $roomToPeople[roomID] = $roomToPeople[roomID].filter(p => p.browserTabID !== person.browserTabID)

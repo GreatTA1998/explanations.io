@@ -192,7 +192,6 @@
   }
 
   function toggleMic () {
-    console.log('toggling mic')
     CallObject.setLocalAudio(!$dailyRoomParticipants.local.audio)
     dailyRoomParticipants.set(CallObject.participants())
   }

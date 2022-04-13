@@ -10,7 +10,7 @@
       </div>
     </div>
     
-    <Icon class="material-icons" on>arrow_drop_down</Icon>
+    <Icon class="material-icons">arrow_drop_down</Icon>
   </div>
 
   <!-- left: 50px; top: 50px; width: 200px -->

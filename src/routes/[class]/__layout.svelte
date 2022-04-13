@@ -25,13 +25,11 @@
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
     {#each rooms as room (room.id + roomID)}
-      <div on:click={() => goto(`/${classID}/${room.id}`)}
-        style="padding: 6px;" 
-      >
+      <div on:click={() => goto(`/${classID}/${room.id}`)} style="padding: 6px;">
         <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
         <div class={room.id === roomID ? 'selected' : '' } style="padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;">
           {#if room.name}
-            <div class:question-item={'?' === room.name.charAt(room.name.length - 1)} 
+            <div class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
               style="
                 white-space: nowrap;
                 overflow: hidden;
@@ -42,7 +40,7 @@
               {room.name}
             </div>
           {:else if room.name === ''}
-            <div style="margin-bottom: 2px;">(no title)</div>
+            <div style="margin-bottom: 2px;">(empty room)</div>
           {/if}
 
           {#if $roomToPeople[room.id]}
@@ -59,7 +57,7 @@
                         <Switch checked={$dailyRoomParticipants.local.audio} style="margin: 0 !important"/>
                       </div>
                       {#if $dailyRoomParticipants.local.audio}
-                        <div style="font-size: 0.7rem; margin-left: 6px; color: green">
+                        <div style="font-size: 0.7rem; margin-left: 6px; color: #33ff33">
                           voice on
                         </div>
                       {:else}
@@ -71,11 +69,11 @@
                   {/if}
                   {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}                      
                     {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio} 
-                      <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.2rem; color: {(firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID) ? 'white' : ''}">
+                      <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: {(firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID) ? 'white' : ''}">
                         mic
                       </span>
                     {:else}
-                      <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.2rem; color: red">
+                      <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: red">
                         mic_off
                       </span>
                     {/if}
@@ -89,12 +87,12 @@
     {/each}
 
     <!-- New room -->
-    <Button on:click={createNewRoom} style="width: 100%; margin: auto;">
-      <span class="material-icons" style="margin-right: 4px;">
+    <div on:click={createNewRoom} style="padding: 6px; display: flex; align-items: center;">
+      <span class="material-icons" style="margin-left: 6px; margin-right: 5px; margin-top: 2.5px; font-size: 1.2rem;">
         add
       </span>
-      New room
-    </Button>
+      new room
+    </div>
   </LeftDrawer>
 </DailyVideoConference>
 
@@ -155,7 +153,7 @@
   async function createNewRoom () {
     for (const room of rooms) {
       if (room.name === '') {
-        alert('A room is still untitled - use it before creating a new one')
+        alert('There is still an empty room available')
         return
       }
     }
@@ -255,7 +253,8 @@
 
   .selected {
     font-weight: 500;
-    background-color:rgb(148, 221, 159);
+    background-color:rgb(45, 44, 44);
+    color: white;
   }
 
   .speaking {
@@ -274,7 +273,7 @@
 		flex-direction: column;
 		padding: 1rem;
 		width: 100%;
-		max-width: 1024px;
+		max-width: 1024px;s
 		margin: 0 auto;
 		box-sizing: border-box;
 	}

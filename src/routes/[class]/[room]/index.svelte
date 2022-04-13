@@ -134,11 +134,17 @@
       
     <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
     <div on:click={createNewBlackboard}
-        style="display: flex; 
-                justify-content: center; 
-                align-items: center;
-                margin-top: 40px; background-color: #2e3131; font-family: Roboto, sans-serif; text-transform: uppercase;
-                height: 35px">
+        style="
+          display: flex; 
+          justify-content: center; 
+          align-items: center;
+          margin-top: 40px; 
+          background-color: #2e3131; 
+          font-family: Roboto, sans-serif; text-transform: uppercase;
+          color: white;
+          height: 35px;
+          width: {$canvasWidth}px;
+    ">
        New blackboard
     </div>
   </div>

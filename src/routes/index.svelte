@@ -99,11 +99,12 @@
 
 				How it works:
 				<li>n students each contribute $20/week to the 6.006/8.01 server</li>
-				<li>You ask for help <u>when you need</u> (that's what you're paying for)</li>
+				<li>You ask for help <u>whenever you need</u> (that's what you're paying for)</li>
 				<li>TAs get pinged by text, and joins to help you in real-time (they're paid $20n/week)</li>
 				<li>The fundamental explanations are recorded, so your question benefits other group members, and vice versa.</li>
 				<li>Overtime, visual explanations for almost everything accumulate on the server</li>
-				<li>To get started, contact 503 250 3868 / eltonlin@mit.edu</li>
+				<li>To get started, venmo $20 to elton-lin-2 and specify which class you want</li>
+				<li>Any questions contact 503 250 3868 / eltonlin@mit.edu anytime</li>
 			</p>
 
 			<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

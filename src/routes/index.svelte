@@ -9,7 +9,7 @@
 					</h1>
 				</div>
 				<div style="display: flex; justify-content: center;">
-					<b style="color: grey" class="copied-from-koa">An alternative help resource for flagged students at MIT</b>
+					<b style="color: grey" class="copied-from-koa">An efficient resource for flagged students at MIT</b>
 				</div>
 
 				<div id="sign-up-section" style="height: 100px">
@@ -97,10 +97,13 @@
 				<br>
 				<br>
 
-				Here's how you use this:
-				<li>You ask for help anytime (special hours have instant replies)</li>
-				<li>TAs get pinged by text notication, and joins the voice chat and shared blackboard </li>
-				<li>Recorded explanations accumulate over time, benefitting everyone.</li>
+				How it works:
+				<li>n students each contribute $20/week to the 6.006/8.01 server</li>
+				<li>You ask for help <u>when you need</u> (that's what you're paying for)</li>
+				<li>TAs get pinged by text, and joins to help you in real-time (they're paid $20n/week)</li>
+				<li>The fundamental explanations are recorded, so your question benefits other group members, and vice versa.</li>
+				<li>Overtime, visual explanations for almost everything accumulate on the server</li>
+				<li>To get started, contact 503 250 3868 / eltonlin@mit.edu</li>
 			</p>
 
 			<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

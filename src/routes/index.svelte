@@ -1,44 +1,39 @@
 {#if Object.keys($user).length === 0}
-	<section style="height: 100vh; border-bottom: 1px solid #eee;">
-		<div style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+	<section style="height: 84vh; border-bottom: 1px solid #eee;">
+		<div style="height: 84vh; display: flex; justify-content: center; align-items: center;">
 			<div style="padding-bottom: 90px;">
 				<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
-					<img src="logo.png" width="95" height="85">
-					<h1 id="logo" style="font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 15px;">
+					<img src="logo.png" width="95" height="85" style="margin-left: 5px;">
+					<h1 id="logo" style="font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 10px;">
 						ihtfp.app
 					</h1>
 				</div>
 				<div style="display: flex; justify-content: center;">
-					<b style="color: grey" class="copied-from-koa">An efficient resource for flagged students at MIT</b>
-				</div>
-
-				<div id="sign-up-section" style="height: 100px">
-					{#if !phoneConfirmationResult}
-						<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
-							<div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div>
-							<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
-
-							<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
-
-							<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
-							<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(116 28 183); margin-bottom: 2px">
-								Sign Up
-							</Button>
-						</div>
-					{:else}
-						<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px">
-							<input minlength="6" maxlength="6" placeholder="123456" bind:value={phoneConfirmCode} style="width: 111px; font-size: 2rem; margin-right: 10px">
-							<Button on:click={verifyConfirmationCode} style="color: rgb(116 28 183); margin-bottom: 2px;">Confirm code</Button>
-						</div>
-					{/if}
+					<b style="color: grey; white-space: nowrap;" class="copied-from-koa">Efficient visual explanation platform for MIT classes</b>
 				</div>
 			</div>
 		</div>
 		
 	</section>
 
+	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
+			</h1>
 
-	<section style="background: #FDFDF8; height: {$canvasHeight + 260}px; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
+			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+				<br>
+				<br>
+				So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+			</p>
+			<br>
+		</div>
+	</section>
+
+
+	<section style="height: {$canvasHeight + 260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -68,22 +63,6 @@
 		</div>
 	</section>
 
-	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
-		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
-			</h1>
-
-			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
-				<br>
-				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
-			</p>
-			<br>
-		</div>
-	</section>
-
 	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -92,22 +71,59 @@
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 				Help can become an abundant resource if it is easy to re-use explanations.
-				Great explanations are like SpaceX rockets - it's costly to not try to re-use them. 
-				Reusability frees up TA's time, so they can spend it on other things.
+				If tutors don't need to repeat themselves, they can have more time and/or help more students. 
 				<br>
 				<br>
 
 				How it works:
-				<li>n students each contribute $20/week to the 6.006/8.01 server</li>
-				<li>You ask for help <u>whenever you need</u> (that's what you're paying for)</li>
-				<li>TAs get pinged by text, and joins to help you in real-time (they're paid $20n/week)</li>
-				<li>The fundamental explanations are recorded, so your question benefits other group members, and vice versa.</li>
-				<li>Overtime, visual explanations for almost everything accumulate on the server</li>
-				<li>To get started, venmo $20 to elton-lin-2 and specify which class you want</li>
-				<li>Any questions contact 503 250 3868 / eltonlin@mit.edu anytime</li>
+				<li>Everyone contributes $20/week to the class server</li>
+				<li>Tutor runs the server and helps you personally as you want</li>
+				<li>Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li>
+				<!-- <li>To request a class, venmo $20 to elton-lin-2</li>
+				<li>Any questions contact 503 250 3868 / eltonlin@mit.edu</li> -->
 			</p>
 
 			<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+	</section>
+
+	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				How to get started
+			</h1>
+
+			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
+				<br>
+				<br>
+				<li>Request a class by venmo'ing $20 to elton-lin-2</li>
+				<li>I'll send you a confirmation, create a server and find your tutor within 24 hours</li>
+				<li>Refund anytime any reason</li>
+				<!-- <li>To request a class, venmo $20 to elton-lin-2</li>
+				<li>Any questions contact 503 250 3868 / eltonlin@mit.edu</li> -->
+			</p>
+		</div>
+
+		<div id="sign-up-section" style="height: 100px">
+			{#if !phoneConfirmationResult}
+				<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
+					<!-- <div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div> -->
+					<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+
+					<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+
+					<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
+					<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(116 28 183); margin-bottom: 2px">
+						Sign Up
+					</Button>
+				</div>
+			{:else}
+				<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px">
+					<input minlength="6" maxlength="6" placeholder="123456" bind:value={phoneConfirmCode} style="width: 111px; font-size: 2rem; margin-right: 10px">
+					<Button on:click={verifyConfirmationCode} style="color: rgb(116 28 183); margin-bottom: 2px;">Confirm code</Button>
+				</div>
+			{/if}
 		</div>
 	</section>
 {/if}

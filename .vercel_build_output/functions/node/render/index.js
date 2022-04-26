@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-4bb7c3e6.js
+// .svelte-kit/output/server/chunks/store-4c131131.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -9059,10 +9059,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_4bb7c3e6 = __esm({
-  ".svelte-kit/output/server/chunks/store-4bb7c3e6.js"() {
+var init_store_4c131131 = __esm({
+  ".svelte-kit/output/server/chunks/store-4c131131.js"() {
     init_shims();
-    init_app_0bd0dbe0();
+    init_app_29e69d20();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -17444,7 +17444,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-3aaf0392.js
+// .svelte-kit/output/server/chunks/index-c327074d-bc3f6955.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17933,10 +17933,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_3aaf0392 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-3aaf0392.js"() {
+var init_index_c327074d_bc3f6955 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-bc3f6955.js"() {
     init_shims();
-    init_store_4bb7c3e6();
+    init_store_4c131131();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18865,18 +18865,18 @@ var init_index_c327074d_3aaf0392 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-fe493e93.js
-var layout_fe493e93_exports = {};
-__export(layout_fe493e93_exports, {
+// .svelte-kit/output/server/chunks/__layout-3eaff16a.js
+var layout_3eaff16a_exports = {};
+__export(layout_3eaff16a_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, _layout;
-var init_layout_fe493e93 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-fe493e93.js"() {
+var init_layout_3eaff16a = __esm({
+  ".svelte-kit/output/server/chunks/__layout-3eaff16a.js"() {
     init_shims();
-    init_app_0bd0dbe0();
-    init_store_4bb7c3e6();
-    init_index_c327074d_3aaf0392();
+    init_app_29e69d20();
+    init_store_4c131131();
+    init_index_c327074d_bc3f6955();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18895,9 +18895,9 @@ var init_layout_fe493e93 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-d71a9956.js
-var error_d71a9956_exports = {};
-__export(error_d71a9956_exports, {
+// .svelte-kit/output/server/chunks/error-30e054d5.js
+var error_30e054d5_exports = {};
+__export(error_30e054d5_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18905,10 +18905,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_d71a9956 = __esm({
-  ".svelte-kit/output/server/chunks/error-d71a9956.js"() {
+var init_error_30e054d5 = __esm({
+  ".svelte-kit/output/server/chunks/error-30e054d5.js"() {
     init_shims();
-    init_app_0bd0dbe0();
+    init_app_29e69d20();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18930,7 +18930,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-8f0eaaab.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-28bcf7f9.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19283,11 +19283,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_8f0eaaab = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-8f0eaaab.js"() {
+var init_SelectionGroupIcon_28bcf7f9 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-28bcf7f9.js"() {
     init_shims();
-    init_app_0bd0dbe0();
-    init_store_4bb7c3e6();
+    init_app_29e69d20();
+    init_store_4c131131();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20541,14 +20541,14 @@ var init_SelectionGroupIcon_8f0eaaab = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-873831c1.js
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-c6c92dd7.js
 var Object_12, Button_1, css, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_873831c1 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-873831c1.js"() {
+var init_RenderlessFetchStrokes_c6c92dd7 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-c6c92dd7.js"() {
     init_shims();
-    init_app_0bd0dbe0();
-    init_SelectionGroupIcon_8f0eaaab();
-    init_store_4bb7c3e6();
+    init_app_29e69d20();
+    init_SelectionGroupIcon_28bcf7f9();
+    init_store_4c131131();
     ({ Object: Object_12 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20808,9 +20808,9 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/index-944f3db4.js
-var index_944f3db4_exports = {};
-__export(index_944f3db4_exports, {
+// .svelte-kit/output/server/chunks/index-8f1c06ed.js
+var index_8f1c06ed_exports = {};
+__export(index_8f1c06ed_exports, {
   default: () => Routes
 });
 function calculateCanvasDimensions() {
@@ -20840,15 +20840,15 @@ function calculateCanvasDimensions2() {
   return { width: 0.9 * normalD.width, height: 0.9 * normalD.height };
 }
 var import_node_fetch2, import_cookie3, css2, Routes;
-var init_index_944f3db4 = __esm({
-  ".svelte-kit/output/server/chunks/index-944f3db4.js"() {
+var init_index_8f1c06ed = __esm({
+  ".svelte-kit/output/server/chunks/index-8f1c06ed.js"() {
     init_shims();
-    init_app_0bd0dbe0();
-    init_index_c327074d_3aaf0392();
-    init_store_4bb7c3e6();
+    init_app_29e69d20();
+    init_index_c327074d_bc3f6955();
+    init_store_4c131131();
     import_node_fetch2 = __toModule(require_lib2());
-    init_RenderlessFetchStrokes_873831c1();
-    init_SelectionGroupIcon_8f0eaaab();
+    init_RenderlessFetchStrokes_c6c92dd7();
+    init_SelectionGroupIcon_28bcf7f9();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
     css2 = {
@@ -20860,11 +20860,11 @@ var init_index_944f3db4 = __esm({
     Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let isQuestionMode;
       let $user, $$unsubscribe_user;
-      let $canvasHeight, $$unsubscribe_canvasHeight;
       let $canvasWidth, $$unsubscribe_canvasWidth;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let currentTime = 10;
       let titleValue = "Welcome!";
       let phoneNumSegment1 = "";
@@ -20940,32 +20940,25 @@ var init_index_944f3db4 = __esm({
         }
       }
       $$unsubscribe_user();
-      $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
-      return `${Object.keys($user).length === 0 ? `<section style="${"height: 100vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 100vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"95"}" height="${"85"}">
-					<h1 id="${"logo"}" style="${"font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 15px;"}" class="${"svelte-987aa6"}">ihtfp.app
+      $$unsubscribe_canvasHeight();
+      return `${Object.keys($user).length === 0 ? `<section style="${"height: 84vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 84vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"95"}" height="${"85"}" style="${"margin-left: 5px;"}">
+					<h1 id="${"logo"}" style="${"font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 10px;"}" class="${"svelte-987aa6"}">ihtfp.app
 					</h1></div>
-				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey"}" class="${"copied-from-koa svelte-987aa6"}">An efficient resource for flagged students at MIT</b></div>
+				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-987aa6"}">Efficient visual explanation platform for MIT classes</b></div></div></div></section>
 
-				<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}"><div style="${"margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem"}">+1 </div>
-							<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment1, 0)}>
+	<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Falling behind classes is like accumulating credit card debt - you need <b style="${"color: orange"}">proper help </b>to escape the cycle
+			</h1>
 
-							<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment2, 0)}>
-
-							<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment3, 0)}>
-							${validate_component(Button_1, "Button").$$render($$result, {
-        id: "sign-in-button",
-        style: "color: rgb(116 28 183); margin-bottom: 2px"
-      }, {}, {
-        default: () => `Sign Up
-							`
-      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
-							${validate_component(Button_1, "Button").$$render($$result, {
-        style: "color: rgb(116 28 183); margin-bottom: 2px;"
-      }, {}, { default: () => `Confirm code` })}</div>`}</div></div></div></section>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">In the real world, there&#39;s just not enough help to go around. The TA just can&#39;t spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+				<br>
+				<br>
+				So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they&#39;re fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+			</p>
+			<br></div></section>
 
 
-	<section style="${"background: #FDFDF8; height: " + escape($canvasHeight + 260) + "px; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Introduction</h1>
+	<section style="${"height: " + escape($canvasHeight + 260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Introduction</h1>
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">ihtfp.app is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
 				<br>
 				<br>
@@ -20987,34 +20980,49 @@ var init_index_944f3db4 = __esm({
         })}`
       })}</div></section>
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Falling behind classes is like accumulating credit card debt - you need <b style="${"color: orange"}">proper help </b>to escape the cycle
-			</h1>
-
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">In the real world, there&#39;s just not enough help to go around. The TA just can&#39;t spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
-				<br>
-				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they&#39;re fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
-			</p>
-			<br></div></section>
-
 	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">This website makes it <b style="${"color: rgb(15 186 191)"}">efficient to give &amp; receive explanations</b>, so everyone can get enough help
 			</h1>
 
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Help can become an abundant resource if it is easy to re-use explanations.
-				Great explanations are like SpaceX rockets - it&#39;s costly to not try to re-use them. 
-				Reusability frees up TA&#39;s time, so they can spend it on other things.
+				If tutors don&#39;t need to repeat themselves, they can have more time and/or help more students. 
 				<br>
 				<br>
 
 				How it works:
-				<li class="${"svelte-987aa6"}">n students each contribute $20/week to the 6.006/8.01 server</li>
-				<li class="${"svelte-987aa6"}">You ask for help <u>when you need</u> (that&#39;s what you&#39;re paying for)</li>
-				<li class="${"svelte-987aa6"}">TAs get pinged by text, and joins to help you in real-time (they&#39;re paid $20n/week)</li>
-				<li class="${"svelte-987aa6"}">The fundamental explanations are recorded, so your question benefits other group members, and vice versa.</li>
-				<li class="${"svelte-987aa6"}">Overtime, visual explanations for almost everything accumulate on the server</li>
-				<li class="${"svelte-987aa6"}">To get started, contact 503 250 3868 / eltonlin@mit.edu</li></p>
+				<li class="${"svelte-987aa6"}">Everyone contributes $20/week to the class server</li>
+				<li class="${"svelte-987aa6"}">Tutor runs the server and helps you personally as you want</li>
+				<li class="${"svelte-987aa6"}">Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li>
+				</p>
 
-			<iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>` : ``}
+			<iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How to get started
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
+				<br>
+				<br>
+				<li class="${"svelte-987aa6"}">Request a class by venmo&#39;ing $20 to elton-lin-2</li>
+				<li class="${"svelte-987aa6"}">I&#39;ll send you a confirmation, create a server and find your tutor within 24 hours</li>
+				<li class="${"svelte-987aa6"}">Refund anytime any reason</li>
+				</p></div>
+
+		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
+					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment1, 0)}>
+
+					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment2, 0)}>
+
+					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment3, 0)}>
+					${validate_component(Button_1, "Button").$$render($$result, {
+        id: "sign-in-button",
+        style: "color: rgb(116 28 183); margin-bottom: 2px"
+      }, {}, {
+        default: () => `Sign Up
+					`
+      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
+					${validate_component(Button_1, "Button").$$render($$result, {
+        style: "color: rgb(116 28 183); margin-bottom: 2px;"
+      }, {}, { default: () => `Confirm code` })}</div>`}</div></section>` : ``}
 
 
 
@@ -21032,7 +21040,7 @@ var init_index_944f3db4 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Menu-817a47e9.js
+// .svelte-kit/output/server/chunks/Menu-b7191585.js
 function guard(name6) {
   return () => {
     throw new Error(`Cannot call ${name6}(...) on the server`);
@@ -21066,12 +21074,12 @@ function prefixFilter(obj, prefix) {
   return newObj;
 }
 var goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, Switch, MenuSurface, Menu;
-var init_Menu_817a47e9 = __esm({
-  ".svelte-kit/output/server/chunks/Menu-817a47e9.js"() {
+var init_Menu_b7191585 = __esm({
+  ".svelte-kit/output/server/chunks/Menu-b7191585.js"() {
     init_shims();
-    init_app_0bd0dbe0();
-    init_SelectionGroupIcon_8f0eaaab();
-    init_store_4bb7c3e6();
+    init_app_29e69d20();
+    init_SelectionGroupIcon_28bcf7f9();
+    init_store_4c131131();
     goto = guard("goto");
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -27044,9 +27052,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-b388881f.js
-var layout_b388881f_exports = {};
-__export(layout_b388881f_exports, {
+// .svelte-kit/output/server/chunks/__layout-66fda66c.js
+var layout_66fda66c_exports = {};
+__export(layout_66fda66c_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -29213,13 +29221,13 @@ function load2({ page }) {
   };
 }
 var import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie4, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name4, version4, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, css3, _layout2;
-var init_layout_b388881f = __esm({
-  ".svelte-kit/output/server/chunks/__layout-b388881f.js"() {
+var init_layout_66fda66c = __esm({
+  ".svelte-kit/output/server/chunks/__layout-66fda66c.js"() {
     init_shims();
-    init_app_0bd0dbe0();
-    init_Menu_817a47e9();
-    init_SelectionGroupIcon_8f0eaaab();
-    init_store_4bb7c3e6();
+    init_app_29e69d20();
+    init_Menu_b7191585();
+    init_SelectionGroupIcon_28bcf7f9();
+    init_store_4c131131();
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -37611,9 +37619,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-b380b4a7.js
-var index_b380b4a7_exports = {};
-__export(index_b380b4a7_exports, {
+// .svelte-kit/output/server/chunks/index-4aab86b7.js
+var index_4aab86b7_exports = {};
+__export(index_4aab86b7_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -37855,14 +37863,14 @@ function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
 var import_node_fetch3, import_cookie5, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name5, version5, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css4, U5Broomu5D;
-var init_index_b380b4a7 = __esm({
-  ".svelte-kit/output/server/chunks/index-b380b4a7.js"() {
+var init_index_4aab86b7 = __esm({
+  ".svelte-kit/output/server/chunks/index-4aab86b7.js"() {
     init_shims();
-    init_app_0bd0dbe0();
-    init_RenderlessFetchStrokes_873831c1();
-    init_store_4bb7c3e6();
-    init_Menu_817a47e9();
-    init_SelectionGroupIcon_8f0eaaab();
+    init_app_29e69d20();
+    init_RenderlessFetchStrokes_c6c92dd7();
+    init_store_4c131131();
+    init_Menu_b7191585();
+    init_SelectionGroupIcon_28bcf7f9();
     import_node_fetch3 = __toModule(require_lib2());
     import_cookie5 = __toModule(require_cookie());
     init_dist();
@@ -38862,7 +38870,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-0bd0dbe0.js
+// .svelte-kit/output/server/chunks/app-29e69d20.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -40320,9 +40328,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-94977a81.js",
+      file: assets + "/_app/start-d8bc39bd.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-94977a81.js", assets + "/_app/chunks/vendor-bc7dd356.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-d8bc39bd.js", assets + "/_app/chunks/vendor-bc7dd356.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40366,8 +40374,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_0bd0dbe0 = __esm({
-  ".svelte-kit/output/server/chunks/app-0bd0dbe0.js"() {
+var init_app_29e69d20 = __esm({
+  ".svelte-kit/output/server/chunks/app-29e69d20.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -40633,13 +40641,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_fe493e93(), layout_fe493e93_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_d71a9956(), error_d71a9956_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_944f3db4(), index_944f3db4_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_b388881f(), layout_b388881f_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_b380b4a7(), index_b380b4a7_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_3eaff16a(), layout_3eaff16a_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_30e054d5(), error_30e054d5_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_8f1c06ed(), index_8f1c06ed_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_66fda66c(), layout_66fda66c_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_4aab86b7(), index_4aab86b7_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-7cbaa5c9.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-7cbaa5c9.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-8f3403f4.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-c1df57b6.js", "css": [], "js": ["error.svelte-c1df57b6.js", "chunks/vendor-bc7dd356.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-91433df0.js", "css": ["assets/pages/index.svelte-704a2b30.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/index.svelte-91433df0.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-8f3403f4.js", "chunks/singletons-12a22614.js", "chunks/RenderlessFetchStrokes-2efee724.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-6b7c7ab5.js", "css": ["assets/pages/_class_/__layout.svelte-c4788b3a.css"], "js": ["pages/_class_/__layout.svelte-6b7c7ab5.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-8f3403f4.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-d0ff3c74.js", "css": ["assets/pages/_class_/_room_/index.svelte-1ffcb44e.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/_class_/_room_/index.svelte-d0ff3c74.js", "chunks/vendor-bc7dd356.js", "chunks/RenderlessFetchStrokes-2efee724.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-8f3403f4.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-3ef70d65.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-3ef70d65.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-3ddb30f2.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-c1df57b6.js", "css": [], "js": ["error.svelte-c1df57b6.js", "chunks/vendor-bc7dd356.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-843adbc1.js", "css": ["assets/pages/index.svelte-704a2b30.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/index.svelte-843adbc1.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-3ddb30f2.js", "chunks/singletons-12a22614.js", "chunks/RenderlessFetchStrokes-c4d69b50.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-42707756.js", "css": ["assets/pages/_class_/__layout.svelte-c4788b3a.css"], "js": ["pages/_class_/__layout.svelte-42707756.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-3ddb30f2.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-225707fc.js", "css": ["assets/pages/_class_/_room_/index.svelte-1ffcb44e.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/_class_/_room_/index.svelte-225707fc.js", "chunks/vendor-bc7dd356.js", "chunks/RenderlessFetchStrokes-c4d69b50.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-3ddb30f2.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
   }
 });
 
@@ -40692,7 +40700,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_0bd0dbe0();
+init_app_29e69d20();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

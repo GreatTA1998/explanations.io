@@ -195,7 +195,7 @@ function fromRawHeaders(headers2 = []) {
   }));
 }
 async function fetch(url2, options_) {
-  return new Promise((resolve2, reject) => {
+  return new Promise((resolve2, reject2) => {
     const request = new Request(url2, options_);
     const options2 = getNodeRequestOptions(request);
     if (!supportedSchemas.has(options2.protocol)) {
@@ -212,7 +212,7 @@ async function fetch(url2, options_) {
     let response = null;
     const abort = () => {
       const error3 = new AbortError("The operation was aborted.");
-      reject(error3);
+      reject2(error3);
       if (request.body && request.body instanceof import_stream.default.Readable) {
         request.body.destroy(error3);
       }
@@ -240,7 +240,7 @@ async function fetch(url2, options_) {
       }
     };
     request_.on("error", (error3) => {
-      reject(new FetchError(`request to ${request.url} failed, reason: ${error3.message}`, "system", error3));
+      reject2(new FetchError(`request to ${request.url} failed, reason: ${error3.message}`, "system", error3));
       finalize();
     });
     fixResponseChunkedTransferBadEnding(request_, (error3) => {
@@ -269,7 +269,7 @@ async function fetch(url2, options_) {
         const locationURL = location2 === null ? null : new URL(location2, request.url);
         switch (request.redirect) {
           case "error":
-            reject(new FetchError(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
+            reject2(new FetchError(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
             finalize();
             return;
           case "manual":
@@ -282,7 +282,7 @@ async function fetch(url2, options_) {
               break;
             }
             if (request.counter >= request.follow) {
-              reject(new FetchError(`maximum redirect reached at: ${request.url}`, "max-redirect"));
+              reject2(new FetchError(`maximum redirect reached at: ${request.url}`, "max-redirect"));
               finalize();
               return;
             }
@@ -298,7 +298,7 @@ async function fetch(url2, options_) {
               size: request.size
             };
             if (response_.statusCode !== 303 && request.body && options_.body instanceof import_stream.default.Readable) {
-              reject(new FetchError("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
+              reject2(new FetchError("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
               finalize();
               return;
             }
@@ -312,7 +312,7 @@ async function fetch(url2, options_) {
             return;
           }
           default:
-            return reject(new TypeError(`Redirect option '${request.redirect}' is not a valid value of RequestRedirect`));
+            return reject2(new TypeError(`Redirect option '${request.redirect}' is not a valid value of RequestRedirect`));
         }
       }
       if (signal) {
@@ -320,7 +320,7 @@ async function fetch(url2, options_) {
           signal.removeEventListener("abort", abortAndFinalize);
         });
       }
-      let body = (0, import_stream.pipeline)(response_, new import_stream.PassThrough(), reject);
+      let body = (0, import_stream.pipeline)(response_, new import_stream.PassThrough(), reject2);
       if (process.version < "v12.10") {
         response_.on("aborted", abortAndFinalize);
       }
@@ -344,22 +344,22 @@ async function fetch(url2, options_) {
         finishFlush: import_zlib.default.Z_SYNC_FLUSH
       };
       if (codings === "gzip" || codings === "x-gzip") {
-        body = (0, import_stream.pipeline)(body, import_zlib.default.createGunzip(zlibOptions), reject);
+        body = (0, import_stream.pipeline)(body, import_zlib.default.createGunzip(zlibOptions), reject2);
         response = new Response(body, responseOptions);
         resolve2(response);
         return;
       }
       if (codings === "deflate" || codings === "x-deflate") {
-        const raw = (0, import_stream.pipeline)(response_, new import_stream.PassThrough(), reject);
+        const raw = (0, import_stream.pipeline)(response_, new import_stream.PassThrough(), reject2);
         raw.once("data", (chunk) => {
-          body = (chunk[0] & 15) === 8 ? (0, import_stream.pipeline)(body, import_zlib.default.createInflate(), reject) : (0, import_stream.pipeline)(body, import_zlib.default.createInflateRaw(), reject);
+          body = (chunk[0] & 15) === 8 ? (0, import_stream.pipeline)(body, import_zlib.default.createInflate(), reject2) : (0, import_stream.pipeline)(body, import_zlib.default.createInflateRaw(), reject2);
           response = new Response(body, responseOptions);
           resolve2(response);
         });
         return;
       }
       if (codings === "br") {
-        body = (0, import_stream.pipeline)(body, import_zlib.default.createBrotliDecompress(), reject);
+        body = (0, import_stream.pipeline)(body, import_zlib.default.createBrotliDecompress(), reject2);
         response = new Response(body, responseOptions);
         resolve2(response);
         return;
@@ -592,9 +592,9 @@ var init_install_fetch = __esm({
           return new TypeError("Cannot " + name6 + " a stream using a released reader");
         }
         function defaultReaderClosedPromiseInitialize(reader) {
-          reader._closedPromise = newPromise((resolve2, reject) => {
+          reader._closedPromise = newPromise((resolve2, reject2) => {
             reader._closedPromise_resolve = resolve2;
-            reader._closedPromise_reject = reject;
+            reader._closedPromise_reject = reject2;
           });
         }
         function defaultReaderClosedPromiseInitializeAsRejected(reader, reason) {
@@ -759,9 +759,9 @@ var init_install_fetch = __esm({
             }
             let resolvePromise;
             let rejectPromise;
-            const promise = newPromise((resolve2, reject) => {
+            const promise = newPromise((resolve2, reject2) => {
               resolvePromise = resolve2;
-              rejectPromise = reject;
+              rejectPromise = reject2;
             });
             const readRequest = {
               _chunkSteps: (chunk) => resolvePromise({ value: chunk, done: false }),
@@ -847,9 +847,9 @@ var init_install_fetch = __esm({
             }
             let resolvePromise;
             let rejectPromise;
-            const promise = newPromise((resolve2, reject) => {
+            const promise = newPromise((resolve2, reject2) => {
               resolvePromise = resolve2;
-              rejectPromise = reject;
+              rejectPromise = reject2;
             });
             const readRequest = {
               _chunkSteps: (chunk) => {
@@ -1646,9 +1646,9 @@ var init_install_fetch = __esm({
             }
             let resolvePromise;
             let rejectPromise;
-            const promise = newPromise((resolve2, reject) => {
+            const promise = newPromise((resolve2, reject2) => {
               resolvePromise = resolve2;
-              rejectPromise = reject;
+              rejectPromise = reject2;
             });
             const readIntoRequest = {
               _chunkSteps: (chunk) => resolvePromise({ value: chunk, done: false }),
@@ -1907,11 +1907,11 @@ var init_install_fetch = __esm({
             wasAlreadyErroring = true;
             reason = void 0;
           }
-          const promise = newPromise((resolve2, reject) => {
+          const promise = newPromise((resolve2, reject2) => {
             stream._pendingAbortRequest = {
               _promise: void 0,
               _resolve: resolve2,
-              _reject: reject,
+              _reject: reject2,
               _reason: reason,
               _wasAlreadyErroring: wasAlreadyErroring
             };
@@ -1927,10 +1927,10 @@ var init_install_fetch = __esm({
           if (state === "closed" || state === "errored") {
             return promiseRejectedWith(new TypeError(`The stream (in ${state} state) is not in the writable state and cannot be closed`));
           }
-          const promise = newPromise((resolve2, reject) => {
+          const promise = newPromise((resolve2, reject2) => {
             const closeRequest = {
               _resolve: resolve2,
-              _reject: reject
+              _reject: reject2
             };
             stream._closeRequest = closeRequest;
           });
@@ -1942,10 +1942,10 @@ var init_install_fetch = __esm({
           return promise;
         }
         function WritableStreamAddWriteRequest(stream) {
-          const promise = newPromise((resolve2, reject) => {
+          const promise = newPromise((resolve2, reject2) => {
             const writeRequest = {
               _resolve: resolve2,
-              _reject: reject
+              _reject: reject2
             };
             stream._writeRequests.push(writeRequest);
           });
@@ -2483,9 +2483,9 @@ var init_install_fetch = __esm({
           return new TypeError("Cannot " + name6 + " a stream using a released writer");
         }
         function defaultWriterClosedPromiseInitialize(writer) {
-          writer._closedPromise = newPromise((resolve2, reject) => {
+          writer._closedPromise = newPromise((resolve2, reject2) => {
             writer._closedPromise_resolve = resolve2;
-            writer._closedPromise_reject = reject;
+            writer._closedPromise_reject = reject2;
             writer._closedPromiseState = "pending";
           });
         }
@@ -2520,9 +2520,9 @@ var init_install_fetch = __esm({
           writer._closedPromiseState = "resolved";
         }
         function defaultWriterReadyPromiseInitialize(writer) {
-          writer._readyPromise = newPromise((resolve2, reject) => {
+          writer._readyPromise = newPromise((resolve2, reject2) => {
             writer._readyPromise_resolve = resolve2;
-            writer._readyPromise_reject = reject;
+            writer._readyPromise_reject = reject2;
           });
           writer._readyPromiseState = "pending";
         }
@@ -2590,7 +2590,7 @@ var init_install_fetch = __esm({
           source._disturbed = true;
           let shuttingDown = false;
           let currentWrite = promiseResolvedWith(void 0);
-          return newPromise((resolve2, reject) => {
+          return newPromise((resolve2, reject2) => {
             let abortAlgorithm;
             if (signal !== void 0) {
               abortAlgorithm = () => {
@@ -2729,7 +2729,7 @@ var init_install_fetch = __esm({
                 signal.removeEventListener("abort", abortAlgorithm);
               }
               if (isError) {
-                reject(error3);
+                reject2(error3);
               } else {
                 resolve2(void 0);
               }
@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-4c131131.js
+// .svelte-kit/output/server/chunks/store-ba285225.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5911,7 +5911,7 @@ function Kc$1(a, b) {
   if (a.forEach && typeof a.forEach == "function")
     a.forEach(b, void 0);
   else if (ba$1(a) || typeof a === "string")
-    na(a, b, void 0);
+    na$1(a, b, void 0);
   else {
     if (a.T && typeof a.T == "function")
       var c = a.T();
@@ -8514,6 +8514,23 @@ async function Xc(t2) {
   const e = await Gc(t2), n = e.eventManager;
   return n.onListen = nc.bind(null, e.syncEngine), n.onUnlisten = ic.bind(null, e.syncEngine), n;
 }
+function na(t2, e, n = {}) {
+  const s2 = new Q();
+  return t2.asyncQueue.enqueueAndForget(async () => function(t3, e2, n2, s22, i) {
+    const r = new Lc({
+      next: (r2) => {
+        e2.enqueueAndForget(() => Uo(t3, o));
+        const c = r2.docs.has(n2);
+        !c && r2.fromCache ? i.reject(new j(K.UNAVAILABLE, "Failed to get document because the client is offline.")) : c && r2.fromCache && s22 && s22.source === "server" ? i.reject(new j(K.UNAVAILABLE, 'Failed to get document from server. (However, this document does exist in the local cache. Run again without setting source to "server" to retrieve the cached document.)')) : i.resolve(r2);
+      },
+      error: (t4) => i.reject(t4)
+    }), o = new Qo(we(n2.path), r, {
+      includeMetadataChanges: true,
+      fo: true
+    });
+    return Bo(t3, o);
+  }(await Xc(t2), t2.asyncQueue, e, n, s2)), s2.promise;
+}
 function ia(t2, e, n = {}) {
   const s2 = new Q();
   return t2.asyncQueue.enqueueAndForget(async () => function(t3, e2, n2, s22, i) {
@@ -8885,6 +8902,11 @@ function oh(t2, e) {
     throw new j(K.INVALID_ARGUMENT, "Provided document reference is from a different Firestore instance.");
   return t2;
 }
+function ch(t2) {
+  t2 = ga(t2, Ia);
+  const e = ga(t2.firestore, ka);
+  return na(Fa(e), t2._key).then((n) => Eh(e, t2, n));
+}
 function lh(t2) {
   t2 = ga(t2, Aa);
   const e = ga(t2.firestore, ka), n = Fa(e), s2 = new ah(e);
@@ -9058,11 +9080,11 @@ function getRandomID() {
   }
   return autoId;
 }
-var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_4c131131 = __esm({
-  ".svelte-kit/output/server/chunks/store-4c131131.js"() {
+var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
+var init_store_ba285225 = __esm({
+  ".svelte-kit/output/server/chunks/store-ba285225.js"() {
     init_shims();
-    init_app_29e69d20();
+    init_app_0889c82b();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -9245,9 +9267,9 @@ var init_store_4c131131 = __esm({
         };
         this.resolve = () => {
         };
-        this.promise = new Promise((resolve2, reject) => {
+        this.promise = new Promise((resolve2, reject2) => {
           this.resolve = resolve2;
-          this.reject = reject;
+          this.reject = reject2;
         });
       }
       wrapCallback(callback) {
@@ -9875,7 +9897,7 @@ var init_store_4c131131 = __esm({
           return c;
       return -1;
     };
-    na = Array.prototype.forEach ? function(a, b, c) {
+    na$1 = Array.prototype.forEach ? function(a, b, c) {
       Array.prototype.forEach.call(a, b, c);
     } : function(a, b, c) {
       const d2 = a.length, e = typeof a === "string" ? a.split("") : a;
@@ -10262,7 +10284,7 @@ var init_store_4c131131 = __esm({
     k.forEach = function(a, b) {
       V(this);
       this.g.forEach(function(c, d2) {
-        na(c, function(e) {
+        na$1(c, function(e) {
           a.call(b, e, d2, this);
         }, this);
       }, this);
@@ -16649,20 +16671,20 @@ var require_lib2 = __commonJS({
       let accum = [];
       let accumBytes = 0;
       let abort = false;
-      return new Body2.Promise(function(resolve2, reject) {
+      return new Body2.Promise(function(resolve2, reject2) {
         let resTimeout;
         if (_this4.timeout) {
           resTimeout = setTimeout(function() {
             abort = true;
-            reject(new FetchError2(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
+            reject2(new FetchError2(`Response timeout while trying to fetch ${_this4.url} (over ${_this4.timeout}ms)`, "body-timeout"));
           }, _this4.timeout);
         }
         body.on("error", function(err) {
           if (err.name === "AbortError") {
             abort = true;
-            reject(err);
+            reject2(err);
           } else {
-            reject(new FetchError2(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
+            reject2(new FetchError2(`Invalid response body while trying to fetch ${_this4.url}: ${err.message}`, "system", err));
           }
         });
         body.on("data", function(chunk) {
@@ -16671,7 +16693,7 @@ var require_lib2 = __commonJS({
           }
           if (_this4.size && accumBytes + chunk.length > _this4.size) {
             abort = true;
-            reject(new FetchError2(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
+            reject2(new FetchError2(`content size at ${_this4.url} over limit: ${_this4.size}`, "max-size"));
             return;
           }
           accumBytes += chunk.length;
@@ -16685,7 +16707,7 @@ var require_lib2 = __commonJS({
           try {
             resolve2(Buffer.concat(accum, accumBytes));
           } catch (err) {
-            reject(new FetchError2(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
+            reject2(new FetchError2(`Could not create Buffer from response body for ${_this4.url}: ${err.message}`, "system", err));
           }
         });
       });
@@ -17272,7 +17294,7 @@ var require_lib2 = __commonJS({
         throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
       }
       Body2.Promise = fetch2.Promise;
-      return new fetch2.Promise(function(resolve2, reject) {
+      return new fetch2.Promise(function(resolve2, reject2) {
         const request = new Request2(url2, opts);
         const options2 = getNodeRequestOptions2(request);
         const send = (options2.protocol === "https:" ? https2 : http2).request;
@@ -17280,7 +17302,7 @@ var require_lib2 = __commonJS({
         let response = null;
         const abort = function abort2() {
           let error3 = new AbortError2("The user aborted a request.");
-          reject(error3);
+          reject2(error3);
           if (request.body && request.body instanceof Stream3.Readable) {
             request.body.destroy(error3);
           }
@@ -17310,13 +17332,13 @@ var require_lib2 = __commonJS({
         if (request.timeout) {
           req.once("socket", function(socket) {
             reqTimeout = setTimeout(function() {
-              reject(new FetchError2(`network timeout at: ${request.url}`, "request-timeout"));
+              reject2(new FetchError2(`network timeout at: ${request.url}`, "request-timeout"));
               finalize();
             }, request.timeout);
           });
         }
         req.on("error", function(err) {
-          reject(new FetchError2(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
+          reject2(new FetchError2(`request to ${request.url} failed, reason: ${err.message}`, "system", err));
           finalize();
         });
         req.on("response", function(res) {
@@ -17327,7 +17349,7 @@ var require_lib2 = __commonJS({
             const locationURL = location2 === null ? null : resolve_url(request.url, location2);
             switch (request.redirect) {
               case "error":
-                reject(new FetchError2(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
+                reject2(new FetchError2(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, "no-redirect"));
                 finalize();
                 return;
               case "manual":
@@ -17335,7 +17357,7 @@ var require_lib2 = __commonJS({
                   try {
                     headers2.set("Location", locationURL);
                   } catch (err) {
-                    reject(err);
+                    reject2(err);
                   }
                 }
                 break;
@@ -17344,7 +17366,7 @@ var require_lib2 = __commonJS({
                   break;
                 }
                 if (request.counter >= request.follow) {
-                  reject(new FetchError2(`maximum redirect reached at: ${request.url}`, "max-redirect"));
+                  reject2(new FetchError2(`maximum redirect reached at: ${request.url}`, "max-redirect"));
                   finalize();
                   return;
                 }
@@ -17361,7 +17383,7 @@ var require_lib2 = __commonJS({
                   size: request.size
                 };
                 if (res.statusCode !== 303 && request.body && getTotalBytes2(request) === null) {
-                  reject(new FetchError2("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
+                  reject2(new FetchError2("Cannot follow redirect with body being a readable stream", "unsupported-redirect"));
                   finalize();
                   return;
                 }
@@ -17444,7 +17466,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-bc3f6955.js
+// .svelte-kit/output/server/chunks/index-c327074d-df423577.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17933,10 +17955,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_bc3f6955 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-bc3f6955.js"() {
+var init_index_c327074d_df423577 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-df423577.js"() {
     init_shims();
-    init_store_4c131131();
+    init_store_ba285225();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18039,9 +18061,9 @@ var init_index_c327074d_bc3f6955 = __esm({
       constructor(auth) {
         this.auth = auth;
         this.timer = null;
-        this.promise = new Promise((_, reject) => {
+        this.promise = new Promise((_, reject2) => {
           this.timer = setTimeout(() => {
-            return reject(_createError(this.auth, "timeout"));
+            return reject2(_createError(this.auth, "timeout"));
           }, DEFAULT_API_TIMEOUT_MS.get());
         });
       }
@@ -18865,18 +18887,18 @@ var init_index_c327074d_bc3f6955 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-3eaff16a.js
-var layout_3eaff16a_exports = {};
-__export(layout_3eaff16a_exports, {
+// .svelte-kit/output/server/chunks/__layout-23f94696.js
+var layout_23f94696_exports = {};
+__export(layout_23f94696_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, _layout;
-var init_layout_3eaff16a = __esm({
-  ".svelte-kit/output/server/chunks/__layout-3eaff16a.js"() {
+var init_layout_23f94696 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-23f94696.js"() {
     init_shims();
-    init_app_29e69d20();
-    init_store_4c131131();
-    init_index_c327074d_bc3f6955();
+    init_app_0889c82b();
+    init_store_ba285225();
+    init_index_c327074d_df423577();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18895,9 +18917,9 @@ var init_layout_3eaff16a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-30e054d5.js
-var error_30e054d5_exports = {};
-__export(error_30e054d5_exports, {
+// .svelte-kit/output/server/chunks/error-1645c6cf.js
+var error_1645c6cf_exports = {};
+__export(error_1645c6cf_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18905,10 +18927,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_30e054d5 = __esm({
-  ".svelte-kit/output/server/chunks/error-30e054d5.js"() {
+var init_error_1645c6cf = __esm({
+  ".svelte-kit/output/server/chunks/error-1645c6cf.js"() {
     init_shims();
-    init_app_29e69d20();
+    init_app_0889c82b();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18930,7 +18952,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-28bcf7f9.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-bd92b2f5.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19283,11 +19305,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_28bcf7f9 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-28bcf7f9.js"() {
+var init_SelectionGroupIcon_bd92b2f5 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-bd92b2f5.js"() {
     init_shims();
-    init_app_29e69d20();
-    init_store_4c131131();
+    init_app_0889c82b();
+    init_store_ba285225();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20541,14 +20563,14 @@ var init_SelectionGroupIcon_28bcf7f9 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-c6c92dd7.js
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-3da8e773.js
 var Object_12, Button_1, css, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_c6c92dd7 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-c6c92dd7.js"() {
+var init_RenderlessFetchStrokes_3da8e773 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-3da8e773.js"() {
     init_shims();
-    init_app_29e69d20();
-    init_SelectionGroupIcon_28bcf7f9();
-    init_store_4c131131();
+    init_app_0889c82b();
+    init_SelectionGroupIcon_bd92b2f5();
+    init_store_ba285225();
     ({ Object: Object_12 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20808,9 +20830,9 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/index-8f1c06ed.js
-var index_8f1c06ed_exports = {};
-__export(index_8f1c06ed_exports, {
+// .svelte-kit/output/server/chunks/index-e9dcd522.js
+var index_e9dcd522_exports = {};
+__export(index_e9dcd522_exports, {
   default: () => Routes
 });
 function calculateCanvasDimensions() {
@@ -20840,15 +20862,15 @@ function calculateCanvasDimensions2() {
   return { width: 0.9 * normalD.width, height: 0.9 * normalD.height };
 }
 var import_node_fetch2, import_cookie3, css2, Routes;
-var init_index_8f1c06ed = __esm({
-  ".svelte-kit/output/server/chunks/index-8f1c06ed.js"() {
+var init_index_e9dcd522 = __esm({
+  ".svelte-kit/output/server/chunks/index-e9dcd522.js"() {
     init_shims();
-    init_app_29e69d20();
-    init_index_c327074d_bc3f6955();
-    init_store_4c131131();
+    init_app_0889c82b();
+    init_index_c327074d_df423577();
+    init_store_ba285225();
     import_node_fetch2 = __toModule(require_lib2());
-    init_RenderlessFetchStrokes_c6c92dd7();
-    init_SelectionGroupIcon_28bcf7f9();
+    init_RenderlessFetchStrokes_3da8e773();
+    init_SelectionGroupIcon_bd92b2f5();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
     css2 = {
@@ -20953,7 +20975,7 @@ var init_index_8f1c06ed = __esm({
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">In the real world, there&#39;s just not enough help to go around. The TA just can&#39;t spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
 				<br>
 				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they&#39;re fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+				So while there are lots of free MIT resources, S^3 for extensions, etc. they&#39;re fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
 			</p>
 			<br></div></section>
 
@@ -21040,7 +21062,7 @@ var init_index_8f1c06ed = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Menu-b7191585.js
+// .svelte-kit/output/server/chunks/Menu-fb1bf718.js
 function guard(name6) {
   return () => {
     throw new Error(`Cannot call ${name6}(...) on the server`);
@@ -21074,12 +21096,12 @@ function prefixFilter(obj, prefix) {
   return newObj;
 }
 var goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, Switch, MenuSurface, Menu;
-var init_Menu_b7191585 = __esm({
-  ".svelte-kit/output/server/chunks/Menu-b7191585.js"() {
+var init_Menu_fb1bf718 = __esm({
+  ".svelte-kit/output/server/chunks/Menu-fb1bf718.js"() {
     init_shims();
-    init_app_29e69d20();
-    init_SelectionGroupIcon_28bcf7f9();
-    init_store_4c131131();
+    init_app_0889c82b();
+    init_SelectionGroupIcon_bd92b2f5();
+    init_store_ba285225();
     goto = guard("goto");
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -27052,9 +27074,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-66fda66c.js
-var layout_66fda66c_exports = {};
-__export(layout_66fda66c_exports, {
+// .svelte-kit/output/server/chunks/__layout-47ea5ea1.js
+var layout_47ea5ea1_exports = {};
+__export(layout_47ea5ea1_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -27173,10 +27195,10 @@ function unwrapListeners(arr) {
   return ret;
 }
 function once2(emitter, name22) {
-  return new Promise(function(resolve2, reject) {
+  return new Promise(function(resolve2, reject2) {
     function errorListener(err) {
       emitter.removeListener(name22, resolver);
-      reject(err);
+      reject2(err);
     }
     function resolver() {
       if (typeof emitter.removeListener === "function") {
@@ -29220,14 +29242,14 @@ function load2({ page }) {
     }
   };
 }
-var import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie4, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name4, version4, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, DailyVideoConference, css3, _layout2;
-var init_layout_66fda66c = __esm({
-  ".svelte-kit/output/server/chunks/__layout-66fda66c.js"() {
+var import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie4, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name4, version4, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css3, _layout2;
+var init_layout_47ea5ea1 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-47ea5ea1.js"() {
     init_shims();
-    init_app_29e69d20();
-    init_Menu_b7191585();
-    init_SelectionGroupIcon_28bcf7f9();
-    init_store_4c131131();
+    init_app_0889c82b();
+    init_Menu_fb1bf718();
+    init_SelectionGroupIcon_bd92b2f5();
+    init_store_ba285225();
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -29586,7 +29608,6 @@ var init_layout_66fda66c = __esm({
       let anchor;
       let allClasses = [];
       let valueStandard = "";
-      console.log("$user =", $user);
       let menu;
       async function join({ mitClass }) {
         console.log("join mitClass =", mitClass);
@@ -29618,7 +29639,7 @@ var init_layout_66fda66c = __esm({
             join({ mitClass: valueStandard });
           }
         }
-        filteredClasses = allClasses.filter((c) => ["8.01"].includes(c.name));
+        filteredClasses = allClasses.filter((c) => ["8.01", "6.036"].includes(c.name));
         $$rendered = `<div${add_attribute("this", anchor, 0)}><div style="${"display: flex; align-items: center;"}"><div><h1 style="${"font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem"}">${escape(nameOfClass)}</h1>
       <div style="${"font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px"}">${escape(descriptionOfClass)}</div></div>
     
@@ -33560,10 +33581,10 @@ var init_layout_66fda66c = __esm({
       }
       getToken(forceRefresh) {
         if (!this.appCheck) {
-          return new Promise((resolve2, reject) => {
+          return new Promise((resolve2, reject2) => {
             setTimeout(() => {
               if (this.appCheck) {
-                this.getToken(forceRefresh).then(resolve2, reject);
+                this.getToken(forceRefresh).then(resolve2, reject2);
               } else {
                 resolve2(null);
               }
@@ -33593,10 +33614,10 @@ var init_layout_66fda66c = __esm({
       }
       getToken(forceRefresh) {
         if (!this.auth_) {
-          return new Promise((resolve2, reject) => {
+          return new Promise((resolve2, reject2) => {
             setTimeout(() => {
               if (this.auth_) {
-                this.getToken(forceRefresh).then(resolve2, reject);
+                this.getToken(forceRefresh).then(resolve2, reject2);
               } else {
                 resolve2(null);
               }
@@ -37464,25 +37485,113 @@ var init_layout_66fda66c = __esm({
       $$unsubscribe_isFirestoreDocCreated();
       return ``;
     });
+    API_KEY_SECRET = "0ac8a98cf9bef2827f5beef5cd36c4f42a442863ce904a2469de12caa9097fa1";
     DailyVideoConference = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $dailyRoomParticipants, $$unsubscribe_dailyRoomParticipants;
-      let $$unsubscribe_browserTabID;
+      let $browserTabID, $$unsubscribe_browserTabID;
       let $$unsubscribe_dailyMicStream;
       $$unsubscribe_dailyRoomParticipants = subscribe(dailyRoomParticipants, (value) => $dailyRoomParticipants = value);
-      $$unsubscribe_browserTabID = subscribe(browserTabID, (value) => value);
+      $$unsubscribe_browserTabID = subscribe(browserTabID, (value) => $browserTabID = value);
       $$unsubscribe_dailyMicStream = subscribe(dailyMicStream, (value) => value);
       let { roomID } = $$props;
       let CallObject;
       let firestoreIDToDailyID;
+      let prevCallState;
+      let currentCallState;
+      let dailyRoomID;
       let activeSpeakerID = "";
       onDestroy(() => {
+        if (currentCallState === "connected") {
+          leaveConferenceRoom();
+        }
       });
+      async function publicJoinRoom() {
+        prevCallState = "not_connected";
+        currentCallState = "connecting";
+        dailyRoomID = roomID;
+        const { url: url2 } = await fetchOrCreateDailyRoom();
+        if (url2) {
+          await joinDailyRoom(url2);
+          prevCallState = "connecting";
+          currentCallState = "connected";
+        }
+      }
+      function fetchOrCreateDailyRoom() {
+        return new Promise(async (resolve2) => {
+          try {
+            const SECONDS_IN_TWO_HOURS = 2 * 60 * 60;
+            const response = await fetch("https://api.daily.co/v1/rooms", {
+              "method": "POST",
+              "headers": {
+                "content-type": "application/json",
+                "Authorization": "Bearer " + API_KEY_SECRET
+              },
+              body: JSON.stringify({
+                name: roomID,
+                properties: {
+                  exp: Math.round(Date.now() / 1e3) + SECONDS_IN_TWO_HOURS,
+                  eject_at_room_exp: true,
+                  start_video_off: true
+                }
+              })
+            });
+            const room = await response.json();
+            if (room.error === "invalid-request-error" && room.info === `a room named ${roomID} already exists`) {
+              resolve2({
+                url: `https://feynman.daily.co/${roomID}`
+              });
+            } else {
+              resolve2(room);
+            }
+          } catch (error22) {
+            console.error(error22);
+            alert(error22);
+            reject({ url: "" });
+          }
+        });
+      }
+      function joinDailyRoom(roomURL) {
+        return new Promise(async (resolve2, reject2) => {
+          try {
+            await CallObject.join({ url: roomURL, userName: $browserTabID });
+            resolve2();
+          } catch (error22) {
+            console.log("error)");
+            alert(error22);
+            reject2();
+          }
+        });
+      }
       function toggleMic() {
         CallObject.setLocalAudio(!$dailyRoomParticipants.local.audio);
         dailyRoomParticipants.set(CallObject.participants());
       }
+      function leaveConferenceRoom() {
+        const micAudioElems = document.querySelectorAll("audio");
+        for (const micAudioElem of micAudioElems) {
+          micAudioElem.remove();
+        }
+        cleanUpCallObject();
+        prevCallState = "connected";
+        currentCallState = "not_connected";
+      }
+      function cleanUpCallObject() {
+        CallObject.leave();
+        dailyRoomParticipants.set({});
+        activeSpeakerID = "";
+      }
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
+      {
+        if (dailyRoomID !== roomID && currentCallState === "connected" && prevCallState === "connecting") {
+          leaveConferenceRoom();
+        }
+      }
+      {
+        if (dailyRoomID !== roomID && currentCallState === "not_connected" && prevCallState === "connected") {
+          publicJoinRoom();
+        }
+      }
       $$unsubscribe_dailyRoomParticipants();
       $$unsubscribe_browserTabID();
       $$unsubscribe_dailyMicStream();
@@ -37507,66 +37616,90 @@ var init_layout_66fda66c = __esm({
       $$unsubscribe_browserTabID = subscribe(browserTabID, (value) => $browserTabID = value);
       let { classID } = $$props;
       let { roomID } = $$props;
+      let unsubFuncs = [];
       let nameOfClass = "";
       let descriptionOfClass = "";
       let rooms = [];
-      onDestroy(() => {
+      function unsubDbListeners() {
         for (const unsubFunc of unsubFuncs) {
           unsubFunc();
         }
+        unsubFuncs = [];
+      }
+      async function fetchClassDoc() {
+        const classDocRef = va(Oa(), `classes/${classID}`);
+        const classDoc = await ch(classDocRef);
+        nameOfClass = classDoc.data().name;
+        descriptionOfClass = classDoc.data().description;
+      }
+      onDestroy(() => {
+        unsubDbListeners();
       });
-      let unsubFuncs = [];
-      const participantsRef = ba(Oa(), `classes/${classID}/participants`);
-      const roomsRef = ba(Oa(), `classes/${classID}/rooms`);
-      const roomsQuery = Mu(roomsRef, qu("date", "asc"));
-      unsubFuncs.push(yh(roomsQuery, (snapshot) => {
-        const docs = [];
-        snapshot.forEach((doc) => {
-          docs.push({
-            id: doc.id,
-            ref: doc.ref.path,
-            ...doc.data()
-          });
-        });
-        rooms = docs;
-      }));
-      unsubFuncs.push(yh(participantsRef, (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          const person = change.doc.data();
-          const roomID2 = person.currentRoomID;
-          switch (change.type) {
-            case "added":
-              if (!$roomToPeople[roomID2])
-                set_store_value(roomToPeople, $roomToPeople[roomID2] = [], $roomToPeople);
-              set_store_value(roomToPeople, $roomToPeople[roomID2] = [...$roomToPeople[roomID2], person], $roomToPeople);
-              break;
-            case "modified":
-              for (const id2 of Object.keys($roomToPeople)) {
-                for (const p2 of $roomToPeople[id2]) {
-                  if (p2.browserTabID === person.browserTabID) {
-                    set_store_value(roomToPeople, $roomToPeople[id2] = $roomToPeople[id2].filter((p22) => p22.browserTabID !== person.browserTabID), $roomToPeople);
+      function fetchParticipants() {
+        const participantsRef = ba(Oa(), `classes/${classID}/participants`);
+        unsubFuncs.push(yh(participantsRef, (snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+            const person = change.doc.data();
+            const roomID2 = person.currentRoomID;
+            switch (change.type) {
+              case "added":
+                if (!$roomToPeople[roomID2])
+                  set_store_value(roomToPeople, $roomToPeople[roomID2] = [], $roomToPeople);
+                set_store_value(roomToPeople, $roomToPeople[roomID2] = [...$roomToPeople[roomID2], person], $roomToPeople);
+                break;
+              case "modified":
+                for (const id2 of Object.keys($roomToPeople)) {
+                  for (const p2 of $roomToPeople[id2]) {
+                    if (p2.browserTabID === person.browserTabID) {
+                      set_store_value(roomToPeople, $roomToPeople[id2] = $roomToPeople[id2].filter((p22) => p22.browserTabID !== person.browserTabID), $roomToPeople);
+                    }
                   }
                 }
-              }
-              if (!$roomToPeople[roomID2])
-                set_store_value(roomToPeople, $roomToPeople[roomID2] = [], $roomToPeople);
-              set_store_value(roomToPeople, $roomToPeople[roomID2] = [...$roomToPeople[roomID2], person], $roomToPeople);
-              break;
-            case "removed":
-              set_store_value(roomToPeople, $roomToPeople[roomID2] = $roomToPeople[roomID2].filter((p2) => p2.browserTabID !== person.browserTabID), $roomToPeople);
-              break;
-          }
-        });
-      }));
+                if (!$roomToPeople[roomID2])
+                  set_store_value(roomToPeople, $roomToPeople[roomID2] = [], $roomToPeople);
+                set_store_value(roomToPeople, $roomToPeople[roomID2] = [...$roomToPeople[roomID2], person], $roomToPeople);
+                break;
+              case "removed":
+                set_store_value(roomToPeople, $roomToPeople[roomID2] = $roomToPeople[roomID2].filter((p2) => p2.browserTabID !== person.browserTabID), $roomToPeople);
+                break;
+            }
+          });
+        }));
+      }
+      function fetchRooms() {
+        const roomsRef = ba(Oa(), `classes/${classID}/rooms`);
+        const roomsQuery = Mu(roomsRef, qu("date", "asc"));
+        unsubFuncs.push(yh(roomsQuery, (snapshot) => {
+          const docs = [];
+          snapshot.forEach((doc) => {
+            docs.push({
+              id: doc.id,
+              ref: doc.ref.path,
+              ...doc.data()
+            });
+          });
+          rooms = docs;
+        }));
+      }
       if ($$props.classID === void 0 && $$bindings.classID && classID !== void 0)
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
       $$result.css.add(css3);
+      {
+        if (classID) {
+          unsubDbListeners();
+          set_store_value(roomToPeople, $roomToPeople = [], $roomToPeople);
+          fetchClassDoc();
+          fetchParticipants();
+          fetchRooms();
+        }
+      }
       $$unsubscribe_roomToPeople();
       $$unsubscribe_dailyRoomParticipants();
       $$unsubscribe_browserTabID();
-      return `${validate_component(RenderlessMyDocUpdater, "RenderlessMyDocUpdater").$$render($$result, { classID, roomID }, {}, {})}
+      return `
+${validate_component(RenderlessMyDocUpdater, "RenderlessMyDocUpdater").$$render($$result, { classID, roomID }, {}, {})}
 
 <div id="${"container-for-audio-elements"}"></div>
 
@@ -37590,10 +37723,9 @@ ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$re
                       ${$dailyRoomParticipants.local.audio ? `<div style="${"font-size: 0.7rem; margin-left: 6px; color: #33ff33"}">voice on
                         </div>` : `<div style="${"font-size: 0.7rem; margin-left: 6px; color: red"}">muted
                         </div>`}
-                    </div>` : ``}
-                  ${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]] ? `${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio ? `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto; font-size: 1.1rem; color: " + escape(firestoreIDToDailyID && firestoreIDToDailyID[person.browserTabID] && firestoreIDToDailyID[person.browserTabID] === activeSpeakerID ? "white" : "")}">mic
+                    </div>` : `${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]] ? `${$dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio ? `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto; font-size: 1.1rem; color: " + escape(firestoreIDToDailyID && firestoreIDToDailyID[person.browserTabID] && firestoreIDToDailyID[person.browserTabID] === activeSpeakerID ? "white" : "")}">mic
                       </span>` : `<span class="${"material-icons"}" style="${"margin-right: 0; margin-left: auto; font-size: 1.1rem; color: red"}">mic_off
-                      </span>`}` : ``}` : ``}
+                      </span>`}` : ``}`}` : ``}
               </div>`)}` : ``}</div>
       </div>`)}
 
@@ -37619,9 +37751,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-4aab86b7.js
-var index_4aab86b7_exports = {};
-__export(index_4aab86b7_exports, {
+// .svelte-kit/output/server/chunks/index-30b1a6fe.js
+var index_30b1a6fe_exports = {};
+__export(index_30b1a6fe_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -37863,14 +37995,14 @@ function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
 var import_node_fetch3, import_cookie5, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name5, version5, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css4, U5Broomu5D;
-var init_index_4aab86b7 = __esm({
-  ".svelte-kit/output/server/chunks/index-4aab86b7.js"() {
+var init_index_30b1a6fe = __esm({
+  ".svelte-kit/output/server/chunks/index-30b1a6fe.js"() {
     init_shims();
-    init_app_29e69d20();
-    init_RenderlessFetchStrokes_c6c92dd7();
-    init_store_4c131131();
-    init_Menu_b7191585();
-    init_SelectionGroupIcon_28bcf7f9();
+    init_app_0889c82b();
+    init_RenderlessFetchStrokes_3da8e773();
+    init_store_ba285225();
+    init_Menu_fb1bf718();
+    init_SelectionGroupIcon_bd92b2f5();
     import_node_fetch3 = __toModule(require_lib2());
     import_cookie5 = __toModule(require_cookie());
     init_dist();
@@ -38033,10 +38165,10 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
       const dispatch2 = createEventDispatcher();
       let recorder = null;
       function startRecording() {
-        return new Promise(async (resolve2, reject) => {
+        return new Promise(async (resolve2, reject2) => {
           if (!$dailyRoomParticipants.local.audio) {
             alert('Cannot start recording because your mic is muted - click the switch next to your "beaver #n" to unmute');
-            reject("Cannot start recording because mic stream is muted");
+            reject2("Cannot start recording because mic stream is muted");
             return;
           }
           const micStreamCopy = $dailyMicStream.clone();
@@ -38049,7 +38181,7 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
         });
       }
       function stopRecording() {
-        return new Promise((resolve2, reject) => {
+        return new Promise((resolve2, reject2) => {
           clearTimeout(timer);
           recordState.set("post_record");
           recorder.addEventListener("dataavailable", (e) => {
@@ -38220,9 +38352,9 @@ ${this.customData.serverResponse}`;
         this.backoffId_ = null;
         this.canceled_ = false;
         this.appDelete_ = false;
-        this.promise_ = new Promise((resolve2, reject) => {
+        this.promise_ = new Promise((resolve2, reject2) => {
           this.resolve_ = resolve2;
-          this.reject_ = reject;
+          this.reject_ = reject2;
           this.start_();
         });
       }
@@ -38262,7 +38394,7 @@ ${this.customData.serverResponse}`;
         };
         const backoffDone = (requestWentThrough, status) => {
           const resolve2 = this.resolve_;
-          const reject = this.reject_;
+          const reject2 = this.reject_;
           const connection = status.connection;
           if (status.wasSuccessCode) {
             try {
@@ -38273,24 +38405,24 @@ ${this.customData.serverResponse}`;
                 resolve2();
               }
             } catch (e) {
-              reject(e);
+              reject2(e);
             }
           } else {
             if (connection !== null) {
               const err = unknown();
               err.serverResponse = connection.getErrorText();
               if (this.errorCallback_) {
-                reject(this.errorCallback_(connection, err));
+                reject2(this.errorCallback_(connection, err));
               } else {
-                reject(err);
+                reject2(err);
               }
             } else {
               if (status.canceled) {
                 const err = this.appDelete_ ? appDeleted() : canceled();
-                reject(err);
+                reject2(err);
               } else {
                 const err = retryLimitExceeded();
-                reject(err);
+                reject2(err);
               }
             }
           }
@@ -38755,6 +38887,8 @@ ${this.customData.serverResponse}`;
       map: null
     };
     U5Broomu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let boardsDbPath;
+      let roomsDbPath;
       let roomRef;
       let $user, $$unsubscribe_user;
       let $canvasWidth, $$unsubscribe_canvasWidth;
@@ -38768,8 +38902,6 @@ ${this.customData.serverResponse}`;
       let { roomID } = $$props;
       let unsubRoomListener;
       let roomDoc;
-      const boardsDbPath = `classes/${classID}/blackboards/`;
-      const roomsDbPath = `classes/${classID}/rooms/`;
       if (!$user.uid) {
         goto("/");
       }
@@ -38788,6 +38920,8 @@ ${this.customData.serverResponse}`;
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
       $$result.css.add(css4);
+      boardsDbPath = `classes/${classID}/blackboards/`;
+      roomsDbPath = `classes/${classID}/rooms/`;
       roomRef = va(Oa(), roomsDbPath + roomID);
       {
         createRoomListener();
@@ -38870,7 +39004,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-29e69d20.js
+// .svelte-kit/output/server/chunks/app-0889c82b.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -40328,9 +40462,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-d8bc39bd.js",
+      file: assets + "/_app/start-639c5e64.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-d8bc39bd.js", assets + "/_app/chunks/vendor-bc7dd356.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-639c5e64.js", assets + "/_app/chunks/vendor-da8027ad.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40374,8 +40508,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_29e69d20 = __esm({
-  ".svelte-kit/output/server/chunks/app-29e69d20.js"() {
+var init_app_0889c82b = __esm({
+  ".svelte-kit/output/server/chunks/app-0889c82b.js"() {
     init_shims();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
@@ -40641,13 +40775,13 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_3eaff16a(), layout_3eaff16a_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_30e054d5(), error_30e054d5_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_8f1c06ed(), index_8f1c06ed_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_66fda66c(), layout_66fda66c_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_4aab86b7(), index_4aab86b7_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_23f94696(), layout_23f94696_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_1645c6cf(), error_1645c6cf_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_e9dcd522(), index_e9dcd522_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_47ea5ea1(), layout_47ea5ea1_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_30b1a6fe(), index_30b1a6fe_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-3ef70d65.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-3ef70d65.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-3ddb30f2.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-c1df57b6.js", "css": [], "js": ["error.svelte-c1df57b6.js", "chunks/vendor-bc7dd356.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-843adbc1.js", "css": ["assets/pages/index.svelte-704a2b30.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/index.svelte-843adbc1.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-3ddb30f2.js", "chunks/singletons-12a22614.js", "chunks/RenderlessFetchStrokes-c4d69b50.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-42707756.js", "css": ["assets/pages/_class_/__layout.svelte-c4788b3a.css"], "js": ["pages/_class_/__layout.svelte-42707756.js", "chunks/vendor-bc7dd356.js", "chunks/navigation-3ddb30f2.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-225707fc.js", "css": ["assets/pages/_class_/_room_/index.svelte-1ffcb44e.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/_class_/_room_/index.svelte-225707fc.js", "chunks/vendor-bc7dd356.js", "chunks/RenderlessFetchStrokes-c4d69b50.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-3ddb30f2.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-00215c89.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-00215c89.js", "chunks/vendor-da8027ad.js", "chunks/navigation-d0de6f35.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-5f714c2a.js", "css": [], "js": ["error.svelte-5f714c2a.js", "chunks/vendor-da8027ad.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-63b5cffd.js", "css": ["assets/pages/index.svelte-704a2b30.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/index.svelte-63b5cffd.js", "chunks/vendor-da8027ad.js", "chunks/navigation-d0de6f35.js", "chunks/singletons-12a22614.js", "chunks/RenderlessFetchStrokes-a85d8772.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-0eda956f.js", "css": ["assets/pages/_class_/__layout.svelte-c4788b3a.css"], "js": ["pages/_class_/__layout.svelte-0eda956f.js", "chunks/vendor-da8027ad.js", "chunks/navigation-d0de6f35.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-9dc11624.js", "css": ["assets/pages/_class_/_room_/index.svelte-1ffcb44e.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/_class_/_room_/index.svelte-9dc11624.js", "chunks/vendor-da8027ad.js", "chunks/RenderlessFetchStrokes-a85d8772.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-d0de6f35.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
   }
 });
 
@@ -40660,12 +40794,12 @@ init_shims();
 // node_modules/@sveltejs/kit/dist/node.js
 init_shims();
 function getRawBody(req) {
-  return new Promise((fulfil, reject) => {
+  return new Promise((fulfil, reject2) => {
     const h = req.headers;
     if (!h["content-type"]) {
       return fulfil(null);
     }
-    req.on("error", reject);
+    req.on("error", reject2);
     const length = Number(h["content-length"]);
     if (isNaN(length) && h["transfer-encoding"] == null) {
       return fulfil(null);
@@ -40676,7 +40810,7 @@ function getRawBody(req) {
       req.on("data", (chunk) => {
         const new_len = offset + Buffer.byteLength(chunk);
         if (new_len > length) {
-          return reject({
+          return reject2({
             status: 413,
             reason: 'Exceeded "Content-Length" limit'
           });
@@ -40700,7 +40834,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_29e69d20();
+init_app_0889c82b();
 var import_cookie7 = __toModule(require_cookie());
 init_dist();
 

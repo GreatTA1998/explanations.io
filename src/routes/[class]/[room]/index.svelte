@@ -177,16 +177,27 @@
   export let roomID
 
   let unsubRoomListener
-
   let roomDoc
-  // reactivity not necessary: `classID` is constant here 
-  const boardsDbPath = `classes/${classID}/blackboards/`
-  const roomsDbPath = `classes/${classID}/rooms/`
-  $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
 
   if (!$user.uid) {
     goto('/')
   }
+
+  $: boardsDbPath = `classes/${classID}/blackboards/`
+  $: roomsDbPath = `classes/${classID}/rooms/`
+  $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
+  $: roomID, createRoomListener() // Yes, reactive statements DO trigger on initial assignment
+
+  async function createRoomListener () {
+    if (unsubRoomListener) unsubRoomListener() // assume it's not async
+    unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
+      roomDoc = { id: snapshot.id, ...snapshot.data() }
+    })
+  }
+
+  onDestroy(() => {
+    unsubRoomListener()
+  })
 
   //// START of background image logic
   function clickHiddenInput (boardID) {
@@ -339,20 +350,6 @@
       description: detail
     })
   }
-
-  // reactive statements DO trigger on initial assignment
-  $: roomID, createRoomListener() 
-
-  async function createRoomListener () {
-    if (unsubRoomListener) unsubRoomListener() // assume it's not async
-    unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
-      roomDoc = { id: snapshot.id, ...snapshot.data() }
-    })
-  }
-  
-  onDestroy(() => {
-    unsubRoomListener()
-  })
 
   async function saveVideo (audioBlob, boardID) {
     const storage = getStorage()

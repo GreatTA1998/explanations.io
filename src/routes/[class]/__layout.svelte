@@ -9,10 +9,13 @@
   }  
 </script>
 
-<RenderlessMyDocUpdater 
-  {classID} 
-  {roomID}
-/>
+<!-- This component re-renders everytime classID changes: https://github.com/sveltejs/svelte/issues/1469#issuecomment-698955660 -->
+{#key classID}
+  <RenderlessMyDocUpdater 
+    {classID} 
+    {roomID}
+  />
+{/key}
 
 <div id="container-for-audio-elements">
 
@@ -66,8 +69,7 @@
                         </div>
                       {/if}
                     </div>             
-                  {/if}
-                  {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}                      
+                  {:else if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}                      
                     {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio} 
                       <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: {(firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID) ? 'white' : ''}">
                         mic
@@ -121,33 +123,51 @@
   export let classID;
   export let roomID;
 
+  let unsubFuncs = []
   let nameOfClass = ''
   let descriptionOfClass = ''
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
 
 	// START OF RESIZE LOGIC 
   let resizeDebouncer = null
-  onDestroy(() => {
+
+  $: if (classID) {
+    unsubDbListeners()
+    $roomToPeople = []
+    fetchClassDoc()
+    fetchParticipants()
+    fetchRooms()
+  }
+
+  function unsubDbListeners () {
     for (const unsubFunc of unsubFuncs) {
       unsubFunc()
     }
-    if (browser) {
-      window.removeEventListener('resize', debouncedResizeHandler)
-    }
-  })
+    unsubFuncs = []
+  }
 
-  onMount(async () => {
-    console.log('__layout mounted, but should only be done once')
-    if (browser) {
-      window.addEventListener('resize', debouncedResizeHandler)
-    }
-    debouncedResizeHandler()
-
-    // fetch the class document
+  async function fetchClassDoc () {
     const classDocRef = doc(getFirestore(), `classes/${classID}`)
     const classDoc = await getDoc(classDocRef)
     nameOfClass = classDoc.data().name
     descriptionOfClass = classDoc.data().description
+  }
+
+  onMount(async () => {
+    // AWAIT FIX: __layout mounts twice: see issue https://github.com/sveltejs/kit/issues/2130
+    if (browser) {
+      window.addEventListener('resize', debouncedResizeHandler)
+    } else {
+      console.log('no browser')
+    }
+    debouncedResizeHandler()
+  })
+
+  onDestroy(() => {
+    unsubDbListeners()
+    if (browser) {
+      window.removeEventListener('resize', debouncedResizeHandler)
+    }
   })
 
   async function createNewRoom () {
@@ -188,62 +208,67 @@
   }
   // END OF RESIZE LOGIC
 
-  // HYDRATE PARTICIPANTS AND ROOMS
-  let unsubFuncs = []
-  const participantsRef = collection(
-    getFirestore(), 
-    `classes/${classID}/participants`
-  )  
-	const roomsRef = collection(
-    getFirestore(),
-    `classes/${classID}/rooms`
-  )
 
-  const roomsQuery = query(roomsRef, orderBy('date', 'asc'))
-  unsubFuncs.push(
-		onSnapshot(roomsQuery, snapshot => { // onSnapshot does NOT return a promise
-			const docs = []
-			snapshot.forEach(doc => { 
-				docs.push({ 
-					id: doc.id, 
-					ref: doc.ref.path, 
-					...doc.data() 
-				})
-			});
-			rooms = docs
-    })
-  )
-  unsubFuncs.push(
-		onSnapshot(participantsRef, (snapshot) => { // onSnapshot does NOT return a promise
-      snapshot.docChanges().forEach(change => {
-        const person = change.doc.data()
-        const roomID = person.currentRoomID
-        
-        switch (change.type) {
-          case 'added': 
-            if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
-            $roomToPeople[roomID] = [...$roomToPeople[roomID], person]
-            break
-          case 'modified':
-            // first remove, inefficiently.
-            for (const id of Object.keys($roomToPeople)) {
-              for (const p of $roomToPeople[id]) {
-                if (p.browserTabID === person.browserTabID) {
-                  $roomToPeople[id] = $roomToPeople[id].filter(p => p.browserTabID !== person.browserTabID)
-                }
-              } 
-            }
-            // then add (identical to code above)
-            if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
-            $roomToPeople[roomID] = [...$roomToPeople[roomID], person]
-            break
-          case 'removed':
-            $roomToPeople[roomID] = $roomToPeople[roomID].filter(p => p.browserTabID !== person.browserTabID)
-            break
-        }
+  function fetchParticipants () {
+    const participantsRef = collection(
+      getFirestore(), 
+      `classes/${classID}/participants`
+    )  
+     
+    unsubFuncs.push(
+      onSnapshot(participantsRef, (snapshot) => { // onSnapshot does NOT return a promise
+        snapshot.docChanges().forEach(change => {
+          const person = change.doc.data()
+          const roomID = person.currentRoomID
+          
+          switch (change.type) {
+            case 'added': 
+              if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
+              $roomToPeople[roomID] = [...$roomToPeople[roomID], person]
+              break
+            case 'modified':
+              // first remove, inefficiently.
+              for (const id of Object.keys($roomToPeople)) {
+                for (const p of $roomToPeople[id]) {
+                  if (p.browserTabID === person.browserTabID) {
+                    $roomToPeople[id] = $roomToPeople[id].filter(p => p.browserTabID !== person.browserTabID)
+                  }
+                } 
+              }
+              // then add (identical to code above)
+              if (!$roomToPeople[roomID]) $roomToPeople[roomID] = []
+              $roomToPeople[roomID] = [...$roomToPeople[roomID], person]
+              break
+            case 'removed':
+              $roomToPeople[roomID] = $roomToPeople[roomID].filter(p => p.browserTabID !== person.browserTabID)
+              break
+          }
+        })
       })
-    })
-  )
+    )
+  }
+
+  function fetchRooms () {
+    const roomsRef = collection(
+      getFirestore(),
+      `classes/${classID}/rooms`
+    )
+
+    const roomsQuery = query(roomsRef, orderBy('date', 'asc'))
+    unsubFuncs.push(
+      onSnapshot(roomsQuery, snapshot => { // onSnapshot does NOT return a promise
+        const docs = []
+        snapshot.forEach(doc => { 
+          docs.push({ 
+            id: doc.id, 
+            ref: doc.ref.path, 
+            ...doc.data() 
+          })
+        });
+        rooms = docs
+      })
+    )
+  }
 </script>
 
 <style>

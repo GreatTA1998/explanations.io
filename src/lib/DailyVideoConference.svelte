@@ -5,7 +5,7 @@
 <script>
   import DailyIframe from '@daily-co/daily-js'
   import { API_KEY_SECRET } from './environmentSecrets.js'
-  import { dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID } from '../store.js'
+  import { dailyMicStream, dailyRoomParticipants, browserTabID } from '../store.js'
   import { onDestroy, onMount } from 'svelte'
 
   export let roomID
@@ -15,18 +15,19 @@
   let prevCallState
   let currentCallState
   let dailyRoomID
-
   let activeSpeakerID = ''
 
-  $: if (prevCallState === 'connecting' && currentCallState === 'connected' && dailyRoomID !== roomID) {
-    // by the time we connected the roomID already changed, reset
-    console.log('part 1: user moved to a different room before voice chat connected')
+  // The .join() and .leave() promises are interruption-safe: 
+  //    case 1 (easy): we just clicked a different room
+  //    case 2 (subtle): by the time we connected the roomID, we clicked yet another room, so reset
+  $: if (dailyRoomID !== roomID && currentCallState === 'connected' && prevCallState === 'connecting') {
+    // console.log('LEAVING ROOM =', dailyRoomID)
     leaveConferenceRoom()
   }
 
-  $: if (prevCallState === 'connected' && currentCallState === 'not_connected' && dailyRoomID !== roomID) {
-    // safely join the new video conference room
-    console.log('part 2: ready to join the new room')
+  $: if (dailyRoomID !== roomID && currentCallState === 'not_connected' && prevCallState === 'connected') {
+    // now safely join the new video conference room
+    // console.log('JOINING ROOM', roomID)
     publicJoinRoom()
   }
   onDestroy(() =>{
@@ -45,14 +46,15 @@
       if (!$dailyMicStream) {
         try {
           const micStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-          console.log('micStream =', micStream)
+          // console.log('micStream =', micStream)
           dailyMicStream.set(micStream)
-          console.log('dailyMicStream =', $dailyMicStream)
+          // console.log('dailyMicStream =', $dailyMicStream)
         } catch (error) {
-          alert("Mic. permission was denied by your browser - it's needed for voice chat and for recording voiced explanations. Reset your mic. settings, which is usually an icon button close to the website URL bar e.g. the left side of 'https://ihtfp.app'")
-          reject()
+          alert(`Don't forget to enable your your mic! Click the "aA" / "i" button beside the URL bar "https://explain.mit.edu", then click "website settings" / "microphone"`)
+          return reject("Can't access mic stream")
         }
       }
+
       // for localhost, $dailyMicStream can be "null" here. I don't know why - can be a nextTick issue,
       // but a clue is, __layout is rendered twice, instead of once, and initCallObject is called twice as a result, instead of once. 
       // ignore for now if the error isn't reproduced on a deployed version
@@ -95,7 +97,6 @@
       
       // FINALLY RESOLVE
       resolve()
-
     })
   }  
 

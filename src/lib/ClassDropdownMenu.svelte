@@ -70,7 +70,7 @@
   let allClasses = []
   let fruits = ['Apple', 'Orange', 'Banana', 'Mango']
   let valueStandard = ''
-  console.log("$user =", $user)
+  // console.log("$user =", $user)
   // $user.enrolledClasses
   let menu
 
@@ -79,13 +79,11 @@
     join({ mitClass: valueStandard })
   }
 
-  $: filteredClasses = allClasses.filter(c => ['8.01'].includes(c.name))
+  $: filteredClasses = allClasses.filter(c => ['8.01', '6.036'].includes(c.name))
 
   // fetch all classes
   onMount(async () => {
-
-    console.log('$user.enrolledClasses =', $user.enrolledClasses)
-
+    // console.log('$user.enrolledClasses =', $user.enrolledClasses)
     const ref = collection(getFirestore(), '/classes')
     const classDocs = await getDocs(ref)
     const temp = []

@@ -26,7 +26,7 @@
 				In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
 				<br>
 				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, study group programs, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+				So while there are lots of free MIT resources, S^3 for extensions, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
 			</p>
 			<br>
 		</div>

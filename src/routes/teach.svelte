@@ -1,42 +1,15 @@
 {#if Object.keys($user).length === 0}
-	<section style="height: 100vh; border-bottom: 1px solid #eee;">
-		<div style="height: 84vh; display: flex; justify-content: center; align-items: center;">
-			<div style="padding-bottom: 90px;">
-				<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
-					<img src="logo.png" width="95" height="85" style="margin-left: 0px;">
-					<h1 id="logo" style="font-size: 5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 5px;">
-						explain
-					</h1>
-				</div>
-
-				<div style="display: flex; justify-content: center;">
-					<b style="color: grey; white-space: nowrap;" class="copied-from-koa">Efficient visual explanation platform for MIT classes</b>
-				</div>
-				
-				<div style="display: flex; justify-content: center; margin-top: 20px;">
-					<Button on:click={() => goto('learn')} variant="raised" color="purple">
-						I'm a student
-					</Button>
-
-					<Button on:click={() => goto('teach')} variant="raised" color="orange" style="margin-left: 6px">
-						I'm a teacher
-					</Button>	
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
+				Teaching MIT students <b style="color: orange">shouldn't</b> be a minimum wage job
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+				Paragraph 1
 				<br>
 				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+        Paragraph 2
 			</p>
 			<br>
 		</div>

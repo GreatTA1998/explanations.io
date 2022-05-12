@@ -73,7 +73,7 @@
                   let:startRecording={startRecording} 
                   let:stopRecording={stopRecording}
                   let:currentTime={currentTime}
-                  on:record-end={(e) => saveVideo(e.detail.audioBlob, boardID)}
+                  on:record-end={(e) => saveVideo(e.detail.audioBlob, strokesArray, boardID)}
                 >
                   <Blackboard 
                     {strokesArray} 
@@ -81,19 +81,26 @@
                     backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                     on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
                   > 
-                    {#if $recordState === 'pre_record'}
-                      <span on:click={startRecording}
-                        class="material-icons" style="font-size: 2.5rem;
-                        color: cyan;
-                        margin-left: 30px; margin-right: 26px"
+                    {#if !boardDoc.recordState || boardDoc.recordState === 'pre_record'}
+                      <span on:click={() => callManyFuncs(
+                          startRecording, 
+                          () => updateRecordState(boardID, 'mid_record'),
+                          () => updateRecorderBrowserTabID(boardID)
+                        )}
+                        class="material-icons" 
+                        style="font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"
                       >
                         radio_button_checked
                       </span>
-                    {:else if $recordState === 'mid_record'}
-                      <span on:click={stopRecording}
-                        class="material-icons" style="font-size: 2.5rem;
-                        color: cyan;
-                        margin-left: 30px; margin-right: 26px"
+                    {:else if boardDoc.recordState === 'mid_record'}
+                      <span 
+                        on:click={() => callManyFuncs(
+                          stopRecording,
+                          () => updateRecordState(boardID, 'post_record')
+                        )}
+                        class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
+                        class="material-icons" 
+                        style="font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"
                       >
                         stop_circle
                       </span>
@@ -160,7 +167,7 @@
   import Button, { Group, Label }from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
-  import { recordState, user, canvasHeight, canvasWidth } from '../../../store.js'
+  import { browserTabID, user, canvasHeight, canvasWidth } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs } from 'firebase/firestore';
@@ -198,6 +205,26 @@
   onDestroy(() => {
     unsubRoomListener()
   })
+
+  function callManyFuncs (...funcs) {
+    for (const func of funcs) {
+      func()
+    }
+  }
+
+  function updateRecorderBrowserTabID (boardID) {
+    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
+    updateDoc(blackboardRef, {
+      recorderBrowserTabID: $browserTabID
+    })
+  }
+
+  function updateRecordState (boardID, newRecordState) {
+    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
+    updateDoc(blackboardRef, {
+      recordState: newRecordState
+    })
+  }
 
   //// START of background image logic
   function clickHiddenInput (boardID) {
@@ -351,7 +378,46 @@
     })
   }
 
-  async function saveVideo (audioBlob, boardID) {
+  async function saveVideo (audioBlob, strokesArray, boardID) {
+    // QUICK-FIX for concurrent drawings with no timestamp 
+    // TODO: fails for edge case when all starting strokes are consecutively from other person
+    function hasValidTimestamp (stroke) {
+      // strokes from other people have an artificial stroke duration of 0.5 added by `RenderlessListenToStrokes`
+      // and have `currentTime = 0` because they have no access to the recorder's timer
+      // NOTE: even if the person recording does preview drawings, both `startTime` and `endTime` would be 0 (instead of 0 and 0.5)
+      return stroke.startTime !== 0 && stroke.endTime !== artificialDuration
+    }
+
+    const artificialDuration = 0.5
+    const indicesOfModifiedStrokes = []
+    const n = strokesArray.length
+
+    for (let i = 0; i < n; i++) {
+      if (!hasValidTimestamp(strokesArray[i])) {
+        // find the last valid stroke and base the `startTime` on it
+        let j = i - 1
+        while (j >= 0) {
+          if (hasValidTimestamp(strokesArray[j])) {
+            strokesArray[i].startTime = strokesArray[j].endTime
+            strokesArray[i].endTime = strokesArray[i].startTime + artificialDuration
+            indicesOfModifiedStrokes.push(i)
+            break
+          }
+          j -= 1 
+        }
+      }
+
+      for (let idx of indicesOfModifiedStrokes) {
+        const stroke = strokesArray[idx]
+        const dbPath = boardsDbPath + boardID
+        const strokesRef = doc(getFirestore(), `${dbPath}/strokes/${stroke.id}`)
+        updateDoc(strokesRef, {
+          startTime: stroke.startTime,
+          endTime: stroke.endTime
+        })
+      }
+    }
+
     const storage = getStorage()
     const audioRef = ref(storage, `audio/${getRandomID()}`)
     await uploadBytes(audioRef, audioBlob)
@@ -365,7 +431,8 @@
       audioDownloadURL: downloadURL,
       audioRefFullPath: audioRef.fullPath
     })
-    recordState.set('pre_record')
+
+    updateRecordState(boardID, 'pre_record')
   }
 
   async function revertToBoard ({ id, audioRefFullPath }, deleteAllStrokesFromDb) {
@@ -412,6 +479,10 @@
 
 :global(.question input) {
   color: rgb(19, 145, 230) !important;
+}
+
+.unclickable {
+  pointer-events: none;
 }
 </style>
 

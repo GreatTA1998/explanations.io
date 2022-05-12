@@ -220,10 +220,6 @@
 	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
 
-	import Tab from '@smui/tab';
-  import TabBar from '@smui/tab-bar';
-	let active = 'Students'
-	
 	let currentTime = 10
 	let titleValue = 'Welcome!'
 	let i = 0

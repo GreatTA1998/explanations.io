@@ -51,14 +51,12 @@
       )
 
       dispatch('record-start')
-      recordState.set('mid_record')
       resolve();
     });
   }
   function stopRecording () {
     return new Promise((resolve, reject) => {
       clearTimeout(timer)
-      recordState.set('post_record')
       recorder.addEventListener("dataavailable", e => {
         const audioBlob = e.data
         dispatch('record-end', { audioBlob }); 

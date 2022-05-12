@@ -2,7 +2,7 @@
 	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Falling behind is like getting credit card debt - it's hard to truly recover
+				Not understanding
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -192,10 +192,6 @@
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-
-	import Tab from '@smui/tab';
-  import TabBar from '@smui/tab-bar';
-	let active = 'Students'
 	
 	let currentTime = 10
 	let titleValue = 'Welcome!'

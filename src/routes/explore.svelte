@@ -81,6 +81,15 @@
 	</section>
 {/if}
 
+<!-- <h1>
+This website makes it <b style="color: rgb(15 186 191)">efficient to give & receive explanations</b>, so everyone can get enough help
+</h1>
+
+<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+  Help can become an abundant resource if it is easy to re-use explanations.
+  If tutors don't need to repeat themselves, they can have more time and/or help more students. 
+</p> -->
+
 <!-- Sign-up -->
 <!-- <section style="height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee">
 	<div class="content">

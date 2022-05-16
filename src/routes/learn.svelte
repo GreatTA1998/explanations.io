@@ -2,7 +2,7 @@
 	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Not understanding
+				Not understanding things properly leads to a lot of problems
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -15,7 +15,51 @@
 		</div>
 	</section>
 
+	<section style="height: {260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Review videos for everything, and real-time help whenever</h1>
+			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				Imagine if the material was so good that, everything you need to know is clearly explained and re-watchable at your own pace. And suppose anything were to be missing, you can just ask for help efficiently without having to travel to campus, wait till the next Office Hours / for a Piazza response?
+				<br>
+				<br>
+				Then, you can efficiently grasp the fundamentals and get up to speed, without unnecessary added stress. 
+			</p>
+		</div>
+	</section>
+
 	<section style="height: {$canvasHeight + 260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">How everything works</h1>
+			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				To be edited...
+
+				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
+				<br>
+				<br>
+				Here's an example video that was recorded on this website: 
+			</p>
+		</div>
+
+		<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`} id="caleb-video-section">
+			<RenderlessListenToBoard dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+				let:boardDoc={boardDoc}
+			>
+				<RenderlessFetchStrokes dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7" autoFetchStrokes={true}
+					let:strokesArray={strokesArray}
+				>
+					{#if boardDoc}
+						<DoodleVideo 
+							{strokesArray} 
+							audioDownloadURL={boardDoc.audioDownloadURL} 
+							backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+						/>
+					{/if}
+				</RenderlessFetchStrokes>
+			</RenderlessListenToBoard>
+		</div>
+	</section>
+
+	<!-- <section style="height: {$canvasHeight + 260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">What is Explain?</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -43,20 +87,15 @@
 				</RenderlessFetchStrokes>
 			</RenderlessListenToBoard>
 		</div>
-	</section>
+	</section> -->
 
 	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				This website makes it <b style="color: rgb(15 186 191)">efficient to give & receive explanations</b>, so everyone can get enough help
+				Website preview
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Help can become an abundant resource if it is easy to re-use explanations.
-				If tutors don't need to repeat themselves, they can have more time and/or help more students. 
-				<br>
-				<br>
-
 				How it works:
 				<li>Everyone contributes $20/week to the class server</li>
 				<li>Tutor runs the server and helps you personally as you want</li>
@@ -70,7 +109,7 @@
 	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				How to get started
+				Get started
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">

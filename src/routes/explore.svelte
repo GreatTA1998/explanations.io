@@ -1,46 +1,16 @@
 {#if Object.keys($user).length === 0}
-	<section style="height: 100vh; border-bottom: 1px solid #eee;">
-		<div style="height: 84vh; display: flex; justify-content: center; align-items: center;">
-			<div style="padding-bottom: 90px;">
-				<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
-					<img src="logo.png" width="120" height="108" style="margin-left: 0px;">
-					<h1 id="logo" style="font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;">
-						explain.mit.edu
-					</h1>
-				</div>
-
-				<div style="display: flex; justify-content: center;">
-					<b style="color: grey; white-space: nowrap;" class="copied-from-koa">Open-learning communities with lots of visual explanations</b>
-				</div>
-				
-				<div style="display: flex; justify-content: center; margin-top: 20px;">
-					<Button on:click={() => goto('learn')} variant="raised" color="purple">
-						I'm a student
-					</Button>
-
-					<Button on:click={() => goto('teach')} variant="raised" color="orange" style="margin-left: 6px">
-						I'm a teacher
-					</Button>	
-
-					<Button on:click={() => goto('explore')} variant="raised" color="orange" style="margin-left: 6px">
-						I'm someone else
-					</Button>	
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- <section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
+				It's hard to understand properly with text messages
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+				Communities built around Discord, Piazza, Facebook etc. have a fundamental flaw - you can't draw on blackboards easily, so you need to explain everything in words. 
+        It's almost a waste of time to learn anything complex without visuals. 
 				<br>
-				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+				<br>     
+        Times are changing: iPads are becoming more affordable, web apps becoming more powerful.
 			</p>
 			<br>
 		</div>
@@ -48,7 +18,7 @@
 
 	<section style="height: {$canvasHeight + 260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Blackboard-centric servers</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
 				<br>
@@ -79,44 +49,18 @@
 	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				This website makes it <b style="color: rgb(15 186 191)">efficient to give & receive explanations</b>, so everyone can get enough help
+        Get started
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Help can become an abundant resource if it is easy to re-use explanations.
-				If tutors don't need to repeat themselves, they can have more time and/or help more students. 
-				<br>
-				<br>
-
-				How it works:
-				<li>Everyone contributes $20/week to the class server</li>
-				<li>Tutor runs the server and helps you personally as you want</li>
-				<li>Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li>
-			</p>
-
-			<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		</div>
-	</section>
-
-	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
-		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				How to get started
-			</h1>
-
-			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
-				<br>
-				<br>
-				<li>Request a class by venmo'ing $20 to elton-lin-2</li>
-				<li>I'll send you a confirmation, create a server and find your tutor within 24 hours</li>
-				<li>Refund anytime any reason</li>
+        Just sign up for a password-less account to join and create servers
 			</p>
 		</div>
 
 		<div id="sign-up-section" style="height: 100px">
 			{#if !phoneConfirmationResult}
 				<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
+          <input type="tel" id="phone-country-code" minlength="2" maxlength="4" placeholder="+1" bind:value={countryCode} style="margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px">
 
 					<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
@@ -134,10 +78,8 @@
 				</div>
 			{/if}
 		</div>
-	</section> -->
+	</section>
 {/if}
-
-	<!-- <div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div> -->
 
 <!-- Sign-up -->
 <!-- <section style="height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee">
@@ -225,12 +167,13 @@
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-
+	
 	let currentTime = 10
 	let titleValue = 'Welcome!'
 	let i = 0
 	let typewriter
 
+  let countryCode = '+1'
 	let phoneNumSegment1 = ''
 	let phoneNumSegment2 = ''
 	let phoneNumSegment3 = ''
@@ -266,14 +209,13 @@
 		}, 300)
 	}
 
-	$: if (isQuestionMode) {
+	$:if (isQuestionMode) {
 		setTimeout(() => {
 			hasWatchedExemplar = true
 		}, 5000)
 	}
 
 	$: if (currentTime.toFixed(0) === '0') {
-		console.log('end of timer, currentTime =', currentTime)
 		clearInterval(timer)
 	}
 
@@ -356,7 +298,7 @@
 		onSignInSubmit();
 
 		function onSignInSubmit () {
-			const phoneNumber = `+1 ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`
+			const phoneNumber = `${countryCode} ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`
 			print(getAuth(), phoneNumber, appVerifier)
 			signInWithPhoneNumber(getAuth(), phoneNumber, appVerifier)
 				.then((confirmationResult) => {
@@ -391,7 +333,7 @@
 				// User signed in successfully.
 				const user = result.user;
 				console.log('redirecting, user =', user)
-				goto('/O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
+				goto('O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
 				// goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
 				// ...
 			}).catch((error) => {
@@ -412,18 +354,18 @@
 }
 
 .copied-from-koa {
-	font: 26px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
+	font: 20px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
 }
+/* increased 17px to 18px */
 
 #logo {
-	/* NOTE: this font-size is overriden on top so doesn't do anything! */
-    font: 300px 'Italiana', sans-serif;
+    font: 150px 'Italiana', sans-serif;
     text-transform: lowercase;
 }
 
 .content {
 	margin: 0 auto;
-	/* min-width: 750px; 
+	/* min-width: 750px;
 	max-width: 750px; */
 	text-align: left;
 }

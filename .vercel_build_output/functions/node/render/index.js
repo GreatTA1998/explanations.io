@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-ba285225.js
+// .svelte-kit/output/server/chunks/store-8e8f68a1.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -9080,11 +9080,11 @@ function getRandomID() {
   }
   return autoId;
 }
-var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, recordState, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_ba285225 = __esm({
-  ".svelte-kit/output/server/chunks/store-ba285225.js"() {
+var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
+var init_store_8e8f68a1 = __esm({
+  ".svelte-kit/output/server/chunks/store-8e8f68a1.js"() {
     init_shims();
-    init_app_0889c82b();
+    init_app_0ee4f17f();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -14623,7 +14623,6 @@ This typically indicates that your device does not have a healthy Internet conne
       lineWidth: 3
     });
     onlyAllowApplePencil = writable(true);
-    recordState = writable("pre_record");
     dailyMicStream = writable(null);
     roomToPeople = writable({});
     dailyRoomParticipants = writable({});
@@ -17466,7 +17465,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-df423577.js
+// .svelte-kit/output/server/chunks/index-c327074d-e1caddfe.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17955,10 +17954,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_df423577 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-df423577.js"() {
+var init_index_c327074d_e1caddfe = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-e1caddfe.js"() {
     init_shims();
-    init_store_ba285225();
+    init_store_8e8f68a1();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18887,27 +18886,57 @@ var init_index_c327074d_df423577 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-23f94696.js
-var layout_23f94696_exports = {};
-__export(layout_23f94696_exports, {
+// .svelte-kit/output/server/chunks/__layout-6643c439.js
+var layout_6643c439_exports = {};
+__export(layout_6643c439_exports, {
   default: () => _layout
 });
-var import_node_fetch, import_cookie, name3, version3, _layout;
-var init_layout_23f94696 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-23f94696.js"() {
+var import_node_fetch, import_cookie, name3, version3, getStores, page, _layout;
+var init_layout_6643c439 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-6643c439.js"() {
     init_shims();
-    init_app_0889c82b();
-    init_store_ba285225();
-    init_index_c327074d_df423577();
+    init_app_0ee4f17f();
+    init_store_8e8f68a1();
+    init_index_c327074d_e1caddfe();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
     name3 = "firebase";
     version3 = "9.5.0";
     registerVersion(name3, version3, "app");
+    getStores = () => {
+      const stores = getContext("__svelte__");
+      return {
+        page: {
+          subscribe: stores.page.subscribe
+        },
+        navigating: {
+          subscribe: stores.navigating.subscribe
+        },
+        get preloading() {
+          console.error("stores.preloading is deprecated; use stores.navigating instead");
+          return {
+            subscribe: stores.navigating.subscribe
+          };
+        },
+        session: stores.session
+      };
+    };
+    page = {
+      subscribe(fn2) {
+        const store2 = getStores().page;
+        return store2.subscribe(fn2);
+      }
+    };
     _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_user;
+      let $$unsubscribe_page;
       let $hasFetchedUser, $$unsubscribe_hasFetchedUser;
+      $$unsubscribe_user = subscribe(user, (value) => value);
+      $$unsubscribe_page = subscribe(page, (value) => value);
       $$unsubscribe_hasFetchedUser = subscribe(hasFetchedUser, (value) => $hasFetchedUser = value);
+      $$unsubscribe_user();
+      $$unsubscribe_page();
       $$unsubscribe_hasFetchedUser();
       return `${!$hasFetchedUser ? `<h4 style="${"margin-left: 16px; font-family: Roboto, sans-serif; opacity: 70%; font-weight: 400"}">Fetching your info...
   </h4>` : `${slots.default ? slots.default({}) : `
@@ -18917,9 +18946,9 @@ var init_layout_23f94696 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-1645c6cf.js
-var error_1645c6cf_exports = {};
-__export(error_1645c6cf_exports, {
+// .svelte-kit/output/server/chunks/error-5bc331be.js
+var error_5bc331be_exports = {};
+__export(error_5bc331be_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18927,10 +18956,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_1645c6cf = __esm({
-  ".svelte-kit/output/server/chunks/error-1645c6cf.js"() {
+var init_error_5bc331be = __esm({
+  ".svelte-kit/output/server/chunks/error-5bc331be.js"() {
     init_shims();
-    init_app_0889c82b();
+    init_app_0ee4f17f();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18952,7 +18981,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-bd92b2f5.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-9930abff.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19305,11 +19334,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_bd92b2f5 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-bd92b2f5.js"() {
+var init_SelectionGroupIcon_9930abff = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-9930abff.js"() {
     init_shims();
-    init_app_0889c82b();
-    init_store_ba285225();
+    init_app_0ee4f17f();
+    init_store_8e8f68a1();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20563,14 +20592,13 @@ var init_SelectionGroupIcon_bd92b2f5 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-3da8e773.js
-var Object_12, Button_1, css, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_3da8e773 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-3da8e773.js"() {
+// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-b4cf0aef.js
+var Object_12, Button_1;
+var init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef = __esm({
+  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-b4cf0aef.js"() {
     init_shims();
-    init_app_0889c82b();
-    init_SelectionGroupIcon_bd92b2f5();
-    init_store_ba285225();
+    init_app_0ee4f17f();
+    init_SelectionGroupIcon_9930abff();
     ({ Object: Object_12 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20717,7 +20745,200 @@ var init_RenderlessFetchStrokes_3da8e773 = __esm({
       } while (!$$settled);
       return $$rendered;
     });
+  }
+});
+
+// .svelte-kit/output/server/chunks/canvas-fb765f32.js
+function calculateCanvasDimensions() {
+  const appElement = document.getElementById("main-content");
+  let availableHeight;
+  let availableWidth;
+  const aspectRatio = 4 / 3;
+  if (appElement) {
+    availableHeight = appElement.clientHeight;
+    availableWidth = appElement.clientWidth;
+  } else {
+    availableHeight = window.innerHeight;
+    availableWidth = window.innerWidth;
+  }
+  let dimensions = {};
+  if (availableWidth * (1 / aspectRatio) < availableHeight) {
+    dimensions.width = 0.95 * availableWidth;
+    dimensions.height = dimensions.width * (1 / aspectRatio);
+  } else {
+    dimensions.height = 0.95 * availableHeight;
+    dimensions.width = dimensions.height * aspectRatio;
+  }
+  return dimensions;
+}
+function calculateCanvasDimensions2() {
+  const normalD = calculateCanvasDimensions();
+  return { width: 0.9 * normalD.width, height: 0.9 * normalD.height };
+}
+var init_canvas_fb765f32 = __esm({
+  ".svelte-kit/output/server/chunks/canvas-fb765f32.js"() {
+    init_shims();
+  }
+});
+
+// .svelte-kit/output/server/chunks/index-be8b7714.js
+var index_be8b7714_exports = {};
+__export(index_be8b7714_exports, {
+  default: () => Routes
+});
+var import_node_fetch2, import_cookie3, css, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Routes;
+var init_index_be8b7714 = __esm({
+  ".svelte-kit/output/server/chunks/index-be8b7714.js"() {
+    init_shims();
+    init_app_0ee4f17f();
+    init_index_c327074d_e1caddfe();
+    init_store_8e8f68a1();
+    import_node_fetch2 = __toModule(require_lib2());
+    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
+    init_SelectionGroupIcon_9930abff();
+    init_canvas_fb765f32();
+    import_cookie3 = __toModule(require_cookie());
+    init_dist();
     css = {
+      code: `.room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r
+}.copied-from-koa.svelte-1eot2i9{font:26px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
+}#logo.svelte-1eot2i9{font:300px 'Italiana', sans-serif;text-transform:lowercase}`,
+      map: null
+    };
+    phoneNumSegment1 = "";
+    phoneNumSegment2 = "";
+    phoneNumSegment3 = "";
+    Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let isQuestionMode;
+      let $user, $$unsubscribe_user;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      let currentTime = 10;
+      let titleValue = "Welcome!";
+      let appVerifier;
+      const print = console.log;
+      let timer;
+      function adjustContentDimensions() {
+        const { width, height } = calculateCanvasDimensions2();
+        canvasWidth.set(width);
+        canvasHeight.set(height);
+      }
+      onDestroy(() => {
+        window.removeEventListener("resize", adjustContentDimensions);
+      });
+      function signInWithPhone() {
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
+            "size": "invisible",
+            "callback": (response) => {
+              console.log("reCAPTCHA solved =", response);
+            }
+          }, getAuth());
+          appVerifier = window.recaptchaVerifier;
+        }
+        onSignInSubmit();
+        function onSignInSubmit() {
+          const phoneNumber = `+1 ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`;
+          print(getAuth(), phoneNumber, appVerifier);
+          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
+            console.log("confirmation result =", confirmationResult);
+            window.confirmationResult = confirmationResult;
+          }).catch((error3) => {
+            alert(error3);
+            console.log("error =", error3);
+            window.recaptchaVerifier.render().then(function(widgetId) {
+              grecaptcha.reset(widgetId);
+            });
+          });
+        }
+      }
+      $$result.css.add(css);
+      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
+      {
+        if (isQuestionMode) {
+          setTimeout(() => {
+          }, 5e3);
+        }
+      }
+      {
+        if (currentTime.toFixed(0) === "0") {
+          console.log("end of timer, currentTime =", currentTime);
+          clearInterval(timer);
+        }
+      }
+      {
+        if (phoneNumSegment1.length === 3) {
+          document.getElementById("phone-input-2").focus();
+        }
+      }
+      {
+        if (phoneNumSegment2.length === 3) {
+          document.getElementById("phone-input-3").focus();
+        }
+      }
+      {
+        if (phoneNumSegment3.length === 4) {
+          signInWithPhone();
+        }
+      }
+      $$unsubscribe_user();
+      return `${Object.keys($user).length === 0 ? `<section style="${"height: 100vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 84vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"120"}" height="${"108"}" style="${"margin-left: 0px;"}">
+					<h1 id="${"logo"}" style="${"font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;"}" class="${"svelte-1eot2i9"}">explain.mit.edu
+					</h1></div>
+
+				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-1eot2i9"}">Open-learning communities with lots of visual explanations</b></div>
+				
+				<div style="${"display: flex; justify-content: center; margin-top: 20px;"}">${validate_component(Button_1, "Button").$$render($$result, { variant: "raised", color: "purple" }, {}, {
+        default: () => `I&#39;m a student
+					`
+      })}
+
+					${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "raised",
+        color: "orange",
+        style: "margin-left: 6px"
+      }, {}, {
+        default: () => `I&#39;m a teacher
+					`
+      })}	
+
+					${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "raised",
+        color: "orange",
+        style: "margin-left: 6px"
+      }, {}, {
+        default: () => `I&#39;m someone else
+					`
+      })}</div></div></div></section>
+
+	` : ``}
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-ec4322d5.js
+var css2, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
+var init_RenderlessFetchStrokes_ec4322d5 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-ec4322d5.js"() {
+    init_shims();
+    init_app_0ee4f17f();
+    init_store_8e8f68a1();
+    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
+    css2 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
     };
@@ -20740,7 +20961,7 @@ var init_RenderlessFetchStrokes_3da8e773 = __esm({
         $$bindings.audioDownloadURL(audioDownloadURL);
       if ($$props.backgroundImageDownloadURL === void 0 && $$bindings.backgroundImageDownloadURL && backgroundImageDownloadURL !== void 0)
         $$bindings.backgroundImageDownloadURL(backgroundImageDownloadURL);
-      $$result.css.add(css);
+      $$result.css.add(css2);
       $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
       return `<div style="${"position: absolute; right: 0; left: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5"}">${slots.default ? slots.default({}) : `
@@ -20830,56 +21051,30 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/index-e9dcd522.js
-var index_e9dcd522_exports = {};
-__export(index_e9dcd522_exports, {
-  default: () => Routes
+// .svelte-kit/output/server/chunks/explore-aedefcdc.js
+var explore_aedefcdc_exports = {};
+__export(explore_aedefcdc_exports, {
+  default: () => Explore
 });
-function calculateCanvasDimensions() {
-  const appElement = document.getElementById("main-content");
-  let availableHeight;
-  let availableWidth;
-  const aspectRatio = 4 / 3;
-  if (appElement) {
-    availableHeight = appElement.clientHeight;
-    availableWidth = appElement.clientWidth;
-  } else {
-    availableHeight = window.innerHeight;
-    availableWidth = window.innerWidth;
-  }
-  let dimensions = {};
-  if (availableWidth * (1 / aspectRatio) < availableHeight) {
-    dimensions.width = 0.95 * availableWidth;
-    dimensions.height = dimensions.width * (1 / aspectRatio);
-  } else {
-    dimensions.height = 0.95 * availableHeight;
-    dimensions.width = dimensions.height * aspectRatio;
-  }
-  return dimensions;
-}
-function calculateCanvasDimensions2() {
-  const normalD = calculateCanvasDimensions();
-  return { width: 0.9 * normalD.width, height: 0.9 * normalD.height };
-}
-var import_node_fetch2, import_cookie3, css2, Routes;
-var init_index_e9dcd522 = __esm({
-  ".svelte-kit/output/server/chunks/index-e9dcd522.js"() {
+var import_node_fetch3, import_cookie4, css3, Explore;
+var init_explore_aedefcdc = __esm({
+  ".svelte-kit/output/server/chunks/explore-aedefcdc.js"() {
     init_shims();
-    init_app_0889c82b();
-    init_index_c327074d_df423577();
-    init_store_ba285225();
-    import_node_fetch2 = __toModule(require_lib2());
-    init_RenderlessFetchStrokes_3da8e773();
-    init_SelectionGroupIcon_bd92b2f5();
-    import_cookie3 = __toModule(require_cookie());
+    init_app_0ee4f17f();
+    init_index_c327074d_e1caddfe();
+    init_store_8e8f68a1();
+    import_node_fetch3 = __toModule(require_lib2());
+    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
+    init_SelectionGroupIcon_9930abff();
+    init_canvas_fb765f32();
+    init_RenderlessFetchStrokes_ec4322d5();
+    import_cookie4 = __toModule(require_cookie());
     init_dist();
-    css2 = {
-      code: `.room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r
-}.copied-from-koa.svelte-987aa6{font:17px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
-}#logo.svelte-987aa6{font:150px 'Italiana', sans-serif;text-transform:lowercase}.content.svelte-987aa6{margin:0 auto;text-align:left}li.svelte-987aa6{margin-bottom:2px}`,
+    css3 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}",
       map: null
     };
-    Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+    Explore = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let isQuestionMode;
       let $user, $$unsubscribe_user;
       let $canvasWidth, $$unsubscribe_canvasWidth;
@@ -20889,9 +21084,10 @@ var init_index_e9dcd522 = __esm({
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let currentTime = 10;
       let titleValue = "Welcome!";
-      let phoneNumSegment1 = "";
-      let phoneNumSegment2 = "";
-      let phoneNumSegment3 = "";
+      let countryCode = "+1";
+      let phoneNumSegment12 = "";
+      let phoneNumSegment22 = "";
+      let phoneNumSegment32 = "";
       let phoneConfirmationResult;
       let phoneConfirmCode = "";
       let appVerifier;
@@ -20917,7 +21113,7 @@ var init_index_e9dcd522 = __esm({
         }
         onSignInSubmit();
         function onSignInSubmit() {
-          const phoneNumber = `+1 ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`;
+          const phoneNumber = `${countryCode} ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
           print(getAuth(), phoneNumber, appVerifier);
           signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
             console.log("confirmation result =", confirmationResult);
@@ -20932,7 +21128,7 @@ var init_index_e9dcd522 = __esm({
           });
         }
       }
-      $$result.css.add(css2);
+      $$result.css.add(css3);
       isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
       {
         if (isQuestionMode) {
@@ -20942,46 +21138,40 @@ var init_index_e9dcd522 = __esm({
       }
       {
         if (currentTime.toFixed(0) === "0") {
-          console.log("end of timer, currentTime =", currentTime);
           clearInterval(timer);
         }
       }
       {
-        if (phoneNumSegment1.length === 3) {
+        if (phoneNumSegment12.length === 3) {
           document.getElementById("phone-input-2").focus();
         }
       }
       {
-        if (phoneNumSegment2.length === 3) {
+        if (phoneNumSegment22.length === 3) {
           document.getElementById("phone-input-3").focus();
         }
       }
       {
-        if (phoneNumSegment3.length === 4) {
+        if (phoneNumSegment32.length === 4) {
           signInWithPhone();
         }
       }
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
-      return `${Object.keys($user).length === 0 ? `<section style="${"height: 84vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 84vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"95"}" height="${"85"}" style="${"margin-left: 5px;"}">
-					<h1 id="${"logo"}" style="${"font-size: 5rem; color: rgb(0 0 0); padding-bottom: 14px; padding-left: 10px;"}" class="${"svelte-987aa6"}">ihtfp.app
-					</h1></div>
-				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-987aa6"}">Efficient visual explanation platform for MIT classes</b></div></div></div></section>
-
-	<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Falling behind classes is like accumulating credit card debt - you need <b style="${"color: orange"}">proper help </b>to escape the cycle
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">It&#39;s hard to understand properly with text messages
 			</h1>
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">In the real world, there&#39;s just not enough help to go around. The TA just can&#39;t spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Communities built around Discord, Piazza, Facebook etc. have a fundamental flaw - you can&#39;t draw on blackboards easily, so you need to explain everything in words. 
+        It&#39;s almost a waste of time to learn anything complex without visuals. 
 				<br>
-				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, etc. they&#39;re fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+				<br>     
+        Times are changing: iPads are becoming more affordable, web apps becoming more powerful.
 			</p>
 			<br></div></section>
 
-
-	<section style="${"height: " + escape($canvasHeight + 260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Introduction</h1>
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">ihtfp.app is Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
+	<section style="${"height: " + escape($canvasHeight + 260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Blackboard-centric servers</h1>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
 				<br>
 				<br>
 				Here&#39;s an example video that was recorded on this website: 
@@ -21002,39 +21192,19 @@ var init_index_e9dcd522 = __esm({
         })}`
       })}</div></section>
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">This website makes it <b style="${"color: rgb(15 186 191)"}">efficient to give &amp; receive explanations</b>, so everyone can get enough help
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
 			</h1>
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Help can become an abundant resource if it is easy to re-use explanations.
-				If tutors don&#39;t need to repeat themselves, they can have more time and/or help more students. 
-				<br>
-				<br>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Just sign up for a password-less account to join and create servers
+			</p></div>
 
-				How it works:
-				<li class="${"svelte-987aa6"}">Everyone contributes $20/week to the class server</li>
-				<li class="${"svelte-987aa6"}">Tutor runs the server and helps you personally as you want</li>
-				<li class="${"svelte-987aa6"}">Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li>
-				</p>
+		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}"><input type="${"tel"}" id="${"phone-country-code"}" minlength="${"2"}" maxlength="${"4"}" placeholder="${"+1"}" style="${"margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", countryCode, 0)}>
 
-			<iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>
+					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment12, 0)}>
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-987aa6"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How to get started
-			</h1>
+					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment22, 0)}>
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
-				<br>
-				<br>
-				<li class="${"svelte-987aa6"}">Request a class by venmo&#39;ing $20 to elton-lin-2</li>
-				<li class="${"svelte-987aa6"}">I&#39;ll send you a confirmation, create a server and find your tutor within 24 hours</li>
-				<li class="${"svelte-987aa6"}">Refund anytime any reason</li>
-				</p></div>
-
-		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
-					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment1, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment2, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment3, 0)}>
+					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment32, 0)}>
 					${validate_component(Button_1, "Button").$$render($$result, {
         id: "sign-in-button",
         style: "color: rgb(116 28 183); margin-bottom: 2px"
@@ -21062,7 +21232,415 @@ var init_index_e9dcd522 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Menu-fb1bf718.js
+// .svelte-kit/output/server/chunks/learn-181d24a2.js
+var learn_181d24a2_exports = {};
+__export(learn_181d24a2_exports, {
+  default: () => Learn
+});
+var import_node_fetch4, import_cookie5, css4, Learn;
+var init_learn_181d24a2 = __esm({
+  ".svelte-kit/output/server/chunks/learn-181d24a2.js"() {
+    init_shims();
+    init_app_0ee4f17f();
+    init_index_c327074d_e1caddfe();
+    init_store_8e8f68a1();
+    import_node_fetch4 = __toModule(require_lib2());
+    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
+    init_SelectionGroupIcon_9930abff();
+    init_canvas_fb765f32();
+    init_RenderlessFetchStrokes_ec4322d5();
+    import_cookie5 = __toModule(require_cookie());
+    init_dist();
+    css4 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}li.svelte-ejjzis{margin-bottom:2px}",
+      map: null
+    };
+    Learn = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let isQuestionMode;
+      let $user, $$unsubscribe_user;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      let currentTime = 10;
+      let titleValue = "Welcome!";
+      let phoneNumSegment12 = "";
+      let phoneNumSegment22 = "";
+      let phoneNumSegment32 = "";
+      let phoneConfirmationResult;
+      let phoneConfirmCode = "";
+      let appVerifier;
+      const print = console.log;
+      let timer;
+      function adjustContentDimensions() {
+        const { width, height } = calculateCanvasDimensions2();
+        canvasWidth.set(width);
+        canvasHeight.set(height);
+      }
+      onDestroy(() => {
+        window.removeEventListener("resize", adjustContentDimensions);
+      });
+      function signInWithPhone() {
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
+            "size": "invisible",
+            "callback": (response) => {
+              console.log("reCAPTCHA solved =", response);
+            }
+          }, getAuth());
+          appVerifier = window.recaptchaVerifier;
+        }
+        onSignInSubmit();
+        function onSignInSubmit() {
+          const phoneNumber = `+1 ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
+          print(getAuth(), phoneNumber, appVerifier);
+          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
+            console.log("confirmation result =", confirmationResult);
+            phoneConfirmationResult = confirmationResult;
+            window.confirmationResult = confirmationResult;
+          }).catch((error3) => {
+            alert(error3);
+            console.log("error =", error3);
+            window.recaptchaVerifier.render().then(function(widgetId) {
+              grecaptcha.reset(widgetId);
+            });
+          });
+        }
+      }
+      $$result.css.add(css4);
+      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
+      {
+        if (isQuestionMode) {
+          setTimeout(() => {
+          }, 5e3);
+        }
+      }
+      {
+        if (currentTime.toFixed(0) === "0") {
+          console.log("end of timer, currentTime =", currentTime);
+          clearInterval(timer);
+        }
+      }
+      {
+        if (phoneNumSegment12.length === 3) {
+          document.getElementById("phone-input-2").focus();
+        }
+      }
+      {
+        if (phoneNumSegment22.length === 3) {
+          document.getElementById("phone-input-3").focus();
+        }
+      }
+      {
+        if (phoneNumSegment32.length === 4) {
+          signInWithPhone();
+        }
+      }
+      $$unsubscribe_user();
+      $$unsubscribe_canvasWidth();
+      $$unsubscribe_canvasHeight();
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Not understanding
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">In the real world, there&#39;s just not enough help to go around. The TA just can&#39;t spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+				<br>
+				<br>
+				So while there are lots of free MIT resources, S^3 for extensions, etc. they&#39;re fundamentally not efficient enough to <b style="${"color: orange"}">break you out of vicious cycle</b>. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+			</p>
+			<br></div></section>
+
+	<section style="${"height: " + escape($canvasHeight + 260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">What is Explain?</h1>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
+				<br>
+				<br>
+				Here&#39;s an example video that was recorded on this website: 
+			</p></div>
+
+		<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`, 0)} id="${"caleb-video-section"}">${validate_component(RenderlessListenToBoard, "RenderlessListenToBoard").$$render($$result, {
+        dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+      }, {}, {
+        default: ({ boardDoc }) => `${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, {
+          dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
+          autoFetchStrokes: true
+        }, {}, {
+          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray,
+            audioDownloadURL: boardDoc.audioDownloadURL,
+            backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
+          }, {}, {})}` : ``}`
+        })}`
+      })}</div></section>
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">This website makes it <b style="${"color: rgb(15 186 191)"}">efficient to give &amp; receive explanations</b>, so everyone can get enough help
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Help can become an abundant resource if it is easy to re-use explanations.
+				If tutors don&#39;t need to repeat themselves, they can have more time and/or help more students. 
+				<br>
+				<br>
+
+				How it works:
+				<li class="${"svelte-ejjzis"}">Everyone contributes $20/week to the class server</li>
+				<li class="${"svelte-ejjzis"}">Tutor runs the server and helps you personally as you want</li>
+				<li class="${"svelte-ejjzis"}">Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li></p>
+
+			<iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How to get started
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
+				<br>
+				<br>
+				<li class="${"svelte-ejjzis"}">Request a class by venmo&#39;ing $20 to elton-lin-2</li>
+				<li class="${"svelte-ejjzis"}">I&#39;ll send you a confirmation, create a server and find your tutor within 24 hours</li>
+				<li class="${"svelte-ejjzis"}">Refund anytime any reason</li></p></div>
+
+		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
+					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment12, 0)}>
+
+					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment22, 0)}>
+
+					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment32, 0)}>
+					${validate_component(Button_1, "Button").$$render($$result, {
+        id: "sign-in-button",
+        style: "color: rgb(116 28 183); margin-bottom: 2px"
+      }, {}, {
+        default: () => `Sign Up
+					`
+      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
+					${validate_component(Button_1, "Button").$$render($$result, {
+        style: "color: rgb(116 28 183); margin-bottom: 2px;"
+      }, {}, { default: () => `Confirm code` })}</div>`}</div></section>` : ``}
+
+
+
+
+
+
+
+
+
+
+
+
+`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/teach-31333ced.js
+var teach_31333ced_exports = {};
+__export(teach_31333ced_exports, {
+  default: () => Teach
+});
+var import_node_fetch5, import_cookie6, css5, Teach;
+var init_teach_31333ced = __esm({
+  ".svelte-kit/output/server/chunks/teach-31333ced.js"() {
+    init_shims();
+    init_app_0ee4f17f();
+    init_index_c327074d_e1caddfe();
+    init_store_8e8f68a1();
+    import_node_fetch5 = __toModule(require_lib2());
+    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
+    init_SelectionGroupIcon_9930abff();
+    init_canvas_fb765f32();
+    init_RenderlessFetchStrokes_ec4322d5();
+    import_cookie6 = __toModule(require_cookie());
+    init_dist();
+    css5 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}li.svelte-ejjzis{margin-bottom:2px}",
+      map: null
+    };
+    Teach = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let isQuestionMode;
+      let $user, $$unsubscribe_user;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      let currentTime = 10;
+      let titleValue = "Welcome!";
+      let phoneNumSegment12 = "";
+      let phoneNumSegment22 = "";
+      let phoneNumSegment32 = "";
+      let phoneConfirmationResult;
+      let phoneConfirmCode = "";
+      let appVerifier;
+      const print = console.log;
+      let timer;
+      function adjustContentDimensions() {
+        const { width, height } = calculateCanvasDimensions2();
+        canvasWidth.set(width);
+        canvasHeight.set(height);
+      }
+      onDestroy(() => {
+        window.removeEventListener("resize", adjustContentDimensions);
+      });
+      function signInWithPhone() {
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
+            "size": "invisible",
+            "callback": (response) => {
+              console.log("reCAPTCHA solved =", response);
+            }
+          }, getAuth());
+          appVerifier = window.recaptchaVerifier;
+        }
+        onSignInSubmit();
+        function onSignInSubmit() {
+          const phoneNumber = `+1 ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
+          print(getAuth(), phoneNumber, appVerifier);
+          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
+            console.log("confirmation result =", confirmationResult);
+            phoneConfirmationResult = confirmationResult;
+            window.confirmationResult = confirmationResult;
+          }).catch((error3) => {
+            alert(error3);
+            console.log("error =", error3);
+            window.recaptchaVerifier.render().then(function(widgetId) {
+              grecaptcha.reset(widgetId);
+            });
+          });
+        }
+      }
+      $$result.css.add(css5);
+      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
+      {
+        if (isQuestionMode) {
+          setTimeout(() => {
+          }, 5e3);
+        }
+      }
+      {
+        if (currentTime.toFixed(0) === "0") {
+          console.log("end of timer, currentTime =", currentTime);
+          clearInterval(timer);
+        }
+      }
+      {
+        if (phoneNumSegment12.length === 3) {
+          document.getElementById("phone-input-2").focus();
+        }
+      }
+      {
+        if (phoneNumSegment22.length === 3) {
+          document.getElementById("phone-input-3").focus();
+        }
+      }
+      {
+        if (phoneNumSegment32.length === 4) {
+          signInWithPhone();
+        }
+      }
+      $$unsubscribe_user();
+      $$unsubscribe_canvasWidth();
+      $$unsubscribe_canvasHeight();
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Teaching has long hours and mediocre pay
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Students want more Office Hours, so now the class has 10 Office Hours throughtout the week. The queue is always 30-people, so you stay there for extra-long to help everyone.
+				Oh by the way, you need to attend staff meetings, create pset problems, manage Piazza and email, etc...you have to fight to find time for research and the classes you&#39;re taking yourself. 
+				<br>
+				<br>
+				Too many hours, too low pay, too many responsibilities outside of direct teaching. 
+			</p>
+			<br></div></section>
+
+	<section style="${"height: " + escape(260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How about high pay, short hours?</h1>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Suppose you can make a great-living out of teaching, and it&#39;s no longer about hours spent, but instead effectiveness. So if you do a great job in 10 minutes, you&#39;re done. And you can get paid at the ball-park of $100/hour, without having to 
+				handle class logistics etc.
+
+				<br>
+				<br></p></div></section>
+
+	<section style="${"height: " + escape($canvasHeight + 800) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How teaching on Explain works</h1>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Sal Khan&#39;s KhanAcademy videos, or 3Blue1Brown&#39;s videos...etc. have benefited millions of people. If you use recorded explanations whenever appropriate, it enables you to teach efficiently. 
+				Explain is designed around the concept of, re-use explanations and of fundamental concepts and canonical problems whenever it is wise to do so, and then make up everything else with individual help.
+				
+			<br>
+			<br>
+				Recording explanations is painful. Recording videos on the internet has the technological barrier of heavy files, convoluted workflows and long upload times. But actually it&#39;s unrewarding - you don&#39;t have a live audience. Think what proportion of smart people you know have Youtube channels. 
+				Recording lectures and recitations live are also painful - it&#39;s all the inconveniences previously mentioned, AND needing a camera crew. 
+				<br>
+			<br>
+				Explain makes it rewarding and efficient to re-use explanations. How it works is, you decide to record your <b>live</b> explanations to students who asked you a question. Answering a question live to someone who wants your help is much more rewarding than recording an arbitrary video in isolation and not knowing if people will find it useful. 	
+				Second, videos here are <b>light</b>. A 10GB video on YouTube will be around 100MB here - which means near-instant upload. That&#39;s because the website is optimized for blackboard videos, and blackboard videos can be crazy-optimized vs arbitrary general videos. 
+				You can literally one-click upload explanations, and move them, edit them, like you would with text. It&#39;s blackboard-as-a-first-class-citizen experience.
+			<br>
+			<br>
+				In summary, Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
+				<br>
+				<br>
+				Here&#39;s an example video that was recorded on this website: 
+			</p></div>
+
+		<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`, 0)} id="${"caleb-video-section"}">${validate_component(RenderlessListenToBoard, "RenderlessListenToBoard").$$render($$result, {
+        dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+      }, {}, {
+        default: ({ boardDoc }) => `${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, {
+          dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
+          autoFetchStrokes: true
+        }, {}, {
+          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray,
+            audioDownloadURL: boardDoc.audioDownloadURL,
+            backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
+          }, {}, {})}` : ``}`
+        })}`
+      })}</div></section>
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">You teach a group of students on a Discord-like server. Every student contributes $20/week for you to help them.
+				<br>
+				<br>
+
+				How it works:
+				<li class="${"svelte-ejjzis"}">You teach a group of students on a Discord-like server</li>
+				<li class="${"svelte-ejjzis"}">Students will request real-time help from you via voice chat and blackboard</li>
+				<li class="${"svelte-ejjzis"}">Many fundamental explanations are recorded, so your visual explanations build up over time for everyone to reference</li>
+				<li class="${"svelte-ejjzis"}">Each student pays $20/week, and you receive $18n/week. A 20-student server means $360/week, requiring around 5 hours commitment</li></p>
+
+			<iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How to get started
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
+			</p></div>
+
+		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
+					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment12, 0)}>
+
+					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment22, 0)}>
+
+					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment32, 0)}>
+					${validate_component(Button_1, "Button").$$render($$result, {
+        id: "sign-in-button",
+        style: "color: rgb(116 28 183); margin-bottom: 2px"
+      }, {}, {
+        default: () => `Sign Up
+					`
+      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
+					${validate_component(Button_1, "Button").$$render($$result, {
+        style: "color: rgb(116 28 183); margin-bottom: 2px;"
+      }, {}, { default: () => `Confirm code` })}</div>`}</div></section>` : ``}
+
+
+
+
+
+
+`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/Menu-2285d19e.js
 function guard(name6) {
   return () => {
     throw new Error(`Cannot call ${name6}(...) on the server`);
@@ -21096,12 +21674,12 @@ function prefixFilter(obj, prefix) {
   return newObj;
 }
 var goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, Switch, MenuSurface, Menu;
-var init_Menu_fb1bf718 = __esm({
-  ".svelte-kit/output/server/chunks/Menu-fb1bf718.js"() {
+var init_Menu_2285d19e = __esm({
+  ".svelte-kit/output/server/chunks/Menu-2285d19e.js"() {
     init_shims();
-    init_app_0889c82b();
-    init_SelectionGroupIcon_bd92b2f5();
-    init_store_ba285225();
+    init_app_0ee4f17f();
+    init_SelectionGroupIcon_9930abff();
+    init_store_8e8f68a1();
     goto = guard("goto");
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -27074,9 +27652,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-47ea5ea1.js
-var layout_47ea5ea1_exports = {};
-__export(layout_47ea5ea1_exports, {
+// .svelte-kit/output/server/chunks/__layout-4235bbeb.js
+var layout_4235bbeb_exports = {};
+__export(layout_4235bbeb_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -29234,22 +29812,22 @@ function registerDatabase(variant) {
   registerVersion(name4, version4, variant);
   registerVersion(name4, version4, "esm2017");
 }
-function load2({ page }) {
+function load2({ page: page2 }) {
   return {
     props: {
-      classID: page.params.class,
-      roomID: page.params.room
+      classID: page2.params.class,
+      roomID: page2.params.room
     }
   };
 }
-var import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie4, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name4, version4, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css3, _layout2;
-var init_layout_47ea5ea1 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-47ea5ea1.js"() {
+var import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie7, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name4, version4, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css6, _layout2;
+var init_layout_4235bbeb = __esm({
+  ".svelte-kit/output/server/chunks/__layout-4235bbeb.js"() {
     init_shims();
-    init_app_0889c82b();
-    init_Menu_fb1bf718();
-    init_SelectionGroupIcon_bd92b2f5();
-    init_store_ba285225();
+    init_app_0ee4f17f();
+    init_Menu_2285d19e();
+    init_SelectionGroupIcon_9930abff();
+    init_store_8e8f68a1();
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -29259,7 +29837,7 @@ var init_layout_47ea5ea1 = __esm({
     import_net = __toModule(require("net"));
     import_tls = __toModule(require("tls"));
     import_daily_js = __toModule(require_daily_iframe());
-    import_cookie4 = __toModule(require_cookie());
+    import_cookie7 = __toModule(require_cookie());
     init_dist();
     I2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
@@ -29639,7 +30217,7 @@ var init_layout_47ea5ea1 = __esm({
             join({ mitClass: valueStandard });
           }
         }
-        filteredClasses = allClasses.filter((c) => ["8.01", "6.036"].includes(c.name));
+        filteredClasses = allClasses;
         $$rendered = `<div${add_attribute("this", anchor, 0)}><div style="${"display: flex; align-items: center;"}"><div><h1 style="${"font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem"}">${escape(nameOfClass)}</h1>
       <div style="${"font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px"}">${escape(descriptionOfClass)}</div></div>
     
@@ -37603,15 +38181,17 @@ var init_layout_47ea5ea1 = __esm({
 
 `}`;
     });
-    css3 = {
+    css6 = {
       code: ".question-item.svelte-d2j7h9{color:rgb(19, 145, 230)}.selected.svelte-d2j7h9{font-weight:500;background-color:rgb(45, 44, 44);color:white}.speaking.svelte-d2j7h9{font-weight:800}",
       map: null
     };
     _layout2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $roomToPeople, $$unsubscribe_roomToPeople;
+      let $user, $$unsubscribe_user;
       let $dailyRoomParticipants, $$unsubscribe_dailyRoomParticipants;
       let $browserTabID, $$unsubscribe_browserTabID;
       $$unsubscribe_roomToPeople = subscribe(roomToPeople, (value) => $roomToPeople = value);
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
       $$unsubscribe_dailyRoomParticipants = subscribe(dailyRoomParticipants, (value) => $dailyRoomParticipants = value);
       $$unsubscribe_browserTabID = subscribe(browserTabID, (value) => $browserTabID = value);
       let { classID } = $$props;
@@ -37669,7 +38249,7 @@ var init_layout_47ea5ea1 = __esm({
       function fetchRooms() {
         const roomsRef = ba(Oa(), `classes/${classID}/rooms`);
         const roomsQuery = Mu(roomsRef, qu("date", "asc"));
-        unsubFuncs.push(yh(roomsQuery, (snapshot) => {
+        unsubFuncs.push(yh(roomsQuery, async (snapshot) => {
           const docs = [];
           snapshot.forEach((doc) => {
             docs.push({
@@ -37679,13 +38259,25 @@ var init_layout_47ea5ea1 = __esm({
             });
           });
           rooms = docs;
+          if (rooms.length === 0) {
+            const roomsRef2 = ba(Oa(), `classes/${classID}/rooms`);
+            const rooms2 = [];
+            const roomsResult = await lh(roomsRef2);
+            roomsResult.docs.forEach((doc) => {
+              rooms2.push({ id: doc.id, ...doc.data() });
+            });
+            for (const room of rooms2) {
+              const roomRef = va(Oa(), `classes/${classID}/rooms/${room.id}`);
+              _h(roomRef, { date: Date.now() });
+            }
+          }
         }));
       }
       if ($$props.classID === void 0 && $$bindings.classID && classID !== void 0)
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
-      $$result.css.add(css3);
+      $$result.css.add(css6);
       {
         if (classID) {
           unsubDbListeners();
@@ -37693,9 +38285,14 @@ var init_layout_47ea5ea1 = __esm({
           fetchClassDoc();
           fetchParticipants();
           fetchRooms();
+          const userRef = va(Oa(), `users/${$user.uid}`);
+          _h(userRef, {
+            mostRecentClassAndRoomID: `/${classID}/${roomID}`
+          });
         }
       }
       $$unsubscribe_roomToPeople();
+      $$unsubscribe_user();
       $$unsubscribe_dailyRoomParticipants();
       $$unsubscribe_browserTabID();
       return `
@@ -37751,9 +38348,9 @@ ${slots.default ? slots.default({}) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/index-30b1a6fe.js
-var index_30b1a6fe_exports = {};
-__export(index_30b1a6fe_exports, {
+// .svelte-kit/output/server/chunks/index-ecaebf40.js
+var index_ecaebf40_exports = {};
+__export(index_ecaebf40_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -37981,11 +38578,11 @@ function convertDocToStroke(doc) {
   }
   return strokeObject;
 }
-async function load3({ page }) {
+async function load3({ page: page2 }) {
   return {
     props: {
-      classID: page.params.class,
-      roomID: page.params.room
+      classID: page2.params.class,
+      roomID: page2.params.room
     }
   };
 }
@@ -37994,17 +38591,18 @@ function hasQuestionMark(string) {
     return false;
   return string.charAt(string.length - 1) === "?";
 }
-var import_node_fetch3, import_cookie5, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name5, version5, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css4, U5Broomu5D;
-var init_index_30b1a6fe = __esm({
-  ".svelte-kit/output/server/chunks/index-30b1a6fe.js"() {
+var import_node_fetch6, import_cookie8, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name5, version5, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css7, U5Broomu5D;
+var init_index_ecaebf40 = __esm({
+  ".svelte-kit/output/server/chunks/index-ecaebf40.js"() {
     init_shims();
-    init_app_0889c82b();
-    init_RenderlessFetchStrokes_3da8e773();
-    init_store_ba285225();
-    init_Menu_fb1bf718();
-    init_SelectionGroupIcon_bd92b2f5();
-    import_node_fetch3 = __toModule(require_lib2());
-    import_cookie5 = __toModule(require_cookie());
+    init_app_0ee4f17f();
+    init_RenderlessFetchStrokes_ec4322d5();
+    init_store_8e8f68a1();
+    init_Menu_2285d19e();
+    init_SelectionGroupIcon_9930abff();
+    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
+    import_node_fetch6 = __toModule(require_lib2());
+    import_cookie8 = __toModule(require_cookie());
     init_dist();
     counter2 = 0;
     HelperText = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -38176,14 +38774,12 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
           recorder.start();
           timer = setInterval(() => currentTime += 0.1, 100);
           dispatch2("record-start");
-          recordState.set("mid_record");
           resolve2();
         });
       }
       function stopRecording() {
         return new Promise((resolve2, reject2) => {
           clearTimeout(timer);
-          recordState.set("post_record");
           recorder.addEventListener("dataavailable", (e) => {
             const audioBlob = e.data;
             dispatch2("record-end", { audioBlob });
@@ -38711,7 +39307,7 @@ ${this.customData.serverResponse}`;
     AUTH_INTERNAL_NAME = "auth-internal";
     APP_CHECK_INTERNAL_NAME = "app-check-internal";
     MESSAGING_INTERNAL_NAME = "messaging-internal";
-    registerFunctions(import_node_fetch3.default, "node");
+    registerFunctions(import_node_fetch6.default, "node");
     css$12 = {
       code: '.grow-wrap.svelte-tv3wak.svelte-tv3wak{display:grid}.grow-wrap.svelte-tv3wak.svelte-tv3wak::after{content:attr(data-replicated-value) " ";white-space:pre-wrap;visibility:hidden}.grow-wrap.svelte-tv3wak>textarea.svelte-tv3wak{resize:none;overflow:hidden}.grow-wrap.svelte-tv3wak>textarea.svelte-tv3wak,.grow-wrap.svelte-tv3wak.svelte-tv3wak::after{border:1px solid black;padding:0.5rem;font:inherit;grid-area:1 / 1 / 2 / 2}',
       map: null
@@ -38882,8 +39478,8 @@ ${this.customData.serverResponse}`;
 
 `}`;
     });
-    css4 = {
-      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important}",
+    css7 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important}.unclickable.svelte-53fhoc{pointer-events:none}",
       map: null
     };
     U5Broomu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -38891,13 +39487,13 @@ ${this.customData.serverResponse}`;
       let roomsDbPath;
       let roomRef;
       let $user, $$unsubscribe_user;
+      let $browserTabID, $$unsubscribe_browserTabID;
       let $canvasWidth, $$unsubscribe_canvasWidth;
       let $canvasHeight, $$unsubscribe_canvasHeight;
-      let $recordState, $$unsubscribe_recordState;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_browserTabID = subscribe(browserTabID, (value) => $browserTabID = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
-      $$unsubscribe_recordState = subscribe(recordState, (value) => $recordState = value);
       let { classID } = $$props;
       let { roomID } = $$props;
       let unsubRoomListener;
@@ -38919,7 +39515,7 @@ ${this.customData.serverResponse}`;
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
-      $$result.css.add(css4);
+      $$result.css.add(css7);
       boardsDbPath = `classes/${classID}/blackboards/`;
       roomsDbPath = `classes/${classID}/rooms/`;
       roomRef = va(Oa(), roomsDbPath + roomID);
@@ -38927,9 +39523,9 @@ ${this.customData.serverResponse}`;
         createRoomListener();
       }
       $$unsubscribe_user();
+      $$unsubscribe_browserTabID();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
-      $$unsubscribe_recordState();
       return `${roomDoc ? `<div style="${"padding: 16px;"}"${add_classes([hasQuestionMark(roomDoc.name) ? "question" : ""].join(" ").trim())}>${validate_component(Textfield, "Textfield").$$render($$result, {
         disabled: hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID,
         value: roomDoc.name,
@@ -38977,8 +39573,11 @@ ${this.customData.serverResponse}`;
                       `
               })}
                     </div>`,
-              default: () => `${$recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">radio_button_checked
-                      </span>` : `${$recordState === "mid_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">stop_circle
+              default: () => `${!boardDoc.recordState || boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">radio_button_checked
+                      </span>` : `${boardDoc.recordState === "mid_record" ? `<span class="${[
+                "material-icons svelte-53fhoc",
+                $browserTabID !== boardDoc.recorderBrowserTabID ? "unclickable" : ""
+              ].join(" ").trim()}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">stop_circle
                       </span>` : `<div style="${"display: flex; justify-content: center; margin-left: 20px; margin-right: 20px"}">${validate_component(CircularProgress, "CircularProgress").$$render($$result, {
                 class: "my-four-colors",
                 style: "height: 32px; width: 32px;",
@@ -39004,7 +39603,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-0889c82b.js
+// .svelte-kit/output/server/chunks/app-0ee4f17f.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -39396,7 +39995,7 @@ async function render_response({
   page_config,
   status,
   error: error22,
-  page
+  page: page2
 }) {
   const css22 = new Set(options2.entry.css);
   const js2 = new Set(options2.entry.js);
@@ -39429,7 +40028,7 @@ async function render_response({
         navigating: writable2(null),
         session
       },
-      page,
+      page: page2,
       components: branch.map(({ node }) => node.module.default)
     };
     for (let i = 0; i < branch.length; i += 1) {
@@ -39472,7 +40071,7 @@ async function render_response({
 				session: ${try_serialize($session, (error3) => {
       throw new Error(`Failed to serialize session data: ${error3.message}`);
     })},
-				host: ${page && page.host ? s$1(page.host) : "location.host"},
+				host: ${page2 && page2.host ? s$1(page2.host) : "location.host"},
 				route: ${!!page_config.router},
 				spa: ${!page_config.ssr},
 				trailing_slash: ${s$1(options2.trailing_slash)},
@@ -39483,12 +40082,12 @@ async function render_response({
 						${(branch || []).map(({ node }) => `import(${s$1(node.entry)})`).join(",\n						")}
 					],
 					page: {
-						host: ${page && page.host ? s$1(page.host) : "location.host"}, // TODO this is redundant
-						path: ${page && page.path ? try_serialize(page.path, (error3) => {
+						host: ${page2 && page2.host ? s$1(page2.host) : "location.host"}, // TODO this is redundant
+						path: ${page2 && page2.path ? try_serialize(page2.path, (error3) => {
       throw new Error(`Failed to serialize page.path: ${error3.message}`);
     }) : null},
-						query: new URLSearchParams(${page && page.query ? s$1(page.query.toString()) : ""}),
-						params: ${page && page.params ? try_serialize(page.params, (error3) => {
+						query: new URLSearchParams(${page2 && page2.query ? s$1(page2.query.toString()) : ""}),
+						params: ${page2 && page2.params ? try_serialize(page2.params, (error3) => {
       throw new Error(`Failed to serialize page.params: ${error3.message}`);
     }) : null}
 					}
@@ -39602,7 +40201,7 @@ async function load_node({
   options: options2,
   state,
   route,
-  page,
+  page: page2,
   node,
   $session,
   stuff,
@@ -39617,7 +40216,7 @@ async function load_node({
   const fetched = [];
   let set_cookie_headers = [];
   let loaded;
-  const page_proxy = new Proxy(page, {
+  const page_proxy = new Proxy(page2, {
     get: (target, prop, receiver) => {
       if (prop === "query" && prerender_enabled) {
         throw new Error("Cannot access query on a page with prerendering enabled");
@@ -39660,7 +40259,7 @@ async function load_node({
         if (asset) {
           response = options2.read ? new Response(options2.read(asset.file), {
             headers: asset.type ? { "content-type": asset.type } : {}
-          }) : await fetch(`http://${page.host}/${asset.file}`, opts);
+          }) : await fetch(`http://${page2.host}/${asset.file}`, opts);
         } else if (is_root_relative(resolved)) {
           const relative = resolved;
           const headers2 = {
@@ -39781,7 +40380,7 @@ async function load_node({
 async function respond_with_error({ request, options: options2, state, $session, status, error: error22 }) {
   const default_layout = await options2.load_component(options2.manifest.layout);
   const default_error = await options2.load_component(options2.manifest.error);
-  const page = {
+  const page2 = {
     host: request.host,
     path: request.path,
     query: request.query,
@@ -39792,7 +40391,7 @@ async function respond_with_error({ request, options: options2, state, $session,
     options: options2,
     state,
     route: null,
-    page,
+    page: page2,
     node: default_layout,
     $session,
     stuff: {},
@@ -39807,7 +40406,7 @@ async function respond_with_error({ request, options: options2, state, $session,
       options: options2,
       state,
       route: null,
-      page,
+      page: page2,
       node: default_error,
       $session,
       stuff: loaded ? loaded.stuff : {},
@@ -39830,7 +40429,7 @@ async function respond_with_error({ request, options: options2, state, $session,
       status,
       error: error22,
       branch,
-      page
+      page: page2
     });
   } catch (err) {
     const error3 = coalesce_to_error(err);
@@ -40004,7 +40603,7 @@ async function render_page(request, route, match, options2, state) {
     };
   }
   const params = route.params(match);
-  const page = {
+  const page2 = {
     host: request.host,
     path: request.path,
     query: request.query,
@@ -40017,7 +40616,7 @@ async function render_page(request, route, match, options2, state) {
     state,
     $session,
     route,
-    page
+    page: page2
   });
   if (response) {
     return response;
@@ -40462,9 +41061,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-639c5e64.js",
+      file: assets + "/_app/start-346d8c5b.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-639c5e64.js", assets + "/_app/chunks/vendor-da8027ad.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-346d8c5b.js", assets + "/_app/chunks/vendor-577628cf.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -40507,11 +41106,11 @@ function render(request, {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-var import_cookie6, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css5, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_0889c82b = __esm({
-  ".svelte-kit/output/server/chunks/app-0889c82b.js"() {
+var import_cookie9, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css8, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
+var init_app_0ee4f17f = __esm({
+  ".svelte-kit/output/server/chunks/app-0ee4f17f.js"() {
     init_shims();
-    import_cookie6 = __toModule(require_cookie());
+    import_cookie9 = __toModule(require_cookie());
     init_dist();
     __accessCheck = (obj, member, msg) => {
       if (!member.has(obj))
@@ -40663,13 +41262,13 @@ var init_app_0889c82b = __esm({
     missing_component = {
       $$render: () => ""
     };
-    css5 = {
+    css8 = {
       code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
       map: null
     };
     Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { stores } = $$props;
-      let { page } = $$props;
+      let { page: page2 } = $$props;
       let { components } = $$props;
       let { props_0 = null } = $$props;
       let { props_1 = null } = $$props;
@@ -40679,8 +41278,8 @@ var init_app_0889c82b = __esm({
       afterUpdate(stores.page.notify);
       if ($$props.stores === void 0 && $$bindings.stores && stores !== void 0)
         $$bindings.stores(stores);
-      if ($$props.page === void 0 && $$bindings.page && page !== void 0)
-        $$bindings.page(page);
+      if ($$props.page === void 0 && $$bindings.page && page2 !== void 0)
+        $$bindings.page(page2);
       if ($$props.components === void 0 && $$bindings.components && components !== void 0)
         $$bindings.components(components);
       if ($$props.props_0 === void 0 && $$bindings.props_0 && props_0 !== void 0)
@@ -40691,9 +41290,9 @@ var init_app_0889c82b = __esm({
         $$bindings.props_2(props_2);
       if ($$props.props_3 === void 0 && $$bindings.props_3 && props_3 !== void 0)
         $$bindings.props_3(props_3);
-      $$result.css.add(css5);
+      $$result.css.add(css8);
       {
-        stores.page.set(page);
+        stores.page.set(page2);
       }
       return `
 
@@ -40711,14 +41310,14 @@ ${``}`;
     base2 = "";
     assets = "";
     handle = async ({ request, resolve: resolve2 }) => {
-      const cookies = import_cookie6.default.parse(request.headers.cookie || "");
+      const cookies = import_cookie9.default.parse(request.headers.cookie || "");
       request.locals.userid = cookies.userid || v4();
       if (request.query.has("_method")) {
         request.method = request.query.get("_method").toUpperCase();
       }
       const response = await resolve2(request);
       if (!cookies.userid) {
-        response.headers["set-cookie"] = import_cookie6.default.serialize("userid", request.locals.userid, {
+        response.headers["set-cookie"] = import_cookie9.default.serialize("userid", request.locals.userid, {
           path: "/",
           httpOnly: true
         });
@@ -40755,6 +41354,27 @@ ${``}`;
         },
         {
           type: "page",
+          pattern: /^\/explore\/?$/,
+          params: empty,
+          a: ["src/routes/__layout.svelte", "src/routes/explore.svelte"],
+          b: [".svelte-kit/build/components/error.svelte"]
+        },
+        {
+          type: "page",
+          pattern: /^\/learn\/?$/,
+          params: empty,
+          a: ["src/routes/__layout.svelte", "src/routes/learn.svelte"],
+          b: [".svelte-kit/build/components/error.svelte"]
+        },
+        {
+          type: "page",
+          pattern: /^\/teach\/?$/,
+          params: empty,
+          a: ["src/routes/__layout.svelte", "src/routes/teach.svelte"],
+          b: [".svelte-kit/build/components/error.svelte"]
+        },
+        {
+          type: "page",
           pattern: /^\/([^/]+?)\/([^/]+?)\/?$/,
           params: (m) => ({ class: d(m[1]), room: d(m[2]) }),
           a: ["src/routes/__layout.svelte", "src/routes/[class]/__layout.svelte", "src/routes/[class]/[room]/index.svelte"],
@@ -40775,13 +41395,16 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_23f94696(), layout_23f94696_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_1645c6cf(), error_1645c6cf_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_e9dcd522(), index_e9dcd522_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_47ea5ea1(), layout_47ea5ea1_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_30b1a6fe(), index_30b1a6fe_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_6643c439(), layout_6643c439_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_5bc331be(), error_5bc331be_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_be8b7714(), index_be8b7714_exports)),
+      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_aedefcdc(), explore_aedefcdc_exports)),
+      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_181d24a2(), learn_181d24a2_exports)),
+      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_31333ced(), teach_31333ced_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_4235bbeb(), layout_4235bbeb_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_ecaebf40(), index_ecaebf40_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-00215c89.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-00215c89.js", "chunks/vendor-da8027ad.js", "chunks/navigation-d0de6f35.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-5f714c2a.js", "css": [], "js": ["error.svelte-5f714c2a.js", "chunks/vendor-da8027ad.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-63b5cffd.js", "css": ["assets/pages/index.svelte-704a2b30.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/index.svelte-63b5cffd.js", "chunks/vendor-da8027ad.js", "chunks/navigation-d0de6f35.js", "chunks/singletons-12a22614.js", "chunks/RenderlessFetchStrokes-a85d8772.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-0eda956f.js", "css": ["assets/pages/_class_/__layout.svelte-c4788b3a.css"], "js": ["pages/_class_/__layout.svelte-0eda956f.js", "chunks/vendor-da8027ad.js", "chunks/navigation-d0de6f35.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-9dc11624.js", "css": ["assets/pages/_class_/_room_/index.svelte-1ffcb44e.css", "assets/RenderlessFetchStrokes-74aa521d.css"], "js": ["pages/_class_/_room_/index.svelte-9dc11624.js", "chunks/vendor-da8027ad.js", "chunks/RenderlessFetchStrokes-a85d8772.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-d0de6f35.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-384c0e04.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-384c0e04.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-f69dd117.js", "css": [], "js": ["error.svelte-f69dd117.js", "chunks/vendor-577628cf.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-9ae7b0ca.js", "css": ["assets/pages/index.svelte-85299949.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-9ae7b0ca.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-1899b2f8.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-1899b2f8.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-1c2db2ae.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-b90240da.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-b90240da.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-1c2db2ae.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-392c9b3c.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-392c9b3c.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-1c2db2ae.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-2eab816e.js", "css": ["assets/pages/_class_/__layout.svelte-c4788b3a.css"], "js": ["pages/_class_/__layout.svelte-2eab816e.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-04136f97.js", "css": ["assets/pages/_class_/_room_/index.svelte-8d8f89d3.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-04136f97.js", "chunks/vendor-577628cf.js", "chunks/RenderlessFetchStrokes-1c2db2ae.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
   }
 });
 
@@ -40834,8 +41457,8 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_0889c82b();
-var import_cookie7 = __toModule(require_cookie());
+init_app_0ee4f17f();
+var import_cookie10 = __toModule(require_cookie());
 init_dist();
 
 // .svelte-kit/vercel/entry.js

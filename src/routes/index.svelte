@@ -260,7 +260,7 @@
 		}, 300)
 	}
 
-	$:if (isQuestionMode) {
+	$: if (isQuestionMode) {
 		setTimeout(() => {
 			hasWatchedExemplar = true
 		}, 5000)
@@ -385,7 +385,7 @@
 				// User signed in successfully.
 				const user = result.user;
 				console.log('redirecting, user =', user)
-				goto('O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
+				goto('/O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
 				// goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
 				// ...
 			}).catch((error) => {

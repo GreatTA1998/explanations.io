@@ -107,17 +107,13 @@
 	import LeftDrawer from '$lib/LeftDrawer.svelte'
   import RenderlessMyDocUpdater from '$lib/RenderlessMyDocUpdater.svelte'
   import DailyVideoConference from '$lib/DailyVideoConference.svelte'
-  import Button from '@smui/button'
   import { onDestroy, onMount } from 'svelte'
-  import { portal } from '../../helpers/actions.js'
   import { goto } from '$app/navigation'
-  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query } from 'firebase/firestore'
-  import { calculateCanvasDimensions } from '../../helpers/canvas'
   import { browser } from '$app/env'
-  import { canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants } from '../../store.js'
-  // import List, { Item, Text, SecondaryText } from '@smui/list'
+  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc } from 'firebase/firestore'
+  import { calculateCanvasDimensions } from '../../helpers/canvas'
+  import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants } from '../../store.js'
   import Switch from '@smui/switch';
-  import FormField from '@smui/form-field';
   import { getRandomID } from '../../helpers/utility.js';
   
   export let classID;
@@ -137,6 +133,11 @@
     fetchClassDoc()
     fetchParticipants()
     fetchRooms()
+
+    const userRef = doc(getFirestore(), `users/${$user.uid}`)
+    updateDoc(userRef, {
+      mostRecentClassAndRoomID: `/${classID}/${roomID}`
+    })
   }
 
   function unsubDbListeners () {
@@ -256,7 +257,7 @@
 
     const roomsQuery = query(roomsRef, orderBy('date', 'asc'))
     unsubFuncs.push(
-      onSnapshot(roomsQuery, snapshot => { // onSnapshot does NOT return a promise
+      onSnapshot(roomsQuery, async (snapshot) => { // onSnapshot does NOT return a promise
         const docs = []
         snapshot.forEach(doc => { 
           docs.push({ 
@@ -266,6 +267,30 @@
           })
         });
         rooms = docs
+        
+        // QUICKFIX FOR BACKWARDS COMPATIBILITY
+        if (rooms.length === 0) {
+          // means they have no 'date property'
+            const roomsRef = collection(
+              getFirestore(),
+              `classes/${classID}/rooms`
+            )
+            const rooms = []
+            const roomsResult = await getDocs(roomsRef)
+            roomsResult.docs.forEach(doc => {
+              rooms.push({
+                id: doc.id,
+                ...doc.data()
+              })
+            })
+            for (const room of rooms) {
+              const roomRef = doc(getFirestore(), `classes/${classID}/rooms/${room.id}`)
+              updateDoc(roomRef, {
+                date: Date.now()
+              })
+            }
+            // can make it atomic with a batch operation
+        }
       })
     )
   }

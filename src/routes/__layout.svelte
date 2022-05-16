@@ -17,6 +17,7 @@
   import { hasFetchedUser, user } from '../store.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
  
   onMount(async () => {
     initializeDatabase()
@@ -48,7 +49,7 @@
             uid: resultUser.uid,
             phoneNumber: resultUser.phoneNumber,
             enrolledClasses: [exampleClass],
-            mostRecentClassID: exampleClassID,
+            mostRecentClassAndRoomID: `/${exampleClassID}/${exampleClassID}`,
             pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"],
             willReceiveText: true // can be toggled
           })
@@ -63,23 +64,12 @@
           ...dbUserSnapshot.data()
         })
       
-       //  let { mostRecentClassID } = $user
-        // just for backwards compatibility
-        // if (!mostRecentClassID) {
-        //   mostRecentClassID = exampleClassID
-        // }
-
-
-        console.log('redirect')
-
-        // Check if this is a direct URL visit to a particular server
-        // check if $[routeID] and $[classID] are already populated
-        // if so, go to that particular class
-        // and set the mostRecentClassID to [classID]
-
-        // otherwise by default just resume the user to his/her most recent clas
-        const mostRecentClassID = 'O00mSbBEYQxTnv3cKkbe' // ID
-        goto(`/${mostRecentClassID}/${mostRecentClassID}`)
+        // check if it's a direct URL visit to a particular server
+        if ($page.params.classID && $page.params.roomID) {
+          goto(`/${classID}/${roomID}`)
+        } else {
+          goto($user.mostRecentClassAndRoomID)
+        }
       } 
       else {
         user.set({})

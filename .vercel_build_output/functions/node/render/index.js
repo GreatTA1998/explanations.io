@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-8e8f68a1.js
+// .svelte-kit/output/server/chunks/store-8197bd59.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -9081,10 +9081,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_8e8f68a1 = __esm({
-  ".svelte-kit/output/server/chunks/store-8e8f68a1.js"() {
+var init_store_8197bd59 = __esm({
+  ".svelte-kit/output/server/chunks/store-8197bd59.js"() {
     init_shims();
-    init_app_0ee4f17f();
+    init_app_0da64886();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -17465,7 +17465,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-e1caddfe.js
+// .svelte-kit/output/server/chunks/index-c327074d-ab36d89e.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17954,10 +17954,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_e1caddfe = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-e1caddfe.js"() {
+var init_index_c327074d_ab36d89e = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-ab36d89e.js"() {
     init_shims();
-    init_store_8e8f68a1();
+    init_store_8197bd59();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18886,18 +18886,18 @@ var init_index_c327074d_e1caddfe = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-6643c439.js
-var layout_6643c439_exports = {};
-__export(layout_6643c439_exports, {
+// .svelte-kit/output/server/chunks/__layout-c70e9a02.js
+var layout_c70e9a02_exports = {};
+__export(layout_c70e9a02_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, getStores, page, _layout;
-var init_layout_6643c439 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-6643c439.js"() {
+var init_layout_c70e9a02 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-c70e9a02.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_store_8e8f68a1();
-    init_index_c327074d_e1caddfe();
+    init_app_0da64886();
+    init_store_8197bd59();
+    init_index_c327074d_ab36d89e();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18946,9 +18946,9 @@ var init_layout_6643c439 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-5bc331be.js
-var error_5bc331be_exports = {};
-__export(error_5bc331be_exports, {
+// .svelte-kit/output/server/chunks/error-6de15946.js
+var error_6de15946_exports = {};
+__export(error_6de15946_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18956,10 +18956,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_5bc331be = __esm({
-  ".svelte-kit/output/server/chunks/error-5bc331be.js"() {
+var init_error_6de15946 = __esm({
+  ".svelte-kit/output/server/chunks/error-6de15946.js"() {
     init_shims();
-    init_app_0ee4f17f();
+    init_app_0da64886();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18981,7 +18981,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-9930abff.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-23352050.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19334,11 +19334,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_9930abff = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-9930abff.js"() {
+var init_SelectionGroupIcon_23352050 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-23352050.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_store_8e8f68a1();
+    init_app_0da64886();
+    init_store_8197bd59();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20592,13 +20592,13 @@ var init_SelectionGroupIcon_9930abff = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-b4cf0aef.js
+// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-85e3e53a.js
 var Object_12, Button_1;
-var init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef = __esm({
-  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-b4cf0aef.js"() {
+var init_DoodleVideo_svelte_svelte_type_style_lang_85e3e53a = __esm({
+  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-85e3e53a.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_SelectionGroupIcon_9930abff();
+    init_app_0da64886();
+    init_SelectionGroupIcon_23352050();
     ({ Object: Object_12 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20781,21 +20781,21 @@ var init_canvas_fb765f32 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-be8b7714.js
-var index_be8b7714_exports = {};
-__export(index_be8b7714_exports, {
+// .svelte-kit/output/server/chunks/index-63ac6861.js
+var index_63ac6861_exports = {};
+__export(index_63ac6861_exports, {
   default: () => Routes
 });
 var import_node_fetch2, import_cookie3, css, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Routes;
-var init_index_be8b7714 = __esm({
-  ".svelte-kit/output/server/chunks/index-be8b7714.js"() {
+var init_index_63ac6861 = __esm({
+  ".svelte-kit/output/server/chunks/index-63ac6861.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_index_c327074d_e1caddfe();
-    init_store_8e8f68a1();
+    init_app_0da64886();
+    init_index_c327074d_ab36d89e();
+    init_store_8197bd59();
     import_node_fetch2 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
-    init_SelectionGroupIcon_9930abff();
+    init_DoodleVideo_svelte_svelte_type_style_lang_85e3e53a();
+    init_SelectionGroupIcon_23352050();
     init_canvas_fb765f32();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
@@ -20930,14 +20930,14 @@ var init_index_be8b7714 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-ec4322d5.js
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-f8e25791.js
 var css2, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_ec4322d5 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-ec4322d5.js"() {
+var init_RenderlessFetchStrokes_f8e25791 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-f8e25791.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_store_8e8f68a1();
-    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
+    init_app_0da64886();
+    init_store_8197bd59();
+    init_DoodleVideo_svelte_svelte_type_style_lang_85e3e53a();
     css2 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
@@ -20964,23 +20964,29 @@ var init_RenderlessFetchStrokes_ec4322d5 = __esm({
       $$result.css.add(css2);
       $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
-      return `<div style="${"position: absolute; right: 0; left: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5"}">${slots.default ? slots.default({}) : `
-
-  `}</div>
-
-
+      return `
 ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5"}">play_circle
   </span>` : ``}
 
 
-<div style="${"position: relative"}"><canvas${add_attribute("style", `position: absolute; z-index: 1; z-index: 1; margin-top: 0; margin-left: 0; width: ${$canvasWidth}px; height: ${$canvasHeight}px; background-color: transparent`, 0)}${add_attribute("this", canvas, 0)}></canvas>
+<div style="${"position: relative"}"><canvas${add_attribute("style", `
+      position: absolute; 
+      z-index: 1; 
+      margin-top: 0; 
+      margin-left: 0; 
+      width: ${$canvasWidth}px; 
+      height: ${$canvasHeight}px; 
+      background-color: transparent`, 0)}${add_attribute("this", canvas, 0)}></canvas>
 
-  <canvas${add_attribute("style", `position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    display: block;
-    background-color: rgb(46, 49, 49); width: ${$canvasWidth}px; height: ${$canvasHeight}px`, 0)}${add_attribute("this", bgCanvas, 0)}></canvas></div>
+  <canvas${add_attribute("style", `
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      display: block;
+      width: ${$canvasWidth}px; 
+      height: ${$canvasHeight}px;
+      background-color: rgb(46, 49, 49);`, 0)}${add_attribute("this", bgCanvas, 0)}></canvas></div>
 
 <div><audio${add_attribute("src", audioDownloadURL, 0)} controls${add_attribute("style", `width: ${$canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`, 0)}${add_attribute("this", AudioPlayer, 0)}></audio>
 </div>`;
@@ -21051,23 +21057,23 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/explore-aedefcdc.js
-var explore_aedefcdc_exports = {};
-__export(explore_aedefcdc_exports, {
+// .svelte-kit/output/server/chunks/explore-e7d22b09.js
+var explore_e7d22b09_exports = {};
+__export(explore_e7d22b09_exports, {
   default: () => Explore
 });
 var import_node_fetch3, import_cookie4, css3, Explore;
-var init_explore_aedefcdc = __esm({
-  ".svelte-kit/output/server/chunks/explore-aedefcdc.js"() {
+var init_explore_e7d22b09 = __esm({
+  ".svelte-kit/output/server/chunks/explore-e7d22b09.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_index_c327074d_e1caddfe();
-    init_store_8e8f68a1();
+    init_app_0da64886();
+    init_index_c327074d_ab36d89e();
+    init_store_8197bd59();
     import_node_fetch3 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
-    init_SelectionGroupIcon_9930abff();
+    init_DoodleVideo_svelte_svelte_type_style_lang_85e3e53a();
+    init_SelectionGroupIcon_23352050();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_ec4322d5();
+    init_RenderlessFetchStrokes_f8e25791();
     import_cookie4 = __toModule(require_cookie());
     init_dist();
     css3 = {
@@ -21227,28 +21233,30 @@ var init_explore_aedefcdc = __esm({
 
 
 
+
+
 `;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/learn-181d24a2.js
-var learn_181d24a2_exports = {};
-__export(learn_181d24a2_exports, {
+// .svelte-kit/output/server/chunks/learn-431958fd.js
+var learn_431958fd_exports = {};
+__export(learn_431958fd_exports, {
   default: () => Learn
 });
 var import_node_fetch4, import_cookie5, css4, Learn;
-var init_learn_181d24a2 = __esm({
-  ".svelte-kit/output/server/chunks/learn-181d24a2.js"() {
+var init_learn_431958fd = __esm({
+  ".svelte-kit/output/server/chunks/learn-431958fd.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_index_c327074d_e1caddfe();
-    init_store_8e8f68a1();
+    init_app_0da64886();
+    init_index_c327074d_ab36d89e();
+    init_store_8197bd59();
     import_node_fetch4 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
-    init_SelectionGroupIcon_9930abff();
+    init_DoodleVideo_svelte_svelte_type_style_lang_85e3e53a();
+    init_SelectionGroupIcon_23352050();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_ec4322d5();
+    init_RenderlessFetchStrokes_f8e25791();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     css4 = {
@@ -21340,7 +21348,7 @@ var init_learn_181d24a2 = __esm({
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
-      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Not understanding
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Not understanding things properly leads to a lot of problems
 			</h1>
 
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">In the real world, there&#39;s just not enough help to go around. The TA just can&#39;t spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
@@ -21350,8 +21358,17 @@ var init_learn_181d24a2 = __esm({
 			</p>
 			<br></div></section>
 
-	<section style="${"height: " + escape($canvasHeight + 260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">What is Explain?</h1>
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
+	<section style="${"height: " + escape(260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Review videos for everything, and real-time help whenever</h1>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Imagine if the material was so good that, everything you need to know is clearly explained and re-watchable at your own pace. And suppose anything were to be missing, you can just ask for help efficiently without having to travel to campus, wait till the next Office Hours / for a Piazza response?
+				<br>
+				<br>
+				Then, you can efficiently grasp the fundamentals and get up to speed, without unnecessary added stress. 
+			</p></div></section>
+
+	<section style="${"height: " + escape($canvasHeight + 260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How everything works</h1>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">To be edited...
+
+				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
 				<br>
 				<br>
 				Here&#39;s an example video that was recorded on this website: 
@@ -21372,22 +21389,19 @@ var init_learn_181d24a2 = __esm({
         })}`
       })}</div></section>
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">This website makes it <b style="${"color: rgb(15 186 191)"}">efficient to give &amp; receive explanations</b>, so everyone can get enough help
+	
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Website preview
 			</h1>
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Help can become an abundant resource if it is easy to re-use explanations.
-				If tutors don&#39;t need to repeat themselves, they can have more time and/or help more students. 
-				<br>
-				<br>
-
-				How it works:
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How it works:
 				<li class="${"svelte-ejjzis"}">Everyone contributes $20/week to the class server</li>
 				<li class="${"svelte-ejjzis"}">Tutor runs the server and helps you personally as you want</li>
 				<li class="${"svelte-ejjzis"}">Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li></p>
 
 			<iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How to get started
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
 			</h1>
 
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
@@ -21430,23 +21444,23 @@ var init_learn_181d24a2 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/teach-31333ced.js
-var teach_31333ced_exports = {};
-__export(teach_31333ced_exports, {
+// .svelte-kit/output/server/chunks/teach-948ec578.js
+var teach_948ec578_exports = {};
+__export(teach_948ec578_exports, {
   default: () => Teach
 });
 var import_node_fetch5, import_cookie6, css5, Teach;
-var init_teach_31333ced = __esm({
-  ".svelte-kit/output/server/chunks/teach-31333ced.js"() {
+var init_teach_948ec578 = __esm({
+  ".svelte-kit/output/server/chunks/teach-948ec578.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_index_c327074d_e1caddfe();
-    init_store_8e8f68a1();
+    init_app_0da64886();
+    init_index_c327074d_ab36d89e();
+    init_store_8197bd59();
     import_node_fetch5 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
-    init_SelectionGroupIcon_9930abff();
+    init_DoodleVideo_svelte_svelte_type_style_lang_85e3e53a();
+    init_SelectionGroupIcon_23352050();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_ec4322d5();
+    init_RenderlessFetchStrokes_f8e25791();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
     css5 = {
@@ -21640,7 +21654,7 @@ var init_teach_31333ced = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Menu-2285d19e.js
+// .svelte-kit/output/server/chunks/Switch-b824b447.js
 function guard(name6) {
   return () => {
     throw new Error(`Cannot call ${name6}(...) on the server`);
@@ -21673,13 +21687,13 @@ function prefixFilter(obj, prefix) {
   }
   return newObj;
 }
-var goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, Switch, MenuSurface, Menu;
-var init_Menu_2285d19e = __esm({
-  ".svelte-kit/output/server/chunks/Menu-2285d19e.js"() {
+var goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch;
+var init_Switch_b824b447 = __esm({
+  ".svelte-kit/output/server/chunks/Switch-b824b447.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_SelectionGroupIcon_9930abff();
-    init_store_8e8f68a1();
+    init_app_0da64886();
+    init_SelectionGroupIcon_23352050();
+    init_store_8197bd59();
     goto = guard("goto");
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -22477,179 +22491,6 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
       } while (!$$settled);
       return $$rendered;
     });
-    Switch = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "disabled",
-        "color",
-        "group",
-        "checked",
-        "value",
-        "processing",
-        "icons",
-        "icons$use",
-        "icons$class",
-        "getId",
-        "getElement"
-      ]);
-      var _a2;
-      forwardEventsBuilder(get_current_component());
-      let uninitializedValue = () => {
-      };
-      function isUninitializedValue(value2) {
-        return value2 === uninitializedValue;
-      }
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { disabled = false } = $$props;
-      let { color = "primary" } = $$props;
-      let { group = uninitializedValue } = $$props;
-      let { checked = uninitializedValue } = $$props;
-      let { value = null } = $$props;
-      let { processing = false } = $$props;
-      let { icons = true } = $$props;
-      let { icons$use = [] } = $$props;
-      let { icons$class = "" } = $$props;
-      let element;
-      let internalClasses = {};
-      let rippleElement;
-      let inputProps = (_a2 = getContext("SMUI:generic:input:props")) !== null && _a2 !== void 0 ? _a2 : {};
-      let selected = isUninitializedValue(group) ? isUninitializedValue(checked) ? false : checked : group.indexOf(value) !== -1;
-      let state = {
-        get disabled() {
-          return disabled;
-        },
-        set disabled(value2) {
-          disabled = value2;
-        },
-        get processing() {
-          return processing;
-        },
-        set processing(value2) {
-          processing = value2;
-        },
-        get selected() {
-          return selected;
-        },
-        set selected(value2) {
-          selected = value2;
-        }
-      };
-      let previousChecked = checked;
-      let previousGroup = isUninitializedValue(group) ? [] : [...group];
-      let previousSelected = selected;
-      function getId() {
-        return inputProps && inputProps.id;
-      }
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
-        $$bindings.disabled(disabled);
-      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-        $$bindings.color(color);
-      if ($$props.group === void 0 && $$bindings.group && group !== void 0)
-        $$bindings.group(group);
-      if ($$props.checked === void 0 && $$bindings.checked && checked !== void 0)
-        $$bindings.checked(checked);
-      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-        $$bindings.value(value);
-      if ($$props.processing === void 0 && $$bindings.processing && processing !== void 0)
-        $$bindings.processing(processing);
-      if ($$props.icons === void 0 && $$bindings.icons && icons !== void 0)
-        $$bindings.icons(icons);
-      if ($$props.icons$use === void 0 && $$bindings.icons$use && icons$use !== void 0)
-        $$bindings.icons$use(icons$use);
-      if ($$props.icons$class === void 0 && $$bindings.icons$class && icons$class !== void 0)
-        $$bindings.icons$class(icons$class);
-      if ($$props.getId === void 0 && $$bindings.getId && getId !== void 0)
-        $$bindings.getId(getId);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      {
-        {
-          let notifyChange = false;
-          if (!isUninitializedValue(group)) {
-            if (previousSelected !== selected) {
-              const idx = group.indexOf(value);
-              if (selected && idx === -1) {
-                group.push(value);
-                group = group;
-              } else if (!selected && idx !== -1) {
-                group.splice(idx, 1);
-                group = group;
-              }
-              notifyChange = true;
-            } else {
-              const idxPrev = previousGroup.indexOf(value);
-              const idx = group.indexOf(value);
-              if (idxPrev > -1 && idx === -1) {
-                state.selected = false;
-              } else if (idx > -1 && idxPrev === -1) {
-                state.selected = true;
-              }
-            }
-          }
-          if (isUninitializedValue(checked)) {
-            if (previousSelected !== selected) {
-              notifyChange = true;
-            }
-          } else if (checked !== selected) {
-            if (checked === previousChecked) {
-              checked = selected;
-              notifyChange = true;
-            } else {
-              state.selected = checked;
-            }
-          }
-          previousChecked = checked;
-          previousGroup = isUninitializedValue(group) ? [] : [...group];
-          previousSelected = selected;
-          if (notifyChange && element) {
-            dispatch(element, "SMUISwitch:change", { selected, value });
-          }
-        }
-      }
-      return `<button${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [className]: true,
-            "mdc-switch": true,
-            "mdc-switch--unselected": !selected,
-            "mdc-switch--selected": selected,
-            "mdc-switch--processing": processing,
-            "smui-switch--color-secondary": color === "secondary",
-            ...internalClasses
-          }))
-        },
-        { type: "button" },
-        { role: "switch" },
-        {
-          "aria-checked": escape_attribute_value(selected ? "true" : "false")
-        },
-        { disabled: disabled || null },
-        escape_object(inputProps),
-        escape_object(exclude($$restProps, ["icons$"]))
-      ])}${add_attribute("this", element, 0)}><div class="${"mdc-switch__track"}"></div>
-  <div class="${"mdc-switch__handle-track"}"><div class="${"mdc-switch__handle"}"><div class="${"mdc-switch__shadow"}"><div class="${"mdc-elevation-overlay"}"></div></div>
-      <div class="${"mdc-switch__ripple"}"${add_attribute("this", rippleElement, 0)}></div>
-      ${icons ? `<div${spread([
-        {
-          class: escape_attribute_value(classMap({
-            [icons$class]: true,
-            "mdc-switch__icons": true
-          }))
-        },
-        escape_object(prefixFilter($$restProps, "icons$"))
-      ])}><svg class="${"mdc-switch__icon mdc-switch__icon--on"}" viewBox="${"0 0 24 24"}"><path d="${"M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z"}"></path></svg>
-          <svg class="${"mdc-switch__icon mdc-switch__icon--off"}" viewBox="${"0 0 24 24"}"><path d="${"M20 13H4v-2h16v2z"}"></path></svg></div>` : ``}</div></div>
-</button>`;
-    });
     MenuSurface = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -22849,6 +22690,179 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
         })}`;
       } while (!$$settled);
       return $$rendered;
+    });
+    Switch = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "disabled",
+        "color",
+        "group",
+        "checked",
+        "value",
+        "processing",
+        "icons",
+        "icons$use",
+        "icons$class",
+        "getId",
+        "getElement"
+      ]);
+      var _a2;
+      forwardEventsBuilder(get_current_component());
+      let uninitializedValue = () => {
+      };
+      function isUninitializedValue(value2) {
+        return value2 === uninitializedValue;
+      }
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { disabled = false } = $$props;
+      let { color = "primary" } = $$props;
+      let { group = uninitializedValue } = $$props;
+      let { checked = uninitializedValue } = $$props;
+      let { value = null } = $$props;
+      let { processing = false } = $$props;
+      let { icons = true } = $$props;
+      let { icons$use = [] } = $$props;
+      let { icons$class = "" } = $$props;
+      let element;
+      let internalClasses = {};
+      let rippleElement;
+      let inputProps = (_a2 = getContext("SMUI:generic:input:props")) !== null && _a2 !== void 0 ? _a2 : {};
+      let selected = isUninitializedValue(group) ? isUninitializedValue(checked) ? false : checked : group.indexOf(value) !== -1;
+      let state = {
+        get disabled() {
+          return disabled;
+        },
+        set disabled(value2) {
+          disabled = value2;
+        },
+        get processing() {
+          return processing;
+        },
+        set processing(value2) {
+          processing = value2;
+        },
+        get selected() {
+          return selected;
+        },
+        set selected(value2) {
+          selected = value2;
+        }
+      };
+      let previousChecked = checked;
+      let previousGroup = isUninitializedValue(group) ? [] : [...group];
+      let previousSelected = selected;
+      function getId() {
+        return inputProps && inputProps.id;
+      }
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
+        $$bindings.disabled(disabled);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.group === void 0 && $$bindings.group && group !== void 0)
+        $$bindings.group(group);
+      if ($$props.checked === void 0 && $$bindings.checked && checked !== void 0)
+        $$bindings.checked(checked);
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      if ($$props.processing === void 0 && $$bindings.processing && processing !== void 0)
+        $$bindings.processing(processing);
+      if ($$props.icons === void 0 && $$bindings.icons && icons !== void 0)
+        $$bindings.icons(icons);
+      if ($$props.icons$use === void 0 && $$bindings.icons$use && icons$use !== void 0)
+        $$bindings.icons$use(icons$use);
+      if ($$props.icons$class === void 0 && $$bindings.icons$class && icons$class !== void 0)
+        $$bindings.icons$class(icons$class);
+      if ($$props.getId === void 0 && $$bindings.getId && getId !== void 0)
+        $$bindings.getId(getId);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      {
+        {
+          let notifyChange = false;
+          if (!isUninitializedValue(group)) {
+            if (previousSelected !== selected) {
+              const idx = group.indexOf(value);
+              if (selected && idx === -1) {
+                group.push(value);
+                group = group;
+              } else if (!selected && idx !== -1) {
+                group.splice(idx, 1);
+                group = group;
+              }
+              notifyChange = true;
+            } else {
+              const idxPrev = previousGroup.indexOf(value);
+              const idx = group.indexOf(value);
+              if (idxPrev > -1 && idx === -1) {
+                state.selected = false;
+              } else if (idx > -1 && idxPrev === -1) {
+                state.selected = true;
+              }
+            }
+          }
+          if (isUninitializedValue(checked)) {
+            if (previousSelected !== selected) {
+              notifyChange = true;
+            }
+          } else if (checked !== selected) {
+            if (checked === previousChecked) {
+              checked = selected;
+              notifyChange = true;
+            } else {
+              state.selected = checked;
+            }
+          }
+          previousChecked = checked;
+          previousGroup = isUninitializedValue(group) ? [] : [...group];
+          previousSelected = selected;
+          if (notifyChange && element) {
+            dispatch(element, "SMUISwitch:change", { selected, value });
+          }
+        }
+      }
+      return `<button${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [className]: true,
+            "mdc-switch": true,
+            "mdc-switch--unselected": !selected,
+            "mdc-switch--selected": selected,
+            "mdc-switch--processing": processing,
+            "smui-switch--color-secondary": color === "secondary",
+            ...internalClasses
+          }))
+        },
+        { type: "button" },
+        { role: "switch" },
+        {
+          "aria-checked": escape_attribute_value(selected ? "true" : "false")
+        },
+        { disabled: disabled || null },
+        escape_object(inputProps),
+        escape_object(exclude($$restProps, ["icons$"]))
+      ])}${add_attribute("this", element, 0)}><div class="${"mdc-switch__track"}"></div>
+  <div class="${"mdc-switch__handle-track"}"><div class="${"mdc-switch__handle"}"><div class="${"mdc-switch__shadow"}"><div class="${"mdc-elevation-overlay"}"></div></div>
+      <div class="${"mdc-switch__ripple"}"${add_attribute("this", rippleElement, 0)}></div>
+      ${icons ? `<div${spread([
+        {
+          class: escape_attribute_value(classMap({
+            [icons$class]: true,
+            "mdc-switch__icons": true
+          }))
+        },
+        escape_object(prefixFilter($$restProps, "icons$"))
+      ])}><svg class="${"mdc-switch__icon mdc-switch__icon--on"}" viewBox="${"0 0 24 24"}"><path d="${"M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z"}"></path></svg>
+          <svg class="${"mdc-switch__icon mdc-switch__icon--off"}" viewBox="${"0 0 24 24"}"><path d="${"M20 13H4v-2h16v2z"}"></path></svg></div>` : ``}</div></div>
+</button>`;
     });
   }
 });
@@ -27652,9 +27666,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-4235bbeb.js
-var layout_4235bbeb_exports = {};
-__export(layout_4235bbeb_exports, {
+// .svelte-kit/output/server/chunks/__layout-48f3bd27.js
+var layout_48f3bd27_exports = {};
+__export(layout_48f3bd27_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -29821,13 +29835,13 @@ function load2({ page: page2 }) {
   };
 }
 var import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie7, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name4, version4, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css6, _layout2;
-var init_layout_4235bbeb = __esm({
-  ".svelte-kit/output/server/chunks/__layout-4235bbeb.js"() {
+var init_layout_48f3bd27 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-48f3bd27.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_Menu_2285d19e();
-    init_SelectionGroupIcon_9930abff();
-    init_store_8e8f68a1();
+    init_app_0da64886();
+    init_Switch_b824b447();
+    init_SelectionGroupIcon_23352050();
+    init_store_8197bd59();
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -30227,7 +30241,7 @@ var init_layout_4235bbeb = __esm({
   ${validate_component(Menu, "Menu").$$render($$result, {
           anchor: false,
           anchorCorner: "BOTTOM_LEFT",
-          style: "left: 70px; top: 65px; width: 220px; overflow: visible;",
+          style: "left: 70px; top: 65px; width: 280px; overflow: scroll;",
           this: menu,
           anchorElement: anchor
         }, {
@@ -30242,7 +30256,7 @@ var init_layout_4235bbeb = __esm({
         }, {
           default: () => `${validate_component(List, "List").$$render($$result, {}, {}, {
             default: () => `${$user.enrolledClasses ? `${each($user.enrolledClasses, (mitClass) => `${mitClass.name !== nameOfClass ? `${validate_component(Item, "Item").$$render($$result, {}, {}, {
-              default: () => `${escape(mitClass.name)}
+              default: () => `${escape(mitClass.name)} (${escape(mitClass.description)})
               
             `
             })}` : ``}`)}` : ``}`
@@ -38182,7 +38196,7 @@ var init_layout_4235bbeb = __esm({
 `}`;
     });
     css6 = {
-      code: ".question-item.svelte-d2j7h9{color:rgb(19, 145, 230)}.selected.svelte-d2j7h9{font-weight:500;background-color:rgb(45, 44, 44);color:white}.speaking.svelte-d2j7h9{font-weight:800}",
+      code: ".question-item.svelte-ms4my9{color:rgb(19, 145, 230)}.selected.svelte-ms4my9{font-weight:500;background-color:rgb(45, 44, 44);color:white}.speaking.svelte-ms4my9{font-weight:800}",
       map: null
     };
     _layout2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -38285,6 +38299,10 @@ var init_layout_4235bbeb = __esm({
           fetchClassDoc();
           fetchParticipants();
           fetchRooms();
+        }
+      }
+      {
+        if (roomID) {
           const userRef = va(Oa(), `users/${$user.uid}`);
           _h(userRef, {
             mostRecentClassAndRoomID: `/${classID}/${roomID}`
@@ -38302,15 +38320,16 @@ ${validate_component(RenderlessMyDocUpdater, "RenderlessMyDocUpdater").$$render(
 
 ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$result, { roomID }, {}, {
         default: ({ activeSpeakerID, toggleMic, firestoreIDToDailyID }) => `${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, { nameOfClass, descriptionOfClass }, {}, {
-          default: () => `${each(rooms, (room) => `<div style="${"padding: 6px;"}">
-        <div class="${escape(null_to_empty(room.id === roomID ? "selected" : "")) + " svelte-d2j7h9"}" style="${"padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;"}">${room.name ? `<div style="${"white-space: nowrap; overflow: hidden; text-overflow: ellipsis margin-bottom: 2px; "}" class="${[
-            "svelte-d2j7h9",
+          default: () => `
+    ${each(rooms, (room) => `<div style="${"padding: 6px;"}">
+        <div class="${escape(null_to_empty(room.id === roomID ? "selected" : "")) + " svelte-ms4my9"}" style="${"padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;"}">${room.name ? `<div style="${"white-space: nowrap; overflow: hidden; text-overflow: ellipsis margin-bottom: 2px; "}" class="${[
+            "svelte-ms4my9",
             room.name.charAt(room.name.length - 1) === "?" && room.id !== roomID ? "question-item" : ""
           ].join(" ").trim()}">${escape(room.name)}
             </div>` : `${room.name === "" ? `<div style="${"margin-bottom: 2px;"}">(empty room)</div>` : ``}`}
 
           ${$roomToPeople[room.id] ? `${each($roomToPeople[room.id], (person) => `<div style="${"display: flex; align-items: center"}"><div style="${"font-size: 0.7rem; margin-left: 6px;"}" class="${[
-            "svelte-d2j7h9",
+            "svelte-ms4my9",
             firestoreIDToDailyID && firestoreIDToDailyID[person.browserTabID] && firestoreIDToDailyID[person.browserTabID] === activeSpeakerID ? "speaking" : ""
           ].join(" ").trim()}">${escape(person.name)}</div> 
                 ${Object.keys($dailyRoomParticipants).length > 0 ? `${person.browserTabID === $browserTabID ? `<div style="${"display: flex; align-items: center; margin-right: 0; margin-left: auto"}"><div style="${"margin-right: 0; margin-left: auto; padding-top: 5px"}">${validate_component(Switch, "Switch").$$render($$result, {
@@ -38337,20 +38356,14 @@ ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$re
 
 ${slots.default ? slots.default({}) : `
 
-`}
-
-
-
-
-
-`;
+`}`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/index-ecaebf40.js
-var index_ecaebf40_exports = {};
-__export(index_ecaebf40_exports, {
+// .svelte-kit/output/server/chunks/index-1b9e059f.js
+var index_1b9e059f_exports = {};
+__export(index_1b9e059f_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -38592,15 +38605,15 @@ function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
 var import_node_fetch6, import_cookie8, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name5, version5, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css7, U5Broomu5D;
-var init_index_ecaebf40 = __esm({
-  ".svelte-kit/output/server/chunks/index-ecaebf40.js"() {
+var init_index_1b9e059f = __esm({
+  ".svelte-kit/output/server/chunks/index-1b9e059f.js"() {
     init_shims();
-    init_app_0ee4f17f();
-    init_RenderlessFetchStrokes_ec4322d5();
-    init_store_8e8f68a1();
-    init_Menu_2285d19e();
-    init_SelectionGroupIcon_9930abff();
-    init_DoodleVideo_svelte_svelte_type_style_lang_b4cf0aef();
+    init_app_0da64886();
+    init_RenderlessFetchStrokes_f8e25791();
+    init_store_8197bd59();
+    init_SelectionGroupIcon_23352050();
+    init_Switch_b824b447();
+    init_DoodleVideo_svelte_svelte_type_style_lang_85e3e53a();
     import_node_fetch6 = __toModule(require_lib2());
     import_cookie8 = __toModule(require_cookie());
     init_dist();
@@ -38661,18 +38674,16 @@ var init_index_ecaebf40 = __esm({
       $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => $onlyAllowApplePencil = value);
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
       $$unsubscribe_currentTool = subscribe(currentTool, (value) => $currentTool = value);
-      let dropdownMenu;
       $$result.css.add(css$2);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        $$rendered = `<div style="${"position: absolute; display: flex; align-items: center; height: 50px; left: 0; right: auto; top: 0; bottom: auto; z-index: 100; background-color: grey; padding-left: 10px; border-radius: 2px;"}"><div style="${"margin-right: 10px; text-align: center"}">
+      $$unsubscribe_onlyAllowApplePencil();
+      $$unsubscribe_user();
+      $$unsubscribe_currentTool();
+      return `<div style="${"position: absolute; display: flex; align-items: center; height: 50px; left: 0; right: auto; top: 0; bottom: auto; z-index: 100; background-color: grey; padding-left: 10px; border-radius: 2px;"}"><div style="${"margin-right: 10px; text-align: center"}">
     ${validate_component(Switch, "Switch").$$render($$result, {
-          icons: false,
-          checked: !$onlyAllowApplePencil,
-          style: "margin: 0 !important"
-        }, {}, {})}
+        icons: false,
+        checked: !$onlyAllowApplePencil,
+        style: "margin: 0 !important"
+      }, {}, {})}
     <div style="${"margin-top: 2px; font-size: 0.55rem; font-family: Roboto,sans-serif; color: white;"}">${escape($onlyAllowApplePencil ? "No touch" : "Touch draw")}</div></div>
   ${Object.keys($user).length > 0 ? `${each($user.pencilColors, (color) => `<div style="${"margin: 0 4px; width: 30px; height: 42px; border-radius: 3px; align-items: center; display: flex; justify-content: center;"}" class="${["svelte-1bgxyxs", $currentTool.color === color ? "pencil-selected" : ""].join(" ").trim()}"><svg preserveAspectRatio="${"none"}" version="${"1.1"}" id="${"Layer_1"}" xmlns="${"http://www.w3.org/2000/svg"}" xmlns:xlink="${"http://www.w3.org/1999/xlink"}" x="${"0px"}" y="${"0px"}" width="${"16px"}" height="${"30px"}" viewBox="${"0 0 100 230"}" style="${"enable-background:new 0 0 100 230;"}" xml:space="${"preserve"}" class="${"svelte-1bgxyxs"}"><g><path d="${"M0,0v72.377c0,1.588,0.234,3.169,0.698,4.706l45.416,150.032C46.633,228.828,48.212,230,50,230s3.367-1.172,3.886-2.883\r\n              L99.31,77.079c0.457-1.525,0.69-3.108,0.69-4.702V0.002"}"></path>;
             <polygon${add_attribute("style", `fill: ${color};`, 0)} points="${"50,211.978 38.879,175.24 61.122,175.24"}"></polygon><path style="${"fill:#424242;"}" d="${"M63.581,167.118H36.42L8.765,75.761l10.924-9.63l12.5,11.015c1.54,1.353,3.835,1.35,5.375-0.002\r\n                l12.468-11.007l12.464,11.005c1.54,1.357,3.839,1.357,5.377,0l12.465-11.005l10.9,9.623L63.581,167.118z"}"></path><path${add_attribute("style", `fill: ${color};`, 0)} d="${"M91.878,0v65.486l-8.852-7.813c-1.539-1.353-3.838-1.354-5.377,0.002L65.185,68.679L52.72,57.674\r\n                c-1.539-1.356-3.838-1.354-5.377-0.002L34.871,68.683L22.375,57.67c-0.769-0.676-1.725-1.013-2.685-1.013\r\n                c-0.959,0-1.919,0.339-2.685,1.013L8.121,65.5L8.098,0.024L91.878,0z"}"></path></g></svg> 
@@ -38684,30 +38695,10 @@ var init_index_ecaebf40 = __esm({
 
   `}
 
-  <span class="${"material-icons"}" style="${"margin-right: 10px; color: white; font-size: 2rem;"}">more_horiz
-  </span>
-  
-  ${validate_component(Menu, "Menu").$$render($$result, {
-          style: "left: 100px; top: 50px; width: 300px",
-          this: dropdownMenu
-        }, {
-          this: ($$value) => {
-            dropdownMenu = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `${validate_component(List, "List").$$render($$result, {}, {}, {
-            default: () => `${slots["dropdown-menu"] ? slots["dropdown-menu"]({}) : `
+  ${slots["dropdown-menu"] ? slots["dropdown-menu"]({}) : `
 
-      `}`
-          })}`
-        })}
+  `}  
 </div>`;
-      } while (!$$settled);
-      $$unsubscribe_onlyAllowApplePencil();
-      $$unsubscribe_user();
-      $$unsubscribe_currentTool();
-      return $$rendered;
     });
     Blackboard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $canvasHeight, $$unsubscribe_canvasHeight;
@@ -38724,25 +38715,52 @@ var init_index_ecaebf40 = __esm({
       createEventDispatcher();
       let canvas;
       let bgCanvas;
+      let DropdownMenu;
       if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray !== void 0)
         $$bindings.strokesArray(strokesArray);
       if ($$props.currentTime === void 0 && $$bindings.currentTime && currentTime !== void 0)
         $$bindings.currentTime(currentTime);
       if ($$props.backgroundImageDownloadURL === void 0 && $$bindings.backgroundImageDownloadURL && backgroundImageDownloadURL !== void 0)
         $$bindings.backgroundImageDownloadURL(backgroundImageDownloadURL);
-      $$unsubscribe_canvasHeight();
-      $$unsubscribe_canvasWidth();
-      $$unsubscribe_currentTool();
-      $$unsubscribe_onlyAllowApplePencil();
-      return `
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        $$rendered = `
 ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
-        "dropdown-menu": () => `${slots["dropdown-menu"] ? slots["dropdown-menu"]({ slot: "dropdown-menu" }) : `
+          "dropdown-menu": () => `<div slot="${"dropdown-menu"}"><span class="${"material-icons"}" style="${"margin-right: 10px; color: white; font-size: 2rem;"}">more_horiz
+      </span>
+    
+      <input style="${"display: none"}" type="${"file"}" accept="${"image/gif, image/jpeg, image/png"}">
 
-    `}`,
-        default: () => `${slots.default ? slots.default({}) : `
+      ${validate_component(Menu, "Menu").$$render($$result, {
+            style: "width: 300px",
+            this: DropdownMenu
+          }, {
+            this: ($$value) => {
+              DropdownMenu = $$value;
+              $$settled = false;
+            }
+          }, {
+            default: () => `${validate_component(List, "List").$$render($$result, {}, {}, {
+              default: () => `${backgroundImageDownloadURL ? `${validate_component(Item, "Item").$$render($$result, {}, {}, {
+                default: () => `Remove background
+            `
+              })}` : `${validate_component(Item, "Item").$$render($$result, {}, {}, {
+                default: () => `Set background
+            `
+              })}`}
+
+          ${validate_component(Item, "Item").$$render($$result, {}, {}, {
+                default: () => `Wipe board
+          `
+              })}`
+            })}`
+          })}</div>`,
+          default: () => `${slots.default ? slots.default({}) : `
 
     `}`
-      })}` : ``}
+        })}` : ``}
 
 <canvas${add_attribute("style", `position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${$canvasWidth}px; height: ${$canvasHeight}px`, 0)}${add_attribute("this", canvas, 0)}></canvas>
   
@@ -38752,6 +38770,12 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
   z-index: 0;
   display: block;
   background-color: rgb(46, 49, 49); width: ${$canvasWidth}px; height: ${$canvasHeight}px`, 0)}${add_attribute("this", bgCanvas, 0)}></canvas>`;
+      } while (!$$settled);
+      $$unsubscribe_canvasHeight();
+      $$unsubscribe_canvasWidth();
+      $$unsubscribe_currentTool();
+      $$unsubscribe_onlyAllowApplePencil();
+      return $$rendered;
     });
     RenderlessAudioRecorder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $dailyMicStream, $$unsubscribe_dailyMicStream;
@@ -39563,16 +39587,6 @@ ${this.customData.serverResponse}`;
               currentTime,
               backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
             }, {}, {
-              "dropdown-menu": () => `<div slot="${"dropdown-menu"}">${validate_component(Item, "Item").$$render($$result, { slot: "dropdown-menu" }, {}, {
-                default: () => `Wipe board
-                      `
-              })}     
-                      ${validate_component(Item, "Item").$$render($$result, {}, {}, {
-                default: () => `${escape(boardDoc.backgroundImageDownloadURL ? "Remove background" : "Set background")}
-                        <input id="${"input-" + escape(boardDoc.id)}" style="${"display: none"}" type="${"file"}" accept="${"image/gif, image/jpeg, image/png"}">
-                      `
-              })}
-                    </div>`,
               default: () => `${!boardDoc.recordState || boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">radio_button_checked
                       </span>` : `${boardDoc.recordState === "mid_record" ? `<span class="${[
                 "material-icons svelte-53fhoc",
@@ -39585,8 +39599,6 @@ ${this.customData.serverResponse}`;
                 fourColor: true
               }, {}, {})}
                       </div>`}`}
-                    
-                    
                   `
             })}
                 `
@@ -39603,7 +39615,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-0ee4f17f.js
+// .svelte-kit/output/server/chunks/app-0da64886.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -41061,9 +41073,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-346d8c5b.js",
+      file: assets + "/_app/start-d93f2151.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-346d8c5b.js", assets + "/_app/chunks/vendor-577628cf.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-d93f2151.js", assets + "/_app/chunks/vendor-17ac3c4e.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -41107,8 +41119,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie9, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css8, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_0ee4f17f = __esm({
-  ".svelte-kit/output/server/chunks/app-0ee4f17f.js"() {
+var init_app_0da64886 = __esm({
+  ".svelte-kit/output/server/chunks/app-0da64886.js"() {
     init_shims();
     import_cookie9 = __toModule(require_cookie());
     init_dist();
@@ -41395,16 +41407,16 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_6643c439(), layout_6643c439_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_5bc331be(), error_5bc331be_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_be8b7714(), index_be8b7714_exports)),
-      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_aedefcdc(), explore_aedefcdc_exports)),
-      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_181d24a2(), learn_181d24a2_exports)),
-      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_31333ced(), teach_31333ced_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_4235bbeb(), layout_4235bbeb_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_ecaebf40(), index_ecaebf40_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_c70e9a02(), layout_c70e9a02_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_6de15946(), error_6de15946_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_63ac6861(), index_63ac6861_exports)),
+      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_e7d22b09(), explore_e7d22b09_exports)),
+      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_431958fd(), learn_431958fd_exports)),
+      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_948ec578(), teach_948ec578_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_48f3bd27(), layout_48f3bd27_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_1b9e059f(), index_1b9e059f_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-384c0e04.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-384c0e04.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-f69dd117.js", "css": [], "js": ["error.svelte-f69dd117.js", "chunks/vendor-577628cf.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-9ae7b0ca.js", "css": ["assets/pages/index.svelte-85299949.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-9ae7b0ca.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-1899b2f8.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-1899b2f8.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-1c2db2ae.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-b90240da.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-b90240da.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-1c2db2ae.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-392c9b3c.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-392c9b3c.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-1c2db2ae.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-2eab816e.js", "css": ["assets/pages/_class_/__layout.svelte-c4788b3a.css"], "js": ["pages/_class_/__layout.svelte-2eab816e.js", "chunks/vendor-577628cf.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-04136f97.js", "css": ["assets/pages/_class_/_room_/index.svelte-8d8f89d3.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-04136f97.js", "chunks/vendor-577628cf.js", "chunks/RenderlessFetchStrokes-1c2db2ae.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-a5eee486.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-4aa24d11.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-4aa24d11.js", "chunks/vendor-17ac3c4e.js", "chunks/navigation-1456a012.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-ef0a3056.js", "css": [], "js": ["error.svelte-ef0a3056.js", "chunks/vendor-17ac3c4e.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-4e46eda3.js", "css": ["assets/pages/index.svelte-85299949.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-4e46eda3.js", "chunks/vendor-17ac3c4e.js", "chunks/navigation-1456a012.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-45708005.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-45708005.js", "chunks/vendor-17ac3c4e.js", "chunks/navigation-1456a012.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-81b0db41.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-566a28f3.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-566a28f3.js", "chunks/vendor-17ac3c4e.js", "chunks/navigation-1456a012.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-81b0db41.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-776ba181.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-776ba181.js", "chunks/vendor-17ac3c4e.js", "chunks/navigation-1456a012.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-81b0db41.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-36a72a9a.js", "css": ["assets/pages/_class_/__layout.svelte-2c9907cf.css"], "js": ["pages/_class_/__layout.svelte-36a72a9a.js", "chunks/vendor-17ac3c4e.js", "chunks/navigation-1456a012.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-d4a5bdc8.js", "css": ["assets/pages/_class_/_room_/index.svelte-8d8f89d3.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-d4a5bdc8.js", "chunks/vendor-17ac3c4e.js", "chunks/RenderlessFetchStrokes-81b0db41.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-1456a012.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
   }
 });
 
@@ -41457,7 +41469,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_0ee4f17f();
+init_app_0da64886();
 var import_cookie10 = __toModule(require_cookie());
 init_dist();
 

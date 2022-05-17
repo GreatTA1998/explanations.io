@@ -60,7 +60,7 @@
   <slot>
 
   </slot>
-  
+
   <slot name="dropdown-menu">
 
   </slot>  
@@ -74,10 +74,6 @@
 
   function func () {
     onlyAllowApplePencil.set(!$onlyAllowApplePencil)
-  }
-
-  function callFunc () {
-    return
   }
 </script>
 

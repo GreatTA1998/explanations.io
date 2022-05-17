@@ -1,9 +1,3 @@
-<div style="position: absolute; right: 0; left: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5">
-  <slot>
-
-  </slot>
-</div>
-
 <!-- The play button double-duties as an indication that the video has finished fetching -->
 {#if !recursiveSyncer && isPlaying === false && strokesArray}
   <span on:click={startAudioPlayer} class="material-icons overlay-center" style="color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5">
@@ -16,19 +10,33 @@
   otherwise pencil strokes are submerged by back canvas 
 -->
 <div style="position: relative">
-  <canvas bind:this={canvas} 
-    style={`position: absolute; z-index: 1; z-index: 1; margin-top: 0; margin-left: 0; width: ${$canvasWidth}px; height: ${$canvasHeight}px; background-color: transparent`}
+  <canvas 
+    bind:this={canvas} 
+    on:click={togglePlayPause}
+    style={`
+      position: absolute; 
+      z-index: 1; 
+      margin-top: 0; 
+      margin-left: 0; 
+      width: ${$canvasWidth}px; 
+      height: ${$canvasHeight}px; 
+      background-color: transparent`
+    }
   >
-
   </canvas>
 
-  <canvas bind:this={bgCanvas} 
-    style={`position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    display: block;
-    background-color: rgb(46, 49, 49); width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
+  <canvas 
+    bind:this={bgCanvas} 
+    style={`
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      display: block;
+      width: ${$canvasWidth}px; 
+      height: ${$canvasHeight}px;
+      background-color: rgb(46, 49, 49);`
+    }
   >
   </canvas>
 </div>
@@ -87,6 +95,10 @@
   onMount(() => {
     ctx = canvas.getContext('2d')
     bgCtx = bgCanvas.getContext('2d')
+
+    AudioPlayer.playbackRate = playbackSpeed
+    AudioPlayer.onended = (e) => isPlaying = false 
+    AudioPlayer.onpause = (e) => isPlaying = false
   })
 
   $: if (ctx && strokesArray && !allFrames) {
@@ -102,6 +114,16 @@
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
   })
 
+  function togglePlayPause () {
+    if (!recursiveSyncer && isPlaying === false && strokesArray) {
+      startAudioPlayer()
+    } 
+    else {
+      if (isPlaying) AudioPlayer.pause()
+      else AudioPlayer.play()  
+    }
+  }
+  
   function initDoodleVideo () {
     for (const stroke of strokesArray) {
       drawStroke(stroke, null, ctx, canvas)
@@ -129,7 +151,6 @@
   }
 
   function startAudioPlayer () {
-    AudioPlayer.playbackRate = playbackSpeed
     AudioPlayer.play()
   }
 

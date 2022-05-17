@@ -27,7 +27,8 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
-    {#each rooms as room (room.id)}
+    <!-- `+ roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
+    {#each rooms as room (room.id + roomID)}
       <div on:click={() => goto(`/${classID}/${room.id}`)} style="padding: 6px;">
         <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
         <div class={room.id === roomID ? 'selected' : '' } style="padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;">

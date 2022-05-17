@@ -79,7 +79,10 @@
                     {strokesArray} 
                     {currentTime} 
                     backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+                    on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardID)}
+                    on:background-reset={() => resetBackgroundImage(boardID)}
                     on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+                    on:board-wipe={deleteAllStrokesFromDb}
                   > 
                     {#if !boardDoc.recordState || boardDoc.recordState === 'pre_record'}
                       <span on:click={() => callManyFuncs(
@@ -114,31 +117,6 @@
                         />
                       </div>
                     {/if}
-                    
-                    <div slot="dropdown-menu">
-                      <span on:click={() => dropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
-                        more_horiz
-                      </span>
-                    
-                      <Menu bind:this={dropdownMenu} style="width: 300px">
-                        <List>
-                          <Item on:click={boardDoc.backgroundImageDownloadURL ? resetBackgroundImage(boardDoc.id) : clickHiddenInput(boardDoc.id)}>
-                            {boardDoc.backgroundImageDownloadURL ? 'Remove background' : 'Set background' }
-                            <input
-                              id="input-{boardDoc.id}"
-                              on:change={(e) => handleWhatUserUploaded(e, boardDoc.id)}
-                              style="display: none" 
-                              type="file" 
-                              accept="image/gif, image/jpeg, image/png" 
-                            >
-                          </Item>
-
-                          <Item on:SMUI:action={deleteAllStrokesFromDb}>
-                            Wipe board
-                          </Item>    
-                        </List> 
-                      </Menu>
-                    </div>
                   </Blackboard>
                 </RenderlessAudioRecorder>
               </div>
@@ -183,19 +161,16 @@
   import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
-  import List, { Item, Text } from '@smui/list'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import CircularProgress from '@smui/circular-progress' 
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import Menu from '@smui/menu';
 
   export let classID
   export let roomID
 
   let unsubRoomListener
   let roomDoc
-  let dropdownMenu = false
 
   if (!$user.uid) {
     goto('/')
@@ -237,15 +212,9 @@
     })
   }
 
-  //// START of background image logic
-  function clickHiddenInput (boardID) {
-    document.getElementById(`input-${boardID}`).click()
-  }
-
-  async function handleWhatUserUploaded (e, boardID) {
+  async function handleWhatUserUploaded (imageFile, boardID) {
     const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
-    const imageFile = e.target.files[0]; 
-    if (!imageFile) return; 
+    if (!imageFile) return
     if (imageFile.type.split("/")[0] === 'image') {
       // rewrite
       const storage = getStorage()

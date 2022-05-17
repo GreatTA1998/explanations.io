@@ -1,4 +1,3 @@
-
 <slot 
   {fetchStrokes}  
   {strokesArray} 

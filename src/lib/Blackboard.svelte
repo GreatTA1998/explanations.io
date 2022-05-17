@@ -7,9 +7,37 @@
 
     </slot>
 
-    <slot name="dropdown-menu" slot="dropdown-menu">
+    <div slot="dropdown-menu">
+      <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
+        more_horiz
+      </span>
+    
+      <input
+        bind:this={FileUploadButton}
+        on:change={(e) => uploadBackground(e)}
+        style="display: none" 
+        type="file" 
+        accept="image/gif, image/jpeg, image/png" 
+      >
 
-    </slot>
+      <Menu bind:this={DropdownMenu} style="width: 300px">
+        <List>
+          {#if backgroundImageDownloadURL}
+            <Item on:click={resetBackgroundImage}>
+              Remove background
+            </Item>
+          {:else}
+            <Item on:click={clickHiddenInput}>
+              Set background
+            </Item>
+          {/if}
+
+          <Item on:SMUI:action={wipeBoard}>
+            Wipe board
+          </Item>    
+        </List> 
+      </Menu>
+    </div>
   </BlackboardToolbar>
 {/if}
 
@@ -33,6 +61,8 @@
 </canvas>
 
 <script>
+  import List, { Item, Text } from '@smui/list'
+  import Menu from '@smui/menu';
   import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
@@ -60,10 +90,29 @@
   }
   let debouncerTimeout
 
+  let DropdownMenu
+  let FileUploadButton 
+
   onMount(() => {
     ctx = canvas.getContext('2d')
     bgCtx = bgCanvas.getContext('2d')
   })
+
+  function uploadBackground (e) {
+    dispatch('background-upload', { imageFile: e.target.files[0] })
+  }
+
+  function wipeBoard (e) {
+    dispatch('board-wipe')
+  }
+
+  function resetBackgroundImage () {
+    dispatch('background-reset')
+  }
+  
+  function clickHiddenInput () {
+    FileUploadButton.click()
+  }
 
   // auto-resize
   $: if (ctx) {

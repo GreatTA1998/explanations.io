@@ -55,8 +55,6 @@
           browserTabID: $browserTabID,
           currentRoomID: roomID,
           name: myName
-          // currentBoardID: '',
-          // currentBoardNumber: 1
         })
         isFirestoreDocCreated.set(true)
       } else {

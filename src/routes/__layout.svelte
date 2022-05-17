@@ -63,11 +63,10 @@
           id: dbUserSnapshot.id,
           ...dbUserSnapshot.data()
         })
-      
-        // check if it's a direct URL visit to a particular server
-        if ($page.params.classID && $page.params.roomID) {
-          goto(`/${classID}/${roomID}`)
-        } else {
+        
+        // if not a direct URL visit, resume to the most recent class
+        const { params } = $page 
+        if (!params.class && !params.room) { 
           goto($user.mostRecentClassAndRoomID)
         }
       } 

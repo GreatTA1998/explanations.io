@@ -60,30 +60,24 @@
   <slot>
 
   </slot>
-
-  <span on:click={() => dropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
-    more_horiz
-  </span>
   
-  <Menu bind:this={dropdownMenu} style="left: 100px; top: 50px; width: 300px">
-    <List>
-      <slot name="dropdown-menu">
+  <slot name="dropdown-menu">
 
-      </slot>  
-    </List>
-  </Menu>
+  </slot>  
 </div>
 
 <script>
   import { user, currentTool, onlyAllowApplePencil } from '../store.js'
   import Switch from '@smui/switch';
-  import List, { Item, Text } from '@smui/list'
-  import Menu from '@smui/menu';
 
   let dropdownMenu
 
   function func () {
     onlyAllowApplePencil.set(!$onlyAllowApplePencil)
+  }
+
+  function callFunc () {
+    return
   }
 </script>
 

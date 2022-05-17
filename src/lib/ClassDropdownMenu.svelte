@@ -18,14 +18,14 @@
     anchor={false}
     bind:anchorElement={anchor}
     anchorCorner="BOTTOM_LEFT"
-    style="left: 70px; top: 65px; width: 220px; overflow: visible;"
+    style="left: 70px; top: 65px; width: 280px; overflow: scroll;"
   >
     <List>
       {#if $user.enrolledClasses}
         {#each $user.enrolledClasses as mitClass }
           {#if mitClass.name !== nameOfClass}
             <Item on:SMUI:action={() => switchClass(mitClass)}>
-              {mitClass.name}
+              {mitClass.name} ({mitClass.description})
               <!-- <div>{mitClass.description}</div> -->
             </Item>
           {/if}

@@ -27,7 +27,7 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
-    {#each rooms as room (room.id + roomID)}
+    {#each rooms as room (room.id)}
       <div on:click={() => goto(`/${classID}/${room.id}`)} style="padding: 6px;">
         <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
         <div class={room.id === roomID ? 'selected' : '' } style="padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;">
@@ -133,7 +133,9 @@
     fetchClassDoc()
     fetchParticipants()
     fetchRooms()
+  }
 
+  $: if (roomID) {
     const userRef = doc(getFirestore(), `users/${$user.uid}`)
     updateDoc(userRef, {
       mostRecentClassAndRoomID: `/${classID}/${roomID}`
@@ -254,8 +256,10 @@
       getFirestore(),
       `classes/${classID}/rooms`
     )
-
-    const roomsQuery = query(roomsRef, orderBy('date', 'asc'))
+    const roomsQuery = query(
+      roomsRef, 
+      orderBy('date', 'asc')
+    )
     unsubFuncs.push(
       onSnapshot(roomsQuery, async (snapshot) => { // onSnapshot does NOT return a promise
         const docs = []
@@ -263,9 +267,9 @@
           docs.push({ 
             id: doc.id, 
             ref: doc.ref.path, 
-            ...doc.data() 
+            ...doc.data()  
           })
-        });
+        })
         rooms = docs
         
         // QUICKFIX FOR BACKWARDS COMPATIBILITY
@@ -310,22 +314,4 @@
   .speaking {
     font-weight: 800;
   }
-
-  /* .not-selected {
-    opacity: 80%;
-  } */
 </style>
-
-<!-- <style>
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 1024px;s
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-</style> -->
-

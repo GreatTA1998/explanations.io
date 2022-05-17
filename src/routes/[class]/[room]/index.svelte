@@ -116,19 +116,28 @@
                     {/if}
                     
                     <div slot="dropdown-menu">
-                      <Item slot="dropdown-menu" on:SMUI:action={deleteAllStrokesFromDb}>
-                        Wipe board
-                      </Item>     
-                      <Item on:click={boardDoc.backgroundImageDownloadURL ? resetBackgroundImage(boardDoc.id) : clickHiddenInput(boardDoc.id)}>
-                        {boardDoc.backgroundImageDownloadURL ? 'Remove background' : 'Set background' }
-                        <input
-                          id="input-{boardDoc.id}"
-                          on:change={(e) => handleWhatUserUploaded(e, boardDoc.id)}
-                          style="display: none" 
-                          type="file" 
-                          accept="image/gif, image/jpeg, image/png" 
-                        >
-                      </Item>
+                      <span on:click={() => dropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
+                        more_horiz
+                      </span>
+                    
+                      <Menu bind:this={dropdownMenu} style="width: 300px">
+                        <List>
+                          <Item on:click={boardDoc.backgroundImageDownloadURL ? resetBackgroundImage(boardDoc.id) : clickHiddenInput(boardDoc.id)}>
+                            {boardDoc.backgroundImageDownloadURL ? 'Remove background' : 'Set background' }
+                            <input
+                              id="input-{boardDoc.id}"
+                              on:change={(e) => handleWhatUserUploaded(e, boardDoc.id)}
+                              style="display: none" 
+                              type="file" 
+                              accept="image/gif, image/jpeg, image/png" 
+                            >
+                          </Item>
+
+                          <Item on:SMUI:action={deleteAllStrokesFromDb}>
+                            Wipe board
+                          </Item>    
+                        </List> 
+                      </Menu>
                     </div>
                   </Blackboard>
                 </RenderlessAudioRecorder>
@@ -179,12 +188,14 @@
   import CircularProgress from '@smui/circular-progress' 
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import Menu from '@smui/menu';
 
   export let classID
   export let roomID
 
   let unsubRoomListener
   let roomDoc
+  let dropdownMenu = false
 
   if (!$user.uid) {
     goto('/')

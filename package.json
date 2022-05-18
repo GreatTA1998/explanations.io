@@ -38,6 +38,7 @@
     "@lukeed/uuid": "^2.0.0",
     "audio-recorder-polyfill": "^0.4.1",
     "cookie": "^0.4.1",
-    "firebase": "^9.5.0"
+    "firebase": "^9.5.0",
+    "svelte-css-vars": "^0.0.3"
   }
 }

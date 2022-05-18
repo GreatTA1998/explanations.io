@@ -1,20 +1,38 @@
 <!-- Adapted from https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ -->
-<div class="grow-wrap" bind:this={autogrowWrapper} use:initValue style="font-family: Roboto, sans-serif; margin: 10px 0px;">
+<div 
+  class="grow-wrap"
+  bind:this={autogrowWrapper} 
+  use:initValue 
+  style="display: grid;"
+  use:cssVars={styleVars}
+>
+  <!-- took me 1 hour to figure out `rows = n` is the way to change initial height -->
+  <!-- without `border-box`, textarea will add padding and border to width, exceeding it -->
   <textarea 
     {value}
     on:input={(e) => { 
       autogrowWrapper.dataset.replicatedValue = e.target.value; 
       dispatch('input', e.target.value)
     }} 
-    style="box-sizing: border-box; width: {$canvasWidth}px; padding: 6px; border-radius: 2px; 
-      font-family: Roboto, sans-serif; color: rgb(60 55 56 / 87%);"
+    rows="1"
+    style="width: {$canvasWidth}px;"
   />
-  <!-- border-box otherwise textarea padding and border to the width, exceeding it -->
 </div>
 
 <script>
   import { createEventDispatcher } from 'svelte'
   import { canvasWidth } from '../store.js'
+
+  // `cssVars` package solved a 4-part headache: https://github.com/sveltejs/svelte/issues/758#issuecomment-521764823
+  // 1. we need pseudoelement to avoid jumpy textbot resize behavior (see autogrow tutorial)
+  // 2. we also need to dynamically set pseudoelement width to match the textarea
+  // 3. pseudoelement can't be styled with dynamic CSS because it doesn't exist in template area
+  // 4. attr() was designed to style pseudoelements, but it does NOT support setting px widths 
+  import cssVars from 'svelte-css-vars';  
+  
+  $: styleVars = {
+    width: `${$canvasWidth}px`,
+  };
 
   export let value
 
@@ -28,35 +46,36 @@
 </script>
 
 <style>
-.grow-wrap {
-  /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
-  display: grid;
-}
+/* gentle reminder: `::after` is a CHILD element of <div class="grow-wrap"> (more specifically, a PSEUDO-element that is the last child)*/
 .grow-wrap::after {
-  /* Note the weird space! Needed to preventy jumpy behavior */
-  content: attr(data-replicated-value) " ";
-
-  /* This is how textarea text behaves */
-  white-space: pre-wrap;
-
-  /* Hidden from view, clicks, and screen readers */
   visibility: hidden;
+  content: attr(data-replicated-value) " "; 
 }
-.grow-wrap > textarea {
-  /* You could leave this, but after a user resizes, then it ruins the auto sizing */
-  resize: none;
 
-  /* Firefox shows scrollbar on growth, you can hide like this. */
-  overflow: hidden;
-}
-.grow-wrap > textarea,
+/* SHARED, COMMON properties */
+.grow-wrap > textarea, 
 .grow-wrap::after {
   /* Identical styling required!! */
+  width: var(--width);
+  overflow-wrap: break-word; /* somehow without this, you can spam the longest word and the autogrower never knows to manually insert a line break*/
+  white-space: pre-wrap; /* Sequences of white space are preserved. Lines are broken at newline characters, at <br>, and as necessary to fill line boxes. */
+  box-sizing: border-box;
   border: 1px solid black;
-  padding: 0.5rem;
-  font: inherit;
+  border-radius: 2px;
+  padding: 6px;
+  /* padding: 0.5rem;  */
+  /* font: inherit;  */
+  /* the inspect tool won't show me what value `font-size` takes through inheritance 
+     turns out it's unexpectedly complicated https://manishearth.github.io/blog/2017/08/10/font-size-an-unexpectedly-complex-css-property/ */
+  font-size: 1rem;
+  font-family: Roboto, sans-serif; 
+  color: rgb(60 55 56 / 87%);
 
   /* Place on top of each other */
   grid-area: 1 / 1 / 2 / 2;
+
+  /* probably <textarea> specific attributes, but easier to understand code if in shared rather than in individual css */
+  resize: none; /* user's drag resize would ruin auto-sizing */
+  overflow: hidden;  /* e.g. Firefox shows scrollbar */
 }
 </style>

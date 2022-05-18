@@ -99,7 +99,6 @@
   </LeftDrawer>
 </DailyVideoConference>
 
-<!-- <main></main> tag might be important -->
 <slot>
 
 </slot>

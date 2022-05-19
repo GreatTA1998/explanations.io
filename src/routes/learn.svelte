@@ -2,14 +2,23 @@
 	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Not understanding things properly leads to a lot of problems
+				What we truly fear isn't failing classes...
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+				We fear having to go through the day-to-day, waking up with a headache, seeing a grey sky, walking to lecture to a room full of everyone but friends, not understanding anything. 
 				<br>
 				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, etc. they're fundamentally not efficient enough to <b style="color: orange">break you out of vicious cycle</b>. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+				It's the fatigue and anxiety. It's the purposelessness. It's the isolation. 
+				<br>
+				<br>
+				There are many reasons why we can fall behind classes. But the fact we can't <u>recover</u> is the problem. We especially visit Office Hours, only to wait 30 minutes for 5 minutes of "hints".
+				<br>
+				<br>
+				When night comes, either we're so burnt out that we can't do any work, or we try to sleep knowing that tomorrow will be just as bad. We're stuck in a vicious cycle of compounding inefficiencies. The suffering isn't extreme or intense, it's prolonged and pervasive. 
+				<br>
+				<br>	
+				That's what keeps us up at night.
 			</p>
 			<br>
 		</div>
@@ -17,12 +26,12 @@
 
 	<section style="height: {260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Review videos for everything, and real-time help whenever</h1>
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">College can be full of colors</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 				Imagine if the material was so good that, everything you need to know is clearly explained and re-watchable at your own pace. And suppose anything were to be missing, you can just ask for help efficiently without having to travel to campus, wait till the next Office Hours / for a Piazza response?
 				<br>
 				<br>
-				Then, you can efficiently grasp the fundamentals and get up to speed, without unnecessary added stress. 
+				Then, you can efficiently grasp the fundamentals and get up to speed.
 			</p>
 		</div>
 	</section>
@@ -31,9 +40,17 @@
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">How everything works</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				To be edited...
-
 				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
+
+				Explain changes 3 things: 
+					<br>
+					- Abundance of visual explanations: making and managing videos has always been inconvenient, but on this web app you just press one button...so teachers can do it much more
+					<br>
+					- Convenient way to get help: instead of waiting till Wednesday 5-7 pm, then having to travelling across campus, you can receive real-time help from your room, anytime.
+					Traditional remote help has always been ineffective - it suffers the worst of both worlds - the limited availability and wait-times of Office Hours, and the lack of easy blackboard integration.
+					Explain removes both.
+					<br>
+				  - Strong incentives: TAs are rewarded for actual impact; a TA who helped 100 people in a way 10x more helpful should get paid 1000x more than other TAs
 				<br>
 				<br>
 				Here's an example video that was recorded on this website: 

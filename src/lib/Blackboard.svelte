@@ -35,6 +35,10 @@
           <Item on:SMUI:action={wipeBoard}>
             Wipe board
           </Item>    
+
+          <Item on:SMUI:action={deleteBoard}>
+            Delete board 
+          </Item>
         </List> 
       </Menu>
     </div>
@@ -98,20 +102,24 @@
     bgCtx = bgCanvas.getContext('2d')
   })
 
-  function uploadBackground (e) {
-    dispatch('background-upload', { imageFile: e.target.files[0] })
+  function clickHiddenInput () {
+    FileUploadButton.click()
   }
 
-  function wipeBoard (e) {
-    dispatch('board-wipe')
+  function uploadBackground (e) {
+    dispatch('background-upload', { imageFile: e.target.files[0] })
   }
 
   function resetBackgroundImage () {
     dispatch('background-reset')
   }
-  
-  function clickHiddenInput () {
-    FileUploadButton.click()
+
+  function wipeBoard () {
+    dispatch('board-wipe')
+  }
+
+  function deleteBoard () {
+    dispatch('board-delete')
   }
 
   // auto-resize

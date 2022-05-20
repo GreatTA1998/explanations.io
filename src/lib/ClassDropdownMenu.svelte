@@ -14,6 +14,7 @@
   </div>
 
   <!-- left: 50px; top: 50px; width: 200px -->
+  <!-- anchor is different -->
   <Menu bind:this={menu} 
     anchor={false}
     bind:anchorElement={anchor}
@@ -32,7 +33,6 @@
         {/each}
       {/if}
     </List>
-
 
     <!-- Put an autocomplete component at the bottom -->
     <div style="margin: 4px">

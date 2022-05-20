@@ -12,18 +12,26 @@
 				<div style="display: flex; justify-content: center;">
 					<b style="color: grey; white-space: nowrap;" class="copied-from-koa">Open-learning communities with lots of visual explanations</b>
 				</div>
-				
-				<div style="display: flex; justify-content: center; margin-top: 20px;">
-					<Button on:click={() => goto('learn')} variant="raised" color="purple">
-						I'm a student
-					</Button>
+
+
+				<div style="display	: flex; justify-content: center; margin-top: 20px;">
+					<div>
+						<Button on:click={() => goto('learn')} variant="raised" color="purple">
+							Office Hours is too crowded
+						</Button>
+	
+						<Button on:click={() => goto('teach')} variant="raised" color="orange" style="margin-left: 6px">
+							Too many TA responsibilities
+						</Button>	
+					</div>
 
 					<Button on:click={() => goto('teach')} variant="raised" color="orange" style="margin-left: 6px">
-						I'm a teacher
+						Self-learning web dev is hard
 					</Button>	
 
+					<!-- Be open, you never know -->
 					<Button on:click={() => goto('explore')} variant="raised" color="orange" style="margin-left: 6px">
-						I'm someone else
+						I'm just exploring
 					</Button>	
 				</div>
 			</div>

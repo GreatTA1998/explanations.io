@@ -27,37 +27,54 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
-    <!-- `+ roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
+    <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
     {#each rooms as room (room.id + roomID)}
       <div on:click={() => goto(`/${classID}/${room.id}`)} style="padding: 6px;">
         <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
-        <div class={room.id === roomID ? 'selected' : '' } style="padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;">
-          {#if room.name}
-            <div class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
-              style="
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis
-                margin-bottom: 2px;
-              "
-            >
-              {room.name}
-            </div>
-          {:else if room.name === ''}
-            <div style="margin-bottom: 2px;">(empty room)</div>
-          {/if}
+        <div class={room.id === roomID ? 'selected' : '' } style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
+          <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
+          <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
+            {#if room.name}
+              <div class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
+                style="
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis
+                  margin-bottom: 2px;
+                "
+              >
+                {room.name}
+              </div>
+            {:else if room.name === ''}
+              <div style="margin-bottom: 2px;">(empty room)</div>
+            {/if}
+
+            {#if room.id === roomID}
+              <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+                more_horiz
+              </span>
+
+              <Menu bind:this={DropdownMenu} style="width: 300px">
+                <List>        
+                  <Item on:SMUI:action={() => deleteRoom(room)}>
+                    Delete room
+                  </Item>
+                </List> 
+              </Menu>
+            {/if}
+          </div>
 
           {#if $roomToPeople[room.id]}
             {#each $roomToPeople[room.id] as person (person.browserTabID)}
-              <div style="display: flex; align-items: center">
+              <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 8px;">
                 <div style="font-size: 0.7rem; margin-left: 6px;" 
                   class:speaking={firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID}>
                   {person.name} 
                 </div> 
                 {#if Object.keys($dailyRoomParticipants).length > 0}
                   {#if person.browserTabID === $browserTabID}     
-                    <div style="display: flex; align-items: center; margin-right: 0; margin-left: auto">
-                      <div on:click|preventDefault|stopPropagation={toggleMic} style="margin-right: 0; margin-left: auto; padding-top: 5px">
+                    <div style="display: flex; align-items: center; margin-right: 6px; margin-left: auto">
+                      <div on:click|preventDefault|stopPropagation={toggleMic} style="padding-top: 5px">
                         <Switch checked={$dailyRoomParticipants.local.audio} style="margin: 0 !important"/>
                       </div>
                       {#if $dailyRoomParticipants.local.audio}
@@ -104,25 +121,30 @@
 </slot>
 
 <script>
+  import List, { Item, Text } from '@smui/list'
+  import Menu from '@smui/menu';
+  import Switch from '@smui/switch';
 	import LeftDrawer from '$lib/LeftDrawer.svelte'
   import RenderlessMyDocUpdater from '$lib/RenderlessMyDocUpdater.svelte'
   import DailyVideoConference from '$lib/DailyVideoConference.svelte'
   import { onDestroy, onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { browser } from '$app/env'
-  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc } from 'firebase/firestore'
+  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc } from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
   import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants } from '../../store.js'
-  import Switch from '@smui/switch';
-  import { getRandomID } from '../../helpers/utility.js';
-  
+  import { getRandomID } from '../../helpers/utility.js'
+  import { deleteObject, getStorage, ref } from 'firebase/storage'
+
   export let classID;
   export let roomID;
 
+  const classPath = `classes/${classID}/`
   let unsubFuncs = []
   let nameOfClass = ''
   let descriptionOfClass = ''
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
+  let DropdownMenu
 
 	// START OF RESIZE LOGIC 
   let resizeDebouncer = null
@@ -182,7 +204,6 @@
     }
 
     const newDocID = getRandomID()
-    const classPath = `classes/${classID}/`
     const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
     const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)
     await Promise.all([
@@ -210,7 +231,6 @@
     setTimeout(resizeCanvas, 100)
   }
   // END OF RESIZE LOGIC
-
 
   function fetchParticipants () {
     const participantsRef = collection(
@@ -297,6 +317,53 @@
         }
       })
     )
+  }
+  
+  /**
+   * Properly deletes the room
+   *   1. Delete audio files, if any boards are recorded 
+   *   2. TODO: Delete stroke subcollections
+   *   3. Delete the room doc itself
+   *   4. TODO: handle web app freezing due to deletion
+   * @param room
+   */
+  async function deleteRoom (room) {
+    const boardsQueries = [] 
+    for (const boardID of room.blackboards) {
+      // if it's a video, delete the audio file
+      boardsQueries.push(
+        getDoc(
+          doc(getFirestore(), classPath + `blackboards/${boardID}`)
+        )
+      )
+    }
+    await Promise.all(boardsQueries)
+
+    const subdeleteRequests = [] 
+    for (const boardQuery of boardsQueries) {
+      const boardDoc = (await boardQuery).data()
+      if (boardDoc.audioRefFullPath) {
+        subdeleteRequests.push(
+          deleteObject(
+            ref(getStorage(), audioRefFullPath)
+          )
+        )
+      }
+      // subdeleteRequests.push(
+      //   deleteAllStrokesFromDb({ 
+      //     boardPath: classPath + `blackboards/${boardQuery.id}`
+      //   })
+      // )
+    }
+    await Promise.all(subdeleteRequests)
+
+    // delete the doc itself
+    await deleteDoc(
+      doc(getFirestore(), classPath + `rooms/${room.id}`)
+    )
+    alert("Deleted room successfully")
+
+    // TODO: redirect to a different room
   }
 </script>
 

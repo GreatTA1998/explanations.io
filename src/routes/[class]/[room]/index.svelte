@@ -85,6 +85,7 @@
                     on:background-reset={() => resetBackgroundImage(boardID)}
                     on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
                     on:board-wipe={deleteAllStrokesFromDb}
+                    on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
                   > 
                     {#if !boardDoc.recordState || boardDoc.recordState === 'pre_record'}
                       <span on:click={() => callManyFuncs(
@@ -161,7 +162,7 @@
   import { browserTabID, user, canvasHeight, canvasWidth } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs } from 'firebase/firestore';
+  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove } from 'firebase/firestore';
   import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
@@ -454,6 +455,29 @@
     // await tick()
     // this.scrollToThisBoard(newID)
   }
+
+  // A blackboard does not have an audioDownloadURL,
+  // otherwise it's a video
+  function deleteBoard (boardID, deleteAllStrokesFromDb) {
+    if (roomDoc.blackboards.length === 1) {
+      alert("Can't delete the last blackboard")
+      return
+    }
+
+    // 1. delete blackboard reference from parent
+    updateDoc(roomRef, {
+      blackboards: arrayRemove(boardID)
+    })
+    
+    // 2. delete strokes
+    deleteAllStrokesFromDb()
+    
+    // 3. delete board itself
+    deleteDoc(
+      doc(getFirestore(), boardsDbPath + boardID)
+    )
+  }
+
 </script>
 
 <style>

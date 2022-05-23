@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-65404eb4.js
+// .svelte-kit/output/server/chunks/store-836abe82.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -9081,10 +9081,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_65404eb4 = __esm({
-  ".svelte-kit/output/server/chunks/store-65404eb4.js"() {
+var init_store_836abe82 = __esm({
+  ".svelte-kit/output/server/chunks/store-836abe82.js"() {
     init_shims();
-    init_app_55d38c16();
+    init_app_a0c37348();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -17465,7 +17465,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-ba435d64.js
+// .svelte-kit/output/server/chunks/index-c327074d-a627185f.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17954,10 +17954,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_ba435d64 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-ba435d64.js"() {
+var init_index_c327074d_a627185f = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-a627185f.js"() {
     init_shims();
-    init_store_65404eb4();
+    init_store_836abe82();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18886,18 +18886,18 @@ var init_index_c327074d_ba435d64 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-cdb44992.js
-var layout_cdb44992_exports = {};
-__export(layout_cdb44992_exports, {
+// .svelte-kit/output/server/chunks/__layout-e2bedaf0.js
+var layout_e2bedaf0_exports = {};
+__export(layout_e2bedaf0_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, getStores, page, _layout;
-var init_layout_cdb44992 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-cdb44992.js"() {
+var init_layout_e2bedaf0 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-e2bedaf0.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_store_65404eb4();
-    init_index_c327074d_ba435d64();
+    init_app_a0c37348();
+    init_store_836abe82();
+    init_index_c327074d_a627185f();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18946,9 +18946,9 @@ var init_layout_cdb44992 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-08e4dd5c.js
-var error_08e4dd5c_exports = {};
-__export(error_08e4dd5c_exports, {
+// .svelte-kit/output/server/chunks/error-73c19383.js
+var error_73c19383_exports = {};
+__export(error_73c19383_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18956,10 +18956,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_08e4dd5c = __esm({
-  ".svelte-kit/output/server/chunks/error-08e4dd5c.js"() {
+var init_error_73c19383 = __esm({
+  ".svelte-kit/output/server/chunks/error-73c19383.js"() {
     init_shims();
-    init_app_55d38c16();
+    init_app_a0c37348();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18981,7 +18981,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-5481d254.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-d37af903.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19334,11 +19334,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_5481d254 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-5481d254.js"() {
+var init_SelectionGroupIcon_d37af903 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-d37af903.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_store_65404eb4();
+    init_app_a0c37348();
+    init_store_836abe82();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20592,13 +20592,13 @@ var init_SelectionGroupIcon_5481d254 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-90d8aa9e.js
+// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-d920fc55.js
 var Object_12, Button_1;
-var init_DoodleVideo_svelte_svelte_type_style_lang_90d8aa9e = __esm({
-  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-90d8aa9e.js"() {
+var init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55 = __esm({
+  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-d920fc55.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_SelectionGroupIcon_5481d254();
+    init_app_a0c37348();
+    init_SelectionGroupIcon_d37af903();
     ({ Object: Object_12 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20781,28 +20781,29 @@ var init_canvas_fb765f32 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c4eaf64e.js
-var index_c4eaf64e_exports = {};
-__export(index_c4eaf64e_exports, {
+// .svelte-kit/output/server/chunks/index-d863144f.js
+var index_d863144f_exports = {};
+__export(index_d863144f_exports, {
   default: () => Routes
 });
 var import_node_fetch2, import_cookie3, css, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Routes;
-var init_index_c4eaf64e = __esm({
-  ".svelte-kit/output/server/chunks/index-c4eaf64e.js"() {
+var init_index_d863144f = __esm({
+  ".svelte-kit/output/server/chunks/index-d863144f.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_index_c327074d_ba435d64();
-    init_store_65404eb4();
+    init_app_a0c37348();
+    init_index_c327074d_a627185f();
+    init_store_836abe82();
     import_node_fetch2 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_90d8aa9e();
-    init_SelectionGroupIcon_5481d254();
+    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
+    init_SelectionGroupIcon_d37af903();
     init_canvas_fb765f32();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
     css = {
       code: `.room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r
-}.copied-from-koa.svelte-1eot2i9{font:26px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
-}#logo.svelte-1eot2i9{font:300px 'Italiana', sans-serif;text-transform:lowercase}`,
+}.copied-from-koa.svelte-ufphu6{font:26px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
+}.copied-from-koa-2.svelte-ufphu6{font:18px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
+}#logo.svelte-ufphu6{font:300px 'Italiana', sans-serif;text-transform:lowercase}`,
       map: null
     };
     phoneNumSegment1 = "";
@@ -20882,31 +20883,43 @@ var init_index_c4eaf64e = __esm({
       }
       $$unsubscribe_user();
       return `${Object.keys($user).length === 0 ? `<section style="${"height: 100vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 84vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"120"}" height="${"108"}" style="${"margin-left: 0px;"}">
-					<h1 id="${"logo"}" style="${"font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;"}" class="${"svelte-1eot2i9"}">explain.mit.edu
+					<h1 id="${"logo"}" style="${"font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;"}" class="${"svelte-ufphu6"}">explain.mit.edu
 					</h1></div>
 
-				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-1eot2i9"}">Open-learning communities with lots of visual explanations</b></div>
-				
-				<div style="${"display: flex; justify-content: center; margin-top: 20px;"}">${validate_component(Button_1, "Button").$$render($$result, { variant: "raised", color: "purple" }, {}, {
-        default: () => `I&#39;m a student
-					`
+				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-ufphu6"}">Open-learning communities with lots of visual explanations</b></div>
+
+
+				<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 20px;"}"><div class="${"copied-from-koa-2 svelte-ufphu6"}" style="${"margin-right: 20px;"}">Who are you?</div>
+					<div>${validate_component(Button_1, "Button").$$render($$result, { variant: "raised", color: "purple" }, {}, {
+        default: () => `Student
+						`
       })}
+	
+						${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "raised",
+        color: "orange",
+        style: "margin-left: 6px"
+      }, {}, {
+        default: () => `Teacher
+						`
+      })}</div>
 
 					${validate_component(Button_1, "Button").$$render($$result, {
         variant: "raised",
         color: "orange",
         style: "margin-left: 6px"
       }, {}, {
-        default: () => `I&#39;m a teacher
+        default: () => `Self-learner
 					`
       })}	
 
+					
 					${validate_component(Button_1, "Button").$$render($$result, {
         variant: "raised",
         color: "orange",
         style: "margin-left: 6px"
       }, {}, {
-        default: () => `I&#39;m someone else
+        default: () => `Just curious
 					`
       })}</div></div></div></section>
 
@@ -20930,14 +20943,35 @@ var init_index_c4eaf64e = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-9d9c6a41.js
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-7cd4b957.js
+async function deleteAllStrokesFromDb({ boardPath }) {
+  return new Promise(async (resolve2) => {
+    const batchDeleteRequests = [];
+    let currentBatch = Sh(Oa());
+    let currentBatchSize = 0;
+    for (const stroke of strokesArray) {
+      if (currentBatchSize >= 500) {
+        batchDeleteRequests.push(currentBatch.commit());
+        currentBatch = Sh(Oa());
+        currentBatchSize = 0;
+      }
+      const ref = va(Oa(), `${boardPath}/strokes/${stroke.id}`);
+      currentBatch.delete(ref);
+      currentBatchSize += 1;
+    }
+    batchDeleteRequests.push(currentBatch.commit());
+    await Promise.all(batchDeleteRequests);
+    strokesArray = [];
+    resolve2();
+  });
+}
 var css2, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_9d9c6a41 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-9d9c6a41.js"() {
+var init_RenderlessFetchStrokes_7cd4b957 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-7cd4b957.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_store_65404eb4();
-    init_DoodleVideo_svelte_svelte_type_style_lang_90d8aa9e();
+    init_app_a0c37348();
+    init_store_836abe82();
+    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
     css2 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
@@ -20947,7 +20981,7 @@ var init_RenderlessFetchStrokes_9d9c6a41 = __esm({
       let $canvasWidth, $$unsubscribe_canvasWidth;
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
-      let { strokesArray } = $$props;
+      let { strokesArray: strokesArray2 } = $$props;
       let { audioDownloadURL } = $$props;
       let { backgroundImageDownloadURL } = $$props;
       let canvas;
@@ -20955,8 +20989,8 @@ var init_RenderlessFetchStrokes_9d9c6a41 = __esm({
       let AudioPlayer;
       onDestroy(() => {
       });
-      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray !== void 0)
-        $$bindings.strokesArray(strokesArray);
+      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray2 !== void 0)
+        $$bindings.strokesArray(strokesArray2);
       if ($$props.audioDownloadURL === void 0 && $$bindings.audioDownloadURL && audioDownloadURL !== void 0)
         $$bindings.audioDownloadURL(audioDownloadURL);
       if ($$props.backgroundImageDownloadURL === void 0 && $$bindings.backgroundImageDownloadURL && backgroundImageDownloadURL !== void 0)
@@ -20965,7 +20999,7 @@ var init_RenderlessFetchStrokes_9d9c6a41 = __esm({
       $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
       return `
-${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5"}">play_circle
+${strokesArray2 ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5"}">play_circle
   </span>` : ``}
 
 
@@ -21007,7 +21041,7 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
     RenderlessFetchStrokes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { dbPath } = $$props;
       let { autoFetchStrokes = false } = $$props;
-      let strokesArray;
+      let strokesArray2;
       const strokesRef = ba(Oa(), `${dbPath}/strokes`);
       const strokesQuery = Mu(strokesRef, qu("timestamp"));
       if (autoFetchStrokes) {
@@ -21019,28 +21053,7 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
         for (const doc of strokesSnapshot.docs) {
           temp.push({ id: doc.id, ...doc.data() });
         }
-        strokesArray = temp;
-      }
-      async function deleteAllStrokesFromDb() {
-        return new Promise(async (resolve2) => {
-          const batchDeleteRequests = [];
-          let currentBatch = Sh(Oa());
-          let currentBatchSize = 0;
-          for (const stroke of strokesArray) {
-            if (currentBatchSize >= 500) {
-              batchDeleteRequests.push(currentBatch.commit());
-              currentBatch = Sh(Oa());
-              currentBatchSize = 0;
-            }
-            const ref = va(Oa(), `${dbPath}/strokes/${stroke.id}`);
-            currentBatch.delete(ref);
-            currentBatchSize += 1;
-          }
-          batchDeleteRequests.push(currentBatch.commit());
-          await Promise.all(batchDeleteRequests);
-          strokesArray = [];
-          resolve2();
-        });
+        strokesArray2 = temp;
       }
       if ($$props.dbPath === void 0 && $$bindings.dbPath && dbPath !== void 0)
         $$bindings.dbPath(dbPath);
@@ -21048,8 +21061,8 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
         $$bindings.autoFetchStrokes(autoFetchStrokes);
       return `${slots.default ? slots.default({
         fetchStrokes,
-        strokesArray,
-        deleteAllStrokesFromDb
+        strokesArray: strokesArray2,
+        deleteAllStrokesFromDb: () => deleteAllStrokesFromDb({ boardPath: dbPath })
       }) : `
 
 `}`;
@@ -21057,23 +21070,23 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/explore-c78d5ba8.js
-var explore_c78d5ba8_exports = {};
-__export(explore_c78d5ba8_exports, {
+// .svelte-kit/output/server/chunks/explore-df1383ff.js
+var explore_df1383ff_exports = {};
+__export(explore_df1383ff_exports, {
   default: () => Explore
 });
 var import_node_fetch3, import_cookie4, css3, Explore;
-var init_explore_c78d5ba8 = __esm({
-  ".svelte-kit/output/server/chunks/explore-c78d5ba8.js"() {
+var init_explore_df1383ff = __esm({
+  ".svelte-kit/output/server/chunks/explore-df1383ff.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_index_c327074d_ba435d64();
-    init_store_65404eb4();
+    init_app_a0c37348();
+    init_index_c327074d_a627185f();
+    init_store_836abe82();
     import_node_fetch3 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_90d8aa9e();
-    init_SelectionGroupIcon_5481d254();
+    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
+    init_SelectionGroupIcon_d37af903();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_9d9c6a41();
+    init_RenderlessFetchStrokes_7cd4b957();
     import_cookie4 = __toModule(require_cookie());
     init_dist();
     css3 = {
@@ -21190,8 +21203,8 @@ var init_explore_c78d5ba8 = __esm({
           dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
           autoFetchStrokes: true
         }, {}, {
-          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray,
+          default: ({ strokesArray: strokesArray2 }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray: strokesArray2,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {})}` : ``}`
@@ -21240,23 +21253,23 @@ var init_explore_c78d5ba8 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/learn-c7a71cc0.js
-var learn_c7a71cc0_exports = {};
-__export(learn_c7a71cc0_exports, {
+// .svelte-kit/output/server/chunks/learn-73d67864.js
+var learn_73d67864_exports = {};
+__export(learn_73d67864_exports, {
   default: () => Learn
 });
 var import_node_fetch4, import_cookie5, css4, Learn;
-var init_learn_c7a71cc0 = __esm({
-  ".svelte-kit/output/server/chunks/learn-c7a71cc0.js"() {
+var init_learn_73d67864 = __esm({
+  ".svelte-kit/output/server/chunks/learn-73d67864.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_index_c327074d_ba435d64();
-    init_store_65404eb4();
+    init_app_a0c37348();
+    init_index_c327074d_a627185f();
+    init_store_836abe82();
     import_node_fetch4 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_90d8aa9e();
-    init_SelectionGroupIcon_5481d254();
+    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
+    init_SelectionGroupIcon_d37af903();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_9d9c6a41();
+    init_RenderlessFetchStrokes_7cd4b957();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     css4 = {
@@ -21348,27 +21361,44 @@ var init_learn_c7a71cc0 = __esm({
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
-      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Not understanding things properly leads to a lot of problems
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">What we truly fear isn&#39;t failing classes...
 			</h1>
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">In the real world, there&#39;s just not enough help to go around. The TA just can&#39;t spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">We fear having to go through the day-to-day, waking up with a headache, seeing a grey sky, walking to lecture to a room full of everyone but friends, not understanding anything. 
 				<br>
 				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, etc. they&#39;re fundamentally not efficient enough to <b style="${"color: orange"}">break you out of vicious cycle</b>. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+				It&#39;s the fatigue and anxiety. It&#39;s the purposelessness. It&#39;s the isolation. 
+				<br>
+				<br>
+				There are many reasons why we can fall behind classes. But the fact we can&#39;t <u>recover</u> is the problem. We especially visit Office Hours, only to wait 30 minutes for 5 minutes of &quot;hints&quot;.
+				<br>
+				<br>
+				When night comes, either we&#39;re so burnt out that we can&#39;t do any work, or we try to sleep knowing that tomorrow will be just as bad. We&#39;re stuck in a vicious cycle of compounding inefficiencies. The suffering isn&#39;t extreme or intense, it&#39;s prolonged and pervasive. 
+				<br>
+				<br>	
+				That&#39;s what keeps us up at night.
 			</p>
 			<br></div></section>
 
-	<section style="${"height: " + escape(260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Review videos for everything, and real-time help whenever</h1>
+	<section style="${"height: " + escape(260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">College can be full of colors</h1>
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Imagine if the material was so good that, everything you need to know is clearly explained and re-watchable at your own pace. And suppose anything were to be missing, you can just ask for help efficiently without having to travel to campus, wait till the next Office Hours / for a Piazza response?
 				<br>
 				<br>
-				Then, you can efficiently grasp the fundamentals and get up to speed, without unnecessary added stress. 
+				Then, you can efficiently grasp the fundamentals and get up to speed.
 			</p></div></section>
 
 	<section style="${"height: " + escape($canvasHeight + 260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How everything works</h1>
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">To be edited...
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
 
-				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
+				Explain changes 3 things: 
+					<br>
+					- Abundance of visual explanations: making and managing videos has always been inconvenient, but on this web app you just press one button...so teachers can do it much more
+					<br>
+					- Convenient way to get help: instead of waiting till Wednesday 5-7 pm, then having to travelling across campus, you can receive real-time help from your room, anytime.
+					Traditional remote help has always been ineffective - it suffers the worst of both worlds - the limited availability and wait-times of Office Hours, and the lack of easy blackboard integration.
+					Explain removes both.
+					<br>
+				  - Strong incentives: TAs are rewarded for actual impact; a TA who helped 100 people in a way 10x more helpful should get paid 1000x more than other TAs
 				<br>
 				<br>
 				Here&#39;s an example video that was recorded on this website: 
@@ -21381,8 +21411,8 @@ var init_learn_c7a71cc0 = __esm({
           dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
           autoFetchStrokes: true
         }, {}, {
-          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray,
+          default: ({ strokesArray: strokesArray2 }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray: strokesArray2,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {})}` : ``}`
@@ -21444,23 +21474,23 @@ var init_learn_c7a71cc0 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/teach-dbf6c81f.js
-var teach_dbf6c81f_exports = {};
-__export(teach_dbf6c81f_exports, {
+// .svelte-kit/output/server/chunks/teach-39e2a7b8.js
+var teach_39e2a7b8_exports = {};
+__export(teach_39e2a7b8_exports, {
   default: () => Teach
 });
 var import_node_fetch5, import_cookie6, css5, Teach;
-var init_teach_dbf6c81f = __esm({
-  ".svelte-kit/output/server/chunks/teach-dbf6c81f.js"() {
+var init_teach_39e2a7b8 = __esm({
+  ".svelte-kit/output/server/chunks/teach-39e2a7b8.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_index_c327074d_ba435d64();
-    init_store_65404eb4();
+    init_app_a0c37348();
+    init_index_c327074d_a627185f();
+    init_store_836abe82();
     import_node_fetch5 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_90d8aa9e();
-    init_SelectionGroupIcon_5481d254();
+    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
+    init_SelectionGroupIcon_d37af903();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_9d9c6a41();
+    init_RenderlessFetchStrokes_7cd4b957();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
     css5 = {
@@ -21598,8 +21628,8 @@ var init_teach_dbf6c81f = __esm({
           dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
           autoFetchStrokes: true
         }, {}, {
-          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray,
+          default: ({ strokesArray: strokesArray2 }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray: strokesArray2,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {})}` : ``}`
@@ -21654,25 +21684,25 @@ var init_teach_dbf6c81f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Switch-e609408f.js
-function guard(name6) {
+// .svelte-kit/output/server/chunks/index.node.esm-d00324cd.js
+function guard(name22) {
   return () => {
-    throw new Error(`Cannot call ${name6}(...) on the server`);
+    throw new Error(`Cannot call ${name22}(...) on the server`);
   };
 }
 function exclude(obj, keys) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
   for (let i = 0; i < names.length; i++) {
-    const name6 = names[i];
-    const cashIndex = name6.indexOf("$");
-    if (cashIndex !== -1 && keys.indexOf(name6.substring(0, cashIndex + 1)) !== -1) {
+    const name22 = names[i];
+    const cashIndex = name22.indexOf("$");
+    if (cashIndex !== -1 && keys.indexOf(name22.substring(0, cashIndex + 1)) !== -1) {
       continue;
     }
-    if (keys.indexOf(name6) !== -1) {
+    if (keys.indexOf(name22) !== -1) {
       continue;
     }
-    newObj[name6] = obj[name6];
+    newObj[name22] = obj[name22];
   }
   return newObj;
 }
@@ -21680,20 +21710,236 @@ function prefixFilter(obj, prefix) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
   for (let i = 0; i < names.length; i++) {
-    const name6 = names[i];
-    if (name6.substring(0, prefix.length) === prefix) {
-      newObj[name6.substring(prefix.length)] = obj[name6];
+    const name22 = names[i];
+    if (name22.substring(0, prefix.length) === prefix) {
+      newObj[name22.substring(prefix.length)] = obj[name22];
     }
   }
   return newObj;
 }
-var goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch;
-var init_Switch_e609408f = __esm({
-  ".svelte-kit/output/server/chunks/Switch-e609408f.js"() {
+function prependCode(code) {
+  return "storage/" + code;
+}
+function unknown() {
+  const message2 = "An unknown error occurred, please check the error payload for server response.";
+  return new StorageError("unknown", message2);
+}
+function retryLimitExceeded() {
+  return new StorageError("retry-limit-exceeded", "Max retry time for operation exceeded, please try again.");
+}
+function canceled() {
+  return new StorageError("canceled", "User canceled the upload/download.");
+}
+function invalidUrl(url2) {
+  return new StorageError("invalid-url", "Invalid URL '" + url2 + "'.");
+}
+function invalidDefaultBucket(bucket) {
+  return new StorageError("invalid-default-bucket", "Invalid default bucket '" + bucket + "'.");
+}
+function invalidArgument(message2) {
+  return new StorageError("invalid-argument", message2);
+}
+function appDeleted() {
+  return new StorageError("app-deleted", "The Firebase app was deleted.");
+}
+function invalidRootOperation(name22) {
+  return new StorageError("invalid-root-operation", "The operation '" + name22 + "' cannot be performed on a root reference, create a non-root reference using child, such as .child('file.png').");
+}
+function start(f, callback, timeout) {
+  let waitSeconds = 1;
+  let retryTimeoutId = null;
+  let globalTimeoutId = null;
+  let hitTimeout = false;
+  let cancelState = 0;
+  function canceled2() {
+    return cancelState === 2;
+  }
+  let triggeredCallback = false;
+  function triggerCallback(...args) {
+    if (!triggeredCallback) {
+      triggeredCallback = true;
+      callback.apply(null, args);
+    }
+  }
+  function callWithDelay(millis) {
+    retryTimeoutId = setTimeout(() => {
+      retryTimeoutId = null;
+      f(handler, canceled2());
+    }, millis);
+  }
+  function clearGlobalTimeout() {
+    if (globalTimeoutId) {
+      clearTimeout(globalTimeoutId);
+    }
+  }
+  function handler(success, ...args) {
+    if (triggeredCallback) {
+      clearGlobalTimeout();
+      return;
+    }
+    if (success) {
+      clearGlobalTimeout();
+      triggerCallback.call(null, success, ...args);
+      return;
+    }
+    const mustStop = canceled2() || hitTimeout;
+    if (mustStop) {
+      clearGlobalTimeout();
+      triggerCallback.call(null, success, ...args);
+      return;
+    }
+    if (waitSeconds < 64) {
+      waitSeconds *= 2;
+    }
+    let waitMillis;
+    if (cancelState === 1) {
+      cancelState = 2;
+      waitMillis = 0;
+    } else {
+      waitMillis = (waitSeconds + Math.random()) * 1e3;
+    }
+    callWithDelay(waitMillis);
+  }
+  let stopped = false;
+  function stop2(wasTimeout) {
+    if (stopped) {
+      return;
+    }
+    stopped = true;
+    clearGlobalTimeout();
+    if (triggeredCallback) {
+      return;
+    }
+    if (retryTimeoutId !== null) {
+      if (!wasTimeout) {
+        cancelState = 2;
+      }
+      clearTimeout(retryTimeoutId);
+      callWithDelay(0);
+    } else {
+      if (!wasTimeout) {
+        cancelState = 1;
+      }
+    }
+  }
+  callWithDelay(0);
+  globalTimeoutId = setTimeout(() => {
+    hitTimeout = true;
+    stop2(true);
+  }, timeout);
+  return stop2;
+}
+function stop(id2) {
+  id2(false);
+}
+function isJustDef(p2) {
+  return p2 !== void 0;
+}
+function validateNumber(argument, minValue, maxValue, value) {
+  if (value < minValue) {
+    throw invalidArgument(`Invalid value for '${argument}'. Expected ${minValue} or greater.`);
+  }
+  if (value > maxValue) {
+    throw invalidArgument(`Invalid value for '${argument}'. Expected ${maxValue} or less.`);
+  }
+}
+function makeQueryString(params) {
+  const encode = encodeURIComponent;
+  let queryPart = "?";
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const nextPart = encode(key) + "=" + encode(params[key]);
+      queryPart = queryPart + nextPart + "&";
+    }
+  }
+  queryPart = queryPart.slice(0, -1);
+  return queryPart;
+}
+function addAuthHeader_(headers2, authToken) {
+  if (authToken !== null && authToken.length > 0) {
+    headers2["Authorization"] = "Firebase " + authToken;
+  }
+}
+function addVersionHeader_(headers2, firebaseVersion) {
+  headers2["X-Firebase-Storage-Version"] = "webjs/" + (firebaseVersion !== null && firebaseVersion !== void 0 ? firebaseVersion : "AppManager");
+}
+function addGmpidHeader_(headers2, appId) {
+  if (appId) {
+    headers2["X-Firebase-GMPID"] = appId;
+  }
+}
+function addAppCheckHeader_(headers2, appCheckToken) {
+  if (appCheckToken !== null) {
+    headers2["X-Firebase-AppCheck"] = appCheckToken;
+  }
+}
+function makeRequest(requestInfo, appId, authToken, appCheckToken, requestFactory, firebaseVersion) {
+  const queryPart = makeQueryString(requestInfo.urlParams);
+  const url2 = requestInfo.url + queryPart;
+  const headers2 = Object.assign({}, requestInfo.headers);
+  addGmpidHeader_(headers2, appId);
+  addAuthHeader_(headers2, authToken);
+  addVersionHeader_(headers2, firebaseVersion);
+  addAppCheckHeader_(headers2, appCheckToken);
+  return new NetworkRequest(url2, requestInfo.method, headers2, requestInfo.body, requestInfo.successCodes, requestInfo.additionalRetryCodes, requestInfo.handler, requestInfo.errorHandler, requestInfo.timeout, requestInfo.progressCallback, requestFactory);
+}
+function parent(path) {
+  if (path.length === 0) {
+    return null;
+  }
+  const index = path.lastIndexOf("/");
+  if (index === -1) {
+    return "";
+  }
+  const newPath = path.slice(0, index);
+  return newPath;
+}
+function lastComponent(path) {
+  const index = path.lastIndexOf("/", path.length - 2);
+  if (index === -1) {
+    return path;
+  } else {
+    return path.slice(index + 1);
+  }
+}
+function extractBucket(host, config) {
+  const bucketString = config === null || config === void 0 ? void 0 : config[CONFIG_STORAGE_BUCKET_KEY];
+  if (bucketString == null) {
+    return null;
+  }
+  return Location.makeFromBucketSpec(bucketString, host);
+}
+function factory(container, { instanceIdentifier: url2 }) {
+  const app = container.getProvider("app").getImmediate();
+  const authProvider = container.getProvider("auth-internal");
+  const appCheckProvider = container.getProvider("app-check-internal");
+  return new FirebaseStorageImpl(app, authProvider, appCheckProvider, url2, SDK_VERSION);
+}
+function registerStorage() {
+  _registerComponent(new Component(STORAGE_TYPE, factory, "PUBLIC").setMultipleInstances(true));
+  registerVersion(name$12, version$12, "node");
+  registerVersion(name$12, version$12, "esm2017");
+}
+function registerFunctions(fetchImpl2, variant) {
+  const factory2 = (container, { instanceIdentifier: regionOrCustomDomain }) => {
+    const app = container.getProvider("app").getImmediate();
+    const authProvider = container.getProvider(AUTH_INTERNAL_NAME);
+    const messagingProvider = container.getProvider(MESSAGING_INTERNAL_NAME);
+    const appCheckProvider = container.getProvider(APP_CHECK_INTERNAL_NAME);
+    return new FunctionsService(app, authProvider, messagingProvider, appCheckProvider, regionOrCustomDomain, fetchImpl2);
+  };
+  _registerComponent(new Component(FUNCTIONS_TYPE, factory2, "PUBLIC").setMultipleInstances(true));
+  registerVersion(name4, version4, variant);
+  registerVersion(name4, version4, "esm2017");
+}
+var import_node_fetch6, goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name4, version4, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME;
+var init_index_node_esm_d00324cd = __esm({
+  ".svelte-kit/output/server/chunks/index.node.esm-d00324cd.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_SelectionGroupIcon_5481d254();
-    init_store_65404eb4();
+    init_app_a0c37348();
+    init_SelectionGroupIcon_d37af903();
+    init_store_836abe82();
+    import_node_fetch6 = __toModule(require_lib2());
     goto = guard("goto");
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -21792,7 +22038,7 @@ var init_Switch_e609408f = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name22, value]) => `${name22}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>` : `<label${spread([
@@ -21806,7 +22052,7 @@ var init_Switch_e609408f = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name22, value]) => `${name22}: ${value};`).concat([style]).join(" "))
         },
         {
           for: escape_attribute_value(forId || (inputProps ? inputProps.id : void 0))
@@ -21872,7 +22118,7 @@ var init_Switch_e609408f = __esm({
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name22, value]) => `${name22}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}></div>`;
@@ -21933,7 +22179,7 @@ var init_Switch_e609408f = __esm({
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}><div class="${"mdc-notched-outline__leading"}"></div>
-  ${!noLabel ? `<div class="${"mdc-notched-outline__notch"}"${add_attribute("style", Object.entries(notchStyles).map(([name6, value]) => `${name6}: ${value};`).join(" "), 0)}>${slots.default ? slots.default({}) : ``}</div>` : ``}
+  ${!noLabel ? `<div class="${"mdc-notched-outline__notch"}"${add_attribute("style", Object.entries(notchStyles).map(([name22, value]) => `${name22}: ${value};`).join(" "), 0)}>${slots.default ? slots.default({}) : ``}</div>` : ``}
   <div class="${"mdc-notched-outline__trailing"}"></div>
 </div>`;
     });
@@ -21987,18 +22233,18 @@ var init_Switch_e609408f = __esm({
       let element;
       let internalAttrs = {};
       let valueProp = {};
-      function getAttr(name6) {
+      function getAttr(name22) {
         var _a2;
-        return name6 in internalAttrs ? (_a2 = internalAttrs[name6]) !== null && _a2 !== void 0 ? _a2 : null : getElement().getAttribute(name6);
+        return name22 in internalAttrs ? (_a2 = internalAttrs[name22]) !== null && _a2 !== void 0 ? _a2 : null : getElement().getAttribute(name22);
       }
-      function addAttr(name6, value2) {
-        if (internalAttrs[name6] !== value2) {
-          internalAttrs[name6] = value2;
+      function addAttr(name22, value2) {
+        if (internalAttrs[name22] !== value2) {
+          internalAttrs[name22] = value2;
         }
       }
-      function removeAttr(name6) {
-        if (!(name6 in internalAttrs) || internalAttrs[name6] != null) {
-          internalAttrs[name6] = void 0;
+      function removeAttr(name22) {
+        if (!(name22 in internalAttrs) || internalAttrs[name22] != null) {
+          internalAttrs[name22] = void 0;
         }
       }
       function focus() {
@@ -22096,18 +22342,18 @@ var init_Switch_e609408f = __esm({
       let { resizable = true } = $$props;
       let element;
       let internalAttrs = {};
-      function getAttr(name6) {
+      function getAttr(name22) {
         var _a2;
-        return name6 in internalAttrs ? (_a2 = internalAttrs[name6]) !== null && _a2 !== void 0 ? _a2 : null : getElement().getAttribute(name6);
+        return name22 in internalAttrs ? (_a2 = internalAttrs[name22]) !== null && _a2 !== void 0 ? _a2 : null : getElement().getAttribute(name22);
       }
-      function addAttr(name6, value2) {
-        if (internalAttrs[name6] !== value2) {
-          internalAttrs[name6] = value2;
+      function addAttr(name22, value2) {
+        if (internalAttrs[name22] !== value2) {
+          internalAttrs[name22] = value2;
         }
       }
-      function removeAttr(name6) {
-        if (!(name6 in internalAttrs) || internalAttrs[name6] != null) {
-          internalAttrs[name6] = void 0;
+      function removeAttr(name22) {
+        if (!(name22 in internalAttrs) || internalAttrs[name22] != null) {
+          internalAttrs[name22] = void 0;
         }
       }
       function focus() {
@@ -22349,7 +22595,7 @@ var init_Switch_e609408f = __esm({
             }))
           },
           {
-            style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value2]) => `${name6}: ${value2};`).concat([style]).join(" "))
+            style: escape_attribute_value(Object.entries(internalStyles).map(([name22, value2]) => `${name22}: ${value2};`).concat([style]).join(" "))
           },
           {
             for: escape_attribute_value(void 0)
@@ -22467,7 +22713,7 @@ var init_Switch_e609408f = __esm({
             }))
           },
           {
-            style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value2]) => `${name6}: ${value2};`).concat([style]).join(" "))
+            style: escape_attribute_value(Object.entries(internalStyles).map(([name22, value2]) => `${name22}: ${value2};`).concat([style]).join(" "))
           },
           escape_object(exclude($$restProps, ["input$", "label$", "ripple$", "outline$", "helperLine$"]))
         ])}${add_attribute("this", element, 0)}>${slots.label ? slots.label({}) : ``}
@@ -22614,7 +22860,7 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
           }))
         },
         {
-          style: escape_attribute_value(Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" "))
+          style: escape_attribute_value(Object.entries(internalStyles).map(([name22, value]) => `${name22}: ${value};`).concat([style]).join(" "))
         },
         escape_object($$restProps)
       ])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}
@@ -22864,6 +23110,513 @@ ${$$slots.helper ? `${validate_component(HelperLine, "HelperLine").$$render($$re
           <svg class="${"mdc-switch__icon mdc-switch__icon--off"}" viewBox="${"0 0 24 24"}"><path d="${"M20 13H4v-2h16v2z"}"></path></svg></div>` : ``}</div></div>
 </button>`;
     });
+    DEFAULT_HOST = "firebasestorage.googleapis.com";
+    CONFIG_STORAGE_BUCKET_KEY = "storageBucket";
+    DEFAULT_MAX_OPERATION_RETRY_TIME = 2 * 60 * 1e3;
+    DEFAULT_MAX_UPLOAD_RETRY_TIME = 10 * 60 * 1e3;
+    StorageError = class extends FirebaseError {
+      constructor(code, message2) {
+        super(prependCode(code), `Firebase Storage: ${message2} (${prependCode(code)})`);
+        this.customData = { serverResponse: null };
+        this._baseMessage = this.message;
+        Object.setPrototypeOf(this, StorageError.prototype);
+      }
+      _codeEquals(code) {
+        return prependCode(code) === this.code;
+      }
+      get serverResponse() {
+        return this.customData.serverResponse;
+      }
+      set serverResponse(serverResponse) {
+        this.customData.serverResponse = serverResponse;
+        if (this.customData.serverResponse) {
+          this.message = `${this._baseMessage}
+${this.customData.serverResponse}`;
+        } else {
+          this.message = this._baseMessage;
+        }
+      }
+    };
+    Location = class {
+      constructor(bucket, path) {
+        this.bucket = bucket;
+        this.path_ = path;
+      }
+      get path() {
+        return this.path_;
+      }
+      get isRoot() {
+        return this.path.length === 0;
+      }
+      fullServerUrl() {
+        const encode = encodeURIComponent;
+        return "/b/" + encode(this.bucket) + "/o/" + encode(this.path);
+      }
+      bucketOnlyServerUrl() {
+        const encode = encodeURIComponent;
+        return "/b/" + encode(this.bucket) + "/o";
+      }
+      static makeFromBucketSpec(bucketString, host) {
+        let bucketLocation;
+        try {
+          bucketLocation = Location.makeFromUrl(bucketString, host);
+        } catch (e) {
+          return new Location(bucketString, "");
+        }
+        if (bucketLocation.path === "") {
+          return bucketLocation;
+        } else {
+          throw invalidDefaultBucket(bucketString);
+        }
+      }
+      static makeFromUrl(url2, host) {
+        let location2 = null;
+        const bucketDomain = "([A-Za-z0-9.\\-_]+)";
+        function gsModify(loc) {
+          if (loc.path.charAt(loc.path.length - 1) === "/") {
+            loc.path_ = loc.path_.slice(0, -1);
+          }
+        }
+        const gsPath = "(/(.*))?$";
+        const gsRegex = new RegExp("^gs://" + bucketDomain + gsPath, "i");
+        const gsIndices = { bucket: 1, path: 3 };
+        function httpModify(loc) {
+          loc.path_ = decodeURIComponent(loc.path);
+        }
+        const version22 = "v[A-Za-z0-9_]+";
+        const firebaseStorageHost = host.replace(/[.]/g, "\\.");
+        const firebaseStoragePath = "(/([^?#]*).*)?$";
+        const firebaseStorageRegExp = new RegExp(`^https?://${firebaseStorageHost}/${version22}/b/${bucketDomain}/o${firebaseStoragePath}`, "i");
+        const firebaseStorageIndices = { bucket: 1, path: 3 };
+        const cloudStorageHost = host === DEFAULT_HOST ? "(?:storage.googleapis.com|storage.cloud.google.com)" : host;
+        const cloudStoragePath = "([^?#]*)";
+        const cloudStorageRegExp = new RegExp(`^https?://${cloudStorageHost}/${bucketDomain}/${cloudStoragePath}`, "i");
+        const cloudStorageIndices = { bucket: 1, path: 2 };
+        const groups = [
+          { regex: gsRegex, indices: gsIndices, postModify: gsModify },
+          {
+            regex: firebaseStorageRegExp,
+            indices: firebaseStorageIndices,
+            postModify: httpModify
+          },
+          {
+            regex: cloudStorageRegExp,
+            indices: cloudStorageIndices,
+            postModify: httpModify
+          }
+        ];
+        for (let i = 0; i < groups.length; i++) {
+          const group = groups[i];
+          const captures = group.regex.exec(url2);
+          if (captures) {
+            const bucketValue = captures[group.indices.bucket];
+            let pathValue = captures[group.indices.path];
+            if (!pathValue) {
+              pathValue = "";
+            }
+            location2 = new Location(bucketValue, pathValue);
+            group.postModify(location2);
+            break;
+          }
+        }
+        if (location2 == null) {
+          throw invalidUrl(url2);
+        }
+        return location2;
+      }
+    };
+    FailRequest = class {
+      constructor(error3) {
+        this.promise_ = Promise.reject(error3);
+      }
+      getPromise() {
+        return this.promise_;
+      }
+      cancel(_appDelete = false) {
+      }
+    };
+    (function(ErrorCode22) {
+      ErrorCode22[ErrorCode22["NO_ERROR"] = 0] = "NO_ERROR";
+      ErrorCode22[ErrorCode22["NETWORK_ERROR"] = 1] = "NETWORK_ERROR";
+      ErrorCode22[ErrorCode22["ABORT"] = 2] = "ABORT";
+    })(ErrorCode2 || (ErrorCode2 = {}));
+    NetworkRequest = class {
+      constructor(url_, method_, headers_, body_, successCodes_, additionalRetryCodes_, callback_, errorCallback_, timeout_, progressCallback_, connectionFactory_) {
+        this.url_ = url_;
+        this.method_ = method_;
+        this.headers_ = headers_;
+        this.body_ = body_;
+        this.successCodes_ = successCodes_;
+        this.additionalRetryCodes_ = additionalRetryCodes_;
+        this.callback_ = callback_;
+        this.errorCallback_ = errorCallback_;
+        this.timeout_ = timeout_;
+        this.progressCallback_ = progressCallback_;
+        this.connectionFactory_ = connectionFactory_;
+        this.pendingConnection_ = null;
+        this.backoffId_ = null;
+        this.canceled_ = false;
+        this.appDelete_ = false;
+        this.promise_ = new Promise((resolve2, reject2) => {
+          this.resolve_ = resolve2;
+          this.reject_ = reject2;
+          this.start_();
+        });
+      }
+      start_() {
+        const doTheRequest = (backoffCallback, canceled2) => {
+          if (canceled2) {
+            backoffCallback(false, new RequestEndStatus(false, null, true));
+            return;
+          }
+          const connection = this.connectionFactory_();
+          this.pendingConnection_ = connection;
+          const progressListener = (progressEvent) => {
+            const loaded = progressEvent.loaded;
+            const total = progressEvent.lengthComputable ? progressEvent.total : -1;
+            if (this.progressCallback_ !== null) {
+              this.progressCallback_(loaded, total);
+            }
+          };
+          if (this.progressCallback_ !== null) {
+            connection.addUploadProgressListener(progressListener);
+          }
+          connection.send(this.url_, this.method_, this.body_, this.headers_).then(() => {
+            if (this.progressCallback_ !== null) {
+              connection.removeUploadProgressListener(progressListener);
+            }
+            this.pendingConnection_ = null;
+            const hitServer = connection.getErrorCode() === ErrorCode2.NO_ERROR;
+            const status = connection.getStatus();
+            if (!hitServer || this.isRetryStatusCode_(status)) {
+              const wasCanceled = connection.getErrorCode() === ErrorCode2.ABORT;
+              backoffCallback(false, new RequestEndStatus(false, null, wasCanceled));
+              return;
+            }
+            const successCode = this.successCodes_.indexOf(status) !== -1;
+            backoffCallback(true, new RequestEndStatus(successCode, connection));
+          });
+        };
+        const backoffDone = (requestWentThrough, status) => {
+          const resolve2 = this.resolve_;
+          const reject2 = this.reject_;
+          const connection = status.connection;
+          if (status.wasSuccessCode) {
+            try {
+              const result = this.callback_(connection, connection.getResponse());
+              if (isJustDef(result)) {
+                resolve2(result);
+              } else {
+                resolve2();
+              }
+            } catch (e) {
+              reject2(e);
+            }
+          } else {
+            if (connection !== null) {
+              const err = unknown();
+              err.serverResponse = connection.getErrorText();
+              if (this.errorCallback_) {
+                reject2(this.errorCallback_(connection, err));
+              } else {
+                reject2(err);
+              }
+            } else {
+              if (status.canceled) {
+                const err = this.appDelete_ ? appDeleted() : canceled();
+                reject2(err);
+              } else {
+                const err = retryLimitExceeded();
+                reject2(err);
+              }
+            }
+          }
+        };
+        if (this.canceled_) {
+          backoffDone(false, new RequestEndStatus(false, null, true));
+        } else {
+          this.backoffId_ = start(doTheRequest, backoffDone, this.timeout_);
+        }
+      }
+      getPromise() {
+        return this.promise_;
+      }
+      cancel(appDelete) {
+        this.canceled_ = true;
+        this.appDelete_ = appDelete || false;
+        if (this.backoffId_ !== null) {
+          stop(this.backoffId_);
+        }
+        if (this.pendingConnection_ !== null) {
+          this.pendingConnection_.abort();
+        }
+      }
+      isRetryStatusCode_(status) {
+        const isFiveHundredCode = status >= 500 && status < 600;
+        const extraRetryCodes = [
+          408,
+          429
+        ];
+        const isExtraRetryCode = extraRetryCodes.indexOf(status) !== -1;
+        const isRequestSpecificRetryCode = this.additionalRetryCodes_.indexOf(status) !== -1;
+        return isFiveHundredCode || isExtraRetryCode || isRequestSpecificRetryCode;
+      }
+    };
+    RequestEndStatus = class {
+      constructor(wasSuccessCode, connection, canceled2) {
+        this.wasSuccessCode = wasSuccessCode;
+        this.connection = connection;
+        this.canceled = !!canceled2;
+      }
+    };
+    Reference = class {
+      constructor(_service, location2) {
+        this._service = _service;
+        if (location2 instanceof Location) {
+          this._location = location2;
+        } else {
+          this._location = Location.makeFromUrl(location2, _service.host);
+        }
+      }
+      toString() {
+        return "gs://" + this._location.bucket + "/" + this._location.path;
+      }
+      _newRef(service, location2) {
+        return new Reference(service, location2);
+      }
+      get root() {
+        const location2 = new Location(this._location.bucket, "");
+        return this._newRef(this._service, location2);
+      }
+      get bucket() {
+        return this._location.bucket;
+      }
+      get fullPath() {
+        return this._location.path;
+      }
+      get name() {
+        return lastComponent(this._location.path);
+      }
+      get storage() {
+        return this._service;
+      }
+      get parent() {
+        const newPath = parent(this._location.path);
+        if (newPath === null) {
+          return null;
+        }
+        const location2 = new Location(this._location.bucket, newPath);
+        return new Reference(this._service, location2);
+      }
+      _throwIfRoot(name22) {
+        if (this._location.path === "") {
+          throw invalidRootOperation(name22);
+        }
+      }
+    };
+    FirebaseStorageImpl = class {
+      constructor(app, _authProvider, _appCheckProvider, _url, _firebaseVersion) {
+        this.app = app;
+        this._authProvider = _authProvider;
+        this._appCheckProvider = _appCheckProvider;
+        this._url = _url;
+        this._firebaseVersion = _firebaseVersion;
+        this._bucket = null;
+        this._host = DEFAULT_HOST;
+        this._protocol = "https";
+        this._appId = null;
+        this._deleted = false;
+        this._maxOperationRetryTime = DEFAULT_MAX_OPERATION_RETRY_TIME;
+        this._maxUploadRetryTime = DEFAULT_MAX_UPLOAD_RETRY_TIME;
+        this._requests = new Set();
+        if (_url != null) {
+          this._bucket = Location.makeFromBucketSpec(_url, this._host);
+        } else {
+          this._bucket = extractBucket(this._host, this.app.options);
+        }
+      }
+      get host() {
+        return this._host;
+      }
+      set host(host) {
+        this._host = host;
+        if (this._url != null) {
+          this._bucket = Location.makeFromBucketSpec(this._url, host);
+        } else {
+          this._bucket = extractBucket(host, this.app.options);
+        }
+      }
+      get maxUploadRetryTime() {
+        return this._maxUploadRetryTime;
+      }
+      set maxUploadRetryTime(time) {
+        validateNumber("time", 0, Number.POSITIVE_INFINITY, time);
+        this._maxUploadRetryTime = time;
+      }
+      get maxOperationRetryTime() {
+        return this._maxOperationRetryTime;
+      }
+      set maxOperationRetryTime(time) {
+        validateNumber("time", 0, Number.POSITIVE_INFINITY, time);
+        this._maxOperationRetryTime = time;
+      }
+      async _getAuthToken() {
+        if (this._overrideAuthToken) {
+          return this._overrideAuthToken;
+        }
+        const auth = this._authProvider.getImmediate({ optional: true });
+        if (auth) {
+          const tokenData = await auth.getToken();
+          if (tokenData !== null) {
+            return tokenData.accessToken;
+          }
+        }
+        return null;
+      }
+      async _getAppCheckToken() {
+        const appCheck = this._appCheckProvider.getImmediate({ optional: true });
+        if (appCheck) {
+          const result = await appCheck.getToken();
+          return result.token;
+        }
+        return null;
+      }
+      _delete() {
+        if (!this._deleted) {
+          this._deleted = true;
+          this._requests.forEach((request) => request.cancel());
+          this._requests.clear();
+        }
+        return Promise.resolve();
+      }
+      _makeStorageReference(loc) {
+        return new Reference(this, loc);
+      }
+      _makeRequest(requestInfo, requestFactory, authToken, appCheckToken) {
+        if (!this._deleted) {
+          const request = makeRequest(requestInfo, this._appId, authToken, appCheckToken, requestFactory, this._firebaseVersion);
+          this._requests.add(request);
+          request.getPromise().then(() => this._requests.delete(request), () => this._requests.delete(request));
+          return request;
+        } else {
+          return new FailRequest(appDeleted());
+        }
+      }
+      async makeRequestWithTokens(requestInfo, requestFactory) {
+        const [authToken, appCheckToken] = await Promise.all([
+          this._getAuthToken(),
+          this._getAppCheckToken()
+        ]);
+        return this._makeRequest(requestInfo, requestFactory, authToken, appCheckToken).getPromise();
+      }
+    };
+    name$12 = "@firebase/storage";
+    version$12 = "0.9.0";
+    STORAGE_TYPE = "storage";
+    registerStorage();
+    FUNCTIONS_TYPE = "functions";
+    ContextProvider = class {
+      constructor(authProvider, messagingProvider, appCheckProvider) {
+        this.auth = null;
+        this.messaging = null;
+        this.appCheck = null;
+        this.auth = authProvider.getImmediate({ optional: true });
+        this.messaging = messagingProvider.getImmediate({
+          optional: true
+        });
+        if (!this.auth) {
+          authProvider.get().then((auth) => this.auth = auth, () => {
+          });
+        }
+        if (!this.messaging) {
+          messagingProvider.get().then((messaging) => this.messaging = messaging, () => {
+          });
+        }
+        if (!this.appCheck) {
+          appCheckProvider.get().then((appCheck) => this.appCheck = appCheck, () => {
+          });
+        }
+      }
+      async getAuthToken() {
+        if (!this.auth) {
+          return void 0;
+        }
+        try {
+          const token = await this.auth.getToken();
+          return token === null || token === void 0 ? void 0 : token.accessToken;
+        } catch (e) {
+          return void 0;
+        }
+      }
+      async getMessagingToken() {
+        if (!this.messaging || !("Notification" in self) || Notification.permission !== "granted") {
+          return void 0;
+        }
+        try {
+          return await this.messaging.getToken();
+        } catch (e) {
+          return void 0;
+        }
+      }
+      async getAppCheckToken() {
+        if (this.appCheck) {
+          const result = await this.appCheck.getToken();
+          if (result.error) {
+            return null;
+          }
+          return result.token;
+        }
+        return null;
+      }
+      async getContext() {
+        const authToken = await this.getAuthToken();
+        const messagingToken = await this.getMessagingToken();
+        const appCheckToken = await this.getAppCheckToken();
+        return { authToken, messagingToken, appCheckToken };
+      }
+    };
+    DEFAULT_REGION = "us-central1";
+    FunctionsService = class {
+      constructor(app, authProvider, messagingProvider, appCheckProvider, regionOrCustomDomain = DEFAULT_REGION, fetchImpl2) {
+        this.app = app;
+        this.fetchImpl = fetchImpl2;
+        this.emulatorOrigin = null;
+        this.contextProvider = new ContextProvider(authProvider, messagingProvider, appCheckProvider);
+        this.cancelAllRequests = new Promise((resolve2) => {
+          this.deleteService = () => {
+            return Promise.resolve(resolve2());
+          };
+        });
+        try {
+          const url2 = new URL(regionOrCustomDomain);
+          this.customDomain = url2.origin;
+          this.region = DEFAULT_REGION;
+        } catch (e) {
+          this.customDomain = null;
+          this.region = regionOrCustomDomain;
+        }
+      }
+      _delete() {
+        return this.deleteService();
+      }
+      _url(name22) {
+        const projectId = this.app.options.projectId;
+        if (this.emulatorOrigin !== null) {
+          const origin = this.emulatorOrigin;
+          return `${origin}/${projectId}/${this.region}/${name22}`;
+        }
+        if (this.customDomain !== null) {
+          return `${this.customDomain}/${name22}`;
+        }
+        return `https://${this.region}-${projectId}.cloudfunctions.net/${name22}`;
+      }
+    };
+    name4 = "@firebase/functions";
+    version4 = "0.7.6";
+    AUTH_INTERNAL_NAME = "auth-internal";
+    APP_CHECK_INTERNAL_NAME = "app-check-internal";
+    MESSAGING_INTERNAL_NAME = "messaging-internal";
+    registerFunctions(import_node_fetch6.default, "node");
   }
 });
 
@@ -22948,7 +23701,7 @@ var require_daily_iframe = __commonJS({
         function o() {
           return !!(navigator && navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) && function(e2, t3) {
             if (!e2 || !t3)
-              return false;
+              return true;
             switch (e2) {
               case "Chrome":
                 return t3.major >= 75;
@@ -22957,15 +23710,15 @@ var require_daily_iframe = __commonJS({
               case "Firefox":
                 return t3.major >= 67;
             }
-            return false;
-          }(d2(), function() {
-            switch (d2()) {
+            return true;
+          }(f(), function() {
+            switch (f()) {
               case "Chrome":
-                return f();
+                return p2();
               case "Safari":
-                return h();
-              case "Firefox":
                 return v2();
+              case "Firefox":
+                return m();
               case "Edge":
                 return function() {
                   var e2 = 0, t3 = 0;
@@ -22982,56 +23735,66 @@ var require_daily_iframe = __commonJS({
             }
           }());
         }
+        function s2() {
+          if (i())
+            return false;
+          if (!document)
+            return false;
+          var e2 = document.createElement("iframe");
+          return !!e2.requestFullscreen || !!e2.webkitRequestFullscreen;
+        }
         r.d(t2, "b", function() {
           return n;
-        }), r.d(t2, "c", function() {
-          return i;
         }), r.d(t2, "d", function() {
-          return o;
-        }), r.d(t2, "f", function() {
-          return c;
+          return i;
         }), r.d(t2, "e", function() {
+          return o;
+        }), r.d(t2, "c", function() {
+          return s2;
+        }), r.d(t2, "g", function() {
           return u;
-        }), r.d(t2, "a", function() {
+        }), r.d(t2, "f", function() {
           return l2;
+        }), r.d(t2, "a", function() {
+          return d2;
         });
-        var s2 = ["Chrome", "Firefox"];
-        function c() {
+        var c = ["Chrome", "Firefox"];
+        function u() {
           return !i() && (!function() {
             var e2 = n();
             if (e2.match(/Mobi/) || e2.match(/Android/))
               return true;
             if (n().match(/DailyAnd\//))
               return true;
-          }() && s2.includes(d2()));
-        }
-        function u() {
-          return !!i() || l2();
+          }() && c.includes(f()));
         }
         function l2() {
+          return !!i() || d2();
+        }
+        function d2() {
           return a() && !function() {
-            var e2, t3 = d2();
+            var e2, t3 = f();
             if (!n())
               return true;
             switch (t3) {
               case "Chrome":
-                return (e2 = f()).major && e2.major > 0 && e2.major < 61;
+                return (e2 = p2()).major && e2.major > 0 && e2.major < 61;
               case "Firefox":
-                return (e2 = v2()).major < 78;
+                return (e2 = m()).major < 78;
               case "Safari":
-                return (e2 = h()).major < 12;
+                return (e2 = v2()).major < 12;
               default:
                 return true;
             }
           }();
         }
-        function d2() {
+        function f() {
           if (typeof window != "undefined") {
             var e2 = n();
-            return p2() ? "Safari" : e2.indexOf("Edge") > -1 ? "Edge" : e2.match(/Chrome\//) ? "Chrome" : e2.indexOf("Safari") > -1 ? "Safari" : e2.indexOf("Firefox") > -1 ? "Firefox" : e2.indexOf("MSIE") > -1 || e2.indexOf(".NET") > -1 ? "IE" : "Unknown Browser";
+            return h() ? "Safari" : e2.indexOf("Edge") > -1 ? "Edge" : e2.match(/Chrome\//) ? "Chrome" : e2.indexOf("Safari") > -1 ? "Safari" : e2.indexOf("Firefox") > -1 ? "Firefox" : e2.indexOf("MSIE") > -1 || e2.indexOf(".NET") > -1 ? "IE" : "Unknown Browser";
           }
         }
-        function f() {
+        function p2() {
           var e2 = 0, t3 = 0, r2 = 0, i2 = 0, a2 = false;
           if (typeof window != "undefined") {
             var o2 = n(), s3 = o2.match(/Chrome\/(\d+).(\d+).(\d+).(\d+)/);
@@ -23043,10 +23806,10 @@ var require_daily_iframe = __commonJS({
           }
           return { major: e2, minor: t3, build: r2, patch: i2, opera: a2 };
         }
-        function p2() {
+        function h() {
           return !!n().match(/iPad|iPhone|iPod/i) && a();
         }
-        function h() {
+        function v2() {
           var e2 = 0, t3 = 0, r2 = 0;
           if (typeof window != "undefined") {
             var i2 = n().match(/Version\/(\d+).(\d+)(.(\d+))?/);
@@ -23056,11 +23819,11 @@ var require_daily_iframe = __commonJS({
               } catch (e3) {
               }
             else
-              p2() && (e2 = 14, t3 = 0, r2 = 3);
+              h() && (e2 = 14, t3 = 0, r2 = 3);
           }
           return { major: e2, minor: t3, point: r2 };
         }
-        function v2() {
+        function m() {
           var e2 = 0, t3 = 0;
           if (typeof window != "undefined") {
             var r2 = n().match(/Firefox\/(\d+).(\d+)/);
@@ -23080,6 +23843,8 @@ var require_daily_iframe = __commonJS({
           return a;
         }), r.d(t2, "a", function() {
           return o;
+        }), r.d(t2, "d", function() {
+          return s2;
         });
         var n = r(2);
         function i() {
@@ -23090,8 +23855,25 @@ var require_daily_iframe = __commonJS({
         }
         function o(e2) {
           var t3 = e2 ? new URL(e2).origin : null;
-          return !t3 || t3.match(/https:\/\/[^.]+\.daily\.co/) ? Object(n.e)() ? "https://c.daily.co/static/call-machine-object-bundle.js" : "https://c.daily.co/static/call-machine-object-nosfu-bundle.js" : (t3 || (console.warn("No baseUrl provided for call object bundle. Defaulting to production CDN..."), t3 = "https://c.daily.co"), Object(n.e)() ? "".concat(t3, "/static/call-machine-object-bundle.js") : "".concat(t3, "/static/call-machine-object-nosfu-bundle.js"));
+          return !t3 || t3.match(/https:\/\/[^.]+\.daily\.co/) ? Object(n.f)() ? "https://c.daily.co/static/call-machine-object-bundle.js" : "https://c.daily.co/static/call-machine-object-nosfu-bundle.js" : (t3 || (console.warn("No baseUrl provided for call object bundle. Defaulting to production CDN..."), t3 = "https://c.daily.co"), Object(n.f)() ? "".concat(t3, "/static/call-machine-object-bundle.js") : "".concat(t3, "/static/call-machine-object-nosfu-bundle.js"));
         }
+        function s2(e2) {
+          try {
+            new URL(e2);
+          } catch (e3) {
+            return false;
+          }
+          return true;
+        }
+      }, function(e, t2) {
+        function r(t3) {
+          return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? e.exports = r = function(e2) {
+            return typeof e2;
+          } : e.exports = r = function(e2) {
+            return e2 && typeof Symbol == "function" && e2.constructor === Symbol && e2 !== Symbol.prototype ? "symbol" : typeof e2;
+          }, r(t3);
+        }
+        e.exports = r;
       }, function(e, t2) {
         e.exports = function(e2, t3) {
           if (!(e2 instanceof t3))
@@ -23115,29 +23897,30 @@ var require_daily_iframe = __commonJS({
         }
         e.exports = r;
       }, function(e, t2) {
-        function r(t3) {
-          return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? e.exports = r = function(e2) {
-            return typeof e2;
-          } : e.exports = r = function(e2) {
-            return e2 && typeof Symbol == "function" && e2.constructor === Symbol && e2 !== Symbol.prototype ? "symbol" : typeof e2;
-          }, r(t3);
-        }
-        e.exports = r;
+        e.exports = function(e2, t3, r) {
+          return t3 in e2 ? Object.defineProperty(e2, t3, { value: r, enumerable: true, configurable: true, writable: true }) : e2[t3] = r, e2;
+        };
+      }, function(e, t2) {
+        e.exports = function(e2) {
+          if (e2 === void 0)
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+          return e2;
+        };
       }, function(e, t2) {
         var r = Array.isArray;
         e.exports = r;
       }, function(e, t2, r) {
-        var n = r(41), i = typeof self == "object" && self && self.Object === Object && self, a = n || i || Function("return this")();
+        var n = r(42), i = typeof self == "object" && self && self.Object === Object && self, a = n || i || Function("return this")();
         e.exports = a;
       }, function(e, t2, r) {
-        var n = r(27);
+        var n = r(28);
         e.exports = function(e2, t3) {
           if (typeof t3 != "function" && t3 !== null)
             throw new TypeError("Super expression must either be null or a function");
           e2.prototype = Object.create(t3 && t3.prototype, { constructor: { value: e2, writable: true, configurable: true } }), t3 && n(e2, t3);
         };
       }, function(e, t2, r) {
-        var n = r(7), i = r(17);
+        var n = r(4), i = r(9);
         e.exports = function(e2, t3) {
           return !t3 || n(t3) !== "object" && typeof t3 != "function" ? i(e2) : t3;
         };
@@ -23194,7 +23977,7 @@ var require_daily_iframe = __commonJS({
             for (var t4 = new Array(e3.length), r3 = 0; r3 < t4.length; ++r3)
               t4[r3] = e3[r3].listener || e3[r3];
             return t4;
-          }(i2) : g(i2, i2.length);
+          }(i2) : m(i2, i2.length);
         }
         function v2(e2) {
           var t3 = this._events;
@@ -23207,7 +23990,7 @@ var require_daily_iframe = __commonJS({
           }
           return 0;
         }
-        function g(e2, t3) {
+        function m(e2, t3) {
           for (var r2 = new Array(t3), n2 = 0; n2 < t3; ++n2)
             r2[n2] = e2[n2];
           return r2;
@@ -23247,7 +24030,7 @@ var require_daily_iframe = __commonJS({
           if (typeof c2 == "function")
             a(c2, this, t3);
           else {
-            var u2 = c2.length, l3 = g(c2, u2);
+            var u2 = c2.length, l3 = m(c2, u2);
             for (r2 = 0; r2 < u2; ++r2)
               a(l3[r2], this, t3);
           }
@@ -23316,25 +24099,6 @@ var require_daily_iframe = __commonJS({
           var r2 = i(e2, t3);
           return n(r2) ? r2 : void 0;
         };
-      }, function(e, t2) {
-        e.exports = function(e2, t3, r) {
-          return t3 in e2 ? Object.defineProperty(e2, t3, { value: r, enumerable: true, configurable: true, writable: true }) : e2[t3] = r, e2;
-        };
-      }, function(e, t2, r) {
-        var n = r(19), i = r(83), a = r(84), o = n ? n.toStringTag : void 0;
-        e.exports = function(e2) {
-          return e2 == null ? e2 === void 0 ? "[object Undefined]" : "[object Null]" : o && o in Object(e2) ? i(e2) : a(e2);
-        };
-      }, function(e, t2) {
-        e.exports = function(e2) {
-          return e2 != null && typeof e2 == "object";
-        };
-      }, function(e, t2) {
-        e.exports = function(e2) {
-          if (e2 === void 0)
-            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-          return e2;
-        };
       }, function(e, t2, r) {
         !function(e2) {
           "use strict";
@@ -23392,7 +24156,7 @@ var require_daily_iframe = __commonJS({
                 return false;
             }
             return true;
-          }, g = Array.isArray, m = function(e3) {
+          }, m = Array.isArray, g = function(e3) {
             var n2 = typeof e3 == "function" ? e3(i2) : i2;
             function i2(e4, i3, a2) {
               if (c(e4, i3))
@@ -23402,9 +24166,9 @@ var require_daily_iframe = __commonJS({
                 return false;
               if (u(e4) && u(i3))
                 return v2(e4, i3, n2, a2);
-              var f2 = g(e4), m2 = g(i3);
-              if (f2 || m2)
-                return f2 === m2 && function(e5, t4, r3, n3) {
+              var f2 = m(e4), g2 = m(i3);
+              if (f2 || g2)
+                return f2 === g2 && function(e5, t4, r3, n3) {
                   if (e5.length !== t4.length)
                     return false;
                   for (var i4 = 0; i4 < e5.length; i4++)
@@ -23421,9 +24185,9 @@ var require_daily_iframe = __commonJS({
               if (l2(e4) || l2(i3))
                 return e4 === i3;
               if (t3) {
-                var S2 = e4 instanceof Map, T2 = i3 instanceof Map;
-                if (S2 || T2)
-                  return S2 === T2 && function(e5, t4, r3, n3) {
+                var S2 = e4 instanceof Map, E2 = i3 instanceof Map;
+                if (S2 || E2)
+                  return S2 === E2 && function(e5, t4, r3, n3) {
                     if (e5.size !== t4.size)
                       return false;
                     for (var i4 = p2(e5), a3 = p2(t4), s3 = 0; s3 < i4.length; s3++)
@@ -23433,9 +24197,9 @@ var require_daily_iframe = __commonJS({
                   }(e4, i3, n2, a2);
               }
               if (r2) {
-                var A3 = e4 instanceof Set, E2 = i3 instanceof Set;
-                if (A3 || E2)
-                  return A3 === E2 && function(e5, t4, r3, n3) {
+                var T2 = e4 instanceof Set, A3 = i3 instanceof Set;
+                if (T2 || A3)
+                  return T2 === A3 && function(e5, t4, r3, n3) {
                     if (e5.size !== t4.size)
                       return false;
                     for (var i4 = h(e5), a3 = h(t4), o2 = 0; o2 < i4.length; o2++)
@@ -23447,13 +24211,22 @@ var require_daily_iframe = __commonJS({
               return v2(e4, i3, n2, a2);
             }
             return i2;
-          }, y2 = m(f()), b = m(f(c)), _ = m(), w2 = m(function() {
+          }, y2 = g(f()), b = g(f(c)), _ = g(), w2 = g(function() {
             return c;
-          }), k2 = { circularDeep: y2, circularShallow: b, createCustom: m, deep: _, sameValueZero: c, shallow: w2 };
-          e2.circularDeepEqual = y2, e2.circularShallowEqual = b, e2.createCustomEqual = m, e2.deepEqual = _, e2.default = k2, e2.sameValueZeroEqual = c, e2.shallowEqual = w2, Object.defineProperty(e2, "__esModule", { value: true });
+          }), k2 = { circularDeep: y2, circularShallow: b, createCustom: g, deep: _, sameValueZero: c, shallow: w2 };
+          e2.circularDeepEqual = y2, e2.circularShallowEqual = b, e2.createCustomEqual = g, e2.deepEqual = _, e2.default = k2, e2.sameValueZeroEqual = c, e2.shallowEqual = w2, Object.defineProperty(e2, "__esModule", { value: true });
         }(t2);
       }, function(e, t2, r) {
-        var n = r(9).Symbol;
+        var n = r(19), i = r(83), a = r(84), o = n ? n.toStringTag : void 0;
+        e.exports = function(e2) {
+          return e2 == null ? e2 === void 0 ? "[object Undefined]" : "[object Null]" : o && o in Object(e2) ? i(e2) : a(e2);
+        };
+      }, function(e, t2) {
+        e.exports = function(e2) {
+          return e2 != null && typeof e2 == "object";
+        };
+      }, function(e, t2, r) {
+        var n = r(11).Symbol;
         e.exports = n;
       }, function(e, t2, r) {
         var n = r(95), i = r(96), a = r(97), o = r(98), s2 = r(99);
@@ -23466,7 +24239,7 @@ var require_daily_iframe = __commonJS({
         }
         c.prototype.clear = n, c.prototype.delete = i, c.prototype.get = a, c.prototype.has = o, c.prototype.set = s2, e.exports = c;
       }, function(e, t2, r) {
-        var n = r(50);
+        var n = r(51);
         e.exports = function(e2, t3) {
           for (var r2 = e2.length; r2--; )
             if (n(e2[r2][0], t3))
@@ -23474,7 +24247,7 @@ var require_daily_iframe = __commonJS({
           return -1;
         };
       }, function(e, t2, r) {
-        var n = r(13)(Object, "create");
+        var n = r(15)(Object, "create");
         e.exports = n;
       }, function(e, t2, r) {
         var n = r(117);
@@ -23483,7 +24256,7 @@ var require_daily_iframe = __commonJS({
           return n(t3) ? r2[typeof t3 == "string" ? "string" : "hash"] : r2.map;
         };
       }, function(e, t2, r) {
-        var n = r(15), i = r(16);
+        var n = r(17), i = r(18);
         e.exports = function(e2) {
           return typeof e2 == "symbol" || i(e2) && n(e2) == "[object Symbol]";
         };
@@ -23500,7 +24273,7 @@ var require_daily_iframe = __commonJS({
         r.d(t2, "a", function() {
           return c;
         });
-        var n = r(4), i = r.n(n), a = r(5), o = r.n(a), s2 = r(3), c = function() {
+        var n = r(5), i = r.n(n), a = r(6), o = r.n(a), s2 = r(3), c = function() {
           function e2() {
             i()(this, e2);
           }
@@ -23516,6 +24289,11 @@ var require_daily_iframe = __commonJS({
             Object(s2.b)();
           } }]), e2;
         }();
+      }, function(e, t2, r) {
+        var n = r(66), i = r(67), a = r(68), o = r(70);
+        e.exports = function(e2, t3) {
+          return n(e2) || i(e2, t3) || a(e2, t3) || o();
+        };
       }, function(e, t2) {
         function r(t3, n) {
           return e.exports = r = Object.setPrototypeOf || function(e2, t4) {
@@ -23524,7 +24302,7 @@ var require_daily_iframe = __commonJS({
         }
         e.exports = r;
       }, function(e, t2, r) {
-        var n = r(80), i = r(88), a = r(30);
+        var n = r(80), i = r(88), a = r(31);
         e.exports = function(e2) {
           return a(e2) ? n(e2) : i(e2);
         };
@@ -23533,7 +24311,7 @@ var require_daily_iframe = __commonJS({
           return typeof e2 == "number" && e2 > -1 && e2 % 1 == 0 && e2 <= 9007199254740991;
         };
       }, function(e, t2, r) {
-        var n = r(47), i = r(29);
+        var n = r(48), i = r(30);
         e.exports = function(e2) {
           return e2 != null && i(e2.length) && !n(e2);
         };
@@ -23543,7 +24321,7 @@ var require_daily_iframe = __commonJS({
           return e2 != null && (t3 == "object" || t3 == "function");
         };
       }, function(e, t2, r) {
-        var n = r(13)(r(9), "Map");
+        var n = r(15)(r(11), "Map");
         e.exports = n;
       }, function(e, t2, r) {
         var n = r(109), i = r(116), a = r(118), o = r(119), s2 = r(120);
@@ -23556,7 +24334,7 @@ var require_daily_iframe = __commonJS({
         }
         c.prototype.clear = n, c.prototype.delete = i, c.prototype.get = a, c.prototype.has = o, c.prototype.set = s2, e.exports = c;
       }, function(e, t2, r) {
-        var n = r(8), i = r(24), a = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/, o = /^\w*$/;
+        var n = r(10), i = r(24), a = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/, o = /^\w*$/;
         e.exports = function(e2, t3) {
           if (n(e2))
             return false;
@@ -23564,12 +24342,12 @@ var require_daily_iframe = __commonJS({
           return !(r2 != "number" && r2 != "symbol" && r2 != "boolean" && e2 != null && !i(e2)) || (o.test(e2) || !a.test(e2) || t3 != null && e2 in Object(t3));
         };
       }, function(e, t2, r) {
-        var n = r(38), i = r(76), a = r(48), o = r(8);
+        var n = r(39), i = r(76), a = r(49), o = r(10);
         e.exports = function(e2, t3) {
           return (o(e2) ? n : i)(e2, a(t3, 3));
         };
       }, function(e, t2, r) {
-        var n = r(156), i = r(8);
+        var n = r(156), i = r(10);
         e.exports = function(e2, t3, r2, a) {
           return e2 == null ? [] : (i(t3) || (t3 = t3 == null ? [] : [t3]), i(r2 = a ? void 0 : r2) || (r2 = r2 == null ? [] : [r2]), n(e2, t3, r2));
         };
@@ -23596,7 +24374,7 @@ var require_daily_iframe = __commonJS({
         var n = r(77), i = r(92)(n);
         e.exports = i;
       }, function(e, t2, r) {
-        var n = r(82), i = r(16), a = Object.prototype, o = a.hasOwnProperty, s2 = a.propertyIsEnumerable, c = n(function() {
+        var n = r(82), i = r(18), a = Object.prototype, o = a.hasOwnProperty, s2 = a.propertyIsEnumerable, c = n(function() {
           return arguments;
         }()) ? n : function(e2) {
           return i(e2) && o.call(e2, "callee") && !s2.call(e2, "callee");
@@ -23606,12 +24384,12 @@ var require_daily_iframe = __commonJS({
         (function(t3) {
           var r2 = typeof t3 == "object" && t3 && t3.Object === Object && t3;
           e.exports = r2;
-        }).call(this, r(37));
+        }).call(this, r(38));
       }, function(e, t2, r) {
         (function(e2) {
-          var n = r(9), i = r(85), a = t2 && !t2.nodeType && t2, o = a && typeof e2 == "object" && e2 && !e2.nodeType && e2, s2 = o && o.exports === a ? n.Buffer : void 0, c = (s2 ? s2.isBuffer : void 0) || i;
+          var n = r(11), i = r(85), a = t2 && !t2.nodeType && t2, o = a && typeof e2 == "object" && e2 && !e2.nodeType && e2, s2 = o && o.exports === a ? n.Buffer : void 0, c = (s2 ? s2.isBuffer : void 0) || i;
           e2.exports = c;
-        }).call(this, r(43)(e));
+        }).call(this, r(44)(e));
       }, function(e, t2) {
         e.exports = function(e2) {
           return e2.webpackPolyfill || (e2.deprecate = function() {
@@ -23628,7 +24406,7 @@ var require_daily_iframe = __commonJS({
           return !!(t3 = t3 == null ? 9007199254740991 : t3) && (n == "number" || n != "symbol" && r.test(e2)) && e2 > -1 && e2 % 1 == 0 && e2 < t3;
         };
       }, function(e, t2, r) {
-        var n = r(86), i = r(46), a = r(87), o = a && a.isTypedArray, s2 = o ? i(o) : n;
+        var n = r(86), i = r(47), a = r(87), o = a && a.isTypedArray, s2 = o ? i(o) : n;
         e.exports = s2;
       }, function(e, t2) {
         e.exports = function(e2) {
@@ -23637,7 +24415,7 @@ var require_daily_iframe = __commonJS({
           };
         };
       }, function(e, t2, r) {
-        var n = r(15), i = r(31);
+        var n = r(17), i = r(32);
         e.exports = function(e2) {
           if (!i(e2))
             return false;
@@ -23645,7 +24423,7 @@ var require_daily_iframe = __commonJS({
           return t3 == "[object Function]" || t3 == "[object GeneratorFunction]" || t3 == "[object AsyncFunction]" || t3 == "[object Proxy]";
         };
       }, function(e, t2, r) {
-        var n = r(93), i = r(143), a = r(59), o = r(8), s2 = r(153);
+        var n = r(93), i = r(143), a = r(60), o = r(10), s2 = r(153);
         e.exports = function(e2) {
           return typeof e2 == "function" ? e2 : e2 == null ? a : typeof e2 == "object" ? o(e2) ? i(e2[0], e2[1]) : n(e2) : s2(e2);
         };
@@ -23676,7 +24454,7 @@ var require_daily_iframe = __commonJS({
           return "";
         };
       }, function(e, t2, r) {
-        var n = r(121), i = r(16);
+        var n = r(121), i = r(18);
         e.exports = function e2(t3, r2, a, o, s2) {
           return t3 === r2 || (t3 == null || r2 == null || !i(t3) && !i(r2) ? t3 != t3 && r2 != r2 : n(t3, r2, a, o, e2, s2));
         };
@@ -23691,9 +24469,9 @@ var require_daily_iframe = __commonJS({
             return f == t3;
           var p2 = -1, h = true, v2 = 2 & r2 ? new n() : void 0;
           for (c.set(e2, t3), c.set(t3, e2); ++p2 < l2; ) {
-            var g = e2[p2], m = t3[p2];
+            var m = e2[p2], g = t3[p2];
             if (o)
-              var y2 = u ? o(m, g, p2, t3, e2, c) : o(g, m, p2, e2, t3, c);
+              var y2 = u ? o(g, m, p2, t3, e2, c) : o(m, g, p2, e2, t3, c);
             if (y2 !== void 0) {
               if (y2)
                 continue;
@@ -23702,13 +24480,13 @@ var require_daily_iframe = __commonJS({
             }
             if (v2) {
               if (!i(t3, function(e3, t4) {
-                if (!a(v2, t4) && (g === e3 || s2(g, e3, r2, o, c)))
+                if (!a(v2, t4) && (m === e3 || s2(m, e3, r2, o, c)))
                   return v2.push(t4);
               })) {
                 h = false;
                 break;
               }
-            } else if (g !== m && !s2(g, m, r2, o, c)) {
+            } else if (m !== g && !s2(m, g, r2, o, c)) {
               h = false;
               break;
             }
@@ -23716,7 +24494,7 @@ var require_daily_iframe = __commonJS({
           return c.delete(e2), c.delete(t3), h;
         };
       }, function(e, t2, r) {
-        var n = r(31);
+        var n = r(32);
         e.exports = function(e2) {
           return e2 == e2 && !n(e2);
         };
@@ -23727,14 +24505,14 @@ var require_daily_iframe = __commonJS({
           };
         };
       }, function(e, t2, r) {
-        var n = r(57), i = r(25);
+        var n = r(58), i = r(25);
         e.exports = function(e2, t3) {
           for (var r2 = 0, a = (t3 = n(t3, e2)).length; e2 != null && r2 < a; )
             e2 = e2[i(t3[r2++])];
           return r2 && r2 == a ? e2 : void 0;
         };
       }, function(e, t2, r) {
-        var n = r(8), i = r(34), a = r(145), o = r(148);
+        var n = r(10), i = r(35), a = r(145), o = r(148);
         e.exports = function(e2, t3) {
           return n(e2) ? e2 : i(e2, t3) ? [e2] : a(o(e2));
         };
@@ -23747,11 +24525,6 @@ var require_daily_iframe = __commonJS({
       }, function(e, t2) {
         e.exports = function(e2) {
           return e2;
-        };
-      }, function(e, t2, r) {
-        var n = r(66), i = r(67), a = r(68), o = r(70);
-        e.exports = function(e2, t3) {
-          return n(e2) || i(e2, t3) || a(e2, t3) || o();
         };
       }, function(e, t2, r) {
         var n = r(71);
@@ -24408,10 +25181,10 @@ var require_daily_iframe = __commonJS({
         "use strict";
         (function(e2) {
           r.d(t2, "a", function() {
-            return m;
+            return g;
           });
-          var n = r(4), i = r.n(n), a = r(5), o = r.n(a), s2 = r(10), c = r.n(s2), u = r(11), l2 = r.n(u), d2 = r(6), f = r.n(d2), p2 = r(26), h = r(12), v2 = r(3);
-          function g(e3) {
+          var n = r(5), i = r.n(n), a = r(6), o = r.n(a), s2 = r(12), c = r.n(s2), u = r(13), l2 = r.n(u), d2 = r(7), f = r.n(d2), p2 = r(26), h = r(14), v2 = r(3);
+          function m(e3) {
             var t3 = function() {
               if (typeof Reflect == "undefined" || !Reflect.construct)
                 return false;
@@ -24437,9 +25210,9 @@ var require_daily_iframe = __commonJS({
             };
           }
           e2.callMachineToDailyJsEmitter = e2.callMachineToDailyJsEmitter || new h.EventEmitter(), e2.dailyJsToCallMachineEmitter = e2.dailyJsToCallMachineEmitter || new h.EventEmitter();
-          var m = function(t3) {
+          var g = function(t3) {
             c()(n2, t3);
-            var r2 = g(n2);
+            var r2 = m(n2);
             function n2() {
               var e3;
               return i()(this, n2), (e3 = r2.call(this))._wrappedListeners = {}, e3._messageCallbacks = {}, e3;
@@ -24472,9 +25245,9 @@ var require_daily_iframe = __commonJS({
               t4.emit("message", e3);
             } }]), n2;
           }(p2.a);
-        }).call(this, r(37));
+        }).call(this, r(38));
       }, function(e, t2, r) {
-        var n = r(6), i = r(27), a = r(73), o = r(74);
+        var n = r(7), i = r(28), a = r(73), o = r(74);
         function s2(t3) {
           var r2 = typeof Map == "function" ? new Map() : void 0;
           return e.exports = s2 = function(e2) {
@@ -24576,7 +25349,7 @@ var require_daily_iframe = __commonJS({
                 if (n4 === "completed") {
                   if (i3 === "throw")
                     throw a3;
-                  return T2();
+                  return E2();
                 }
                 for (r4.method = i3, r4.arg = a3; ; ) {
                   var o3 = r4.delegate;
@@ -24627,9 +25400,9 @@ var require_daily_iframe = __commonJS({
           h[i] = function() {
             return this;
           };
-          var v2 = Object.getPrototypeOf, g = v2 && v2(v2(S2([])));
-          g && g !== t3 && r2.call(g, i) && (h = g);
-          var m = p2.prototype = d2.prototype = Object.create(h);
+          var v2 = Object.getPrototypeOf, m = v2 && v2(v2(S2([])));
+          m && m !== t3 && r2.call(m, i) && (h = m);
+          var g = p2.prototype = d2.prototype = Object.create(h);
           function y2(e3) {
             ["next", "throw", "return"].forEach(function(t4) {
               s2(e3, t4, function(e4) {
@@ -24707,16 +25480,16 @@ var require_daily_iframe = __commonJS({
                 return a2.next = a2;
               }
             }
-            return { next: T2 };
+            return { next: E2 };
           }
-          function T2() {
+          function E2() {
             return { value: void 0, done: true };
           }
-          return f.prototype = m.constructor = p2, p2.constructor = f, f.displayName = s2(p2, o, "GeneratorFunction"), e2.isGeneratorFunction = function(e3) {
+          return f.prototype = g.constructor = p2, p2.constructor = f, f.displayName = s2(p2, o, "GeneratorFunction"), e2.isGeneratorFunction = function(e3) {
             var t4 = typeof e3 == "function" && e3.constructor;
             return !!t4 && (t4 === f || (t4.displayName || t4.name) === "GeneratorFunction");
           }, e2.mark = function(e3) {
-            return Object.setPrototypeOf ? Object.setPrototypeOf(e3, p2) : (e3.__proto__ = p2, s2(e3, o, "GeneratorFunction")), e3.prototype = Object.create(m), e3;
+            return Object.setPrototypeOf ? Object.setPrototypeOf(e3, p2) : (e3.__proto__ = p2, s2(e3, o, "GeneratorFunction")), e3.prototype = Object.create(g), e3;
           }, e2.awrap = function(e3) {
             return { __await: e3 };
           }, y2(b.prototype), b.prototype[a] = function() {
@@ -24727,9 +25500,9 @@ var require_daily_iframe = __commonJS({
             return e2.isGeneratorFunction(r3) ? o2 : o2.next().then(function(e3) {
               return e3.done ? e3.value : o2.next();
             });
-          }, y2(m), s2(m, o, "Generator"), m[i] = function() {
+          }, y2(g), s2(g, o, "Generator"), g[i] = function() {
             return this;
-          }, m.toString = function() {
+          }, g.toString = function() {
             return "[object Generator]";
           }, e2.keys = function(e3) {
             var t4 = [];
@@ -24830,7 +25603,7 @@ var require_daily_iframe = __commonJS({
           return Function.toString.call(e2).indexOf("[native code]") !== -1;
         };
       }, function(e, t2, r) {
-        var n = r(27), i = r(75);
+        var n = r(28), i = r(75);
         function a(t3, r2, o) {
           return i() ? e.exports = a = Reflect.construct : e.exports = a = function(e2, t4, r3) {
             var i2 = [null];
@@ -24856,7 +25629,7 @@ var require_daily_iframe = __commonJS({
           }
         };
       }, function(e, t2, r) {
-        var n = r(39);
+        var n = r(40);
         e.exports = function(e2, t3) {
           var r2 = [];
           return n(e2, function(e3, n2, i) {
@@ -24864,7 +25637,7 @@ var require_daily_iframe = __commonJS({
           }), r2;
         };
       }, function(e, t2, r) {
-        var n = r(78), i = r(28);
+        var n = r(78), i = r(29);
         e.exports = function(e2, t3) {
           return e2 && n(e2, t3, i);
         };
@@ -24883,11 +25656,11 @@ var require_daily_iframe = __commonJS({
           };
         };
       }, function(e, t2, r) {
-        var n = r(81), i = r(40), a = r(8), o = r(42), s2 = r(44), c = r(45), u = Object.prototype.hasOwnProperty;
+        var n = r(81), i = r(41), a = r(10), o = r(43), s2 = r(45), c = r(46), u = Object.prototype.hasOwnProperty;
         e.exports = function(e2, t3) {
           var r2 = a(e2), l2 = !r2 && i(e2), d2 = !r2 && !l2 && o(e2), f = !r2 && !l2 && !d2 && c(e2), p2 = r2 || l2 || d2 || f, h = p2 ? n(e2.length, String) : [], v2 = h.length;
-          for (var g in e2)
-            !t3 && !u.call(e2, g) || p2 && (g == "length" || d2 && (g == "offset" || g == "parent") || f && (g == "buffer" || g == "byteLength" || g == "byteOffset") || s2(g, v2)) || h.push(g);
+          for (var m in e2)
+            !t3 && !u.call(e2, m) || p2 && (m == "length" || d2 && (m == "offset" || m == "parent") || f && (m == "buffer" || m == "byteLength" || m == "byteOffset") || s2(m, v2)) || h.push(m);
           return h;
         };
       }, function(e, t2) {
@@ -24897,7 +25670,7 @@ var require_daily_iframe = __commonJS({
           return n;
         };
       }, function(e, t2, r) {
-        var n = r(15), i = r(16);
+        var n = r(17), i = r(18);
         e.exports = function(e2) {
           return i(e2) && n(e2) == "[object Arguments]";
         };
@@ -24923,13 +25696,13 @@ var require_daily_iframe = __commonJS({
           return false;
         };
       }, function(e, t2, r) {
-        var n = r(15), i = r(29), a = r(16), o = {};
+        var n = r(17), i = r(30), a = r(18), o = {};
         o["[object Float32Array]"] = o["[object Float64Array]"] = o["[object Int8Array]"] = o["[object Int16Array]"] = o["[object Int32Array]"] = o["[object Uint8Array]"] = o["[object Uint8ClampedArray]"] = o["[object Uint16Array]"] = o["[object Uint32Array]"] = true, o["[object Arguments]"] = o["[object Array]"] = o["[object ArrayBuffer]"] = o["[object Boolean]"] = o["[object DataView]"] = o["[object Date]"] = o["[object Error]"] = o["[object Function]"] = o["[object Map]"] = o["[object Number]"] = o["[object Object]"] = o["[object RegExp]"] = o["[object Set]"] = o["[object String]"] = o["[object WeakMap]"] = false, e.exports = function(e2) {
           return a(e2) && i(e2.length) && !!o[n(e2)];
         };
       }, function(e, t2, r) {
         (function(e2) {
-          var n = r(41), i = t2 && !t2.nodeType && t2, a = i && typeof e2 == "object" && e2 && !e2.nodeType && e2, o = a && a.exports === i && n.process, s2 = function() {
+          var n = r(42), i = t2 && !t2.nodeType && t2, a = i && typeof e2 == "object" && e2 && !e2.nodeType && e2, o = a && a.exports === i && n.process, s2 = function() {
             try {
               var e3 = a && a.require && a.require("util").types;
               return e3 || o && o.binding && o.binding("util");
@@ -24937,7 +25710,7 @@ var require_daily_iframe = __commonJS({
             }
           }();
           e2.exports = s2;
-        }).call(this, r(43)(e));
+        }).call(this, r(44)(e));
       }, function(e, t2, r) {
         var n = r(89), i = r(90), a = Object.prototype.hasOwnProperty;
         e.exports = function(e2) {
@@ -24964,7 +25737,7 @@ var require_daily_iframe = __commonJS({
           };
         };
       }, function(e, t2, r) {
-        var n = r(30);
+        var n = r(31);
         e.exports = function(e2, t3) {
           return function(r2, i) {
             if (r2 == null)
@@ -24977,7 +25750,7 @@ var require_daily_iframe = __commonJS({
           };
         };
       }, function(e, t2, r) {
-        var n = r(94), i = r(142), a = r(55);
+        var n = r(94), i = r(142), a = r(56);
         e.exports = function(e2) {
           var t3 = i(e2);
           return t3.length == 1 && t3[0][2] ? a(t3[0][0], t3[0][1]) : function(r2) {
@@ -24985,7 +25758,7 @@ var require_daily_iframe = __commonJS({
           };
         };
       }, function(e, t2, r) {
-        var n = r(49), i = r(52);
+        var n = r(50), i = r(53);
         e.exports = function(e2, t3, r2, a) {
           var o = r2.length, s2 = o, c = !a;
           if (e2 == null)
@@ -25056,7 +25829,7 @@ var require_daily_iframe = __commonJS({
           return this.__data__.has(e2);
         };
       }, function(e, t2, r) {
-        var n = r(20), i = r(32), a = r(33);
+        var n = r(20), i = r(33), a = r(34);
         e.exports = function(e2, t3) {
           var r2 = this.__data__;
           if (r2 instanceof n) {
@@ -25068,7 +25841,7 @@ var require_daily_iframe = __commonJS({
           return r2.set(e2, t3), this.size = r2.size, this;
         };
       }, function(e, t2, r) {
-        var n = r(47), i = r(106), a = r(31), o = r(51), s2 = /^\[object .+?Constructor\]$/, c = Function.prototype, u = Object.prototype, l2 = c.toString, d2 = u.hasOwnProperty, f = RegExp("^" + l2.call(d2).replace(/[\\^$.*+?()[\]{}|]/g, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$");
+        var n = r(48), i = r(106), a = r(32), o = r(52), s2 = /^\[object .+?Constructor\]$/, c = Function.prototype, u = Object.prototype, l2 = c.toString, d2 = u.hasOwnProperty, f = RegExp("^" + l2.call(d2).replace(/[\\^$.*+?()[\]{}|]/g, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$");
         e.exports = function(e2) {
           return !(!a(e2) || i(e2)) && (n(e2) ? f : s2).test(o(e2));
         };
@@ -25078,14 +25851,14 @@ var require_daily_iframe = __commonJS({
           return !!a && a in e2;
         };
       }, function(e, t2, r) {
-        var n = r(9)["__core-js_shared__"];
+        var n = r(11)["__core-js_shared__"];
         e.exports = n;
       }, function(e, t2) {
         e.exports = function(e2, t3) {
           return e2 == null ? void 0 : e2[t3];
         };
       }, function(e, t2, r) {
-        var n = r(110), i = r(20), a = r(32);
+        var n = r(110), i = r(20), a = r(33);
         e.exports = function() {
           this.size = 0, this.__data__ = { hash: new n(), map: new (a || i)(), string: new n() };
         };
@@ -25159,27 +25932,27 @@ var require_daily_iframe = __commonJS({
           return r2.set(e2, t3), this.size += r2.size == i ? 0 : 1, this;
         };
       }, function(e, t2, r) {
-        var n = r(49), i = r(53), a = r(127), o = r(131), s2 = r(137), c = r(8), u = r(42), l2 = r(45), d2 = "[object Object]", f = Object.prototype.hasOwnProperty;
+        var n = r(50), i = r(54), a = r(127), o = r(131), s2 = r(137), c = r(10), u = r(43), l2 = r(46), d2 = "[object Object]", f = Object.prototype.hasOwnProperty;
         e.exports = function(e2, t3, r2, p2, h, v2) {
-          var g = c(e2), m = c(t3), y2 = g ? "[object Array]" : s2(e2), b = m ? "[object Array]" : s2(t3), _ = (y2 = y2 == "[object Arguments]" ? d2 : y2) == d2, w2 = (b = b == "[object Arguments]" ? d2 : b) == d2, k2 = y2 == b;
+          var m = c(e2), g = c(t3), y2 = m ? "[object Array]" : s2(e2), b = g ? "[object Array]" : s2(t3), _ = (y2 = y2 == "[object Arguments]" ? d2 : y2) == d2, w2 = (b = b == "[object Arguments]" ? d2 : b) == d2, k2 = y2 == b;
           if (k2 && u(e2)) {
             if (!u(t3))
               return false;
-            g = true, _ = false;
+            m = true, _ = false;
           }
           if (k2 && !_)
-            return v2 || (v2 = new n()), g || l2(e2) ? i(e2, t3, r2, p2, h, v2) : a(e2, t3, y2, r2, p2, h, v2);
+            return v2 || (v2 = new n()), m || l2(e2) ? i(e2, t3, r2, p2, h, v2) : a(e2, t3, y2, r2, p2, h, v2);
           if (!(1 & r2)) {
             var M2 = _ && f.call(e2, "__wrapped__"), S2 = w2 && f.call(t3, "__wrapped__");
             if (M2 || S2) {
-              var T2 = M2 ? e2.value() : e2, A3 = S2 ? t3.value() : t3;
-              return v2 || (v2 = new n()), h(T2, A3, r2, p2, v2);
+              var E2 = M2 ? e2.value() : e2, T2 = S2 ? t3.value() : t3;
+              return v2 || (v2 = new n()), h(E2, T2, r2, p2, v2);
             }
           }
           return !!k2 && (v2 || (v2 = new n()), o(e2, t3, r2, p2, h, v2));
         };
       }, function(e, t2, r) {
-        var n = r(33), i = r(123), a = r(124);
+        var n = r(34), i = r(123), a = r(124);
         function o(e2) {
           var t3 = -1, r2 = e2 == null ? 0 : e2.length;
           for (this.__data__ = new n(); ++t3 < r2; )
@@ -25206,7 +25979,7 @@ var require_daily_iframe = __commonJS({
           return e2.has(t3);
         };
       }, function(e, t2, r) {
-        var n = r(19), i = r(128), a = r(50), o = r(53), s2 = r(129), c = r(130), u = n ? n.prototype : void 0, l2 = u ? u.valueOf : void 0;
+        var n = r(19), i = r(128), a = r(51), o = r(54), s2 = r(129), c = r(130), u = n ? n.prototype : void 0, l2 = u ? u.valueOf : void 0;
         e.exports = function(e2, t3, r2, n2, u2, d2, f) {
           switch (r2) {
             case "[object DataView]":
@@ -25234,8 +26007,8 @@ var require_daily_iframe = __commonJS({
               if (v2)
                 return v2 == t3;
               n2 |= 2, f.set(e2, t3);
-              var g = o(p2(e2), p2(t3), n2, u2, d2, f);
-              return f.delete(e2), g;
+              var m = o(p2(e2), p2(t3), n2, u2, d2, f);
+              return f.delete(e2), m;
             case "[object Symbol]":
               if (l2)
                 return l2.call(e2) == l2.call(t3);
@@ -25243,7 +26016,7 @@ var require_daily_iframe = __commonJS({
           return false;
         };
       }, function(e, t2, r) {
-        var n = r(9).Uint8Array;
+        var n = r(11).Uint8Array;
         e.exports = n;
       }, function(e, t2) {
         e.exports = function(e2) {
@@ -25276,10 +26049,10 @@ var require_daily_iframe = __commonJS({
           var h = true;
           s2.set(e2, t3), s2.set(t3, e2);
           for (var v2 = c; ++d2 < l2; ) {
-            var g = e2[f = u[d2]], m = t3[f];
+            var m = e2[f = u[d2]], g = t3[f];
             if (a)
-              var y2 = c ? a(m, g, f, t3, e2, s2) : a(g, m, f, e2, t3, s2);
-            if (!(y2 === void 0 ? g === m || o(g, m, r2, a, s2) : y2)) {
+              var y2 = c ? a(g, m, f, t3, e2, s2) : a(m, g, f, e2, t3, s2);
+            if (!(y2 === void 0 ? m === g || o(m, g, r2, a, s2) : y2)) {
               h = false;
               break;
             }
@@ -25292,12 +26065,12 @@ var require_daily_iframe = __commonJS({
           return s2.delete(e2), s2.delete(t3), h;
         };
       }, function(e, t2, r) {
-        var n = r(133), i = r(135), a = r(28);
+        var n = r(133), i = r(135), a = r(29);
         e.exports = function(e2) {
           return n(e2, a, i);
         };
       }, function(e, t2, r) {
-        var n = r(134), i = r(8);
+        var n = r(134), i = r(10);
         e.exports = function(e2, t3, r2) {
           var a = t3(e2);
           return i(e2) ? a : n(a, r2(e2));
@@ -25309,7 +26082,7 @@ var require_daily_iframe = __commonJS({
           return e2;
         };
       }, function(e, t2, r) {
-        var n = r(38), i = r(136), a = Object.prototype.propertyIsEnumerable, o = Object.getOwnPropertySymbols, s2 = o ? function(e2) {
+        var n = r(39), i = r(136), a = Object.prototype.propertyIsEnumerable, o = Object.getOwnPropertySymbols, s2 = o ? function(e2) {
           return e2 == null ? [] : (e2 = Object(e2), n(o(e2), function(t3) {
             return a.call(e2, t3);
           }));
@@ -25320,7 +26093,7 @@ var require_daily_iframe = __commonJS({
           return [];
         };
       }, function(e, t2, r) {
-        var n = r(138), i = r(32), a = r(139), o = r(140), s2 = r(141), c = r(15), u = r(51), l2 = u(n), d2 = u(i), f = u(a), p2 = u(o), h = u(s2), v2 = c;
+        var n = r(138), i = r(33), a = r(139), o = r(140), s2 = r(141), c = r(17), u = r(52), l2 = u(n), d2 = u(i), f = u(a), p2 = u(o), h = u(s2), v2 = c;
         (n && v2(new n(new ArrayBuffer(1))) != "[object DataView]" || i && v2(new i()) != "[object Map]" || a && v2(a.resolve()) != "[object Promise]" || o && v2(new o()) != "[object Set]" || s2 && v2(new s2()) != "[object WeakMap]") && (v2 = function(e2) {
           var t3 = c(e2), r2 = t3 == "[object Object]" ? e2.constructor : void 0, n2 = r2 ? u(r2) : "";
           if (n2)
@@ -25339,19 +26112,19 @@ var require_daily_iframe = __commonJS({
           return t3;
         }), e.exports = v2;
       }, function(e, t2, r) {
-        var n = r(13)(r(9), "DataView");
+        var n = r(15)(r(11), "DataView");
         e.exports = n;
       }, function(e, t2, r) {
-        var n = r(13)(r(9), "Promise");
+        var n = r(15)(r(11), "Promise");
         e.exports = n;
       }, function(e, t2, r) {
-        var n = r(13)(r(9), "Set");
+        var n = r(15)(r(11), "Set");
         e.exports = n;
       }, function(e, t2, r) {
-        var n = r(13)(r(9), "WeakMap");
+        var n = r(15)(r(11), "WeakMap");
         e.exports = n;
       }, function(e, t2, r) {
-        var n = r(54), i = r(28);
+        var n = r(55), i = r(29);
         e.exports = function(e2) {
           for (var t3 = i(e2), r2 = t3.length; r2--; ) {
             var a = t3[r2], o = e2[a];
@@ -25360,7 +26133,7 @@ var require_daily_iframe = __commonJS({
           return t3;
         };
       }, function(e, t2, r) {
-        var n = r(52), i = r(144), a = r(150), o = r(34), s2 = r(54), c = r(55), u = r(25);
+        var n = r(53), i = r(144), a = r(150), o = r(35), s2 = r(55), c = r(56), u = r(25);
         e.exports = function(e2, t3) {
           return o(e2) && s2(t3) ? c(u(e2), t3) : function(r2) {
             var o2 = i(r2, e2);
@@ -25368,7 +26141,7 @@ var require_daily_iframe = __commonJS({
           };
         };
       }, function(e, t2, r) {
-        var n = r(56);
+        var n = r(57);
         e.exports = function(e2, t3, r2) {
           var i = e2 == null ? void 0 : n(e2, t3);
           return i === void 0 ? r2 : i;
@@ -25390,7 +26163,7 @@ var require_daily_iframe = __commonJS({
           return t3;
         };
       }, function(e, t2, r) {
-        var n = r(33);
+        var n = r(34);
         function i(e2, t3) {
           if (typeof e2 != "function" || t3 != null && typeof t3 != "function")
             throw new TypeError("Expected a function");
@@ -25410,7 +26183,7 @@ var require_daily_iframe = __commonJS({
           return e2 == null ? "" : n(e2);
         };
       }, function(e, t2, r) {
-        var n = r(19), i = r(58), a = r(8), o = r(24), s2 = n ? n.prototype : void 0, c = s2 ? s2.toString : void 0;
+        var n = r(19), i = r(59), a = r(10), o = r(24), s2 = n ? n.prototype : void 0, c = s2 ? s2.toString : void 0;
         e.exports = function e2(t3) {
           if (typeof t3 == "string")
             return t3;
@@ -25431,7 +26204,7 @@ var require_daily_iframe = __commonJS({
           return e2 != null && t3 in Object(e2);
         };
       }, function(e, t2, r) {
-        var n = r(57), i = r(40), a = r(8), o = r(44), s2 = r(29), c = r(25);
+        var n = r(58), i = r(41), a = r(10), o = r(45), s2 = r(30), c = r(25);
         e.exports = function(e2, t3, r2) {
           for (var u = -1, l2 = (t3 = n(t3, e2)).length, d2 = false; ++u < l2; ) {
             var f = c(t3[u]);
@@ -25442,7 +26215,7 @@ var require_daily_iframe = __commonJS({
           return d2 || ++u != l2 ? d2 : !!(l2 = e2 == null ? 0 : e2.length) && s2(l2) && o(f, l2) && (a(e2) || i(e2));
         };
       }, function(e, t2, r) {
-        var n = r(154), i = r(155), a = r(34), o = r(25);
+        var n = r(154), i = r(155), a = r(35), o = r(25);
         e.exports = function(e2) {
           return a(e2) ? n(o(e2)) : i(e2);
         };
@@ -25453,14 +26226,14 @@ var require_daily_iframe = __commonJS({
           };
         };
       }, function(e, t2, r) {
-        var n = r(56);
+        var n = r(57);
         e.exports = function(e2) {
           return function(t3) {
             return n(t3, e2);
           };
         };
       }, function(e, t2, r) {
-        var n = r(58), i = r(48), a = r(157), o = r(158), s2 = r(46), c = r(159), u = r(59);
+        var n = r(59), i = r(49), a = r(157), o = r(158), s2 = r(47), c = r(159), u = r(60);
         e.exports = function(e2, t3, r2) {
           var l2 = -1;
           t3 = n(t3.length ? t3 : [u], s2(i));
@@ -25474,7 +26247,7 @@ var require_daily_iframe = __commonJS({
           });
         };
       }, function(e, t2, r) {
-        var n = r(39), i = r(30);
+        var n = r(40), i = r(31);
         e.exports = function(e2, t3) {
           var r2 = -1, a = i(e2) ? Array(e2.length) : [];
           return n(e2, function(e3, n2, i2) {
@@ -25513,8 +26286,8 @@ var require_daily_iframe = __commonJS({
       }, function(e, t2, r) {
         "use strict";
         r.r(t2);
-        var n = r(60), i = r.n(n), a = r(61), o = r.n(a), s2 = r(0), c = r.n(s2), u = r(1), l2 = r.n(u), d2 = r(4), f = r.n(d2), p2 = r(17), h = r.n(p2), v2 = r(5), g = r.n(v2), m = r(10), y2 = r.n(m), b = r(11), _ = r.n(b), w2 = r(6), k2 = r.n(w2), M2 = r(14), S2 = r.n(M2), T2 = r(7), A3 = r.n(T2), E2 = r(12), O2 = r.n(E2), x2 = r(18), P2 = r(62), j2 = r.n(P2), C2 = "new", L2 = "loading", I3 = "joining-meeting", N2 = "joined-meeting", F2 = "left-meeting", R3 = "error", D2 = { NONE: "none", BGBLUR: "background-blur" }, V2 = r(2), B2 = r(26), U2 = r(3);
-        function Y2(e2, t3) {
+        var n = r(27), i = r.n(n), a = r(61), o = r.n(a), s2 = r(0), c = r.n(s2), u = r(1), l2 = r.n(u), d2 = r(5), f = r.n(d2), p2 = r(9), h = r.n(p2), v2 = r(6), m = r.n(v2), g = r(12), y2 = r.n(g), b = r(13), _ = r.n(b), w2 = r(7), k2 = r.n(w2), M2 = r(8), S2 = r.n(M2), E2 = r(4), T2 = r.n(E2), A3 = r(14), O2 = r.n(A3), x2 = r(16), P2 = r(62), C2 = r.n(P2), j2 = "new", L2 = "loading", I3 = "joining-meeting", N2 = "joined-meeting", R3 = "left-meeting", D2 = "error", F2 = { NONE: "none", BGBLUR: "background-blur", BGIMAGE: "background-image" }, B2 = { PLAY: "play", PAUSE: "pause" }, V2 = "playing", U2 = "paused", Y2 = ["jpg", "png", "jpeg"], G2 = r(2), q2 = r(26), J2 = r(3);
+        function W2(e2, t3) {
           var r2 = Object.keys(e2);
           if (Object.getOwnPropertySymbols) {
             var n2 = Object.getOwnPropertySymbols(e2);
@@ -25524,18 +26297,18 @@ var require_daily_iframe = __commonJS({
           }
           return r2;
         }
-        function G2(e2) {
+        function z2(e2) {
           for (var t3 = 1; t3 < arguments.length; t3++) {
             var r2 = arguments[t3] != null ? arguments[t3] : {};
-            t3 % 2 ? Y2(Object(r2), true).forEach(function(t4) {
+            t3 % 2 ? W2(Object(r2), true).forEach(function(t4) {
               S2()(e2, t4, r2[t4]);
-            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e2, Object.getOwnPropertyDescriptors(r2)) : Y2(Object(r2)).forEach(function(t4) {
+            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e2, Object.getOwnPropertyDescriptors(r2)) : W2(Object(r2)).forEach(function(t4) {
               Object.defineProperty(e2, t4, Object.getOwnPropertyDescriptor(r2, t4));
             });
           }
           return e2;
         }
-        function q2(e2) {
+        function K2(e2) {
           var t3 = function() {
             if (typeof Reflect == "undefined" || !Reflect.construct)
               return false;
@@ -25560,17 +26333,17 @@ var require_daily_iframe = __commonJS({
             return _()(this, r2);
           };
         }
-        var W2 = function(e2) {
+        var H4 = function(e2) {
           y2()(r2, e2);
-          var t3 = q2(r2);
+          var t3 = K2(r2);
           function r2() {
             var e3;
             return f()(this, r2), (e3 = t3.call(this))._wrappedListeners = {}, e3._messageCallbacks = {}, e3;
           }
-          return g()(r2, [{ key: "addListenerForMessagesFromCallMachine", value: function(e3, t4, r3) {
+          return m()(r2, [{ key: "addListenerForMessagesFromCallMachine", value: function(e3, t4, r3) {
             var n2 = this, i2 = function(i3) {
               if (i3.data && i3.data.what === "iframe-call-message" && (!i3.data.callFrameId || i3.data.callFrameId === t4) && (!i3.data.from || i3.data.from !== "module")) {
-                var a2 = G2({}, i3.data);
+                var a2 = z2({}, i3.data);
                 if (delete a2.from, a2.callbackStamp && n2._messageCallbacks[a2.callbackStamp]) {
                   var o2 = a2.callbackStamp;
                   n2._messageCallbacks[o2].call(r3, a2), delete n2._messageCallbacks[o2];
@@ -25588,9 +26361,9 @@ var require_daily_iframe = __commonJS({
             };
             this._wrappedListeners[e3] = n2, window.addEventListener("message", n2);
           } }, { key: "sendMessageToCallMachine", value: function(e3, t4, r3, n2) {
-            var i2 = G2({}, e3);
+            var i2 = z2({}, e3);
             if (i2.what = "iframe-call-message", i2.from = "module", i2.callFrameId = n2, t4) {
-              var a2 = Object(U2.c)();
+              var a2 = Object(J2.c)();
               this._messageCallbacks[a2] = t4, i2.callbackStamp = a2;
             }
             (r3 ? r3.contentWindow : window).postMessage(i2, "*");
@@ -25600,7 +26373,7 @@ var require_daily_iframe = __commonJS({
             var t4 = this._wrappedListeners[e3];
             t4 && (window.removeEventListener("message", t4), delete this._wrappedListeners[e3]);
           } }, { key: "forwardPackagedMessageToCallMachine", value: function(e3, t4, r3) {
-            var n2 = G2({}, e3);
+            var n2 = z2({}, e3);
             n2.callFrameId = r3, (t4 ? t4.contentWindow : window).postMessage(n2, "*");
           } }, { key: "addListenerForPackagedMessagesFromCallMachine", value: function(e3, t4) {
             var r3 = function(r4) {
@@ -25614,8 +26387,8 @@ var require_daily_iframe = __commonJS({
             var t4 = this._wrappedListeners[e3];
             t4 && (window.removeEventListener("message", t4), delete this._wrappedListeners[e3]);
           } }]), r2;
-        }(B2.a), z2 = r(63), J2 = r(64), K2 = r.n(J2);
-        function H4(e2) {
+        }(q2.a), Q2 = r(63), $2 = r(64), Z2 = r.n($2);
+        function X2(e2) {
           var t3 = function() {
             if (typeof Reflect == "undefined" || !Reflect.construct)
               return false;
@@ -25640,16 +26413,16 @@ var require_daily_iframe = __commonJS({
             return _()(this, r2);
           };
         }
-        var Q2 = function() {
+        var ee2 = function() {
           function e2() {
             f()(this, e2), this._currentLoad = null;
           }
-          return g()(e2, [{ key: "load", value: function(e3, t3, r2, n2) {
+          return m()(e2, [{ key: "load", value: function(e3, t3, r2, n2) {
             if (this.loaded)
               return window._dailyCallObjectSetup(t3), void r2(true);
             !function(e4) {
               window._dailyConfig || (window._dailyConfig = {}), window._dailyConfig.callFrameId = e4;
-            }(t3), this._currentLoad && this._currentLoad.cancel(), this._currentLoad = new $2(e3, t3, function() {
+            }(t3), this._currentLoad && this._currentLoad.cancel(), this._currentLoad = new te2(e3, t3, function() {
               r2(false);
             }, n2), this._currentLoad.start();
           } }, { key: "cancel", value: function() {
@@ -25657,16 +26430,16 @@ var require_daily_iframe = __commonJS({
           } }, { key: "loaded", get: function() {
             return this._currentLoad && this._currentLoad.succeeded;
           } }]), e2;
-        }(), $2 = function() {
+        }(), te2 = function() {
           function e2(t3, r2, n2, i2) {
             f()(this, e2), this._attemptsRemaining = 3, this._currentAttempt = null, this._meetingOrBaseUrl = t3, this._callFrameId = r2, this._successCallback = n2, this._failureCallback = i2;
           }
-          return g()(e2, [{ key: "start", value: function() {
+          return m()(e2, [{ key: "start", value: function() {
             var e3 = this;
             if (!this._currentAttempt) {
-              this._currentAttempt = new X2(this._meetingOrBaseUrl, this._callFrameId, this._successCallback, function t3(r2) {
+              this._currentAttempt = new ne2(this._meetingOrBaseUrl, this._callFrameId, this._successCallback, function t3(r2) {
                 e3._currentAttempt.cancelled || (e3._attemptsRemaining--, e3._failureCallback(r2, e3._attemptsRemaining > 0), e3._attemptsRemaining <= 0 || setTimeout(function() {
-                  e3._currentAttempt.cancelled || (e3._currentAttempt = new X2(e3._meetingOrBaseUrl, e3._callFrameId, e3._successCallback, t3), e3._currentAttempt.start());
+                  e3._currentAttempt.cancelled || (e3._currentAttempt = new ne2(e3._meetingOrBaseUrl, e3._callFrameId, e3._successCallback, t3), e3._currentAttempt.start());
                 }, 3e3));
               }), this._currentAttempt.start();
             }
@@ -25677,32 +26450,37 @@ var require_daily_iframe = __commonJS({
           } }, { key: "succeeded", get: function() {
             return this._currentAttempt && this._currentAttempt.succeeded;
           } }]), e2;
-        }(), Z2 = function(e2) {
+        }(), re2 = function(e2) {
           y2()(r2, e2);
-          var t3 = H4(r2);
+          var t3 = X2(r2);
           function r2() {
             return f()(this, r2), t3.apply(this, arguments);
           }
           return r2;
-        }(K2()(Error)), X2 = function() {
+        }(Z2()(Error)), ne2 = function() {
           function e2(t4, r3, n3, i3) {
             f()(this, e2), this.cancelled = false, this.succeeded = false, this._networkTimedOut = false, this._networkTimeout = null, this._iosCache = typeof iOSCallObjectBundleCache != "undefined" && iOSCallObjectBundleCache, this._refetchHeaders = null, this._meetingOrBaseUrl = t4, this._callFrameId = r3, this._successCallback = n3, this._failureCallback = i3;
           }
           var t3, r2, n2, i2;
-          return g()(e2, [{ key: "start", value: (i2 = l2()(c.a.mark(function e3() {
+          return m()(e2, [{ key: "start", value: (i2 = l2()(c.a.mark(function e3() {
             var t4;
             return c.a.wrap(function(e4) {
               for (; ; )
                 switch (e4.prev = e4.next) {
                   case 0:
-                    return t4 = Object(U2.a)(this._meetingOrBaseUrl), e4.next = 3, this._tryLoadFromIOSCache(t4);
-                  case 3:
+                    e4.prev = 0, t4 = Object(J2.a)(this._meetingOrBaseUrl), e4.next = 8;
+                    break;
+                  case 4:
+                    return e4.prev = 4, e4.t0 = e4.catch(0), this._failureCallback("Failed to get call object bundle URL ".concat(t4, ": ").concat(e4.t0)), e4.abrupt("return");
+                  case 8:
+                    return e4.next = 10, this._tryLoadFromIOSCache(t4);
+                  case 10:
                     !e4.sent && this._loadFromNetwork(t4);
-                  case 5:
+                  case 12:
                   case "end":
                     return e4.stop();
                 }
-            }, e3, this);
+            }, e3, this, [[0, 4]]);
           })), function() {
             return i2.apply(this, arguments);
           }) }, { key: "cancel", value: function() {
@@ -25763,7 +26541,7 @@ var require_daily_iframe = __commonJS({
                       e4.next = 9;
                       break;
                     }
-                    throw new Z2();
+                    throw new re2();
                   case 9:
                     return e4.next = 11, this._getBundleCodeFromResponse(t4, n3);
                   case 11:
@@ -25771,12 +26549,12 @@ var require_daily_iframe = __commonJS({
                       e4.next = 14;
                       break;
                     }
-                    throw new Z2();
+                    throw new re2();
                   case 14:
                     Function('"use strict";' + i3)(), this._iosCache && this._iosCache.set(t4, i3, n3.headers), this.succeeded = true, this._successCallback(), e4.next = 26;
                     break;
                   case 20:
-                    if (e4.prev = 20, e4.t0 = e4.catch(1), clearTimeout(this._networkTimeout), !(e4.t0 instanceof Z2 || this.cancelled || this._networkTimedOut)) {
+                    if (e4.prev = 20, e4.t0 = e4.catch(1), clearTimeout(this._networkTimeout), !(e4.t0 instanceof re2 || this.cancelled || this._networkTimedOut)) {
                       e4.next = 25;
                       break;
                     }
@@ -25821,14 +26599,14 @@ var require_daily_iframe = __commonJS({
           })), function(e3, r3) {
             return t3.apply(this, arguments);
           }) }]), e2;
-        }(), ee2 = r(35), te2 = r.n(ee2), re2 = r(36), ne2 = r.n(re2), ie2 = function(e2, t3, r2) {
-          return se2(e2.local, t3, r2) === true;
-        }, ae2 = function(e2, t3, r2) {
+        }(), ie2 = r(36), ae2 = r.n(ie2), oe2 = r(37), se2 = r.n(oe2), ce2 = function(e2, t3, r2) {
+          return de2(e2.local, t3, r2) === true;
+        }, ue2 = function(e2, t3, r2) {
           return e2.local.streams && e2.local.streams[t3] && e2.local.streams[t3].stream && e2.local.streams[t3].stream["get".concat(r2 === "video" ? "Video" : "Audio", "Tracks")]()[0];
-        }, oe2 = function(e2, t3, r2, n2) {
-          var i2 = ce2(e2, t3, r2, n2);
+        }, le2 = function(e2, t3, r2, n2) {
+          var i2 = fe2(e2, t3, r2, n2);
           return i2 && i2.pendingTrack;
-        }, se2 = function(e2, t3, r2) {
+        }, de2 = function(e2, t3, r2) {
           if (!e2)
             return false;
           var n2 = function(e3) {
@@ -25841,41 +26619,44 @@ var require_daily_iframe = __commonJS({
                 return !!e3;
             }
           }, i2 = e2.public.subscribedTracks;
-          return i2 && i2[t3] ? n2(i2[t3][r2]) : !i2 || n2(i2.ALL);
-        }, ce2 = function(e2, t3, r2, n2) {
-          var i2 = ne2()(te2()(e2.streams, function(e3) {
+          return i2 && i2[t3] ? ["cam-audio", "cam-video", "screen-video", "screen-audio", "rmpAudio", "rmpVideo"].indexOf(r2) === -1 && i2[t3].custom ? [true, "staged"].includes(i2[t3].custom) ? n2(i2[t3].custom) : n2(i2[t3].custom[r2]) : n2(i2[t3][r2]) : !i2 || n2(i2.ALL);
+        }, fe2 = function(e2, t3, r2, n2) {
+          var i2 = se2()(ae2()(e2.streams, function(e3) {
             return e3.participantId === t3 && e3.type === r2 && e3.pendingTrack && e3.pendingTrack.kind === n2;
           }), "starttime", "desc");
           return i2 && i2[0];
-        }, ue2 = function(e2, t3) {
+        }, pe2 = function(e2, t3) {
           var r2 = e2.local.public.customTracks;
           if (r2 && r2[t3])
             return r2[t3].track;
-        }, le2 = function(e2, t3, r2, n2) {
-          var i2 = "soup-" + r2, a2 = ne2()(te2()(e2.streams, function(e3) {
+        }, he2 = function(e2, t3, r2, n2) {
+          var i2 = "soup-" + r2, a2 = se2()(ae2()(e2.streams, function(e3) {
             return e3.participantId === t3 && e3.streamId === i2 && e3.pendingTrack && e3.pendingTrack.kind === n2;
           }), "starttime", "desc");
           return a2 && a2[0] && a2[0].pendingTrack;
         };
-        function de2(e2) {
+        function ve2(e2) {
           for (var t3 = store.getState(), r2 = 0, n2 = ["cam", "screen"]; r2 < n2.length; r2++)
             for (var i2 = n2[r2], a2 = 0, o2 = ["video", "audio"]; a2 < o2.length; a2++) {
               var s3 = o2[a2], c2 = i2 === "cam" ? s3 : "screen".concat(s3.charAt(0).toUpperCase() + s3.slice(1)), u2 = e2.tracks[c2];
               if (u2) {
-                var l3 = e2.local ? ae2(t3, i2, s3) : oe2(t3, e2.session_id, i2, s3);
+                var l3 = e2.local ? ue2(t3, i2, s3) : le2(t3, e2.session_id, i2, s3);
                 u2.state === "playable" && (u2.track = l3), u2.persistentTrack = l3;
               }
             }
         }
-        function fe2(e2) {
+        function me2(e2) {
           try {
             var t3 = store.getState();
             for (var r2 in e2.tracks)
-              if (!pe2(r2)) {
+              if (!ge2(r2)) {
                 var n2 = e2.tracks[r2].kind;
                 if (n2) {
-                  var i2 = e2.local ? ue2(t3, r2) : le2(t3, e2.session_id, r2, n2), a2 = e2.tracks[r2];
-                  i2 && a2 && a2.state === "playable" && (e2.tracks[r2].track = i2);
+                  var i2 = e2.tracks[r2];
+                  if (i2) {
+                    var a2 = e2.local ? pe2(t3, r2) : he2(t3, e2.session_id, r2, n2);
+                    i2.state === "playable" && (e2.tracks[r2].track = a2), i2.persistentTrack = a2;
+                  }
                 } else
                   console.error("unknown type for custom track");
               }
@@ -25883,10 +26664,10 @@ var require_daily_iframe = __commonJS({
             console.error(e3);
           }
         }
-        function pe2(e2) {
+        function ge2(e2) {
           return ["video", "audio", "screenVideo", "screenAudio"].includes(e2);
         }
-        function he2(e2, t3) {
+        function ye2(e2, t3) {
           var r2 = store.getState();
           if (e2.local) {
             if (e2.audio)
@@ -25916,20 +26697,20 @@ var require_daily_iframe = __commonJS({
               return e2.audio = false, e2.audioTrack = false, e2.video = false, e2.videoTrack = false, e2.screen = false, void (e2.screenTrack = false);
             try {
               r2.streams;
-              if (e2.audio && ie2(r2, e2.session_id, "cam-audio")) {
-                var a2 = oe2(r2, e2.session_id, "cam", "audio");
+              if (e2.audio && ce2(r2, e2.session_id, "cam-audio")) {
+                var a2 = le2(r2, e2.session_id, "cam", "audio");
                 a2 && (t3 && t3.audioTrack && t3.audioTrack.id === a2.id ? e2.audioTrack = a2 : a2.muted || (e2.audioTrack = a2)), e2.audioTrack || (e2.audio = false);
               }
-              if (e2.video && ie2(r2, e2.session_id, "cam-video")) {
-                var o2 = oe2(r2, e2.session_id, "cam", "video");
+              if (e2.video && ce2(r2, e2.session_id, "cam-video")) {
+                var o2 = le2(r2, e2.session_id, "cam", "video");
                 o2 && (t3 && t3.videoTrack && t3.videoTrack.id === o2.id ? e2.videoTrack = o2 : o2.muted || (e2.videoTrack = o2)), e2.videoTrack || (e2.video = false);
               }
-              if (e2.screen && ie2(r2, e2.session_id, "screen-audio")) {
-                var s3 = oe2(r2, e2.session_id, "screen", "audio");
+              if (e2.screen && ce2(r2, e2.session_id, "screen-audio")) {
+                var s3 = le2(r2, e2.session_id, "screen", "audio");
                 s3 && (t3 && t3.screenAudioTrack && t3.screenAudioTrack.id === s3.id ? e2.screenAudioTrack = s3 : s3.muted || (e2.screenAudioTrack = s3));
               }
-              if (e2.screen && ie2(r2, e2.session_id, "screen-video")) {
-                var c2 = oe2(r2, e2.session_id, "screen", "video");
+              if (e2.screen && ce2(r2, e2.session_id, "screen-video")) {
+                var c2 = le2(r2, e2.session_id, "screen", "video");
                 c2 && (t3 && t3.screenVideoTrack && t3.screenVideoTrack.id === c2.id ? e2.screenVideoTrack = c2 : c2.muted || (e2.screenVideoTrack = c2));
               }
               e2.screenVideoTrack || e2.screenAudioTrack || (e2.screen = false);
@@ -25938,7 +26719,7 @@ var require_daily_iframe = __commonJS({
             }
           }
         }
-        function ve2(e2, t3) {
+        function be2(e2, t3) {
           var r2 = Object.keys(e2);
           if (Object.getOwnPropertySymbols) {
             var n2 = Object.getOwnPropertySymbols(e2);
@@ -25948,18 +26729,18 @@ var require_daily_iframe = __commonJS({
           }
           return r2;
         }
-        function ge2(e2) {
+        function _e2(e2) {
           for (var t3 = 1; t3 < arguments.length; t3++) {
             var r2 = arguments[t3] != null ? arguments[t3] : {};
-            t3 % 2 ? ve2(Object(r2), true).forEach(function(t4) {
+            t3 % 2 ? be2(Object(r2), true).forEach(function(t4) {
               S2()(e2, t4, r2[t4]);
-            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e2, Object.getOwnPropertyDescriptors(r2)) : ve2(Object(r2)).forEach(function(t4) {
+            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e2, Object.getOwnPropertyDescriptors(r2)) : be2(Object(r2)).forEach(function(t4) {
               Object.defineProperty(e2, t4, Object.getOwnPropertyDescriptor(r2, t4));
             });
           }
           return e2;
         }
-        function me2(e2) {
+        function we2(e2) {
           var t3 = function() {
             if (typeof Reflect == "undefined" || !Reflect.construct)
               return false;
@@ -25985,17 +26766,17 @@ var require_daily_iframe = __commonJS({
           };
         }
         r.d(t2, "default", function() {
-          return Me2;
+          return Ce2;
         }), r.d(t2, "DAILY_STATE_NEW", function() {
-          return C2;
+          return j2;
         }), r.d(t2, "DAILY_STATE_JOINING", function() {
           return I3;
         }), r.d(t2, "DAILY_STATE_JOINED", function() {
           return N2;
         }), r.d(t2, "DAILY_STATE_LEFT", function() {
-          return F2;
-        }), r.d(t2, "DAILY_STATE_ERROR", function() {
           return R3;
+        }), r.d(t2, "DAILY_STATE_ERROR", function() {
+          return D2;
         }), r.d(t2, "DAILY_TRACK_STATE_BLOCKED", function() {
           return "blocked";
         }), r.d(t2, "DAILY_TRACK_STATE_OFF", function() {
@@ -26064,6 +26845,8 @@ var require_daily_iframe = __commonJS({
           return "participant-updated";
         }), r.d(t2, "DAILY_EVENT_PARTICIPANT_LEFT", function() {
           return "participant-left";
+        }), r.d(t2, "DAILY_EVENT_PARTICIPANT_COUNTS_UPDATED", function() {
+          return "participant-counts-updated";
         }), r.d(t2, "DAILY_EVENT_TRACK_STARTED", function() {
           return "track-started";
         }), r.d(t2, "DAILY_EVENT_TRACK_STOPPED", function() {
@@ -26078,6 +26861,12 @@ var require_daily_iframe = __commonJS({
           return "recording-error";
         }), r.d(t2, "DAILY_EVENT_RECORDING_UPLOAD_COMPLETED", function() {
           return "recording-upload-completed";
+        }), r.d(t2, "DAILY_EVENT_REMOTE_MEDIA_PLAYER_STARTED", function() {
+          return "remote-media-player-started";
+        }), r.d(t2, "DAILY_EVENT_REMOTE_MEDIA_PLAYER_UPDATED", function() {
+          return "remote-media-player-updated";
+        }), r.d(t2, "DAILY_EVENT_REMOTE_MEDIA_PLAYER_STOPPED", function() {
+          return "remote-media-player-stopped";
         }), r.d(t2, "DAILY_EVENT_TRANSCRIPTION_STARTED", function() {
           return "transcription-started";
         }), r.d(t2, "DAILY_EVENT_TRANSCRIPTION_STOPPED", function() {
@@ -26133,23 +26922,23 @@ var require_daily_iframe = __commonJS({
         }), r.d(t2, "DAILY_EVENT_NONFATAL_ERROR", function() {
           return "nonfatal-error";
         });
-        var ye2 = "video", be2 = "voice", _e2 = { androidInCallNotification: { title: "string", subtitle: "string", iconName: "string", disableForCustomOverride: "boolean" }, disableAutoDeviceManagement: { audio: "boolean", video: "boolean" } }, we2 = { url: { validate: function(e2) {
+        var ke2 = "video", Me2 = "voice", Se2 = { present: 0, hidden: 0 }, Ee2 = { maxBitrate: { min: 1e5, max: 25e5 }, maxFramerate: { min: 1, max: 30 }, scaleResolutionDownBy: { min: 1, max: 8 } }, Te2 = ["state", "simulcastEncodings"], Ae2 = { androidInCallNotification: { title: "string", subtitle: "string", iconName: "string", disableForCustomOverride: "boolean" }, disableAutoDeviceManagement: { audio: "boolean", video: "boolean" } }, Oe2 = { id: { iconPath: "string", label: "string", tooltip: "string" } }, xe2 = { customTrayButtons: { validate: Be2, help: "customTrayButtons should be a dictionary of the type ".concat(JSON.stringify(Oe2)) }, url: { validate: function(e2) {
           return typeof e2 == "string";
         }, help: "url should be a string" }, baseUrl: { validate: function(e2) {
           return typeof e2 == "string";
         }, help: "baseUrl should be a string" }, token: { validate: function(e2) {
           return typeof e2 == "string";
         }, help: "token should be a string", queryString: "t" }, dailyConfig: { validate: function(e2) {
-          return window._dailyConfig || (window._dailyConfig = {}), window._dailyConfig.experimentalGetUserMediaConstraintsModify = e2.experimentalGetUserMediaConstraintsModify, delete e2.experimentalGetUserMediaConstraintsModify, true;
+          return window._dailyConfig || (window._dailyConfig = {}), window._dailyConfig.experimentalGetUserMediaConstraintsModify = e2.experimentalGetUserMediaConstraintsModify, delete e2.experimentalGetUserMediaConstraintsModify, window._dailyConfig.userMediaVideoConstraints = e2.userMediaVideoConstraints, delete e2.userMediaVideoConstraints, true;
         } }, reactNativeConfig: { validate: function(e2) {
           return function e3(t3, r2) {
             if (r2 === void 0)
               return false;
-            switch (A3()(r2)) {
+            switch (T2()(r2)) {
               case "string":
-                return A3()(t3) === r2;
+                return T2()(t3) === r2;
               case "object":
-                if (A3()(t3) !== "object")
+                if (T2()(t3) !== "object")
                   return false;
                 for (var n2 in t3)
                   if (!e3(t3[n2], r2[n2]))
@@ -26158,8 +26947,8 @@ var require_daily_iframe = __commonJS({
               default:
                 return false;
             }
-          }(e2, _e2);
-        }, help: "reactNativeConfig should look like ".concat(JSON.stringify(_e2), ", all fields optional") }, lang: { validate: function(e2) {
+          }(e2, Ae2);
+        }, help: "reactNativeConfig should look like ".concat(JSON.stringify(Ae2), ", all fields optional") }, lang: { validate: function(e2) {
           return ["de", "en-us", "en", "es", "fi", "fr", "it", "jp", "ka", "nl", "no", "pl", "pt", "ru", "sv", "tr", "user"].includes(e2);
         }, help: "language not supported. Options are: de, en-us, en, es, fi, fr, it, jp, ka, nl, no, pl, pt, ru, sv, tr, user" }, userName: true, activeSpeakerMode: true, showLeaveButton: true, showLocalVideo: true, showParticipantsBar: true, showFullscreenButton: true, iframeStyle: true, customLayout: true, cssFile: true, cssText: true, bodyClass: true, videoSource: { validate: function(e2, t3) {
           return t3._preloadCache.videoDeviceId = e2, true;
@@ -26178,7 +26967,7 @@ var require_daily_iframe = __commonJS({
             }
             return true;
           };
-          return A3()(e2) === "object" && ("light" in e2 && "dark" in e2 || "colors" in e2) ? "light" in e2 && "dark" in e2 ? "colors" in e2.light ? "colors" in e2.dark ? r2(e2.light.colors) && r2(e2.dark.colors) : (console.error('Dark theme is missing "colors" property.', e2), false) : (console.error('Light theme is missing "colors" property.', e2), false) : r2(e2.colors) : (console.error('Theme must contain either both "light" and "dark" properties, or "colors".', e2), false);
+          return T2()(e2) === "object" && ("light" in e2 && "dark" in e2 || "colors" in e2) ? "light" in e2 && "dark" in e2 ? "colors" in e2.light ? "colors" in e2.dark ? r2(e2.light.colors) && r2(e2.dark.colors) : (console.error('Dark theme is missing "colors" property.', e2), false) : (console.error('Light theme is missing "colors" property.', e2), false) : r2(e2.colors) : (console.error('Theme must contain either both "light" and "dark" properties, or "colors".', e2), false);
         }, help: "unsupported theme configuration. Check error logs for detailed info." }, layoutConfig: { validate: function(e2) {
           if ("grid" in e2) {
             var t3 = e2.grid;
@@ -26199,12 +26988,12 @@ var require_daily_iframe = __commonJS({
           }
           return true;
         }, help: "unsupported layoutConfig. Check error logs for detailed info." }, receiveSettings: { validate: function(e2) {
-          return Ee2(e2, { allowAllParticipantsKey: false });
-        }, help: Pe2({ allowAllParticipantsKey: false }) }, inputSettings: { validate: function(e2) {
-          return Oe2(e2);
-        }, help: xe2() }, layout: { validate: function(e2) {
+          return Ne2(e2, { allowAllParticipantsKey: false });
+        }, help: Fe2({ allowAllParticipantsKey: false }) }, inputSettings: { validate: function(e2) {
+          return Re2(e2);
+        }, help: De2() }, layout: { validate: function(e2) {
           return e2 === "custom-v1" || e2 === "browser" || e2 === "none";
-        }, help: 'layout may only be set to "custom-v1"', queryString: "layout" }, emb: { queryString: "emb" }, embHref: { queryString: "embHref" }, dailyJsVersion: { queryString: "dailyJsVersion" } }, ke2 = { styles: { validate: function(e2) {
+        }, help: 'layout may only be set to "custom-v1"', queryString: "layout" }, emb: { queryString: "emb" }, embHref: { queryString: "embHref" }, dailyJsVersion: { queryString: "dailyJsVersion" } }, Pe2 = { styles: { validate: function(e2) {
           for (var t3 in e2)
             if (t3 !== "cam" && t3 !== "screen")
               return false;
@@ -26223,49 +27012,98 @@ var require_daily_iframe = __commonJS({
           if (t3._preloadCache.subscribeToTracksAutomatically)
             return false;
           var n2 = [true, false, "staged"];
-          if (n2.includes(e2) || !Object(V2.c)() && e2 === "avatar")
+          if (n2.includes(e2) || !Object(G2.d)() && e2 === "avatar")
             return true;
-          for (var i2 in e2)
-            if (!["audio", "video", "screenAudio", "screenVideo"].includes(i2) || !n2.includes(e2[i2]))
-              return false;
-          return true;
-        }, help: "setSubscribedTracks cannot be used when setSubscribeToTracksAutomatically is enabled, and should be of the form: " + "true".concat(Object(V2.c)() ? "" : " | 'avatar'", " | false | 'staged' | { [audio: true|false|'staged'], [video: true|false|'staged'], [screenAudio: true|false|'staged'], [screenVideo: true|false|'staged'] }") }, setAudio: true, setVideo: true, eject: true }, Me2 = function(e2) {
-          y2()(Y3, e2);
-          var t3, r2, n2, i2, a2, s3, u2, d3, p3, v3, m2, b2, _2, w3, k3, M3, T3, E3, P3, D3, B3 = me2(Y3);
-          function Y3(e3) {
+          var i2 = ["audio", "video", "screenAudio", "screenVideo", "rmpAudio", "rmpVideo"];
+          return function e3(t4) {
+            var r3 = arguments.length > 1 && arguments[1] !== void 0 && arguments[1];
+            for (var a2 in t4)
+              if (a2 === "custom") {
+                var o2 = n2.includes(t4[a2]);
+                if (!o2 && !e3(t4[a2], true))
+                  return false;
+              } else {
+                var s3 = !r3 && !i2.includes(a2), c2 = !n2.includes(t4[a2]);
+                if (s3 || c2)
+                  return false;
+              }
+            return true;
+          }(e2);
+        }, help: "setSubscribedTracks cannot be used when setSubscribeToTracksAutomatically is enabled, and should be of the form: " + "true".concat(Object(G2.d)() ? "" : " | 'avatar'", " | false | 'staged' | { [audio: true|false|'staged'], [video: true|false|'staged'], [screenAudio: true|false|'staged'], [screenVideo: true|false|'staged'] }") }, setAudio: true, setVideo: true, eject: true }, Ce2 = function(e2) {
+          y2()($3, e2);
+          var t3, r2, n2, i2, a2, s3, u2, d3, p3, v3, g2, b2, _2, w3, k3, M3, E3, A4, P3, F3, Y3, q3, W3, z3, K3 = we2($3);
+          function $3(e3) {
             var t4, r3 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-            if (f()(this, Y3), t4 = B3.call(this), S2()(h()(t4), "handleNativeAppActiveStateChange", function(e4) {
+            if (f()(this, $3), t4 = K3.call(this), S2()(h()(t4), "startListeningForDeviceChanges", function() {
+              navigator.mediaDevices.ondevicechange !== void 0 || Object(G2.d)() ? navigator.mediaDevices.addEventListener("devicechange", t4.deviceChangeListener) : t4.startPollingForDeviceChanges();
+            }), S2()(h()(t4), "stopListeningForDeviceChanges", function() {
+              navigator.mediaDevices.ondevicechange !== void 0 || Object(G2.d)() ? navigator.mediaDevices.removeEventListener("devicechange", t4.deviceChangeListener) : t4.stopPollingForDeviceChanges();
+            }), S2()(h()(t4), "deviceChangeListener", l2()(c.a.mark(function e4() {
+              var r4;
+              return c.a.wrap(function(e5) {
+                for (; ; )
+                  switch (e5.prev = e5.next) {
+                    case 0:
+                      return e5.next = 2, t4.enumerateDevices();
+                    case 2:
+                      r4 = e5.sent, t4.handleDeviceChange(r4.devices);
+                    case 4:
+                    case "end":
+                      return e5.stop();
+                  }
+              }, e4);
+            }))), S2()(h()(t4), "handleDeviceChange", function(e4) {
+              t4.emit("available-devices-updated", { action: "available-devices-updated", availableDevices: e4 });
+            }), S2()(h()(t4), "startPollingForDeviceChanges", function() {
+              t4._deviceChangeInterval || (t4._deviceChangeInterval = setInterval(l2()(c.a.mark(function e4() {
+                var r4, n4;
+                return c.a.wrap(function(e5) {
+                  for (; ; )
+                    switch (e5.prev = e5.next) {
+                      case 0:
+                        return e5.next = 2, t4.enumerateDevices();
+                      case 2:
+                        r4 = e5.sent, n4 = JSON.stringify(r4), t4._lastDevicesJSON && n4 !== t4._lastDevicesJSON && t4.handleDeviceChange(r4.devices), t4._lastDevicesJSON = n4;
+                      case 6:
+                      case "end":
+                        return e5.stop();
+                    }
+                }, e4);
+              })), 3e3));
+            }), S2()(h()(t4), "stopPollingForDeviceChanges", function() {
+              t4._deviceChangeInterval && (clearInterval(t4._deviceChangeInterval), t4._deviceChangeInterval = null, t4._lastDevicesJSON = null);
+            }), S2()(h()(t4), "handleNativeAppActiveStateChange", function(e4) {
               t4.disableReactNativeAutoDeviceManagement("video") || (e4 ? t4.camUnmutedBeforeLosingNativeActiveState && t4.setLocalVideo(true) : (t4.camUnmutedBeforeLosingNativeActiveState = t4.localVideo(), t4.camUnmutedBeforeLosingNativeActiveState && t4.setLocalVideo(false)));
             }), S2()(h()(t4), "handleNativeAudioFocusChange", function(e4) {
               t4.disableReactNativeAutoDeviceManagement("audio") || (t4._hasNativeAudioFocus = e4, t4.toggleParticipantAudioBasedOnNativeAudioFocus(), t4._hasNativeAudioFocus ? t4.micUnmutedBeforeLosingNativeAudioFocus && t4.setLocalAudio(true) : (t4.micUnmutedBeforeLosingNativeAudioFocus = t4.localAudio(), t4.setLocalAudio(false)));
-            }), r3.dailyJsVersion = "0.21.0", t4._iframe = e3, t4._callObjectMode = r3.layout === "none" && !t4._iframe, t4._preloadCache = { subscribeToTracksAutomatically: true, audioDeviceId: null, videoDeviceId: null, outputDeviceId: null }, t4._callObjectMode && (window._dailyPreloadCache = t4._preloadCache), r3.showLocalVideo !== void 0 ? t4._callObjectMode ? console.error("showLocalVideo is not available in call object mode") : t4._showLocalVideo = !!r3.showLocalVideo : t4._showLocalVideo = true, r3.showParticipantsBar !== void 0 ? t4._callObjectMode ? console.error("showParticipantsBar is not available in call object mode") : t4._showParticipantsBar = !!r3.showParticipantsBar : t4._showParticipantsBar = true, r3.activeSpeakerMode !== void 0 ? t4._callObjectMode ? console.error("activeSpeakerMode is not available in call object mode") : t4._activeSpeakerMode = !!r3.activeSpeakerMode : t4._activeSpeakerMode = false, r3.receiveSettings ? t4._callObjectMode ? t4._receiveSettings = r3.receiveSettings : console.error("receiveSettings is only available in call object mode") : t4._receiveSettings = {}, t4._inputSettings = {}, r3.inputSettings && (t4._inputSettings = r3.inputSettings), t4.validateProperties(r3), t4.properties = ge2({}, r3), t4._callObjectLoader = t4._callObjectMode ? new Q2() : null, t4._meetingState = C2, t4._isPreparingToJoin = false, t4._accessState = { access: "unknown" }, t4._nativeInCallAudioMode = ye2, t4._participants = {}, t4._waitingParticipants = {}, t4._inputEventsOn = {}, t4._network = { threshold: "good", quality: 100 }, t4._activeSpeaker = {}, t4._callFrameId = Object(U2.c)(), t4._messageChannel = Object(V2.c)() ? new z2.a() : new W2(), t4._iframe && (t4._iframe.requestFullscreen ? t4._iframe.addEventListener("fullscreenchange", function(e4) {
+            }), r3.dailyJsVersion = $3.version(), t4._iframe = e3, t4._callObjectMode = r3.layout === "none" && !t4._iframe, t4._preloadCache = { subscribeToTracksAutomatically: true, audioDeviceId: null, videoDeviceId: null, outputDeviceId: null }, t4._callObjectMode && (window._dailyPreloadCache = t4._preloadCache), r3.showLocalVideo !== void 0 ? t4._callObjectMode ? console.error("showLocalVideo is not available in call object mode") : t4._showLocalVideo = !!r3.showLocalVideo : t4._showLocalVideo = true, r3.showParticipantsBar !== void 0 ? t4._callObjectMode ? console.error("showParticipantsBar is not available in call object mode") : t4._showParticipantsBar = !!r3.showParticipantsBar : t4._showParticipantsBar = true, r3.customTrayButtons !== void 0 ? t4._callObjectMode ? console.error("customTrayButtons is not available in call object mode") : t4._customTrayButtons = r3.customTrayButtons : t4._customTrayButtons = {}, r3.activeSpeakerMode !== void 0 ? t4._callObjectMode ? console.error("activeSpeakerMode is not available in call object mode") : t4._activeSpeakerMode = !!r3.activeSpeakerMode : t4._activeSpeakerMode = false, r3.receiveSettings ? t4._callObjectMode ? t4._receiveSettings = r3.receiveSettings : console.error("receiveSettings is only available in call object mode") : t4._receiveSettings = {}, t4._inputSettings = {}, r3.inputSettings && (t4._inputSettings = r3.inputSettings), t4.validateProperties(r3), t4.properties = _e2({}, r3), t4._callObjectLoader = t4._callObjectMode ? new ee2() : null, t4._meetingState = j2, t4._isPreparingToJoin = false, t4._accessState = { access: "unknown" }, t4._nativeInCallAudioMode = ke2, t4._participants = {}, t4._participantCounts = Se2, t4._rmpPlayerState = {}, t4._waitingParticipants = {}, t4._inputEventsOn = {}, t4._network = { threshold: "good", quality: 100 }, t4._activeSpeaker = {}, t4._callFrameId = Object(J2.c)(), t4._messageChannel = Object(G2.d)() ? new Q2.a() : new H4(), t4._iframe && (t4._iframe.requestFullscreen ? t4._iframe.addEventListener("fullscreenchange", function(e4) {
               document.fullscreenElement === t4._iframe ? (t4.emit("fullscreen", { action: "fullscreen" }), t4.sendMessageToCallMachine({ action: "fullscreen" })) : (t4.emit("exited-fullscreen", { action: "exited-fullscreen" }), t4.sendMessageToCallMachine({ action: "exited-fullscreen" }));
             }) : t4._iframe.webkitRequestFullscreen && t4._iframe.addEventListener("webkitfullscreenchange", function(e4) {
               document.webkitFullscreenElement === t4._iframe ? (t4.emit("fullscreen", { action: "fullscreen" }), t4.sendMessageToCallMachine({ action: "fullscreen" })) : (t4.emit("exited-fullscreen", { action: "exited-fullscreen" }), t4.sendMessageToCallMachine({ action: "exited-fullscreen" }));
-            })), Object(V2.c)()) {
+            })), Object(G2.d)()) {
               var n3 = t4.nativeUtils();
               n3.addAudioFocusChangeListener && n3.removeAudioFocusChangeListener && n3.addAppActiveStateChangeListener && n3.removeAppActiveStateChangeListener || console.warn("expected (add|remove)(AudioFocus|AppActiveState)ChangeListener to be available in React Native"), t4._hasNativeAudioFocus = true, n3.addAudioFocusChangeListener(t4.handleNativeAudioFocusChange), n3.addAppActiveStateChangeListener(t4.handleNativeAppActiveStateChange);
             }
-            return t4._messageChannel.addListenerForMessagesFromCallMachine(t4.handleMessageFromCallMachine, t4._callFrameId, h()(t4)), t4;
+            return t4._callObjectMode && t4.startListeningForDeviceChanges(), t4._messageChannel.addListenerForMessagesFromCallMachine(t4.handleMessageFromCallMachine, t4._callFrameId, h()(t4)), t4;
           }
-          return g()(Y3, null, [{ key: "supportedBrowser", value: function() {
-            if (Object(V2.c)())
+          return m()($3, null, [{ key: "supportedBrowser", value: function() {
+            if (Object(G2.d)())
               return { supported: true, mobile: true, name: "React Native", version: null, supportsScreenShare: false, supportsSfu: true, supportsVideoProcessing: false };
-            var e3 = j2.a.getParser(Object(V2.b)());
-            return { supported: !!Object(V2.a)(), mobile: e3.getPlatformType() === "mobile", name: e3.getBrowserName(), version: e3.getBrowserVersion(), supportsScreenShare: !!Object(V2.d)(), supportsSfu: !!Object(V2.e)(), supportsVideoProcessing: Object(V2.f)() };
+            var e3 = C2.a.getParser(Object(G2.b)());
+            return { supported: !!Object(G2.a)(), mobile: e3.getPlatformType() === "mobile", name: e3.getBrowserName(), version: e3.getBrowserVersion(), supportsFullscreen: !!Object(G2.c)(), supportsScreenShare: !!Object(G2.e)(), supportsSfu: !!Object(G2.f)(), supportsVideoProcessing: Object(G2.g)() };
           } }, { key: "version", value: function() {
-            return "0.21.0";
+            return "0.26.0";
           } }, { key: "createCallObject", value: function() {
             var e3 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-            return e3.layout = "none", new Y3(null, e3);
+            return e3.layout = "none", new $3(null, e3);
           } }, { key: "wrap", value: function(e3) {
             var t4 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-            if (Te2(), !e3 || !e3.contentWindow || typeof e3.src != "string")
+            if (Le2(), !e3 || !e3.contentWindow || typeof e3.src != "string")
               throw new Error("DailyIframe::Wrap needs an iframe-like first argument");
-            return t4.layout || (t4.customLayout ? t4.layout = "custom-v1" : t4.layout = "browser"), new Y3(e3, t4);
+            return t4.layout || (t4.customLayout ? t4.layout = "custom-v1" : t4.layout = "browser"), new $3(e3, t4);
           } }, { key: "createFrame", value: function(e3, t4) {
             var r3, n3;
-            Te2(), e3 && t4 ? (r3 = e3, n3 = t4) : e3 && e3.append ? (r3 = e3, n3 = {}) : (r3 = document.body, n3 = e3 || {});
+            Le2(), e3 && t4 ? (r3 = e3, n3 = t4) : e3 && e3.append ? (r3 = e3, n3 = {}) : (r3 = document.body, n3 = e3 || {});
             var i3 = n3.iframeStyle;
             i3 || (i3 = r3 === document.body ? { position: "fixed", border: "1px solid black", backgroundColor: "white", width: "375px", height: "450px", right: "1em", bottom: "1em" } : { border: 0, width: "100%", height: "100%" });
             var a3 = document.createElement("iframe");
@@ -26273,16 +27111,16 @@ var require_daily_iframe = __commonJS({
               return a3.style[e4] = i3[e4];
             }), n3.layout || (n3.customLayout ? n3.layout = "custom-v1" : n3.layout = "browser");
             try {
-              return new Y3(a3, n3);
+              return new $3(a3, n3);
             } catch (e4) {
               throw r3.removeChild(a3), e4;
             }
           } }, { key: "createTransparentFrame", value: function() {
             var e3 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-            Te2();
+            Le2();
             var t4 = document.createElement("iframe");
-            return t4.allow = "microphone; camera; autoplay", t4.style.cssText = "\n      position: fixed;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      border: 0;\n      pointer-events: none;\n    ", document.body.appendChild(t4), e3.layout || (e3.layout = "custom-v1"), Y3.wrap(t4, e3);
-          } }]), g()(Y3, [{ key: "destroy", value: (D3 = l2()(c.a.mark(function e3() {
+            return t4.allow = "microphone; camera; autoplay", t4.style.cssText = "\n      position: fixed;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      border: 0;\n      pointer-events: none;\n    ", document.body.appendChild(t4), e3.layout || (e3.layout = "custom-v1"), $3.wrap(t4, e3);
+          } }]), m()($3, [{ key: "destroy", value: (z3 = l2()(c.a.mark(function e3() {
             var t4, r3, n3;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26299,19 +27137,19 @@ var require_daily_iframe = __commonJS({
                   case 6:
                     e4.prev = 6, e4.t0 = e4.catch(0);
                   case 8:
-                    (t4 = this._iframe) && (r3 = t4.parentElement) && r3.removeChild(t4), this._messageChannel.removeListener(this.handleMessageFromCallMachine), Object(V2.c)() && ((n3 = this.nativeUtils()).removeAudioFocusChangeListener(this.handleNativeAudioFocusChange), n3.removeAppActiveStateChangeListener(this.handleNativeAppActiveStateChange)), this.resetMeetingDependentVars();
-                  case 13:
+                    (t4 = this._iframe) && (r3 = t4.parentElement) && r3.removeChild(t4), this._messageChannel.removeListener(this.handleMessageFromCallMachine), Object(G2.d)() && ((n3 = this.nativeUtils()).removeAudioFocusChangeListener(this.handleNativeAudioFocusChange), n3.removeAppActiveStateChangeListener(this.handleNativeAppActiveStateChange)), this._callObjectMode && this.stopListeningForDeviceChanges(), this.resetMeetingDependentVars();
+                  case 14:
                   case "end":
                     return e4.stop();
                 }
             }, e3, this, [[0, 6]]);
           })), function() {
-            return D3.apply(this, arguments);
+            return z3.apply(this, arguments);
           }) }, { key: "loadCss", value: function(e3) {
             var t4 = e3.bodyClass, r3 = e3.cssFile, n3 = e3.cssText;
-            return Te2(), this.sendMessageToCallMachine({ action: "load-css", cssFile: this.absoluteUrl(r3), bodyClass: t4, cssText: n3 }), this;
+            return Le2(), this.sendMessageToCallMachine({ action: "load-css", cssFile: this.absoluteUrl(r3), bodyClass: t4, cssText: n3 }), this;
           } }, { key: "iframe", value: function() {
-            return Te2(), this._iframe;
+            return Le2(), this._iframe;
           } }, { key: "meetingState", value: function() {
             return this._meetingState;
           } }, { key: "accessState", value: function() {
@@ -26320,16 +27158,18 @@ var require_daily_iframe = __commonJS({
             return this._accessState;
           } }, { key: "participants", value: function() {
             return this._participants;
+          } }, { key: "participantCounts", value: function() {
+            return this._participantCounts;
           } }, { key: "waitingParticipants", value: function() {
             if (!this._callObjectMode)
               throw new Error("waitingParticipants() currently only supported in call object mode");
             return this._waitingParticipants;
           } }, { key: "validateParticipantProperties", value: function(e3, t4) {
             for (var r3 in t4) {
-              if (!ke2[r3])
+              if (!Pe2[r3])
                 throw new Error("unrecognized updateParticipant property ".concat(r3));
-              if (ke2[r3].validate && !ke2[r3].validate(t4[r3], this, this._participants[e3]))
-                throw new Error(ke2[r3].help);
+              if (Pe2[r3].validate && !Pe2[r3].validate(t4[r3], this, this._participants[e3]))
+                throw new Error(Pe2[r3].help);
             }
           } }, { key: "updateParticipant", value: function(e3, t4) {
             return this._participants.local && this._participants.local.session_id === e3 && (e3 = "local"), e3 && t4 && this._participants[e3] && (this.validateParticipantProperties(e3, t4), this.sendMessageToCallMachine({ action: "update-participant", id: e3, properties: t4 })), this;
@@ -26338,7 +27178,7 @@ var require_daily_iframe = __commonJS({
             for (var r3 in e3)
               r3 === t4 && (r3 = "local"), r3 && e3[r3] && (this._participants[r3] || r3 === "*") ? this.validateParticipantProperties(r3, e3[r3]) : (console.warn("unrecognized participant in updateParticipants: ".concat(r3)), delete e3[r3]);
             return this.sendMessageToCallMachine({ action: "update-participants", participants: e3 }), this;
-          } }, { key: "updateWaitingParticipant", value: (P3 = l2()(c.a.mark(function e3() {
+          } }, { key: "updateWaitingParticipant", value: (W3 = l2()(c.a.mark(function e3() {
             var t4, r3, n3 = this, i3 = arguments;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26356,7 +27196,7 @@ var require_daily_iframe = __commonJS({
                     }
                     throw new Error("updateWaitingParticipant() only supported for joined meetings");
                   case 6:
-                    if (typeof t4 == "string" && A3()(r3) === "object") {
+                    if (typeof t4 == "string" && T2()(r3) === "object") {
                       e4.next = 8;
                       break;
                     }
@@ -26373,8 +27213,8 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function() {
-            return P3.apply(this, arguments);
-          }) }, { key: "updateWaitingParticipants", value: (E3 = l2()(c.a.mark(function e3() {
+            return W3.apply(this, arguments);
+          }) }, { key: "updateWaitingParticipants", value: (q3 = l2()(c.a.mark(function e3() {
             var t4, r3 = this, n3 = arguments;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26392,7 +27232,7 @@ var require_daily_iframe = __commonJS({
                     }
                     throw new Error("updateWaitingParticipants() only supported for joined meetings");
                   case 5:
-                    if (A3()(t4) === "object") {
+                    if (T2()(t4) === "object") {
                       e4.next = 7;
                       break;
                     }
@@ -26409,8 +27249,8 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function() {
-            return E3.apply(this, arguments);
-          }) }, { key: "requestAccess", value: (T3 = l2()(c.a.mark(function e3() {
+            return q3.apply(this, arguments);
+          }) }, { key: "requestAccess", value: (Y3 = l2()(c.a.mark(function e3() {
             var t4, r3, n3, i3, a3, o2 = this, s4 = arguments;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26439,7 +27279,7 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function() {
-            return T3.apply(this, arguments);
+            return Y3.apply(this, arguments);
           }) }, { key: "localAudio", value: function() {
             return this._participants.local ? this._participants.local.audio : null;
           } }, { key: "localVideo", value: function() {
@@ -26448,7 +27288,7 @@ var require_daily_iframe = __commonJS({
             return this.sendMessageToCallMachine({ action: "local-audio", state: e3 }), this;
           } }, { key: "setLocalVideo", value: function(e3) {
             return this.sendMessageToCallMachine({ action: "local-video", state: e3 }), this;
-          } }, { key: "getReceiveSettings", value: (M3 = l2()(c.a.mark(function e3(t4) {
+          } }, { key: "getReceiveSettings", value: (F3 = l2()(c.a.mark(function e3(t4) {
             var r3, n3, i3, a3 = this, o2 = arguments;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26460,7 +27300,7 @@ var require_daily_iframe = __commonJS({
                     }
                     throw new Error("getReceiveSettings() only supported in call object mode");
                   case 3:
-                    e4.t0 = A3()(t4), e4.next = e4.t0 === "string" ? 6 : e4.t0 === "undefined" ? 7 : 8;
+                    e4.t0 = T2()(t4), e4.next = e4.t0 === "string" ? 6 : e4.t0 === "undefined" ? 7 : 8;
                     break;
                   case 6:
                     return e4.abrupt("return", new Promise(function(e5) {
@@ -26478,8 +27318,8 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function(e3) {
-            return M3.apply(this, arguments);
-          }) }, { key: "updateReceiveSettings", value: (k3 = l2()(c.a.mark(function e3(t4) {
+            return F3.apply(this, arguments);
+          }) }, { key: "updateReceiveSettings", value: (P3 = l2()(c.a.mark(function e3(t4) {
             var r3 = this;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26491,11 +27331,11 @@ var require_daily_iframe = __commonJS({
                     }
                     throw new Error("updateReceiveSettings() only supported in call object mode");
                   case 2:
-                    if (Ee2(t4, { allowAllParticipantsKey: true })) {
+                    if (Ne2(t4, { allowAllParticipantsKey: true })) {
                       e4.next = 4;
                       break;
                     }
-                    throw new Error(Pe2({ allowAllParticipantsKey: true }));
+                    throw new Error(Fe2({ allowAllParticipantsKey: true }));
                   case 4:
                     if (this._meetingState === N2) {
                       e4.next = 6;
@@ -26514,39 +27354,38 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function(e3) {
-            return k3.apply(this, arguments);
+            return P3.apply(this, arguments);
           }) }, { key: "getInputSettings", value: function() {
-            return this._inputSettings;
-          } }, { key: "updateInputSettings", value: (w3 = l2()(c.a.mark(function e3(t4) {
+            var e3 = this;
+            return new Promise(function(t4) {
+              t4(e3._inputSettings);
+            });
+          } }, { key: "updateInputSettings", value: (A4 = l2()(c.a.mark(function e3(t4) {
             var r3 = this;
             return c.a.wrap(function(e4) {
               for (; ; )
                 switch (e4.prev = e4.next) {
                   case 0:
-                    if (Oe2(t4)) {
-                      e4.next = 2;
-                      break;
-                    }
-                    throw new Error(xe2());
-                  case 2:
-                    return e4.abrupt("return", new Promise(function(e5) {
+                    return e4.abrupt("return", new Promise(function(e5, n3) {
+                      if (!Re2(t4))
+                        return console.error(De2()), void n3(De2());
                       r3.sendMessageToCallMachine({ action: "update-input-settings", inputSettings: t4 }, function(t5) {
-                        e5({ inputSettings: t5.inputSettings });
+                        t5.error ? n3(t5.error) : e5({ inputSettings: t5.inputSettings });
                       });
                     }));
-                  case 3:
+                  case 1:
                   case "end":
                     return e4.stop();
                 }
             }, e3);
           })), function(e3) {
-            return w3.apply(this, arguments);
+            return A4.apply(this, arguments);
           }) }, { key: "setBandwidth", value: function(e3) {
             var t4 = e3.kbs, r3 = e3.trackConstraints;
-            return Te2(), this.sendMessageToCallMachine({ action: "set-bandwidth", kbs: t4, trackConstraints: r3 }), this;
+            return Le2(), this.sendMessageToCallMachine({ action: "set-bandwidth", kbs: t4, trackConstraints: r3 }), this;
           } }, { key: "getDailyLang", value: function() {
             var e3 = this;
-            return Te2(), new Promise(function() {
+            return Le2(), new Promise(function() {
               var t4 = l2()(c.a.mark(function t5(r3) {
                 var n3;
                 return c.a.wrap(function(t6) {
@@ -26567,8 +27406,8 @@ var require_daily_iframe = __commonJS({
               };
             }());
           } }, { key: "setDailyLang", value: function(e3) {
-            return Te2(), this.sendMessageToCallMachine({ action: "set-daily-lang", lang: e3 }), this;
-          } }, { key: "getMeetingSession", value: (_2 = l2()(c.a.mark(function e3() {
+            return Le2(), this.sendMessageToCallMachine({ action: "set-daily-lang", lang: e3 }), this;
+          } }, { key: "getMeetingSession", value: (E3 = l2()(c.a.mark(function e3() {
             var t4 = this;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26606,7 +27445,7 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function() {
-            return _2.apply(this, arguments);
+            return E3.apply(this, arguments);
           }) }, { key: "setUserName", value: function(e3, t4) {
             var r3 = this;
             return this.properties.userName = e3, new Promise(function() {
@@ -26618,7 +27457,7 @@ var require_daily_iframe = __commonJS({
                       case 0:
                         a3 = function(e4) {
                           delete e4.action, delete e4.callbackStamp, i3(e4);
-                        }, r3.sendMessageToCallMachine({ action: "set-user-name", name: e3 != null ? e3 : "", thisMeetingOnly: Object(V2.c)() || !!t4 && !!t4.thisMeetingOnly }, a3);
+                        }, r3.sendMessageToCallMachine({ action: "set-user-name", name: e3 != null ? e3 : "", thisMeetingOnly: Object(G2.d)() || !!t4 && !!t4.thisMeetingOnly }, a3);
                       case 2:
                       case "end":
                         return n5.stop();
@@ -26631,6 +27470,10 @@ var require_daily_iframe = __commonJS({
             }());
           } }, { key: "startCamera", value: function() {
             var e3 = this, t4 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+            if (!this._callObjectMode)
+              throw new Error("startCamera() currently only supported in call object mode");
+            if ([I3, N2].includes(this._meetingState))
+              throw new Error("startCamera() not supported after joining a meeting: did you mean to use setLocalAudio() and/or setLocalVideo() instead?");
             return new Promise(function() {
               var r3 = l2()(c.a.mark(function r4(n3, i3) {
                 var a3;
@@ -26641,7 +27484,7 @@ var require_daily_iframe = __commonJS({
                         if (a3 = function(e4) {
                           delete e4.action, delete e4.callbackStamp, n3(e4);
                         }, !e3.needsLoad()) {
-                          r5.next = 10;
+                          r5.next = 12;
                           break;
                         }
                         return r5.prev = 2, r5.next = 5, e3.load(t4);
@@ -26651,8 +27494,13 @@ var require_daily_iframe = __commonJS({
                       case 7:
                         r5.prev = 7, r5.t0 = r5.catch(2), i3(r5.t0);
                       case 10:
-                        e3.sendMessageToCallMachine({ action: "start-camera", properties: Se2(e3.properties), preloadCache: Se2(e3._preloadCache) }, a3);
-                      case 11:
+                        r5.next = 13;
+                        break;
+                      case 12:
+                        e3.validateProperties(t4);
+                      case 13:
+                        e3.sendMessageToCallMachine({ action: "start-camera", properties: je2(e3.properties), preloadCache: je2(e3._preloadCache) }, a3);
+                      case 14:
                       case "end":
                         return r5.stop();
                     }
@@ -26662,7 +27510,32 @@ var require_daily_iframe = __commonJS({
                 return r3.apply(this, arguments);
               };
             }());
-          } }, { key: "cycleCamera", value: function() {
+          } }, { key: "setCamera", value: function(e3) {
+            var t4 = this;
+            if (Ie2(), this.needsLoad())
+              throw new Error("Before you can invoke setCamera, first you need to invoke one of these methods: join, startCamera, or preAuth");
+            return new Promise(function(r3, n3) {
+              t4.sendMessageToCallMachine({ action: "set-camera", cameraDeviceId: e3 }, function(e4) {
+                r3({ device: e4.device });
+              });
+            });
+          } }, { key: "setAudioDevice", value: (M3 = l2()(c.a.mark(function e3(t4) {
+            var r3;
+            return c.a.wrap(function(e4) {
+              for (; ; )
+                switch (e4.prev = e4.next) {
+                  case 0:
+                    return Ie2(), this.nativeUtils().setAudioDevice(t4), e4.next = 4, this.nativeUtils().getAudioDevice();
+                  case 4:
+                    return r3 = e4.sent, e4.abrupt("return", { deviceId: r3 });
+                  case 6:
+                  case "end":
+                    return e4.stop();
+                }
+            }, e3, this);
+          })), function(e3) {
+            return M3.apply(this, arguments);
+          }) }, { key: "cycleCamera", value: function() {
             var e3 = this;
             return new Promise(function(t4, r3) {
               e3.sendMessageToCallMachine({ action: "cycle-camera" }, function(e4) {
@@ -26671,14 +27544,14 @@ var require_daily_iframe = __commonJS({
             });
           } }, { key: "cycleMic", value: function() {
             var e3 = this;
-            return Te2(), new Promise(function(t4, r3) {
+            return Le2(), new Promise(function(t4, r3) {
               e3.sendMessageToCallMachine({ action: "cycle-mic" }, function(e4) {
                 t4({ device: e4.device });
               });
             });
           } }, { key: "getCameraFacingMode", value: function() {
             var e3 = this;
-            return Ae2(), new Promise(function(t4, r3) {
+            return Ie2(), new Promise(function(t4, r3) {
               e3.sendMessageToCallMachine({ action: "get-camera-facing-mode" }, function(e4) {
                 t4(e4.facingMode);
               });
@@ -26686,13 +27559,13 @@ var require_daily_iframe = __commonJS({
           } }, { key: "setInputDevices", value: function(e3) {
             var t4 = e3.audioDeviceId, r3 = e3.videoDeviceId, n3 = e3.audioSource, i3 = e3.videoSource;
             return console.warn("setInputDevices() is deprecated: instead use setInputDevicesAsync(), which returns a Promise"), this.setInputDevicesAsync({ audioDeviceId: t4, videoDeviceId: r3, audioSource: n3, videoSource: i3 }), this;
-          } }, { key: "setInputDevicesAsync", value: (b2 = l2()(c.a.mark(function e3(t4) {
+          } }, { key: "setInputDevicesAsync", value: (k3 = l2()(c.a.mark(function e3(t4) {
             var r3, n3, i3, a3, o2 = this;
             return c.a.wrap(function(e4) {
               for (; ; )
                 switch (e4.prev = e4.next) {
                   case 0:
-                    if (r3 = t4.audioDeviceId, n3 = t4.videoDeviceId, i3 = t4.audioSource, a3 = t4.videoSource, Te2(), i3 !== void 0 && (r3 = i3), a3 !== void 0 && (n3 = a3), r3 && (this._preloadCache.audioDeviceId = r3), n3 && (this._preloadCache.videoDeviceId = n3), !this._callObjectMode || !this.needsLoad()) {
+                    if (r3 = t4.audioDeviceId, n3 = t4.videoDeviceId, i3 = t4.audioSource, a3 = t4.videoSource, Le2(), i3 !== void 0 && (r3 = i3), a3 !== void 0 && (n3 = a3), r3 && (this._preloadCache.audioDeviceId = r3), n3 && (this._preloadCache.videoDeviceId = n3), !this._callObjectMode || !this.needsLoad()) {
                       e4.next = 8;
                       break;
                     }
@@ -26709,43 +27582,43 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function(e3) {
-            return b2.apply(this, arguments);
+            return k3.apply(this, arguments);
           }) }, { key: "setOutputDevice", value: function(e3) {
             var t4 = e3.outputDeviceId;
-            return Te2(), t4 && (this._preloadCache.outputDeviceId = t4), this._callObjectMode && this._meetingState !== N2 ? this : (this.sendMessageToCallMachine({ action: "set-output-device", outputDeviceId: t4 }), this);
-          } }, { key: "getInputDevices", value: (m2 = l2()(c.a.mark(function e3() {
+            return Le2(), t4 && (this._preloadCache.outputDeviceId = t4), this._callObjectMode && this._meetingState !== N2 && !this._didPreAuth ? (console.warn("setOutputDevice() not supported before preAuth() or join()"), this) : (this.sendMessageToCallMachine({ action: "set-output-device", outputDeviceId: t4 }), this);
+          } }, { key: "getInputDevices", value: (w3 = l2()(c.a.mark(function e3() {
             var t4 = this;
             return c.a.wrap(function(e4) {
               for (; ; )
                 switch (e4.prev = e4.next) {
                   case 0:
-                    if (Te2(), !this._callObjectMode || !this.needsLoad()) {
-                      e4.next = 3;
+                    if (!this._callObjectMode || !this.needsLoad()) {
+                      e4.next = 2;
                       break;
                     }
                     return e4.abrupt("return", { camera: { deviceId: this._preloadCache.videoDeviceId }, mic: { deviceId: this._preloadCache.audioDeviceId }, speaker: { deviceId: this._preloadCache.outputDeviceId } });
-                  case 3:
+                  case 2:
                     return e4.abrupt("return", new Promise(function(e5, r3) {
                       t4.sendMessageToCallMachine({ action: "get-input-devices" }, function(r4) {
                         delete r4.action, delete r4.callbackStamp, r4.returnPreloadCache ? e5({ camera: { deviceId: t4._preloadCache.videoDeviceId }, mic: { deviceId: t4._preloadCache.audioDeviceId }, speaker: { deviceId: t4._preloadCache.outputDeviceId } }) : e5(r4);
                       });
                     }));
-                  case 4:
+                  case 3:
                   case "end":
                     return e4.stop();
                 }
             }, e3, this);
           })), function() {
-            return m2.apply(this, arguments);
+            return w3.apply(this, arguments);
           }) }, { key: "nativeInCallAudioMode", value: function() {
-            return Ae2(), this._nativeInCallAudioMode;
+            return Ie2(), this._nativeInCallAudioMode;
           } }, { key: "setNativeInCallAudioMode", value: function(e3) {
-            if (Ae2(), [ye2, be2].includes(e3)) {
+            if (Ie2(), [ke2, Me2].includes(e3)) {
               if (e3 !== this._nativeInCallAudioMode)
                 return this._nativeInCallAudioMode = e3, !this.disableReactNativeAutoDeviceManagement("audio") && this.isMeetingPendingOrOngoing(this._meetingState, this._isPreparingToJoin) && this.nativeUtils().setAudioMode(this._nativeInCallAudioMode), this;
             } else
               console.error("invalid in-call audio mode specified: ", e3);
-          } }, { key: "preAuth", value: (v3 = l2()(c.a.mark(function e3() {
+          } }, { key: "preAuth", value: (_2 = l2()(c.a.mark(function e3() {
             var t4, r3, n3, i3 = this, a3 = arguments;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26775,14 +27648,14 @@ var require_daily_iframe = __commonJS({
                     }
                     throw new Error("preAuth() requires at least a url to be provided");
                   case 10:
-                    if (r3 = Object(U2.a)(t4.url), n3 = Object(U2.a)(this.properties.url || this.properties.baseUrl), r3 === n3) {
+                    if (r3 = Object(J2.a)(t4.url), n3 = Object(J2.a)(this.properties.url || this.properties.baseUrl), r3 === n3) {
                       e4.next = 14;
                       break;
                     }
                     throw new Error("url in preAuth() has a different bundle url than the one loaded (".concat(n3, " -> ").concat(r3, ")"));
                   case 14:
-                    return this.validateProperties(t4), this.properties = ge2(ge2({}, this.properties), t4), e4.abrupt("return", new Promise(function(e5, t5) {
-                      i3.sendMessageToCallMachine({ action: "daily-method-preauth", properties: Se2(i3.properties) }, function(r4) {
+                    return this.validateProperties(t4), this.properties = _e2(_e2({}, this.properties), t4), e4.abrupt("return", new Promise(function(e5, t5) {
+                      i3.sendMessageToCallMachine({ action: "daily-method-preauth", properties: je2(i3.properties) }, function(r4) {
                         return r4.error ? t5(r4.error) : r4.access ? (i3._didPreAuth = true, void e5({ access: r4.access })) : t5(new Error("unknown error in preAuth()"));
                       });
                     }));
@@ -26792,8 +27665,8 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function() {
-            return v3.apply(this, arguments);
-          }) }, { key: "load", value: (p3 = l2()(c.a.mark(function e3(t4) {
+            return _2.apply(this, arguments);
+          }) }, { key: "load", value: (b2 = l2()(c.a.mark(function e3(t4) {
             var r3 = this;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26805,7 +27678,7 @@ var require_daily_iframe = __commonJS({
                     }
                     return e4.abrupt("return");
                   case 2:
-                    if (t4 && (this.validateProperties(t4), this.properties = ge2(ge2({}, this.properties), t4)), this._callObjectMode || this.properties.url) {
+                    if (t4 && (this.validateProperties(t4), this.properties = _e2(_e2({}, this.properties), t4)), this._callObjectMode || this.properties.url) {
                       e4.next = 5;
                       break;
                     }
@@ -26825,13 +27698,13 @@ var require_daily_iframe = __commonJS({
                       r3._callObjectLoader.cancel(), r3._callObjectLoader.load(r3.properties.url || r3.properties.baseUrl, r3._callFrameId, function(t6) {
                         r3.updateMeetingState("loaded"), t6 && r3.emit("loaded", { action: "loaded" }), e5();
                       }, function(e6, n3) {
-                        r3.emit("load-attempt-failed", { action: "load-attempt-failed", errorMsg: e6 }), n3 || (r3.updateMeetingState(R3), r3.resetMeetingDependentVars(), r3.emit("error", { action: "error", errorMsg: e6 }), t5(e6));
+                        r3.emit("load-attempt-failed", { action: "load-attempt-failed", errorMsg: e6 }), n3 || (r3.updateMeetingState(D2), r3.resetMeetingDependentVars(), r3.emit("error", { action: "error", errorMsg: e6 }), t5(e6));
                       });
                     }));
                   case 11:
                     return this._iframe.src = this.assembleMeetingUrl(), e4.abrupt("return", new Promise(function(e5, t5) {
                       r3._loadedCallback = function(n3) {
-                        if (r3._meetingState !== R3) {
+                        if (r3._meetingState !== D2) {
                           for (var i3 in r3.updateMeetingState("loaded"), (r3.properties.cssFile || r3.properties.cssText) && r3.loadCss(r3.properties), r3._inputEventsOn)
                             r3.sendMessageToCallMachine({ action: "register-input-handler", on: i3 });
                           e5();
@@ -26845,8 +27718,8 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this);
           })), function(e3) {
-            return p3.apply(this, arguments);
-          }) }, { key: "join", value: (d3 = l2()(c.a.mark(function e3() {
+            return b2.apply(this, arguments);
+          }) }, { key: "join", value: (g2 = l2()(c.a.mark(function e3() {
             var t4, r3, n3, i3, a3 = this, o2 = arguments;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26890,7 +27763,7 @@ var require_daily_iframe = __commonJS({
                       e4.next = 36;
                       break;
                     }
-                    if (n3 = Object(U2.a)(t4.url), i3 = Object(U2.a)(this.properties.url || this.properties.baseUrl), n3 === i3) {
+                    if (n3 = Object(J2.a)(t4.url), i3 = Object(J2.a)(this.properties.url || this.properties.baseUrl), n3 === i3) {
                       e4.next = 33;
                       break;
                     }
@@ -26905,7 +27778,7 @@ var require_daily_iframe = __commonJS({
                     }
                     return console.error("url in join() is different than the one used in load() (".concat(this.properties.url, " -> ").concat(t4.url, ")")), this.updateIsPreparingToJoin(false), e4.abrupt("return", Promise.reject());
                   case 40:
-                    this.validateProperties(t4), this.properties = ge2(ge2({}, this.properties), t4);
+                    this.validateProperties(t4), this.properties = _e2(_e2({}, this.properties), t4);
                   case 42:
                     if (t4.showLocalVideo !== void 0 && (this._callObjectMode ? console.error("showLocalVideo is not available in callObject mode") : this._showLocalVideo = !!t4.showLocalVideo), t4.showParticipantsBar !== void 0 && (this._callObjectMode ? console.error("showParticipantsBar is not available in callObject mode") : this._showParticipantsBar = !!t4.showParticipantsBar), this._meetingState !== N2 && this._meetingState !== I3) {
                       e4.next = 48;
@@ -26919,12 +27792,12 @@ var require_daily_iframe = __commonJS({
                     } catch (e5) {
                       console.log("could not emit 'joining-meeting'", e5);
                     }
-                    return this.sendMessageToCallMachine({ action: "join-meeting", properties: Se2(this.properties), preloadCache: Se2(this._preloadCache) }), e4.abrupt("return", new Promise(function(e5, t5) {
+                    return this.sendMessageToCallMachine({ action: "join-meeting", properties: je2(this.properties), preloadCache: je2(this._preloadCache) }), e4.abrupt("return", new Promise(function(e5, t5) {
                       a3._joinedCallback = function(n4, i4) {
-                        if (a3._meetingState !== R3) {
+                        if (a3._meetingState !== D2) {
                           if (a3.updateMeetingState(N2), n4)
                             for (var o3 in n4)
-                              a3._callObjectMode && (de2(n4[o3]), fe2(n4[o3]), he2(n4[o3], a3._participants[o3])), a3._participants[o3] = ge2({}, n4[o3]), a3.toggleParticipantAudioBasedOnNativeAudioFocus();
+                              a3._callObjectMode && (ve2(n4[o3]), me2(n4[o3]), ye2(n4[o3], a3._participants[o3])), a3._participants[o3] = _e2({}, n4[o3]), a3.toggleParticipantAudioBasedOnNativeAudioFocus();
                           r3 && a3.loadCss(a3.properties), e5(n4);
                         } else
                           t5(i4);
@@ -26936,8 +27809,8 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3, this, [[4, 9]]);
           })), function() {
-            return d3.apply(this, arguments);
-          }) }, { key: "leave", value: (u2 = l2()(c.a.mark(function e3() {
+            return g2.apply(this, arguments);
+          }) }, { key: "leave", value: (v3 = l2()(c.a.mark(function e3() {
             var t4 = this;
             return c.a.wrap(function(e4) {
               for (; ; )
@@ -26945,17 +27818,17 @@ var require_daily_iframe = __commonJS({
                   case 0:
                     return e4.abrupt("return", new Promise(function(e5, r3) {
                       if (t4._callObjectLoader && !t4._callObjectLoader.loaded) {
-                        t4._callObjectLoader.cancel(), t4.updateMeetingState(F2), t4.resetMeetingDependentVars();
+                        t4._callObjectLoader.cancel(), t4.updateMeetingState(R3), t4.resetMeetingDependentVars();
                         try {
-                          t4.emit(F2, { action: F2 });
+                          t4.emit(R3, { action: R3 });
                         } catch (e6) {
                           console.log("could not emit 'left-meeting'", e6);
                         }
                         e5();
                       } else
-                        t4._meetingState === F2 || t4._meetingState === R3 ? e5() : t4.sendMessageToCallMachine({ action: "leave-meeting" }, function() {
-                          e5();
-                        });
+                        t4._meetingState === R3 || t4._meetingState === D2 ? e5() : (t4._leftCallback = function() {
+                          t4._meetingState !== D2 && t4.updateMeetingState(R3), t4.resetMeetingDependentVars(), e5();
+                        }, t4.sendMessageToCallMachine({ action: "leave-meeting" }));
                     }));
                   case 1:
                   case "end":
@@ -26963,29 +27836,144 @@ var require_daily_iframe = __commonJS({
                 }
             }, e3);
           })), function() {
-            return u2.apply(this, arguments);
+            return v3.apply(this, arguments);
           }) }, { key: "startScreenShare", value: function() {
             var e3 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-            Te2(), e3.mediaStream && (this._preloadCache.screenMediaStream = e3.mediaStream, e3.mediaStream = "daily-custom-track"), this.sendMessageToCallMachine({ action: "local-screen-start", captureOptions: e3 });
+            Le2(), e3.mediaStream && (this._preloadCache.screenMediaStream = e3.mediaStream, e3.mediaStream = "daily-custom-track"), this.sendMessageToCallMachine({ action: "local-screen-start", captureOptions: e3 });
           } }, { key: "stopScreenShare", value: function() {
-            Te2(), this.sendMessageToCallMachine({ action: "local-screen-stop" });
+            Le2(), this.sendMessageToCallMachine({ action: "local-screen-stop" });
           } }, { key: "startRecording", value: function() {
             var e3 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-            Te2(), this.sendMessageToCallMachine(ge2({ action: "local-recording-start" }, e3));
+            this.sendMessageToCallMachine(_e2({ action: "local-recording-start" }, e3));
           } }, { key: "updateRecording", value: function(e3) {
             var t4 = e3.layout, r3 = t4 === void 0 ? { preset: "default" } : t4;
             this.sendMessageToCallMachine({ action: "daily-method-update-recording", layout: r3 });
           } }, { key: "stopRecording", value: function() {
-            Te2(), this.sendMessageToCallMachine({ action: "local-recording-stop" });
+            this.sendMessageToCallMachine({ action: "local-recording-stop" });
           } }, { key: "startLiveStreaming", value: function() {
             var e3 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-            this.sendMessageToCallMachine(ge2({ action: "daily-method-start-live-streaming" }, e3));
+            this.sendMessageToCallMachine(_e2({ action: "daily-method-start-live-streaming" }, e3));
           } }, { key: "updateLiveStreaming", value: function(e3) {
             var t4 = e3.layout, r3 = t4 === void 0 ? { preset: "default" } : t4;
             this.sendMessageToCallMachine({ action: "daily-method-update-live-streaming", layout: r3 });
           } }, { key: "stopLiveStreaming", value: function() {
             this.sendMessageToCallMachine({ action: "daily-method-stop-live-streaming" });
-          } }, { key: "startTranscription", value: function() {
+          } }, { key: "startRemoteMediaPlayer", value: (p3 = l2()(c.a.mark(function e3(t4) {
+            var r3, n3, i3, a3 = this;
+            return c.a.wrap(function(e4) {
+              for (; ; )
+                switch (e4.prev = e4.next) {
+                  case 0:
+                    r3 = t4.url, n3 = t4.settings, i3 = n3 === void 0 ? { state: B2.PLAY } : n3, e4.prev = 1, Ve2(r3), Ue2(i3), Ge2(i3), e4.next = 12;
+                    break;
+                  case 7:
+                    throw e4.prev = 7, e4.t0 = e4.catch(1), console.error("invalid argument Error: ".concat(e4.t0)), console.error('startRemoteMediaPlayer arguments must be of the form: \n  { url: "playback url", \n  settings?: \n  {state: "play"|"pause", simulcastEncodings?: [{}] } }'), e4.t0;
+                  case 12:
+                    return e4.abrupt("return", new Promise(function() {
+                      var e5 = l2()(c.a.mark(function e6(t5, n4) {
+                        var o2;
+                        return c.a.wrap(function(e7) {
+                          for (; ; )
+                            switch (e7.prev = e7.next) {
+                              case 0:
+                                o2 = function(e8) {
+                                  e8.error ? n4({ error: e8.error, errorMsg: e8.errorMsg }) : t5({ session_id: e8.session_id, remoteMediaPlayerState: { state: e8.state, settings: e8.settings } });
+                                }, a3.sendMessageToCallMachine({ action: "daily-method-start-remote-media-player", url: r3, settings: i3 }, o2);
+                              case 2:
+                              case "end":
+                                return e7.stop();
+                            }
+                        }, e6);
+                      }));
+                      return function(t5, r4) {
+                        return e5.apply(this, arguments);
+                      };
+                    }()));
+                  case 13:
+                  case "end":
+                    return e4.stop();
+                }
+            }, e3, null, [[1, 7]]);
+          })), function(e3) {
+            return p3.apply(this, arguments);
+          }) }, { key: "stopRemoteMediaPlayer", value: (d3 = l2()(c.a.mark(function e3(t4) {
+            var r3 = this;
+            return c.a.wrap(function(e4) {
+              for (; ; )
+                switch (e4.prev = e4.next) {
+                  case 0:
+                    if (typeof t4 == "string") {
+                      e4.next = 2;
+                      break;
+                    }
+                    throw new Error(" remotePlayerID must be of type string");
+                  case 2:
+                    return e4.abrupt("return", new Promise(function() {
+                      var e5 = l2()(c.a.mark(function e6(n3, i3) {
+                        var a3;
+                        return c.a.wrap(function(e7) {
+                          for (; ; )
+                            switch (e7.prev = e7.next) {
+                              case 0:
+                                a3 = function(e8) {
+                                  e8.error ? i3({ error: e8.error, errorMsg: e8.errorMsg }) : n3();
+                                }, r3.sendMessageToCallMachine({ action: "daily-method-stop-remote-media-player", session_id: t4 }, a3);
+                              case 2:
+                              case "end":
+                                return e7.stop();
+                            }
+                        }, e6);
+                      }));
+                      return function(t5, r4) {
+                        return e5.apply(this, arguments);
+                      };
+                    }()));
+                  case 3:
+                  case "end":
+                    return e4.stop();
+                }
+            }, e3);
+          })), function(e3) {
+            return d3.apply(this, arguments);
+          }) }, { key: "updateRemoteMediaPlayer", value: (u2 = l2()(c.a.mark(function e3(t4) {
+            var r3, n3, i3 = this;
+            return c.a.wrap(function(e4) {
+              for (; ; )
+                switch (e4.prev = e4.next) {
+                  case 0:
+                    r3 = t4.session_id, n3 = t4.settings, e4.prev = 1, Ue2(n3), e4.next = 10;
+                    break;
+                  case 5:
+                    throw e4.prev = 5, e4.t0 = e4.catch(1), console.error("invalid argument Error: ".concat(e4.t0)), console.error('updateRemoteMediaPlayer arguments must be of the form: \n  session_id: "participant session", \n  { settings?: {state: "play"|"pause"} }'), e4.t0;
+                  case 10:
+                    return e4.abrupt("return", new Promise(function() {
+                      var e5 = l2()(c.a.mark(function e6(t5, a3) {
+                        var o2;
+                        return c.a.wrap(function(e7) {
+                          for (; ; )
+                            switch (e7.prev = e7.next) {
+                              case 0:
+                                o2 = function(e8) {
+                                  e8.error ? a3({ error: e8.error, errorMsg: e8.errorMsg }) : t5({ session_id: e8.session_id, remoteMediaPlayerState: { state: e8.state, settings: e8.settings } });
+                                }, i3.sendMessageToCallMachine({ action: "daily-method-update-remote-media-player", session_id: r3, settings: n3 }, o2);
+                              case 2:
+                              case "end":
+                                return e7.stop();
+                            }
+                        }, e6);
+                      }));
+                      return function(t5, r4) {
+                        return e5.apply(this, arguments);
+                      };
+                    }()));
+                  case 11:
+                  case "end":
+                    return e4.stop();
+                }
+            }, e3, null, [[1, 5]]);
+          })), function(e3) {
+            return u2.apply(this, arguments);
+          }) }, { key: "startTranscription", value: function() {
             this.sendMessageToCallMachine({ action: "daily-method-start-transcription" });
           } }, { key: "stopTranscription", value: function() {
             this.sendMessageToCallMachine({ action: "daily-method-stop-transcription" });
@@ -26996,15 +27984,15 @@ var require_daily_iframe = __commonJS({
             }
             return new Promise(function(t4, r3) {
               e3.sendMessageToCallMachine({ action: "get-calc-stats" }, function(r4) {
-                t4(ge2({ stats: r4.stats }, e3._network));
+                t4(_e2({ stats: r4.stats }, e3._network));
               });
             });
           } }, { key: "getActiveSpeaker", value: function() {
-            return Te2(), this._activeSpeaker;
+            return Le2(), this._activeSpeaker;
           } }, { key: "setActiveSpeakerMode", value: function(e3) {
-            return Te2(), this.sendMessageToCallMachine({ action: "set-active-speaker-mode", enabled: e3 }), this;
+            return Le2(), this.sendMessageToCallMachine({ action: "set-active-speaker-mode", enabled: e3 }), this;
           } }, { key: "activeSpeakerMode", value: function() {
-            return Te2(), this._activeSpeakerMode;
+            return Le2(), this._activeSpeakerMode;
           } }, { key: "subscribeToTracksAutomatically", value: function() {
             return this._preloadCache.subscribeToTracksAutomatically;
           } }, { key: "setSubscribeToTracksAutomatically", value: function(e3) {
@@ -27017,22 +28005,22 @@ var require_daily_iframe = __commonJS({
               for (; ; )
                 switch (e4.prev = e4.next) {
                   case 0:
-                    if (Te2(), !this._callObjectMode) {
-                      e4.next = 6;
+                    if (!this._callObjectMode) {
+                      e4.next = 5;
                       break;
                     }
-                    return e4.next = 4, navigator.mediaDevices.enumerateDevices();
-                  case 4:
+                    return e4.next = 3, navigator.mediaDevices.enumerateDevices();
+                  case 3:
                     return t4 = e4.sent, e4.abrupt("return", { devices: t4.map(function(e5) {
                       return JSON.parse(JSON.stringify(e5));
                     }) });
-                  case 6:
+                  case 5:
                     return e4.abrupt("return", new Promise(function(e5, t5) {
                       r3.sendMessageToCallMachine({ action: "enumerate-devices" }, function(t6) {
                         e5({ devices: t6.devices });
                       });
                     }));
-                  case 7:
+                  case 6:
                   case "end":
                     return e4.stop();
                 }
@@ -27045,19 +28033,23 @@ var require_daily_iframe = __commonJS({
               throw new Error("Message data too large. Max size is 4096");
             return this.sendMessageToCallMachine({ action: "app-msg", data: e3, to: t4 }), this;
           } }, { key: "addFakeParticipant", value: function(e3) {
-            return Te2(), this.sendMessageToCallMachine(ge2({ action: "add-fake-participant" }, e3)), this;
+            return Le2(), this.sendMessageToCallMachine(_e2({ action: "add-fake-participant" }, e3)), this;
           } }, { key: "setShowNamesMode", value: function(e3) {
-            return Te2(), e3 && e3 !== "always" && e3 !== "never" ? (console.error('setShowNamesMode argument should be "always", "never", or false'), this) : (this.sendMessageToCallMachine({ action: "set-show-names", mode: e3 }), this);
+            return Le2(), e3 && e3 !== "always" && e3 !== "never" ? (console.error('setShowNamesMode argument should be "always", "never", or false'), this) : (this.sendMessageToCallMachine({ action: "set-show-names", mode: e3 }), this);
           } }, { key: "setShowLocalVideo", value: function() {
             var e3 = !(arguments.length > 0 && arguments[0] !== void 0) || arguments[0];
-            return Te2(), typeof e3 != "boolean" ? (console.error("setShowLocalVideo only accepts a boolean value"), this) : this._callObjectMode ? (console.error("setShowLocalVideo is not available in callObject mode"), this) : this._meetingState !== N2 ? (console.error("the meeting must be joined before calling setShowLocalVideo"), this) : (this.sendMessageToCallMachine({ action: "set-show-local-video", show: e3 }), this._showLocalVideo = e3, this);
+            return Le2(), typeof e3 != "boolean" ? (console.error("setShowLocalVideo only accepts a boolean value"), this) : this._callObjectMode ? (console.error("setShowLocalVideo is not available in callObject mode"), this) : this._meetingState !== N2 ? (console.error("the meeting must be joined before calling setShowLocalVideo"), this) : (this.sendMessageToCallMachine({ action: "set-show-local-video", show: e3 }), this._showLocalVideo = e3, this);
           } }, { key: "showLocalVideo", value: function() {
-            return Te2(), this._callObjectMode ? (console.error("showLocalVideo is not available in callObject mode"), this) : this._showLocalVideo;
+            return Le2(), this._callObjectMode ? (console.error("showLocalVideo is not available in callObject mode"), this) : this._showLocalVideo;
           } }, { key: "setShowParticipantsBar", value: function() {
             var e3 = !(arguments.length > 0 && arguments[0] !== void 0) || arguments[0];
-            return Te2(), typeof e3 != "boolean" ? (console.error("setShowParticipantsBar only accepts a boolean value"), this) : this._callObjectMode ? (console.error("setShowParticipantsBar is not available in callObject mode"), this) : this._meetingState !== N2 ? (console.error("the meeting must be joined before calling setShowParticipantsBar"), this) : (this.sendMessageToCallMachine({ action: "set-show-participants-bar", show: e3 }), this._showParticipantsBar = e3, this);
+            return Le2(), typeof e3 != "boolean" ? (console.error("setShowParticipantsBar only accepts a boolean value"), this) : this._callObjectMode ? (console.error("setShowParticipantsBar is not available in callObject mode"), this) : this._meetingState !== N2 ? (console.error("the meeting must be joined before calling setShowParticipantsBar"), this) : (this.sendMessageToCallMachine({ action: "set-show-participants-bar", show: e3 }), this._showParticipantsBar = e3, this);
           } }, { key: "showParticipantsBar", value: function() {
-            return Te2(), this._callObjectMode ? (console.error("showParticipantsBar is not available in callObject mode"), this) : this._showParticipantsBar;
+            return Le2(), this._callObjectMode ? (console.error("showParticipantsBar is not available in callObject mode"), this) : this._showParticipantsBar;
+          } }, { key: "customTrayButtons", value: function() {
+            return Le2(), this._callObjectMode ? (console.error("customTrayButtons is not available in callObject mode"), this) : this._customTrayButtons;
+          } }, { key: "updateCustomTrayButtons", value: function(e3) {
+            return Le2(), this._callObjectMode ? (console.error("updateCustomTrayButtons is not available in callObject mode"), this) : this._meetingState !== N2 ? (console.error("the meeting must be joined before calling updateCustomTrayButtons"), this) : Be2(e3) ? (this.sendMessageToCallMachine({ action: "update-custom-tray-buttons", btns: e3 }), this._customTrayButtons = e3, this) : (console.error("updateCustomTrayButtons only accepts a dictionary of the type ".concat(JSON.stringify(Oe2))), this);
           } }, { key: "theme", value: function() {
             return this._callObjectMode ? (console.error("theme is not available in callObject mode"), this) : this.properties.theme;
           } }, { key: "setTheme", value: function(e3) {
@@ -27067,7 +28059,7 @@ var require_daily_iframe = __commonJS({
                 n3("setTheme is not available in callObject mode");
               else
                 try {
-                  t4.validateProperties({ theme: e3 }), t4.properties.theme = ge2({}, e3), t4.sendMessageToCallMachine({ action: "set-theme", theme: t4.properties.theme });
+                  t4.validateProperties({ theme: e3 }), t4.properties.theme = _e2({}, e3), t4.sendMessageToCallMachine({ action: "set-theme", theme: t4.properties.theme });
                   try {
                     t4.emit("theme-updated", { action: "theme-updated", theme: t4.properties.theme });
                   } catch (e4) {
@@ -27080,7 +28072,7 @@ var require_daily_iframe = __commonJS({
             });
           } }, { key: "detectAllFaces", value: function() {
             var e3 = this;
-            return Te2(), new Promise(function(t4, r3) {
+            return Le2(), new Promise(function(t4, r3) {
               e3.sendMessageToCallMachine({ action: "detect-all-faces" }, function(e4) {
                 delete e4.action, delete e4.callbackStamp, t4(e4);
               });
@@ -27090,7 +28082,7 @@ var require_daily_iframe = __commonJS({
               for (; ; )
                 switch (e4.prev = e4.next) {
                   case 0:
-                    if (Te2(), this._iframe && !document.fullscreenElement) {
+                    if (Le2(), this._iframe && !document.fullscreenElement && Object(G2.c)()) {
                       e4.next = 3;
                       break;
                     }
@@ -27119,14 +28111,14 @@ var require_daily_iframe = __commonJS({
           })), function() {
             return a2.apply(this, arguments);
           }) }, { key: "exitFullscreen", value: function() {
-            Te2(), document.fullscreenElement ? document.exitFullscreen() : document.webkitFullscreenElement && document.webkitExitFullscreen();
+            Le2(), document.fullscreenElement ? document.exitFullscreen() : document.webkitFullscreenElement && document.webkitExitFullscreen();
           } }, { key: "room", value: (i2 = l2()(c.a.mark(function e3() {
             var t4, r3, n3, i3 = this, a3 = arguments;
             return c.a.wrap(function(e4) {
               for (; ; )
                 switch (e4.prev = e4.next) {
                   case 0:
-                    if (t4 = a3.length > 0 && a3[0] !== void 0 ? a3[0] : {}, r3 = t4.includeRoomConfigDefaults, n3 = r3 === void 0 || r3, this._meetingState !== N2 && !this._didPreAuth) {
+                    if (t4 = a3.length > 0 && a3[0] !== void 0 ? a3[0] : {}, r3 = t4.includeRoomConfigDefaults, n3 = r3 === void 0 || r3, this._accessState.access === "unknown" || this.needsLoad()) {
                       e4.next = 5;
                       break;
                     }
@@ -27193,7 +28185,7 @@ var require_daily_iframe = __commonJS({
               for (; ; )
                 switch (e4.prev = e4.next) {
                   case 0:
-                    return Te2(), e4.abrupt("return", new Promise(function() {
+                    return Le2(), e4.abrupt("return", new Promise(function() {
                       var e5 = l2()(c.a.mark(function e6(n3, i3) {
                         var a3;
                         return c.a.wrap(function(e7) {
@@ -27254,7 +28246,7 @@ var require_daily_iframe = __commonJS({
           })), function() {
             return t3.apply(this, arguments);
           }) }, { key: "setPlayNewParticipantSound", value: function(e3) {
-            if (Te2(), typeof e3 != "number" && e3 !== true && e3 !== false)
+            if (Le2(), typeof e3 != "number" && e3 !== true && e3 !== false)
               throw new Error("argument to setShouldPlayNewParticipantSound should be true, false, or a number, but is ".concat(e3));
             this.sendMessageToCallMachine({ action: "daily-method-set-play-ding", arg: e3 });
           } }, { key: "on", value: function(e3, t4) {
@@ -27265,20 +28257,20 @@ var require_daily_iframe = __commonJS({
             return delete this._inputEventsOn[e3], this.sendMessageToCallMachine({ action: "register-input-handler", off: e3 }), O2.a.prototype.off.call(this, e3, t4);
           } }, { key: "validateProperties", value: function(e3) {
             for (var t4 in e3) {
-              if (!we2[t4])
+              if (!xe2[t4])
                 throw new Error("unrecognized property '".concat(t4, "'"));
-              if (we2[t4].validate && !we2[t4].validate(e3[t4], this))
-                throw new Error("property '".concat(t4, "': ").concat(we2[t4].help));
+              if (xe2[t4].validate && !xe2[t4].validate(e3[t4], this))
+                throw new Error("property '".concat(t4, "': ").concat(xe2[t4].help));
             }
           } }, { key: "assembleMeetingUrl", value: function() {
-            var e3 = ge2(ge2({}, this.properties), {}, { emb: this._callFrameId, embHref: encodeURIComponent(window.location.href) }), t4 = e3.url.match(/\?/) ? "&" : "?";
-            return e3.url + t4 + Object.keys(we2).filter(function(t5) {
-              return we2[t5].queryString && e3[t5] !== void 0;
+            var e3 = _e2(_e2({}, this.properties), {}, { emb: this._callFrameId, embHref: encodeURIComponent(window.location.href) }), t4 = e3.url.match(/\?/) ? "&" : "?";
+            return e3.url + t4 + Object.keys(xe2).filter(function(t5) {
+              return xe2[t5].queryString && e3[t5] !== void 0;
             }).map(function(t5) {
-              return "".concat(we2[t5].queryString, "=").concat(e3[t5]);
+              return "".concat(xe2[t5].queryString, "=").concat(e3[t5]);
             }).join("&");
           } }, { key: "needsLoad", value: function() {
-            return [C2, L2, F2, R3].includes(this._meetingState);
+            return [j2, L2, R3, D2].includes(this._meetingState);
           } }, { key: "sendMessageToCallMachine", value: function(e3, t4) {
             this._messageChannel.sendMessageToCallMachine(e3, t4, this._iframe, this._callFrameId);
           } }, { key: "forwardPackagedMessageToCallMachine", value: function(e3) {
@@ -27290,7 +28282,7 @@ var require_daily_iframe = __commonJS({
           } }, { key: "handleMessageFromCallMachine", value: function(e3) {
             switch (e3.action) {
               case "iframe-ready-for-launch-config":
-                this.sendMessageToCallMachine(ge2({ action: "iframe-launch-config" }, this.properties));
+                this.sendMessageToCallMachine(_e2({ action: "iframe-launch-config" }, this.properties));
                 break;
               case "loaded":
                 this._loadedCallback && (this._loadedCallback(), this._loadedCallback = null);
@@ -27310,18 +28302,18 @@ var require_daily_iframe = __commonJS({
                 break;
               case "participant-joined":
               case "participant-updated":
-                if (this._meetingState === F2)
+                if (this._meetingState === R3)
                   return;
                 if (e3.participant && e3.participant.session_id) {
                   var t4 = e3.participant.local ? "local" : e3.participant.session_id;
-                  this._callObjectMode && (de2(e3.participant), fe2(e3.participant), he2(e3.participant, this._participants[t4]));
+                  this._callObjectMode && (ve2(e3.participant), me2(e3.participant), ye2(e3.participant, this._participants[t4]));
                   try {
                     this.maybeEventTrackStopped(this._participants[t4], e3.participant, "audioTrack"), this.maybeEventTrackStopped(this._participants[t4], e3.participant, "videoTrack"), this.maybeEventTrackStopped(this._participants[t4], e3.participant, "screenVideoTrack"), this.maybeEventTrackStopped(this._participants[t4], e3.participant, "screenAudioTrack"), this.maybeEventTrackStarted(this._participants[t4], e3.participant, "audioTrack"), this.maybeEventTrackStarted(this._participants[t4], e3.participant, "videoTrack"), this.maybeEventTrackStarted(this._participants[t4], e3.participant, "screenVideoTrack"), this.maybeEventTrackStarted(this._participants[t4], e3.participant, "screenAudioTrack"), this.maybeEventTrackStoppedForCustomTracks(this._participants[t4], e3.participant), this.maybeEventTrackStartedForCustomTracks(this._participants[t4], e3.participant), this.maybeEventRecordingStopped(this._participants[t4], e3.participant), this.maybeEventRecordingStarted(this._participants[t4], e3.participant);
                   } catch (e4) {
                     console.error("track events error", e4);
                   }
                   if (!this.compareEqualForParticipantUpdateEvent(e3.participant, this._participants[t4])) {
-                    this._participants[t4] = ge2({}, e3.participant), this.toggleParticipantAudioBasedOnNativeAudioFocus();
+                    this._participants[t4] = _e2({}, e3.participant), this.toggleParticipantAudioBasedOnNativeAudioFocus();
                     try {
                       this.emit(e3.action, e3);
                     } catch (t5) {
@@ -27334,6 +28326,16 @@ var require_daily_iframe = __commonJS({
                 if (e3.participant && e3.participant.session_id) {
                   var r3 = this._participants[e3.participant.session_id];
                   r3 && (this.maybeEventTrackStopped(r3, null, "audioTrack"), this.maybeEventTrackStopped(r3, null, "videoTrack"), this.maybeEventTrackStopped(r3, null, "screenVideoTrack"), this.maybeEventTrackStopped(r3, null, "screenAudioTrack"), this.maybeEventTrackStoppedForCustomTracks(r3, null)), delete this._participants[e3.participant.session_id];
+                  try {
+                    this.emit(e3.action, e3);
+                  } catch (t5) {
+                    console.log("could not emit", e3, t5);
+                  }
+                }
+                break;
+              case "participant-counts-updated":
+                if (!Object(x2.deepEqual)(this._participantCounts, e3.participantCounts)) {
+                  this._participantCounts = e3.participantCounts;
                   try {
                     this.emit(e3.action, e3);
                   } catch (t5) {
@@ -27361,7 +28363,7 @@ var require_daily_iframe = __commonJS({
                   }
                 break;
               case "error":
-                this._iframe && !e3.preserveIframe && (this._iframe.src = ""), this.updateMeetingState(R3), this.resetMeetingDependentVars(), this._loadedCallback && (this._loadedCallback(e3.errorMsg), this._loadedCallback = null), this._joinedCallback && (this._joinedCallback(null, e3.errorMsg), this._joinedCallback = null);
+                this._iframe && !e3.preserveIframe && (this._iframe.src = ""), this.updateMeetingState(D2), this.resetMeetingDependentVars(), this._loadedCallback && (this._loadedCallback(e3.errorMsg), this._loadedCallback = null), this._joinedCallback && (this._joinedCallback(null, e3.errorMsg), this._joinedCallback = null);
                 try {
                   e3.preserveIframe;
                   var i3 = o()(e3, ["preserveIframe"]);
@@ -27371,7 +28373,7 @@ var require_daily_iframe = __commonJS({
                 }
                 break;
               case "left-meeting":
-                this._meetingState !== R3 && this.updateMeetingState(F2), this.resetMeetingDependentVars();
+                this._leftCallback && (this._leftCallback(), this._leftCallback = null);
                 try {
                   this.emit(e3.action, e3);
                 } catch (t5) {
@@ -27382,7 +28384,7 @@ var require_daily_iframe = __commonJS({
                 var a3 = this._participants[e3.session_id];
                 a3 || (a3 = e3.session_id === this._participants.local.session_id ? this._participants.local : {});
                 try {
-                  this.emit(e3.event.type, { action: e3.event.type, event: e3.event, participant: ge2({}, a3) });
+                  this.emit(e3.event.type, { action: e3.event.type, event: e3.event, participant: _e2({}, a3) });
                 } catch (t5) {
                   console.log("could not emit", e3, t5);
                 }
@@ -27461,6 +28463,20 @@ var require_daily_iframe = __commonJS({
                   }
                 }
                 break;
+              case "remote-media-player-started":
+                var f2 = e3.session_id;
+                this._rmpPlayerState[f2] = e3.playerState, this.emitDailyJSEvent(e3);
+                break;
+              case "remote-media-player-stopped":
+                delete this._rmpPlayerState[e3.session_id], this.emitDailyJSEvent(e3);
+                break;
+              case "remote-media-player-updated":
+                var p4 = e3.session_id, h2 = this._rmpPlayerState[p4];
+                h2 && this.compareEqualForRMPUpdateEvent(h2, e3.remoteMediaPlayerState) || (this._rmpPlayerState[p4] = e3.remoteMediaPlayerState, this.emitDailyJSEvent(e3));
+                break;
+              case "custom-button-click":
+                this.emitDailyJSEvent(e3);
+                break;
               case "recording-started":
               case "recording-stopped":
               case "recording-stats":
@@ -27481,7 +28497,6 @@ var require_daily_iframe = __commonJS({
               case "live-streaming-error":
               case "nonfatal-error":
               case "lang-updated":
-              case "media-ingest-error":
                 try {
                   this.emit(e3.action, e3);
                 } catch (t5) {
@@ -27517,6 +28532,20 @@ var require_daily_iframe = __commonJS({
               } catch (e4) {
                 console.log("could not emit", e4);
               }
+          } }, { key: "maybeEventCustomTrackStopped", value: function(e3, t4, r3, n3) {
+            if (e3 && (!n3 || !n3.remoteMediaPlayerState || n3.remoteMediaPlayerState.state != V2 && n3.remoteMediaPlayerState.state != U2) && (e3 && e3.readyState === "ended" || e3 && !t4 || e3 && e3.id !== t4.id))
+              try {
+                this.emit("track-stopped", { action: "track-stopped", track: e3, participant: r3 });
+              } catch (e4) {
+                console.log("maybeEventCustomTrackStopped: could not emit", e4);
+              }
+          } }, { key: "maybeEventCustomTrackStarted", value: function(e3, t4, r3) {
+            if (t4 && !e3 || t4 && e3.readyState === "ended" || t4 && t4.id !== e3.id)
+              try {
+                this.emit("track-started", { action: "track-started", track: t4, participant: r3 });
+              } catch (e4) {
+                console.log("maybeEventCustomTrackStarted: could not emit", e4);
+              }
           } }, { key: "maybeEventTrackStarted", value: function(e3, t4, r3) {
             if (t4[r3] && (!e3 || !e3[r3]) || t4[r3] && e3[r3].readyState === "ended" || t4[r3] && t4[r3].id !== e3[r3].id)
               try {
@@ -27527,15 +28556,23 @@ var require_daily_iframe = __commonJS({
           } }, { key: "maybeEventTrackStoppedForCustomTracks", value: function(e3, t4) {
             if (e3)
               for (var r3 in e3.tracks)
-                pe2(r3) || this.maybeEventTrackStopped(e3.tracks[r3], t4 ? t4.tracks[r3] : null, "track");
+                ge2(r3) || this.maybeEventCustomTrackStopped(e3.tracks[r3].track, t4 && t4.tracks[r3] ? t4.tracks[r3].track : null, e3, t4);
           } }, { key: "maybeEventTrackStartedForCustomTracks", value: function(e3, t4) {
             if (t4)
               for (var r3 in t4.tracks)
-                pe2(r3) || this.maybeEventTrackStarted(e3 ? e3.tracks[r3] : null, t4.tracks[r3], "track");
+                ge2(r3) || this.maybeEventCustomTrackStarted(e3 && e3.tracks[r3] ? e3.tracks[r3].track : null, t4.tracks[r3].track, t4);
+          } }, { key: "compareEqualForRMPUpdateEvent", value: function(e3, t4) {
+            return e3.state === t4.state;
+          } }, { key: "emitDailyJSEvent", value: function(e3) {
+            try {
+              this.emit(e3.action, e3);
+            } catch (t4) {
+              console.log("could not emit", e3, t4);
+            }
           } }, { key: "compareEqualForParticipantUpdateEvent", value: function(e3, t4) {
             return !!Object(x2.deepEqual)(e3, t4) && ((!e3.videoTrack || !t4.videoTrack || e3.videoTrack.id === t4.videoTrack.id && e3.videoTrack.muted === t4.videoTrack.muted && e3.videoTrack.enabled === t4.videoTrack.enabled) && (!e3.audioTrack || !t4.audioTrack || e3.audioTrack.id === t4.audioTrack.id && e3.audioTrack.muted === t4.audioTrack.muted && e3.audioTrack.enabled === t4.audioTrack.enabled));
           } }, { key: "nativeUtils", value: function() {
-            return Object(V2.c)() ? typeof DailyNativeUtils == "undefined" ? (console.warn("in React Native, DailyNativeUtils is expected to be available"), null) : DailyNativeUtils : null;
+            return Object(G2.d)() ? typeof DailyNativeUtils == "undefined" ? (console.warn("in React Native, DailyNativeUtils is expected to be available"), null) : DailyNativeUtils : null;
           } }, { key: "updateIsPreparingToJoin", value: function(e3) {
             this.updateMeetingState(this._meetingState, e3);
           } }, { key: "updateMeetingState", value: function(e3) {
@@ -27547,16 +28584,16 @@ var require_daily_iframe = __commonJS({
               i3 !== a3 && (this.updateKeepDeviceAwake(a3), this.updateDeviceAudioMode(a3), this.updateShowAndroidOngoingMeetingNotification(a3), this.updateNoOpRecordingEnsuringBackgroundContinuity(a3));
             }
           } }, { key: "resetMeetingDependentVars", value: function() {
-            this._participants = {}, this._waitingParticipants = {}, this._activeSpeaker = {}, this._activeSpeakerMode = false, this._didPreAuth = false, this._accessState = { access: "unknown" }, this._receiveSettings = {}, this._inputSettings = {}, this._preloadCache;
+            this._participants = {}, this._participantCounts = Se2, this._waitingParticipants = {}, this._activeSpeaker = {}, this._activeSpeakerMode = false, this._didPreAuth = false, this._accessState = { access: "unknown" }, this._receiveSettings = {}, this._inputSettings = {}, this._preloadCache;
           } }, { key: "updateKeepDeviceAwake", value: function(e3) {
-            Object(V2.c)() && this.nativeUtils().setKeepDeviceAwake(e3, this._callFrameId);
+            Object(G2.d)() && this.nativeUtils().setKeepDeviceAwake(e3, this._callFrameId);
           } }, { key: "updateDeviceAudioMode", value: function(e3) {
-            if (Object(V2.c)() && !this.disableReactNativeAutoDeviceManagement("audio")) {
+            if (Object(G2.d)() && !this.disableReactNativeAutoDeviceManagement("audio")) {
               var t4 = e3 ? this._nativeInCallAudioMode : "idle";
               this.nativeUtils().setAudioMode(t4);
             }
           } }, { key: "updateShowAndroidOngoingMeetingNotification", value: function(e3) {
-            if (Object(V2.c)() && this.nativeUtils().setShowOngoingMeetingNotification) {
+            if (Object(G2.d)() && this.nativeUtils().setShowOngoingMeetingNotification) {
               var t4, r3, n3, i3;
               if (this.properties.reactNativeConfig && this.properties.reactNativeConfig.androidInCallNotification) {
                 var a3 = this.properties.reactNativeConfig.androidInCallNotification;
@@ -27565,11 +28602,11 @@ var require_daily_iframe = __commonJS({
               i3 && (e3 = false), this.nativeUtils().setShowOngoingMeetingNotification(e3, t4, r3, n3, this._callFrameId);
             }
           } }, { key: "updateNoOpRecordingEnsuringBackgroundContinuity", value: function(e3) {
-            Object(V2.c)() && this.nativeUtils().enableNoOpRecordingEnsuringBackgroundContinuity && this.nativeUtils().enableNoOpRecordingEnsuringBackgroundContinuity(e3);
+            Object(G2.d)() && this.nativeUtils().enableNoOpRecordingEnsuringBackgroundContinuity && this.nativeUtils().enableNoOpRecordingEnsuringBackgroundContinuity(e3);
           } }, { key: "isMeetingPendingOrOngoing", value: function(e3, t4) {
             return [I3, N2].includes(e3) || t4;
           } }, { key: "toggleParticipantAudioBasedOnNativeAudioFocus", value: function() {
-            if (Object(V2.c)()) {
+            if (Object(G2.d)()) {
               var e3 = store.getState();
               for (var t4 in e3.streams) {
                 var r3 = e3.streams[t4];
@@ -27586,23 +28623,23 @@ var require_daily_iframe = __commonJS({
           } }, { key: "sayHello", value: function() {
             var e3 = "hello, world.";
             return console.log(e3), e3;
-          } }]), Y3;
+          } }]), $3;
         }(O2.a);
-        function Se2(e2) {
+        function je2(e2) {
           var t3 = {};
           for (var r2 in e2)
             e2[r2] instanceof MediaStreamTrack ? t3[r2] = "daily-custom-track" : r2 === "dailyConfig" ? (e2[r2].modifyLocalSdpHook && (window._dailyConfig && (window._dailyConfig.modifyLocalSdpHook = e2[r2].modifyLocalSdpHook), delete e2[r2].modifyLocalSdpHook), e2[r2].modifyRemoteSdpHook && (window._dailyConfig && (window._dailyConfig.modifyRemoteSdpHook = e2[r2].modifyRemoteSdpHook), delete e2[r2].modifyRemoteSdpHook), t3[r2] = e2[r2]) : t3[r2] = e2[r2];
           return t3;
         }
-        function Te2() {
-          if (Object(V2.c)())
+        function Le2() {
+          if (Object(G2.d)())
             throw new Error("This daily-js method is not currently supported in React Native");
         }
-        function Ae2() {
-          if (!Object(V2.c)())
+        function Ie2() {
+          if (!Object(G2.d)())
             throw new Error("This daily-js method is only supported in React Native");
         }
-        function Ee2(e2, t3) {
+        function Ne2(e2, t3) {
           for (var r2 = t3.allowAllParticipantsKey, n2 = function(e3) {
             var t4 = ["local"];
             return r2 || t4.push("*"), e3 && !t4.includes(e3);
@@ -27617,21 +28654,28 @@ var require_daily_iframe = __commonJS({
           }
           return true;
         }
-        function Oe2(e2) {
-          return A3()(e2) === "object" && (!(!e2.video || A3()(e2.video) !== "object") && !!function(e3) {
+        function Re2(e2) {
+          return T2()(e2) === "object" && (!(!e2.video || T2()(e2.video) !== "object") && !!function(e3) {
+            var t3 = ["type", "config", "publish"];
             if (!e3)
               return false;
-            if (A3()(e3) !== "object")
+            if (T2()(e3) !== "object")
               return false;
             if (Object.keys(e3).length === 0)
               return false;
-            if (e3.type && (t3 = e3.type, typeof t3 != "string" || !Object.values(D2).includes(t3)))
+            if (e3.type && !function(e4) {
+              if (typeof e4 != "string")
+                return false;
+              if (!Object.values(F2).includes(e4))
+                return console.error("inputSettings video processor type invalid"), false;
+              return true;
+            }(e3.type))
               return false;
-            var t3;
             if (e3.publish !== void 0 && typeof e3.publish != "boolean")
               return false;
+            typeof e3.publish == "boolean" && console.warn("inputSettings.video.processor: publish key has been deprecated; it will be ignored");
             if (e3.config) {
-              if (A3()(e3.config) !== "object")
+              if (T2()(e3.config) !== "object")
                 return false;
               if (!function(e4, t4) {
                 var r2 = Object.keys(t4);
@@ -27639,36 +28683,108 @@ var require_daily_iframe = __commonJS({
                   return true;
                 var n2 = "invalid object in inputSettings -> video -> processor -> config";
                 switch (e4) {
-                  case D2.BGBLUR:
-                    if (r2.length > 1 || r2[0] !== "strength")
-                      throw new Error(n2);
-                    if (typeof t4.strength != "number" || t4.strength <= 0 || t4.strength > 1 || isNaN(t4.strength))
-                      throw new Error("".concat(n2, "; expected: {0 < strength <= 1}, got: ").concat(t4.strength));
+                  case F2.BGBLUR:
+                    return r2.length > 1 || r2[0] !== "strength" ? (console.error(n2), false) : !(typeof t4.strength != "number" || t4.strength <= 0 || t4.strength > 1 || isNaN(t4.strength)) || (console.error("".concat(n2, "; expected: {0 < strength <= 1}, got: ").concat(t4.strength)), false);
+                  case F2.BGIMAGE:
+                    return !(t4.source !== void 0 && !function(e5) {
+                      if (e5.source === "default")
+                        return e5.type = "default", true;
+                      if (Object(J2.d)(e5.source))
+                        return e5.type = "url", !!function(e6) {
+                          var t6 = new URL(e6), r4 = t6.pathname;
+                          if (t6.protocol === "data:")
+                            try {
+                              var n3 = r4.substring(r4.indexOf(":") + 1, r4.indexOf(";")).split("/")[1];
+                              return Y2.includes(n3);
+                            } catch (e7) {
+                              return console.error("failed to deduce blob content type", e7), false;
+                            }
+                          var i2 = r4.split(".").at(-1).toLowerCase().trim();
+                          return Y2.includes(i2);
+                        }(e5.source) || (console.error("invalid image type; supported types: [".concat(Y2.join(", "), "]")), false);
+                      return t5 = e5.source, r3 = Number(t5), isNaN(r3) || !Number.isInteger(r3) || r3 <= 0 || r3 > 10 ? (console.error("invalid image selection; must be an int, > 0, <= ".concat(10)), false) : (e5.type = "daily-preselect", true);
+                      var t5, r3;
+                    }(t4));
                   default:
                     return true;
                 }
               }(e3.type, e3.config))
                 return false;
             }
-            return true;
+            return Object.keys(e3).filter(function(e4) {
+              return !t3.includes(e4);
+            }).forEach(function(t4) {
+              console.warn("invalid key inputSettings -> video -> processor : ".concat(t4)), delete e3[t4];
+            }), true;
           }(e2.video.processor));
         }
-        function xe2() {
-          var e2 = Object.values(D2).join(" | ");
-          return "inputSettings must be of the form: { video: { processor: [ ".concat(e2, " ] }, publish?: boolean, config?: {} }");
+        function De2() {
+          var e2 = Object.values(F2).join(" | ");
+          return "inputSettings must be of the form: { video: { processor: [ ".concat(e2, " ] }, config?: {} }");
         }
-        function Pe2(e2) {
+        function Fe2(e2) {
           var t3 = e2.allowAllParticipantsKey;
           return "receiveSettings must be of the form { [<remote participant id> | ".concat("base").concat(t3 ? ' | "'.concat("*", '"') : "", "]: ") + '{ [video: [{ layer: [<non-negative integer> | "inherit"] } | "inherit"]], [screenVideo: [{ layer: [<non-negative integer> | "inherit"] } | "inherit"]] }}}';
+        }
+        function Be2(e2) {
+          if (e2 && T2()(e2) !== "object" || Array.isArray(e2))
+            return console.error("customTrayButtons should be an Object of the type ".concat(JSON.stringify(Oe2), ".")), false;
+          if (e2)
+            for (var t3 = 0, r2 = Object.entries(e2); t3 < r2.length; t3++)
+              for (var n2 = i()(r2[t3], 1)[0], a2 = 0, o2 = Object.entries(e2[n2]); a2 < o2.length; a2++) {
+                var s3 = i()(o2[a2], 2), c2 = s3[0], u2 = s3[1];
+                if (c2 === "iconPath" && !Object(J2.d)(u2))
+                  return console.error("customTrayButton ".concat(c2, " should be a url.")), false;
+                if (T2()(u2) !== Oe2.id[c2])
+                  return console.error("customTrayButton ".concat(c2, " should be a ").concat(Oe2.id[c2], ".")), false;
+              }
+          return true;
+        }
+        function Ve2(e2) {
+          if (typeof e2 != "string")
+            throw new Error('url parameter must be "string" type');
+        }
+        function Ue2(e2) {
+          if (T2()(e2) !== "object")
+            throw new Error('RemoteMediaPlayerSettings: must be "object" type');
+          if (!e2.state || !Object.values(B2).includes(e2.state))
+            throw new Error("Invalid value for RemoteMediaPlayerSettings.state, valid values are: " + JSON.stringify(B2));
+        }
+        function Ye2(e2, t3, r2) {
+          return !(typeof e2 != "number" || e2 < t3 || e2 > r2);
+        }
+        function Ge2(e2) {
+          for (var t3 in e2)
+            if (!Te2.includes(t3))
+              throw new Error("Invalid key ".concat(t3, ", valid keys are: ").concat(Te2));
+          if (e2.simulcastEncodings) {
+            if (!(e2.simulcastEncodings instanceof Array))
+              throw new Error('simulcastEncodings must be "Array"');
+            if (!Ye2(e2.simulcastEncodings.length, 0, 3))
+              throw new Error('"simulcastEncodings" not in range. valid range 1 to 3 layers');
+            e2.simulcastEncodings.every(function(e3) {
+              for (var t4 in e3) {
+                if (!Ee2.hasOwnProperty(t4))
+                  throw new Error("Invalid key ".concat(t4, ", valid keys are:") + Object.keys(Ee2));
+                if (typeof e3[t4] != "number")
+                  throw new Error("simulcastEncodings[].".concat(t4, ' must be "number"'));
+                var r2 = Ee2[t4], n2 = r2.min, i2 = r2.max;
+                if (!Ye2(e3[t4], n2, i2))
+                  throw new Error("simulcastEncodings[].".concat(t4, " value not in range. valid range:        ").concat(n2, " to ").concat(i2));
+              }
+              if (!e3.hasOwnProperty("maxBitrate"))
+                throw new Error("simulcastEncodings[].maxBitrate is not specified");
+            });
+          }
         }
       }]);
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-c21ff88a.js
-var layout_c21ff88a_exports = {};
-__export(layout_c21ff88a_exports, {
+// .svelte-kit/output/server/chunks/__layout-a67b9923.js
+var layout_a67b9923_exports = {};
+__export(layout_a67b9923_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -29823,8 +30939,8 @@ function registerDatabase(variant) {
     const appCheckProvider = container.getProvider("app-check-internal");
     return repoManagerDatabaseFromApp(app, authProvider, appCheckProvider, url2);
   }, "PUBLIC").setMultipleInstances(true));
-  registerVersion(name4, version4, variant);
-  registerVersion(name4, version4, "esm2017");
+  registerVersion(name5, version5, variant);
+  registerVersion(name5, version5, "esm2017");
 }
 function load2({ page: page2 }) {
   return {
@@ -29834,14 +30950,16 @@ function load2({ page: page2 }) {
     }
   };
 }
-var import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie7, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name4, version4, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css6, _layout2;
-var init_layout_c21ff88a = __esm({
-  ".svelte-kit/output/server/chunks/__layout-c21ff88a.js"() {
+var import_node_fetch7, import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie7, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css6, _layout2;
+var init_layout_a67b9923 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-a67b9923.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_Switch_e609408f();
-    init_SelectionGroupIcon_5481d254();
-    init_store_65404eb4();
+    init_app_a0c37348();
+    init_SelectionGroupIcon_d37af903();
+    init_index_node_esm_d00324cd();
+    init_store_836abe82();
+    init_index_c327074d_a627185f();
+    import_node_fetch7 = __toModule(require_lib2());
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -30238,6 +31356,7 @@ var init_layout_c21ff88a = __esm({
     ${validate_component(Icon, "Icon").$$render($$result, { class: "material-icons" }, {}, { default: () => `arrow_drop_down` })}</div>
 
   
+  
   ${validate_component(Menu, "Menu").$$render($$result, {
           anchor: false,
           anchorCorner: "BOTTOM_LEFT",
@@ -30261,7 +31380,6 @@ var init_layout_c21ff88a = __esm({
             `
             })}` : ``}`)}` : ``}`
           })}
-
 
     
     <div style="${"margin: 4px"}">${allClasses.length > 0 ? `${validate_component(Autocomplete, "Autocomplete").$$render($$result, {
@@ -30633,10 +31751,12 @@ var init_layout_c21ff88a = __esm({
       component: Div
     });
     css$1 = {
-      code: ".drawer-container.svelte-f4hgt4{height:100vh;position:relative;display:flex}.svelte-f4hgt4 .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}.main-content.svelte-f4hgt4{overflow:auto;padding:16px;height:100%;box-sizing:border-box}",
+      code: ".drawer-container.svelte-ek1cfd{height:100vh;position:relative;display:flex}.svelte-ek1cfd .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}.main-content.svelte-ek1cfd{overflow:auto;padding:16px;height:100%;box-sizing:border-box}.logo-image.svelte-ek1cfd:hover{cursor:pointer}",
       map: null
     };
     LeftDrawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $user, $$unsubscribe_user;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
       let { nameOfClass } = $$props;
       let { descriptionOfClass } = $$props;
       if ($$props.nameOfClass === void 0 && $$bindings.nameOfClass && nameOfClass !== void 0)
@@ -30644,14 +31764,15 @@ var init_layout_c21ff88a = __esm({
       if ($$props.descriptionOfClass === void 0 && $$bindings.descriptionOfClass && descriptionOfClass !== void 0)
         $$bindings.descriptionOfClass(descriptionOfClass);
       $$result.css.add(css$1);
-      return `<div class="${"drawer-container svelte-f4hgt4"}">${validate_component(Drawer, "Drawer").$$render($$result, {
+      $$unsubscribe_user();
+      return `<div class="${"drawer-container svelte-ek1cfd"}">${validate_component(Drawer, "Drawer").$$render($$result, {
         style: "overflow-y: scroll; height: 100%;",
         class: "mdc-elevation--z" + 5
       }, {}, {
         default: () => `${validate_component(Content, "Content").$$render($$result, {}, {}, {
-          default: () => `<div style="${"margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;"}" class="${"mdc-elevation--z" + escape(4) + " svelte-f4hgt4"}"><div style="${"display: flex; align-items: center"}" class="${"svelte-f4hgt4"}"><img src="${"/logo.png"}" width="${"60"}" height="${"54"}" alt="${"web-logo"}" class="${"svelte-f4hgt4"}">
-          <div class="${"svelte-f4hgt4"}">${validate_component(ClassDropdownMenu, "ClassDropdownMenu").$$render($$result, { nameOfClass, descriptionOfClass }, {}, {})}
-            </div></div></div>
+          default: () => `<div style="${"margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;"}" class="${"mdc-elevation--z" + escape(4) + " svelte-ek1cfd"}"><div style="${"display: flex; align-items: center"}" class="${"svelte-ek1cfd"}"><img src="${"/logo.png"}" width="${"60"}" height="${"54"}" alt="${"web-logo"}" class="${"logo-image svelte-ek1cfd"}">
+          <div class="${"svelte-ek1cfd"}">${$user.uid ? `${validate_component(ClassDropdownMenu, "ClassDropdownMenu").$$render($$result, { nameOfClass, descriptionOfClass }, {}, {})}` : `<div style="${"font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem"}" class="${"svelte-ek1cfd"}">${escape(nameOfClass)}</div>
+              <div style="${"font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px"}" class="${"svelte-ek1cfd"}">${escape(descriptionOfClass)}</div>`}</div></div></div>
       ${validate_component(List, "List").$$render($$result, {}, {}, {
             default: () => `${slots.default ? slots.default({}) : `
 
@@ -30661,7 +31782,7 @@ var init_layout_c21ff88a = __esm({
       })}
  
   ${validate_component(AppContent, "AppContent").$$render($$result, { class: "app-content" }, {}, {
-        default: () => `<main class="${"main-content svelte-f4hgt4"}" id="${"main-content"}" style="${"padding: 0"}"></main>`
+        default: () => `<main class="${"main-content svelte-ek1cfd"}" id="${"main-content"}" style="${"padding: 0"}"></main>`
       })}
 </div>`;
     });
@@ -34160,8 +35281,8 @@ var init_layout_c21ff88a = __esm({
     };
     WebSocketConnection.responsesRequiredToBeHealthy = 2;
     WebSocketConnection.healthyTimeout = 3e4;
-    name4 = "@firebase/database";
-    version4 = "0.12.4";
+    name5 = "@firebase/database";
+    version5 = "0.12.4";
     AppCheckTokenProvider = class {
       constructor(appName_, appCheckProvider) {
         this.appName_ = appName_;
@@ -38214,6 +39335,7 @@ var init_layout_c21ff88a = __esm({
       let nameOfClass = "";
       let descriptionOfClass = "";
       let rooms = [];
+      let DropdownMenu;
       function unsubDbListeners() {
         for (const unsubFunc of unsubFuncs) {
           unsubFunc();
@@ -38292,50 +39414,73 @@ var init_layout_c21ff88a = __esm({
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
       $$result.css.add(css6);
-      {
-        if (classID) {
-          unsubDbListeners();
-          set_store_value(roomToPeople, $roomToPeople = [], $roomToPeople);
-          fetchClassDoc();
-          fetchParticipants();
-          fetchRooms();
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        {
+          if (classID) {
+            unsubDbListeners();
+            set_store_value(roomToPeople, $roomToPeople = [], $roomToPeople);
+            fetchClassDoc();
+            fetchParticipants();
+            fetchRooms();
+          }
         }
-      }
-      {
-        if (roomID) {
-          const userRef = va(Oa(), `users/${$user.uid}`);
-          _h(userRef, {
-            mostRecentClassAndRoomID: `/${classID}/${roomID}`
-          });
+        {
+          if (roomID && $user.uid) {
+            const userRef = va(Oa(), `users/${$user.uid}`);
+            _h(userRef, {
+              mostRecentClassAndRoomID: `/${classID}/${roomID}`
+            });
+          }
         }
-      }
-      $$unsubscribe_roomToPeople();
-      $$unsubscribe_user();
-      $$unsubscribe_dailyRoomParticipants();
-      $$unsubscribe_browserTabID();
-      return `
-${validate_component(RenderlessMyDocUpdater, "RenderlessMyDocUpdater").$$render($$result, { classID, roomID }, {}, {})}
+        $$rendered = `
+${$user.uid ? `${validate_component(RenderlessMyDocUpdater, "RenderlessMyDocUpdater").$$render($$result, { classID, roomID }, {}, {})}` : ``}
 
 <div id="${"container-for-audio-elements"}"></div>
 
 ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$result, { roomID }, {}, {
-        default: ({ activeSpeakerID, toggleMic, firestoreIDToDailyID }) => `${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, { nameOfClass, descriptionOfClass }, {}, {
-          default: () => `
+          default: ({ activeSpeakerID, toggleMic, firestoreIDToDailyID }) => `${validate_component(LeftDrawer, "LeftDrawer").$$render($$result, { nameOfClass, descriptionOfClass }, {}, {
+            default: () => `
     ${each(rooms, (room) => `<div style="${"padding: 6px;"}">
-        <div class="${escape(null_to_empty(room.id === roomID ? "selected" : "")) + " svelte-ms4my9"}" style="${"padding: 6px 10px 6px 8px; opacity: 90%; border-radius: 5px;"}">${room.name ? `<div style="${"white-space: nowrap; overflow: hidden; text-overflow: ellipsis margin-bottom: 2px; "}" class="${[
-            "svelte-ms4my9",
-            room.name.charAt(room.name.length - 1) === "?" && room.id !== roomID ? "question-item" : ""
-          ].join(" ").trim()}">${escape(room.name)}
-            </div>` : `${room.name === "" ? `<div style="${"margin-bottom: 2px;"}">(empty room)</div>` : ``}`}
+        <div class="${escape(null_to_empty(room.id === roomID ? "selected" : "")) + " svelte-ms4my9"}" style="${"padding-bottom: 6px; opacity: 90%; border-radius: 5px;"}">
+          <div style="${"display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;"}">${room.name ? `<div style="${"white-space: nowrap; overflow: hidden; text-overflow: ellipsis margin-bottom: 2px; "}" class="${[
+              "svelte-ms4my9",
+              room.name.charAt(room.name.length - 1) === "?" && room.id !== roomID ? "question-item" : ""
+            ].join(" ").trim()}">${escape(room.name)}
+              </div>` : `${room.name === "" ? `<div style="${"margin-bottom: 2px;"}">(empty room)</div>` : ``}`}
 
-          ${$roomToPeople[room.id] ? `${each($roomToPeople[room.id], (person) => `<div style="${"display: flex; align-items: center"}"><div style="${"font-size: 0.7rem; margin-left: 6px;"}" class="${[
-            "svelte-ms4my9",
-            firestoreIDToDailyID && firestoreIDToDailyID[person.browserTabID] && firestoreIDToDailyID[person.browserTabID] === activeSpeakerID ? "speaking" : ""
-          ].join(" ").trim()}">${escape(person.name)}</div> 
-                ${Object.keys($dailyRoomParticipants).length > 0 ? `${person.browserTabID === $browserTabID ? `<div style="${"display: flex; align-items: center; margin-right: 0; margin-left: auto"}"><div style="${"margin-right: 0; margin-left: auto; padding-top: 5px"}">${validate_component(Switch, "Switch").$$render($$result, {
-            checked: $dailyRoomParticipants.local.audio,
-            style: "margin: 0 !important"
-          }, {}, {})}</div>
+            ${room.id === roomID & $user.uid ? `<span class="${"material-icons"}" style="${"margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;"}">more_horiz
+              </span>
+
+              ${validate_component(Menu, "Menu").$$render($$result, {
+              style: "width: 300px",
+              this: DropdownMenu
+            }, {
+              this: ($$value) => {
+                DropdownMenu = $$value;
+                $$settled = false;
+              }
+            }, {
+              default: () => `${validate_component(List, "List").$$render($$result, {}, {}, {
+                default: () => `${validate_component(Item, "Item").$$render($$result, {}, {}, {
+                  default: () => `Delete room
+                  `
+                })}
+                `
+              })} 
+              `
+            })}` : ``}</div>
+
+          ${$roomToPeople[room.id] ? `${each($roomToPeople[room.id], (person) => `<div style="${"display: flex; align-items: center; padding-left: 8px; padding-right: 8px;"}"><div style="${"font-size: 0.7rem; margin-left: 6px;"}" class="${[
+              "svelte-ms4my9",
+              firestoreIDToDailyID && firestoreIDToDailyID[person.browserTabID] && firestoreIDToDailyID[person.browserTabID] === activeSpeakerID ? "speaking" : ""
+            ].join(" ").trim()}">${escape(person.name)}</div> 
+                ${Object.keys($dailyRoomParticipants).length > 0 ? `${person.browserTabID === $browserTabID ? `<div style="${"display: flex; align-items: center; margin-right: 6px; margin-left: auto"}"><div style="${"padding-top: 5px"}">${validate_component(Switch, "Switch").$$render($$result, {
+              checked: $dailyRoomParticipants.local.audio,
+              style: "margin: 0 !important"
+            }, {}, {})}</div>
                       ${$dailyRoomParticipants.local.audio ? `<div style="${"font-size: 0.7rem; margin-left: 6px; color: #33ff33"}">voice on
                         </div>` : `<div style="${"font-size: 0.7rem; margin-left: 6px; color: red"}">muted
                         </div>`}
@@ -38346,16 +39491,22 @@ ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$re
       </div>`)}
 
     
-    <div style="${"padding: 6px; display: flex; align-items: center;"}"><span class="${"material-icons"}" style="${"margin-left: 6px; margin-right: 5px; margin-top: 2.5px; font-size: 1.2rem;"}">add
-      </span>
-      new room
-    </div>`
-        })}`
-      })}
+    ${$user.uid ? `<div style="${"padding: 6px; display: flex; align-items: center;"}"><span class="${"material-icons"}" style="${"margin-left: 6px; margin-right: 5px; margin-top: 2.5px; font-size: 1.2rem;"}">add
+        </span>
+        new room
+      </div>` : ``}`
+          })}`
+        })}
 
 ${slots.default ? slots.default({}) : `
 
 `}`;
+      } while (!$$settled);
+      $$unsubscribe_roomToPeople();
+      $$unsubscribe_user();
+      $$unsubscribe_dailyRoomParticipants();
+      $$unsubscribe_browserTabID();
+      return $$rendered;
     });
   }
 });
@@ -38376,227 +39527,12 @@ var require_dist = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-821d53b7.js
-var index_821d53b7_exports = {};
-__export(index_821d53b7_exports, {
+// .svelte-kit/output/server/chunks/index-daa2ace3.js
+var index_daa2ace3_exports = {};
+__export(index_daa2ace3_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
-function prependCode(code) {
-  return "storage/" + code;
-}
-function unknown() {
-  const message2 = "An unknown error occurred, please check the error payload for server response.";
-  return new StorageError("unknown", message2);
-}
-function retryLimitExceeded() {
-  return new StorageError("retry-limit-exceeded", "Max retry time for operation exceeded, please try again.");
-}
-function canceled() {
-  return new StorageError("canceled", "User canceled the upload/download.");
-}
-function invalidUrl(url2) {
-  return new StorageError("invalid-url", "Invalid URL '" + url2 + "'.");
-}
-function invalidDefaultBucket(bucket) {
-  return new StorageError("invalid-default-bucket", "Invalid default bucket '" + bucket + "'.");
-}
-function invalidArgument(message2) {
-  return new StorageError("invalid-argument", message2);
-}
-function appDeleted() {
-  return new StorageError("app-deleted", "The Firebase app was deleted.");
-}
-function invalidRootOperation(name22) {
-  return new StorageError("invalid-root-operation", "The operation '" + name22 + "' cannot be performed on a root reference, create a non-root reference using child, such as .child('file.png').");
-}
-function start(f, callback, timeout) {
-  let waitSeconds = 1;
-  let retryTimeoutId = null;
-  let globalTimeoutId = null;
-  let hitTimeout = false;
-  let cancelState = 0;
-  function canceled2() {
-    return cancelState === 2;
-  }
-  let triggeredCallback = false;
-  function triggerCallback(...args) {
-    if (!triggeredCallback) {
-      triggeredCallback = true;
-      callback.apply(null, args);
-    }
-  }
-  function callWithDelay(millis) {
-    retryTimeoutId = setTimeout(() => {
-      retryTimeoutId = null;
-      f(handler, canceled2());
-    }, millis);
-  }
-  function clearGlobalTimeout() {
-    if (globalTimeoutId) {
-      clearTimeout(globalTimeoutId);
-    }
-  }
-  function handler(success, ...args) {
-    if (triggeredCallback) {
-      clearGlobalTimeout();
-      return;
-    }
-    if (success) {
-      clearGlobalTimeout();
-      triggerCallback.call(null, success, ...args);
-      return;
-    }
-    const mustStop = canceled2() || hitTimeout;
-    if (mustStop) {
-      clearGlobalTimeout();
-      triggerCallback.call(null, success, ...args);
-      return;
-    }
-    if (waitSeconds < 64) {
-      waitSeconds *= 2;
-    }
-    let waitMillis;
-    if (cancelState === 1) {
-      cancelState = 2;
-      waitMillis = 0;
-    } else {
-      waitMillis = (waitSeconds + Math.random()) * 1e3;
-    }
-    callWithDelay(waitMillis);
-  }
-  let stopped = false;
-  function stop2(wasTimeout) {
-    if (stopped) {
-      return;
-    }
-    stopped = true;
-    clearGlobalTimeout();
-    if (triggeredCallback) {
-      return;
-    }
-    if (retryTimeoutId !== null) {
-      if (!wasTimeout) {
-        cancelState = 2;
-      }
-      clearTimeout(retryTimeoutId);
-      callWithDelay(0);
-    } else {
-      if (!wasTimeout) {
-        cancelState = 1;
-      }
-    }
-  }
-  callWithDelay(0);
-  globalTimeoutId = setTimeout(() => {
-    hitTimeout = true;
-    stop2(true);
-  }, timeout);
-  return stop2;
-}
-function stop(id2) {
-  id2(false);
-}
-function isJustDef(p2) {
-  return p2 !== void 0;
-}
-function validateNumber(argument, minValue, maxValue, value) {
-  if (value < minValue) {
-    throw invalidArgument(`Invalid value for '${argument}'. Expected ${minValue} or greater.`);
-  }
-  if (value > maxValue) {
-    throw invalidArgument(`Invalid value for '${argument}'. Expected ${maxValue} or less.`);
-  }
-}
-function makeQueryString(params) {
-  const encode = encodeURIComponent;
-  let queryPart = "?";
-  for (const key in params) {
-    if (params.hasOwnProperty(key)) {
-      const nextPart = encode(key) + "=" + encode(params[key]);
-      queryPart = queryPart + nextPart + "&";
-    }
-  }
-  queryPart = queryPart.slice(0, -1);
-  return queryPart;
-}
-function addAuthHeader_(headers2, authToken) {
-  if (authToken !== null && authToken.length > 0) {
-    headers2["Authorization"] = "Firebase " + authToken;
-  }
-}
-function addVersionHeader_(headers2, firebaseVersion) {
-  headers2["X-Firebase-Storage-Version"] = "webjs/" + (firebaseVersion !== null && firebaseVersion !== void 0 ? firebaseVersion : "AppManager");
-}
-function addGmpidHeader_(headers2, appId) {
-  if (appId) {
-    headers2["X-Firebase-GMPID"] = appId;
-  }
-}
-function addAppCheckHeader_(headers2, appCheckToken) {
-  if (appCheckToken !== null) {
-    headers2["X-Firebase-AppCheck"] = appCheckToken;
-  }
-}
-function makeRequest(requestInfo, appId, authToken, appCheckToken, requestFactory, firebaseVersion) {
-  const queryPart = makeQueryString(requestInfo.urlParams);
-  const url2 = requestInfo.url + queryPart;
-  const headers2 = Object.assign({}, requestInfo.headers);
-  addGmpidHeader_(headers2, appId);
-  addAuthHeader_(headers2, authToken);
-  addVersionHeader_(headers2, firebaseVersion);
-  addAppCheckHeader_(headers2, appCheckToken);
-  return new NetworkRequest(url2, requestInfo.method, headers2, requestInfo.body, requestInfo.successCodes, requestInfo.additionalRetryCodes, requestInfo.handler, requestInfo.errorHandler, requestInfo.timeout, requestInfo.progressCallback, requestFactory);
-}
-function parent(path) {
-  if (path.length === 0) {
-    return null;
-  }
-  const index = path.lastIndexOf("/");
-  if (index === -1) {
-    return "";
-  }
-  const newPath = path.slice(0, index);
-  return newPath;
-}
-function lastComponent(path) {
-  const index = path.lastIndexOf("/", path.length - 2);
-  if (index === -1) {
-    return path;
-  } else {
-    return path.slice(index + 1);
-  }
-}
-function extractBucket(host, config) {
-  const bucketString = config === null || config === void 0 ? void 0 : config[CONFIG_STORAGE_BUCKET_KEY];
-  if (bucketString == null) {
-    return null;
-  }
-  return Location.makeFromBucketSpec(bucketString, host);
-}
-function factory(container, { instanceIdentifier: url2 }) {
-  const app = container.getProvider("app").getImmediate();
-  const authProvider = container.getProvider("auth-internal");
-  const appCheckProvider = container.getProvider("app-check-internal");
-  return new FirebaseStorageImpl(app, authProvider, appCheckProvider, url2, SDK_VERSION);
-}
-function registerStorage() {
-  _registerComponent(new Component(STORAGE_TYPE, factory, "PUBLIC").setMultipleInstances(true));
-  registerVersion(name$12, version$12, "node");
-  registerVersion(name$12, version$12, "esm2017");
-}
-function registerFunctions(fetchImpl2, variant) {
-  const factory2 = (container, { instanceIdentifier: regionOrCustomDomain }) => {
-    const app = container.getProvider("app").getImmediate();
-    const authProvider = container.getProvider(AUTH_INTERNAL_NAME);
-    const messagingProvider = container.getProvider(MESSAGING_INTERNAL_NAME);
-    const appCheckProvider = container.getProvider(APP_CHECK_INTERNAL_NAME);
-    return new FunctionsService(app, authProvider, messagingProvider, appCheckProvider, regionOrCustomDomain, fetchImpl2);
-  };
-  _registerComponent(new Component(FUNCTIONS_TYPE, factory2, "PUBLIC").setMultipleInstances(true));
-  registerVersion(name5, version5, variant);
-  registerVersion(name5, version5, "esm2017");
-}
 function convertDocToStroke(doc) {
   const strokeObject = { id: doc.id, ...doc.data() };
   strokeObject.startTime = 0;
@@ -38619,20 +39555,20 @@ function hasQuestionMark(string) {
     return false;
   return string.charAt(string.length - 1) === "?";
 }
-var import_node_fetch6, import_svelte_css_vars, import_cookie8, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name5, version5, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css7, U5Broomu5D;
-var init_index_821d53b7 = __esm({
-  ".svelte-kit/output/server/chunks/index-821d53b7.js"() {
+var import_svelte_css_vars, import_cookie8, import_node_fetch8, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css7, U5Broomu5D;
+var init_index_daa2ace3 = __esm({
+  ".svelte-kit/output/server/chunks/index-daa2ace3.js"() {
     init_shims();
-    init_app_55d38c16();
-    init_RenderlessFetchStrokes_9d9c6a41();
-    init_store_65404eb4();
-    init_SelectionGroupIcon_5481d254();
-    init_Switch_e609408f();
-    init_DoodleVideo_svelte_svelte_type_style_lang_90d8aa9e();
-    import_node_fetch6 = __toModule(require_lib2());
+    init_app_a0c37348();
+    init_RenderlessFetchStrokes_7cd4b957();
+    init_store_836abe82();
+    init_SelectionGroupIcon_d37af903();
+    init_index_node_esm_d00324cd();
+    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
     import_svelte_css_vars = __toModule(require_dist());
     import_cookie8 = __toModule(require_cookie());
     init_dist();
+    import_node_fetch8 = __toModule(require_lib2());
     counter2 = 0;
     HelperText = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["use", "class", "id", "persistent", "validationMsg", "getElement"]);
@@ -38721,19 +39657,21 @@ var init_index_821d53b7 = __esm({
       let $canvasWidth, $$unsubscribe_canvasWidth;
       let $$unsubscribe_currentTool;
       let $$unsubscribe_onlyAllowApplePencil;
+      let $user, $$unsubscribe_user;
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
       $$unsubscribe_currentTool = subscribe(currentTool, (value) => value);
       $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => value);
-      let { strokesArray } = $$props;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      let { strokesArray: strokesArray2 } = $$props;
       let { currentTime = 0 } = $$props;
       let { backgroundImageDownloadURL = "" } = $$props;
       createEventDispatcher();
       let canvas;
       let bgCanvas;
       let DropdownMenu;
-      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray !== void 0)
-        $$bindings.strokesArray(strokesArray);
+      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray2 !== void 0)
+        $$bindings.strokesArray(strokesArray2);
       if ($$props.currentTime === void 0 && $$bindings.currentTime && currentTime !== void 0)
         $$bindings.currentTime(currentTime);
       if ($$props.backgroundImageDownloadURL === void 0 && $$bindings.backgroundImageDownloadURL && backgroundImageDownloadURL !== void 0)
@@ -38743,13 +39681,13 @@ var init_index_821d53b7 = __esm({
       do {
         $$settled = true;
         $$rendered = `
-${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
-          "dropdown-menu": () => `<div slot="${"dropdown-menu"}"><span class="${"material-icons"}" style="${"margin-right: 10px; color: white; font-size: 2rem;"}">more_horiz
-      </span>
-    
-      <input style="${"display: none"}" type="${"file"}" accept="${"image/gif, image/jpeg, image/png"}">
+${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
+          "dropdown-menu": () => `<div slot="${"dropdown-menu"}">${$user.uid ? `<span class="${"material-icons"}" style="${"margin-right: 10px; color: white; font-size: 2rem;"}">more_horiz
+        </span>
+      
+        <input style="${"display: none"}" type="${"file"}" accept="${"image/gif, image/jpeg, image/png"}">
 
-      ${validate_component(Menu, "Menu").$$render($$result, {
+        ${validate_component(Menu, "Menu").$$render($$result, {
             style: "width: 300px",
             this: DropdownMenu
           }, {
@@ -38761,18 +39699,23 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
             default: () => `${validate_component(List, "List").$$render($$result, {}, {}, {
               default: () => `${backgroundImageDownloadURL ? `${validate_component(Item, "Item").$$render($$result, {}, {}, {
                 default: () => `Remove background
-            `
+              `
               })}` : `${validate_component(Item, "Item").$$render($$result, {}, {}, {
                 default: () => `Set background
-            `
+              `
               })}`}
 
-          ${validate_component(Item, "Item").$$render($$result, {}, {}, {
+            ${validate_component(Item, "Item").$$render($$result, {}, {}, {
                 default: () => `Wipe board
-          `
+            `
+              })}    
+
+            ${validate_component(Item, "Item").$$render($$result, {}, {}, {
+                default: () => `Delete board 
+            `
               })}`
             })}`
-          })}</div>`,
+          })}` : ``}</div>`,
           default: () => `${slots.default ? slots.default({}) : `
 
     `}`
@@ -38791,6 +39734,7 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
       $$unsubscribe_canvasWidth();
       $$unsubscribe_currentTool();
       $$unsubscribe_onlyAllowApplePencil();
+      $$unsubscribe_user();
       return $$rendered;
     });
     RenderlessAudioRecorder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -38841,513 +39785,6 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
 
 `}`;
     });
-    DEFAULT_HOST = "firebasestorage.googleapis.com";
-    CONFIG_STORAGE_BUCKET_KEY = "storageBucket";
-    DEFAULT_MAX_OPERATION_RETRY_TIME = 2 * 60 * 1e3;
-    DEFAULT_MAX_UPLOAD_RETRY_TIME = 10 * 60 * 1e3;
-    StorageError = class extends FirebaseError {
-      constructor(code, message2) {
-        super(prependCode(code), `Firebase Storage: ${message2} (${prependCode(code)})`);
-        this.customData = { serverResponse: null };
-        this._baseMessage = this.message;
-        Object.setPrototypeOf(this, StorageError.prototype);
-      }
-      _codeEquals(code) {
-        return prependCode(code) === this.code;
-      }
-      get serverResponse() {
-        return this.customData.serverResponse;
-      }
-      set serverResponse(serverResponse) {
-        this.customData.serverResponse = serverResponse;
-        if (this.customData.serverResponse) {
-          this.message = `${this._baseMessage}
-${this.customData.serverResponse}`;
-        } else {
-          this.message = this._baseMessage;
-        }
-      }
-    };
-    Location = class {
-      constructor(bucket, path) {
-        this.bucket = bucket;
-        this.path_ = path;
-      }
-      get path() {
-        return this.path_;
-      }
-      get isRoot() {
-        return this.path.length === 0;
-      }
-      fullServerUrl() {
-        const encode = encodeURIComponent;
-        return "/b/" + encode(this.bucket) + "/o/" + encode(this.path);
-      }
-      bucketOnlyServerUrl() {
-        const encode = encodeURIComponent;
-        return "/b/" + encode(this.bucket) + "/o";
-      }
-      static makeFromBucketSpec(bucketString, host) {
-        let bucketLocation;
-        try {
-          bucketLocation = Location.makeFromUrl(bucketString, host);
-        } catch (e) {
-          return new Location(bucketString, "");
-        }
-        if (bucketLocation.path === "") {
-          return bucketLocation;
-        } else {
-          throw invalidDefaultBucket(bucketString);
-        }
-      }
-      static makeFromUrl(url2, host) {
-        let location2 = null;
-        const bucketDomain = "([A-Za-z0-9.\\-_]+)";
-        function gsModify(loc) {
-          if (loc.path.charAt(loc.path.length - 1) === "/") {
-            loc.path_ = loc.path_.slice(0, -1);
-          }
-        }
-        const gsPath = "(/(.*))?$";
-        const gsRegex = new RegExp("^gs://" + bucketDomain + gsPath, "i");
-        const gsIndices = { bucket: 1, path: 3 };
-        function httpModify(loc) {
-          loc.path_ = decodeURIComponent(loc.path);
-        }
-        const version22 = "v[A-Za-z0-9_]+";
-        const firebaseStorageHost = host.replace(/[.]/g, "\\.");
-        const firebaseStoragePath = "(/([^?#]*).*)?$";
-        const firebaseStorageRegExp = new RegExp(`^https?://${firebaseStorageHost}/${version22}/b/${bucketDomain}/o${firebaseStoragePath}`, "i");
-        const firebaseStorageIndices = { bucket: 1, path: 3 };
-        const cloudStorageHost = host === DEFAULT_HOST ? "(?:storage.googleapis.com|storage.cloud.google.com)" : host;
-        const cloudStoragePath = "([^?#]*)";
-        const cloudStorageRegExp = new RegExp(`^https?://${cloudStorageHost}/${bucketDomain}/${cloudStoragePath}`, "i");
-        const cloudStorageIndices = { bucket: 1, path: 2 };
-        const groups = [
-          { regex: gsRegex, indices: gsIndices, postModify: gsModify },
-          {
-            regex: firebaseStorageRegExp,
-            indices: firebaseStorageIndices,
-            postModify: httpModify
-          },
-          {
-            regex: cloudStorageRegExp,
-            indices: cloudStorageIndices,
-            postModify: httpModify
-          }
-        ];
-        for (let i = 0; i < groups.length; i++) {
-          const group = groups[i];
-          const captures = group.regex.exec(url2);
-          if (captures) {
-            const bucketValue = captures[group.indices.bucket];
-            let pathValue = captures[group.indices.path];
-            if (!pathValue) {
-              pathValue = "";
-            }
-            location2 = new Location(bucketValue, pathValue);
-            group.postModify(location2);
-            break;
-          }
-        }
-        if (location2 == null) {
-          throw invalidUrl(url2);
-        }
-        return location2;
-      }
-    };
-    FailRequest = class {
-      constructor(error3) {
-        this.promise_ = Promise.reject(error3);
-      }
-      getPromise() {
-        return this.promise_;
-      }
-      cancel(_appDelete = false) {
-      }
-    };
-    (function(ErrorCode22) {
-      ErrorCode22[ErrorCode22["NO_ERROR"] = 0] = "NO_ERROR";
-      ErrorCode22[ErrorCode22["NETWORK_ERROR"] = 1] = "NETWORK_ERROR";
-      ErrorCode22[ErrorCode22["ABORT"] = 2] = "ABORT";
-    })(ErrorCode2 || (ErrorCode2 = {}));
-    NetworkRequest = class {
-      constructor(url_, method_, headers_, body_, successCodes_, additionalRetryCodes_, callback_, errorCallback_, timeout_, progressCallback_, connectionFactory_) {
-        this.url_ = url_;
-        this.method_ = method_;
-        this.headers_ = headers_;
-        this.body_ = body_;
-        this.successCodes_ = successCodes_;
-        this.additionalRetryCodes_ = additionalRetryCodes_;
-        this.callback_ = callback_;
-        this.errorCallback_ = errorCallback_;
-        this.timeout_ = timeout_;
-        this.progressCallback_ = progressCallback_;
-        this.connectionFactory_ = connectionFactory_;
-        this.pendingConnection_ = null;
-        this.backoffId_ = null;
-        this.canceled_ = false;
-        this.appDelete_ = false;
-        this.promise_ = new Promise((resolve2, reject2) => {
-          this.resolve_ = resolve2;
-          this.reject_ = reject2;
-          this.start_();
-        });
-      }
-      start_() {
-        const doTheRequest = (backoffCallback, canceled2) => {
-          if (canceled2) {
-            backoffCallback(false, new RequestEndStatus(false, null, true));
-            return;
-          }
-          const connection = this.connectionFactory_();
-          this.pendingConnection_ = connection;
-          const progressListener = (progressEvent) => {
-            const loaded = progressEvent.loaded;
-            const total = progressEvent.lengthComputable ? progressEvent.total : -1;
-            if (this.progressCallback_ !== null) {
-              this.progressCallback_(loaded, total);
-            }
-          };
-          if (this.progressCallback_ !== null) {
-            connection.addUploadProgressListener(progressListener);
-          }
-          connection.send(this.url_, this.method_, this.body_, this.headers_).then(() => {
-            if (this.progressCallback_ !== null) {
-              connection.removeUploadProgressListener(progressListener);
-            }
-            this.pendingConnection_ = null;
-            const hitServer = connection.getErrorCode() === ErrorCode2.NO_ERROR;
-            const status = connection.getStatus();
-            if (!hitServer || this.isRetryStatusCode_(status)) {
-              const wasCanceled = connection.getErrorCode() === ErrorCode2.ABORT;
-              backoffCallback(false, new RequestEndStatus(false, null, wasCanceled));
-              return;
-            }
-            const successCode = this.successCodes_.indexOf(status) !== -1;
-            backoffCallback(true, new RequestEndStatus(successCode, connection));
-          });
-        };
-        const backoffDone = (requestWentThrough, status) => {
-          const resolve2 = this.resolve_;
-          const reject2 = this.reject_;
-          const connection = status.connection;
-          if (status.wasSuccessCode) {
-            try {
-              const result = this.callback_(connection, connection.getResponse());
-              if (isJustDef(result)) {
-                resolve2(result);
-              } else {
-                resolve2();
-              }
-            } catch (e) {
-              reject2(e);
-            }
-          } else {
-            if (connection !== null) {
-              const err = unknown();
-              err.serverResponse = connection.getErrorText();
-              if (this.errorCallback_) {
-                reject2(this.errorCallback_(connection, err));
-              } else {
-                reject2(err);
-              }
-            } else {
-              if (status.canceled) {
-                const err = this.appDelete_ ? appDeleted() : canceled();
-                reject2(err);
-              } else {
-                const err = retryLimitExceeded();
-                reject2(err);
-              }
-            }
-          }
-        };
-        if (this.canceled_) {
-          backoffDone(false, new RequestEndStatus(false, null, true));
-        } else {
-          this.backoffId_ = start(doTheRequest, backoffDone, this.timeout_);
-        }
-      }
-      getPromise() {
-        return this.promise_;
-      }
-      cancel(appDelete) {
-        this.canceled_ = true;
-        this.appDelete_ = appDelete || false;
-        if (this.backoffId_ !== null) {
-          stop(this.backoffId_);
-        }
-        if (this.pendingConnection_ !== null) {
-          this.pendingConnection_.abort();
-        }
-      }
-      isRetryStatusCode_(status) {
-        const isFiveHundredCode = status >= 500 && status < 600;
-        const extraRetryCodes = [
-          408,
-          429
-        ];
-        const isExtraRetryCode = extraRetryCodes.indexOf(status) !== -1;
-        const isRequestSpecificRetryCode = this.additionalRetryCodes_.indexOf(status) !== -1;
-        return isFiveHundredCode || isExtraRetryCode || isRequestSpecificRetryCode;
-      }
-    };
-    RequestEndStatus = class {
-      constructor(wasSuccessCode, connection, canceled2) {
-        this.wasSuccessCode = wasSuccessCode;
-        this.connection = connection;
-        this.canceled = !!canceled2;
-      }
-    };
-    Reference = class {
-      constructor(_service, location2) {
-        this._service = _service;
-        if (location2 instanceof Location) {
-          this._location = location2;
-        } else {
-          this._location = Location.makeFromUrl(location2, _service.host);
-        }
-      }
-      toString() {
-        return "gs://" + this._location.bucket + "/" + this._location.path;
-      }
-      _newRef(service, location2) {
-        return new Reference(service, location2);
-      }
-      get root() {
-        const location2 = new Location(this._location.bucket, "");
-        return this._newRef(this._service, location2);
-      }
-      get bucket() {
-        return this._location.bucket;
-      }
-      get fullPath() {
-        return this._location.path;
-      }
-      get name() {
-        return lastComponent(this._location.path);
-      }
-      get storage() {
-        return this._service;
-      }
-      get parent() {
-        const newPath = parent(this._location.path);
-        if (newPath === null) {
-          return null;
-        }
-        const location2 = new Location(this._location.bucket, newPath);
-        return new Reference(this._service, location2);
-      }
-      _throwIfRoot(name22) {
-        if (this._location.path === "") {
-          throw invalidRootOperation(name22);
-        }
-      }
-    };
-    FirebaseStorageImpl = class {
-      constructor(app, _authProvider, _appCheckProvider, _url, _firebaseVersion) {
-        this.app = app;
-        this._authProvider = _authProvider;
-        this._appCheckProvider = _appCheckProvider;
-        this._url = _url;
-        this._firebaseVersion = _firebaseVersion;
-        this._bucket = null;
-        this._host = DEFAULT_HOST;
-        this._protocol = "https";
-        this._appId = null;
-        this._deleted = false;
-        this._maxOperationRetryTime = DEFAULT_MAX_OPERATION_RETRY_TIME;
-        this._maxUploadRetryTime = DEFAULT_MAX_UPLOAD_RETRY_TIME;
-        this._requests = new Set();
-        if (_url != null) {
-          this._bucket = Location.makeFromBucketSpec(_url, this._host);
-        } else {
-          this._bucket = extractBucket(this._host, this.app.options);
-        }
-      }
-      get host() {
-        return this._host;
-      }
-      set host(host) {
-        this._host = host;
-        if (this._url != null) {
-          this._bucket = Location.makeFromBucketSpec(this._url, host);
-        } else {
-          this._bucket = extractBucket(host, this.app.options);
-        }
-      }
-      get maxUploadRetryTime() {
-        return this._maxUploadRetryTime;
-      }
-      set maxUploadRetryTime(time) {
-        validateNumber("time", 0, Number.POSITIVE_INFINITY, time);
-        this._maxUploadRetryTime = time;
-      }
-      get maxOperationRetryTime() {
-        return this._maxOperationRetryTime;
-      }
-      set maxOperationRetryTime(time) {
-        validateNumber("time", 0, Number.POSITIVE_INFINITY, time);
-        this._maxOperationRetryTime = time;
-      }
-      async _getAuthToken() {
-        if (this._overrideAuthToken) {
-          return this._overrideAuthToken;
-        }
-        const auth = this._authProvider.getImmediate({ optional: true });
-        if (auth) {
-          const tokenData = await auth.getToken();
-          if (tokenData !== null) {
-            return tokenData.accessToken;
-          }
-        }
-        return null;
-      }
-      async _getAppCheckToken() {
-        const appCheck = this._appCheckProvider.getImmediate({ optional: true });
-        if (appCheck) {
-          const result = await appCheck.getToken();
-          return result.token;
-        }
-        return null;
-      }
-      _delete() {
-        if (!this._deleted) {
-          this._deleted = true;
-          this._requests.forEach((request) => request.cancel());
-          this._requests.clear();
-        }
-        return Promise.resolve();
-      }
-      _makeStorageReference(loc) {
-        return new Reference(this, loc);
-      }
-      _makeRequest(requestInfo, requestFactory, authToken, appCheckToken) {
-        if (!this._deleted) {
-          const request = makeRequest(requestInfo, this._appId, authToken, appCheckToken, requestFactory, this._firebaseVersion);
-          this._requests.add(request);
-          request.getPromise().then(() => this._requests.delete(request), () => this._requests.delete(request));
-          return request;
-        } else {
-          return new FailRequest(appDeleted());
-        }
-      }
-      async makeRequestWithTokens(requestInfo, requestFactory) {
-        const [authToken, appCheckToken] = await Promise.all([
-          this._getAuthToken(),
-          this._getAppCheckToken()
-        ]);
-        return this._makeRequest(requestInfo, requestFactory, authToken, appCheckToken).getPromise();
-      }
-    };
-    name$12 = "@firebase/storage";
-    version$12 = "0.9.0";
-    STORAGE_TYPE = "storage";
-    registerStorage();
-    FUNCTIONS_TYPE = "functions";
-    ContextProvider = class {
-      constructor(authProvider, messagingProvider, appCheckProvider) {
-        this.auth = null;
-        this.messaging = null;
-        this.appCheck = null;
-        this.auth = authProvider.getImmediate({ optional: true });
-        this.messaging = messagingProvider.getImmediate({
-          optional: true
-        });
-        if (!this.auth) {
-          authProvider.get().then((auth) => this.auth = auth, () => {
-          });
-        }
-        if (!this.messaging) {
-          messagingProvider.get().then((messaging) => this.messaging = messaging, () => {
-          });
-        }
-        if (!this.appCheck) {
-          appCheckProvider.get().then((appCheck) => this.appCheck = appCheck, () => {
-          });
-        }
-      }
-      async getAuthToken() {
-        if (!this.auth) {
-          return void 0;
-        }
-        try {
-          const token = await this.auth.getToken();
-          return token === null || token === void 0 ? void 0 : token.accessToken;
-        } catch (e) {
-          return void 0;
-        }
-      }
-      async getMessagingToken() {
-        if (!this.messaging || !("Notification" in self) || Notification.permission !== "granted") {
-          return void 0;
-        }
-        try {
-          return await this.messaging.getToken();
-        } catch (e) {
-          return void 0;
-        }
-      }
-      async getAppCheckToken() {
-        if (this.appCheck) {
-          const result = await this.appCheck.getToken();
-          if (result.error) {
-            return null;
-          }
-          return result.token;
-        }
-        return null;
-      }
-      async getContext() {
-        const authToken = await this.getAuthToken();
-        const messagingToken = await this.getMessagingToken();
-        const appCheckToken = await this.getAppCheckToken();
-        return { authToken, messagingToken, appCheckToken };
-      }
-    };
-    DEFAULT_REGION = "us-central1";
-    FunctionsService = class {
-      constructor(app, authProvider, messagingProvider, appCheckProvider, regionOrCustomDomain = DEFAULT_REGION, fetchImpl2) {
-        this.app = app;
-        this.fetchImpl = fetchImpl2;
-        this.emulatorOrigin = null;
-        this.contextProvider = new ContextProvider(authProvider, messagingProvider, appCheckProvider);
-        this.cancelAllRequests = new Promise((resolve2) => {
-          this.deleteService = () => {
-            return Promise.resolve(resolve2());
-          };
-        });
-        try {
-          const url2 = new URL(regionOrCustomDomain);
-          this.customDomain = url2.origin;
-          this.region = DEFAULT_REGION;
-        } catch (e) {
-          this.customDomain = null;
-          this.region = regionOrCustomDomain;
-        }
-      }
-      _delete() {
-        return this.deleteService();
-      }
-      _url(name22) {
-        const projectId = this.app.options.projectId;
-        if (this.emulatorOrigin !== null) {
-          const origin = this.emulatorOrigin;
-          return `${origin}/${projectId}/${this.region}/${name22}`;
-        }
-        if (this.customDomain !== null) {
-          return `${this.customDomain}/${name22}`;
-        }
-        return `https://${this.region}-${projectId}.cloudfunctions.net/${name22}`;
-      }
-    };
-    name5 = "@firebase/functions";
-    version5 = "0.7.6";
-    AUTH_INTERNAL_NAME = "auth-internal";
-    APP_CHECK_INTERNAL_NAME = "app-check-internal";
-    MESSAGING_INTERNAL_NAME = "messaging-internal";
-    registerFunctions(import_node_fetch6.default, "node");
     css$12 = {
       code: '.grow-wrap.svelte-1xi77cs.svelte-1xi77cs::after{visibility:hidden;content:attr(data-replicated-value) " "}.grow-wrap.svelte-1xi77cs>textarea.svelte-1xi77cs,.grow-wrap.svelte-1xi77cs.svelte-1xi77cs::after{width:var(--width);overflow-wrap:break-word;white-space:pre-wrap;box-sizing:border-box;border:1px solid black;border-radius:2px;padding:6px;font-size:1rem;font-family:Roboto, sans-serif;color:rgb(60 55 56 / 87%);grid-area:1 / 1 / 2 / 2;resize:none;overflow:hidden}',
       map: null
@@ -39445,7 +39882,7 @@ ${this.customData.serverResponse}`;
     });
     RenderlessListenToStrokes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { dbPath } = $$props;
-      let strokesArray;
+      let strokesArray2;
       let unsubStrokesListener;
       const strokesRef = ba(Oa(), `${dbPath}/strokes`);
       const strokesQuery = Mu(strokesRef, qu("timestamp"));
@@ -39458,41 +39895,41 @@ ${this.customData.serverResponse}`;
         unsubStrokesListener = yh(strokesQuery, async (snapshot) => {
           const removedDocs = snapshot.docChanges().filter((change) => change.type === "removed");
           if (removedDocs.length > 0) {
-            strokesArray = [];
+            strokesArray2 = [];
             await tick();
             if (snapshot.docs.length > 0) {
               snapshot.docs.forEach((doc) => {
-                strokesArray.push(convertDocToStroke(doc));
+                strokesArray2.push(convertDocToStroke(doc));
               });
             }
           } else {
-            if (!strokesArray) {
-              strokesArray = [];
+            if (!strokesArray2) {
+              strokesArray2 = [];
             }
-            if (snapshot.docs.length === strokesArray.length)
+            if (snapshot.docs.length === strokesArray2.length)
               ;
             else {
               snapshot.docChanges().filter((change) => change.type === "added").forEach((change) => {
-                strokesArray = [...strokesArray, convertDocToStroke(change.doc)];
+                strokesArray2 = [...strokesArray2, convertDocToStroke(change.doc)];
               });
             }
           }
         });
       }
       function handleNewlyDrawnStroke(stroke) {
-        strokesArray.push(stroke);
+        strokesArray2.push(stroke);
         try {
           wh(va(Oa(), `${dbPath}/strokes/${stroke.id}`), { timestamp: bh(), ...stroke });
         } catch (error3) {
           alert(error3);
         }
       }
-      async function deleteAllStrokesFromDb() {
+      async function deleteAllStrokesFromDb2() {
         return new Promise(async (resolve2) => {
           const batchDeleteRequests = [];
           let currentBatch = Sh(Oa());
           let currentBatchSize = 0;
-          for (const stroke of strokesArray) {
+          for (const stroke of strokesArray2) {
             if (currentBatchSize >= 500) {
               batchDeleteRequests.push(currentBatch.commit());
               currentBatch = Sh(Oa());
@@ -39504,7 +39941,7 @@ ${this.customData.serverResponse}`;
           }
           batchDeleteRequests.push(currentBatch.commit());
           await Promise.all(batchDeleteRequests);
-          strokesArray = [];
+          strokesArray2 = [];
           resolve2();
         });
       }
@@ -39512,9 +39949,9 @@ ${this.customData.serverResponse}`;
         $$bindings.dbPath(dbPath);
       return `${slots.default ? slots.default({
         listenToStrokes,
-        strokesArray,
+        strokesArray: strokesArray2,
         handleNewlyDrawnStroke,
-        deleteAllStrokesFromDb
+        deleteAllStrokesFromDb: deleteAllStrokesFromDb2
       }) : `
 
 `}`;
@@ -39538,15 +39975,16 @@ ${this.customData.serverResponse}`;
       let { classID } = $$props;
       let { roomID } = $$props;
       let unsubRoomListener;
-      let roomDoc;
-      if (!$user.uid) {
-        goto("/");
-      }
+      let roomDoc = { name: "", blackboards: [] };
       async function createRoomListener() {
         if (unsubRoomListener)
           unsubRoomListener();
         unsubRoomListener = yh(roomRef, (snapshot) => {
-          roomDoc = { id: snapshot.id, ...snapshot.data() };
+          if (!snapshot.exists()) {
+            goto(`/${classID}/${classID}`);
+          } else {
+            roomDoc = { id: snapshot.id, ...snapshot.data() };
+          }
         });
       }
       onDestroy(() => {
@@ -39587,8 +40025,8 @@ ${this.customData.serverResponse}`;
           ${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, { value: boardDoc.description || "" }, {}, {})}
           <div style="${"margin-bottom: 10px;"}"></div>
           ${boardDoc.audioDownloadURL ? `${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-          default: ({ fetchStrokes, strokesArray, deleteAllStrokesFromDb }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`, 0)}>${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray,
+          default: ({ fetchStrokes, strokesArray: strokesArray2, deleteAllStrokesFromDb: deleteAllStrokesFromDb2 }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`, 0)}>${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray: strokesArray2,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {
@@ -39600,24 +40038,24 @@ ${this.customData.serverResponse}`;
           })}</div>
             `
         })}` : `${validate_component(RenderlessListenToStrokes, "RenderlessListenToStrokes").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-          default: ({ listenToStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`, 0)}>${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
+          default: ({ listenToStrokes, strokesArray: strokesArray2, handleNewlyDrawnStroke, deleteAllStrokesFromDb: deleteAllStrokesFromDb2 }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`, 0)}>${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
             default: ({ startRecording, stopRecording, currentTime }) => `${validate_component(Blackboard, "Blackboard").$$render($$result, {
-              strokesArray,
+              strokesArray: strokesArray2,
               currentTime,
               backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
             }, {}, {
-              default: () => `${!boardDoc.recordState || boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">radio_button_checked
-                      </span>` : `${boardDoc.recordState === "mid_record" ? `<span class="${[
+              default: () => `${user.uid ? `${!boardDoc.recordState || boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">radio_button_checked
+                        </span>` : `${boardDoc.recordState === "mid_record" ? `<span class="${[
                 "material-icons svelte-53fhoc",
                 $browserTabID !== boardDoc.recorderBrowserTabID ? "unclickable" : ""
               ].join(" ").trim()}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">stop_circle
-                      </span>` : `<div style="${"display: flex; justify-content: center; margin-left: 20px; margin-right: 20px"}">${validate_component(CircularProgress, "CircularProgress").$$render($$result, {
+                        </span>` : `<div style="${"display: flex; justify-content: center; margin-left: 20px; margin-right: 20px"}">${validate_component(CircularProgress, "CircularProgress").$$render($$result, {
                 class: "my-four-colors",
                 style: "height: 32px; width: 32px;",
                 indeterminate: true,
                 fourColor: true
               }, {}, {})}
-                      </div>`}`}
+                        </div>`}`}` : ``}
                   `
             })}
                 `
@@ -39634,7 +40072,7 @@ ${this.customData.serverResponse}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/app-55d38c16.js
+// .svelte-kit/output/server/chunks/app-a0c37348.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -41092,9 +41530,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-d007a107.js",
+      file: assets + "/_app/start-a744efac.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-d007a107.js", assets + "/_app/chunks/vendor-c30b751f.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-a744efac.js", assets + "/_app/chunks/vendor-d35e056c.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -41138,8 +41576,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie9, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css8, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_55d38c16 = __esm({
-  ".svelte-kit/output/server/chunks/app-55d38c16.js"() {
+var init_app_a0c37348 = __esm({
+  ".svelte-kit/output/server/chunks/app-a0c37348.js"() {
     init_shims();
     import_cookie9 = __toModule(require_cookie());
     init_dist();
@@ -41426,16 +41864,16 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_cdb44992(), layout_cdb44992_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_08e4dd5c(), error_08e4dd5c_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_c4eaf64e(), index_c4eaf64e_exports)),
-      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_c78d5ba8(), explore_c78d5ba8_exports)),
-      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_c7a71cc0(), learn_c7a71cc0_exports)),
-      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_dbf6c81f(), teach_dbf6c81f_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_c21ff88a(), layout_c21ff88a_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_821d53b7(), index_821d53b7_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_e2bedaf0(), layout_e2bedaf0_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_73c19383(), error_73c19383_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_d863144f(), index_d863144f_exports)),
+      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_df1383ff(), explore_df1383ff_exports)),
+      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_73d67864(), learn_73d67864_exports)),
+      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_39e2a7b8(), teach_39e2a7b8_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_a67b9923(), layout_a67b9923_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_daa2ace3(), index_daa2ace3_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-1fd8f2cf.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-1fd8f2cf.js", "chunks/vendor-c30b751f.js", "chunks/navigation-42d1d4ee.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-df3d27dd.js", "css": [], "js": ["error.svelte-df3d27dd.js", "chunks/vendor-c30b751f.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-5156dd3f.js", "css": ["assets/pages/index.svelte-85299949.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-5156dd3f.js", "chunks/vendor-c30b751f.js", "chunks/navigation-42d1d4ee.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-48fc5c7d.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-48fc5c7d.js", "chunks/vendor-c30b751f.js", "chunks/navigation-42d1d4ee.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-5f068974.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-ebf3d3c1.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-ebf3d3c1.js", "chunks/vendor-c30b751f.js", "chunks/navigation-42d1d4ee.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-5f068974.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-52b8470d.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-52b8470d.js", "chunks/vendor-c30b751f.js", "chunks/navigation-42d1d4ee.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-5f068974.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-c3208564.js", "css": ["assets/pages/_class_/__layout.svelte-2c9907cf.css"], "js": ["pages/_class_/__layout.svelte-c3208564.js", "chunks/vendor-c30b751f.js", "chunks/navigation-42d1d4ee.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-9b710d55.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-9b710d55.js", "chunks/vendor-c30b751f.js", "chunks/RenderlessFetchStrokes-5f068974.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-42d1d4ee.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-68a6dcab.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-68a6dcab.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-9ac6e3bb.js", "css": [], "js": ["error.svelte-9ac6e3bb.js", "chunks/vendor-d35e056c.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-d225247b.js", "css": ["assets/pages/index.svelte-839a29ef.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-d225247b.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-7f3c8090.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-7f3c8090.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-e489d726.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-e489d726.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-c873eada.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-c873eada.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-b19ee779.js", "css": ["assets/pages/_class_/__layout.svelte-f73c5b3e.css"], "js": ["pages/_class_/__layout.svelte-b19ee779.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-1240d83e.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-1240d83e.js", "chunks/vendor-d35e056c.js", "chunks/RenderlessFetchStrokes-80310fd5.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
   }
 });
 
@@ -41488,7 +41926,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_55d38c16();
+init_app_a0c37348();
 var import_cookie10 = __toModule(require_cookie());
 init_dist();
 

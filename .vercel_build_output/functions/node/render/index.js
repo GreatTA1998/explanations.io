@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-836abe82.js
+// .svelte-kit/output/server/chunks/store-b029642a.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -9081,10 +9081,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_836abe82 = __esm({
-  ".svelte-kit/output/server/chunks/store-836abe82.js"() {
+var init_store_b029642a = __esm({
+  ".svelte-kit/output/server/chunks/store-b029642a.js"() {
     init_shims();
-    init_app_a0c37348();
+    init_app_9e949ba6();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -17465,7 +17465,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-a627185f.js
+// .svelte-kit/output/server/chunks/index-c327074d-e140591a.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17954,10 +17954,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_a627185f = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-a627185f.js"() {
+var init_index_c327074d_e140591a = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-e140591a.js"() {
     init_shims();
-    init_store_836abe82();
+    init_store_b029642a();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18886,18 +18886,18 @@ var init_index_c327074d_a627185f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-e2bedaf0.js
-var layout_e2bedaf0_exports = {};
-__export(layout_e2bedaf0_exports, {
+// .svelte-kit/output/server/chunks/__layout-e5c6936e.js
+var layout_e5c6936e_exports = {};
+__export(layout_e5c6936e_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, getStores, page, _layout;
-var init_layout_e2bedaf0 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-e2bedaf0.js"() {
+var init_layout_e5c6936e = __esm({
+  ".svelte-kit/output/server/chunks/__layout-e5c6936e.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_store_836abe82();
-    init_index_c327074d_a627185f();
+    init_app_9e949ba6();
+    init_store_b029642a();
+    init_index_c327074d_e140591a();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18946,9 +18946,9 @@ var init_layout_e2bedaf0 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-73c19383.js
-var error_73c19383_exports = {};
-__export(error_73c19383_exports, {
+// .svelte-kit/output/server/chunks/error-08d8919d.js
+var error_08d8919d_exports = {};
+__export(error_08d8919d_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18956,10 +18956,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_73c19383 = __esm({
-  ".svelte-kit/output/server/chunks/error-73c19383.js"() {
+var init_error_08d8919d = __esm({
+  ".svelte-kit/output/server/chunks/error-08d8919d.js"() {
     init_shims();
-    init_app_a0c37348();
+    init_app_9e949ba6();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18981,7 +18981,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-d37af903.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-9327042a.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19334,11 +19334,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_d37af903 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-d37af903.js"() {
+var init_SelectionGroupIcon_9327042a = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-9327042a.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_store_836abe82();
+    init_app_9e949ba6();
+    init_store_b029642a();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20592,13 +20592,13 @@ var init_SelectionGroupIcon_d37af903 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-d920fc55.js
+// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-4c65784e.js
 var Object_12, Button_1;
-var init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55 = __esm({
-  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-d920fc55.js"() {
+var init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e = __esm({
+  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-4c65784e.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_SelectionGroupIcon_d37af903();
+    init_app_9e949ba6();
+    init_SelectionGroupIcon_9327042a();
     ({ Object: Object_12 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20781,21 +20781,21 @@ var init_canvas_fb765f32 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-d863144f.js
-var index_d863144f_exports = {};
-__export(index_d863144f_exports, {
+// .svelte-kit/output/server/chunks/index-9244a85d.js
+var index_9244a85d_exports = {};
+__export(index_9244a85d_exports, {
   default: () => Routes
 });
 var import_node_fetch2, import_cookie3, css, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Routes;
-var init_index_d863144f = __esm({
-  ".svelte-kit/output/server/chunks/index-d863144f.js"() {
+var init_index_9244a85d = __esm({
+  ".svelte-kit/output/server/chunks/index-9244a85d.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_index_c327074d_a627185f();
-    init_store_836abe82();
+    init_app_9e949ba6();
+    init_index_c327074d_e140591a();
+    init_store_b029642a();
     import_node_fetch2 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
-    init_SelectionGroupIcon_d37af903();
+    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
+    init_SelectionGroupIcon_9327042a();
     init_canvas_fb765f32();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
@@ -20943,7 +20943,7 @@ var init_index_d863144f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-7cd4b957.js
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-b4eb4a80.js
 async function deleteAllStrokesFromDb({ boardPath }) {
   return new Promise(async (resolve2) => {
     const batchDeleteRequests = [];
@@ -20966,12 +20966,12 @@ async function deleteAllStrokesFromDb({ boardPath }) {
   });
 }
 var css2, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_7cd4b957 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-7cd4b957.js"() {
+var init_RenderlessFetchStrokes_b4eb4a80 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-b4eb4a80.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_store_836abe82();
-    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
+    init_app_9e949ba6();
+    init_store_b029642a();
+    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
     css2 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
@@ -21070,23 +21070,23 @@ ${strokesArray2 ? `<span class="${"material-icons overlay-center svelte-12w6n3q"
   }
 });
 
-// .svelte-kit/output/server/chunks/explore-df1383ff.js
-var explore_df1383ff_exports = {};
-__export(explore_df1383ff_exports, {
+// .svelte-kit/output/server/chunks/explore-e01c0ba1.js
+var explore_e01c0ba1_exports = {};
+__export(explore_e01c0ba1_exports, {
   default: () => Explore
 });
 var import_node_fetch3, import_cookie4, css3, Explore;
-var init_explore_df1383ff = __esm({
-  ".svelte-kit/output/server/chunks/explore-df1383ff.js"() {
+var init_explore_e01c0ba1 = __esm({
+  ".svelte-kit/output/server/chunks/explore-e01c0ba1.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_index_c327074d_a627185f();
-    init_store_836abe82();
+    init_app_9e949ba6();
+    init_index_c327074d_e140591a();
+    init_store_b029642a();
     import_node_fetch3 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
-    init_SelectionGroupIcon_d37af903();
+    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
+    init_SelectionGroupIcon_9327042a();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_7cd4b957();
+    init_RenderlessFetchStrokes_b4eb4a80();
     import_cookie4 = __toModule(require_cookie());
     init_dist();
     css3 = {
@@ -21253,23 +21253,23 @@ var init_explore_df1383ff = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/learn-73d67864.js
-var learn_73d67864_exports = {};
-__export(learn_73d67864_exports, {
+// .svelte-kit/output/server/chunks/learn-49f7e294.js
+var learn_49f7e294_exports = {};
+__export(learn_49f7e294_exports, {
   default: () => Learn
 });
 var import_node_fetch4, import_cookie5, css4, Learn;
-var init_learn_73d67864 = __esm({
-  ".svelte-kit/output/server/chunks/learn-73d67864.js"() {
+var init_learn_49f7e294 = __esm({
+  ".svelte-kit/output/server/chunks/learn-49f7e294.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_index_c327074d_a627185f();
-    init_store_836abe82();
+    init_app_9e949ba6();
+    init_index_c327074d_e140591a();
+    init_store_b029642a();
     import_node_fetch4 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
-    init_SelectionGroupIcon_d37af903();
+    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
+    init_SelectionGroupIcon_9327042a();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_7cd4b957();
+    init_RenderlessFetchStrokes_b4eb4a80();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     css4 = {
@@ -21474,23 +21474,23 @@ var init_learn_73d67864 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/teach-39e2a7b8.js
-var teach_39e2a7b8_exports = {};
-__export(teach_39e2a7b8_exports, {
+// .svelte-kit/output/server/chunks/teach-5ac5c348.js
+var teach_5ac5c348_exports = {};
+__export(teach_5ac5c348_exports, {
   default: () => Teach
 });
 var import_node_fetch5, import_cookie6, css5, Teach;
-var init_teach_39e2a7b8 = __esm({
-  ".svelte-kit/output/server/chunks/teach-39e2a7b8.js"() {
+var init_teach_5ac5c348 = __esm({
+  ".svelte-kit/output/server/chunks/teach-5ac5c348.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_index_c327074d_a627185f();
-    init_store_836abe82();
+    init_app_9e949ba6();
+    init_index_c327074d_e140591a();
+    init_store_b029642a();
     import_node_fetch5 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
-    init_SelectionGroupIcon_d37af903();
+    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
+    init_SelectionGroupIcon_9327042a();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_7cd4b957();
+    init_RenderlessFetchStrokes_b4eb4a80();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
     css5 = {
@@ -21684,7 +21684,7 @@ var init_teach_39e2a7b8 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index.node.esm-d00324cd.js
+// .svelte-kit/output/server/chunks/index.node.esm-e8a898bc.js
 function guard(name22) {
   return () => {
     throw new Error(`Cannot call ${name22}(...) on the server`);
@@ -21933,12 +21933,12 @@ function registerFunctions(fetchImpl2, variant) {
   registerVersion(name4, version4, "esm2017");
 }
 var import_node_fetch6, goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name4, version4, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME;
-var init_index_node_esm_d00324cd = __esm({
-  ".svelte-kit/output/server/chunks/index.node.esm-d00324cd.js"() {
+var init_index_node_esm_e8a898bc = __esm({
+  ".svelte-kit/output/server/chunks/index.node.esm-e8a898bc.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_SelectionGroupIcon_d37af903();
-    init_store_836abe82();
+    init_app_9e949ba6();
+    init_SelectionGroupIcon_9327042a();
+    init_store_b029642a();
     import_node_fetch6 = __toModule(require_lib2());
     goto = guard("goto");
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -28782,9 +28782,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-a67b9923.js
-var layout_a67b9923_exports = {};
-__export(layout_a67b9923_exports, {
+// .svelte-kit/output/server/chunks/__layout-8d495e5e.js
+var layout_8d495e5e_exports = {};
+__export(layout_8d495e5e_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -30951,14 +30951,14 @@ function load2({ page: page2 }) {
   };
 }
 var import_node_fetch7, import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie7, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css6, _layout2;
-var init_layout_a67b9923 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-a67b9923.js"() {
+var init_layout_8d495e5e = __esm({
+  ".svelte-kit/output/server/chunks/__layout-8d495e5e.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_SelectionGroupIcon_d37af903();
-    init_index_node_esm_d00324cd();
-    init_store_836abe82();
-    init_index_c327074d_a627185f();
+    init_app_9e949ba6();
+    init_SelectionGroupIcon_9327042a();
+    init_index_node_esm_e8a898bc();
+    init_store_b029642a();
+    init_index_c327074d_e140591a();
     import_node_fetch7 = __toModule(require_lib2());
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
@@ -39527,9 +39527,9 @@ var require_dist = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-daa2ace3.js
-var index_daa2ace3_exports = {};
-__export(index_daa2ace3_exports, {
+// .svelte-kit/output/server/chunks/index-ca832ebe.js
+var index_ca832ebe_exports = {};
+__export(index_ca832ebe_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -39556,15 +39556,15 @@ function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
 var import_svelte_css_vars, import_cookie8, import_node_fetch8, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css7, U5Broomu5D;
-var init_index_daa2ace3 = __esm({
-  ".svelte-kit/output/server/chunks/index-daa2ace3.js"() {
+var init_index_ca832ebe = __esm({
+  ".svelte-kit/output/server/chunks/index-ca832ebe.js"() {
     init_shims();
-    init_app_a0c37348();
-    init_RenderlessFetchStrokes_7cd4b957();
-    init_store_836abe82();
-    init_SelectionGroupIcon_d37af903();
-    init_index_node_esm_d00324cd();
-    init_DoodleVideo_svelte_svelte_type_style_lang_d920fc55();
+    init_app_9e949ba6();
+    init_RenderlessFetchStrokes_b4eb4a80();
+    init_store_b029642a();
+    init_SelectionGroupIcon_9327042a();
+    init_index_node_esm_e8a898bc();
+    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
     import_svelte_css_vars = __toModule(require_dist());
     import_cookie8 = __toModule(require_cookie());
     init_dist();
@@ -40044,7 +40044,7 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
               currentTime,
               backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
             }, {}, {
-              default: () => `${user.uid ? `${!boardDoc.recordState || boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">radio_button_checked
+              default: () => `${$user.uid ? `${!boardDoc.recordState || boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">radio_button_checked
                         </span>` : `${boardDoc.recordState === "mid_record" ? `<span class="${[
                 "material-icons svelte-53fhoc",
                 $browserTabID !== boardDoc.recorderBrowserTabID ? "unclickable" : ""
@@ -40072,7 +40072,7 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
   }
 });
 
-// .svelte-kit/output/server/chunks/app-a0c37348.js
+// .svelte-kit/output/server/chunks/app-9e949ba6.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -41530,9 +41530,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-a744efac.js",
+      file: assets + "/_app/start-c907c1bc.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-a744efac.js", assets + "/_app/chunks/vendor-d35e056c.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-c907c1bc.js", assets + "/_app/chunks/vendor-d35e056c.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -41576,8 +41576,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie9, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css8, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_a0c37348 = __esm({
-  ".svelte-kit/output/server/chunks/app-a0c37348.js"() {
+var init_app_9e949ba6 = __esm({
+  ".svelte-kit/output/server/chunks/app-9e949ba6.js"() {
     init_shims();
     import_cookie9 = __toModule(require_cookie());
     init_dist();
@@ -41864,16 +41864,16 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_e2bedaf0(), layout_e2bedaf0_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_73c19383(), error_73c19383_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_d863144f(), index_d863144f_exports)),
-      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_df1383ff(), explore_df1383ff_exports)),
-      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_73d67864(), learn_73d67864_exports)),
-      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_39e2a7b8(), teach_39e2a7b8_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_a67b9923(), layout_a67b9923_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_daa2ace3(), index_daa2ace3_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_e5c6936e(), layout_e5c6936e_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_08d8919d(), error_08d8919d_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_9244a85d(), index_9244a85d_exports)),
+      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_e01c0ba1(), explore_e01c0ba1_exports)),
+      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_49f7e294(), learn_49f7e294_exports)),
+      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_5ac5c348(), teach_5ac5c348_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_8d495e5e(), layout_8d495e5e_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_ca832ebe(), index_ca832ebe_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-68a6dcab.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-68a6dcab.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-9ac6e3bb.js", "css": [], "js": ["error.svelte-9ac6e3bb.js", "chunks/vendor-d35e056c.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-d225247b.js", "css": ["assets/pages/index.svelte-839a29ef.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-d225247b.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-7f3c8090.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-7f3c8090.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-e489d726.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-e489d726.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-c873eada.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-c873eada.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-b19ee779.js", "css": ["assets/pages/_class_/__layout.svelte-f73c5b3e.css"], "js": ["pages/_class_/__layout.svelte-b19ee779.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-1240d83e.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-1240d83e.js", "chunks/vendor-d35e056c.js", "chunks/RenderlessFetchStrokes-80310fd5.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-68a6dcab.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-68a6dcab.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-9ac6e3bb.js", "css": [], "js": ["error.svelte-9ac6e3bb.js", "chunks/vendor-d35e056c.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-d225247b.js", "css": ["assets/pages/index.svelte-839a29ef.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-d225247b.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-7f3c8090.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-7f3c8090.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-e489d726.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-e489d726.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-c873eada.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-c873eada.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-b19ee779.js", "css": ["assets/pages/_class_/__layout.svelte-f73c5b3e.css"], "js": ["pages/_class_/__layout.svelte-b19ee779.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-1d995a62.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-1d995a62.js", "chunks/vendor-d35e056c.js", "chunks/RenderlessFetchStrokes-80310fd5.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
   }
 });
 
@@ -41926,7 +41926,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_a0c37348();
+init_app_9e949ba6();
 var import_cookie10 = __toModule(require_cookie());
 init_dist();
 

@@ -8,39 +8,41 @@
     </slot>
 
     <div slot="dropdown-menu">
-      <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
-        more_horiz
-      </span>
-    
-      <input
-        bind:this={FileUploadButton}
-        on:change={(e) => uploadBackground(e)}
-        style="display: none" 
-        type="file" 
-        accept="image/gif, image/jpeg, image/png" 
-      >
+      {#if $user.uid}
+        <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
+          more_horiz
+        </span>
+      
+        <input
+          bind:this={FileUploadButton}
+          on:change={(e) => uploadBackground(e)}
+          style="display: none" 
+          type="file" 
+          accept="image/gif, image/jpeg, image/png" 
+        >
 
-      <Menu bind:this={DropdownMenu} style="width: 300px">
-        <List>
-          {#if backgroundImageDownloadURL}
-            <Item on:click={resetBackgroundImage}>
-              Remove background
+        <Menu bind:this={DropdownMenu} style="width: 300px">
+          <List>
+            {#if backgroundImageDownloadURL}
+              <Item on:click={resetBackgroundImage}>
+                Remove background
+              </Item>
+            {:else}
+              <Item on:click={clickHiddenInput}>
+                Set background
+              </Item>
+            {/if}
+
+            <Item on:SMUI:action={wipeBoard}>
+              Wipe board
+            </Item>    
+
+            <Item on:SMUI:action={deleteBoard}>
+              Delete board 
             </Item>
-          {:else}
-            <Item on:click={clickHiddenInput}>
-              Set background
-            </Item>
-          {/if}
-
-          <Item on:SMUI:action={wipeBoard}>
-            Wipe board
-          </Item>    
-
-          <Item on:SMUI:action={deleteBoard}>
-            Delete board 
-          </Item>
-        </List> 
-      </Menu>
+          </List> 
+        </Menu>
+      {/if}
     </div>
   </BlackboardToolbar>
 {/if}
@@ -71,7 +73,7 @@
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, createEventDispatcher } from 'svelte'
-  import { currentTool, canvasWidth, canvasHeight, onlyAllowApplePencil } from '../store.js'
+  import { user, currentTool, canvasWidth, canvasHeight, onlyAllowApplePencil } from '../store.js'
 
   export let strokesArray
   export let currentTime = 0

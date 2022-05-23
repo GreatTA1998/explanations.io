@@ -87,38 +87,41 @@
                     on:board-wipe={deleteAllStrokesFromDb}
                     on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
                   > 
-                    {#if !boardDoc.recordState || boardDoc.recordState === 'pre_record'}
-                      <span on:click={() => callManyFuncs(
-                          startRecording, 
-                          () => updateRecordState(boardID, 'mid_record'),
-                          () => updateRecorderBrowserTabID(boardID)
-                        )}
-                        class="material-icons" 
-                        style="font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"
-                      >
-                        radio_button_checked
-                      </span>
-                    {:else if boardDoc.recordState === 'mid_record'}
-                      <span 
-                        on:click={() => callManyFuncs(
-                          stopRecording,
-                          () => updateRecordState(boardID, 'post_record')
-                        )}
-                        class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
-                        class="material-icons" 
-                        style="font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"
-                      >
-                        stop_circle
-                      </span>
-                    {:else}
-                      <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
-                        <CircularProgress
-                          class="my-four-colors"
-                          style="height: 32px; width: 32px;"
-                          indeterminate
-                          fourColor
-                        />
-                      </div>
+                    {#if user.uid}
+
+                      {#if !boardDoc.recordState || boardDoc.recordState === 'pre_record'}
+                        <span on:click={() => callManyFuncs(
+                            startRecording, 
+                            () => updateRecordState(boardID, 'mid_record'),
+                            () => updateRecorderBrowserTabID(boardID)
+                          )}
+                          class="material-icons" 
+                          style="font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"
+                        >
+                          radio_button_checked
+                        </span>
+                      {:else if boardDoc.recordState === 'mid_record'}
+                        <span 
+                          on:click={() => callManyFuncs(
+                            stopRecording,
+                            () => updateRecordState(boardID, 'post_record')
+                          )}
+                          class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
+                          class="material-icons" 
+                          style="font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"
+                        >
+                          stop_circle
+                        </span>
+                      {:else}
+                        <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
+                          <CircularProgress
+                            class="my-four-colors"
+                            style="height: 32px; width: 32px;"
+                            indeterminate
+                            fourColor
+                          />
+                        </div>
+                      {/if}
                     {/if}
                   </Blackboard>
                 </RenderlessAudioRecorder>
@@ -175,10 +178,9 @@
   export let roomID
 
   let unsubRoomListener
-  let roomDoc = { name: '', blackboards: [] }
-
-  if (!$user.uid) {
-    goto('/')
+  let roomDoc = {
+    name: '', 
+    blackboards: [] 
   }
 
   $: boardsDbPath = `classes/${classID}/blackboards/`

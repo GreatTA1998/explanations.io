@@ -10,12 +10,14 @@
 </script>
 
 <!-- This component re-renders everytime classID changes: https://github.com/sveltejs/svelte/issues/1469#issuecomment-698955660 -->
-{#key classID}
-  <RenderlessMyDocUpdater 
-    {classID} 
-    {roomID}
-  />
-{/key}
+{#if $user.uid}
+  {#key classID}
+    <RenderlessMyDocUpdater 
+      {classID} 
+      {roomID}
+    />
+  {/key}
+{/if}
 
 <div id="container-for-audio-elements">
 
@@ -49,7 +51,7 @@
               <div style="margin-bottom: 2px;">(empty room)</div>
             {/if}
 
-            {#if room.id === roomID}
+            {#if room.id === roomID & $user.uid}
               <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
                 more_horiz
               </span>
@@ -107,12 +109,14 @@
     {/each}
 
     <!-- New room -->
-    <div on:click={createNewRoom} style="padding: 6px; display: flex; align-items: center;">
-      <span class="material-icons" style="margin-left: 6px; margin-right: 5px; margin-top: 2.5px; font-size: 1.2rem;">
-        add
-      </span>
-      new room
-    </div>
+    {#if $user.uid}
+      <div on:click={createNewRoom} style="padding: 6px; display: flex; align-items: center;">
+        <span class="material-icons" style="margin-left: 6px; margin-right: 5px; margin-top: 2.5px; font-size: 1.2rem;">
+          add
+        </span>
+        new room
+      </div>
+    {/if}
   </LeftDrawer>
 </DailyVideoConference>
 
@@ -158,7 +162,7 @@
     fetchRooms()
   }
 
-  $: if (roomID) {
+  $: if (roomID && $user.uid) {
     const userRef = doc(getFirestore(), `users/${$user.uid}`)
     updateDoc(userRef, {
       mostRecentClassAndRoomID: `/${classID}/${roomID}`

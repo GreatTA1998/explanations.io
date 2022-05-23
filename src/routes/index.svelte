@@ -14,24 +14,25 @@
 				</div>
 
 
-				<div style="display	: flex; justify-content: center; margin-top: 20px;">
+				<div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+					<div class="copied-from-koa-2" style="margin-right: 20px;">Who are you?</div>
 					<div>
 						<Button on:click={() => goto('learn')} variant="raised" color="purple">
-							Office Hours is too crowded
+							Student
 						</Button>
 	
 						<Button on:click={() => goto('teach')} variant="raised" color="orange" style="margin-left: 6px">
-							Too many TA responsibilities
+							Teacher
 						</Button>	
 					</div>
 
 					<Button on:click={() => goto('teach')} variant="raised" color="orange" style="margin-left: 6px">
-						Self-learning web dev is hard
+						Self-learner
 					</Button>	
 
 					<!-- Be open, you never know -->
 					<Button on:click={() => goto('explore')} variant="raised" color="orange" style="margin-left: 6px">
-						I'm just exploring
+						Just curious
 					</Button>	
 				</div>
 			</div>
@@ -421,6 +422,10 @@
 
 .copied-from-koa {
 	font: 26px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
+}
+
+.copied-from-koa-2 {
+	font: 18px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
 }
 
 #logo {

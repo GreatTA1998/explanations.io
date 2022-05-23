@@ -175,7 +175,7 @@
   export let roomID
 
   let unsubRoomListener
-  let roomDoc
+  let roomDoc = { name: '', blackboards: [] }
 
   if (!$user.uid) {
     goto('/')
@@ -189,7 +189,12 @@
   async function createRoomListener () {
     if (unsubRoomListener) unsubRoomListener() // assume it's not async
     unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
-      roomDoc = { id: snapshot.id, ...snapshot.data() }
+      // a room can be deleted at any moment - when that happens, redirect
+      if (!snapshot.exists()) {
+        goto(`/${classID}/${classID}`)
+      } else {
+        roomDoc = { id: snapshot.id, ...snapshot.data() }
+      }
     })
   }
 

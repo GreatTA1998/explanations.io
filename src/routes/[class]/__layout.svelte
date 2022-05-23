@@ -135,6 +135,7 @@
   import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants } from '../../store.js'
   import { getRandomID } from '../../helpers/utility.js'
   import { deleteObject, getStorage, ref } from 'firebase/storage'
+  import { getFunctions, httpsCallable } from "firebase/functions";
 
   export let classID;
   export let roomID;
@@ -341,7 +342,9 @@
 
     const subdeleteRequests = [] 
     for (const boardQuery of boardsQueries) {
-      const boardDoc = (await boardQuery).data()
+      const boardResult = await boardQuery
+      const boardDoc = await boardResult.data()
+      // delete audio
       if (boardDoc.audioRefFullPath) {
         subdeleteRequests.push(
           deleteObject(
@@ -349,11 +352,12 @@
           )
         )
       }
-      // subdeleteRequests.push(
-      //   deleteAllStrokesFromDb({ 
-      //     boardPath: classPath + `blackboards/${boardQuery.id}`
-      //   })
-      // )
+      // delete strokes
+      const functions = getFunctions();
+      const deleteRecursively = httpsCallable(functions, 'recursiveDelete')
+      subdeleteRequests.push(
+        deleteRecursively({ path: `/classes/${classID}/blackboards/${boardResult.id}` }).then(console.log(`Deleted blackboard /classes/${classID}/blackboards/${boardResult.id}`))
+      )
     }
     await Promise.all(subdeleteRequests)
 
@@ -361,9 +365,8 @@
     await deleteDoc(
       doc(getFirestore(), classPath + `rooms/${room.id}`)
     )
-    alert("Deleted room successfully")
 
-    // TODO: redirect to a different room
+    // note, the [room].svelte page knows how to handle itself when its `roomDoc` no longer exists
   }
 </script>
 

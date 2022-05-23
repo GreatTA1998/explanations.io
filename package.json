@@ -33,7 +33,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@daily-co/daily-js": "^0.21.0",
+    "@daily-co/daily-js": "^0.26.0",
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
     "audio-recorder-polyfill": "^0.4.1",

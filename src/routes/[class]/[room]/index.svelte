@@ -87,8 +87,7 @@
                     on:board-wipe={deleteAllStrokesFromDb}
                     on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
                   > 
-                    {#if user.uid}
-
+                    {#if $user.uid}
                       {#if !boardDoc.recordState || boardDoc.recordState === 'pre_record'}
                         <span on:click={() => callManyFuncs(
                             startRecording, 

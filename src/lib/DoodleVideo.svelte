@@ -1,3 +1,10 @@
+<!-- The delete button is added here -->
+<div style="position: absolute; right: 0; left: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5">
+  <slot>
+
+  </slot>
+</div>
+
 <!-- The play button double-duties as an indication that the video has finished fetching -->
 {#if !recursiveSyncer && isPlaying === false && strokesArray}
   <span on:click={startAudioPlayer} class="material-icons overlay-center" style="color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5">

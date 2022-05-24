@@ -26,7 +26,7 @@
 						</Button>	
 					</div>
 
-					<Button on:click={() => goto('teach')} variant="raised" color="orange" style="margin-left: 6px">
+					<Button on:click={() => goto('explore')} variant="raised" color="orange" style="margin-left: 6px">
 						Self-learner
 					</Button>	
 

@@ -34,8 +34,7 @@
       {/if}
     </List>
 
-    <!-- Put an autocomplete component at the bottom -->
-    <div style="margin: 4px">
+    <div style="margin: 4px;">
       {#if allClasses.length > 0}
         <Autocomplete
           options={filteredClasses}

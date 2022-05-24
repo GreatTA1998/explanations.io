@@ -5,7 +5,7 @@
 <script>
   import DailyIframe from '@daily-co/daily-js'
   import { API_KEY_SECRET } from './environmentSecrets.js'
-  import { dailyMicStream, dailyRoomParticipants, browserTabID } from '../store.js'
+  import { dailyMicStream, dailyRoomParticipants, browserTabID, user } from '../store.js'
   import { onDestroy, onMount } from 'svelte'
 
   export let roomID
@@ -31,16 +31,21 @@
     publicJoinRoom()
   }
   onDestroy(() =>{
+    // TODO: handle anonymous
     if (currentCallState === 'connected') {
       leaveConferenceRoom()
     }
   })
 
-  onMount(async () => {
-    await initCallObject()
-    publicJoinRoom()
-  })
 
+  $: if ($user.uid) {
+    async function initDaily () {
+      await initCallObject()
+      publicJoinRoom()
+    }
+    initDaily()
+  }
+  
   async function initCallObject () {
     return new Promise(async (resolve, reject) => {      
       if (!$dailyMicStream) {

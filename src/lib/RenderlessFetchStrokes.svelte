@@ -1,7 +1,7 @@
 <slot 
   {fetchStrokes}  
   {strokesArray} 
-  deleteAllStrokesFromDb={() => deleteAllStrokesFromDb({ boardPath: dbPath })}
+  deleteAllStrokesFromDb={() => deleteAllStrokesFromDb({ boardPath: dbPath, strokesArray })}
 >
 
 </slot>

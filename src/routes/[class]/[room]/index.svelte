@@ -55,7 +55,7 @@
                   audioDownloadURL={boardDoc.audioDownloadURL}
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                 >
-                  {#if $user.uid === boardDoc.creatorUID}
+                  {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
                     <Button on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
                       Delete video
                     </Button>
@@ -87,7 +87,7 @@
                     on:board-wipe={deleteAllStrokesFromDb}
                     on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
                   > 
-                    {#if $user.uid}
+               
                       {#if !boardDoc.recordState || boardDoc.recordState === 'pre_record'}
                         <span on:click={() => callManyFuncs(
                             startRecording, 
@@ -121,7 +121,7 @@
                           />
                         </div>
                       {/if}
-                    {/if}
+         
                   </Blackboard>
                 </RenderlessAudioRecorder>
               </div>
@@ -416,8 +416,8 @@
 
     const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
     await updateDoc(blackboardRef, {
-      creatorUID: $user.uid,
-      creatorPhoneNumber: $user.phoneNumber,
+      creatorUID: $user.uid || '',
+      creatorPhoneNumber: $user.phoneNumber || '',
       date: new Date().toISOString(),
       audioDownloadURL: downloadURL,
       audioRefFullPath: audioRef.fullPath

@@ -1,6 +1,6 @@
 import { getFirestore, doc, writeBatch } from 'firebase/firestore'
 
-export async function deleteAllStrokesFromDb ({ boardPath }) {
+export async function deleteAllStrokesFromDb ({ boardPath, strokesArray }) {
   return new Promise(async (resolve) => {
     const batchDeleteRequests = [];
     let currentBatch = writeBatch(getFirestore())

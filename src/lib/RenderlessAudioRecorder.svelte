@@ -31,16 +31,29 @@
    */
   function startRecording () {
     return new Promise(async (resolve, reject) => {
-      if (!$dailyRoomParticipants.local.audio) {
+      // call it `...Copy` just to maintain same API, will change future
+      let micStreamCopy
+      // new, account-less visitors don't connect to voice chat
+      if (!$dailyMicStream) {
+        try {
+          micStreamCopy = await navigator.mediaDevices.getUserMedia({ audio: true })
+        } catch (error) {
+          alert(`Don't forget to enable your your mic! Click the "aA" / "i" button beside the URL bar "https://explain.mit.edu", then click "website settings" / "microphone"`)
+          return reject("Can't access mic stream")
+        }
+      }
+      // logged in user connected to voice chat, but is MUTED
+      else if (!$dailyRoomParticipants.local.audio) {
         alert('Cannot start recording because your mic is muted - click the switch next to your "beaver #n" to unmute')
         reject('Cannot start recording because mic stream is muted')
         return
+      } 
+      else {
+        // need to use a copy because:
+        //   1. aliasing a stream for video call, different recording sessions, etc. causes unpredictable issues on Safari iOS
+        //   2. By using a copy, we naturally handle the edge case where the user mutes voice in the MIDDLE of recording
+        micStreamCopy = $dailyMicStream.clone()
       }
-
-      // need to use a copy because:
-      //   1. aliasing a stream for video call, different recording sessions, etc. causes unpredictable issues on Safari iOS
-      //   2. By using a copy, we naturally handle the edge case where the user mutes voice in the MIDDLE of recording
-      const micStreamCopy = $dailyMicStream.clone()
 
       recorder = new MediaRecorder(micStreamCopy); 
       recorder.start();

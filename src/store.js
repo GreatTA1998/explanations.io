@@ -28,3 +28,5 @@ export const browserTabID = readable(getRandomID())
 export const isMicOn = writable(false)
 
 export const isFirestoreDocCreated = writable(false)
+
+export const willPreventPageLeave = writable(false)

@@ -8,39 +8,41 @@
     </slot>
 
     <div slot="dropdown-menu">
+      {#if recordState === 'pre_record' }
         <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
           more_horiz
         </span>
+      {/if}
+    
+      <input
+        bind:this={FileUploadButton}
+        on:change={(e) => uploadBackground(e)}
+        style="display: none" 
+        type="file" 
+        accept="image/gif, image/jpeg, image/png" 
+      >
       
-        <input
-          bind:this={FileUploadButton}
-          on:change={(e) => uploadBackground(e)}
-          style="display: none" 
-          type="file" 
-          accept="image/gif, image/jpeg, image/png" 
-        >
-
-        <Menu bind:this={DropdownMenu} style="width: 300px">
-          <List>
-            {#if backgroundImageDownloadURL}
-              <Item on:click={resetBackgroundImage}>
-                Remove background
-              </Item>
-            {:else}
-              <Item on:click={clickHiddenInput}>
-                Set background
-              </Item>
-            {/if}
-
-            <Item on:SMUI:action={wipeBoard}>
-              Wipe board
-            </Item>    
-
-            <Item on:SMUI:action={deleteBoard}>
-              Delete board 
+      <Menu bind:this={DropdownMenu} style="width: 300px">
+        <List>
+          {#if backgroundImageDownloadURL}
+            <Item on:click={resetBackgroundImage}>
+              Remove background
             </Item>
-          </List> 
-        </Menu>
+          {:else}
+            <Item on:click={clickHiddenInput}>
+              Set background
+            </Item>
+          {/if}
+
+          <Item on:SMUI:action={wipeBoard}>
+            Wipe board
+          </Item>    
+
+          <Item on:SMUI:action={deleteBoard}>
+            Delete board 
+          </Item>
+        </List> 
+      </Menu>
     </div>
   </BlackboardToolbar>
 {/if}
@@ -70,12 +72,13 @@
   import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
-  import { onMount, createEventDispatcher } from 'svelte'
-  import { user, currentTool, canvasWidth, canvasHeight, onlyAllowApplePencil } from '../store.js'
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
+  import { currentTool, canvasWidth, canvasHeight, onlyAllowApplePencil } from '../store.js'
 
   export let strokesArray
   export let currentTime = 0
   export let backgroundImageDownloadURL = ''
+  export let recordState  = ''
   
 	const dispatch = createEventDispatcher()
 
@@ -100,7 +103,36 @@
   onMount(() => {
     ctx = canvas.getContext('2d')
     bgCtx = bgCanvas.getContext('2d')
+
+    // PREVENTS USER FROM ACCIDENTALLY LEAVING THE PAGE
+    // catches forward and backward
+    window.addEventListener('popstate', onBackOrForward)
+
+    // catches reload AND closing browser (was surprised it works for Chrome at least)
+    window.onbeforeunload = function (event) {
+      if (recordState === 'mid_record') {
+        event.returnValue = ''
+      } 
+      // no need to unlisten - because it means the page was destroyed
+    }
   })
+
+  onDestroy(() => {
+    window.removeEventListener('popstate', onBackOrForward)
+  })
+
+  function onBackOrForward () {
+    if (recordState === 'mid_record') {
+      if (confirm('This will interrupt your current recording, are you sure?')) {
+
+      }
+      else {
+        // luckily, the browser won't go back-and-forth it actually knows to wait for the state to resolve 
+        // and jus tstay in place
+        history.pushState(null, document.title, location.href);
+      }
+    }
+  }
 
   function clickHiddenInput () {
     FileUploadButton.click()

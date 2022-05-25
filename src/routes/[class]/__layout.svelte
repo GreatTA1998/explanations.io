@@ -31,7 +31,7 @@
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
     <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
     {#each rooms as room (room.id + roomID)}
-      <div on:click={() => goto(`/${classID}/${room.id}`)} style="padding: 6px;">
+      <div on:click={() => handleRoomClick(room.id)} style="padding: 6px;">
         <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
         <div class={room.id === roomID ? 'selected' : '' } style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
           <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
@@ -51,7 +51,7 @@
               <div style="margin-bottom: 2px;">(empty room)</div>
             {/if}
 
-            {#if room.id === roomID & $user.uid}
+            {#if room.id === roomID && $user.uid}
               <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
                 more_horiz
               </span>
@@ -136,7 +136,7 @@
   import { browser } from '$app/env'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc } from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
-  import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants } from '../../store.js'
+  import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave } from '../../store.js'
   import { getRandomID } from '../../helpers/utility.js'
   import { deleteObject, getStorage, ref } from 'firebase/storage'
   import { getFunctions, httpsCallable } from "firebase/functions";
@@ -200,6 +200,20 @@
     }
   })
 
+  function handleRoomClick (roomID) { 
+    // prevents in-app navigation
+    if ($willPreventPageLeave) {
+      if (window.confirm("You're still recording, are you sure you want to leave?")) {
+        willPreventPageLeave.set(false)
+        goto(`/${classID}/${roomID}`)
+      }
+    }
+
+    else {
+      goto(`/${classID}/${roomID}`)
+    }
+  }
+
   async function createNewRoom () {
     for (const room of rooms) {
       if (room.name === '') {
@@ -219,7 +233,7 @@
           // rooms have an order property, look at v3's drag and drop source code
       }),
       setDoc(blackboardRef, {
-        // empty doc
+        recordState: 'pre_record'
       })
     ])
   }

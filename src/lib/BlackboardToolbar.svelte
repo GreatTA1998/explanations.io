@@ -51,7 +51,7 @@
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}
       class:eraser-selected={$currentTool.type === 'eraser'}
       width="46" height="33"
-      style="margin-left: 8px;"
+      style="margin-left: 8px; margin-right: 8px;"
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"
       alt="eraser"
     >
@@ -69,8 +69,6 @@
 <script>
   import { user, currentTool, onlyAllowApplePencil } from '../store.js'
   import Switch from '@smui/switch';
-
-  let dropdownMenu
 
   function func () {
     onlyAllowApplePencil.set(!$onlyAllowApplePencil)

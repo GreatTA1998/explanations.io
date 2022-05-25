@@ -81,6 +81,7 @@
                     {strokesArray} 
                     {currentTime} 
                     backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+                    recordState={boardDoc.recordState}
                     on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardID)}
                     on:background-reset={() => resetBackgroundImage(boardID)}
                     on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
@@ -88,26 +89,28 @@
                     on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
                   > 
                
-                      {#if !boardDoc.recordState || boardDoc.recordState === 'pre_record'}
+                      {#if boardDoc.recordState === 'pre_record'}
                         <span on:click={() => callManyFuncs(
                             startRecording, 
                             () => updateRecordState(boardID, 'mid_record'),
-                            () => updateRecorderBrowserTabID(boardID)
+                            () => updateRecorderBrowserTabID(boardID),
+                            () => willPreventPageLeave.set(true)
                           )}
                           class="material-icons" 
-                          style="font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"
+                          style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
                         >
-                          radio_button_checked
+                          album
                         </span>
                       {:else if boardDoc.recordState === 'mid_record'}
                         <span 
                           on:click={() => callManyFuncs(
                             stopRecording,
-                            () => updateRecordState(boardID, 'post_record')
+                            () => updateRecordState(boardID, 'post_record'),
+                            () => willPreventPageLeave.set(false)
                           )}
                           class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
                           class="material-icons" 
-                          style="font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"
+                          style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
                         >
                           stop_circle
                         </span>
@@ -140,8 +143,8 @@
                   font-family: Roboto, sans-serif; text-transform: uppercase;
                   color: white;
                   height: 35px;
-                  width: {$canvasWidth}px;
-            ">
+                  width: {$canvasWidth}px;"
+                >
               New blackboard
             </div>
           {/if}
@@ -161,7 +164,7 @@
   import Button, { Group, Label }from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
-  import { browserTabID, user, canvasHeight, canvasWidth } from '../../../store.js'
+  import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove } from 'firebase/firestore';
@@ -203,9 +206,15 @@
     unsubRoomListener()
   })
 
-  function callManyFuncs (...funcs) {
+  // TODO: rename to reflect sequential nature of operations
+  async function callManyFuncs (...funcs) {
     for (const func of funcs) {
-      func()
+      try {
+        await func()
+      } catch (error) {
+        alert(error)
+        return
+      }
     }
   }
 
@@ -453,7 +462,9 @@
     const blackboardRef = doc(getFirestore(), boardsDbPath + newID)
     // TODO: use batch operation
     await Promise.all([
-      setDoc(blackboardRef, {}),
+      setDoc(blackboardRef, { 
+        recordState: 'pre_record' 
+      }),
       updateDoc(roomRef, {
         blackboards: arrayUnion(newID)
       })

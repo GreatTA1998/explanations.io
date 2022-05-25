@@ -105,6 +105,7 @@
     bgCtx = bgCanvas.getContext('2d')
 
     // PREVENTS USER FROM ACCIDENTALLY LEAVING THE PAGE
+    // correctness argument: https://explain.mit.edu/mDbUrvjy4pe8Q5s5wyoD/3IAf1lUTz1gdwxi3blth
     // catches forward and backward
     window.addEventListener('popstate', onBackOrForward)
 

@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-b029642a.js
+// .svelte-kit/output/server/chunks/store-99ad9184.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -9080,11 +9080,11 @@ function getRandomID() {
   }
   return autoId;
 }
-var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated;
-var init_store_b029642a = __esm({
-  ".svelte-kit/output/server/chunks/store-b029642a.js"() {
+var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated, willPreventPageLeave;
+var init_store_99ad9184 = __esm({
+  ".svelte-kit/output/server/chunks/store-99ad9184.js"() {
     init_shims();
-    init_app_9e949ba6();
+    init_app_9dfe5932();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -14628,6 +14628,7 @@ This typically indicates that your device does not have a healthy Internet conne
     dailyRoomParticipants = writable({});
     browserTabID = readable(getRandomID());
     isFirestoreDocCreated = writable(false);
+    willPreventPageLeave = writable(false);
   }
 });
 
@@ -17465,7 +17466,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-e140591a.js
+// .svelte-kit/output/server/chunks/index-c327074d-60f0a3e3.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17954,10 +17955,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_e140591a = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-e140591a.js"() {
+var init_index_c327074d_60f0a3e3 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-60f0a3e3.js"() {
     init_shims();
-    init_store_b029642a();
+    init_store_99ad9184();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18886,18 +18887,18 @@ var init_index_c327074d_e140591a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-e5c6936e.js
-var layout_e5c6936e_exports = {};
-__export(layout_e5c6936e_exports, {
+// .svelte-kit/output/server/chunks/__layout-d42c6269.js
+var layout_d42c6269_exports = {};
+__export(layout_d42c6269_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, getStores, page, _layout;
-var init_layout_e5c6936e = __esm({
-  ".svelte-kit/output/server/chunks/__layout-e5c6936e.js"() {
+var init_layout_d42c6269 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-d42c6269.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_store_b029642a();
-    init_index_c327074d_e140591a();
+    init_app_9dfe5932();
+    init_store_99ad9184();
+    init_index_c327074d_60f0a3e3();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18946,9 +18947,9 @@ var init_layout_e5c6936e = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-08d8919d.js
-var error_08d8919d_exports = {};
-__export(error_08d8919d_exports, {
+// .svelte-kit/output/server/chunks/error-c4be795a.js
+var error_c4be795a_exports = {};
+__export(error_c4be795a_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18956,10 +18957,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_08d8919d = __esm({
-  ".svelte-kit/output/server/chunks/error-08d8919d.js"() {
+var init_error_c4be795a = __esm({
+  ".svelte-kit/output/server/chunks/error-c4be795a.js"() {
     init_shims();
-    init_app_9e949ba6();
+    init_app_9dfe5932();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18981,7 +18982,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-9327042a.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-a2a58aeb.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19334,11 +19335,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_9327042a = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-9327042a.js"() {
+var init_SelectionGroupIcon_a2a58aeb = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-a2a58aeb.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_store_b029642a();
+    init_app_9dfe5932();
+    init_store_99ad9184();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20592,13 +20593,13 @@ var init_SelectionGroupIcon_9327042a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-4c65784e.js
+// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-f098ce0f.js
 var Object_12, Button_1;
-var init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e = __esm({
-  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-4c65784e.js"() {
+var init_DoodleVideo_svelte_svelte_type_style_lang_f098ce0f = __esm({
+  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-f098ce0f.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_SelectionGroupIcon_9327042a();
+    init_app_9dfe5932();
+    init_SelectionGroupIcon_a2a58aeb();
     ({ Object: Object_12 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20781,21 +20782,21 @@ var init_canvas_fb765f32 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-9244a85d.js
-var index_9244a85d_exports = {};
-__export(index_9244a85d_exports, {
+// .svelte-kit/output/server/chunks/index-8107e881.js
+var index_8107e881_exports = {};
+__export(index_8107e881_exports, {
   default: () => Routes
 });
 var import_node_fetch2, import_cookie3, css, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Routes;
-var init_index_9244a85d = __esm({
-  ".svelte-kit/output/server/chunks/index-9244a85d.js"() {
+var init_index_8107e881 = __esm({
+  ".svelte-kit/output/server/chunks/index-8107e881.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_index_c327074d_e140591a();
-    init_store_b029642a();
+    init_app_9dfe5932();
+    init_index_c327074d_60f0a3e3();
+    init_store_99ad9184();
     import_node_fetch2 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
-    init_SelectionGroupIcon_9327042a();
+    init_DoodleVideo_svelte_svelte_type_style_lang_f098ce0f();
+    init_SelectionGroupIcon_a2a58aeb();
     init_canvas_fb765f32();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
@@ -20943,8 +20944,8 @@ var init_index_9244a85d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-b4eb4a80.js
-async function deleteAllStrokesFromDb({ boardPath }) {
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-93eacee8.js
+async function deleteAllStrokesFromDb({ boardPath, strokesArray }) {
   return new Promise(async (resolve2) => {
     const batchDeleteRequests = [];
     let currentBatch = Sh(Oa());
@@ -20966,12 +20967,12 @@ async function deleteAllStrokesFromDb({ boardPath }) {
   });
 }
 var css2, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_b4eb4a80 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-b4eb4a80.js"() {
+var init_RenderlessFetchStrokes_93eacee8 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-93eacee8.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_store_b029642a();
-    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
+    init_app_9dfe5932();
+    init_store_99ad9184();
+    init_DoodleVideo_svelte_svelte_type_style_lang_f098ce0f();
     css2 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
@@ -20981,7 +20982,7 @@ var init_RenderlessFetchStrokes_b4eb4a80 = __esm({
       let $canvasWidth, $$unsubscribe_canvasWidth;
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
-      let { strokesArray: strokesArray2 } = $$props;
+      let { strokesArray } = $$props;
       let { audioDownloadURL } = $$props;
       let { backgroundImageDownloadURL } = $$props;
       let canvas;
@@ -20989,8 +20990,8 @@ var init_RenderlessFetchStrokes_b4eb4a80 = __esm({
       let AudioPlayer;
       onDestroy(() => {
       });
-      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray2 !== void 0)
-        $$bindings.strokesArray(strokesArray2);
+      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray !== void 0)
+        $$bindings.strokesArray(strokesArray);
       if ($$props.audioDownloadURL === void 0 && $$bindings.audioDownloadURL && audioDownloadURL !== void 0)
         $$bindings.audioDownloadURL(audioDownloadURL);
       if ($$props.backgroundImageDownloadURL === void 0 && $$bindings.backgroundImageDownloadURL && backgroundImageDownloadURL !== void 0)
@@ -20999,7 +21000,12 @@ var init_RenderlessFetchStrokes_b4eb4a80 = __esm({
       $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
       return `
-${strokesArray2 ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5"}">play_circle
+<div style="${"position: absolute; right: 0; left: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5"}">${slots.default ? slots.default({}) : `
+
+  `}</div>
+
+
+${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}" style="${"color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5"}">play_circle
   </span>` : ``}
 
 
@@ -21041,7 +21047,7 @@ ${strokesArray2 ? `<span class="${"material-icons overlay-center svelte-12w6n3q"
     RenderlessFetchStrokes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { dbPath } = $$props;
       let { autoFetchStrokes = false } = $$props;
-      let strokesArray2;
+      let strokesArray;
       const strokesRef = ba(Oa(), `${dbPath}/strokes`);
       const strokesQuery = Mu(strokesRef, qu("timestamp"));
       if (autoFetchStrokes) {
@@ -21053,7 +21059,7 @@ ${strokesArray2 ? `<span class="${"material-icons overlay-center svelte-12w6n3q"
         for (const doc of strokesSnapshot.docs) {
           temp.push({ id: doc.id, ...doc.data() });
         }
-        strokesArray2 = temp;
+        strokesArray = temp;
       }
       if ($$props.dbPath === void 0 && $$bindings.dbPath && dbPath !== void 0)
         $$bindings.dbPath(dbPath);
@@ -21061,8 +21067,8 @@ ${strokesArray2 ? `<span class="${"material-icons overlay-center svelte-12w6n3q"
         $$bindings.autoFetchStrokes(autoFetchStrokes);
       return `${slots.default ? slots.default({
         fetchStrokes,
-        strokesArray: strokesArray2,
-        deleteAllStrokesFromDb: () => deleteAllStrokesFromDb({ boardPath: dbPath })
+        strokesArray,
+        deleteAllStrokesFromDb: () => deleteAllStrokesFromDb({ boardPath: dbPath, strokesArray })
       }) : `
 
 `}`;
@@ -21070,23 +21076,23 @@ ${strokesArray2 ? `<span class="${"material-icons overlay-center svelte-12w6n3q"
   }
 });
 
-// .svelte-kit/output/server/chunks/explore-e01c0ba1.js
-var explore_e01c0ba1_exports = {};
-__export(explore_e01c0ba1_exports, {
+// .svelte-kit/output/server/chunks/explore-427b2ae3.js
+var explore_427b2ae3_exports = {};
+__export(explore_427b2ae3_exports, {
   default: () => Explore
 });
 var import_node_fetch3, import_cookie4, css3, Explore;
-var init_explore_e01c0ba1 = __esm({
-  ".svelte-kit/output/server/chunks/explore-e01c0ba1.js"() {
+var init_explore_427b2ae3 = __esm({
+  ".svelte-kit/output/server/chunks/explore-427b2ae3.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_index_c327074d_e140591a();
-    init_store_b029642a();
+    init_app_9dfe5932();
+    init_index_c327074d_60f0a3e3();
+    init_store_99ad9184();
     import_node_fetch3 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
-    init_SelectionGroupIcon_9327042a();
+    init_DoodleVideo_svelte_svelte_type_style_lang_f098ce0f();
+    init_SelectionGroupIcon_a2a58aeb();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_b4eb4a80();
+    init_RenderlessFetchStrokes_93eacee8();
     import_cookie4 = __toModule(require_cookie());
     init_dist();
     css3 = {
@@ -21203,8 +21209,8 @@ var init_explore_e01c0ba1 = __esm({
           dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
           autoFetchStrokes: true
         }, {}, {
-          default: ({ strokesArray: strokesArray2 }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray: strokesArray2,
+          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {})}` : ``}`
@@ -21253,23 +21259,23 @@ var init_explore_e01c0ba1 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/learn-49f7e294.js
-var learn_49f7e294_exports = {};
-__export(learn_49f7e294_exports, {
+// .svelte-kit/output/server/chunks/learn-26296570.js
+var learn_26296570_exports = {};
+__export(learn_26296570_exports, {
   default: () => Learn
 });
 var import_node_fetch4, import_cookie5, css4, Learn;
-var init_learn_49f7e294 = __esm({
-  ".svelte-kit/output/server/chunks/learn-49f7e294.js"() {
+var init_learn_26296570 = __esm({
+  ".svelte-kit/output/server/chunks/learn-26296570.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_index_c327074d_e140591a();
-    init_store_b029642a();
+    init_app_9dfe5932();
+    init_index_c327074d_60f0a3e3();
+    init_store_99ad9184();
     import_node_fetch4 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
-    init_SelectionGroupIcon_9327042a();
+    init_DoodleVideo_svelte_svelte_type_style_lang_f098ce0f();
+    init_SelectionGroupIcon_a2a58aeb();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_b4eb4a80();
+    init_RenderlessFetchStrokes_93eacee8();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
     css4 = {
@@ -21411,8 +21417,8 @@ var init_learn_49f7e294 = __esm({
           dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
           autoFetchStrokes: true
         }, {}, {
-          default: ({ strokesArray: strokesArray2 }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray: strokesArray2,
+          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {})}` : ``}`
@@ -21474,23 +21480,23 @@ var init_learn_49f7e294 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/teach-5ac5c348.js
-var teach_5ac5c348_exports = {};
-__export(teach_5ac5c348_exports, {
+// .svelte-kit/output/server/chunks/teach-67c8a16c.js
+var teach_67c8a16c_exports = {};
+__export(teach_67c8a16c_exports, {
   default: () => Teach
 });
 var import_node_fetch5, import_cookie6, css5, Teach;
-var init_teach_5ac5c348 = __esm({
-  ".svelte-kit/output/server/chunks/teach-5ac5c348.js"() {
+var init_teach_67c8a16c = __esm({
+  ".svelte-kit/output/server/chunks/teach-67c8a16c.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_index_c327074d_e140591a();
-    init_store_b029642a();
+    init_app_9dfe5932();
+    init_index_c327074d_60f0a3e3();
+    init_store_99ad9184();
     import_node_fetch5 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
-    init_SelectionGroupIcon_9327042a();
+    init_DoodleVideo_svelte_svelte_type_style_lang_f098ce0f();
+    init_SelectionGroupIcon_a2a58aeb();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_b4eb4a80();
+    init_RenderlessFetchStrokes_93eacee8();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
     css5 = {
@@ -21628,8 +21634,8 @@ var init_teach_5ac5c348 = __esm({
           dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
           autoFetchStrokes: true
         }, {}, {
-          default: ({ strokesArray: strokesArray2 }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray: strokesArray2,
+          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {})}` : ``}`
@@ -21684,7 +21690,7 @@ var init_teach_5ac5c348 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index.node.esm-e8a898bc.js
+// .svelte-kit/output/server/chunks/index.node.esm-532d2ab7.js
 function guard(name22) {
   return () => {
     throw new Error(`Cannot call ${name22}(...) on the server`);
@@ -21933,12 +21939,12 @@ function registerFunctions(fetchImpl2, variant) {
   registerVersion(name4, version4, "esm2017");
 }
 var import_node_fetch6, goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name4, version4, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME;
-var init_index_node_esm_e8a898bc = __esm({
-  ".svelte-kit/output/server/chunks/index.node.esm-e8a898bc.js"() {
+var init_index_node_esm_532d2ab7 = __esm({
+  ".svelte-kit/output/server/chunks/index.node.esm-532d2ab7.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_SelectionGroupIcon_9327042a();
-    init_store_b029642a();
+    init_app_9dfe5932();
+    init_SelectionGroupIcon_a2a58aeb();
+    init_store_99ad9184();
     import_node_fetch6 = __toModule(require_lib2());
     goto = guard("goto");
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -28782,9 +28788,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-8d495e5e.js
-var layout_8d495e5e_exports = {};
-__export(layout_8d495e5e_exports, {
+// .svelte-kit/output/server/chunks/__layout-ab528d52.js
+var layout_ab528d52_exports = {};
+__export(layout_ab528d52_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -30942,6 +30948,29 @@ function registerDatabase(variant) {
   registerVersion(name5, version5, variant);
   registerVersion(name5, version5, "esm2017");
 }
+async function mountNewTrack({ track, participant }) {
+  switch (track.kind) {
+    case "audio":
+      if (participant.local)
+        return;
+      else {
+        const audioElement = document.createElement("audio");
+        audioElement.srcObject = new MediaStream([track]);
+        audioElement.setAttribute("id", "audio" + participant.user_id);
+        audioElement.setAttribute("playsinline", true);
+        audioElement.setAttribute("autoplay", true);
+        document.getElementById("container-for-audio-elements").appendChild(audioElement);
+      }
+      break;
+  }
+}
+async function unmountTrack({ track, participant }) {
+  const trackElement = document.getElementById(track.id);
+  if (trackElement) {
+    trackElement.srcObject = null;
+    trackElement.remove();
+  }
+}
 function load2({ page: page2 }) {
   return {
     props: {
@@ -30951,14 +30980,14 @@ function load2({ page: page2 }) {
   };
 }
 var import_node_fetch7, import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie7, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css6, _layout2;
-var init_layout_8d495e5e = __esm({
-  ".svelte-kit/output/server/chunks/__layout-8d495e5e.js"() {
+var init_layout_ab528d52 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-ab528d52.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_SelectionGroupIcon_9327042a();
-    init_index_node_esm_e8a898bc();
-    init_store_b029642a();
-    init_index_c327074d_e140591a();
+    init_app_9dfe5932();
+    init_SelectionGroupIcon_a2a58aeb();
+    init_index_node_esm_532d2ab7();
+    init_store_99ad9184();
+    init_index_c327074d_60f0a3e3();
     import_node_fetch7 = __toModule(require_lib2());
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
@@ -31381,8 +31410,7 @@ var init_layout_8d495e5e = __esm({
             })}` : ``}`)}` : ``}`
           })}
 
-    
-    <div style="${"margin: 4px"}">${allClasses.length > 0 ? `${validate_component(Autocomplete, "Autocomplete").$$render($$result, {
+    <div style="${"margin: 4px;"}">${allClasses.length > 0 ? `${validate_component(Autocomplete, "Autocomplete").$$render($$result, {
             options: filteredClasses,
             getOptionLabel: (option) => option ? `${option.name} (${option.description})` : "",
             textfield$variant: "outlined",
@@ -39202,10 +39230,12 @@ var init_layout_8d495e5e = __esm({
     DailyVideoConference = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $dailyRoomParticipants, $$unsubscribe_dailyRoomParticipants;
       let $browserTabID, $$unsubscribe_browserTabID;
-      let $$unsubscribe_dailyMicStream;
+      let $dailyMicStream, $$unsubscribe_dailyMicStream;
+      let $user, $$unsubscribe_user;
       $$unsubscribe_dailyRoomParticipants = subscribe(dailyRoomParticipants, (value) => $dailyRoomParticipants = value);
       $$unsubscribe_browserTabID = subscribe(browserTabID, (value) => $browserTabID = value);
-      $$unsubscribe_dailyMicStream = subscribe(dailyMicStream, (value) => value);
+      $$unsubscribe_dailyMicStream = subscribe(dailyMicStream, (value) => $dailyMicStream = value);
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
       let { roomID } = $$props;
       let CallObject;
       let firestoreIDToDailyID;
@@ -39218,6 +39248,51 @@ var init_layout_8d495e5e = __esm({
           leaveConferenceRoom();
         }
       });
+      async function initCallObject() {
+        return new Promise(async (resolve2, reject2) => {
+          if (!$dailyMicStream) {
+            try {
+              const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+              dailyMicStream.set(micStream);
+            } catch (error22) {
+              alert(`Don't forget to enable your your mic! Click the "aA" / "i" button beside the URL bar "https://explain.mit.edu", then click "website settings" / "microphone"`);
+              return reject2("Can't access mic stream");
+            }
+          }
+          const [micMediaStreamTrack] = $dailyMicStream.getAudioTracks();
+          CallObject = import_daily_js.default.createCallObject({
+            audioSource: micMediaStreamTrack,
+            videoSource: false
+          });
+          const participantEvents = ["participant-joined", "participant-updated", "participant-left"];
+          for (const e of participantEvents) {
+            CallObject.on(e, () => {
+              dailyRoomParticipants.set(CallObject.participants());
+              const temp = {};
+              for (const dailyID of Object.keys($dailyRoomParticipants)) {
+                const dailyParticipant = $dailyRoomParticipants[dailyID];
+                const browserTabID2 = dailyParticipant.user_name;
+                if (browserTabID2) {
+                  temp[browserTabID2] = dailyParticipant.user_id;
+                }
+              }
+              firestoreIDToDailyID = temp;
+            });
+          }
+          CallObject.on("track-started", mountNewTrack);
+          CallObject.on("track-stopped", unmountTrack);
+          CallObject.on("active-speaker-change", ({ activeSpeaker }) => {
+            activeSpeakerID = activeSpeaker.peerId;
+          });
+          CallObject.on("load-attempt-failed", ({ action, errorMsg }) => {
+            alert(action + ": " + errorMsg);
+          });
+          CallObject.on("error", ({ action, errorMsg }) => {
+            alert(action + ": " + errorMsg);
+          });
+          resolve2();
+        });
+      }
       async function publicJoinRoom() {
         prevCallState = "not_connected";
         currentCallState = "connecting";
@@ -39305,9 +39380,19 @@ var init_layout_8d495e5e = __esm({
           publicJoinRoom();
         }
       }
+      {
+        if ($user.uid) {
+          async function initDaily() {
+            await initCallObject();
+            publicJoinRoom();
+          }
+          initDaily();
+        }
+      }
       $$unsubscribe_dailyRoomParticipants();
       $$unsubscribe_browserTabID();
       $$unsubscribe_dailyMicStream();
+      $$unsubscribe_user();
       return `${slots.default ? slots.default({
         toggleMic,
         activeSpeakerID,
@@ -39322,10 +39407,12 @@ var init_layout_8d495e5e = __esm({
     };
     _layout2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $roomToPeople, $$unsubscribe_roomToPeople;
+      let $$unsubscribe_willPreventPageLeave;
       let $user, $$unsubscribe_user;
       let $dailyRoomParticipants, $$unsubscribe_dailyRoomParticipants;
       let $browserTabID, $$unsubscribe_browserTabID;
       $$unsubscribe_roomToPeople = subscribe(roomToPeople, (value) => $roomToPeople = value);
+      $$unsubscribe_willPreventPageLeave = subscribe(willPreventPageLeave, (value) => value);
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
       $$unsubscribe_dailyRoomParticipants = subscribe(dailyRoomParticipants, (value) => $dailyRoomParticipants = value);
       $$unsubscribe_browserTabID = subscribe(browserTabID, (value) => $browserTabID = value);
@@ -39451,7 +39538,7 @@ ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$re
             ].join(" ").trim()}">${escape(room.name)}
               </div>` : `${room.name === "" ? `<div style="${"margin-bottom: 2px;"}">(empty room)</div>` : ``}`}
 
-            ${room.id === roomID & $user.uid ? `<span class="${"material-icons"}" style="${"margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;"}">more_horiz
+            ${room.id === roomID && $user.uid ? `<span class="${"material-icons"}" style="${"margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;"}">more_horiz
               </span>
 
               ${validate_component(Menu, "Menu").$$render($$result, {
@@ -39503,6 +39590,7 @@ ${slots.default ? slots.default({}) : `
 `}`;
       } while (!$$settled);
       $$unsubscribe_roomToPeople();
+      $$unsubscribe_willPreventPageLeave();
       $$unsubscribe_user();
       $$unsubscribe_dailyRoomParticipants();
       $$unsubscribe_browserTabID();
@@ -39527,9 +39615,9 @@ var require_dist = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-ca832ebe.js
-var index_ca832ebe_exports = {};
-__export(index_ca832ebe_exports, {
+// .svelte-kit/output/server/chunks/index-b7c37d99.js
+var index_b7c37d99_exports = {};
+__export(index_b7c37d99_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -39556,15 +39644,15 @@ function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
 var import_svelte_css_vars, import_cookie8, import_node_fetch8, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css7, U5Broomu5D;
-var init_index_ca832ebe = __esm({
-  ".svelte-kit/output/server/chunks/index-ca832ebe.js"() {
+var init_index_b7c37d99 = __esm({
+  ".svelte-kit/output/server/chunks/index-b7c37d99.js"() {
     init_shims();
-    init_app_9e949ba6();
-    init_RenderlessFetchStrokes_b4eb4a80();
-    init_store_b029642a();
-    init_SelectionGroupIcon_9327042a();
-    init_index_node_esm_e8a898bc();
-    init_DoodleVideo_svelte_svelte_type_style_lang_4c65784e();
+    init_app_9dfe5932();
+    init_RenderlessFetchStrokes_93eacee8();
+    init_store_99ad9184();
+    init_SelectionGroupIcon_a2a58aeb();
+    init_index_node_esm_532d2ab7();
+    init_DoodleVideo_svelte_svelte_type_style_lang_f098ce0f();
     import_svelte_css_vars = __toModule(require_dist());
     import_cookie8 = __toModule(require_cookie());
     init_dist();
@@ -39641,7 +39729,7 @@ var init_index_ca832ebe = __esm({
             <polygon${add_attribute("style", `fill: ${color};`, 0)} points="${"50,211.978 38.879,175.24 61.122,175.24"}"></polygon><path style="${"fill:#424242;"}" d="${"M63.581,167.118H36.42L8.765,75.761l10.924-9.63l12.5,11.015c1.54,1.353,3.835,1.35,5.375-0.002\r\n                l12.468-11.007l12.464,11.005c1.54,1.357,3.839,1.357,5.377,0l12.465-11.005l10.9,9.623L63.581,167.118z"}"></path><path${add_attribute("style", `fill: ${color};`, 0)} d="${"M91.878,0v65.486l-8.852-7.813c-1.539-1.353-3.838-1.354-5.377,0.002L65.185,68.679L52.72,57.674\r\n                c-1.539-1.356-3.838-1.354-5.377-0.002L34.871,68.683L22.375,57.67c-0.769-0.676-1.725-1.013-2.685-1.013\r\n                c-0.959,0-1.919,0.339-2.685,1.013L8.121,65.5L8.098,0.024L91.878,0z"}"></path></g></svg> 
       </div>`)}
 
-    <img width="${"46"}" height="${"33"}" style="${"margin-left: 8px;"}" src="${"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"}" alt="${"eraser"}" class="${["svelte-1bgxyxs", $currentTool.type === "eraser" ? "eraser-selected" : ""].join(" ").trim()}">` : ``}
+    <img width="${"46"}" height="${"33"}" style="${"margin-left: 8px; margin-right: 8px;"}" src="${"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"}" alt="${"eraser"}" class="${["svelte-1bgxyxs", $currentTool.type === "eraser" ? "eraser-selected" : ""].join(" ").trim()}">` : ``}
   
   ${slots.default ? slots.default({}) : `
 
@@ -39657,37 +39745,50 @@ var init_index_ca832ebe = __esm({
       let $canvasWidth, $$unsubscribe_canvasWidth;
       let $$unsubscribe_currentTool;
       let $$unsubscribe_onlyAllowApplePencil;
-      let $user, $$unsubscribe_user;
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
       $$unsubscribe_currentTool = subscribe(currentTool, (value) => value);
       $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => value);
-      $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      let { strokesArray: strokesArray2 } = $$props;
+      let { strokesArray } = $$props;
       let { currentTime = 0 } = $$props;
       let { backgroundImageDownloadURL = "" } = $$props;
+      let { recordState = "" } = $$props;
       createEventDispatcher();
       let canvas;
       let bgCanvas;
       let DropdownMenu;
-      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray2 !== void 0)
-        $$bindings.strokesArray(strokesArray2);
+      onDestroy(() => {
+        window.removeEventListener("popstate", onBackOrForward);
+      });
+      function onBackOrForward() {
+        if (recordState === "mid_record") {
+          if (confirm("This will interrupt your current recording, are you sure?"))
+            ;
+          else {
+            history.pushState(null, document.title, location.href);
+          }
+        }
+      }
+      if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray !== void 0)
+        $$bindings.strokesArray(strokesArray);
       if ($$props.currentTime === void 0 && $$bindings.currentTime && currentTime !== void 0)
         $$bindings.currentTime(currentTime);
       if ($$props.backgroundImageDownloadURL === void 0 && $$bindings.backgroundImageDownloadURL && backgroundImageDownloadURL !== void 0)
         $$bindings.backgroundImageDownloadURL(backgroundImageDownloadURL);
+      if ($$props.recordState === void 0 && $$bindings.recordState && recordState !== void 0)
+        $$bindings.recordState(recordState);
       let $$settled;
       let $$rendered;
       do {
         $$settled = true;
         $$rendered = `
-${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
-          "dropdown-menu": () => `<div slot="${"dropdown-menu"}">${$user.uid ? `<span class="${"material-icons"}" style="${"margin-right: 10px; color: white; font-size: 2rem;"}">more_horiz
-        </span>
+${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
+          "dropdown-menu": () => `<div slot="${"dropdown-menu"}">${recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"margin-right: 10px; color: white; font-size: 2rem;"}">more_horiz
+        </span>` : ``}
+    
+      <input style="${"display: none"}" type="${"file"}" accept="${"image/gif, image/jpeg, image/png"}">
       
-        <input style="${"display: none"}" type="${"file"}" accept="${"image/gif, image/jpeg, image/png"}">
-
-        ${validate_component(Menu, "Menu").$$render($$result, {
+      ${validate_component(Menu, "Menu").$$render($$result, {
             style: "width: 300px",
             this: DropdownMenu
           }, {
@@ -39699,23 +39800,23 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
             default: () => `${validate_component(List, "List").$$render($$result, {}, {}, {
               default: () => `${backgroundImageDownloadURL ? `${validate_component(Item, "Item").$$render($$result, {}, {}, {
                 default: () => `Remove background
-              `
+            `
               })}` : `${validate_component(Item, "Item").$$render($$result, {}, {}, {
                 default: () => `Set background
-              `
+            `
               })}`}
 
-            ${validate_component(Item, "Item").$$render($$result, {}, {}, {
+          ${validate_component(Item, "Item").$$render($$result, {}, {}, {
                 default: () => `Wipe board
-            `
+          `
               })}    
 
-            ${validate_component(Item, "Item").$$render($$result, {}, {}, {
+          ${validate_component(Item, "Item").$$render($$result, {}, {}, {
                 default: () => `Delete board 
-            `
+          `
               })}`
             })}`
-          })}` : ``}</div>`,
+          })}</div>`,
           default: () => `${slots.default ? slots.default({}) : `
 
     `}`
@@ -39734,7 +39835,6 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
       $$unsubscribe_canvasWidth();
       $$unsubscribe_currentTool();
       $$unsubscribe_onlyAllowApplePencil();
-      $$unsubscribe_user();
       return $$rendered;
     });
     RenderlessAudioRecorder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -39748,12 +39848,21 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
       let recorder = null;
       function startRecording() {
         return new Promise(async (resolve2, reject2) => {
-          if (!$dailyRoomParticipants.local.audio) {
+          let micStreamCopy;
+          if (!$dailyMicStream) {
+            try {
+              micStreamCopy = await navigator.mediaDevices.getUserMedia({ audio: true });
+            } catch (error3) {
+              alert(`Don't forget to enable your your mic! Click the "aA" / "i" button beside the URL bar "https://explain.mit.edu", then click "website settings" / "microphone"`);
+              return reject2("Can't access mic stream");
+            }
+          } else if (!$dailyRoomParticipants.local.audio) {
             alert('Cannot start recording because your mic is muted - click the switch next to your "beaver #n" to unmute');
             reject2("Cannot start recording because mic stream is muted");
             return;
+          } else {
+            micStreamCopy = $dailyMicStream.clone();
           }
-          const micStreamCopy = $dailyMicStream.clone();
           recorder = new MediaRecorder(micStreamCopy);
           recorder.start();
           timer = setInterval(() => currentTime += 0.1, 100);
@@ -39882,7 +39991,7 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
     });
     RenderlessListenToStrokes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { dbPath } = $$props;
-      let strokesArray2;
+      let strokesArray;
       let unsubStrokesListener;
       const strokesRef = ba(Oa(), `${dbPath}/strokes`);
       const strokesQuery = Mu(strokesRef, qu("timestamp"));
@@ -39895,29 +40004,29 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
         unsubStrokesListener = yh(strokesQuery, async (snapshot) => {
           const removedDocs = snapshot.docChanges().filter((change) => change.type === "removed");
           if (removedDocs.length > 0) {
-            strokesArray2 = [];
+            strokesArray = [];
             await tick();
             if (snapshot.docs.length > 0) {
               snapshot.docs.forEach((doc) => {
-                strokesArray2.push(convertDocToStroke(doc));
+                strokesArray.push(convertDocToStroke(doc));
               });
             }
           } else {
-            if (!strokesArray2) {
-              strokesArray2 = [];
+            if (!strokesArray) {
+              strokesArray = [];
             }
-            if (snapshot.docs.length === strokesArray2.length)
+            if (snapshot.docs.length === strokesArray.length)
               ;
             else {
               snapshot.docChanges().filter((change) => change.type === "added").forEach((change) => {
-                strokesArray2 = [...strokesArray2, convertDocToStroke(change.doc)];
+                strokesArray = [...strokesArray, convertDocToStroke(change.doc)];
               });
             }
           }
         });
       }
       function handleNewlyDrawnStroke(stroke) {
-        strokesArray2.push(stroke);
+        strokesArray.push(stroke);
         try {
           wh(va(Oa(), `${dbPath}/strokes/${stroke.id}`), { timestamp: bh(), ...stroke });
         } catch (error3) {
@@ -39929,7 +40038,7 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
           const batchDeleteRequests = [];
           let currentBatch = Sh(Oa());
           let currentBatchSize = 0;
-          for (const stroke of strokesArray2) {
+          for (const stroke of strokesArray) {
             if (currentBatchSize >= 500) {
               batchDeleteRequests.push(currentBatch.commit());
               currentBatch = Sh(Oa());
@@ -39941,7 +40050,7 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
           }
           batchDeleteRequests.push(currentBatch.commit());
           await Promise.all(batchDeleteRequests);
-          strokesArray2 = [];
+          strokesArray = [];
           resolve2();
         });
       }
@@ -39949,7 +40058,7 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
         $$bindings.dbPath(dbPath);
       return `${slots.default ? slots.default({
         listenToStrokes,
-        strokesArray: strokesArray2,
+        strokesArray,
         handleNewlyDrawnStroke,
         deleteAllStrokesFromDb: deleteAllStrokesFromDb2
       }) : `
@@ -40025,12 +40134,12 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
           ${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, { value: boardDoc.description || "" }, {}, {})}
           <div style="${"margin-bottom: 10px;"}"></div>
           ${boardDoc.audioDownloadURL ? `${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-          default: ({ fetchStrokes, strokesArray: strokesArray2, deleteAllStrokesFromDb: deleteAllStrokesFromDb2 }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`, 0)}>${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray: strokesArray2,
+          default: ({ fetchStrokes, strokesArray, deleteAllStrokesFromDb: deleteAllStrokesFromDb2 }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`, 0)}>${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
+            strokesArray,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {
-            default: () => `${$user.uid === boardDoc.creatorUID ? `${validate_component(Button_1, "Button").$$render($$result, { color: "primary" }, {}, {
+            default: () => `${$user.uid === boardDoc.creatorUID || !boardDoc.creatorUID ? `${validate_component(Button_1, "Button").$$render($$result, { color: "primary" }, {}, {
               default: () => `Delete video
                     `
             })}` : ``}
@@ -40038,24 +40147,26 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
           })}</div>
             `
         })}` : `${validate_component(RenderlessListenToStrokes, "RenderlessListenToStrokes").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-          default: ({ listenToStrokes, strokesArray: strokesArray2, handleNewlyDrawnStroke, deleteAllStrokesFromDb: deleteAllStrokesFromDb2 }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`, 0)}>${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
+          default: ({ listenToStrokes, strokesArray, handleNewlyDrawnStroke, deleteAllStrokesFromDb: deleteAllStrokesFromDb2 }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`, 0)}>${validate_component(RenderlessAudioRecorder, "RenderlessAudioRecorder").$$render($$result, {}, {}, {
             default: ({ startRecording, stopRecording, currentTime }) => `${validate_component(Blackboard, "Blackboard").$$render($$result, {
-              strokesArray: strokesArray2,
+              strokesArray,
               currentTime,
-              backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
+              backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL,
+              recordState: boardDoc.recordState
             }, {}, {
-              default: () => `${$user.uid ? `${!boardDoc.recordState || boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">radio_button_checked
+              default: () => `${boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"}">album
                         </span>` : `${boardDoc.recordState === "mid_record" ? `<span class="${[
                 "material-icons svelte-53fhoc",
                 $browserTabID !== boardDoc.recorderBrowserTabID ? "unclickable" : ""
-              ].join(" ").trim()}" style="${"font-size: 2.5rem; color: cyan; margin-left: 30px; margin-right: 26px"}">stop_circle
+              ].join(" ").trim()}" style="${"font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"}">stop_circle
                         </span>` : `<div style="${"display: flex; justify-content: center; margin-left: 20px; margin-right: 20px"}">${validate_component(CircularProgress, "CircularProgress").$$render($$result, {
                 class: "my-four-colors",
                 style: "height: 32px; width: 32px;",
                 indeterminate: true,
                 fourColor: true
               }, {}, {})}
-                        </div>`}`}` : ``}
+                        </div>`}`}
+         
                   `
             })}
                 `
@@ -40072,7 +40183,7 @@ ${strokesArray2 ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").
   }
 });
 
-// .svelte-kit/output/server/chunks/app-9e949ba6.js
+// .svelte-kit/output/server/chunks/app-9dfe5932.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -41530,9 +41641,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-c907c1bc.js",
+      file: assets + "/_app/start-9b6d3233.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-c907c1bc.js", assets + "/_app/chunks/vendor-d35e056c.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-9b6d3233.js", assets + "/_app/chunks/vendor-d35e056c.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -41576,8 +41687,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie9, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css8, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_9e949ba6 = __esm({
-  ".svelte-kit/output/server/chunks/app-9e949ba6.js"() {
+var init_app_9dfe5932 = __esm({
+  ".svelte-kit/output/server/chunks/app-9dfe5932.js"() {
     init_shims();
     import_cookie9 = __toModule(require_cookie());
     init_dist();
@@ -41864,16 +41975,16 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_e5c6936e(), layout_e5c6936e_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_08d8919d(), error_08d8919d_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_9244a85d(), index_9244a85d_exports)),
-      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_e01c0ba1(), explore_e01c0ba1_exports)),
-      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_49f7e294(), learn_49f7e294_exports)),
-      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_5ac5c348(), teach_5ac5c348_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_8d495e5e(), layout_8d495e5e_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_ca832ebe(), index_ca832ebe_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_d42c6269(), layout_d42c6269_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_c4be795a(), error_c4be795a_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_8107e881(), index_8107e881_exports)),
+      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_427b2ae3(), explore_427b2ae3_exports)),
+      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_26296570(), learn_26296570_exports)),
+      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_67c8a16c(), teach_67c8a16c_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_ab528d52(), layout_ab528d52_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_b7c37d99(), index_b7c37d99_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-68a6dcab.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-68a6dcab.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-9ac6e3bb.js", "css": [], "js": ["error.svelte-9ac6e3bb.js", "chunks/vendor-d35e056c.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-d225247b.js", "css": ["assets/pages/index.svelte-839a29ef.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-d225247b.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-7f3c8090.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-7f3c8090.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-e489d726.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-e489d726.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-c873eada.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-c873eada.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-80310fd5.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-b19ee779.js", "css": ["assets/pages/_class_/__layout.svelte-f73c5b3e.css"], "js": ["pages/_class_/__layout.svelte-b19ee779.js", "chunks/vendor-d35e056c.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-1d995a62.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-1d995a62.js", "chunks/vendor-d35e056c.js", "chunks/RenderlessFetchStrokes-80310fd5.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-e96c681c.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-e0c10492.js", "css": ["assets/pages/__layout.svelte-ac89f805.css"], "js": ["pages/__layout.svelte-e0c10492.js", "chunks/vendor-d35e056c.js", "chunks/navigation-4873d97b.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-9ac6e3bb.js", "css": [], "js": ["error.svelte-9ac6e3bb.js", "chunks/vendor-d35e056c.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-50b7433b.js", "css": ["assets/pages/index.svelte-839a29ef.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-50b7433b.js", "chunks/vendor-d35e056c.js", "chunks/navigation-4873d97b.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-3cb9cb06.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-3cb9cb06.js", "chunks/vendor-d35e056c.js", "chunks/navigation-4873d97b.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-201d03c6.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-7adb391e.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-7adb391e.js", "chunks/vendor-d35e056c.js", "chunks/navigation-4873d97b.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-201d03c6.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-720bbfea.js", "css": ["assets/pages/learn.svelte-93b57da7.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-720bbfea.js", "chunks/vendor-d35e056c.js", "chunks/navigation-4873d97b.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-201d03c6.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-07108aaf.js", "css": ["assets/pages/_class_/__layout.svelte-f73c5b3e.css"], "js": ["pages/_class_/__layout.svelte-07108aaf.js", "chunks/vendor-d35e056c.js", "chunks/navigation-4873d97b.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-ee60f5c7.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-ee60f5c7.js", "chunks/vendor-d35e056c.js", "chunks/RenderlessFetchStrokes-201d03c6.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-4873d97b.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
   }
 });
 
@@ -41926,7 +42037,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_9e949ba6();
+init_app_9dfe5932();
 var import_cookie10 = __toModule(require_cookie());
 init_dist();
 

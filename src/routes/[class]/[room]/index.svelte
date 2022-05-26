@@ -18,7 +18,9 @@
       style={`width: ${$canvasWidth}px;`}
     >
       <HelperText slot="helper" persistent>
-        {#if lockQuestionIntervalID}
+        {#if !lockQuestionIntervalID && !resolveQuestionIntervalID && !roomDoc.askerUID}
+          To ask a question, just use a question mark "?"
+        {:else if lockQuestionIntervalID}
           Pinging server members in {lockQuestionCurrentTime}, cancel by backtracking the ?
         {:else if resolveQuestionIntervalID}
           Resolving this question in {resolveQuestionCurrentTime}, cancel by re-adding ?

@@ -1,6 +1,6 @@
 
 <div bind:this={anchor}>
-  <div on:click={() => menu.setOpen(true)} style="display: flex; align-items: center;">
+  <div on:click={openMenu} style="display: flex; align-items: center;">
     <div>
       <h1 style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
         {nameOfClass}
@@ -19,7 +19,7 @@
     anchor={false}
     bind:anchorElement={anchor}
     anchorCorner="BOTTOM_LEFT"
-    style="left: 70px; top: 65px; width: 280px; overflow: scroll;"
+    style="left: 70px; top: 5px; width: 240px; overflow: visible;"
   >
     <List>
       {#if $user.enrolledClasses}
@@ -32,19 +32,30 @@
           {/if}
         {/each}
       {/if}
-    </List>
 
-    <div style="margin: 4px;">
-      {#if allClasses.length > 0}
-        <Autocomplete
-          options={filteredClasses}
-          getOptionLabel={(option) => option ? `${option.name} (${option.description})` : ''}
-          bind:value={valueStandard}
-          textfield$variant="outlined"
-          label="Search class"
-        />
-      {/if}
-    </div>
+      <div style="margin-left: 12px; margin-bottom: 4px; margin-top: 16px;">
+        {#if allClasses.length > 0}
+          <Autocomplete 
+            options={filteredClasses}
+            getOptionLabel={(option) => option ? `${option.name} (${option.description})` : ''}
+            bind:value={valueStandard}
+            on:SMUIAutocomplete:
+            textfield$variant="outlined"
+            label="Search class"
+            menu$style="max-height: 226px;"
+          />
+          <!--
+             Let's break down what `menu$style` means:
+              SMUI lets us inject props into the sub-elements of <Autocomplete/>
+              `menu` there is a child div that looks like this <div class="LOTS OF SMUI-DEFINED CLASSES">, which we select
+              `$style`: we add a `style` attribute directly to the menu element, thereby applying CSS to it
+
+            (This child prop injection feature was mentioned in SMUI's README https://github.com/hperrin/svelte-material-ui)
+          -->
+          <!-- 226px will half-show the last element, indicating the result list is scrollable without needing to display a scrollbar -->
+        {/if}
+      </div>
+    </List>
   </Menu>
 </div>
  
@@ -68,12 +79,9 @@
   let mitClasses = []
   let allClasses = []
   let valueStandard = ''
-  // console.log("$user =", $user)
-  // $user.enrolledClasses
   let menu
 
   $: if (valueStandard) {
-    console.log('selected option =', valueStandard)
     join({ mitClass: valueStandard })
   }
 
@@ -95,9 +103,14 @@
     allClasses = [...temp]
   })
 
+  function openMenu () {
+    menu.setOpen(true)
+  } 
+
   async function join ({ mitClass }) {    
     console.log('join mitClass =', mitClass)
     // don't allow duplicate joins
+    // TODO: don't even show the classes you are already in
     for (const userClass of $user.enrolledClasses) {
       if (userClass.id === mitClass.id) {
         alert(`You are already in ${mitClass.name}`)

@@ -38,10 +38,8 @@
           <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
             {#if room.name}
               <div class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
+                  class="my-truncated-text"
                 style="
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis
                   margin-bottom: 2px;
                 "
               >
@@ -53,7 +51,7 @@
 
             {#if room.id === roomID && $user.uid}
               <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
-                more_horiz
+                more_vert
               </span>
 
               <Menu bind:this={DropdownMenu} style="width: 300px">

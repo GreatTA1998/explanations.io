@@ -2,10 +2,10 @@
 <div bind:this={anchor}>
   <div on:click={openMenu} style="display: flex; align-items: center;">
     <div>
-      <h1 style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
-        {nameOfClass}
+      <h1 class="my-truncated-text" style="width: 150px; font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
+        {nameOfClass} 
       </h1>
-      <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
+      <div class="my-truncated-text" style="width: 150px; font-family: Roboto, sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: {6+2}px; margin-bottom: 12px">
         {descriptionOfClass}
       </div>
     </div>
@@ -26,8 +26,9 @@
         {#each $user.enrolledClasses as mitClass }
           {#if mitClass.name !== nameOfClass}
             <Item on:SMUI:action={() => switchClass(mitClass)}>
-              {mitClass.name} ({mitClass.description})
-              <!-- <div>{mitClass.description}</div> -->
+              <div class="my-truncated-text">
+                {mitClass.name} ({mitClass.description})
+              </div>
             </Item>
           {/if}
         {/each}

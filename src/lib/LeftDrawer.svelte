@@ -6,11 +6,17 @@
           <img on:click={goToHomePage} src="/logo.png" width="60" height="54" alt="web-logo" class="logo-image">
           <div>
             {#if $user.uid}
-              <ClassDropdownMenu {nameOfClass} {descriptionOfClass}>
-              </ClassDropdownMenu>
+              <ClassDropdownMenu 
+                {nameOfClass} 
+                {descriptionOfClass}
+              />
             {:else}
-              <div style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">{nameOfClass}</div>
-              <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">{descriptionOfClass}</div>
+              <div style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
+                {nameOfClass} 
+              </div>
+              <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
+                {descriptionOfClass}
+              </div>
             {/if}
           </div>
         </div>

@@ -6,6 +6,17 @@ body {
 	width: 0;
 }
 
+/* used from https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow  */
+/* NOTE: you must set a width explicitly */
+.my-truncated-text {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+
+	/* width: 150px; */
+	/* border: 1px solid; */
+}
+
 /* @import '@fontsource/fira-mono';
 
 :root {

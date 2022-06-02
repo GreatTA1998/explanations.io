@@ -37,16 +37,17 @@
           <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
           <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
             {#if room.name}
-              <div class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
-                  class="my-truncated-text"
-                style="
-                  margin-bottom: 2px;
-                "
+              <div 
+                class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
+                class="my-truncated-text"
+                style="margin-bottom: 2px;"
               >
                 {room.name}
               </div>
             {:else}
-              <div style="margin-bottom: 2px;">(untitled room)</div>
+              <div style="margin-bottom: 2px;">
+                (untitled room)
+              </div>
             {/if}
 
             {#if room.id === roomID && $user.uid}

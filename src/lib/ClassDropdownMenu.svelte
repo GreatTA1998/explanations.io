@@ -134,8 +134,9 @@
         numOfMembers: increment(1)
       }
     )
-
-    goto(`/${mitClass.id}/${mitClass.id}`);
+    
+    valueStandard = ''
+    goto(`/${mitClass.id}/${mitClass.id}`)
   }
 
   async function switchClass (mitClass) {

@@ -45,8 +45,8 @@
               >
                 {room.name}
               </div>
-            {:else if room.name === ''}
-              <div style="margin-bottom: 2px;">(empty room)</div>
+            {:else}
+              <div style="margin-bottom: 2px;">(untitled room)</div>
             {/if}
 
             {#if room.id === roomID && $user.uid}
@@ -327,7 +327,7 @@
             for (const room of rooms) {
               const roomRef = doc(getFirestore(), `classes/${classID}/rooms/${room.id}`)
               updateDoc(roomRef, {
-                date: Date.now()
+                date: Date.toISOString()
               })
             }
             // can make it atomic with a batch operation

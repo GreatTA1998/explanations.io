@@ -1,8 +1,8 @@
 {#if Object.keys($user).length === 0}
-	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+	<!-- <section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Teaching has long hours and mediocre pay
+				
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -14,13 +14,13 @@
 			</p>
 			<br>
 		</div>
-	</section>
+	</section> -->
 
 	<section style="height: {260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">How about high pay, short hours?</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Suppose you can make a great-living out of teaching, and it's no longer about hours spent, but instead effectiveness. So if you do a great job in 10 minutes, you're done. And you can get paid at the ball-park of $100/hour, without having to 
+				Suppose you can make a great-living out of teaching, and it's no longer about hours spent, but instead effectiveness. So if you do a great job in 10 minutes, you're done. And you can get paid proportional to the impact you have, without having to 
 				handle class logistics etc.
 
 				<br>

@@ -6,13 +6,13 @@
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				We fear having to go through the day-to-day, waking up with a headache, seeing a grey sky, walking to lecture to a room full of everyone but friends, not understanding anything. 
+				We dread having to go through the day-to-day, waking up with a headache, seeing a grey sky, walking to a class you hate, not understanding anything. 
 				<br>
 				<br>
 				It's the fatigue and anxiety. It's the purposelessness. It's the isolation. 
 				<br>
 				<br>
-				There are many reasons why we can fall behind classes. But the fact we can't <u>recover</u> is the problem. We especially visit Office Hours, only to wait 30 minutes for 5 minutes of "hints".
+				There are many reasons why we fall behind classes. But the fact we can't <u>recover</u> is the problem. We especially visit Office Hours, only to wait 30 minutes for 5 minutes of "hints".
 				<br>
 				<br>
 				When night comes, either we're so burnt out that we can't do any work, or we try to sleep knowing that tomorrow will be just as bad. We're stuck in a vicious cycle of compounding inefficiencies. The suffering isn't extreme or intense, it's prolonged and pervasive. 
@@ -31,30 +31,30 @@
 				Imagine if the material was so good that, everything you need to know is clearly explained and re-watchable at your own pace. And suppose anything were to be missing, you can just ask for help efficiently without having to travel to campus, wait till the next Office Hours / for a Piazza response?
 				<br>
 				<br>
-				Then, you can efficiently grasp the fundamentals and get up to speed.
+				Then, we'd efficiently grasp the fundamentals, fully recover, and actually look forward to our classes.
 			</p>
 		</div>
 	</section>
 
-	<section style="height: {$canvasHeight + 260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+	<section style="height: {$canvasHeight + 400}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">How everything works</h1>
-			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
-
-				Explain changes 3 things: 
-					<br>
-					- Abundance of visual explanations: making and managing videos has always been inconvenient, but on this web app you just press one button...so teachers can do it much more
-					<br>
-					- Convenient way to get help: instead of waiting till Wednesday 5-7 pm, then having to travelling across campus, you can receive real-time help from your room, anytime.
-					Traditional remote help has always been ineffective - it suffers the worst of both worlds - the limited availability and wait-times of Office Hours, and the lack of easy blackboard integration.
-					Explain removes both.
-					<br>
-				  - Strong incentives: TAs are rewarded for actual impact; a TA who helped 100 people in a way 10x more helpful should get paid 1000x more than other TAs
-				<br>
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">What is Explain?</h1>
+			<div style="margin-bottom: 20px; font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+					Explain is a place with voice chat and lots of blackboards:
+					<ol>
+						<li>
+							To ask a question, add a ? to a sentence and the server will be pinged by text				
+						</li>
+						<li>
+							While receiving help, the teacher can record the explanation with 1-click and <u>near-instantly</u> upload it
+						</li>
+						<li>
+							Overtime, great explanations accumulate for everyone to review
+						</li>
+					</ol>
 				<br>
 				Here's an example video that was recorded on this website: 
-			</p>
+			</div>
 		</div>
 
 		<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`} id="caleb-video-section">

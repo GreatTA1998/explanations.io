@@ -1,85 +1,70 @@
 {#if Object.keys($user).length === 0}
-	<section style="height: 100vh; border-bottom: 1px solid #eee;">
-		<div style="height: 84vh; display: flex; justify-content: center; align-items: center;">
-			<div style="padding-bottom: 90px;">
-				<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
-					<img src="logo.png" width="120" height="108" style="margin-left: 0px;">
-					<h1 id="logo" style="font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;">
-						explain.mit.edu
-					</h1>
-				</div>
-
-				<div style="display: flex; justify-content: center;">
-					<b style="color: grey; white-space: nowrap;" class="copied-from-koa">A place with lots of helpers and visual explanations</b>
-				</div>
-
-				<!-- This flex is just used to center horizontally -->
-				<div style="display: flex; justify-content: center">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 500px;">
-						<div>
-							<div class="copied-from-koa-2" style="margin-top: 20px;">ASE exam:</div>
-							<div class="copied-from-koa-2" style="margin-top: 20px;">Normal class:</div>
-							<div class="copied-from-koa-2" style="margin-top: 20px;">Open-learning:</div>
-						</div>
-
-						<div style="width: 300px;">
-							<div style="margin-top: 20px;">
-								<Button on:click={() => goto('ase')} variant="raised" color="purple" style="width: 47%">
-									Student
-								</Button>
-
-								<Button on:click={() => goto('learn')} variant="raised" color="secondary" style="margin-left: 7px; width: 47%">
-									Tutor
-								</Button>
-							</div>
-
-							<div style="margin-top: 14px;">
-								<Button on:click={() => goto('teach')} variant="raised" color="orange" style="width: 47%;">
-									STUDENT
-								</Button>	
-								<Button width={100} on:click={() => goto('teach')} variant="raised" color="secondary" style="margin-left: 7px; width: 47%">
-									TA
-								</Button>	
-							</div>
-
-							<div style="margin-top: 14px;">
-								<Button on:click={() => goto('teach')} variant="raised" color="orange" style="width: 47%;">
-									join server
-								</Button>	
-								<Button on:click={() => goto('teach')} variant="raised" style="margin-left: 7px;" color="secondary">
-									start server
-								</Button>	
-							</div>
-						</div>
-					</div>
-					<!-- <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;"> -->
-				
-					<!-- </div> -->
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- <section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Falling behind classes is like accumulating credit card debt - you need <b style="color: orange">proper help </b>to escape the cycle
+			  De-risk ASE exams
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				In the real world, there's just not enough help to go around. The TA just can't spend time with only you in Office Hours, and the amount of learning that can be done on Piazza is just limited. 
-				<br>
-				<br>
-				So while there are lots of free MIT resources, S^3 for extensions, etc. they're fundamentally not efficient enough to break you out of a vicious cycle. The effect of improper understanding outlasts semesters, because classes often build upon the previous. 
+				Passing ASEs can save a whole semester worth of time, but it's harder because there are no peers, Office Hours, and the final exam is said to be more difficult than normal
+
 			</p>
 			<br>
 		</div>
 	</section>
 
-	<section style="height: {$canvasHeight + 260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+	<section style="height: {160}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Introduction</h1>
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Best of both worlds</h1>
+			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+				What's on the syllabus, what the important concepts, but crucially, understanding the material properly such that the exam is secured.
+			</p>
+		</div>
+	</section>
+
+	<section style="height: {$canvasHeight + 400}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">How Explain helps you</h1>
+			<div style="margin-bottom: 20px; font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
+					Explain is a place with voice chat and lots of blackboards:
+					<ol>
+						<li>
+							To ask a question, add a ? to a sentence and the server will be pinged by text				
+						</li>
+						<li>
+							While receiving help, the teacher can record the explanation with 1-click and <u>near-instantly</u> upload it
+						</li>
+						<li>
+							Overtime, great explanations accumulate for everyone to review
+						</li>
+					</ol>
+				<br>
+				Here's an example video that was recorded on this website: 
+			</div>
+		</div>
+
+		<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`} id="caleb-video-section">
+			<RenderlessListenToBoard dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+				let:boardDoc={boardDoc}
+			>
+				<RenderlessFetchStrokes dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7" autoFetchStrokes={true}
+					let:strokesArray={strokesArray}
+				>
+					{#if boardDoc}
+						<DoodleVideo 
+							{strokesArray} 
+							audioDownloadURL={boardDoc.audioDownloadURL} 
+							backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+						/>
+					{/if}
+				</RenderlessFetchStrokes>
+			</RenderlessListenToBoard>
+		</div>
+	</section>
+
+	<!-- <section style="height: {$canvasHeight + 260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+		<div class="content" style="width: {$canvasWidth}px">
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">What is Explain?</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
 				<br>
@@ -105,20 +90,15 @@
 				</RenderlessFetchStrokes>
 			</RenderlessListenToBoard>
 		</div>
-	</section>
+	</section> -->
 
 	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				This website makes it <b style="color: rgb(15 186 191)">efficient to give & receive explanations</b>, so everyone can get enough help
+				Website preview
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Help can become an abundant resource if it is easy to re-use explanations.
-				If tutors don't need to repeat themselves, they can have more time and/or help more students. 
-				<br>
-				<br>
-
 				How it works:
 				<li>Everyone contributes $20/week to the class server</li>
 				<li>Tutor runs the server and helps you personally as you want</li>
@@ -132,7 +112,7 @@
 	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				How to get started
+				Get started
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -148,7 +128,7 @@
 		<div id="sign-up-section" style="height: 100px">
 			{#if !phoneConfirmationResult}
 				<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
-
+					<!-- <div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div> -->
 					<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
 
 					<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
@@ -165,10 +145,8 @@
 				</div>
 			{/if}
 		</div>
-	</section> -->
+	</section>
 {/if}
-
-	<!-- <div style="margin-right: 10px; font-family: Roboto, sans-serif; font-size: 2rem">+1 </div> -->
 
 <!-- Sign-up -->
 <!-- <section style="height: 250px; padding: 150px 100px; border-bottom: 1px solid #eee">
@@ -256,7 +234,7 @@
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-
+	
 	let currentTime = 10
 	let titleValue = 'Welcome!'
 	let i = 0
@@ -297,7 +275,7 @@
 		}, 300)
 	}
 
-	$: if (isQuestionMode) {
+	$:if (isQuestionMode) {
 		setTimeout(() => {
 			hasWatchedExemplar = true
 		}, 5000)
@@ -422,7 +400,7 @@
 				// User signed in successfully.
 				const user = result.user;
 				console.log('redirecting, user =', user)
-				goto('/O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
+				goto('O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
 				// goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
 				// ...
 			}).catch((error) => {
@@ -443,24 +421,18 @@
 }
 
 .copied-from-koa {
-	font: 29px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
+	font: 20px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
 }
-
-.copied-from-koa-2 {
-	font: 17px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-	font-weight: 600;
-	color: grey;
-}
+/* increased 17px to 18px */
 
 #logo {
-	/* NOTE: this font-size is overriden on top so doesn't do anything! */
-    font: 300px 'Italiana', sans-serif;
+    font: 150px 'Italiana', sans-serif;
     text-transform: lowercase;
 }
 
 .content {
 	margin: 0 auto;
-	/* min-width: 750px; 
+	/* min-width: 750px;
 	max-width: 750px; */
 	text-align: left;
 }

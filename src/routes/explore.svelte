@@ -2,15 +2,14 @@
 	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				It's hard to understand properly with text messages
+				It's hard to learn properly without visuals
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Communities built around Discord, Piazza, Facebook etc. have a fundamental flaw - you can't draw on blackboards easily, so you need to explain everything in words. 
-        It's almost a waste of time to learn anything complex without visuals. 
+				Learning communities built around Discord, Piazza, Facebook etc. have a fundamental flaw: they are text-based platforms. We have to over-use words because it's hard to make pictures or just draw on a board.
 				<br>
 				<br>     
-        Times are changing: iPads are becoming more affordable, web apps becoming more powerful.
+        Times are changing: stylus-enabled tablets are becoming more affordable, web apps have evolved.
 			</p>
 			<br>
 		</div>

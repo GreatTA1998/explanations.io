@@ -2,12 +2,12 @@
 	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-			  De-risk ASE exams
+			 For those who are worried about passing a <i>crucial</i> ASE exam
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Passing ASEs can save a whole semester worth of time, but it's harder because there are no peers, Office Hours, and the final exam is said to be more difficult than normal
-
+				It's just less efficient to study without access to recitations, Office Hours and active classmates. 
+				It's also risky - for example spending too much time on a topic that turns out to no longer be on the class.
 			</p>
 			<br>
 		</div>
@@ -15,16 +15,17 @@
 
 	<section style="height: {160}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Best of both worlds</h1>
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Efficient help & social structure</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				What's on the syllabus, what the important concepts, but crucially, understanding the material properly such that the exam is secured.
+				If you had access to TAs who are readily available to help you fundamentally understand the material and give boundaries on what needs to be known on the exam, and a server of peers to calibrate your motivation and stress. 
+			 	It'd greatly increase the odds of a passing grade without an unbounded time investment.
 			</p>
 		</div>
 	</section>
 
-	<section style="height: {$canvasHeight + 400}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+	<section style="height: {$canvasHeight + 280}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">How Explain helps you</h1>
+			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">How Explain achieves this</h1>
 			<div style="margin-bottom: 20px; font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 					Explain is a place with voice chat and lots of blackboards:
 					<ol>
@@ -32,34 +33,33 @@
 							To ask a question, add a ? to a sentence and the server will be pinged by text				
 						</li>
 						<li>
-							While receiving help, the teacher can record the explanation with 1-click and <u>near-instantly</u> upload it
+							While you are getting helped in real-time, your tutor can easily record the explanation
 						</li>
 						<li>
 							Overtime, great explanations accumulate for everyone to review
 						</li>
 					</ol>
-				<br>
-				Here's an example video that was recorded on this website: 
 			</div>
 		</div>
-
+	
 		<div style={`position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`} id="caleb-video-section">
-			<RenderlessListenToBoard dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
-				let:boardDoc={boardDoc}
-			>
-				<RenderlessFetchStrokes dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7" autoFetchStrokes={true}
-					let:strokesArray={strokesArray}
+			<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<!-- <RenderlessListenToBoard dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
+					let:boardDoc={boardDoc}
 				>
-					{#if boardDoc}
-						<DoodleVideo 
-							{strokesArray} 
-							audioDownloadURL={boardDoc.audioDownloadURL} 
-							backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-						/>
-					{/if}
-				</RenderlessFetchStrokes>
-			</RenderlessListenToBoard>
-		</div>
+					<RenderlessFetchStrokes dbPath="/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7" autoFetchStrokes={true}
+						let:strokesArray={strokesArray}
+					>
+						{#if boardDoc}
+							<DoodleVideo 
+								{strokesArray} 
+								audioDownloadURL={boardDoc.audioDownloadURL} 
+								backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+							/>
+						{/if}
+					</RenderlessFetchStrokes>
+				</RenderlessListenToBoard> -->
+		</div> 
 	</section>
 
 	<!-- <section style="height: {$canvasHeight + 260}px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
@@ -92,23 +92,6 @@
 		</div>
 	</section> -->
 
-	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
-		<div class="content" style="width: {$canvasWidth}px">
-			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Website preview
-			</h1>
-
-			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				How it works:
-				<li>Everyone contributes $20/week to the class server</li>
-				<li>Tutor runs the server and helps you personally as you want</li>
-				<li>Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li>
-			</p>
-
-			<iframe style="display: block;" width={$canvasWidth} height={$canvasHeight} src="https://www.youtube.com/embed/kJSZYFEQ_8I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		</div>
-	</section>
-
 	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
@@ -116,12 +99,12 @@
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
+				Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868
 				<br>
 				<br>
 				<li>Request a class by venmo'ing $20 to elton-lin-2</li>
-				<li>I'll send you a confirmation, create a server and find your tutor within 24 hours</li>
-				<li>Refund anytime any reason</li>
+				<li>You'll receive a confirmation and get a tutor within 48 hours</li>
+				<li>Meanwhile, you can sign up to play around with this web app</li>
 			</p>
 		</div>
 
@@ -440,11 +423,6 @@
 li {
 	margin-bottom: 2px;
 }
-
-#make-your-own-video {
-
-}
-
 </style>
 
 <!-- 	<picture>

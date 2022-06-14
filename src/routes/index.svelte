@@ -10,43 +10,43 @@
 				</div>
 
 				<div style="display: flex; justify-content: center;">
-					<b style="color: grey; white-space: nowrap;" class="copied-from-koa">A place with lots of helpers and visual explanations</b>
+					<b style="color: grey; white-space: nowrap;" class="copied-from-koa">An explanation platform based on voice chat and blackboards</b>
 				</div>
 
 				<!-- This flex is just used to center horizontally -->
 				<div style="display: flex; justify-content: center">
 					<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 500px;">
 						<div>
-							<div class="copied-from-koa-2" style="margin-top: 20px;">ASE exam:</div>
-							<div class="copied-from-koa-2" style="margin-top: 20px;">Normal class:</div>
-							<div class="copied-from-koa-2" style="margin-top: 20px;">Open-learning:</div>
+							<div class="copied-from-koa-2" style="margin-top: 20px;">For ASE exams:</div>
+							<div class="copied-from-koa-2" style="margin-top: 20px;">For semester classes:</div>
+							<div class="copied-from-koa-2" style="margin-top: 50px;">For open-learning:</div>
 						</div>
 
 						<div style="width: 300px;">
 							<div style="margin-top: 20px;">
-								<Button on:click={() => goto('ase')} variant="raised" color="purple" style="width: 47%">
+								<Button on:click={() => goto('ase')} variant="outlined" style="width: 47%; color: black">
 									Student
 								</Button>
 
-								<Button on:click={() => goto('learn')} variant="raised" color="secondary" style="margin-left: 7px; width: 47%">
+								<Button on:click={() => goto('teach')} variant="outlined" style="margin-left: 7px; width: 47%; color: purple;">
 									Tutor
 								</Button>
 							</div>
 
 							<div style="margin-top: 14px;">
-								<Button on:click={() => goto('teach')} variant="raised" color="orange" style="width: 47%;">
-									STUDENT
+								<Button on:click={() => goto('class-material')} variant="outlined" color="primary" style="width: 47%; color: black">
+									Instructor
 								</Button>	
-								<Button width={100} on:click={() => goto('teach')} variant="raised" color="secondary" style="margin-left: 7px; width: 47%">
+								<Button width={100} on:click={() => goto('class-material')} variant="outlined" style="margin-left: 7px; width: 47%; color: purple">
 									TA
 								</Button>	
 							</div>
 
-							<div style="margin-top: 14px;">
-								<Button on:click={() => goto('teach')} variant="raised" color="orange" style="width: 47%;">
+							<div style="margin-top: 44px;">
+								<Button on:click={() => goto('explore')} variant="outlined" color="orange" style="width: 47%; color: black">
 									join server
 								</Button>	
-								<Button on:click={() => goto('teach')} variant="raised" style="margin-left: 7px;" color="secondary">
+								<Button on:click={() => goto('explore')} variant="outlined" style="margin-left: 7px; color: purple">
 									start server
 								</Button>	
 							</div>
@@ -443,7 +443,7 @@
 }
 
 .copied-from-koa {
-	font: 29px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
+	font: 34px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif
 }
 
 .copied-from-koa-2 {

@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-0068b96d.js
+// .svelte-kit/output/server/chunks/store-24a6b466.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -9081,10 +9081,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated, willPreventPageLeave;
-var init_store_0068b96d = __esm({
-  ".svelte-kit/output/server/chunks/store-0068b96d.js"() {
+var init_store_24a6b466 = __esm({
+  ".svelte-kit/output/server/chunks/store-24a6b466.js"() {
     init_shims();
-    init_app_5d6b9b1f();
+    init_app_ce98eb20();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -17466,7 +17466,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-08a6a150.js
+// .svelte-kit/output/server/chunks/index-c327074d-426d2725.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17955,10 +17955,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_08a6a150 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-08a6a150.js"() {
+var init_index_c327074d_426d2725 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-426d2725.js"() {
     init_shims();
-    init_store_0068b96d();
+    init_store_24a6b466();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18887,18 +18887,18 @@ var init_index_c327074d_08a6a150 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-c882863f.js
-var layout_c882863f_exports = {};
-__export(layout_c882863f_exports, {
+// .svelte-kit/output/server/chunks/__layout-54dc8cd5.js
+var layout_54dc8cd5_exports = {};
+__export(layout_54dc8cd5_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, getStores, page, _layout;
-var init_layout_c882863f = __esm({
-  ".svelte-kit/output/server/chunks/__layout-c882863f.js"() {
+var init_layout_54dc8cd5 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-54dc8cd5.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_store_0068b96d();
-    init_index_c327074d_08a6a150();
+    init_app_ce98eb20();
+    init_store_24a6b466();
+    init_index_c327074d_426d2725();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18947,9 +18947,9 @@ var init_layout_c882863f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-35839073.js
-var error_35839073_exports = {};
-__export(error_35839073_exports, {
+// .svelte-kit/output/server/chunks/error-47e9c32d.js
+var error_47e9c32d_exports = {};
+__export(error_47e9c32d_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18957,10 +18957,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_35839073 = __esm({
-  ".svelte-kit/output/server/chunks/error-35839073.js"() {
+var init_error_47e9c32d = __esm({
+  ".svelte-kit/output/server/chunks/error-47e9c32d.js"() {
     init_shims();
-    init_app_5d6b9b1f();
+    init_app_ce98eb20();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18982,7 +18982,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-627f4823.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-0c3a74b7.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19335,11 +19335,11 @@ function classAdderBuilder(props) {
   });
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_627f4823 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-627f4823.js"() {
+var init_SelectionGroupIcon_0c3a74b7 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-0c3a74b7.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_store_0068b96d();
+    init_app_ce98eb20();
+    init_store_24a6b466();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20593,13 +20593,13 @@ var init_SelectionGroupIcon_627f4823 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-efce05b6.js
+// .svelte-kit/output/server/chunks/Button-3970676c.js
 var Object_12, Button_1;
-var init_DoodleVideo_svelte_svelte_type_style_lang_efce05b6 = __esm({
-  ".svelte-kit/output/server/chunks/DoodleVideo.svelte_svelte_type_style_lang-efce05b6.js"() {
+var init_Button_3970676c = __esm({
+  ".svelte-kit/output/server/chunks/Button-3970676c.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_SelectionGroupIcon_627f4823();
+    init_app_ce98eb20();
+    init_SelectionGroupIcon_0c3a74b7();
     ({ Object: Object_12 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20782,29 +20782,28 @@ var init_canvas_fb765f32 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-e3508c2f.js
-var index_e3508c2f_exports = {};
-__export(index_e3508c2f_exports, {
+// .svelte-kit/output/server/chunks/index-9c4ae749.js
+var index_9c4ae749_exports = {};
+__export(index_9c4ae749_exports, {
   default: () => Routes
 });
 var import_node_fetch2, import_cookie3, css, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Routes;
-var init_index_e3508c2f = __esm({
-  ".svelte-kit/output/server/chunks/index-e3508c2f.js"() {
+var init_index_9c4ae749 = __esm({
+  ".svelte-kit/output/server/chunks/index-9c4ae749.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_index_c327074d_08a6a150();
-    init_store_0068b96d();
+    init_app_ce98eb20();
+    init_index_c327074d_426d2725();
+    init_store_24a6b466();
     import_node_fetch2 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_efce05b6();
-    init_SelectionGroupIcon_627f4823();
+    init_Button_3970676c();
+    init_SelectionGroupIcon_0c3a74b7();
     init_canvas_fb765f32();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
     css = {
       code: `.room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r
-}.copied-from-koa.svelte-ufphu6{font:26px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
-}.copied-from-koa-2.svelte-ufphu6{font:18px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
-}#logo.svelte-ufphu6{font:300px 'Italiana', sans-serif;text-transform:lowercase}`,
+}.copied-from-koa.svelte-530tv{font:34px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
+}.copied-from-koa-2.svelte-530tv{font:17px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;font-weight:600;color:grey}#logo.svelte-530tv{font:300px 'Italiana', sans-serif;text-transform:lowercase}`,
       map: null
     };
     phoneNumSegment1 = "";
@@ -20884,45 +20883,68 @@ var init_index_e3508c2f = __esm({
       }
       $$unsubscribe_user();
       return `${Object.keys($user).length === 0 ? `<section style="${"height: 100vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 84vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"120"}" height="${"108"}" style="${"margin-left: 0px;"}">
-					<h1 id="${"logo"}" style="${"font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;"}" class="${"svelte-ufphu6"}">explain.mit.edu
+					<h1 id="${"logo"}" style="${"font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;"}" class="${"svelte-530tv"}">explain.mit.edu
 					</h1></div>
 
-				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-ufphu6"}">Open-learning communities with lots of visual explanations</b></div>
+				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-530tv"}">An explanation platform based on voice chat and blackboards</b></div>
 
+				
+				<div style="${"display: flex; justify-content: center"}"><div style="${"display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 500px;"}"><div><div class="${"copied-from-koa-2 svelte-530tv"}" style="${"margin-top: 20px;"}">For ASE exams:</div>
+							<div class="${"copied-from-koa-2 svelte-530tv"}" style="${"margin-top: 20px;"}">For semester classes:</div>
+							<div class="${"copied-from-koa-2 svelte-530tv"}" style="${"margin-top: 50px;"}">For open-learning:</div></div>
 
-				<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 20px;"}"><div class="${"copied-from-koa-2 svelte-ufphu6"}" style="${"margin-right: 20px;"}">Who are you?</div>
-					<div>${validate_component(Button_1, "Button").$$render($$result, { variant: "raised", color: "purple" }, {}, {
-        default: () => `Student
-						`
-      })}
-	
-						${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "raised",
-        color: "orange",
-        style: "margin-left: 6px"
+						<div style="${"width: 300px;"}"><div style="${"margin-top: 20px;"}">${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "outlined",
+        style: "width: 47%; color: black"
       }, {}, {
-        default: () => `Teacher
-						`
+        default: () => `Student
+								`
+      })}
+
+								${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "outlined",
+        style: "margin-left: 7px; width: 47%; color: purple;"
+      }, {}, {
+        default: () => `Tutor
+								`
       })}</div>
 
-					${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "raised",
-        color: "orange",
-        style: "margin-left: 6px"
+							<div style="${"margin-top: 14px;"}">${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "outlined",
+        color: "primary",
+        style: "width: 47%; color: black"
       }, {}, {
-        default: () => `Self-learner
-					`
+        default: () => `Instructor
+								`
       })}	
-
-					
-					${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "raised",
-        color: "orange",
-        style: "margin-left: 6px"
+								${validate_component(Button_1, "Button").$$render($$result, {
+        width: 100,
+        variant: "outlined",
+        style: "margin-left: 7px; width: 47%; color: purple"
       }, {}, {
-        default: () => `Just curious
-					`
-      })}</div></div></div></section>
+        default: () => `TA
+								`
+      })}</div>
+
+							<div style="${"margin-top: 44px;"}">${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "outlined",
+        color: "orange",
+        style: "width: 47%; color: black"
+      }, {}, {
+        default: () => `join server
+								`
+      })}	
+								${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "outlined",
+        style: "margin-left: 7px; color: purple"
+      }, {}, {
+        default: () => `start server
+								`
+      })}</div></div></div>
+					
+				
+					
+					<div style="${"display: flex; justify-content: space-between; align-items: center; margin-top: 12px;"}"></div></div></div></div></section>
 
 	` : ``}
 
@@ -20944,7 +20966,146 @@ var init_index_e3508c2f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-e4fe79b5.js
+// .svelte-kit/output/server/chunks/class-material-d01eb426.js
+var class_material_d01eb426_exports = {};
+__export(class_material_d01eb426_exports, {
+  default: () => Class_material
+});
+var import_node_fetch3, import_cookie4, css2, phoneNumSegment12, phoneNumSegment22, phoneNumSegment32, Class_material;
+var init_class_material_d01eb426 = __esm({
+  ".svelte-kit/output/server/chunks/class-material-d01eb426.js"() {
+    init_shims();
+    init_app_ce98eb20();
+    init_index_c327074d_426d2725();
+    init_store_24a6b466();
+    import_node_fetch3 = __toModule(require_lib2());
+    init_SelectionGroupIcon_0c3a74b7();
+    init_canvas_fb765f32();
+    import_cookie4 = __toModule(require_cookie());
+    init_dist();
+    css2 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-113t2a0{margin:0 auto;text-align:left}",
+      map: null
+    };
+    phoneNumSegment12 = "";
+    phoneNumSegment22 = "";
+    phoneNumSegment32 = "";
+    Class_material = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let isQuestionMode;
+      let $user, $$unsubscribe_user;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      let currentTime = 10;
+      let titleValue = "Welcome!";
+      let appVerifier;
+      const print = console.log;
+      let timer;
+      function adjustContentDimensions() {
+        const { width, height } = calculateCanvasDimensions2();
+        canvasWidth.set(width);
+        canvasHeight.set(height);
+      }
+      onDestroy(() => {
+        window.removeEventListener("resize", adjustContentDimensions);
+      });
+      function signInWithPhone() {
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
+            "size": "invisible",
+            "callback": (response) => {
+              console.log("reCAPTCHA solved =", response);
+            }
+          }, getAuth());
+          appVerifier = window.recaptchaVerifier;
+        }
+        onSignInSubmit();
+        function onSignInSubmit() {
+          const phoneNumber = `+1 ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
+          print(getAuth(), phoneNumber, appVerifier);
+          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
+            console.log("confirmation result =", confirmationResult);
+            window.confirmationResult = confirmationResult;
+          }).catch((error3) => {
+            alert(error3);
+            console.log("error =", error3);
+            window.recaptchaVerifier.render().then(function(widgetId) {
+              grecaptcha.reset(widgetId);
+            });
+          });
+        }
+      }
+      $$result.css.add(css2);
+      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
+      {
+        if (isQuestionMode) {
+          setTimeout(() => {
+          }, 5e3);
+        }
+      }
+      {
+        if (currentTime.toFixed(0) === "0") {
+          console.log("end of timer, currentTime =", currentTime);
+          clearInterval(timer);
+        }
+      }
+      {
+        if (phoneNumSegment12.length === 3) {
+          document.getElementById("phone-input-2").focus();
+        }
+      }
+      {
+        if (phoneNumSegment22.length === 3) {
+          document.getElementById("phone-input-3").focus();
+        }
+      }
+      {
+        if (phoneNumSegment32.length === 4) {
+          signInWithPhone();
+        }
+      }
+      $$unsubscribe_user();
+      $$unsubscribe_canvasWidth();
+      $$unsubscribe_canvasHeight();
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">It takes a lot of time to manage staff
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Students want more Office Hours, and request review sessions. Then they request lecture videos. 
+        And to keep up with high Office Hours availability, more staff needs to be hired. 
+      
+        It means more co-ordinating everyone, less time for everything else like research.
+			</p>
+			<br></div></section>
+
+	<section style="${"height: " + escape(160) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Smaller head-count and happier students</h1>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Suppose there is a way to run fewer Office Hours, freeing up the staff to do other things.
+			</p></div></section>
+
+	<section style="${"height: " + escape($canvasHeight - $canvasHeight + 400) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Allocate 1 TA to take care of material</h1>
+			<div style="${"margin-bottom: 20px; font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">What&#39;s actually happening is, there is repeating work across-semesters that keeps happening. There is a hole.
+
+        Dedicate 1 TA to be in-charge of material. Focused on evolving the course material - creating new material, condensing existing notes,
+        so it&#39;s as complete and condensed as possible. This minimizes the amount of preventable confusions, saving staff a lot of hours. 
+
+
+        Then, if the web app can help you efficiently organize and index those explanations, then the material
+        PREVENTS most of the preventable misunderstandings, leaving a much smaller number of nuanced conversation that increases the quality of Office Hours. 
+
+        It&#39;s a problem of &quot;scaling&quot; help, does there exist a way to give help more efficiently, without diluting quality.
+			</div></div></section>
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Will this impact attendance?
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Will students not come to Office Hours? What about attendance.
+			</p></div></section>` : ``}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-f8e1d554.js
 async function deleteAllStrokesFromDb({ boardPath, strokesArray }) {
   return new Promise(async (resolve2) => {
     const batchDeleteRequests = [];
@@ -20966,14 +21127,13 @@ async function deleteAllStrokesFromDb({ boardPath, strokesArray }) {
     resolve2();
   });
 }
-var css2, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_e4fe79b5 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-e4fe79b5.js"() {
+var css3, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
+var init_RenderlessFetchStrokes_f8e1d554 = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-f8e1d554.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_store_0068b96d();
-    init_DoodleVideo_svelte_svelte_type_style_lang_efce05b6();
-    css2 = {
+    init_app_ce98eb20();
+    init_store_24a6b466();
+    css3 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
     };
@@ -20996,7 +21156,7 @@ var init_RenderlessFetchStrokes_e4fe79b5 = __esm({
         $$bindings.audioDownloadURL(audioDownloadURL);
       if ($$props.backgroundImageDownloadURL === void 0 && $$bindings.backgroundImageDownloadURL && backgroundImageDownloadURL !== void 0)
         $$bindings.backgroundImageDownloadURL(backgroundImageDownloadURL);
-      $$result.css.add(css2);
+      $$result.css.add(css3);
       $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
       return `
@@ -21076,26 +21236,26 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/explore-6ea8917d.js
-var explore_6ea8917d_exports = {};
-__export(explore_6ea8917d_exports, {
+// .svelte-kit/output/server/chunks/explore-2eff2fba.js
+var explore_2eff2fba_exports = {};
+__export(explore_2eff2fba_exports, {
   default: () => Explore
 });
-var import_node_fetch3, import_cookie4, css3, Explore;
-var init_explore_6ea8917d = __esm({
-  ".svelte-kit/output/server/chunks/explore-6ea8917d.js"() {
+var import_node_fetch4, import_cookie5, css4, Explore;
+var init_explore_2eff2fba = __esm({
+  ".svelte-kit/output/server/chunks/explore-2eff2fba.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_index_c327074d_08a6a150();
-    init_store_0068b96d();
-    import_node_fetch3 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_efce05b6();
-    init_SelectionGroupIcon_627f4823();
+    init_app_ce98eb20();
+    init_index_c327074d_426d2725();
+    init_store_24a6b466();
+    import_node_fetch4 = __toModule(require_lib2());
+    init_Button_3970676c();
+    init_SelectionGroupIcon_0c3a74b7();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_e4fe79b5();
-    import_cookie4 = __toModule(require_cookie());
+    init_RenderlessFetchStrokes_f8e1d554();
+    import_cookie5 = __toModule(require_cookie());
     init_dist();
-    css3 = {
+    css4 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}",
       map: null
     };
@@ -21110,9 +21270,9 @@ var init_explore_6ea8917d = __esm({
       let currentTime = 10;
       let titleValue = "Welcome!";
       let countryCode = "+1";
-      let phoneNumSegment12 = "";
-      let phoneNumSegment22 = "";
-      let phoneNumSegment32 = "";
+      let phoneNumSegment13 = "";
+      let phoneNumSegment23 = "";
+      let phoneNumSegment33 = "";
       let phoneConfirmationResult;
       let phoneConfirmCode = "";
       let appVerifier;
@@ -21138,7 +21298,7 @@ var init_explore_6ea8917d = __esm({
         }
         onSignInSubmit();
         function onSignInSubmit() {
-          const phoneNumber = `${countryCode} ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
+          const phoneNumber = `${countryCode} ${phoneNumSegment13}-${phoneNumSegment23}-${phoneNumSegment33}`;
           print(getAuth(), phoneNumber, appVerifier);
           signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
             console.log("confirmation result =", confirmationResult);
@@ -21153,7 +21313,7 @@ var init_explore_6ea8917d = __esm({
           });
         }
       }
-      $$result.css.add(css3);
+      $$result.css.add(css4);
       isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
       {
         if (isQuestionMode) {
@@ -21167,31 +21327,30 @@ var init_explore_6ea8917d = __esm({
         }
       }
       {
-        if (phoneNumSegment12.length === 3) {
+        if (phoneNumSegment13.length === 3) {
           document.getElementById("phone-input-2").focus();
         }
       }
       {
-        if (phoneNumSegment22.length === 3) {
+        if (phoneNumSegment23.length === 3) {
           document.getElementById("phone-input-3").focus();
         }
       }
       {
-        if (phoneNumSegment32.length === 4) {
+        if (phoneNumSegment33.length === 4) {
           signInWithPhone();
         }
       }
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
-      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">It&#39;s hard to understand properly with text messages
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">It&#39;s hard to learn properly without visuals
 			</h1>
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Communities built around Discord, Piazza, Facebook etc. have a fundamental flaw - you can&#39;t draw on blackboards easily, so you need to explain everything in words. 
-        It&#39;s almost a waste of time to learn anything complex without visuals. 
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Learning communities built around Discord, Piazza, Facebook etc. have a fundamental flaw: they are text-based platforms. We have to over-use words because it&#39;s hard to make pictures or just draw on a board.
 				<br>
 				<br>     
-        Times are changing: iPads are becoming more affordable, web apps becoming more powerful.
+        Times are changing: stylus-enabled tablets are becoming more affordable, web apps have evolved.
 			</p>
 			<br></div></section>
 
@@ -21225,11 +21384,11 @@ var init_explore_6ea8917d = __esm({
 
 		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}"><input type="${"tel"}" id="${"phone-country-code"}" minlength="${"2"}" maxlength="${"4"}" placeholder="${"+1"}" style="${"margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", countryCode, 0)}>
 
-					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment12, 0)}>
+					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment13, 0)}>
 
-					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment22, 0)}>
+					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment23, 0)}>
 
-					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment32, 0)}>
+					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment33, 0)}>
 					${validate_component(Button_1, "Button").$$render($$result, {
         id: "sign-in-button",
         style: "color: rgb(116 28 183); margin-bottom: 2px"
@@ -21259,26 +21418,26 @@ var init_explore_6ea8917d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/learn-d69afa8b.js
-var learn_d69afa8b_exports = {};
-__export(learn_d69afa8b_exports, {
+// .svelte-kit/output/server/chunks/learn-7bca72ea.js
+var learn_7bca72ea_exports = {};
+__export(learn_7bca72ea_exports, {
   default: () => Learn
 });
-var import_node_fetch4, import_cookie5, css4, Learn;
-var init_learn_d69afa8b = __esm({
-  ".svelte-kit/output/server/chunks/learn-d69afa8b.js"() {
+var import_node_fetch5, import_cookie6, css5, Learn;
+var init_learn_7bca72ea = __esm({
+  ".svelte-kit/output/server/chunks/learn-7bca72ea.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_index_c327074d_08a6a150();
-    init_store_0068b96d();
-    import_node_fetch4 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_efce05b6();
-    init_SelectionGroupIcon_627f4823();
+    init_app_ce98eb20();
+    init_index_c327074d_426d2725();
+    init_store_24a6b466();
+    import_node_fetch5 = __toModule(require_lib2());
+    init_Button_3970676c();
+    init_SelectionGroupIcon_0c3a74b7();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_e4fe79b5();
-    import_cookie5 = __toModule(require_cookie());
+    init_RenderlessFetchStrokes_f8e1d554();
+    import_cookie6 = __toModule(require_cookie());
     init_dist();
-    css4 = {
+    css5 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}li.svelte-ejjzis{margin-bottom:2px}",
       map: null
     };
@@ -21292,9 +21451,9 @@ var init_learn_d69afa8b = __esm({
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let currentTime = 10;
       let titleValue = "Welcome!";
-      let phoneNumSegment12 = "";
-      let phoneNumSegment22 = "";
-      let phoneNumSegment32 = "";
+      let phoneNumSegment13 = "";
+      let phoneNumSegment23 = "";
+      let phoneNumSegment33 = "";
       let phoneConfirmationResult;
       let phoneConfirmCode = "";
       let appVerifier;
@@ -21320,7 +21479,7 @@ var init_learn_d69afa8b = __esm({
         }
         onSignInSubmit();
         function onSignInSubmit() {
-          const phoneNumber = `+1 ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
+          const phoneNumber = `+1 ${phoneNumSegment13}-${phoneNumSegment23}-${phoneNumSegment33}`;
           print(getAuth(), phoneNumber, appVerifier);
           signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
             console.log("confirmation result =", confirmationResult);
@@ -21335,7 +21494,7 @@ var init_learn_d69afa8b = __esm({
           });
         }
       }
-      $$result.css.add(css4);
+      $$result.css.add(css5);
       isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
       {
         if (isQuestionMode) {
@@ -21350,17 +21509,17 @@ var init_learn_d69afa8b = __esm({
         }
       }
       {
-        if (phoneNumSegment12.length === 3) {
+        if (phoneNumSegment13.length === 3) {
           document.getElementById("phone-input-2").focus();
         }
       }
       {
-        if (phoneNumSegment22.length === 3) {
+        if (phoneNumSegment23.length === 3) {
           document.getElementById("phone-input-3").focus();
         }
       }
       {
-        if (phoneNumSegment32.length === 4) {
+        if (phoneNumSegment33.length === 4) {
           signInWithPhone();
         }
       }
@@ -21443,11 +21602,11 @@ var init_learn_d69afa8b = __esm({
 				<li class="${"svelte-ejjzis"}">Refund anytime any reason</li></p></div>
 
 		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
-					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment12, 0)}>
+					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment13, 0)}>
 
-					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment22, 0)}>
+					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment23, 0)}>
 
-					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment32, 0)}>
+					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment33, 0)}>
 					${validate_component(Button_1, "Button").$$render($$result, {
         id: "sign-in-button",
         style: "color: rgb(116 28 183); margin-bottom: 2px"
@@ -21475,26 +21634,26 @@ var init_learn_d69afa8b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/teach-9672b209.js
-var teach_9672b209_exports = {};
-__export(teach_9672b209_exports, {
+// .svelte-kit/output/server/chunks/teach-dfc2cf29.js
+var teach_dfc2cf29_exports = {};
+__export(teach_dfc2cf29_exports, {
   default: () => Teach
 });
-var import_node_fetch5, import_cookie6, css5, Teach;
-var init_teach_9672b209 = __esm({
-  ".svelte-kit/output/server/chunks/teach-9672b209.js"() {
+var import_node_fetch6, import_cookie7, css6, Teach;
+var init_teach_dfc2cf29 = __esm({
+  ".svelte-kit/output/server/chunks/teach-dfc2cf29.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_index_c327074d_08a6a150();
-    init_store_0068b96d();
-    import_node_fetch5 = __toModule(require_lib2());
-    init_DoodleVideo_svelte_svelte_type_style_lang_efce05b6();
-    init_SelectionGroupIcon_627f4823();
+    init_app_ce98eb20();
+    init_index_c327074d_426d2725();
+    init_store_24a6b466();
+    import_node_fetch6 = __toModule(require_lib2());
+    init_Button_3970676c();
+    init_SelectionGroupIcon_0c3a74b7();
     init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_e4fe79b5();
-    import_cookie6 = __toModule(require_cookie());
+    init_RenderlessFetchStrokes_f8e1d554();
+    import_cookie7 = __toModule(require_cookie());
     init_dist();
-    css5 = {
+    css6 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}li.svelte-ejjzis{margin-bottom:2px}",
       map: null
     };
@@ -21508,9 +21667,9 @@ var init_teach_9672b209 = __esm({
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let currentTime = 10;
       let titleValue = "Welcome!";
-      let phoneNumSegment12 = "";
-      let phoneNumSegment22 = "";
-      let phoneNumSegment32 = "";
+      let phoneNumSegment13 = "";
+      let phoneNumSegment23 = "";
+      let phoneNumSegment33 = "";
       let phoneConfirmationResult;
       let phoneConfirmCode = "";
       let appVerifier;
@@ -21536,7 +21695,7 @@ var init_teach_9672b209 = __esm({
         }
         onSignInSubmit();
         function onSignInSubmit() {
-          const phoneNumber = `+1 ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
+          const phoneNumber = `+1 ${phoneNumSegment13}-${phoneNumSegment23}-${phoneNumSegment33}`;
           print(getAuth(), phoneNumber, appVerifier);
           signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
             console.log("confirmation result =", confirmationResult);
@@ -21551,7 +21710,7 @@ var init_teach_9672b209 = __esm({
           });
         }
       }
-      $$result.css.add(css5);
+      $$result.css.add(css6);
       isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
       {
         if (isQuestionMode) {
@@ -21566,17 +21725,17 @@ var init_teach_9672b209 = __esm({
         }
       }
       {
-        if (phoneNumSegment12.length === 3) {
+        if (phoneNumSegment13.length === 3) {
           document.getElementById("phone-input-2").focus();
         }
       }
       {
-        if (phoneNumSegment22.length === 3) {
+        if (phoneNumSegment23.length === 3) {
           document.getElementById("phone-input-3").focus();
         }
       }
       {
-        if (phoneNumSegment32.length === 4) {
+        if (phoneNumSegment33.length === 4) {
           signInWithPhone();
         }
       }
@@ -21650,11 +21809,11 @@ var init_teach_9672b209 = __esm({
 			</p></div>
 
 		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
-					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment12, 0)}>
+					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment13, 0)}>
 
-					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment22, 0)}>
+					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment23, 0)}>
 
-					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment32, 0)}>
+					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment33, 0)}>
 					${validate_component(Button_1, "Button").$$render($$result, {
         id: "sign-in-button",
         style: "color: rgb(116 28 183); margin-bottom: 2px"
@@ -21676,7 +21835,184 @@ var init_teach_9672b209 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index.node.esm-e1a4efbc.js
+// .svelte-kit/output/server/chunks/ase-c10be744.js
+var ase_c10be744_exports = {};
+__export(ase_c10be744_exports, {
+  default: () => Ase
+});
+var import_node_fetch7, import_cookie8, css7, Ase;
+var init_ase_c10be744 = __esm({
+  ".svelte-kit/output/server/chunks/ase-c10be744.js"() {
+    init_shims();
+    init_app_ce98eb20();
+    init_index_c327074d_426d2725();
+    init_store_24a6b466();
+    import_node_fetch7 = __toModule(require_lib2());
+    init_Button_3970676c();
+    init_SelectionGroupIcon_0c3a74b7();
+    init_canvas_fb765f32();
+    import_cookie8 = __toModule(require_cookie());
+    init_dist();
+    css7 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-113t2a0{margin:0 auto;text-align:left}li.svelte-113t2a0{margin-bottom:2px}",
+      map: null
+    };
+    Ase = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let isQuestionMode;
+      let $user, $$unsubscribe_user;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      let currentTime = 10;
+      let titleValue = "Welcome!";
+      let phoneNumSegment13 = "";
+      let phoneNumSegment23 = "";
+      let phoneNumSegment33 = "";
+      let phoneConfirmationResult;
+      let phoneConfirmCode = "";
+      let appVerifier;
+      const print = console.log;
+      let timer;
+      function adjustContentDimensions() {
+        const { width, height } = calculateCanvasDimensions2();
+        canvasWidth.set(width);
+        canvasHeight.set(height);
+      }
+      onDestroy(() => {
+        window.removeEventListener("resize", adjustContentDimensions);
+      });
+      function signInWithPhone() {
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
+            "size": "invisible",
+            "callback": (response) => {
+              console.log("reCAPTCHA solved =", response);
+            }
+          }, getAuth());
+          appVerifier = window.recaptchaVerifier;
+        }
+        onSignInSubmit();
+        function onSignInSubmit() {
+          const phoneNumber = `+1 ${phoneNumSegment13}-${phoneNumSegment23}-${phoneNumSegment33}`;
+          print(getAuth(), phoneNumber, appVerifier);
+          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
+            console.log("confirmation result =", confirmationResult);
+            phoneConfirmationResult = confirmationResult;
+            window.confirmationResult = confirmationResult;
+          }).catch((error3) => {
+            alert(error3);
+            console.log("error =", error3);
+            window.recaptchaVerifier.render().then(function(widgetId) {
+              grecaptcha.reset(widgetId);
+            });
+          });
+        }
+      }
+      $$result.css.add(css7);
+      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
+      {
+        if (isQuestionMode) {
+          setTimeout(() => {
+          }, 5e3);
+        }
+      }
+      {
+        if (currentTime.toFixed(0) === "0") {
+          console.log("end of timer, currentTime =", currentTime);
+          clearInterval(timer);
+        }
+      }
+      {
+        if (phoneNumSegment13.length === 3) {
+          document.getElementById("phone-input-2").focus();
+        }
+      }
+      {
+        if (phoneNumSegment23.length === 3) {
+          document.getElementById("phone-input-3").focus();
+        }
+      }
+      {
+        if (phoneNumSegment33.length === 4) {
+          signInWithPhone();
+        }
+      }
+      $$unsubscribe_user();
+      $$unsubscribe_canvasWidth();
+      $$unsubscribe_canvasHeight();
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">For those who are worried about passing a <i>crucial</i> ASE exam
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">It&#39;s just less efficient to study without access to recitations, Office Hours and active classmates. 
+				It&#39;s also risky - for example spending too much time on a topic that turns out to no longer be on the class.
+			</p>
+			<br></div></section>
+
+	<section style="${"height: " + escape(160) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Efficient help &amp; social structure</h1>
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">If you had access to TAs who are readily available to help you fundamentally understand the material and give boundaries on what needs to be known on the exam, and a server of peers to calibrate your motivation and stress. 
+			 	It&#39;d greatly increase the odds of a passing grade without an unbounded time investment.
+			</p></div></section>
+
+	<section style="${"height: " + escape($canvasHeight + 280) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How Explain achieves this</h1>
+			<div style="${"margin-bottom: 20px; font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Explain is a place with voice chat and lots of blackboards:
+					<ol><li class="${"svelte-113t2a0"}">To ask a question, add a ? to a sentence and the server will be pinged by text				
+						</li>
+						<li class="${"svelte-113t2a0"}">While you are getting helped in real-time, your tutor can easily record the explanation
+						</li>
+						<li class="${"svelte-113t2a0"}">Overtime, great explanations accumulate for everyone to review
+						</li></ol></div></div>
+	
+		<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`, 0)} id="${"caleb-video-section"}"><iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe>
+				</div></section>
+
+	
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868
+				<br>
+				<br>
+				<li class="${"svelte-113t2a0"}">Request a class by venmo&#39;ing $20 to elton-lin-2</li>
+				<li class="${"svelte-113t2a0"}">You&#39;ll receive a confirmation and get a tutor within 48 hours</li>
+				<li class="${"svelte-113t2a0"}">Meanwhile, you can sign up to play around with this web app</li></p></div>
+
+		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
+					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment13, 0)}>
+
+					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment23, 0)}>
+
+					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment33, 0)}>
+					${validate_component(Button_1, "Button").$$render($$result, {
+        id: "sign-in-button",
+        style: "color: rgb(116 28 183); margin-bottom: 2px"
+      }, {}, {
+        default: () => `Sign Up
+					`
+      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
+					${validate_component(Button_1, "Button").$$render($$result, {
+        style: "color: rgb(116 28 183); margin-bottom: 2px;"
+      }, {}, { default: () => `Confirm code` })}</div>`}</div></section>` : ``}
+
+
+
+
+
+
+
+
+
+
+
+
+`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/index.node.esm-0d76b14a.js
 function guard(name22) {
   return () => {
     throw new Error(`Cannot call ${name22}(...) on the server`);
@@ -21924,14 +22260,14 @@ function registerFunctions(fetchImpl2, variant) {
   registerVersion(name4, version4, variant);
   registerVersion(name4, version4, "esm2017");
 }
-var import_node_fetch6, goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name4, version4, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME;
-var init_index_node_esm_e1a4efbc = __esm({
-  ".svelte-kit/output/server/chunks/index.node.esm-e1a4efbc.js"() {
+var import_node_fetch8, goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name4, version4, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME;
+var init_index_node_esm_0d76b14a = __esm({
+  ".svelte-kit/output/server/chunks/index.node.esm-0d76b14a.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_SelectionGroupIcon_627f4823();
-    init_store_0068b96d();
-    import_node_fetch6 = __toModule(require_lib2());
+    init_app_ce98eb20();
+    init_SelectionGroupIcon_0c3a74b7();
+    init_store_24a6b466();
+    import_node_fetch8 = __toModule(require_lib2());
     goto = guard("goto");
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -23608,7 +23944,7 @@ ${this.customData.serverResponse}`;
     AUTH_INTERNAL_NAME = "auth-internal";
     APP_CHECK_INTERNAL_NAME = "app-check-internal";
     MESSAGING_INTERNAL_NAME = "messaging-internal";
-    registerFunctions(import_node_fetch6.default, "node");
+    registerFunctions(import_node_fetch8.default, "node");
   }
 });
 
@@ -28774,9 +29110,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-f06ce3d2.js
-var layout_f06ce3d2_exports = {};
-__export(layout_f06ce3d2_exports, {
+// .svelte-kit/output/server/chunks/__layout-2b183dde.js
+var layout_2b183dde_exports = {};
+__export(layout_2b183dde_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -30965,16 +31301,16 @@ function load2({ page: page2 }) {
     }
   };
 }
-var import_node_fetch7, import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie7, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css6, _layout2;
-var init_layout_f06ce3d2 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-f06ce3d2.js"() {
+var import_node_fetch9, import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie9, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css8, _layout2;
+var init_layout_2b183dde = __esm({
+  ".svelte-kit/output/server/chunks/__layout-2b183dde.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_SelectionGroupIcon_627f4823();
-    init_index_node_esm_e1a4efbc();
-    init_store_0068b96d();
-    init_index_c327074d_08a6a150();
-    import_node_fetch7 = __toModule(require_lib2());
+    init_app_ce98eb20();
+    init_SelectionGroupIcon_0c3a74b7();
+    init_index_node_esm_0d76b14a();
+    init_store_24a6b466();
+    init_index_c327074d_426d2725();
+    import_node_fetch9 = __toModule(require_lib2());
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -30984,7 +31320,7 @@ var init_layout_f06ce3d2 = __esm({
     import_net = __toModule(require("net"));
     import_tls = __toModule(require("tls"));
     import_daily_js = __toModule(require_daily_iframe());
-    import_cookie7 = __toModule(require_cookie());
+    import_cookie9 = __toModule(require_cookie());
     init_dist();
     I2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
@@ -39390,7 +39726,7 @@ var init_layout_f06ce3d2 = __esm({
 
 `}`;
     });
-    css6 = {
+    css8 = {
       code: ".question-item.svelte-ms4my9{color:rgb(19, 145, 230)}.selected.svelte-ms4my9{font-weight:500;background-color:rgb(45, 44, 44);color:white}.speaking.svelte-ms4my9{font-weight:800}",
       map: null
     };
@@ -39489,7 +39825,7 @@ var init_layout_f06ce3d2 = __esm({
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
-      $$result.css.add(css6);
+      $$result.css.add(css8);
       let $$settled;
       let $$rendered;
       do {
@@ -39605,9 +39941,9 @@ var require_dist = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c03f8dd1.js
-var index_c03f8dd1_exports = {};
-__export(index_c03f8dd1_exports, {
+// .svelte-kit/output/server/chunks/index-9858ee51.js
+var index_9858ee51_exports = {};
+__export(index_9858ee51_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -39633,20 +39969,20 @@ function hasQuestionMark(string) {
     return false;
   return string.charAt(string.length - 1) === "?";
 }
-var import_svelte_css_vars, import_cookie8, import_node_fetch8, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css7, U5Broomu5D;
-var init_index_c03f8dd1 = __esm({
-  ".svelte-kit/output/server/chunks/index-c03f8dd1.js"() {
+var import_svelte_css_vars, import_cookie10, import_node_fetch10, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css9, U5Broomu5D;
+var init_index_9858ee51 = __esm({
+  ".svelte-kit/output/server/chunks/index-9858ee51.js"() {
     init_shims();
-    init_app_5d6b9b1f();
-    init_RenderlessFetchStrokes_e4fe79b5();
-    init_store_0068b96d();
-    init_SelectionGroupIcon_627f4823();
-    init_index_node_esm_e1a4efbc();
-    init_DoodleVideo_svelte_svelte_type_style_lang_efce05b6();
+    init_app_ce98eb20();
+    init_RenderlessFetchStrokes_f8e1d554();
+    init_store_24a6b466();
+    init_SelectionGroupIcon_0c3a74b7();
+    init_index_node_esm_0d76b14a();
+    init_Button_3970676c();
     import_svelte_css_vars = __toModule(require_dist());
-    import_cookie8 = __toModule(require_cookie());
+    import_cookie10 = __toModule(require_cookie());
     init_dist();
-    import_node_fetch8 = __toModule(require_lib2());
+    import_node_fetch10 = __toModule(require_lib2());
     counter2 = 0;
     HelperText = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["use", "class", "id", "persistent", "validationMsg", "getElement"]);
@@ -40055,7 +40391,7 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
 
 `}`;
     });
-    css7 = {
+    css9 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important}.unclickable.svelte-53fhoc{pointer-events:none}",
       map: null
     };
@@ -40093,7 +40429,7 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
-      $$result.css.add(css7);
+      $$result.css.add(css9);
       boardsDbPath = `classes/${classID}/blackboards/`;
       roomsDbPath = `classes/${classID}/rooms/`;
       roomRef = va(Oa(), roomsDbPath + roomID);
@@ -40173,7 +40509,7 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
   }
 });
 
-// .svelte-kit/output/server/chunks/app-5d6b9b1f.js
+// .svelte-kit/output/server/chunks/app-ce98eb20.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -41631,9 +41967,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-cc450e37.js",
+      file: assets + "/_app/start-eaf8fcd5.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-cc450e37.js", assets + "/_app/chunks/vendor-271324cb.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-eaf8fcd5.js", assets + "/_app/chunks/vendor-271324cb.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -41676,11 +42012,11 @@ function render(request, {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-var import_cookie9, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css8, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_5d6b9b1f = __esm({
-  ".svelte-kit/output/server/chunks/app-5d6b9b1f.js"() {
+var import_cookie11, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css10, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
+var init_app_ce98eb20 = __esm({
+  ".svelte-kit/output/server/chunks/app-ce98eb20.js"() {
     init_shims();
-    import_cookie9 = __toModule(require_cookie());
+    import_cookie11 = __toModule(require_cookie());
     init_dist();
     __accessCheck = (obj, member, msg) => {
       if (!member.has(obj))
@@ -41832,7 +42168,7 @@ var init_app_5d6b9b1f = __esm({
     missing_component = {
       $$render: () => ""
     };
-    css8 = {
+    css10 = {
       code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
       map: null
     };
@@ -41860,7 +42196,7 @@ var init_app_5d6b9b1f = __esm({
         $$bindings.props_2(props_2);
       if ($$props.props_3 === void 0 && $$bindings.props_3 && props_3 !== void 0)
         $$bindings.props_3(props_3);
-      $$result.css.add(css8);
+      $$result.css.add(css10);
       {
         stores.page.set(page2);
       }
@@ -41880,14 +42216,14 @@ ${``}`;
     base2 = "";
     assets = "";
     handle = async ({ request, resolve: resolve2 }) => {
-      const cookies = import_cookie9.default.parse(request.headers.cookie || "");
+      const cookies = import_cookie11.default.parse(request.headers.cookie || "");
       request.locals.userid = cookies.userid || v4();
       if (request.query.has("_method")) {
         request.method = request.query.get("_method").toUpperCase();
       }
       const response = await resolve2(request);
       if (!cookies.userid) {
-        response.headers["set-cookie"] = import_cookie9.default.serialize("userid", request.locals.userid, {
+        response.headers["set-cookie"] = import_cookie11.default.serialize("userid", request.locals.userid, {
           path: "/",
           httpOnly: true
         });
@@ -41899,7 +42235,7 @@ ${``}`;
       [Symbol.toStringTag]: "Module",
       handle
     });
-    template = ({ head, body }) => '<!DOCTYPE html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<meta name="description" content="Svelte demo app" />\r\n		<link rel="icon" href="/favicon.ico" />\r\n\r\n		<script>\r\n			// fixes the `global is not defined` but with importing DailyJS (spent 3 hours)\r\n			var global = global || window;\r\n		<\/script>\r\n\r\n		<!-- Material Icons -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/icon?family=Material+Icons"\r\n		/>\r\n		<!-- Roboto -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"\r\n		/>\r\n		<!-- Roboto Mono -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto+Mono"\r\n		/>\r\n\r\n		<!-- SMUI includes it in their setup guide, but it just throws an error at the moment -->\r\n		<!-- \r\n		<link\r\n			rel="stylesheet"\r\n			href="https://cdn.jsdelivr.net/npm/svelte-material-ui@6.0.0/bare.css"\r\n		/> -->\r\n\r\n		<!-- SMUI Styles -->\r\n		<!-- media="(prefers-color-scheme: light)" -->\r\n		<link rel="stylesheet" href="/smui.css" />\r\n\r\n		<!-- <link\r\n			rel="stylesheet"\r\n			href="/smui-dark.css"\r\n			media="screen and (prefers-color-scheme: dark)"\r\n		/> -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		' + head + '\r\n	</head>\r\n	<body>\r\n		<div id="svelte">' + body + "</div>\r\n	</body>\r\n</html>\r\n";
+    template = ({ head, body }) => '<!DOCTYPE html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<meta name="description" content="A place with lots of visual explanations" />\r\n		<link rel="icon" href="/favicon.ico" />\r\n\r\n		<script>\r\n			// fixes the `global is not defined` but with importing DailyJS (spent 3 hours)\r\n			var global = global || window;\r\n		<\/script>\r\n\r\n		<!-- Material Icons -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/icon?family=Material+Icons"\r\n		/>\r\n		<!-- Roboto -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"\r\n		/>\r\n		<!-- Roboto Mono -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto+Mono"\r\n		/>\r\n\r\n		<!-- SMUI includes it in their setup guide, but it just throws an error at the moment -->\r\n		<!-- \r\n		<link\r\n			rel="stylesheet"\r\n			href="https://cdn.jsdelivr.net/npm/svelte-material-ui@6.0.0/bare.css"\r\n		/> -->\r\n\r\n		<!-- SMUI Styles -->\r\n		<!-- media="(prefers-color-scheme: light)" -->\r\n		<link rel="stylesheet" href="/smui.css" />\r\n\r\n		<!-- <link\r\n			rel="stylesheet"\r\n			href="/smui-dark.css"\r\n			media="screen and (prefers-color-scheme: dark)"\r\n		/> -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		' + head + '\r\n	</head>\r\n	<body>\r\n		<div id="svelte">' + body + "</div>\r\n	</body>\r\n</html>\r\n";
     options = null;
     default_settings = { paths: { "base": "", "assets": "" } };
     d = (s2) => s2.replace(/%23/g, "#").replace(/%3[Bb]/g, ";").replace(/%2[Cc]/g, ",").replace(/%2[Ff]/g, "/").replace(/%3[Ff]/g, "?").replace(/%3[Aa]/g, ":").replace(/%40/g, "@").replace(/%26/g, "&").replace(/%3[Dd]/g, "=").replace(/%2[Bb]/g, "+").replace(/%24/g, "$");
@@ -41914,6 +42250,13 @@ ${``}`;
           pattern: /^\/$/,
           params: empty,
           a: ["src/routes/__layout.svelte", "src/routes/index.svelte"],
+          b: [".svelte-kit/build/components/error.svelte"]
+        },
+        {
+          type: "page",
+          pattern: /^\/class-material\/?$/,
+          params: empty,
+          a: ["src/routes/__layout.svelte", "src/routes/class-material.svelte"],
           b: [".svelte-kit/build/components/error.svelte"]
         },
         {
@@ -41945,6 +42288,13 @@ ${``}`;
         },
         {
           type: "page",
+          pattern: /^\/ase\/?$/,
+          params: empty,
+          a: ["src/routes/__layout.svelte", "src/routes/ase.svelte"],
+          b: [".svelte-kit/build/components/error.svelte"]
+        },
+        {
+          type: "page",
           pattern: /^\/([^/]+?)\/([^/]+?)\/?$/,
           params: (m) => ({ class: d(m[1]), room: d(m[2]) }),
           a: ["src/routes/__layout.svelte", "src/routes/[class]/__layout.svelte", "src/routes/[class]/[room]/index.svelte"],
@@ -41965,16 +42315,18 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_c882863f(), layout_c882863f_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_35839073(), error_35839073_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_e3508c2f(), index_e3508c2f_exports)),
-      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_6ea8917d(), explore_6ea8917d_exports)),
-      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_d69afa8b(), learn_d69afa8b_exports)),
-      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_9672b209(), teach_9672b209_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_f06ce3d2(), layout_f06ce3d2_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_c03f8dd1(), index_c03f8dd1_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_54dc8cd5(), layout_54dc8cd5_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_47e9c32d(), error_47e9c32d_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_9c4ae749(), index_9c4ae749_exports)),
+      "src/routes/class-material.svelte": () => Promise.resolve().then(() => (init_class_material_d01eb426(), class_material_d01eb426_exports)),
+      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_2eff2fba(), explore_2eff2fba_exports)),
+      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_7bca72ea(), learn_7bca72ea_exports)),
+      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_dfc2cf29(), teach_dfc2cf29_exports)),
+      "src/routes/ase.svelte": () => Promise.resolve().then(() => (init_ase_c10be744(), ase_c10be744_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_2b183dde(), layout_2b183dde_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_9858ee51(), index_9858ee51_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-707cbe0f.js", "css": ["assets/pages/__layout.svelte-8d662a74.css"], "js": ["pages/__layout.svelte-707cbe0f.js", "chunks/vendor-271324cb.js", "chunks/navigation-7e077723.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-3d6ec224.js", "css": [], "js": ["error.svelte-3d6ec224.js", "chunks/vendor-271324cb.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-b92a59c0.js", "css": ["assets/pages/index.svelte-839a29ef.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-b92a59c0.js", "chunks/vendor-271324cb.js", "chunks/navigation-7e077723.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-299c32c1.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-299c32c1.js", "chunks/vendor-271324cb.js", "chunks/navigation-7e077723.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-ede1c779.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-247ec097.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-247ec097.js", "chunks/vendor-271324cb.js", "chunks/navigation-7e077723.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-ede1c779.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-9d7aad88.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-9d7aad88.js", "chunks/vendor-271324cb.js", "chunks/navigation-7e077723.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-ede1c779.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-c7abffa8.js", "css": ["assets/pages/_class_/__layout.svelte-f73c5b3e.css"], "js": ["pages/_class_/__layout.svelte-c7abffa8.js", "chunks/vendor-271324cb.js", "chunks/navigation-7e077723.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-4e4f4ccc.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-4e4f4ccc.js", "chunks/vendor-271324cb.js", "chunks/RenderlessFetchStrokes-ede1c779.js", "chunks/canvas-74f91cf9.js", "chunks/navigation-7e077723.js", "chunks/singletons-12a22614.js", "chunks/preload-helper-ec9aa979.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-ea84d7ff.js", "css": ["assets/pages/__layout.svelte-8d662a74.css"], "js": ["pages/__layout.svelte-ea84d7ff.js", "chunks/vendor-271324cb.js", "chunks/store-e011fff7.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-3d6ec224.js", "css": [], "js": ["error.svelte-3d6ec224.js", "chunks/vendor-271324cb.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-cb41e697.js", "css": ["assets/pages/index.svelte-36321c84.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-cb41e697.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/class-material.svelte": { "entry": "pages/class-material.svelte-dc89ff74.js", "css": ["assets/pages/class-material.svelte-333d1d10.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/class-material.svelte-dc89ff74.js", "chunks/vendor-271324cb.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-92d3d543.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-92d3d543.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-b5224a13.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-097ab787.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-097ab787.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-b5224a13.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-cda1d5a6.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-cda1d5a6.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-b5224a13.js"], "styles": [] }, "src/routes/ase.svelte": { "entry": "pages/ase.svelte-aae1deb9.js", "css": ["assets/pages/ase.svelte-400dbc5e.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/ase.svelte-aae1deb9.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-c7e3b8d0.js", "css": ["assets/pages/_class_/__layout.svelte-f73c5b3e.css"], "js": ["pages/_class_/__layout.svelte-c7e3b8d0.js", "chunks/vendor-271324cb.js", "chunks/store-e011fff7.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-08370021.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-08370021.js", "chunks/vendor-271324cb.js", "chunks/RenderlessFetchStrokes-b5224a13.js", "chunks/canvas-74f91cf9.js", "chunks/store-e011fff7.js", "chunks/preload-helper-ec9aa979.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
   }
 });
 
@@ -42027,8 +42379,8 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_5d6b9b1f();
-var import_cookie10 = __toModule(require_cookie());
+init_app_ce98eb20();
+var import_cookie12 = __toModule(require_cookie());
 init_dist();
 
 // .svelte-kit/vercel/entry.js

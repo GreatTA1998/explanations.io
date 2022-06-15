@@ -42,7 +42,7 @@
           <div style="margin-top: 10px;"></div>
           <TextAreaAutoResizing 
             value={boardDoc.description || ''} 
-            on:input={(e) => updateBoardDescription(e, boardID)}
+            on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
           />
           <div style="margin-bottom: 10px;"></div>
           {#if boardDoc.audioDownloadURL }
@@ -371,6 +371,40 @@
     }
     await Promise.all(promises)
     console.log('success, sent all texts.')
+  }
+
+  let t = { promise: null, cancel: _ => void 0 }
+
+  // Snippet from: https://stackoverflow.com/a/68228099/7812829
+  // NOTE: this literally returns a function (you still have to call it)
+  function debounce (task, ms) {
+    return async (...args) => {
+      try {
+        t.cancel()
+        t = deferred(ms)
+        await t.promise
+        await task(...args)
+      }
+      catch (_) { 
+        /* prevent memory leak */ 
+      }
+    }
+  }
+
+  function deferred (ms) {
+    let cancel, promise = new Promise((resolve, reject) => {
+      cancel = reject
+      setTimeout(resolve, ms)
+    })
+    return { promise, cancel }
+  }
+
+  async function debouncedUpdateBoardDescription ({ detail }, id) {
+    const debouncedVersion = debounce(
+      () => updateBoardDescription({ detail }, id),
+      3000
+    ) 
+    debouncedVersion({ detail }, id)
   }
 
   async function updateBoardDescription ({ detail }, id) {

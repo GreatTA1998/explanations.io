@@ -19,7 +19,7 @@
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">Blackboard-centric servers</h1>
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="color: #b22ab2;">easily re-usable.</b>
+				Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b>easily re-usable.</b>
 				<br>
 				<br>
 				Here's an example video that was recorded on this website: 
@@ -56,27 +56,7 @@
 			</p>
 		</div>
 
-		<div id="sign-up-section" style="height: 100px">
-			{#if !phoneConfirmationResult}
-				<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
-          <input type="tel" id="phone-country-code" minlength="2" maxlength="4" placeholder="+1" bind:value={countryCode} style="margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px">
-
-					<input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
-
-					<input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
-
-					<input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
-					<Button id="sign-in-button" on:click={signInWithPhone} style="color: rgb(116 28 183); margin-bottom: 2px">
-						Sign Up
-					</Button>
-				</div>
-			{:else}
-				<div style="display: flex; justify-content: center; align-items: center; margin-top: 24px">
-					<input minlength="6" maxlength="6" placeholder="123456" bind:value={phoneConfirmCode} style="width: 111px; font-size: 2rem; margin-right: 10px">
-					<Button on:click={verifyConfirmationCode} style="color: rgb(116 28 183); margin-bottom: 2px;">Confirm code</Button>
-				</div>
-			{/if}
-		</div>
+		<PhoneLogin canTakeInternationalNumbers/>
 	</section>
 {/if}
 
@@ -162,33 +142,25 @@ This website makes it <b style="color: rgb(15 186 191)">efficient to give & rece
 </section> -->
 
 <script>	
-	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-	import Button, { Label } from '@smui/button';
-	import HelperText from '@smui/textfield/helper-text'
-	import Textfield from '@smui/textfield';
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { goto } from '$app/navigation'
 	import { canvasHeight, canvasWidth, user, recordState } from '../store.js'
+	import Button, { Label } from '@smui/button';
+	import HelperText from '@smui/textfield/helper-text'
+	import Textfield from '@smui/textfield';
 	import Blackboard from '$lib/Blackboard.svelte'
 	import DoodleVideo from '$lib/DoodleVideo.svelte'
 	import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+	import PhoneLogin from '$lib/PhoneLogin.svelte'
 	
 	let currentTime = 10
 	let titleValue = 'Welcome!'
 	let i = 0
 	let typewriter
 
-  let countryCode = '+1'
-	let phoneNumSegment1 = ''
-	let phoneNumSegment2 = ''
-	let phoneNumSegment3 = ''
-	let phoneConfirmationResult
-	let phoneConfirmCode = ''
-
-	let appVerifier
 	const print = console.log
 	let hasClickedTitle = false
 	$: isQuestionMode = '?' === titleValue.charAt(titleValue.length - 1)
@@ -238,24 +210,6 @@ This website makes it <b style="color: rgb(15 186 191)">efficient to give & rece
 		})
 	}
 
-
-	$: if (phoneNumSegment1.length === 3) {
-		document.getElementById('phone-input-2').focus()
-	}
-	$: if (phoneNumSegment2.length === 3) {
-		document.getElementById('phone-input-3').focus()
-	}
-
-	$: if (phoneNumSegment3.length === 4) {
-		signInWithPhone()
-	}
-
-	$: if (phoneConfirmCode) {
-		if (phoneConfirmCode.length === 6) {
-			verifyConfirmationCode()
-		}
-	}
-
 	function adjustContentDimensions () {
 		const { width, height } = calculateCanvasDimensions2()
 		canvasWidth.set(width) 
@@ -288,67 +242,6 @@ This website makes it <b style="color: rgb(15 186 191)">efficient to give & rece
 
 	function startRecordCountdown (element) {
 		timer = setInterval(() => currentTime -= 1, 1000)	
-	}
-
-	function signInWithPhone () {
-		if (!window.recaptchaVerifier) {
-			window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
-				'size': 'invisible',
-				'callback': (response) => {
-					// reCAPTCHA solved, allow signInWithPhoneNumber.
-					console.log('reCAPTCHA solved =', response)
-					// onSignInSubmit()
-				}
-			}, getAuth())
-			appVerifier = window.recaptchaVerifier;
-		}
-
-		onSignInSubmit();
-
-		function onSignInSubmit () {
-			const phoneNumber = `${countryCode} ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`
-			print(getAuth(), phoneNumber, appVerifier)
-			signInWithPhoneNumber(getAuth(), phoneNumber, appVerifier)
-				.then((confirmationResult) => {
-					console.log('confirmation result =', confirmationResult)
-					phoneConfirmationResult = confirmationResult
-
-					// SMS sent. Prompt user to type the code from the message, then sign the
-					// user in with confirmationResult.confirm(code).
-					window.confirmationResult = confirmationResult
-					// ...
-				}).catch((error) => {
-					alert(error)
-					console.log('error =', error)
-					// Error; SMS not sent
-					// ...
-			
-					// if it fails, reset 
-					// grecaptcha.reset(window.recaptchaWidgetId);
-			
-					// Or, if you haven't stored the widget ID:
-					window.recaptchaVerifier.render().then(function(widgetId) {
-						grecaptcha.reset(widgetId);
-					})
-				});
-			}
-		}
-
-		// SIGN IN WITH CONFIRMATION CODE
-		function verifyConfirmationCode () {
-			console.log('phoneConfirmCode =', phoneConfirmCode)
-			window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
-				// User signed in successfully.
-				const user = result.user;
-				console.log('redirecting, user =', user)
-				goto('O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
-				// goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
-				// ...
-			}).catch((error) => {
-				alert(error)
-				// User couldn't sign in (bad verification code?)
-				// ...
-			});
 	}
 </script>
 

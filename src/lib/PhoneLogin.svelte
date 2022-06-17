@@ -21,12 +21,12 @@
         You should receive a text message with a 6-digit code:
       </div>
       
-      <input minlength="1" maxlength="1" bind:value={confirm1} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="1">
-      <input minlength="1" maxlength="1" bind:value={confirm2} style="width: 20px; font-size: 2rem; margin-left: 15px; " placeholder="2">  
-      <input minlength="1" maxlength="1" bind:value={confirm3} style="width: 20px; font-size: 2rem; margin-left: 15px; " placeholder="3">
-      <input minlength="1" maxlength="1" bind:value={confirm4} style="width: 20px; font-size: 2rem; margin-left: 15px; " placeholder="4">
-      <input minlength="1" maxlength="1" bind:value={confirm5} style="width: 20px; font-size: 2rem; margin-left: 15px; " placeholder="5">
-      <input minlength="1" maxlength="1" bind:value={confirm6} style="width: 20px; margin-left: 15px; margin-right: 10px" placeholder="6">
+      <input minlength="1" maxlength="1" bind:value={confirm1} bind:this={c1} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="1">
+      <input minlength="1" maxlength="1" bind:value={confirm2} bind:this={c2} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="2">  
+      <input minlength="1" maxlength="1" bind:value={confirm3} bind:this={c3} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="3">
+      <input minlength="1" maxlength="1" bind:value={confirm4} bind:this={c4} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="4">
+      <input minlength="1" maxlength="1" bind:value={confirm5} bind:this={c5} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="5">
+      <input minlength="1" maxlength="1" bind:value={confirm6} bind:this={c6} style="width: 20px; font-size: 2rem; margin-left: 15px; margin-right: 10px" placeholder="6">
       <Button on:click={verifyConfirmationCode} style="display: none; color: {hasEnteredConfirmCode ? 'rgb(116 28 183)' : 'grey'}; margin-bottom: 2px;" disabled={!hasEnteredConfirmCode}>Confirm code</Button>
     </div>
   {/if}
@@ -55,11 +55,13 @@
   let confirm4 = ''
   let confirm5 = ''
   let confirm6 = ''
+
+  // references to the input elements
+  let c1, c2, c3, c4, c5, c6
   $: phoneConfirmCode = confirm1 + confirm2 + confirm3 + confirm4 + confirm5 + confirm6
 
 	$: hasEnteredPhoneNumber = phoneNumSegment1.length === 3 && phoneNumSegment2.length === 3 && phoneNumSegment3.length === 4
   
-
   $: if (phoneNumSegment1.length === 3) {
 		document.getElementById('phone-input-2').focus()
 	}
@@ -70,9 +72,19 @@
 		signInWithPhone()
 	}
 
-	$: hasEnteredConfirmCode = phoneConfirmCode.length === 6
+  $: if (phoneConfirmationResult && c1) {
+    c1.focus()
+  }
 
-  $: if (hasEnteredConfirmCode) {
+  $: if (confirm1.length === 1) { c2.focus() }
+  $: if (confirm2.length === 1) { c3.focus() }
+  $: if (confirm3.length === 1) { c4.focus() }
+  $: if (confirm4.length === 1) { c5.focus() }
+  $: if (confirm5.length === 1) { c6.focus() }
+
+  $: hasEnteredConfirmCode = phoneConfirmCode.length === 6
+
+  $: if (hasEnteredConfirmCode) { 
     verifyConfirmationCode()
   }
 

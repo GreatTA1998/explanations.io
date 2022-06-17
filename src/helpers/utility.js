@@ -10,10 +10,10 @@ export function getRandomID () {
 /**
  * Displays the date in the user's local time
  * 
- * @param {String} dateString  an ISO string
+ * @param {String} isoString 
  * @returns a human readable form of the date e.g. March 24th 5:46
  */
- export const displayDate = function (dateString, format = {
+ export const displayDate = function (isoString, format = {
   month: 'short',
   day: '2-digit',
   hour: '2-digit',
@@ -21,7 +21,7 @@ export function getRandomID () {
   timeZone: 'utc',
 }) 
 { 
-  const deserializedDate = new Date(dateString)
+  const deserializedDate = new Date(isoString)
   let currentTimeZoneOffset = deserializedDate.getTimezoneOffset() * 60000;
   return new Date(deserializedDate - currentTimeZoneOffset).toLocaleDateString(
     'en-US',

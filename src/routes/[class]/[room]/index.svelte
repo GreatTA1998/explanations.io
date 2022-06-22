@@ -39,12 +39,56 @@
 		{#each roomDoc.blackboards as boardID, i (boardID) }
 			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
         {#if boardDoc}
-          <div style="margin-top: 10px;"></div>
-          <TextAreaAutoResizing 
-            value={boardDoc.description || ''} 
-            on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
-          />
-          <div style="margin-bottom: 10px;"></div>
+          <div style="margin-top: 10px; margin-bottom: 0px">
+            <TextAreaAutoResizing 
+              value={boardDoc.description || ''} 
+              on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
+            />
+          </div>
+
+          <RenderlessFetchComments 
+            dbPath={boardsDbPath + boardID} 
+            let:fetchComments={fetchComments} 
+            let:allComments={allComments}
+            let:newComment={newComment}
+            let:bindLocalValue={bindLocalValue}
+            let:submitNewComment={submitNewComment}
+            let:isShowingComments={isShowingComments}
+            let:hideComments={hideComments}
+          >  
+          <div style="display: flex; align-items: center">
+            <div style="color: grey;">5 eurekas, 607 view-minutes, 3 comments</div>
+            {#if !isShowingComments}
+              <Button on:click={fetchComments} >
+                +
+              </Button>
+            {:else}
+              <Button on:click={hideComments}>
+                -
+              </Button>
+            {/if}
+          </div>
+
+          {#if isShowingComments}
+            <div style="width: 60%">
+              <DoodleVideoComments 
+                {allComments}
+              />
+              <TextAreaAutoResizing
+                value={newComment} 
+                on:input={(e) => bindLocalValue(e.detail)}
+              />
+              <Button on:click={submitNewComment}>
+                SUBMIT
+              </Button>
+            </div>
+            <div style="margin-bottom: 10px;"></div>
+          {/if}
+        </RenderlessFetchComments>
+
+
+
+
           {#if boardDoc.audioDownloadURL }
             <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
               let:fetchStrokes={fetchStrokes}
@@ -58,7 +102,7 @@
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                 >
                   {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
-                    <Button on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
+                    <Button slot="top-left-corner" on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
                       Delete video
                     </Button>
                   {/if}
@@ -92,7 +136,8 @@
                   > 
                
                       {#if boardDoc.recordState === 'pre_record'}
-                        <span on:click={() => callManyFuncs(
+                        <span 
+                          on:click={() => callManyFuncs(
                             startRecording, 
                             () => updateRecordState(boardID, 'mid_record'),
                             () => updateRecorderBrowserTabID(boardID),
@@ -177,6 +222,8 @@
   import CircularProgress from '@smui/circular-progress' 
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
+  import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
 
   export let classID
   export let roomID

@@ -60,8 +60,8 @@
   overflow-wrap: break-word; /* somehow without this, you can spam the longest word and the autogrower never knows to manually insert a line break*/
   white-space: pre-wrap; /* Sequences of white space are preserved. Lines are broken at newline characters, at <br>, and as necessary to fill line boxes. */
   box-sizing: border-box;
-  border: 1px solid black;
-  border-radius: 2px;
+  border: 1px solid rgb(160, 146, 146);
+  border-radius: 0px;
   padding: 6px;
   /* padding: 0.5rem;  */
   /* font: inherit;  */
@@ -69,7 +69,7 @@
      turns out it's unexpectedly complicated https://manishearth.github.io/blog/2017/08/10/font-size-an-unexpectedly-complex-css-property/ */
   font-size: 1rem;
   font-family: Roboto, sans-serif; 
-  color: rgb(60 55 56 / 87%);
+  color: rgba(74, 72, 73, 0.87);
 
   /* Place on top of each other */
   grid-area: 1 / 1 / 2 / 2;

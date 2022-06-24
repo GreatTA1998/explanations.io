@@ -1,9 +1,9 @@
 <!-- Adapted from https://css-tricks.com/the-cleanest-trick-for-autogrowing-textareas/ -->
 <div 
+  style="display: grid;"
   class="grow-wrap"
   bind:this={autogrowWrapper} 
   use:initValue 
-  style="display: grid;"
   use:cssVars={styleVars}
 >
   <!-- took me 1 hour to figure out `rows = n` is the way to change initial height -->
@@ -15,7 +15,7 @@
       dispatch('input', e.target.value)
     }} 
     rows="1"
-    style="width: {$canvasWidth}px;"
+    style="width: {100}%;"
   />
 </div>
 
@@ -31,7 +31,7 @@
   import cssVars from 'svelte-css-vars';  
   
   $: styleVars = {
-    width: `${$canvasWidth}px`,
+    width: `100%`,
   };
 
   export let value

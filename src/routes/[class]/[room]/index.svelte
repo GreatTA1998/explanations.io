@@ -39,57 +39,61 @@
 		{#each roomDoc.blackboards as boardID, i (boardID) }
 			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
         {#if boardDoc}
-          <div style="margin-top: 10px; margin-bottom: 0px">
+          <div style="width: {$canvasWidth}px; margin-top: 10px; margin-bottom: 0px">
             <TextAreaAutoResizing 
               value={boardDoc.description || ''} 
               on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
             />
           </div>
 
-          <RenderlessFetchComments 
-            dbPath={boardsDbPath + boardID} 
-            let:fetchComments={fetchComments} 
-            let:allComments={allComments}
-            let:newComment={newComment}
-            let:bindLocalValue={bindLocalValue}
-            let:submitNewComment={submitNewComment}
-            let:isShowingComments={isShowingComments}
-            let:hideComments={hideComments}
-          >  
-          <div style="display: flex; align-items: center">
-            <div style="color: grey;">5 eurekas, 607 view-minutes, 3 comments</div>
-            {#if !isShowingComments}
-              <Button on:click={fetchComments} >
-                +
-              </Button>
-            {:else}
-              <Button on:click={hideComments}>
-                -
-              </Button>
-            {/if}
-          </div>
-
-          {#if isShowingComments}
-            <div style="width: 60%">
-              <DoodleVideoComments 
-                {allComments}
-              />
-              <TextAreaAutoResizing
-                value={newComment} 
-                on:input={(e) => bindLocalValue(e.detail)}
-              />
-              <Button on:click={submitNewComment}>
-                SUBMIT
-              </Button>
-            </div>
-            <div style="margin-bottom: 10px;"></div>
-          {/if}
-        </RenderlessFetchComments>
-
-
-
-
           {#if boardDoc.audioDownloadURL }
+            <RenderlessFetchComments 
+              dbPath={boardsDbPath + boardID} 
+              let:fetchComments={fetchComments} 
+              let:allComments={allComments}
+              let:newComment={newComment}
+              let:bindLocalValue={bindLocalValue}
+              let:submitNewComment={submitNewComment}
+              let:isShowingComments={isShowingComments}
+              let:hideComments={hideComments}
+            >  
+              <div style="display: flex; align-items: center">
+                <div style="color: grey; font-size: 0.7rem">5 eurekas, 607 view-minutes, 3 comments</div>
+                {#if !isShowingComments}
+                  <Button on:click={fetchComments} >
+                    <Icon class="material-icons" style="margin-right: 0">
+                      expand_more
+                    </Icon>
+                  </Button>
+                {:else}
+                  <Button on:click={hideComments}>
+                    <Icon class="material-icons" style="margin-right: 0">
+                      expand_less
+                    </Icon>
+                  </Button>
+                {/if}
+              </div>
+
+              {#if isShowingComments}
+                <div style="width: {$canvasWidth - 20}px; margin-left: 20px;">
+                  <DoodleVideoComments 
+                    {allComments}
+                  />
+                  <div style="margin-bottom: 4px;"></div>
+
+                  <TextAreaAutoResizing
+                    value={newComment} 
+                    on:input={(e) => bindLocalValue(e.detail)}
+                  />
+
+                  <Button on:click={submitNewComment}>
+                    SUBMIT
+                  </Button>
+                </div>
+                <div style="margin-bottom: 10px;"></div>
+              {/if}
+            </RenderlessFetchComments>
+
             <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
@@ -208,7 +212,7 @@
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import { onMount, tick, onDestroy } from 'svelte'
-  import Button, { Group, Label }from '@smui/button'
+  import Button, { Icon } from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
   import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave } from '../../../store.js'

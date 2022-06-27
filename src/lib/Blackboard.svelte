@@ -76,7 +76,7 @@
   import { currentTool, canvasWidth, canvasHeight, onlyAllowApplePencil } from '../store.js'
 
   export let strokesArray
-  export let currentTime = 0
+  export let currentTime = 0 // assumes it's always rounded to nearest 0.1
   export let backgroundImageDownloadURL = ''
   export let recordState  = ''
   
@@ -299,7 +299,7 @@
     }
     currentStroke = {
       strokeNumber: strokesArray.length + 1,
-      startTime: Number(currentTime.toFixed(1)),
+      startTime: currentTime,
       color: $currentTool.color,
       lineWidth: $currentTool.lineWidth,
       isErasing: $currentTool.type === 'eraser',
@@ -340,7 +340,7 @@
   }
 
   function handleEndOfStroke (newStroke) {
-    newStroke.endTime = Number(currentTime.toFixed(1));
+    newStroke.endTime = currentTime
     newStroke.id = getRandomID(); 
     localStrokesArray.push(newStroke)
     dispatch('stroke-drawn', { newStroke })

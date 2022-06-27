@@ -79,6 +79,7 @@
                   <DoodleVideoComments 
                     {allComments}
                   />
+                  
                   <div style="margin-bottom: 4px;"></div>
 
                   <TextAreaAutoResizing

@@ -3,7 +3,21 @@
     <Content>
       <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;" class="mdc-elevation--z{4}">
         <div style="display: flex; align-items: center">
-          <img on:click={goToHomePage} src="/logo.png" width="60" height="54" alt="web-logo" class="logo-image">
+          <img 
+            on:click={() => isShowingPopup = true} 
+            src="/logo.png" 
+            width="60"
+            height="54" 
+            alt="web-logo" 
+            class="logo-image"
+          >
+
+          {#if isShowingPopup}
+            <PopupAppSettings
+              on:popup-close={() => isShowingPopup = false}
+            />
+          {/if}
+
           <div>
             {#if $user.uid}
               <ClassDropdownMenu 
@@ -39,23 +53,17 @@
 <script lang="ts">
   import './_Elevation.scss'
   import ClassDropdownMenu from '$lib/ClassDropdownMenu.svelte'
+  import PopupAppSettings from '$lib/PopupAppSettings.svelte';
   import Drawer, { AppContent, Content } from '@smui/drawer';
   import Card from '@smui/card'
   import List, { Item, Text } from '@smui/list';
   import { user } from '../store.js'
   import { goto } from '$app/navigation'
-  import { signOut, getAuth } from 'firebase/auth'
 
   export let nameOfClass
   export let descriptionOfClass
 
-  function goToHomePage () {
-    if ($user.uid) {
-      const auth = getAuth()
-      signOut(auth)
-    }
-    goto('/')
-  }
+  let isShowingPopup = false
 </script>
  
 <style>

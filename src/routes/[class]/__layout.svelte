@@ -46,7 +46,7 @@
               </div>
             {:else}
               <div style="margin-bottom: 2px;">
-                (untitled room)
+                (no title)
               </div>
             {/if}
 

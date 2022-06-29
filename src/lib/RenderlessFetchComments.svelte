@@ -1,5 +1,6 @@
+<!-- TO-DO: rename to RenderlessListenToComments -->
 <slot 
-  {fetchComments}  
+  {listenToComments}  
   {allComments} 
   {newComment}
   {bindLocalValue}
@@ -12,6 +13,7 @@
 
 <script>
 import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, getDocs, addDoc } from 'firebase/firestore'
+import { onDestroy } from 'svelte'
 import { user } from '../store.js'
 
 export let dbPath
@@ -22,19 +24,30 @@ export let dbPath
 let allComments // null means unfetched, [] means no comments
 const commentsRef = collection(getFirestore(), `${dbPath}/comments`)
 const commentsQuery = query(commentsRef, orderBy('isoStringOfDate'))
+let unsubCommentsListener = null
 
 let newComment = ''
 let isShowingComments = false
 
-// for lazy-fetching
-async function fetchComments () {
-  const commentsSnapshot = await getDocs(commentsQuery)
-  const temp = []
-  for (const doc of commentsSnapshot.docs) {
-    temp.push({ id: doc.id, ...doc.data() })
+onDestroy(() => {
+  console.log('destroying')
+  if (unsubCommentsListener) {
+    console.log('unsubbing')
+    unsubCommentsListener()
   }
-  allComments = temp
-  isShowingComments = true
+})
+
+async function listenToComments () {
+  // do snapshot
+  unsubCommentsListener = onSnapshot(commentsQuery, snap => {
+    console.log('snap =', snap) 
+    const temp = []
+    for (const doc of snap.docs) {
+      temp.push({ id: doc.id, ...doc.data() })
+    }
+    allComments = temp
+    isShowingComments = true
+  })
 }
 
 function bindLocalValue (newVal) {
@@ -48,7 +61,8 @@ async function submitNewComment () {
   addDoc(commentsRef, {
     content: newComment,
     isoStringOfDate: new Date().toISOString(),
-    creatorUID: $user.uid
+    creatorUID: $user.uid,
+    creatorName: $user.name
   })
   console.log('added comment')
 }

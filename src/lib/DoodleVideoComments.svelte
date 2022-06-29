@@ -2,7 +2,7 @@
   {#each allComments as comment} 
     <div class="copied-from-old-explain">{comment.content}</div>
     <div class="copied-from-old-explain-2">
-      {displayDate(comment.isoStringOfDate)} by {comment.creatorUID}
+      {displayDate(comment.isoStringOfDate)} by {comment.creatorName || comment.creatorUID}
     </div>
   {/each}
 </div>

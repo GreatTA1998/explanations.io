@@ -302,6 +302,7 @@
       startTime: currentTime,
       color: $currentTool.color,
       lineWidth: $currentTool.lineWidth,
+      canvasWidth: $canvasWidth,
       isErasing: $currentTool.type === 'eraser',
       points: [],
       sessionID: '123' // TODO: initialize in store

@@ -17,11 +17,11 @@
       class="room-title" 
       style={`width: ${$canvasWidth}px;`}
     >
-      <HelperText slot="helper" persistent>
+      <HelperText slot="helper">
         {#if !lockQuestionIntervalID && !resolveQuestionIntervalID && !roomDoc.askerUID}
-          To ask a question, just use a question mark "?"
+          To ask the server a question, end your title with a question mark "?"
         {:else if lockQuestionIntervalID}
-          Pinging server members in {lockQuestionCurrentTime}, cancel by backtracking the ?
+          Pinging server members in {lockQuestionCurrentTime}, cancel by backtracking the "?""
         {:else if resolveQuestionIntervalID}
           Resolving this question in {resolveQuestionCurrentTime}, cancel by re-adding ?
         {:else if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
@@ -34,7 +34,7 @@
       </HelperText>
     </Textfield>
 
-    <div style="margin-bottom: 20px;"></div>
+    <div style="margin-bottom: 14px;"></div>
 
 		{#each roomDoc.blackboards as boardID, i (boardID) }
 			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
@@ -43,13 +43,14 @@
             <TextAreaAutoResizing 
               value={boardDoc.description || ''} 
               on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
+              placeholder="Describe the blackboard..."
             />
           </div>
 
           {#if boardDoc.audioDownloadURL }
             <RenderlessFetchComments 
               dbPath={boardsDbPath + boardID} 
-              let:fetchComments={fetchComments} 
+              let:listenToComments={listenToComments} 
               let:allComments={allComments}
               let:newComment={newComment}
               let:bindLocalValue={bindLocalValue}
@@ -58,9 +59,11 @@
               let:hideComments={hideComments}
             >  
               <div style="display: flex; align-items: center">
-                <div style="color: grey; font-size: 0.7rem">5 eurekas, 607 view-minutes, 3 comments</div>
+                <div style="color: grey; font-size: 0.7rem">
+                  5 eurekas, 607 view-minutes, 3 comments
+                </div>
                 {#if !isShowingComments}
-                  <Button on:click={fetchComments} >
+                  <Button on:click={listenToComments} >
                     <Icon class="material-icons" style="margin-right: 0">
                       expand_more
                     </Icon>
@@ -85,6 +88,7 @@
                   <TextAreaAutoResizing
                     value={newComment} 
                     on:input={(e) => bindLocalValue(e.detail)}
+                    placeholder="Type comment..."
                   />
 
                   <Button on:click={submitNewComment}>

@@ -10,6 +10,7 @@
   <!-- without `border-box`, textarea will add padding and border to width, exceeding it -->
   <textarea 
     {value}
+    placeholder={placeholder}
     on:input={(e) => { 
       autogrowWrapper.dataset.replicatedValue = e.target.value; 
       dispatch('input', e.target.value)
@@ -21,7 +22,6 @@
 
 <script>
   import { createEventDispatcher } from 'svelte'
-  import { canvasWidth } from '../store.js'
 
   // `cssVars` package solved a 4-part headache: https://github.com/sveltejs/svelte/issues/758#issuecomment-521764823
   // 1. we need pseudoelement to avoid jumpy textbot resize behavior (see autogrow tutorial)
@@ -35,6 +35,7 @@
   };
 
   export let value
+  export let placeholder
 
   let autogrowWrapper
 
@@ -77,5 +78,13 @@
   /* probably <textarea> specific attributes, but easier to understand code if in shared rather than in individual css */
   resize: none; /* user's drag resize would ruin auto-sizing */
   overflow: hidden;  /* e.g. Firefox shows scrollbar */
+}
+
+textarea::placeholder{
+  opacity: 0;
+}
+
+textarea:focus::placeholder{
+  opacity: 0.6;
 }
 </style>

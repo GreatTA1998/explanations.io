@@ -16,7 +16,6 @@
 </div>
  
 <script>
-  import Dialog, { Title, Content, Actions } from '@smui/dialog'
   import Button, { Label } from '@smui/button'
   import { createEventDispatcher } from 'svelte'
   import { signOut, getAuth } from 'firebase/auth'

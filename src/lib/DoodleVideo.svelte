@@ -1,5 +1,8 @@
 <!-- The delete button is added here -->
-<div style="position: absolute; right: 0; left: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5">
+<div style="position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5">
+  <div on:click={togglePlaySpeed}>
+    Playing at {playbackSpeed}x speed
+  </div>
   <slot>
 
   </slot>
@@ -103,7 +106,7 @@
     ctx = canvas.getContext('2d')
     bgCtx = bgCanvas.getContext('2d')
 
-    AudioPlayer.playbackRate = playbackSpeed
+    AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
     AudioPlayer.onended = (e) => isPlaying = false 
     AudioPlayer.onpause = (e) => isPlaying = false
   })
@@ -117,9 +120,22 @@
     renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
   }
 
+  $: if (AudioPlayer) {
+    playbackSpeed = AudioPlayer.playbackRate
+    // I know...AudioPlayer is not reactive because of bind:this, will refactor in future
+  }
+
   onDestroy(() => {
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
   })
+
+  function togglePlaySpeed () {
+    if (AudioPlayer.playbackRate === 2) {
+      AudioPlayer.playbackRate = 1 
+    } else {
+      AudioPlayer.playbackRate = 2
+    }
+  }
 
   function togglePlayPause () {
     if (!recursiveSyncer && isPlaying === false && strokesArray) {
@@ -212,9 +228,15 @@
   }
 
   function renderFrame ({ strokeIndex, pointIndex }) {
-    const stroke = strokesArray[strokeIndex];
-    const lineWidth = stroke.lineWidth; 
-    const normalizedLineWidth = lineWidth * (canvas.scrollWidth / 1000);
+    const stroke = strokesArray[strokeIndex]
+
+    let normalizedLineWidth 
+    if (stroke.canvasWidth) {
+      normalizedLineWidth = stroke.lineWidth * ($canvasWidth / stroke.canvasWidth) 
+    } else { 
+      // backwards compatibility: we didn't use to remember what the canvas width on the original device was, so can't normalize it
+      normalizedLineWidth = stroke.lineWidth
+    }
     connectTwoPoints(
       stroke.points, 
       pointIndex, 

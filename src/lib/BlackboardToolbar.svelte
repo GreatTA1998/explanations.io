@@ -62,7 +62,7 @@
     {/each}
 
     <img 
-      on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 40 })}
+      on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 6 })}
       class:eraser-selected={$currentTool.type === 'eraser'}
       width="46" height="33"
       style="margin-left: 8px; margin-right: 8px;"

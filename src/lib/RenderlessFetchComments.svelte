@@ -12,7 +12,7 @@
 </slot>
 
 <script>
-import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, getDocs, addDoc } from 'firebase/firestore'
+import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, getDocs, addDoc, updateDoc, increment } from 'firebase/firestore'
 import { onDestroy } from 'svelte'
 import { user } from '../store.js'
 
@@ -30,17 +30,13 @@ let newComment = ''
 let isShowingComments = false
 
 onDestroy(() => {
-  console.log('destroying')
   if (unsubCommentsListener) {
-    console.log('unsubbing')
     unsubCommentsListener()
   }
 })
 
 async function listenToComments () {
-  // do snapshot
   unsubCommentsListener = onSnapshot(commentsQuery, snap => {
-    console.log('snap =', snap) 
     const temp = []
     for (const doc of snap.docs) {
       temp.push({ id: doc.id, ...doc.data() })
@@ -56,7 +52,6 @@ function bindLocalValue (newVal) {
 }
 
 async function submitNewComment () {
-  console.log("content =", newComment)
   const commentsRef = collection(getFirestore(), `${dbPath}/comments`)
   addDoc(commentsRef, {
     content: newComment,
@@ -64,7 +59,11 @@ async function submitNewComment () {
     creatorUID: $user.uid,
     creatorName: $user.name
   })
-  console.log('added comment')
+  
+  const blackboardRef = doc(getFirestore(), dbPath)
+  updateDoc(blackboardRef, {
+    numOfComments: increment(1)
+  })
 }
 
 function hideComments () {

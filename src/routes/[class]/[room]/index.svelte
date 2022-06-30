@@ -59,8 +59,12 @@
               let:hideComments={hideComments}
             >  
               <div style="display: flex; align-items: center">
-                <div style="color: grey; font-size: 0.7rem">
-                  5 eurekas, 607 view-minutes, 3 comments
+                <div 
+                  style="color: grey; font-size: 0.7rem"
+                >
+                  {boardDoc.numOfEurekas || 0} eurekas, 
+                  {boardDoc.viewMinutes || 0} minutes viewed,
+                  {boardDoc.numOfComments || 0} comments
                 </div>
                 {#if !isShowingComments}
                   <Button on:click={listenToComments} >
@@ -109,6 +113,7 @@
                   {strokesArray} 
                   audioDownloadURL={boardDoc.audioDownloadURL}
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+                  on:six-seconds-watched={() => incrementViewMinutes(boardID)}
                 >
                   {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
                     <Button slot="top-left-corner" on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
@@ -223,7 +228,7 @@
   import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove } from 'firebase/firestore';
+  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment } from 'firebase/firestore';
   import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
@@ -274,6 +279,13 @@
         return
       }
     }
+  }
+
+  function incrementViewMinutes (boardID) {
+    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
+    updateDoc(blackboardRef, {
+      viewMinutes: increment(0.1)
+    })
   }
 
   function updateRecorderBrowserTabID (boardID) {

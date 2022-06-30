@@ -64,7 +64,7 @@
 
 <script>
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { canvasWidth, canvasHeight } from '../store.js'
   // import IconButton from '@smui/icon-button';
 
@@ -88,6 +88,8 @@
   let AudioPlayer
   let recursiveSyncer
   let playbackSpeed = 2
+
+  const dispatch = createEventDispatcher()
 
   // handle resizing
   $: if (ctx) {
@@ -187,43 +189,64 @@
     return strokePeriod / stroke.points.length;
   }
 
+  // NOTE: initSyncing() is called EVERY time you press play (e.g. after a pause) - the video playback works as expected but not for the reasons you think
   function initSyncing () {
     isPlaying = true
+
+    // visual logic
     nextFrameIdx = 0;
     ctx.clearRect(0, 0, $canvasWidth, $canvasHeight) // video could already be rendered as an initial preview or completed video
     syncRecursively()
+
+    // after 6 seconds, if the video is still playing:
+    //   we tell parent to increment `viewMinutes` by 0.1,
+    //   we do another 6 seconds timeout (via recursion)
+    // BASE CASE: nothing will be updated nor called after the countdown if the video is no longer playing
+    const sixSeconds = 6000
+    function updateViewMinutes () {
+      setTimeout(
+        () => {
+          if (isPlaying) {
+            dispatch('six-seconds-watched')
+            updateViewMinutes()
+          }
+        },
+        sixSeconds
+      )
+    } 
+    updateViewMinutes()
   }
   
   function syncRecursively () {
-    if (!AudioPlayer) return;
-    syncStrokesToAudio();
+    if (!AudioPlayer) return
+    syncStrokesToAudio()
     if (nextFrameIdx < allFrames.length) {
       // calculate sleep duration
-      const nextFrame = allFrames[nextFrameIdx];
-      const timeTilNextStroke = 1000 * (nextFrame.startTime - AudioPlayer.currentTime); 
-      recursiveSyncer = setTimeout(syncRecursively, timeTilNextStroke/playbackSpeed); // use recursion instead of `setInterval` to prevent overlapping calls
+      const nextFrame = allFrames[nextFrameIdx]
+      const timeTilNextStroke = 1000 * (nextFrame.startTime - AudioPlayer.currentTime)
+      recursiveSyncer = setTimeout(syncRecursively, timeTilNextStroke/playbackSpeed) // use recursion instead of `setInterval` to prevent overlapping calls
     }
   }
 
   function syncStrokesToAudio () {
-    if (!AudioPlayer) return;
+    if (!AudioPlayer) return
     const nextFrame = allFrames[nextFrameIdx];
     if (!nextFrame || nextFrame.startTime > AudioPlayer.currentTime) { // !nextFrame: nextFrame is undefined after a video finishes
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      nextFrameIdx = 0;
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      nextFrameIdx = 0
     }
-    renderFramesUntilCurrentTime();
+    renderFramesUntilCurrentTime()
   }
 
   function renderFramesUntilCurrentTime () {
-    const { currentTime } = AudioPlayer;
+    const { currentTime } = AudioPlayer
     for (let i = nextFrameIdx; i < allFrames.length; i++) {
-      const frame = allFrames[i];
+      const frame = allFrames[i]
       if (frame.startTime > currentTime) { 
-        break; 
+        break
       }
-      renderFrame(frame);
-      nextFrameIdx += 1;
+      renderFrame(frame)
+      nextFrameIdx += 1
     }
   }
 
@@ -252,8 +275,8 @@
     return new Promise(async (resolve) => {
       if (recursiveSyncer) {
         // video was playing: resume to previous progress
-        nextFrameIdx = 0;
-        syncStrokesToAudio();
+        nextFrameIdx = 0
+        syncStrokesToAudio()
       } else if (hasPlayedOnce) {
         renderFramesUntilCurrentTime()
       } else {

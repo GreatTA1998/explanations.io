@@ -28,3 +28,9 @@ export function getRandomID () {
     format
   );
 } 
+
+// rounds to nearest 0.1, see https://stackoverflow.com/a/12698296/7812829
+export function roundedToFixed(input, digits) {
+  var rounded = Math.pow(10, digits);
+  return (Math.round(input * rounded) / rounded).toFixed(digits);
+}

@@ -116,7 +116,10 @@
                   on:six-seconds-watched={() => incrementViewMinutes(boardID)}
                 >
                   {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
-                    <Button slot="top-left-corner" on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} color="primary">
+                    <Button 
+                      slot="top-left-corner" 
+                      on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} 
+                      style="margin-left: {$canvasWidth - 240}px; background-color: rgba(255,255,255,0.5); color: white">
                       Delete video
                     </Button>
                   {/if}

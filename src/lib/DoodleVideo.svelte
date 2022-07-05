@@ -1,8 +1,9 @@
 <!-- The delete button is added here -->
 <div style="position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5">
-  <div on:click={togglePlaySpeed}>
-    Playing at {playbackSpeed}x speed
-  </div>
+  <Button on:click={togglePlaySpeed} variant="raised" style="margin-left: 4px; background-color: rgba(255,255,255,0.5); color: white;">
+    <div style="color: white">{playbackSpeed}x speed</div>
+    <span class="material-icons"></span>
+  </Button>
   <slot>
 
   </slot>
@@ -66,6 +67,7 @@
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { canvasWidth, canvasHeight } from '../store.js'
+  import Button, { Label } from '@smui/button'
   // import IconButton from '@smui/icon-button';
 
   /**

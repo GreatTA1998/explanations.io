@@ -35,8 +35,15 @@
     if (currentCallState === 'connected') {
       leaveConferenceRoom()
     }
-  })
 
+    // stop the jarring red mic circle when the user logs out
+    if ($dailyMicStream) {
+      $dailyMicStream.getAudioTracks().forEach(track => {
+        track.stop()
+      })
+      dailyMicStream.set(null)
+    }
+  })
 
   $: if ($user.uid) {
     async function initDaily () {

@@ -1,7 +1,7 @@
 <div style="height: 100px">
   {#if !phoneConfirmationResult}
     <div style="display: flex; justify-content: center; align-items: center; margin-top: 24px;">
-      <div class="copied-from-koa" style="color: purple">Log in with phone:</div>
+      <!-- <div class="copied-from-koa" style="color: purple">Log in with phone:</div> -->
 
       {#if canTakeInternationalNumbers}
         <input type="tel" id="phone-country-code" minlength="2" maxlength="4" placeholder="+1" bind:value={countryCode} style="margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px">

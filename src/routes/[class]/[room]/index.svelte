@@ -150,45 +150,50 @@
                     on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
                     on:board-wipe={deleteAllStrokesFromDb}
                     on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
-                  > 
-               
-                      {#if boardDoc.recordState === 'pre_record'}
-                        <span 
-                          on:click={() => callManyFuncs(
-                            startRecording, 
-                            () => updateRecordState(boardID, 'mid_record'),
-                            () => updateRecorderBrowserTabID(boardID),
-                            () => willPreventPageLeave.set(true)
-                          )}
-                          class="material-icons" 
-                          style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
-                        >
-                          album
-                        </span>
-                      {:else if boardDoc.recordState === 'mid_record'}
-                        <span 
-                          on:click={() => callManyFuncs(
-                            stopRecording,
-                            () => updateRecordState(boardID, 'post_record'),
-                            () => willPreventPageLeave.set(false)
-                          )}
-                          class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
-                          class="material-icons" 
-                          style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
-                        >
-                          stop_circle
-                        </span>
-                      {:else}
-                        <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
-                          <CircularProgress
-                            class="my-four-colors"
-                            style="height: 32px; width: 32px;"
-                            indeterminate
-                            fourColor
-                          />
-                        </div>
-                      {/if}
-         
+                  >
+                    <!-- if an recording is active (rather than an interrupted session that isn't actually recording,
+                      currentTime will be incrementing -->
+                    {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
+                      <span 
+                        on:click={() => callManyFuncs(
+                          startRecording, 
+                          () => updateRecordState(boardID, 'mid_record'),
+                          () => updateRecorderBrowserTabID(boardID),
+                          () => willPreventPageLeave.set(true)
+                        )}
+                        class="material-icons" 
+                        style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
+                      >
+                        album
+                      </span>
+     
+                    {:else if boardDoc.recordState === 'mid_record'}
+                      <span 
+                        on:click={() => callManyFuncs(
+                          stopRecording,
+                          () => updateRecordState(boardID, 'post_record'),
+                          () => willPreventPageLeave.set(false)
+                        )}
+                        class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
+                        class="material-icons" 
+                        style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
+                      >
+                        stop_circle
+                      </span>
+
+                    <!-- Note that `currentTime` will not be reset after the recording, which is good for us
+                      (explain more when you're head is more clear)
+                    -->
+                    {:else if boardDoc.recordState === 'post_record'}
+                      <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
+                        <CircularProgress
+                          class="my-four-colors"
+                          style="height: 32px; width: 32px;"
+                          indeterminate
+                          fourColor
+                        />
+                      </div>
+                    {/if}
                   </Blackboard>
                 </RenderlessAudioRecorder>
               </div>

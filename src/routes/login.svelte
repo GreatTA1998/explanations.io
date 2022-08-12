@@ -1,5 +1,5 @@
 {#if Object.keys($user).length === 0}
-	<section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
+	<!-- <section style="background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;">
 		<div class="content" style="width: {$canvasWidth}px">
 			<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 				It's hard to learn properly without visuals
@@ -43,7 +43,7 @@
 				</RenderlessFetchStrokes>
 			</RenderlessListenToBoard>
 		</div>
-	</section>
+	</section> -->
 
 	<section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
 		<div class="content" style="width: {$canvasWidth}px">
@@ -52,7 +52,7 @@
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-        Just sign up for a password-less account to join and create servers
+        Phone accounts are password-less and lets Explain notify you (if the settings are on)
 			</p>
 		</div>
 

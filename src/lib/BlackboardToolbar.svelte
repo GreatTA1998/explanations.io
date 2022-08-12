@@ -28,7 +28,7 @@
       checked={!$onlyAllowApplePencil}
       style="margin: 0 !important"
     />
-    <div style="margin-top: 2px; font-size: 0.55rem; font-family: Roboto,sans-serif; color: white;">
+    <div style="margin-top: 1px; margin-left: 1px; font-size: 0.52rem; font-family: Roboto,sans-serif; color: white;">
       {$onlyAllowApplePencil ? 'No touch' : 'Touch draw'}
     </div>
   </div>
@@ -62,11 +62,11 @@
     {/each}
 
     <img 
-      on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 6 })}
+      on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 32 })}
       class:eraser-selected={$currentTool.type === 'eraser'}
-      width="46" height="33"
+      width="46" height="40"
       style="margin-left: 8px; margin-right: 8px;"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"
+      src="https://www.pngall.com/wp-content/uploads/2017/03/Eraser-Download-PNG.png"
       alt="eraser"
     >
   {/if}

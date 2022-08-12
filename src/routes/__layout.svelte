@@ -27,7 +27,7 @@
       if (resultUser) {
         // partially hydrate the user so we can redirect away ASAP
         user.set({ 
-          phoneNumber: resultUser.phoneNumber, 
+          phoneNumber: resultUser.phoneNumber || '', // can be anonymous new user playing around
           uid: resultUser.uid, 
           pencilColors: [] 
         })
@@ -47,11 +47,11 @@
           await setDoc(userRef, {
             name: `Beaver #${metadataSnap.data().numOfUsers}`, 
             uid: resultUser.uid,
-            phoneNumber: resultUser.phoneNumber,
+            phoneNumber: resultUser.phoneNumber || '',
             enrolledClasses: [exampleClass],
             mostRecentClassAndRoomID: `/${exampleClassID}/${exampleClassID}`,
             pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"],
-            willReceiveText: true // can be toggled
+            willReceiveText: !!resultUser.phoneNumber // can be toggled
           })
           updateDoc(metadataRef, {
             numOfUsers: increment(1)
@@ -72,7 +72,6 @@
       } 
       else {
         user.set({})
-        // redirect to home page
       }
       
       // now display the home page or server page

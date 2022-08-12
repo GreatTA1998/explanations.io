@@ -192,6 +192,7 @@
     debouncedResizeHandler()
   })
 
+  // the only possibility (I think) of this getting destroyed is logging out and returning to the home page
   onDestroy(() => {
     unsubDbListeners()
     if (browser) {
@@ -203,8 +204,13 @@
     // prevents in-app navigation
     if ($willPreventPageLeave) {
       if (window.confirm("You're still recording, are you sure you want to leave?")) {
+        // TODO: reset the board so it's not perpetually uploading in nothing?
+        // NOTE: this will not handle some cases 
+        // maybe fix from Blackboard rendering logic side?
         willPreventPageLeave.set(false)
         goto(`/${classID}/${roomID}`)
+      } else {
+        // do nothing
       }
     }
 
@@ -365,7 +371,7 @@
       if (boardDoc.audioRefFullPath) {
         subdeleteRequests.push(
           deleteObject(
-            ref(getStorage(), audioRefFullPath)
+            ref(getStorage(), boardDoc.audioRefFullPath)
           )
         )
       }

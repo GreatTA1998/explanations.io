@@ -10,7 +10,7 @@
   </div>
   <input bind:value={newlyTypedDisplayName}>
 
-  <div>
+  <div on:click={logOut}>
     Logout
   </div>
 </div>
@@ -20,7 +20,7 @@
   import { createEventDispatcher } from 'svelte'
   import { signOut, getAuth } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore'
-
+  import { goto } from '$app/navigation'
   import { user } from '../store.js'
 
 	const dispatch = createEventDispatcher()

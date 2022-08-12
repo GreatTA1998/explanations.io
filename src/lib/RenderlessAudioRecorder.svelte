@@ -99,7 +99,7 @@
       }
       // logged in user connected to voice chat, but is MUTED
       else if (!$dailyRoomParticipants.local.audio) {
-        alert('Cannot start recording because your mic is muted - click the switch next to your "beaver #n" to unmute')
+        alert('Cannot start recording because your mic is muted - click the switch next to your name to unmute')
         reject('Cannot start recording because mic stream is muted')
         return
       } 
@@ -116,7 +116,7 @@
       startTimer()
 
       dispatch('record-start')
-      resolve();
+      resolve()
     });
   }
   function stopRecording () {

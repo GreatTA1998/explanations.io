@@ -109,9 +109,10 @@
 			</p>
 		</div>
 
-		<PhoneLogin/>
+		<!-- <PhoneLogin/> -->
 	</section>
 {/if}
+
 <script>	
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { canvasHeight, canvasWidth, user, recordState } from '../store.js'

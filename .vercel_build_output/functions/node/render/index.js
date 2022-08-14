@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-24a6b466.js
+// .svelte-kit/output/server/chunks/store-37bf12c9.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5117,6 +5117,937 @@ function registerCoreComponents(variant) {
   registerVersion(name$o, version$1, "esm2017");
   registerVersion("fire-js", "");
 }
+function __extends(d2, b) {
+  if (typeof b !== "function" && b !== null)
+    throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+  extendStatics(d2, b);
+  function __() {
+    this.constructor = d2;
+  }
+  d2.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+function __rest(s2, e) {
+  var t2 = {};
+  for (var p2 in s2)
+    if (Object.prototype.hasOwnProperty.call(s2, p2) && e.indexOf(p2) < 0)
+      t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
+    for (var i = 0, p2 = Object.getOwnPropertySymbols(s2); i < p2.length; i++) {
+      if (e.indexOf(p2[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i]))
+        t2[p2[i]] = s2[p2[i]];
+    }
+  return t2;
+}
+function __values(o) {
+  var s2 = typeof Symbol === "function" && Symbol.iterator, m = s2 && o[s2], i = 0;
+  if (m)
+    return m.call(o);
+  if (o && typeof o.length === "number")
+    return {
+      next: function() {
+        if (o && i >= o.length)
+          o = void 0;
+        return { value: o && o[i++], done: !o };
+      }
+    };
+  throw new TypeError(s2 ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+function readable(value, start2) {
+  return {
+    subscribe: writable(value, start2).subscribe
+  };
+}
+function writable(value, start2 = noop) {
+  let stop2;
+  const subscribers = new Set();
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop2) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  function update2(fn2) {
+    set(fn2(value));
+  }
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop2 = start2(set) || noop;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0) {
+        stop2();
+        stop2 = null;
+      }
+    };
+  }
+  return { set, update: update2, subscribe: subscribe2 };
+}
+function getRandomID() {
+  const chars2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let autoId = "";
+  for (let i = 0; i < 20; i++) {
+    autoId += chars2.charAt(Math.floor(Math.random() * chars2.length));
+  }
+  return autoId;
+}
+var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated, willPreventPageLeave;
+var init_store_37bf12c9 = __esm({
+  ".svelte-kit/output/server/chunks/store-37bf12c9.js"() {
+    init_shims();
+    init_app_11594781();
+    CONSTANTS = {
+      NODE_CLIENT: false,
+      NODE_ADMIN: false,
+      SDK_VERSION: "${JSCORE_VERSION}"
+    };
+    assert = function(assertion, message2) {
+      if (!assertion) {
+        throw assertionError(message2);
+      }
+    };
+    assertionError = function(message2) {
+      return new Error("Firebase Database (" + CONSTANTS.SDK_VERSION + ") INTERNAL ASSERT FAILED: " + message2);
+    };
+    stringToByteArray$1 = function(str) {
+      const out = [];
+      let p2 = 0;
+      for (let i = 0; i < str.length; i++) {
+        let c = str.charCodeAt(i);
+        if (c < 128) {
+          out[p2++] = c;
+        } else if (c < 2048) {
+          out[p2++] = c >> 6 | 192;
+          out[p2++] = c & 63 | 128;
+        } else if ((c & 64512) === 55296 && i + 1 < str.length && (str.charCodeAt(i + 1) & 64512) === 56320) {
+          c = 65536 + ((c & 1023) << 10) + (str.charCodeAt(++i) & 1023);
+          out[p2++] = c >> 18 | 240;
+          out[p2++] = c >> 12 & 63 | 128;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
+        } else {
+          out[p2++] = c >> 12 | 224;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
+        }
+      }
+      return out;
+    };
+    byteArrayToString = function(bytes) {
+      const out = [];
+      let pos = 0, c = 0;
+      while (pos < bytes.length) {
+        const c1 = bytes[pos++];
+        if (c1 < 128) {
+          out[c++] = String.fromCharCode(c1);
+        } else if (c1 > 191 && c1 < 224) {
+          const c2 = bytes[pos++];
+          out[c++] = String.fromCharCode((c1 & 31) << 6 | c2 & 63);
+        } else if (c1 > 239 && c1 < 365) {
+          const c2 = bytes[pos++];
+          const c3 = bytes[pos++];
+          const c4 = bytes[pos++];
+          const u = ((c1 & 7) << 18 | (c2 & 63) << 12 | (c3 & 63) << 6 | c4 & 63) - 65536;
+          out[c++] = String.fromCharCode(55296 + (u >> 10));
+          out[c++] = String.fromCharCode(56320 + (u & 1023));
+        } else {
+          const c2 = bytes[pos++];
+          const c3 = bytes[pos++];
+          out[c++] = String.fromCharCode((c1 & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+        }
+      }
+      return out.join("");
+    };
+    base64 = {
+      byteToCharMap_: null,
+      charToByteMap_: null,
+      byteToCharMapWebSafe_: null,
+      charToByteMapWebSafe_: null,
+      ENCODED_VALS_BASE: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+      get ENCODED_VALS() {
+        return this.ENCODED_VALS_BASE + "+/=";
+      },
+      get ENCODED_VALS_WEBSAFE() {
+        return this.ENCODED_VALS_BASE + "-_.";
+      },
+      HAS_NATIVE_SUPPORT: typeof atob === "function",
+      encodeByteArray(input, webSafe) {
+        if (!Array.isArray(input)) {
+          throw Error("encodeByteArray takes an array as a parameter");
+        }
+        this.init_();
+        const byteToCharMap = webSafe ? this.byteToCharMapWebSafe_ : this.byteToCharMap_;
+        const output = [];
+        for (let i = 0; i < input.length; i += 3) {
+          const byte1 = input[i];
+          const haveByte2 = i + 1 < input.length;
+          const byte2 = haveByte2 ? input[i + 1] : 0;
+          const haveByte3 = i + 2 < input.length;
+          const byte3 = haveByte3 ? input[i + 2] : 0;
+          const outByte1 = byte1 >> 2;
+          const outByte2 = (byte1 & 3) << 4 | byte2 >> 4;
+          let outByte3 = (byte2 & 15) << 2 | byte3 >> 6;
+          let outByte4 = byte3 & 63;
+          if (!haveByte3) {
+            outByte4 = 64;
+            if (!haveByte2) {
+              outByte3 = 64;
+            }
+          }
+          output.push(byteToCharMap[outByte1], byteToCharMap[outByte2], byteToCharMap[outByte3], byteToCharMap[outByte4]);
+        }
+        return output.join("");
+      },
+      encodeString(input, webSafe) {
+        if (this.HAS_NATIVE_SUPPORT && !webSafe) {
+          return btoa(input);
+        }
+        return this.encodeByteArray(stringToByteArray$1(input), webSafe);
+      },
+      decodeString(input, webSafe) {
+        if (this.HAS_NATIVE_SUPPORT && !webSafe) {
+          return atob(input);
+        }
+        return byteArrayToString(this.decodeStringToByteArray(input, webSafe));
+      },
+      decodeStringToByteArray(input, webSafe) {
+        this.init_();
+        const charToByteMap = webSafe ? this.charToByteMapWebSafe_ : this.charToByteMap_;
+        const output = [];
+        for (let i = 0; i < input.length; ) {
+          const byte1 = charToByteMap[input.charAt(i++)];
+          const haveByte2 = i < input.length;
+          const byte2 = haveByte2 ? charToByteMap[input.charAt(i)] : 0;
+          ++i;
+          const haveByte3 = i < input.length;
+          const byte3 = haveByte3 ? charToByteMap[input.charAt(i)] : 64;
+          ++i;
+          const haveByte4 = i < input.length;
+          const byte4 = haveByte4 ? charToByteMap[input.charAt(i)] : 64;
+          ++i;
+          if (byte1 == null || byte2 == null || byte3 == null || byte4 == null) {
+            throw Error();
+          }
+          const outByte1 = byte1 << 2 | byte2 >> 4;
+          output.push(outByte1);
+          if (byte3 !== 64) {
+            const outByte2 = byte2 << 4 & 240 | byte3 >> 2;
+            output.push(outByte2);
+            if (byte4 !== 64) {
+              const outByte3 = byte3 << 6 & 192 | byte4;
+              output.push(outByte3);
+            }
+          }
+        }
+        return output;
+      },
+      init_() {
+        if (!this.byteToCharMap_) {
+          this.byteToCharMap_ = {};
+          this.charToByteMap_ = {};
+          this.byteToCharMapWebSafe_ = {};
+          this.charToByteMapWebSafe_ = {};
+          for (let i = 0; i < this.ENCODED_VALS.length; i++) {
+            this.byteToCharMap_[i] = this.ENCODED_VALS.charAt(i);
+            this.charToByteMap_[this.byteToCharMap_[i]] = i;
+            this.byteToCharMapWebSafe_[i] = this.ENCODED_VALS_WEBSAFE.charAt(i);
+            this.charToByteMapWebSafe_[this.byteToCharMapWebSafe_[i]] = i;
+            if (i >= this.ENCODED_VALS_BASE.length) {
+              this.charToByteMap_[this.ENCODED_VALS_WEBSAFE.charAt(i)] = i;
+              this.charToByteMapWebSafe_[this.ENCODED_VALS.charAt(i)] = i;
+            }
+          }
+        }
+      }
+    };
+    base64Encode = function(str) {
+      const utf8Bytes = stringToByteArray$1(str);
+      return base64.encodeByteArray(utf8Bytes, true);
+    };
+    base64Decode = function(str) {
+      try {
+        return base64.decodeString(str, true);
+      } catch (e) {
+        console.error("base64Decode failed: ", e);
+      }
+      return null;
+    };
+    Deferred = class {
+      constructor() {
+        this.reject = () => {
+        };
+        this.resolve = () => {
+        };
+        this.promise = new Promise((resolve2, reject2) => {
+          this.resolve = resolve2;
+          this.reject = reject2;
+        });
+      }
+      wrapCallback(callback) {
+        return (error3, value) => {
+          if (error3) {
+            this.reject(error3);
+          } else {
+            this.resolve(value);
+          }
+          if (typeof callback === "function") {
+            this.promise.catch(() => {
+            });
+            if (callback.length === 1) {
+              callback(error3);
+            } else {
+              callback(error3, value);
+            }
+          }
+        };
+      }
+    };
+    ERROR_NAME = "FirebaseError";
+    FirebaseError = class extends Error {
+      constructor(code, message2, customData) {
+        super(message2);
+        this.code = code;
+        this.customData = customData;
+        this.name = ERROR_NAME;
+        Object.setPrototypeOf(this, FirebaseError.prototype);
+        if (Error.captureStackTrace) {
+          Error.captureStackTrace(this, ErrorFactory.prototype.create);
+        }
+      }
+    };
+    ErrorFactory = class {
+      constructor(service, serviceName, errors) {
+        this.service = service;
+        this.serviceName = serviceName;
+        this.errors = errors;
+      }
+      create(code, ...data) {
+        const customData = data[0] || {};
+        const fullCode = `${this.service}/${code}`;
+        const template2 = this.errors[code];
+        const message2 = template2 ? replaceTemplate(template2, customData) : "Error";
+        const fullMessage = `${this.serviceName}: ${message2} (${fullCode}).`;
+        const error3 = new FirebaseError(fullCode, fullMessage, customData);
+        return error3;
+      }
+    };
+    PATTERN = /\{\$([^}]+)}/g;
+    decode = function(token) {
+      let header = {}, claims = {}, data = {}, signature = "";
+      try {
+        const parts = token.split(".");
+        header = jsonEval(base64Decode(parts[0]) || "");
+        claims = jsonEval(base64Decode(parts[1]) || "");
+        signature = parts[2];
+        data = claims["d"] || {};
+        delete claims["d"];
+      } catch (e) {
+      }
+      return {
+        header,
+        claims,
+        data,
+        signature
+      };
+    };
+    isValidFormat = function(token) {
+      const decoded = decode(token), claims = decoded.claims;
+      return !!claims && typeof claims === "object" && claims.hasOwnProperty("iat");
+    };
+    isAdmin = function(token) {
+      const claims = decode(token).claims;
+      return typeof claims === "object" && claims["admin"] === true;
+    };
+    Sha1 = class {
+      constructor() {
+        this.chain_ = [];
+        this.buf_ = [];
+        this.W_ = [];
+        this.pad_ = [];
+        this.inbuf_ = 0;
+        this.total_ = 0;
+        this.blockSize = 512 / 8;
+        this.pad_[0] = 128;
+        for (let i = 1; i < this.blockSize; ++i) {
+          this.pad_[i] = 0;
+        }
+        this.reset();
+      }
+      reset() {
+        this.chain_[0] = 1732584193;
+        this.chain_[1] = 4023233417;
+        this.chain_[2] = 2562383102;
+        this.chain_[3] = 271733878;
+        this.chain_[4] = 3285377520;
+        this.inbuf_ = 0;
+        this.total_ = 0;
+      }
+      compress_(buf, offset) {
+        if (!offset) {
+          offset = 0;
+        }
+        const W2 = this.W_;
+        if (typeof buf === "string") {
+          for (let i = 0; i < 16; i++) {
+            W2[i] = buf.charCodeAt(offset) << 24 | buf.charCodeAt(offset + 1) << 16 | buf.charCodeAt(offset + 2) << 8 | buf.charCodeAt(offset + 3);
+            offset += 4;
+          }
+        } else {
+          for (let i = 0; i < 16; i++) {
+            W2[i] = buf[offset] << 24 | buf[offset + 1] << 16 | buf[offset + 2] << 8 | buf[offset + 3];
+            offset += 4;
+          }
+        }
+        for (let i = 16; i < 80; i++) {
+          const t2 = W2[i - 3] ^ W2[i - 8] ^ W2[i - 14] ^ W2[i - 16];
+          W2[i] = (t2 << 1 | t2 >>> 31) & 4294967295;
+        }
+        let a = this.chain_[0];
+        let b = this.chain_[1];
+        let c = this.chain_[2];
+        let d2 = this.chain_[3];
+        let e = this.chain_[4];
+        let f, k2;
+        for (let i = 0; i < 80; i++) {
+          if (i < 40) {
+            if (i < 20) {
+              f = d2 ^ b & (c ^ d2);
+              k2 = 1518500249;
+            } else {
+              f = b ^ c ^ d2;
+              k2 = 1859775393;
+            }
+          } else {
+            if (i < 60) {
+              f = b & c | d2 & (b | c);
+              k2 = 2400959708;
+            } else {
+              f = b ^ c ^ d2;
+              k2 = 3395469782;
+            }
+          }
+          const t2 = (a << 5 | a >>> 27) + f + e + k2 + W2[i] & 4294967295;
+          e = d2;
+          d2 = c;
+          c = (b << 30 | b >>> 2) & 4294967295;
+          b = a;
+          a = t2;
+        }
+        this.chain_[0] = this.chain_[0] + a & 4294967295;
+        this.chain_[1] = this.chain_[1] + b & 4294967295;
+        this.chain_[2] = this.chain_[2] + c & 4294967295;
+        this.chain_[3] = this.chain_[3] + d2 & 4294967295;
+        this.chain_[4] = this.chain_[4] + e & 4294967295;
+      }
+      update(bytes, length) {
+        if (bytes == null) {
+          return;
+        }
+        if (length === void 0) {
+          length = bytes.length;
+        }
+        const lengthMinusBlock = length - this.blockSize;
+        let n = 0;
+        const buf = this.buf_;
+        let inbuf = this.inbuf_;
+        while (n < length) {
+          if (inbuf === 0) {
+            while (n <= lengthMinusBlock) {
+              this.compress_(bytes, n);
+              n += this.blockSize;
+            }
+          }
+          if (typeof bytes === "string") {
+            while (n < length) {
+              buf[inbuf] = bytes.charCodeAt(n);
+              ++inbuf;
+              ++n;
+              if (inbuf === this.blockSize) {
+                this.compress_(buf);
+                inbuf = 0;
+                break;
+              }
+            }
+          } else {
+            while (n < length) {
+              buf[inbuf] = bytes[n];
+              ++inbuf;
+              ++n;
+              if (inbuf === this.blockSize) {
+                this.compress_(buf);
+                inbuf = 0;
+                break;
+              }
+            }
+          }
+        }
+        this.inbuf_ = inbuf;
+        this.total_ += length;
+      }
+      digest() {
+        const digest = [];
+        let totalBits = this.total_ * 8;
+        if (this.inbuf_ < 56) {
+          this.update(this.pad_, 56 - this.inbuf_);
+        } else {
+          this.update(this.pad_, this.blockSize - (this.inbuf_ - 56));
+        }
+        for (let i = this.blockSize - 1; i >= 56; i--) {
+          this.buf_[i] = totalBits & 255;
+          totalBits /= 256;
+        }
+        this.compress_(this.buf_);
+        let n = 0;
+        for (let i = 0; i < 5; i++) {
+          for (let j2 = 24; j2 >= 0; j2 -= 8) {
+            digest[n] = this.chain_[i] >> j2 & 255;
+            ++n;
+          }
+        }
+        return digest;
+      }
+    };
+    ObserverProxy = class {
+      constructor(executor, onNoObservers) {
+        this.observers = [];
+        this.unsubscribes = [];
+        this.observerCount = 0;
+        this.task = Promise.resolve();
+        this.finalized = false;
+        this.onNoObservers = onNoObservers;
+        this.task.then(() => {
+          executor(this);
+        }).catch((e) => {
+          this.error(e);
+        });
+      }
+      next(value) {
+        this.forEachObserver((observer) => {
+          observer.next(value);
+        });
+      }
+      error(error3) {
+        this.forEachObserver((observer) => {
+          observer.error(error3);
+        });
+        this.close(error3);
+      }
+      complete() {
+        this.forEachObserver((observer) => {
+          observer.complete();
+        });
+        this.close();
+      }
+      subscribe(nextOrObserver, error3, complete) {
+        let observer;
+        if (nextOrObserver === void 0 && error3 === void 0 && complete === void 0) {
+          throw new Error("Missing Observer.");
+        }
+        if (implementsAnyMethods(nextOrObserver, [
+          "next",
+          "error",
+          "complete"
+        ])) {
+          observer = nextOrObserver;
+        } else {
+          observer = {
+            next: nextOrObserver,
+            error: error3,
+            complete
+          };
+        }
+        if (observer.next === void 0) {
+          observer.next = noop2;
+        }
+        if (observer.error === void 0) {
+          observer.error = noop2;
+        }
+        if (observer.complete === void 0) {
+          observer.complete = noop2;
+        }
+        const unsub = this.unsubscribeOne.bind(this, this.observers.length);
+        if (this.finalized) {
+          this.task.then(() => {
+            try {
+              if (this.finalError) {
+                observer.error(this.finalError);
+              } else {
+                observer.complete();
+              }
+            } catch (e) {
+            }
+            return;
+          });
+        }
+        this.observers.push(observer);
+        return unsub;
+      }
+      unsubscribeOne(i) {
+        if (this.observers === void 0 || this.observers[i] === void 0) {
+          return;
+        }
+        delete this.observers[i];
+        this.observerCount -= 1;
+        if (this.observerCount === 0 && this.onNoObservers !== void 0) {
+          this.onNoObservers(this);
+        }
+      }
+      forEachObserver(fn2) {
+        if (this.finalized) {
+          return;
+        }
+        for (let i = 0; i < this.observers.length; i++) {
+          this.sendOne(i, fn2);
+        }
+      }
+      sendOne(i, fn2) {
+        this.task.then(() => {
+          if (this.observers !== void 0 && this.observers[i] !== void 0) {
+            try {
+              fn2(this.observers[i]);
+            } catch (e) {
+              if (typeof console !== "undefined" && console.error) {
+                console.error(e);
+              }
+            }
+          }
+        });
+      }
+      close(err) {
+        if (this.finalized) {
+          return;
+        }
+        this.finalized = true;
+        if (err !== void 0) {
+          this.finalError = err;
+        }
+        this.task.then(() => {
+          this.observers = void 0;
+          this.onNoObservers = void 0;
+        });
+      }
+    };
+    stringToByteArray = function(str) {
+      const out = [];
+      let p2 = 0;
+      for (let i = 0; i < str.length; i++) {
+        let c = str.charCodeAt(i);
+        if (c >= 55296 && c <= 56319) {
+          const high = c - 55296;
+          i++;
+          assert(i < str.length, "Surrogate pair missing trail surrogate.");
+          const low = str.charCodeAt(i) - 56320;
+          c = 65536 + (high << 10) + low;
+        }
+        if (c < 128) {
+          out[p2++] = c;
+        } else if (c < 2048) {
+          out[p2++] = c >> 6 | 192;
+          out[p2++] = c & 63 | 128;
+        } else if (c < 65536) {
+          out[p2++] = c >> 12 | 224;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
+        } else {
+          out[p2++] = c >> 18 | 240;
+          out[p2++] = c >> 12 & 63 | 128;
+          out[p2++] = c >> 6 & 63 | 128;
+          out[p2++] = c & 63 | 128;
+        }
+      }
+      return out;
+    };
+    stringLength = function(str) {
+      let p2 = 0;
+      for (let i = 0; i < str.length; i++) {
+        const c = str.charCodeAt(i);
+        if (c < 128) {
+          p2++;
+        } else if (c < 2048) {
+          p2 += 2;
+        } else if (c >= 55296 && c <= 56319) {
+          p2 += 4;
+          i++;
+        } else {
+          p2 += 3;
+        }
+      }
+      return p2;
+    };
+    CONSTANTS.NODE_CLIENT = true;
+    Component = class {
+      constructor(name22, instanceFactory, type) {
+        this.name = name22;
+        this.instanceFactory = instanceFactory;
+        this.type = type;
+        this.multipleInstances = false;
+        this.serviceProps = {};
+        this.instantiationMode = "LAZY";
+        this.onInstanceCreated = null;
+      }
+      setInstantiationMode(mode) {
+        this.instantiationMode = mode;
+        return this;
+      }
+      setMultipleInstances(multipleInstances) {
+        this.multipleInstances = multipleInstances;
+        return this;
+      }
+      setServiceProps(props) {
+        this.serviceProps = props;
+        return this;
+      }
+      setInstanceCreatedCallback(callback) {
+        this.onInstanceCreated = callback;
+        return this;
+      }
+    };
+    (function(LogLevel2) {
+      LogLevel2[LogLevel2["DEBUG"] = 0] = "DEBUG";
+      LogLevel2[LogLevel2["VERBOSE"] = 1] = "VERBOSE";
+      LogLevel2[LogLevel2["INFO"] = 2] = "INFO";
+      LogLevel2[LogLevel2["WARN"] = 3] = "WARN";
+      LogLevel2[LogLevel2["ERROR"] = 4] = "ERROR";
+      LogLevel2[LogLevel2["SILENT"] = 5] = "SILENT";
+    })(LogLevel || (LogLevel = {}));
+    levelStringToEnum = {
+      "debug": LogLevel.DEBUG,
+      "verbose": LogLevel.VERBOSE,
+      "info": LogLevel.INFO,
+      "warn": LogLevel.WARN,
+      "error": LogLevel.ERROR,
+      "silent": LogLevel.SILENT
+    };
+    defaultLogLevel = LogLevel.INFO;
+    ConsoleMethod = {
+      [LogLevel.DEBUG]: "log",
+      [LogLevel.VERBOSE]: "log",
+      [LogLevel.INFO]: "info",
+      [LogLevel.WARN]: "warn",
+      [LogLevel.ERROR]: "error"
+    };
+    defaultLogHandler = (instance2, logType, ...args) => {
+      if (logType < instance2.logLevel) {
+        return;
+      }
+      const now = new Date().toISOString();
+      const method = ConsoleMethod[logType];
+      if (method) {
+        console[method](`[${now}]  ${instance2.name}:`, ...args);
+      } else {
+        throw new Error(`Attempted to log a message with an invalid logType (value: ${logType})`);
+      }
+    };
+    Logger = class {
+      constructor(name22) {
+        this.name = name22;
+        this._logLevel = defaultLogLevel;
+        this._logHandler = defaultLogHandler;
+        this._userLogHandler = null;
+      }
+      get logLevel() {
+        return this._logLevel;
+      }
+      set logLevel(val) {
+        if (!(val in LogLevel)) {
+          throw new TypeError(`Invalid value "${val}" assigned to \`logLevel\``);
+        }
+        this._logLevel = val;
+      }
+      setLogLevel(val) {
+        this._logLevel = typeof val === "string" ? levelStringToEnum[val] : val;
+      }
+      get logHandler() {
+        return this._logHandler;
+      }
+      set logHandler(val) {
+        if (typeof val !== "function") {
+          throw new TypeError("Value assigned to `logHandler` must be a function");
+        }
+        this._logHandler = val;
+      }
+      get userLogHandler() {
+        return this._userLogHandler;
+      }
+      set userLogHandler(val) {
+        this._userLogHandler = val;
+      }
+      debug(...args) {
+        this._userLogHandler && this._userLogHandler(this, LogLevel.DEBUG, ...args);
+        this._logHandler(this, LogLevel.DEBUG, ...args);
+      }
+      log(...args) {
+        this._userLogHandler && this._userLogHandler(this, LogLevel.VERBOSE, ...args);
+        this._logHandler(this, LogLevel.VERBOSE, ...args);
+      }
+      info(...args) {
+        this._userLogHandler && this._userLogHandler(this, LogLevel.INFO, ...args);
+        this._logHandler(this, LogLevel.INFO, ...args);
+      }
+      warn(...args) {
+        this._userLogHandler && this._userLogHandler(this, LogLevel.WARN, ...args);
+        this._logHandler(this, LogLevel.WARN, ...args);
+      }
+      error(...args) {
+        this._userLogHandler && this._userLogHandler(this, LogLevel.ERROR, ...args);
+        this._logHandler(this, LogLevel.ERROR, ...args);
+      }
+    };
+    PlatformLoggerServiceImpl = class {
+      constructor(container) {
+        this.container = container;
+      }
+      getPlatformInfoString() {
+        const providers = this.container.getProviders();
+        return providers.map((provider) => {
+          if (isVersionServiceProvider(provider)) {
+            const service = provider.getImmediate();
+            return `${service.library}/${service.version}`;
+          } else {
+            return null;
+          }
+        }).filter((logString) => logString).join(" ");
+      }
+    };
+    name$o = "@firebase/app";
+    version$1 = "0.7.9";
+    logger = new Logger("@firebase/app");
+    name$n = "@firebase/app-compat";
+    name$m = "@firebase/analytics-compat";
+    name$l = "@firebase/analytics";
+    name$k = "@firebase/app-check-compat";
+    name$j = "@firebase/app-check";
+    name$i = "@firebase/auth";
+    name$h = "@firebase/auth-compat";
+    name$g = "@firebase/database";
+    name$f = "@firebase/database-compat";
+    name$e = "@firebase/functions";
+    name$d = "@firebase/functions-compat";
+    name$c = "@firebase/installations";
+    name$b = "@firebase/installations-compat";
+    name$a = "@firebase/messaging";
+    name$9 = "@firebase/messaging-compat";
+    name$8 = "@firebase/performance";
+    name$7 = "@firebase/performance-compat";
+    name$6 = "@firebase/remote-config";
+    name$5 = "@firebase/remote-config-compat";
+    name$4 = "@firebase/storage";
+    name$3 = "@firebase/storage-compat";
+    name$2 = "@firebase/firestore";
+    name$1 = "@firebase/firestore-compat";
+    name = "firebase";
+    version = "9.5.0";
+    DEFAULT_ENTRY_NAME = "[DEFAULT]";
+    PLATFORM_LOG_STRING = {
+      [name$o]: "fire-core",
+      [name$n]: "fire-core-compat",
+      [name$l]: "fire-analytics",
+      [name$m]: "fire-analytics-compat",
+      [name$j]: "fire-app-check",
+      [name$k]: "fire-app-check-compat",
+      [name$i]: "fire-auth",
+      [name$h]: "fire-auth-compat",
+      [name$g]: "fire-rtdb",
+      [name$f]: "fire-rtdb-compat",
+      [name$e]: "fire-fn",
+      [name$d]: "fire-fn-compat",
+      [name$c]: "fire-iid",
+      [name$b]: "fire-iid-compat",
+      [name$a]: "fire-fcm",
+      [name$9]: "fire-fcm-compat",
+      [name$8]: "fire-perf",
+      [name$7]: "fire-perf-compat",
+      [name$6]: "fire-rc",
+      [name$5]: "fire-rc-compat",
+      [name$4]: "fire-gcs",
+      [name$3]: "fire-gcs-compat",
+      [name$2]: "fire-fst",
+      [name$1]: "fire-fst-compat",
+      "fire-js": "fire-js",
+      [name]: "fire-js-all"
+    };
+    _apps = new Map();
+    _components = new Map();
+    ERRORS = {
+      ["no-app"]: "No Firebase App '{$appName}' has been created - call Firebase App.initializeApp()",
+      ["bad-app-name"]: "Illegal App name: '{$appName}",
+      ["duplicate-app"]: "Firebase App named '{$appName}' already exists with different options or config",
+      ["app-deleted"]: "Firebase App named '{$appName}' already deleted",
+      ["invalid-app-argument"]: "firebase.{$appName}() takes either no argument or a Firebase App instance.",
+      ["invalid-log-argument"]: "First argument to `onLog` must be null or a function."
+    };
+    ERROR_FACTORY = new ErrorFactory("app", "Firebase", ERRORS);
+    SDK_VERSION = version;
+    registerCoreComponents("");
+    extendStatics = function(d2, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b2) {
+        d22.__proto__ = b2;
+      } || function(d22, b2) {
+        for (var p2 in b2)
+          if (Object.prototype.hasOwnProperty.call(b2, p2))
+            d22[p2] = b2[p2];
+      };
+      return extendStatics(d2, b);
+    };
+    __assign = function() {
+      __assign = Object.assign || function __assign2(t2) {
+        for (var s2, i = 1, n = arguments.length; i < n; i++) {
+          s2 = arguments[i];
+          for (var p2 in s2)
+            if (Object.prototype.hasOwnProperty.call(s2, p2))
+              t2[p2] = s2[p2];
+        }
+        return t2;
+      };
+      return __assign.apply(this, arguments);
+    };
+    subscriber_queue = [];
+    displayDate = function(isoString, format2 = {
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "utc"
+    }) {
+      const deserializedDate = new Date(isoString);
+      let currentTimeZoneOffset = deserializedDate.getTimezoneOffset() * 6e4;
+      return new Date(deserializedDate - currentTimeZoneOffset).toLocaleDateString("en-US", format2);
+    };
+    canvasHeight = writable(0);
+    canvasWidth = writable(0);
+    hasFetchedUser = writable(false);
+    user = writable({});
+    currentTool = writable({
+      type: "pencil",
+      color: "white",
+      lineWidth: 3
+    });
+    onlyAllowApplePencil = writable(true);
+    dailyMicStream = writable(null);
+    roomToPeople = writable({});
+    dailyRoomParticipants = writable({});
+    browserTabID = readable(getRandomID());
+    isFirestoreDocCreated = writable(false);
+    willPreventPageLeave = writable(false);
+  }
+});
+
+// .svelte-kit/output/server/chunks/index.esm2017-ce2eb917.js
 function aa() {
 }
 function ba$1(a) {
@@ -8927,6 +9858,10 @@ function _h(t2, e, n, ...s2) {
 function mh(t2) {
   return Th(ga(t2.firestore, ka), [new cn(t2._key, Ge.none())]);
 }
+function gh(t2, e) {
+  const n = ga(t2.firestore, ka), s2 = va(t2), i = sh(t2.converter, e);
+  return Th(n, [au(cu(t2.firestore), "addDoc", s2._key, i, t2.converter !== null, {}).toMutation(s2._key, Ge.exists(false))]).then(() => s2);
+}
 function yh(t2, ...e) {
   var n, s2, i;
   t2 = getModularInstance(t2);
@@ -8991,883 +9926,11 @@ function Vh(t2) {
 function Sh(t2) {
   return Fa(t2 = ga(t2, ka)), new rh(t2, (e) => Th(t2, e));
 }
-function __extends(d2, b) {
-  if (typeof b !== "function" && b !== null)
-    throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-  extendStatics(d2, b);
-  function __() {
-    this.constructor = d2;
-  }
-  d2.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-function __rest(s2, e) {
-  var t2 = {};
-  for (var p2 in s2)
-    if (Object.prototype.hasOwnProperty.call(s2, p2) && e.indexOf(p2) < 0)
-      t2[p2] = s2[p2];
-  if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
-    for (var i = 0, p2 = Object.getOwnPropertySymbols(s2); i < p2.length; i++) {
-      if (e.indexOf(p2[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i]))
-        t2[p2[i]] = s2[p2[i]];
-    }
-  return t2;
-}
-function __values(o) {
-  var s2 = typeof Symbol === "function" && Symbol.iterator, m = s2 && o[s2], i = 0;
-  if (m)
-    return m.call(o);
-  if (o && typeof o.length === "number")
-    return {
-      next: function() {
-        if (o && i >= o.length)
-          o = void 0;
-        return { value: o && o[i++], done: !o };
-      }
-    };
-  throw new TypeError(s2 ? "Object is not iterable." : "Symbol.iterator is not defined.");
-}
-function readable(value, start2) {
-  return {
-    subscribe: writable(value, start2).subscribe
-  };
-}
-function writable(value, start2 = noop) {
-  let stop2;
-  const subscribers = new Set();
-  function set(new_value) {
-    if (safe_not_equal(value, new_value)) {
-      value = new_value;
-      if (stop2) {
-        const run_queue = !subscriber_queue.length;
-        for (const subscriber of subscribers) {
-          subscriber[1]();
-          subscriber_queue.push(subscriber, value);
-        }
-        if (run_queue) {
-          for (let i = 0; i < subscriber_queue.length; i += 2) {
-            subscriber_queue[i][0](subscriber_queue[i + 1]);
-          }
-          subscriber_queue.length = 0;
-        }
-      }
-    }
-  }
-  function update2(fn2) {
-    set(fn2(value));
-  }
-  function subscribe2(run2, invalidate = noop) {
-    const subscriber = [run2, invalidate];
-    subscribers.add(subscriber);
-    if (subscribers.size === 1) {
-      stop2 = start2(set) || noop;
-    }
-    run2(value);
-    return () => {
-      subscribers.delete(subscriber);
-      if (subscribers.size === 0) {
-        stop2();
-        stop2 = null;
-      }
-    };
-  }
-  return { set, update: update2, subscribe: subscribe2 };
-}
-function getRandomID() {
-  const chars2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let autoId = "";
-  for (let i = 0; i < 20; i++) {
-    autoId += chars2.charAt(Math.floor(Math.random() * chars2.length));
-  }
-  return autoId;
-}
-var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated, willPreventPageLeave;
-var init_store_24a6b466 = __esm({
-  ".svelte-kit/output/server/chunks/store-24a6b466.js"() {
+var commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah;
+var init_index_esm2017_ce2eb917 = __esm({
+  ".svelte-kit/output/server/chunks/index.esm2017-ce2eb917.js"() {
     init_shims();
-    init_app_ce98eb20();
-    CONSTANTS = {
-      NODE_CLIENT: false,
-      NODE_ADMIN: false,
-      SDK_VERSION: "${JSCORE_VERSION}"
-    };
-    assert = function(assertion, message2) {
-      if (!assertion) {
-        throw assertionError(message2);
-      }
-    };
-    assertionError = function(message2) {
-      return new Error("Firebase Database (" + CONSTANTS.SDK_VERSION + ") INTERNAL ASSERT FAILED: " + message2);
-    };
-    stringToByteArray$1 = function(str) {
-      const out = [];
-      let p2 = 0;
-      for (let i = 0; i < str.length; i++) {
-        let c = str.charCodeAt(i);
-        if (c < 128) {
-          out[p2++] = c;
-        } else if (c < 2048) {
-          out[p2++] = c >> 6 | 192;
-          out[p2++] = c & 63 | 128;
-        } else if ((c & 64512) === 55296 && i + 1 < str.length && (str.charCodeAt(i + 1) & 64512) === 56320) {
-          c = 65536 + ((c & 1023) << 10) + (str.charCodeAt(++i) & 1023);
-          out[p2++] = c >> 18 | 240;
-          out[p2++] = c >> 12 & 63 | 128;
-          out[p2++] = c >> 6 & 63 | 128;
-          out[p2++] = c & 63 | 128;
-        } else {
-          out[p2++] = c >> 12 | 224;
-          out[p2++] = c >> 6 & 63 | 128;
-          out[p2++] = c & 63 | 128;
-        }
-      }
-      return out;
-    };
-    byteArrayToString = function(bytes) {
-      const out = [];
-      let pos = 0, c = 0;
-      while (pos < bytes.length) {
-        const c1 = bytes[pos++];
-        if (c1 < 128) {
-          out[c++] = String.fromCharCode(c1);
-        } else if (c1 > 191 && c1 < 224) {
-          const c2 = bytes[pos++];
-          out[c++] = String.fromCharCode((c1 & 31) << 6 | c2 & 63);
-        } else if (c1 > 239 && c1 < 365) {
-          const c2 = bytes[pos++];
-          const c3 = bytes[pos++];
-          const c4 = bytes[pos++];
-          const u = ((c1 & 7) << 18 | (c2 & 63) << 12 | (c3 & 63) << 6 | c4 & 63) - 65536;
-          out[c++] = String.fromCharCode(55296 + (u >> 10));
-          out[c++] = String.fromCharCode(56320 + (u & 1023));
-        } else {
-          const c2 = bytes[pos++];
-          const c3 = bytes[pos++];
-          out[c++] = String.fromCharCode((c1 & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
-        }
-      }
-      return out.join("");
-    };
-    base64 = {
-      byteToCharMap_: null,
-      charToByteMap_: null,
-      byteToCharMapWebSafe_: null,
-      charToByteMapWebSafe_: null,
-      ENCODED_VALS_BASE: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
-      get ENCODED_VALS() {
-        return this.ENCODED_VALS_BASE + "+/=";
-      },
-      get ENCODED_VALS_WEBSAFE() {
-        return this.ENCODED_VALS_BASE + "-_.";
-      },
-      HAS_NATIVE_SUPPORT: typeof atob === "function",
-      encodeByteArray(input, webSafe) {
-        if (!Array.isArray(input)) {
-          throw Error("encodeByteArray takes an array as a parameter");
-        }
-        this.init_();
-        const byteToCharMap = webSafe ? this.byteToCharMapWebSafe_ : this.byteToCharMap_;
-        const output = [];
-        for (let i = 0; i < input.length; i += 3) {
-          const byte1 = input[i];
-          const haveByte2 = i + 1 < input.length;
-          const byte2 = haveByte2 ? input[i + 1] : 0;
-          const haveByte3 = i + 2 < input.length;
-          const byte3 = haveByte3 ? input[i + 2] : 0;
-          const outByte1 = byte1 >> 2;
-          const outByte2 = (byte1 & 3) << 4 | byte2 >> 4;
-          let outByte3 = (byte2 & 15) << 2 | byte3 >> 6;
-          let outByte4 = byte3 & 63;
-          if (!haveByte3) {
-            outByte4 = 64;
-            if (!haveByte2) {
-              outByte3 = 64;
-            }
-          }
-          output.push(byteToCharMap[outByte1], byteToCharMap[outByte2], byteToCharMap[outByte3], byteToCharMap[outByte4]);
-        }
-        return output.join("");
-      },
-      encodeString(input, webSafe) {
-        if (this.HAS_NATIVE_SUPPORT && !webSafe) {
-          return btoa(input);
-        }
-        return this.encodeByteArray(stringToByteArray$1(input), webSafe);
-      },
-      decodeString(input, webSafe) {
-        if (this.HAS_NATIVE_SUPPORT && !webSafe) {
-          return atob(input);
-        }
-        return byteArrayToString(this.decodeStringToByteArray(input, webSafe));
-      },
-      decodeStringToByteArray(input, webSafe) {
-        this.init_();
-        const charToByteMap = webSafe ? this.charToByteMapWebSafe_ : this.charToByteMap_;
-        const output = [];
-        for (let i = 0; i < input.length; ) {
-          const byte1 = charToByteMap[input.charAt(i++)];
-          const haveByte2 = i < input.length;
-          const byte2 = haveByte2 ? charToByteMap[input.charAt(i)] : 0;
-          ++i;
-          const haveByte3 = i < input.length;
-          const byte3 = haveByte3 ? charToByteMap[input.charAt(i)] : 64;
-          ++i;
-          const haveByte4 = i < input.length;
-          const byte4 = haveByte4 ? charToByteMap[input.charAt(i)] : 64;
-          ++i;
-          if (byte1 == null || byte2 == null || byte3 == null || byte4 == null) {
-            throw Error();
-          }
-          const outByte1 = byte1 << 2 | byte2 >> 4;
-          output.push(outByte1);
-          if (byte3 !== 64) {
-            const outByte2 = byte2 << 4 & 240 | byte3 >> 2;
-            output.push(outByte2);
-            if (byte4 !== 64) {
-              const outByte3 = byte3 << 6 & 192 | byte4;
-              output.push(outByte3);
-            }
-          }
-        }
-        return output;
-      },
-      init_() {
-        if (!this.byteToCharMap_) {
-          this.byteToCharMap_ = {};
-          this.charToByteMap_ = {};
-          this.byteToCharMapWebSafe_ = {};
-          this.charToByteMapWebSafe_ = {};
-          for (let i = 0; i < this.ENCODED_VALS.length; i++) {
-            this.byteToCharMap_[i] = this.ENCODED_VALS.charAt(i);
-            this.charToByteMap_[this.byteToCharMap_[i]] = i;
-            this.byteToCharMapWebSafe_[i] = this.ENCODED_VALS_WEBSAFE.charAt(i);
-            this.charToByteMapWebSafe_[this.byteToCharMapWebSafe_[i]] = i;
-            if (i >= this.ENCODED_VALS_BASE.length) {
-              this.charToByteMap_[this.ENCODED_VALS_WEBSAFE.charAt(i)] = i;
-              this.charToByteMapWebSafe_[this.ENCODED_VALS.charAt(i)] = i;
-            }
-          }
-        }
-      }
-    };
-    base64Encode = function(str) {
-      const utf8Bytes = stringToByteArray$1(str);
-      return base64.encodeByteArray(utf8Bytes, true);
-    };
-    base64Decode = function(str) {
-      try {
-        return base64.decodeString(str, true);
-      } catch (e) {
-        console.error("base64Decode failed: ", e);
-      }
-      return null;
-    };
-    Deferred = class {
-      constructor() {
-        this.reject = () => {
-        };
-        this.resolve = () => {
-        };
-        this.promise = new Promise((resolve2, reject2) => {
-          this.resolve = resolve2;
-          this.reject = reject2;
-        });
-      }
-      wrapCallback(callback) {
-        return (error3, value) => {
-          if (error3) {
-            this.reject(error3);
-          } else {
-            this.resolve(value);
-          }
-          if (typeof callback === "function") {
-            this.promise.catch(() => {
-            });
-            if (callback.length === 1) {
-              callback(error3);
-            } else {
-              callback(error3, value);
-            }
-          }
-        };
-      }
-    };
-    ERROR_NAME = "FirebaseError";
-    FirebaseError = class extends Error {
-      constructor(code, message2, customData) {
-        super(message2);
-        this.code = code;
-        this.customData = customData;
-        this.name = ERROR_NAME;
-        Object.setPrototypeOf(this, FirebaseError.prototype);
-        if (Error.captureStackTrace) {
-          Error.captureStackTrace(this, ErrorFactory.prototype.create);
-        }
-      }
-    };
-    ErrorFactory = class {
-      constructor(service, serviceName, errors) {
-        this.service = service;
-        this.serviceName = serviceName;
-        this.errors = errors;
-      }
-      create(code, ...data) {
-        const customData = data[0] || {};
-        const fullCode = `${this.service}/${code}`;
-        const template2 = this.errors[code];
-        const message2 = template2 ? replaceTemplate(template2, customData) : "Error";
-        const fullMessage = `${this.serviceName}: ${message2} (${fullCode}).`;
-        const error3 = new FirebaseError(fullCode, fullMessage, customData);
-        return error3;
-      }
-    };
-    PATTERN = /\{\$([^}]+)}/g;
-    decode = function(token) {
-      let header = {}, claims = {}, data = {}, signature = "";
-      try {
-        const parts = token.split(".");
-        header = jsonEval(base64Decode(parts[0]) || "");
-        claims = jsonEval(base64Decode(parts[1]) || "");
-        signature = parts[2];
-        data = claims["d"] || {};
-        delete claims["d"];
-      } catch (e) {
-      }
-      return {
-        header,
-        claims,
-        data,
-        signature
-      };
-    };
-    isValidFormat = function(token) {
-      const decoded = decode(token), claims = decoded.claims;
-      return !!claims && typeof claims === "object" && claims.hasOwnProperty("iat");
-    };
-    isAdmin = function(token) {
-      const claims = decode(token).claims;
-      return typeof claims === "object" && claims["admin"] === true;
-    };
-    Sha1 = class {
-      constructor() {
-        this.chain_ = [];
-        this.buf_ = [];
-        this.W_ = [];
-        this.pad_ = [];
-        this.inbuf_ = 0;
-        this.total_ = 0;
-        this.blockSize = 512 / 8;
-        this.pad_[0] = 128;
-        for (let i = 1; i < this.blockSize; ++i) {
-          this.pad_[i] = 0;
-        }
-        this.reset();
-      }
-      reset() {
-        this.chain_[0] = 1732584193;
-        this.chain_[1] = 4023233417;
-        this.chain_[2] = 2562383102;
-        this.chain_[3] = 271733878;
-        this.chain_[4] = 3285377520;
-        this.inbuf_ = 0;
-        this.total_ = 0;
-      }
-      compress_(buf, offset) {
-        if (!offset) {
-          offset = 0;
-        }
-        const W2 = this.W_;
-        if (typeof buf === "string") {
-          for (let i = 0; i < 16; i++) {
-            W2[i] = buf.charCodeAt(offset) << 24 | buf.charCodeAt(offset + 1) << 16 | buf.charCodeAt(offset + 2) << 8 | buf.charCodeAt(offset + 3);
-            offset += 4;
-          }
-        } else {
-          for (let i = 0; i < 16; i++) {
-            W2[i] = buf[offset] << 24 | buf[offset + 1] << 16 | buf[offset + 2] << 8 | buf[offset + 3];
-            offset += 4;
-          }
-        }
-        for (let i = 16; i < 80; i++) {
-          const t2 = W2[i - 3] ^ W2[i - 8] ^ W2[i - 14] ^ W2[i - 16];
-          W2[i] = (t2 << 1 | t2 >>> 31) & 4294967295;
-        }
-        let a = this.chain_[0];
-        let b = this.chain_[1];
-        let c = this.chain_[2];
-        let d2 = this.chain_[3];
-        let e = this.chain_[4];
-        let f, k2;
-        for (let i = 0; i < 80; i++) {
-          if (i < 40) {
-            if (i < 20) {
-              f = d2 ^ b & (c ^ d2);
-              k2 = 1518500249;
-            } else {
-              f = b ^ c ^ d2;
-              k2 = 1859775393;
-            }
-          } else {
-            if (i < 60) {
-              f = b & c | d2 & (b | c);
-              k2 = 2400959708;
-            } else {
-              f = b ^ c ^ d2;
-              k2 = 3395469782;
-            }
-          }
-          const t2 = (a << 5 | a >>> 27) + f + e + k2 + W2[i] & 4294967295;
-          e = d2;
-          d2 = c;
-          c = (b << 30 | b >>> 2) & 4294967295;
-          b = a;
-          a = t2;
-        }
-        this.chain_[0] = this.chain_[0] + a & 4294967295;
-        this.chain_[1] = this.chain_[1] + b & 4294967295;
-        this.chain_[2] = this.chain_[2] + c & 4294967295;
-        this.chain_[3] = this.chain_[3] + d2 & 4294967295;
-        this.chain_[4] = this.chain_[4] + e & 4294967295;
-      }
-      update(bytes, length) {
-        if (bytes == null) {
-          return;
-        }
-        if (length === void 0) {
-          length = bytes.length;
-        }
-        const lengthMinusBlock = length - this.blockSize;
-        let n = 0;
-        const buf = this.buf_;
-        let inbuf = this.inbuf_;
-        while (n < length) {
-          if (inbuf === 0) {
-            while (n <= lengthMinusBlock) {
-              this.compress_(bytes, n);
-              n += this.blockSize;
-            }
-          }
-          if (typeof bytes === "string") {
-            while (n < length) {
-              buf[inbuf] = bytes.charCodeAt(n);
-              ++inbuf;
-              ++n;
-              if (inbuf === this.blockSize) {
-                this.compress_(buf);
-                inbuf = 0;
-                break;
-              }
-            }
-          } else {
-            while (n < length) {
-              buf[inbuf] = bytes[n];
-              ++inbuf;
-              ++n;
-              if (inbuf === this.blockSize) {
-                this.compress_(buf);
-                inbuf = 0;
-                break;
-              }
-            }
-          }
-        }
-        this.inbuf_ = inbuf;
-        this.total_ += length;
-      }
-      digest() {
-        const digest = [];
-        let totalBits = this.total_ * 8;
-        if (this.inbuf_ < 56) {
-          this.update(this.pad_, 56 - this.inbuf_);
-        } else {
-          this.update(this.pad_, this.blockSize - (this.inbuf_ - 56));
-        }
-        for (let i = this.blockSize - 1; i >= 56; i--) {
-          this.buf_[i] = totalBits & 255;
-          totalBits /= 256;
-        }
-        this.compress_(this.buf_);
-        let n = 0;
-        for (let i = 0; i < 5; i++) {
-          for (let j2 = 24; j2 >= 0; j2 -= 8) {
-            digest[n] = this.chain_[i] >> j2 & 255;
-            ++n;
-          }
-        }
-        return digest;
-      }
-    };
-    ObserverProxy = class {
-      constructor(executor, onNoObservers) {
-        this.observers = [];
-        this.unsubscribes = [];
-        this.observerCount = 0;
-        this.task = Promise.resolve();
-        this.finalized = false;
-        this.onNoObservers = onNoObservers;
-        this.task.then(() => {
-          executor(this);
-        }).catch((e) => {
-          this.error(e);
-        });
-      }
-      next(value) {
-        this.forEachObserver((observer) => {
-          observer.next(value);
-        });
-      }
-      error(error3) {
-        this.forEachObserver((observer) => {
-          observer.error(error3);
-        });
-        this.close(error3);
-      }
-      complete() {
-        this.forEachObserver((observer) => {
-          observer.complete();
-        });
-        this.close();
-      }
-      subscribe(nextOrObserver, error3, complete) {
-        let observer;
-        if (nextOrObserver === void 0 && error3 === void 0 && complete === void 0) {
-          throw new Error("Missing Observer.");
-        }
-        if (implementsAnyMethods(nextOrObserver, [
-          "next",
-          "error",
-          "complete"
-        ])) {
-          observer = nextOrObserver;
-        } else {
-          observer = {
-            next: nextOrObserver,
-            error: error3,
-            complete
-          };
-        }
-        if (observer.next === void 0) {
-          observer.next = noop2;
-        }
-        if (observer.error === void 0) {
-          observer.error = noop2;
-        }
-        if (observer.complete === void 0) {
-          observer.complete = noop2;
-        }
-        const unsub = this.unsubscribeOne.bind(this, this.observers.length);
-        if (this.finalized) {
-          this.task.then(() => {
-            try {
-              if (this.finalError) {
-                observer.error(this.finalError);
-              } else {
-                observer.complete();
-              }
-            } catch (e) {
-            }
-            return;
-          });
-        }
-        this.observers.push(observer);
-        return unsub;
-      }
-      unsubscribeOne(i) {
-        if (this.observers === void 0 || this.observers[i] === void 0) {
-          return;
-        }
-        delete this.observers[i];
-        this.observerCount -= 1;
-        if (this.observerCount === 0 && this.onNoObservers !== void 0) {
-          this.onNoObservers(this);
-        }
-      }
-      forEachObserver(fn2) {
-        if (this.finalized) {
-          return;
-        }
-        for (let i = 0; i < this.observers.length; i++) {
-          this.sendOne(i, fn2);
-        }
-      }
-      sendOne(i, fn2) {
-        this.task.then(() => {
-          if (this.observers !== void 0 && this.observers[i] !== void 0) {
-            try {
-              fn2(this.observers[i]);
-            } catch (e) {
-              if (typeof console !== "undefined" && console.error) {
-                console.error(e);
-              }
-            }
-          }
-        });
-      }
-      close(err) {
-        if (this.finalized) {
-          return;
-        }
-        this.finalized = true;
-        if (err !== void 0) {
-          this.finalError = err;
-        }
-        this.task.then(() => {
-          this.observers = void 0;
-          this.onNoObservers = void 0;
-        });
-      }
-    };
-    stringToByteArray = function(str) {
-      const out = [];
-      let p2 = 0;
-      for (let i = 0; i < str.length; i++) {
-        let c = str.charCodeAt(i);
-        if (c >= 55296 && c <= 56319) {
-          const high = c - 55296;
-          i++;
-          assert(i < str.length, "Surrogate pair missing trail surrogate.");
-          const low = str.charCodeAt(i) - 56320;
-          c = 65536 + (high << 10) + low;
-        }
-        if (c < 128) {
-          out[p2++] = c;
-        } else if (c < 2048) {
-          out[p2++] = c >> 6 | 192;
-          out[p2++] = c & 63 | 128;
-        } else if (c < 65536) {
-          out[p2++] = c >> 12 | 224;
-          out[p2++] = c >> 6 & 63 | 128;
-          out[p2++] = c & 63 | 128;
-        } else {
-          out[p2++] = c >> 18 | 240;
-          out[p2++] = c >> 12 & 63 | 128;
-          out[p2++] = c >> 6 & 63 | 128;
-          out[p2++] = c & 63 | 128;
-        }
-      }
-      return out;
-    };
-    stringLength = function(str) {
-      let p2 = 0;
-      for (let i = 0; i < str.length; i++) {
-        const c = str.charCodeAt(i);
-        if (c < 128) {
-          p2++;
-        } else if (c < 2048) {
-          p2 += 2;
-        } else if (c >= 55296 && c <= 56319) {
-          p2 += 4;
-          i++;
-        } else {
-          p2 += 3;
-        }
-      }
-      return p2;
-    };
-    CONSTANTS.NODE_CLIENT = true;
-    Component = class {
-      constructor(name22, instanceFactory, type) {
-        this.name = name22;
-        this.instanceFactory = instanceFactory;
-        this.type = type;
-        this.multipleInstances = false;
-        this.serviceProps = {};
-        this.instantiationMode = "LAZY";
-        this.onInstanceCreated = null;
-      }
-      setInstantiationMode(mode) {
-        this.instantiationMode = mode;
-        return this;
-      }
-      setMultipleInstances(multipleInstances) {
-        this.multipleInstances = multipleInstances;
-        return this;
-      }
-      setServiceProps(props) {
-        this.serviceProps = props;
-        return this;
-      }
-      setInstanceCreatedCallback(callback) {
-        this.onInstanceCreated = callback;
-        return this;
-      }
-    };
-    (function(LogLevel2) {
-      LogLevel2[LogLevel2["DEBUG"] = 0] = "DEBUG";
-      LogLevel2[LogLevel2["VERBOSE"] = 1] = "VERBOSE";
-      LogLevel2[LogLevel2["INFO"] = 2] = "INFO";
-      LogLevel2[LogLevel2["WARN"] = 3] = "WARN";
-      LogLevel2[LogLevel2["ERROR"] = 4] = "ERROR";
-      LogLevel2[LogLevel2["SILENT"] = 5] = "SILENT";
-    })(LogLevel || (LogLevel = {}));
-    levelStringToEnum = {
-      "debug": LogLevel.DEBUG,
-      "verbose": LogLevel.VERBOSE,
-      "info": LogLevel.INFO,
-      "warn": LogLevel.WARN,
-      "error": LogLevel.ERROR,
-      "silent": LogLevel.SILENT
-    };
-    defaultLogLevel = LogLevel.INFO;
-    ConsoleMethod = {
-      [LogLevel.DEBUG]: "log",
-      [LogLevel.VERBOSE]: "log",
-      [LogLevel.INFO]: "info",
-      [LogLevel.WARN]: "warn",
-      [LogLevel.ERROR]: "error"
-    };
-    defaultLogHandler = (instance2, logType, ...args) => {
-      if (logType < instance2.logLevel) {
-        return;
-      }
-      const now = new Date().toISOString();
-      const method = ConsoleMethod[logType];
-      if (method) {
-        console[method](`[${now}]  ${instance2.name}:`, ...args);
-      } else {
-        throw new Error(`Attempted to log a message with an invalid logType (value: ${logType})`);
-      }
-    };
-    Logger = class {
-      constructor(name22) {
-        this.name = name22;
-        this._logLevel = defaultLogLevel;
-        this._logHandler = defaultLogHandler;
-        this._userLogHandler = null;
-      }
-      get logLevel() {
-        return this._logLevel;
-      }
-      set logLevel(val) {
-        if (!(val in LogLevel)) {
-          throw new TypeError(`Invalid value "${val}" assigned to \`logLevel\``);
-        }
-        this._logLevel = val;
-      }
-      setLogLevel(val) {
-        this._logLevel = typeof val === "string" ? levelStringToEnum[val] : val;
-      }
-      get logHandler() {
-        return this._logHandler;
-      }
-      set logHandler(val) {
-        if (typeof val !== "function") {
-          throw new TypeError("Value assigned to `logHandler` must be a function");
-        }
-        this._logHandler = val;
-      }
-      get userLogHandler() {
-        return this._userLogHandler;
-      }
-      set userLogHandler(val) {
-        this._userLogHandler = val;
-      }
-      debug(...args) {
-        this._userLogHandler && this._userLogHandler(this, LogLevel.DEBUG, ...args);
-        this._logHandler(this, LogLevel.DEBUG, ...args);
-      }
-      log(...args) {
-        this._userLogHandler && this._userLogHandler(this, LogLevel.VERBOSE, ...args);
-        this._logHandler(this, LogLevel.VERBOSE, ...args);
-      }
-      info(...args) {
-        this._userLogHandler && this._userLogHandler(this, LogLevel.INFO, ...args);
-        this._logHandler(this, LogLevel.INFO, ...args);
-      }
-      warn(...args) {
-        this._userLogHandler && this._userLogHandler(this, LogLevel.WARN, ...args);
-        this._logHandler(this, LogLevel.WARN, ...args);
-      }
-      error(...args) {
-        this._userLogHandler && this._userLogHandler(this, LogLevel.ERROR, ...args);
-        this._logHandler(this, LogLevel.ERROR, ...args);
-      }
-    };
-    PlatformLoggerServiceImpl = class {
-      constructor(container) {
-        this.container = container;
-      }
-      getPlatformInfoString() {
-        const providers = this.container.getProviders();
-        return providers.map((provider) => {
-          if (isVersionServiceProvider(provider)) {
-            const service = provider.getImmediate();
-            return `${service.library}/${service.version}`;
-          } else {
-            return null;
-          }
-        }).filter((logString) => logString).join(" ");
-      }
-    };
-    name$o = "@firebase/app";
-    version$1 = "0.7.9";
-    logger = new Logger("@firebase/app");
-    name$n = "@firebase/app-compat";
-    name$m = "@firebase/analytics-compat";
-    name$l = "@firebase/analytics";
-    name$k = "@firebase/app-check-compat";
-    name$j = "@firebase/app-check";
-    name$i = "@firebase/auth";
-    name$h = "@firebase/auth-compat";
-    name$g = "@firebase/database";
-    name$f = "@firebase/database-compat";
-    name$e = "@firebase/functions";
-    name$d = "@firebase/functions-compat";
-    name$c = "@firebase/installations";
-    name$b = "@firebase/installations-compat";
-    name$a = "@firebase/messaging";
-    name$9 = "@firebase/messaging-compat";
-    name$8 = "@firebase/performance";
-    name$7 = "@firebase/performance-compat";
-    name$6 = "@firebase/remote-config";
-    name$5 = "@firebase/remote-config-compat";
-    name$4 = "@firebase/storage";
-    name$3 = "@firebase/storage-compat";
-    name$2 = "@firebase/firestore";
-    name$1 = "@firebase/firestore-compat";
-    name = "firebase";
-    version = "9.5.0";
-    DEFAULT_ENTRY_NAME = "[DEFAULT]";
-    PLATFORM_LOG_STRING = {
-      [name$o]: "fire-core",
-      [name$n]: "fire-core-compat",
-      [name$l]: "fire-analytics",
-      [name$m]: "fire-analytics-compat",
-      [name$j]: "fire-app-check",
-      [name$k]: "fire-app-check-compat",
-      [name$i]: "fire-auth",
-      [name$h]: "fire-auth-compat",
-      [name$g]: "fire-rtdb",
-      [name$f]: "fire-rtdb-compat",
-      [name$e]: "fire-fn",
-      [name$d]: "fire-fn-compat",
-      [name$c]: "fire-iid",
-      [name$b]: "fire-iid-compat",
-      [name$a]: "fire-fcm",
-      [name$9]: "fire-fcm-compat",
-      [name$8]: "fire-perf",
-      [name$7]: "fire-perf-compat",
-      [name$6]: "fire-rc",
-      [name$5]: "fire-rc-compat",
-      [name$4]: "fire-gcs",
-      [name$3]: "fire-gcs-compat",
-      [name$2]: "fire-fst",
-      [name$1]: "fire-fst-compat",
-      "fire-js": "fire-js",
-      [name]: "fire-js-all"
-    };
-    _apps = new Map();
-    _components = new Map();
-    ERRORS = {
-      ["no-app"]: "No Firebase App '{$appName}' has been created - call Firebase App.initializeApp()",
-      ["bad-app-name"]: "Illegal App name: '{$appName}",
-      ["duplicate-app"]: "Firebase App named '{$appName}' already exists with different options or config",
-      ["app-deleted"]: "Firebase App named '{$appName}' already deleted",
-      ["invalid-app-argument"]: "firebase.{$appName}() takes either no argument or a Firebase App instance.",
-      ["invalid-log-argument"]: "First argument to `onLog` must be null or a function."
-    };
-    ERROR_FACTORY = new ErrorFactory("app", "Firebase", ERRORS);
-    SDK_VERSION = version;
-    registerCoreComponents("");
+    init_store_37bf12c9();
     commonjsGlobal2 = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
     goog = goog || {};
     l = commonjsGlobal2 || self;
@@ -14579,56 +14642,6 @@ This typically indicates that your device does not have a healthy Internet conne
         }, n), i._setSettings(n), i;
       }, "PUBLIC")), registerVersion(S, "3.3.1", t2), registerVersion(S, "3.3.1", "esm2017");
     }();
-    extendStatics = function(d2, b) {
-      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b2) {
-        d22.__proto__ = b2;
-      } || function(d22, b2) {
-        for (var p2 in b2)
-          if (Object.prototype.hasOwnProperty.call(b2, p2))
-            d22[p2] = b2[p2];
-      };
-      return extendStatics(d2, b);
-    };
-    __assign = function() {
-      __assign = Object.assign || function __assign2(t2) {
-        for (var s2, i = 1, n = arguments.length; i < n; i++) {
-          s2 = arguments[i];
-          for (var p2 in s2)
-            if (Object.prototype.hasOwnProperty.call(s2, p2))
-              t2[p2] = s2[p2];
-        }
-        return t2;
-      };
-      return __assign.apply(this, arguments);
-    };
-    subscriber_queue = [];
-    displayDate = function(dateString, format2 = {
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZone: "utc"
-    }) {
-      const deserializedDate = new Date(dateString);
-      let currentTimeZoneOffset = deserializedDate.getTimezoneOffset() * 6e4;
-      return new Date(deserializedDate - currentTimeZoneOffset).toLocaleDateString("en-US", format2);
-    };
-    canvasHeight = writable(0);
-    canvasWidth = writable(0);
-    hasFetchedUser = writable(false);
-    user = writable({});
-    currentTool = writable({
-      type: "pencil",
-      color: "white",
-      lineWidth: 3
-    });
-    onlyAllowApplePencil = writable(true);
-    dailyMicStream = writable(null);
-    roomToPeople = writable({});
-    dailyRoomParticipants = writable({});
-    browserTabID = readable(getRandomID());
-    isFirestoreDocCreated = writable(false);
-    willPreventPageLeave = writable(false);
   }
 });
 
@@ -17466,7 +17479,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-426d2725.js
+// .svelte-kit/output/server/chunks/index-c327074d-02c581bb.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17955,10 +17968,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_426d2725 = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-426d2725.js"() {
+var init_index_c327074d_02c581bb = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-02c581bb.js"() {
     init_shims();
-    init_store_24a6b466();
+    init_store_37bf12c9();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18887,18 +18900,19 @@ var init_index_c327074d_426d2725 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-54dc8cd5.js
-var layout_54dc8cd5_exports = {};
-__export(layout_54dc8cd5_exports, {
+// .svelte-kit/output/server/chunks/__layout-44362ce1.js
+var layout_44362ce1_exports = {};
+__export(layout_44362ce1_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, getStores, page, _layout;
-var init_layout_54dc8cd5 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-54dc8cd5.js"() {
+var init_layout_44362ce1 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-44362ce1.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_store_24a6b466();
-    init_index_c327074d_426d2725();
+    init_app_11594781();
+    init_store_37bf12c9();
+    init_index_esm2017_ce2eb917();
+    init_index_c327074d_02c581bb();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18947,9 +18961,9 @@ var init_layout_54dc8cd5 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-47e9c32d.js
-var error_47e9c32d_exports = {};
-__export(error_47e9c32d_exports, {
+// .svelte-kit/output/server/chunks/error-196599ad.js
+var error_196599ad_exports = {};
+__export(error_196599ad_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18957,10 +18971,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_47e9c32d = __esm({
-  ".svelte-kit/output/server/chunks/error-47e9c32d.js"() {
+var init_error_196599ad = __esm({
+  ".svelte-kit/output/server/chunks/error-196599ad.js"() {
     init_shims();
-    init_app_ce98eb20();
+    init_app_11594781();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18982,23 +18996,9 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-0c3a74b7.js
+// .svelte-kit/output/server/chunks/index-19d1847a.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
-}
-function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
-  if (typeof Event !== "undefined" && element) {
-    const event2 = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
-    element === null || element === void 0 ? void 0 : element.dispatchEvent(event2);
-    if (duplicateEventForMDC && eventType.startsWith("SMUI")) {
-      const duplicateEvent = new CustomEvent(eventType.replace(/^SMUI/g, () => "MDC"), Object.assign(Object.assign({}, eventInit), { detail }));
-      element === null || element === void 0 ? void 0 : element.dispatchEvent(duplicateEvent);
-      if (duplicateEvent.defaultPrevented) {
-        event2.preventDefault();
-      }
-    }
-    return event2;
-  }
 }
 function forwardEventsBuilder(component) {
   let $on;
@@ -19322,24 +19322,12 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
     }
   };
 }
-function classAdderBuilder(props) {
-  return new Proxy(ClassAdder, {
-    construct: function(target, args) {
-      Object.assign(internals, defaults, props);
-      return new target(...args);
-    },
-    get: function(target, prop) {
-      Object.assign(internals, defaults, props);
-      return target[prop];
-    }
-  });
-}
-var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul, Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_1, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_0c3a74b7 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-0c3a74b7.js"() {
+var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul;
+var init_index_19d1847a = __esm({
+  ".svelte-kit/output/server/chunks/index-19d1847a.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_store_24a6b466();
+    init_app_11594781();
+    init_store_37bf12c9();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20076,6 +20064,260 @@ var init_SelectionGroupIcon_0c3a74b7 = __esm({
     Nav = Nav$1;
     Span = Span$1;
     Ul = Ul$1;
+  }
+});
+
+// .svelte-kit/output/server/chunks/Button-2d3dd829.js
+var Object_1, Button_1;
+var init_Button_2d3dd829 = __esm({
+  ".svelte-kit/output/server/chunks/Button-2d3dd829.js"() {
+    init_shims();
+    init_app_11594781();
+    init_index_19d1847a();
+    ({ Object: Object_1 } = globals);
+    Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let actionProp;
+      let defaultProp;
+      let secondaryProp;
+      let $$restProps = compute_rest_props($$props, [
+        "use",
+        "class",
+        "style",
+        "ripple",
+        "color",
+        "variant",
+        "touch",
+        "href",
+        "action",
+        "defaultAction",
+        "secondary",
+        "component",
+        "getElement"
+      ]);
+      const forwardEvents = forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { style = "" } = $$props;
+      let { ripple = true } = $$props;
+      let { color = "primary" } = $$props;
+      let { variant = "text" } = $$props;
+      let { touch = false } = $$props;
+      let { href = void 0 } = $$props;
+      let { action = "close" } = $$props;
+      let { defaultAction = false } = $$props;
+      let { secondary = false } = $$props;
+      let element;
+      let internalClasses = {};
+      let internalStyles = {};
+      let context = getContext("SMUI:button:context");
+      let { component = href == null ? Button : A2 } = $$props;
+      setContext("SMUI:label:context", "button");
+      setContext("SMUI:icon:context", "button");
+      function addClass(className2) {
+        if (!internalClasses[className2]) {
+          internalClasses[className2] = true;
+        }
+      }
+      function removeClass(className2) {
+        if (!(className2 in internalClasses) || internalClasses[className2]) {
+          internalClasses[className2] = false;
+        }
+      }
+      function addStyle(name6, value) {
+        if (internalStyles[name6] != value) {
+          if (value === "" || value == null) {
+            delete internalStyles[name6];
+            internalStyles = internalStyles;
+          } else {
+            internalStyles[name6] = value;
+          }
+        }
+      }
+      function getElement() {
+        return element.getElement();
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+        $$bindings.style(style);
+      if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
+        $$bindings.ripple(ripple);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.variant === void 0 && $$bindings.variant && variant !== void 0)
+        $$bindings.variant(variant);
+      if ($$props.touch === void 0 && $$bindings.touch && touch !== void 0)
+        $$bindings.touch(touch);
+      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
+        $$bindings.href(href);
+      if ($$props.action === void 0 && $$bindings.action && action !== void 0)
+        $$bindings.action(action);
+      if ($$props.defaultAction === void 0 && $$bindings.defaultAction && defaultAction !== void 0)
+        $$bindings.defaultAction(defaultAction);
+      if ($$props.secondary === void 0 && $$bindings.secondary && secondary !== void 0)
+        $$bindings.secondary(secondary);
+      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
+        $$bindings.component(component);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        actionProp = context === "dialog:action" && action != null ? { "data-mdc-dialog-action": action } : { action: $$props.action };
+        defaultProp = context === "dialog:action" && defaultAction ? { "data-mdc-dialog-button-default": "" } : { default: $$props.default };
+        secondaryProp = context === "banner" ? {} : { secondary: $$props.secondary };
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1.assign({
+          use: [
+            [
+              Ripple,
+              {
+                ripple,
+                unbounded: false,
+                color,
+                disabled: !!$$restProps.disabled,
+                addClass,
+                removeClass,
+                addStyle
+              }
+            ],
+            forwardEvents,
+            ...use
+          ]
+        }, {
+          class: classMap({
+            [className]: true,
+            "mdc-button": true,
+            "mdc-button--raised": variant === "raised",
+            "mdc-button--unelevated": variant === "unelevated",
+            "mdc-button--outlined": variant === "outlined",
+            "smui-button--color-secondary": color === "secondary",
+            "mdc-button--touch": touch,
+            "mdc-card__action": context === "card:action",
+            "mdc-card__action--button": context === "card:action",
+            "mdc-dialog__button": context === "dialog:action",
+            "mdc-top-app-bar__navigation-icon": context === "top-app-bar:navigation",
+            "mdc-top-app-bar__action-item": context === "top-app-bar:action",
+            "mdc-snackbar__action": context === "snackbar:actions",
+            "mdc-banner__secondary-action": context === "banner" && secondary,
+            "mdc-banner__primary-action": context === "banner" && !secondary,
+            "mdc-tooltip__action": context === "tooltip:rich-actions",
+            ...internalClasses
+          })
+        }, {
+          style: Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" ")
+        }, actionProp, defaultProp, secondaryProp, { href }, $$restProps, { this: element }), {
+          this: ($$value) => {
+            element = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `<div class="${"mdc-button__ripple"}"></div>
+  ${slots.default ? slots.default({}) : ``}${touch ? `<div class="${"mdc-button__touch"}"></div>` : ``}`
+        })}`;
+      } while (!$$settled);
+      return $$rendered;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/index-508bb4f7.js
+var index_508bb4f7_exports = {};
+__export(index_508bb4f7_exports, {
+  default: () => Routes
+});
+var import_node_fetch2, import_cookie3, css, Routes;
+var init_index_508bb4f7 = __esm({
+  ".svelte-kit/output/server/chunks/index-508bb4f7.js"() {
+    init_shims();
+    init_app_11594781();
+    init_index_c327074d_02c581bb();
+    init_store_37bf12c9();
+    import_node_fetch2 = __toModule(require_lib2());
+    init_Button_2d3dd829();
+    import_cookie3 = __toModule(require_cookie());
+    init_dist();
+    init_index_19d1847a();
+    css = {
+      code: `.room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r
+}.copied-from-koa.svelte-530tv{font:34px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
+}#logo.svelte-530tv{font:300px 'Italiana', sans-serif;text-transform:lowercase}`,
+      map: null
+    };
+    Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $user, $$unsubscribe_user;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$result.css.add(css);
+      $$unsubscribe_user();
+      return `${Object.keys($user).length === 0 ? `<section style="${"height: 100vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 84vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"120"}" height="${"108"}" style="${"margin-left: 0px;"}">
+					<h1 id="${"logo"}" style="${"font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;"}" class="${"svelte-530tv"}">explain.mit.edu
+					</h1></div>
+
+				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-530tv"}">voice chat + blackboards = videos
+					</b></div>
+
+				
+				<div style="${"display: flex; justify-content: center; margin-top: 50px"}">${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "outlined",
+        color: "orange",
+        style: "color: rgb(246,130,13); font-size: 1.05rem"
+      }, {}, {
+        default: () => `Play around
+					`
+      })}	
+					${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "outlined",
+        style: "margin-left: 25px; color: rgb(128, 0, 128); font-size: 1.05rem"
+      }, {}, {
+        default: () => `Log in
+					`
+      })}</div></div></div></section>` : ``}
+
+
+
+
+
+
+`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-0c333156.js
+function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
+  if (typeof Event !== "undefined" && element) {
+    const event2 = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
+    element === null || element === void 0 ? void 0 : element.dispatchEvent(event2);
+    if (duplicateEventForMDC && eventType.startsWith("SMUI")) {
+      const duplicateEvent = new CustomEvent(eventType.replace(/^SMUI/g, () => "MDC"), Object.assign(Object.assign({}, eventInit), { detail }));
+      element === null || element === void 0 ? void 0 : element.dispatchEvent(duplicateEvent);
+      if (duplicateEvent.defaultPrevented) {
+        event2.preventDefault();
+      }
+    }
+    return event2;
+  }
+}
+function classAdderBuilder(props) {
+  return new Proxy(ClassAdder, {
+    construct: function(target, args) {
+      Object.assign(internals, defaults, props);
+      return new target(...args);
+    },
+    get: function(target, prop) {
+      Object.assign(internals, defaults, props);
+      return target[prop];
+    }
+  });
+}
+var Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_12, counter, Item$1, Text, Graphic$1, Item, Graphic;
+var init_SelectionGroupIcon_0c333156 = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-0c333156.js"() {
+    init_shims();
+    init_index_19d1847a();
+    init_app_11594781();
     ({ Object: Object_1$1 } = globals);
     internals = {
       component: Div$1,
@@ -20342,7 +20584,7 @@ var init_SelectionGroupIcon_0c3a74b7 = __esm({
       } while (!$$settled);
       return $$rendered;
     });
-    ({ Object: Object_1 } = globals);
+    ({ Object: Object_12 } = globals);
     counter = 0;
     Item$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let tabindex;
@@ -20482,7 +20724,7 @@ var init_SelectionGroupIcon_0c3a74b7 = __esm({
       do {
         $$settled = true;
         tabindex = isUninitializedValue(tabindexProp) ? !nonInteractive && !disabled && (selected || input) ? 0 : -1 : tabindexProp;
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_1.assign({
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_12.assign({
           use: [
             ...nonInteractive ? [] : [
               [
@@ -20593,163 +20835,7 @@ var init_SelectionGroupIcon_0c3a74b7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Button-3970676c.js
-var Object_12, Button_1;
-var init_Button_3970676c = __esm({
-  ".svelte-kit/output/server/chunks/Button-3970676c.js"() {
-    init_shims();
-    init_app_ce98eb20();
-    init_SelectionGroupIcon_0c3a74b7();
-    ({ Object: Object_12 } = globals);
-    Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let actionProp;
-      let defaultProp;
-      let secondaryProp;
-      let $$restProps = compute_rest_props($$props, [
-        "use",
-        "class",
-        "style",
-        "ripple",
-        "color",
-        "variant",
-        "touch",
-        "href",
-        "action",
-        "defaultAction",
-        "secondary",
-        "component",
-        "getElement"
-      ]);
-      const forwardEvents = forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { style = "" } = $$props;
-      let { ripple = true } = $$props;
-      let { color = "primary" } = $$props;
-      let { variant = "text" } = $$props;
-      let { touch = false } = $$props;
-      let { href = void 0 } = $$props;
-      let { action = "close" } = $$props;
-      let { defaultAction = false } = $$props;
-      let { secondary = false } = $$props;
-      let element;
-      let internalClasses = {};
-      let internalStyles = {};
-      let context = getContext("SMUI:button:context");
-      let { component = href == null ? Button : A2 } = $$props;
-      setContext("SMUI:label:context", "button");
-      setContext("SMUI:icon:context", "button");
-      function addClass(className2) {
-        if (!internalClasses[className2]) {
-          internalClasses[className2] = true;
-        }
-      }
-      function removeClass(className2) {
-        if (!(className2 in internalClasses) || internalClasses[className2]) {
-          internalClasses[className2] = false;
-        }
-      }
-      function addStyle(name6, value) {
-        if (internalStyles[name6] != value) {
-          if (value === "" || value == null) {
-            delete internalStyles[name6];
-            internalStyles = internalStyles;
-          } else {
-            internalStyles[name6] = value;
-          }
-        }
-      }
-      function getElement() {
-        return element.getElement();
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-        $$bindings.style(style);
-      if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
-        $$bindings.ripple(ripple);
-      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-        $$bindings.color(color);
-      if ($$props.variant === void 0 && $$bindings.variant && variant !== void 0)
-        $$bindings.variant(variant);
-      if ($$props.touch === void 0 && $$bindings.touch && touch !== void 0)
-        $$bindings.touch(touch);
-      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
-        $$bindings.href(href);
-      if ($$props.action === void 0 && $$bindings.action && action !== void 0)
-        $$bindings.action(action);
-      if ($$props.defaultAction === void 0 && $$bindings.defaultAction && defaultAction !== void 0)
-        $$bindings.defaultAction(defaultAction);
-      if ($$props.secondary === void 0 && $$bindings.secondary && secondary !== void 0)
-        $$bindings.secondary(secondary);
-      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-        $$bindings.component(component);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        actionProp = context === "dialog:action" && action != null ? { "data-mdc-dialog-action": action } : { action: $$props.action };
-        defaultProp = context === "dialog:action" && defaultAction ? { "data-mdc-dialog-button-default": "" } : { default: $$props.default };
-        secondaryProp = context === "banner" ? {} : { secondary: $$props.secondary };
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object_12.assign({
-          use: [
-            [
-              Ripple,
-              {
-                ripple,
-                unbounded: false,
-                color,
-                disabled: !!$$restProps.disabled,
-                addClass,
-                removeClass,
-                addStyle
-              }
-            ],
-            forwardEvents,
-            ...use
-          ]
-        }, {
-          class: classMap({
-            [className]: true,
-            "mdc-button": true,
-            "mdc-button--raised": variant === "raised",
-            "mdc-button--unelevated": variant === "unelevated",
-            "mdc-button--outlined": variant === "outlined",
-            "smui-button--color-secondary": color === "secondary",
-            "mdc-button--touch": touch,
-            "mdc-card__action": context === "card:action",
-            "mdc-card__action--button": context === "card:action",
-            "mdc-dialog__button": context === "dialog:action",
-            "mdc-top-app-bar__navigation-icon": context === "top-app-bar:navigation",
-            "mdc-top-app-bar__action-item": context === "top-app-bar:action",
-            "mdc-snackbar__action": context === "snackbar:actions",
-            "mdc-banner__secondary-action": context === "banner" && secondary,
-            "mdc-banner__primary-action": context === "banner" && !secondary,
-            "mdc-tooltip__action": context === "tooltip:rich-actions",
-            ...internalClasses
-          })
-        }, {
-          style: Object.entries(internalStyles).map(([name6, value]) => `${name6}: ${value};`).concat([style]).join(" ")
-        }, actionProp, defaultProp, secondaryProp, { href }, $$restProps, { this: element }), {
-          this: ($$value) => {
-            element = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `<div class="${"mdc-button__ripple"}"></div>
-  ${slots.default ? slots.default({}) : ``}${touch ? `<div class="${"mdc-button__touch"}"></div>` : ``}`
-        })}`;
-      } while (!$$settled);
-      return $$rendered;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/canvas-fb765f32.js
+// .svelte-kit/output/server/chunks/canvas-160cb3ae.js
 function calculateCanvasDimensions() {
   const appElement = document.getElementById("main-content");
   let availableHeight;
@@ -20776,47 +20862,52 @@ function calculateCanvasDimensions2() {
   const normalD = calculateCanvasDimensions();
   return { width: 0.9 * normalD.width, height: 0.9 * normalD.height };
 }
-var init_canvas_fb765f32 = __esm({
-  ".svelte-kit/output/server/chunks/canvas-fb765f32.js"() {
+var init_canvas_160cb3ae = __esm({
+  ".svelte-kit/output/server/chunks/canvas-160cb3ae.js"() {
     init_shims();
+    init_store_37bf12c9();
+    init_app_11594781();
   }
 });
 
-// .svelte-kit/output/server/chunks/index-9c4ae749.js
-var index_9c4ae749_exports = {};
-__export(index_9c4ae749_exports, {
-  default: () => Routes
+// .svelte-kit/output/server/chunks/class-material-e313ce56.js
+var class_material_e313ce56_exports = {};
+__export(class_material_e313ce56_exports, {
+  default: () => Class_material
 });
-var import_node_fetch2, import_cookie3, css, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Routes;
-var init_index_9c4ae749 = __esm({
-  ".svelte-kit/output/server/chunks/index-9c4ae749.js"() {
+var import_node_fetch3, import_cookie4, css2, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Class_material;
+var init_class_material_e313ce56 = __esm({
+  ".svelte-kit/output/server/chunks/class-material-e313ce56.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_index_c327074d_426d2725();
-    init_store_24a6b466();
-    import_node_fetch2 = __toModule(require_lib2());
-    init_Button_3970676c();
-    init_SelectionGroupIcon_0c3a74b7();
-    init_canvas_fb765f32();
-    import_cookie3 = __toModule(require_cookie());
+    init_app_11594781();
+    init_index_c327074d_02c581bb();
+    init_store_37bf12c9();
+    import_node_fetch3 = __toModule(require_lib2());
+    init_SelectionGroupIcon_0c333156();
+    init_canvas_160cb3ae();
+    init_index_esm2017_ce2eb917();
+    import_cookie4 = __toModule(require_cookie());
     init_dist();
-    css = {
-      code: `.room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r
-}.copied-from-koa.svelte-530tv{font:34px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
-}.copied-from-koa-2.svelte-530tv{font:17px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;font-weight:600;color:grey}#logo.svelte-530tv{font:300px 'Italiana', sans-serif;text-transform:lowercase}`,
+    init_index_19d1847a();
+    css2 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-113t2a0{margin:0 auto;text-align:left}",
       map: null
     };
     phoneNumSegment1 = "";
     phoneNumSegment2 = "";
     phoneNumSegment3 = "";
-    Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+    Class_material = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let isQuestionMode;
       let $user, $$unsubscribe_user;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      let $canvasHeight, $$unsubscribe_canvasHeight;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let currentTime = 10;
       let titleValue = "Welcome!";
       let appVerifier;
-      const print = console.log;
+      const print2 = console.log;
       let timer;
       function adjustContentDimensions() {
         const { width, height } = calculateCanvasDimensions2();
@@ -20839,192 +20930,7 @@ var init_index_9c4ae749 = __esm({
         onSignInSubmit();
         function onSignInSubmit() {
           const phoneNumber = `+1 ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`;
-          print(getAuth(), phoneNumber, appVerifier);
-          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
-            console.log("confirmation result =", confirmationResult);
-            window.confirmationResult = confirmationResult;
-          }).catch((error3) => {
-            alert(error3);
-            console.log("error =", error3);
-            window.recaptchaVerifier.render().then(function(widgetId) {
-              grecaptcha.reset(widgetId);
-            });
-          });
-        }
-      }
-      $$result.css.add(css);
-      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
-      {
-        if (isQuestionMode) {
-          setTimeout(() => {
-          }, 5e3);
-        }
-      }
-      {
-        if (currentTime.toFixed(0) === "0") {
-          console.log("end of timer, currentTime =", currentTime);
-          clearInterval(timer);
-        }
-      }
-      {
-        if (phoneNumSegment1.length === 3) {
-          document.getElementById("phone-input-2").focus();
-        }
-      }
-      {
-        if (phoneNumSegment2.length === 3) {
-          document.getElementById("phone-input-3").focus();
-        }
-      }
-      {
-        if (phoneNumSegment3.length === 4) {
-          signInWithPhone();
-        }
-      }
-      $$unsubscribe_user();
-      return `${Object.keys($user).length === 0 ? `<section style="${"height: 100vh; border-bottom: 1px solid #eee;"}"><div style="${"height: 84vh; display: flex; justify-content: center; align-items: center;"}"><div style="${"padding-bottom: 90px;"}"><div style="${"display: flex; align-items: center; justify-content: center; height: 120px;"}"><img src="${"logo.png"}" width="${"120"}" height="${"108"}" style="${"margin-left: 0px;"}">
-					<h1 id="${"logo"}" style="${"font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;"}" class="${"svelte-530tv"}">explain.mit.edu
-					</h1></div>
-
-				<div style="${"display: flex; justify-content: center;"}"><b style="${"color: grey; white-space: nowrap;"}" class="${"copied-from-koa svelte-530tv"}">An explanation platform based on voice chat and blackboards</b></div>
-
-				
-				<div style="${"display: flex; justify-content: center"}"><div style="${"display: flex; justify-content: space-between; align-items: center; margin-top: 20px; width: 500px;"}"><div><div class="${"copied-from-koa-2 svelte-530tv"}" style="${"margin-top: 20px;"}">For ASE exams:</div>
-							<div class="${"copied-from-koa-2 svelte-530tv"}" style="${"margin-top: 20px;"}">For semester classes:</div>
-							<div class="${"copied-from-koa-2 svelte-530tv"}" style="${"margin-top: 50px;"}">For open-learning:</div></div>
-
-						<div style="${"width: 300px;"}"><div style="${"margin-top: 20px;"}">${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "outlined",
-        style: "width: 47%; color: black"
-      }, {}, {
-        default: () => `Student
-								`
-      })}
-
-								${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "outlined",
-        style: "margin-left: 7px; width: 47%; color: purple;"
-      }, {}, {
-        default: () => `Tutor
-								`
-      })}</div>
-
-							<div style="${"margin-top: 14px;"}">${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "outlined",
-        color: "primary",
-        style: "width: 47%; color: black"
-      }, {}, {
-        default: () => `Instructor
-								`
-      })}	
-								${validate_component(Button_1, "Button").$$render($$result, {
-        width: 100,
-        variant: "outlined",
-        style: "margin-left: 7px; width: 47%; color: purple"
-      }, {}, {
-        default: () => `TA
-								`
-      })}</div>
-
-							<div style="${"margin-top: 44px;"}">${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "outlined",
-        color: "orange",
-        style: "width: 47%; color: black"
-      }, {}, {
-        default: () => `join server
-								`
-      })}	
-								${validate_component(Button_1, "Button").$$render($$result, {
-        variant: "outlined",
-        style: "margin-left: 7px; color: purple"
-      }, {}, {
-        default: () => `start server
-								`
-      })}</div></div></div>
-					
-				
-					
-					<div style="${"display: flex; justify-content: space-between; align-items: center; margin-top: 12px;"}"></div></div></div></div></section>
-
-	` : ``}
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/class-material-d01eb426.js
-var class_material_d01eb426_exports = {};
-__export(class_material_d01eb426_exports, {
-  default: () => Class_material
-});
-var import_node_fetch3, import_cookie4, css2, phoneNumSegment12, phoneNumSegment22, phoneNumSegment32, Class_material;
-var init_class_material_d01eb426 = __esm({
-  ".svelte-kit/output/server/chunks/class-material-d01eb426.js"() {
-    init_shims();
-    init_app_ce98eb20();
-    init_index_c327074d_426d2725();
-    init_store_24a6b466();
-    import_node_fetch3 = __toModule(require_lib2());
-    init_SelectionGroupIcon_0c3a74b7();
-    init_canvas_fb765f32();
-    import_cookie4 = __toModule(require_cookie());
-    init_dist();
-    css2 = {
-      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-113t2a0{margin:0 auto;text-align:left}",
-      map: null
-    };
-    phoneNumSegment12 = "";
-    phoneNumSegment22 = "";
-    phoneNumSegment32 = "";
-    Class_material = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let isQuestionMode;
-      let $user, $$unsubscribe_user;
-      let $canvasWidth, $$unsubscribe_canvasWidth;
-      let $canvasHeight, $$unsubscribe_canvasHeight;
-      $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
-      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
-      let currentTime = 10;
-      let titleValue = "Welcome!";
-      let appVerifier;
-      const print = console.log;
-      let timer;
-      function adjustContentDimensions() {
-        const { width, height } = calculateCanvasDimensions2();
-        canvasWidth.set(width);
-        canvasHeight.set(height);
-      }
-      onDestroy(() => {
-        window.removeEventListener("resize", adjustContentDimensions);
-      });
-      function signInWithPhone() {
-        if (!window.recaptchaVerifier) {
-          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
-            "size": "invisible",
-            "callback": (response) => {
-              console.log("reCAPTCHA solved =", response);
-            }
-          }, getAuth());
-          appVerifier = window.recaptchaVerifier;
-        }
-        onSignInSubmit();
-        function onSignInSubmit() {
-          const phoneNumber = `+1 ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
-          print(getAuth(), phoneNumber, appVerifier);
+          print2(getAuth(), phoneNumber, appVerifier);
           signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
             console.log("confirmation result =", confirmationResult);
             window.confirmationResult = confirmationResult;
@@ -21052,17 +20958,17 @@ var init_class_material_d01eb426 = __esm({
         }
       }
       {
-        if (phoneNumSegment12.length === 3) {
+        if (phoneNumSegment1.length === 3) {
           document.getElementById("phone-input-2").focus();
         }
       }
       {
-        if (phoneNumSegment22.length === 3) {
+        if (phoneNumSegment2.length === 3) {
           document.getElementById("phone-input-3").focus();
         }
       }
       {
-        if (phoneNumSegment32.length === 4) {
+        if (phoneNumSegment3.length === 4) {
           signInWithPhone();
         }
       }
@@ -21105,7 +21011,7 @@ var init_class_material_d01eb426 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-f8e1d554.js
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-39805ebe.js
 async function deleteAllStrokesFromDb({ boardPath, strokesArray }) {
   return new Promise(async (resolve2) => {
     const batchDeleteRequests = [];
@@ -21128,26 +21034,30 @@ async function deleteAllStrokesFromDb({ boardPath, strokesArray }) {
   });
 }
 var css3, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_f8e1d554 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-f8e1d554.js"() {
+var init_RenderlessFetchStrokes_39805ebe = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-39805ebe.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_store_24a6b466();
+    init_app_11594781();
+    init_store_37bf12c9();
+    init_Button_2d3dd829();
+    init_index_esm2017_ce2eb917();
     css3 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
     };
     DoodleVideo = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $canvasHeight, $$unsubscribe_canvasHeight;
       let $canvasWidth, $$unsubscribe_canvasWidth;
-      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
+      let $canvasHeight, $$unsubscribe_canvasHeight;
       $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let { strokesArray } = $$props;
       let { audioDownloadURL } = $$props;
       let { backgroundImageDownloadURL } = $$props;
       let canvas;
       let bgCanvas;
       let AudioPlayer;
+      let playbackSpeed = 2;
+      createEventDispatcher();
       onDestroy(() => {
       });
       if ($$props.strokesArray === void 0 && $$bindings.strokesArray && strokesArray !== void 0)
@@ -21157,10 +21067,18 @@ var init_RenderlessFetchStrokes_f8e1d554 = __esm({
       if ($$props.backgroundImageDownloadURL === void 0 && $$bindings.backgroundImageDownloadURL && backgroundImageDownloadURL !== void 0)
         $$bindings.backgroundImageDownloadURL(backgroundImageDownloadURL);
       $$result.css.add(css3);
-      $$unsubscribe_canvasHeight();
       $$unsubscribe_canvasWidth();
+      $$unsubscribe_canvasHeight();
       return `
-<div style="${"position: absolute; right: 0; left: auto; top: 0; bottom: auto; display: flex; padding-top: 4px; padding-bottom: 4px; z-index: 5"}">${slots.default ? slots.default({}) : `
+<div style="${"position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5"}">${validate_component(Button_1, "Button").$$render($$result, {
+        variant: "raised",
+        style: "margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgba(255,255,255,0.5); color: white;"
+      }, {}, {
+        default: () => `<div style="${"color: white"}">${escape(playbackSpeed)}x speed
+    </div>
+    <span class="${"material-icons"}"></span>`
+      })}
+  ${slots.default ? slots.default({}) : `
 
   `}</div>
 
@@ -21236,56 +21154,64 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/explore-2eff2fba.js
-var explore_2eff2fba_exports = {};
-__export(explore_2eff2fba_exports, {
-  default: () => Explore
-});
-var import_node_fetch4, import_cookie5, css4, Explore;
-var init_explore_2eff2fba = __esm({
-  ".svelte-kit/output/server/chunks/explore-2eff2fba.js"() {
+// .svelte-kit/output/server/chunks/navigation-0a4806ec.js
+function guard(name6) {
+  return () => {
+    throw new Error(`Cannot call ${name6}(...) on the server`);
+  };
+}
+var goto;
+var init_navigation_0a4806ec = __esm({
+  ".svelte-kit/output/server/chunks/navigation-0a4806ec.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_index_c327074d_426d2725();
-    init_store_24a6b466();
+    goto = guard("goto");
+  }
+});
+
+// .svelte-kit/output/server/chunks/learn-99adf8b9.js
+var learn_99adf8b9_exports = {};
+__export(learn_99adf8b9_exports, {
+  default: () => Learn
+});
+var import_node_fetch4, import_cookie5, css$1, Phonelogin, css4, Learn;
+var init_learn_99adf8b9 = __esm({
+  ".svelte-kit/output/server/chunks/learn-99adf8b9.js"() {
+    init_shims();
+    init_app_11594781();
+    init_store_37bf12c9();
+    init_RenderlessFetchStrokes_39805ebe();
+    init_canvas_160cb3ae();
+    init_index_c327074d_02c581bb();
     import_node_fetch4 = __toModule(require_lib2());
-    init_Button_3970676c();
-    init_SelectionGroupIcon_0c3a74b7();
-    init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_f8e1d554();
+    init_Button_2d3dd829();
+    init_navigation_0a4806ec();
+    init_SelectionGroupIcon_0c333156();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
-    css4 = {
-      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}",
+    init_index_esm2017_ce2eb917();
+    init_index_19d1847a();
+    css$1 = {
+      code: '.svelte-1iojg2p::placeholder{opacity:0.2\r\n  }.copied-from-koa.svelte-1iojg2p{font:20px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r\n  }',
       map: null
     };
-    Explore = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let isQuestionMode;
-      let $user, $$unsubscribe_user;
-      let $canvasWidth, $$unsubscribe_canvasWidth;
-      let $canvasHeight, $$unsubscribe_canvasHeight;
-      $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
-      $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
-      let currentTime = 10;
-      let titleValue = "Welcome!";
-      let countryCode = "+1";
-      let phoneNumSegment13 = "";
-      let phoneNumSegment23 = "";
-      let phoneNumSegment33 = "";
-      let phoneConfirmationResult;
-      let phoneConfirmCode = "";
+    Phonelogin = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let phoneConfirmCode;
+      let hasEnteredPhoneNumber;
+      let hasEnteredConfirmCode;
+      let { canTakeInternationalNumbers } = $$props;
       let appVerifier;
-      const print = console.log;
-      let timer;
-      function adjustContentDimensions() {
-        const { width, height } = calculateCanvasDimensions2();
-        canvasWidth.set(width);
-        canvasHeight.set(height);
-      }
-      onDestroy(() => {
-        window.removeEventListener("resize", adjustContentDimensions);
-      });
+      let phoneConfirmationResult;
+      let countryCode = "+1";
+      let phoneNumSegment12 = "";
+      let phoneNumSegment22 = "";
+      let phoneNumSegment32 = "";
+      let confirm1 = "";
+      let confirm2 = "";
+      let confirm3 = "";
+      let confirm4 = "";
+      let confirm5 = "";
+      let confirm6 = "";
+      let c1, c2, c3, c4, c5, c6;
       function signInWithPhone() {
         if (!window.recaptchaVerifier) {
           window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
@@ -21298,7 +21224,7 @@ var init_explore_2eff2fba = __esm({
         }
         onSignInSubmit();
         function onSignInSubmit() {
-          const phoneNumber = `${countryCode} ${phoneNumSegment13}-${phoneNumSegment23}-${phoneNumSegment33}`;
+          const phoneNumber = `${countryCode} ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
           print(getAuth(), phoneNumber, appVerifier);
           signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
             console.log("confirmation result =", confirmationResult);
@@ -21313,132 +21239,104 @@ var init_explore_2eff2fba = __esm({
           });
         }
       }
-      $$result.css.add(css4);
-      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
-      {
-        if (isQuestionMode) {
-          setTimeout(() => {
-          }, 5e3);
-        }
+      function verifyConfirmationCode() {
+        console.log("phoneConfirmCode =", phoneConfirmCode);
+        window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
+          const user2 = result.user;
+          console.log("redirecting, user =", user2);
+          goto("O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe", { replaceState: true });
+        }).catch((error3) => {
+          alert(error3);
+        });
       }
+      if ($$props.canTakeInternationalNumbers === void 0 && $$bindings.canTakeInternationalNumbers && canTakeInternationalNumbers !== void 0)
+        $$bindings.canTakeInternationalNumbers(canTakeInternationalNumbers);
+      $$result.css.add(css$1);
+      phoneConfirmCode = confirm1 + confirm2 + confirm3 + confirm4 + confirm5 + confirm6;
+      hasEnteredPhoneNumber = phoneNumSegment12.length === 3 && phoneNumSegment22.length === 3 && phoneNumSegment32.length === 4;
       {
-        if (currentTime.toFixed(0) === "0") {
-          clearInterval(timer);
-        }
-      }
-      {
-        if (phoneNumSegment13.length === 3) {
+        if (phoneNumSegment12.length === 3) {
           document.getElementById("phone-input-2").focus();
         }
       }
       {
-        if (phoneNumSegment23.length === 3) {
+        if (phoneNumSegment22.length === 3) {
           document.getElementById("phone-input-3").focus();
         }
       }
       {
-        if (phoneNumSegment33.length === 4) {
+        if (hasEnteredPhoneNumber) {
           signInWithPhone();
         }
       }
-      $$unsubscribe_user();
-      $$unsubscribe_canvasWidth();
-      $$unsubscribe_canvasHeight();
-      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">It&#39;s hard to learn properly without visuals
-			</h1>
+      {
+        if (phoneConfirmationResult && c1) {
+          c1.focus();
+        }
+      }
+      {
+        if (confirm1.length === 1) {
+          c2.focus();
+        }
+      }
+      {
+        if (confirm2.length === 1) {
+          c3.focus();
+        }
+      }
+      {
+        if (confirm3.length === 1) {
+          c4.focus();
+        }
+      }
+      {
+        if (confirm4.length === 1) {
+          c5.focus();
+        }
+      }
+      {
+        if (confirm5.length === 1) {
+          c6.focus();
+        }
+      }
+      hasEnteredConfirmCode = phoneConfirmCode.length === 6;
+      {
+        if (hasEnteredConfirmCode) {
+          verifyConfirmationCode();
+        }
+      }
+      return `<div style="${"height: 100px"}" class="${"svelte-1iojg2p"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}" class="${"svelte-1iojg2p"}">
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Learning communities built around Discord, Piazza, Facebook etc. have a fundamental flaw: they are text-based platforms. We have to over-use words because it&#39;s hard to make pictures or just draw on a board.
-				<br>
-				<br>     
-        Times are changing: stylus-enabled tablets are becoming more affordable, web apps have evolved.
-			</p>
-			<br></div></section>
+      ${canTakeInternationalNumbers ? `<input type="${"tel"}" id="${"phone-country-code"}" minlength="${"2"}" maxlength="${"4"}" placeholder="${"+1"}" style="${"margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px"}" class="${"svelte-1iojg2p"}"${add_attribute("value", countryCode, 0)}>` : ``}
+      <input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}" class="${"svelte-1iojg2p"}"${add_attribute("value", phoneNumSegment12, 0)}>
 
-	<section style="${"height: " + escape($canvasHeight + 260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Blackboard-centric servers</h1>
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
-				<br>
-				<br>
-				Here&#39;s an example video that was recorded on this website: 
-			</p></div>
+      <input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}" class="${"svelte-1iojg2p"}"${add_attribute("value", phoneNumSegment22, 0)}>
 
-		<div${add_attribute("style", `position: relative; width: ${$canvasWidth}px; height: ${$canvasHeight + 60}px; margin: auto;`, 0)} id="${"caleb-video-section"}">${validate_component(RenderlessListenToBoard, "RenderlessListenToBoard").$$render($$result, {
-        dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7"
-      }, {}, {
-        default: ({ boardDoc }) => `${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, {
-          dbPath: "/classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7",
-          autoFetchStrokes: true
-        }, {}, {
-          default: ({ strokesArray }) => `${boardDoc ? `${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
-            strokesArray,
-            audioDownloadURL: boardDoc.audioDownloadURL,
-            backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
-          }, {}, {})}` : ``}`
-        })}`
-      })}</div></section>
-
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
-			</h1>
-
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Just sign up for a password-less account to join and create servers
-			</p></div>
-
-		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}"><input type="${"tel"}" id="${"phone-country-code"}" minlength="${"2"}" maxlength="${"4"}" placeholder="${"+1"}" style="${"margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", countryCode, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment13, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment23, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment33, 0)}>
-					${validate_component(Button_1, "Button").$$render($$result, {
+      <input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}" class="${"svelte-1iojg2p"}"${add_attribute("value", phoneNumSegment32, 0)}>
+      ${validate_component(Button_1, "Button").$$render($$result, {
         id: "sign-in-button",
-        style: "color: rgb(116 28 183); margin-bottom: 2px"
+        style: "display: none; color: " + (hasEnteredPhoneNumber ? "rgb(116 28 183)" : "grey") + "; margin-bottom: 2px",
+        disabled: !hasEnteredPhoneNumber
       }, {}, {
         default: () => `Sign Up
-					`
-      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
-					${validate_component(Button_1, "Button").$$render($$result, {
-        style: "color: rgb(116 28 183); margin-bottom: 2px;"
-      }, {}, { default: () => `Confirm code` })}</div>`}</div></section>` : ``}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-`;
+      `
+      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}" class="${"svelte-1iojg2p"}"><div class="${"copied-from-koa svelte-1iojg2p"}" style="${"color: purple"}">You should receive a text message with a 6-digit code:
+      </div>
+      
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"1"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm1, 0)}${add_attribute("this", c1, 0)}>
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"2"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm2, 0)}${add_attribute("this", c2, 0)}>  
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"3"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm3, 0)}${add_attribute("this", c3, 0)}>
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"4"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm4, 0)}${add_attribute("this", c4, 0)}>
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"5"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm5, 0)}${add_attribute("this", c5, 0)}>
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px; margin-right: 10px"}" placeholder="${"6"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm6, 0)}${add_attribute("this", c6, 0)}>
+      ${validate_component(Button_1, "Button").$$render($$result, {
+        style: "display: none; color: " + (hasEnteredConfirmCode ? "rgb(116 28 183)" : "grey") + "; margin-bottom: 2px;",
+        disabled: !hasEnteredConfirmCode
+      }, {}, { default: () => `Confirm code` })}</div>`}
+</div>`;
     });
-  }
-});
-
-// .svelte-kit/output/server/chunks/learn-7bca72ea.js
-var learn_7bca72ea_exports = {};
-__export(learn_7bca72ea_exports, {
-  default: () => Learn
-});
-var import_node_fetch5, import_cookie6, css5, Learn;
-var init_learn_7bca72ea = __esm({
-  ".svelte-kit/output/server/chunks/learn-7bca72ea.js"() {
-    init_shims();
-    init_app_ce98eb20();
-    init_index_c327074d_426d2725();
-    init_store_24a6b466();
-    import_node_fetch5 = __toModule(require_lib2());
-    init_Button_3970676c();
-    init_SelectionGroupIcon_0c3a74b7();
-    init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_f8e1d554();
-    import_cookie6 = __toModule(require_cookie());
-    init_dist();
-    css5 = {
-      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}li.svelte-ejjzis{margin-bottom:2px}",
+    css4 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-1f67sie{margin:0 auto;text-align:left}li.svelte-1f67sie{margin-bottom:2px}",
       map: null
     };
     Learn = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -21451,13 +21349,6 @@ var init_learn_7bca72ea = __esm({
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let currentTime = 10;
       let titleValue = "Welcome!";
-      let phoneNumSegment13 = "";
-      let phoneNumSegment23 = "";
-      let phoneNumSegment33 = "";
-      let phoneConfirmationResult;
-      let phoneConfirmCode = "";
-      let appVerifier;
-      const print = console.log;
       let timer;
       function adjustContentDimensions() {
         const { width, height } = calculateCanvasDimensions2();
@@ -21467,34 +21358,7 @@ var init_learn_7bca72ea = __esm({
       onDestroy(() => {
         window.removeEventListener("resize", adjustContentDimensions);
       });
-      function signInWithPhone() {
-        if (!window.recaptchaVerifier) {
-          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
-            "size": "invisible",
-            "callback": (response) => {
-              console.log("reCAPTCHA solved =", response);
-            }
-          }, getAuth());
-          appVerifier = window.recaptchaVerifier;
-        }
-        onSignInSubmit();
-        function onSignInSubmit() {
-          const phoneNumber = `+1 ${phoneNumSegment13}-${phoneNumSegment23}-${phoneNumSegment33}`;
-          print(getAuth(), phoneNumber, appVerifier);
-          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
-            console.log("confirmation result =", confirmationResult);
-            phoneConfirmationResult = confirmationResult;
-            window.confirmationResult = confirmationResult;
-          }).catch((error3) => {
-            alert(error3);
-            console.log("error =", error3);
-            window.recaptchaVerifier.render().then(function(widgetId) {
-              grecaptcha.reset(widgetId);
-            });
-          });
-        }
-      }
-      $$result.css.add(css5);
+      $$result.css.add(css4);
       isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
       {
         if (isQuestionMode) {
@@ -21508,25 +21372,10 @@ var init_learn_7bca72ea = __esm({
           clearInterval(timer);
         }
       }
-      {
-        if (phoneNumSegment13.length === 3) {
-          document.getElementById("phone-input-2").focus();
-        }
-      }
-      {
-        if (phoneNumSegment23.length === 3) {
-          document.getElementById("phone-input-3").focus();
-        }
-      }
-      {
-        if (phoneNumSegment33.length === 4) {
-          signInWithPhone();
-        }
-      }
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
-      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">What we truly fear isn&#39;t failing classes...
+      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-1f67sie"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">What we truly fear isn&#39;t failing classes...
 			</h1>
 
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">We dread having to go through the day-to-day, waking up with a headache, seeing a grey sky, walking to a class you hate, not understanding anything. 
@@ -21545,20 +21394,20 @@ var init_learn_7bca72ea = __esm({
 			</p>
 			<br></div></section>
 
-	<section style="${"height: " + escape(260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">College can be full of colors</h1>
+	<section style="${"height: " + escape(260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-1f67sie"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">College can be full of colors</h1>
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Imagine if the material was so good that, everything you need to know is clearly explained and re-watchable at your own pace. And suppose anything were to be missing, you can just ask for help efficiently without having to travel to campus, wait till the next Office Hours / for a Piazza response?
 				<br>
 				<br>
 				Then, we&#39;d efficiently grasp the fundamentals, fully recover, and actually look forward to our classes.
 			</p></div></section>
 
-	<section style="${"height: " + escape($canvasHeight + 400) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">What is Explain?</h1>
+	<section style="${"height: " + escape($canvasHeight + 400) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-1f67sie"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">What is Explain?</h1>
 			<div style="${"margin-bottom: 20px; font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Explain is a place with voice chat and lots of blackboards:
-					<ol><li class="${"svelte-ejjzis"}">To ask a question, add a ? to a sentence and the server will be pinged by text				
+					<ol><li class="${"svelte-1f67sie"}">To ask a question, add a ? to a sentence and the server will be pinged by text				
 						</li>
-						<li class="${"svelte-ejjzis"}">While receiving help, the teacher can record the explanation with 1-click and <u>near-instantly</u> upload it
+						<li class="${"svelte-1f67sie"}">While receiving help, the teacher can record the explanation with 1-click and <u>near-instantly</u> upload it
 						</li>
-						<li class="${"svelte-ejjzis"}">Overtime, great explanations accumulate for everyone to review
+						<li class="${"svelte-1f67sie"}">Overtime, great explanations accumulate for everyone to review
 						</li></ol>
 				<br>
 				Here&#39;s an example video that was recorded on this website: 
@@ -21579,44 +21428,265 @@ var init_learn_7bca72ea = __esm({
         })}`
       })}</div></section>
 
-	
-
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Website preview
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-1f67sie"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Website preview
 			</h1>
 
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How it works:
-				<li class="${"svelte-ejjzis"}">Everyone contributes $20/week to the class server</li>
-				<li class="${"svelte-ejjzis"}">Tutor runs the server and helps you personally as you want</li>
-				<li class="${"svelte-ejjzis"}">Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li></p>
+				<li class="${"svelte-1f67sie"}">Everyone contributes $20/week to the class server</li>
+				<li class="${"svelte-1f67sie"}">Tutor runs the server and helps you personally as you want</li>
+				<li class="${"svelte-1f67sie"}">Many fundamental explanations are recorded, so your question benefits other server members, and vice versa.</li></p>
 
 			<iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-1f67sie"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
 			</h1>
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu
 				<br>
 				<br>
-				<li class="${"svelte-ejjzis"}">Request a class by venmo&#39;ing $20 to elton-lin-2</li>
-				<li class="${"svelte-ejjzis"}">I&#39;ll send you a confirmation, create a server and find your tutor within 24 hours</li>
-				<li class="${"svelte-ejjzis"}">Refund anytime any reason</li></p></div>
+				<li class="${"svelte-1f67sie"}">Request a class by venmo&#39;ing $20 to elton-lin-2</li>
+				<li class="${"svelte-1f67sie"}">I&#39;ll send you a confirmation, create a server and find your tutor within 24 hours</li>
+				<li class="${"svelte-1f67sie"}">Refund anytime any reason</li></p></div>
 
-		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
-					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment13, 0)}>
+		${validate_component(Phonelogin, "PhoneLogin").$$render($$result, {}, {}, {})}</section>` : ``}
 
-					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment23, 0)}>
 
-					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment33, 0)}>
-					${validate_component(Button_1, "Button").$$render($$result, {
+
+
+
+`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/PhoneLogin-482c62ef.js
+var import_node_fetch5, css5, PhoneLogin;
+var init_PhoneLogin_482c62ef = __esm({
+  ".svelte-kit/output/server/chunks/PhoneLogin-482c62ef.js"() {
+    init_shims();
+    init_app_11594781();
+    init_index_c327074d_02c581bb();
+    init_store_37bf12c9();
+    import_node_fetch5 = __toModule(require_lib2());
+    init_Button_2d3dd829();
+    init_navigation_0a4806ec();
+    css5 = {
+      code: '.svelte-1iojg2p::placeholder{opacity:0.2\r\n  }.copied-from-koa.svelte-1iojg2p{font:20px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r\n  }',
+      map: null
+    };
+    PhoneLogin = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let phoneConfirmCode;
+      let hasEnteredPhoneNumber;
+      let hasEnteredConfirmCode;
+      let { canTakeInternationalNumbers } = $$props;
+      let appVerifier;
+      let phoneConfirmationResult;
+      let countryCode = "+1";
+      let phoneNumSegment12 = "";
+      let phoneNumSegment22 = "";
+      let phoneNumSegment32 = "";
+      let confirm1 = "";
+      let confirm2 = "";
+      let confirm3 = "";
+      let confirm4 = "";
+      let confirm5 = "";
+      let confirm6 = "";
+      let c1, c2, c3, c4, c5, c6;
+      function signInWithPhone() {
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
+            "size": "invisible",
+            "callback": (response) => {
+              console.log("reCAPTCHA solved =", response);
+            }
+          }, getAuth());
+          appVerifier = window.recaptchaVerifier;
+        }
+        onSignInSubmit();
+        function onSignInSubmit() {
+          const phoneNumber = `${countryCode} ${phoneNumSegment12}-${phoneNumSegment22}-${phoneNumSegment32}`;
+          print(getAuth(), phoneNumber, appVerifier);
+          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
+            console.log("confirmation result =", confirmationResult);
+            phoneConfirmationResult = confirmationResult;
+            window.confirmationResult = confirmationResult;
+          }).catch((error3) => {
+            alert(error3);
+            console.log("error =", error3);
+            window.recaptchaVerifier.render().then(function(widgetId) {
+              grecaptcha.reset(widgetId);
+            });
+          });
+        }
+      }
+      function verifyConfirmationCode() {
+        console.log("phoneConfirmCode =", phoneConfirmCode);
+        window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
+          const user2 = result.user;
+          console.log("redirecting, user =", user2);
+          goto("O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe", { replaceState: true });
+        }).catch((error3) => {
+          alert(error3);
+        });
+      }
+      if ($$props.canTakeInternationalNumbers === void 0 && $$bindings.canTakeInternationalNumbers && canTakeInternationalNumbers !== void 0)
+        $$bindings.canTakeInternationalNumbers(canTakeInternationalNumbers);
+      $$result.css.add(css5);
+      phoneConfirmCode = confirm1 + confirm2 + confirm3 + confirm4 + confirm5 + confirm6;
+      hasEnteredPhoneNumber = phoneNumSegment12.length === 3 && phoneNumSegment22.length === 3 && phoneNumSegment32.length === 4;
+      {
+        if (phoneNumSegment12.length === 3) {
+          document.getElementById("phone-input-2").focus();
+        }
+      }
+      {
+        if (phoneNumSegment22.length === 3) {
+          document.getElementById("phone-input-3").focus();
+        }
+      }
+      {
+        if (hasEnteredPhoneNumber) {
+          signInWithPhone();
+        }
+      }
+      {
+        if (phoneConfirmationResult && c1) {
+          c1.focus();
+        }
+      }
+      {
+        if (confirm1.length === 1) {
+          c2.focus();
+        }
+      }
+      {
+        if (confirm2.length === 1) {
+          c3.focus();
+        }
+      }
+      {
+        if (confirm3.length === 1) {
+          c4.focus();
+        }
+      }
+      {
+        if (confirm4.length === 1) {
+          c5.focus();
+        }
+      }
+      {
+        if (confirm5.length === 1) {
+          c6.focus();
+        }
+      }
+      hasEnteredConfirmCode = phoneConfirmCode.length === 6;
+      {
+        if (hasEnteredConfirmCode) {
+          verifyConfirmationCode();
+        }
+      }
+      return `<div style="${"height: 100px"}" class="${"svelte-1iojg2p"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}" class="${"svelte-1iojg2p"}">
+
+      ${canTakeInternationalNumbers ? `<input type="${"tel"}" id="${"phone-country-code"}" minlength="${"2"}" maxlength="${"4"}" placeholder="${"+1"}" style="${"margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px"}" class="${"svelte-1iojg2p"}"${add_attribute("value", countryCode, 0)}>` : ``}
+      <input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}" class="${"svelte-1iojg2p"}"${add_attribute("value", phoneNumSegment12, 0)}>
+
+      <input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}" class="${"svelte-1iojg2p"}"${add_attribute("value", phoneNumSegment22, 0)}>
+
+      <input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}" class="${"svelte-1iojg2p"}"${add_attribute("value", phoneNumSegment32, 0)}>
+      ${validate_component(Button_1, "Button").$$render($$result, {
         id: "sign-in-button",
-        style: "color: rgb(116 28 183); margin-bottom: 2px"
+        style: "display: none; color: " + (hasEnteredPhoneNumber ? "rgb(116 28 183)" : "grey") + "; margin-bottom: 2px",
+        disabled: !hasEnteredPhoneNumber
       }, {}, {
         default: () => `Sign Up
-					`
-      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
-					${validate_component(Button_1, "Button").$$render($$result, {
-        style: "color: rgb(116 28 183); margin-bottom: 2px;"
-      }, {}, { default: () => `Confirm code` })}</div>`}</div></section>` : ``}
+      `
+      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}" class="${"svelte-1iojg2p"}"><div class="${"copied-from-koa svelte-1iojg2p"}" style="${"color: purple"}">You should receive a text message with a 6-digit code:
+      </div>
+      
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"1"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm1, 0)}${add_attribute("this", c1, 0)}>
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"2"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm2, 0)}${add_attribute("this", c2, 0)}>  
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"3"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm3, 0)}${add_attribute("this", c3, 0)}>
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"4"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm4, 0)}${add_attribute("this", c4, 0)}>
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px;"}" placeholder="${"5"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm5, 0)}${add_attribute("this", c5, 0)}>
+      <input minlength="${"1"}" maxlength="${"1"}" style="${"width: 20px; font-size: 2rem; margin-left: 15px; margin-right: 10px"}" placeholder="${"6"}" class="${"svelte-1iojg2p"}"${add_attribute("value", confirm6, 0)}${add_attribute("this", c6, 0)}>
+      ${validate_component(Button_1, "Button").$$render($$result, {
+        style: "display: none; color: " + (hasEnteredConfirmCode ? "rgb(116 28 183)" : "grey") + "; margin-bottom: 2px;",
+        disabled: !hasEnteredConfirmCode
+      }, {}, { default: () => `Confirm code` })}</div>`}
+</div>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/login-0c735d0c.js
+var login_0c735d0c_exports = {};
+__export(login_0c735d0c_exports, {
+  default: () => Login
+});
+var import_cookie6, import_node_fetch6, css6, Login;
+var init_login_0c735d0c = __esm({
+  ".svelte-kit/output/server/chunks/login-0c735d0c.js"() {
+    init_shims();
+    init_app_11594781();
+    init_store_37bf12c9();
+    init_SelectionGroupIcon_0c333156();
+    init_canvas_160cb3ae();
+    init_index_esm2017_ce2eb917();
+    init_PhoneLogin_482c62ef();
+    import_cookie6 = __toModule(require_cookie());
+    init_dist();
+    init_index_19d1847a();
+    init_index_c327074d_02c581bb();
+    import_node_fetch6 = __toModule(require_lib2());
+    init_Button_2d3dd829();
+    init_navigation_0a4806ec();
+    css6 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}",
+      map: null
+    };
+    Login = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let isQuestionMode;
+      let $user, $$unsubscribe_user;
+      let $canvasWidth, $$unsubscribe_canvasWidth;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value) => $canvasWidth = value);
+      let currentTime = 10;
+      let titleValue = "Welcome!";
+      let timer;
+      function adjustContentDimensions() {
+        const { width, height } = calculateCanvasDimensions2();
+        canvasWidth.set(width);
+        canvasHeight.set(height);
+      }
+      onDestroy(() => {
+        window.removeEventListener("resize", adjustContentDimensions);
+      });
+      $$result.css.add(css6);
+      isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
+      {
+        if (isQuestionMode) {
+          setTimeout(() => {
+          }, 5e3);
+        }
+      }
+      {
+        if (currentTime.toFixed(0) === "0") {
+          clearInterval(timer);
+        }
+      }
+      $$unsubscribe_user();
+      $$unsubscribe_canvasWidth();
+      return `${Object.keys($user).length === 0 ? `
+
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
+			</h1>
+
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Phone accounts are password-less and lets Explain notify you (if the settings are on)
+			</p></div>
+
+		${validate_component(PhoneLogin, "PhoneLogin").$$render($$result, { canTakeInternationalNumbers: true }, {}, {})}</section>` : ``}
+
+
 
 
 
@@ -21634,27 +21704,31 @@ var init_learn_7bca72ea = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/teach-dfc2cf29.js
-var teach_dfc2cf29_exports = {};
-__export(teach_dfc2cf29_exports, {
+// .svelte-kit/output/server/chunks/teach-ee6fd9d6.js
+var teach_ee6fd9d6_exports = {};
+__export(teach_ee6fd9d6_exports, {
   default: () => Teach
 });
-var import_node_fetch6, import_cookie7, css6, Teach;
-var init_teach_dfc2cf29 = __esm({
-  ".svelte-kit/output/server/chunks/teach-dfc2cf29.js"() {
+var import_node_fetch7, import_cookie7, css7, Teach;
+var init_teach_ee6fd9d6 = __esm({
+  ".svelte-kit/output/server/chunks/teach-ee6fd9d6.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_index_c327074d_426d2725();
-    init_store_24a6b466();
-    import_node_fetch6 = __toModule(require_lib2());
-    init_Button_3970676c();
-    init_SelectionGroupIcon_0c3a74b7();
-    init_canvas_fb765f32();
-    init_RenderlessFetchStrokes_f8e1d554();
+    init_app_11594781();
+    init_index_c327074d_02c581bb();
+    init_store_37bf12c9();
+    import_node_fetch7 = __toModule(require_lib2());
+    init_RenderlessFetchStrokes_39805ebe();
+    init_canvas_160cb3ae();
+    init_PhoneLogin_482c62ef();
+    init_SelectionGroupIcon_0c333156();
     import_cookie7 = __toModule(require_cookie());
     init_dist();
-    css6 = {
-      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}li.svelte-ejjzis{margin-bottom:2px}",
+    init_Button_2d3dd829();
+    init_index_19d1847a();
+    init_index_esm2017_ce2eb917();
+    init_navigation_0a4806ec();
+    css7 = {
+      code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-6a84vc{margin:0 auto;text-align:left}li.svelte-6a84vc{margin-bottom:2px}",
       map: null
     };
     Teach = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -21667,13 +21741,6 @@ var init_teach_dfc2cf29 = __esm({
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let currentTime = 10;
       let titleValue = "Welcome!";
-      let phoneNumSegment13 = "";
-      let phoneNumSegment23 = "";
-      let phoneNumSegment33 = "";
-      let phoneConfirmationResult;
-      let phoneConfirmCode = "";
-      let appVerifier;
-      const print = console.log;
       let timer;
       function adjustContentDimensions() {
         const { width, height } = calculateCanvasDimensions2();
@@ -21683,34 +21750,7 @@ var init_teach_dfc2cf29 = __esm({
       onDestroy(() => {
         window.removeEventListener("resize", adjustContentDimensions);
       });
-      function signInWithPhone() {
-        if (!window.recaptchaVerifier) {
-          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
-            "size": "invisible",
-            "callback": (response) => {
-              console.log("reCAPTCHA solved =", response);
-            }
-          }, getAuth());
-          appVerifier = window.recaptchaVerifier;
-        }
-        onSignInSubmit();
-        function onSignInSubmit() {
-          const phoneNumber = `+1 ${phoneNumSegment13}-${phoneNumSegment23}-${phoneNumSegment33}`;
-          print(getAuth(), phoneNumber, appVerifier);
-          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
-            console.log("confirmation result =", confirmationResult);
-            phoneConfirmationResult = confirmationResult;
-            window.confirmationResult = confirmationResult;
-          }).catch((error3) => {
-            alert(error3);
-            console.log("error =", error3);
-            window.recaptchaVerifier.render().then(function(widgetId) {
-              grecaptcha.reset(widgetId);
-            });
-          });
-        }
-      }
-      $$result.css.add(css6);
+      $$result.css.add(css7);
       isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
       {
         if (isQuestionMode) {
@@ -21724,34 +21764,17 @@ var init_teach_dfc2cf29 = __esm({
           clearInterval(timer);
         }
       }
-      {
-        if (phoneNumSegment13.length === 3) {
-          document.getElementById("phone-input-2").focus();
-        }
-      }
-      {
-        if (phoneNumSegment23.length === 3) {
-          document.getElementById("phone-input-3").focus();
-        }
-      }
-      {
-        if (phoneNumSegment33.length === 4) {
-          signInWithPhone();
-        }
-      }
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
-      return `${Object.keys($user).length === 0 ? `
-
-	<section style="${"height: " + escape(260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How about high pay, short hours?</h1>
+      return `${Object.keys($user).length === 0 ? `<section style="${"height: " + escape(260) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-6a84vc"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How about high pay, short hours?</h1>
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Suppose you can make a great-living out of teaching, and it&#39;s no longer about hours spent, but instead effectiveness. So if you do a great job in 10 minutes, you&#39;re done. And you can get paid proportional to the impact you have, without having to 
 				handle class logistics etc.
 
 				<br>
 				<br></p></div></section>
 
-	<section style="${"height: " + escape($canvasHeight + 800) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How teaching on Explain works</h1>
+	<section style="${"background: #FDFDF8; height: " + escape($canvasHeight + 800) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-6a84vc"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How teaching on Explain works</h1>
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Sal Khan&#39;s KhanAcademy videos, or 3Blue1Brown&#39;s videos...etc. have benefited millions of people. If you use recorded explanations whenever appropriate, it enables you to teach efficiently. 
 				Explain is designed around the concept of, re-use explanations and of fundamental concepts and canonical problems whenever it is wise to do so, and then make up everything else with individual help.
 				
@@ -21766,7 +21789,7 @@ var init_teach_dfc2cf29 = __esm({
 				You can literally one-click upload explanations, and move them, edit them, like you would with text. It&#39;s blackboard-as-a-first-class-citizen experience.
 			<br>
 			<br>
-				In summary, Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b style="${"color: #b22ab2;"}">easily re-usable.</b>
+				In summary, Explain = Discord (voice chat) + KhanAcademy (blackboards). Here, blackboard videos upload near-instantly, so explanations are <b>easily re-usable.</b>
 				<br>
 				<br>
 				Here&#39;s an example video that was recorded on this website: 
@@ -21787,7 +21810,7 @@ var init_teach_dfc2cf29 = __esm({
         })}`
       })}</div></section>
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
+	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-6a84vc"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
 			</h1>
 
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">You teach a group of students on a Discord-like server. Every student contributes $20/week for you to help them.
@@ -21795,35 +21818,20 @@ var init_teach_dfc2cf29 = __esm({
 				<br>
 
 				How it works:
-				<li class="${"svelte-ejjzis"}">You teach a group of students on a Discord-like server</li>
-				<li class="${"svelte-ejjzis"}">Students will request real-time help from you via voice chat and blackboard</li>
-				<li class="${"svelte-ejjzis"}">Many fundamental explanations are recorded, so your visual explanations build up over time for everyone to reference</li>
-				<li class="${"svelte-ejjzis"}">Each student pays $20/week, and you receive $18n/week. A 20-student server means $360/week, requiring around 5 hours commitment</li></p>
+				<li class="${"svelte-6a84vc"}">You teach a group of students on a Discord-like server</li>
+				<li class="${"svelte-6a84vc"}">Students will request real-time help from you via voice chat and blackboard</li>
+				<li class="${"svelte-6a84vc"}">Many fundamental explanations are recorded, so your visual explanations build up over time for everyone to reference</li>
+				<li class="${"svelte-6a84vc"}">Each student pays $20/week, and you receive $18n/week. A 20-student server means $360/week, requiring around 5 hours commitment</li></p>
 
 			<iframe style="${"display: block;"}"${add_attribute("width", $canvasWidth, 0)}${add_attribute("height", $canvasHeight, 0)} src="${"https://www.youtube.com/embed/kJSZYFEQ_8I"}" title="${"YouTube video player"}" frameborder="${"0"}" allow="${"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}" allowfullscreen></iframe></div></section>
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-ejjzis"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How to get started
+	<section style="${"background: #FDFDF8; height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-6a84vc"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">How to get started
 			</h1>
 
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868, I reply quickly
 			</p></div>
-
-		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
-					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment13, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment23, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment33, 0)}>
-					${validate_component(Button_1, "Button").$$render($$result, {
-        id: "sign-in-button",
-        style: "color: rgb(116 28 183); margin-bottom: 2px"
-      }, {}, {
-        default: () => `Sign Up
-					`
-      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
-					${validate_component(Button_1, "Button").$$render($$result, {
-        style: "color: rgb(116 28 183); margin-bottom: 2px;"
-      }, {}, { default: () => `Confirm code` })}</div>`}</div></section>` : ``}
+	
+		${validate_component(PhoneLogin, "PhoneLogin").$$render($$result, {}, {}, {})}</section>` : ``}
 
 
 
@@ -21835,25 +21843,29 @@ var init_teach_dfc2cf29 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/ase-c10be744.js
-var ase_c10be744_exports = {};
-__export(ase_c10be744_exports, {
+// .svelte-kit/output/server/chunks/ase-f52fcceb.js
+var ase_f52fcceb_exports = {};
+__export(ase_f52fcceb_exports, {
   default: () => Ase
 });
-var import_node_fetch7, import_cookie8, css7, Ase;
-var init_ase_c10be744 = __esm({
-  ".svelte-kit/output/server/chunks/ase-c10be744.js"() {
+var import_cookie8, import_node_fetch8, css8, Ase;
+var init_ase_f52fcceb = __esm({
+  ".svelte-kit/output/server/chunks/ase-f52fcceb.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_index_c327074d_426d2725();
-    init_store_24a6b466();
-    import_node_fetch7 = __toModule(require_lib2());
-    init_Button_3970676c();
-    init_SelectionGroupIcon_0c3a74b7();
-    init_canvas_fb765f32();
+    init_app_11594781();
+    init_store_37bf12c9();
+    init_canvas_160cb3ae();
+    init_PhoneLogin_482c62ef();
+    init_SelectionGroupIcon_0c333156();
+    init_index_esm2017_ce2eb917();
     import_cookie8 = __toModule(require_cookie());
     init_dist();
-    css7 = {
+    init_index_c327074d_02c581bb();
+    import_node_fetch8 = __toModule(require_lib2());
+    init_Button_2d3dd829();
+    init_index_19d1847a();
+    init_navigation_0a4806ec();
+    css8 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-113t2a0{margin:0 auto;text-align:left}li.svelte-113t2a0{margin-bottom:2px}",
       map: null
     };
@@ -21867,13 +21879,6 @@ var init_ase_c10be744 = __esm({
       $$unsubscribe_canvasHeight = subscribe(canvasHeight, (value) => $canvasHeight = value);
       let currentTime = 10;
       let titleValue = "Welcome!";
-      let phoneNumSegment13 = "";
-      let phoneNumSegment23 = "";
-      let phoneNumSegment33 = "";
-      let phoneConfirmationResult;
-      let phoneConfirmCode = "";
-      let appVerifier;
-      const print = console.log;
       let timer;
       function adjustContentDimensions() {
         const { width, height } = calculateCanvasDimensions2();
@@ -21883,34 +21888,7 @@ var init_ase_c10be744 = __esm({
       onDestroy(() => {
         window.removeEventListener("resize", adjustContentDimensions);
       });
-      function signInWithPhone() {
-        if (!window.recaptchaVerifier) {
-          window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
-            "size": "invisible",
-            "callback": (response) => {
-              console.log("reCAPTCHA solved =", response);
-            }
-          }, getAuth());
-          appVerifier = window.recaptchaVerifier;
-        }
-        onSignInSubmit();
-        function onSignInSubmit() {
-          const phoneNumber = `+1 ${phoneNumSegment13}-${phoneNumSegment23}-${phoneNumSegment33}`;
-          print(getAuth(), phoneNumber, appVerifier);
-          signInWithPhoneNumber(getAuth()).then((confirmationResult) => {
-            console.log("confirmation result =", confirmationResult);
-            phoneConfirmationResult = confirmationResult;
-            window.confirmationResult = confirmationResult;
-          }).catch((error3) => {
-            alert(error3);
-            console.log("error =", error3);
-            window.recaptchaVerifier.render().then(function(widgetId) {
-              grecaptcha.reset(widgetId);
-            });
-          });
-        }
-      }
-      $$result.css.add(css7);
+      $$result.css.add(css8);
       isQuestionMode = titleValue.charAt(titleValue.length - 1) === "?";
       {
         if (isQuestionMode) {
@@ -21924,25 +21902,10 @@ var init_ase_c10be744 = __esm({
           clearInterval(timer);
         }
       }
-      {
-        if (phoneNumSegment13.length === 3) {
-          document.getElementById("phone-input-2").focus();
-        }
-      }
-      {
-        if (phoneNumSegment23.length === 3) {
-          document.getElementById("phone-input-3").focus();
-        }
-      }
-      {
-        if (phoneNumSegment33.length === 4) {
-          signInWithPhone();
-        }
-      }
       $$unsubscribe_user();
       $$unsubscribe_canvasWidth();
       $$unsubscribe_canvasHeight();
-      return `${Object.keys($user).length === 0 ? `<section style="${"background: #FDFDF8; height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">For those who are worried about passing a <i>crucial</i> ASE exam
+      return `${Object.keys($user).length === 0 ? `<section style="${"height: 100%; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">For those who are worried about passing a <i>crucial</i> ASE exam
 			</h1>
 
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">It&#39;s just less efficient to study without access to recitations, Office Hours and active classmates. 
@@ -21950,7 +21913,7 @@ var init_ase_c10be744 = __esm({
 			</p>
 			<br></div></section>
 
-	<section style="${"height: " + escape(160) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Efficient help &amp; social structure</h1>
+	<section style="${"background: #FDFDF8; height: " + escape(160) + "px; padding-top: 100px; padding-bottom: 100px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Efficient help &amp; social structure</h1>
 			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">If you had access to TAs who are readily available to help you fundamentally understand the material and give boundaries on what needs to be known on the exam, and a server of peers to calibrate your motivation and stress. 
 			 	It&#39;d greatly increase the odds of a passing grade without an unbounded time investment.
 			</p></div></section>
@@ -21969,38 +21932,17 @@ var init_ase_c10be744 = __esm({
 
 	
 
-	<section style="${"height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
+	<section style="${"background: #FDFDF8; height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee;"}"><div class="${"content svelte-113t2a0"}" style="${"width: " + escape($canvasWidth) + "px"}"><h1 style="${"margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Get started
 			</h1>
 
-			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu or text 503 250 3868
+			<p style="${"font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif"}">Any questions, email the organizer eltonlin@mit.edu
 				<br>
 				<br>
 				<li class="${"svelte-113t2a0"}">Request a class by venmo&#39;ing $20 to elton-lin-2</li>
 				<li class="${"svelte-113t2a0"}">You&#39;ll receive a confirmation and get a tutor within 48 hours</li>
-				<li class="${"svelte-113t2a0"}">Meanwhile, you can sign up to play around with this web app</li></p></div>
+				<li class="${"svelte-113t2a0"}">Meanwhile, you can sign up to explore this web app</li></p></div>
 
-		<div id="${"sign-up-section"}" style="${"height: 100px"}">${!phoneConfirmationResult ? `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px;"}">
-					<input type="${"tel"}" id="${"phone-input-1"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"503"}" style="${"margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment13, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-2"}" minlength="${"3"}" maxlength="${"3"}" placeholder="${"250"}" style="${"width: 54px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment23, 0)}>
-
-					<input type="${"tel"}" id="${"phone-input-3"}" minlength="${"4"}" maxlength="${"4"}" placeholder="${"3868"}" style="${"width: 76px; height: 40px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneNumSegment33, 0)}>
-					${validate_component(Button_1, "Button").$$render($$result, {
-        id: "sign-in-button",
-        style: "color: rgb(116 28 183); margin-bottom: 2px"
-      }, {}, {
-        default: () => `Sign Up
-					`
-      })}</div>` : `<div style="${"display: flex; justify-content: center; align-items: center; margin-top: 24px"}"><input minlength="${"6"}" maxlength="${"6"}" placeholder="${"123456"}" style="${"width: 111px; font-size: 2rem; margin-right: 10px"}"${add_attribute("value", phoneConfirmCode, 0)}>
-					${validate_component(Button_1, "Button").$$render($$result, {
-        style: "color: rgb(116 28 183); margin-bottom: 2px;"
-      }, {}, { default: () => `Confirm code` })}</div>`}</div></section>` : ``}
-
-
-
-
-
-
+		${validate_component(PhoneLogin, "PhoneLogin").$$render($$result, {}, {}, {})}</section>` : ``}
 
 
 
@@ -22012,12 +21954,7 @@ var init_ase_c10be744 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index.node.esm-0d76b14a.js
-function guard(name22) {
-  return () => {
-    throw new Error(`Cannot call ${name22}(...) on the server`);
-  };
-}
+// .svelte-kit/output/server/chunks/index.node.esm-6b111d18.js
 function exclude(obj, keys) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
@@ -22260,15 +22197,91 @@ function registerFunctions(fetchImpl2, variant) {
   registerVersion(name4, version4, variant);
   registerVersion(name4, version4, "esm2017");
 }
-var import_node_fetch8, goto, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name4, version4, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME;
-var init_index_node_esm_0d76b14a = __esm({
-  ".svelte-kit/output/server/chunks/index.node.esm-0d76b14a.js"() {
+var import_node_fetch9, I2, Svg, CommonIcon, ContextFragment, Icon, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name4, version4, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME;
+var init_index_node_esm_6b111d18 = __esm({
+  ".svelte-kit/output/server/chunks/index.node.esm-6b111d18.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_SelectionGroupIcon_0c3a74b7();
-    init_store_24a6b466();
-    import_node_fetch8 = __toModule(require_lib2());
-    goto = guard("goto");
+    init_app_11594781();
+    init_index_19d1847a();
+    init_store_37bf12c9();
+    init_SelectionGroupIcon_0c333156();
+    import_node_fetch9 = __toModule(require_lib2());
+    I2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
+      let { use = [] } = $$props;
+      forwardEventsBuilder(get_current_component());
+      let element;
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `<i${spread([escape_object($$restProps)])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</i>`;
+    });
+    Svg = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
+      let { use = [] } = $$props;
+      forwardEventsBuilder(get_current_component());
+      let element;
+      function getElement() {
+        return element;
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      return `<svg${spread([escape_object($$restProps)])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</svg>`;
+    });
+    CommonIcon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["use", "class", "on", "component", "getElement"]);
+      const forwardEvents = forwardEventsBuilder(get_current_component());
+      let { use = [] } = $$props;
+      let { class: className = "" } = $$props;
+      let { on: on2 = false } = $$props;
+      let element;
+      let { component = I2 } = $$props;
+      const context = getContext("SMUI:icon:context");
+      function getElement() {
+        return element.getElement();
+      }
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+        $$bindings.class(className);
+      if ($$props.on === void 0 && $$bindings.on && on2 !== void 0)
+        $$bindings.on(on2);
+      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
+        $$bindings.component(component);
+      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+        $$bindings.getElement(getElement);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object.assign({ use: [forwardEvents, ...use] }, {
+          class: classMap({
+            [className]: true,
+            "mdc-button__icon": context === "button",
+            "mdc-fab__icon": context === "fab",
+            "mdc-icon-button__icon": context === "icon-button",
+            "mdc-icon-button__icon--on": context === "icon-button" && on2,
+            "mdc-tab__icon": context === "tab",
+            "mdc-banner__icon": context === "banner",
+            "mdc-segmented-button__icon": context === "segmented-button"
+          })
+        }, { "aria-hidden": "true" }, component === Svg ? { focusable: "false", tabindex: "-1" } : {}, $$restProps, { this: element }), {
+          this: ($$value) => {
+            element = $$value;
+            $$settled = false;
+          }
+        }, {
+          default: () => `${slots.default ? slots.default({}) : ``}`
+        })}`;
+      } while (!$$settled);
+      return $$rendered;
+    });
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
       let { key } = $$props;
@@ -22287,6 +22300,7 @@ var init_index_node_esm_0d76b14a = __esm({
       $$unsubscribe_storeValue();
       return `${slots.default ? slots.default({}) : ``}`;
     });
+    Icon = CommonIcon;
     FloatingLabel = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "use",
@@ -23944,7 +23958,7 @@ ${this.customData.serverResponse}`;
     AUTH_INTERNAL_NAME = "auth-internal";
     APP_CHECK_INTERNAL_NAME = "app-check-internal";
     MESSAGING_INTERNAL_NAME = "messaging-internal";
-    registerFunctions(import_node_fetch8.default, "node");
+    registerFunctions(import_node_fetch9.default, "node");
   }
 });
 
@@ -29110,9 +29124,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-2b183dde.js
-var layout_2b183dde_exports = {};
-__export(layout_2b183dde_exports, {
+// .svelte-kit/output/server/chunks/__layout-eabf928b.js
+var layout_eabf928b_exports = {};
+__export(layout_eabf928b_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -31301,16 +31315,19 @@ function load2({ page: page2 }) {
     }
   };
 }
-var import_node_fetch9, import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie9, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css8, _layout2;
-var init_layout_2b183dde = __esm({
-  ".svelte-kit/output/server/chunks/__layout-2b183dde.js"() {
+var import_node_fetch10, import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie9, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$12, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css9, _layout2;
+var init_layout_eabf928b = __esm({
+  ".svelte-kit/output/server/chunks/__layout-eabf928b.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_SelectionGroupIcon_0c3a74b7();
-    init_index_node_esm_0d76b14a();
-    init_store_24a6b466();
-    init_index_c327074d_426d2725();
-    import_node_fetch9 = __toModule(require_lib2());
+    init_app_11594781();
+    init_SelectionGroupIcon_0c333156();
+    init_index_node_esm_6b111d18();
+    init_store_37bf12c9();
+    init_index_19d1847a();
+    init_index_esm2017_ce2eb917();
+    init_navigation_0a4806ec();
+    init_index_c327074d_02c581bb();
+    import_node_fetch10 = __toModule(require_lib2());
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
     import_stream2 = __toModule(require("stream"));
@@ -31322,83 +31339,6 @@ var init_layout_2b183dde = __esm({
     import_daily_js = __toModule(require_daily_iframe());
     import_cookie9 = __toModule(require_cookie());
     init_dist();
-    I2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
-      let { use = [] } = $$props;
-      forwardEventsBuilder(get_current_component());
-      let element;
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `<i${spread([escape_object($$restProps)])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</i>`;
-    });
-    Svg = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
-      let { use = [] } = $$props;
-      forwardEventsBuilder(get_current_component());
-      let element;
-      function getElement() {
-        return element;
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      return `<svg${spread([escape_object($$restProps)])}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</svg>`;
-    });
-    CommonIcon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["use", "class", "on", "component", "getElement"]);
-      const forwardEvents = forwardEventsBuilder(get_current_component());
-      let { use = [] } = $$props;
-      let { class: className = "" } = $$props;
-      let { on: on2 = false } = $$props;
-      let element;
-      let { component = I2 } = $$props;
-      const context = getContext("SMUI:icon:context");
-      function getElement() {
-        return element.getElement();
-      }
-      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-        $$bindings.use(use);
-      if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-        $$bindings.class(className);
-      if ($$props.on === void 0 && $$bindings.on && on2 !== void 0)
-        $$bindings.on(on2);
-      if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-        $$bindings.component(component);
-      if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-        $$bindings.getElement(getElement);
-      let $$settled;
-      let $$rendered;
-      do {
-        $$settled = true;
-        $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render($$result, Object.assign({ use: [forwardEvents, ...use] }, {
-          class: classMap({
-            [className]: true,
-            "mdc-button__icon": context === "button",
-            "mdc-fab__icon": context === "fab",
-            "mdc-icon-button__icon": context === "icon-button",
-            "mdc-icon-button__icon--on": context === "icon-button" && on2,
-            "mdc-tab__icon": context === "tab",
-            "mdc-banner__icon": context === "banner",
-            "mdc-segmented-button__icon": context === "segmented-button"
-          })
-        }, { "aria-hidden": "true" }, component === Svg ? { focusable: "false", tabindex: "-1" } : {}, $$restProps, { this: element }), {
-          this: ($$value) => {
-            element = $$value;
-            $$settled = false;
-          }
-        }, {
-          default: () => `${slots.default ? slots.default({}) : ``}`
-        })}`;
-      } while (!$$settled);
-      return $$rendered;
-    });
-    Icon = CommonIcon;
     Autocomplete = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let menuOpen;
       let $$restProps = compute_rest_props($$props, [
@@ -32103,7 +32043,7 @@ var init_layout_2b183dde = __esm({
       class: "mdc-card__action-icons",
       component: Div
     });
-    css$1 = {
+    css$12 = {
       code: ".drawer-container.svelte-ek1cfd{height:100vh;position:relative;display:flex}.svelte-ek1cfd .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}.main-content.svelte-ek1cfd{overflow:auto;padding:16px;height:100%;box-sizing:border-box}.logo-image.svelte-ek1cfd:hover{cursor:pointer}",
       map: null
     };
@@ -32116,7 +32056,7 @@ var init_layout_2b183dde = __esm({
         $$bindings.nameOfClass(nameOfClass);
       if ($$props.descriptionOfClass === void 0 && $$bindings.descriptionOfClass && descriptionOfClass !== void 0)
         $$bindings.descriptionOfClass(descriptionOfClass);
-      $$result.css.add(css$1);
+      $$result.css.add(css$12);
       $$unsubscribe_user();
       return `<div class="${"drawer-container svelte-ek1cfd"}">${validate_component(Drawer, "Drawer").$$render($$result, {
         style: "overflow-y: scroll; height: 100%;",
@@ -32124,6 +32064,9 @@ var init_layout_2b183dde = __esm({
       }, {}, {
         default: () => `${validate_component(Content, "Content").$$render($$result, {}, {}, {
           default: () => `<div style="${"margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;"}" class="${"mdc-elevation--z" + escape(4) + " svelte-ek1cfd"}"><div style="${"display: flex; align-items: center"}" class="${"svelte-ek1cfd"}"><img src="${"/logo.png"}" width="${"60"}" height="${"54"}" alt="${"web-logo"}" class="${"logo-image svelte-ek1cfd"}">
+
+          ${``}
+
           <div class="${"svelte-ek1cfd"}">${$user.uid ? `${validate_component(ClassDropdownMenu, "ClassDropdownMenu").$$render($$result, { nameOfClass, descriptionOfClass }, {}, {})}` : `<div style="${"font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem"}" class="${"svelte-ek1cfd"}">${escape(nameOfClass)}</div>
               <div style="${"font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px"}" class="${"svelte-ek1cfd"}">${escape(descriptionOfClass)}</div>`}</div></div></div>
       ${validate_component(List, "List").$$render($$result, {}, {}, {
@@ -33237,10 +33180,10 @@ var init_layout_2b183dde = __esm({
       },
       serializeParams: function(name22, params) {
         var values = [];
-        var print = function(key2, value) {
+        var print2 = function(key2, value) {
           if (value instanceof Array) {
             value.forEach(function(v2) {
-              print(key2, v2);
+              print2(key2, v2);
             });
           } else if (value === true) {
             values.push(key2);
@@ -33253,7 +33196,7 @@ var init_layout_2b183dde = __esm({
           }
         };
         for (var key in params)
-          print(key, params[key]);
+          print2(key, params[key]);
         return [name22].concat(values).join("; ");
       }
     };
@@ -39572,6 +39515,12 @@ var init_layout_2b183dde = __esm({
         if (currentCallState === "connected") {
           leaveConferenceRoom();
         }
+        if ($dailyMicStream) {
+          $dailyMicStream.getAudioTracks().forEach((track) => {
+            track.stop();
+          });
+          dailyMicStream.set(null);
+        }
       });
       async function initCallObject() {
         return new Promise(async (resolve2, reject2) => {
@@ -39726,7 +39675,7 @@ var init_layout_2b183dde = __esm({
 
 `}`;
     });
-    css8 = {
+    css9 = {
       code: ".question-item.svelte-ms4my9{color:rgb(19, 145, 230)}.selected.svelte-ms4my9{font-weight:500;background-color:rgb(45, 44, 44);color:white}.speaking.svelte-ms4my9{font-weight:800}",
       map: null
     };
@@ -39825,7 +39774,7 @@ var init_layout_2b183dde = __esm({
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
-      $$result.css.add(css8);
+      $$result.css.add(css9);
       let $$settled;
       let $$rendered;
       do {
@@ -39861,7 +39810,7 @@ ${validate_component(DailyVideoConference, "DailyVideoConference").$$render($$re
               "my-truncated-text svelte-ms4my9",
               room.name.charAt(room.name.length - 1) === "?" && room.id !== roomID ? "question-item" : ""
             ].join(" ").trim()}" style="${"margin-bottom: 2px;"}">${escape(room.name)}
-              </div>` : `<div style="${"margin-bottom: 2px;"}">(untitled room)
+              </div>` : `<div style="${"margin-bottom: 2px;"}">(no title)
               </div>`}
 
             ${room.id === roomID && $user.uid ? `<span class="${"material-icons"}" style="${"margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;"}">more_vert
@@ -39941,12 +39890,16 @@ var require_dist = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-9858ee51.js
-var index_9858ee51_exports = {};
-__export(index_9858ee51_exports, {
+// .svelte-kit/output/server/chunks/index-60a39644.js
+var index_60a39644_exports = {};
+__export(index_60a39644_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
+function roundedToFixed(input, digits) {
+  var rounded = Math.pow(10, digits);
+  return (Math.round(input * rounded) / rounded).toFixed(digits);
+}
 function convertDocToStroke(doc) {
   const strokeObject = { id: doc.id, ...doc.data() };
   strokeObject.startTime = 0;
@@ -39969,20 +39922,23 @@ function hasQuestionMark(string) {
     return false;
   return string.charAt(string.length - 1) === "?";
 }
-var import_svelte_css_vars, import_cookie10, import_node_fetch10, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, RenderlessAudioRecorder, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, css9, U5Broomu5D;
-var init_index_9858ee51 = __esm({
-  ".svelte-kit/output/server/chunks/index-9858ee51.js"() {
+var import_svelte_css_vars, import_cookie10, import_node_fetch11, counter2, HelperText, css$3, BlackboardToolbar, Blackboard, tickSize, RenderlessAudioRecorder, css$2, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, RenderlessFetchComments, css$13, DoodleVideoComments, css10, U5Broomu5D;
+var init_index_60a39644 = __esm({
+  ".svelte-kit/output/server/chunks/index-60a39644.js"() {
     init_shims();
-    init_app_ce98eb20();
-    init_RenderlessFetchStrokes_f8e1d554();
-    init_store_24a6b466();
-    init_SelectionGroupIcon_0c3a74b7();
-    init_index_node_esm_0d76b14a();
-    init_Button_3970676c();
+    init_app_11594781();
+    init_RenderlessFetchStrokes_39805ebe();
+    init_store_37bf12c9();
+    init_SelectionGroupIcon_0c333156();
+    init_index_node_esm_6b111d18();
+    init_Button_2d3dd829();
+    init_navigation_0a4806ec();
+    init_index_esm2017_ce2eb917();
+    init_index_19d1847a();
     import_svelte_css_vars = __toModule(require_dist());
     import_cookie10 = __toModule(require_cookie());
     init_dist();
-    import_node_fetch10 = __toModule(require_lib2());
+    import_node_fetch11 = __toModule(require_lib2());
     counter2 = 0;
     HelperText = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["use", "class", "id", "persistent", "validationMsg", "getElement"]);
@@ -40029,7 +39985,7 @@ var init_index_9858ee51 = __esm({
       ])}${add_attribute("this", element, 0)}>${`${slots.default ? slots.default({}) : ``}`}
 </div>`;
     });
-    css$2 = {
+    css$3 = {
       code: "svg.svelte-1bgxyxs{max-height:30px}.pencil-selected.svelte-1bgxyxs{background-color:white}.eraser-selected.svelte-1bgxyxs{filter:invert(1)\r\n}",
       map: null
     };
@@ -40040,7 +39996,7 @@ var init_index_9858ee51 = __esm({
       $$unsubscribe_onlyAllowApplePencil = subscribe(onlyAllowApplePencil, (value) => $onlyAllowApplePencil = value);
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
       $$unsubscribe_currentTool = subscribe(currentTool, (value) => $currentTool = value);
-      $$result.css.add(css$2);
+      $$result.css.add(css$3);
       $$unsubscribe_onlyAllowApplePencil();
       $$unsubscribe_user();
       $$unsubscribe_currentTool();
@@ -40050,12 +40006,12 @@ var init_index_9858ee51 = __esm({
         checked: !$onlyAllowApplePencil,
         style: "margin: 0 !important"
       }, {}, {})}
-    <div style="${"margin-top: 2px; font-size: 0.55rem; font-family: Roboto,sans-serif; color: white;"}">${escape($onlyAllowApplePencil ? "No touch" : "Touch draw")}</div></div>
+    <div style="${"margin-top: 1px; margin-left: 1px; font-size: 0.52rem; font-family: Roboto,sans-serif; color: white;"}">${escape($onlyAllowApplePencil ? "No touch" : "Touch draw")}</div></div>
   ${Object.keys($user).length > 0 ? `${each($user.pencilColors, (color) => `<div style="${"margin: 0 4px; width: 30px; height: 42px; border-radius: 3px; align-items: center; display: flex; justify-content: center;"}" class="${["svelte-1bgxyxs", $currentTool.color === color ? "pencil-selected" : ""].join(" ").trim()}"><svg preserveAspectRatio="${"none"}" version="${"1.1"}" id="${"Layer_1"}" xmlns="${"http://www.w3.org/2000/svg"}" xmlns:xlink="${"http://www.w3.org/1999/xlink"}" x="${"0px"}" y="${"0px"}" width="${"16px"}" height="${"30px"}" viewBox="${"0 0 100 230"}" style="${"enable-background:new 0 0 100 230;"}" xml:space="${"preserve"}" class="${"svelte-1bgxyxs"}"><g><path d="${"M0,0v72.377c0,1.588,0.234,3.169,0.698,4.706l45.416,150.032C46.633,228.828,48.212,230,50,230s3.367-1.172,3.886-2.883\r\n              L99.31,77.079c0.457-1.525,0.69-3.108,0.69-4.702V0.002"}"></path>;
             <polygon${add_attribute("style", `fill: ${color};`, 0)} points="${"50,211.978 38.879,175.24 61.122,175.24"}"></polygon><path style="${"fill:#424242;"}" d="${"M63.581,167.118H36.42L8.765,75.761l10.924-9.63l12.5,11.015c1.54,1.353,3.835,1.35,5.375-0.002\r\n                l12.468-11.007l12.464,11.005c1.54,1.357,3.839,1.357,5.377,0l12.465-11.005l10.9,9.623L63.581,167.118z"}"></path><path${add_attribute("style", `fill: ${color};`, 0)} d="${"M91.878,0v65.486l-8.852-7.813c-1.539-1.353-3.838-1.354-5.377,0.002L65.185,68.679L52.72,57.674\r\n                c-1.539-1.356-3.838-1.354-5.377-0.002L34.871,68.683L22.375,57.67c-0.769-0.676-1.725-1.013-2.685-1.013\r\n                c-0.959,0-1.919,0.339-2.685,1.013L8.121,65.5L8.098,0.024L91.878,0z"}"></path></g></svg> 
       </div>`)}
 
-    <img width="${"46"}" height="${"33"}" style="${"margin-left: 8px; margin-right: 8px;"}" src="${"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR30G9gEErDXNf8qxm0-vvSLs2zaE8V6v-pDqxNg-CUaoeORwmoosKPF-DC2SUG772Tm3A&usqp=CAU"}" alt="${"eraser"}" class="${["svelte-1bgxyxs", $currentTool.type === "eraser" ? "eraser-selected" : ""].join(" ").trim()}">` : ``}
+    <img width="${"46"}" height="${"40"}" style="${"margin-left: 8px; margin-right: 8px;"}" src="${"https://i.imgur.com/Klln1yP.png"}" alt="${"eraser"}" class="${["svelte-1bgxyxs", $currentTool.type === "eraser" ? "eraser-selected" : ""].join(" ").trim()}">` : ``}
   
   ${slots.default ? slots.default({}) : `
 
@@ -40109,7 +40065,7 @@ var init_index_9858ee51 = __esm({
         $$settled = true;
         $$rendered = `
 ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$$render($$result, {}, {}, {
-          "dropdown-menu": () => `<div slot="${"dropdown-menu"}">${recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"margin-right: 10px; color: white; font-size: 2rem;"}">more_vert
+          "dropdown-menu": () => `<div slot="${"dropdown-menu"}">${recordState === "pre_record" || currentTime === 0 ? `<span class="${"material-icons"}" style="${"margin-right: 10px; color: white; font-size: 2rem;"}">more_vert
         </span>` : ``}
     
       <input style="${"display: none"}" type="${"file"}" accept="${"image/gif, image/jpeg, image/png"}">
@@ -40163,13 +40119,38 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
       $$unsubscribe_onlyAllowApplePencil();
       return $$rendered;
     });
+    tickSize = 100;
     RenderlessAudioRecorder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $dailyMicStream, $$unsubscribe_dailyMicStream;
       let $dailyRoomParticipants, $$unsubscribe_dailyRoomParticipants;
       $$unsubscribe_dailyMicStream = subscribe(dailyMicStream, (value) => $dailyMicStream = value);
       $$unsubscribe_dailyRoomParticipants = subscribe(dailyRoomParticipants, (value) => $dailyRoomParticipants = value);
-      let currentTime = 0;
-      let timer;
+      let startTimestamp = null;
+      let etaOfNextTick = null;
+      let displayedCurrentTime = 0;
+      let nextTimeoutID = "";
+      function startTimer() {
+        startTimestamp = Date.now();
+        etaOfNextTick = startTimestamp + tickSize;
+        nextTimeoutID = setTimeout(step, tickSize);
+      }
+      function stopTimer() {
+        clearTimeout(nextTimeoutID);
+        nextTimeoutID = "";
+        displayedCurrentTime = 0;
+        etaOfNextTick = null;
+      }
+      function step() {
+        const delay = Date.now() - etaOfNextTick;
+        if (delay > tickSize) {
+          console.log("setTimeout is lagging greatly");
+        }
+        etaOfNextTick += tickSize;
+        const millisecondsInSecond = 1e3;
+        const nearestDecimalPoint = 1;
+        displayedCurrentTime = roundedToFixed((etaOfNextTick - startTimestamp) / millisecondsInSecond, nearestDecimalPoint);
+        nextTimeoutID = setTimeout(step, Math.max(0, tickSize - delay));
+      }
       const dispatch2 = createEventDispatcher();
       let recorder = null;
       function startRecording() {
@@ -40183,7 +40164,7 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
               return reject2("Can't access mic stream");
             }
           } else if (!$dailyRoomParticipants.local.audio) {
-            alert('Cannot start recording because your mic is muted - click the switch next to your "beaver #n" to unmute');
+            alert("Cannot start recording because your mic is muted - click the switch next to your name to unmute");
             reject2("Cannot start recording because mic stream is muted");
             return;
           } else {
@@ -40191,14 +40172,14 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
           }
           recorder = new MediaRecorder(micStreamCopy);
           recorder.start();
-          timer = setInterval(() => currentTime += 0.1, 100);
+          startTimer();
           dispatch2("record-start");
           resolve2();
         });
       }
       function stopRecording() {
         return new Promise((resolve2, reject2) => {
-          clearTimeout(timer);
+          stopTimer();
           recorder.addEventListener("dataavailable", (e) => {
             const audioBlob = e.data;
             dispatch2("record-end", { audioBlob });
@@ -40215,29 +40196,29 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
       return `${slots.default ? slots.default({
         startRecording,
         stopRecording,
-        currentTime
+        currentTime: displayedCurrentTime
       }) : `
 
 `}`;
     });
-    css$12 = {
-      code: '.grow-wrap.svelte-1xi77cs.svelte-1xi77cs::after{visibility:hidden;content:attr(data-replicated-value) " "}.grow-wrap.svelte-1xi77cs>textarea.svelte-1xi77cs,.grow-wrap.svelte-1xi77cs.svelte-1xi77cs::after{width:var(--width);overflow-wrap:break-word;white-space:pre-wrap;box-sizing:border-box;border:1px solid black;border-radius:2px;padding:6px;font-size:1rem;font-family:Roboto, sans-serif;color:rgb(60 55 56 / 87%);grid-area:1 / 1 / 2 / 2;resize:none;overflow:hidden}',
+    css$2 = {
+      code: '.grow-wrap.svelte-1iax4ps.svelte-1iax4ps::after{visibility:hidden;content:attr(data-replicated-value) " "}.grow-wrap.svelte-1iax4ps>textarea.svelte-1iax4ps,.grow-wrap.svelte-1iax4ps.svelte-1iax4ps::after{width:var(--width);overflow-wrap:break-word;white-space:pre-wrap;box-sizing:border-box;border:1px solid rgb(160, 146, 146);border-radius:0px;padding:6px;font-size:1rem;font-family:Roboto, sans-serif;color:rgba(74, 72, 73, 0.87);grid-area:1 / 1 / 2 / 2;resize:none;overflow:hidden}textarea.svelte-1iax4ps.svelte-1iax4ps::placeholder{opacity:0}textarea.svelte-1iax4ps.svelte-1iax4ps:focus::placeholder{opacity:0.6}',
       map: null
     };
     TextAreaAutoResizing = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $canvasWidth, $$unsubscribe_canvasWidth;
-      $$unsubscribe_canvasWidth = subscribe(canvasWidth, (value2) => $canvasWidth = value2);
       let { value } = $$props;
+      let { placeholder } = $$props;
       let autogrowWrapper;
       createEventDispatcher();
       if ($$props.value === void 0 && $$bindings.value && value !== void 0)
         $$bindings.value(value);
-      $$result.css.add(css$12);
-      $$unsubscribe_canvasWidth();
+      if ($$props.placeholder === void 0 && $$bindings.placeholder && placeholder !== void 0)
+        $$bindings.placeholder(placeholder);
+      $$result.css.add(css$2);
       return `
-<div class="${"grow-wrap svelte-1xi77cs"}" style="${"display: grid;"}"${add_attribute("this", autogrowWrapper, 0)}>
+<div style="${"display: grid;"}" class="${"grow-wrap svelte-1iax4ps"}"${add_attribute("this", autogrowWrapper, 0)}>
   
-  <textarea rows="${"1"}" style="${"width: " + escape($canvasWidth) + "px;"}" class="${"svelte-1xi77cs"}">${escape(value)}</textarea>
+  <textarea${add_attribute("placeholder", placeholder, 0)} rows="${"1"}" style="${"width: " + escape(100) + "%;"}" class="${"svelte-1iax4ps"}">${escape(value)}</textarea>
 </div>`;
     });
     CircularProgress = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -40391,7 +40372,80 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
 
 `}`;
     });
-    css9 = {
+    RenderlessFetchComments = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $user, $$unsubscribe_user;
+      $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      let { dbPath } = $$props;
+      let allComments;
+      const commentsRef = ba(Oa(), `${dbPath}/comments`);
+      const commentsQuery = Mu(commentsRef, qu("isoStringOfDate"));
+      let unsubCommentsListener = null;
+      let newComment = "";
+      let isShowingComments = false;
+      onDestroy(() => {
+        if (unsubCommentsListener) {
+          unsubCommentsListener();
+        }
+      });
+      async function listenToComments() {
+        unsubCommentsListener = yh(commentsQuery, (snap) => {
+          const temp = [];
+          for (const doc of snap.docs) {
+            temp.push({ id: doc.id, ...doc.data() });
+          }
+          allComments = temp;
+          isShowingComments = true;
+        });
+      }
+      function bindLocalValue(newVal) {
+        console.log("e =", newVal);
+        newComment = newVal;
+      }
+      async function submitNewComment() {
+        const commentsRef2 = ba(Oa(), `${dbPath}/comments`);
+        gh(commentsRef2, {
+          content: newComment,
+          isoStringOfDate: new Date().toISOString(),
+          creatorUID: $user.uid,
+          creatorName: $user.name
+        });
+        const blackboardRef = va(Oa(), dbPath);
+        _h(blackboardRef, { numOfComments: Vh(1) });
+      }
+      function hideComments() {
+        isShowingComments = false;
+      }
+      if ($$props.dbPath === void 0 && $$bindings.dbPath && dbPath !== void 0)
+        $$bindings.dbPath(dbPath);
+      $$unsubscribe_user();
+      return `
+${slots.default ? slots.default({
+        listenToComments,
+        allComments,
+        newComment,
+        bindLocalValue,
+        submitNewComment,
+        isShowingComments,
+        hideComments
+      }) : `
+
+`}`;
+    });
+    css$13 = {
+      code: ".copied-from-old-explain.svelte-aku6lc{font-size:.875rem;font-weight:400;line-height:1.375rem;letter-spacing:.0071}.copied-from-old-explain-2.svelte-aku6lc{color:rgba(0,0,0,.6) !important;font-size:0.75rem !important}",
+      map: null
+    };
+    DoodleVideoComments = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { allComments = [] } = $$props;
+      if ($$props.allComments === void 0 && $$bindings.allComments && allComments !== void 0)
+        $$bindings.allComments(allComments);
+      $$result.css.add(css$13);
+      return `<div>${each(allComments, (comment) => `<div class="${"copied-from-old-explain svelte-aku6lc"}">${escape(comment.content)}</div>
+    <div class="${"copied-from-old-explain-2 svelte-aku6lc"}">${escape(displayDate(comment.isoStringOfDate))} by ${escape(comment.creatorName || comment.creatorUID)}
+    </div>`)}
+</div>`;
+    });
+    css10 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important}.unclickable.svelte-53fhoc{pointer-events:none}",
       map: null
     };
@@ -40429,7 +40483,7 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
         $$bindings.classID(classID);
       if ($$props.roomID === void 0 && $$bindings.roomID && roomID !== void 0)
         $$bindings.roomID(roomID);
-      $$result.css.add(css9);
+      $$result.css.add(css10);
       boardsDbPath = `classes/${classID}/blackboards/`;
       roomsDbPath = `classes/${classID}/rooms/`;
       roomRef = va(Oa(), roomsDbPath + roomID);
@@ -40446,26 +40500,73 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
         class: "room-title",
         style: `width: ${$canvasWidth}px;`
       }, {}, {
-        helper: () => `${validate_component(HelperText, "HelperText").$$render($$result, { slot: "helper", persistent: true }, {}, {
-          default: () => `${!roomDoc.askerUID ? `To ask a question, just use a question mark &quot;?&quot;` : `${`${`${roomDoc.askerName && roomDoc.askerUID && roomDoc.date ? `${escape(roomDoc.askerName)} asked on ${escape(displayDate(roomDoc.dateAsked))}` : ``}`}`}`}
+        helper: () => `${validate_component(HelperText, "HelperText").$$render($$result, { slot: "helper" }, {}, {
+          default: () => `${!roomDoc.askerUID ? `To ask the server a question, end your title with a question mark &quot;?&quot;` : `${`${`${roomDoc.askerName && roomDoc.askerUID && roomDoc.date ? `${escape(roomDoc.askerName)} asked on ${escape(displayDate(roomDoc.dateAsked))}` : ``}`}`}`}
 
         ${roomDoc.dateResolved ? `, resolved ${escape(displayDate(roomDoc.dateResolved))}` : ``}`
         })}`
       })}
 
-    <div style="${"margin-bottom: 20px;"}"></div>
+    <div style="${"margin-bottom: 14px;"}"></div>
 
 		${each(roomDoc.blackboards, (boardID, i) => `${validate_component(RenderlessListenToBoard, "RenderlessListenToBoard").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
-        default: ({ boardDoc }) => `${boardDoc ? `<div style="${"margin-top: 10px;"}"></div>
-          ${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, { value: boardDoc.description || "" }, {}, {})}
-          <div style="${"margin-bottom: 10px;"}"></div>
-          ${boardDoc.audioDownloadURL ? `${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
+        default: ({ boardDoc }) => `${boardDoc ? `<div style="${"width: " + escape($canvasWidth) + "px; margin-top: 10px; margin-bottom: 0px"}">${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, {
+          value: boardDoc.description || "",
+          placeholder: "Describe the blackboard..."
+        }, {}, {})}</div>
+
+          ${boardDoc.audioDownloadURL ? `${validate_component(RenderlessFetchComments, "RenderlessFetchComments").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
+          default: ({ listenToComments, allComments, newComment, bindLocalValue, submitNewComment, isShowingComments, hideComments }) => `<div style="${"display: flex; align-items: center"}"><div style="${"color: grey; font-size: 0.7rem"}">${escape(boardDoc.numOfEurekas || 0)} eurekas, 
+                  ${escape(boardDoc.viewMinutes || 0)} minutes viewed,
+                  ${escape(boardDoc.numOfComments || 0)} comments
+                </div>
+                ${!isShowingComments ? `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+            default: () => `${validate_component(Icon, "Icon").$$render($$result, {
+              class: "material-icons",
+              style: "margin-right: 0"
+            }, {}, {
+              default: () => `expand_more
+                    `
+            })}
+                  `
+          })}` : `${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+            default: () => `${validate_component(Icon, "Icon").$$render($$result, {
+              class: "material-icons",
+              style: "margin-right: 0"
+            }, {}, {
+              default: () => `expand_less
+                    `
+            })}
+                  `
+          })}`}</div>
+
+              ${isShowingComments ? `<div style="${"width: " + escape($canvasWidth - 20) + "px; margin-left: 20px;"}">${validate_component(DoodleVideoComments, "DoodleVideoComments").$$render($$result, { allComments }, {}, {})}
+                  
+                  <div style="${"margin-bottom: 4px;"}"></div>
+
+                  ${validate_component(TextAreaAutoResizing, "TextAreaAutoResizing").$$render($$result, {
+            value: newComment,
+            placeholder: "Type comment..."
+          }, {}, {})}
+
+                  ${validate_component(Button_1, "Button").$$render($$result, {}, {}, {
+            default: () => `SUBMIT
+                  `
+          })}</div>
+                <div style="${"margin-bottom: 10px;"}"></div>` : ``}
+            `
+        })}
+
+            ${validate_component(RenderlessFetchStrokes, "RenderlessFetchStrokes").$$render($$result, { dbPath: boardsDbPath + boardID }, {}, {
           default: ({ fetchStrokes, strokesArray, deleteAllStrokesFromDb: deleteAllStrokesFromDb2 }) => `<div${add_attribute("style", `width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`, 0)}>${validate_component(DoodleVideo, "DoodleVideo").$$render($$result, {
             strokesArray,
             audioDownloadURL: boardDoc.audioDownloadURL,
             backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL
           }, {}, {
-            default: () => `${$user.uid === boardDoc.creatorUID || !boardDoc.creatorUID ? `${validate_component(Button_1, "Button").$$render($$result, { color: "primary" }, {}, {
+            default: () => `${$user.uid === boardDoc.creatorUID || !boardDoc.creatorUID ? `${validate_component(Button_1, "Button").$$render($$result, {
+              slot: "top-left-corner",
+              style: "margin-left: " + ($canvasWidth - 240) + "px; background-color: rgba(255,255,255,0.5); color: white"
+            }, {}, {
               default: () => `Delete video
                     `
             })}` : ``}
@@ -40480,19 +40581,21 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
               backgroundImageDownloadURL: boardDoc.backgroundImageDownloadURL,
               recordState: boardDoc.recordState
             }, {}, {
-              default: () => `${boardDoc.recordState === "pre_record" ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"}">album
-                        </span>` : `${boardDoc.recordState === "mid_record" ? `<span class="${[
+              default: () => `
+                    ${boardDoc.recordState === "pre_record" || currentTime === 0 ? `<span class="${"material-icons"}" style="${"font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"}">album
+                      </span>` : `${boardDoc.recordState === "mid_record" ? `<span class="${[
                 "material-icons svelte-53fhoc",
                 $browserTabID !== boardDoc.recorderBrowserTabID ? "unclickable" : ""
               ].join(" ").trim()}" style="${"font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"}">stop_circle
-                        </span>` : `<div style="${"display: flex; justify-content: center; margin-left: 20px; margin-right: 20px"}">${validate_component(CircularProgress, "CircularProgress").$$render($$result, {
+                      </span>
+
+                    ` : `${boardDoc.recordState === "post_record" ? `<div style="${"display: flex; justify-content: center; margin-left: 20px; margin-right: 20px"}">${validate_component(CircularProgress, "CircularProgress").$$render($$result, {
                 class: "my-four-colors",
                 style: "height: 32px; width: 32px;",
                 indeterminate: true,
                 fourColor: true
               }, {}, {})}
-                        </div>`}`}
-         
+                      </div>` : ``}`}`}
                   `
             })}
                 `
@@ -40509,7 +40612,7 @@ ${strokesArray ? `${validate_component(BlackboardToolbar, "BlackboardToolbar").$
   }
 });
 
-// .svelte-kit/output/server/chunks/app-ce98eb20.js
+// .svelte-kit/output/server/chunks/app-11594781.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -41967,9 +42070,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-eaf8fcd5.js",
+      file: assets + "/_app/start-3fa0e385.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-eaf8fcd5.js", assets + "/_app/chunks/vendor-271324cb.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-3fa0e385.js", assets + "/_app/chunks/vendor-3cd1c581.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -42012,9 +42115,9 @@ function render(request, {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-var import_cookie11, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css10, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_ce98eb20 = __esm({
-  ".svelte-kit/output/server/chunks/app-ce98eb20.js"() {
+var import_cookie11, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css11, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
+var init_app_11594781 = __esm({
+  ".svelte-kit/output/server/chunks/app-11594781.js"() {
     init_shims();
     import_cookie11 = __toModule(require_cookie());
     init_dist();
@@ -42168,7 +42271,7 @@ var init_app_ce98eb20 = __esm({
     missing_component = {
       $$render: () => ""
     };
-    css10 = {
+    css11 = {
       code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
       map: null
     };
@@ -42196,7 +42299,7 @@ var init_app_ce98eb20 = __esm({
         $$bindings.props_2(props_2);
       if ($$props.props_3 === void 0 && $$bindings.props_3 && props_3 !== void 0)
         $$bindings.props_3(props_3);
-      $$result.css.add(css10);
+      $$result.css.add(css11);
       {
         stores.page.set(page2);
       }
@@ -42267,16 +42370,16 @@ ${``}`;
         },
         {
           type: "page",
-          pattern: /^\/explore\/?$/,
+          pattern: /^\/learn\/?$/,
           params: empty,
-          a: ["src/routes/__layout.svelte", "src/routes/explore.svelte"],
+          a: ["src/routes/__layout.svelte", "src/routes/learn.svelte"],
           b: [".svelte-kit/build/components/error.svelte"]
         },
         {
           type: "page",
-          pattern: /^\/learn\/?$/,
+          pattern: /^\/login\/?$/,
           params: empty,
-          a: ["src/routes/__layout.svelte", "src/routes/learn.svelte"],
+          a: ["src/routes/__layout.svelte", "src/routes/login.svelte"],
           b: [".svelte-kit/build/components/error.svelte"]
         },
         {
@@ -42315,18 +42418,18 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_54dc8cd5(), layout_54dc8cd5_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_47e9c32d(), error_47e9c32d_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_9c4ae749(), index_9c4ae749_exports)),
-      "src/routes/class-material.svelte": () => Promise.resolve().then(() => (init_class_material_d01eb426(), class_material_d01eb426_exports)),
-      "src/routes/explore.svelte": () => Promise.resolve().then(() => (init_explore_2eff2fba(), explore_2eff2fba_exports)),
-      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_7bca72ea(), learn_7bca72ea_exports)),
-      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_dfc2cf29(), teach_dfc2cf29_exports)),
-      "src/routes/ase.svelte": () => Promise.resolve().then(() => (init_ase_c10be744(), ase_c10be744_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_2b183dde(), layout_2b183dde_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_9858ee51(), index_9858ee51_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_44362ce1(), layout_44362ce1_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_196599ad(), error_196599ad_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_508bb4f7(), index_508bb4f7_exports)),
+      "src/routes/class-material.svelte": () => Promise.resolve().then(() => (init_class_material_e313ce56(), class_material_e313ce56_exports)),
+      "src/routes/learn.svelte": () => Promise.resolve().then(() => (init_learn_99adf8b9(), learn_99adf8b9_exports)),
+      "src/routes/login.svelte": () => Promise.resolve().then(() => (init_login_0c735d0c(), login_0c735d0c_exports)),
+      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_ee6fd9d6(), teach_ee6fd9d6_exports)),
+      "src/routes/ase.svelte": () => Promise.resolve().then(() => (init_ase_f52fcceb(), ase_f52fcceb_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_eabf928b(), layout_eabf928b_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_60a39644(), index_60a39644_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-ea84d7ff.js", "css": ["assets/pages/__layout.svelte-8d662a74.css"], "js": ["pages/__layout.svelte-ea84d7ff.js", "chunks/vendor-271324cb.js", "chunks/store-e011fff7.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-3d6ec224.js", "css": [], "js": ["error.svelte-3d6ec224.js", "chunks/vendor-271324cb.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-cb41e697.js", "css": ["assets/pages/index.svelte-36321c84.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/index.svelte-cb41e697.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/class-material.svelte": { "entry": "pages/class-material.svelte-dc89ff74.js", "css": ["assets/pages/class-material.svelte-333d1d10.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/class-material.svelte-dc89ff74.js", "chunks/vendor-271324cb.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/explore.svelte": { "entry": "pages/explore.svelte-92d3d543.js", "css": ["assets/pages/explore.svelte-05304d75.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/explore.svelte-92d3d543.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-b5224a13.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-097ab787.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-097ab787.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-b5224a13.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-cda1d5a6.js", "css": ["assets/pages/teach.svelte-6563d2d2.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/teach.svelte-cda1d5a6.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js", "chunks/RenderlessFetchStrokes-b5224a13.js"], "styles": [] }, "src/routes/ase.svelte": { "entry": "pages/ase.svelte-aae1deb9.js", "css": ["assets/pages/ase.svelte-400dbc5e.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/ase.svelte-aae1deb9.js", "chunks/vendor-271324cb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-e011fff7.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-c7e3b8d0.js", "css": ["assets/pages/_class_/__layout.svelte-f73c5b3e.css"], "js": ["pages/_class_/__layout.svelte-c7e3b8d0.js", "chunks/vendor-271324cb.js", "chunks/store-e011fff7.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/canvas-74f91cf9.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-08370021.js", "css": ["assets/pages/_class_/_room_/index.svelte-5d3f2b74.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-08370021.js", "chunks/vendor-271324cb.js", "chunks/RenderlessFetchStrokes-b5224a13.js", "chunks/canvas-74f91cf9.js", "chunks/store-e011fff7.js", "chunks/preload-helper-ec9aa979.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-b6733eaf.js", "css": ["assets/pages/__layout.svelte-8d662a74.css"], "js": ["pages/__layout.svelte-b6733eaf.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-ce9ddefa.js", "css": [], "js": ["error.svelte-ce9ddefa.js", "chunks/vendor-3cd1c581.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-8046d1de.js", "css": ["assets/pages/index.svelte-adf5b1d6.css"], "js": ["pages/index.svelte-8046d1de.js", "chunks/vendor-3cd1c581.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-d69d6870.js"], "styles": [] }, "src/routes/class-material.svelte": { "entry": "pages/class-material.svelte-b0905e10.js", "css": ["assets/pages/class-material.svelte-333d1d10.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/class-material.svelte-b0905e10.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/canvas-fe9cb9fb.js"], "styles": [] }, "src/routes/learn.svelte": { "entry": "pages/learn.svelte-be1ebf69.js", "css": ["assets/pages/learn.svelte-86578aff.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/learn.svelte-be1ebf69.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/RenderlessFetchStrokes-38c2f700.js", "chunks/canvas-fe9cb9fb.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/login.svelte": { "entry": "pages/login.svelte-ebe8db23.js", "css": ["assets/pages/login.svelte-5e6d1fce.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/login.svelte-ebe8db23.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/canvas-fe9cb9fb.js", "chunks/PhoneLogin-62ca2936.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-1b424989.js", "css": ["assets/pages/teach.svelte-95d7d300.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/teach.svelte-1b424989.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/RenderlessFetchStrokes-38c2f700.js", "chunks/canvas-fe9cb9fb.js", "chunks/PhoneLogin-62ca2936.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/ase.svelte": { "entry": "pages/ase.svelte-49ef8956.js", "css": ["assets/pages/ase.svelte-400dbc5e.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/ase.svelte-49ef8956.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/canvas-fe9cb9fb.js", "chunks/PhoneLogin-62ca2936.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-69b82327.js", "css": ["assets/pages/_class_/__layout.svelte-3309dbb0.css"], "js": ["pages/_class_/__layout.svelte-69b82327.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/canvas-fe9cb9fb.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-5e469811.js", "css": ["assets/pages/_class_/_room_/index.svelte-e4eb3591.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-5e469811.js", "chunks/vendor-3cd1c581.js", "chunks/RenderlessFetchStrokes-38c2f700.js", "chunks/canvas-fe9cb9fb.js", "chunks/store-d69d6870.js", "chunks/preload-helper-ec9aa979.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
   }
 });
 
@@ -42379,7 +42482,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_ce98eb20();
+init_app_11594781();
 var import_cookie12 = __toModule(require_cookie());
 init_dist();
 

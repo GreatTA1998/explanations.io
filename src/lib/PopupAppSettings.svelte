@@ -1,18 +1,25 @@
 <div id="app-popup">
-  <h2>App settings</h2>
+  <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px">
+    <h2>App Settings</h2>
 
-  <div on:click={() => dispatch('popup-close')}>
-    Close popup
+    <span on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0; margin-left: auto;">
+      close
+    </span>
   </div>
 
-  <div on:click={changeName}>
+  <div style="margin-left: 10px;">
+    TODO: notifications and name
+  </div>
+
+  <!-- <div on:click={changeName}>
     Change name
-  </div>
-  <input bind:value={newlyTypedDisplayName}>
-
-  <div on:click={logOut}>
-    Logout
-  </div>
+  </div> -->
+  <!-- <input bind:value={newlyTypedDisplayName}> -->
+  <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
+    <button on:click={logOut} style="margin-right: 16px; margin-left: auto">
+      Logout
+    </button>
+  </div> 
 </div>
  
 <script>

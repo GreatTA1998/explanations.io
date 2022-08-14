@@ -66,7 +66,7 @@
       class:eraser-selected={$currentTool.type === 'eraser'}
       width="46" height="40"
       style="margin-left: 8px; margin-right: 8px;"
-      src="https://www.pngall.com/wp-content/uploads/2017/03/Eraser-Download-PNG.png"
+      src="https://i.imgur.com/Klln1yP.png"
       alt="eraser"
     >
   {/if}

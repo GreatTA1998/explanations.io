@@ -20,10 +20,12 @@
 
           <div>
             {#if $user.uid}
-              <ClassDropdownMenu 
-                {nameOfClass} 
-                {descriptionOfClass}
-              />
+              {#key nameOfClass}
+                <ClassDropdownMenu 
+                  {nameOfClass} 
+                  {descriptionOfClass}
+                />
+              {/key}
             {:else}
               <div style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
                 {nameOfClass} 

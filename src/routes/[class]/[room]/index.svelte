@@ -63,7 +63,7 @@
                   style="color: grey; font-size: 0.7rem"
                 >
                   {boardDoc.numOfEurekas || 0} eurekas, 
-                  {boardDoc.viewMinutes || 0} minutes viewed,
+                  {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed,
                   {boardDoc.numOfComments || 0} comments
                 </div>
                 {#if !isShowingComments}

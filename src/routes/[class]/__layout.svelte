@@ -365,21 +365,27 @@
 
     const subdeleteRequests = [] 
     for (const boardQuery of boardsQueries) {
-      const boardResult = await boardQuery
-      const boardDoc = await boardResult.data()
+      const result = await boardQuery
+      if (!result.exists()) continue // sometimes I have empty blackboard pointers for some reason, so quick-fix
+      const boardDoc = result.data()
       // delete audio
       if (boardDoc.audioRefFullPath) {
-        subdeleteRequests.push(
-          deleteObject(
-            ref(getStorage(), boardDoc.audioRefFullPath)
+        // `try-catch` because sometimes the audioRefFUllPath is invalid, but we don't want it to break the delete method
+        try {
+          subdeleteRequests.push(
+            deleteObject(
+              ref(getStorage(), boardDoc.audioRefFullPath)
+            )
           )
-        )
+        } catch (error) {
+          console.alert(error)
+        }
       }
       // delete strokes
       const functions = getFunctions();
       const deleteRecursively = httpsCallable(functions, 'recursiveDelete')
       subdeleteRequests.push(
-        deleteRecursively({ path: `/classes/${classID}/blackboards/${boardResult.id}` }).then(console.log(`Deleted blackboard /classes/${classID}/blackboards/${boardResult.id}`))
+        deleteRecursively({ path: `/classes/${classID}/blackboards/${result.id}` }).then(console.log(`Deleted blackboard /classes/${classID}/blackboards/${result.id}`))
       )
     }
     await Promise.all(subdeleteRequests)

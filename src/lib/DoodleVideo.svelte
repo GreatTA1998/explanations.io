@@ -211,7 +211,7 @@
       setTimeout(
         () => {
           if (isPlaying) {
-            dispatch('six-seconds-watched')
+            dispatch('six-seconds-elapsed', { playbackSpeed })
             updateViewMinutes()
           }
         },

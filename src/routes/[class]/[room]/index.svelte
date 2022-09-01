@@ -64,9 +64,9 @@
                 >
                   {boardDoc.numOfEurekas || 0} eurekas, 
                   {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed,
-                  {boardDoc.numOfComments || 0} comments
+                  <!-- {boardDoc.numOfComments || 0} comments -->
                 </div>
-                {#if !isShowingComments}
+                <!-- {#if !isShowingComments}
                   <Button on:click={listenToComments} >
                     <Icon class="material-icons" style="margin-right: 0">
                       expand_more
@@ -78,10 +78,10 @@
                       expand_less
                     </Icon>
                   </Button>
-                {/if}
+                {/if} -->
               </div>
 
-              {#if isShowingComments}
+              <!-- {#if isShowingComments}
                 <div style="width: {$canvasWidth - 20}px; margin-left: 20px;">
                   <DoodleVideoComments 
                     {allComments}
@@ -100,7 +100,7 @@
                   </Button>
                 </div>
                 <div style="margin-bottom: 10px;"></div>
-              {/if}
+              {/if} -->
             </RenderlessFetchComments>
 
             <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
@@ -113,7 +113,7 @@
                   {strokesArray} 
                   audioDownloadURL={boardDoc.audioDownloadURL}
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-                  on:six-seconds-watched={() => incrementViewMinutes(boardID)}
+                  on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                 >
                   {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
                     <Button 
@@ -290,10 +290,10 @@
     }
   }
 
-  function incrementViewMinutes (boardID) {
+  function incrementViewMinutes (boardID, playbackSpeed) {
     const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
     updateDoc(blackboardRef, {
-      viewMinutes: increment(0.1)
+      viewMinutes: increment(0.1 * playbackSpeed)
     })
   }
 

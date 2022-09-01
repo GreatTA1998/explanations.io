@@ -60,10 +60,10 @@
             >  
               <div style="display: flex; align-items: center">
                 <div 
-                  style="color: grey; font-size: 0.7rem"
+                  style="color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 4px; margin-bottom: 4px;"
                 >
-                  {boardDoc.numOfEurekas || 0} eurekas, 
-                  {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed,
+                  {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0} eurekas, 
+                  {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed
                   <!-- {boardDoc.numOfComments || 0} comments -->
                 </div>
                 <!-- {#if !isShowingComments}
@@ -115,11 +115,20 @@
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                 >
+                  <Button
+                    on:click={eureka(boardDoc)}
+                    style="
+                    background-color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'rgba(255,255,255,0.5)') : 'rgba(255,255,255,0.5)'};
+                    color: white;
+                    margin-left: 8px;"
+                  >
+                    Eureka
+                  </Button>
+
                   {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
                     <Button 
-                      slot="top-left-corner" 
                       on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} 
-                      style="margin-left: {$canvasWidth - 240}px; background-color: rgba(255,255,255,0.5); color: white">
+                      style="margin-left: {$canvasWidth - 240 - 70}px; background-color: rgba(255,255,255,0.5); color: white">
                       Delete video
                     </Button>
                   {/if}
@@ -606,6 +615,21 @@
     deleteDoc(
       doc(getFirestore(), boardsDbPath + boardID)
     )
+  }
+
+  function eureka (boardDoc) {
+    const boardRef = doc(getFirestore(), boardsDbPath + boardDoc.id)
+    if (boardDoc.eurekaUIDs instanceof Array) {
+      if (boardDoc.eurekaUIDs.includes($user.uid)) {
+        updateDoc(boardRef, {
+          eurekaUIDs: arrayRemove($user.uid)
+        })
+        return 
+      }
+    } 
+    updateDoc(boardRef, {
+      eurekaUIDs: arrayUnion($user.uid)
+    })
   }
 
 </script>

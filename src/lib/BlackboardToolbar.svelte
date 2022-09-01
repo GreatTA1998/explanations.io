@@ -34,7 +34,9 @@
   </div>
   {#if Object.keys($user).length > 0}
     {#each $user.pencilColors as color }
-      <div on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })} style="margin: 0 4px; width: 30px; height: 42px; border-radius: 3px; align-items: center; display: flex; justify-content: center;" class:pencil-selected={$currentTool.color === color}>
+      <div on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })} style="margin: 0 4px; width: 30px; height: 42px; border-radius: 3px; align-items: center; display: flex; justify-content: center;" 
+        class:pencil-selected={$currentTool.color === color && $currentTool.color !== currentDiceColor}
+      >
         <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="16px" height="30px" viewBox="0 0 100 230" style="enable-background:new 0 0 100 230;" xml:space="preserve"
         >
@@ -61,11 +63,19 @@
       </div>
     {/each}
 
+    <img on:click={handleDiceClick}
+      src="https://i.imgur.com/qshS7Vi.png"
+      width="30"
+      height="30"
+      style="margin-left: 8px"
+      alt="Random color dice"
+    />
+
     <img 
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 32 })}
       class:eraser-selected={$currentTool.type === 'eraser'}
       width="46" height="40"
-      style="margin-left: 8px; margin-right: 8px;"
+      style="margin-left: 15px; margin-right: 8px;"
       src="https://i.imgur.com/Klln1yP.png"
       alt="eraser"
     >
@@ -84,9 +94,59 @@
   import { user, currentTool, onlyAllowApplePencil } from '../store.js'
   import Switch from '@smui/switch';
 
+  let currentDiceColor = ''
+
   function func () {
     onlyAllowApplePencil.set(!$onlyAllowApplePencil)
   }
+
+  function handleDiceClick (color, i) {
+    // don't change color when there is already an existing color saved
+    if (!currentDiceColor || $currentTool.color === currentDiceColor) {
+      currentDiceColor = getRandomColor()
+    }
+    currentTool.set({ type: 'pencil', color: currentDiceColor, lineWidth: 3 })
+  }
+    
+  //   const { currentTool } = this
+  //   const alreadySelected = currentTool.color === color && currentTool.type === 'PEN'
+  //   if (!alreadySelected) {
+  //     const penWidthsCopy = [ ...(this.user.penWidths || [2, 2, 2, 2]) ]
+  //     this.$store.commit("SET_CURRENT_TOOL", {
+  //       type: "PEN",
+  //       color: color,
+  //       lineWidth: penWidthsCopy[i]
+  //     })
+  //   } else {
+  //     this.diceNumber = 1 + Math.floor( Math.random() * 6 )
+  //     const newPencilWidth = this.diceNumber
+
+  //     this.changePenColor(this.getRandomColor(), i, newPencilWidth)
+  //   }
+  // }
+  function getRandomColor () {
+      return "hsla(" + ~~(360 * Math.random()) + "," + // hue i.e. the "color"
+                    "100%,"+  // 100% saturation i.e. maximize on its vividness and purity
+                    "60%,1)"; // 60% lightness (how much black / white mix, otherwise too faded), 1 alpha
+  }
+
+  // function changePenColor (color, i, width = 2) {
+  //   const penColorsCopy = [...this.user.penColors];
+  //   penColorsCopy[i] = color
+  //   const penWidthsCopy = [ ...(this.user.penWidths || [2, 2, 2, 2]) ]
+  //   penWidthsCopy[i] = width
+  //   db.collection("users").doc(this.user.uid).update({
+  //     penColors: penColorsCopy,
+  //     penWidths: penWidthsCopy
+  //   });
+  //   this.$store.commit("SET_CURRENT_TOOL", {
+  //     type: "PEN",
+  //     color: penColorsCopy[i],
+  //     lineWidth: penWidthsCopy[i]
+  //   })
+  //   this.newWidthToUpdate = null
+  //   this.newColorToUpdate = null
+  // }
 </script>
 
 <style>

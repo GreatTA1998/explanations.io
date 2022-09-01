@@ -162,10 +162,11 @@
                           () => willPreventPageLeave.set(true)
                         )}
                         class="material-icons" 
-                        style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
+                        style="font-size: 2.5rem; color: red; margin-left: 22px; margin-right: 26px"
                       >
-                        album
+                        circle
                       </span>
+                      <!-- color was `cyan`, icon was `album` -->
      
                     {:else if boardDoc.recordState === 'mid_record'}
                       <span 

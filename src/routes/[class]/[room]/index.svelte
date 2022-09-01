@@ -160,9 +160,18 @@
                     on:board-wipe={deleteAllStrokesFromDb}
                     on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
                   >
+                    {#if boardDoc.recordState === 'post_record'}
+                      <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
+                        <CircularProgress
+                          class="my-four-colors"
+                          style="height: 32px; width: 32px;"
+                          indeterminate
+                          fourColor
+                        />
+                      </div>
                     <!-- if an recording is active (rather than an interrupted session that isn't actually recording,
                       currentTime will be incrementing -->
-                    {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
+                    {:else if boardDoc.recordState === 'pre_record' || currentTime === 0}
                       <span 
                         on:click={() => callManyFuncs(
                           startRecording, 
@@ -191,18 +200,6 @@
                         stop_circle
                       </span>
 
-                    <!-- Note that `currentTime` will not be reset after the recording, which is good for us
-                      (explain more when you're head is more clear)
-                    -->
-                    {:else if boardDoc.recordState === 'post_record'}
-                      <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
-                        <CircularProgress
-                          class="my-four-colors"
-                          style="height: 32px; width: 32px;"
-                          indeterminate
-                          fourColor
-                        />
-                      </div>
                     {/if}
                   </Blackboard>
                 </RenderlessAudioRecorder>

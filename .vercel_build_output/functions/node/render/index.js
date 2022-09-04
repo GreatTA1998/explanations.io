@@ -4879,7 +4879,7 @@ var init_DailyRoom_json_5588df4b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/store-8ddd345a.js
+// .svelte-kit/output/server/chunks/store-aae57f2a.js
 function deepCopy(value) {
   return deepExtend(void 0, value);
 }
@@ -5207,10 +5207,10 @@ function getRandomID() {
   return autoId;
 }
 var CONSTANTS, assert, assertionError, stringToByteArray$1, byteArrayToString, base64, base64Encode, base64Decode, Deferred, ERROR_NAME, FirebaseError, ErrorFactory, PATTERN, decode, isValidFormat, isAdmin, Sha1, ObserverProxy, stringToByteArray, stringLength, Component, LogLevel, levelStringToEnum, defaultLogLevel, ConsoleMethod, defaultLogHandler, Logger, PlatformLoggerServiceImpl, name$o, version$1, logger, name$n, name$m, name$l, name$k, name$j, name$i, name$h, name$g, name$f, name$e, name$d, name$c, name$b, name$a, name$9, name$8, name$7, name$6, name$5, name$4, name$3, name$2, name$1, name, version, DEFAULT_ENTRY_NAME, PLATFORM_LOG_STRING, _apps, _components, ERRORS, ERROR_FACTORY, SDK_VERSION, extendStatics, __assign, subscriber_queue, displayDate, canvasHeight, canvasWidth, hasFetchedUser, user, currentTool, onlyAllowApplePencil, dailyMicStream, roomToPeople, dailyRoomParticipants, browserTabID, isFirestoreDocCreated, willPreventPageLeave;
-var init_store_8ddd345a = __esm({
-  ".svelte-kit/output/server/chunks/store-8ddd345a.js"() {
+var init_store_aae57f2a = __esm({
+  ".svelte-kit/output/server/chunks/store-aae57f2a.js"() {
     init_shims();
-    init_app_cc9bc85b();
+    init_app_54cf9c98();
     CONSTANTS = {
       NODE_CLIENT: false,
       NODE_ADMIN: false,
@@ -6047,7 +6047,7 @@ var init_store_8ddd345a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index.esm2017-b5a9af8a.js
+// .svelte-kit/output/server/chunks/index.esm2017-af8996bd.js
 function aa() {
 }
 function ba$1(a) {
@@ -9927,10 +9927,10 @@ function Sh(t2) {
   return Fa(t2 = ga(t2, ka)), new rh(t2, (e) => Th(t2, e));
 }
 var commonjsGlobal2, k, goog, l, ea, fa$1, ka$1, la$1, ma$1, na$1, ta, x$1, va$1, wa$1, za, Ha, y, Ia$1, Ja$1, Ka, La, Na, Oa$1, Pa, Qa, Ga, Sa, Ta$1, Ua, Va, Wa, B$1, Xa$1, cb, db, pb, rb, ub, vb, wb, Ab, Cb, tb, Ib, Jb, H$1, Rb, Wb, Xb, L$1, cc$1, ec$1, gc$1, hc$1, Mc, Vc, Xc$1, Wc$1, $c, Yc$1, fd, hd, rd, vd, wd, xd, yd, createWebChannelTransport, getStatEventTarget, ErrorCode, EventType, Event2, Stat, FetchXmlHttpFactory, WebChannel, XhrIo, S, D, C, N, K, j, Q, W, G, H, J, Y, X, tt, it, rt, ut, ht, lt, ft, dt, _t, mt, Pt, Ut, Kt, jt, Jt, Xt, Zt, te, ne, se, ie, re, oe, ae, fe, Ne, Oe, Fe, Le, Ue, je, We, Ge, He, en, nn, cn, an, un, hn, ln, wn, _n, mn, gn, yn, pn, En, An, bn, vn, Sn, Dn, Cn, Nn, xn, kn, $n, Mn, Ln, Bn, qs, Ks, js, ni, si, ii, ri, pi, Ti, Ni, ji, Qi, rr, or, cr, ar, Rr, br, Pr, vr, Vr, Sr, Dr, Cr, Nr, xr, Ur, Kr, jr, Qr, Wr, Gr, zr, Xr, Zr, to, eo, no, so, io, xo, $o, Oo, Fo, Mo, Lo, Qo, Jo, Yo, Xo, Zo, tc, ec, kc, Fc, Lc, Kc, ua, ha, la, pa, Ta, Ia, Aa, Ra, Da, ka, Ja, Xa, Za, tu, eu, nu, su, ru, ou, uu, lu, fu, wu, Au, vu, Vu, Du, Cu, Nu, xu, Fu, Uu, nh, rh, ah;
-var init_index_esm2017_b5a9af8a = __esm({
-  ".svelte-kit/output/server/chunks/index.esm2017-b5a9af8a.js"() {
+var init_index_esm2017_af8996bd = __esm({
+  ".svelte-kit/output/server/chunks/index.esm2017-af8996bd.js"() {
     init_shims();
-    init_store_8ddd345a();
+    init_store_aae57f2a();
     commonjsGlobal2 = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
     goog = goog || {};
     l = commonjsGlobal2 || self;
@@ -17479,7 +17479,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c327074d-89a5ab2a.js
+// .svelte-kit/output/server/chunks/index-c327074d-b6ba0360.js
 function _prodErrorMap() {
   return {
     ["dependent-sdk-initialized-before-auth"]: "Another Firebase SDK was initialized and is trying to use Auth before Auth is initialized. Please be sure to call `initializeAuth` or `getAuth` before starting any other Firebase SDK."
@@ -17968,10 +17968,10 @@ async function fail() {
   throw NOT_AVAILABLE_ERROR;
 }
 var fetchImpl, prodErrorMap, _DEFAULT_AUTH_ERROR_FACTORY, logClient, instanceCache, Delay, FetchProvider, SERVER_ERROR_MAP, DEFAULT_API_TIMEOUT_MS, NetworkTimeout, ProactiveRefresh, UserMetadata, StsTokenManager, UserImpl, InMemoryPersistence, inMemoryPersistence, PersistenceUserManager, AuthImpl, Subscription, name2, version2, AuthInterop, NOT_AVAILABLE_ERROR, FailClass, signInWithPhoneNumber, RecaptchaVerifier;
-var init_index_c327074d_89a5ab2a = __esm({
-  ".svelte-kit/output/server/chunks/index-c327074d-89a5ab2a.js"() {
+var init_index_c327074d_b6ba0360 = __esm({
+  ".svelte-kit/output/server/chunks/index-c327074d-b6ba0360.js"() {
     init_shims();
-    init_store_8ddd345a();
+    init_store_aae57f2a();
     fetchImpl = __toModule(require_lib2());
     prodErrorMap = _prodErrorMap;
     _DEFAULT_AUTH_ERROR_FACTORY = new ErrorFactory("auth", "Firebase", _prodErrorMap());
@@ -18900,19 +18900,19 @@ var init_index_c327074d_89a5ab2a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-9887601a.js
-var layout_9887601a_exports = {};
-__export(layout_9887601a_exports, {
+// .svelte-kit/output/server/chunks/__layout-c64f8dbb.js
+var layout_c64f8dbb_exports = {};
+__export(layout_c64f8dbb_exports, {
   default: () => _layout
 });
 var import_node_fetch, import_cookie, name3, version3, getStores, page, _layout;
-var init_layout_9887601a = __esm({
-  ".svelte-kit/output/server/chunks/__layout-9887601a.js"() {
+var init_layout_c64f8dbb = __esm({
+  ".svelte-kit/output/server/chunks/__layout-c64f8dbb.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_store_8ddd345a();
-    init_index_esm2017_b5a9af8a();
-    init_index_c327074d_89a5ab2a();
+    init_app_54cf9c98();
+    init_store_aae57f2a();
+    init_index_esm2017_af8996bd();
+    init_index_c327074d_b6ba0360();
     import_node_fetch = __toModule(require_lib2());
     import_cookie = __toModule(require_cookie());
     init_dist();
@@ -18961,9 +18961,9 @@ var init_layout_9887601a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/error-4c239f59.js
-var error_4c239f59_exports = {};
-__export(error_4c239f59_exports, {
+// .svelte-kit/output/server/chunks/error-6dece8fc.js
+var error_6dece8fc_exports = {};
+__export(error_6dece8fc_exports, {
   default: () => Error2,
   load: () => load
 });
@@ -18971,10 +18971,10 @@ function load({ error: error3, status }) {
   return { props: { error: error3, status } };
 }
 var import_cookie2, Error2;
-var init_error_4c239f59 = __esm({
-  ".svelte-kit/output/server/chunks/error-4c239f59.js"() {
+var init_error_6dece8fc = __esm({
+  ".svelte-kit/output/server/chunks/error-6dece8fc.js"() {
     init_shims();
-    init_app_cc9bc85b();
+    init_app_54cf9c98();
     import_cookie2 = __toModule(require_cookie());
     init_dist();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -18996,7 +18996,7 @@ ${error3.stack ? `<pre>${escape(error3.stack)}</pre>` : ``}`;
   }
 });
 
-// .svelte-kit/output/server/chunks/index-f299e8a7.js
+// .svelte-kit/output/server/chunks/index-f63e16cf.js
 function classMap(classObj) {
   return Object.entries(classObj).filter(([name6, value]) => name6 !== "" && value).map(([name6]) => name6).join(" ");
 }
@@ -19323,11 +19323,11 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
   };
 }
 var oldModifierRegex, newModifierRegex, supportsCssVariables_, MDCFoundation, events, ponyfill, cssClasses, strings, numbers, ACTIVATION_EVENT_TYPES, POINTER_DEACTIVATION_EVENT_TYPES, activatedTargets, MDCRippleFoundation, applyPassive, matches, A$1, Button$1, Div$1, H1$1, H2$1, H3$1, Li$1, Nav$1, Span$1, Ul$1, A2, Button, Div, H1, H2, H3, Li, Nav, Span, Ul;
-var init_index_f299e8a7 = __esm({
-  ".svelte-kit/output/server/chunks/index-f299e8a7.js"() {
+var init_index_f63e16cf = __esm({
+  ".svelte-kit/output/server/chunks/index-f63e16cf.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_store_8ddd345a();
+    init_app_54cf9c98();
+    init_store_aae57f2a();
     oldModifierRegex = /^[a-z]+(?::(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     newModifierRegex = /^[^$]+(?:\$(?:preventDefault|stopPropagation|passive|nonpassive|capture|once|self))+$/;
     MDCFoundation = function() {
@@ -20067,13 +20067,13 @@ var init_index_f299e8a7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Button-6bf22d1f.js
+// .svelte-kit/output/server/chunks/Button-1e395305.js
 var Object_1, Button_1;
-var init_Button_6bf22d1f = __esm({
-  ".svelte-kit/output/server/chunks/Button-6bf22d1f.js"() {
+var init_Button_1e395305 = __esm({
+  ".svelte-kit/output/server/chunks/Button-1e395305.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_index_f299e8a7();
+    init_app_54cf9c98();
+    init_index_f63e16cf();
     ({ Object: Object_1 } = globals);
     Button_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let actionProp;
@@ -20223,23 +20223,23 @@ var init_Button_6bf22d1f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-c0b9ccd0.js
-var index_c0b9ccd0_exports = {};
-__export(index_c0b9ccd0_exports, {
+// .svelte-kit/output/server/chunks/index-d30cfaa2.js
+var index_d30cfaa2_exports = {};
+__export(index_d30cfaa2_exports, {
   default: () => Routes
 });
 var import_node_fetch2, import_cookie3, css, Routes;
-var init_index_c0b9ccd0 = __esm({
-  ".svelte-kit/output/server/chunks/index-c0b9ccd0.js"() {
+var init_index_d30cfaa2 = __esm({
+  ".svelte-kit/output/server/chunks/index-d30cfaa2.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_index_c327074d_89a5ab2a();
-    init_store_8ddd345a();
+    init_app_54cf9c98();
+    init_index_c327074d_b6ba0360();
+    init_store_aae57f2a();
     import_node_fetch2 = __toModule(require_lib2());
-    init_Button_6bf22d1f();
+    init_Button_1e395305();
     import_cookie3 = __toModule(require_cookie());
     init_dist();
-    init_index_f299e8a7();
+    init_index_f63e16cf();
     css = {
       code: `.room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r
 }.copied-from-koa.svelte-530tv{font:34px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r
@@ -20285,7 +20285,7 @@ var init_index_c0b9ccd0 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/SelectionGroupIcon-56afcad7.js
+// .svelte-kit/output/server/chunks/SelectionGroupIcon-50d68b2b.js
 function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
   if (typeof Event !== "undefined" && element) {
     const event2 = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
@@ -20313,11 +20313,11 @@ function classAdderBuilder(props) {
   });
 }
 var Object_1$1, internals, ClassAdder, defaults, HelperLine, Prefix, Suffix, List, Object_12, counter, Item$1, Text, Graphic$1, Item, Graphic;
-var init_SelectionGroupIcon_56afcad7 = __esm({
-  ".svelte-kit/output/server/chunks/SelectionGroupIcon-56afcad7.js"() {
+var init_SelectionGroupIcon_50d68b2b = __esm({
+  ".svelte-kit/output/server/chunks/SelectionGroupIcon-50d68b2b.js"() {
     init_shims();
-    init_index_f299e8a7();
-    init_app_cc9bc85b();
+    init_index_f63e16cf();
+    init_app_54cf9c98();
     ({ Object: Object_1$1 } = globals);
     internals = {
       component: Div$1,
@@ -20835,7 +20835,7 @@ var init_SelectionGroupIcon_56afcad7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/canvas-6954c1ba.js
+// .svelte-kit/output/server/chunks/canvas-a04101b7.js
 function calculateCanvasDimensions() {
   const appElement = document.getElementById("main-content");
   let availableHeight;
@@ -20862,33 +20862,33 @@ function calculateCanvasDimensions2() {
   const normalD = calculateCanvasDimensions();
   return { width: 0.9 * normalD.width, height: 0.9 * normalD.height };
 }
-var init_canvas_6954c1ba = __esm({
-  ".svelte-kit/output/server/chunks/canvas-6954c1ba.js"() {
+var init_canvas_a04101b7 = __esm({
+  ".svelte-kit/output/server/chunks/canvas-a04101b7.js"() {
     init_shims();
-    init_store_8ddd345a();
-    init_app_cc9bc85b();
+    init_store_aae57f2a();
+    init_app_54cf9c98();
   }
 });
 
-// .svelte-kit/output/server/chunks/class-material-132afcdf.js
-var class_material_132afcdf_exports = {};
-__export(class_material_132afcdf_exports, {
+// .svelte-kit/output/server/chunks/class-material-cf751d17.js
+var class_material_cf751d17_exports = {};
+__export(class_material_cf751d17_exports, {
   default: () => Class_material
 });
 var import_node_fetch3, import_cookie4, css2, phoneNumSegment1, phoneNumSegment2, phoneNumSegment3, Class_material;
-var init_class_material_132afcdf = __esm({
-  ".svelte-kit/output/server/chunks/class-material-132afcdf.js"() {
+var init_class_material_cf751d17 = __esm({
+  ".svelte-kit/output/server/chunks/class-material-cf751d17.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_index_c327074d_89a5ab2a();
-    init_store_8ddd345a();
+    init_app_54cf9c98();
+    init_index_c327074d_b6ba0360();
+    init_store_aae57f2a();
     import_node_fetch3 = __toModule(require_lib2());
-    init_SelectionGroupIcon_56afcad7();
-    init_canvas_6954c1ba();
-    init_index_esm2017_b5a9af8a();
+    init_SelectionGroupIcon_50d68b2b();
+    init_canvas_a04101b7();
+    init_index_esm2017_af8996bd();
     import_cookie4 = __toModule(require_cookie());
     init_dist();
-    init_index_f299e8a7();
+    init_index_f63e16cf();
     css2 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-113t2a0{margin:0 auto;text-align:left}",
       map: null
@@ -21025,16 +21025,16 @@ var init_navigation_0a4806ec = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/PhoneLogin-de8a2dad.js
+// .svelte-kit/output/server/chunks/PhoneLogin-0d14d16e.js
 var import_node_fetch4, css3, PhoneLogin;
-var init_PhoneLogin_de8a2dad = __esm({
-  ".svelte-kit/output/server/chunks/PhoneLogin-de8a2dad.js"() {
+var init_PhoneLogin_0d14d16e = __esm({
+  ".svelte-kit/output/server/chunks/PhoneLogin-0d14d16e.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_index_c327074d_89a5ab2a();
-    init_store_8ddd345a();
+    init_app_54cf9c98();
+    init_index_c327074d_b6ba0360();
+    init_store_aae57f2a();
     import_node_fetch4 = __toModule(require_lib2());
-    init_Button_6bf22d1f();
+    init_Button_1e395305();
     init_navigation_0a4806ec();
     css3 = {
       code: '.svelte-1iojg2p::placeholder{opacity:0.2\r\n  }.copied-from-koa.svelte-1iojg2p{font:20px/1.7 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif\r\n  }',
@@ -21184,27 +21184,27 @@ var init_PhoneLogin_de8a2dad = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/login-44198cef.js
-var login_44198cef_exports = {};
-__export(login_44198cef_exports, {
+// .svelte-kit/output/server/chunks/login-c8c3f873.js
+var login_c8c3f873_exports = {};
+__export(login_c8c3f873_exports, {
   default: () => Login
 });
 var import_cookie5, import_node_fetch5, css4, Login;
-var init_login_44198cef = __esm({
-  ".svelte-kit/output/server/chunks/login-44198cef.js"() {
+var init_login_c8c3f873 = __esm({
+  ".svelte-kit/output/server/chunks/login-c8c3f873.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_store_8ddd345a();
-    init_SelectionGroupIcon_56afcad7();
-    init_canvas_6954c1ba();
-    init_index_esm2017_b5a9af8a();
-    init_PhoneLogin_de8a2dad();
+    init_app_54cf9c98();
+    init_store_aae57f2a();
+    init_SelectionGroupIcon_50d68b2b();
+    init_canvas_a04101b7();
+    init_index_esm2017_af8996bd();
+    init_PhoneLogin_0d14d16e();
     import_cookie5 = __toModule(require_cookie());
     init_dist();
-    init_index_f299e8a7();
-    init_index_c327074d_89a5ab2a();
+    init_index_f63e16cf();
+    init_index_c327074d_b6ba0360();
     import_node_fetch5 = __toModule(require_lib2());
-    init_Button_6bf22d1f();
+    init_Button_1e395305();
     init_navigation_0a4806ec();
     css4 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-ejjzis{margin:0 auto;text-align:left}",
@@ -21270,7 +21270,7 @@ var init_login_44198cef = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-17009ea4.js
+// .svelte-kit/output/server/chunks/RenderlessFetchStrokes-8fa4085c.js
 async function deleteAllStrokesFromDb({ boardPath, strokesArray }) {
   return new Promise(async (resolve2) => {
     const batchDeleteRequests = [];
@@ -21293,13 +21293,13 @@ async function deleteAllStrokesFromDb({ boardPath, strokesArray }) {
   });
 }
 var css5, DoodleVideo, RenderlessListenToBoard, RenderlessFetchStrokes;
-var init_RenderlessFetchStrokes_17009ea4 = __esm({
-  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-17009ea4.js"() {
+var init_RenderlessFetchStrokes_8fa4085c = __esm({
+  ".svelte-kit/output/server/chunks/RenderlessFetchStrokes-8fa4085c.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_store_8ddd345a();
-    init_Button_6bf22d1f();
-    init_index_esm2017_b5a9af8a();
+    init_app_54cf9c98();
+    init_store_aae57f2a();
+    init_Button_1e395305();
+    init_index_esm2017_af8996bd();
     css5 = {
       code: ".overlay-center.svelte-12w6n3q{position:absolute;width:20px;height:20px;top:0;left:0;right:0;bottom:0;margin:auto;color:white\r\n}",
       map: null
@@ -21413,28 +21413,28 @@ ${strokesArray ? `<span class="${"material-icons overlay-center svelte-12w6n3q"}
   }
 });
 
-// .svelte-kit/output/server/chunks/teach-a4d475eb.js
-var teach_a4d475eb_exports = {};
-__export(teach_a4d475eb_exports, {
+// .svelte-kit/output/server/chunks/teach-7cb50912.js
+var teach_7cb50912_exports = {};
+__export(teach_7cb50912_exports, {
   default: () => Teach
 });
 var import_node_fetch6, import_cookie6, css6, Teach;
-var init_teach_a4d475eb = __esm({
-  ".svelte-kit/output/server/chunks/teach-a4d475eb.js"() {
+var init_teach_7cb50912 = __esm({
+  ".svelte-kit/output/server/chunks/teach-7cb50912.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_index_c327074d_89a5ab2a();
-    init_store_8ddd345a();
+    init_app_54cf9c98();
+    init_index_c327074d_b6ba0360();
+    init_store_aae57f2a();
     import_node_fetch6 = __toModule(require_lib2());
-    init_RenderlessFetchStrokes_17009ea4();
-    init_canvas_6954c1ba();
-    init_PhoneLogin_de8a2dad();
-    init_SelectionGroupIcon_56afcad7();
+    init_RenderlessFetchStrokes_8fa4085c();
+    init_canvas_a04101b7();
+    init_PhoneLogin_0d14d16e();
+    init_SelectionGroupIcon_50d68b2b();
     import_cookie6 = __toModule(require_cookie());
     init_dist();
-    init_Button_6bf22d1f();
-    init_index_f299e8a7();
-    init_index_esm2017_b5a9af8a();
+    init_Button_1e395305();
+    init_index_f63e16cf();
+    init_index_esm2017_af8996bd();
     init_navigation_0a4806ec();
     css6 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-6a84vc{margin:0 auto;text-align:left}li.svelte-6a84vc{margin-bottom:2px}",
@@ -21552,27 +21552,27 @@ var init_teach_a4d475eb = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/ase-450a198a.js
-var ase_450a198a_exports = {};
-__export(ase_450a198a_exports, {
+// .svelte-kit/output/server/chunks/ase-0ad91eb3.js
+var ase_0ad91eb3_exports = {};
+__export(ase_0ad91eb3_exports, {
   default: () => Ase
 });
 var import_cookie7, import_node_fetch7, css7, Ase;
-var init_ase_450a198a = __esm({
-  ".svelte-kit/output/server/chunks/ase-450a198a.js"() {
+var init_ase_0ad91eb3 = __esm({
+  ".svelte-kit/output/server/chunks/ase-0ad91eb3.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_store_8ddd345a();
-    init_canvas_6954c1ba();
-    init_PhoneLogin_de8a2dad();
-    init_SelectionGroupIcon_56afcad7();
-    init_index_esm2017_b5a9af8a();
+    init_app_54cf9c98();
+    init_store_aae57f2a();
+    init_canvas_a04101b7();
+    init_PhoneLogin_0d14d16e();
+    init_SelectionGroupIcon_50d68b2b();
+    init_index_esm2017_af8996bd();
     import_cookie7 = __toModule(require_cookie());
     init_dist();
-    init_index_c327074d_89a5ab2a();
+    init_index_c327074d_b6ba0360();
     import_node_fetch7 = __toModule(require_lib2());
-    init_Button_6bf22d1f();
-    init_index_f299e8a7();
+    init_Button_1e395305();
+    init_index_f63e16cf();
     init_navigation_0a4806ec();
     css7 = {
       code: ".room-title input{font-size:2rem}.question input{color:rgb(19, 145, 230) !important\r\n}.content.svelte-113t2a0{margin:0 auto;text-align:left}li.svelte-113t2a0{margin-bottom:2px}",
@@ -21663,7 +21663,7 @@ var init_ase_450a198a = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index.node.esm-82fafce9.js
+// .svelte-kit/output/server/chunks/index.node.esm-7d41c3d6.js
 function exclude(obj, keys) {
   let names = Object.getOwnPropertyNames(obj);
   const newObj = {};
@@ -21907,13 +21907,13 @@ function registerFunctions(fetchImpl2, variant) {
   registerVersion(name4, version4, "esm2017");
 }
 var import_node_fetch8, ContextFragment, FloatingLabel, LineRipple, NotchedOutline, Input, Textarea, Object_13, Textfield, MenuSurface, Menu, Switch, DEFAULT_HOST, CONFIG_STORAGE_BUCKET_KEY, DEFAULT_MAX_OPERATION_RETRY_TIME, DEFAULT_MAX_UPLOAD_RETRY_TIME, StorageError, Location, FailRequest, ErrorCode2, NetworkRequest, RequestEndStatus, Reference, FirebaseStorageImpl, name$12, version$12, STORAGE_TYPE, FUNCTIONS_TYPE, ContextProvider, DEFAULT_REGION, FunctionsService, name4, version4, AUTH_INTERNAL_NAME, APP_CHECK_INTERNAL_NAME, MESSAGING_INTERNAL_NAME;
-var init_index_node_esm_82fafce9 = __esm({
-  ".svelte-kit/output/server/chunks/index.node.esm-82fafce9.js"() {
+var init_index_node_esm_7d41c3d6 = __esm({
+  ".svelte-kit/output/server/chunks/index.node.esm-7d41c3d6.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_index_f299e8a7();
-    init_store_8ddd345a();
-    init_SelectionGroupIcon_56afcad7();
+    init_app_54cf9c98();
+    init_index_f63e16cf();
+    init_store_aae57f2a();
+    init_SelectionGroupIcon_50d68b2b();
     import_node_fetch8 = __toModule(require_lib2());
     ContextFragment = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $storeValue, $$unsubscribe_storeValue;
@@ -28756,9 +28756,9 @@ var require_daily_iframe = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-672161e4.js
-var layout_672161e4_exports = {};
-__export(layout_672161e4_exports, {
+// .svelte-kit/output/server/chunks/__layout-df87ce28.js
+var layout_df87ce28_exports = {};
+__export(layout_df87ce28_exports, {
   default: () => _layout2,
   load: () => load2
 });
@@ -30948,17 +30948,17 @@ function load2({ page: page2 }) {
   };
 }
 var import_node_fetch9, import_util2, import_buffer, import_stream2, import_crypto2, import_url2, import_assert, import_net, import_tls, import_daily_js, import_cookie8, I2, Svg, CommonIcon, Icon, Autocomplete, ClassDropdownMenu, cssClasses2, strings2, MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation, Drawer, AppContent, Content, css$1, LeftDrawer, safeBuffer, events2, R2, ReflectApply, ReflectOwnKeys, NumberIsNaN, defaultMaxListeners, streams$1, Stream$3, util$b, IO, Messages, Headers$3, headers, Buffer$9, StreamReader, stream_reader, Buffer$8, Emitter, util$a, streams, Headers$2, Reader, Base$7, instance$b, key$b, base, httpParser, assert2, kOnHeaders, kOnHeadersComplete, kOnBody, kOnMessageComplete, compatMode0_12, methods, method_connect, headerState, stateFinishAllowed, headerExp, headerContinueExp, requestExp, responseExp, NodeHTTPParser, Buffer$7, TYPES, HttpParser$3, VERSION, http_parser, TOKEN, NOTOKEN, QUOTED, PARAM, EXT, EXT_LIST, NUMBER, hasOwnProperty, Parser$1, Offers, parser, RingBuffer$2, ring_buffer, RingBuffer$1, Functor$1, functor, RingBuffer, Pledge$2, pledge, Functor, Pledge$1, Cell$1, cell, Cell, Pledge, Pipeline$1, pipeline2, Parser, Pipeline, Extensions$1, instance$a, key$a, websocket_extensions, Frame$1, instance$9, key$9, frame, Buffer$6, Message$1, instance$8, key$8, message, Buffer$5, crypto$2, util$9, Extensions, Base$6, Frame, Message, Hybi$2, instance$7, key$7, hybi, Buffer$4, Stream$2, url$2, util$8, Base$5, Headers$1, HttpParser$2, PORTS, Proxy$1, instance$6, key$6, proxy, Buffer$3, crypto$1, url$1, util$7, HttpParser$1, Base$4, Hybi$1, Proxy2, Client$2, instance$5, key$5, client$1, Buffer$2, Base$3, util$6, Draft75$2, instance$4, key$4, draft75, Buffer$1, Base$2, Draft75$1, crypto, util$5, numberFromKey, spacesInKey, Draft76$1, instance$3, key$3, draft76, util$4, HttpParser, Base$1, Draft75, Draft76, Hybi, Server$1, instance$2, key$2, server, Base, Client$1, Server, Driver, driver$4, Event$3, event, Event$2, EventTarget$2, event_target, Stream$1, util$3, driver$3, EventTarget$1, Event$1, API$3, instance$1, method$1, key$1, api, util$2, net, tls, url, driver$2, API$2, DEFAULT_PORTS, SECURE_PROTOCOLS, Client, client, Stream2, util$1, driver$1, Headers3, API$1, EventTarget, Event3, EventSource, instance, method, key, eventsource, util, driver, API, WebSocket$1, websocket, PROTOCOL_VERSION, VERSION_PARAM, TRANSPORT_SESSION_PARAM, REFERER_PARAM, FORGE_REF, FORGE_DOMAIN_RE, LAST_SESSION_PARAM, APPLICATION_ID_PARAM, APP_CHECK_TOKEN_PARAM, WEBSOCKET, LONG_POLLING, DOMStorageWrapper, MemoryStorage, createStoragefor, PersistentStorage, SessionStorage, logClient2, LUIDGenerator, sha1, buildLogMessage_, logger2, firstLog_, enableLogging$1, log, logWrapper, error, fatal, warn, warnIfPageIsSecure, isInvalidJSONNumber, executeWhenDOMReady, MIN_NAME, MAX_NAME, nameCompare, stringCompare, requireKey, ObjectToUniqueKey, splitStringBySize, doubleToIEEE754String, isChromeExtensionContentScript, isWindowsStoreApp, INTEGER_REGEXP_, INTEGER_32_MIN, INTEGER_32_MAX, tryParseInt, exceptionGuard, beingCrawled, setTimeoutNonBlocking, RepoInfo, StatsCollection, collections, reporters, SDK_VERSION2, WEBSOCKET_MAX_FRAME_SIZE, WEBSOCKET_KEEPALIVE_INTERVAL, WebSocketImpl, WebSocketConnection, name5, version5, AppCheckTokenProvider, FirebaseAuthTokenProvider, EmulatorTokenProvider, PacketReceiver, FIREBASE_LONGPOLL_START_PARAM, FIREBASE_LONGPOLL_CLOSE_COMMAND, FIREBASE_LONGPOLL_COMMAND_CB_NAME, FIREBASE_LONGPOLL_DATA_CB_NAME, FIREBASE_LONGPOLL_ID_PARAM, FIREBASE_LONGPOLL_PW_PARAM, FIREBASE_LONGPOLL_SERIAL_PARAM, FIREBASE_LONGPOLL_CALLBACK_ID_PARAM, FIREBASE_LONGPOLL_SEGMENT_NUM_PARAM, FIREBASE_LONGPOLL_SEGMENTS_IN_PACKET, FIREBASE_LONGPOLL_DATA_PARAM, FIREBASE_LONGPOLL_DISCONN_FRAME_REQUEST_PARAM, MAX_URL_DATA_SIZE, SEG_HEADER_SIZE, MAX_PAYLOAD_SIZE, KEEPALIVE_REQUEST_INTERVAL, LP_CONNECT_TIMEOUT, BrowserPollConnection, FirebaseIFrameScriptHolder, TransportManager, UPGRADE_TIMEOUT, DELAY_BEFORE_SENDING_EXTRA_REQUESTS, BYTES_SENT_HEALTHY_OVERRIDE, BYTES_RECEIVED_HEALTHY_OVERRIDE, MESSAGE_TYPE, MESSAGE_DATA, CONTROL_SHUTDOWN, CONTROL_RESET, CONTROL_ERROR, CONTROL_PONG, SWITCH_ACK, END_TRANSMISSION, PING, SERVER_HELLO, Connection, ServerActions, EventEmitter, OnlineMonitor, MAX_PATH_DEPTH, MAX_PATH_LENGTH_BYTES, Path, ValidationPath, VisibilityMonitor, RECONNECT_MIN_DELAY, RECONNECT_MAX_DELAY_DEFAULT, GET_CONNECT_TIMEOUT, RECONNECT_MAX_DELAY_FOR_ADMINS, RECONNECT_DELAY_MULTIPLIER, RECONNECT_DELAY_RESET_TIMEOUT, SERVER_KILL_INTERRUPT_REASON, INVALID_TOKEN_THRESHOLD, PersistentConnection, NamedNode, Index, __EMPTY_NODE, KeyIndex, KEY_INDEX, SortedMapIterator, LLRBNode, LLRBEmptyNode, SortedMap, MAX_NODE$2, priorityHashText, validatePriorityNode, __childrenNodeConstructor, LeafNode, nodeFromJSON$1, MAX_NODE$1, PriorityIndex, PRIORITY_INDEX, LOG_2, Base12Num, buildChildSet, _defaultIndexMap, fallbackObject, IndexMap, EMPTY_NODE, ChildrenNode, MaxNode, MAX_NODE, USE_HINZE, PathIndex, ValueIndex, VALUE_INDEX, QueryParams, ReadonlyRestClient, SnapshotHolder, StatsListener, FIRST_STATS_MIN_TIME, FIRST_STATS_MAX_TIME, REPORT_STATS_INTERVAL, StatsReporter, OperationType, AckUserWrite, Overwrite, Merge, CacheNode, emptyChildrenSingleton, EmptyChildren, ImmutableTree, CompoundWrite, ChildChangeAccumulator, NoCompleteChildSource_, NO_COMPLETE_CHILD_SOURCE, WriteTreeCompleteChildSource, referenceConstructor$1, referenceConstructor, SyncTree, ExistingValueProvider, DeferredValueProvider, generateWithValues, resolveDeferredLeafValue, resolveScalarDeferredValue, resolveComplexDeferredValue, resolveDeferredValueTree, resolveDeferredValueSnapshot, Tree, INVALID_KEY_REGEX_, INVALID_PATH_REGEX_, MAX_LEAF_SIZE_, isValidKey2, isValidPathString, isValidRootPathString, validateFirebaseData, validateUrl, EventQueue, INTERRUPT_REASON, MAX_TRANSACTION_RETRIES, Repo, parseRepoInfo, parseDatabaseURL, QueryImpl, ReferenceImpl, FIREBASE_DATABASE_EMULATOR_HOST_VAR, repos, useRestClient, Database, RenderlessMyDocUpdater, API_KEY_SECRET, DailyVideoConference, css8, _layout2;
-var init_layout_672161e4 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-672161e4.js"() {
+var init_layout_df87ce28 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-df87ce28.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_SelectionGroupIcon_56afcad7();
-    init_index_node_esm_82fafce9();
-    init_index_f299e8a7();
-    init_store_8ddd345a();
-    init_index_esm2017_b5a9af8a();
+    init_app_54cf9c98();
+    init_SelectionGroupIcon_50d68b2b();
+    init_index_node_esm_7d41c3d6();
+    init_index_f63e16cf();
+    init_store_aae57f2a();
+    init_index_esm2017_af8996bd();
     init_navigation_0a4806ec();
-    init_index_c327074d_89a5ab2a();
+    init_index_c327074d_b6ba0360();
     import_node_fetch9 = __toModule(require_lib2());
     import_util2 = __toModule(require("util"));
     import_buffer = __toModule(require("buffer"));
@@ -39599,9 +39599,9 @@ var require_dist = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-28e376e7.js
-var index_28e376e7_exports = {};
-__export(index_28e376e7_exports, {
+// .svelte-kit/output/server/chunks/index-fb081994.js
+var index_fb081994_exports = {};
+__export(index_fb081994_exports, {
   default: () => U5Broomu5D,
   load: () => load3
 });
@@ -39632,18 +39632,18 @@ function hasQuestionMark(string) {
   return string.charAt(string.length - 1) === "?";
 }
 var import_svelte_css_vars, import_cookie9, import_node_fetch10, counter2, HelperText, css$2, BlackboardToolbar, Blackboard, tickSize, RenderlessAudioRecorder, css$12, TextAreaAutoResizing, CircularProgress, RenderlessListenToStrokes, RenderlessFetchComments, css9, U5Broomu5D;
-var init_index_28e376e7 = __esm({
-  ".svelte-kit/output/server/chunks/index-28e376e7.js"() {
+var init_index_fb081994 = __esm({
+  ".svelte-kit/output/server/chunks/index-fb081994.js"() {
     init_shims();
-    init_app_cc9bc85b();
-    init_RenderlessFetchStrokes_17009ea4();
-    init_store_8ddd345a();
-    init_SelectionGroupIcon_56afcad7();
-    init_index_node_esm_82fafce9();
-    init_Button_6bf22d1f();
+    init_app_54cf9c98();
+    init_RenderlessFetchStrokes_8fa4085c();
+    init_store_aae57f2a();
+    init_SelectionGroupIcon_50d68b2b();
+    init_index_node_esm_7d41c3d6();
+    init_Button_1e395305();
     init_navigation_0a4806ec();
-    init_index_esm2017_b5a9af8a();
-    init_index_f299e8a7();
+    init_index_esm2017_af8996bd();
+    init_index_f63e16cf();
     import_svelte_css_vars = __toModule(require_dist());
     import_cookie9 = __toModule(require_cookie());
     init_dist();
@@ -40285,7 +40285,7 @@ ${slots.default ? slots.default({
   }
 });
 
-// .svelte-kit/output/server/chunks/app-cc9bc85b.js
+// .svelte-kit/output/server/chunks/app-54cf9c98.js
 function get_single_valued_header(headers2, key) {
   const value = headers2[key];
   if (Array.isArray(value)) {
@@ -41743,9 +41743,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-01fda96a.js",
+      file: assets + "/_app/start-1cfd9c57.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-01fda96a.js", assets + "/_app/chunks/vendor-3cd1c581.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-1cfd9c57.js", assets + "/_app/chunks/vendor-6d8cc87b.js", assets + "/_app/chunks/preload-helper-ec9aa979.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -41789,8 +41789,8 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var import_cookie10, __accessCheck, __privateGet, __privateAdd, __privateSet, _map, absolute, scheme, chars, unsafeChars, reserved, escaped$1, objectProtoOwnPropertyNames, subscriber_queue2, escape_json_string_in_html_dict, escape_html_attr_dict, s$1, s, ReadOnlyFormData, current_component, dirty_components, binding_callbacks, render_callbacks, flush_callbacks, resolved_promise, update_scheduled, flushing, seen_callbacks, globals, boolean_attributes, invalid_attribute_name_character, escaped, missing_component, on_destroy, css10, Root, base2, assets, handle, user_hooks, template, options, default_settings, d, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_cc9bc85b = __esm({
-  ".svelte-kit/output/server/chunks/app-cc9bc85b.js"() {
+var init_app_54cf9c98 = __esm({
+  ".svelte-kit/output/server/chunks/app-54cf9c98.js"() {
     init_shims();
     import_cookie10 = __toModule(require_cookie());
     init_dist();
@@ -42011,7 +42011,7 @@ ${``}`;
       [Symbol.toStringTag]: "Module",
       handle
     });
-    template = ({ head, body }) => '<!DOCTYPE html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<meta name="description" content="A place with lots of visual explanations" />\r\n		<link rel="icon" href="/favicon.ico" />\r\n\r\n		<script>\r\n			// fixes the `global is not defined` but with importing DailyJS (spent 3 hours)\r\n			var global = global || window;\r\n		<\/script>\r\n\r\n		<!-- Material Icons -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/icon?family=Material+Icons"\r\n		/>\r\n		<!-- Roboto -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"\r\n		/>\r\n		<!-- Roboto Mono -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto+Mono"\r\n		/>\r\n\r\n		<!-- SMUI includes it in their setup guide, but it just throws an error at the moment -->\r\n		<!-- \r\n		<link\r\n			rel="stylesheet"\r\n			href="https://cdn.jsdelivr.net/npm/svelte-material-ui@6.0.0/bare.css"\r\n		/> -->\r\n\r\n		<!-- SMUI Styles -->\r\n		<!-- media="(prefers-color-scheme: light)" -->\r\n		<link rel="stylesheet" href="/smui.css" />\r\n\r\n		<!-- <link\r\n			rel="stylesheet"\r\n			href="/smui-dark.css"\r\n			media="screen and (prefers-color-scheme: dark)"\r\n		/> -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		' + head + '\r\n	</head>\r\n	<body>\r\n		<div id="svelte">' + body + "</div>\r\n	</body>\r\n</html>\r\n";
+    template = ({ head, body }) => '<!DOCTYPE html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<meta name="description" content="A place with lots of visual explanations" />\r\n\r\n		<!-- https://stackoverflow.com/a/43469640/7812829 -->\r\n		<link rel="apple-touch-icon" href="%svelte.assets%/logo.png">\r\n		<link rel="icon" href="/favicon.ico" />\r\n\r\n		<script>\r\n			// fixes the `global is not defined` but with importing DailyJS (spent 3 hours)\r\n			var global = global || window;\r\n		<\/script>\r\n\r\n		<!-- Material Icons -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/icon?family=Material+Icons"\r\n		/>\r\n		<!-- Roboto -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"\r\n		/>\r\n		<!-- Roboto Mono -->\r\n		<link\r\n			rel="stylesheet"\r\n			href="https://fonts.googleapis.com/css?family=Roboto+Mono"\r\n		/>\r\n\r\n		<!-- SMUI includes it in their setup guide, but it just throws an error at the moment -->\r\n		<!-- \r\n		<link\r\n			rel="stylesheet"\r\n			href="https://cdn.jsdelivr.net/npm/svelte-material-ui@6.0.0/bare.css"\r\n		/> -->\r\n\r\n		<!-- SMUI Styles -->\r\n		<!-- media="(prefers-color-scheme: light)" -->\r\n		<link rel="stylesheet" href="/smui.css" />\r\n\r\n		<!-- <link\r\n			rel="stylesheet"\r\n			href="/smui-dark.css"\r\n			media="screen and (prefers-color-scheme: dark)"\r\n		/> -->\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		' + head + '\r\n	</head>\r\n	<body>\r\n		<div id="svelte">' + body + "</div>\r\n	</body>\r\n</html>\r\n";
     options = null;
     default_settings = { paths: { "base": "", "assets": "" } };
     d = (s2) => s2.replace(/%23/g, "#").replace(/%3[Bb]/g, ";").replace(/%2[Cc]/g, ",").replace(/%2[Ff]/g, "/").replace(/%3[Ff]/g, "?").replace(/%3[Aa]/g, ":").replace(/%40/g, "@").replace(/%26/g, "&").replace(/%3[Dd]/g, "=").replace(/%2[Bb]/g, "+").replace(/%24/g, "$");
@@ -42084,17 +42084,17 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_9887601a(), layout_9887601a_exports)),
-      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_4c239f59(), error_4c239f59_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_c0b9ccd0(), index_c0b9ccd0_exports)),
-      "src/routes/class-material.svelte": () => Promise.resolve().then(() => (init_class_material_132afcdf(), class_material_132afcdf_exports)),
-      "src/routes/login.svelte": () => Promise.resolve().then(() => (init_login_44198cef(), login_44198cef_exports)),
-      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_a4d475eb(), teach_a4d475eb_exports)),
-      "src/routes/ase.svelte": () => Promise.resolve().then(() => (init_ase_450a198a(), ase_450a198a_exports)),
-      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_672161e4(), layout_672161e4_exports)),
-      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_28e376e7(), index_28e376e7_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_c64f8dbb(), layout_c64f8dbb_exports)),
+      ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(() => (init_error_6dece8fc(), error_6dece8fc_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_d30cfaa2(), index_d30cfaa2_exports)),
+      "src/routes/class-material.svelte": () => Promise.resolve().then(() => (init_class_material_cf751d17(), class_material_cf751d17_exports)),
+      "src/routes/login.svelte": () => Promise.resolve().then(() => (init_login_c8c3f873(), login_c8c3f873_exports)),
+      "src/routes/teach.svelte": () => Promise.resolve().then(() => (init_teach_7cb50912(), teach_7cb50912_exports)),
+      "src/routes/ase.svelte": () => Promise.resolve().then(() => (init_ase_0ad91eb3(), ase_0ad91eb3_exports)),
+      "src/routes/[class]/__layout.svelte": () => Promise.resolve().then(() => (init_layout_df87ce28(), layout_df87ce28_exports)),
+      "src/routes/[class]/[room]/index.svelte": () => Promise.resolve().then(() => (init_index_fb081994(), index_fb081994_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-b6733eaf.js", "css": ["assets/pages/__layout.svelte-8d662a74.css"], "js": ["pages/__layout.svelte-b6733eaf.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-ce9ddefa.js", "css": [], "js": ["error.svelte-ce9ddefa.js", "chunks/vendor-3cd1c581.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-8046d1de.js", "css": ["assets/pages/index.svelte-adf5b1d6.css"], "js": ["pages/index.svelte-8046d1de.js", "chunks/vendor-3cd1c581.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-d69d6870.js"], "styles": [] }, "src/routes/class-material.svelte": { "entry": "pages/class-material.svelte-b0905e10.js", "css": ["assets/pages/class-material.svelte-333d1d10.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/class-material.svelte-b0905e10.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/canvas-fe9cb9fb.js"], "styles": [] }, "src/routes/login.svelte": { "entry": "pages/login.svelte-ebe8db23.js", "css": ["assets/pages/login.svelte-5e6d1fce.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/login.svelte-ebe8db23.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/canvas-fe9cb9fb.js", "chunks/PhoneLogin-62ca2936.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-20f62e2a.js", "css": ["assets/pages/teach.svelte-95d7d300.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/teach.svelte-20f62e2a.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/RenderlessFetchStrokes-ac6e0826.js", "chunks/canvas-fe9cb9fb.js", "chunks/PhoneLogin-62ca2936.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/ase.svelte": { "entry": "pages/ase.svelte-49ef8956.js", "css": ["assets/pages/ase.svelte-400dbc5e.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/ase.svelte-49ef8956.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/canvas-fe9cb9fb.js", "chunks/PhoneLogin-62ca2936.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-1145c725.js", "css": ["assets/pages/_class_/__layout.svelte-3309dbb0.css"], "js": ["pages/_class_/__layout.svelte-1145c725.js", "chunks/vendor-3cd1c581.js", "chunks/store-d69d6870.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/canvas-fe9cb9fb.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-910a6b43.js", "css": ["assets/pages/_class_/_room_/index.svelte-e4eb3591.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-910a6b43.js", "chunks/vendor-3cd1c581.js", "chunks/RenderlessFetchStrokes-ac6e0826.js", "chunks/canvas-fe9cb9fb.js", "chunks/store-d69d6870.js", "chunks/preload-helper-ec9aa979.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-c274e65b.js", "css": ["assets/pages/__layout.svelte-8d662a74.css"], "js": ["pages/__layout.svelte-c274e65b.js", "chunks/vendor-6d8cc87b.js", "chunks/store-48614d01.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-5a9dc3f0.js", "css": [], "js": ["error.svelte-5a9dc3f0.js", "chunks/vendor-6d8cc87b.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-0affa4cc.js", "css": ["assets/pages/index.svelte-adf5b1d6.css"], "js": ["pages/index.svelte-0affa4cc.js", "chunks/vendor-6d8cc87b.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/store-48614d01.js"], "styles": [] }, "src/routes/class-material.svelte": { "entry": "pages/class-material.svelte-503b24e5.js", "css": ["assets/pages/class-material.svelte-333d1d10.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/class-material.svelte-503b24e5.js", "chunks/vendor-6d8cc87b.js", "chunks/store-48614d01.js", "chunks/canvas-fa3137c4.js"], "styles": [] }, "src/routes/login.svelte": { "entry": "pages/login.svelte-66fe37ea.js", "css": ["assets/pages/login.svelte-5e6d1fce.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/login.svelte-66fe37ea.js", "chunks/vendor-6d8cc87b.js", "chunks/store-48614d01.js", "chunks/canvas-fa3137c4.js", "chunks/PhoneLogin-26de7327.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/teach.svelte": { "entry": "pages/teach.svelte-d82200e6.js", "css": ["assets/pages/teach.svelte-95d7d300.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/teach.svelte-d82200e6.js", "chunks/vendor-6d8cc87b.js", "chunks/store-48614d01.js", "chunks/RenderlessFetchStrokes-7bfa23b6.js", "chunks/canvas-fa3137c4.js", "chunks/PhoneLogin-26de7327.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/ase.svelte": { "entry": "pages/ase.svelte-cb5ea1ca.js", "css": ["assets/pages/ase.svelte-400dbc5e.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css", "assets/PhoneLogin-f3f594b5.css"], "js": ["pages/ase.svelte-cb5ea1ca.js", "chunks/vendor-6d8cc87b.js", "chunks/store-48614d01.js", "chunks/canvas-fa3137c4.js", "chunks/PhoneLogin-26de7327.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] }, "src/routes/[class]/__layout.svelte": { "entry": "pages/_class_/__layout.svelte-6ce4283b.js", "css": ["assets/pages/_class_/__layout.svelte-3309dbb0.css"], "js": ["pages/_class_/__layout.svelte-6ce4283b.js", "chunks/vendor-6d8cc87b.js", "chunks/store-48614d01.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js", "chunks/canvas-fa3137c4.js"], "styles": [] }, "src/routes/[class]/[room]/index.svelte": { "entry": "pages/_class_/_room_/index.svelte-a3ab7992.js", "css": ["assets/pages/_class_/_room_/index.svelte-e4eb3591.css", "assets/DoodleVideo.svelte_svelte_type_style_lang-aaa9ff7f.css"], "js": ["pages/_class_/_room_/index.svelte-a3ab7992.js", "chunks/vendor-6d8cc87b.js", "chunks/RenderlessFetchStrokes-7bfa23b6.js", "chunks/canvas-fa3137c4.js", "chunks/store-48614d01.js", "chunks/preload-helper-ec9aa979.js", "chunks/navigation-51f4a605.js", "chunks/singletons-12a22614.js"], "styles": [] } };
   }
 });
 
@@ -42147,7 +42147,7 @@ function getRawBody(req) {
 
 // .svelte-kit/output/server/app.js
 init_shims();
-init_app_cc9bc85b();
+init_app_54cf9c98();
 var import_cookie11 = __toModule(require_cookie());
 init_dist();
 

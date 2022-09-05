@@ -144,7 +144,7 @@ This website makes it <b style="color: rgb(15 186 191)">efficient to give & rece
 <script>	
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { goto } from '$app/navigation'
-	import { canvasHeight, canvasWidth, user, recordState } from '../store.js'
+	import { canvasHeight, canvasWidth, user, recordState } from '../../store.js'
 	import Button, { Label } from '@smui/button';
 	import HelperText from '@smui/textfield/helper-text'
 	import Textfield from '@smui/textfield';
@@ -152,7 +152,7 @@ This website makes it <b style="color: rgb(15 186 191)">efficient to give & rece
 	import DoodleVideo from '$lib/DoodleVideo.svelte'
 	import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
+	import { calculateCanvasDimensions2 } from '../../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
 	import PhoneLogin from '$lib/PhoneLogin.svelte'
 	

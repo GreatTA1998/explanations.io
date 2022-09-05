@@ -1,7 +1,5 @@
-export function get () { 
-  return {
-    body: 'Hello from Daily.json.js'
-  }
+export function GET () { 
+  return new Response('Hello from Daily.json.js')
   // fetch
 }
 

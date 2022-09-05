@@ -1,13 +1,4 @@
-<script context="module">
-  export function load ({ page }) {
-    return {
-      props: {
-        classID: page.params.class,
-        roomID: page.params.room
-      }
-    }
-  }  
-</script>
+
 
 <!-- This component re-renders everytime classID changes: https://github.com/sveltejs/svelte/issues/1469#issuecomment-698955660 -->
 {#if $user.uid}
@@ -132,7 +123,7 @@
   import DailyVideoConference from '$lib/DailyVideoConference.svelte'
   import { onDestroy, onMount } from 'svelte'
   import { goto } from '$app/navigation'
-  import { browser } from '$app/env'
+  import { browser } from '$app/environment'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc } from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
   import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave } from '../../store.js'
@@ -140,8 +131,13 @@
   import { deleteObject, getStorage, ref } from 'firebase/storage'
   import { getFunctions, httpsCallable } from "firebase/functions";
 
-  export let classID;
-  export let roomID;
+   export let data;
+   let { classID, roomID } = data;
+   $: ({ classID, roomID } = data); // so it stays in sync when `data` changes
+// +  $: console.log({ foo, bar });
+
+  // export let classID;
+  // export let roomID;
 
   const classPath = `classes/${classID}/`
   let unsubFuncs = []

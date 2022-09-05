@@ -5,7 +5,7 @@
 <script>
   import { dailyMicStream, recordState, dailyRoomParticipants } from '../store.js'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { browser } from '$app/env'
+  import { browser } from '$app/environment'
   // import mpegEncoder from "audio-recorder-polyfill/mpeg-encoder";
   // AudioRecorder.encoder = mpegEncoder;
   // AudioRecorder.prototype.mimeType = "audio/mpeg"; // mpeg is equivalent to mp3

@@ -114,8 +114,8 @@
 
 <script>	
 	import { onMount, tick, onDestroy } from 'svelte'
-	import { canvasHeight, canvasWidth, user, recordState } from '../store.js'
-	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
+	import { canvasHeight, canvasWidth, user, recordState } from '../../store.js'
+	import { calculateCanvasDimensions2 } from '../../helpers/canvas.js'
 	import PhoneLogin from '$lib/PhoneLogin.svelte'
 	import Button, { Label } from '@smui/button';
 	import HelperText from '@smui/textfield/helper-text'

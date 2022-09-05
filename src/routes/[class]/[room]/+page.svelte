@@ -1,13 +1,4 @@
-<script context="module">
-  export async function load ({ page }) {
-    return {
-      props: {
-        classID: page.params.class,
-        roomID: page.params.room
-      }
-    }
-  }
-</script>
+
 
 {#if roomDoc}
 	<div use:portal={'main-content'} style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
@@ -254,8 +245,13 @@
   import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
   import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
 
-  export let classID
-  export let roomID
+  export let data
+  let { classID, roomID } = data
+  $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
+  $: console.log({ classID, roomID })
+
+  // export let classID
+  // export let roomID
 
   let unsubRoomListener
   let roomDoc = {

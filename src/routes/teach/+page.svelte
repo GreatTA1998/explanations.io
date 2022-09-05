@@ -97,10 +97,10 @@
 	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { goto } from '$app/navigation'
-	import { canvasHeight, canvasWidth, user, recordState } from '../store.js'
+	import { canvasHeight, canvasWidth, user, recordState } from '../../store.js'
 	import DoodleVideo from '$lib/DoodleVideo.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-	import { calculateCanvasDimensions2 } from '../helpers/canvas.js'
+	import { calculateCanvasDimensions2 } from '../../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
 	import PhoneLogin from '$lib/PhoneLogin.svelte'
 	import Button, { Label } from '@smui/button';

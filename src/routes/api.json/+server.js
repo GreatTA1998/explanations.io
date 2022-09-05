@@ -1,9 +1,9 @@
-export async function get() {
-  return {
-    body: {
-      hello: 'world'
-    }
-  }
+import { json as json$1 } from '@sveltejs/kit';
+
+export async function GET() {
+  return json$1({
+  hello: 'world'
+})
 }
 
 // EXAMPLE CODE FOR USE IN A PAGE COMPONENT:

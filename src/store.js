@@ -30,3 +30,5 @@ export const isMicOn = writable(false)
 export const isFirestoreDocCreated = writable(false)
 
 export const willPreventPageLeave = writable(false)
+
+export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2'])

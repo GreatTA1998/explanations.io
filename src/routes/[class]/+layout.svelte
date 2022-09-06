@@ -42,17 +42,19 @@
             {/if}
 
             {#if room.id === roomID && $user.uid}
-              <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
-                more_vert
-              </span>
+              {#if $adminUIDs.includes($user.uid)}
+                <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+                  more_vert
+                </span>
 
-              <Menu bind:this={DropdownMenu} style="width: 300px">
-                <List>        
-                  <Item on:SMUI:action={() => deleteRoom(room)}>
-                    Delete room
-                  </Item>
-                </List> 
-              </Menu>
+                <Menu bind:this={DropdownMenu} style="width: 300px">
+                  <List>      
+                    <Item on:SMUI:action={() => deleteRoom(room)}>
+                      Delete room
+                    </Item>
+                  </List> 
+                </Menu>
+              {/if}
             {/if}
           </div>
 
@@ -126,7 +128,7 @@
   import { browser } from '$app/environment'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc } from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
-  import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave } from '../../store.js'
+  import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs } from '../../store.js'
   import { getRandomID } from '../../helpers/utility.js'
   import { deleteObject, getStorage, ref } from 'firebase/storage'
   import { getFunctions, httpsCallable } from "firebase/functions";
@@ -134,10 +136,6 @@
    export let data;
    let { classID, roomID } = data;
    $: ({ classID, roomID } = data); // so it stays in sync when `data` changes
-// +  $: console.log({ foo, bar });
-
-  // export let classID;
-  // export let roomID;
 
   const classPath = `classes/${classID}/`
   let unsubFuncs = []

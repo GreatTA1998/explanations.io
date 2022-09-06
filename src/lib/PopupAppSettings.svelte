@@ -7,8 +7,14 @@
     </span>
   </div>
 
-  <div style="margin-left: 10px;">
-    TODO: notifications and name
+  <div style="margin-left: 10px; margin-right: 10px;">
+    Problems? Call/text 503 250 3868 or reload the page or force restart Safari
+  </div>
+
+  <br>
+
+  <div style="margin-left: 10px; margin-right: 10px;">
+    TODO: notification settings and putting real name
   </div>
 
   <!-- <div on:click={changeName}>

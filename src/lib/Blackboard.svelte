@@ -312,7 +312,7 @@
   }
 
   /**
-   * TODO: Make `tool` an explicit parameter 
+   * TO-DO: Make `tool` an explicit parameter 
    */
   function handleContactWithBlackboard (e, { isInitialContact }) {
     e.preventDefault();

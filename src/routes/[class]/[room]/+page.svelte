@@ -105,16 +105,18 @@
                   audioDownloadURL={boardDoc.audioDownloadURL}
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
-                >
-                  <Button
-                    on:click={eureka(boardDoc)}
-                    style="
-                    background-color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'rgba(255,255,255,0.5)') : 'rgba(255,255,255,0.5)'};
-                    color: white;
-                    margin-left: 8px;"
-                  >
-                    Eureka
-                  </Button>
+                > 
+                  {#if $user.uid}
+                    <Button
+                      on:click={eureka(boardDoc)}
+                      style="
+                      background-color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'rgba(255,255,255,0.5)') : 'rgba(255,255,255,0.5)'};
+                      color: white;
+                      margin-left: 8px;"
+                    >
+                      Eureka
+                    </Button>
+                  {/if}
 
                   {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
                     <Button 
@@ -134,66 +136,71 @@
               let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
             >
               <div use:lazyCallable={listenToStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`}>
-                <RenderlessAudioRecorder
-                  let:startRecording={startRecording} 
-                  let:stopRecording={stopRecording}
-                  let:currentTime={currentTime}
-                  on:record-end={(e) => saveVideo(e.detail.audioBlob, strokesArray, boardID)}
-                >
-                  <Blackboard 
-                    {strokesArray} 
-                    {currentTime} 
-                    backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-                    recordState={boardDoc.recordState}
-                    on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardID)}
-                    on:background-reset={() => resetBackgroundImage(boardID)}
-                    on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-                    on:board-wipe={deleteAllStrokesFromDb}
-                    on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
+                {#if boardDoc.recordState === 'post_record'}
+                  <LinearProgress indeterminate/>
+                {:else}
+                  <RenderlessAudioRecorder
+                    let:startRecording={startRecording} 
+                    let:stopRecording={stopRecording}
+                    let:currentTime={currentTime}
+                    on:record-end={(e) => saveVideo(e.detail.audioBlob, strokesArray, boardID)}
                   >
-                    {#if boardDoc.recordState === 'post_record'}
-                      <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
-                        <CircularProgress
-                          class="my-four-colors"
-                          style="height: 32px; width: 32px;"
-                          indeterminate
-                          fourColor
-                        />
-                      </div>
-                    <!-- if an recording is active (rather than an interrupted session that isn't actually recording,
-                      currentTime will be incrementing -->
-                    {:else if boardDoc.recordState === 'pre_record' || currentTime === 0}
-                      <span 
-                        on:click={() => callManyFuncs(
-                          startRecording, 
-                          () => updateRecordState(boardID, 'mid_record'),
-                          () => updateRecorderBrowserTabID(boardID),
-                          () => willPreventPageLeave.set(true)
-                        )}
-                        class="material-icons" 
-                        style="font-size: 2.5rem; color: red; margin-left: 22px; margin-right: 26px"
-                      >
-                        circle
-                      </span>
-                      <!-- color was `cyan`, icon was `album` -->
-     
-                    {:else if boardDoc.recordState === 'mid_record'}
-                      <span 
-                        on:click={() => callManyFuncs(
-                          stopRecording,
-                          () => updateRecordState(boardID, 'post_record'),
-                          () => willPreventPageLeave.set(false)
-                        )}
-                        class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
-                        class="material-icons" 
-                        style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
-                      >
-                        stop_circle
-                      </span>
+                    <Blackboard 
+                      {strokesArray} 
+                      {currentTime} 
+                      backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+                      recordState={boardDoc.recordState}
+                      on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardID)}
+                      on:background-reset={() => resetBackgroundImage(boardID)}
+                      on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+                      on:board-wipe={deleteAllStrokesFromDb}
+                      on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
+                    >
+                      <!-- {#if boardDoc.recordState === 'post_record'}
+                        <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
+                          <CircularProgress
+                            class="my-four-colors"
+                            style="height: 32px; width: 32px;"
+                            indeterminate
+                            fourColor
+                          />
+                        </div> -->
 
-                    {/if}
-                  </Blackboard>
-                </RenderlessAudioRecorder>
+                      <!-- if an recording is active (rather than an interrupted session that isn't actually recording,
+                        currentTime will be incrementing -->
+                      {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
+                        <span 
+                          on:click={() => callManyFuncs(
+                            startRecording, 
+                            () => updateRecordState(boardID, 'mid_record'),
+                            () => updateRecorderBrowserTabID(boardID),
+                            () => willPreventPageLeave.set(true)
+                          )}
+                          class="material-icons" 
+                          style="font-size: 2.5rem; color: red; margin-left: 22px; margin-right: 26px"
+                        >
+                          circle
+                        </span>
+                        <!-- color was `cyan`, icon was `album` -->
+      
+                      {:else if boardDoc.recordState === 'mid_record'}
+                        <span 
+                          on:click={() => callManyFuncs(
+                            stopRecording,
+                            () => updateRecordState(boardID, 'post_record'),
+                            () => willPreventPageLeave.set(false)
+                          )}
+                          class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
+                          class="material-icons" 
+                          style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
+                        >
+                          stop_circle
+                        </span>
+
+                      {/if}
+                    </Blackboard>
+                  </RenderlessAudioRecorder>
+                {/if}
               </div>
             </RenderlessListenToStrokes>
           {/if}
@@ -238,8 +245,9 @@
   import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import LinearProgress from '@smui/linear-progress'
   import CircularProgress from '@smui/circular-progress' 
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
@@ -248,10 +256,6 @@
   export let data
   let { classID, roomID } = data
   $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
-  $: console.log({ classID, roomID })
-
-  // export let classID
-  // export let roomID
 
   let unsubRoomListener
   let roomDoc = {
@@ -611,6 +615,7 @@
   }
 
   function eureka (boardDoc) {
+    console.log('$user =', $user)
     const boardRef = doc(getFirestore(), boardsDbPath + boardDoc.id)
     if (boardDoc.eurekaUIDs instanceof Array) {
       if (boardDoc.eurekaUIDs.includes($user.uid)) {

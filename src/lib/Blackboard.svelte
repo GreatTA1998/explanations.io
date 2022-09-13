@@ -73,7 +73,7 @@
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { currentTool, canvasWidth, canvasHeight, onlyAllowApplePencil } from '../store.js'
+  import { currentTool, canvasWidth, canvasHeight, assumedCanvasWidth, onlyAllowApplePencil } from '../store.js'
 
   export let strokesArray
   export let currentTime = 0 // assumes it's always rounded to nearest 0.1
@@ -155,7 +155,7 @@
     dispatch('board-delete')
   }
 
-  // auto-resize
+  // resize on initialization
   $: if (ctx) {
     canvas.width = $canvasWidth
     canvas.height = $canvasHeight
@@ -172,7 +172,9 @@
   $: if (bgCtx) {
       bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
       renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
-    }
+  }
+
+  $: normalizedLineWidth = $currentTool.lineWidth * ($canvasWidth / $assumedCanvasWidth)
 
   /**
    * Reactive statement that triggers each time `strokesArray` changes
@@ -324,7 +326,7 @@
     currentStroke.points.push({ 
       unitX: parseFloat(contactPoint.x / canvas.width).toFixed(4),
       unitY: parseFloat(contactPoint.y / canvas.height).toFixed(4)
-    });
+    })
     // update UI
     if (prevPoint.x !== -1 && prevPoint.y !== -1) {
       connectTwoPoints(
@@ -333,7 +335,7 @@
         $currentTool.type === 'eraser',
         ctx,
         $currentTool.color,
-        $currentTool.lineWidth,
+        normalizedLineWidth,
         canvas
       )
     }

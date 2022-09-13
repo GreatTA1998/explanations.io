@@ -1,4 +1,4 @@
-import { canvasWidth } from '../store.js'
+import { canvasWidth, assumedCanvasWidth } from '../store.js'
 import { get } from 'svelte/store'
 
 export function calculateCanvasDimensions () {
@@ -34,25 +34,17 @@ export function calculateCanvasDimensions2 () {
 }
 
 // the last destructured property `canvasWidth` is renamed, AND also has a default value
-export function drawStroke ({ points, color, lineWidth, isErasing, canvasWidth: originalWidth = null }, pointPeriod = null, ctx, canvas) {
+export function drawStroke ({ points, color, lineWidth, isErasing }, pointPeriod = null, ctx, canvas) {
   return new Promise(async resolve => {
     for (let i = 1; i < points.length; i++) {
-      // always normalize the unitX, unitY and unitWidth
-      // points are already in unit form  
-      // so just handle unit width 
-      let normalizedLineWidth
-      if (originalWidth) {
-        normalizedLineWidth = lineWidth * (get(canvasWidth) / originalWidth)
-      } else {
-        normalizedLineWidth = originalWidth
-      }
-      connectTwoPoints(points, i, isErasing, ctx, color, lineWidth, canvas);
+      const normalizedLineWidth = lineWidth * (get(canvasWidth) / get(assumedCanvasWidth)) // `get()` is used to read value when we're not in a .svelte file 
+      connectTwoPoints(points, i, isErasing, ctx, color, normalizedLineWidth, canvas)
       if (pointPeriod !== null) { // delay for a duration of pointPeriod
-        await new Promise(resolve => setTimeout(resolve, pointPeriod));
+        await new Promise(resolve => setTimeout(resolve, pointPeriod))
       }
     }
-    resolve();
-  });
+    resolve()
+  })
 }
 
 /**

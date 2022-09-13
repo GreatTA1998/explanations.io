@@ -4,6 +4,10 @@ import { getRandomID } from './helpers/utility.js'
 export const canvasHeight = writable(0)
 export const canvasWidth = writable(0)
 
+// to scale the pencil stroke width for smaller/bigger devices
+export const assumedCanvasHeight = writable(900) // 4:3 aspect ratio
+export const assumedCanvasWidth = writable(1200)
+
 export const hasFetchedUser = writable(false)
 export const user = writable({}) // {} means not logged in, cannot be null
 

@@ -18,10 +18,10 @@
 				<!-- This flex is just used to center horizontally -->
 				<div style="display: flex; justify-content: center; margin-top: 50px">
 					<Button on:click={signInAnonymouslyAndRedirect} variant="outlined" color="orange" style="color: rgb(246,130,13); font-size: 1.05rem">
-						Play around
+						Try now
 					</Button>	
 					<Button on:click={() => goto('login')} variant="outlined" style="margin-left: 25px; color: rgb(128, 0, 128); font-size: 1.05rem">
-						Log in
+						Sign up
 					</Button>	
 				</div>
 		</div>

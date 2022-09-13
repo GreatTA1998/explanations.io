@@ -68,7 +68,7 @@
 <script>
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { canvasWidth, canvasHeight } from '../store.js'
+  import { canvasWidth, canvasHeight, assumedCanvasWidth } from '../store.js'
   import Button, { Label } from '@smui/button'
   // import IconButton from '@smui/icon-button';
 
@@ -95,7 +95,7 @@
 
   const dispatch = createEventDispatcher()
 
-  // handle resizing
+  // resize on initialization
   $: if (ctx) {
     canvas.width = $canvasWidth
     canvas.height = $canvasHeight
@@ -103,8 +103,7 @@
     bgCanvas.height = $canvasHeight
     
     if (strokesArray) {
-      // TODO: rename to `re-render strokes`
-      handleResize() // sometimes resize happens when `strokesArray` is not yet hydrated
+      rerenderStrokes() // sometimes resize happens when `strokesArray` is not yet hydrated
     } 
   }
 
@@ -256,14 +255,7 @@
 
   function renderFrame ({ strokeIndex, pointIndex }) {
     const stroke = strokesArray[strokeIndex]
-
-    let normalizedLineWidth 
-    if (stroke.canvasWidth) {
-      normalizedLineWidth = stroke.lineWidth * ($canvasWidth / stroke.canvasWidth) 
-    } else { 
-      // backwards compatibility: we didn't use to remember what the canvas width on the original device was, so can't normalize it
-      normalizedLineWidth = stroke.lineWidth
-    }
+    const normalizedLineWidth = stroke.lineWidth * ($canvasWidth / $assumedCanvasWidth)
     connectTwoPoints(
       stroke.points, 
       pointIndex, 
@@ -275,7 +267,7 @@
     )
   }
 
-  function handleResize () {
+  function rerenderStrokes () {
     return new Promise(async (resolve) => {
       if (recursiveSyncer) {
         // video was playing: resume to previous progress

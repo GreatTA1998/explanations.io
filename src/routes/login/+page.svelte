@@ -52,7 +52,7 @@
 			</h1>
 
 			<p style="font-size: 1.2rem; color: #33333d; font-weight: 300; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
-        Phone accounts are password-less and lets Explain notify you (if the settings are on)
+        Phone accounts are password-less and enables question notifications
 			</p>
 		</div>
 

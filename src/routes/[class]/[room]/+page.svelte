@@ -30,7 +30,7 @@
 		{#each roomDoc.blackboards as boardID, i (boardID) }
 			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
         {#if boardDoc}
-          <div style="width: {$canvasWidth}px; margin-top: 10px; margin-bottom: 0px">
+          <div style="width: {$canvasWidth}px; margin-top: 0px; margin-bottom: 0px">
             <TextAreaAutoResizing 
               value={boardDoc.description || ''} 
               on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
@@ -117,14 +117,27 @@
                       Eureka
                     </Button>
                   {/if}
+                    
+                  <div style="
+                    margin-left: {$canvasWidth - 240 - 92}px; 
+                    display: flex; 
+                    align-items: center; 
+                    flex-direction: row-reverse"
+                  >
+                    {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
+                      <Button 
+                        on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} 
+                        style="background-color: rgba(255,255,255,0.5); color: white">
+                        Delete
+                      </Button>
 
-                  {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
-                    <Button 
-                      on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} 
-                      style="margin-left: {$canvasWidth - 240 - 70}px; background-color: rgba(255,255,255,0.5); color: white">
-                      Delete video
-                    </Button>
-                  {/if}
+                      <Button 
+                        draggable="true" on:dragstart={(e) => dragstart_handler(e, boardID, i)}
+                        style="margin-right: 6px; background-color: rgba(255,255,255,0.5); color: white">
+                        Move
+                      </Button>
+                    {/if}
+                  </div>
                 </DoodleVideo>
               </div>
             </RenderlessFetchStrokes>
@@ -150,6 +163,8 @@
                       {currentTime} 
                       backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                       recordState={boardDoc.recordState}
+                      {boardID}
+                      originalIndex={i}
                       on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardID)}
                       on:background-reset={() => resetBackgroundImage(boardID)}
                       on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
@@ -204,6 +219,14 @@
               </div>
             </RenderlessListenToStrokes>
           {/if}
+
+          <div
+            style="width: {$canvasWidth}px; height: 40px; box-sizing: border-box"
+            on:dragover={(e) => dragover_handler(e)}
+            on:drop={(e) => drop_handler(e, i+1)}
+          >
+      
+          </div>
 
           {#if i  === roomDoc.blackboards.length - 1}
            <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
@@ -555,6 +578,10 @@
   }
 
   async function revertToBoard ({ id, audioRefFullPath }, deleteAllStrokesFromDb) {
+    if (!confirm('Are you sure you want to delete this video?')) {
+      return
+    }
+
     const promises = []
     const boardRef = doc(getFirestore(), boardsDbPath + id)
     if (audioRefFullPath) {
@@ -615,7 +642,6 @@
   }
 
   function eureka (boardDoc) {
-    console.log('$user =', $user)
     const boardRef = doc(getFirestore(), boardsDbPath + boardDoc.id)
     if (boardDoc.eurekaUIDs instanceof Array) {
       if (boardDoc.eurekaUIDs.includes($user.uid)) {
@@ -628,6 +654,43 @@
     updateDoc(boardRef, {
       eurekaUIDs: arrayUnion($user.uid)
     })
+  }
+
+  function dragover_handler (e) {
+    e.preventDefault()
+
+  }
+  
+  async function drop_handler (e, j) {
+    e.preventDefault()
+    const data = e.dataTransfer.getData('text/plain')
+    const [i, boardID] = data.split(':')
+
+    // ACTUALLY UPDATE
+    console.log('i, j =', i, j)
+    const blackboardsCopy = [...roomDoc.blackboards]
+    const draggedBoardID = blackboardsCopy[i] // I know...turns out I only needed `i`, no need for `boardID`
+    // remove 
+    const removeOneElement = 1
+    blackboardsCopy.splice(i, removeOneElement)
+
+    console.log('after remove =', blackboardsCopy)
+
+    // insert
+    const removeNoElement = 0
+    blackboardsCopy.splice(j, removeNoElement, draggedBoardID)  
+    console.log('after insert =', blackboardsCopy)
+      
+    // make an update operation
+    updateDoc(roomRef, {
+      blackboards: blackboardsCopy
+    })
+  }
+
+  // TO-DO: this is a copy-paste, do DRY 
+  function dragstart_handler (e, boardID, originalIndex) {
+    e.dataTransfer.setData("text/plain", originalIndex + ':' + boardID)
+    e.dataTransfer.dropEffect = 'move'
   }
 
 </script>

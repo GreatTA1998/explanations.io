@@ -34,6 +34,14 @@
             </Item>
           {/if}
 
+          <!-- TO-DO: use a named slot -->
+          <Item on:SMUI:action={showHintForDragAndDrop} 
+            draggable="true" 
+            on:dragstart={(e) => dragstart_handler(e, boardID, originalIndex)}
+          >
+            Move
+          </Item>
+
           <Item on:SMUI:action={wipeBoard}>
             Wipe board
           </Item>    
@@ -78,7 +86,11 @@
   export let strokesArray
   export let currentTime = 0 // assumes it's always rounded to nearest 0.1
   export let backgroundImageDownloadURL = ''
-  export let recordState  = ''
+  export let recordState = ''
+
+  // for drag-and-drop purposes
+  export let boardID = ''
+  export let originalIndex = null
   
 	const dispatch = createEventDispatcher()
 
@@ -371,5 +383,14 @@
 
   function wipeUI () {
     ctx.clearRect(0, 0, $canvasWidth, $canvasHeight)
+  }
+
+  function dragstart_handler (e, boardID, originalIndex) {
+    e.dataTransfer.setData("text/plain", originalIndex + ':' + boardID)
+    e.dataTransfer.dropEffect = 'move'
+  }
+
+  function showHintForDragAndDrop () {
+
   }
 </script>

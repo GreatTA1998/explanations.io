@@ -14,7 +14,9 @@
 
 </div>
 
-<DailyVideoConference {roomID}
+<DailyVideoConference 
+  {roomID}
+  {willJoinVoiceChat}
   let:activeSpeakerID={activeSpeakerID}
   let:toggleMic={toggleMic}
   let:firestoreIDToDailyID={firestoreIDToDailyID}
@@ -65,7 +67,12 @@
                   class:speaking={firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID}>
                   {person.name} 
                 </div> 
-                {#if Object.keys($dailyRoomParticipants).length > 0}
+                {#if !willJoinVoiceChat && person.browserTabID === $browserTabID}
+                  <div on:click={() => willJoinVoiceChat = true}
+                    style="margin-right: 4px; margin-left: auto; background-color: green; color: white; font-size: 0.6rem; padding-left: 4px; padding-right: 4px; cursor: pointer; border-radius: 4px;">
+                    Join voice 
+                  </div>
+                {:else if Object.keys($dailyRoomParticipants).length > 0}
                   {#if person.browserTabID === $browserTabID}     
                     <div style="display: flex; align-items: center; margin-right: 6px; margin-left: auto">
                       <div on:click|preventDefault|stopPropagation={toggleMic} style="padding-top: 5px">
@@ -143,6 +150,8 @@
   let descriptionOfClass = ''
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
   let DropdownMenu
+
+  let willJoinVoiceChat = false
 
 	// START OF RESIZE LOGIC 
   let resizeDebouncer = null

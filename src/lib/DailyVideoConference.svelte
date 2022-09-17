@@ -9,6 +9,7 @@
   import { onDestroy, onMount } from 'svelte'
 
   export let roomID
+  export let willJoinVoiceChat
 
   let CallObject
   let firestoreIDToDailyID
@@ -45,7 +46,7 @@
     }
   })
 
-  $: if ($user.uid) {
+  $: if (willJoinVoiceChat && $user.uid) {
     async function initDaily () {
       await initCallObject()
       publicJoinRoom()

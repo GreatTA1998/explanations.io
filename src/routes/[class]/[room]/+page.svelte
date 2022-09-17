@@ -123,7 +123,7 @@
                     </span>
                   </Button>
                   <div style="
-                    margin-left: {$canvasWidth - 240 - 92}px; 
+                    margin-left: {$canvasWidth - 240 - 164}px; 
                     display: flex; 
                     align-items: center; 
                     flex-direction: row-reverse"

@@ -9,7 +9,7 @@
 
     <div slot="dropdown-menu">
       {#if recordState === 'pre_record' || currentTime === 0 }
-        <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 10px; color: white; font-size: 2rem;">
+        <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-top: 3px; margin-right: 10px; color: white; font-size: 2rem;">
           more_vert
         </span>
       {/if}

@@ -117,7 +117,11 @@
                       Eureka
                     </Button>
                   {/if}
-                    
+                  <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgba(255,255,255,0.5); margin-left: 8px;">
+                    <span class="material-icons" style="color: white;">
+                      fullscreen
+                    </span>
+                  </Button>
                   <div style="
                     margin-left: {$canvasWidth - 240 - 92}px; 
                     display: flex; 
@@ -213,6 +217,13 @@
                         </span>
 
                       {/if}
+
+                      <span 
+                        on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} 
+                        class="material-icons" style="color: white; font-size: 2.2rem; margin-right: 8px"
+                      >
+                        fullscreen
+                      </span>
                     </Blackboard>
                   </RenderlessAudioRecorder>
                 {/if}
@@ -261,7 +272,7 @@
   import Button, { Icon } from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
-  import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave } from '../../../store.js'
+  import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave, drawerWidth } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment } from 'firebase/firestore';
@@ -465,7 +476,7 @@
           if (doc.id !== $user.uid) {
             promises.push(
               sendTextMessage({ 
-                content: `${$user.name} asked on https://ihtfp.app: "${roomDoc.name || 'Fake question here'}"`,
+                content: `${$user.name} asked on https://explain.mit.edu/${classID}/${roomID}: ${roomDoc.name}`, // assumes roomDoc.name is not ''
                 toWho: doc.data().phoneNumber
               })
             )

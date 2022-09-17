@@ -1,5 +1,5 @@
 <div class="drawer-container">
-  <Drawer style="overflow-y: scroll; height: 100%;" class="mdc-elevation--z{5}">
+  <Drawer style="overflow-y: scroll; height: 100%; width: {$drawerWidth}px" class="mdc-elevation--z{5}">
     <Content>
       <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;" class="mdc-elevation--z{4}">
         <div style="display: flex; align-items: center">
@@ -59,13 +59,25 @@
   import Drawer, { AppContent, Content } from '@smui/drawer';
   import Card from '@smui/card'
   import List, { Item, Text } from '@smui/list';
-  import { user } from '../store.js'
+  import { user, drawerWidth, canvasWidth, canvasHeight } from '../store.js'
   import { goto } from '$app/navigation'
+  import { calculateCanvasDimensions } from '../helpers/canvas.js'
+  import { tick } from 'svelte';
 
   export let nameOfClass
   export let descriptionOfClass
 
   let isShowingPopup = false
+
+  // adjust dimensions whenever $drawerWidth changes
+  $: if ($drawerWidth) {
+    tick().then(() => {
+      const { width, height } = calculateCanvasDimensions()
+      // TO-DO: it's strange that we need to manually bind canvas width and height to these new values
+      canvasWidth.set(width)
+      canvasHeight.set(height)
+    })
+  }
 </script>
  
 <style>

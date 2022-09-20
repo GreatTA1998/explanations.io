@@ -5,7 +5,6 @@ export function calculateCanvasDimensions () {
   const appElement = document.getElementById('main-content')
   let availableHeight
   let availableWidth
-  const aspectRatio = 4/3
   if (appElement) {
     availableHeight = appElement.clientHeight
     availableWidth = appElement.clientWidth
@@ -15,16 +14,26 @@ export function calculateCanvasDimensions () {
     availableWidth = window.innerWidth
   }
 
-  let dimensions = {}
-  // lose 5% of space to maintain slight separation and space for audio slider
-  if (availableWidth * (1/aspectRatio) < availableHeight) {
-    dimensions.width = 0.95 * availableWidth;
-    dimensions.height = dimensions.width * (1/aspectRatio);
-  } else {
-    dimensions.height = 0.95 * availableHeight;
-    dimensions.width = dimensions.height * aspectRatio;
+  const aspectRatio = 4.4/3 //
+  const leftPadding = 16
+  const audioPlayerHeight = 40
+  const maxBoardWidth = availableWidth - (leftPadding * 2) // right padding
+  const maxBoardHeight = availableHeight - audioPlayerHeight
+
+  // width take precedence, we prefer horizontal displays that utilizes full horizontal space,
+  if ((maxBoardWidth * (1/aspectRatio)) <= maxBoardHeight) {
+    return {
+      width: maxBoardWidth,
+      height: maxBoardWidth * (1/aspectRatio)
+    }
+  } 
+  // screens that are vertical don't really matter
+  else {
+    return { 
+      height: maxBoardHeight,
+      width: maxBoardHeight * aspectRatio
+    }
   }
-  return dimensions
 }
 
 // I know...

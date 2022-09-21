@@ -1,4 +1,4 @@
-<div id="app-popup">
+<div class="popup-window">
   <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px">
     <h2>App Settings</h2>
 
@@ -63,8 +63,8 @@
 </script>
 
 <style>
-  #app-popup {
-    position: absolute; 
+  .popup-window {
+    position: fixed; 
     z-index: 10;
     background-color: white; 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

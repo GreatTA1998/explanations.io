@@ -196,7 +196,7 @@
                             () => willPreventPageLeave.set(true)
                           )}
                           class="material-icons" 
-                          style="font-size: 2.5rem; color: red; margin-left: 22px; margin-right: 26px"
+                          style="font-size: 2.5rem; color: red; margin-left: 28px; margin-right: 26px"
                         >
                           circle
                         </span>

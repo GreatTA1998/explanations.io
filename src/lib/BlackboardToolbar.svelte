@@ -33,10 +33,48 @@
       {$onlyAllowApplePencil ? 'No touch' : 'Touch draw'}
     </div>
   </div>
+
   {#if Object.keys($user).length > 0}
-    {#each $user.pencilColors as color }
-      <div on:click={() => currentTool.set({ type: 'pencil', color, lineWidth: 3 })} style="margin: 0 4px; width: 30px; height: 42px; border-radius: 3px; align-items: center; display: flex; justify-content: center;" 
+    {#if open}
+      <div class="popup-window">
+        <!-- generate random colors -->
+        <div style="display: flex; flex-wrap: wrap">
+          {#each randomPaletteColors as color}
+              <div 
+                on:click={() => newlySelectedColor = color}
+                style="background: {color}; height: 30px; width: 30px;"
+              >
+              </div>
+          {/each}
+        </div>
+
+
+        <Slider style="flex-grow: 1;" 
+          bind:value={newlySelectedWidth}
+          min={1}
+          max={10}
+          discrete
+          step={1}
+        />
+        <span
+          style="padding-right: 12px; width: max-content; display: block;"
+        >
+          pencil width (px): {newlySelectedWidth}
+        </span>
+
+        <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
+          <!-- TODO- implement a cancel button -->
+          <Button on:click={changeColorAndWidthOfPencil} style="margin-right: 16px; margin-left: auto">
+            Save
+          </Button>
+        </div> 
+      </div>
+    {/if}
+
+    {#each $user.pencilColors as color, i }
+      <div on:click={() => selectPencil({ i, color, lineWidth: pencilWidths[i] })} 
         class:pencil-selected={$currentTool.color === color && $currentTool.color !== currentDiceColor}
+        style="margin: 0 4px; width: 30px; height: 42px; border-radius: 3px; align-items: center; display: flex; justify-content: center;" 
       >
         <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="16px" height="30px" viewBox="0 0 100 230" style="enable-background:new 0 0 100 230;" xml:space="preserve"
@@ -73,12 +111,23 @@
     />
 
     <img 
+      id="large-eraser"
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 32 })}
-      class:eraser-selected={$currentTool.type === 'eraser'}
-      width="46" height="40"
-      style="margin-left: 30px; margin-right: 8px;"
+      class:eraser-selected={$currentTool.type === 'eraser' && $currentTool.lineWidth === 32}
+      width="60" height="54"
+      style="margin-left: 30px; margin-right: 10px;"
       src="https://i.imgur.com/Klln1yP.png"
-      alt="eraser"
+      alt="large-eraser"
+    >
+
+    <img 
+      id="small-eraser"
+      on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 5 })}
+      class:eraser-selected={$currentTool.type === 'eraser' && $currentTool.lineWidth === 5}
+      width="30" height="27"
+      style="margin-right: 16px;"
+      src="https://i.imgur.com/Klln1yP.png"
+      alt="small-eraser"
     >
   {/if}
   
@@ -92,10 +141,85 @@
 </div>
 
 <script>
-  import { user, currentTool, onlyAllowApplePencil } from '../store.js'
+  import { user, currentTool, onlyAllowApplePencil, roomToPeople, browserTabID } from '../store.js'
   import Switch from '@smui/switch'
+  import { updateDoc, doc, getFirestore, getDoc } from 'firebase/firestore'
+  import Button from '@smui/button'
+  import Slider from '@smui/slider'
+  import { onMount } from 'svelte';
+  
+  // let pencilColor = []
+  let pencilWidths = [] 
+
+  let pencilIdx = null
+  let newlySelectedColor = '' 
+  let newlySelectedWidth = 0 // AF(0) means no width
+
+  let open = false
+
+  let randomPaletteColors = []
+
+  $: {
+    if ($user.pencilWidths) pencilWidths = $user.pencilWidths
+    else [2, 2, 2, 2]
+  }
+  // TO-DO: rename `roomToParicipants`, this implies it's a map of ID to ID
+  // when it's a roomID to an array of user objects
+  // maps from room[ID] to an array of people inside the room
 
   let currentDiceColor = ''
+
+  onMount(() => {
+    for (let i = 0; i < 20; i++) {
+      randomPaletteColors.push(
+        getRandomColor()
+      )
+    }
+  })
+
+  function selectPencil ({ color, lineWidth, i }) {
+    if ($currentTool.color === color && $currentTool.lineWidth === lineWidth) {
+      pencilIdx = i
+      newlySelectedWidth = lineWidth
+      newlySelectedColor = color
+      // initialize to current value
+      open = true
+    } 
+    else {
+      currentTool.set({ type: 'pencil', color, lineWidth })
+    }
+  }
+
+  async function changeColorAndWidthOfPencil () {
+    const i = pencilIdx
+    selectPencil({ 
+      color: newlySelectedColor, 
+      lineWidth: newlySelectedWidth 
+    })
+
+    const userRef = doc(getFirestore(), 'users/' + $user.uid)
+    const colorsCopy = [...$user.pencilColors] 
+    let widthsCopy 
+    if ($user.pencilWidths) widthsCopy = [...$user.pencilWidths]
+    else widthsCopy = [2, 2, 2, 2]
+    colorsCopy[i] = newlySelectedColor
+    widthsCopy[i] = newlySelectedWidth
+    console.log(colorsCopy)
+    console.log(widthsCopy)
+    updateDoc(userRef, {
+      pencilColors: colorsCopy,
+      pencilWidths: widthsCopy
+    })  
+
+    const userSnapshot = await getDoc(userRef)
+    user.set({ 
+      id: userSnapshot.id,
+      ...userSnapshot.data()
+    })
+    console.log("updated user =", user)
+    open = false
+    pencilIdx = null
+  } 
 
   function func () {
     onlyAllowApplePencil.set(!$onlyAllowApplePencil)
@@ -130,24 +254,6 @@
                     "100%,"+  // 100% saturation i.e. maximize on its vividness and purity
                     "60%,1)"; // 60% lightness (how much black / white mix, otherwise too faded), 1 alpha
   }
-
-  // function changePenColor (color, i, width = 2) {
-  //   const penColorsCopy = [...this.user.penColors];
-  //   penColorsCopy[i] = color
-  //   const penWidthsCopy = [ ...(this.user.penWidths || [2, 2, 2, 2]) ]
-  //   penWidthsCopy[i] = width
-  //   db.collection("users").doc(this.user.uid).update({
-  //     penColors: penColorsCopy,
-  //     penWidths: penWidthsCopy
-  //   });
-  //   this.$store.commit("SET_CURRENT_TOOL", {
-  //     type: "PEN",
-  //     color: penColorsCopy[i],
-  //     lineWidth: penWidthsCopy[i]
-  //   })
-  //   this.newWidthToUpdate = null
-  //   this.newColorToUpdate = null
-  // }
 </script>
 
 <style>
@@ -161,5 +267,22 @@ svg {
 
 .eraser-selected {
   filter: invert(1)
+}
+
+.popup-window {
+  position: fixed; 
+  z-index: 10;
+  background-color: white; 
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 8px; 
+  width: 500px; 
+  height: 300px;
+
+   /* center it within the page */
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
 </style>

@@ -39,6 +39,7 @@
         if (!dbUserSnapshot.exists()) {
           const metadataRef = doc(getFirestore(), 'metadata/78tDSRCiMHGnf8zcXkQt')
           const metadataSnap = await getDoc(metadataRef)
+          // TO-DO: change to 14.01
           const exampleClass = {
             id: exampleClassID,
             name: '8.01', 
@@ -51,6 +52,7 @@
             enrolledClasses: [exampleClass],
             mostRecentClassAndRoomID: `/${exampleClassID}/${exampleClassID}`,
             pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"],
+            pencilWidths: [1, 1, 1, 1],
             willReceiveText: !!resultUser.phoneNumber // can be toggled
           })
           updateDoc(metadataRef, {

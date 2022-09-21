@@ -13,7 +13,7 @@ export const user = writable({}) // {} means not logged in, cannot be null
 
 export const currentTool = writable({
     type: 'pencil',
-    color: 'white',
+    color: 'hsla(0, 0, 100%, 0)',
     lineWidth: 3
 })
 

@@ -1,6 +1,6 @@
 
 export function load ({ data, params }) {
-  // return data
+  // this corresponds to the `data` object
   return {
     classID: params.class,
     roomID: params.room

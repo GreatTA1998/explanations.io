@@ -67,14 +67,15 @@
   style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
 >
 </canvas>
-  
+
+<!-- rgb(46, 49, 49) -->
 <canvas bind:this={bgCanvas} 
   style={`position: absolute;
   top: 0;
   left: 0;
   z-index: 0;
   display: block;
-  background-color: rgb(46, 49, 49); width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
+  background-color: hsl(0,0%,0%, 0.81); width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
 >
 
 </canvas>

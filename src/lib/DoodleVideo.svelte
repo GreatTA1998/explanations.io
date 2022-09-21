@@ -37,7 +37,7 @@
     }
   >
   </canvas>
-
+  <!-- rgb(46, 49, 49) -->
   <canvas 
     bind:this={bgCanvas} 
     style={`
@@ -48,7 +48,7 @@
       display: block;
       width: ${$canvasWidth}px; 
       height: ${$canvasHeight}px;
-      background-color: rgb(46, 49, 49);`
+      background-color: hsl(0,0%,0%, 0.81);`
     }
   >
   </canvas>

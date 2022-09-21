@@ -1,17 +1,18 @@
 <div 
   style="
-  position: absolute; 
-  display: flex; 
-  align-items: center; 
-  height: 50px; 
-  left: 0; 
-  right: auto; 
-  top: 0; 
-  bottom: auto; 
-  z-index: 2; 
-  background-color: grey; 
-  padding-left: 10px; 
-  border-radius: 2px;"
+    position: absolute; 
+    display: flex; 
+    align-items: center; 
+    height: 50px; 
+    left: 0; 
+    right: auto; 
+    top: 0; 
+    bottom: auto; 
+    z-index: 2; 
+    background-color: grey; 
+    padding-left: 10px; 
+    border-radius: 2px;
+  "
 >
   <div on:click|stopPropagation|preventDefault={func}
     style="margin-right: 10px; text-align: center"
@@ -75,7 +76,7 @@
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 32 })}
       class:eraser-selected={$currentTool.type === 'eraser'}
       width="46" height="40"
-      style="margin-left: 15px; margin-right: 8px;"
+      style="margin-left: 30px; margin-right: 8px;"
       src="https://i.imgur.com/Klln1yP.png"
       alt="eraser"
     >
@@ -92,7 +93,7 @@
 
 <script>
   import { user, currentTool, onlyAllowApplePencil } from '../store.js'
-  import Switch from '@smui/switch';
+  import Switch from '@smui/switch'
 
   let currentDiceColor = ''
 

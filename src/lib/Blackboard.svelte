@@ -3,6 +3,11 @@
 -->
 {#if strokesArray}
   <BlackboardToolbar>
+    <span on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
+      undo
+    </span>
+
+    <!-- uses `BlackboardToolbar`'s unnamed slot (the 2 other slots are named) -->
     <slot>
 
     </slot>
@@ -107,6 +112,8 @@
   let currentStroke = { 
     points: [] 
   }
+  let undoStrokeIdx = null // Optional(int)
+
   let debouncerTimeout
 
   let DropdownMenu
@@ -198,10 +205,14 @@
    * CRITICAL ASSUMPTION: strokesArray can be pushed singularly and deleted in batch, but can never be modified in place. 
    */
   $: if (ctx && strokesArray) {
-    let m = localStrokesArray.length; 
-    let n = strokesArray.length; 
+    let m = localStrokesArray.length
+    let n = strokesArray.length
+    // NOTE: this does not trigger!
     if (m === n) { 
       // do nothing: this blackboard updated its parent, and the change propagated back to itself
+      if (strokesArray[n-1] && !strokesArray[n-1].isErasing) {
+        undoStrokeIdx = n - 1 // when a new visible stroke is drawn, set it to that index
+      } 
     } 
     else if (m < n) {
       if (m === 0) { // blackboard just finished loading i.e. there can be 500 strokes
@@ -209,17 +220,23 @@
           drawStroke(stroke, null, ctx, canvas)
         }
         localStrokesArray = [...strokesArray]
+
+        undoStrokeIdx = n - 1 // correct at initialization (TO-DO: video proof of correctness)
       }
-      else {
+      else { // normal update
         for (let i = m; i < n; i++) {
-          const newStroke = strokesArray[i];
+          const newStroke = strokesArray[i]
           drawStroke(
             newStroke, 
             newStroke.startTime !== newStroke.endTime ? getPointDuration(newStroke) : null, // instantly or smoothly,
             ctx, 
             canvas
-          );
-          localStrokesArray.push(newStroke);
+          )
+          localStrokesArray.push(newStroke)
+
+          if (!newStroke.isErasing) { // means it's a eraser stroke
+            undoStrokeIdx = i // when a new visible stroke is drawn, set it to that index
+          } 
         }
       }
     }
@@ -392,5 +409,41 @@
 
   function showHintForDragAndDrop () {
 
+  }
+
+  // assumes undoStroke
+  function undoPencilStroke () {
+    if (undoStrokeIdx === null) {
+      return
+    }
+    const stroke = strokesArray[undoStrokeIdx]
+    // undo current stroke
+    const antiStroke = {
+      points: [...stroke.points], // points are normalized
+      startTime: currentTime,
+      isErasing: true,
+      strokeNumber: strokesArray.length + 1,
+      lineWidth: stroke.lineWidth + 2, // TWO extra pixel to guarantee it covers the visible stroke
+    }
+    drawStroke(antiStroke, null, ctx, canvas)
+    handleEndOfStroke(antiStroke);
+
+    // update pointer to last visible stroke (can be a while if many strokes before were also undone)
+    let eraserDebt = 0
+    for (let i = undoStrokeIdx - 1; i >= 0; i--) {
+      if (!strokesArray[i].isErasing && eraserDebt === 0) {
+        console.log("found visible stroke at i =", i)
+        undoStrokeIdx = i 
+        break
+      } 
+      else if (strokesArray[i].isErasing) {
+        eraserDebt += 1 
+        console.log('debt increased =', eraserDebt)
+      } 
+      else if (!strokesArray[i].isErasing) {
+        eraserDebt -= 1
+        console.log('debt decreased =', eraserDebt)
+      }
+    }
   }
 </script>

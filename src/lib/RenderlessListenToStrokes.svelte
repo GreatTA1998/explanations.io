@@ -85,7 +85,6 @@ async function listenToStrokes () {
 }
 
 function handleNewlyDrawnStroke (stroke) {
-  strokesArray.push(stroke)
   try {
     setDoc(
       doc(getFirestore(), `${dbPath}/strokes/${stroke.id}`),

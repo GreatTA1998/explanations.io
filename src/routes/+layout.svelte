@@ -33,7 +33,7 @@
         })
 
         // hydrate the user doc fully
-        const exampleClassID = 'O00mSbBEYQxTnv3cKkbe'
+        const exampleClassID = 'Mev5x66mSMEvNz3rijym' // used to be 8.01 'O00mSbBEYQxTnv3cKkbe'
         const userRef = doc(getFirestore(), 'users/' + resultUser.uid)
         let dbUserSnapshot = await getDoc(userRef)
         if (!dbUserSnapshot.exists()) {
@@ -42,8 +42,8 @@
           // TO-DO: change to 14.01
           const exampleClass = {
             id: exampleClassID,
-            name: '8.01', 
-            description: "Classical Mechanics"
+            name: '14.01', 
+            description: "Principles of Microeconomics"
           }
           await setDoc(userRef, {
             name: `Beaver #${metadataSnap.data().numOfUsers}`, 

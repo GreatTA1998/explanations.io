@@ -5,8 +5,9 @@
 <script>
   import DailyIframe from '@daily-co/daily-js'
   import { API_KEY_SECRET } from './environmentSecrets.js'
-  import { dailyMicStream, dailyRoomParticipants, browserTabID, user } from '../store.js'
+  import { dailyRoomParticipants, browserTabID, user, baseMicStream } from '../store.js'
   import { onDestroy, onMount } from 'svelte'
+  import { initializeMicStream } from '../helpers/microphone.js'
 
   export let roomID
   export let willJoinVoiceChat
@@ -38,11 +39,11 @@
     }
 
     // stop the jarring red mic circle when the user logs out
-    if ($dailyMicStream) {
-      $dailyMicStream.getAudioTracks().forEach(track => {
+    if ($baseMicStream) {
+      $baseMicStream.getAudioTracks().forEach(track => {
         track.stop()
       })
-      dailyMicStream.set(null)
+      baseMicStream.set(null)
     }
   })
 
@@ -56,22 +57,14 @@
   
   async function initCallObject () {
     return new Promise(async (resolve, reject) => {      
-      if (!$dailyMicStream) {
-        try {
-          const micStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-          // console.log('micStream =', micStream)
-          dailyMicStream.set(micStream)
-          // console.log('dailyMicStream =', $dailyMicStream)
-        } catch (error) {
-          alert(`Don't forget to enable your your mic! Click the "aA" / "i" button beside the URL bar "https://explain.mit.edu", then click "website settings" / "microphone"`)
-          return reject("Can't access mic stream")
-        }
+      if (!$baseMicStream) {
+        await initializeMicStream()
       }
-
-      // for localhost, $dailyMicStream can be "null" here. I don't know why - can be a nextTick issue,
+      // IS IT NECESSARY TO CLONE THE STREAM FOR DAILY AS WELL?
+      // for localhost, $baseMicStream can be "null" here. I don't know why - can be a nextTick issue,
       // but a clue is, __layout is rendered twice, instead of once, and initCallObject is called twice as a result, instead of once. 
       // ignore for now if the error isn't reproduced on a deployed version
-      const [ micMediaStreamTrack ] = $dailyMicStream.getAudioTracks()
+      const [ micMediaStreamTrack ] = $baseMicStream.getAudioTracks()
       CallObject = DailyIframe.createCallObject({
         audioSource: micMediaStreamTrack,
         videoSource: false

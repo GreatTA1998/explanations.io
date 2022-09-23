@@ -3,7 +3,34 @@
 </slot>
 
 <script>
-  import { dailyMicStream, recordState, dailyRoomParticipants } from '../store.js'
+  /** 
+  The reason this exists is because iOS Safari invalidates previous mic streams when you call "navigator.getUserMedia"
+  so recording a video mutes your audio call. The opposite is also true: `Daily.createCallObject()` will likely invalidate the 
+  current recording session.
+  The best workaround is to clone independent mic streams and pass them to the recorder and the call object respectively. 
+  If we're using the audio recorder, we MUST also pre-clone a stream in case the user joins an audio call afterwards. 
+  The logic is as follows: 
+    1. Either recording or phone call is triggered. We create two independent copies of the mic stream.
+    2. The recorder is correct no matter what, because, each time it starts recording it clones an additional independent copy.
+    3. The phone call is correct with exception to, when it terminates, we have to terminate the mic stream.
+
+  The last thing to ensure is, the mic is deactivated when it's not in use so it's not jarring for the user. 
+  We do this by destroying the micStream object upon ending a call. 
+      CASE 1 (in the middle of recording): the audio recorder has an independent copy, so the mic will be turned off when that independent copy 
+      is also deactivated.
+      CASE 2 (not in the middle of recording): trivially correct. 
+  This is used by `BlackboardAudioRecorder.vue` and `VideoConferenceRoom.vue`
+  KNOWN ISSUES: if you hang-up in the middle of a recording you lose your sound
+   (though if you hang-up after the recording, then start another one, it's fine. 
+        1. I suspect it's the track.stop() messing the ongoing tracks mid-recording
+        2. If the recording already finished, a fresh micStream is created because we reset the pointers of micStream and CallObject
+    )
+**/
+
+
+
+  import { baseMicStream, recordState, dailyRoomParticipants } from '../store.js'
+  import { initializeMicStream } from '../helpers/microphone.js'
   import { createEventDispatcher, onMount } from 'svelte'
   import { browser } from '$app/environment'
   // import mpegEncoder from "audio-recorder-polyfill/mpeg-encoder";
@@ -11,8 +38,9 @@
   // AudioRecorder.prototype.mimeType = "audio/mpeg"; // mpeg is equivalent to mp3
   let AudioRecorder
 
-  let startTimestamp = null // number of milliseconds since 1970 00:00:00 UTC
   const tickSize = 100 // milliseconds
+
+  let startTimestamp = null // number of milliseconds since 1970 00:00:00 UTC
   let etaOfNextTick = null // would use an Optional in 6.031, `0` doesn't make sense as it makes the AF inconsistent
   let displayedCurrentTime = 0
   let nextTimeoutID = ''
@@ -41,10 +69,11 @@
   }
 
   function stopTimer () {
+    startTimestamp = null 
+    etaOfNextTick = null
+    displayedCurrentTime = 0
     clearTimeout(nextTimeoutID)
     nextTimeoutID = ''
-    displayedCurrentTime = 0
-    etaOfNextTick = null
   }
 
   function step () {
@@ -86,29 +115,27 @@
    */
   function startRecording () {
     return new Promise(async (resolve, reject) => {
-      // call it `...Copy` just to maintain same API, will change future
-      let micStreamCopy
-      // new, account-less visitors don't connect to voice chat
-      if (!$dailyMicStream) {
-        try {
-          micStreamCopy = await navigator.mediaDevices.getUserMedia({ audio: true })
-        } catch (error) {
-          alert(`Don't forget to enable your your mic! Click the "aA" / "i" button beside the URL bar "https://explain.mit.edu", then click "website settings" / "microphone"`)
-          return reject("Can't access mic stream")
-        }
+      if (!$baseMicStream) {
+        await initializeMicStream()
       }
+      // TEST RIGOROUSLY ON IPAD
+      // NOTE: this doesn't seem necessary anymore because the mic streams are independent now, but defensive programming
+      // actually order matters: if you have the mic stream from daily muted first, 
+      // it might affect the audio recorder who then clones off of the muted stream
+      // test on iPad
+
       // logged in user connected to voice chat, but is MUTED
-      else if (!$dailyRoomParticipants.local.audio) {
-        alert('Cannot start recording because your mic is muted - click the switch next to your name to unmute')
-        reject('Cannot start recording because mic stream is muted')
-        return
-      } 
-      else {
-        // need to use a copy because:
-        //   1. aliasing a stream for video call, different recording sessions, etc. causes unpredictable issues on Safari iOS
-        //   2. By using a copy, we naturally handle the edge case where the user mutes voice in the MIDDLE of recording
-        micStreamCopy = $dailyMicStream.clone()
-      }
+      
+      // if ($dailyRoomParticipants && $dailyRoomParticipants.local && !$dailyRoomParticipants.local.audio) {
+      //   alert('Cannot start recording because your mic is muted - click the switch next to your name to unmute')
+      //   reject('Cannot start recording because mic stream is muted')
+      //   return
+      // } 
+      
+      // need to use a copy because:
+      //   1. aliasing a stream for video call, different recording sessions, etc. causes unpredictable issues on Safari iOS
+      //   2. By using a copy, we naturally handle the edge case where the user mutes voice in the MIDDLE of recording
+      const micStreamCopy = $baseMicStream.clone() // new copies I assume will have active tracks, even if the base is deactivated
 
       recorder = new MediaRecorder(micStreamCopy); 
       recorder.start()
@@ -133,6 +160,6 @@
       for (const track of recorder.stream.getTracks()) {
         track.stop();
       }
-    });
+    })
   }
 </script>

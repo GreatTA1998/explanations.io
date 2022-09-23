@@ -106,6 +106,12 @@
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                 > 
+                  <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgba(255,255,255,0.5); margin-left: 8px;">
+                    <span class="material-icons" style="color: white;">
+                      fullscreen
+                    </span>
+                  </Button>
+
                   {#if $user.uid}
                     <Button
                       on:click={eureka(boardDoc)}
@@ -117,11 +123,7 @@
                       Eureka
                     </Button>
                   {/if}
-                  <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgba(255,255,255,0.5); margin-left: 8px;">
-                    <span class="material-icons" style="color: white;">
-                      fullscreen
-                    </span>
-                  </Button>
+
                   <div style="
                     margin-left: {$canvasWidth - 240 - 164}px; 
                     display: flex; 
@@ -175,19 +177,11 @@
                       on:board-wipe={deleteAllStrokesFromDb}
                       on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
                     >
-                      <!-- {#if boardDoc.recordState === 'post_record'}
-                        <div style="display: flex; justify-content: center; margin-left: 20px; margin-right: 20px">
-                          <CircularProgress
-                            class="my-four-colors"
-                            style="height: 32px; width: 32px;"
-                            indeterminate
-                            fourColor
-                          />
-                        </div> -->
-
-                      <!-- if an recording is active (rather than an interrupted session that isn't actually recording,
-                        currentTime will be incrementing -->
-                        <!-- class="material-icons"  -->
+                      <!-- 
+                        if an recording is active (rather than an interrupted session that isn't actually recording,
+                        currentTime will be incrementing 
+                      -->
+                      <!-- class="material-icons"  -->
                       {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
                         <span 
                           on:click={() => callManyFuncs(
@@ -223,7 +217,6 @@
                         >
                           stop_circle
                         </span>
-
                       {/if}
 
                       <span 

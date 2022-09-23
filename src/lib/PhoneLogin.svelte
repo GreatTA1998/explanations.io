@@ -21,12 +21,13 @@
         You should receive a text message with a 6-digit code:
       </div>
       
-      <input minlength="1" maxlength="1" bind:value={confirm1} bind:this={c1} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="1">
-      <input minlength="1" maxlength="1" bind:value={confirm2} bind:this={c2} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="2">  
-      <input minlength="1" maxlength="1" bind:value={confirm3} bind:this={c3} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="3">
-      <input minlength="1" maxlength="1" bind:value={confirm4} bind:this={c4} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="4">
-      <input minlength="1" maxlength="1" bind:value={confirm5} bind:this={c5} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="5">
-      <input minlength="1" maxlength="1" bind:value={confirm6} bind:this={c6} style="width: 20px; font-size: 2rem; margin-left: 15px; margin-right: 10px" placeholder="6">
+      <!-- `numeric`: https://stackoverflow.com/a/62179845/7812829 -->
+      <input type="text" inputmode="numeric" minlength="1" maxlength="1" bind:value={confirm1} bind:this={c1} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="1">
+      <input type="text" inputmode="numeric" minlength="1" maxlength="1" bind:value={confirm2} bind:this={c2} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="2">  
+      <input type="text" inputmode="numeric" minlength="1" maxlength="1" bind:value={confirm3} bind:this={c3} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="3">
+      <input type="text" inputmode="numeric" minlength="1" maxlength="1" bind:value={confirm4} bind:this={c4} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="4">
+      <input type="text" inputmode="numeric" minlength="1" maxlength="1" bind:value={confirm5} bind:this={c5} style="width: 20px; font-size: 2rem; margin-left: 15px;" placeholder="5">
+      <input type="text" inputmode="numeric" minlength="1" maxlength="1" bind:value={confirm6} bind:this={c6} style="width: 20px; font-size: 2rem; margin-left: 15px; margin-right: 10px" placeholder="6">
       <Button on:click={verifyConfirmationCode} style="display: none; color: {hasEnteredConfirmCode ? 'rgb(116 28 183)' : 'grey'}; margin-bottom: 2px;" disabled={!hasEnteredConfirmCode}>Confirm code</Button>
     </div>
   {/if}

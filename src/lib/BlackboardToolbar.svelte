@@ -40,14 +40,14 @@
         <!-- generate random colors -->
         <div style="display: flex; flex-wrap: wrap">
           {#each randomPaletteColors as color}
-              <div 
-                on:click={() => newlySelectedColor = color}
-                style="background: {color}; height: 30px; width: 30px;"
-              >
-              </div>
+            <div 
+              on:click={() => newlySelectedColor = color}
+              style="background: {color}; height: 30px; width: 30px; box-sizing: border-box"
+              class:highlighted-outline={newlySelectedColor === color}
+            >
+            </div>
           {/each}
         </div>
-
 
         <Slider style="flex-grow: 1;" 
           bind:value={newlySelectedWidth}
@@ -56,16 +56,17 @@
           discrete
           step={1}
         />
+
         <span
-          style="padding-right: 12px; width: max-content; display: block;"
+          style="padding-left: 18px; padding-right: 12px; width: max-content; display: block;"
         >
           pencil width (px): {newlySelectedWidth}
         </span>
 
         <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
           <!-- TODO- implement a cancel button -->
-          <Button on:click={changeColorAndWidthOfPencil} style="margin-right: 16px; margin-left: auto">
-            Save
+          <Button on:click={changeColorAndWidthOfPencil} style="margin-right: 16px; margin-left: auto;">
+            OK
           </Button>
         </div> 
       </div>
@@ -74,7 +75,16 @@
     {#each $user.pencilColors as color, i }
       <div on:click={() => selectPencil({ i, color, lineWidth: pencilWidths[i] })} 
         class:pencil-selected={$currentTool.color === color && $currentTool.color !== currentDiceColor}
-        style="margin: 0 4px; width: 30px; height: 42px; border-radius: 3px; align-items: center; display: flex; justify-content: center;" 
+        style="
+          margin: 0 4px; 
+          width: 30px; 
+          height: 42px; 
+          border-radius: 3px; 
+          align-items: center; 
+          display: flex; 
+          justify-content: center;
+          padding-left: 4px;
+        " 
       >
         <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="16px" height="30px" viewBox="0 0 100 230" style="enable-background:new 0 0 100 230;" xml:space="preserve"
@@ -99,16 +109,24 @@
             />
           </g>
         </svg> 
+
+        <span 
+          class="material-icons" 
+          style="font-size: 0.7rem; 
+                 color: {$currentTool.color === color && $currentTool.color !== currentDiceColor ? 'black' : 'white'};
+                 margin-top: 27px;
+          "
+          >
+          arrow_drop_down
+        </span>
       </div>
     {/each}
-
-    <img on:click={handleDiceClick}
-      src="https://i.imgur.com/qshS7Vi.png"
-      width="30"
-      height="30"
-      style="margin-left: 8px"
-      alt="Random color dice"
-    />
+    
+    <span on:click={handleDiceClick} 
+      class="material-icons" style="font-size: 2.1rem; margin-left: 5px; color: {currentDiceColor}"
+    >
+      casino
+    </span>
 
     <img 
       id="large-eraser"
@@ -157,7 +175,7 @@
 
   let open = false
 
-  let randomPaletteColors = []
+  let randomPaletteColors = ['black', 'white']
 
   $: {
     if ($user.pencilWidths) pencilWidths = $user.pencilWidths
@@ -170,7 +188,7 @@
   let currentDiceColor = ''
 
   onMount(() => {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
       randomPaletteColors.push(
         getRandomColor()
       )
@@ -257,6 +275,10 @@
 </script>
 
 <style>
+.highlighted-outline {
+  border: 1px solid rgb(128, 0, 128); 
+}
+
 svg {
   max-height: 30px;
 }
@@ -275,8 +297,8 @@ svg {
   background-color: white; 
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 8px; 
-  width: 500px; 
-  height: 300px;
+  width: 480px; 
+  height: 170px;
 
    /* center it within the page */
   left: 0;

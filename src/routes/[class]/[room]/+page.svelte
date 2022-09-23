@@ -187,6 +187,7 @@
 
                       <!-- if an recording is active (rather than an interrupted session that isn't actually recording,
                         currentTime will be incrementing -->
+                        <!-- class="material-icons"  -->
                       {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
                         <span 
                           on:click={() => callManyFuncs(
@@ -195,10 +196,17 @@
                             () => updateRecorderBrowserTabID(boardID),
                             () => willPreventPageLeave.set(true)
                           )}
-                          class="material-icons" 
-                          style="font-size: 2.5rem; color: red; margin-left: 28px; margin-right: 26px"
+                          style="
+                            font-size: 1.2rem; color: cyan; margin-left: 28px; margin-right: 26px; font-family: sans-serif; border: 1px solid cyan; 
+                            padding-top: 2px; 
+                            padding-bottom: 4px;
+                            padding-left: 10px;
+                            padding-right: 9px; 
+                            box-sizing: border-box;
+                            border-radius: 1px;
+                            cursor: pointer;"
                         >
-                          circle
+                          record
                         </span>
                         <!-- color was `cyan`, icon was `album` -->
       

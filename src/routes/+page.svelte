@@ -1,32 +1,37 @@
-{#if Object.keys($user).length === 0}
-	<section style="height: 100vh; border-bottom: 1px solid #eee;">
-		<div style="height: 84vh; display: flex; justify-content: center; align-items: center;">
-			<div style="padding-bottom: 90px;">
-				<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
-					<img src="logo.png" width="120" height="108" style="margin-left: 0px;">
-					<h1 id="logo" style="font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;">
-						explain.mit.edu
-					</h1>
-				</div>
+<section style="height: 100vh; border-bottom: 1px solid #eee;">
+	<div style="height: 84vh; display: flex; justify-content: center; align-items: center;">
+		<div style="padding-bottom: 90px;">
+			<div style="display: flex; align-items: center; justify-content: center; height: 120px;">
+				<img src="logo.png" width="120" height="108" style="margin-left: 0px;">
+				<h1 id="logo" style="font-size: 6.5rem; color: rgb(0 0 0); padding-bottom: 16px; padding-left: 10px;">
+					explain.mit.edu
+				</h1>
+			</div>
 
-				<div style="display: flex; justify-content: center;">
-					<b style="color: grey; white-space: nowrap;" class="copied-from-koa">
-						voice chat + blackboards = videos
-					</b>
-				</div>
+			<div style="display: flex; justify-content: center;">
+				<b style="color: grey; white-space: nowrap;" class="copied-from-koa">
+					voice chat + blackboards = videos
+				</b>
+			</div>
 
-				<!-- This flex is just used to center horizontally -->
-				<div style="display: flex; justify-content: center; margin-top: 50px">
-					<Button on:click={signInAnonymouslyAndRedirect} variant="outlined" color="orange" style="color: rgb(246,130,13); font-size: 1.05rem">
-						Try now
-					</Button>	
+			<!-- This flex is just used to center horizontally -->
+			<div style="display: flex; justify-content: center; margin-top: 50px">
+				<Button on:click={redirectToExampleClass} variant="outlined" color="orange" style="color: rgb(246,130,13); font-size: 1.05rem">
+					Look around
+				</Button>	
+
+				{#if !user.phoneNumber}
 					<Button on:click={() => goto('login')} variant="outlined" style="margin-left: 25px; color: rgb(128, 0, 128); font-size: 1.05rem">
 						Sign up
 					</Button>	
-				</div>
-		</div>
-	</section>
-{/if}
+				{:else}
+					<Button on:click={resumeToMostRecentServer} variant="outlined" style="margin-left: 25px; color: rgb(128, 0, 128); font-size: 1.05rem">
+						Resume
+					</Button>	
+				{/if}
+			</div>
+	</div>
+</section>
 
 <script>	
 	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signInAnonymously } from 'firebase/auth'
@@ -35,18 +40,14 @@
 	import { goto } from '$app/navigation'
 	import { user } from '../store.js'
 
-	function signInAnonymouslyAndRedirect () {
-		const auth = getAuth()
-		signInAnonymously(auth)
-			.then(() => {
-				goto('/O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
-				// Signed in..
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				// ...
-			});
+	function resumeToMostRecentServer () {
+		goto($user.mostRecentClassAndRoomID, { replaceState: true })
+	}
+
+	// TO-DO: maybe just redirect
+	function redirectToExampleClass () {
+		const id = 'Mev5x66mSMEvNz3rijym' // 14.01
+    goto(`/${id}/${id}`, { replaceState: true })
 	}
 </script>
 

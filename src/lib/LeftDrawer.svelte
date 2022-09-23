@@ -4,7 +4,7 @@
       <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;" class="mdc-elevation--z{4}">
         <div style="display: flex; align-items: center">
           <img 
-            on:click={() => isShowingPopup = true} 
+            on:click={handleLogoClick} 
             src="/logo.png" 
             width="60"
             height="54" 
@@ -55,14 +55,14 @@
 <script lang="ts">
   import './_Elevation.scss'
   import ClassDropdownMenu from '$lib/ClassDropdownMenu.svelte'
-  import PopupAppSettings from '$lib/PopupAppSettings.svelte';
-  import Drawer, { AppContent, Content } from '@smui/drawer';
+  import PopupAppSettings from '$lib/PopupAppSettings.svelte'
+  import Drawer, { AppContent, Content } from '@smui/drawer'
+  import List, { Item, Text } from '@smui/list'
   import Card from '@smui/card'
-  import List, { Item, Text } from '@smui/list';
   import { user, drawerWidth, canvasWidth, canvasHeight } from '../store.js'
-  import { goto } from '$app/navigation'
   import { calculateCanvasDimensions } from '../helpers/canvas.js'
-  import { tick } from 'svelte';
+  import { tick } from 'svelte'
+  import { goto } from '$app/navigation'
 
   export let nameOfClass
   export let descriptionOfClass
@@ -77,6 +77,15 @@
       canvasWidth.set(width)
       canvasHeight.set(height)
     })
+  }
+
+  function handleLogoClick () {
+    if ($user.phoneNumber) { 
+      isShowingPopup = true
+    } 
+    else {
+      goto('/', { replaceState: true })
+    }
   }
 </script>
  

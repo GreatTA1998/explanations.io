@@ -48,7 +48,7 @@
       display: block;
       width: ${$canvasWidth}px; 
       height: ${$canvasHeight}px;
-      background-color: hsl(0,0%,0%, 0.81);`
+      background-color: hsl(0,0%,0%, 0.80);`
     }
   >
   </canvas>

@@ -12,7 +12,7 @@
 	import '../app.css';
   import 'firebase/app'
   import { initializeDatabase } from '../database.js'
-  import { getAuth, onAuthStateChanged } from 'firebase/auth'
+  import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore'
   import { hasFetchedUser, user } from '../store.js'
   import { onMount } from 'svelte'
@@ -23,7 +23,8 @@
     initializeDatabase()
 
     // USER LOGIN
-    onAuthStateChanged(getAuth(), async (resultUser) => {
+    const auth = getAuth()
+    onAuthStateChanged(auth, async (resultUser) => {
       if (resultUser) {
         // partially hydrate the user so we can redirect away ASAP
         user.set({ 
@@ -33,7 +34,7 @@
         })
 
         // hydrate the user doc fully
-        const exampleClassID = 'Mev5x66mSMEvNz3rijym' // used to be 8.01 'O00mSbBEYQxTnv3cKkbe'
+        const exampleClassID = 'Mev5x66mSMEvNz3rijym' // 14.01 (used to be 8.01 'O00mSbBEYQxTnv3cKkbe')
         const userRef = doc(getFirestore(), 'users/' + resultUser.uid)
         let dbUserSnapshot = await getDoc(userRef)
         if (!dbUserSnapshot.exists()) {
@@ -48,12 +49,12 @@
           await setDoc(userRef, {
             name: `Beaver #${metadataSnap.data().numOfUsers}`, 
             uid: resultUser.uid,
-            phoneNumber: resultUser.phoneNumber || '',
+            phoneNumber: resultUser.phoneNumber || '', // anonymous user has no phone number
             enrolledClasses: [exampleClass],
-            mostRecentClassAndRoomID: `/${exampleClassID}/${exampleClassID}`,
+            mostRecentClassAndRoomID: '', // AF('') means no class was visited
             pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"],
             pencilWidths: [1, 1, 1, 1],
-            willReceiveText: !!resultUser.phoneNumber // can be toggled
+            willReceiveText: !!resultUser.phoneNumber // can be toggled in future
           })
           updateDoc(metadataRef, {
             numOfUsers: increment(1)
@@ -69,13 +70,21 @@
         // if not a direct URL visit, resume to the most recent class
         const { params } = $page 
         if (!params.class && !params.room) { 
-          goto($user.mostRecentClassAndRoomID)
+          if ($user.mostRecentClassAndRoomID) {
+            goto($user.mostRecentClassAndRoomID)
+          }
         }
       } 
+
+      // user not logged in
       else {
-        user.set({})
+        try {
+          await signInAnonymously(auth)
+        } catch (error) {
+          console.error(error)
+          alert("Error code & message =", error.code + ' ' + error.message)
+        }
       }
-      
       // now display the home page or server page
       hasFetchedUser.set(true) 
     })

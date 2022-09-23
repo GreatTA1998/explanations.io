@@ -53,10 +53,10 @@
     })
   }
 
-  function logOut () {
+  async function logOut () {
     if ($user.uid) {
       const auth = getAuth()
-      signOut(auth)
+      await signOut(auth)
     }
     goto('/')
   }

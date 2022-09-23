@@ -75,7 +75,7 @@
   left: 0;
   z-index: 0;
   display: block;
-  background-color: hsl(0,0%,0%, 0.81); width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
+  background-color: hsl(0,0%,0%, 0.80); width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
 >
 
 </canvas>

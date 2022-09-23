@@ -136,13 +136,11 @@
       //   1. aliasing a stream for video call, different recording sessions, etc. causes unpredictable issues on Safari iOS
       //   2. By using a copy, we naturally handle the edge case where the user mutes voice in the MIDDLE of recording
       const micStreamCopy = $baseMicStream.clone() // new copies I assume will have active tracks, even if the base is deactivated
-
       recorder = new MediaRecorder(micStreamCopy); 
       recorder.start()
-
-      startTimer()
-
       dispatch('record-start')
+      startTimer()
+      
       resolve()
     });
   }
@@ -151,14 +149,12 @@
       stopTimer()
       recorder.addEventListener("dataavailable", e => {
         const audioBlob = e.data
-        dispatch('record-end', { audioBlob }); 
-        resolve(); 
-        // quickfix: don't reset to pre_record when audio hasn't been uploaded to cloud 
-        // recordState.set('pre_record')
+        dispatch('record-end', { audioBlob })
+        resolve()
       })
-      recorder.stop();
+      recorder.stop()
       for (const track of recorder.stream.getTracks()) {
-        track.stop();
+        track.stop()
       }
     })
   }

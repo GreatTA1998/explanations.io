@@ -595,10 +595,13 @@
 
     // TODO: figure out why old Explain's recording works?
     updateRecordState(boardID, 'pre_record')
+
+
+    
     // quick-fix that didn't work
-    incrementKeyToDestroyComponent += 1
+    // incrementKeyToDestroyComponent += 1
     // urgent fix
-    window.location.reload()
+    // window.location.reload()
   }
 
   async function revertToBoard ({ id, audioRefFullPath }, deleteAllStrokesFromDb) {

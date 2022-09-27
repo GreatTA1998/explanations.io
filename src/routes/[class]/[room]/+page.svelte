@@ -592,16 +592,12 @@
       audioDownloadURL: downloadURL,
       audioRefFullPath: audioRef.fullPath
     })
-
-    // TODO: figure out why old Explain's recording works?
     updateRecordState(boardID, 'pre_record')
 
-
-    
-    // quick-fix that didn't work
-    // incrementKeyToDestroyComponent += 1
-    // urgent fix
-    // window.location.reload()
+    // QUICKFIX
+    // only reproducible on my iPad (yet old Explain works for some reason)
+    // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
+    window.location.reload()
   }
 
   async function revertToBoard ({ id, audioRefFullPath }, deleteAllStrokesFromDb) {

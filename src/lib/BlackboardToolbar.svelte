@@ -4,14 +4,14 @@
     display: flex; 
     align-items: center; 
     height: 50px; 
-    left: 0; 
-    right: auto; 
+    left: auto; 
+    right: 0; 
     top: 0; 
     bottom: auto; 
     z-index: 2; 
-    background-color: grey; 
+    background-color: rgb(90 90 90 / 100%);
     padding-left: 10px; 
-    border-radius: 2px;
+    border-radius: 4px;
   "
 >
   <div on:click|stopPropagation|preventDefault={func}

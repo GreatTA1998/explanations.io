@@ -35,7 +35,7 @@
 
   import { baseMicStream, recordState, dailyRoomParticipants } from '../store.js'
   import { initializeMicStream } from '../helpers/microphone.js'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher, onMount, onDestroy } from 'svelte'
   import { browser } from '$app/environment'
   // import AudioRecorder from 'audio-recorder-polyfill'
   // import mpegEncoder from "audio-recorder-polyfill/mpeg-encoder";
@@ -55,6 +55,11 @@
     }
   })
 
+  /**
+   * MediaStreamTrack API https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop
+   * 
+   * 
+   */
   function startRecording () {
     return new Promise(async (resolve, reject) => {
       if (!$baseMicStream) {
@@ -69,7 +74,7 @@
       recorder.start()
       dispatch('record-start')
       resolve()
-    });
+    })
   }
 
   function stopRecording () {
@@ -80,7 +85,7 @@
         resolve()
       })
       recorder.stop()
-      //  turn off the red circle that indicates you're being recorded
+      //  turn off the red circle that indicates you're being recorded (however the baseMicStream is still accessing the mic so red will be on still)
       for (const track of recorder.stream.getTracks()) {
         track.stop()
       }

@@ -35,6 +35,7 @@
               value={boardDoc.description || ''} 
               on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
               placeholder="Describe the blackboard..."
+              readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
             />
           </div>
 
@@ -106,7 +107,7 @@
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                 > 
-                  <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgba(255,255,255,0.5); margin-left: 8px;">
+                  <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
                     <span class="material-icons" style="color: white;">
                       fullscreen
                     </span>
@@ -116,7 +117,7 @@
                     <Button
                       on:click={eureka(boardDoc)}
                       style="
-                      background-color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'rgba(255,255,255,0.5)') : 'rgba(255,255,255,0.5)'};
+                      background-color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'rgb(90 90 90 / 100%)') : 'rgb(90 90 90 / 100%)'};
                       color: white;
                       margin-left: 8px;"
                     >
@@ -130,16 +131,17 @@
                     align-items: center; 
                     flex-direction: row-reverse"
                   >
-                    {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
+                    <!-- boardDoc will always have a creatorUID because anonymous login -->
+                    {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
                       <Button 
                         on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} 
-                        style="background-color: rgba(255,255,255,0.5); color: white">
+                        style="background-color: rgb(90 90 90 / 100%); color: white">
                         Delete
                       </Button>
 
                       <Button 
                         draggable="true" on:dragstart={(e) => dragstart_handler(e, boardID, i)}
-                        style="margin-right: 6px; background-color: rgba(255,255,255,0.5); color: white">
+                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
                         Move
                       </Button>
                     {/if}
@@ -279,7 +281,7 @@
   import Button, { Icon } from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
-  import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave, drawerWidth } from '../../../store.js'
+  import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment } from 'firebase/firestore';

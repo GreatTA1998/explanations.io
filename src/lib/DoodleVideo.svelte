@@ -1,6 +1,6 @@
 <!-- The delete button is added here -->
 <div style="position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5">
-  <Button on:click={togglePlaySpeed} variant="raised" style="margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgba(255,255,255,0.5); color: white;">
+  <Button on:click={togglePlaySpeed} variant="raised" style="margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;">
     <div style="color: white">
       {playbackSpeed}x speed
     </div>

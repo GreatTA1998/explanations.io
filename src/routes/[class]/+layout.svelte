@@ -355,6 +355,15 @@
    * @param room
    */
   async function deleteRoom (room) {
+    if (!confirm('Are you sure you want to delete this room?')) {
+      return
+    }
+
+    if (room.id === classID) {
+      alert('Cannot delete the first room')
+      return 
+    }
+  
     const boardsQueries = [] 
     for (const boardID of room.blackboards) {
       // if it's a video, delete the audio file
@@ -375,11 +384,12 @@
       if (boardDoc.audioRefFullPath) {
         // `try-catch` because sometimes the audioRefFUllPath is invalid, but we don't want it to break the delete method
         try {
-          subdeleteRequests.push(
+          // we no longer push it onto this promise array - otherwise it'll be resolved OUTSIDE of catch block and interrupt the entire function when audio is empty
+          // subdeleteRequests.push(
             deleteObject(
               ref(getStorage(), boardDoc.audioRefFullPath)
             )
-          )
+          // )
         } catch (error) {
           console.alert(error)
         }

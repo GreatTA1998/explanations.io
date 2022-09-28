@@ -9,6 +9,7 @@
   <!-- took me 1 hour to figure out `rows = n` is the way to change initial height -->
   <!-- without `border-box`, textarea will add padding and border to width, exceeding it -->
   <textarea 
+    {readonly}
     {value}
     placeholder={placeholder}
     on:input={(e) => { 
@@ -36,6 +37,7 @@
 
   export let value
   export let placeholder
+  export let readonly = false
 
   let autogrowWrapper
 

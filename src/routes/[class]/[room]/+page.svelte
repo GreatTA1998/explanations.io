@@ -54,7 +54,7 @@
                 <div 
                   style="color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 4px; margin-bottom: 4px;"
                 >
-                  {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0} eurekas, 
+                  {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0} upvotes, 
                   {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed
                   <!-- {boardDoc.numOfComments || 0} comments -->
                 </div>
@@ -121,7 +121,7 @@
                       color: white;
                       margin-left: 8px;"
                     >
-                      Eureka
+                      Upvote
                     </Button>
                   {/if}
 

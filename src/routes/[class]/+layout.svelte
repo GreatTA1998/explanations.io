@@ -113,7 +113,7 @@
         <span class="material-icons" style="margin-left: 6px; margin-right: 5px; margin-top: 2.5px; font-size: 1.2rem;">
           add
         </span>
-        new room
+        new question
       </div>
     {/if}
   </LeftDrawer>

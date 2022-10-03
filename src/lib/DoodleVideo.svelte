@@ -92,6 +92,7 @@
   let AudioPlayer
   let recursiveSyncer
   let playbackSpeed = 2
+  let updateViewMinutesTimeoutID
 
   const dispatch = createEventDispatcher()
 
@@ -132,6 +133,7 @@
 
   onDestroy(() => {
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
+    if (updateViewMinutesTimeoutID) clearTimeout(updateViewMinutesTimeoutID)
   })
 
   function togglePlaySpeed () {
@@ -207,7 +209,7 @@
     // BASE CASE: nothing will be updated nor called after the countdown if the video is no longer playing
     const sixSeconds = 6000
     function updateViewMinutes () {
-      setTimeout(
+      updateViewMinutesTimeoutID = setTimeout(
         () => {
           if (isPlaying) {
             dispatch('six-seconds-elapsed', { playbackSpeed })

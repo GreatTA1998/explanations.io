@@ -135,7 +135,7 @@
   import { browser } from '$app/environment'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc } from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
-  import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs } from '../../store.js'
+  import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth } from '../../store.js'
   import { getRandomID } from '../../helpers/utility.js'
   import { deleteObject, getStorage, ref } from 'firebase/storage'
   import { getFunctions, httpsCallable } from "firebase/functions";
@@ -188,6 +188,10 @@
   onMount(async () => {
     // AWAIT FIX: __layout mounts twice: see issue https://github.com/sveltejs/kit/issues/2130
     if (browser) {
+      if (window.matchMedia('screen and (max-width: 480px)').matches) {
+        drawerWidth.set(0)
+      }
+
       window.addEventListener('resize', debouncedResizeHandler)
     } else {
       console.log('no browser')

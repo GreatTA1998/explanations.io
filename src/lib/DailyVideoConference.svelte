@@ -5,7 +5,7 @@
 <script>
   import DailyIframe from '@daily-co/daily-js'
   import { API_KEY_SECRET } from './environmentSecrets.js'
-  import { dailyRoomParticipants, browserTabID, user, baseMicStream } from '../store.js'
+  import { dailyRoomParticipants, browserTabID, user, baseMicStream, hasJoinedVoice } from '../store.js'
   import { onDestroy, onMount } from 'svelte'
   import { initializeMicStream } from '../helpers/microphone.js'
 
@@ -117,6 +117,7 @@
       await joinDailyRoom(url)
       prevCallState = 'connecting'
       currentCallState = 'connected'
+      hasJoinedVoice.set(true)
     }
   }
 
@@ -219,6 +220,7 @@
   function cleanUpCallObject () {
     CallObject.leave()
     dailyRoomParticipants.set({})
+    hasJoinedVoice.set(false)
     activeSpeakerID = ''
   }
 </script>

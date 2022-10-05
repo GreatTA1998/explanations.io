@@ -70,9 +70,13 @@
   /* font: inherit;  */
   /* the inspect tool won't show me what value `font-size` takes through inheritance 
      turns out it's unexpectedly complicated https://manishearth.github.io/blog/2017/08/10/font-size-an-unexpectedly-complex-css-property/ */
-  font-size: 1rem;
-  font-family: Roboto, sans-serif; 
-  color: rgba(74, 72, 73, 0.87);
+  
+  /* Copying Mozilla */
+  font-family: "Segoe UI", Roboto, sans-serif; 
+  font-size: 1.4rem;
+  line-height: 1.6;
+  letter-spacing: 0.001em;
+  color: rgba(1, 11, 1, 1);
 
   /* Place on top of each other */
   grid-area: 1 / 1 / 2 / 2;
@@ -82,7 +86,7 @@
   overflow: hidden;  /* e.g. Firefox shows scrollbar */
 }
 
-textarea::placeholder{
+textarea::placeholder {
   opacity: 0;
 }
 

@@ -87,7 +87,8 @@
                           muted
                         </div>
                       {/if}
-                    </div>             
+                    </div>     
+                  <!-- means we're all in voice chat-->
                   {:else if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}                      
                     {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio} 
                       <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: {(firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID) ? 'white' : ''}">
@@ -99,6 +100,11 @@
                       </span>
                     {/if}
                   {/if}
+                <!-- I'm not in voice chat but this participant is active in it -->
+                {:else if person.hasJoinedVoice}
+                  <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: #33ff33;">
+                    volume_up
+                  </span>
                 {/if}
               </div>
             {/each}

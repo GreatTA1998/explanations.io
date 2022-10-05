@@ -5,7 +5,7 @@
   import { getDatabase, ref, onDisconnect, onValue } from 'firebase/database'
   import { getFirestore, doc, updateDoc, setDoc, deleteDoc } from 'firebase/firestore'
   import { getRandomID } from '../helpers/utility.js'
-  import { browserTabID, user, isFirestoreDocCreated, roomToPeople } from '../store.js'
+  import { browserTabID, user, isFirestoreDocCreated, roomToPeople, hasJoinedVoice } from '../store.js'
 
   export let classID
   export let roomID
@@ -22,7 +22,8 @@
   $: if ($isFirestoreDocCreated && $user.name) {
     updateDoc(myFirestoreRef, {
       currentRoomID: roomID,
-      name: $user.name
+      name: $user.name,
+      hasJoinedVoice: $hasJoinedVoice
     })
   }
 

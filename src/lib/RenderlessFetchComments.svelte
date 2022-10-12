@@ -7,14 +7,16 @@
   {submitNewComment}
   {isShowingComments}
   {hideComments}
+  {deleteComment}
 >
 
 </slot>
 
 <script>
-import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, getDocs, addDoc, updateDoc, increment } from 'firebase/firestore'
+import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, getDocs, addDoc, updateDoc, increment, deleteDoc } from 'firebase/firestore'
 import { onDestroy } from 'svelte'
 import { user } from '../store.js'
+import { getRandomID } from '../helpers/utility.js'
 
 export let dbPath
 /**
@@ -52,21 +54,35 @@ function bindLocalValue (newVal) {
 }
 
 async function submitNewComment () {
-  const commentsRef = collection(getFirestore(), `${dbPath}/comments`)
-  addDoc(commentsRef, {
+  const db = getFirestore()
+  const batch = writeBatch(db)
+  const commentRef = doc(db, `${dbPath}/comments/${getRandomID()}`)
+  batch.set(commentRef, {  
     content: newComment,
     isoStringOfDate: new Date().toISOString(),
     creatorUID: $user.uid,
     creatorName: $user.name
   })
-  
-  const blackboardRef = doc(getFirestore(), dbPath)
-  updateDoc(blackboardRef, {
-    numOfComments: increment(1)
-  })
+  const blackboardRef = doc(db, dbPath)
+  batch.update(blackboardRef, { numOfComments: increment(1) })
+  await batch.commit()
+  newComment = '' 
 }
 
 function hideComments () {
   isShowingComments = false
+}
+
+async function deleteComment ({ id }) {
+  const db = getFirestore()
+  const batch = writeBatch(db)
+  batch.delete(
+    doc(db, `${dbPath}/comments/${id}`)
+  )
+  batch.update(
+    doc(db, dbPath), 
+    { numOfComments: increment(-1)}
+  )
+  await batch.commit()
 }
 </script>

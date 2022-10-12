@@ -108,15 +108,6 @@
     } 
   }
 
-  onMount(() => {
-    ctx = canvas.getContext('2d')
-    bgCtx = bgCanvas.getContext('2d')
-
-    AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
-    AudioPlayer.onended = (e) => isPlaying = false 
-    AudioPlayer.onpause = (e) => isPlaying = false
-  })
-
   $: if (ctx && strokesArray && !allFrames) {
     initDoodleVideo()
   }
@@ -130,6 +121,33 @@
     playbackSpeed = AudioPlayer.playbackRate
     // I know...AudioPlayer is not reactive because of bind:this, will refactor in future
   }
+
+  onMount(() => {
+    ctx = canvas.getContext('2d')
+    bgCtx = bgCanvas.getContext('2d')
+
+    AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
+    AudioPlayer.onended = (e) => isPlaying = false 
+    AudioPlayer.onpause = (e) => isPlaying = false
+
+    // after 6 seconds, if the video is still playing:
+    //   we tell parent to increment `viewMinutes` by 0.1,
+    //   we do another 6 seconds timeout (via recursion)
+    // BASE CASE: nothing will be updated nor called after the countdown if the video is no longer playing
+    const sixSeconds = 6000
+    function updateViewMinutes () {
+      updateViewMinutesTimeoutID = setTimeout(
+        () => {
+          if (isPlaying) {
+            dispatch('six-seconds-elapsed', { playbackSpeed })
+            updateViewMinutes()
+          }
+        },
+        sixSeconds
+      )
+    } 
+    updateViewMinutes()
+  })
 
   onDestroy(() => {
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
@@ -202,24 +220,6 @@
     nextFrameIdx = 0;
     ctx.clearRect(0, 0, $canvasWidth, $canvasHeight) // video could already be rendered as an initial preview or completed video
     syncRecursively()
-
-    // after 6 seconds, if the video is still playing:
-    //   we tell parent to increment `viewMinutes` by 0.1,
-    //   we do another 6 seconds timeout (via recursion)
-    // BASE CASE: nothing will be updated nor called after the countdown if the video is no longer playing
-    const sixSeconds = 6000
-    function updateViewMinutes () {
-      updateViewMinutesTimeoutID = setTimeout(
-        () => {
-          if (isPlaying) {
-            dispatch('six-seconds-elapsed', { playbackSpeed })
-            updateViewMinutes()
-          }
-        },
-        sixSeconds
-      )
-    } 
-    updateViewMinutes()
   }
   
   function syncRecursively () {

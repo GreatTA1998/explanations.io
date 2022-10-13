@@ -17,8 +17,14 @@ import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, 
 import { onDestroy } from 'svelte'
 import { user } from '../store.js'
 import { getRandomID } from '../helpers/utility.js'
+import { getFunctions, httpsCallable } from 'firebase/functions'
 
 export let dbPath
+export let boardDoc
+export let roomDoc
+export let roomID 
+export let classID
+
 /**
 * REMINDERS FOR FUTURE SELF: 
 *   - When console.logging, use true [...array] copies, otherwise the arrays will appear to be the same even though they're not
@@ -54,6 +60,8 @@ function bindLocalValue (newVal) {
 }
 
 async function submitNewComment () {
+  const promises = []
+
   const db = getFirestore()
   const batch = writeBatch(db)
   const commentRef = doc(db, `${dbPath}/comments/${getRandomID()}`)
@@ -65,7 +73,24 @@ async function submitNewComment () {
   })
   const blackboardRef = doc(db, dbPath)
   batch.update(blackboardRef, { numOfComments: increment(1) })
-  await batch.commit()
+  promises.push(
+    batch.commit()
+  )
+
+  console.log("boardDoc =", boardDoc)
+
+  // notify the video creator
+  if ($user.uid !== boardDoc.creatorUID) {
+    const functions = getFunctions();
+    const sendTextMessage = httpsCallable(functions, 'sendTextMessage')
+    promises.push(
+      sendTextMessage({ 
+        content: `For your video in "${roomDoc.name}", ${$user.name} commented: "${newComment}": https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
+        toWho: boardDoc.creatorPhoneNumber
+      })
+    )
+  }
+  await Promise.all(promises)
   newComment = '' 
 }
 

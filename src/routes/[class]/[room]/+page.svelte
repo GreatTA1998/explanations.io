@@ -42,6 +42,10 @@
           {#if boardDoc.audioDownloadURL }
             <RenderlessFetchComments 
               dbPath={boardsDbPath + boardID} 
+              {boardDoc}
+              {roomDoc}
+              {classID}
+              {roomID}
               let:listenToComments={listenToComments} 
               let:allComments={allComments}
               let:newComment={newComment}
@@ -591,6 +595,7 @@
     const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
     await updateDoc(blackboardRef, {
       creatorUID: $user.uid || '',
+      creatorName: $user.name || '',
       creatorPhoneNumber: $user.phoneNumber || '',
       date: new Date().toISOString(),
       audioDownloadURL: downloadURL,

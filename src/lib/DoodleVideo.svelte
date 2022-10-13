@@ -140,8 +140,8 @@
         () => {
           if (isPlaying) {
             dispatch('six-seconds-elapsed', { playbackSpeed })
-            updateViewMinutes()
           }
+          updateViewMinutes()
         },
         sixSeconds
       )

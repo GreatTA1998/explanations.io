@@ -315,12 +315,12 @@
     // normal check for Apple Pencil (note changedTouches)
     const isApplePencil = e.changedTouches[0].touchType === "stylus"
     if ($onlyAllowApplePencil && !isApplePencil)   {
-      console.log('error: cannot use finger during Apple Pencil mode');
+      console.log('error: cannot use finger during Apple Pencil mode')
       return;
     }
     handleEndOfStroke(currentStroke)
     // this.currentStroke = { points: [] }; // this line might not be necessary, it's an attempt to fix stray strokes
-    isInMiddleOfStroke = false; 
+    isInMiddleOfStroke = false
   }
 
   function startNewStroke (e) {
@@ -433,17 +433,14 @@
     let eraserDebt = 0
     for (let i = undoStrokeIdx - 1; i >= 0; i--) {
       if (!strokesArray[i].isErasing && eraserDebt === 0) {
-        console.log("found visible stroke at i =", i)
         undoStrokeIdx = i 
         break
       } 
       else if (strokesArray[i].isErasing) {
         eraserDebt += 1 
-        console.log('debt increased =', eraserDebt)
       } 
       else if (!strokesArray[i].isErasing) {
         eraserDebt -= 1
-        console.log('debt decreased =', eraserDebt)
       }
     }
   }

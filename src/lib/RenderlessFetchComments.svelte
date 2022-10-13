@@ -77,8 +77,6 @@ async function submitNewComment () {
     batch.commit()
   )
 
-  console.log("boardDoc =", boardDoc)
-
   // notify the video creator
   if ($user.uid !== boardDoc.creatorUID) {
     const functions = getFunctions();

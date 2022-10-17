@@ -13,7 +13,7 @@
   import 'firebase/app'
   import { initializeDatabase } from '../database.js'
   import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
-  import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore'
+  import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
   import { hasFetchedUser, user } from '../store.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
@@ -52,8 +52,8 @@
             phoneNumber: resultUser.phoneNumber || '', // anonymous user has no phone number
             enrolledClasses: [exampleClass],
             mostRecentClassAndRoomID: '', // AF('') means no class was visited
-            pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA"],
-            pencilWidths: [1, 1, 1, 1],
+            pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA", "hsla(147,100%,60%,1)", "hsla(6,100%,60%,1)", "hsla(143,100%,60%,1)"],
+            pencilWidths: [1, 1, 1, 1, 1, 1, 1],
             willReceiveText: !!resultUser.phoneNumber // can be toggled in future
           })
           updateDoc(metadataRef, {
@@ -61,6 +61,8 @@
           })
           dbUserSnapshot = await getDoc(userRef) // seems like a redundant fetch, but keep for now
         } 
+
+        listenToUserDoc(dbUserSnapshot.id)
 
         user.set({ 
           id: dbUserSnapshot.id,
@@ -89,5 +91,23 @@
       hasFetchedUser.set(true) 
     })
   })
+
+  async function listenToUserDoc (uid) {
+    return new Promise((resolve, reject) => {
+      const db = getFirestore()
+      const mirrorUserRef = doc(db, `users/${uid}`)
+
+      // no need to unsub because that means we quit the application
+      const unsub = onSnapshot(mirrorUserRef, userDoc => {
+        if (!userDoc.exists) {
+          reject("Error in listenToUserDoc: uid doesn't exist")
+          user.set(null) // context.commit("SET_USER", null);
+        } else {
+          user.set(userDoc.data()) // context.commit("SET_USER", userDoc.data());
+          resolve()
+        }
+      })
+    })
+  }
 </script>
 

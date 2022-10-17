@@ -254,7 +254,7 @@
       
           </div>
 
-          {#if i  === roomDoc.blackboards.length - 1}
+          {#if i === roomDoc.blackboards.length - 1}
            <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
             <div on:click={createNewBlackboard}
                 style="
@@ -290,7 +290,7 @@
   import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment } from 'firebase/firestore';
+  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'

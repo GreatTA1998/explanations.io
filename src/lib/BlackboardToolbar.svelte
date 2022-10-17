@@ -49,7 +49,6 @@
         </span>
 
         <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
-          <!-- TODO- implement a cancel button -->
           <Button on:click={changeColorAndWidthOfPencil(newlySelectedColor, newlySelectedWidth)} style="margin-right: 16px; margin-left: auto;">
             OK
           </Button>
@@ -187,7 +186,6 @@
   }
 
   async function changeColorAndWidthOfPencil (newColor, newWidth) {
-    // TODO: see if you can use function params instead of class variables
     const i = pencilIdx
     selectPencil({ 
       color: newColor,

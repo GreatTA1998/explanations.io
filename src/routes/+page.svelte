@@ -10,9 +10,14 @@
 
 			<div style="display: flex; justify-content: center;">
 				<b style="color: grey; white-space: nowrap;" class="copied-from-koa">
-					voice chat + blackboards = videos
+					Record and share blackboard videos quickly
 				</b>
 			</div>
+
+			<iframe 
+				src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="300" height="200"
+				style="position: static; margin: 0 auto; display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+			</iframe>
 
 			<!-- This flex is just used to center horizontally -->
 			<div style="display: flex; justify-content: center; margin-top: 50px">

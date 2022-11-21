@@ -10,11 +10,10 @@
   export let classID
   export let roomID
 
-  let myFirebaseRef
   let myFirestoreRef
-  let isConnectedRef
   let onDisconnectRef
-  let unsubIsConnected
+  let unsubBrowserTabAndDatabaseHeartbeatListener
+
   $: myName = $user.name ? $user.name : 'Beaver #' 
 
   // react to `roomID` changes]
@@ -27,25 +26,19 @@
     })
   }
 
-  onDestroy(() => {
-    if (unsubIsConnected) unsubIsConnected(); // `.on()` and `.off()` are not asynchronous, so no need for an if statement
-    if ($isFirestoreDocCreated) {
-      deleteDoc(myFirestoreRef)
-      isFirestoreDocCreated.set(false)
-      // doesn't truly matter if it's async
-    }
-    if (onDisconnectRef) onDisconnectRef.cancel()
-  })
-
   onMount(() => {
-    roomToPeople.set({}) // annoying, don't know why __layout is re-rendered
-    isConnectedRef = ref(getDatabase(), '.info/connected')
-    unsubIsConnected = onValue(isConnectedRef, async (snap) => {
+    // roomToPeople.set({}) // annoying, don't know why __layout is re-rendered UPDATE: new version of Svelte doesn't seem to re-render in localhost, removing for now
+    const isConnectedRef = ref(getDatabase(), '.info/connected')
+    // we use 'info.connected' e.g. when user is AFK in background, even though the page is open,
+    // the heartbeat would be dead
+    unsubBrowserTabAndDatabaseHeartbeatListener = onValue(isConnectedRef, async (snap) => {
       if (snap.val() === true) {
         const disconnectID = getRandomID()
-        myFirebaseRef = ref(getDatabase(), `/class/${classID}/room/${roomID}/participants/${disconnectID}`)
+        const myFirebaseRef = ref(getDatabase(), `/class/${classID}/room/${roomID}/participants/${disconnectID}`)
         onDisconnectRef = onDisconnect(myFirebaseRef)
-        onDisconnectRef.set({ // NOTE: we're `awaiting` the disconnect hook to setup - NOT the .set() operation
+
+        // NOTE 2: I deleted the `await`, and got ghost participants as a Heisenbug. For 100% reliability, keep it in. 
+        await onDisconnectRef.set({ // NOTE: we're `awaiting` the disconnect hook to setup - NOT the .set() operation
           hasDisconnected: true,
           userUID: $user.uid // Cloud Functions will use `userUID` to set `isOnline` to false for the right user document
         })
@@ -62,6 +55,16 @@
         // disconnected, Cloud Functions will remove my doc, so I'm done.
       }
     })
+  })
+
+  onDestroy(() => {
+    if (unsubBrowserTabAndDatabaseHeartbeatListener) unsubBrowserTabAndDatabaseHeartbeatListener(); // `.on()` and `.off()` are not asynchronous, so no need for an if statement
+    if ($isFirestoreDocCreated) {
+      deleteDoc(myFirestoreRef)
+      isFirestoreDocCreated.set(false)
+      // doesn't truly matter if it's async
+    }
+    if (onDisconnectRef) onDisconnectRef.cancel()
   })
 </script>
 

@@ -19,6 +19,14 @@
   let dailyRoomID
   let activeSpeakerID = ''
 
+  $: if (willJoinVoiceChat && $user.uid) {
+    async function initDaily () {
+      await initCallObject()
+      publicJoinRoom()
+    }
+    initDaily()
+  }
+
   // The .join() and .leave() promises are interruption-safe: 
   //    case 1 (easy): we just clicked a different room
   //    case 2 (subtle): by the time we connected the roomID, we clicked yet another room, so reset
@@ -32,6 +40,7 @@
     // console.log('JOINING ROOM', roomID)
     publicJoinRoom()
   }
+
   onDestroy(() =>{
     // TODO: handle anonymous
     if (currentCallState === 'connected') {
@@ -46,14 +55,6 @@
       baseMicStream.set(null)
     }
   })
-
-  $: if (willJoinVoiceChat && $user.uid) {
-    async function initDaily () {
-      await initCallObject()
-      publicJoinRoom()
-    }
-    initDaily()
-  }
   
   async function initCallObject () {
     return new Promise(async (resolve, reject) => {      
@@ -178,24 +179,24 @@
   async function mountNewTrack ({ track, participant }) {
     switch (track.kind) {
       case "audio": 
-        if (participant.local) return; 
+        if (participant.local) return
         else {
-          const audioElement = document.createElement("audio"); 
-          audioElement.srcObject = new MediaStream([track]); 
-          audioElement.setAttribute("id", "audio" + participant.user_id); 
-          audioElement.setAttribute("playsinline", true); 
-          audioElement.setAttribute("autoplay", true); 
-          document.getElementById("container-for-audio-elements").appendChild(audioElement);
+          const audioElement = document.createElement("audio")
+          audioElement.srcObject = new MediaStream([track])
+          audioElement.setAttribute("id", "audio" + participant.user_id)
+          audioElement.setAttribute("playsinline", true)
+          audioElement.setAttribute("autoplay", true)
+          document.getElementById("container-for-audio-elements").appendChild(audioElement)
         }
-        break;
+        break
     }
   }
 
   async function unmountTrack ({ track, participant }) {
     const trackElement = document.getElementById(track.id); 
     if (trackElement) { // sometimes the trackElement unexpectedly doesn't exist, though the error is harmless
-      trackElement.srcObject = null; 
-      trackElement.remove(); 
+      trackElement.srcObject = null
+      trackElement.remove()
     }
   }
 
@@ -205,9 +206,9 @@
   }
 
   function leaveConferenceRoom () {
-    const micAudioElems = document.querySelectorAll("audio"); 
+    const micAudioElems = document.querySelectorAll("audio")
     for (const micAudioElem of micAudioElems) {
-      micAudioElem.remove(); 
+      micAudioElem.remove()
     }
     cleanUpCallObject()
     // for (const track of $dailyMicStream.getAudioTracks()) {

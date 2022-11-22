@@ -59,25 +59,34 @@
               {/if}
             {/if}
           </div>
-
+          
+          <!-- you can interpret this as `for each person in room.persons` -->
           {#if $roomToPeople[room.id]}
             {#each $roomToPeople[room.id] as person (person.browserTabID)}
               <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 8px;">
-                <div style="font-size: 0.7rem; margin-left: 6px;" 
-                  class:speaking={firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID}>
+                <div 
+                  style="font-size: 0.7rem; margin-left: 6px;" 
+                  class:speaking={firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID}
+                >
                   {person.name} 
                 </div> 
-                {#if !willJoinVoiceChat && person.browserTabID === $browserTabID}
-                  <div on:click={() => willJoinVoiceChat = true}
-                    style="margin-right: 4px; margin-left: auto; background-color: green; color: white; font-size: 0.6rem; padding-left: 4px; padding-right: 4px; cursor: pointer; border-radius: 4px;">
-                    Join voice 
-                  </div>
-                {:else if Object.keys($dailyRoomParticipants).length > 0}
-                  {#if person.browserTabID === $browserTabID}     
+
+                <!-- CASE 1: it's me -->
+                {#if person.browserTabID === $browserTabID}
+                  {#if !willJoinVoiceChat}
+                    <div 
+                      on:click={() => willJoinVoiceChat = true}
+                      style="margin-right: 4px; margin-left: auto; background-color: green; color: white; font-size: 0.6rem; padding-left: 4px; padding-right: 4px; cursor: pointer; border-radius: 4px;"
+                    >
+                      Join voice 
+                    </div>
+
+                  {:else if Object.keys($dailyRoomParticipants).length > 0}
                     <div style="display: flex; align-items: center; margin-right: 6px; margin-left: auto">
                       <div on:click|preventDefault|stopPropagation={toggleMic} style="padding-top: 5px">
                         <Switch checked={$dailyRoomParticipants.local.audio} style="margin: 0 !important"/>
                       </div>
+
                       {#if $dailyRoomParticipants.local.audio}
                         <div style="font-size: 0.7rem; margin-left: 6px; color: #33ff33">
                           voice on
@@ -88,10 +97,20 @@
                         </div>
                       {/if}
                     </div>     
-                  <!-- means we're all in voice chat-->
-                  {:else if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}                      
+                  {/if}
+            
+                <!-- CASE 2: it's not me -->
+                {:else}
+                  <!-- case 2.1: this person is connected to my voice chat -->
+                  {#if Object.keys($dailyRoomParticipants).length > 0 && $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}
                     {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio} 
-                      <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: {(firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID) ? 'white' : ''}">
+                      <!-- display mute status -->
+                      <span 
+                        class="material-icons" 
+                        style="
+                          margin-right: 0; margin-left: auto; font-size: 1.1rem; 
+                          color: {(firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID) ? 'white' : ''}"
+                      >
                         mic
                       </span>
                     {:else}
@@ -99,12 +118,12 @@
                         mic_off
                       </span>
                     {/if}
+                  <!-- case 2.2: otherwise visually indicate if they're in voice chat (whichever room they're in) -->
+                  {:else if person.hasJoinedVoice}
+                    <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: #33ff33;">
+                      volume_up
+                    </span>
                   {/if}
-                <!-- I'm not in voice chat but this participant is active in it -->
-                {:else if person.hasJoinedVoice}
-                  <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: #33ff33;">
-                    volume_up
-                  </span>
                 {/if}
               </div>
             {/each}

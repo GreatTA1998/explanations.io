@@ -12,6 +12,11 @@
   export let roomID
   export let willJoinVoiceChat
 
+  function print (message) {
+    console.log(message)
+  }
+
+
   let CallObject
   let firestoreIDToDailyID
   let prevCallState
@@ -19,7 +24,8 @@
   let dailyRoomID
   let activeSpeakerID = ''
 
-  $: if (willJoinVoiceChat && $user.uid) {
+  $: if (willJoinVoiceChat) {
+    console.log('case 3')
     async function initDaily () {
       await initCallObject()
       publicJoinRoom()
@@ -31,11 +37,13 @@
   //    case 1 (easy): we just clicked a different room
   //    case 2 (subtle): by the time we connected the roomID, we clicked yet another room, so reset
   $: if (dailyRoomID !== roomID && currentCallState === 'connected' && prevCallState === 'connecting') {
+    print('case 1')
     // console.log('LEAVING ROOM =', dailyRoomID)
     leaveConferenceRoom()
   }
 
   $: if (dailyRoomID !== roomID && currentCallState === 'not_connected' && prevCallState === 'connected') {
+    print('case 2')
     // now safely join the new video conference room
     // console.log('JOINING ROOM', roomID)
     publicJoinRoom()
@@ -109,6 +117,7 @@
 
   // differs from privateJoinRoom in that it first, it fetches a room OR creates a room if it doesn't exist
   async function publicJoinRoom () {
+    print('publicJoinRoom()')
     prevCallState = 'not_connected'
     currentCallState = 'connecting'
     dailyRoomID = roomID // note by the end of the promise `roomID` may have changed, but dailyRoomID will capture it's previous value
@@ -160,6 +169,7 @@
 
   // join room (call after CallObject and DailyRoom are ready)
   function joinDailyRoom (roomURL) {
+    console.log('joinDailyRoom()')
     return new Promise(async (resolve, reject) => {
       try {
         await CallObject.join({
@@ -206,6 +216,7 @@
   }
 
   function leaveConferenceRoom () {
+    print('leaveConferenceRoom()')
     const micAudioElems = document.querySelectorAll("audio")
     for (const micAudioElem of micAudioElems) {
       micAudioElem.remove()

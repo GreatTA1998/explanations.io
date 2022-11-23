@@ -24,7 +24,11 @@
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
     <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
     {#each rooms as room (room.id + roomID)}
-      <div on:click={() => handleRoomClick(room.id)} style="padding: 6px;">
+      <div 
+        on:click={() => handleRoomClick(room.id)} style="padding: 6px;"
+        on:dragover={(e) => dragover_handler(e)}
+        on:drop={(e) => moveVideoIntoAnotherRoom(e, room.id)}
+      >
         <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
         <div class={room.id === roomID ? 'selected' : '' } style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
           <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
@@ -158,7 +162,7 @@
   import { onDestroy, onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { browser } from '$app/environment'
-  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc } from 'firebase/firestore'
+  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion} from 'firebase/firestore'
   import { calculateCanvasDimensions } from '../../helpers/canvas'
   import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth } from '../../store.js'
   import { getRandomID } from '../../helpers/utility.js'
@@ -194,6 +198,31 @@
     updateDoc(userRef, {
       mostRecentClassAndRoomID: `/${classID}/${roomID}`
     })
+  }
+
+  function dragover_handler (e) {
+    e.preventDefault()
+  }
+
+  // user dragged video into another room
+  async function moveVideoIntoAnotherRoom (e, droppedRoomID) {
+    const data = e.dataTransfer.getData('text/plain')
+    const [i, boardID] = data.split(':')
+
+    const db = getFirestore()
+    const batch = writeBatch(db)
+    const roomsPath = `classes/${classID}/rooms`
+
+    // update old room (i.e. our current room)
+    batch.update(doc(db, `${roomsPath}/${roomID}`), {
+      blackboards: arrayRemove(boardID)
+    })
+
+    // update new room 
+    batch.update(doc(db, `${roomsPath}/${droppedRoomID}`), {
+      blackboards: arrayUnion(boardID)
+    })
+    await batch.commit()
   }
 
   function unsubDbListeners () {

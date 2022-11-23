@@ -690,7 +690,6 @@
 
   function dragover_handler (e) {
     e.preventDefault()
-
   }
   
   async function drop_handler (e, j) {

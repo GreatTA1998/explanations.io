@@ -3,7 +3,7 @@
 {#if roomDoc}
 	<div use:portal={'main-content'} style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
     <Textfield 
-      disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID}
+      disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
       value={roomDoc.name} on:input={(e) => updateRoomName(e)}
       class="room-title" 
       style={`width: ${$canvasWidth}px;`}

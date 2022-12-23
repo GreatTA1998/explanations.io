@@ -47,12 +47,12 @@
 				</TabBar>
 
 				{#if active.label === 'Students'}
-					<Content>
-						<p style="font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px;">
+					<Content style="padding-left: 40px; padding-right: 40px;">
+						<p style="font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px">
 							KhanAcademy-style tutoring 
 						</p>
 						<p style="font-size: 1.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
-							Life-saving explanations, without the scheduling, walking & waiting
+							Life-saving explanations - without the scheduling, walking and waiting
 						</p>
 
 						<!-- Dropdowns to select the class -->
@@ -93,12 +93,12 @@
 						</div>
 					</Content>
 
-					<Actions style="padding-left: 15px; padding-bottom: 15px;">
+					<Actions style="padding-left: 40px; padding-bottom: 15px;">
 						<!-- Previewable -->
 
 						<!-- Add foot-note for 14.01 subsidies -->
 						<Button on:click={() => clicked++} color="secondary" variant="raised">
-							<Label style="padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">
+							<Label style="padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; font-size: 1rem">
 								Sign up for $10/week
 							</Label>
 						</Button>
@@ -109,9 +109,17 @@
 					</Actions>
 				{:else}
 					<Content>
-						<p style="font-size: 2.5rem; font-family: sans-serif; font-weight: 500">
-							Get paid according to impact, not time spent.
+						<!-- font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px" -->
+						<p style="font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px">
+							Earn by impact, not time spent
 						</p>
+
+						<!-- <p>
+							Wage is O(n)
+							For example: 
+							  - 10 students signed up, each for $10/week
+								- You receive $100/week
+						</p> -->
 
 						</Content>
 
@@ -119,9 +127,9 @@
 						<Button on:click={() => clicked++} color="secondary">
 							<Label>Schedule to interview</Label>
 						</Button>
-						<Button on:click={() => clicked++}>
+						<!-- <Button on:click={() => clicked++}>
 							<Label>Learn more</Label>
-						</Button>
+						</Button> -->
 					</Actions>
 				{/if}
 			</Card>
@@ -140,31 +148,18 @@
 							<iframe width="560" height="315" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 				
-						<div class="one-blog-container">
+						<div class="one-blog-container" style="padding-bottom: 0; margin-bottom: 10px">
 							<div style="font-family: sans-serif; margin-bottom: 20px;">
 								The value of minimizing the amount of material students learn
 							</div>
 							<iframe width="560" height="315" src="https://www.youtube.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							
-							<div style="font-family: sans-serif; margin-top: 20px; font-size: 0.8rem">These video-essays were edited with permission from faculty and students
+							<div style="font-family: sans-serif; margin-top: 50px; font-size: 0.8rem;">These video-essays were edited with permission from faculty and students
 								to open a discussion about counterintuitive ideas about education, and are not endorsements of Explain as a paid service. 
 								It's part of Students for Open & Universal Learning (SOUL)
 							</div>
 						</div>
 					</Content>
-		
-					<Actions>
-						<!-- Previewable -->
-		
-						<!-- Add foot-note for 14.01 subsidies -->
-						<Button on:click={() => clicked++} color="secondary">
-
-						</Button>
-
-						<Button on:click={() => clicked++}>
-
-						</Button>
-					</Actions>
 				</Card>
 			</div>
 		</div>
@@ -181,7 +176,7 @@
 								Step 1
 							</div>
 							<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
-								A student opens the website on computer
+								A student opens the website
 							</div>
 							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400;">
 								The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
@@ -209,10 +204,17 @@
 								Step 3
 							</div>
 							<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
-								The student and tutor can follow-up over voice chat + live blackboard to resolve remaining questions
+								They can follow-up over voice chat + live blackboard to resolve remaining questions
 							</div>
 							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400;">
-								The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
+								You can ask follow-up questions via the comments section on the video
+								<br><br>
+								Even better, if both of you are active on the website at the same time, so you can just quickly voice chat. 
+								This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
+								all of which you'll see each others names as being active in the server. 
+						
+								<br><br>
+								In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email.
 							</div>
 						</div>
 
@@ -220,44 +222,10 @@
 							Step 4
 						</div>
 						<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
-							At any point, students can browse and review all the questions and explanations that accumulated in the server
+							At any time, students can review explanations that accumulated in the server
 						</div>
 						<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400;">
-							The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
-						</div>
-
-						<div style="font-family: sans-serif; margin-top: 60px;">Explain = tutoring enhanced by re-watchable explanations</div>
-
-						<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; margin-bottom: 64px;">
-							(Talk about lack of intuition, big picture, not grasping the fundamentals and falling behind. The gap between lectures and psets)
-							
-							You just want the right explanation, at the right time.
-							If there's already a material for that, you just view it. If there isn't, you need someone you can ask. 
-
-							<br>
-							<br>
-							Private tutoring is unscalable, because there is no "scaling". No videos are shared. KhanAcademy videos have reached millions of views.
-
-							Recording great explanations to set the context, then follow-up with just the right amount of personalized tutoring, is much more efficient. 
-
-							That's what Explain is. It's KhanAcademy videos + tutoring. Instead of $50/hour, it's $10/week.
-							<br>
-							<br>
-							Lectures into four hard-as-balls questions.
-							Teaching styles. A common problem students face is not understanding the bigger picture, why we're doing this, and not just get lost in one topic after another.
-							
-							<br>
-							<br>
-							TAs time are severely limited, they're spread very thin due to all the responsibilities. 
-
-							The idea of Explain is to invest a lot to find tutors who can really teach well,
-							and use videos to enable them to help as many students, so they're scaling with videos, not # of hours.
-							Then sprinkle.
-
-							Private tutoring is expensive (e.g. $50/hour).
-
-							The key idea of Explain is to use video explanations to resolve questions common for many students,
-							and only use 1:1 time to clean-up individualized questions. This efficiency makes quality tutoring much more affordable.
+							This means when other students ask questions, you benefit from their resultant videos.
 						</div>
 					</Content>
 
@@ -333,15 +301,15 @@
 
 	let topAppBar
 
-	let tabs = [{ label: 'Students', icon: 'hail'}, { label: 'Teachers', icon: 'local_taxi'}]
+	let tabs = [{ label: 'Students', icon: 'hail'}, { label: 'Tutors', icon: 'local_taxi'}]
 	let active = tabs[0]
 
 	let foo
 
 	// quickfix:
 
-	canvasWidth.set(610)
-	canvasHeight.set(400)
+	canvasWidth.set(558)
+	canvasHeight.set(380)
 
 	function resumeToMostRecentServer () {
 		goto($user.mostRecentClassAndRoomID, { replaceState: true })

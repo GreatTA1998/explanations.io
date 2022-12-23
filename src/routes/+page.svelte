@@ -35,8 +35,8 @@
 </div>
 
 <AutoAdjust {topAppBar}>
-	<div style="display: flex">
-		<div class="card-container" style="margin-top: 50px; margin-left: 50px;">
+	<div style="display: flex; justify-content: space-evenly;">
+		<div class="card-container">
 			<Card>
 				<TabBar tabs={tabs} let:tab bind:active style="background-color: rgb(238, 238, 238)">
 					<!-- Note: the `tab` property is required! -->
@@ -48,31 +48,62 @@
 
 				{#if active.label === 'Students'}
 					<Content>
-						<p style="font-size: 2.5rem; font-family: sans-serif; font-weight: 500">
-							Spend less time studying, so you have space for other things in life
+						<p style="font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px;">
+							KhanAcademy-style tutoring 
+						</p>
+						<p style="font-size: 1.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
+							Life-saving explanations, without the scheduling, walking & waiting
 						</p>
 
 						<!-- Dropdowns to select the class -->
 						<div style="width: 100%">
-							<Textfield value='' label="Which class do you want video explanations for?" style="width: 100%">
+							<Textfield value='14.01' label="Enter a class e.g. 14.01" style="width: 100%">
 								
 							</Textfield>
 						</div>
 
+						<div style="width: 400px; height: 450px;">
+							<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
+								{#if boardDoc}
+									<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
+										let:fetchStrokes={fetchStrokes}
+										autoFetchStrokes
+										let:strokesArray={strokesArray}
+									>
+										<div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+											<DoodleVideo 
+												{strokesArray} 
+												audioDownloadURL={boardDoc.audioDownloadURL}
+												backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+											> 
+												<Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
+													<span class="material-icons" style="color: white;">
+														fullscreen
+													</span>
+												</Button>
+											</DoodleVideo>
+										</div>
+									</RenderlessFetchStrokes>
+								{/if}
+							</RenderlessListenToBoard>
+						</div>
 						<!-- Then the relevant teachers -->
 						<div>
 
 						</div>
 					</Content>
 
-					<Actions>
+					<Actions style="padding-left: 15px; padding-bottom: 15px;">
 						<!-- Previewable -->
 
 						<!-- Add foot-note for 14.01 subsidies -->
-						<Button on:click={() => clicked++} color="secondary">
-							<Label>Sign up for $30/month</Label>
+						<Button on:click={() => clicked++} color="secondary" variant="raised">
+							<Label style="padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">
+								Sign up for $10/week
+							</Label>
 						</Button>
-						<Button on:click={() => clicked++}>
+						<Button on:click={() => clicked++} color="primary">
+							Explore last term's videos
 							<!-- <Label>Learn more</Label> -->
 						</Button>
 					</Actions>
@@ -94,42 +125,157 @@
 					</Actions>
 				{/if}
 			</Card>
+
+			<div style="width: 100%px; margin-top: 60px;">
+				<Card>
+					<Content style="padding-left: 40px; padding-right: 40px;">
+						<p style="font-size: 2.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
+							Recent blogs
+						</p>
+
+						<div class="one-blog-container">
+							<div style="font-family: sans-serif; margin-bottom: 20px;">
+								The conflict between teaching and research: a story of money and opportunity
+							</div>
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						</div>
+				
+						<div class="one-blog-container">
+							<div style="font-family: sans-serif; margin-bottom: 20px;">
+								The value of minimizing the amount of material students learn
+							</div>
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							
+							<div style="font-family: sans-serif; margin-top: 20px; font-size: 0.8rem">These video-essays were edited with permission from faculty and students
+								to open a discussion about counterintuitive ideas about education, and are not endorsements of Explain as a paid service. 
+								It's part of Students for Open & Universal Learning (SOUL)
+							</div>
+						</div>
+					</Content>
+		
+					<Actions>
+						<!-- Previewable -->
+		
+						<!-- Add foot-note for 14.01 subsidies -->
+						<Button on:click={() => clicked++} color="secondary">
+
+						</Button>
+
+						<Button on:click={() => clicked++}>
+
+						</Button>
+					</Actions>
+				</Card>
+			</div>
+		</div>
+
+		<div class="card-container">
+			<Card>
+					<Content style="padding-left: 40px; padding-right: 40px;">
+						<p style="font-size: 2.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
+							How it works
+						</p>
+
+						<div class="step-container" style="padding-bottom: 64px;">
+							<div style="color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px;">
+								Step 1
+							</div>
+							<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
+								A student opens the website on computer
+							</div>
+							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400;">
+								The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
+							</div>
+						</div>
+
+						<div class="step-container" style="padding-bottom: 64px;">
+							<div style="color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px;">
+								Step 2
+							</div>
+							<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
+								The tutor records a blackboard video with tablet and stylus
+							</div>
+							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400;">
+								The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
+							</div>
+							<iframe 
+								src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="300" height="200"
+								style="position: static; margin: 0 auto; display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+							</iframe>
+						</div>
+
+						<div class="step-container" style="padding-bottom: 64px">
+							<div style="color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px;">
+								Step 3
+							</div>
+							<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
+								The student and tutor can follow-up over voice chat + live blackboard to resolve remaining questions
+							</div>
+							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400;">
+								The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
+							</div>
+						</div>
+
+						<div style="color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px;">
+							Step 4
+						</div>
+						<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
+							At any point, students can browse and review all the questions and explanations that accumulated in the server
+						</div>
+						<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400;">
+							The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
+						</div>
+
+						<div style="font-family: sans-serif; margin-top: 60px;">Explain = tutoring enhanced by re-watchable explanations</div>
+
+						<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; margin-bottom: 64px;">
+							(Talk about lack of intuition, big picture, not grasping the fundamentals and falling behind. The gap between lectures and psets)
+							
+							You just want the right explanation, at the right time.
+							If there's already a material for that, you just view it. If there isn't, you need someone you can ask. 
+
+							<br>
+							<br>
+							Private tutoring is unscalable, because there is no "scaling". No videos are shared. KhanAcademy videos have reached millions of views.
+
+							Recording great explanations to set the context, then follow-up with just the right amount of personalized tutoring, is much more efficient. 
+
+							That's what Explain is. It's KhanAcademy videos + tutoring. Instead of $50/hour, it's $10/week.
+							<br>
+							<br>
+							Lectures into four hard-as-balls questions.
+							Teaching styles. A common problem students face is not understanding the bigger picture, why we're doing this, and not just get lost in one topic after another.
+							
+							<br>
+							<br>
+							TAs time are severely limited, they're spread very thin due to all the responsibilities. 
+
+							The idea of Explain is to invest a lot to find tutors who can really teach well,
+							and use videos to enable them to help as many students, so they're scaling with videos, not # of hours.
+							Then sprinkle.
+
+							Private tutoring is expensive (e.g. $50/hour).
+
+							The key idea of Explain is to use video explanations to resolve questions common for many students,
+							and only use 1:1 time to clean-up individualized questions. This efficiency makes quality tutoring much more affordable.
+						</div>
+					</Content>
+
+					<Actions>
+						<!-- Previewable -->
+
+						<!-- Add foot-note for 14.01 subsidies -->
+						<Button on:click={() => clicked++} color="secondary">
+						</Button>
+						<Button on:click={() => clicked++}>
+						</Button>
+					</Actions>
+			</Card>
 		</div>
 	</div>
-
-
-	<div>
-
-	<div style="margin-left: 50px; margin-top: 50px; font-size: 3rem; font-weight: 600; font-family: sans-serif; color: hsl(0,0%,0%, 0.80)">
-		How does it work?
-	</div>
-	<div style="margin-left: 50px; margin-right: 50px;">
-		explain.mit.edu = blackboard videos + tutoring
-	</div>
-	<div style="font-family: sans-serif; margin-left: 50px; margin-right: 50px;">
-		There's nothing that can't be understood - if explained right.
-		Private tutoring is scarce & expensive (e.g. $50/hour) because the it just doesn't scale well. 
-		
-		<br><br>
-		explain.mit.edu = video explanations + lil' bit of 1:1 help. You'd explanations for concepts you just can't understand, and problems you can't solve.
-
-		This mean you don't need to schedule, and can review the explanation, and it allows the tutor to scale themselves beyond manual labor and provide cheaper rates.
-	</div>
-	
-</div>
-
-	<div style="margin-left: 50px; margin-top: 50px; font-size: 3rem; font-weight: 600; font-family: sans-serif; color: hsl(0,0%,0%, 0.80)">
-		Why this exists
-	</div>
-
-
-
 </AutoAdjust>
 
-<section style="height: 100vh; border-bottom: 1px solid #eee;">
-	
-	
-	
+<section style="height: 100vh; border-bottom: 1px solid #eee;">	
 	<div style="height: 84vh; display: flex; justify-content: center; align-items: center;">
 		<div style="padding-bottom: 90px;">
 			<div style="display: flex; justify-content: center;">
@@ -164,7 +310,7 @@
 	import Button, { Label } from '@smui/button';
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { goto } from '$app/navigation'
-	import { user } from '../store.js'
+	import { user, canvasWidth, canvasHeight, drawerWidth, adminUIDs } from '../store.js'
 	import TabBar from '@smui/tab-bar';
 	import Tab, { Icon } from '@smui/tab';
 	import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
@@ -177,6 +323,13 @@
     ActionIcons,
   } from '@smui/card';
 	import Textfield from '@smui/textfield'
+	import DoodleVideo from '$lib/DoodleVideo.svelte'
+	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
+	import { lazyCallable } from '../helpers/actions.js'
+
+	let boardsDbPath = `classes/Mev5x66mSMEvNz3rijym/blackboards/`
+	let boardID = 'B0npFZMsV3PMAxapkGy1'
 
 	let topAppBar
 
@@ -184,6 +337,11 @@
 	let active = tabs[0]
 
 	let foo
+
+	// quickfix:
+
+	canvasWidth.set(610)
+	canvasHeight.set(400)
 
 	function resumeToMostRecentServer () {
 		goto($user.mostRecentClassAndRoomID, { replaceState: true })
@@ -236,6 +394,10 @@ li {
 
 }
 
+.one-blog-container {
+	margin-bottom: 50px;
+}
+
 :global(#smui-app),
   :global(body),
   :global(html) {
@@ -257,7 +419,8 @@ li {
   }
 
 	.card-container {
-		width: 600px;
+		margin-top: 60px;
+		width: 40%;
 	}
 
 	.mdc-tab__text-label {

@@ -35,58 +35,186 @@
 </div>
 
 <AutoAdjust {topAppBar}>
-	<div style="display: flex; justify-content: space-evenly;">
+	<div style="display: flex; justify-content: center">
 		<div class="card-container">
 			<Card>
-				<TabBar tabs={tabs} let:tab bind:active style="background-color: rgb(238, 238, 238)">
+				<TabBar tabs={tabs} let:tab bind:active style="background-color: rgb(238, 238, 238)" variant="dense">
 					<!-- Note: the `tab` property is required! -->
-					<Tab {tab} minWidth indicatorSpanOnlyContent stacked>
-						<Icon class="material-icons">{tab.icon}</Icon>
+					<!-- stacked -->
+					<Tab {tab} minWidth indicatorSpanOnlyContent>
+						<!-- <Icon class="material-icons">{tab.icon}</Icon> -->
 						<Label>{tab.label}</Label>
 					</Tab>
 				</TabBar>
 
 				{#if active.label === 'Students'}
-					<Content style="padding-left: 40px; padding-right: 40px;">
-						<p style="font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px">
-							KhanAcademy-style tutoring 
-						</p>
-						<p style="font-size: 1.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
-							Life-saving explanations - without the scheduling, walking and waiting
+					<Content style="padding-left: 60px; padding-right: 60px;">
+						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 20px; margin-top: 60px">
+							Life-saving explanations <br> without the scheduling, walking & waiting
 						</p>
 
-						<!-- Dropdowns to select the class -->
-						<div style="width: 100%">
-							<Textfield value='14.01' label="Enter a class e.g. 14.01" style="width: 100%">
-								
-							</Textfield>
+						<!-- Add foot-note for 14.01 subsidies -->
+						<div style="float: right; margin-right: 100px;"> 
+							<Button on:click={() => clicked++} color="secondary" variant="raised">
+								<Label style="padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px; font-size: 1.2rem; border-radius: 6px;">
+									Sign up for 14.01 at $10/week
+								</Label>
+							</Button>
 						</div>
 
-						<div style="width: 400px; height: 450px;">
-							<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
-								{#if boardDoc}
-									<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
-										let:fetchStrokes={fetchStrokes}
-										autoFetchStrokes
-										let:strokesArray={strokesArray}
-									>
-										<div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
-											<DoodleVideo 
-												{strokesArray} 
-												audioDownloadURL={boardDoc.audioDownloadURL}
-												backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-											> 
-												<Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
-													<span class="material-icons" style="color: white;">
-														fullscreen
-													</span>
-												</Button>
-											</DoodleVideo>
+						<!-- <div class="card-container">
+							<Card> -->
+								<!-- TO-DO: add a divider, maybe just use the card border -->
+									<Content style="padding-left: 0px; padding-right: 0px; margin-top: 160px; border-top: 1px solid #eee;">
+										<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px;">
+											How it works
+										</p>
+										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.5rem; margin-top: 1px; opacity: 0.8;">
+											Explain = video explanations + sprinkles of tutoring
 										</div>
-									</RenderlessFetchStrokes>
-								{/if}
-							</RenderlessListenToBoard>
-						</div>
+										<!-- <br> -->
+
+										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.5rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
+											This is useful for classes where you can't talk to the TA enough during Office Hours
+										</div>
+							
+
+										
+										<!-- <div class="step-container" style="padding-bottom: 84px;">
+											<div style="width: 800px;">
+												<div class="step-one-two-three-font">
+													Step 0
+												</div>
+												<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.7rem;">
+													Pick the right tutor
+												</div>
+												<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.5rem">
+													We hire beavers who make things easy-to-understand. But you want to see if their explanation style suits you.
+													Read their blog, their pedagogical beliefs.
+												</div>
+											</div>
+										</div>									 -->
+
+										<div class="step-container" style="padding-bottom: 84px;">
+											<div style="width: 800px;">
+												<div class="step-one-two-three-font">
+													Step 1
+												</div>
+												<div class="step-title-font-styles">
+													Type your question
+												</div>
+												<div class="step-description-font-styles">
+													This is usually a pset problem "How do you setup pset 3b finding a firm's cost function"
+													or a concept " can we review income & substitution effects?"
+												</div>
+											</div>
+										</div>
+				
+										<div class="step-container" style="padding-bottom: 84px;">
+											<div style="display: flex">
+												<div>
+													<div class="step-one-two-three-font">
+														Step 2
+													</div>
+													<div class="step-title-font-styles">
+														Your tutor will reply with a blackboard video
+													</div>
+													<div class="step-description-font-styles">
+														How long will it take?
+
+														<br><br>
+														The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
+													</div>
+												</div>
+
+												<div style="display: flex; justify-content: space-evenly">
+													<!-- position: static; margin: 0 auto;  -->
+													<!-- <iframe 
+														src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
+														style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+													</iframe> -->
+
+													<div style="width: 90%; height: 70%;">
+														<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
+															{#if boardDoc}
+																<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
+																	let:fetchStrokes={fetchStrokes}
+																	autoFetchStrokes
+																	let:strokesArray={strokesArray}
+																>
+																	<div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+																		<DoodleVideo 
+																			{strokesArray} 
+																			audioDownloadURL={boardDoc.audioDownloadURL}
+																			backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+																		> 
+																			<Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
+																				<span class="material-icons" style="color: white;">
+																					fullscreen
+																				</span>
+																			</Button>
+																		</DoodleVideo>
+																	</div>
+																</RenderlessFetchStrokes>
+															{/if}
+														</RenderlessListenToBoard>
+													</div>
+											</div>
+										</div>
+				
+										<div class="step-container" style="padding-bottom: 84px">
+											<div class="step-one-two-three-font">
+												Step 3
+											</div>
+											<div class="step-title-font-styles">
+												Follow-up over voice chat
+											</div>
+											<div class="step-description-font-styles">
+												You can ask follow-up questions via the comments section on the video
+												<br><br>
+												Even better, if both of you are active on the website at the same time, so you can just quickly voice chat. 
+												This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
+												all of which you'll see each others names as being active in the server. 
+										
+												<br><br>
+												In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email.
+											</div>
+										</div>
+				
+										<div style="display: flex; align-content: center;">
+											<div>
+												<div class="step-one-two-three-font">
+													Step 4
+												</div>
+												<div class="step-title-font-styles">
+													Review explanations in the server anytime
+												</div>
+												<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.5rem">
+													This means when other students ask questions, you benefit from their resultant videos.
+													The server is free to access after the semester finishes.
+												</div>
+											</div>
+
+											<div>
+												<Button on:click={() => clicked++} color="primary" variant="raised" class="button-shaped-round">
+													Explore the 14.01 server
+													<!-- <Label>Learn more</Label> -->
+												</Button>
+											</div>
+										</div>
+									</Content>
+				
+									<Actions>
+										<!-- Previewable -->
+				
+										<!-- Add foot-note for 14.01 subsidies -->
+										<Button on:click={() => clicked++} color="secondary">
+										</Button>
+										<Button on:click={() => clicked++}>
+										</Button>
+									</Actions>
+							<!-- </Card>
+						</div> -->
 						<!-- Then the relevant teachers -->
 						<div>
 
@@ -97,15 +225,11 @@
 						<!-- Previewable -->
 
 						<!-- Add foot-note for 14.01 subsidies -->
-						<Button on:click={() => clicked++} color="secondary" variant="raised">
+						<!-- <Button on:click={() => clicked++} color="secondary" variant="raised">
 							<Label style="padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; font-size: 1rem">
 								Sign up for $10/week
 							</Label>
-						</Button>
-						<Button on:click={() => clicked++} color="primary">
-							Explore last term's videos
-							<!-- <Label>Learn more</Label> -->
-						</Button>
+						</Button> -->
 					</Actions>
 				{:else}
 					<Content>
@@ -113,6 +237,7 @@
 						<p style="font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px">
 							Earn by impact, not time spent
 						</p>
+						<p>3-10 secs. upload time for 5 min. blackboard videos</p>
 
 						<!-- <p>
 							Wage is O(n)
@@ -134,144 +259,50 @@
 				{/if}
 			</Card>
 
-			<div style="width: 100%px; margin-top: 60px;">
+
+			<div style="width: 100%;">
 				<Card>
-					<Content style="padding-left: 40px; padding-right: 40px;">
-						<p style="font-size: 2.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
+					<Content style="padding-left: 60px; padding-right: 60px;">
+						<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
 							Recent blogs
 						</p>
 
-						<div class="one-blog-container">
-							<div style="font-family: sans-serif; margin-bottom: 20px;">
-								The conflict between teaching and research: a story of money and opportunity
+						<div class="one-blog-container" style="display: flex; justify-content: space-around;">
+							<iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<div style="width: 900px;">
+								<h1 style="font-size: 2.5rem" class="step-title-font-styles">
+									Teaching incentives at a research university
+								</h1>
+								<!-- blog title -->
+								<div style="font-family: sans-serif; margin-bottom: 20px;" class="step-description-font-styles">
+									"As a tenure-track professor, teaching well won't get respect from your peers,
+									nor will it help with promotion, or funding. Teaching simply isn't the job what you were hired to do"
+								</div>
+								<!-- blog preview -->
 							</div>
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 				
-						<div class="one-blog-container" style="padding-bottom: 0; margin-bottom: 10px">
-							<div style="font-family: sans-serif; margin-bottom: 20px;">
-								The value of minimizing the amount of material students learn
-							</div>
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<div class="one-blog-container" style="display: flex; justify-content: space-around; padding-bottom: 0; margin-bottom: 10px">
+							<iframe width="700" height="480" src="https://www.youtube.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							
-							<div style="font-family: sans-serif; margin-top: 50px; font-size: 0.8rem;">These video-essays were edited with permission from faculty and students
+							<div style="width: 900px">
+								<h1 style="font-size: 2.5rem" class="step-title-font-styles">Contrarian ideas in 6.006</h1>
+								<div style="font-family: sans-serif; margin-bottom: 20px;" class="step-description-font-styles">
+									I just think I would like to be at a place where everyone gets an A, when they take off, like double O six or six. Because that means we're doing I mean, that's better for everyone, right? Like, I don't want to lower the standard. Right? I want people to understand it. But if we can do a better job of getting people to understand it quicker, and better, and you that's a win, because then they can move on to more complicated things, and be in a better situation.
+								</div>					
+							</div>	
+							<!-- <div style="font-family: sans-serif; margin-top: 50px; font-size: 0.8rem;">These video-essays were edited with permission from faculty and students
 								to open a discussion about counterintuitive ideas about education, and are not endorsements of Explain as a paid service. 
 								It's part of Students for Open & Universal Learning (SOUL)
-							</div>
+							</div> -->
 						</div>
 					</Content>
 				</Card>
 			</div>
-		</div>
-
-		<div class="card-container">
-			<Card>
-					<Content style="padding-left: 40px; padding-right: 40px;">
-						<p style="font-size: 2.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
-							How it works
-						</p>
-
-						<div class="step-container" style="padding-bottom: 64px;">
-							<div style="color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px;">
-								Step 1
-							</div>
-							<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
-								A student opens the website
-							</div>
-							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400;">
-								The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
-							</div>
-						</div>
-
-						<div class="step-container" style="padding-bottom: 64px;">
-							<div style="color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px;">
-								Step 2
-							</div>
-							<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
-								The tutor records a blackboard video with tablet and stylus
-							</div>
-							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400;">
-								The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
-							</div>
-							<iframe 
-								src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="300" height="200"
-								style="position: static; margin: 0 auto; display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-							</iframe>
-						</div>
-
-						<div class="step-container" style="padding-bottom: 64px">
-							<div style="color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px;">
-								Step 3
-							</div>
-							<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
-								They can follow-up over voice chat + live blackboard to resolve remaining questions
-							</div>
-							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400;">
-								You can ask follow-up questions via the comments section on the video
-								<br><br>
-								Even better, if both of you are active on the website at the same time, so you can just quickly voice chat. 
-								This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
-								all of which you'll see each others names as being active in the server. 
-						
-								<br><br>
-								In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email.
-							</div>
-						</div>
-
-						<div style="color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px;">
-							Step 4
-						</div>
-						<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.1rem;">
-							At any time, students can review explanations that accumulated in the server
-						</div>
-						<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400;">
-							This means when other students ask questions, you benefit from their resultant videos.
-						</div>
-					</Content>
-
-					<Actions>
-						<!-- Previewable -->
-
-						<!-- Add foot-note for 14.01 subsidies -->
-						<Button on:click={() => clicked++} color="secondary">
-						</Button>
-						<Button on:click={() => clicked++}>
-						</Button>
-					</Actions>
-			</Card>
-		</div>
+		<!-- </div> -->
+		<!-- End of flexbox -->
 	</div>
 </AutoAdjust>
-
-<section style="height: 100vh; border-bottom: 1px solid #eee;">	
-	<div style="height: 84vh; display: flex; justify-content: center; align-items: center;">
-		<div style="padding-bottom: 90px;">
-			<div style="display: flex; justify-content: center;">
-			</div>
-
-			<!-- <iframe 
-				src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="300" height="200"
-				style="position: static; margin: 0 auto; display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-			</iframe> -->
-
-			<!-- This flex is just used to center horizontally -->
-			<!-- <div style="display: flex; justify-content: center; margin-top: 50px">
-				<Button on:click={redirectToExampleClass} variant="outlined" color="orange" style="color: rgb(246,130,13); font-size: 1.05rem">
-					Look around
-				</Button>	
-
-				{#if !user.phoneNumber}
-					<Button on:click={() => goto('login')} variant="outlined" style="margin-left: 25px; color: rgb(128, 0, 128); font-size: 1.05rem">
-						Sign up
-					</Button>	
-				{:else}
-					<Button on:click={resumeToMostRecentServer} variant="outlined" style="margin-left: 25px; color: rgb(128, 0, 128); font-size: 1.05rem">
-						Resume
-					</Button>	
-				{/if}
-			</div> -->
-	</div>
-</section>
 
 <script>	
 	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signInAnonymously } from 'firebase/auth'
@@ -308,8 +339,8 @@
 
 	// quickfix:
 
-	canvasWidth.set(558)
-	canvasHeight.set(380)
+	canvasWidth.set(700)
+	canvasHeight.set(450)
 
 	function resumeToMostRecentServer () {
 		goto($user.mostRecentClassAndRoomID, { replaceState: true })
@@ -323,6 +354,18 @@
 </script>
 
 <style>
+.step-one-two-three-font {
+	color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px; font-size: 1.5rem;
+}
+
+.step-title-font-styles {
+	margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.7rem
+}
+
+.step-description-font-styles {
+	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.5rem;
+}
+
 :global(.room-title input) {
   font-size: 2rem;
 }
@@ -387,8 +430,8 @@ li {
   }
 
 	.card-container {
-		margin-top: 60px;
-		width: 40%;
+		margin-top: 0px;
+		width: 100%;
 	}
 
 	.mdc-tab__text-label {

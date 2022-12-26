@@ -2,7 +2,10 @@
 <div class="container">
   <div id="carousel">
     <div>
-      <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg">
+      <slot>
+
+      </slot>
+      <!-- <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg"> -->
     </div>
       <div>
       <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg">

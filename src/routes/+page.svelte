@@ -58,7 +58,7 @@
 
 						<div style="display: flex;  align-items: end">
 
-
+<!-- 
 								<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
 									{#if boardDoc}
 										<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
@@ -81,7 +81,7 @@
 											</div>
 										</RenderlessFetchStrokes>
 									{/if}
-								</RenderlessListenToBoard>
+								</RenderlessListenToBoard> -->
 
 								<div style="margin-left: auto">
 									<div style="margin-right: 160px; margin-bottom: 25px; max-width: 400px; font-family: sans-serif; font-size: 1.8rem; line-height: 1.5;">
@@ -357,7 +357,32 @@
 		<!-- </div> -->
 		<!-- End of flexbox -->
 
-		<ImageGallery/>
+		<ImageGallery>
+			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
+				{#if boardDoc}
+					<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
+						let:fetchStrokes={fetchStrokes}
+						autoFetchStrokes
+						let:strokesArray={strokesArray}
+					>
+						<div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+							<DoodleVideo 
+								{strokesArray} 
+								audioDownloadURL={boardDoc.audioDownloadURL}
+								backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+							> 
+								<Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
+									<span class="material-icons" style="color: white;">
+										fullscreen
+									</span>
+								</Button>
+							</DoodleVideo>
+						</div>
+					</RenderlessFetchStrokes>
+				{/if}
+			</RenderlessListenToBoard>
+
+		</ImageGallery>
 	</div>
 </AutoAdjust>
 

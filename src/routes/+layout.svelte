@@ -1,4 +1,4 @@
-{#if !&#x24;hasFetchedUser}
+{#if !hasFetchedUser}
   <h4 style="margin-left: 16px; font-family: Roboto, sans-serif; opacity: 70%; font-weight: 400">
     Fetching your info...
   </h4>
@@ -18,10 +18,11 @@
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+
+  console.log('mounted, initializing DB')
+  initializeDatabase()
  
   onMount(async () => {
-    initializeDatabase()
-
     // USER LOGIN
     const auth = getAuth()
     onAuthStateChanged(auth, async (resultUser) => {

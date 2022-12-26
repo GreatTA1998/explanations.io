@@ -1,4 +1,4 @@
-{#if !$hasFetchedUser}
+{#if !&#x24;hasFetchedUser}
   <h4 style="margin-left: 16px; font-family: Roboto, sans-serif; opacity: 70%; font-weight: 400">
     Fetching your info...
   </h4>
@@ -9,7 +9,7 @@
 {/if}
 
 <script>
-	import '../app.css';
+	import "../app.scss";
   import 'firebase/app'
   import { initializeDatabase } from '../database.js'
   import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'

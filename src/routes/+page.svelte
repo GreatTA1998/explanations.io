@@ -83,16 +83,19 @@
 									{/if}
 								</RenderlessListenToBoard>
 
-								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
-								<div style="margin-left: auto; margin-right: 120px; display: flex; justify-content: flex-end; margin-bottom: 180px">
-									<div>
-										
+								<div style="margin-left: auto">
+									<div style="margin-right: 160px; margin-bottom: 25px; max-width: 400px; font-family: sans-serif; font-size: 1.8rem; line-height: 1.5;">
+										Designed for classes with busy Office Hours
 									</div>
-									<Button on:click={() => clicked++} color="secondary" variant="raised" style="height: 60px">
-										<Label style="padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px;">
-											See available classes
-										</Label>
-									</Button>
+
+									<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
+									<div style="margin-left: auto; margin-right: 430px; display: flex; justify-content: flex-end; margin-bottom: 180px">
+										<Button on:click={() => clicked++} color="secondary" variant="raised" style="height: 75px">
+											<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
+												Check availability
+											</Label>
+										</Button>
+									</div>
 								</div>
 						</div>
 
@@ -114,10 +117,10 @@
 										</p>
 										
 										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 2rem; margin-top: 1px; opacity: 0.8;">
-											Inspired by KhanAcademy, we hire ex-TAs to explain hard things with easy-to-understand videos. 
+											Inspired by KhanAcademy, we hire undergrads & grads to explain hard things with easy-to-understand videos. 
 											<br>
 											Because the videos can efficiently help n students at no additional effort, 
-											it is then possible for the tutors to address the remaining needs of every student <i>individually</i>, until nothing is left unexplained.
+											it is then possible for these tutors to address the remaining needs of every student <i>individually</i>, until nothing is left unexplained.
 											<!-- It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
 										</div>
 				
@@ -275,9 +278,13 @@
 				{:else}
 					<Content>
 						<!-- font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px" -->
-						<p style="font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px">
+						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 110px; margin-top: 60px">
 							Earn by impact, not time spent
 						</p>
+
+						Just teaching, without the responsibilities of grading
+						Lower hours, higher pay
+
 						<p>3-10 secs. upload time for 5 min. blackboard videos</p>
 
 						<!-- <p>
@@ -307,6 +314,11 @@
 						<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
 							Recent blogs
 						</p>
+						<!-- Social proof: student reviews -->
+						<!-- Social proof: company  -->
+						<!-- Social proof: hours watched -->
+						<!-- Get to know the teachers -->
+						<!-- Blog posts -->
 
 						<div class="one-blog-container" style="display: flex;">
 							<iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -344,10 +356,13 @@
 			</div>
 		<!-- </div> -->
 		<!-- End of flexbox -->
+
+		<ImageGallery/>
 	</div>
 </AutoAdjust>
 
 <script>	
+	import ImageGallery from '../lib/ImageGallery.svelte'
 	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signInAnonymously } from 'firebase/auth'
 	import Button, { Label } from '@smui/button';
 	import { onMount, tick, onDestroy } from 'svelte'

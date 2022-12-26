@@ -49,33 +49,80 @@
 
 				{#if active.label === 'Students'}
 					<Content style="padding-left: 60px; padding-right: 60px;">
-						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 20px; margin-top: 60px">
+						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 110px; margin-top: 60px">
 							Life-saving explanations <br> without the scheduling, walking & waiting
 						</p>
+						<p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
+							
+						</p>
+
+						<div style="display: flex;  align-items: end">
+
+
+								<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
+									{#if boardDoc}
+										<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
+											let:fetchStrokes={fetchStrokes}
+											autoFetchStrokes
+											let:strokesArray={strokesArray}
+										>
+											<div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+												<DoodleVideo 
+													{strokesArray} 
+													audioDownloadURL={boardDoc.audioDownloadURL}
+													backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+												> 
+													<Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
+														<span class="material-icons" style="color: white;">
+															fullscreen
+														</span>
+													</Button>
+												</DoodleVideo>
+											</div>
+										</RenderlessFetchStrokes>
+									{/if}
+								</RenderlessListenToBoard>
+
+								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
+								<div style="margin-left: auto; margin-right: 120px; display: flex; justify-content: flex-end; margin-bottom: 180px">
+									<div>
+										
+									</div>
+									<Button on:click={() => clicked++} color="secondary" variant="raised" style="height: 60px">
+										<Label style="padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px;">
+											See available classes
+										</Label>
+									</Button>
+								</div>
+						</div>
 
 						<!-- Add foot-note for 14.01 subsidies -->
-						<div style="float: right; margin-right: 100px;"> 
-							<Button on:click={() => clicked++} color="secondary" variant="raised">
-								<Label style="padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px; font-size: 1.2rem; border-radius: 6px;">
-									Sign up for 14.01 at $10/week
+						<!-- <div style="float: right; margin-right: 100px;"> 
+							<Button on:click={() => clicked++} color="secondary" variant="raised" style="height: 60px">
+								<Label style="padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px;">
+									See available classes
 								</Label>
 							</Button>
-						</div>
+						</div> -->
 
 						<!-- <div class="card-container">
 							<Card> -->
 								<!-- TO-DO: add a divider, maybe just use the card border -->
 									<Content style="padding-left: 0px; padding-right: 0px; margin-top: 160px; border-top: 1px solid #eee;">
-										<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px;">
+										<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 											How it works
 										</p>
-										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.5rem; margin-top: 1px; opacity: 0.8;">
-											Explain = video explanations + sprinkles of tutoring
+										
+										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 2rem; margin-top: 1px; opacity: 0.8;">
+											Inspired by KhanAcademy, we hire ex-TAs to explain hard things with easy-to-understand videos. 
+											<br>
+											Because the videos can efficiently help n students at no additional effort, 
+											it is then possible for the tutors to address the remaining needs of every student <i>individually</i>, until nothing is left unexplained.
+											<!-- It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
 										</div>
-										<!-- <br> -->
-
-										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.5rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
-											This is useful for classes where you can't talk to the TA enough during Office Hours
+				
+										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
+								
 										</div>
 							
 
@@ -95,7 +142,7 @@
 											</div>
 										</div>									 -->
 
-										<div class="step-container" style="padding-bottom: 84px;">
+										<div class="step-container" style="margin-bottom: 160px;">
 											<div style="width: 800px;">
 												<div class="step-one-two-three-font">
 													Step 1
@@ -110,7 +157,7 @@
 											</div>
 										</div>
 				
-										<div class="step-container" style="padding-bottom: 84px;">
+										<div class="step-container" style="margin-bottom: 160px;">
 											<div style="display: flex">
 												<div>
 													<div class="step-one-two-three-font">
@@ -162,7 +209,7 @@
 											</div>
 										</div>
 				
-										<div class="step-container" style="padding-bottom: 84px">
+										<div class="step-container" style="margin-bottom: 120px">
 											<div class="step-one-two-three-font">
 												Step 3
 											</div>
@@ -176,8 +223,8 @@
 												This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
 												all of which you'll see each others names as being active in the server. 
 										
-												<br><br>
-												In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email.
+												<!-- <br><br>
+												In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
 											</div>
 										</div>
 				
@@ -187,9 +234,9 @@
 													Step 4
 												</div>
 												<div class="step-title-font-styles">
-													Review explanations in the server anytime
+													Revisit explanations anytime
 												</div>
-												<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.5rem">
+												<div class="step-description-font-styles">
 													This means when other students ask questions, you benefit from their resultant videos.
 													The server is free to access after the semester finishes.
 												</div>
@@ -204,18 +251,12 @@
 										</div>
 									</Content>
 				
-									<Actions>
-										<!-- Previewable -->
-				
-										<!-- Add foot-note for 14.01 subsidies -->
+									<!-- <Actions>
 										<Button on:click={() => clicked++} color="secondary">
 										</Button>
 										<Button on:click={() => clicked++}>
 										</Button>
-									</Actions>
-							<!-- </Card>
-						</div> -->
-						<!-- Then the relevant teachers -->
+									</Actions> -->
 						<div>
 
 						</div>
@@ -267,14 +308,14 @@
 							Recent blogs
 						</p>
 
-						<div class="one-blog-container" style="display: flex; justify-content: space-around;">
+						<div class="one-blog-container" style="display: flex;">
 							<iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-							<div style="width: 900px;">
-								<h1 style="font-size: 2.5rem" class="step-title-font-styles">
+							<div style="width: 900px; margin-left: 50px;">
+								<!-- blog title -->
+								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									Teaching incentives at a research university
 								</h1>
-								<!-- blog title -->
-								<div style="font-family: sans-serif; margin-bottom: 20px;" class="step-description-font-styles">
+								<div style="margin-bottom: 20px; opacity: 0.8" class="step-description-font-styles">
 									"As a tenure-track professor, teaching well won't get respect from your peers,
 									nor will it help with promotion, or funding. Teaching simply isn't the job what you were hired to do"
 								</div>
@@ -282,12 +323,14 @@
 							</div>
 						</div>
 				
-						<div class="one-blog-container" style="display: flex; justify-content: space-around; padding-bottom: 0; margin-bottom: 10px">
+						<div class="one-blog-container" style="display: flex;padding-bottom: 0; margin-bottom: 10px">
 							<iframe width="700" height="480" src="https://www.youtube.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							
-							<div style="width: 900px">
-								<h1 style="font-size: 2.5rem" class="step-title-font-styles">Contrarian ideas in 6.006</h1>
-								<div style="font-family: sans-serif; margin-bottom: 20px;" class="step-description-font-styles">
+							<div style="width: 900px; margin-left: 50px;">
+								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
+									Contrarian ideas in 6.006
+								</h1>
+								<div style="margin-bottom: 20px; opacity: 0.8" class="step-description-font-styles">
 									I just think I would like to be at a place where everyone gets an A, when they take off, like double O six or six. Because that means we're doing I mean, that's better for everyone, right? Like, I don't want to lower the standard. Right? I want people to understand it. But if we can do a better job of getting people to understand it quicker, and better, and you that's a win, because then they can move on to more complicated things, and be in a better situation.
 								</div>					
 							</div>	
@@ -340,7 +383,7 @@
 	// quickfix:
 
 	canvasWidth.set(700)
-	canvasHeight.set(450)
+	canvasHeight.set(460)
 
 	function resumeToMostRecentServer () {
 		goto($user.mostRecentClassAndRoomID, { replaceState: true })

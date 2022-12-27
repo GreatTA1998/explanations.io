@@ -1,32 +1,101 @@
+<!-- Copied from https://codepen.io/RustamAbraham/pen/BWzVxo -->
+
 <!-- <html> -->
-<div class="container">
+<div class="container" style="margin-left: 400px; margin-bottom: 160px;">
   <div id="carousel">
-    <div>
-      <slot>
-
-      </slot>
-      <!-- <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg"> -->
-    </div>
-      <div>
-      <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg">
-    </div>
-        <div>
-      <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg">
-    </div>
-        <div>
-      <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg">
-    </div>
-
-    <div>
-      <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg">
-    </div>
-
-    <div>
-      <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg">
+    <div style="width: 268px; height: 120px; border: solid red 2px;">
+      <!-- <RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
+        {#if boardDoc}
+          <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
+            let:fetchStrokes={fetchStrokes}
+            autoFetchStrokes
+            let:strokesArray={strokesArray}
+          >
+            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+              <DoodleVideo 
+                {strokesArray} 
+                audioDownloadURL={boardDoc.audioDownloadURL}
+                backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+              > 
+              </DoodleVideo>
+            </div>
+          </RenderlessFetchStrokes>
+        {/if}
+      </RenderlessListenToBoard> -->
     </div>
 
-    <div>
-      <img src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg">
+    <div style="width: 268px; height: 120px; border: solid red 2px"></div>
+    <div style="width: 268px; height: 120px; border: solid red 2px"></div>   
+    
+    <div style="width: 268px; height: 120px; border: solid red 2px"></div>
+
+
+
+    <div style="width: 268px; height: 120px; border: solid red 2px">
+      <!-- <RenderlessListenToBoard dbPath={`classes/USb1mGxeLqufbgbPhSbV/blackboards/` + 'K7kZAAhGIhlcYWTjzh4q'} let:boardDoc={boardDoc}>
+        {#if boardDoc}
+          <RenderlessFetchStrokes dbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/' + 'K7kZAAhGIhlcYWTjzh4q'}
+            let:fetchStrokes={fetchStrokes}
+            autoFetchStrokes
+            let:strokesArray={strokesArray}
+          >
+            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+              <DoodleVideo 
+                {strokesArray} 
+                audioDownloadURL={boardDoc.audioDownloadURL}
+                backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+              > 
+              </DoodleVideo>
+            </div>
+          </RenderlessFetchStrokes>
+        {/if}
+      </RenderlessListenToBoard> -->
+    </div>
+
+    <div style="width: 268px; height: 120px; border: solid red 2px"></div>
+
+    <div style="width: 268px; height: 120px; border: solid red 2px">
+      <!-- <RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
+        {#if boardDoc}
+          <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
+            let:fetchStrokes={fetchStrokes}
+            autoFetchStrokes
+            let:strokesArray={strokesArray}
+          >
+            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+              <DoodleVideo 
+                {strokesArray} 
+                audioDownloadURL={boardDoc.audioDownloadURL}
+                backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+              > 
+              </DoodleVideo>
+            </div>
+          </RenderlessFetchStrokes>
+        {/if}
+      </RenderlessListenToBoard> -->
+    </div>
+
+    <div style="width: 268px; height: 120px; border: solid red 2px"></div>
+
+    <div style="width: 268px; height: 120px; border: solid red 2px">
+      <!-- <RenderlessListenToBoard dbPath={`classes/AsUl1VWQ7zzxZsD5epL7/blackboards/` + 'AsUl1VWQ7zzxZsD5epL7'} let:boardDoc={boardDoc}>
+        {#if boardDoc}
+          <RenderlessFetchStrokes dbPath={`classes/AsUl1VWQ7zzxZsD5epL7/blackboards/` + 'AsUl1VWQ7zzxZsD5epL7'}
+            let:fetchStrokes={fetchStrokes}
+            autoFetchStrokes
+            let:strokesArray={strokesArray}
+          >
+            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+              <DoodleVideo 
+                {strokesArray} 
+                audioDownloadURL={boardDoc.audioDownloadURL}
+                backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+              > 
+              </DoodleVideo>
+            </div>
+          </RenderlessFetchStrokes>
+        {/if}
+      </RenderlessListenToBoard> -->
     </div>
   </div>
 </div>
@@ -53,6 +122,23 @@
         div
             img(src="http://wallpaper-gallery.net/images/wild-animals-wallpaper/wild-animals-wallpaper-15.jpg") -->
 <!-- </html> -->
+
+<script>
+  import { user, canvasWidth, canvasHeight, drawerWidth, adminUIDs } from '../store.js'
+  import DoodleVideo from '$lib/DoodleVideo.svelte'
+	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
+	import { lazyCallable } from '../helpers/actions.js'
+
+  let boardsDbPath = `classes/Mev5x66mSMEvNz3rijym/blackboards/`
+	let boardID = 'B0npFZMsV3PMAxapkGy1'
+
+  canvasWidth.set(560)
+	canvasHeight.set(340)
+
+
+</script>
+
 
 <style lang="scss">
 @mixin transform($deg) {
@@ -91,17 +177,18 @@
   }
 }
 
+// container size has an effect
 .container {
   width: 210px;
   height: 140px;
-  position: absolute;
+  // position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  -webkit-perspective: 1100px;
+  -webkit-perspective: 1100px; 
   -moz-perspective: 1100px;
   -ms-perspective: 1100px;
-  perspective: 1100px;
+  perspective: 1100px; // was 1100
 }
 
 #carousel {
@@ -123,18 +210,18 @@
   -o-animation: rotating 20s linear infinite;
   -ms-animation: rotating 20s linear infinite;
   animation: rotating 20s linear infinite;
-  &:hover {
-  animation-play-state:paused;
-  -o-animation-play-state:paused;
-  -moz-animation-play-state:paused;
-	-webkit-animation-play-state:paused;
-}
+  // &:hover {
+  // animation-play-state:paused;
+  // -o-animation-play-state:paused;
+  // -moz-animation-play-state:paused;
+	// -webkit-animation-play-state:paused;
+  // }
   div {
     display: block;
     position: absolute;
-    width: 180px;
-    height: 120px;
-    border: 2px solid #000;
+    // width: 268px;
+    // height: 120px;
+    // border: 2px solid #000;
     img {
       width:100%;
       height:100%;
@@ -144,13 +231,13 @@
       @include transform(0deg);
     }
     &:nth-child(2) {
-      @include transform(40deg);
+      @include transform(40deg); // 268
     }
-    &:nth-child(3) {
-      @include transform(80deg);
+    &:nth-child(3) { 
+      @include transform(80deg); // 80
     }
     &:nth-child(4) {
-      @include transform(120deg);
+      @include transform(120deg); // 120
     }
     &:nth-child(5) {
       @include transform(160deg);

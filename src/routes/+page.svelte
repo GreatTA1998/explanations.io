@@ -57,6 +57,10 @@
 						</p>
 
 						<div style="display: flex;  align-items: end">
+												
+							<ImageGallery>
+
+							</ImageGallery>
 
 <!-- 
 								<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
@@ -84,15 +88,15 @@
 								</RenderlessListenToBoard> -->
 
 								<div style="margin-left: auto">
-									<div style="margin-right: 160px; margin-bottom: 25px; max-width: 400px; font-family: sans-serif; font-size: 1.8rem; line-height: 1.5;">
+									<div style="margin-left: auto; margin-right: 30px; margin-bottom: 25px; max-width: 400px; font-family: sans-serif; font-size: 1.8rem; line-height: 1.5;">
 										Designed for classes with busy Office Hours
 									</div>
 
 									<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
-									<div style="margin-left: auto; margin-right: 430px; display: flex; justify-content: flex-end; margin-bottom: 180px">
+									<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 180px">
 										<Button on:click={() => clicked++} color="secondary" variant="raised" style="height: 75px">
 											<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-												Check availability
+												Sign up for Spring 2023
 											</Label>
 										</Button>
 									</div>
@@ -111,13 +115,13 @@
 						<!-- <div class="card-container">
 							<Card> -->
 								<!-- TO-DO: add a divider, maybe just use the card border -->
-									<Content style="padding-left: 0px; padding-right: 0px; margin-top: 160px; border-top: 1px solid #eee;">
+									<Content style="padding-left: 0px; padding-right: 0px; margin-top: 280px; border-top: 1px solid #eee;">
 										<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 											How it works
 										</p>
 										
 										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 2rem; margin-top: 1px; opacity: 0.8;">
-											Inspired by KhanAcademy, we hire undergrads & grads to explain hard things with easy-to-understand videos. 
+											Inspired by KhanAcademy, we hire folks who can explain hard things with easy-to-understand videos. 
 											<br>
 											Because the videos can efficiently help n students at no additional effort, 
 											it is then possible for these tutors to address the remaining needs of every student <i>individually</i>, until nothing is left unexplained.
@@ -127,23 +131,6 @@
 										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
 								
 										</div>
-							
-
-										
-										<!-- <div class="step-container" style="padding-bottom: 84px;">
-											<div style="width: 800px;">
-												<div class="step-one-two-three-font">
-													Step 0
-												</div>
-												<div style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.7rem;">
-													Pick the right tutor
-												</div>
-												<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.5rem">
-													We hire beavers who make things easy-to-understand. But you want to see if their explanation style suits you.
-													Read their blog, their pedagogical beliefs.
-												</div>
-											</div>
-										</div>									 -->
 
 										<div class="step-container" style="margin-bottom: 160px;">
 											<div style="width: 800px;">
@@ -243,13 +230,16 @@
 													This means when other students ask questions, you benefit from their resultant videos.
 													The server is free to access after the semester finishes.
 												</div>
+												<Button on:click={() => clicked++} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
+													Explore last semester's 14.01 server
+													<!-- <Label>Learn more</Label> -->
+												</Button>
 											</div>
 
 											<div>
-												<Button on:click={() => clicked++} color="primary" variant="raised" class="button-shaped-round">
+												<!-- <Button on:click={() => clicked++} color="primary" variant="raised" class="button-shaped-round">
 													Explore the 14.01 server
-													<!-- <Label>Learn more</Label> -->
-												</Button>
+												</Button> -->
 											</div>
 										</div>
 									</Content>
@@ -321,31 +311,44 @@
 						<!-- Blog posts -->
 
 						<div class="one-blog-container" style="display: flex;">
-							<iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<iframe width="600" height="380" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+							<!-- <iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 							<div style="width: 900px; margin-left: 50px;">
 								<!-- blog title -->
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-									Teaching incentives at a research university
+									The hidden story of teaching at a research university
 								</h1>
-								<div style="margin-bottom: 20px; opacity: 0.8" class="step-description-font-styles">
-									"As a tenure-track professor, teaching well won't get respect from your peers,
-									nor will it help with promotion, or funding. Teaching simply isn't the job what you were hired to do"
+								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
+									I had an inkling that the teaching at MIT didn’t live up to its world-class status. Yes, there were some great classes — but the quality was inconsistent.
+
+									To figure out why that is, I’ve talked to various faculty & students and went down rabbit holes. We talked about lots of specific things, things like how to keep semesters consistent despite rotating teachers, how we lose the TA explanations and student notes, pedagogical beliefs on attendance and collaboration, what does good material look like etc.
+
+									But after some recent interviews, I believe the most fundamental force that is rarely discussed is incentives: what exactly are the reward structures for teachers to innovate?
 								</div>
-								<!-- blog preview -->
+								<a href="https://medium.com/@eltonlin1998/the-hidden-story-of-teaching-at-a-research-university-8bcd47bac62" target="_blank" style="text-decoration: none !important;">
+									<Button variant="outlined">
+										Read story
+									</Button>
+								</a>
 							</div>
 						</div>
 				
 						<div class="one-blog-container" style="display: flex;padding-bottom: 0; margin-bottom: 10px">
-							<iframe width="700" height="480" src="https://www.youtube.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<iframe width="600" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							
 							<div style="width: 900px; margin-left: 50px;">
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									Contrarian ideas in 6.006
 								</h1>
-								<div style="margin-bottom: 20px; opacity: 0.8" class="step-description-font-styles">
+								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
 									I just think I would like to be at a place where everyone gets an A, when they take off, like double O six or six. Because that means we're doing I mean, that's better for everyone, right? Like, I don't want to lower the standard. Right? I want people to understand it. But if we can do a better job of getting people to understand it quicker, and better, and you that's a win, because then they can move on to more complicated things, and be in a better situation.
-								</div>					
+								</div>			
+								<Button variant="outlined">
+									Read story
+								</Button>		
 							</div>	
+
 							<!-- <div style="font-family: sans-serif; margin-top: 50px; font-size: 0.8rem;">These video-essays were edited with permission from faculty and students
 								to open a discussion about counterintuitive ideas about education, and are not endorsements of Explain as a paid service. 
 								It's part of Students for Open & Universal Learning (SOUL)
@@ -356,33 +359,6 @@
 			</div>
 		<!-- </div> -->
 		<!-- End of flexbox -->
-
-		<ImageGallery>
-			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
-				{#if boardDoc}
-					<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
-						let:fetchStrokes={fetchStrokes}
-						autoFetchStrokes
-						let:strokesArray={strokesArray}
-					>
-						<div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
-							<DoodleVideo 
-								{strokesArray} 
-								audioDownloadURL={boardDoc.audioDownloadURL}
-								backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-							> 
-								<Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
-									<span class="material-icons" style="color: white;">
-										fullscreen
-									</span>
-								</Button>
-							</DoodleVideo>
-						</div>
-					</RenderlessFetchStrokes>
-				{/if}
-			</RenderlessListenToBoard>
-
-		</ImageGallery>
 	</div>
 </AutoAdjust>
 
@@ -447,6 +423,10 @@
 
 .step-description-font-styles {
 	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.5rem;
+}
+
+.blog-description-font-styles {
+	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.1rem;
 }
 
 :global(.room-title input) {

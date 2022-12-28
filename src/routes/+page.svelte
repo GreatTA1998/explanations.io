@@ -23,11 +23,6 @@
 					<Button variant="outlined">
 						Log in
 					</Button>
-					<!-- 					
-					<Button on:click={() => goto('login')} variant="outlined" style="margin-left: 25px; color: rgb(128, 0, 128); font-size: 1.05rem">
-						Sign up
-					</Button>	 -->
-					<!-- <Button on:click={() => goto('login')}>Sign up</Button> -->
 				</Section>
 			</Row>
 		</TopAppBar>
@@ -49,7 +44,7 @@
 
 				{#if active.label === 'Students'}
 					<Content style="padding-left: 60px; padding-right: 60px;">
-						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 110px; margin-top: 60px">
+						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-top: 60px; margin-bottom: 200px;">
 							Life-saving explanations <br> without the scheduling, walking & waiting
 						</p>
 						<p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
@@ -57,65 +52,29 @@
 						</p>
 
 						<div style="display: flex;  align-items: end">
-												
-							<ImageGallery>
+							<ImageGallery/>
 
-							</ImageGallery>
-
-<!-- 
-								<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
-									{#if boardDoc}
-										<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
-											let:fetchStrokes={fetchStrokes}
-											autoFetchStrokes
-											let:strokesArray={strokesArray}
-										>
-											<div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
-												<DoodleVideo 
-													{strokesArray} 
-													audioDownloadURL={boardDoc.audioDownloadURL}
-													backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-												> 
-													<Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
-														<span class="material-icons" style="color: white;">
-															fullscreen
-														</span>
-													</Button>
-												</DoodleVideo>
-											</div>
-										</RenderlessFetchStrokes>
-									{/if}
-								</RenderlessListenToBoard> -->
-
-								<div style="margin-left: auto">
-									<div style="margin-left: auto; margin-right: 30px; margin-bottom: 25px; max-width: 400px; font-family: sans-serif; font-size: 1.8rem; line-height: 1.5;">
-										Designed for classes with busy Office Hours
-									</div>
-
-									<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
-									<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 180px">
-										<Button on:click={() => clicked++} color="secondary" variant="raised" style="height: 75px">
-											<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-												Sign up for Spring 2023
-											</Label>
-										</Button>
-									</div>
+							<div style="margin-left: auto">
+								<div style="margin-left: auto; margin-right: 30px; margin-bottom: 25px; max-width: 400px; font-family: sans-serif; font-size: 1.8rem; line-height: 1.5;">
+									Designed for classes with busy Office Hours
 								</div>
+
+								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
+								<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 180px">
+									<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 75px">
+										<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
+											Explore available classes
+										</Label>
+									</Button>
+								</div>
+							</div>
 						</div>
 
-						<!-- Add foot-note for 14.01 subsidies -->
-						<!-- <div style="float: right; margin-right: 100px;"> 
-							<Button on:click={() => clicked++} color="secondary" variant="raised" style="height: 60px">
-								<Label style="padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px;">
-									See available classes
-								</Label>
-							</Button>
-						</div> -->
 
 						<!-- <div class="card-container">
 							<Card> -->
 								<!-- TO-DO: add a divider, maybe just use the card border -->
-									<Content style="padding-left: 0px; padding-right: 0px; margin-top: 280px; border-top: 1px solid #eee;">
+									<Content style="padding-left: 0px; padding-right: 0px; margin-top: 900px; border-top: 1px solid #eee;">
 										<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 											How it works
 										</p>
@@ -166,35 +125,18 @@
 
 												<div style="display: flex; justify-content: space-evenly">
 													<!-- position: static; margin: 0 auto;  -->
-													<!-- <iframe 
-														src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
-														style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-													</iframe> -->
-
+													<!-- 
+														<iframe 
+															src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
+															style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+														</iframe> 
+													-->
 													<div style="width: 90%; height: 70%;">
-														<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
-															{#if boardDoc}
-																<RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
-																	let:fetchStrokes={fetchStrokes}
-																	autoFetchStrokes
-																	let:strokesArray={strokesArray}
-																>
-																	<div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
-																		<DoodleVideo 
-																			{strokesArray} 
-																			audioDownloadURL={boardDoc.audioDownloadURL}
-																			backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-																		> 
-																			<Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
-																				<span class="material-icons" style="color: white;">
-																					fullscreen
-																				</span>
-																			</Button>
-																		</DoodleVideo>
-																	</div>
-																</RenderlessFetchStrokes>
-															{/if}
-														</RenderlessListenToBoard>
+														<ReusableDoodleVideo
+															canvasWidth={500}
+															canvasHeight={360}
+															boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+														/>
 													</div>
 											</div>
 										</div>
@@ -230,9 +172,8 @@
 													This means when other students ask questions, you benefit from their resultant videos.
 													The server is free to access after the semester finishes.
 												</div>
-												<Button on:click={() => clicked++} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
+												<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
 													Explore last semester's 14.01 server
-													<!-- <Label>Learn more</Label> -->
 												</Button>
 											</div>
 
@@ -339,7 +280,7 @@
 							
 							<div style="width: 900px; margin-left: 50px;">
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-									Contrarian ideas in 6.006
+									The impact of reducing workload on student life
 								</h1>
 								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
 									I just think I would like to be at a place where everyone gets an A, when they take off, like double O six or six. Because that means we're doing I mean, that's better for everyone, right? Like, I don't want to lower the standard. Right? I want people to understand it. But if we can do a better job of getting people to understand it quicker, and better, and you that's a win, because then they can move on to more complicated things, and be in a better situation.
@@ -364,6 +305,7 @@
 
 <script>	
 	import ImageGallery from '../lib/ImageGallery.svelte'
+	import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
 	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signInAnonymously } from 'firebase/auth'
 	import Button, { Label } from '@smui/button';
 	import { onMount, tick, onDestroy } from 'svelte'
@@ -380,14 +322,6 @@
     ActionButtons,
     ActionIcons,
   } from '@smui/card';
-	import Textfield from '@smui/textfield'
-	import DoodleVideo from '$lib/DoodleVideo.svelte'
-	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-	import { lazyCallable } from '../helpers/actions.js'
-
-	let boardsDbPath = `classes/Mev5x66mSMEvNz3rijym/blackboards/`
-	let boardID = 'B0npFZMsV3PMAxapkGy1'
 
 	let topAppBar
 
@@ -403,6 +337,10 @@
 
 	function resumeToMostRecentServer () {
 		goto($user.mostRecentClassAndRoomID, { replaceState: true })
+	}
+
+	function redirectToSignUpPage () {
+		goto('/signup')
 	}
 
 	// TO-DO: maybe just redirect

@@ -1,102 +1,39 @@
 <!-- Copied from https://codepen.io/RustamAbraham/pen/BWzVxo -->
-
-<!-- <html> -->
-<div class="container" style="margin-left: 400px; margin-bottom: 160px;">
+<div class="container" style="margin-left: 200px; margin-bottom: 160px;">
   <div id="carousel">
-    <div style="width: 268px; height: 120px; border: solid red 2px;">
-      <!-- <RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
-        {#if boardDoc}
-          <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
-            let:fetchStrokes={fetchStrokes}
-            autoFetchStrokes
-            let:strokesArray={strokesArray}
-          >
-            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
-              <DoodleVideo 
-                {strokesArray} 
-                audioDownloadURL={boardDoc.audioDownloadURL}
-                backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-              > 
-              </DoodleVideo>
-            </div>
-          </RenderlessFetchStrokes>
-        {/if}
-      </RenderlessListenToBoard> -->
+    <div>
+      <ReusableDoodleVideo
+        canvasWidth={galleryItemWidth}
+        canvasHeight={galleryItemHeight}
+        boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+      />
     </div>
 
-    <div style="width: 268px; height: 120px; border: solid red 2px"></div>
-    <div style="width: 268px; height: 120px; border: solid red 2px"></div>   
-    
-    <div style="width: 268px; height: 120px; border: solid red 2px"></div>
+    <div></div>
+    <div></div>
 
-
-
-    <div style="width: 268px; height: 120px; border: solid red 2px">
-      <!-- <RenderlessListenToBoard dbPath={`classes/USb1mGxeLqufbgbPhSbV/blackboards/` + 'K7kZAAhGIhlcYWTjzh4q'} let:boardDoc={boardDoc}>
-        {#if boardDoc}
-          <RenderlessFetchStrokes dbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/' + 'K7kZAAhGIhlcYWTjzh4q'}
-            let:fetchStrokes={fetchStrokes}
-            autoFetchStrokes
-            let:strokesArray={strokesArray}
-          >
-            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
-              <DoodleVideo 
-                {strokesArray} 
-                audioDownloadURL={boardDoc.audioDownloadURL}
-                backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-              > 
-              </DoodleVideo>
-            </div>
-          </RenderlessFetchStrokes>
-        {/if}
-      </RenderlessListenToBoard> -->
+    <div>
+      <ReusableDoodleVideo
+        canvasWidth={galleryItemWidth}
+        canvasHeight={galleryItemHeight}
+        boardDbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q'}
+      />
     </div>
 
-    <div style="width: 268px; height: 120px; border: solid red 2px"></div>
+    <div></div>
 
-    <div style="width: 268px; height: 120px; border: solid red 2px">
-      <!-- <RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
-        {#if boardDoc}
-          <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
-            let:fetchStrokes={fetchStrokes}
-            autoFetchStrokes
-            let:strokesArray={strokesArray}
-          >
-            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
-              <DoodleVideo 
-                {strokesArray} 
-                audioDownloadURL={boardDoc.audioDownloadURL}
-                backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-              > 
-              </DoodleVideo>
-            </div>
-          </RenderlessFetchStrokes>
-        {/if}
-      </RenderlessListenToBoard> -->
+    <div></div>
+
+    <div>
+      <ReusableDoodleVideo
+        canvasWidth={galleryItemWidth}
+        canvasHeight={galleryItemHeight}
+        boardDbPath={'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7'}
+      />
     </div>
 
-    <div style="width: 268px; height: 120px; border: solid red 2px"></div>
-
-    <div style="width: 268px; height: 120px; border: solid red 2px">
-      <!-- <RenderlessListenToBoard dbPath={`classes/AsUl1VWQ7zzxZsD5epL7/blackboards/` + 'AsUl1VWQ7zzxZsD5epL7'} let:boardDoc={boardDoc}>
-        {#if boardDoc}
-          <RenderlessFetchStrokes dbPath={`classes/AsUl1VWQ7zzxZsD5epL7/blackboards/` + 'AsUl1VWQ7zzxZsD5epL7'}
-            let:fetchStrokes={fetchStrokes}
-            autoFetchStrokes
-            let:strokesArray={strokesArray}
-          >
-            <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
-              <DoodleVideo 
-                {strokesArray} 
-                audioDownloadURL={boardDoc.audioDownloadURL}
-                backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-              > 
-              </DoodleVideo>
-            </div>
-          </RenderlessFetchStrokes>
-        {/if}
-      </RenderlessListenToBoard> -->
-    </div>
+    <div></div>
+    <div></div>
   </div>
 </div>
 
@@ -124,19 +61,10 @@
 <!-- </html> -->
 
 <script>
-  import { user, canvasWidth, canvasHeight, drawerWidth, adminUIDs } from '../store.js'
-  import DoodleVideo from '$lib/DoodleVideo.svelte'
-	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-	import { lazyCallable } from '../helpers/actions.js'
+  import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'
 
-  let boardsDbPath = `classes/Mev5x66mSMEvNz3rijym/blackboards/`
-	let boardID = 'B0npFZMsV3PMAxapkGy1'
-
-  canvasWidth.set(560)
-	canvasHeight.set(340)
-
-
+  const galleryItemWidth = 360 
+  const galleryItemHeight = 240 
 </script>
 
 
@@ -146,7 +74,7 @@
      -moz-transform: rotateY($deg) translateZ(288px);
       -ms-transform: rotateY($deg) translateZ(288px);
        -o-transform: rotateY($deg) translateZ(288px);
-          transform: rotateY($deg) translateZ(288px);
+          transform: rotateY($deg) translateZ(576px); // was 288, makes the rotation bigger, sort of the radius of rotation
 }
 
 @mixin transform-origin() {
@@ -179,8 +107,8 @@
 
 // container size has an effect
 .container {
-  width: 210px;
-  height: 140px;
+  width: 420px; // was w h 210 and 140
+  height: 280px;
   // position: absolute;
   top: 50%;
   left: 50%;
@@ -210,18 +138,18 @@
   -o-animation: rotating 20s linear infinite;
   -ms-animation: rotating 20s linear infinite;
   animation: rotating 20s linear infinite;
-  // &:hover {
-  // animation-play-state:paused;
-  // -o-animation-play-state:paused;
-  // -moz-animation-play-state:paused;
-	// -webkit-animation-play-state:paused;
-  // }
+  &:hover {
+  animation-play-state:paused;
+  -o-animation-play-state:paused;
+  -moz-animation-play-state:paused;
+	-webkit-animation-play-state:paused;
+  }
   div {
     display: block;
-    position: absolute;
-    // width: 268px;
-    // height: 120px;
-    // border: 2px solid #000;
+    position: absolute; // removing this will create a spiral
+    width: 360px; // 360 was original width height was 180, 120
+    height: 240px; // 240
+    border: 2px solid #000;
     img {
       width:100%;
       height:100%;
@@ -231,7 +159,7 @@
       @include transform(0deg);
     }
     &:nth-child(2) {
-      @include transform(40deg); // 268
+      @include transform(40deg); // 180
     }
     &:nth-child(3) { 
       @include transform(80deg); // 80

@@ -64,7 +64,7 @@
   on:touchstart={touchStart}
   on:touchmove={touchMove}
   on:touchend={touchEnd}
-  style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${$canvasWidth}px; height: ${$canvasHeight}px`}
+  style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight}px`}
 >
 </canvas>
 
@@ -76,7 +76,7 @@
     left: 0;
     z-index: 0;
     display: block;
-    background-color: hsl(0,0%,0%, 0.80); width: ${$canvasWidth}px; height: ${$canvasHeight}px
+    background-color: hsl(0,0%,0%, 0.80); width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight}px
   `}
 >
 
@@ -89,7 +89,7 @@
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { currentTool, canvasWidth, canvasHeight, assumedCanvasWidth, onlyAllowApplePencil } from '../store.js'
+  import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil } from '../store.js'
 
   export let strokesArray
   export let currentTime = 0 // assumes it's always rounded to nearest 0.1
@@ -179,10 +179,10 @@
 
   // resize on initialization
   $: if (ctx) {
-    canvas.width = $canvasWidth
-    canvas.height = $canvasHeight
-    bgCanvas.width = $canvasWidth
-    bgCanvas.height = $canvasHeight
+    canvas.width = $maxAvailableWidth
+    canvas.height = $maxAvailableHeight
+    bgCanvas.width = $maxAvailableWidth
+    bgCanvas.height = $maxAvailableHeight
     if (strokesArray) {
       for (const stroke of strokesArray) {
         drawStroke(stroke, null, ctx, canvas)
@@ -196,7 +196,7 @@
       renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
   }
 
-  $: normalizedLineWidth = $currentTool.lineWidth * ($canvasWidth / $assumedCanvasWidth)
+  $: normalizedLineWidth = $currentTool.lineWidth * ($maxAvailableWidth / $assumedCanvasWidth)
 
   /**
    * Reactive statement that triggers each time `strokesArray` changes
@@ -336,7 +336,7 @@
       startTime: currentTime,
       color: $currentTool.color,
       lineWidth: $currentTool.lineWidth,
-      canvasWidth: $canvasWidth,
+      maxAvailableWidth: $maxAvailableWidth,
       isErasing: $currentTool.type === 'eraser',
       points: [],
       sessionID: '123' // TODO: initialize in store
@@ -402,7 +402,7 @@
   }
 
   function wipeUI () {
-    ctx.clearRect(0, 0, $canvasWidth, $canvasHeight)
+    ctx.clearRect(0, 0, $maxAvailableWidth, $maxAvailableHeight)
   }
 
   function dragstart_handler (e, boardID, originalIndex) {

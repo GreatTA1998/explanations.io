@@ -1,6 +1,9 @@
 <!-- The delete button is added here -->
 <div style="position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5">
-  <Button on:click={togglePlaySpeed} variant="raised" style="margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;">
+  <Button on:click={togglePlaySpeed} 
+    variant="raised" 
+    style="height: {20 * (canvasWidth / assumedCanvasWidth)}px; margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;"
+  >
     <div style="color: white">
       {playbackSpeed}x speed
     </div>
@@ -13,7 +16,15 @@
 
 <!-- The play button double-duties as an indication that the video has finished fetching -->
 {#if !recursiveSyncer && isPlaying === false && strokesArray}
-  <span on:click={startAudioPlayer} class="material-icons overlay-center" style="color: white; font-size: 6rem; width: 120px; height: 120px; z-index: 5">
+  <!-- font-size: {60 * (canvasWidth / assumedCanvasWidth)}rem; -->
+  <span on:click={startAudioPlayer} 
+    class="material-icons overlay-center" 
+    style="color: white; 
+    width: {120 * (canvasWidth / assumedCanvasWidth)}px; 
+    height: {120 * (canvasWidth / assumedCanvasWidth)}px; 
+    z-index: 5;
+    font-size: 2rem;"
+  >
     play_circle
   </span>
 {/if}
@@ -31,8 +42,8 @@
       z-index: 1; 
       margin-top: 0; 
       margin-left: 0; 
-      width: ${$canvasWidth}px; 
-      height: ${$canvasHeight}px; 
+      width: ${canvasWidth}px; 
+      height: ${canvasHeight}px; 
       background-color: transparent`
     }
   >
@@ -46,8 +57,8 @@
       top: 0;
       left: 0;
       display: block;
-      width: ${$canvasWidth}px; 
-      height: ${$canvasHeight}px;
+      width: ${canvasWidth}px; 
+      height: ${canvasHeight}px;
       background-color: hsl(0,0%,0%, 0.80);`
     }
   >
@@ -61,21 +72,22 @@
     bind:this={AudioPlayer} 
     src={audioDownloadURL} 
     controls 
-    style={`width: ${$canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}>
+    style={`width: ${canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}>
   </audio>
 </div>
 
 <script>
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { canvasWidth, canvasHeight, assumedCanvasWidth } from '../store.js'
+  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../store.js' // note `canvasWidth` was misleading
   import Button, { Label } from '@smui/button'
-  // import IconButton from '@smui/icon-button';
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once
    */
 
+  export let canvasWidth = $maxAvailableWidth // reminder: `maxWidth` is just the default value
+  export let canvasHeight = $maxAvailableHeight
   export let strokesArray
   export let audioDownloadURL
   export let backgroundImageDownloadURL
@@ -97,11 +109,13 @@
   const dispatch = createEventDispatcher()
 
   // resize on initialization
+  // reminder: if canvasWidth changes, this whole reactive statement will run!
+  // same goes with canvasHeight
   $: if (ctx) {
-    canvas.width = $canvasWidth
-    canvas.height = $canvasHeight
-    bgCanvas.width = $canvasWidth
-    bgCanvas.height = $canvasHeight
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+    bgCanvas.width = canvasWidth
+    bgCanvas.height = canvasHeight
     
     if (strokesArray) {
       rerenderStrokes() // sometimes resize happens when `strokesArray` is not yet hydrated
@@ -218,7 +232,7 @@
 
     // visual logic
     nextFrameIdx = 0;
-    ctx.clearRect(0, 0, $canvasWidth, $canvasHeight) // video could already be rendered as an initial preview or completed video
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight) // video could already be rendered as an initial preview or completed video
     syncRecursively()
   }
   
@@ -257,7 +271,7 @@
 
   function renderFrame ({ strokeIndex, pointIndex }) {
     const stroke = strokesArray[strokeIndex]
-    const normalizedLineWidth = stroke.lineWidth * ($canvasWidth / $assumedCanvasWidth)
+    const normalizedLineWidth = stroke.lineWidth * (canvasWidth / $assumedCanvasWidth)
     connectTwoPoints(
       stroke.points, 
       pointIndex, 
@@ -289,7 +303,9 @@
 
 <style>
 .overlay-center {
-  position: absolute; width: 20px; height: 20px;
+  position: absolute; 
+  width: 20px; 
+  height: 20px;
   top: 0;
   left: 0;
   right: 0;

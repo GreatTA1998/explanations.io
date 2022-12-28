@@ -1,7 +1,7 @@
 import { canvasWidth, assumedCanvasWidth } from '../store.js'
 import { get } from 'svelte/store'
 
-export function calculateCanvasDimensions () {
+export function computeMaxAvailableDimensions () {
   const appElement = document.getElementById('main-content')
   let availableHeight
   let availableWidth
@@ -34,12 +34,6 @@ export function calculateCanvasDimensions () {
       width: maxBoardHeight * aspectRatio
     }
   }
-}
-
-// I know...
-export function calculateCanvasDimensions2 () {
-  const normalD = calculateCanvasDimensions()
-  return { width: 0.9 * normalD.width, height: 0.9 * normalD.height}
 }
 
 // the last destructured property `canvasWidth` is renamed, AND also has a default value

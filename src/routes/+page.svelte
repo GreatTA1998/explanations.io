@@ -47,6 +47,7 @@
 						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-top: 60px; margin-bottom: 200px;">
 							Life-saving explanations <br> without the scheduling, walking & waiting
 						</p>
+
 						<p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
 							
 						</p>
@@ -55,142 +56,132 @@
 							<ImageGallery/>
 
 							<div style="margin-left: auto">
-								<div style="margin-left: auto; margin-right: 30px; margin-bottom: 25px; max-width: 400px; font-family: sans-serif; font-size: 1.8rem; line-height: 1.5;">
-									Designed for classes with busy Office Hours
+								<div style="margin-left: auto; margin-right: 60px; margin-bottom: 25px; max-width: 380px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
+									Designed for students who want to spend less time on classes with busy Office Hours
 								</div>
 
 								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
 								<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 180px">
 									<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 75px">
 										<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-											Explore available classes
+											Check availability & pricing
 										</Label>
 									</Button>
 								</div>
 							</div>
 						</div>
+						<!-- End of flexbox -->
 
+						<Content style="padding-left: 0px; padding-right: 0px; margin-top: 20px; border-top: 1px solid #eee;">
+							<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+								How it works
+							</p>
+							
+							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 2rem; margin-top: 1px; opacity: 0.8;">
+								Inspired by KhanAcademy, we hire folks who can explain hard things with easy-to-understand videos. 
+								<br>
+								Because the videos can efficiently help n students at no additional effort, 
+								it is then possible for these tutors to address the remaining needs of every student <i>individually</i>, until nothing is left unexplained.
+								<!-- It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
+							</div>
+	
+							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
+					
+							</div>
 
-						<!-- <div class="card-container">
-							<Card> -->
-								<!-- TO-DO: add a divider, maybe just use the card border -->
-									<Content style="padding-left: 0px; padding-right: 0px; margin-top: 900px; border-top: 1px solid #eee;">
-										<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
-											How it works
-										</p>
-										
-										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 2rem; margin-top: 1px; opacity: 0.8;">
-											Inspired by KhanAcademy, we hire folks who can explain hard things with easy-to-understand videos. 
-											<br>
-											Because the videos can efficiently help n students at no additional effort, 
-											it is then possible for these tutors to address the remaining needs of every student <i>individually</i>, until nothing is left unexplained.
-											<!-- It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
+							<div class="step-container" style="margin-bottom: 160px;">
+								<div style="width: 800px;">
+									<div class="step-one-two-three-font">
+										Step 1
+									</div>
+									<div class="step-title-font-styles">
+										Type your question
+									</div>
+									<div class="step-description-font-styles">
+										This is usually a pset problem "How do you setup pset 3b finding a firm's cost function"
+										or a concept " can we review income & substitution effects?"
+									</div>
+								</div>
+							</div>
+	
+							<div class="step-container" style="margin-bottom: 160px;">
+								<div style="display: flex">
+									<div>
+										<div class="step-one-two-three-font">
+											Step 2
 										</div>
-				
-										<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
-								
+										<div class="step-title-font-styles">
+											Your tutor will reply with a blackboard video
 										</div>
+										<div class="step-description-font-styles">
+											How long will it take?
 
-										<div class="step-container" style="margin-bottom: 160px;">
-											<div style="width: 800px;">
-												<div class="step-one-two-three-font">
-													Step 1
-												</div>
-												<div class="step-title-font-styles">
-													Type your question
-												</div>
-												<div class="step-description-font-styles">
-													This is usually a pset problem "How do you setup pset 3b finding a firm's cost function"
-													or a concept " can we review income & substitution effects?"
-												</div>
-											</div>
+											<br><br>
+											The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
 										</div>
-				
-										<div class="step-container" style="margin-bottom: 160px;">
-											<div style="display: flex">
-												<div>
-													<div class="step-one-two-three-font">
-														Step 2
-													</div>
-													<div class="step-title-font-styles">
-														Your tutor will reply with a blackboard video
-													</div>
-													<div class="step-description-font-styles">
-														How long will it take?
+									</div>
 
-														<br><br>
-														The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
-													</div>
-												</div>
+									<div style="display: flex; justify-content: space-evenly">
+										<!-- position: static; margin: 0 auto;  -->
+										<!-- 
+											<iframe 
+												src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
+												style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+											</iframe> 
+										-->
+										<div style="width: 90%; height: 70%;">
+											<ReusableDoodleVideo
+												canvasWidth={500}
+												canvasHeight={360}
+												boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+											/>
+										</div>
+								</div>
+							</div>
+	
+							<div class="step-container" style="margin-bottom: 120px">
+								<div class="step-one-two-three-font">
+									Step 3
+								</div>
+								<div class="step-title-font-styles">
+									Follow-up over voice chat
+								</div>
+								<div class="step-description-font-styles">
+									You can ask follow-up questions via the comments section on the video
+									<br><br>
+									Even better, if both of you are active on the website at the same time, so you can just quickly voice chat. 
+									This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
+									all of which you'll see each others names as being active in the server. 
+							
+									<!-- <br><br>
+									In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
+								</div>
+							</div>
+	
+							<div style="display: flex; align-content: center;">
+								<div>
+									<div class="step-one-two-three-font">
+										Step 4
+									</div>
+									<div class="step-title-font-styles">
+										Revisit explanations anytime
+									</div>
+									<div class="step-description-font-styles">
+										This means when other students ask questions, you benefit from their resultant videos.
+										The server is free to access after the semester finishes.
+									</div>
+									<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
+										Explore last semester's 14.01 server
+									</Button>
+								</div>
 
-												<div style="display: flex; justify-content: space-evenly">
-													<!-- position: static; margin: 0 auto;  -->
-													<!-- 
-														<iframe 
-															src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
-															style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-														</iframe> 
-													-->
-													<div style="width: 90%; height: 70%;">
-														<ReusableDoodleVideo
-															canvasWidth={500}
-															canvasHeight={360}
-															boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
-														/>
-													</div>
-											</div>
-										</div>
-				
-										<div class="step-container" style="margin-bottom: 120px">
-											<div class="step-one-two-three-font">
-												Step 3
-											</div>
-											<div class="step-title-font-styles">
-												Follow-up over voice chat
-											</div>
-											<div class="step-description-font-styles">
-												You can ask follow-up questions via the comments section on the video
-												<br><br>
-												Even better, if both of you are active on the website at the same time, so you can just quickly voice chat. 
-												This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
-												all of which you'll see each others names as being active in the server. 
-										
-												<!-- <br><br>
-												In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
-											</div>
-										</div>
-				
-										<div style="display: flex; align-content: center;">
-											<div>
-												<div class="step-one-two-three-font">
-													Step 4
-												</div>
-												<div class="step-title-font-styles">
-													Revisit explanations anytime
-												</div>
-												<div class="step-description-font-styles">
-													This means when other students ask questions, you benefit from their resultant videos.
-													The server is free to access after the semester finishes.
-												</div>
-												<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
-													Explore last semester's 14.01 server
-												</Button>
-											</div>
-
-											<div>
-												<!-- <Button on:click={() => clicked++} color="primary" variant="raised" class="button-shaped-round">
-													Explore the 14.01 server
-												</Button> -->
-											</div>
-										</div>
-									</Content>
-				
-									<!-- <Actions>
-										<Button on:click={() => clicked++} color="secondary">
-										</Button>
-										<Button on:click={() => clicked++}>
-										</Button>
-									</Actions> -->
+								<div>
+									<!-- <Button on:click={() => clicked++} color="primary" variant="raised" class="button-shaped-round">
+										Explore the 14.01 server
+									</Button> -->
+								</div>
+							</div>
+						</Content>
 						<div>
 
 						</div>
@@ -265,7 +256,7 @@
 
 									To figure out why that is, I’ve talked to various faculty & students and went down rabbit holes. We talked about lots of specific things, things like how to keep semesters consistent despite rotating teachers, how we lose the TA explanations and student notes, pedagogical beliefs on attendance and collaboration, what does good material look like etc.
 
-									But after some recent interviews, I believe the most fundamental force that is rarely discussed is incentives: what exactly are the reward structures for teachers to innovate?
+									But after some recent interviews, I've come to believe that the most fundamental problem is incentives: what exactly are the reward structures for teachers to innovate?
 								</div>
 								<a href="https://medium.com/@eltonlin1998/the-hidden-story-of-teaching-at-a-research-university-8bcd47bac62" target="_blank" style="text-decoration: none !important;">
 									<Button variant="outlined">
@@ -306,15 +297,12 @@
 <script>	
 	import ImageGallery from '../lib/ImageGallery.svelte'
 	import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
-	import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signInAnonymously } from 'firebase/auth'
 	import Button, { Label } from '@smui/button';
-	import { onMount, tick, onDestroy } from 'svelte'
 	import { goto } from '$app/navigation'
-	import { user, canvasWidth, canvasHeight, drawerWidth, adminUIDs } from '../store.js'
+	import { user, } from '../store.js'
 	import TabBar from '@smui/tab-bar';
 	import Tab, { Icon } from '@smui/tab';
 	import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
-	import IconButton from '@smui/icon-button';
 	import Card, {
     Content,
     PrimaryAction,
@@ -322,19 +310,13 @@
     ActionButtons,
     ActionIcons,
   } from '@smui/card';
+	import { onMount, tick, onDestroy } from 'svelte'
 
 	let topAppBar
 
 	let tabs = [{ label: 'Students', icon: 'hail'}, { label: 'Tutors', icon: 'local_taxi'}]
 	let active = tabs[0]
-
-	let foo
-
-	// quickfix:
-
-	canvasWidth.set(700)
-	canvasHeight.set(460)
-
+	
 	function resumeToMostRecentServer () {
 		goto($user.mostRecentClassAndRoomID, { replaceState: true })
 	}

@@ -21,7 +21,6 @@
     </div>
 
     <div></div>
-
     <div></div>
 
     <div>
@@ -36,29 +35,6 @@
     <div></div>
   </div>
 </div>
-
-
-<!-- .container
-    #carousel
-        div
-            img(src="http://static.superiorwallpapers.com/images/lthumbs/2016-03/11645_Elephant-runing-in-the-jungle-HD-wild-animal-wallpaper.jpg")
-        div
-            img(src="http://wallpaper-gallery.net/images/wild-animals-wallpaper/wild-animals-wallpaper-26.jpg")
-        div
-            img(src="https://lh6.ggpht.com/6TsHWuxMlid2E5sHB-j6MqFlAbJzEnEBv3khmIcfFHYe9_YMNzxi5jOpUa3NBMXLK6E=h900")
-        div
-            img(src="http://wallpaper-gallery.net/images/wallpapers-of-wild-animals/wallpapers-of-wild-animals-27.jpg")
-        div
-            img(src="http://pixelperc.com/wp-content/uploads/2016/09/download-wallpapers-free-wild-animals-wallpaper-inside-wild-animals-wallpapers-hd-free-download-728x453.jpg")
-        div
-            img(src="http://chainimage.com/images/wild-animals-wallpaper-retina-hd-download-8.jpg")
-        div
-            img(src="http://livehdwallpaper.com/wp-content/uploads/2016/08/Wild-Animals-Wallpaper-HD-Pictures.jpg")
-        div
-            img(src="http://www.pixelstalk.net/wp-content/uploads/2016/03/Cool-Wild-Animal-Wallpaper-For-Desktop-620x388.jpg")
-        div
-            img(src="http://wallpaper-gallery.net/images/wild-animals-wallpaper/wild-animals-wallpaper-15.jpg") -->
-<!-- </html> -->
 
 <script>
   import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'

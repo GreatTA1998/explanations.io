@@ -81,8 +81,8 @@
 	}
 
 	function adjustContentDimensions () {
-		canvasWidth.set(width) 
-		canvasHeight.set(height)
+		// canvasWidth.set(width) 
+		// canvasHeight.set(height)
 	}
 
 	onMount(() => {

@@ -1,4 +1,4 @@
-import { canvasWidth, assumedCanvasWidth } from '../store.js'
+import { assumedCanvasWidth, maxAvailableWidth } from '../store.js'
 import { get } from 'svelte/store'
 
 export function computeMaxAvailableDimensions () {
@@ -36,11 +36,14 @@ export function computeMaxAvailableDimensions () {
   }
 }
 
+// TO-DO: this means DoodleVideos which are rendered smaller will look bad
+// which components use this draw function?
+
 // the last destructured property `canvasWidth` is renamed, AND also has a default value
 export function drawStroke ({ points, color, lineWidth, isErasing }, pointPeriod = null, ctx, canvas) {
   return new Promise(async resolve => {
     for (let i = 1; i < points.length; i++) {
-      const normalizedLineWidth = lineWidth * (get(canvasWidth) / get(assumedCanvasWidth)) // `get()` is used to read value when we're not in a .svelte file 
+      const normalizedLineWidth = lineWidth * (get(maxAvailableWidth) / get(assumedCanvasWidth)) // `get()` is used to read value when we're not in a .svelte file 
       connectTwoPoints(points, i, isErasing, ctx, color, normalizedLineWidth, canvas)
       if (pointPeriod !== null) { // delay for a duration of pointPeriod
         await new Promise(resolve => setTimeout(resolve, pointPeriod))

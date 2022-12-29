@@ -20,8 +20,8 @@
   <span on:click={startAudioPlayer} 
     class="material-icons overlay-center" 
     style="color: white; 
-    width: {120 * (canvasWidth / assumedCanvasWidth)}px; 
-    height: {120 * (canvasWidth / assumedCanvasWidth)}px; 
+    width: {240 * (canvasWidth / assumedCanvasWidth)}px; 
+    height: {240 * (canvasWidth / assumedCanvasWidth)}px; 
     z-index: 5;
     font-size: 2rem;"
   >

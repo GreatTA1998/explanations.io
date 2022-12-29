@@ -185,7 +185,7 @@
     bgCanvas.height = $maxAvailableHeight
     if (strokesArray) {
       for (const stroke of strokesArray) {
-        drawStroke(stroke, null, ctx, canvas)
+        drawStroke(stroke, null, ctx, canvas, canvasWidth)
       }
     }
   }
@@ -220,7 +220,7 @@
     else if (m < n) {
       if (m === 0) { // blackboard just finished loading i.e. there can be 500 strokes
         for (const stroke of strokesArray) {
-          drawStroke(stroke, null, ctx, canvas)
+          drawStroke(stroke, null, ctx, canvas, canvasWidth)
         }
         localStrokesArray = [...strokesArray]
 
@@ -233,7 +233,8 @@
             newStroke, 
             newStroke.startTime !== newStroke.endTime ? getPointDuration(newStroke) : null, // instantly or smoothly,
             ctx, 
-            canvas
+            canvas,
+            canvasWidth
           )
           localStrokesArray.push(newStroke)
 
@@ -255,7 +256,7 @@
 
         // draw to current progress
         for (const stroke of strokesArray) {
-          drawStroke(stroke, null, ctx, canvas)
+          drawStroke(stroke, null, ctx, canvas, canvasWidth)
         }
       }
       // [WHY USE DEBOUNCE]: if number of strokes > 500, then deletion happens in multiple batches that can 
@@ -428,7 +429,7 @@
       strokeNumber: strokesArray.length + 1,
       lineWidth: stroke.lineWidth + 2, // TWO extra pixel to guarantee it covers the visible stroke
     }
-    drawStroke(antiStroke, null, ctx, canvas)
+    drawStroke(antiStroke, null, ctx, canvas, canvasWidth)
     handleEndOfStroke(antiStroke);
 
     // update pointer to last visible stroke (can be a while if many strokes before were also undone)

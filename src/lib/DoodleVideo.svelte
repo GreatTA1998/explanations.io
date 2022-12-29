@@ -188,7 +188,7 @@
   
   function initDoodleVideo () {
     for (const stroke of strokesArray) {
-      drawStroke(stroke, null, ctx, canvas)
+      drawStroke(stroke, null, ctx, canvas, canvasWidth)
     }
 
     /**
@@ -293,7 +293,7 @@
         renderFramesUntilCurrentTime()
       } else {
         for (const stroke of strokesArray) {
-          drawStroke(stroke, null, ctx, canvas)
+          drawStroke(stroke, null, ctx, canvas, canvasWidth)
         }
       }
       resolve();

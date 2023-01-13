@@ -44,7 +44,7 @@
 
 				{#if active.label === 'Students'}
 					<Content style="padding-left: 60px; padding-right: 60px;">
-						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-top: 60px; margin-bottom: 200px;">
+						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-top: 60px; margin-bottom: 140px;">
 							Life-saving explanations <br> without the scheduling, walking & waiting
 						</p>
 
@@ -55,16 +55,17 @@
 						<div style="display: flex;  align-items: end">
 							<ImageGallery/>
 
+							<!-- Is it for me -->
 							<div style="margin-left: auto">
-								<div style="margin-left: auto; margin-right: 60px; margin-bottom: 25px; max-width: 380px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
-									Designed for students who want to spend less time on classes with busy Office Hours
+								<div style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; max-width: 340px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
+									Your classes should be an enjoyable challenge, not an all-consuming time-sink.
 								</div>
 
 								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
-								<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 180px">
+								<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 380px">
 									<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 75px">
 										<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-											Check availability & pricing
+											See prices & availability
 										</Label>
 									</Button>
 								</div>
@@ -72,16 +73,32 @@
 						</div>
 						<!-- End of flexbox -->
 
+						<!-- Copied from Webflow's website -->
+						<div style="
+							margin-top: 220px;
+							margin-bottom: 100px;
+							font-family: 'Graphik web',sans-serif; font-size: 5.75rem;
+							line-height: 1.25;
+							font-weight: 500;
+							letter-spacing: -.02em;
+							max-width: 100%"
+						>
+							Explain provides a mix of video explanations and personal tutoring - useful when Office Hours is too busy
+						</div>
+
+
+
 						<Content style="padding-left: 0px; padding-right: 0px; margin-top: 20px; border-top: 1px solid #eee;">
 							<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 								How it works
 							</p>
 							
-							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 2rem; margin-top: 1px; opacity: 0.8;">
-								Inspired by KhanAcademy, we hire folks who can explain hard things with easy-to-understand videos. 
+							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
+								We hire previous students who can explain things well; because the videos can efficiently help n students at no additional effort, 
+								it is then possible for these tutors to address the remaining needs of every student individually, until nothing is left unexplained.
 								<br>
-								Because the videos can efficiently help n students at no additional effort, 
-								it is then possible for these tutors to address the remaining needs of every student <i>individually</i>, until nothing is left unexplained.
+								<br>
+
 								<!-- It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
 							</div>
 	
@@ -95,7 +112,7 @@
 										Step 1
 									</div>
 									<div class="step-title-font-styles">
-										Type your question
+										Open the website to type a question
 									</div>
 									<div class="step-description-font-styles">
 										This is usually a pset problem "How do you setup pset 3b finding a firm's cost function"
@@ -222,9 +239,6 @@
 						<Button on:click={() => clicked++} color="secondary">
 							<Label>Schedule to interview</Label>
 						</Button>
-						<!-- <Button on:click={() => clicked++}>
-							<Label>Learn more</Label>
-						</Button> -->
 					</Actions>
 				{/if}
 			</Card>
@@ -238,9 +252,7 @@
 						</p>
 						<!-- Social proof: student reviews -->
 						<!-- Social proof: company  -->
-						<!-- Social proof: hours watched -->
 						<!-- Get to know the teachers -->
-						<!-- Blog posts -->
 
 						<div class="one-blog-container" style="display: flex;">
 							<iframe width="600" height="380" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -256,7 +268,7 @@
 
 									To figure out why that is, I’ve talked to various faculty & students and went down rabbit holes. We talked about lots of specific things, things like how to keep semesters consistent despite rotating teachers, how we lose the TA explanations and student notes, pedagogical beliefs on attendance and collaboration, what does good material look like etc.
 
-									But after some recent interviews, I've come to believe that the most fundamental problem is incentives: what exactly are the reward structures for teachers to innovate?
+									But after some recent interviews, I've come to believe that the most fundamental problem is incentives: what faculty would be so crazy as to focus on teaching, when their main focus should be research?
 								</div>
 								<a href="https://medium.com/@eltonlin1998/the-hidden-story-of-teaching-at-a-research-university-8bcd47bac62" target="_blank" style="text-decoration: none !important;">
 									<Button variant="outlined">
@@ -334,7 +346,11 @@
 
 <style>
 .step-one-two-three-font {
-	color: #000000; opacity: 0.5; font-family: sans-serif; margin-bottom: 12px; font-size: 1.5rem;
+	color: #000000; 
+	opacity: 0.5; 
+	font-family: sans-serif; 
+	margin-bottom: 12px; 
+	font-size: 1.2rem;
 }
 
 .step-title-font-styles {
@@ -342,7 +358,7 @@
 }
 
 .step-description-font-styles {
-	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.5rem;
+	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.4rem;
 }
 
 .blog-description-font-styles {
@@ -423,11 +439,11 @@ li {
 
 </style>
 
-<!-- 	<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture> -->
-<!-- 
+<!-- 	
+	<picture>
+		<source srcset="svelte-welcome.webp" type="image/webp" />
+		<img src="svelte-welcome.png" alt="Welcome" />
+	</picture> 
 <style>
 	section {
 		display: flex;

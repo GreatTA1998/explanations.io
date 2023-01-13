@@ -1,7 +1,7 @@
 <!-- Copied from https://codepen.io/RustamAbraham/pen/BWzVxo -->
-<div class="container" style="margin-left: 200px; margin-bottom: 160px;">
+<div class="container" style="margin-left: 250px; margin-bottom: 200px; margin-top: 40px">
   <div id="carousel">
-    <div>
+    <div style="border: none;">
       <ReusableDoodleVideo
         canvasWidth={galleryItemWidth}
         canvasHeight={galleryItemHeight}
@@ -9,10 +9,10 @@
       />
     </div>
 
-    <div></div>
-    <div></div>
+    <div class="unselectable"></div>
+    <div class="unselectable"></div>
 
-    <div>
+    <div style="border: none;">
       <ReusableDoodleVideo
         canvasWidth={galleryItemWidth}
         canvasHeight={galleryItemHeight}
@@ -20,10 +20,10 @@
       />
     </div>
 
-    <div></div>
-    <div></div>
+    <div class="unselectable"></div>
+    <div class="unselectable"></div>
 
-    <div>
+    <div style="border: none;">
       <ReusableDoodleVideo
         canvasWidth={galleryItemWidth}
         canvasHeight={galleryItemHeight}
@@ -31,16 +31,16 @@
       />
     </div>
 
-    <div></div>
-    <div></div>
+    <div class="unselectable"></div>
+    <div class="unselectable"></div>
   </div>
 </div>
 
 <script>
   import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'
 
-  const galleryItemWidth = 360 
-  const galleryItemHeight = 240 
+  const galleryItemWidth =  540 // 360, 240 --1.5x->  540 360
+  const galleryItemHeight = 360
 </script>
 
 
@@ -49,16 +49,16 @@
   -webkit-transform: rotateY($deg) translateZ(288px);
      -moz-transform: rotateY($deg) translateZ(288px);
       -ms-transform: rotateY($deg) translateZ(288px);
-       -o-transform: rotateY($deg) translateZ(288px);
-          transform: rotateY($deg) translateZ(576px); // was 288, makes the rotation bigger, sort of the radius of rotation
+       -o-transform: rotateY($deg) translateZ(288px); // then 576
+          transform: rotateY($deg) translateZ(600px); // was 288, makes the rotation bigger, sort of the radius of rotation
 }
 
 @mixin transform-origin() {
-  -webkit-transform-origin: 60% 50%;
-     -moz-transform-origin: 60% 50%;
-       -o-transform-origin: 60% 50%;
-      -ms-transform-origin: 60% 50%;
-          transform-origin: 60% 50%;
+  // -webkit-transform-origin: 60% 50%;
+  //    -moz-transform-origin: 60% 50%;
+  //      -o-transform-origin: 60% 50%; 
+  //     -ms-transform-origin: 60% 50%;
+          transform-origin: 50% 0%; // the "rotation" of the container should be the midpoint of x-axis, hence 50%
 }
 
 @mixin transform_($deg) {
@@ -77,22 +77,22 @@
 
   to {
     @include transform-origin;
-    @include transform_(-360deg);
+    @include transform_(360deg); // originally is 360 degrees, which is like anti-clockwise or the opposite
   }
 }
 
-// container size has an effect
 .container {
-  width: 420px; // was w h 210 and 140
-  height: 280px;
+  width: 360px; // was w h 210 and 140, then 360, 240
+  height: 240px; 
   // position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  // top: 50%;
+  // left: 50%;
+  transform: translate(-60%,-50%);
   -webkit-perspective: 1100px; 
   -moz-perspective: 1100px;
   -ms-perspective: 1100px;
-  perspective: 1100px; // was 1100
+  perspective: 2000px; // was 1100
+  // border: 2px solid red;
 }
 
 #carousel {
@@ -109,23 +109,28 @@
   -o-transition: -o-transform 1s;
   -ms-transition: -ms-transform 1s;
   transition: transform 1s;
-  -webkit-animation: rotating 20s linear infinite;
-  -moz-animation: rotating 20s linear infinite;
-  -o-animation: rotating 20s linear infinite;
-  -ms-animation: rotating 20s linear infinite;
-  animation: rotating 20s linear infinite;
+  // -webkit-animation: rotating 20s linear infinite;
+  // -moz-animation: rotating 20s linear infinite;
+  // -o-animation: rotating 20s linear infinite;
+  // -ms-animation: rotating 20s linear infinite;
+  animation: rotating 30s linear infinite;
   &:hover {
-  animation-play-state:paused;
-  -o-animation-play-state:paused;
-  -moz-animation-play-state:paused;
-	-webkit-animation-play-state:paused;
+  // animation-play-state:paused;
+  // -o-animation-play-state:paused;
+  // -moz-animation-play-state:paused;
+	// -webkit-animation-play-state:paused;
   }
   div {
     display: block;
+    box-sizing: border-box; // so same size as videos with/without border
     position: absolute; // removing this will create a spiral
-    width: 360px; // 360 was original width height was 180, 120
-    height: 240px; // 240
-    border: 2px solid #000;
+    width: 360px; // was w h 210 and 140, then 360, 240
+    height: 240px; // 360 was original width height was 180, 120, then 360, 240
+    // 360px galleryHeight (otherwise was 240)
+
+    // height: 240px; // 240
+    border: 1px solid rgba(112, 112, 112, 0.8);
+    border-left: none;
     img {
       width:100%;
       height:100%;
@@ -175,5 +180,19 @@
 
 @keyframes rotating {
   @include rotating;
+}
+
+.unselectable {
+    pointer-events: none;
+
+    // below didn't make a difference in localhost, but just in-case
+    // different enironments
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 </style>

@@ -72,7 +72,7 @@
         // if not a direct URL visit, resume to the most recent class
         const { params } = $page 
         if (!params.class && !params.room) { 
-          if ($user.mostRecentClassAndRoomID) {
+          if ($user.mostRecentClassAndRoomID && $user.phoneNumber) { // quick-fix
             goto($user.mostRecentClassAndRoomID)
           }
         }

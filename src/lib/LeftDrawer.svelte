@@ -72,12 +72,14 @@
   // adjust dimensions whenever $drawerWidth changes
   $: if ($drawerWidth) {
     tick().then(() => {
-      if (!document) return
-      const { width, height } = computeMaxAvailableDimensions()
-      // TO-DO: it's strange that we need to manually bind canvas width and height to these new values
-      // explore setting store variables within pure JS helper files
-      maxAvailableWidth.set(width)
-      maxAvailableHeight.set(height)
+      // TO-DO: refactor computeMaxAvailableDimensions later
+
+      // if (document === undefined) return
+      // const { width, height } = computeMaxAvailableDimensions()
+      // // TO-DO: it's strange that we need to manually bind canvas width and height to these new values
+      // // explore setting store variables within pure JS helper files
+      // maxAvailableWidth.set(width)
+      // maxAvailableHeight.set(height)
     })
   }
 

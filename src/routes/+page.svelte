@@ -107,18 +107,24 @@
 							</div>
 
 							<div class="step-container" style="margin-bottom: 160px;">
-								<div style="width: 800px;">
-									<div class="step-one-two-three-font">
-										Step 1
+								<div style="display: flex">
+									<div style="width: 800px;">
+										<div class="step-one-two-three-font">
+											Step 1
+										</div>
+										<div class="step-title-font-styles">
+											Open the website to type a question
+										</div>
+										<div class="step-description-font-styles">
+											This is usually a pset problem "How do you setup pset 3b finding a firm's cost function"
+											or a concept " can we review income & substitution effects?"
+										</div>
 									</div>
-									<div class="step-title-font-styles">
-										Open the website to type a question
-									</div>
-									<div class="step-description-font-styles">
-										This is usually a pset problem "How do you setup pset 3b finding a firm's cost function"
-										or a concept " can we review income & substitution effects?"
-									</div>
+
+									<img src="https://i.imgur.com/TYkGFHO.gif" width="450" height="100">
+
 								</div>
+
 							</div>
 	
 							<div class="step-container" style="margin-bottom: 160px;">
@@ -157,21 +163,29 @@
 							</div>
 	
 							<div class="step-container" style="margin-bottom: 120px">
-								<div class="step-one-two-three-font">
-									Step 3
-								</div>
-								<div class="step-title-font-styles">
-									Follow-up over voice chat
-								</div>
-								<div class="step-description-font-styles">
-									You can ask follow-up questions via the comments section on the video
-									<br><br>
-									Even better, if both of you are active on the website at the same time, so you can just quickly voice chat. 
-									This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
-									all of which you'll see each others names as being active in the server. 
-							
-									<!-- <br><br>
-									In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
+								<div style="display: flex">
+									<div>
+										<div class="step-one-two-three-font">
+											Step 3
+										</div>
+										<div class="step-title-font-styles">
+											Follow-up over voice chat
+										</div>
+										<div class="step-description-font-styles">
+											You can ask follow-up questions via the comments section on the video
+											<br><br>
+											Even better, if both of you are active on the website at the same time, so you can just quickly voice chat. 
+											This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
+											all of which you'll see each others names as being active in the server. 
+									
+											<!-- <br><br>
+											In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
+										</div>
+									</div>
+
+									<img src="https://i.imgur.com/8tnRfRB.gif" height="100" width="300">
+
+
 								</div>
 							</div>
 	
@@ -185,7 +199,7 @@
 									</div>
 									<div class="step-description-font-styles">
 										This means when other students ask questions, you benefit from their resultant videos.
-										The server is free to access after the semester finishes.
+										The server is restricted to students who paid during the semester; afterwards it becomes free for everyone forever.
 									</div>
 									<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
 										Explore last semester's 14.01 server
@@ -215,31 +229,155 @@
 						</Button> -->
 					</Actions>
 				{:else}
-					<Content>
+					<Content style="padding-left: 60px; padding-right: 60px;">
 						<!-- font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px" -->
 						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 110px; margin-top: 60px">
-							Earn by impact, not time spent
+							Higher pay, fewer responsibilities
 						</p>
 
-						Just teaching, without the responsibilities of grading
-						Lower hours, higher pay
+				
 
-						<p>3-10 secs. upload time for 5 min. blackboard videos</p>
+						<div style="display: flex;  align-items: end">
+							<ImageGallery/>
 
+							<!-- Is it for me -->
+							<div style="margin-left: auto">
+								<div style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; max-width: 340px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
+									Let your video explanantions earn money for you - while you do other things.
+								</div>
+
+								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
+								<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 380px">
+									<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 75px">
+										<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
+											Sign up to interview
+										</Label>
+									</Button>
+								</div>
+							</div>
+						</div>
 						<!-- <p>
 							Wage is O(n)
 							For example: 
-							  - 10 students signed up, each for $10/week
+								- 10 students signed up, each for $10/week
 								- You receive $100/week
 						</p> -->
+						<!-- <Actions>
+							<Button on:click={() => clicked++} color="secondary">
+								<Label>Sign up to interview</Label>
+							</Button>
+						</Actions> -->
+					
+						<Content style="padding-left: 0px; padding-right: 0px; margin-top: 20px; border-top: 1px solid #eee;">
+							<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+								How pay works
+							</p>
 
+							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
+								Because you get paid proportional to how many students you help, there's no limit on how high you get paid.
+								When starting with just 1 student, Explain guarantees a minimum wage that matches HKN ($17/hr) and math learning center ($19/hr).
+								<br>
+								<br>
+
+								<!-- It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
+							</div>
+	
+							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
+					
+							</div>
+
+							<div class="step-container" style="margin-bottom: 160px;">
+								<div style="display: flex">
+									<div style="width: 800px;">
+										<div class="step-one-two-three-font">
+											Step 1
+										</div>
+										<div class="step-title-font-styles">
+											Start with 1 student
+										</div>
+										<div class="step-description-font-styles">
+											You'd talk and meet in person once
+										</div>
+									</div>
+
+									<!-- <img src="https://i.imgur.com/TYkGFHO.gif" width="450" height="100"> -->
+								</div>
+
+							</div>
+	
+							<div class="step-container" style="margin-bottom: 160px;">
+								<div style="display: flex">
+									<div>
+										<div class="step-one-two-three-font">
+											Step 2
+										</div>
+										<div class="step-title-font-styles">
+											Use video explanations to wisely
+										</div>
+										<div class="step-description-font-styles">
+											You start to use more video explanations (like Sal Khan and his nephew),
+											this brings more flexibility into your work hours e.g. get your work out of the way in the morning,
+											, and commuting in the snow is no longer necessary
+											<br><br>
+											3-10 secs. upload time for 5 min. blackboard videos
+
+										</div>
+									</div>
+
+									<div style="display: flex; justify-content: space-evenly">
+										<iframe 
+										src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
+										style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+									</iframe> 
+										<!-- position: static; margin: 0 auto;  -->
+										<!-- 
+											<iframe 
+												src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
+												style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+											</iframe> 
+										-->
+										<div style="width: 90%; height: 70%;">
+											<!-- <ReusableDoodleVideo
+												canvasWidth={500}
+												canvasHeight={360}
+												boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+											/>
+										</div> -->
+								</div>
+							</div>
+	
+							<div class="step-container" style="margin-bottom: 120px">
+								<div style="display: flex">
+									<div>
+										<div class="step-one-two-three-font">
+											Step 3
+										</div>
+										<div class="step-title-font-styles">
+											Adjust for n students
+										</div>
+										<div class="step-description-font-styles">
+											Different students will have different needs, but their common concerns about a pset problem, or a fundamental concept 
+											is often addressable with a recorded explanation. Your salary scales O(n). 
+											This can be challenging, but it can also be easy. It requires a little bit of experimentation.
+											<br><br>
+											1 student = $19/hour (up to 2 hours)
+											2 students: $19/hour (up to 3 hours)
+											3 students: $20/hour (3 hours)
+											4 students, $21/hour (up to 3 hours)
+											10 students: $38/hour, 4 hours
+											20 students: $60/hour, 5 hours
+											30 students: $90/hour, 5 hours
+											<!-- <br><br>
+											In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
+										</div>
+									</div>
+
+									<img src="https://i.imgur.com/8tnRfRB.gif" height="100" width="300">
+
+								</div>
+							</div>
 						</Content>
-
-					<Actions>
-						<Button on:click={() => clicked++} color="secondary">
-							<Label>Schedule to interview</Label>
-						</Button>
-					</Actions>
+					</Content>
 				{/if}
 			</Card>
 

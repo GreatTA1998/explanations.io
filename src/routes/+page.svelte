@@ -3,7 +3,7 @@
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
-					<img src="logo.png" width="52" height="46" style="margin-left: 0px;">
+					<img src="logo.png" alt="logo" width="52" height="46" style="margin-left: 0px;">
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
 					</Title>
@@ -44,22 +44,27 @@
 
 				{#if active.label === 'Students'}
 					<Content style="padding-left: 60px; padding-right: 60px;">
-						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-top: 60px; margin-bottom: 140px;">
-							Life-saving explanations <br> without the scheduling, walking & waiting
+						<div class="header-flex">
+						
+						<p 
+							class="header-title"
+							style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90);"
+						>
+							Life-saving explanations <br> without the wait time
 						</p>
 
-						<p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
-							
-						</p>
+						<!-- <p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
+						</p> -->
 
-						<div style="display: flex;  align-items: end">
-							<ImageGallery/>
-
-							<!-- Is it for me -->
-							<div style="margin-left: auto">
-								<div style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; max-width: 340px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
-									Your classes should be an enjoyable challenge, not an all-consuming time-sink.
-								</div>
+						<!-- copied from webflow.com -->
+						<div style="display: flex; -webkit-flex-direction: column; justify-content: flex-end; -webkit-align-items: flex-start;">
+							<!-- style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; max-width: 340px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;" -->
+							<!-- max-width: 340px; -->
+							<div
+								class="header-subcopy"
+								style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
+								Less walking, waiting, scheduling & struggling, so there's time to actually sleep.
+							</div>
 
 								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
 								<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 380px">
@@ -70,6 +75,27 @@
 									</Button>
 								</div>
 							</div>
+						</div>
+
+						<div style="display: flex; justify-content: center; align-items: end;">
+							<ImageGallery/>
+
+							<!-- Is it for me -->
+							<!-- <div style="margin-left: auto"> -->
+								<!-- <div style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; max-width: 340px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
+									Your classes should be an enjoyable challenge, not an all-consuming time-sink.
+								</div> -->
+
+								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
+								<!-- <div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 380px">
+									<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 75px">
+										<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
+											See prices & availability
+										</Label>
+									</Button>
+								</div> -->
+							<!-- </div> -->
+
 						</div>
 						<!-- End of flexbox -->
 
@@ -83,10 +109,8 @@
 							letter-spacing: -.02em;
 							max-width: 100%"
 						>
-							Explain provides a mix of video explanations and personal tutoring - useful when Office Hours is too busy
+							Explain provides a mix of video explanations and personal tutoring - offered when Office Hours is too crowded
 						</div>
-
-
 
 						<Content style="padding-left: 0px; padding-right: 0px; margin-top: 20px; border-top: 1px solid #eee;">
 							<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
@@ -94,8 +118,8 @@
 							</p>
 							
 							<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
-								We hire previous students who can explain things well; because the videos can efficiently help n students at no additional effort, 
-								it is then possible for these tutors to address the remaining needs of every student individually, until nothing is left unexplained.
+								We hire previous students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently help n students at no additional effort, 
+								it is then possible for these tutors to address all your questions, until nothing is left unexplained.
 								<br>
 								<br>
 
@@ -121,7 +145,7 @@
 										</div>
 									</div>
 
-									<img src="https://i.imgur.com/TYkGFHO.gif" width="450" height="100">
+									<img src="https://i.imgur.com/TYkGFHO.gif" width="450" height="90">
 
 								</div>
 
@@ -231,7 +255,10 @@
 				{:else}
 					<Content style="padding-left: 60px; padding-right: 60px;">
 						<!-- font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px" -->
-						<p style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 110px; margin-top: 60px">
+						<p 
+							class="header-title"
+							style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 0px; margin-top: 60px"
+						>
 							Higher pay, fewer responsibilities
 						</p>
 
@@ -483,6 +510,67 @@
 </script>
 
 <style>
+/* Copied from Webflow's home page inspector */
+@media only screen and (min-width: 1550px) {
+	.header-title {
+		font-size: 7rem;
+	}
+}
+
+.header-title {
+	max-width: 52vw;
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 7vw;
+	/* line-height: 1; */
+	font-weight: 500;
+
+	/* This turns to prevent <p> from taking additional height for no reason */
+	margin-top: 0;
+	margin-bottom: 0;
+
+	box-sizing: border-box;
+}
+
+@media only screen and (max-width: 991px) {
+	.header-title {
+		/* I don't know why !important is needed when webflow.com doesn't need it */
+		max-width: 85vw !important;
+		font-size: 9vw !important;
+	}
+}
+
+
+.header-flex {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 3%;
+	margin-bottom: 40px;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+
+	flex-wrap: wrap;
+}
+
+@media screen and (max-width: 991px) {
+.header-subcopy {
+		max-width: 55vw !important;
+		font-size: 1.3rem;
+	}
+}
+
+.header-subcopy {
+	max-width: 20vw;
+	margin-top: 0;
+	margin-bottom: 0.4em;
+	font-size: 1.2rem;
+	line-height: 1.5;
+}
+
 .step-one-two-three-font {
 	color: #000000; 
 	opacity: 0.5; 

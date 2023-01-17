@@ -1,5 +1,6 @@
 <!-- Copied from https://codepen.io/RustamAbraham/pen/BWzVxo -->
-<div class="container" style="margin-left: 250px; margin-bottom: 200px; margin-top: 40px">
+<!--  style="border: 2px solid red;" -->
+<div class="container">
   <div id="carousel">
     <div style="border: none;">
       <ReusableDoodleVideo
@@ -87,10 +88,11 @@
   // position: absolute;
   // top: 50%;
   // left: 50%;
-  transform: translate(-60%,-50%);
-  -webkit-perspective: 1100px; 
-  -moz-perspective: 1100px;
-  -ms-perspective: 1100px;
+  // transform: translate(-60%,-50%);
+
+  // -webkit-perspective: 1100px; 
+  // -moz-perspective: 1100px;
+  // -ms-perspective: 1100px;
   perspective: 2000px; // was 1100
   // border: 2px solid red;
 }
@@ -113,7 +115,7 @@
   // -moz-animation: rotating 20s linear infinite;
   // -o-animation: rotating 20s linear infinite;
   // -ms-animation: rotating 20s linear infinite;
-  animation: rotating 30s linear infinite;
+  animation: rotating 20s linear infinite;
   &:hover {
   // animation-play-state:paused;
   // -o-animation-play-state:paused;

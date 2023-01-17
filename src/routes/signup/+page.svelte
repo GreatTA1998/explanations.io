@@ -30,46 +30,27 @@
 </div>
 
 <AutoAdjust {topAppBar}>
-  <TabBar tabs={tabs} bind:active let:tab style="background-color: rgb(238, 238, 238)" variant="dense">
-    <!-- Note: the `tab` property is required! -->
-    <!-- stacked -->
-    <Tab {tab} minWidth indicatorSpanOnlyContent>
-      <!-- <Icon class="material-icons">{tab.icon}</Icon> -->
-      <Label>{tab.label}</Label>
-    </Tab>
-  </TabBar>
+  <div class="drawer-container" style="border: 2px solid red;">
+    <Drawer style="overflow-y: scroll; height: 100%; width: {340}px" class="mdc-elevation--z{5}">
+      <Content>
+        <List>
+          <div>Request a class</div>
 
-  <div>
-    {#if active.label === 'PILOTED CLASSES'}
-      <!-- <TabBar tabs={pilotedClasses} bind:selectedClass let:tab={tab2} style="background-color: rgb(238, 238, 238)" variant="dense">
-        <Tab tab={tab2} minWidth indicatorSpanOnlyContent>
-          <Label>{tab2.label}</Label>
-        </Tab>
-      </TabBar> -->
-    {:else}
-      <div>
-        Explain is new, and most classes have unique circumstances that makes it hard to start. 
-        However, if you're willing to take experimental risk, sign up. 
+          <div>
+            Department-sponsored classes
+          </div>
+          <div>14.01</div>
 
-        If you sign up for $10, our team will devote everything we can into establishing a pilot for you class.
-        In return for early sign-up, you get a 75% discount rate i.e. $10 for the entire semester. 
-        Worst-case if we can't start a pilot for your class, you'll automatically the full refund by February 10th. 
-      </div>
+          <div>
+            Experimental pilot classes
+          </div>
+          <div>18.06</div>
+        </List>
+      </Content>
+    </Drawer>
 
-      <div style="display: flex; justify-content: space-evenly">
-        <div>
-          Request a new class
-          <input placeholder="e.g. 18.06">
-          <button>IAP ASE</button>
-          <button>Spring 2022</button>
-          <button>Summer ASE</button>
-        </div>
-      </div>
-    {/if}
-  </div>
-
-  {#if active.label === 'PILOTED CLASSES'}
-    <Card>
+    <!-- Main content -->
+    <Card style="height: 100%; overflow-y: auto;">
       <Content>
         <div class="section-container">
           <div class="section-title">
@@ -77,12 +58,12 @@
           </div>
 
           <div class="section-subtitle">
-            Explain piloted in 14.01 Fall 2022; the Economics Department now provides a 90% subsidy to all students
+            Explain piloted in 14.01 Fall 2022
           </div>
 
           <Button color="secondary" variant="raised" style="height: 75px; margin-top: 40px;">
             <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-              Early sign-up for $1/semester
+              Sign-up for $0/semester
             </Label>
           </Button>
         </div>
@@ -107,10 +88,10 @@
 
         <div class="section-container">
           <div class="section-title">
-            Tutor editorial
+            Editorial
           </div>
           <div class="section-subtitle">
-            What we learnt from observing 14.01 across semesters
+            What's special about 14.01
           </div>
 
           <div class="editorial-font-styles" style="margin-top: 40px;">
@@ -171,10 +152,17 @@
             </Button>
           </a>
         </div>
+
+        <div class="section-container">
+          <div class="section-title">
+            Reviews
+          </div>
+        </div>
+
         <!-- End of page container -->
       </Content>
     </Card>
-  {/if}
+  </div>
 
   <!-- 
     The above class selection will completely influence the content displayed here.
@@ -211,6 +199,8 @@
 	import Tab, { Icon, Label } from '@smui/tab'
   import Textfield from '@smui/textfield'
   import Button from '@smui/button';
+  import Drawer, { AppContent } from '@smui/drawer'
+  import List, { Item, Text } from '@smui/list'
 
   let topAppBar
 
@@ -223,6 +213,12 @@
 </script>
 
 <style>
+  .drawer-container {
+    height: 100vh;
+    position: relative;
+    display: flex;
+  }
+
   .section-container {
     padding: 40px 40px; 
   }

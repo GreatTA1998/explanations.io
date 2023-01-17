@@ -42,44 +42,51 @@
 					</Tab>
 				</TabBar>
 
+				<!-- Container with padding -->
+				<div style="padding-left: 60px; padding-right: 60px;">
+
 				{#if active.label === 'Students'}
-					<Content style="padding-left: 60px; padding-right: 60px;">
+					<!-- <Content style="padding-left: 60px; padding-right: 60px;"> -->
 						<div class="header-flex">
-						
-						<p 
-							class="header-title"
-							style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90);"
-						>
-							Life-saving explanations <br> without the wait time
-						</p>
+							<p 
+								class="header-title"
+								style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90);"
+							>
+								Life-saving explanations <br> readily available
+							</p>
 
-						<!-- <p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
-						</p> -->
+							<!-- <p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
+							</p> -->
 
-						<!-- copied from webflow.com -->
-						<div style="display: flex; -webkit-flex-direction: column; justify-content: flex-end; -webkit-align-items: flex-start;">
+							<!-- copied from webflow.com -->
 							<!-- style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; max-width: 340px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;" -->
 							<!-- max-width: 340px; -->
-							<div
-								class="header-subcopy"
-								style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
-								Less walking, waiting, scheduling & struggling, so there's time to actually sleep.
-							</div>
-
-								<!-- TO-DO: say something e.g "is this for me" for oversubscribed classes with long Office Hour queues -->
-								<div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 380px">
-									<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 75px">
-										<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-											See prices & availability
-										</Label>
-									</Button>
+							<!-- Is this for me? -->
+							<!-- A different way of explaining it -->
+							
+							<div class="header-subcopy-wrapper" style="display: flex; -webkit-flex-direction: column; justify-content: flex-end; -webkit-align-items: flex-start;">
+								<!-- margin-left: auto; margin-right: 90px; margin-bottom: 25px;  -->
+								<div
+									class="header-subcopy"
+									style="font-family: sans-serif; font-size: 1.5rem; line-height: 1.5;"
+								>
+									Classes are enjoyable when you really understand what's going on
 								</div>
+
+								<!-- <div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 380px"> -->
+								<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 75px">
+									<Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
+										See prices & availability
+									</Label>
+								</Button>
+								<!-- </div> -->
 							</div>
+
 						</div>
+						<!-- End of flexbox -->
 
-						<div style="display: flex; justify-content: center; align-items: end;">
+						<div style="margin-top: 120px; display: flex; justify-content: center; align-items: end;">
 							<ImageGallery/>
-
 							<!-- Is it for me -->
 							<!-- <div style="margin-left: auto"> -->
 								<!-- <div style="margin-left: auto; margin-right: 90px; margin-bottom: 25px; max-width: 340px; font-family: sans-serif; font-size: 1.6rem; line-height: 1.5;">
@@ -101,15 +108,16 @@
 
 						<!-- Copied from Webflow's website -->
 						<div style="
-							margin-top: 220px;
+							margin-top: 600px;
 							margin-bottom: 100px;
-							font-family: 'Graphik web',sans-serif; font-size: 5.75rem;
+							font-family: 'Graphik web',sans-serif; font-size: 5rem;
 							line-height: 1.25;
 							font-weight: 500;
 							letter-spacing: -.02em;
 							max-width: 100%"
 						>
-							Explain provides a mix of video explanations and personal tutoring - offered when Office Hours is too crowded
+							Designed for classes with busy Office Hours, explain.mit.edu 
+							provides video explanations - with a sprinkle of personal tutoring.
 						</div>
 
 						<Content style="padding-left: 0px; padding-right: 0px; margin-top: 20px; border-top: 1px solid #eee;">
@@ -237,10 +245,9 @@
 								</div>
 							</div>
 						</Content>
-						<div>
-
-						</div>
-					</Content>
+						
+					<!-- End of container -->
+					<!-- </Content> -->
 
 					<Actions style="padding-left: 40px; padding-bottom: 15px;">
 						<!-- Previewable -->
@@ -518,8 +525,8 @@
 }
 
 .header-title {
-	max-width: 52vw;
-	margin-top: 0;
+	max-width: 58vw; /* wenflow is 52vw, but explanations is a long word */
+	margin-top: 0; 
 	margin-bottom: 0;
 	font-size: 7vw;
 	/* line-height: 1; */
@@ -569,6 +576,20 @@
 	margin-bottom: 0.4em;
 	font-size: 1.2rem;
 	line-height: 1.5;
+}
+
+@media screen and (max-width: 991px) {
+	.header-subcopy-wrapper {
+		max-width: 700px !important;
+		margin-top: 30px;
+		margin-left: 0;
+		font-size: 1.2rem;
+	}
+}
+
+/* TO-DO: do media query for smaller screen, max width expands to a larger width around 600 */
+.header-subcopy-wrapper {
+	max-width: 310px; 
 }
 
 .step-one-two-three-font {

@@ -1,5 +1,3 @@
-
-
 <!-- This component re-renders everytime classID changes: https://github.com/sveltejs/svelte/issues/1469#issuecomment-698955660 -->
 {#if $user.uid}
   {#key classID}

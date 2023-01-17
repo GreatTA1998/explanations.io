@@ -70,7 +70,7 @@
 									class="header-subcopy"
 									style="font-family: sans-serif; font-size: 1.5rem; line-height: 1.5;"
 								>
-									Classes are enjoyable when you really understand what's going on
+									Classes are enjoyable when you really understand what's going on.
 								</div>
 
 								<!-- <div style="margin-left: auto; margin-right: 125px; display: flex; justify-content: flex-end; margin-bottom: 380px"> -->
@@ -116,8 +116,8 @@
 							letter-spacing: -.02em;
 							max-width: 100%"
 						>
-							Designed for classes with busy Office Hours, explain.mit.edu 
-							provides video explanations - with a sprinkle of personal tutoring.
+							Designed for classes with busy Office Hours, explain.mit.edu answers your long-unresolved questions
+							with simple videos and a sprinkle of personal tutoring.
 						</div>
 
 						<Content style="padding-left: 0px; padding-right: 0px; margin-top: 20px; border-top: 1px solid #eee;">

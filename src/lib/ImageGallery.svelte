@@ -1,44 +1,53 @@
 <!-- Copied from https://codepen.io/RustamAbraham/pen/BWzVxo -->
 <!--  style="border: 2px solid red;" -->
-<div class="container">
-  <div id="carousel">
-    <div style="border: none;">
-      <ReusableDoodleVideo
-        canvasWidth={galleryItemWidth}
-        canvasHeight={galleryItemHeight}
-        boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
-      />
+{#if scaleFactor}
+  <div class="container" style="transform: scale({scaleFactor})">
+    <div id="carousel">
+      <div style="border: none;">
+        <ReusableDoodleVideo
+          canvasWidth={galleryItemWidth}
+          canvasHeight={galleryItemHeight}
+          boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+        />
+      </div>
+
+      <div class="unselectable"></div>
+      <div class="unselectable"></div>
+
+      <div style="border: none;">
+        <ReusableDoodleVideo
+          canvasWidth={galleryItemWidth}
+          canvasHeight={galleryItemHeight}
+          boardDbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q'}
+        />
+      </div>
+
+      <div class="unselectable"></div>
+      <div class="unselectable"></div>
+
+      <div style="border: none;">
+        <ReusableDoodleVideo
+          canvasWidth={galleryItemWidth}
+          canvasHeight={galleryItemHeight}
+          boardDbPath={'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7'}
+        />
+      </div>
+
+      <div class="unselectable"></div>
+      <div class="unselectable"></div>
     </div>
-
-    <div class="unselectable"></div>
-    <div class="unselectable"></div>
-
-    <div style="border: none;">
-      <ReusableDoodleVideo
-        canvasWidth={galleryItemWidth}
-        canvasHeight={galleryItemHeight}
-        boardDbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q'}
-      />
-    </div>
-
-    <div class="unselectable"></div>
-    <div class="unselectable"></div>
-
-    <div style="border: none;">
-      <ReusableDoodleVideo
-        canvasWidth={galleryItemWidth}
-        canvasHeight={galleryItemHeight}
-        boardDbPath={'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7'}
-      />
-    </div>
-
-    <div class="unselectable"></div>
-    <div class="unselectable"></div>
   </div>
-</div>
+{/if}
 
 <script>
   import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'
+  import { onMount } from 'svelte'
+
+  let scaleFactor
+
+  onMount(() => {
+    scaleFactor = window.innerWidth / 1600
+  })
 
   const galleryItemWidth =  540 // 360, 240 --1.5x->  540 360
   const galleryItemHeight = 360

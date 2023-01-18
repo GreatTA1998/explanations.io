@@ -50,9 +50,10 @@
 						<div class="header-flex">
 							<p 
 								class="header-title"
-								style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90);"
+								style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); padding-left: 60px"
+
 							>
-								Life-saving explanations <br> readily available
+								Life-saving videos <br> readily available
 							</p>
 
 							<!-- <p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
@@ -109,7 +110,7 @@
 						<!-- Copied from Webflow's website -->
 						<div class="intro-type" 
 						style="
-							margin-top: 600px;
+							margin-top: 400px;
 							margin-bottom: 100px;
 							font-family: 'Graphik web',sans-serif; font-size: 5rem;
 							line-height: 1.25;
@@ -140,7 +141,7 @@
 							</div>
 
 							<div class="step-container" style="margin-bottom: 160px;">
-								<div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between">
+								<div class="step-one-two-three-flexbox">
 									<div style="max-width: 800px">
 										<div class="step-one-two-three-font">
 											Step 1
@@ -162,17 +163,18 @@
 							</div>
 	
 							<div class="step-container" style="margin-bottom: 160px;">
-								<div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between">
+								<div class="step-one-two-three-flexbox">
 									<div style="max-width: 800px;">
 										<div class="step-one-two-three-font">
 											Step 2
 										</div>
+
 										<div class="step-title-font-styles">
 											Your tutor will reply with a blackboard video
 										</div>
+
 										<div class="step-description-font-styles">
 											How long will it take?
-
 											<br><br>
 											The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
 										</div>
@@ -191,7 +193,7 @@
 							</div>
 	
 							<div class="step-container" style="margin-bottom: 120px">
-								<div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between">
+								<div class="step-one-two-three-flexbox">
 									<div style="max-width: 800px;">
 										<div class="step-one-two-three-font">
 											Step 3
@@ -217,7 +219,7 @@
 								</div>
 							</div>
 	
-							<div style="display: flex; align-content: center;">
+							<div class="step-one-two-three-flexbox">
 								<div style="max-width: 800px;">
 									<div class="step-one-two-three-font">
 										Step 4
@@ -262,11 +264,15 @@
 							class="header-title"
 							style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 0px; margin-top: 60px"
 						>
-							Higher pay, fewer responsibilities
+							Higher pay, flexible commitment
 						</p>				
 
-						<div style="display: flex;  align-items: end">
+						<div style="margin-top: 120px; display: flex; justify-content: center; align-items: end;">
 							<ImageGallery/>
+						</div>
+
+						<div style="display: flex;  align-items: end">
+							<!-- <ImageGallery/> -->
 
 							<!-- Is it for me -->
 							<div style="margin-left: auto">
@@ -315,7 +321,7 @@
 							</div>
 
 							<div class="step-container" style="margin-bottom: 160px;">
-								<div style="display: flex; align-items: center; flex-wrap: wrap;">
+								<div class="step-one-two-three-flexbox">
 									<div style="width: 800px;">
 										<div class="step-one-two-three-font">
 											Step 1
@@ -334,7 +340,7 @@
 							</div>
 	
 							<div class="step-container" style="margin-bottom: 160px;">
-								<div style="display: flex">
+								<div class="step-one-two-three-flexbox">
 									<div>
 										<div class="step-one-two-three-font">
 											Step 2
@@ -352,11 +358,11 @@
 										</div>
 									</div>
 
-									<div style="display: flex; justify-content: space-evenly">
+									<div style="display: flex; justify-content: space-between; align-items: center;">
 										<iframe 
-										src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
-										style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-									</iframe> 
+											src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
+											style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+										</iframe> 
 										<!-- position: static; margin: 0 auto;  -->
 										<!-- 
 											<iframe 
@@ -371,11 +377,12 @@
 												boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
 											/>
 										</div> -->
+										</div>
 								</div>
 							</div>
 	
 							<div class="step-container" style="margin-bottom: 120px">
-								<div style="display: flex">
+								<div class="step-one-two-three-flexbox">
 									<div>
 										<div class="step-one-two-three-font">
 											Step 3
@@ -591,6 +598,13 @@
 /* TO-DO: do media query for smaller screen, max width expands to a larger width around 600 */
 .header-subcopy-wrapper {
 	max-width: 310px; 
+}
+
+.step-one-two-three-flexbox {
+	display: flex; 
+	align-items: center; 
+	justify-content: space-between; 
+	flex-wrap: wrap;
 }
 
 .step-one-two-three-font {

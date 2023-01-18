@@ -13,4 +13,8 @@
   <button>
     Request class for $1
   </button>
+
+  <button>
+    Offer tutoring service with video application
+  </button>
 </div>

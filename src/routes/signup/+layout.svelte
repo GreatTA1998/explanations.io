@@ -31,11 +31,11 @@
 
 
 <AutoAdjust {topAppBar}>
-  <div class="drawer-container" style="border: 2px solid red;">
-    <Drawer style="overflow-y: scroll; height: 100%; width: {340}px" class="mdc-elevation--z{5}">
+  <div class="drawer-container">
+    <Drawer style="overflow-y: scroll; height: 100%; width: {250}px" class="mdc-elevation--z{5}">
       <Content>
         <List>
-          <div on:click={redirectToRequestPage}>Request a class</div>
+          <div on:click={redirectToRequestPage}>Request/Offer a class</div>
 
           <div>
             Department-sponsored classes

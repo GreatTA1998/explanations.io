@@ -107,7 +107,8 @@
 						<!-- End of flexbox -->
 
 						<!-- Copied from Webflow's website -->
-						<div style="
+						<div class="intro-type" 
+						style="
 							margin-top: 600px;
 							margin-bottom: 100px;
 							font-family: 'Graphik web',sans-serif; font-size: 5rem;
@@ -139,8 +140,8 @@
 							</div>
 
 							<div class="step-container" style="margin-bottom: 160px;">
-								<div style="display: flex">
-									<div style="width: 800px;">
+								<div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between">
+									<div style="max-width: 800px">
 										<div class="step-one-two-three-font">
 											Step 1
 										</div>
@@ -153,15 +154,16 @@
 										</div>
 									</div>
 
-									<img src="https://i.imgur.com/TYkGFHO.gif" width="450" height="90">
+									<!-- The margin has no effect when same-line, but for small screens it'll leave a gap from the text -->
+									<img src="https://i.imgur.com/TYkGFHO.gif" width="450" height="90" style="margin-top: 50px;">
 
 								</div>
 
 							</div>
 	
 							<div class="step-container" style="margin-bottom: 160px;">
-								<div style="display: flex">
-									<div>
+								<div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between">
+									<div style="max-width: 800px;">
 										<div class="step-one-two-three-font">
 											Step 2
 										</div>
@@ -176,27 +178,21 @@
 										</div>
 									</div>
 
-									<div style="display: flex; justify-content: space-evenly">
-										<!-- position: static; margin: 0 auto;  -->
-										<!-- 
-											<iframe 
-												src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
-												style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-											</iframe> 
-										-->
-										<div style="width: 90%; height: 70%;">
+									<div style="display: flex; justify-content: space-evenly; justify-content: space-between">
+										<div style="width: 90%; height: 70%; margin-top: 50px;">
 											<ReusableDoodleVideo
-												canvasWidth={500}
-												canvasHeight={360}
+												canvasWidth={400}
+												canvasHeight={260}
 												boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
 											/>
 										</div>
+									</div>
 								</div>
 							</div>
 	
 							<div class="step-container" style="margin-bottom: 120px">
-								<div style="display: flex">
-									<div>
+								<div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between">
+									<div style="max-width: 800px;">
 										<div class="step-one-two-three-font">
 											Step 3
 										</div>
@@ -215,14 +211,14 @@
 										</div>
 									</div>
 
-									<img src="https://i.imgur.com/8tnRfRB.gif" height="100" width="300">
+									<img src="https://i.imgur.com/8tnRfRB.gif" height="100" width="280" style="margin-top: 50px;">
 
 
 								</div>
 							</div>
 	
 							<div style="display: flex; align-content: center;">
-								<div>
+								<div style="max-width: 800px;">
 									<div class="step-one-two-three-font">
 										Step 4
 									</div>
@@ -231,7 +227,7 @@
 									</div>
 									<div class="step-description-font-styles">
 										This means when other students ask questions, you benefit from their resultant videos.
-										The server is restricted to students who paid during the semester; afterwards it becomes free for everyone forever.
+										The server is restricted to paying students during the semester; afterwards it becomes free forever for everyone.
 									</div>
 									<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
 										Explore last semester's 14.01 server
@@ -267,9 +263,7 @@
 							style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 0px; margin-top: 60px"
 						>
 							Higher pay, fewer responsibilities
-						</p>
-
-				
+						</p>				
 
 						<div style="display: flex;  align-items: end">
 							<ImageGallery/>
@@ -321,7 +315,7 @@
 							</div>
 
 							<div class="step-container" style="margin-bottom: 160px;">
-								<div style="display: flex">
+								<div style="display: flex; align-items: center; flex-wrap: wrap;">
 									<div style="width: 800px;">
 										<div class="step-one-two-three-font">
 											Step 1
@@ -426,11 +420,11 @@
 						<!-- Social proof: company  -->
 						<!-- Get to know the teachers -->
 
-						<div class="one-blog-container" style="display: flex;">
-							<iframe width="600" height="380" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+							<iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 							<!-- <iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-							<div style="width: 900px; margin-left: 50px;">
+							<div style="max-width: 800px;">
 								<!-- blog title -->
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									The hidden story of teaching at a research university
@@ -450,10 +444,10 @@
 							</div>
 						</div>
 				
-						<div class="one-blog-container" style="display: flex;padding-bottom: 0; margin-bottom: 10px">
-							<iframe width="600" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
+							<iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							
-							<div style="width: 900px; margin-left: 50px;">
+							<div style="max-width: 800px;">
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									The impact of reducing workload on student life
 								</h1>
@@ -524,6 +518,14 @@
 	}
 }
 
+@media only screen and (max-width: 991px) {
+	.header-title {
+		/* I don't know why !important is needed when webflow.com doesn't need it */
+		max-width: 85vw !important;
+		font-size: 9vw !important;
+	}
+}
+
 .header-title {
 	max-width: 58vw; /* wenflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
@@ -539,11 +541,10 @@
 	box-sizing: border-box;
 }
 
-@media only screen and (max-width: 991px) {
-	.header-title {
-		/* I don't know why !important is needed when webflow.com doesn't need it */
-		max-width: 85vw !important;
-		font-size: 9vw !important;
+
+@media screen and (max-width: 991px) {
+	.intro-type {
+		font-size: 2.6rem !important;
 	}
 }
 
@@ -683,7 +684,6 @@ li {
 	.mdc-tab__text-label {
 		color: orange;
 	}
-
 </style>
 
 <!-- 	

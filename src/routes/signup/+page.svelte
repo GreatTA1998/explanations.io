@@ -31,27 +31,78 @@
 
         <Button color="secondary" variant="raised" style="height: 75px; margin-top: 40px;">
           <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-            Sign-up for $0/semester
+            Join for $0/semester
           </Label>
         </Button>
       </div>
 
       <div class="section-container">
-        Last semester's tutor: Elton Lin 
-        <div>
-          Most viewed videos (see right)
+        <div style="display: flex">
+          <div>
+            <div class="section-title">
+              Peer Tutors
+            </div>
+            <div class="section-subtitle">
+              Elton Lin
+            </div>
+            <div>
+              Last semester statistics
+            </div>
+            <div>
+              Most viewed videos (see right)
+            </div>
+
+            <div>
+              600 total view-minutes
+            </div>
+
+            <div>
+              10 average full-duration views per video
+            </div>
+            
+            <Button on:click={() => idxOfCurrentVideo -= 1}>
+              Left arrow
+            </Button>
+
+            <Button on:click={() => idxOfCurrentVideo += 1}>
+              Right arrow
+            </Button>
+            <Button variant="outlined">
+              Explore Fall 2022 server
+            </Button>
+          </div>
+
+          {#if topFiveVideosIDs.length > 0}
+            {#key idxOfCurrentVideo}
+              <RenderlessListenToBoard dbPath={boardsCollectionDbPath + '/' + topFiveVideosIDs[idxOfCurrentVideo]} 
+                let:boardDoc={boardDoc}
+              > 
+                <!-- ReusableDoodleVideo already has its own RenderlessListenToBoard -->
+                <div>
+                  <ReusableDoodleVideo 
+                    boardDbPath={boardsCollectionDbPath + '/' + topFiveVideosIDs[idxOfCurrentVideo]}
+                    canvasWidth={600}
+                    canvasHeight={400}
+                  />
+                </div>
+
+                {#if boardDoc}
+                  <!-- Display video statistics -->
+                  <div>
+                    Minutes viewed: {boardDoc.viewMinutes.toFixed(1)}
+                  </div>
+                  <!-- Display video description-->
+                  <div class="mozilla-documentation-styles">
+                    {boardDoc.description}
+                  </div>
+                {/if}
+              </RenderlessListenToBoard>
+            {/key}
+          {/if}
         </div>
 
-        <div>
-          600 total view-minutes
-        </div>
-
-        <div>
-          10 average full-duration views per video
-        </div>
-
-        <Button variant="outlined">
-          Explore Fall 2022 server
+        <Button>
+          Sign up to be a 14.01 tutor
         </Button>
       </div>
 
@@ -128,6 +179,8 @@
         <div class="section-title">
           Reviews
         </div>
+
+        <TextAreaAutoResizing></TextAreaAutoResizing>
       </div>
 
       <!-- End of page container -->
@@ -151,6 +204,10 @@
   import Button from '@smui/button';
   import Drawer, { AppContent } from '@smui/drawer'
   import List, { Item, Text } from '@smui/list'
+  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
+  import { collection, query, orderBy, limit, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc } from 'firebase/firestore'
+  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
 
   let topAppBar
 
@@ -160,6 +217,31 @@
   let pilotedClasses = [{ label: '14.01', icon: 'hail'}]
   let selectedClass = pilotedClasses[0]
   let tab2
+
+  let topFiveVideosIDs = []
+  let idxOfCurrentVideo = 0 
+
+  const id = 'Mev5x66mSMEvNz3rijym' // 14.01
+    const boardsCollectionDbPath = `classes/${id}/blackboards`
+
+  // fetch top 5 explanations in 14.01, with the text and the videos
+  // have tutors be able to offer classes all by themselves (almost like Shopify, all you need is an iPad)
+  // short on cash? 
+  async function fetchTopFiveVideos () {
+    const db = getFirestore()
+    const blackboardsRef = collection(db, boardsCollectionDbPath)
+    const q = query(blackboardsRef, orderBy('viewMinutes', 'desc'), limit(5))
+    
+    const querySnapshot = await getDocs(q) 
+    const temp = []
+    querySnapshot.forEach(doc => {
+      console.log(doc.id, " => ", doc.data())
+      temp.push(doc.id)
+    })
+    topFiveVideosIDs = [...temp]
+  }
+
+  fetchTopFiveVideos()
 </script>
 
 <style>
@@ -183,5 +265,13 @@
 
   .editorial-font-styles {
     font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.4rem;
+  }
+
+  .mozilla-documentation-styles {
+    font-family: "Segoe UI", Roboto, sans-serif; 
+    font-size: 1.4rem;
+    line-height: 1.6;
+    letter-spacing: 0.001em;
+    color: rgba(1, 11, 1, 1);
   }
 </style>

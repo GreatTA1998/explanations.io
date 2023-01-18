@@ -31,9 +31,10 @@
 
         <Button color="secondary" variant="raised" style="height: 75px; margin-top: 40px;">
           <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-            Join for $0/semester
+            Join for $20/week
           </Label>
         </Button>
+        <div>Cancel & refund any time, any reason within 1st week</div>
       </div>
 
       <div class="section-container">

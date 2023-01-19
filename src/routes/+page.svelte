@@ -43,14 +43,13 @@
 				</TabBar>
 
 				<!-- Container with padding -->
-				<div style="padding-left: 60px; padding-right: 60px;">
+				<div class="webflow-container">
 
 				{#if active.label === 'Students'}
-					<!-- <Content style="padding-left: 60px; padding-right: 60px;"> -->
 						<div class="header-flex">
 							<p 
 								class="header-title"
-								style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); padding-left: 60px"
+								style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90);"
 
 							>
 								Life-saving help <br> without the scheduling, walking & waiting
@@ -244,10 +243,6 @@
 								</div>
 							</div>
 						</Content>
-						
-					<!-- End of container -->
-					<!-- </Content> -->
-
 					<Actions style="padding-left: 40px; padding-bottom: 15px;">
 						<!-- Previewable -->
 
@@ -259,7 +254,6 @@
 						</Button> -->
 					</Actions>
 				{:else}
-					<Content style="padding-left: 60px; padding-right: 60px;">
 						<!-- font-size: 3.5rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 20px; margin-top: 30px" -->
 						<p 
 							class="header-title"
@@ -413,14 +407,13 @@
 								</div>
 							</div>
 						</Content>
-					</Content>
 				{/if}
 			</Card>
 
 
 			<div style="width: 100%;">
 				<Card>
-					<Content style="padding-left: 60px; padding-right: 60px;">
+					<div class="webflow-container">
 						<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
 							Recent blogs
 						</p>
@@ -428,7 +421,7 @@
 						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
 							<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							
-							<div style="max-width: 800px;">
+							<div style="max-width: 600px;">
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									The impact of reducing workload on student life
 								</h1>
@@ -446,7 +439,7 @@
 							<iframe width="560" height="300" style="margin-bottom: 30px" src="https://www.youtube.com/embed/ED3K-X8iaEU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 							<!-- <iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 							
-							<div style="max-width: 800px;">
+							<div style="max-width: 600px;">
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									Preventative help vs reactive help on Piazza
 								</h1>
@@ -464,7 +457,7 @@
 							<!-- <iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 							<iframe width="560" height="300" style="margin-bottom: 30px" src="https://www.youtube.com/embed/PVBRjv9Sdz0?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-							<div style="max-width: 800px;">
+							<div style="max-width: 600px;">
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									Tutorial system of Oxford & Cambridge
 								</h1>
@@ -480,7 +473,7 @@
 						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
 							<iframe width="560" height="300" style="margin-bottom: 30px;" src="https://www.youtube-nocookie.com/embed/PozzlsHw87w?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-							<div style="max-width: 800px;">
+							<div style="max-width: 600px;">
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									The complex debate around recorded lectures
 								</h1>
@@ -502,7 +495,7 @@
 							<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 							<!-- <iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-							<div style="max-width: 800px;">
+							<div style="max-width: 600px;">
 								<!-- blog title -->
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 									The story of teaching at a research university
@@ -521,7 +514,7 @@
 								</a>
 							</div>
 						</div>
-					</Content>
+					</div>
 				</Card>
 			</div>
 		<!-- </div> -->
@@ -747,6 +740,19 @@ li {
 
 	.mdc-tab__text-label {
 		color: orange;
+	}
+
+	@media screen and (max-width: 991px) {
+		.webflow-container {
+			width: 85%;
+		}
+	}
+
+	.webflow-container {
+		width: 90%; 
+		max-width: 1280px;
+		margin-right: auto;
+		margin-left: auto; 
 	}
 </style>
 

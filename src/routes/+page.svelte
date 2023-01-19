@@ -53,7 +53,8 @@
 								style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); padding-left: 60px"
 
 							>
-								Life-saving videos <br> readily available
+								Life-saving help <br> without the scheduling, walking & waiting
+								<!-- alterante version: readily available -->
 							</p>
 
 							<!-- <p style="font-size: 1.8rem; font-family: sans-serif; font-weight: 500; color: hsl(0,0%,0%, 0.70); text-align: right; margin-right: 110px;">
@@ -423,18 +424,88 @@
 						<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
 							Recent blogs
 						</p>
-						<!-- Social proof: student reviews -->
-						<!-- Social proof: company  -->
-						<!-- Get to know the teachers -->
+				
+						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
+							<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							
+							<div style="max-width: 800px;">
+								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
+									The impact of reducing workload on student life
+								</h1>
+								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
+									I just think I would like to be at a place where everyone gets an A, when they take off, like double O six or six. Because that means we're doing I mean, that's better for everyone, right? Like, I don't want to lower the standard. Right? I want people to understand it. But if we can do a better job of getting people to understand it quicker, and better, and you that's a win, because then they can move on to more complicated things, and be in a better situation.
+								</div>			
+								<Button variant="outlined">
+									Read story
+								</Button>		
+							</div>	
+						</div>
+
+						<!-- Shaunticlair -->
+						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
+							<iframe width="560" height="300" style="margin-bottom: 30px" src="https://www.youtube.com/embed/ED3K-X8iaEU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+							<!-- <iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+							
+							<div style="max-width: 800px;">
+								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
+									Preventative help vs reactive help on Piazza
+								</h1>
+								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
+									There were a couple of questions about Adadelta, it's one approach to make machine learning gradient descent better. Course note explanation was a paragraph long. Nobody had any idea what it meant. I looked at it and realized, all the information you need is technically there. They didn't miss anything, it's just ridiculously dense and not. Broke it apart, several pieces, it was a lengthy piece of work. I understand how that happens, but at the same time staff should be more careful about these sorts of things. 
+								</div>			
+								<Button variant="outlined">
+									Read story
+								</Button>		
+							</div>	
+						</div>
+
+						<!--  -->
+						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
+							<!-- <iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+							<iframe width="560" height="300" style="margin-bottom: 30px" src="https://www.youtube.com/embed/PVBRjv9Sdz0?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+							<div style="max-width: 800px;">
+								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
+									Tutorial system of Oxford & Cambridge
+								</h1>
+								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
+									A lot of the overhead is one copy right, it turns out if you use an image unlicensed, they have all licenses taken from some website where you can run into this issue where people sue you for using content. The second thing is that when they're thinking about is accessibility. There is a mandate for school where you have to have a transcript for a video. So hard of hearing can still access the entire lecture. As a result, these official channels have to work hard to have a big team of lawyers and editors go over the, fine-comb every screenshot used, textbook, then the transcripts, a ton of money, some subject matter to transcribe that lecture. Amazon mechanical turk to do it or something.
+								</div>			
+								<Button variant="outlined">
+									Read story
+								</Button>		
+							</div>	
+						</div>
+
+						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
+							<iframe width="560" height="300" style="margin-bottom: 30px;" src="https://www.youtube-nocookie.com/embed/PozzlsHw87w?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+							<div style="max-width: 800px;">
+								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
+									The complex debate around recorded lectures
+								</h1>
+								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
+									The goal of this essay is to provide an educated guess - from the naive student perspective - as to whether the cost outweighs the benefits. 
+
+									To guess the size of these arrows, we need a criteria, which is some utility function of each individual student's learning experience. Here are naïve examples:
+									Total unweighted grade - number of unhappy students + number of very happy students
+									Average class satisfaction - number of failed students
+									What's important is not the exact coefficients of each variable, but rather what they reflect about college education's core goals. We'll discuss utility functions more in later essays.									
+								</div>			
+								<Button variant="outlined">
+									Read story
+								</Button>		
+							</div>	
+						</div>
 
 						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-							<iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 							<!-- <iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 							<div style="max-width: 800px;">
 								<!-- blog title -->
 								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-									The hidden story of teaching at a research university
+									The story of teaching at a research university
 								</h1>
 								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
 									I had an inkling that the teaching at MIT didn’t live up to its world-class status. Yes, there were some great classes — but the quality was inconsistent.
@@ -449,27 +520,6 @@
 									</Button>
 								</a>
 							</div>
-						</div>
-				
-						<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
-							<iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-							
-							<div style="max-width: 800px;">
-								<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-									The impact of reducing workload on student life
-								</h1>
-								<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
-									I just think I would like to be at a place where everyone gets an A, when they take off, like double O six or six. Because that means we're doing I mean, that's better for everyone, right? Like, I don't want to lower the standard. Right? I want people to understand it. But if we can do a better job of getting people to understand it quicker, and better, and you that's a win, because then they can move on to more complicated things, and be in a better situation.
-								</div>			
-								<Button variant="outlined">
-									Read story
-								</Button>		
-							</div>	
-
-							<!-- <div style="font-family: sans-serif; margin-top: 50px; font-size: 0.8rem;">These video-essays were edited with permission from faculty and students
-								to open a discussion about counterintuitive ideas about education, and are not endorsements of Explain as a paid service. 
-								It's part of Students for Open & Universal Learning (SOUL)
-							</div> -->
 						</div>
 					</Content>
 				</Card>

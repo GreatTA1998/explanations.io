@@ -34,6 +34,9 @@
             Join for $20/week
           </Label>
         </Button>
+        <Button variant="outlined">
+          Explore Fall 2022 server
+        </Button>
         <div>Cancel & refund any time, any reason within 1st week</div>
       </div>
 
@@ -43,69 +46,84 @@
             <div class="section-title">
               Peer Tutors
             </div>
-            <div class="section-subtitle">
+            <!-- No statistics for now, or just write it in the bio -->
+            <!-- <div class="section-subtitle">
               Elton Lin
+            </div>             -->
+            <div style="display: flex; justify-content: space-between;">
+              <div class="tutor-business-card">
+                <Card>
+                  <PrimaryAction on:click={() => clicked++} padded>
+                    Elton Lin
+                    <br>
+          
+                    6-14, '20
+                    <br>
+                    600 combined view-minutes for Spring 2020
+                  </PrimaryAction>
+                </Card>
+              </div>
+          
+              <div class="tutor-business-card">
+                <Card>
+                  <PrimaryAction on:click={() => clicked++} padded>
+                    Be a 18.06 tutor
+                    <br>
+                    Just write a short bio
+                    and record an example video explanation
+                    <br>
+                  </PrimaryAction>
+                  <Button>
+                    Sign up to be a 14.01 tutor
+                  </Button>
+                  <!-- <Action>
+                    Get started
+                  </Action> -->
+                </Card>
+              </div>
             </div>
-            <div>
-              Last semester statistics
-            </div>
-            <div>
-              Most viewed videos (see right)
-            </div>
-
-            <div>
-              600 total view-minutes
-            </div>
-
-            <div>
-              10 average full-duration views per video
-            </div>
-            
-            <Button on:click={() => idxOfCurrentVideo -= 1}>
-              Left arrow
-            </Button>
-
-            <Button on:click={() => idxOfCurrentVideo += 1}>
-              Right arrow
-            </Button>
-            <Button variant="outlined">
-              Explore Fall 2022 server
-            </Button>
           </div>
+        </div>
+      </div>
+      <!-- End of section -->
 
-          {#if topFiveVideosIDs.length > 0}
+      <div class="section-container">
+        <ImageCarousel>
+
+           <!-- NOTE JUST IN-CASE: ReusableDoodleVideo already has its own RenderlessListenToBoard -->
+           {#if topFiveVideosIDs.length > 0}
             {#key idxOfCurrentVideo}
-              <RenderlessListenToBoard dbPath={boardsCollectionDbPath + '/' + topFiveVideosIDs[idxOfCurrentVideo]} 
-                let:boardDoc={boardDoc}
-              > 
-                <!-- ReusableDoodleVideo already has its own RenderlessListenToBoard -->
-                <div>
-                  <ReusableDoodleVideo 
-                    boardDbPath={boardsCollectionDbPath + '/' + topFiveVideosIDs[idxOfCurrentVideo]}
-                    canvasWidth={600}
-                    canvasHeight={400}
-                  />
-                </div>
+              {#each topFiveVideosIDs as id}
+                <div class="card">
+                  <RenderlessListenToBoard dbPath={boardsCollectionDbPath + '/' + id} 
+                    let:boardDoc={boardDoc}
+                  > 
+                    <div>
+                      <ReusableDoodleVideo 
+                        boardDbPath={boardsCollectionDbPath + '/' + id}
+                        canvasWidth={600}
+                        canvasHeight={400}
+                      />
+                    </div>
 
-                {#if boardDoc}
-                  <!-- Display video statistics -->
-                  <div>
-                    Minutes viewed: {boardDoc.viewMinutes.toFixed(1)}
-                  </div>
-                  <!-- Display video description-->
-                  <div class="mozilla-documentation-styles">
-                    {boardDoc.description}
-                  </div>
-                {/if}
-              </RenderlessListenToBoard>
+                    {#if boardDoc}
+                      <div>
+                        Minutes viewed: {boardDoc.viewMinutes.toFixed(1)}
+                      </div>
+                      <div class="mozilla-documentation-styles">
+                        {boardDoc.description}
+                      </div>
+                    {/if}
+                  </RenderlessListenToBoard>
+                </div>
+              {/each}
             {/key}
           {/if}
-        </div>
-
-        <Button>
-          Sign up to be a 14.01 tutor
-        </Button>
+        </ImageCarousel>
       </div>
+
+
+
 
       <div class="section-container">
         <div class="section-title">
@@ -209,6 +227,7 @@
   import { collection, query, orderBy, limit, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc } from 'firebase/firestore'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
+  import ImageCarousel from '$lib/ImageCarousel.svelte';
 
   let topAppBar
 
@@ -275,4 +294,31 @@
     letter-spacing: 0.001em;
     color: rgba(1, 11, 1, 1);
   }
+
+  .card:hover {
+    background-size: auto 100%;
+  }
+  .card:first-child { margin-left: 0; }
+  .card:last-child { margin-right: 0; }
+
+  .card p {
+    margin: 0;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 10vw;
+    color: white;
+    transition: all 0.3s;
+    transform: scale(1);
+  }
+  .card:hover p {
+    background-color: rgba(0,0,0,0.3);
+    transform: scale(1.3);
+  }
+
+  .tutor-business-card {
+    max-width: 400px; 
+    width: 90%;
+  }
+
 </style>

@@ -259,7 +259,7 @@
 							class="header-title"
 							style="font-size: 6rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.90); margin-bottom: 0px; margin-top: 60px"
 						>
-							Higher pay, flexible commitment
+							Higher pay, flexible hours
 						</p>				
 
 						<div style="margin-top: 120px; display: flex; justify-content: center; align-items: end;">

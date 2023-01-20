@@ -32,31 +32,68 @@
 
 <AutoAdjust {topAppBar}>
   <div class="drawer-container">
-    <Drawer style="overflow-y: scroll; height: 100%; width: {250}px" class="mdc-elevation--z{5}">
-      <Content>
+    <!-- TO-DO: figure out why shadow is not working -->
+    <Drawer style="overflow-y: scroll; height: 100%; width: {drawerWidth}px" class="mdc-elevation--z{5}">
+      <!-- <Content> -->
         <List>
-          <div on:click={redirectToRequestPage}>Request/Offer a class</div>
+          {#if drawerWidth === expandedWidth}
+            <div on:click={() => drawerWidth = collapsedWidth}>
+              <!-- mirror flipping `keyboard_tab` icon makes it look like the expand drawer icon -->
+              <span class="material-icons" style="transform: rotateY(180deg)">
+                keyboard_tab
+              </span>
+            </div>
+          {:else}
+            <div on:click={() => drawerWidth = expandedWidth}>
+              <span class="material-icons">
+                start
+              </span>
+            </div>
+          {/if}
+          
+          {#if drawerWidth === expandedWidth}
+            <Item on:click={redirectToRequestPage} style="display: flex; align-items: center;">
+              <span class="material-icons">
+                add
+              </span>
+              Request a class
+            </Item>
+            
+            <Item on:click={redirectToOpenAClassPage} style="display: flex; align-items: center;">
+              <span class="material-icons">
+                add
+              </span>
+              Open a class
+            </Item>
 
-          <div>
-            Department-sponsored classes
-          </div>
-          <div on:click={() => redirectToPage('')}>
-            14.01
-          </div>
-          <div>
-            Experimental pilot classes
-          </div>
-          <div on:click={() => redirectToPage('18.06 ID here')}>
-            18.06
-          </div>
+            <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 6px; font-size: 1.2rem;">
+              Department-sponsored
+            </Text>
+            <Item on:click={() => redirectToPage('')}>
+              14.01
+            </Item>
+
+            <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 6px; font-size: 1.2rem;">
+              Newly offered
+            </Text>
+            <Item on:click={() => redirectToPage('18.06 ID here')}>
+              18.06
+            </Item>
+            <Item on:click={() => redirectToPage('18.06 ID here')}>
+              6.390
+            </Item>
+          {/if}
         </List>
-      </Content>
+      <!-- </Content> -->
     </Drawer>
 
-    <!-- MAIN CONTENT INJECTED HERE VIA +PAGE.SVELTE -->
-    <slot>
+    <!-- No idea why AppContent would be needed, nor the class name -->
+    <AppContent class="app-content">
+      <!-- MAIN CONTENT INJECTED HERE VIA +PAGE.SVELTE -->
+      <slot>
 
-    </slot>
+      </slot>
+    </AppContent>
   </div>
 </AutoAdjust>
 
@@ -75,9 +112,17 @@
   import { goto } from '$app/navigation';
 
   let topAppBar
+  let drawerWidth = 240
+
+  let collapsedWidth = 25
+  let expandedWidth = 240
 
   function redirectToRequestPage () {
     goto('/signup/request')
+  }
+
+  function redirectToOpenAClassPage () {
+    goto('/signup/open')
   }
 
   function redirectToPage (id) {
@@ -95,4 +140,12 @@
     position: relative;
     display: flex;
   }
+
+  * :global(.app-content) {
+    flex: auto;
+    overflow: auto;
+    position: relative;
+    flex-grow: 1;
+  }
+ 
 </style>

@@ -12,6 +12,7 @@
       <div style="margin-top: 40px;">Class name</div>
       <input placeholder="e.g. Intro to Algorithms">
 
+      <!-- npm i -D @smui/segmented-button -->
       <div style="margin-top: 40px;">
         <input type="checkbox" value="Spring 2023">Spring 2023 
         <input type="checkbox" value="Summer ASE 2023">Summer ASE 2023
@@ -28,20 +29,9 @@
       For example, if it costs $20/week, you pay $10/week.
     </div>
   </div>
-
-  <h2 class="header-title-modified" style="font-size: 5rem;">
-    Offer a class
-  </h2>
-
-  <OpenYourShop/>
-
-  <Button>
-    Open up your shop
-  </Button>
 </div>
 
 <script>
-  import OpenYourShop from "$lib/OpenYourShop.svelte";
   import Button, { Label } from '@smui/button';
 
 </script>

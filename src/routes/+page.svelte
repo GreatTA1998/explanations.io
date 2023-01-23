@@ -539,11 +539,29 @@
     ActionIcons,
   } from '@smui/card';
 	import { onMount, tick, onDestroy } from 'svelte'
+	import { page } from '$app/stores'
 
 	let topAppBar
 
 	let tabs = [{ label: 'Students', icon: 'hail'}, { label: 'Tutors', icon: 'local_taxi'}]
 	let active = tabs[0]
+
+	$: if ($user.phoneNumber) {
+      // TO-DO: MOVE THIS BACK TO +LAYOUT.SVELTE
+
+		  // if you visit the root page, you will be redirected
+			// but this should reside in the home page itself, so it doesn't affect other pages
+			// also this test for home page is not accurate - it just tests that it's not in a class page, doesn't mean
+			// it's necessarily in a home page
+			// this is just legacy code
+			const { params } = $page 
+			if (!params.class && !params.room) { 
+				if ($user.mostRecentClassAndRoomID && $user.phoneNumber) { // quick-fix
+					console.log("redirecting to most recent class")
+					goto($user.mostRecentClassAndRoomID)
+				}
+			}
+	}
 	
 	function resumeToMostRecentServer () {
 		goto($user.mostRecentClassAndRoomID, { replaceState: true })

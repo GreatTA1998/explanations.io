@@ -54,10 +54,10 @@
               <div class="tutor-business-card">
                 <Card>
                   <PrimaryAction on:click={() => clicked++} padded>
-                    Elton Lin
+                    Elton Lin (hard-coded name) 
                     <br>
           
-                    6-14, '20
+                    6-14, '20 (hard-coded bio)
                     <br>
                     600 combined view-minutes for Spring 2020
                   </PrimaryAction>
@@ -67,18 +67,23 @@
               <div class="tutor-business-card">
                 <Card>
                   <PrimaryAction on:click={() => clicked++} padded>
-                    Be a 18.06 tutor
+                    <!-- TO-DO: split into first and last name -->
+                    <div>name*</div>
+                    <input name="" placeholder="Alice, Bob, Charles"/>
+                    
+                    <div>bio</div>
+                    <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
                     <br>
-                    Just write a short bio
-                    and record an example video explanation
                     <br>
+                    {#if !$user.phoneNumber}
+                    <div>Login first</div>
+                      <PhoneLogin/>
+                    {:else}
+                      <div>You're successfully logged in and your shop will be auto-saved, feel fullscreen
+                        to continuously improve on different days instead of all in one-go
+                      </div>
+                    {/if}
                   </PrimaryAction>
-                  <Button>
-                    Sign up to be a 14.01 tutor
-                  </Button>
-                  <!-- <Action>
-                    Get started
-                  </Action> -->
                 </Card>
               </div>
             </div>
@@ -89,18 +94,17 @@
 
       <div class="section-container">
         <ImageCarousel>
-
-           <!-- NOTE JUST IN-CASE: ReusableDoodleVideo already has its own RenderlessListenToBoard -->
-           {#if topFiveVideosIDs.length > 0}
+          <!-- NOTE JUST IN-CASE IT MATTERS: ReusableDoodleVideo already has its own RenderlessListenToBoard -->
+          {#if topFiveVideosIDs.length > 0}
             {#key idxOfCurrentVideo}
               {#each topFiveVideosIDs as id}
                 <div class="card">
-                  <RenderlessListenToBoard dbPath={boardsCollectionDbPath + '/' + id} 
+                  <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} 
                     let:boardDoc={boardDoc}
                   > 
                     <div>
                       <ReusableDoodleVideo 
-                        boardDbPath={boardsCollectionDbPath + '/' + id}
+                        boardDbPath={boardsCollectionDbPath + id}
                         canvasWidth={600}
                         canvasHeight={400}
                       />
@@ -119,11 +123,24 @@
               {/each}
             {/key}
           {/if}
+
+          <!-- RECORD A VIDEO -->
+          <!-- TO-DO: after recording you need to show the video,
+            instead of an infinitely linear loading indicator. 
+
+            Refactor: find a composable way to keep these kinds of logic manageable, 
+            and when it's well-tested, you can even bring it back to the [class]/[room]'s page component
+          -->
+          <div use:lazyCallable={decideBlackboardLocation} style={`width: ${500}px; height: ${600 + 40}px; position: relative`}>
+            {#if blackboardDbPath}
+              <ReusableLiveBlackboard
+                boardID={tutorDesignatedRoomID}
+                boardsDbPath={boardsCollectionDbPath}
+              />
+            {/if}
+          </div>
         </ImageCarousel>
       </div>
-
-
-
 
       <div class="section-container">
         <div class="section-title">
@@ -144,11 +161,13 @@
 
           f(x, y): bombardment with technical language like Marginal Rate of Substitution and Marginal Rate of Transformation. 
           These terms can cause misconceptions.
-          
-          For example, "substitution effect".
 
           To avoid these pitfalls in the first place, we like to spend 10 minutes on a 
-          to clearly review the constrained optimization of f(x, y), derive why the maximization condition is df/dx / df/dy 
+          to clearly review the constrained optimization of f(x, y), derive why the maximization condition is df/dx / df/dy.
+
+          For me, I never comfortably understand this 10-minutes worth of fundamental material even after the course finishes.
+          And I didn't know how to ask for it.
+          <!-- For example, "substitution effect".
 
           THEN look at it in economic terms - for example Marginal Utility per dollar.             
         
@@ -170,7 +189,6 @@
 
           Price is the COMMUNICATION. 
 
-
           We lose track of the notion of "invisible" hands. 
           Really the class is building the economy assuming individuals are selfish, and companies are selfish. 
           What would happen? 
@@ -181,8 +199,7 @@
             - Pi ()
 
           And welfare economics. The course then extends off, but this is the most HASS part of the course, 
-          and students usually don't have a problem with it. 
-      
+          and students usually don't have a problem with it.  -->
         </div>
 
         <div style="margin-bottom: 40px;"></div>
@@ -224,10 +241,15 @@
   import Drawer, { AppContent } from '@smui/drawer'
   import List, { Item, Text } from '@smui/list'
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
+  import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
   import { collection, query, orderBy, limit, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc } from 'firebase/firestore'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import ImageCarousel from '$lib/ImageCarousel.svelte';
+  import PhoneLogin from '$lib/PhoneLogin.svelte'
+  import { user } from '../../store.js'
+  import { portal, lazyCallable } from '../../helpers/actions.js'
+  import Blackboard from '$lib/Blackboard.svelte'
 
   let topAppBar
 
@@ -242,7 +264,11 @@
   let idxOfCurrentVideo = 0 
 
   const id = 'Mev5x66mSMEvNz3rijym' // 14.01
-    const boardsCollectionDbPath = `classes/${id}/blackboards`
+  const boardsCollectionDbPath = `classes/${id}/blackboards/`
+  let blackboardDbPath = '' // AF('') means not initialized
+
+  const hardCodedRoomID = 'Enu5WfaHs46qifEecQOu' // newest room on 14.01 that has nothing in it
+  const tutorDesignatedRoomID = hardCodedRoomID
 
   // fetch top 5 explanations in 14.01, with the text and the videos
   // have tutors be able to offer classes all by themselves (almost like Shopify, all you need is an iPad)
@@ -258,7 +284,12 @@
       console.log(doc.id, " => ", doc.data())
       temp.push(doc.id)
     })
+
     topFiveVideosIDs = [...temp]
+  }
+
+  async function decideBlackboardLocation () {
+    blackboardDbPath = `classes/${id}/blackboards/${tutorDesignatedRoomID}`
   }
 
   fetchTopFiveVideos()

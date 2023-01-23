@@ -140,7 +140,10 @@
       // User signed in successfully.
       const user = result.user;
       console.log('redirecting, user =', user)
-      goto('O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
+
+      // COUPLING THE REDIRECT LOGIN IS NOT GOOD, YOU WANT TO SEPARATE IT OUT
+
+      // goto('O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
       // goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
       // ...
     }).catch((error) => {

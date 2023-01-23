@@ -68,14 +68,10 @@
           id: dbUserSnapshot.id,
           ...dbUserSnapshot.data()
         })
-        
-        // if not a direct URL visit, resume to the most recent class
-        const { params } = $page 
-        if (!params.class && !params.room) { 
-          if ($user.mostRecentClassAndRoomID && $user.phoneNumber) { // quick-fix
-            goto($user.mostRecentClassAndRoomID)
-          }
-        }
+
+        // TODO: put redirect logic here, instead of +page components, so
+        // you can have have accurate if statements
+        // to redirect early without heavy page loads
       } 
 
       // user not logged in

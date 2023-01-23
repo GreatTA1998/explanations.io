@@ -64,7 +64,7 @@
   on:touchstart={touchStart}
   on:touchmove={touchMove}
   on:touchend={touchEnd}
-  style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight}px`}
+  style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${canvasWidth}px; height: ${canvasHeight}px`}
 >
 </canvas>
 
@@ -76,7 +76,7 @@
     left: 0;
     z-index: 0;
     display: block;
-    background-color: hsl(0,0%,0%, 0.80); width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight}px
+    background-color: hsl(0,0%,0%, 0.80); width: ${canvasWidth}px; height: ${canvasHeight}px
   `}
 >
 
@@ -90,6 +90,9 @@
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil } from '../store.js'
+
+  export let canvasWidth = $maxAvailableWidth
+  export let canvasHeight = $maxAvailableHeight
 
   export let strokesArray
   export let currentTime = 0 // assumes it's always rounded to nearest 0.1
@@ -179,10 +182,10 @@
 
   // resize on initialization
   $: if (ctx) {
-    canvas.width = $maxAvailableWidth
-    canvas.height = $maxAvailableHeight
-    bgCanvas.width = $maxAvailableWidth
-    bgCanvas.height = $maxAvailableHeight
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+    bgCanvas.width = canvasWidth
+    bgCanvas.height = canvasHeight
     if (strokesArray) {
       for (const stroke of strokesArray) {
         drawStroke(stroke, null, ctx, canvas, canvasWidth)
@@ -196,7 +199,7 @@
       renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
   }
 
-  $: normalizedLineWidth = $currentTool.lineWidth * ($maxAvailableWidth / $assumedCanvasWidth)
+  $: normalizedLineWidth = $currentTool.lineWidth * (canvasWidth / $assumedCanvasWidth)
 
   /**
    * Reactive statement that triggers each time `strokesArray` changes
@@ -337,7 +340,10 @@
       startTime: currentTime,
       color: $currentTool.color,
       lineWidth: $currentTool.lineWidth,
-      maxAvailableWidth: $maxAvailableWidth,
+      // // why do we store `maxAvailableWidth` as a property here?
+      // I believe this is un-used (DoodleVideo normalizes width because we do everything relative to an `assumedCanvasWidth`
+      // and scale it up to whatever the actual canvasSize is, but I'll keep it here just in case I'm wrong since it does no harm)
+      // maxAvailableWidth: $maxAvailableWidth, 
       isErasing: $currentTool.type === 'eraser',
       points: [],
       sessionID: '123' // TODO: initialize in store
@@ -403,7 +409,7 @@
   }
 
   function wipeUI () {
-    ctx.clearRect(0, 0, $maxAvailableWidth, $maxAvailableHeight)
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
   }
 
   function dragstart_handler (e, boardID, originalIndex) {

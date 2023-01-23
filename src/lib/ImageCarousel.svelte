@@ -7,7 +7,7 @@
 <div id="carousel-wrapper">
   <div id="carousel">
     <!-- To optimize, you can use intersection listener to lazy-load -->
-    <slot>
+    <slot carouselWidth={carouselWidth}>
       <!-- <div class="card" style="border: 2px solid blue;">
 
       </div>
@@ -21,25 +21,31 @@
     </slot>
   </div>
 
-  <div id="pagination">
+
+  <!-- HIDE FOR NOW -->
+  <div id="pagination" style="display: none; color: black;">
     <div class="ball"></div>
     <div class="ball"></div>
     <div class="ball"></div>
   </div>
 
   <div id="leftArrow" class="arrow">
-    <Button>
-      <span class="material-icons" style="color: black; font-size: 3rem;">
-        arrow_back_ios
-      </span>
-    </Button>
+    {#if section > 0}
+      <Button style="height: 80px; z-index: 2">
+        <span class="material-icons" style="color: white; font-size: 6rem;">
+          arrow_back_ios
+        </span>
+      </Button>
+    {/if}
   </div>
   <div id="rightArrow" class="arrow">
-    <Button id="rightArrow">
-      <span class="material-icons" style="color: black; font-size: 3rem;">
-        arrow_forward_ios
-      </span>
-    </Button>
+    {#if section < 2}
+      <Button style="height: 80px; z-index: 2" id="rightArrow">
+        <span class="material-icons" style="color: white; font-size: 6rem;">
+          arrow_forward_ios
+        </span>
+      </Button>
+    {/if}
   </div>
 </div>
 
@@ -47,13 +53,17 @@
 import { onMount } from 'svelte'
 import Button, { Label } from '@smui/button';
 
+let section = 0
+let carouselWidth = null // 
+
 onMount(() => {
   let pagination = document.querySelectorAll('.ball');
   let carousel = document.getElementById('carousel');
   let cards = document.querySelectorAll('.card');
   let leftBtn = document.getElementById('leftArrow');
   let rightBtn = document.getElementById('rightArrow');
-  let section = 0
+
+  carouselWidth = carousel.offsetWidth
 
   // This causes the 3 overview dots to change width e.g. 2nd circle becomes wider because we're on 2nd page
   const updatePag = () => {
@@ -101,7 +111,7 @@ onMount(() => {
     font-family: 'Montserrat', sans-serif;
     position: relative;
 
-    border: 2px solid red;
+    /* border: 2px solid red; */
   }
 
   #carousel {
@@ -164,7 +174,7 @@ onMount(() => {
   .ball {
     height: 12px;
     width: 12px;
-    background-color: white;
+    background-color: black;
     border-radius: 20px;
     margin: 2px;
     cursor: pointer;

@@ -26,18 +26,22 @@
         </div>
 
         <div class="section-subtitle">
-          Explain piloted in 14.01 Fall 2022
+          After the Fall 2022 pilot, the department may consider subsidizing student costs.
         </div>
-
-        <Button color="secondary" variant="raised" style="height: 75px; margin-top: 40px;">
-          <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-            Join for $20/week
-          </Label>
-        </Button>
-        <Button variant="outlined">
-          Explore Fall 2022 server
-        </Button>
-        <div>Cancel & refund any time, any reason within 1st week</div>
+        
+        <div style="display: flex; align-items: center; margin-top: 40px;">
+          <Button color="secondary" variant="raised" style="height: 75px;">
+            <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
+              Join for $20/week
+            </Label>
+          </Button>
+          <Button variant="outlined" style="height: 75px;">
+            <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
+              Explore last semester's server
+            </Label>
+          </Button>
+        </div>
+        <div style="margin-top: 20px; margin-left: 5px;">Refund any reason, anytime.</div>
       </div>
 
       <div class="section-container">
@@ -93,52 +97,71 @@
       <!-- End of section -->
 
       <div class="section-container">
-        <ImageCarousel>
-          <!-- NOTE JUST IN-CASE IT MATTERS: ReusableDoodleVideo already has its own RenderlessListenToBoard -->
-          {#if topFiveVideosIDs.length > 0}
-            {#key idxOfCurrentVideo}
-              {#each topFiveVideosIDs as id}
-                <div class="card">
-                  <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} 
-                    let:boardDoc={boardDoc}
-                  > 
-                    <div>
+        <ImageCarousel let:carouselWidth={carouselWidth}>
+          {#if carouselWidth}
+            <!-- NOTE JUST IN-CASE IT MATTERS: ReusableDoodleVideo already has its own RenderlessListenToBoard -->
+            {#if topFiveVideosIDs.length > 0}
+              {#key idxOfCurrentVideo}
+                {#each topFiveVideosIDs as id}
+                  <div class="card">
+                    <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} 
+                      let:boardDoc={boardDoc}
+                    > 
+                      <div>
+                        <ReusableDoodleVideo 
+                          boardDbPath={boardsCollectionDbPath + id}
+                          canvasWidth={Math.max(carouselWidth/2, 300) - gapMargin/2}
+                          canvasHeight={carouselWidth/2 * 3/4}
+                        />
+                      </div>
+
+                      {#if boardDoc}
+                        <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
+                          Minutes viewed: {boardDoc.viewMinutes.toFixed(1)}
+                        </div>
+                        <!-- OVERFLOW -->
+                        <div style="max-height: {carouselWidth/2 * 3/4}" class="mozilla-documentation-styles">
+                          {boardDoc.description}
+                        </div>
+                      {/if}
+                    </RenderlessListenToBoard>
+                  </div>
+                {/each}
+              {/key}
+            {/if}
+
+            <!-- RECORD A VIDEO -->
+            <!-- TO-DO: after recording you need to show the video,
+              instead of an infinitely linear loading indicator. 
+
+              Refactor: find a composable way to keep these kinds of logic manageable, 
+              and when it's well-tested, you can even bring it back to the [class]/[room]'s page component
+
+              TO-DO: this is extremely costly for database, lots of duplicate fetches, make it more efficient
+            -->
+            <div use:lazyCallable={decideBlackboardLocation} style={`width: ${carouselWidth}px; height: ${(carouselWidth* 3/4) + 40}px; position: relative`}>
+              {#if blackboardDbPath}
+                <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} 
+                  let:boardDoc={boardDoc}
+                > 
+                  {#if boardDoc}
+                    {#if boardDoc.audioDownloadURL}
                       <ReusableDoodleVideo 
                         boardDbPath={boardsCollectionDbPath + id}
-                        canvasWidth={600}
-                        canvasHeight={400}
+                        canvasWidth={Math.max(carouselWidth, 300) - gapMargin/2}
+                        canvasHeight={carouselWidth * 3/4}
                       />
-                    </div>
-
-                    {#if boardDoc}
-                      <div>
-                        Minutes viewed: {boardDoc.viewMinutes.toFixed(1)}
-                      </div>
-                      <div class="mozilla-documentation-styles">
-                        {boardDoc.description}
-                      </div>
+                    {:else}
+                      <ReusableLiveBlackboard
+                        boardID={tutorDesignatedRoomID}
+                        boardsDbPath={boardsCollectionDbPath}
+                      />
                     {/if}
-                  </RenderlessListenToBoard>
-                </div>
-              {/each}
-            {/key}
+                  {/if}
+                </RenderlessListenToBoard>
+              {/if}
+            </div> 
           {/if}
-
-          <!-- RECORD A VIDEO -->
-          <!-- TO-DO: after recording you need to show the video,
-            instead of an infinitely linear loading indicator. 
-
-            Refactor: find a composable way to keep these kinds of logic manageable, 
-            and when it's well-tested, you can even bring it back to the [class]/[room]'s page component
-          -->
-          <div use:lazyCallable={decideBlackboardLocation} style={`width: ${500}px; height: ${600 + 40}px; position: relative`}>
-            {#if blackboardDbPath}
-              <ReusableLiveBlackboard
-                boardID={tutorDesignatedRoomID}
-                boardsDbPath={boardsCollectionDbPath}
-              />
-            {/if}
-          </div>
         </ImageCarousel>
       </div>
 
@@ -211,13 +234,13 @@
         </a>
       </div>
 
-      <div class="section-container">
+      <!-- <div class="section-container">
         <div class="section-title">
           Reviews
         </div>
 
         <TextAreaAutoResizing></TextAreaAutoResizing>
-      </div>
+      </div> -->
 
       <!-- End of page container -->
     </Content>
@@ -262,6 +285,7 @@
 
   let topFiveVideosIDs = []
   let idxOfCurrentVideo = 0 
+  let gapMargin = 10
 
   const id = 'Mev5x66mSMEvNz3rijym' // 14.01
   const boardsCollectionDbPath = `classes/${id}/blackboards/`
@@ -276,7 +300,7 @@
   async function fetchTopFiveVideos () {
     const db = getFirestore()
     const blackboardsRef = collection(db, boardsCollectionDbPath)
-    const q = query(blackboardsRef, orderBy('viewMinutes', 'desc'), limit(5))
+    const q = query(blackboardsRef, orderBy('viewMinutes', 'desc'), limit(4))
     
     const querySnapshot = await getDocs(q) 
     const temp = []
@@ -303,7 +327,7 @@
   }
 
   .section-container {
-    padding: 40px 40px; 
+    padding: 5px 5px; 
   }
 
   .section-title {
@@ -329,8 +353,15 @@
   .card:hover {
     background-size: auto 100%;
   }
-  .card:first-child { margin-left: 0; }
-  .card:last-child { margin-right: 0; }
+  .card {
+    margin-right: 10px;
+  }
+  .card:first-child { 
+    margin-left: 0; 
+  }
+  .card:last-child { 
+    margin-right: 0; 
+  }
 
   .card p {
     margin: 0;

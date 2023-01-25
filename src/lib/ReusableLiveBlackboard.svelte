@@ -104,6 +104,7 @@
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { getRandomID } from '../helpers/utility.js'
+  import { createEventDispatcher } from 'svelte';
 
   export let boardDoc
   export let boardID 
@@ -112,6 +113,7 @@
   export let canvasHeight
 
   console.log("boardID =", boardID)
+  const dispatch = createEventDispatcher()
 
   // TODO: rename to reflect sequential nature of operations
   async function callManyFuncs (...funcs) {
@@ -126,9 +128,12 @@
   }
 
   function updateRecordState (boardID, newRecordState) {
-    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
-    updateDoc(blackboardRef, {
-      recordState: newRecordState
+    return new Promise(async resolve => {
+      const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
+      await updateDoc(blackboardRef, {
+        recordState: newRecordState
+      })
+      resolve()
     })
   }
 
@@ -185,15 +190,20 @@
     const downloadURL = await getDownloadURL(audioRef)
 
     const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
-    await updateDoc(blackboardRef, {
-      creatorUID: $user.uid || '',
-      creatorName: $user.name || '',
-      creatorPhoneNumber: $user.phoneNumber || '',
-      date: new Date().toISOString(),
-      audioDownloadURL: downloadURL,
-      audioRefFullPath: audioRef.fullPath
-    })
-    updateRecordState(boardID, 'pre_record')
+
+    await Promise.all([
+      updateDoc(blackboardRef, {
+        creatorUID: $user.uid || '',
+        creatorName: $user.name || '',
+        creatorPhoneNumber: $user.phoneNumber || '',
+        date: new Date().toISOString(),
+        audioDownloadURL: downloadURL,
+        audioRefFullPath: audioRef.fullPath
+      }),
+      updateRecordState(boardID, 'pre_record')
+    ])
+
+    dispatch('video-uploaded')
 
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)

@@ -285,7 +285,7 @@
         return
       }
     }
-
+    // TODO: just import createRoomDoc from helpers/crud.js
     const newDocID = getRandomID()
     const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
     const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)

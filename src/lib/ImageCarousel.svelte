@@ -27,11 +27,14 @@
     <div class="ball"></div>
     <div class="ball"></div>
     <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
   </div>
 
   <div id="leftArrow" class="arrow">
     {#if currIdx > 0}
-      <Button style="height: 80px; z-index: 2">
+      <Button style="height: 100px; z-index: 2; background-color: orange; border-radius: 10px; padding-left: 40px; width: 112px;">
         <span class="material-icons" style="color: white; font-size: 6rem;">
           arrow_back_ios
         </span>
@@ -40,7 +43,7 @@
   </div>
   <div id="rightArrow" class="arrow">
     {#if currIdx < numOfImages - 1}
-      <Button style="height: 80px; z-index: 2" id="rightArrow">
+      <Button style="height: 100px; z-index: 2; background-color: orange; border-radius: 10px;" id="rightArrow">
         <span class="material-icons" style="color: white; font-size: 6rem;">
           arrow_forward_ios
         </span>

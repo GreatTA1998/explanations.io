@@ -20,10 +20,10 @@
   <span on:click={startAudioPlayer} 
     class="material-icons overlay-center" 
     style="color: white; 
-    width: {240 * (canvasWidth / assumedCanvasWidth)}px; 
-    height: {240 * (canvasWidth / assumedCanvasWidth)}px; 
+    width: {180 * scaleFactor}px; 
+    height: {180 * scaleFactor}px; 
     z-index: 5;
-    font-size: 2rem;"
+    font-size: {10 * scaleFactor}rem;"
   >
     play_circle
   </span>
@@ -107,6 +107,8 @@
   let updateViewMinutesTimeoutID
 
   const dispatch = createEventDispatcher()
+
+  $: scaleFactor = canvasWidth / $assumedCanvasWidth
 
   // resize on initialization
   // reminder: if canvasWidth changes, this whole reactive statement will run!

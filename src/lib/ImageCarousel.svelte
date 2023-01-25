@@ -30,7 +30,7 @@
   </div>
 
   <div id="leftArrow" class="arrow">
-    {#if section > 0}
+    {#if currIdx > 0}
       <Button style="height: 80px; z-index: 2">
         <span class="material-icons" style="color: white; font-size: 6rem;">
           arrow_back_ios
@@ -39,7 +39,7 @@
     {/if}
   </div>
   <div id="rightArrow" class="arrow">
-    {#if section < 2}
+    {#if currIdx < numOfImages - 1}
       <Button style="height: 80px; z-index: 2" id="rightArrow">
         <span class="material-icons" style="color: white; font-size: 6rem;">
           arrow_forward_ios
@@ -53,7 +53,8 @@
 import { onMount } from 'svelte'
 import Button, { Label } from '@smui/button';
 
-let section = 0
+export let numOfImages
+let currIdx = 0
 let carouselWidth = null // 
 
 onMount(() => {
@@ -68,32 +69,32 @@ onMount(() => {
   // This causes the 3 overview dots to change width e.g. 2nd circle becomes wider because we're on 2nd page
   const updatePag = () => {
     pagination.forEach((el) => el.style.width = '12px');
-    pagination[section].style.width = '25px' // it was 25 px
+    pagination[currIdx].style.width = '25px' // it was 25 px
   }
 
   pagination.forEach((curItem, index) => {
     curItem.addEventListener('click', () => {
-      section = index;
+      currIdx = index;
       updatePag()
       carousel.scrollLeft = (index * (window.innerWidth - 150)) + (index * 10)
     })
   })
 
   leftBtn.addEventListener('click', () => {
-    if(section > 0){
-      section--
-      carousel.scrollLeft = section * carousel.offsetWidth + (section * 10)
+    if(currIdx > 0){
+      currIdx--
+      carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * 10)
       // (section * (window.innerWidth - 150)) + (section * 10)
       updatePag()
     }
   })
   rightBtn.addEventListener('click', () => {
-    if(section < 2){
-      section++
-      carousel.scrollLeft = section * carousel.offsetWidth + (section * 10) // don't know why the 10n padding multiplier is needed, but it's needed
+    // if(section < 2){
+      currIdx++
+      carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * 10) // don't know why the 10n padding multiplier is needed, but it's needed
       // (section * (window.innerWidth - 300)) + (section * 10)
       updatePag()
-    }
+    // }
   })
 })
 </script>
@@ -111,7 +112,7 @@ onMount(() => {
     font-family: 'Montserrat', sans-serif;
     position: relative;
 
-    /* border: 2px solid red; */
+    border: 5px solid orange;
   }
 
   #carousel {

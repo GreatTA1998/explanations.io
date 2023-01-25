@@ -35,29 +35,69 @@
               Join for $20/week
             </Label>
           </Button>
-          <Button variant="outlined" style="height: 75px;">
+
+          <Button variant="outlined" style="height: 75px; margin-left: 20px;">
             <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
               Explore last semester's server
             </Label>
           </Button>
         </div>
-        <div style="margin-top: 20px; margin-left: 5px;">Refund any reason, anytime.</div>
       </div>
 
-      <div class="section-container">
+      <div style="margin-top: 40px" class="section-container">
         <div style="display: flex">
           <div>
-            <div class="section-title">
+            <!-- <div class="section-title">
               Peer Tutors
-            </div>
-            <!-- No statistics for now, or just write it in the bio -->
-            <!-- <div class="section-subtitle">
-              Elton Lin
-            </div>             -->
-            <div style="display: flex; justify-content: space-between;">
-              <div class="tutor-business-card">
-                <Card>
-                  <PrimaryAction on:click={() => clicked++} padded>
+            </div> -->
+
+            <div style="display: flex;">
+              <!-- TO-DO: hide if user already signed up as tutor -->
+              <div class="tutor-business-card" class:orange-border={selectedTutorID === ''}>
+                <!-- !isSigningUpAsTutor -->
+                {#if selectedTutorID !== ''}
+                  <Card style="height: 150px;">
+                    <!-- isSigningUpAsTutor = true -->
+                    <PrimaryAction on:click={() => selectedTutorID = ''} padded>
+                      <p>Sign up as tutor</p>
+                      <div>It's simple to setup shop:</div>
+                      <ol>
+                        <li>Log in</li>
+                        <li>Record an example video</li>
+                        <li>Fill out everything else another time</li>
+                      </ol>
+                    </PrimaryAction>
+                  </Card>
+                {:else}
+                  {#if !$user.phoneNumber}
+                    <div>Phone login</div>
+                    <PhoneLogin/>
+                  {:else}
+                    <div>
+                      success - you're logged in, shop will be auto-saved
+                    </div>
+
+                    {#if !$user.firstName || !$user.lastName}
+                      <div>First name</div>
+                      <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
+
+                      <div>Last name</div>
+                      <input bind:value={inputFieldLastName} placeholder=""/>
+
+                      <Button on:click={createTutorDoc}>
+                        Submit
+                      </Button>
+                    {/if}
+                    
+                    <div>bio</div>
+                    <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
+                  {/if}
+                {/if}
+              </div>
+
+              <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorID === 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}>
+                <Card style="height: 150px;">
+                  <PrimaryAction on:click={() => { selectedTutorID = 'xC05mXTCFIRxLnyxfKnxY7oNBPi2' }} padded>
                     Elton Lin (hard-coded name) 
                     <br>
           
@@ -67,59 +107,50 @@
                   </PrimaryAction>
                 </Card>
               </div>
-          
-              <div class="tutor-business-card">
-                <Card>
-                  <PrimaryAction on:click={() => clicked++} padded>
-                    <!-- TO-DO: split into first and last name -->
-                    <div>name*</div>
-                    <input name="" placeholder="Alice, Bob, Charles"/>
-                    
-                    <div>bio</div>
-                    <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
-                    <br>
-                    <br>
-                    {#if !$user.phoneNumber}
-                    <div>Login first</div>
-                      <PhoneLogin/>
-                    {:else}
-                      <div>You're successfully logged in and your shop will be auto-saved, feel fullscreen
-                        to continuously improve on different days instead of all in one-go
-                      </div>
-                    {/if}
-                  </PrimaryAction>
-                </Card>
-              </div>
+
+              {#if classTutorsDocs}
+                {#each classTutorsDocs as tutorDoc}
+                  <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorID === tutorDoc.id}>
+                    <Card style="height: 150px;">
+                      <PrimaryAction on:click={() => { selectedTutorID = tutorDoc.id }} padded>
+                        { tutorDoc.firstName + ' ' + tutorDoc.lastName }
+                        <br>
+              
+                        6-14, '20 (hard-coded bio)
+                        <br>
+                        600 combined view-minutes for Spring 2020
+                      </PrimaryAction>
+                    </Card>
+                  </div>
+                {/each}
+              {/if}
             </div>
           </div>
         </div>
       </div>
       <!-- End of section -->
 
-      <div class="section-container">
-        <ImageCarousel let:carouselWidth={carouselWidth}>
-          {#if carouselWidth}
-            <!-- NOTE JUST IN-CASE IT MATTERS: ReusableDoodleVideo already has its own RenderlessListenToBoard -->
-            {#if topFiveVideosIDs.length > 0}
-              {#key idxOfCurrentVideo}
+      <!-- VIDEO PORTFOLIO -->
+      {#key selectedTutorID + rerenderKeyForCarousel}
+        <div use:fetchTopFiveVideos class="section-container">
+          <ImageCarousel numOfImages={Math.ceil(topFiveVideosIDs.length/2) + 1} let:carouselWidth={carouselWidth}>
+            {#if carouselWidth}
+              {#if topFiveVideosIDs.length > 0}
                 {#each topFiveVideosIDs as id}
                   <div class="card">
-                    <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} 
-                      let:boardDoc={boardDoc}
-                    > 
-                      <div>
-                        <ReusableDoodleVideo 
-                          boardDbPath={boardsCollectionDbPath + id}
-                          canvasWidth={Math.max(carouselWidth/2, 300) - gapMargin/2}
-                          canvasHeight={carouselWidth/2 * 3/4}
-                        />
-                      </div>
+                    <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
+                      <ReusableDoodleVideo 
+                        {boardDoc}
+                        boardDbPath={boardsCollectionDbPath + id}
+                        canvasWidth={Math.max(carouselWidth/2, 300) - gapMargin/2}
+                        canvasHeight={carouselWidth/2 * 3/4}
+                      />
 
                       {#if boardDoc}
                         <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
                           Minutes viewed: {boardDoc.viewMinutes.toFixed(1)}
                         </div>
-                        <!-- OVERFLOW -->
+                
                         <div style="max-height: {carouselWidth/2 * 3/4}" class="mozilla-documentation-styles">
                           {boardDoc.description}
                         </div>
@@ -127,102 +158,61 @@
                     </RenderlessListenToBoard>
                   </div>
                 {/each}
-              {/key}
-            {/if}
-
-            <!-- RECORD A VIDEO -->
-            <!-- TO-DO: after recording you need to show the video,
-              instead of an infinitely linear loading indicator. 
-
-              Refactor: find a composable way to keep these kinds of logic manageable, 
-              and when it's well-tested, you can even bring it back to the [class]/[room]'s page component
-
-              TO-DO: this is extremely costly for database, lots of duplicate fetches, make it more efficient
-            -->
-            <div use:lazyCallable={decideBlackboardLocation} style={`width: ${carouselWidth}px; height: ${(carouselWidth* 3/4) + 40}px; position: relative`}>
-              {#if blackboardDbPath}
-                <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} 
-                  let:boardDoc={boardDoc}
-                > 
-                  {#if boardDoc}
-                    {#if boardDoc.audioDownloadURL}
-                      <ReusableDoodleVideo 
-                        boardDbPath={boardsCollectionDbPath + id}
-                        canvasWidth={Math.max(carouselWidth, 300) - gapMargin/2}
-                        canvasHeight={carouselWidth * 3/4}
-                      />
-                    {:else}
-                      <ReusableLiveBlackboard
-                        boardID={tutorDesignatedRoomID}
-                        boardsDbPath={boardsCollectionDbPath}
-                      />
-                    {/if}
-                  {/if}
-                </RenderlessListenToBoard>
               {/if}
-            </div> 
-          {/if}
-        </ImageCarousel>
-      </div>
 
-      <div class="section-container">
+              <!-- RECORD A VIDEO -->
+              <!-- TO-DO: after recording you need to show the video,
+                instead of an infinitely linear loading indicator. 
+
+                Refactor: find a composable way to keep these kinds of logic manageable, 
+                and when it's well-tested, you can even bring it back to the [class]/[room]'s page component
+
+                TO-DO: this is extremely costly for database, lots of duplicate fetches, make it more efficient
+              -->
+              <div use:lazyCallable={decideBlackboardLocation} style={`width: ${carouselWidth}px; height: ${(carouselWidth* 3/4) + 40}px; position: relative`}>
+                {#if blackboardDbPath && newlyDecidedBoardID}
+                  <RenderlessListenToBoard dbPath={boardsCollectionDbPath + newlyDecidedBoardID} let:boardDoc={boardDoc}> 
+                    {#if boardDoc}
+                      {#if boardDoc.audioDownloadURL}
+                        <ReusableDoodleVideo 
+                          {boardDoc}
+                          boardDbPath={boardsCollectionDbPath + newlyDecidedBoardID}
+                          canvasWidth={Math.max(carouselWidth, 300)}
+                          canvasHeight={Math.min(Math.max(carouselWidth, 300) * 3/4, 800)}
+                        />
+                      {:else}
+                      
+                      <div>{boardDoc.creatorName}</div>
+                      <div>{boardDoc.recordState}</div>
+                      <div>boardDoc.audioDownloadURL: {boardDoc.audioDownloadURL}</div>
+                        <ReusableLiveBlackboard
+                          {boardDoc}
+                          boardID={tutorDesignatedRoomID}
+                          boardsDbPath={boardsCollectionDbPath}
+                          canvasWidth={Math.max(carouselWidth, 300)}
+                          canvasHeight={Math.max(carouselWidth, 300) * 3/4}
+                        />
+                      {/if}
+                    {/if}
+                  </RenderlessListenToBoard>
+                {/if}
+              </div> 
+            {/if}
+          </ImageCarousel>
+        </div>
+      {/key}
+
+      <!-- <div class="section-container">
         <div class="section-title">
           Editorial
         </div>
+
         <div class="section-subtitle">
           What's special about 14.01
         </div>
 
-        <!--  editorial of why 14.01 is special, 
-  how Explain will complement recitation and Office Hours, etc.  -->
         <div class="editorial-font-styles" style="margin-top: 40px;">
-          What's special about 14.01 is that lecture focuses on the intuition, 
-          so the math needed for pset rests on the 1 hour recitation each week. 
-        
-          Naturally, a common student request is: "How do we setup this math problem?" 
-          and "Can we review the math". 
 
-          f(x, y): bombardment with technical language like Marginal Rate of Substitution and Marginal Rate of Transformation. 
-          These terms can cause misconceptions.
-
-          To avoid these pitfalls in the first place, we like to spend 10 minutes on a 
-          to clearly review the constrained optimization of f(x, y), derive why the maximization condition is df/dx / df/dy.
-
-          For me, I never comfortably understand this 10-minutes worth of fundamental material even after the course finishes.
-          And I didn't know how to ask for it.
-          <!-- For example, "substitution effect".
-
-          THEN look at it in economic terms - for example Marginal Utility per dollar.             
-        
-          After week 3, as the class moves to producer theory, the curve of ATC, ATC. 
-            1. Too many curves, most of them irrelevant later
-            2. Sequence in which concepts are introduced is reversed 
-                "Cost minimization" 
-                Fuzzy use of language
-            3. There are just concepts, and the concepts are very well taught.
-      
-          
-          Knowing why we're obessed with how price elasticity:
-            - Cross-price elasticity
-            - price elasticity
-            - income elasticity
-
-          Essentially, quantity of goods is what really matters, what we care about.
-          Does everyone get cars.
-
-          Price is the COMMUNICATION. 
-
-          We lose track of the notion of "invisible" hands. 
-          Really the class is building the economy assuming individuals are selfish, and companies are selfish. 
-          What would happen? 
-
-          That means you can derive 80% of the course with just knowing 2 very basic equations 
-          and knowing how to do constrained optimization of 2 variables f(x, y) 
-            - u(x, y) 
-            - Pi ()
-
-          And welfare economics. The course then extends off, but this is the most HASS part of the course, 
-          and students usually don't have a problem with it.  -->
         </div>
 
         <div style="margin-bottom: 40px;"></div>
@@ -232,7 +222,7 @@
             Read full editorial
           </Button>
         </a>
-      </div>
+      </div> -->
 
       <!-- <div class="section-container">
         <div class="section-title">
@@ -265,7 +255,7 @@
   import List, { Item, Text } from '@smui/list'
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
-  import { collection, query, orderBy, limit, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc } from 'firebase/firestore'
+  import { collection, query, orderBy, limit, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import ImageCarousel from '$lib/ImageCarousel.svelte';
@@ -273,6 +263,8 @@
   import { user } from '../../store.js'
   import { portal, lazyCallable } from '../../helpers/actions.js'
   import Blackboard from '$lib/Blackboard.svelte'
+  import { getRandomID } from '../../helpers/utility.js';
+  import { onMount } from 'svelte'
 
   let topAppBar
 
@@ -287,36 +279,81 @@
   let idxOfCurrentVideo = 0 
   let gapMargin = 10
 
+  let newlyDecidedBoardID = ''
   const id = 'Mev5x66mSMEvNz3rijym' // 14.01
   const boardsCollectionDbPath = `classes/${id}/blackboards/`
   let blackboardDbPath = '' // AF('') means not initialized
 
+  let classTutorsDocs = null
+  let selectedTutorID = ''
   const hardCodedRoomID = 'Enu5WfaHs46qifEecQOu' // newest room on 14.01 that has nothing in it
   const tutorDesignatedRoomID = hardCodedRoomID
+
+  let rerenderKeyForCarousel = 0
+
+  let isSigningUpAsTutor = false
+  let inputFieldFirstName = ''
+  let inputFieldLastName = '' 
+
+  onMount(() => {
+    fetchClassTutors()
+  })
+
+  async function fetchClassTutors () {
+    const db = getFirestore()
+    const tutorsRef = collection(db, `classes/${id}/tutors`)
+    const tutorsSnapshot = await getDocs(tutorsRef)
+    const temp = [] 
+    tutorsSnapshot.forEach(doc => {
+      temp.push({ id: doc.id, ...doc.data()})
+    })
+    classTutorsDocs = [...temp]
+  }
+
+  async function createTutorDoc () {
+    const userDbPath = `users/${$user.uid}/`
+    
+    const classDbPath = `classes/${id}/`
+
+    const classTutorDocPath = classDbPath + `tutors/${getRandomID()}`
+    const tutorObject = {
+      uid: $user.uid,
+      firstName: inputFieldFirstName,
+      lastName: inputFieldLastName
+    }
+    const db = getFirestore()
+
+    await setDoc(doc(db, classTutorDocPath), tutorObject)
+  }
+
 
   // fetch top 5 explanations in 14.01, with the text and the videos
   // have tutors be able to offer classes all by themselves (almost like Shopify, all you need is an iPad)
   // short on cash? 
-  async function fetchTopFiveVideos () {
+  async function fetchTopFiveVideos (node) {
     const db = getFirestore()
     const blackboardsRef = collection(db, boardsCollectionDbPath)
-    const q = query(blackboardsRef, orderBy('viewMinutes', 'desc'), limit(4))
+
+    const q = query(blackboardsRef, where('creatorUID', '==', selectedTutorID), orderBy('viewMinutes', 'desc'), limit(4))
     
     const querySnapshot = await getDocs(q) 
     const temp = []
     querySnapshot.forEach(doc => {
-      console.log(doc.id, " => ", doc.data())
       temp.push(doc.id)
     })
 
     topFiveVideosIDs = [...temp]
+
+    return {
+      // try empty
+    }
   }
 
   async function decideBlackboardLocation () {
+    // TO-DO: this has to change as the tutor records more and more videos in the shop
+    newlyDecidedBoardID = tutorDesignatedRoomID
     blackboardDbPath = `classes/${id}/blackboards/${tutorDesignatedRoomID}`
   }
-
-  fetchTopFiveVideos()
 </script>
 
 <style>
@@ -383,4 +420,7 @@
     width: 90%;
   }
 
+  .orange-border {
+    border: 2px solid orange;
+  }
 </style>

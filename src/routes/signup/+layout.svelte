@@ -37,18 +37,18 @@
       <!-- <Content> -->
         <List>
           {#if drawerWidth === expandedWidth}
-            <div on:click={() => drawerWidth = collapsedWidth}>
+            <Button on:click={() => drawerWidth = collapsedWidth} style="padding-left: 1px; padding-right: 1px;">
               <!-- mirror flipping `keyboard_tab` icon makes it look like the expand drawer icon -->
-              <span class="material-icons" style="transform: rotateY(180deg)">
+              <span class="material-icons" style="font-size: 2rem; transform: rotateY(180deg)">
                 keyboard_tab
               </span>
-            </div>
+            </Button>
           {:else}
-            <div on:click={() => drawerWidth = expandedWidth}>
-              <span class="material-icons">
+            <Button on:click={() => drawerWidth = expandedWidth} style="padding-left: 1px; padding-right: 1px;">
+              <span class="material-icons" style="font-size: 2rem;">
                 start
               </span>
-            </div>
+            </Button>
           {/if}
           
           {#if drawerWidth === expandedWidth}
@@ -114,7 +114,7 @@
   let topAppBar
   let drawerWidth = 240
 
-  let collapsedWidth = 25
+  let collapsedWidth = 60
   let expandedWidth = 240
 
   function redirectToRequestPage () {

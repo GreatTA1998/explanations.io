@@ -4,33 +4,42 @@
   <div class="container" style="transform: scale({scaleFactor})">
     <div id="carousel">
       <div style="border: none;">
-        <ReusableDoodleVideo
-          canvasWidth={galleryItemWidth}
-          canvasHeight={galleryItemHeight}
-          boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
-        />
+        <RenderlessListenToBoard dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} let:boardDoc={boardDoc}>
+          <ReusableDoodleVideo
+            {boardDoc}
+            canvasWidth={galleryItemWidth}
+            canvasHeight={galleryItemHeight}
+            boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+          />
+        </RenderlessListenToBoard>
       </div>
 
       <div class="unselectable"></div>
       <div class="unselectable"></div>
 
       <div style="border: none;">
-        <ReusableDoodleVideo
-          canvasWidth={galleryItemWidth}
-          canvasHeight={galleryItemHeight}
-          boardDbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q'}
-        />
+        <RenderlessListenToBoard dbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q'} let:boardDoc={boardDoc}>
+          <ReusableDoodleVideo
+            {boardDoc}
+            canvasWidth={galleryItemWidth}
+            canvasHeight={galleryItemHeight}
+            boardDbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q'}
+          />
+        </RenderlessListenToBoard>
       </div>
 
       <div class="unselectable"></div>
       <div class="unselectable"></div>
 
       <div style="border: none;">
-        <ReusableDoodleVideo
-          canvasWidth={galleryItemWidth}
-          canvasHeight={galleryItemHeight}
-          boardDbPath={'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7'}
-        />
+        <RenderlessListenToBoard dbPath={'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7'} let:boardDoc={boardDoc}>
+          <ReusableDoodleVideo
+            {boardDoc}
+            canvasWidth={galleryItemWidth}
+            canvasHeight={galleryItemHeight}
+            boardDbPath={'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7'}
+          />
+        </RenderlessListenToBoard>
       </div>
 
       <div class="unselectable"></div>
@@ -40,6 +49,7 @@
 {/if}
 
 <script>
+  import RenderlessListenToBoard from './RenderlessListenToBoard.svelte'
   import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'
   import { onMount } from 'svelte'
 

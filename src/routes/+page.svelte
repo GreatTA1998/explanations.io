@@ -73,7 +73,7 @@
 			</div>
 			
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
-				We hire former students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently help n students at no additional effort, 
+				We hire former students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently help `n` students with no additional effort, 
 				it is then possible for these tutors to address all your questions, until nothing is left unexplained.
 				<br>
 				<br>

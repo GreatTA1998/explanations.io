@@ -26,7 +26,7 @@
       </div>
 
       <div class="section-subtitle">
-        After the Fall 2022 pilot, the department may consider subsidizing student costs.
+        Because lectures doesn't cover math, f(x, y) constrained optimization is the source of lots of questions
       </div>
       
       <div style="display: flex; align-items: center; margin-top: 40px;">
@@ -138,97 +138,63 @@
       {#key selectedTutorUID + rerenderKeyForCarousel}
         <div use:setupCarouselData class="section-container">
           <!-- CONSIDER MAKING THE CAROUSEL JUST DISPLAY ONE IMAGE, IT'D BE SIMPLER FOR SURE (WHAT WILL HAPPEN ON IPHONE), MAYBE EVEN GOOD -->
-          <ImageCarousel numOfImages={Math.ceil(topFiveVideosIDs.length/2) + 1} let:carouselWidth={carouselWidth}>
+          <ImageCarousel numOfImages={topFiveVideosIDs.length + 1} let:carouselWidth={carouselWidth}>
             {#if carouselWidth}
               {#if topFiveVideosIDs.length > 0}
                 {#each topFiveVideosIDs as id}
                   <div class="card">
                     <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
                       {#if boardDoc}
+                        <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
+                          Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
+                        </div> -->
+
+                        <!-- JUST COPY FROM [room]/[class].svelte -->
+                        <div style="width: {Math.max(carouselWidth, 300)}px; margin-top: 0px; margin-bottom: 0px">
+                          <TextAreaAutoResizing 
+                            value={boardDoc.description || ''} 
+                            on:input={(e) => debouncedUpdateBoardDescription(e, id)}
+                            placeholder="Describe the blackboard..."
+                            readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
+                          />
+                        </div>
+
                         {#if boardDoc.audioDownloadURL}
                           <ReusableDoodleVideo 
                             {boardDoc}
                             boardDbPath={boardsCollectionDbPath + id}
-                            canvasWidth={Math.max(carouselWidth/2, 300) - gapMargin/2}
-                            canvasHeight={carouselWidth/2 * 3/4}
+                            canvasWidth={Math.max(carouselWidth, 300)}
+                            canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
                           />
-
-                          <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
-                            Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
-                          </div>
                   
-                          <div style="max-height: {carouselWidth/2 * 3/4}" class="mozilla-documentation-styles">
-                            {boardDoc.description || ''}
+                          <div style="max-height: {carouselWidth * 3/4}" class="mozilla-documentation-styles">
+                            {boardDoc.description || 'No description.'}
                           </div>
 
-                          {:else}
-                            <div 
-                            style=" border: 2px dashed hsl(0,0%,0%, 0.80); 
-                                    box-sizing: border-box;
-                                    width: {Math.max(carouselWidth/2, 300) - gapMargin/2}px; 
-                                    height: {carouselWidth/2 * 3/4}px"
-            
-                              >
-                            </div>
-                            <div>
-                              Scroll right to record a new video
-                            </div>
-                          {/if}
+                        {:else}
+                          <ReusableLiveBlackboard
+                            {boardDoc}
+                            boardID={newlyDecidedBoardID}
+                            boardsDbPath={boardsCollectionDbPath}
+                            canvasWidth={Math.max(carouselWidth, 300)}
+                            canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
+                            on:video-uploaded={updateNewBlackboardLocation}
+                          />
+                        {/if}
                       {/if}
                     </RenderlessListenToBoard>
                   </div>
                 {/each}
-              {/if}
 
-              <!-- 2 small videos  = 1 full carousel section, so if odd number videos, add a ghost div -->
-              {#if topFiveVideosIDs.length % 2 === 1}
+                <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
                 <div class="card">
-                  <div 
-                    style=" border: 2px dashed hsl(0,0%,0%, 0.80); 
-                            box-sizing: border-box;
-                            width: {Math.max(carouselWidth/2, 300) - gapMargin/2}px; 
-                            height: {carouselWidth/2 * 3/4}px"
-
-                  >
-                  </div>
-                  <div>
-                    Scroll right to record a new video
+                  <div style="background-color: hsl(0,0%,0%, 0.80); width: {carouselWidth}px; height: {200}px">
+                    <Button on:click={updateNewBlackboardLocation} style="font-size: 4rem; color: white;">
+                      Create New Board
+                    </Button>
                   </div>
                 </div>
               {/if}
-
-              <!-- RECORD A VIDEO -->
-              <!--
-                Refactor: find a composable way to keep these kinds of logic manageable, 
-                and when it's well-tested, you can even bring it back to the [class]/[room]'s page component
-              -->
-              <div style={`width: ${carouselWidth}px; height: ${(carouselWidth* 3/4) + 40}px; position: relative`}>
-                {#if blackboardDbPath && newlyDecidedBoardID}
-                  <RenderlessListenToBoard dbPath={boardsCollectionDbPath + newlyDecidedBoardID} let:boardDoc={boardDoc}> 
-                    {#if boardDoc}
-                      {#if boardDoc.audioDownloadURL}
-                        <ReusableDoodleVideo 
-                          {boardDoc}
-                          boardDbPath={boardsCollectionDbPath + newlyDecidedBoardID}
-                          canvasWidth={Math.max(carouselWidth, 300)}
-                          canvasHeight={Math.min(Math.max(carouselWidth, 300) * 3/4, 800)}
-                        />
-                      {:else}
-                        <div>board ID: {boardDoc.id}</div>
-
-                        <ReusableLiveBlackboard
-                          {boardDoc}
-                          boardID={newlyDecidedBoardID}
-                          boardsDbPath={boardsCollectionDbPath}
-                          canvasWidth={Math.max(carouselWidth, 300)}
-                          canvasHeight={Math.max(carouselWidth, 300) * 3/4}
-                          on:video-uploaded={updateNewBlackboardLocation}
-                        />
-                      {/if}
-                    {/if}
-                  </RenderlessListenToBoard>
-                {/if}
-              </div> 
             {/if}
           </ImageCarousel>
         </div>
@@ -427,6 +393,21 @@
 
     // because everything is re-rendered, the video portfolio will be refetched, and the new blackboard location will be re-decided
     // all we had to do is just create the docs here
+  }
+
+  async function debouncedUpdateBoardDescription ({ detail }, id) {
+    const debouncedVersion = debounce(
+      () => updateBoardDescription({ detail }, id),
+      3000
+    ) 
+    debouncedVersion({ detail }, id)
+  }
+
+  async function updateBoardDescription ({ detail }, id) {
+    const boardRef = doc(getFirestore(), boardsDbPath + id)
+    await updateDoc(boardRef, {
+      description: detail
+    })
   }
 </script>
 

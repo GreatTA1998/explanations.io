@@ -1,100 +1,117 @@
-<div>
-  <div class="section-container">
-    {#if classDoc}
-      <h2 class="section-title">
-        { classDoc.name }: { classDoc.description }
-      </h2>
-    {/if}
+<div class="webflow-container">
+  {#if classDoc}
+    <div class="header-flex">
+      <div class="header-title">
+        { classDoc.name } 
+        <!-- { classDoc.description } -->
+      </div>
 
-    <Button color="secondary" variant="raised" style="height: 75px; margin-top: 40px;">
-      <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-        Early signup for $1
-      </Label>
-    </Button>
-  </div>
-
+      <div class="header-subcopy-wrapper">
+        <div class="header-subcopy">
+          The platform covers refunds anytime, any reason - so both student & tutor are protected
+        </div>
+        <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+            Early signup for $15/week
+          </Label>
+        </Button>
+      </div>
+    </div>
   
-  <div class="section-container">
-    <h2 style="font-family: sans-serif">Tutor gallery</h2>
-    <div style="display: flex; justify-content: space-between;">
-      {#if classTutorsDocs}
-        {#each classTutorsDocs as tutorDoc}
-          <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-            <Card style="height: 150px;">
-              <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
-                { tutorDoc.firstName + ' ' + tutorDoc.lastName }
-                <br>
-                <div>uid: { tutorDoc.uid }</div>
-                <div>designatedRoomID: { tutorDoc.designatedRoomID}</div>
-                <br>
-              </PrimaryAction>
-            </Card>
-          </div>
-        {/each}
-      {/if}
+    <!-- TO-DO: EDITORIAL-LIKE DESCRIPTION OF CLASS
+    <div>
+      Insights about common pitfalls in the class
+    </div> -->
+  {/if}
 
-      <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorUID === ''}>
-        {#if selectedTutorUID !== ''}
-          <Card style="height: 150px;">
-            <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
-              <p>Sign up as tutor</p>
-              <div>It's simple to setup shop:</div>
-              <ol>
-                <li>Log in</li>
-                <li>Record an example video</li>
-                <li>Fill out everything else another time</li>
-              </ol>
-            </PrimaryAction>
-          </Card>
-        {:else}
-          {#if !$user.phoneNumber}
-            <div>Phone login</div>
-            <PhoneLogin/>
-          {:else}
-            <div>
-              success - you're logged in, shop will be auto-saved
+    <div style="margin-top: 1%; margin-bottom: 1%">
+      <h2 style="font-family: sans-serif">
+        Tutor gallery
+      </h2>
+      <div style="display: flex;">
+        {#if classTutorsDocs}
+          {#each classTutorsDocs as tutorDoc}
+            <div class="tutor-business-card" style="margin-right: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
+              <Card style="height: 150px;">
+                <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
+                  <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                    { tutorDoc.firstName + ' ' + tutorDoc.lastName }
+                  </h2>
+              
+                  <div>uid: { tutorDoc.uid }</div>
+                  <div>designatedRoomID: { tutorDoc.designatedRoomID}</div>
+                </PrimaryAction>
+              </Card>
             </div>
-
-            <!-- PROBLEM: it won't detect if user has name or not
-              , and even if it does, you must manually call "createTutorDoc"
-              even if it doesn't auto-register name.Page
-              For now, you can just type it once.
-            -->
-
-            <!-- Check if the class doc exists -->
-            {#if !doesUserHaveTutorDoc($user.uid)}
-              {#if !$user.name}
-                <div>First name</div>
-                <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
-
-                <div>Last name</div>
-                <input bind:value={inputFieldLastName} placeholder=""/>
-
-                <Button on:click={createTutorDoc({ classID, firstName: inputFieldFirstName, lastName: inputFieldLastName })}>
-                  Submit
-                </Button>
+          {/each}
+        {/if}
+  
+        {#if !didUserAlreadySignUpAsTutor}
+          <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
+            {#if selectedTutorUID !== ''}
+              <Card style="height: 150px;">
+                <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
+                  <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                    Become a tutor in just 3 steps:
+                  </h2>
+                  <div style="font-family: sans-serif;">
+                    <ol>
+                      <li>Log in with phone</li>
+                      <li>Record 1 example video</li>
+                      <li>Add your Venmo</li>
+                    </ol>
+                  </div>
+                </PrimaryAction>
+              </Card>
+            {:else}
+              {#if !$user.phoneNumber}
+                <Content>
+                  <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                    1. Log in with phone
+                  </h2>
+                  <PhoneLogin/>
+                </Content>
               {:else}
-                <Button on:click={createTutorDoc({ classID, firstName: $user.name.split(" ")[0], lastName: $user.name.split(" ")[1] })}>
-                  Create shop
-                </Button>
+                <Content>
+                  <div>
+                    success { $user.name }- you're logged in, shop will be auto-saved
+                  </div>
+           
+                  {#if !$user.name}
+                    <div>First name</div>
+                    <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
+    
+                    <div>Last name</div>
+                    <input bind:value={inputFieldLastName} placeholder=""/>
+    
+                    <Button on:click={createTutorDoc({ classID, firstName: inputFieldFirstName, lastName: inputFieldLastName })}>
+                      Submit
+                    </Button>
+                  {:else if $user.name && !didUserAlreadySignUpAsTutor}
+                    <Button on:click={createTutorDoc({ classID, firstName: $user.name.split(" ")[0], lastName: $user.name.split(" ")[1] })}>
+                      Create shop
+                    </Button>
+                  {:else}
+                    <div>bio</div>
+                    <!-- TextAreaAutoResizing -->
+                    <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
+                  {/if}
+                </Content>
               {/if}
             {/if}
-              
-            <div>bio</div>
-            <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
-          {/if}
+          </div>
         {/if}
       </div>
     </div>
   </div>
-
+  
   <div style="margin-top: 20px;"></div>
 
 
   {#if classTutorsDocs}
     {#key selectedTutorUID + rerenderKeyForCarousel}
-      <div use:setupCarouselData class="section-container">
-        <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} let:carouselWidth={carouselWidth}>
+      <div use:setupCarouselData>
+        <ImageCarousel numOfImages={designatedRoomBoardIDs.length} let:carouselWidth={carouselWidth}>
           {#if carouselWidth}
             {#if designatedRoomBoardIDs.length > 0}
               {#each designatedRoomBoardIDs as id}
@@ -146,7 +163,7 @@
               <div class="card">
                 <div style="background-color: hsl(0,0%,0%, 0.80); width: {carouselWidth}px; height: {200}px">
                   <Button on:click={updateNewBlackboardLocation} style="font-size: 4rem; color: white;">
-                    Create New Board
+                    Backup Create Board Button
                   </Button>
                 </div>
               </div>
@@ -157,26 +174,19 @@
       </div>
     {/key}
   {/if}
-
-  <h2 class="section-title">   
-    Editorial
-  </h2>
-  <div>
-    Insights about common pitfalls in the class
-  </div>
-</div>
+<!-- </div> -->
 
 
 <script>
   import ImageCarousel from '$lib/ImageCarousel.svelte'
-  import Card, { PrimaryAction } from '@smui/card'
+  import Card, { PrimaryAction, Content } from '@smui/card'
   import Button, { Label } from '@smui/button';
   import { user } from '../../../store.js'
-  import { onMount } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { getRandomID } from '../../../helpers/utility.js'
-  import { createRoomDoc } from '../../../helpers/crud.js'
+  import { createRoomDoc, createBoardDoc } from '../../../helpers/crud.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
@@ -198,22 +208,32 @@
   let inputFieldLastName = ''
   const boardsCollectionDbPath = `classes/${classID}/blackboards/`
 
+  let isInitialFetch = true
+
   let unsubTutorsListener
+
+  let didUserAlreadySignUpAsTutor = false
+  $: if (classTutorsDocs) {
+    didUserAlreadySignUpAsTutor = false
+    for (const tutor of classTutorsDocs) {
+      if (tutor.uid === $user.uid) didUserAlreadySignUpAsTutor = true
+    }
+  }
 
   console.log('classID =', classID)
 
   function fetchPageData () {
     console.log("classID changed fetching page data")
     if (unsubTutorsListener) unsubTutorsListener()
+
+    isInitialFetch = true
     fetchClassDoc()
-    // fetchClassTutors()
     listenToClassTutors()
   }
 
   function listenToClassTutors () {
     const db = getFirestore()
     const ref = collection(db, `classes/${classID}/tutors`)
-    // const q = query()
     unsubTutorsListener = onSnapshot(ref, snap => {
       const temp = [] 
       for (const doc of snap.docs) {
@@ -224,9 +244,11 @@
   }
 
   onMount(() => {
-    console.log("class page mounted")
-    // fetchClassDoc()
-    // fetchClassTutors()
+
+  })
+
+  onDestroy(() => {
+    if (unsubTutorsListener) unsubTutorsListener()
   })
 
   async function fetchClassDoc () {
@@ -237,13 +259,6 @@
   }
 
 
-  function doesUserHaveTutorDoc (uid) {
-    // if (!classTutorDocs) return false 
-    // for (const tutor of classTutorDocs) {
-    //   if (tutor.uid === uid) return true
-    // }
-    return false
-  }
 
   async function createTutorDoc ({ classID, firstName, lastName }) {
     // const userDbPath = `users/${$user.uid}/`
@@ -278,10 +293,14 @@
 
   function fetchVideoPortfolio () {
     return new Promise(async resolve => {
-      designatedRoomBoardIDs = []
+      if (isInitialFetch) {
+        selectedTutorUID = classTutorsDocs[0].uid
+        isInitialFetch = false
+      }
       if (selectedTutorUID === '') {
         return // the user has to login first before the room exists
       }
+      designatedRoomBoardIDs = []
       await fetchVideosOfTutorRoom()
       resolve()
     })

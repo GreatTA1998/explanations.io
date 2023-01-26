@@ -1,5 +1,113 @@
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing  */
 
+.webflow-container {
+	width: 90%; 
+	max-width: 1280px; /* webflow's value is 1280, partly because their scrollbar takes up width */
+	margin-right: auto;
+	margin-left: auto; 
+
+	box-sizing: border-box;
+}
+
+.header-flex {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 3%;
+	margin-bottom: 40px;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	/* -webkit-justify-content: space-between;
+	justify-content: space-between; */
+
+	flex-wrap: wrap;
+}
+
+/* Copied from Webflow's home page inspector */
+@media only screen and (min-width: 1550px) {
+	.header-title {
+		font-size: 7rem !important;
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	.header-title {
+		/* I don't know why !important is needed when webflow.com doesn't need it */
+		max-width: 85vw !important;
+		font-size: 11vw !important;
+	}
+}
+
+.header-title {
+	max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
+	margin-top: 0; 
+	margin-bottom: 0;
+	font-size: 7vw;
+	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
+	font-weight: 500;
+
+	/* This turns to prevent <p> from taking additional height for no reason */
+	margin-top: 0;
+	margin-bottom: 0;
+
+
+	// BELOW ARE CSS ATTRIBUTES I PUT IN ADDITION TO BASE ATTRIBUTES
+	box-sizing: border-box;
+
+	/* The -0.02em is the secret sauce for making sans-serif fonts look good **/
+	letter-spacing: -.02em; 
+	font-family: sans-serif; 
+	font-weight: 600; 
+
+	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
+	line-height: 1.25;
+}
+
+@media screen and (max-width: 991px) {
+	.header-subcopy-wrapper {
+		max-width: 700px !important;
+		margin-top: 30px;
+		margin-left: 0;
+		font-size: 1.2rem;
+	}
+}
+
+.header-subcopy-wrapper {
+	margin-left: 5vw;
+	max-width: 310px; 
+
+	// additional properties I copied from inspector 
+	display: flex; 
+	-webkit-flex-direction: column; 
+	justify-content: flex-end; 
+	-webkit-align-items: flex-start;
+	align-items: flex-start;
+}
+
+@media screen and (max-width: 991px) {
+	.header-subcopy {
+			max-width: 55vw !important;
+			font-size: 1.3rem;
+		}
+	}
+	
+.header-subcopy {
+	max-width: 20vw;
+	margin-top: 0;
+	margin-bottom: 0.4em;
+	font-size: 1.2rem;
+	line-height: 1.5;
+
+	// ADDITIONAL PROPERTIES I ADDED ON TOP OF WEBFLOW
+	font-family: sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+
 body {
   margin: 0;
 }
@@ -8,8 +116,13 @@ body {
   width: 0;
 }
 
+.webflow-section {
+	padding-top: 8%; 
+	padding-bottom: 8%;
+}
+
 /* used from https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow  */
-/* NOTE: you must set a width explicitly */
+/* NOTE: you MUST set a width explicitly */
 .my-truncated-text {
   text-overflow: ellipsis;
   white-space: nowrap;

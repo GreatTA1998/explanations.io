@@ -3,7 +3,7 @@
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
-					<img on:click={redirectToHomePage} src="logo.png" width="52" height="46" style="margin-left: 0px;">
+					<img on:click={redirectToHomePage} src="../logo.png" width="52" height="46" style="margin-left: 0px;">
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
 					</Title>
@@ -42,6 +42,7 @@
     <Drawer style="overflow-y: scroll; height: 100%; width: {drawerWidth}px" class="mdc-elevation--z{5}">
       <!-- <Content> -->
         <List>
+          <div>
           {#if drawerWidth === expandedWidth}
             <Button on:click={() => drawerWidth = collapsedWidth} style="padding-left: 1px; padding-right: 1px;">
               <!-- mirror flipping `keyboard_tab` icon makes it look like the expand drawer icon -->
@@ -56,37 +57,41 @@
               </span>
             </Button>
           {/if}
+          <div>
           
           {#if drawerWidth === expandedWidth}
-            <Item on:click={redirectToRequestPage} style="display: flex; align-items: center;">
+            <!-- <Item on:click={redirectToRequestPage} style="display: flex; align-items: center;">
               <span class="material-icons">
                 add
               </span>
               Request a class
             </Item>
             
-            <Item on:click={redirectToOpenAClassPage} style="display: flex; align-items: center;">
+            <Item on:click={redirectToOpenAClassPage} style="display: flex; align-items: center;" disabled>
               <span class="material-icons">
                 add
               </span>
               Open a class
-            </Item>
+            </Item> -->
 
-            <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 6px; font-size: 1.2rem;">
+            <!-- <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 6px; font-size: 1.2rem;">
               Department-sponsored
+            </Text> -->
+
+            <div style="margin-top: 10px;">
+
+            </div>
+            <Text style="margin-top: 80px; margin-bottom: 10px; margin-left: 16px; font-size: 1.2rem;">
+              Newly offered
             </Text>
             <Item on:click={() => redirectToPage('')}>
               14.01
             </Item>
-
-            <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 6px; font-size: 1.2rem;">
-              Newly offered
-            </Text>
-            <Item on:click={() => redirectToPage(linearAlgebraID)}>
-              18.06
-            </Item>
             <Item on:click={() => redirectToPage(introToMachineLearningID)}>
               6.390
+            </Item>
+            <Item on:click={() => redirectToPage(linearAlgebraID)}>
+              18.06
             </Item>
           {/if}
         </List>

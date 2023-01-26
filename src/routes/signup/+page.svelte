@@ -79,9 +79,8 @@
                     <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
                       { tutorDoc.firstName + ' ' + tutorDoc.lastName }
                       <br>
-            
-                      Actual bio here...
-                      (note uid is identical to eltonUID)
+                      id: { tutorDoc.id }
+                      uid: { tutorDoc.uid }
                       <br>
                     </PrimaryAction>
                   </Card>

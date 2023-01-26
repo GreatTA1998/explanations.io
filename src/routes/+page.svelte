@@ -40,12 +40,13 @@
 	<div class="webflow-container">
 		{#if active.label === 'Students'}
 			<div class="header-flex">
-				<p class="header-title">The help you want — without wasted time</p>
+				<p class="header-title">
+					 help you want — without wasted time
+				</p>
 				<div class="header-subcopy-wrapper" style="display: flex; -webkit-flex-direction: column; justify-content: flex-end; -webkit-align-items: flex-start;">
 					<div class="header-subcopy">
 						Your psets should be an enjoyable challenge, not an overwhelming timesink.
 					</div>
-				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
 							Explore shops

@@ -116,6 +116,9 @@ onMount(() => {
     position: relative;
 
     border: 5px solid orange;
+
+    /* T match SMUI card's radius, it's multiplied by 2 */
+    border-radius: 10px; 
   }
 
   #carousel {

@@ -1,5 +1,9 @@
+import { initializeDatabase } from '../database.js'
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut } from 'firebase/auth'
 
+// TO-DO: I'm not too happy about this potential duplicate initialization, but it's a quick-fix
+
+// initializeDatabase()
 const auth = getAuth();
 // signOut(auth).then(() => {
 //   // Sign-out successful.
@@ -8,6 +12,13 @@ const auth = getAuth();
 // });
 
 const print = console.log
+
+// export function logOut () {
+//   return new Promise(async (resolve) => {
+//     await signOut(auth)
+//     resolve()
+//   })
+// }
 
 export function signInWithPhone () {
   console.log('before, window.verifier =', window.recaptchaVerifier)

@@ -11,6 +11,6 @@
 
   const boardRef = doc(getFirestore(), dbPath)
   onSnapshot(boardRef, (snapshot) => {
-    boardDoc = { id: snapshot.id, ...snapshot.data() }
+    boardDoc = { id: snapshot.id, ...snapshot.data(), path: snapshot.ref.path }
   })
 </script>

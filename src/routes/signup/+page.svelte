@@ -119,7 +119,7 @@
                     <div>Last name</div>
                     <input bind:value={inputFieldLastName} placeholder=""/>
 
-                    <Button on:click={createTutorDoc}>
+                    <Button on:click={createTutorDoc({ classID: id })}>
                       Submit
                     </Button>
                   {/if}
@@ -138,10 +138,10 @@
       {#key selectedTutorUID + rerenderKeyForCarousel}
         <div use:setupCarouselData class="section-container">
           <!-- CONSIDER MAKING THE CAROUSEL JUST DISPLAY ONE IMAGE, IT'D BE SIMPLER FOR SURE (WHAT WILL HAPPEN ON IPHONE), MAYBE EVEN GOOD -->
-          <ImageCarousel numOfImages={topFiveVideosIDs.length + 1} let:carouselWidth={carouselWidth}>
+          <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} let:carouselWidth={carouselWidth}>
             {#if carouselWidth}
-              {#if topFiveVideosIDs.length > 0}
-                {#each topFiveVideosIDs as id}
+              {#if designatedRoomBoardIDs.length > 0}
+                {#each designatedRoomBoardIDs as id}
                   <div class="card">
                     <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
                       {#if boardDoc}
@@ -174,7 +174,7 @@
                         {:else}
                           <ReusableLiveBlackboard
                             {boardDoc}
-                            boardID={newlyDecidedBoardID}
+                            boardID={id}
                             boardsDbPath={boardsCollectionDbPath}
                             canvasWidth={Math.max(carouselWidth, 300)}
                             canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
@@ -236,23 +236,11 @@
   // HOW TUTOR SIGN UP WORKS AT THE DATABASE LEVEL: 
   // 1. On initial sign-up, fully initialize a normal room, and link it to tutorDoc.designatedRoomID property
   // 2. Whenever a video finishes uploading, it will create a new room
-  
-  let tabs = [{ label: 'PILOTED CLASSES', icon: 'hail'}, { label: 'REQUEST NEW CLASS', icon: 'local_taxi'}]
-  let active = tabs[0]
-
-  let pilotedClasses = [{ label: '14.01', icon: 'hail'}]
-  let selectedClass = pilotedClasses[0]
-  let tab2
-
   let tutorRoomVideosIDs = [] 
-  let topFiveVideosIDs = []
-  let idxOfCurrentVideo = 0 
-  let gapMargin = 10
+  let designatedRoomBoardIDs = []
 
-  let newlyDecidedBoardID = ''
   const id = 'Mev5x66mSMEvNz3rijym' // 14.01
   const boardsCollectionDbPath = `classes/${id}/blackboards/`
-  let blackboardDbPath = '' // AF('') means not initialized
 
   const eltonUID = 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'
   let classTutorsDocs = null
@@ -270,7 +258,6 @@
 
   async function setupCarouselData () {
     await fetchVideoPortfolio()
-    decideBlackboardLocation()
   }
 
   async function fetchClassTutors () {
@@ -284,11 +271,10 @@
     classTutorsDocs = [...temp]
   }
 
-  async function createTutorDoc () {
-    // const userDbPath = `users/${$user.uid}/`
-    const classDbPath = `classes/${id}/`
+  async function createTutorDoc ({ classID }) {
+    const classDbPath = `classes/${classID}/`
     const classTutorDocPath = classDbPath + `tutors/${getRandomID()}`
-    const designatedRoomID = await createRoomDoc(`classes/${id}/`) 
+    const designatedRoomID = await createRoomDoc(`classes/${classID}/`) 
     const tutorObject = {
       uid: $user.uid,
       firstName: inputFieldFirstName,
@@ -302,14 +288,10 @@
 
   function fetchVideoPortfolio () {
     return new Promise(async resolve => {
-      topFiveVideosIDs = []
-      blackboardDbPath = ''
-      newlyDecidedBoardID = ''
+      designatedRoomBoardIDs = []
       if (selectedTutorUID === '') {
         return // the user has to login first before the room exists
       }
-      // if (selectedTutorUID === eltonUID) fetchTopFiveVideos()
-      // else 
       await fetchVideosOfTutorRoom()
       resolve()
     })
@@ -336,10 +318,7 @@
 
       tutorRoomVideosIDs = [...roomDoc.blackboards]
 
-      // TO-DO: rename this to more general "portfolioVideosIDs"
-      topFiveVideosIDs = [...roomDoc.blackboards]
-      // const blackboardsRef = collection(db, boardsCollectionDbPath)
-      // const q = query()
+      designatedRoomBoardIDs = [...roomDoc.blackboards]
 
       resolve()
     })
@@ -360,17 +339,11 @@
       temp.push(doc.id)
     })
 
-    topFiveVideosIDs = [...temp]
+    designatedRoomBoardIDs = [...temp]
 
     return {
       // try empty
     }
-  }
-
-
-  async function decideBlackboardLocation () {
-    newlyDecidedBoardID = topFiveVideosIDs[topFiveVideosIDs.length - 1]
-    blackboardDbPath = `classes/${id}/blackboards/${newlyDecidedBoardID}`
   }
 
   async function updateNewBlackboardLocation () {

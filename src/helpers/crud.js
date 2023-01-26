@@ -1,5 +1,35 @@
 import { getRandomID } from './utility.js'
-import { collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
+import { deleteField, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
+
+export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStrokesFromDb) {
+  return new Promise(async resolve => {
+    if (!confirm('Are you sure you want to delete this video?')) {
+      return
+    }
+  
+    const promises = []
+    const boardRef = doc(getFirestore(), path)
+    if (audioRefFullPath) {
+      const audioRef = ref(getStorage(), audioRefFullPath)
+      promises.push(
+        deleteObject(audioRef)
+      )
+    }
+    promises.push(
+      updateDoc(boardRef, {
+        creator: deleteField(),
+        creatorPhoneNumber: deleteField(),
+        date: deleteField(),
+        audioDownloadURL: deleteField(),
+        audioRefFullPath: deleteField()
+      })
+    )
+    promises.push(deleteAllStrokesFromDb())
+    await Promise.all(promises)
+    resolve()
+  })
+}
 
 // returns the ID of the new room created
 export function createRoomDoc (classPath) {

@@ -20,7 +20,7 @@
   import { page } from '$app/stores'
 
   initializeDatabase()
- 
+  
   onMount(async () => {
     // USER LOGIN
     const auth = getAuth()

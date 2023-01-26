@@ -7,11 +7,11 @@
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
 					</Title>
-					<a href="https://medium.com/mit-soul" target="_blank" style="text-decoration-color: transparent;">
+					<!-- <a href="https://medium.com/mit-soul" target="_blank" style="text-decoration-color: transparent;">
 						<Button style="margin-left: 40px;">
 							Blog
 						</Button>
-					</a>
+					</a> -->
 					<a href="https://github.com/verypopularguy/explain" target="_blank" style="text-decoration-color: transparent;">
 						<Button style="margin-left: 20px;">
 							Github
@@ -20,9 +20,15 @@
 				</Section>
 
 				<Section align="end" toolbar>
-					<Button variant="outlined">
-						Log in
-					</Button>
+          <!-- {#if !$user.phoneNumber}
+            <Button variant="outlined">
+              Log in
+            </Button>
+          {:else}
+            <Button on:click={logOut}>
+              Log out
+            </Button>
+          {/if} -->
 				</Section>
 			</Row>
 		</TopAppBar>
@@ -76,10 +82,10 @@
             <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 6px; font-size: 1.2rem;">
               Newly offered
             </Text>
-            <Item on:click={() => redirectToPage('18.06 ID here')}>
+            <Item on:click={() => redirectToPage(linearAlgebraID)}>
               18.06
             </Item>
-            <Item on:click={() => redirectToPage('18.06 ID here')}>
+            <Item on:click={() => redirectToPage(introToMachineLearningID)}>
               6.390
             </Item>
           {/if}
@@ -110,6 +116,11 @@
   } from '@smui/card';
   import Button from '@smui/button';
   import { goto } from '$app/navigation';
+  import { user } from '../../store.js'
+  // import { logOut } from '../../helpers/auth.js'
+
+  const linearAlgebraID = 'lvzQqyZIV1wjwYnRV9hn'
+  const introToMachineLearningID = 'cLF9unbCuplsl3JmHRbu'
 
   let topAppBar
   let drawerWidth = 240

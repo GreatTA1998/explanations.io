@@ -25,8 +25,8 @@
   {/if}
 
     <div style="margin-top: 1%; margin-bottom: 1%">
-      <h2 style="font-family: sans-serif">
-        Tutor gallery
+      <h2 style="font-family: sans-serif; color: grey; font-size: 1.2rem;">
+        TUTOR GALLERY
       </h2>
       <div style="display: flex;">
         {#if classTutorsDocs}
@@ -41,7 +41,7 @@
                   <TextAreaAutoResizing 
                     value={tutorDoc.bio || ''} 
                     on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
-                    placeholder="e.g. year, major, wrote a textbook, made several Piazza posts with ~20 thanks (provide links)"
+                    placeholder="e.g. year, major, special teaching beliefs, links to related work Piazza, textbook chapters, Youtube etc."
                     readonly={$user.uid !== tutorDoc.uid}
                     nonFocusedPlaceholderOpacity={0.6}
                     numberOfInitialRowsIfEmpty={2}
@@ -59,7 +59,7 @@
               <Card style="height: 150px;">
                 <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
                   <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                    Become a tutor in just 3 steps:
+                    Become a tutor in 3 steps:
                   </h2>
                   <div style="font-family: sans-serif;">
                     <ol>
@@ -116,69 +116,73 @@
 
 
   {#if classTutorsDocs}
-    {#key selectedTutorUID + rerenderKeyForCarousel}
-      <div use:setupCarouselData>
-        <ImageCarousel numOfImages={designatedRoomBoardIDs.length} let:carouselWidth={carouselWidth}>
-          {#if carouselWidth}
-            {#if designatedRoomBoardIDs.length > 0}
-              {#each designatedRoomBoardIDs as id}
-                <div class="card">
-                  <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
-                    {#if boardDoc}
-                      <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
-                        Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
-                      </div> -->
+    <!-- When nobody has signed up, an orange box with nothing is confusing -->
+    {#if classTutorsDocs.length > 0}
+      {#key selectedTutorUID + rerenderKeyForCarousel}
+        <div use:setupCarouselData>
+          <ImageCarousel numOfImages={designatedRoomBoardIDs.length} let:carouselWidth={carouselWidth}>
+            {#if carouselWidth}
+              {#if designatedRoomBoardIDs.length > 0}
+                {#each designatedRoomBoardIDs as id}
+                  <div class="card">
+                    <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
+                      {#if boardDoc}
+                        <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
+                          Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
+                        </div> -->
 
-                      <!-- JUST COPY FROM [room]/[class].svelte -->
-                      <div style="width: {Math.max(carouselWidth, 300)}px; margin-top: 0px; margin-bottom: 0px">
-                        <TextAreaAutoResizing 
-                          value={boardDoc.description || ''} 
-                          on:input={(e) => debouncedUpdateBoardDescription(e, id)}
-                          placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, etc. so students can get a sense of your explanation style :)"
-                          readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                          nonFocusedPlaceholderOpacity={0.6}
-                          numberOfInitialRowsIfEmpty=3
-                        />
-                      </div>
+                        <!-- JUST COPY FROM [room]/[class].svelte -->
+                        <div style="width: {Math.max(carouselWidth, 300)}px; margin-top: 0px; margin-bottom: 0px">
+                          <TextAreaAutoResizing 
+                            value={boardDoc.description || ''} 
+                            on:input={(e) => debouncedUpdateBoardDescription(e, id)}
+                            placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, etc. so students can get a sense of your explanation style :)"
+                            readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
+                            nonFocusedPlaceholderOpacity={0.6}
+                            numberOfInitialRowsIfEmpty=3
+                          />
+                        </div>
 
-                      {#if boardDoc.audioDownloadURL}
-                        <ReusableDoodleVideo 
-                          {boardDoc}
-                          boardDbPath={boardsCollectionDbPath + id}
-                          canvasWidth={Math.max(carouselWidth, 300)}
-                          canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
-                        />
-                      {:else}
-                        <ReusableLiveBlackboard
-                          {boardDoc}
-                          boardID={id}
-                          boardsDbPath={boardsCollectionDbPath}
-                          canvasWidth={Math.max(carouselWidth, 300)}
-                          canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
-                          on:video-uploaded={updateNewBlackboardLocation}
-                        />
+                        {#if boardDoc.audioDownloadURL}
+                          <ReusableDoodleVideo 
+                            {boardDoc}
+                            boardDbPath={boardsCollectionDbPath + id}
+                            canvasWidth={Math.max(carouselWidth, 300)}
+                            canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
+                          />
+                        {:else}
+                          <ReusableLiveBlackboard
+                            {boardDoc}
+                            boardID={id}
+                            boardsDbPath={boardsCollectionDbPath}
+                            canvasWidth={Math.max(carouselWidth, 300)}
+                            canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
+                            on:video-uploaded={updateNewBlackboardLocation}
+                          />
+                        {/if}
                       {/if}
-                    {/if}
-                  </RenderlessListenToBoard>
-                </div>
-              {/each}
-
-              <!-- THE PRESENCE OF THIS BREAKS THE CAROUSEL IN UNEXPECTED WAYS, E.G YOU NEED A NEW PAGE, WHICH BRINGS A 
-              INTRUSIVE RIGHT ARROW ONTO THE NEW BLACKBOARD -->
-              <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
-              <!-- <div class="card">
-                <div style="background-color: hsl(0,0%,0%, 0.80); width: {carouselWidth}px; height: {200}px">
-                  <Button on:click={updateNewBlackboardLocation} style="font-size: 4rem; color: white;">
-                    Backup Create Board Button
-                  </Button>
-                </div>
-              </div> -->
+                    </RenderlessListenToBoard>
+                  </div>
+                {/each}
+                
+                <!-- DO SOMETHING TO GUARANTEE A NEW BOARD WILL BE CREATED -->
+                <!-- THE PRESENCE OF THIS BREAKS THE CAROUSEL IN UNEXPECTED WAYS, E.G YOU NEED A NEW PAGE, WHICH BRINGS A 
+                INTRUSIVE RIGHT ARROW ONTO THE NEW BLACKBOARD -->
+                <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
+                <!-- <div class="card">
+                  <div style="background-color: hsl(0,0%,0%, 0.80); width: {carouselWidth}px; height: {200}px">
+                    <Button on:click={updateNewBlackboardLocation} style="font-size: 4rem; color: white;">
+                      Backup Create Board Button
+                    </Button>
+                  </div>
+                </div> -->
+              {/if}
             {/if}
-          {/if}
 
-        </ImageCarousel>
-      </div>
-    {/key}
+          </ImageCarousel>
+        </div>
+      {/key}
+    {/if}
   {/if}
 <!-- </div> -->
 
@@ -198,10 +202,6 @@
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
 
-  // export let data
-  // let { classID } = data
-  // $: ({ classID } = data) // so it stays in sync when `data` changes
-  
   export let classID
 
   $: classID, fetchPageData()

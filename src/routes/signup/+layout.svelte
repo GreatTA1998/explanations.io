@@ -28,7 +28,7 @@
     <Drawer style="overflow-y: scroll; height: 100%; width: {drawerWidth}px" class="mdc-elevation--z{5}">
       <!-- <Content> -->
         <List>
-          <div>
+          <!-- <div style="display: flex; width: 100%; flex-direction: row-reverse;"> -->
             {#if drawerWidth === expandedWidth}
               <Button on:click={() => drawerWidth = collapsedWidth} style="padding-left: 1px; padding-right: 1px;">
                 <!-- mirror flipping `keyboard_tab` icon makes it look like the expand drawer icon -->
@@ -43,7 +43,7 @@
                 </span>
               </Button>
             {/if}
-          <div>
+          <!-- <div> -->
           
           {#if drawerWidth === expandedWidth}
             <!-- <Item on:click={redirectToRequestPage} style="display: flex; align-items: center;">
@@ -59,24 +59,27 @@
               </span>
               Open a class
             </Item> -->
+            <div style="margin-bottom: 40px;">
 
-            <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 16px; font-size: 1.2rem;">
+            </div>
+
+            <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 16px; font-size: 0.8rem; color: grey;">
               Piloted in Fall 2022
             </Text>
-            <Item on:click={() => redirectToPage('')}>
+            <Item on:click={() => redirectToPage('')} style="font-size: 1.2rem;">
               14.01
             </Item>
 
-            <div style="margin-top: 10px;">
+            <div style="margin-top: 40px;">
 
             </div>
-            <Text style="margin-top: 80px; margin-bottom: 10px; margin-left: 16px; font-size: 1.2rem;">
+            <Text style="margin-top: 80px; margin-bottom: 10px; margin-left: 16px; font-size: 0.8rem; color: grey">
               New for Spring 2023
             </Text>
-            <Item on:click={() => redirectToPage(introToMachineLearningID)}>
+            <Item on:click={() => redirectToPage(introToMachineLearningID)} style="font-size: 1.2rem;" selected={classID === introToMachineLearningID}>
               6.390
             </Item>
-            <Item on:click={() => redirectToPage(linearAlgebraID)}>
+            <Item on:click={() => redirectToPage(linearAlgebraID)} style="font-size: 1.2rem;" selected={classID === linearAlgebraID}>
               18.06
             </Item>
           {/if}
@@ -108,7 +111,16 @@
   import Button from '@smui/button';
   import { goto } from '$app/navigation';
   import { user } from '../../store.js'
+  import { page } from '$app/stores'
   // import { logOut } from '../../helpers/auth.js'
+
+  let classID = ''
+
+  $: if (page) {
+    const { pathname } = $page.url
+    classID = pathname.split('/')[2]
+  }
+
 
   const linearAlgebraID = 'lvzQqyZIV1wjwYnRV9hn'
   const introToMachineLearningID = 'cLF9unbCuplsl3JmHRbu'

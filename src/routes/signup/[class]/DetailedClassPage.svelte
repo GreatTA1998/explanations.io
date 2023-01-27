@@ -228,10 +228,7 @@
     }
   }
 
-  console.log('classID =', classID)
-
   function fetchPageData () {
-    console.log("classID changed fetching page data")
     if (unsubTutorsListener) unsubTutorsListener()
 
     isInitialFetch = true

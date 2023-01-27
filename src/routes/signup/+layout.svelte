@@ -1,4 +1,4 @@
-<!-- <div class="flexy">
+<div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
@@ -19,7 +19,7 @@
 			</Row>
 		</TopAppBar>
 	</div>
-</div> -->
+</div>
 
 
 <AutoAdjust {topAppBar}>

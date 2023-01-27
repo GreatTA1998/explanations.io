@@ -112,7 +112,6 @@
   export let canvasWidth 
   export let canvasHeight
 
-  console.log("boardID =", boardID)
   const dispatch = createEventDispatcher()
 
   // TODO: rename to reflect sequential nature of operations

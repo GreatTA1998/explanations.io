@@ -112,9 +112,9 @@ body {
   margin: 0;
 }
 
-::-webkit-scrollbar {
-  width: 0;
-}
+// ::-webkit-scrollbar {
+//   width: 0;
+// }
 
 .webflow-section {
 	padding-top: 8%; 
@@ -122,7 +122,7 @@ body {
 }
 
 /* used from https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow  */
-/* NOTE: you MUST set a width explicitly */
+/* NOTE: you must set a width explicitly */
 .my-truncated-text {
   text-overflow: ellipsis;
   white-space: nowrap;

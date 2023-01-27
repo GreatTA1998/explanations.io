@@ -4,13 +4,13 @@
       <!-- <div class="copied-from-koa" style="color: purple">Log in with phone:</div> -->
 
       {#if canTakeInternationalNumbers}
-        <input type="tel" id="phone-country-code" minlength="2" maxlength="4" placeholder="+1" bind:value={countryCode} style="margin-left: 15px; width: 72px; height: 40px; font-size: 2rem; margin-right: 10px">
+        <input type="tel" id="phone-country-code" minlength="2" maxlength="4" placeholder="+1" bind:value={countryCode} style="margin-left: 15px; width: 82px; height: 40px; font-size: 2rem; margin-right: 10px">
       {/if}
-      <input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="margin-left: 15px; width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+      <input type="tel" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} style="margin-left: 15px; width: 60px; height: 40px; font-size: 2rem; margin-right: 10px">
 
-      <input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 54px; height: 40px; font-size: 2rem; margin-right: 10px">
+      <input type="tel" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} style="width: 60px; height: 40px; font-size: 2rem; margin-right: 10px">
 
-      <input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 76px; height: 40px; font-size: 2rem; margin-right: 10px">
+      <input type="tel" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} style="width: 82px; height: 40px; font-size: 2rem; margin-right: 10px">
       <Button id="sign-in-button" on:click={signInWithPhone} style="display: none; color: {hasEnteredPhoneNumber ? 'rgb(116 28 183)' : 'grey'}; margin-bottom: 2px" disabled={!hasEnteredPhoneNumber}>
         Sign Up
       </Button>
@@ -18,7 +18,7 @@
   {:else}
     <div style="display: flex; justify-content: center; align-items: center; margin-top: 24px">
       <div class="copied-from-koa" style="color: purple">
-        You should receive a text message with a 6-digit code:
+        You'll receive a text with 6-digits:
       </div>
       
       <!-- `numeric`: https://stackoverflow.com/a/62179845/7812829 -->

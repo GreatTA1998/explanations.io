@@ -16,8 +16,12 @@
       autogrowWrapper.dataset.replicatedValue = e.target.value; 
       dispatch('input', e.target.value)
     }} 
-    rows="1"
-    style="width: {100}%;"
+    rows={numberOfInitialRowsIfEmpty}
+    style="
+      width: {100}%;
+      --nonFocusedPlaceholderOpacity: {nonFocusedPlaceholderOpacity};
+      --fontSizeIncludeUnits: {fontSizeIncludeUnits};
+    "
   />
 </div>
 
@@ -38,6 +42,9 @@
   export let value
   export let placeholder
   export let readonly = false
+  export let nonFocusedPlaceholderOpacity = 0
+  export let numberOfInitialRowsIfEmpty = 1
+  export let fontSizeIncludeUnits = '1.4rem'
 
   let autogrowWrapper
 
@@ -73,7 +80,7 @@
   
   /* Copying Mozilla */
   font-family: "Segoe UI", Roboto, sans-serif; 
-  font-size: 1.4rem;
+  font-size: var(--fontSizeIncludeUnits);
   line-height: 1.6;
   letter-spacing: 0.001em;
   color: rgba(1, 11, 1, 1);
@@ -87,7 +94,7 @@
 }
 
 textarea::placeholder {
-  opacity: 0;
+  opacity: var(--nonFocusedPlaceholderOpacity);
 }
 
 textarea:focus::placeholder{

@@ -1,4 +1,4 @@
-<div class="flexy">
+<!-- <div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
@@ -7,11 +7,6 @@
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
 					</Title>
-					<!-- <a href="https://medium.com/mit-soul" target="_blank" style="text-decoration-color: transparent;">
-						<Button style="margin-left: 40px;">
-							Blog
-						</Button>
-					</a> -->
 					<a href="https://github.com/verypopularguy/explain" target="_blank" style="text-decoration-color: transparent;">
 						<Button style="margin-left: 20px;">
 							Github
@@ -20,20 +15,11 @@
 				</Section>
 
 				<Section align="end" toolbar>
-          <!-- {#if !$user.phoneNumber}
-            <Button variant="outlined">
-              Log in
-            </Button>
-          {:else}
-            <Button on:click={logOut}>
-              Log out
-            </Button>
-          {/if} -->
 				</Section>
 			</Row>
 		</TopAppBar>
 	</div>
-</div>
+</div> -->
 
 
 <AutoAdjust {topAppBar}>
@@ -43,20 +29,20 @@
       <!-- <Content> -->
         <List>
           <div>
-          {#if drawerWidth === expandedWidth}
-            <Button on:click={() => drawerWidth = collapsedWidth} style="padding-left: 1px; padding-right: 1px;">
-              <!-- mirror flipping `keyboard_tab` icon makes it look like the expand drawer icon -->
-              <span class="material-icons" style="font-size: 2rem; transform: rotateY(180deg)">
-                keyboard_tab
-              </span>
-            </Button>
-          {:else}
-            <Button on:click={() => drawerWidth = expandedWidth} style="padding-left: 1px; padding-right: 1px;">
-              <span class="material-icons" style="font-size: 2rem;">
-                start
-              </span>
-            </Button>
-          {/if}
+            {#if drawerWidth === expandedWidth}
+              <Button on:click={() => drawerWidth = collapsedWidth} style="padding-left: 1px; padding-right: 1px;">
+                <!-- mirror flipping `keyboard_tab` icon makes it look like the expand drawer icon -->
+                <span class="material-icons" style="font-size: 2rem; transform: rotateY(180deg)">
+                  keyboard_tab
+                </span>
+              </Button>
+            {:else}
+              <Button on:click={() => drawerWidth = expandedWidth} style="padding-left: 1px; padding-right: 1px;">
+                <span class="material-icons" style="font-size: 2rem;">
+                  start
+                </span>
+              </Button>
+            {/if}
           <div>
           
           {#if drawerWidth === expandedWidth}
@@ -74,19 +60,19 @@
               Open a class
             </Item> -->
 
-            <!-- <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 6px; font-size: 1.2rem;">
-              Department-sponsored
-            </Text> -->
+            <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 16px; font-size: 1.2rem;">
+              Piloted in Fall 2022
+            </Text>
+            <Item on:click={() => redirectToPage('')}>
+              14.01
+            </Item>
 
             <div style="margin-top: 10px;">
 
             </div>
             <Text style="margin-top: 80px; margin-bottom: 10px; margin-left: 16px; font-size: 1.2rem;">
-              Newly offered
+              New for Spring 2023
             </Text>
-            <Item on:click={() => redirectToPage('')}>
-              14.01
-            </Item>
             <Item on:click={() => redirectToPage(introToMachineLearningID)}>
               6.390
             </Item>

@@ -41,7 +41,7 @@
 		{#if active.label === 'Students'}
 			<div class="header-flex">
 				<p class="header-title">
-					 help you want — without wasted time
+					The help you want — without wasted time
 				</p>
 				<div class="header-subcopy-wrapper" style="display: flex; -webkit-flex-direction: column; justify-content: flex-end; -webkit-align-items: flex-start;">
 					<div class="header-subcopy">
@@ -62,7 +62,7 @@
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Here you can hire former students to 
-					help you with psets via blackboard videos and a sprinkle of 1-on-1 tutoring,
+					remotely help you with psets via blackboard videos and a sprinkle of 1-on-1 tutoring,
 					for classes with overcrowded Office Hours.
 				</div>
 			</div>

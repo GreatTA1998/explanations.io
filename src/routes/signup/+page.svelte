@@ -18,125 +18,135 @@
   If for some reason it doesn't happen, you get a full refund. 
 -->
 
-<Card style="height: 100%; overflow-y: auto;">
-  <Content>
-    <div class="section-container">
-      <div class="section-title">
-        14.01 - Microeconomics
-      </div>
+<div class="webflow-container">
+  <div class="header-flex">
+    <div class="header-title">
+      14.01 
+    </div>
 
-      <div class="section-subtitle">
-        Because lectures doesn't cover math, f(x, y) constrained optimization is the source of lots of questions
+    <div class="header-subcopy-wrapper">
+      <div class="header-subcopy">
+        The platform covers refunds anytime, any reason - so both student & tutor are protected
       </div>
-      
-      <div style="display: flex; align-items: center; margin-top: 40px;">
-        <Button color="secondary" variant="raised" style="height: 75px; border-radius: 0px;">
-          <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-            Hire for $15/week
+      <div style="display: flex;">
+        <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+            Sign-up for $20/week
           </Label>
-          <!-- The value of a platform is you can protect both buyer and seller
-            buyer: can get refund 
-            seller: even if there's refund, I can make sure their work is paid for - you want to make this a non-stressful activity,
-              you really want to encourage content creation
-          -->
         </Button>
-
-        <Button variant="outlined" style="height: 75px; margin-left: 20px; border-radius: 0px;">
-          <Label style="text-transform: none; padding-left: 20px; padding-right: 20px; padding-top: 50px; padding-bottom: 50px; font-size: 1.2rem; border-radius: 6px; font-weight: 600">
-            Explore last semester's server
+        <Button on:click={() => goto('/Mev5x66mSMEvNz3rijym')} variant="outlined" style="height: 60px; margin-left: 20px; border-radius: 0px;">
+          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 50px; padding-bottom: 50px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+            Fall '22 server
           </Label>
         </Button>
       </div>
     </div>
+  </div>
 
-    <div style="margin-top: 40px" class="section-container">
-      <div style="display: flex">
-    
-          <!-- <div class="section-title">
-            Peer Tutors
-          </div> -->
+  <!-- WRITE SHORT EDITORIAL HERE
+      We're forced to overlap 2-3 different 3D graphs onto 2D, 
+      with one-color, and try to make sense of it. 
+      Math is therefore the most common source of confusion, 
+      yet it's easily solved by a 10-minute review of f(x, y) constrained optimization of two variables.
+    -->
 
-          <div style="display: flex;">
-            {#if classTutorsDocs}
+  <!-- <div class="section-subtitle">
+    Because lectures doesn't cover math, f(x, y) constrained optimization is the source of lots of questions
+  </div> -->
 
-            <div class="tutor-business-card" class:orange-border={selectedTutorUID === eltonUID}>
+  <div style="margin-top: 1%; margin-bottom: 1%" class="section-container">
+    <h2 style="font-family: sans-serif">
+      Tutor gallery
+    </h2>
+
+    <div style="display: flex">
+      <div style="display: flex;">
+        {#if classTutorsDocs}
+          <div class="tutor-business-card" class:orange-border={selectedTutorUID === eltonUID}>
+            <Card style="height: 150px;">
+              <PrimaryAction on:click={() => { selectedTutorUID = eltonUID }} padded style="height: 100%">
+                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                  Elton Lin 
+                </h2>
+                <br>
+
+                <TextAreaAutoResizing 
+                  value={'6-14, class of 2020, 600 total view-minutes for Fall 2022'} 
+                  placeholder="e.g. year, major, wrote a textbook, made several Piazza posts with ~20 thanks (provide links)"
+                  readonly={$user.uid !== eltonUID}
+                  nonFocusedPlaceholderOpacity={0.6}
+                  numberOfInitialRowsIfEmpty={2}
+                  fontSizeIncludeUnits={'1rem'}
+                />
+              </PrimaryAction>
+            </Card>
+          </div>
+
+          {#each classTutorsDocs as tutorDoc}
+            <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
               <Card style="height: 150px;">
-                <PrimaryAction on:click={() => { selectedTutorUID = eltonUID }} padded style="height: 100%">
-                  Elton Lin (hard-coded name) 
+                <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
+                  { tutorDoc.firstName + ' ' + tutorDoc.lastName }
                   <br>
-        
-                  6-14, '20 (hard-coded bio)
+                  id: { tutorDoc.id }
+                  uid: { tutorDoc.uid }
                   <br>
-                  600 combined view-minutes for Spring 2020
                 </PrimaryAction>
               </Card>
             </div>
+          {/each}
 
-            {#if classTutorsDocs}
-              {#each classTutorsDocs as tutorDoc}
-                <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-                  <Card style="height: 150px;">
-                    <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
-                      { tutorDoc.firstName + ' ' + tutorDoc.lastName }
-                      <br>
-                      id: { tutorDoc.id }
-                      uid: { tutorDoc.uid }
-                      <br>
-                    </PrimaryAction>
-                  </Card>
-                </div>
-              {/each}
-            {/if}
-
-            <!-- TO-DO: hide if user already signed up as tutor -->
-            <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorUID === ''}>
-              {#if selectedTutorUID !== ''}
-                <Card style="height: 150px;">
-                  <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
-                    <p>Sign up as tutor</p>
-                    <div>It's simple to setup shop:</div>
-                    <ol>
-                      <li>Log in</li>
-                      <li>Record an example video</li>
-                      <li>Fill out everything else another time</li>
-                    </ol>
-                  </PrimaryAction>
-                </Card>
+          <!-- TO-DO: hide if user already signed up as tutor -->
+          <!-- <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorUID === ''}>
+            {#if selectedTutorUID !== ''}
+              <Card style="height: 150px;">
+                <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
+                  <p>Sign up as tutor</p>
+                  <div>It's simple to setup shop:</div>
+                  <ol>
+                    <li>Log in</li>
+                    <li>Record an example video</li>
+                    <li>Fill out everything else another time</li>
+                  </ol>
+                </PrimaryAction>
+              </Card>
+            {:else}
+              {#if !$user.phoneNumber}
+                <div>Phone login</div>
+                <PhoneLogin/>
               {:else}
-                {#if !$user.phoneNumber}
-                  <div>Phone login</div>
-                  <PhoneLogin/>
-                {:else}
-                  <div>
-                    success - you're logged in, shop will be auto-saved
-                  </div>
+                <div>
+                  success - you're logged in, shop will be auto-saved
+                </div>
 
-                  {#if !$user.firstName || !$user.lastName}
-                    <div>First name</div>
-                    <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
+                {#if !$user.firstName || !$user.lastName}
+                  <div>First name</div>
+                  <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
 
-                    <div>Last name</div>
-                    <input bind:value={inputFieldLastName} placeholder=""/>
+                  <div>Last name</div>
+                  <input bind:value={inputFieldLastName} placeholder=""/>
 
-                    <Button on:click={createTutorDoc({ classID: id })}>
-                      Submit
-                    </Button>
-                  {/if}
-                  
-                  <div>bio</div>
-                  <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
+                  <Button on:click={createTutorDoc({ classID: id })}>
+                    Submit
+                  </Button>
                 {/if}
+                
+                <div>bio</div>
+                <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
               {/if}
-            </div>
-          {/if}
+            {/if}
+          </div> -->
+        {/if}
       </div><!-- End of flexbox-->
     </div> <!-- End of section -->
+  </div>
+</div>
+
 
     <!-- VIDEO PORTFOLIO -->
     {#if classTutorsDocs}
       {#key selectedTutorUID + rerenderKeyForCarousel}
         <div use:setupCarouselData class="section-container">
-          <!-- CONSIDER MAKING THE CAROUSEL JUST DISPLAY ONE IMAGE, IT'D BE SIMPLER FOR SURE (WHAT WILL HAPPEN ON IPHONE), MAYBE EVEN GOOD -->
           <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} let:carouselWidth={carouselWidth}>
             {#if carouselWidth}
               {#if designatedRoomBoardIDs.length > 0}
@@ -147,8 +157,6 @@
                         <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
                           Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
                         </div> -->
-
-                        <!-- JUST COPY FROM [room]/[class].svelte -->
                         <div style="width: {Math.max(carouselWidth, 300)}px; margin-top: 0px; margin-bottom: 0px">
                           <TextAreaAutoResizing 
                             value={boardDoc.description || ''} 
@@ -165,11 +173,6 @@
                             canvasWidth={Math.max(carouselWidth, 300)}
                             canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
                           />
-                  
-                          <div style="max-height: {carouselWidth * 3/4}" class="mozilla-documentation-styles">
-                            {boardDoc.description || 'No description.'}
-                          </div>
-
                         {:else}
                           <ReusableLiveBlackboard
                             {boardDoc}
@@ -200,9 +203,6 @@
       {/key}
     {/if}
     <!-- End of page container -->
-  </Content>
-</Card>
-
 <script>
   import Card, {
     Content,
@@ -231,6 +231,7 @@
   import { getRandomID } from '../../helpers/utility.js';
   import { createRoomDoc, createBoardDoc } from '../../helpers/crud.js'
   import { onMount } from 'svelte'
+  import { goto } from '$app/navigation'
 
   // HOW TUTOR SIGN UP WORKS AT THE DATABASE LEVEL: 
   // 1. On initial sign-up, fully initialize a normal room, and link it to tutorDoc.designatedRoomID property
@@ -243,7 +244,7 @@
 
   const eltonUID = 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'
   let classTutorsDocs = null
-  let selectedTutorUID = ''
+  let selectedTutorUID = eltonUID
 
   let rerenderKeyForCarousel = 0
 
@@ -291,7 +292,8 @@
       if (selectedTutorUID === '') {
         return // the user has to login first before the room exists
       }
-      await fetchVideosOfTutorRoom()
+      await fetchTopFiveVideos()
+      // await fetchVideosOfTutorRoom()
       resolve()
     })
   }

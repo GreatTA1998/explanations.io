@@ -1,5 +1,5 @@
 <!-- The delete button is added here -->
-<div style="position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5">
+<div style="justify-content: space-between; width: 100%; position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5">
   <Button on:click={togglePlaySpeed} 
     variant="raised" 
     style="height: {20 * (canvasWidth / assumedCanvasWidth)}px; margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;"

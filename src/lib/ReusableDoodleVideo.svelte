@@ -15,12 +15,13 @@
         backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
       > 
         {#if showEditDeleteButtons}
-          <div style="
+          <!-- <div style="
             margin-left: {canvasWidth - 240 - 164}px; 
             display: flex; 
             align-items: center; 
             flex-direction: row-reverse"
-          >
+          > -->
+          <div style="display: flex; align-items: center">
             <!-- boardDoc will always have a creatorUID because anonymous login -->
             {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
               <Button 
@@ -28,7 +29,7 @@
                   boardDoc, 
                   () => deleteAllStrokesFromDb({ boardPath: boardDoc.path, strokesArray })
                 )} 
-                style="background-color: rgb(90 90 90 / 100%); color: white">
+                style="background-color: rgb(90 90 90 / 100%); color: white; margin-right: 10px;">
                 Delete
               </Button>
 

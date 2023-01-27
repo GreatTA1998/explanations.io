@@ -119,6 +119,8 @@ onMount(() => {
 
     /* T match SMUI card's radius, it's multiplied by 2 */
     border-radius: 10px; 
+
+    height: 140vh;
   }
 
   #carousel {
@@ -130,6 +132,8 @@ onMount(() => {
     justify-content: space-between;
 
     box-sizing: border-box;
+
+    overflow-y: auto;
   }
 
   .card {

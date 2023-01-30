@@ -25,9 +25,9 @@
     </div>
 
     <div class="header-subcopy-wrapper">
-      <div class="header-subcopy">
+      <!-- <div class="header-subcopy">
         The platform covers refunds anytime, any reason - so both student & tutor are protected
-      </div>
+      </div> -->
       <div style="display: flex;">
         <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
           <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">

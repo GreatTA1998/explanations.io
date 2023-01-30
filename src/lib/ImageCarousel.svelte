@@ -5,31 +5,30 @@
 -->
 
 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-    
   <!-- Sandwiching the {#if} with a <div> even if the button doesn't exist ensures the space-between 
     content layout works properly (i.e. carousel is always the 2nd element so it's centered)  
   -->
-    <div style="width: 60px;">
-      {#if currIdx > 0}
-      <Button on:click={handleLeftArrowClick} style="height: 40px; z-index: 2; background-color: orange; border-radius: 10px; padding-left: 20px; width: 60px;">
-        <span class="material-icons" style="color: white; font-size: 2rem;">
-          arrow_back_ios
-        </span>
-      </Button>
-      {/if}
-    </div>
-
-
-  <div id="pagination" style="color: orange;">
-    <div class="ball"></div>
-    <div class="ball"></div>
-    <div class="ball"></div>
-    <div class="ball"></div>
-    <div class="ball"></div>
-    <div class="ball"></div>
+  <div style="width: 60px; margin-left: 0.5%">
+    {#if currIdx > 0}
+    <Button on:click={handleLeftArrowClick} style="height: 40px; z-index: 2; background-color: orange; border-radius: 10px; padding-left: 20px; width: 60px;">
+      <span class="material-icons" style="color: white; font-size: 2rem;">
+        arrow_back_ios
+      </span>
+    </Button>
+    {/if}
   </div>
 
-  <div style="width: 60px;">
+  <div id="pagination" style="color: orange;">
+    {#each { length: numOfImages } as _, i}
+      <div 
+        on:click={() => currIdx = i} 
+        class="ball" 
+        style="width: {i === currIdx ? '25' : '12'}px">
+      </div>
+    {/each}
+  </div>
+
+  <div style="width: 60px; margin-right: 1%">
     {#if currIdx < numOfImages - 1}
       <Button on:click={handleRightArrowClick} style="height: 40px; z-index: 2; background-color: orange; border-radius: 10px; width: 60px;">
         <span class="material-icons" style="color: white; font-size: 2rem;">
@@ -41,10 +40,8 @@
 </div>
 
 <div id="carousel-wrapper">
-  
   <!-- <div style="margin-bottom: 4%;"></div> -->
-
-  <div id="carousel">
+  <div id="carousel" bind:this={carousel}>
     <!-- To optimize, you can use intersection listener to lazy-load -->
     <slot carouselWidth={carouselWidth}>
       <!-- <div class="card" style="border: 2px solid blue;">
@@ -66,44 +63,40 @@ import { onMount } from 'svelte'
 import Button, { Label } from '@smui/button';
 
 export let numOfImages
+export let resizeOnChange 
+
 let currIdx = 0
-let carouselWidth = null // 
+let carouselWidth = null 
+
+let pagination = document.querySelectorAll('.ball');
+
+$: currIdx, scrollCarousel(currIdx)
+$: resizeOnChange, scrollCarousel(currIdx)
+
+let carousel
+
+// let carousel = document.getElementById('carousel');
+
+function scrollCarousel () {
+  if (carousel) {
+    carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * errorDueToBorder)
+  }
+}
 
 onMount(() => {
-  let pagination = document.querySelectorAll('.ball');
-  let carousel = document.getElementById('carousel');
-  let cards = document.querySelectorAll('.card');
-  let leftBtn = document.getElementById('leftArrow');
-  let rightBtn = document.getElementById('rightArrow');
-
-  carouselWidth = carousel.offsetWidth
-
-  // This causes the 3 overview dots to change width e.g. 2nd circle becomes wider because we're on 2nd page
-  const updatePag = () => {
-    pagination.forEach((el) => el.style.width = '12px');
-    pagination[currIdx].style.width = '25px' // it was 25 px
-  }
-
-  pagination.forEach((curItem, index) => {
-    curItem.addEventListener('click', () => {
-      currIdx = index;
-      updatePag()
-      carousel.scrollLeft = (index * (window.innerWidth - 150)) + (index * 10)
-    })
-  })
+  // let cards = document.querySelectorAll('.card');
+  // let leftBtn = document.getElementById('leftArrow');
+  // let rightBtn = document.getElementById('rightArrow');
 })
+
+let errorDueToBorder = 5
 
 function handleLeftArrowClick () {
   currIdx--
-  carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * 10)
-  // (section * (window.innerWidth - 150)) + (section * 10)
-  updatePag()
 }
 
 function handleRightArrowClick () {
   currIdx++
-  carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * 10)
-  updatePag()
 }
 </script>
 
@@ -121,9 +114,10 @@ function handleRightArrowClick () {
     position: relative;
 
     border: 2px solid orange;
+    border-right: none;
 
     /* T match SMUI card's radius, it's multiplied by 2 */
-    border-radius: 10px; 
+    /* border-radius: 10px;  */
 
     height: 140vh;
   }
@@ -193,7 +187,7 @@ function handleRightArrowClick () {
     width: 12px;
     background-color: orange;
     border-radius: 20px;
-    margin: 2px;
+    margin: 6px;
     cursor: pointer;
     transition: width 0.2s;
   }

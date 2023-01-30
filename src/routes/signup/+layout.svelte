@@ -13,11 +13,11 @@
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
 					</Title>
-					<a href="https://github.com/verypopularguy/explain" target="_blank" style="text-decoration-color: transparent;">
+					<!-- <a href="https://github.com/verypopularguy/explain" target="_blank" style="text-decoration-color: transparent;">
 						<Button style="margin-left: 20px;">
 							Github
 						</Button>
-					</a>
+					</a> -->
 				</Section>
 
 				<Section align="end" toolbar>

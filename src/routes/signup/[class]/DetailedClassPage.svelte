@@ -7,12 +7,12 @@
       </div>
 
       <div class="header-subcopy-wrapper">
-        <div class="header-subcopy">
+        <!-- <div class="header-subcopy">
           The platform covers refunds anytime, any reason - so both student & tutor are protected
-        </div>
+        </div> -->
         <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
           <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
-            Early signup for $15/week
+            Early signup for $20/week
           </Label>
         </Button>
       </div>
@@ -25,28 +25,37 @@
   {/if}
 
     <div style="margin-top: 1%; margin-bottom: 1%">
-      <h2 style="font-family: sans-serif; color: grey; font-size: 1.2rem;">
-        TUTOR GALLERY
+      <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
+        Tutor gallery
       </h2>
+        <!-- <Text style="margin-bottom: 10px; margin-left: 16px; font-size: 0.95rem; color: grey;">
+              Piloted in Fall 2022
+            </Text> -->
       <div style="display: flex;">
         {#if classTutorsDocs}
           {#each classTutorsDocs as tutorDoc}
             <div class="tutor-business-card" style="margin-right: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-              <Card style="height: 150px;">
+              <Card style="height: 150px;" variant="outlined">
                 <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
                   <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
                     { tutorDoc.firstName + ' ' + tutorDoc.lastName }
                   </h2>
 
-                  <TextAreaAutoResizing 
-                    value={tutorDoc.bio || ''} 
-                    on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
-                    placeholder="e.g. year, major, special teaching beliefs, links to related work Piazza, textbook chapters, Youtube etc."
-                    readonly={$user.uid !== tutorDoc.uid}
-                    nonFocusedPlaceholderOpacity={0.6}
-                    numberOfInitialRowsIfEmpty={2}
-                    fontSizeIncludeUnits={'1rem'}
-                  />
+                  <div style="margin-top: 16px;"></div>
+
+                  {#if $user.uid === tutorDoc.uid}
+                    <TextAreaAutoResizing 
+                      value={tutorDoc.bio || ''} 
+                      on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
+                      placeholder="e.g. year, major, special teaching beliefs, links to related work Piazza, textbook chapters, Youtube etc."
+                      readonly={$user.uid !== tutorDoc.uid}
+                      nonFocusedPlaceholderOpacity={0.6}
+                      numberOfInitialRowsIfEmpty={2}
+                      fontSizeIncludeUnits={'1rem'}
+                    />
+                  {:else}
+                    <div style="font-family: sans-serif; font-size: 1rem;">{tutorDoc.bio || 'No bio yet'}</div>
+                  {/if}
                 </PrimaryAction>
               </Card>
             </div>
@@ -56,10 +65,10 @@
         {#if !didUserAlreadySignUpAsTutor}
           <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
             {#if selectedTutorUID !== ''}
-              <Card style="height: 150px;">
+              <Card style="height: 150px;" variant="outlined">
                 <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
                   <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                    Become a tutor in 3 steps:
+                    Setup your shop
                   </h2>
                   <div style="font-family: sans-serif;">
                     <ol>
@@ -114,13 +123,13 @@
   
   <div style="margin-top: 20px;"></div>
 
-  <div bind:clientWidth={carouselWidth}>
+  <div bind:clientWidth={carouselWidth} style="margin-left: 1%;">
   {#if classTutorsDocs}
     <!-- When nobody has signed up, an orange box with nothing is confusing -->
-    {#if classTutorsDocs.length > 0}
+    {#if classTutorsDocs.length > 0 && selectedTutorUID !== ''}
       {#key selectedTutorUID + rerenderKeyForCarousel}
         <div use:setupCarouselData>
-          <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1}>
+          <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}>
             {#if carouselWidth}
               {#if designatedRoomBoardIDs.length > 0}
                 {#each designatedRoomBoardIDs as id}
@@ -171,8 +180,8 @@
                 INTRUSIVE RIGHT ARROW ONTO THE NEW BLACKBOARD -->
                 <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
                 <div class="card">
-                  <div on:click={updateNewBlackboardLocation} style="background-color: hsl(0,0%,0%, 0.80); width: {carouselWidth}px; height: {200}px">
-                    Backup Create Board Button
+                  <div on:click={updateNewBlackboardLocation} style="background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
+                    Create new board
                     <!-- <Button on:click={updateNewBlackboardLocation} style="font-size: 4rem; color: white;">
                       Backup Create Board Button
                     </Button> -->
@@ -186,7 +195,7 @@
       {/key}
     {/if}
   {/if}
-  </div>
+</div>
 <!-- </div> -->
 
 
@@ -209,8 +218,6 @@
 
   $: classID, fetchPageData()
 
-  let Elem 
-  let containerWidth 
   let carouselWidth
 
   let classDoc

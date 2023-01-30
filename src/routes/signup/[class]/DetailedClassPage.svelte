@@ -129,8 +129,8 @@
     {#if classTutorsDocs.length > 0 && selectedTutorUID !== ''}
       {#key selectedTutorUID + rerenderKeyForCarousel}
         <div use:setupCarouselData>
-          <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}>
-            {#if carouselWidth}
+          {#if carouselWidth}
+            <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}>
               {#if designatedRoomBoardIDs.length > 0}
                 {#each designatedRoomBoardIDs as id}
                   <div class="card">
@@ -141,7 +141,7 @@
                         </div> -->
 
                         <!-- JUST COPY FROM [room]/[class].svelte -->
-                        <div style="width: {Math.max(carouselWidth, 300)}px; margin-top: 0px; margin-bottom: 0px">
+                        <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
                           <TextAreaAutoResizing 
                             value={boardDoc.description || ''} 
                             on:input={(e) => debouncedUpdateBoardDescription(e, id)}
@@ -156,16 +156,16 @@
                           <ReusableDoodleVideo 
                             {boardDoc}
                             boardDbPath={boardsCollectionDbPath + id}
-                            canvasWidth={Math.max(carouselWidth, 300)}
-                            canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
+                            canvasWidth={carouselWidth}
+                            canvasHeight={carouselWidth * 3/4 - 100}
                           />
                         {:else}
                           <ReusableLiveBlackboard
                             {boardDoc}
                             boardID={id}
                             boardsDbPath={boardsCollectionDbPath}
-                            canvasWidth={Math.max(carouselWidth, 300)}
-                            canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
+                            canvasWidth={carouselWidth}
+                            canvasHeight={carouselWidth * 3/4 - 100}
                             hasFullscreenButton={false}
                             on:video-uploaded={updateNewBlackboardLocation}
                           />
@@ -188,9 +188,8 @@
                   </div>
                 </div>
               {/if}
-            {/if}
-
-          </ImageCarousel>
+            </ImageCarousel>
+          {/if}
         </div>
       {/key}
     {/if}

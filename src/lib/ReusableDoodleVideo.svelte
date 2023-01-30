@@ -49,7 +49,6 @@
 <script>
   import { maxAvailableWidth, maxAvailableHeight } from '../store.js'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { lazyCallable } from '../helpers/actions.js'
   import Button, { Icon } from '@smui/button'

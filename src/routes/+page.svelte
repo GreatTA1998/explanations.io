@@ -61,8 +61,7 @@
 
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Here you can hire former students to 
-					remotely help you with psets via blackboard videos and a sprinkle of 1-on-1 tutoring,
+					Here you can hire former students for pset help, using a mix of blackboard videos and remote 1-on-1 tutoring,
 					for classes with overcrowded Office Hours.
 				</div>
 			</div>
@@ -74,7 +73,7 @@
 			</div>
 			
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
-				We hire former students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently help `n` students with no additional effort, 
+				We actively recruit former students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently help `n` students with no additional effort, 
 				it is then possible for these tutors to address all your questions, until nothing is left unexplained.
 				<br>
 				<br>
@@ -457,13 +456,13 @@
 			// also this test for home page is not accurate - it just tests that it's not in a class page, doesn't mean
 			// it's necessarily in a home page
 			// this is just legacy code
-			const { params } = $page 
-			if (!params.class && !params.room) { 
-				if ($user.mostRecentClassAndRoomID && $user.phoneNumber) { // quick-fix
-					console.log("redirecting to most recent class")
-					goto($user.mostRecentClassAndRoomID)
-				}
-			}
+			// const { params } = $page 
+			// if (!params.class && !params.room) { 
+			// 	if ($user.mostRecentClassAndRoomID && $user.phoneNumber) { // quick-fix
+			// 		console.log("redirecting to most recent class")
+			// 		goto($user.mostRecentClassAndRoomID)
+			// 	}
+			// }
 	}
 	
 	function resumeToMostRecentServer () {

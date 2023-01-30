@@ -89,7 +89,7 @@ onMount(() => {
   // let rightBtn = document.getElementById('rightArrow');
 })
 
-let errorDueToBorder = 5
+let errorDueToBorder = 4
 
 function handleLeftArrowClick () {
   currIdx--

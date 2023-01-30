@@ -5,7 +5,7 @@
     let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
     let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
   >
-    <div use:lazyCallable={listenToStrokes} style={`width: ${1000}px; height: ${600 + 40}px; position: relative`}>
+    <div use:lazyCallable={listenToStrokes} style={`width: ${canvasWidth}px; height: ${canvasHeight + 40}px; position: relative`}>
       {#if boardDoc.recordState === 'post_record'}
         <LinearProgress indeterminate/>
       {:else}

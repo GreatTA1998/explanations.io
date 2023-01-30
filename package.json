@@ -24,13 +24,18 @@
     "@smui/menu": "^6.0.0-beta.4",
     "@smui/slider": "^6.1.0",
     "@smui/switch": "^6.0.0-beta.4",
+    "@smui/tab": "^7.0.0-beta.0",
+    "@smui/tab-bar": "^7.0.0-beta.0",
     "@smui/textfield": "^6.0.0-beta.4",
+    "@smui/top-app-bar": "^7.0.0-beta.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-vercel": "next",
     "@sveltejs/kit": "next",
+    "sass": "^1.53.0",
     "smui-theme": "^6.0.0-beta.4",
     "svelte": "^3.44.0",
-    "vite": "^3.1.0"
+    "vite": "^3.1.0",
+    "svelte-preprocess": "^4.10.7"
   },
   "type": "module",
   "dependencies": {

@@ -31,5 +31,6 @@ export function lazyCallable (node, callback) {
       rootMargin: '0px' // shrink/expand the root element's area, not very useful
     }
   )
+  
   observer.observe(node)
 }

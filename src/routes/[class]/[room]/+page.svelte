@@ -6,7 +6,7 @@
       disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
       value={roomDoc.name} on:input={(e) => updateRoomName(e)}
       class="room-title" 
-      style={`width: ${$canvasWidth}px;`}
+      style={`width: ${$maxAvailableWidth}px;`}
     >
       <HelperText slot="helper">
         {#if !lockQuestionIntervalID && !resolveQuestionIntervalID && !roomDoc.askerUID}
@@ -30,7 +30,7 @@
 		{#each roomDoc.blackboards as boardID, i (boardID) }
 			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
         {#if boardDoc}
-          <div style="width: {$canvasWidth}px; margin-top: 0px; margin-bottom: 0px">
+          <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
             <TextAreaAutoResizing 
               value={boardDoc.description || ''} 
               on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
@@ -79,7 +79,7 @@
               </div>
 
               {#if isShowingComments}
-                <div style="width: {$canvasWidth - 20}px; margin-left: 20px;">
+                <div style="width: {$maxAvailableWidth - 20}px; margin-left: 20px;">
                   <DoodleVideoComments 
                     {allComments}
                     on:comment-delete={(e) => deleteComment(e.detail)}
@@ -106,7 +106,7 @@
               let:strokesArray={strokesArray}
               let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
             >
-              <div use:lazyCallable={fetchStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight + 40}px; position: relative`}>
+              <div use:lazyCallable={fetchStrokes} style={`width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight + 40}px; position: relative`}>
                 <DoodleVideo 
                   {strokesArray} 
                   audioDownloadURL={boardDoc.audioDownloadURL}
@@ -132,7 +132,7 @@
                   {/if}
 
                   <div style="
-                    margin-left: {$canvasWidth - 240 - 164}px; 
+                    margin-left: {$maxAvailableWidth - 240 - 164}px; 
                     display: flex; 
                     align-items: center; 
                     flex-direction: row-reverse"
@@ -162,7 +162,7 @@
               let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
               let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
             >
-              <div use:lazyCallable={listenToStrokes} style={`width: ${$canvasWidth}px; height: ${$canvasHeight}px; position: relative`}>
+              <div use:lazyCallable={listenToStrokes} style={`width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight}px; position: relative`}>
                 {#if boardDoc.recordState === 'post_record'}
                   <LinearProgress indeterminate/>
                 {:else}
@@ -247,7 +247,7 @@
           {/if}
 
           <div
-            style="width: {$canvasWidth}px; height: 40px; box-sizing: border-box"
+            style="width: {$maxAvailableWidth}px; height: 40px; box-sizing: border-box"
             on:dragover={(e) => dragover_handler(e)}
             on:drop={(e) => drop_handler(e, i+1)}
           >
@@ -266,7 +266,7 @@
                   font-family: Roboto, sans-serif; text-transform: uppercase;
                   color: white;
                   height: 35px;
-                  width: {$canvasWidth}px;"
+                  width: {$maxAvailableWidth}px;"
                 >
               New blackboard
             </div>
@@ -287,7 +287,7 @@
   import Button, { Icon } from '@smui/button'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
-  import { browserTabID, user, canvasHeight, canvasWidth, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
+  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';

@@ -1,4 +1,4 @@
-{#if !$hasFetchedUser}
+{#if !hasFetchedUser}
   <h4 style="margin-left: 16px; font-family: Roboto, sans-serif; opacity: 70%; font-weight: 400">
     Fetching your info...
   </h4>
@@ -9,7 +9,7 @@
 {/if}
 
 <script>
-	import '../app.css';
+	import "../app.scss";
   import 'firebase/app'
   import { initializeDatabase } from '../database.js'
   import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
@@ -18,10 +18,10 @@
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
- 
-  onMount(async () => {
-    initializeDatabase()
 
+  initializeDatabase()
+  
+  onMount(async () => {
     // USER LOGIN
     const auth = getAuth()
     onAuthStateChanged(auth, async (resultUser) => {
@@ -68,14 +68,10 @@
           id: dbUserSnapshot.id,
           ...dbUserSnapshot.data()
         })
-        
-        // if not a direct URL visit, resume to the most recent class
-        const { params } = $page 
-        if (!params.class && !params.room) { 
-          if ($user.mostRecentClassAndRoomID) {
-            goto($user.mostRecentClassAndRoomID)
-          }
-        }
+
+        // TODO: put redirect logic here, instead of +page components, so
+        // you can have have accurate if statements
+        // to redirect early without heavy page loads
       } 
 
       // user not logged in

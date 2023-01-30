@@ -1,5 +1,5 @@
 <section style="height: 100%; padding-top: 150px; padding-bottom: 150px; border-bottom: 1px solid #eee; background: #FDFDF8;">
-	<div class="content" style="width: {$canvasWidth}px">
+	<div class="content" style="width: {$maxAvailableWidth}px">
 		<h1 style="margin-top: 0; font: 35px/1.5 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif">
 			Get started
 		</h1>
@@ -15,7 +15,7 @@
 <script>	
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { goto } from '$app/navigation'
-	import { canvasHeight, canvasWidth, user, recordState } from '../../store.js'
+	import { maxAvailableWidth, user, recordState } from '../../store.js'
 	import Button, { Label } from '@smui/button';
 	import HelperText from '@smui/textfield/helper-text'
 	import Textfield from '@smui/textfield';
@@ -23,7 +23,6 @@
 	import DoodleVideo from '$lib/DoodleVideo.svelte'
 	import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-	import { calculateCanvasDimensions2 } from '../../helpers/canvas.js'
 	import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
 	import PhoneLogin from '$lib/PhoneLogin.svelte'
 	
@@ -82,9 +81,8 @@
 	}
 
 	function adjustContentDimensions () {
-		const { width, height } = calculateCanvasDimensions2()
-		canvasWidth.set(width) 
-		canvasHeight.set(height)
+		// canvasWidth.set(width) 
+		// canvasHeight.set(height)
 	}
 
 	onMount(() => {

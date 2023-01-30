@@ -1,5 +1,3 @@
-
-
 <!-- This component re-renders everytime classID changes: https://github.com/sveltejs/svelte/issues/1469#issuecomment-698955660 -->
 {#if $user.uid}
   {#key classID}
@@ -163,8 +161,8 @@
   import { goto } from '$app/navigation'
   import { browser } from '$app/environment'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion} from 'firebase/firestore'
-  import { calculateCanvasDimensions } from '../../helpers/canvas'
-  import { user, canvasHeight, canvasWidth, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth } from '../../store.js'
+  import { computeMaxAvailableDimensions } from '../../helpers/canvas'
+  import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth } from '../../store.js'
   import { getRandomID } from '../../helpers/utility.js'
   import { deleteObject, getStorage, ref } from 'firebase/storage'
   import { getFunctions, httpsCallable } from "firebase/functions";
@@ -287,7 +285,7 @@
         return
       }
     }
-
+    // TODO: just import createRoomDoc from helpers/crud.js
     const newDocID = getRandomID()
     const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
     const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)
@@ -304,16 +302,15 @@
     ])
   }
 
-  // TODO: rename the function 
-  function resizeCanvas () {
-    const { height, width } = calculateCanvasDimensions()
-    canvasHeight.set(height)
-    canvasWidth.set(width)
+  function recomputeMaxAvailableDimensions () {
+    const { width, height } = computeMaxAvailableDimensions()
+    maxAvailableWidth.set(width)
+    maxAvailableHeight.set(height)
   }
 
   function debouncedResizeHandler () {
     if (resizeDebouncer) clearTimeout(resizeDebouncer)
-    setTimeout(resizeCanvas, 100)
+    setTimeout(recomputeMaxAvailableDimensions, 100)
   }
   // END OF RESIZE LOGIC
 

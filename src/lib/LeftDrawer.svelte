@@ -59,8 +59,8 @@
   import Drawer, { AppContent, Content } from '@smui/drawer'
   import List, { Item, Text } from '@smui/list'
   import Card from '@smui/card'
-  import { user, drawerWidth, canvasWidth, canvasHeight } from '../store.js'
-  import { calculateCanvasDimensions } from '../helpers/canvas.js'
+  import { user, drawerWidth, maxAvailableWidth, maxAvailableHeight } from '../store.js'
+  import { computeMaxAvailableDimensions } from '../helpers/canvas.js'
   import { tick } from 'svelte'
   import { goto } from '$app/navigation'
 
@@ -72,10 +72,14 @@
   // adjust dimensions whenever $drawerWidth changes
   $: if ($drawerWidth) {
     tick().then(() => {
-      const { width, height } = calculateCanvasDimensions()
-      // TO-DO: it's strange that we need to manually bind canvas width and height to these new values
-      canvasWidth.set(width)
-      canvasHeight.set(height)
+      // TO-DO: refactor computeMaxAvailableDimensions later
+
+      // if (document === undefined) return
+      // const { width, height } = computeMaxAvailableDimensions()
+      // // TO-DO: it's strange that we need to manually bind canvas width and height to these new values
+      // // explore setting store variables within pure JS helper files
+      // maxAvailableWidth.set(width)
+      // maxAvailableHeight.set(height)
     })
   }
 

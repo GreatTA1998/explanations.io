@@ -10,7 +10,7 @@
   -->
   <div style="width: 60px; margin-left: 0.5%">
     {#if currIdx > 0}
-    <Button on:click={handleLeftArrowClick} style="height: 40px; z-index: 2; background-color: orange; border-radius: 10px; padding-left: 20px; width: 60px;">
+    <Button on:click={handleLeftArrowClick} style="height: 40px; background-color: orange; border-radius: 10px; padding-left: 20px; width: 60px;">
       <span class="material-icons" style="color: white; font-size: 2rem;">
         arrow_back_ios
       </span>
@@ -30,7 +30,7 @@
 
   <div style="width: 60px; margin-right: 1%">
     {#if currIdx < numOfImages - 1}
-      <Button on:click={handleRightArrowClick} style="height: 40px; z-index: 2; background-color: orange; border-radius: 10px; width: 60px;">
+      <Button on:click={handleRightArrowClick} style="height: 40px; background-color: orange; border-radius: 10px; width: 60px;">
         <span class="material-icons" style="color: white; font-size: 2rem;">
           arrow_forward_ios
         </span>

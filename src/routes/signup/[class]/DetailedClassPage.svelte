@@ -114,13 +114,13 @@
   
   <div style="margin-top: 20px;"></div>
 
-
+  <div bind:clientWidth={carouselWidth}>
   {#if classTutorsDocs}
     <!-- When nobody has signed up, an orange box with nothing is confusing -->
     {#if classTutorsDocs.length > 0}
       {#key selectedTutorUID + rerenderKeyForCarousel}
         <div use:setupCarouselData>
-          <ImageCarousel numOfImages={designatedRoomBoardIDs.length} let:carouselWidth={carouselWidth}>
+          <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1}>
             {#if carouselWidth}
               {#if designatedRoomBoardIDs.length > 0}
                 {#each designatedRoomBoardIDs as id}
@@ -157,6 +157,7 @@
                             boardsDbPath={boardsCollectionDbPath}
                             canvasWidth={Math.max(carouselWidth, 300)}
                             canvasHeight={Math.max(carouselWidth, 300) * 3/4 - 100}
+                            hasFullscreenButton={false}
                             on:video-uploaded={updateNewBlackboardLocation}
                           />
                         {/if}
@@ -169,13 +170,14 @@
                 <!-- THE PRESENCE OF THIS BREAKS THE CAROUSEL IN UNEXPECTED WAYS, E.G YOU NEED A NEW PAGE, WHICH BRINGS A 
                 INTRUSIVE RIGHT ARROW ONTO THE NEW BLACKBOARD -->
                 <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
-                <!-- <div class="card">
-                  <div style="background-color: hsl(0,0%,0%, 0.80); width: {carouselWidth}px; height: {200}px">
-                    <Button on:click={updateNewBlackboardLocation} style="font-size: 4rem; color: white;">
+                <div class="card">
+                  <div on:click={updateNewBlackboardLocation} style="background-color: hsl(0,0%,0%, 0.80); width: {carouselWidth}px; height: {200}px">
+                    Backup Create Board Button
+                    <!-- <Button on:click={updateNewBlackboardLocation} style="font-size: 4rem; color: white;">
                       Backup Create Board Button
-                    </Button>
+                    </Button> -->
                   </div>
-                </div> -->
+                </div>
               {/if}
             {/if}
 
@@ -184,6 +186,7 @@
       {/key}
     {/if}
   {/if}
+  </div>
 <!-- </div> -->
 
 
@@ -205,7 +208,11 @@
   export let classID
 
   $: classID, fetchPageData()
-  
+
+  let Elem 
+  let containerWidth 
+  let carouselWidth
+
   let classDoc
 
   let classTutorsDocs = null
@@ -221,12 +228,21 @@
   let unsubTutorsListener
 
   let didUserAlreadySignUpAsTutor = false
+
   $: if (classTutorsDocs) {
     didUserAlreadySignUpAsTutor = false
     for (const tutor of classTutorsDocs) {
       if (tutor.uid === $user.uid) didUserAlreadySignUpAsTutor = true
     }
   }
+
+  onMount(() => {
+
+  })
+
+  onDestroy(() => {
+    if (unsubTutorsListener) unsubTutorsListener()
+  })
 
   function fetchPageData () {
     if (unsubTutorsListener) unsubTutorsListener()
@@ -247,14 +263,6 @@
       classTutorsDocs = [...temp]
     })
   }
-
-  onMount(() => {
-
-  })
-
-  onDestroy(() => {
-    if (unsubTutorsListener) unsubTutorsListener()
-  })
 
   async function fetchClassDoc () {
     const db = getFirestore()
@@ -300,6 +308,7 @@
 
   function fetchVideoPortfolio () {
     return new Promise(async resolve => {
+      designatedRoomBoardIDs = []
       if (isInitialFetch) {
         selectedTutorUID = classTutorsDocs[0].uid
         isInitialFetch = false
@@ -307,7 +316,6 @@
       if (selectedTutorUID === '') {
         return // the user has to login first before the room exists
       }
-      designatedRoomBoardIDs = []
       await fetchVideosOfTutorRoom()
       resolve()
     })

@@ -2,9 +2,48 @@
 <!-- HOW TO USE:
   You must wrap <div class="card">, with .card { } CSS styles
   pasted in the component you're using the carousel in  
-  `
 -->
+
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    
+  <!-- Sandwiching the {#if} with a <div> even if the button doesn't exist ensures the space-between 
+    content layout works properly (i.e. carousel is always the 2nd element so it's centered)  
+  -->
+    <div style="width: 60px;">
+      {#if currIdx > 0}
+      <Button on:click={handleLeftArrowClick} style="height: 40px; z-index: 2; background-color: orange; border-radius: 10px; padding-left: 20px; width: 60px;">
+        <span class="material-icons" style="color: white; font-size: 2rem;">
+          arrow_back_ios
+        </span>
+      </Button>
+      {/if}
+    </div>
+
+
+  <div id="pagination" style="color: orange;">
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
+  </div>
+
+  <div style="width: 60px;">
+    {#if currIdx < numOfImages - 1}
+      <Button on:click={handleRightArrowClick} style="height: 40px; z-index: 2; background-color: orange; border-radius: 10px; width: 60px;">
+        <span class="material-icons" style="color: white; font-size: 2rem;">
+          arrow_forward_ios
+        </span>
+      </Button>
+    {/if}
+  </div>
+</div>
+
 <div id="carousel-wrapper">
+  
+  <!-- <div style="margin-bottom: 4%;"></div> -->
+
   <div id="carousel">
     <!-- To optimize, you can use intersection listener to lazy-load -->
     <slot carouselWidth={carouselWidth}>
@@ -19,36 +58,6 @@
 
       </div> -->
     </slot>
-  </div>
-
-
-  <!-- HIDE FOR NOW -->
-  <div id="pagination" style="display: none; color: black;">
-    <div class="ball"></div>
-    <div class="ball"></div>
-    <div class="ball"></div>
-    <div class="ball"></div>
-    <div class="ball"></div>
-    <div class="ball"></div>
-  </div>
-
-  <div id="leftArrow" class="arrow">
-    {#if currIdx > 0}
-      <Button style="height: 100px; z-index: 2; background-color: orange; border-radius: 10px; padding-left: 40px; width: 112px;">
-        <span class="material-icons" style="color: white; font-size: 6rem;">
-          arrow_back_ios
-        </span>
-      </Button>
-    {/if}
-  </div>
-  <div id="rightArrow" class="arrow">
-    {#if currIdx < numOfImages - 1}
-      <Button style="height: 100px; z-index: 2; background-color: orange; border-radius: 10px;" id="rightArrow">
-        <span class="material-icons" style="color: white; font-size: 6rem;">
-          arrow_forward_ios
-        </span>
-      </Button>
-    {/if}
   </div>
 </div>
 
@@ -82,24 +91,20 @@ onMount(() => {
       carousel.scrollLeft = (index * (window.innerWidth - 150)) + (index * 10)
     })
   })
-
-  leftBtn.addEventListener('click', () => {
-    if(currIdx > 0){
-      currIdx--
-      carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * 10)
-      // (section * (window.innerWidth - 150)) + (section * 10)
-      updatePag()
-    }
-  })
-  rightBtn.addEventListener('click', () => {
-    // if(section < 2){
-      currIdx++
-      carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * 10) // don't know why the 10n padding multiplier is needed, but it's needed
-      // (section * (window.innerWidth - 300)) + (section * 10)
-      updatePag()
-    // }
-  })
 })
+
+function handleLeftArrowClick () {
+  currIdx--
+  carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * 10)
+  // (section * (window.innerWidth - 150)) + (section * 10)
+  updatePag()
+}
+
+function handleRightArrowClick () {
+  currIdx++
+  carousel.scrollLeft = currIdx * carousel.offsetWidth + (currIdx * 10)
+  updatePag()
+}
 </script>
 
 <style>
@@ -115,7 +120,7 @@ onMount(() => {
     font-family: 'Montserrat', sans-serif;
     position: relative;
 
-    border: 5px solid orange;
+    border: 2px solid orange;
 
     /* T match SMUI card's radius, it's multiplied by 2 */
     border-radius: 10px; 
@@ -174,8 +179,9 @@ onMount(() => {
   }
 
   #pagination {
-    position: absolute;
-    bottom: 0;
+    /* position: absolute; */
+    /* bottom: 0; */
+    top: 0;
     height: 75px;
     display: flex;
     justify-content: center;
@@ -185,7 +191,7 @@ onMount(() => {
   .ball {
     height: 12px;
     width: 12px;
-    background-color: black;
+    background-color: orange;
     border-radius: 20px;
     margin: 2px;
     cursor: pointer;

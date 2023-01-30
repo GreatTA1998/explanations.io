@@ -77,13 +77,15 @@
                   stop_circle
                 </span>
               {/if}
-
-              <span 
-                on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} 
-                class="material-icons" style="color: white; font-size: 2.2rem; margin-right: 8px"
-              >
-                fullscreen
-              </span>
+              
+              {#if hasFullscreenButton}
+                <span 
+                  on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} 
+                  class="material-icons" style="color: white; font-size: 2.2rem; margin-right: 8px"
+                >
+                  fullscreen
+                </span>
+              {/if}
             </RenderlessAudioRecorder>
           </Blackboard>
         </RenderlessStopwatch>
@@ -111,6 +113,7 @@
   export let boardsDbPath
   export let canvasWidth 
   export let canvasHeight
+  export let hasFullscreenButton = true
 
   const dispatch = createEventDispatcher()
 

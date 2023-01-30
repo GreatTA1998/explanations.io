@@ -3,6 +3,12 @@
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
+          <Button on:click={toggleClassDetailsDrawerWidth} style="margin-right: 16px">
+            <span class="material-icons" style="font-size: 2rem;">
+              menu
+            </span>
+          </Button>
+
 					<img on:click={redirectToHomePage} src="../logo.png" width="52" height="46" style="margin-left: 0px;">
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
@@ -25,24 +31,9 @@
 <AutoAdjust {topAppBar}>
   <div class="drawer-container">
     <!-- TO-DO: figure out why shadow is not working -->
-    <Drawer style="overflow-y: scroll; height: 100%; width: {drawerWidth}px" class="mdc-elevation--z{5}">
+    <Drawer style="overflow-y: auto; height: 100%; width: {$classDetailsDrawerWidth}px; box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%);">
       <!-- <Content> -->
         <List>
-          <!-- <div style="display: flex; width: 100%; flex-direction: row-reverse;"> -->
-            {#if drawerWidth === expandedWidth}
-              <Button on:click={() => drawerWidth = collapsedWidth} style="padding-left: 1px; padding-right: 1px;">
-                <!-- mirror flipping `keyboard_tab` icon makes it look like the expand drawer icon -->
-                <span class="material-icons" style="font-size: 2rem; transform: rotateY(180deg)">
-                  keyboard_tab
-                </span>
-              </Button>
-            {:else}
-              <Button on:click={() => drawerWidth = expandedWidth} style="padding-left: 1px; padding-right: 1px;">
-                <span class="material-icons" style="font-size: 2rem;">
-                  start
-                </span>
-              </Button>
-            {/if}
           <!-- <div> -->
           
           {#if drawerWidth === expandedWidth}
@@ -59,11 +50,11 @@
               </span>
               Open a class
             </Item> -->
-            <div style="margin-bottom: 40px;">
+            <div style="margin-bottom: 20px;">
 
             </div>
 
-            <Text style="margin-top: 30px; margin-bottom: 10px; margin-left: 16px; font-size: 0.8rem; color: grey;">
+            <Text style="margin-bottom: 10px; margin-left: 16px; font-size: 0.95rem; color: grey;">
               Piloted in Fall 2022
             </Text>
             <Item on:click={() => redirectToPage('')} style="font-size: 1.2rem;">
@@ -73,7 +64,7 @@
             <div style="margin-top: 40px;">
 
             </div>
-            <Text style="margin-top: 80px; margin-bottom: 10px; margin-left: 16px; font-size: 0.8rem; color: grey">
+            <Text style="margin-top: 80px; margin-bottom: 10px; margin-left: 16px; font-size: 0.95rem; color: grey">
               New for Spring 2023
             </Text>
             <Item on:click={() => redirectToPage(introToMachineLearningID)} style="font-size: 1.2rem;" selected={classID === introToMachineLearningID}>
@@ -88,8 +79,8 @@
     </Drawer>
 
     <!-- No idea why AppContent would be needed, nor the class name -->
+    <!-- MAIN CONTENT INJECTED HERE VIA +PAGE.SVELTE -->
     <AppContent class="app-content">
-      <!-- MAIN CONTENT INJECTED HERE VIA +PAGE.SVELTE -->
       <slot>
 
       </slot>
@@ -110,7 +101,7 @@
   } from '@smui/card';
   import Button from '@smui/button';
   import { goto } from '$app/navigation';
-  import { user } from '../../store.js'
+  import { user, classDetailsDrawerWidth } from '../../store.js'
   import { page } from '$app/stores'
   // import { logOut } from '../../helpers/auth.js'
 
@@ -128,7 +119,16 @@
   let topAppBar
   let drawerWidth = 240
 
-  let collapsedWidth = 60
+  function  toggleClassDetailsDrawerWidth () {
+    if ($classDetailsDrawerWidth === expandedWidth) {
+      classDetailsDrawerWidth.set(0)
+    }
+    else if ($classDetailsDrawerWidth === 0)
+    {
+      classDetailsDrawerWidth.set(expandedWidth)
+    }
+  }
+
   let expandedWidth = 240
 
   function redirectToRequestPage () {
@@ -161,5 +161,4 @@
     position: relative;
     flex-grow: 1;
   }
- 
 </style>

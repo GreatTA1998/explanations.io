@@ -180,11 +180,10 @@
                 INTRUSIVE RIGHT ARROW ONTO THE NEW BLACKBOARD -->
                 <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
                 <div class="card">
-                  <div on:click={updateNewBlackboardLocation} style="background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
-                    Create new board
-                    <!-- <Button on:click={updateNewBlackboardLocation} style="font-size: 4rem; color: white;">
-                      Backup Create Board Button
-                    </Button> -->
+                  <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
+                    <div style="font-size: 4rem; margin-left: auto; margin-right: auto;">
+                      click for new board
+                    </div>
                   </div>
                 </div>
               {/if}

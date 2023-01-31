@@ -152,14 +152,14 @@
             <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}>
               {#if designatedRoomBoardIDs.length > 0}
                 {#each designatedRoomBoardIDs as id}
-                  <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
+                  <!-- <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
                     <ReusableDoodleVideo
                       {boardDoc}
                       canvasWidth={400}
                       canvasHeight={260}
                       boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
                     />
-                  </RenderlessListenToBoard>
+                  </RenderlessListenToBoard> -->
                   <div class="card">
 
                     <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
@@ -484,14 +484,6 @@
     width: 90%;
     /* This is to match SMUI's card's border radius */
     border-radius: 5px;
-  }
-
-  .section-title {
-    font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);
-  }
-
-  .section-container {
-    padding: 16px 16px; 
   }
 
   .orange-border {

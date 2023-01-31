@@ -105,12 +105,12 @@ function handleRightArrowClick () {
 
   /* This used to be applied to <body> */
   #carousel-wrapper {
-    margin: 0;
+    /* margin: 0; */
     /* background-color: #292929; */
-    display: grid;
-    place-items: center;
-    height: 100vh;
-    font-family: 'Montserrat', sans-serif;
+    /* display: grid;
+    place-items: center; */
+    /* height: 100vh; */
+    /* font-family: 'Montserrat', sans-serif; */
     position: relative;
 
     border: 2px solid orange;
@@ -118,14 +118,13 @@ function handleRightArrowClick () {
 
     /* T match SMUI card's radius, it's multiplied by 2 */
     /* border-radius: 10px;  */
-
     height: 140vh;
   }
 
   #carousel {
     height: 100%; /* calc(100vh - 150px); */
     width: 100%; /* was calc(100vw - 150px)*/
-    /* overflow-x: auto; */
+    overflow-x: auto;
     scroll-behavior: smooth;
     display: flex;
     justify-content: space-between;

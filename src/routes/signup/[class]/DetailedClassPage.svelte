@@ -141,25 +141,35 @@
                         </div> -->
 
                         <!-- JUST COPY FROM [room]/[class].svelte -->
-                        <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
-                          <TextAreaAutoResizing 
-                            value={boardDoc.description || ''} 
-                            on:input={(e) => debouncedUpdateBoardDescription(e, id)}
-                            placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, etc. so students can get a sense of your explanation style :)"
-                            readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                            nonFocusedPlaceholderOpacity={0.6}
-                            numberOfInitialRowsIfEmpty=3
-                          />
-                        </div>
 
                         {#if boardDoc.audioDownloadURL}
+                          <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
+                            <TextAreaAutoResizing 
+                              value={boardDoc.description || ''} 
+                              on:input={(e) => debouncedUpdateBoardDescription(e, id)}
+                              placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, etc. so students can get a sense of your explanation style :)"
+                              readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
+                              nonFocusedPlaceholderOpacity={0.6}
+                              numberOfInitialRowsIfEmpty=3
+                            />
+                          </div>
                           <ReusableDoodleVideo 
                             {boardDoc}
                             boardDbPath={boardsCollectionDbPath + id}
                             canvasWidth={carouselWidth}
                             canvasHeight={carouselWidth * 3/4 - 100}
                           />
-                        {:else}
+                        {:else if $user.uid === selectedTutorUID}
+                          <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
+                            <TextAreaAutoResizing 
+                              value={boardDoc.description || ''} 
+                              on:input={(e) => debouncedUpdateBoardDescription(e, id)}
+                              placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, etc. so students can get a sense of your explanation style :)"
+                              readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
+                              nonFocusedPlaceholderOpacity={0.6}
+                              numberOfInitialRowsIfEmpty=3
+                            />
+                          </div>
                           <ReusableLiveBlackboard
                             {boardDoc}
                             boardID={id}

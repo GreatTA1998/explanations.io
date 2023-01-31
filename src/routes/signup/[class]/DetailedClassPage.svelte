@@ -38,7 +38,7 @@
               <Card style="height: 150px;" variant="outlined">
                 <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
                   <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                    { tutorDoc.firstName + ' ' + tutorDoc.lastName }
+                    { tutorDoc.name }
                   </h2>
 
                   <div style="margin-top: 16px;"></div>
@@ -90,16 +90,16 @@
               {:else}
                 <Content>
                   <div>
-                    { $user.name } - you're logged in, create shop?
+                    Welcome { $user.name || '' }, create shop?
                   </div>
            
-                  {#if !$user.name}
+                  {#if !$user.firstName || !$user.lastName}
                     <div>First name</div>
                     <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
     
                     <div>Last name</div>
                     <input bind:value={inputFieldLastName} placeholder=""/>
-    
+
                     <Button on:click={createTutorDoc({ classID, firstName: inputFieldFirstName, lastName: inputFieldLastName })}>
                       Submit
                     </Button>
@@ -139,8 +139,6 @@
                         <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
                           Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
                         </div> -->
-
-                        <!-- JUST COPY FROM [room]/[class].svelte -->
 
                         {#if boardDoc.audioDownloadURL}
                           <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
@@ -187,11 +185,26 @@
                 
                 {#if $user.uid === selectedTutorUID}
                   <div class="card">
-                    <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
-                      <div style="font-size: 4rem; margin-left: auto; margin-right: auto;">
+                    <div on:click={updateNewBlackboardLocation}
+                      style="
+                        display: flex; 
+                        justify-content: center; 
+                        align-items: center;
+                        margin-top: 40px; 
+                        background-color: #2e3131; 
+                        font-family: Roboto, sans-serif; text-transform: uppercase;
+                        color: white;
+                        height: 35px;
+                        width: {carouselWidth}px;"
+                      >
+                    New blackboard
+                  </div>
+                    <!-- <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
+                      <div style="margin-left: auto;"
+                      <Button style="font-size: 4rem; margin-left: auto; margin-right: auto;">
                         click for new board
-                      </div>
-                    </div>
+                      </Button>
+                    </div> -->
                   </div>
                 {/if}
               {/if}
@@ -287,14 +300,14 @@
 
 
   async function createTutorDoc ({ classID, firstName, lastName }) {
+    if (!firstName || !lastName) return
     // const userDbPath = `users/${$user.uid}/`
     const classDbPath = `classes/${classID}/`
     const classTutorDocPath = classDbPath + `tutors/${getRandomID()}`
     const designatedRoomID = await createRoomDoc(`classes/${classID}/`) 
     const tutorObject = {
       uid: $user.uid,
-      firstName,
-      lastName,
+      name: firstName + ' ' + lastName,
       designatedRoomID
     }
     const db = getFirestore()

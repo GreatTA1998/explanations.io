@@ -26,19 +26,21 @@
     const auth = getAuth()
     onAuthStateChanged(auth, async (resultUser) => {
       if (resultUser) {
+        const { phoneNumber } = resultUser // { uid } = resultUser
+        const shaunticlairUID = 'FTbb00BzdVOBvuVITvKXcYA2wBh2' // resultUser.uid
+        const uid = shaunticlairUID
+
         // partially hydrate the user so we can redirect away ASAP
         user.set({ 
-          phoneNumber: resultUser.phoneNumber || '', // can be anonymous new user playing around
-          uid: resultUser.uid, 
+          phoneNumber: phoneNumber || '', // '' means it's an anonymous new user playing around
+          uid,
           pencilColors: [] 
         })
 
         // hydrate the user doc fully
         const exampleClassID = 'Mev5x66mSMEvNz3rijym' // 14.01 (used to be 8.01 'O00mSbBEYQxTnv3cKkbe')
 
-        // shaunticlair UID
-        const shaunticlairUID = FTbb00BzdVOBvuVITvKXcYA2wBh2
-        const userRef = doc(getFirestore(), 'users/' + shaunticlairUID) // resultUser.uid
+        const userRef = doc(getFirestore(), 'users/' + uid)
         let dbUserSnapshot = await getDoc(userRef)
         if (!dbUserSnapshot.exists()) {
           const metadataRef = doc(getFirestore(), 'metadata/78tDSRCiMHGnf8zcXkQt')
@@ -51,13 +53,13 @@
           }
           await setDoc(userRef, {
             name: `Beaver #${metadataSnap.data().numOfUsers}`, 
-            uid: resultUser.uid,
-            phoneNumber: resultUser.phoneNumber || '', // anonymous user has no phone number
+            uid,
+            phoneNumber: phoneNumber || '', // anonymous user has no phone number
             enrolledClasses: [exampleClass],
             mostRecentClassAndRoomID: '', // AF('') means no class was visited
             pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA", "hsla(147,100%,60%,1)", "hsla(6,100%,60%,1)", "hsla(143,100%,60%,1)"],
             pencilWidths: [1, 1, 1, 1, 1, 1, 1],
-            willReceiveText: !!resultUser.phoneNumber // can be toggled in future
+            willReceiveText: !!phoneNumber // can be toggled in future
           })
           updateDoc(metadataRef, {
             numOfUsers: increment(1)

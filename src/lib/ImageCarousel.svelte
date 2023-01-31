@@ -125,7 +125,7 @@ function handleRightArrowClick () {
   #carousel {
     height: 100%; /* calc(100vh - 150px); */
     width: 100%; /* was calc(100vw - 150px)*/
-    overflow-x: auto;
+    /* overflow-x: auto; */
     scroll-behavior: smooth;
     display: flex;
     justify-content: space-between;

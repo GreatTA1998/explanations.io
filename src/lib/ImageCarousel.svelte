@@ -137,7 +137,7 @@ function handleRightArrowClick () {
 
   .card {
     flex-shrink: 0;
-    background-color: #545454;
+    /* background-color: #545454; */
     height: 100%;
     width: 100%; /* It was calc(20% - 8px) */
     margin: 0 5px; 
@@ -168,7 +168,7 @@ function handleRightArrowClick () {
     transform: scale(1);
   }
   .card:hover p {
-    background-color: rgba(0,0,0,0.3);
+    /* background-color: rgba(0,0,0,0.3); */
     transform: scale(1.3);
   }
 

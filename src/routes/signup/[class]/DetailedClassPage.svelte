@@ -452,5 +452,9 @@
   .orange-border {
     border: 2px solid orange;
   }
+
+  body {
+    overflow-y: hidden;
+  }
 </style>
 

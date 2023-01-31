@@ -39,6 +39,6 @@ export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2'])
 
 export const drawerWidth = writable(260)
 
-export const classDetailsDrawerWidth = writable(240)
+export const classDetailsDrawerWidth = writable(0) // start closed
 
 export const hasJoinedVoice = writable(false)

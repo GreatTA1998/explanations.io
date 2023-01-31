@@ -152,6 +152,14 @@
             <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}>
               {#if designatedRoomBoardIDs.length > 0}
                 {#each designatedRoomBoardIDs as id}
+                  <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
+                    <ReusableDoodleVideo
+                      {boardDoc}
+                      canvasWidth={400}
+                      canvasHeight={260}
+                      boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+                    />
+                  </RenderlessListenToBoard>
                   <div class="card">
 
                     <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >

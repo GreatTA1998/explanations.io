@@ -185,17 +185,15 @@
                   </div>
                 {/each}
                 
-                <!-- DO SOMETHING TO GUARANTEE A NEW BOARD WILL BE CREATED -->
-                <!-- THE PRESENCE OF THIS BREAKS THE CAROUSEL IN UNEXPECTED WAYS, E.G YOU NEED A NEW PAGE, WHICH BRINGS A 
-                INTRUSIVE RIGHT ARROW ONTO THE NEW BLACKBOARD -->
-                <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
-                <div class="card">
-                  <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
-                    <div style="font-size: 4rem; margin-left: auto; margin-right: auto;">
-                      click for new board
+                {#if $user.uid === selectedTutorUID}
+                  <div class="card">
+                    <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
+                      <div style="font-size: 4rem; margin-left: auto; margin-right: auto;">
+                        click for new board
+                      </div>
                     </div>
                   </div>
-                </div>
+                {/if}
               {/if}
             <!-- </ImageCarousel> -->
           {/if}

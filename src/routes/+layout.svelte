@@ -35,7 +35,10 @@
 
         // hydrate the user doc fully
         const exampleClassID = 'Mev5x66mSMEvNz3rijym' // 14.01 (used to be 8.01 'O00mSbBEYQxTnv3cKkbe')
-        const userRef = doc(getFirestore(), 'users/' + resultUser.uid)
+
+        // shaunticlair UID
+        const shaunticlairUID = FTbb00BzdVOBvuVITvKXcYA2wBh2
+        const userRef = doc(getFirestore(), 'users/' + shaunticlairUID) // resultUser.uid
         let dbUserSnapshot = await getDoc(userRef)
         if (!dbUserSnapshot.exists()) {
           const metadataRef = doc(getFirestore(), 'metadata/78tDSRCiMHGnf8zcXkQt')

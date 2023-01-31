@@ -141,7 +141,7 @@
                             <TextAreaAutoResizing 
                               value={boardDoc.description || ''} 
                               on:input={(e) => debouncedUpdateBoardDescription(e, id)}
-                              placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, include links to outside content from Piazza, textbooks, Youtube etc. :)"
+                              placeholder={textAreaPlaceholder}
                               readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
                               nonFocusedPlaceholderOpacity={0.6}
                               numberOfInitialRowsIfEmpty=3
@@ -158,7 +158,7 @@
                             <TextAreaAutoResizing 
                               value={boardDoc.description || ''} 
                               on:input={(e) => debouncedUpdateBoardDescription(e, id)}
-                              placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, etc. so students can get a sense of your explanation style :)"
+                              placeholder={textAreaPlaceholder}
                               readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
                               nonFocusedPlaceholderOpacity={0.6}
                               numberOfInitialRowsIfEmpty=3
@@ -250,6 +250,8 @@
   let unsubTutorsListener
 
   let didUserAlreadySignUpAsTutor = false
+
+  let textAreaPlaceholder = "Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, include links to outside content from Piazza, textbooks, Youtube etc. :)"
 
   $: if (classTutorsDocs) {
     didUserAlreadySignUpAsTutor = false

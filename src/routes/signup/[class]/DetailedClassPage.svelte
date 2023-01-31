@@ -47,7 +47,7 @@
                     <TextAreaAutoResizing 
                       value={tutorDoc.bio || ''} 
                       on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
-                      placeholder="e.g. year, major, special teaching beliefs, links to related work Piazza, textbook chapters, Youtube etc."
+                      placeholder="e.g. year, major, your teaching style/philosophy"
                       readonly={$user.uid !== tutorDoc.uid}
                       nonFocusedPlaceholderOpacity={0.6}
                       numberOfInitialRowsIfEmpty={2}
@@ -93,7 +93,7 @@
                     Welcome { $user.name || '' }, create shop?
                   </div>
            
-                  {#if !$user.firstName || !$user.lastName}
+                  {#if !$user.name}
                     <div>First name</div>
                     <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
     
@@ -107,10 +107,6 @@
                     <Button on:click={createTutorDoc({ classID, firstName: $user.name.split(" ")[0], lastName: $user.name.split(" ")[1] })}>
                       Create shop
                     </Button>
-                  {:else}
-                    <div>bio</div>
-                    <!-- TextAreaAutoResizing -->
-                    <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
                   {/if}
                 </Content>
               {/if}
@@ -145,7 +141,7 @@
                             <TextAreaAutoResizing 
                               value={boardDoc.description || ''} 
                               on:input={(e) => debouncedUpdateBoardDescription(e, id)}
-                              placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, etc. so students can get a sense of your explanation style :)"
+                              placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, include links to outside content from Piazza, textbooks, Youtube etc. :)"
                               readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
                               nonFocusedPlaceholderOpacity={0.6}
                               numberOfInitialRowsIfEmpty=3

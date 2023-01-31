@@ -26,9 +26,9 @@
     const auth = getAuth()
     onAuthStateChanged(auth, async (resultUser) => {
       if (resultUser) {
-        const { phoneNumber } = resultUser // { uid } = resultUser
-        const shaunticlairUID = 'FTbb00BzdVOBvuVITvKXcYA2wBh2' // resultUser.uid
-        const uid = shaunticlairUID
+        // const shaunticlairUID = 'FTbb00BzdVOBvuVITvKXcYA2wBh2' // resultUser.uid
+        // const uid = shaunticlairUID
+        const { uid, phoneNumber } = resultUser 
 
         // partially hydrate the user so we can redirect away ASAP
         user.set({ 

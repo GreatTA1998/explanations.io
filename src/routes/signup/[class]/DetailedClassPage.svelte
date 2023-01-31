@@ -123,17 +123,46 @@
   
   <div style="margin-top: 20px;"></div>
 
+  <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
+    <ReusableDoodleVideo
+      {boardDoc}
+      canvasWidth={400}
+      canvasHeight={260}
+      boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+    />
+  </RenderlessListenToBoard>
+
   <div bind:clientWidth={carouselWidth} style="margin-left: 1%;">
   {#if classTutorsDocs}
     <!-- When nobody has signed up, an orange box with nothing is confusing -->
     {#if classTutorsDocs.length > 0 && selectedTutorUID !== ''}
       {#key selectedTutorUID + rerenderKeyForCarousel}
         <div use:setupCarouselData>
+          <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
+            <ReusableDoodleVideo
+              {boardDoc}
+              canvasWidth={400}
+              canvasHeight={260}
+              boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+            />
+          </RenderlessListenToBoard>
+
+
           {#if carouselWidth}
             <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}>
               {#if designatedRoomBoardIDs.length > 0}
                 {#each designatedRoomBoardIDs as id}
                   <div class="card">
+
+                    <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
+                      <ReusableDoodleVideo
+                        {boardDoc}
+                        canvasWidth={400}
+                        canvasHeight={260}
+                        boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+                      />
+                    </RenderlessListenToBoard>
+
                     <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
                       {#if boardDoc}
                         <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
@@ -159,12 +188,14 @@
                             canvasWidth={carouselWidth}
                             canvasHeight={carouselWidth * 3/4 - 100}
                           />
-                          <ReusableDoodleVideo 
-                            {boardDoc}
-                            boardDbPath={boardsCollectionDbPath + id}
-                            canvasWidth={1000}
-                            canvasHeight={1000}
-                          />
+                          <RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
+                            <ReusableDoodleVideo
+                              {boardDoc}
+                              canvasWidth={400}
+                              canvasHeight={260}
+                              boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+                            />
+                          </RenderlessListenToBoard>
                         {:else}
                           <ReusableLiveBlackboard
                             {boardDoc}

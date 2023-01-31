@@ -72,9 +72,8 @@
     bind:this={AudioPlayer} 
     src={audioDownloadURL} 
     controls 
-    style={`width: 100%; height: 40px; position: absolute; bottom: 0; top: auto;`}>
+    style={`width: ${canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}>
   </audio>
-  <!-- width: ${canvasWidth}px; -->
 </div>
 
 <script>

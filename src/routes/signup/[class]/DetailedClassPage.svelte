@@ -159,6 +159,12 @@
                             canvasWidth={carouselWidth}
                             canvasHeight={carouselWidth * 3/4 - 100}
                           />
+                          <ReusableDoodleVideo 
+                            {boardDoc}
+                            boardDbPath={boardsCollectionDbPath + id}
+                            canvasWidth={1000}
+                            canvasHeight={1000}
+                          />
                         {:else}
                           <ReusableLiveBlackboard
                             {boardDoc}

@@ -144,6 +144,7 @@
 
   function redirectToPage (id) {
     goto(`/signup/${id}`)
+    toggleClassDetailsDrawerWidth()
   }
 
   function redirectToHomePage () {

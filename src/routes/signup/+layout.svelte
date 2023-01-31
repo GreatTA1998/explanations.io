@@ -1,6 +1,7 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
-		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
+    <!-- variant="standard" -->
+		<TopAppBar bind:this={topAppBar} variant="fixed" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
           <Button on:click={toggleClassDetailsDrawerWidth} style="margin-right: 16px">
@@ -150,7 +151,7 @@
 
 <style>
   .drawer-container {
-    height: 100vh;
+    height: calc(100vh - 64px);
     position: relative;
     display: flex;
   }

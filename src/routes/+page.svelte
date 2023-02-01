@@ -47,7 +47,7 @@
 					<div class="header-subcopy">
 						Your psets should be an enjoyable challenge, not an overwhelming timesink.
 					</div>
-					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
 							Explore shops
 						</Label>
@@ -55,7 +55,7 @@
 				</div>
 			</div>
 
-			<div style="margin-top: 12%; margin-bottom: 24%;">
+			<div class="image-gallery-container">
 				<ImageGallery/>
 			</div>
 
@@ -67,12 +67,12 @@
 			</div>
 
 		<!-- HOW IT WORKS SECTION-->
-		<div class="webflow-section">
-			<div style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+		<div bind:clientWidth={w} class="webflow-section">
+			<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 				How it works
 			</div>
 			
-			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
+			<div class="webflow-paragraph-1" style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; margin-top: 1px; opacity: 0.8;">
 				We actively recruit former students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently help `n` students with no additional effort, 
 				it is then possible for these tutors to address all your questions, until nothing is left unexplained.
 				<br>
@@ -95,13 +95,12 @@
 							Open the website to type a question
 						</div>
 						<div class="step-description-font-styles">
-							This is usually a pset problem "How do you setup pset 3b finding a firm's cost function"
-							or a concept " can we review income & substitution effects?"
+							Ask about pset questions, important concepts, anything.
 						</div>
 					</div>
 
 					<!-- The margin has no effect when same-line, but for small screens it'll leave a gap from the text -->
-					<img src="https://i.imgur.com/TYkGFHO.gif" width="450" height="90" style="margin-top: 50px;">
+					<img src="https://i.imgur.com/TYkGFHO.gif" width="{Math.min(w, 600)}" height="{Math.min(w, 600) * 1/5}" style="margin-top: 50px;">
 
 				</div>
 
@@ -115,13 +114,14 @@
 						</div>
 
 						<div class="step-title-font-styles">
-							Your tutor will reply with a blackboard video
+							Your tutor responds with a blackboard video
 						</div>
 
 						<div class="step-description-font-styles">
-							How long will it take?
+							Response time differs depending on the dynamics of you and your tutor, 
+							the classes, whether there's an upcoming deadline.
 							<br><br>
-							The rider enters their destination into the “Where to?” box; reviews each ride option for vehicle size, price, and estimated dropoff time; chooses the desired option; then confirms the pickup.
+							
 						</div>
 					</div>
 
@@ -130,8 +130,8 @@
 							<RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
 								<ReusableDoodleVideo
 									{boardDoc}
-									canvasWidth={400}
-									canvasHeight={260}
+									canvasWidth={Math.min(w, 600)}
+									canvasHeight={Math.min(w, 600) * 3/4}
 									boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
 								/>
 							</RenderlessListenToBoard>
@@ -161,7 +161,7 @@
 						</div>
 					</div>
 
-					<img src="https://i.imgur.com/8tnRfRB.gif" height="100" width="280" style="margin-top: 50px;">
+					<img src="https://i.imgur.com/8tnRfRB.gif" height="{Math.min(0.5 * w, 0.5 * 600) * 4/9}" width="{Math.min(0.5 * w, 0.5 * 600)}" style="margin-top: 50px;">
 
 				</div>
 			</div>
@@ -206,7 +206,7 @@
 		</div>
 
 		<div style="webflow-section">
-			<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+			<p style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 				How pay works
 			</p>
 
@@ -262,7 +262,7 @@
 
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 						<iframe 
-							src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
+							src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="200" height="200"
 							style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
 						</iframe> 
 						<!-- position: static; margin: 0 auto;  -->
@@ -319,7 +319,7 @@
 	<!-- END OF TEACHER/DRIVER SECTION -->
 
 	<!-- BLOG SECTION -->
-	<div>
+	<!-- <div>
 		<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
 			Recent blogs
 		</p>
@@ -340,10 +340,8 @@
 			</div>	
 		</div>
 
-		<!-- Shaunticlair -->
 		<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
 			<iframe width="560" height="300" style="margin-bottom: 30px" src="https://www.youtube.com/embed/ED3K-X8iaEU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-			<!-- <iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 			
 			<div class="blog-text-section-container">
 				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
@@ -358,9 +356,7 @@
 			</div>	
 		</div>
 
-		<!--  -->
 		<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
-			<!-- <iframe style="margin-bottom: 30px;" width="560" height="380" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 			<iframe width="560" height="300" style="margin-bottom: 30px" src="https://www.youtube.com/embed/PVBRjv9Sdz0?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 			<div class="blog-text-section-container" style="width: 48vw; max-width: 800px;">
@@ -400,9 +396,7 @@
 		<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
 			<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-			<!-- <iframe width="700" height="480" src="https://www.youtube.com/embed/PVBRjv9Sdz0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 			<div class="blog-text-section-container">
-				<!-- blog title -->
 				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
 					The story of teaching at a research university
 				</h1>
@@ -420,7 +414,7 @@
 				</a>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </AutoAdjust>
 
 <script>	
@@ -443,6 +437,7 @@
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
 
+	let w
 	let topAppBar
 
 	let tabs = [{ label: 'Students', icon: 'hail'}, { label: 'Tutors', icon: 'local_taxi'}]
@@ -481,24 +476,47 @@
 </script>
 
 <style lang="scss">
+	.webflow-paragraph-1 {
+		font-size: 1.8rem;	
+	}
+
+	@media screen and (max-width: 991px) {
+		.webflow-paragraph-1 {
+			font-size: 1.1rem;
+		}
+	}
+
+	.webflow-h1 {
+		font-size: 4rem;
+	}
+
+	@media screen and (max-width: 767px) {
+		.webflow-h1 {
+			font-size: 3rem;
+	  }	
+	}
+
+	@media screen and (max-width: 479px) {
+		.webflow-h1 {
+			font-size: 2.6rem;
+		}
+	}
+
+	@media screen and (max-width: 991px) {
+		.image-gallery-container {
+			margin-top: 0% !important;
+			margin-bottom: 8% !important;
+		}
+	}
+
+.image-gallery-container {
+	margin-top: 12%; 
+	margin-bottom: 24%;
+}
+
 .webflow-section {
 	padding-top: 8%; 
 	padding-bottom: 8%;
-}
-
-/* Copied from Webflow's home page inspector */
-@media only screen and (min-width: 1550px) {
-	.header-title {
-		font-size: 7rem !important;
-	}
-}
-
-@media only screen and (max-width: 991px) {
-	.header-title {
-		/* I don't know why !important is needed when webflow.com doesn't need it */
-		max-width: 85vw !important;
-		font-size: 11vw !important;
-	}
 }
 
 .header-title {
@@ -526,10 +544,16 @@
 	line-height: 1.25;
 }
 
+@media only screen and (min-width: 1550px) {
+	.header-title {
+		font-size: 7rem;
+	}
+}
 
-@media screen and (max-width: 991px) {
-	.webflow-intro-type {
-		font-size: 2.6rem !important;
+@media only screen and (max-width: 991px) {
+	.header-title {
+		max-width: 85vw;
+		font-size: 11vw;
 	}
 }
 
@@ -542,6 +566,17 @@
 	max-width: 100%;
 }
 
+@media screen and (max-width: 991px) {
+	.webflow-intro-type {
+		font-size: 2.6rem;
+	}
+}
+
+@media screen and (max-width: 479px) {
+	.webflow-intro-type {
+		font-size: 1.6rem;
+	}
+}
 
 .header-flex {
 	display: -webkit-box;
@@ -558,10 +593,15 @@
 	flex-wrap: wrap;
 }
 
-@media screen and (max-width: 991px) {
-.header-subcopy {
-		max-width: 55vw !important;
-		font-size: 1.3rem;
+@media screen and (max-width: 767px) {
+	.header-flex {
+		margin-top: 40px;
+	}
+}
+
+@media screen and (max-width: 479px) {
+	.header-flex {
+		margin-bottom: 0px;
 	}
 }
 
@@ -577,18 +617,33 @@
 }
 
 @media screen and (max-width: 991px) {
-	.header-subcopy-wrapper {
-		max-width: 700px !important;
-		margin-top: 30px;
-		margin-left: 0;
-		font-size: 1.2rem;
+.header-subcopy {
+		max-width: 55vw;
+		font-size: 1.3rem;
 	}
 }
 
-/* TO-DO: do media query for smaller screen, max width expands to a larger width around 600 */
+@media screen and (max-width: 479px) {
+	.header-subcopy {
+		max-width: 90vw;
+		font-size: 1rem;
+	}
+}
+
 .header-subcopy-wrapper {
 	margin-left: 5vw;
+	width: 90%;
 	max-width: 310px; 
+}
+
+
+@media screen and (max-width: 991px) {
+.header-subcopy-wrapper {
+    max-width: 700px;
+    margin-top: 30px;
+    margin-left: 0;
+    font-size: 1.2rem;
+	}
 }
 
 .step-one-two-three-flexbox {
@@ -610,9 +665,22 @@
 	margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.7rem
 }
 
+@media screen and (max-width: 479px) {
+	.step-title-font-styles {
+		font-size: 1.1rem;
+	}
+}
+
 .step-description-font-styles {
 	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.4rem;
 }
+
+@media screen and (max-width: 479px) {
+	.step-description-font-styles {
+		font-size: 1rem;
+	}	
+}
+
 
 .blog-description-font-styles {
 	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.1rem;
@@ -690,12 +758,6 @@ li {
 		color: orange;
 	}
 
-	@media screen and (max-width: 991px) {
-		.webflow-container {
-			width: 85%;
-		}
-	}
-
 	.webflow-container {
 		width: 90%; 
 		max-width: 1280px; /* webflow's value is 1280, partly because their scrollbar takes up width */
@@ -703,6 +765,12 @@ li {
 		margin-left: auto; 
 
 		box-sizing: border-box;
+	}
+	
+	@media screen and (max-width: 991px) {
+		.webflow-container {
+			width: 85%;
+		}
 	}
 
 	.blog-text-section-container {

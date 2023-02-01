@@ -75,7 +75,7 @@ audio::-webkit-media-controls-panel {
 
 @media screen and (max-width: 991px) {
 	.header-subcopy-wrapper {
-		max-width: 700px !important;
+		max-width: 700px;
 		margin-top: 30px;
 		margin-left: 0;
 		font-size: 1.2rem;
@@ -96,7 +96,7 @@ audio::-webkit-media-controls-panel {
 
 @media screen and (max-width: 991px) {
 	.header-subcopy {
-			max-width: 55vw !important;
+			max-width: 55vw;
 			font-size: 1.3rem;
 		}
 	}

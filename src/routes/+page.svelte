@@ -147,21 +147,18 @@
 							Step 3
 						</div>
 						<div class="step-title-font-styles">
-							Follow-up over voice chat
+							Follow-up over comments & voice chat
 						</div>
 						<div class="step-description-font-styles">
-							You can ask follow-up questions via the comments section on the video
+							You can ask follow-up questions via the comments section on the video.
 							<br><br>
-							Even better, if both of you are active on the website at the same time, so you can just quickly voice chat. 
-							This happens more often than you'd think, because you could be watching a video, writing a question, replying to a video comment, writing a comment,
-							all of which you'll see each others names as being active in the server. 
-					
+							You can also directly voice chat over shared blackboards.
 							<!-- <br><br>
 							In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
 						</div>
 					</div>
 
-					<img src="https://i.imgur.com/8tnRfRB.gif" height="{Math.min(0.5 * w, 0.5 * 600) * 4/9}" width="{Math.min(0.5 * w, 0.5 * 600)}" style="margin-top: 50px;">
+					<img src="https://i.imgur.com/8tnRfRB.gif" height="{Math.min(0.5 * w, 0.5 * 600) * 4/10}" width="{Math.min(0.5 * w, 0.5 * 600)}" style="margin-top: 50px;">
 
 				</div>
 			</div>
@@ -172,11 +169,11 @@
 						Step 4
 					</div>
 					<div class="step-title-font-styles">
-						Revisit explanations anytime
+						Re-watch any explanations in the server
 					</div>
 					<div class="step-description-font-styles">
-						This means when other students ask questions, you benefit from their resultant videos.
-						The server is restricted to paying students during the semester; afterwards it becomes free forever for everyone.
+						Within the server, all explanations are shared. This means every student benefits from each others' questions and their tutors' resultant videos. 
+						The server is restricted to paying students during the semester; afterwards it becomes freely accessible on the internet.
 					</div>
 					<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
 						Explore last semester's 14.01 server

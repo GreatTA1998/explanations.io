@@ -12,14 +12,16 @@
 							Blog
 						</Button>
 					</a> -->
-					<a href="https://github.com/verypopularguy/explain" target="_blank" style="text-decoration-color: transparent;">
-						<Button style="margin-left: 20px;">
-							Github
-						</Button>
-					</a>
 				</Section>
 
 				<Section align="end" toolbar>
+					<a href="https://github.com/verypopularguy/explain" target="_blank" style="text-decoration-color: transparent;">
+						<div style="margin-left: 20px; margin-right: 20px;">
+							<svg
+								style="color: white; filter: invert(1); width: 40px; height: 50px; margin-top: 16px; margin-left: 10px;"
+								xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+						</div>
+					</a>
 					<Button variant="outlined">
 						Log in
 					</Button>
@@ -43,7 +45,7 @@
 				<p class="header-title">
 					The help you want — without wasted time
 				</p>
-				<div class="header-subcopy-wrapper" style="display: flex; -webkit-flex-direction: column; justify-content: flex-end; -webkit-align-items: flex-start;">
+				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
 						Your psets should be an enjoyable challenge, not an overwhelming timesink.
 					</div>
@@ -54,11 +56,30 @@
 					</Button>
 				</div>
 			</div>
+		{:else}
+			<div class="header-flex">
+				<p class="header-title">Less hours, more flexibility, unbounded pay</p>	
+				<div class="header-subcopy-wrapper">
+					<div class="header-subcopy">
+						Let video explanations multiply your impact
+						and earn money for you
+					</div>
+				
+					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
+						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
+							Setup shop
+						</Label>
+					</Button>
+				</div>
+			</div>			
+		{/if}
 
-			<div class="image-gallery-container">
-				<ImageGallery/>
-			</div>
+		<!-- ROTATING GALLERY -->
+		<div class="image-gallery-container">
+			<ImageGallery/>
+		</div>
 
+		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Here you can hire former students for pset help, using a mix of blackboard videos and remote 1-on-1 tutoring,
@@ -66,65 +87,38 @@
 				</div>
 			</div>
 
-		<!-- HOW IT WORKS SECTION-->
-		<div bind:clientWidth={w} class="webflow-section">
-			<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
-				How it works
-			</div>
-			
-			<div class="webflow-paragraph-1" style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; margin-top: 1px; opacity: 0.8;">
-				We actively recruit former students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently help `n` students with no additional effort, 
-				it is then possible for these tutors to address all your questions, until nothing is left unexplained.
-				<br>
-				<br>
+			<!-- HOW IT WORKS SECTION-->
+			<div bind:clientWidth={w} class="webflow-section">
+				<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+					How it works
+				</div>
+				
+				<div class="webflow-paragraph-1" style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; margin-top: 1px; opacity: 0.8;">
+					We actively recruit former students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently benefit everyone with no additional effort, 
+					it is then possible for tutors to personally address your remaining questions, until nothing is left unexplained.
+					<br>
+					<br>
 
-				<!-- Alternative: It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
-			</div>
-
-			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
-	
-			</div>
-
-			<div class="step-container" style="margin-bottom: 160px;">
-				<div class="step-one-two-three-flexbox">
-					<div style="max-width: 800px">
-						<div class="step-one-two-three-font">
-							Step 1
-						</div>
-						<div class="step-title-font-styles">
-							Open the website to type a question
-						</div>
-						<div class="step-description-font-styles">
-							Ask about pset questions, important concepts, anything.
-						</div>
-					</div>
-
-					<!-- The margin has no effect when same-line, but for small screens it'll leave a gap from the text -->
-					<img src="https://i.imgur.com/TYkGFHO.gif" width="{Math.min(w, 600)}" height="{Math.min(w, 600) * 1/5}" style="margin-top: 50px;">
-
+					<!-- Alternative: It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
 				</div>
 
-			</div>
+				<!-- <div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
+		
+				</div> -->
+				<HowItWorksStep
+					title="Step 1"
+					subtitle="Open the website to type a question"
+					description="Ask about pset questions, important concepts, anything."
+				>					
+					<img src="https://i.imgur.com/TYkGFHO.gif" width="{Math.min(w, 600)}" height="{Math.min(w, 600) * 1/5}" style="margin-top: 50px;">
 
-			<div class="step-container" style="margin-bottom: 160px;">
-				<div class="step-one-two-three-flexbox">
-					<div style="max-width: 800px;">
-						<div class="step-one-two-three-font">
-							Step 2
-						</div>
+				</HowItWorksStep>
 
-						<div class="step-title-font-styles">
-							Your tutor responds with a blackboard video
-						</div>
-
-						<div class="step-description-font-styles">
-							Response time differs depending on the dynamics of you and your tutor, 
-							the classes, whether there's an upcoming deadline.
-							<br><br>
-							
-						</div>
-					</div>
-
+				<HowItWorksStep
+					title="Step 2"
+					subtitle="Your tutor responds with a blackboard video"
+					description="Reponse time differs depending on the arrangement set by you and your tutor. It will also depend on the situation e.g. faster response when there's an upcoming pset deadline."
+				>
 					<div style="display: flex; justify-content: space-evenly; justify-content: space-between">
 						<div style="width: 90%; height: 70%; margin-top: 50px;">
 							<RenderlessListenToBoard let:boardDoc={boardDoc} dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} >
@@ -137,79 +131,43 @@
 							</RenderlessListenToBoard>
 						</div>
 					</div>
-				</div>
-			</div>
+				</HowItWorksStep>
 
-			<div class="step-container" style="margin-bottom: 120px">
-				<div class="step-one-two-three-flexbox">
-					<div style="max-width: 800px;">
-						<div class="step-one-two-three-font">
-							Step 3
-						</div>
-						<div class="step-title-font-styles">
-							Follow-up over comments & voice chat
-						</div>
-						<div class="step-description-font-styles">
-							You can ask follow-up questions via the comments section on the video.
-							<br><br>
-							You can also directly voice chat over shared blackboards.
-							<!-- <br><br>
-							In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
-						</div>
-					</div>
-
+				<HowItWorksStep
+					title="Step 3"
+					subtitle="Follow-up over comments & voice chat"
+					description="You can ask follow-up questions via the comments section on the video.
+					You can also directly voice chat over shared blackboards."
+				>
 					<img src="https://i.imgur.com/8tnRfRB.gif" height="{Math.min(0.5 * w, 0.5 * 600) * 4/10}" width="{Math.min(0.5 * w, 0.5 * 600)}" style="margin-top: 50px;">
+				</HowItWorksStep>
 
-				</div>
-			</div>
-
-			<div class="step-one-two-three-flexbox">
-				<div style="max-width: 800px;">
-					<div class="step-one-two-three-font">
-						Step 4
-					</div>
-					<div class="step-title-font-styles">
-						Re-watch any explanations in the server
-					</div>
-					<div class="step-description-font-styles">
-						Within the server, all explanations are shared. This means every student benefits from each others' questions and their tutors' resultant videos. 
-						The server is restricted to paying students during the semester; afterwards it becomes freely accessible on the internet.
-					</div>
+				<HowItWorksStep
+					title="Step 4"
+					subtitle="Re-watch any explanations in the server"
+					description="Within the server, all explanations are shared. This means every student benefits from each others' questions and their tutors' resultant videos. The server is restricted to paying students during the semester; afterwards it becomes freely accessible on the internet."	
+				>
 					<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
 						Explore last semester's 14.01 server
 					</Button>
+				</HowItWorksStep>
+			</div>
+		{:else}
+			<div class="webflow-section">
+				<div class="webflow-intro-type">
+					Here you can directly create videos on your stylus-tablet and upload them within <i>seconds</i>. 
+					You also have use voice chat + shared blackboards to directly communicate with students.
 				</div>
 			</div>
-		</div>
-	{:else}
-		<div class="header-flex">
-			<p class="header-title">Scalable pay, flexible hours</p>	
-			<div class="header-subcopy-wrapper" style="display: flex; -webkit-flex-direction: column; justify-content: flex-end; -webkit-align-items: flex-start;">
-				<div class="header-subcopy">
-					Your pay should reflect your impact - start by individual tutoring, then
-					transition to uploading videos.
-				</div>
-			
-				<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
-					<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-						Setup shop
-					</Label>
-				</Button>
-			</div>
-		</div>			
 
-		<div style="margin-top: 12%; margin-bottom: 24%;">
-			<ImageGallery/>
-		</div>
-
-		<div style="webflow-section">
-			<p style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+		<div class="webflow-section">
+			<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 				How pay works
-			</p>
+			</div>
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
 				Because you get paid proportional to how many students you help, there's no limit on how high you get paid.
-				When starting with just 1 student, Explain guarantees a minimum wage that matches HKN ($17/hr) and math learning center ($19/hr).
+				When starting with just 1 student, Explain subsidizes a minimum wage of $20/hr to match HKN ($17/hour) and Math Learning Center ($19/hour).
 				<br>
 				<br>
 
@@ -220,97 +178,44 @@
 	
 			</div>
 
-			<div class="step-container" style="margin-bottom: 160px;">
-				<div class="step-one-two-three-flexbox">
-					<div style="width: 800px;">
-						<div class="step-one-two-three-font">
-							Step 1
-						</div>
-						<div class="step-title-font-styles">
-							Start with 1 student
-						</div>
-						<div class="step-description-font-styles">
-							You'd talk and meet in person once
-						</div>
-					</div>
-					<!-- <img src="https://i.imgur.com/TYkGFHO.gif" width="450" height="100"> -->
-				</div>
+			<HowItWorksStep
+				title="Step 1"
+				subtitle="Start with 1 student"
+				description="Depending on preferenes, you can tutor in-person, remotely, or asynchronously via videos"
+			/>
 
-			</div>
+			<HowItWorksStep
+				title="Step 2"
+				subtitle="Leverage video explanations wisely"
+				description="You start to use more video explanations (like Sal Khan and his nephew),
+						this brings more flexibility into your work hours e.g. get your work out of the way in the morning,
+						and commuting in the snow is no longer necessary"
+			>
+				<iframe 
+					src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="{Math.min(w, 600)}" height="{0.6 * Math.min(w, 600)}"
+					style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+				</iframe> 
+			</HowItWorksStep>
 
-			<div class="step-container" style="margin-bottom: 160px;">
-				<div class="step-one-two-three-flexbox">
-					<div>
-						<div class="step-one-two-three-font">
-							Step 2
-						</div>
-						<div class="step-title-font-styles">
-							Use video explanations to wisely
-						</div>
-						<div class="step-description-font-styles">
-							You start to use more video explanations (like Sal Khan and his nephew),
-							this brings more flexibility into your work hours e.g. get your work out of the way in the morning,
-							, and commuting in the snow is no longer necessary
-							<br><br>
-							3-10 secs. upload time for 5 min. blackboard videos
+			<HowItWorksStep
+				title="Step 3"
+				subtitle="Adjust as you get more students"
+				description="
+				Different students will have different needs, but their common concerns about a pset problem, or a fundamental concept 
+				is often addressable with a recorded explanation. Your salary scales O(n). 
+				This can be challenging, but it can also be easy. It requires a little bit of experimentation.
+				
+				1 student = $19/hour (up to 2 hours)
+				2 students: $19/hour (up to 3 hours)
+				3 students: $20/hour (3 hours)
+				4 students, $21/hour (up to 3 hours)
+				10 students: $38/hour, 4 hours
+				20 students: $60/hour, 5 hours
+				30 students: $90/hour, 5 hours
+				"
+			>
 
-						</div>
-					</div>
-
-					<div style="display: flex; justify-content: space-between; align-items: center;">
-						<iframe 
-							src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="200" height="200"
-							style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-						</iframe> 
-						<!-- position: static; margin: 0 auto;  -->
-						<!-- 
-							<iframe 
-								src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="400" height="450"
-								style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-							</iframe> 
-						-->
-						<div style="width: 90%; height: 70%;">
-							<!-- <ReusableDoodleVideo
-								canvasWidth={500}
-								canvasHeight={360}
-								boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
-							/>
-						</div> -->
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="step-container" style="margin-bottom: 120px">
-				<div class="step-one-two-three-flexbox">
-					<div>
-						<div class="step-one-two-three-font">
-							Step 3
-						</div>
-						<div class="step-title-font-styles">
-							Adjust for n students
-						</div>
-						<div class="step-description-font-styles">
-							Different students will have different needs, but their common concerns about a pset problem, or a fundamental concept 
-							is often addressable with a recorded explanation. Your salary scales O(n). 
-							This can be challenging, but it can also be easy. It requires a little bit of experimentation.
-							<br><br>
-							1 student = $19/hour (up to 2 hours)
-							2 students: $19/hour (up to 3 hours)
-							3 students: $20/hour (3 hours)
-							4 students, $21/hour (up to 3 hours)
-							10 students: $38/hour, 4 hours
-							20 students: $60/hour, 5 hours
-							30 students: $90/hour, 5 hours
-							<!-- <br><br>
-							In any case, there's always still the old-fashioned way of scheduling a time with your tutor via email. -->
-						</div>
-					</div>
-
-					<img src="https://i.imgur.com/8tnRfRB.gif" height="100" width="300">
-
-				</div>
-			</div>
+			</HowItWorksStep>
 		</div>
 	{/if}
 	<!-- END OF TEACHER/DRIVER SECTION -->
@@ -418,6 +323,7 @@
 	import ImageGallery from '../lib/ImageGallery.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
+	import HowItWorksStep from '$lib/HowItWorksStep.svelte';
 	import Button, { Label } from '@smui/button';
 	import { goto } from '$app/navigation'
 	import { user, } from '../store.js'
@@ -631,6 +537,15 @@
 	margin-left: 5vw;
 	width: 90%;
 	max-width: 310px; 
+
+	// additional attributes
+	display: flex; 
+	flex-direction: column;
+	justify-content: flex-end; 
+	align-items: flex-start;
+
+	-webkit-flex-direction: column; 
+	-webkit-align-items: flex-start;
 }
 
 
@@ -642,42 +557,6 @@
     font-size: 1.2rem;
 	}
 }
-
-.step-one-two-three-flexbox {
-	display: flex; 
-	align-items: center; 
-	justify-content: space-between; 
-	flex-wrap: wrap;
-}
-
-.step-one-two-three-font {
-	color: #000000; 
-	opacity: 0.5; 
-	font-family: sans-serif; 
-	margin-bottom: 12px; 
-	font-size: 1.2rem;
-}
-
-.step-title-font-styles {
-	margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.7rem
-}
-
-@media screen and (max-width: 479px) {
-	.step-title-font-styles {
-		font-size: 1.1rem;
-	}
-}
-
-.step-description-font-styles {
-	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.4rem;
-}
-
-@media screen and (max-width: 479px) {
-	.step-description-font-styles {
-		font-size: 1rem;
-	}	
-}
-
 
 .blog-description-font-styles {
 	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.1rem;

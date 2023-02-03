@@ -10,212 +10,129 @@
         <!-- <div class="header-subcopy">
           The platform covers refunds anytime, any reason - so both student & tutor are protected
         </div> -->
+        <slot name="past-videos-button">
+          
+        </slot>
+
         <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
           <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
             Early signup for $20/week
           </Label>
         </Button>
+
+        <slot name="private-tutoring-button">
+
+        </slot>
       </div>
     </div>
-  
-    <!-- TO-DO: EDITORIAL-LIKE DESCRIPTION OF CLASS
-    <div>
-      Insights about common pitfalls in the class
-    </div> -->
+
+    <slot name="editorial-or-blog-paragraph">
+      <!-- CAN INCLUDE YOUTUBE FOR SHAUNTICLAIR -->
+    </slot>
   {/if}
 
-    <div style="margin-top: 1%; margin-bottom: 1%">
-      <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-        Tutor gallery
-      </h2>
-        <!-- <Text style="margin-bottom: 10px; margin-left: 16px; font-size: 0.95rem; color: grey;">
-              Piloted in Fall 2022
-            </Text> -->
-      <div style="display: flex;">
-        {#if classTutorsDocs}
-          {#each classTutorsDocs as tutorDoc}
-            <div class="tutor-business-card" style="margin-right: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-              <Card style="height: 150px;" variant="outlined">
-                <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
-                  <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                    { tutorDoc.name }
-                  </h2>
+  <div style="margin-top: 1%; margin-bottom: 1%">
+    <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
+      Tutor gallery
+    </h2>
 
-                  <div style="margin-top: 16px;"></div>
+    <div style="display: flex;">
+      {#if classTutorsDocs}
+        {#each classTutorsDocs as tutorDoc}
+          <div class="tutor-business-card" style="margin-right: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
+            <Card style="height: 150px;" variant="outlined">
+              <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
+                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                  { tutorDoc.name }
+                </h2>
 
-                  {#if $user.uid === tutorDoc.uid}
-                    <TextAreaAutoResizing 
-                      value={tutorDoc.bio || ''} 
-                      on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
-                      placeholder="e.g. year, major, your teaching style/philosophy"
-                      readonly={$user.uid !== tutorDoc.uid}
-                      nonFocusedPlaceholderOpacity={0.6}
-                      numberOfInitialRowsIfEmpty={2}
-                      fontSizeIncludeUnits={'1rem'}
-                    />
-                  {:else}
-                    <div style="font-family: sans-serif; font-size: 1rem;">{tutorDoc.bio || 'No bio yet'}</div>
-                  {/if}
-                </PrimaryAction>
-              </Card>
-            </div>
-          {/each}
-        {/if}
-  
-        {#if !didUserAlreadySignUpAsTutor}
-          <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
-            {#if selectedTutorUID !== ''}
-              <Card style="height: 150px;" variant="outlined">
-                <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
-                  <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                    Setup your shop
-                  </h2>
-                  <div style="font-family: sans-serif;">
-                    <ol>
-                      <li>Log in with phone</li>
-                      <li>Record 1 example video</li>
-                      <li>Add your Venmo</li>
-                    </ol>
-                  </div>
-                </PrimaryAction>
-              </Card>
-            {:else}
-              {#if !$user.phoneNumber}
-                <Content>
-                  <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                    1. Log in with phone
-                  </h2>
-                  <PhoneLogin/>
-                </Content>
-              {:else}
-                <Content>
-                  <div>
-                    Welcome { $user.name || '' }, create shop?
-                  </div>
-           
-                  {#if !$user.name}
-                    <div>First name</div>
-                    <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
-    
-                    <div>Last name</div>
-                    <input bind:value={inputFieldLastName} placeholder=""/>
+                <div style="margin-top: 16px;"></div>
 
-                    <Button on:click={createTutorDoc({ classID, firstName: inputFieldFirstName, lastName: inputFieldLastName })}>
-                      Submit
-                    </Button>
-                  {:else if $user.name && !didUserAlreadySignUpAsTutor}
-                    <Button on:click={createTutorDoc({ classID, firstName: $user.name.split(" ")[0], lastName: $user.name.split(" ")[1] })}>
-                      Create shop
-                    </Button>
-                  {/if}
-                </Content>
-              {/if}
-            {/if}
+                {#if $user.uid === tutorDoc.uid}
+                  <TextAreaAutoResizing 
+                    value={tutorDoc.bio || ''} 
+                    on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
+                    placeholder="e.g. year, major, your teaching style/philosophy"
+                    readonly={$user.uid !== tutorDoc.uid}
+                    nonFocusedPlaceholderOpacity={0.6}
+                    numberOfInitialRowsIfEmpty={2}
+                    fontSizeIncludeUnits={'1rem'}
+                  />
+                {:else}
+                  <div style="font-family: sans-serif; font-size: 1rem;">{tutorDoc.bio || 'No bio yet'}</div>
+                {/if}
+              </PrimaryAction>
+            </Card>
           </div>
-        {/if}
-      </div>
+        {/each}
+      {/if}
+
+      {#if !didUserAlreadySignUpAsTutor}
+        <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
+          {#if selectedTutorUID !== ''}
+            <Card style="height: 150px;" variant="outlined">
+              <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
+                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                  Setup your shop
+                </h2>
+                <div style="font-family: sans-serif;">
+                  <ol>
+                    <li>Log in with phone</li>
+                    <li>Record 1 example video</li>
+                    <li>Add your Venmo</li>
+                  </ol>
+                </div>
+              </PrimaryAction>
+            </Card>
+          {:else}
+            {#if !$user.phoneNumber}
+              <Content>
+                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                  1. Log in with phone
+                </h2>
+                <PhoneLogin/>
+              </Content>
+            {:else}
+              <Content>
+                <div>
+                  Welcome { $user.name || '' }, create shop?
+                </div>
+          
+                {#if !$user.name}
+                  <div>First name</div>
+                  <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
+  
+                  <div>Last name</div>
+                  <input bind:value={inputFieldLastName} placeholder=""/>
+
+                  <Button on:click={createTutorDoc({ classID, firstName: inputFieldFirstName, lastName: inputFieldLastName })}>
+                    Submit
+                  </Button>
+                {:else if $user.name && !didUserAlreadySignUpAsTutor}
+                  <Button on:click={createTutorDoc({ classID, firstName: $user.name.split(" ")[0], lastName: $user.name.split(" ")[1] })}>
+                    Create shop
+                  </Button>
+                {/if}
+              </Content>
+            {/if}
+          {/if}
+        </div>
+      {/if}
     </div>
+  </div>
+
   </div>
   
   <div style="margin-top: 20px;"></div>
 
-  <div bind:clientWidth={carouselWidth} style="margin-left: 1%;">
-  {#if classTutorsDocs}
-    <!-- When nobody has signed up, an orange box with nothing is confusing -->
-    {#if classTutorsDocs.length > 0 && selectedTutorUID !== ''}
-      {#key selectedTutorUID + rerenderKeyForCarousel}
-        <div use:setupCarouselData>
-          {#if carouselWidth}
-            <!-- <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}> -->
-              {#if designatedRoomBoardIDs.length > 0}
-                {#each designatedRoomBoardIDs as id}
-                  <div class="card">
-                    <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
-                      {#if boardDoc}
-                        <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
-                          Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
-                        </div> -->
-
-                        {#if boardDoc.audioDownloadURL}
-                          <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
-                            <TextAreaAutoResizing 
-                              value={boardDoc.description || ''} 
-                              on:input={(e) => debouncedUpdateBoardDescription(e, id)}
-                              placeholder={textAreaPlaceholder}
-                              readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                              nonFocusedPlaceholderOpacity={0.6}
-                              numberOfInitialRowsIfEmpty=3
-                            />
-                          </div>
-                          <ReusableDoodleVideo 
-                            {boardDoc}
-                            boardDbPath={boardsCollectionDbPath + id}
-                            canvasWidth={carouselWidth}
-                            canvasHeight={carouselWidth * 3/4 - 100}
-                          />
-                        {:else if $user.uid === selectedTutorUID}
-                          <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
-                            <TextAreaAutoResizing 
-                              value={boardDoc.description || ''} 
-                              on:input={(e) => debouncedUpdateBoardDescription(e, id)}
-                              placeholder={textAreaPlaceholder}
-                              readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                              nonFocusedPlaceholderOpacity={0.6}
-                              numberOfInitialRowsIfEmpty=3
-                            />
-                          </div>
-                          <ReusableLiveBlackboard
-                            {boardDoc}
-                            boardID={id}
-                            boardsDbPath={boardsCollectionDbPath}
-                            canvasWidth={carouselWidth}
-                            canvasHeight={carouselWidth * 3/4 - 100}
-                            hasFullscreenButton={false}
-                            on:video-uploaded={updateNewBlackboardLocation}
-                          />
-                        {/if}
-                      {/if}
-                    </RenderlessListenToBoard>
-                  </div>
-                {/each}
-                
-                {#if $user.uid === selectedTutorUID}
-                  <div class="card">
-                    <div on:click={updateNewBlackboardLocation}
-                      style="
-                        display: flex; 
-                        justify-content: center; 
-                        align-items: center;
-                        margin-top: 40px; 
-                        background-color: #2e3131; 
-                        font-family: Roboto, sans-serif; text-transform: uppercase;
-                        color: white;
-                        height: 35px;
-                        width: {carouselWidth}px;"
-                      >
-                    New blackboard
-                  </div>
-                    <!-- <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
-                      <div style="margin-left: auto;"
-                      <Button style="font-size: 4rem; margin-left: auto; margin-right: auto;">
-                        click for new board
-                      </Button>
-                    </div> -->
-                  </div>
-                {/if}
-              {/if}
-            <!-- </ImageCarousel> -->
-          {/if}
-        </div>
-      {/key}
-    {/if}
-  {/if}
-</div>
-<!-- </div> -->
-
+  <DetailedClassPageBoardsAndVideos
+    {selectedTutorUID}
+    fetchVideosFunc={fetchVideoPortfolio}
+    {classID}
+  />
 
 <script>
-  import ImageCarousel from '$lib/ImageCarousel.svelte'
+  import DetailedClassPageBoardsAndVideos from './DetailedClassPageBoardsAndVideos.svelte'
   import Card, { PrimaryAction, Content } from '@smui/card'
   import Button, { Label } from '@smui/button';
   import { user } from '../../../store.js'
@@ -224,39 +141,35 @@
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { getRandomID } from '../../../helpers/utility.js'
   import { createRoomDoc, createBoardDoc } from '../../../helpers/crud.js'
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
-  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
-  import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
 
   export let classID
 
   $: classID, fetchPageData()
 
-  let carouselWidth
-
   let classDoc
-
   let classTutorsDocs = null
   let designatedRoomBoardIDs = []
-  let rerenderKeyForCarousel = 0
   let selectedTutorUID = null
   let inputFieldFirstName = '' 
   let inputFieldLastName = ''
-  const boardsCollectionDbPath = `classes/${classID}/blackboards/`
 
   let isInitialFetch = true
 
   let unsubTutorsListener
-
   let didUserAlreadySignUpAsTutor = false
-
-  let textAreaPlaceholder = "Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, include links to outside content from Piazza, textbooks, Youtube etc. :)"
 
   $: if (classTutorsDocs) {
     didUserAlreadySignUpAsTutor = false
     for (const tutor of classTutorsDocs) {
       if (tutor.uid === $user.uid) didUserAlreadySignUpAsTutor = true
+    }
+
+    if (classTutorsDocs.length > 0) {
+      if (isInitialFetch) {
+        selectedTutorUID = classTutorsDocs[0].uid
+        isInitialFetch = false
+      }
     }
   }
 
@@ -294,8 +207,6 @@
     const snapshot = await getDoc(ref)
     classDoc = { id: snapshot.id, ...snapshot.data()}
   }
-
-
 
   async function createTutorDoc ({ classID, firstName, lastName }) {
     if (!firstName || !lastName) return
@@ -346,11 +257,12 @@
   }
 
    // take a parameter ideally
-   async function fetchVideosOfTutorRoom (tutorUID) {
+   async function fetchVideosOfTutorRoom (node, tutorUID) {
     return new Promise(async resolve => {
+      console.log("passing action parameter, tutorUID =, ", tutorUID)
       let tutor 
       for (const t of classTutorsDocs) {
-        if (t.uid === selectedTutorUID) {
+        if (t.uid === tutorUID) {
           tutor = t 
         }
       }
@@ -363,9 +275,9 @@
       const db = getFirestore()
       const roomSnapshot = await getDoc(doc(db, `classes/${classID}/rooms/${tutor.designatedRoomID}`))
       const roomDoc = { id: roomSnapshot.id, ...roomSnapshot.data() }
-      designatedRoomBoardIDs = [...roomDoc.blackboards]
+      // designatedRoomBoardIDs = [...roomDoc.blackboards]
 
-      resolve()
+      resolve([...roomDoc.blackboards])
     })
   }
 
@@ -402,7 +314,7 @@
     })
   }
 
-  
+  // WARNING: COULD BE DANGEROUS THAT THE DEBOUNCED VARIABLE T IS SHARED BETWEEN TWO FUNCTIONS, THEY COULD DEBOUNCE EACH OTHER WHICH IS BAD
   let t = { promise: null, cancel: _ => void 0 }
 
   // Snippet from: https://stackoverflow.com/a/68228099/7812829
@@ -429,27 +341,6 @@
     return { promise, cancel }
   }
 
-  async function updateNewBlackboardLocation () {
-    const db = getFirestore()
-
-    let tutor
-    for (const t of classTutorsDocs) {
-      if (t.uid === selectedTutorUID) {
-        tutor = t 
-      }
-    }
-    if (!tutor) {
-      alert("tutor is undefined, can't update new blackboard location")
-      return 
-    }
-    const boardsDbPath = `classes/${classID}/blackboards/`
-    const roomRef = doc(db, `classes/${classID}/rooms/${tutor.designatedRoomID}`)
-    await createBoardDoc(boardsDbPath, roomRef)
-    rerenderKeyForCarousel += 1
-
-    // because everything is re-rendered, the video portfolio will be refetched, and the new blackboard location will be re-decided
-    // all we had to do is just create the docs here
-  }
 </script>
 
 <style>
@@ -463,9 +354,9 @@
   .orange-border {
     border: 2px solid orange;
   }
-
+/* 
   body {
     overflow-y: hidden;
-  }
+  } */
 </style>
 

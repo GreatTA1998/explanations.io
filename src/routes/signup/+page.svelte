@@ -1,58 +1,69 @@
-<!-- 
-  For the time being, this will be hard-coded as 14.01's page,
-  which will also be the default page for reference 
-  when exploring pricing and availability
+<DetailedClassPage
+  classID={'Mev5x66mSMEvNz3rijym'}
+>
+  <Button slot="past-videos-button">
+    Past videos
+  </Button>
 
-  TO-DO: 
-  
-  As well as last semester's top videos, stats, and a brief bio for the teacher.
+  <Button slot="private-tutoring-button">
+    Traditional tutoring
+  </Button>
 
-  Don't make unnecessary enemies with the TAs
-
-  NEW CLASS
-  Communicate that you can sign up for any class, including ASEs. The goal is to get students who believe in this 
-  product so much they're willing to sign-up and pay. This is the most important signal. 
-
-  Explain what happens with their money - if the department funds it, you'll be refunded, 75% off. 
-  And yes, it's a free market economy. 
-  If for some reason it doesn't happen, you get a full refund. 
+  <div slot="editorial-or-blog-paragraph" style="font-family: sans-serif;">
+    14.01, personally, has one of the most exciting lectures. What's hard about the class is the psets - the jump between the intuitive concepts to the 
+    hard math in psets can be abrupt, and there's only one math recitation each week.
+  </div>
+</DetailedClassPage>
+<!-- WRITE SHORT EDITORIAL HERE
+  We're forced to overlap 2-3 different 3D graphs onto 2D, 
+  with one-color, and try to make sense of it. 
+  Math is therefore the most common source of confusion, 
+  yet it's easily solved by a 10-minute review of f(x, y) constrained optimization of two variables.
 -->
 
-<div class="webflow-container">
+<!-- <div class="section-subtitle">
+Because lectures doesn't cover math, f(x, y) constrained optimization is the source of lots of questions
+</div> -->
+
+<!-- 
+<div class="header-subcopy">
+  The platform covers refunds anytime, any reason - so both student & tutor are protected
+</div> 
+-->
+
+<!-- <div style="width: 80%">
+
+</div> -->
+
+
+<!-- <div class="webflow-container">
   <div class="header-flex">
     <div class="header-title">
       14.01 
     </div>
 
     <div class="header-subcopy-wrapper">
-      <!-- <div class="header-subcopy">
-        The platform covers refunds anytime, any reason - so both student & tutor are protected
-      </div> -->
       <div style="display: flex;">
-        <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
-          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
-            Sign-up for $10/week
-          </Label>
-        </Button>
         <Button on:click={() => goto('/Mev5x66mSMEvNz3rijym')} variant="outlined" style="height: 60px; margin-left: 20px; border-radius: 0px;">
           <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 50px; padding-bottom: 50px; font-size: 1rem; border-radius: 6px; font-weight: 600">
             Fall '22 server
           </Label>
         </Button>
+
+        <Button color="secondary" variant="raised" style="margin-left: 20px; height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+            Video tutoring: $1/week
+          </Label>
+        </Button>
+
+        <Button color="secondary" variant="raised" style="margin-left: 20px; height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+            Traditional tutoring: $0/week
+          </Label>
+        </Button>
       </div>
     </div>
   </div>
-
-  <!-- WRITE SHORT EDITORIAL HERE
-      We're forced to overlap 2-3 different 3D graphs onto 2D, 
-      with one-color, and try to make sense of it. 
-      Math is therefore the most common source of confusion, 
-      yet it's easily solved by a 10-minute review of f(x, y) constrained optimization of two variables.
-    -->
-
-  <!-- <div class="section-subtitle">
-    Because lectures doesn't cover math, f(x, y) constrained optimization is the source of lots of questions
-  </div> -->
 
   <div style="margin-top: 1%; margin-bottom: 1%" class="section-container">
     <h2 style="font-family: sans-serif">
@@ -95,50 +106,9 @@
               </Card>
             </div>
           {/each}
-
-          <!-- TO-DO: hide if user already signed up as tutor -->
-          <!-- <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorUID === ''}>
-            {#if selectedTutorUID !== ''}
-              <Card style="height: 150px;">
-                <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
-                  <p>Sign up as tutor</p>
-                  <div>It's simple to setup shop:</div>
-                  <ol>
-                    <li>Log in</li>
-                    <li>Record an example video</li>
-                    <li>Fill out everything else another time</li>
-                  </ol>
-                </PrimaryAction>
-              </Card>
-            {:else}
-              {#if !$user.phoneNumber}
-                <div>Phone login</div>
-                <PhoneLogin/>
-              {:else}
-                <div>
-                  success - you're logged in, shop will be auto-saved
-                </div>
-
-                {#if !$user.firstName || !$user.lastName}
-                  <div>First name</div>
-                  <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
-
-                  <div>Last name</div>
-                  <input bind:value={inputFieldLastName} placeholder=""/>
-
-                  <Button on:click={createTutorDoc({ classID: id })}>
-                    Submit
-                  </Button>
-                {/if}
-                
-                <div>bio</div>
-                <input placeholder="class, year, relevant class experience, links and stats to any Piazza posts, Youtube, blogs, resources you created">
-              {/if}
-            {/if}
-          </div> -->
         {/if}
-      </div><!-- End of flexbox-->
-    </div> <!-- End of section -->
+      </div>
+    </div> 
   </div>
 </div>
 
@@ -153,11 +123,6 @@
               <div class="card">
                 <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
                   {#if boardDoc}
-                    <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
-                      Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
-                    </div> -->
-
-                    <!-- JUST COPY FROM [room]/[class].svelte -->
                     <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
                       <TextAreaAutoResizing 
                         value={boardDoc.description || ''} 
@@ -191,11 +156,7 @@
                 </RenderlessListenToBoard>
               </div>
             {/each}
-            
-            <!-- DO SOMETHING TO GUARANTEE A NEW BOARD WILL BE CREATED -->
-            <!-- THE PRESENCE OF THIS BREAKS THE CAROUSEL IN UNEXPECTED WAYS, E.G YOU NEED A NEW PAGE, WHICH BRINGS A 
-            INTRUSIVE RIGHT ARROW ONTO THE NEW BLACKBOARD -->
-            <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
+
             <div class="card">
               <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
                 <div style="font-size: 4rem; margin-left: auto; margin-right: auto;">
@@ -208,12 +169,10 @@
       {/if}
     </div>
   {/key}
-</div>
+</div> -->
 
-
-
-    <!-- End of page container -->
 <script>
+  import DetailedClassPage from './[class]/DetailedClassPage.svelte'
   import Card, {
     Content,
     PrimaryAction,

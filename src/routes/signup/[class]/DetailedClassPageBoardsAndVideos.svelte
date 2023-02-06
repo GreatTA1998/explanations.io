@@ -1,78 +1,72 @@
 
 <div bind:clientWidth={carouselWidth} style="margin-left: 1%;">
-  {#if selectedTutorUID} 
-    {#key selectedTutorUID}
-      <div use:fetchVideosFunc={selectedTutorUID}>
-        {#each boardIDs as boardID} 
-          <div class="card">
-            <RenderlessListenToBoard dbPath={boardsCollectionDbPath + boardID} let:boardDoc={boardDoc}> 
-              {#if boardDoc}
-                {#if boardDoc.audioDownloadURL}
-                  <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
-                    <TextAreaAutoResizing 
-                      value={boardDoc.description || ''} 
-                      on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
-                      placeholder={textAreaPlaceholder}
-                      readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                      nonFocusedPlaceholderOpacity={0.6}
-                      numberOfInitialRowsIfEmpty=3
-                    />
-                  </div>
-                  <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
-                    Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
-                  </div>
-                  <ReusableDoodleVideo 
-                    {boardDoc}
-                    boardDbPath={boardsCollectionDbPath + id}
-                    canvasWidth={carouselWidth}
-                    canvasHeight={carouselWidth * 3/4 - 100}
-                  />
-                {:else if $user.uid === selectedTutorUID}
-                  <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
-                    <TextAreaAutoResizing 
-                      value={boardDoc.description || ''} 
-                      on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
-                      placeholder={textAreaPlaceholder}
-                      readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                      nonFocusedPlaceholderOpacity={0.6}
-                      numberOfInitialRowsIfEmpty=3
-                    />
-                  </div>
-                  <ReusableLiveBlackboard
-                    {boardDoc}
-                    boardID={id}
-                    boardsDbPath={boardsCollectionDbPath}
-                    canvasWidth={carouselWidth}
-                    canvasHeight={carouselWidth * 3/4 - 100}
-                    hasFullscreenButton={false}
-                    on:video-uploaded={updateNewBlackboardLocation}
-                  />
-                {/if}
-              {/if}
-            </RenderlessListenToBoard>
-          </div>
-        {/each}
-        
-        {#if $user.uid === selectedTutorUID}
-          <div class="card">
-            <div on:click={updateNewBlackboardLocation}
-              style="
-                display: flex; 
-                justify-content: center; 
-                align-items: center;
-                margin-top: 40px; 
-                background-color: #2e3131; 
-                font-family: Roboto, sans-serif; text-transform: uppercase;
-                color: white;
-                height: 35px;
-                width: {carouselWidth}px;
-            ">
-              New blackboard
+  {#each galleryBoardIDs as boardID} 
+    <div class="card">
+      <RenderlessListenToBoard dbPath={boardsCollectionDbPath + boardID} let:boardDoc={boardDoc}> 
+        {#if boardDoc}
+          {#if boardDoc.audioDownloadURL}
+            <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
+              <TextAreaAutoResizing 
+                value={boardDoc.description || ''} 
+                on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
+                placeholder={textAreaPlaceholder}
+                readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
+                nonFocusedPlaceholderOpacity={0.6}
+                numberOfInitialRowsIfEmpty=3
+              />
             </div>
-          </div>
+            <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
+              Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
+            </div>
+            <ReusableDoodleVideo 
+              {boardDoc}
+              boardDbPath={boardsCollectionDbPath + boardID}
+              canvasWidth={carouselWidth}
+              canvasHeight={carouselWidth * 3/4 - 100}
+            />
+          {:else if $user.uid === selectedTutorUID}
+            <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
+              <TextAreaAutoResizing 
+                value={boardDoc.description || ''} 
+                on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
+                placeholder={textAreaPlaceholder}
+                readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
+                nonFocusedPlaceholderOpacity={0.6}
+                numberOfInitialRowsIfEmpty=3
+              />
+            </div>
+            <ReusableLiveBlackboard
+              {boardDoc}
+              boardID={boardID}
+              boardsDbPath={boardsCollectionDbPath}
+              canvasWidth={carouselWidth}
+              canvasHeight={carouselWidth * 3/4 - 100}
+              hasFullscreenButton={false}
+              on:video-uploaded={updateNewBlackboardLocation}
+            />
+          {/if}
         {/if}
+      </RenderlessListenToBoard>
+    </div>
+  {/each}
+  
+  {#if $user.uid === selectedTutorUID}
+    <div class="card">
+      <div on:click={updateNewBlackboardLocation}
+        style="
+          display: flex; 
+          justify-content: center; 
+          align-items: center;
+          margin-top: 40px; 
+          background-color: #2e3131; 
+          font-family: Roboto, sans-serif; text-transform: uppercase;
+          color: white;
+          height: 35px;
+          width: {carouselWidth}px;
+      ">
+        New blackboard
       </div>
-    {/key}
+    </div>
   {/if}
 </div>
 
@@ -92,7 +86,7 @@
 
   export let classID
   export let selectedTutorUID 
-  export let fetchVideosFunc
+  export let galleryBoardIDs
 
   let boardIDs = []
   let carouselWidth

@@ -1,12 +1,14 @@
 <DetailedClassPage
+  fetchVideosFunc={fetchTopFiveVideos}
+  price={1}
   classID={'Mev5x66mSMEvNz3rijym'}
 >
   <Button slot="past-videos-button">
-    Past videos
+    See Past videos
   </Button>
 
   <Button slot="private-tutoring-button">
-    Traditional tutoring
+    Sign up for traditional tutoring $0/week
   </Button>
 
   <div slot="editorial-or-blog-paragraph" style="font-family: sans-serif;">
@@ -14,16 +16,13 @@
     hard math in psets can be abrupt, and there's only one math recitation each week.
   </div>
 </DetailedClassPage>
-<!-- WRITE SHORT EDITORIAL HERE
+
+<!-- EDITORIAL HERE
   We're forced to overlap 2-3 different 3D graphs onto 2D, 
   with one-color, and try to make sense of it. 
   Math is therefore the most common source of confusion, 
   yet it's easily solved by a 10-minute review of f(x, y) constrained optimization of two variables.
 -->
-
-<!-- <div class="section-subtitle">
-Because lectures doesn't cover math, f(x, y) constrained optimization is the source of lots of questions
-</div> -->
 
 <!-- 
 <div class="header-subcopy">
@@ -31,176 +30,13 @@ Because lectures doesn't cover math, f(x, y) constrained optimization is the sou
 </div> 
 -->
 
-<!-- <div style="width: 80%">
-
-</div> -->
-
-
-<!-- <div class="webflow-container">
-  <div class="header-flex">
-    <div class="header-title">
-      14.01 
-    </div>
-
-    <div class="header-subcopy-wrapper">
-      <div style="display: flex;">
-        <Button on:click={() => goto('/Mev5x66mSMEvNz3rijym')} variant="outlined" style="height: 60px; margin-left: 20px; border-radius: 0px;">
-          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 50px; padding-bottom: 50px; font-size: 1rem; border-radius: 6px; font-weight: 600">
-            Fall '22 server
-          </Label>
-        </Button>
-
-        <Button color="secondary" variant="raised" style="margin-left: 20px; height: 60px; margin-bottom: 2rem; border-radius: 0px;">
-          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
-            Video tutoring: $1/week
-          </Label>
-        </Button>
-
-        <Button color="secondary" variant="raised" style="margin-left: 20px; height: 60px; margin-bottom: 2rem; border-radius: 0px;">
-          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
-            Traditional tutoring: $0/week
-          </Label>
-        </Button>
-      </div>
-    </div>
-  </div>
-
-  <div style="margin-top: 1%; margin-bottom: 1%" class="section-container">
-    <h2 style="font-family: sans-serif">
-      Tutor gallery
-    </h2>
-
-    <div style="display: flex">
-      <div style="display: flex;">
-        {#if classTutorsDocs}
-          <div class="tutor-business-card" class:orange-border={selectedTutorUID === eltonUID}>
-            <Card style="height: 150px;">
-              <PrimaryAction on:click={() => { selectedTutorUID = eltonUID }} padded style="height: 100%">
-                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                  Elton Lin 
-                </h2>
-                <br>
-
-                <TextAreaAutoResizing 
-                  value={'6-14, class of 2020, 600 total view-minutes for Fall 2022'} 
-                  placeholder="e.g. year, major, wrote a textbook, made several Piazza posts with ~20 thanks (provide links)"
-                  readonly={$user.uid !== eltonUID}
-                  nonFocusedPlaceholderOpacity={0.6}
-                  numberOfInitialRowsIfEmpty={2}
-                  fontSizeIncludeUnits={'1rem'}
-                />
-              </PrimaryAction>
-            </Card>
-          </div>
-
-          {#each classTutorsDocs as tutorDoc}
-            <div class="tutor-business-card" style="margin-left: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-              <Card style="height: 150px;">
-                <PrimaryAction on:click={() => { selectedTutorUID = tutorDoc.uid }} padded style="height: 100%">
-                  { tutorDoc.firstName + ' ' + tutorDoc.lastName }
-                  <br>
-                  id: { tutorDoc.id }
-                  uid: { tutorDoc.uid }
-                  <br>
-                </PrimaryAction>
-              </Card>
-            </div>
-          {/each}
-        {/if}
-      </div>
-    </div> 
-  </div>
-</div>
-
-
-<div bind:clientWidth={carouselWidth} style="margin-left: 1%;">
-  {#key selectedTutorUID + rerenderKeyForCarousel}
-    <div use:setupCarouselData>
-      {#if carouselWidth}
-        <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}>
-          {#if designatedRoomBoardIDs.length > 0}
-            {#each designatedRoomBoardIDs as id}
-              <div class="card">
-                <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
-                  {#if boardDoc}
-                    <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
-                      <TextAreaAutoResizing 
-                        value={boardDoc.description || ''} 
-                        on:input={(e) => debouncedUpdateBoardDescription(e, id)}
-                        placeholder="Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, etc. so students can get a sense of your explanation style :)"
-                        readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                        nonFocusedPlaceholderOpacity={0.6}
-                        numberOfInitialRowsIfEmpty=3
-                      />
-                    </div>
-
-                    {#if boardDoc.audioDownloadURL}
-                      <ReusableDoodleVideo 
-                        {boardDoc}
-                        boardDbPath={boardsCollectionDbPath + id}
-                        canvasWidth={carouselWidth}
-                        canvasHeight={carouselWidth * 3/4 - 100}
-                      />
-                    {:else}
-                      <ReusableLiveBlackboard
-                        {boardDoc}
-                        boardID={id}
-                        boardsDbPath={boardsCollectionDbPath}
-                        canvasWidth={carouselWidth}
-                        canvasHeight={carouselWidth * 3/4 - 100}
-                        hasFullscreenButton={false}
-                        on:video-uploaded={updateNewBlackboardLocation}
-                      />
-                    {/if}
-                  {/if}
-                </RenderlessListenToBoard>
-              </div>
-            {/each}
-
-            <div class="card">
-              <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
-                <div style="font-size: 4rem; margin-left: auto; margin-right: auto;">
-                  click for new board
-                </div>
-              </div>
-            </div>
-          {/if}
-        </ImageCarousel>
-      {/if}
-    </div>
-  {/key}
-</div> -->
-
 <script>
   import DetailedClassPage from './[class]/DetailedClassPage.svelte'
-  import Card, {
-    Content,
-    PrimaryAction,
-    Actions,
-    ActionButtons,
-    ActionIcons,
-  } from '@smui/card';
 
-  import TabBar from '@smui/tab-bar'
-	import Tab, { Icon, Label } from '@smui/tab'
-  import Textfield from '@smui/textfield'
   import Button from '@smui/button';
-  import Drawer, { AppContent } from '@smui/drawer'
-  import List, { Item, Text } from '@smui/list'
-  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
-  import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
-  import { collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
-  import ImageCarousel from '$lib/ImageCarousel.svelte';
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
-  import { user } from '../../store.js'
-  import { portal, lazyCallable } from '../../helpers/actions.js'
-  import Blackboard from '$lib/Blackboard.svelte'
-  import { getRandomID } from '../../helpers/utility.js';
-  import { createRoomDoc, createBoardDoc } from '../../helpers/crud.js'
   import { onMount } from 'svelte'
-  import { goto } from '$app/navigation'
+  import { collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
+  import { createRoomDoc, createBoardDoc } from '../../helpers/crud.js'
 
   // HOW TUTOR SIGN UP WORKS AT THE DATABASE LEVEL: 
   // 1. On initial sign-up, fully initialize a normal room, and link it to tutorDoc.designatedRoomID property
@@ -212,7 +48,6 @@ Because lectures doesn't cover math, f(x, y) constrained optimization is the sou
   const boardsCollectionDbPath = `classes/${id}/blackboards/`
 
   const eltonUID = 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'
-  let classTutorsDocs = null
   let selectedTutorUID = eltonUID
 
   let rerenderKeyForCarousel = 0
@@ -223,83 +58,17 @@ Because lectures doesn't cover math, f(x, y) constrained optimization is the sou
 
   let carouselWidth
 
-  onMount(() => {
-    fetchClassTutors()
+  onMount(async () => {
+    await fetchClassTutors()
   })
 
-  async function setupCarouselData () {
-    await fetchVideoPortfolio()
-  }
-
-  async function fetchClassTutors () {
-    const db = getFirestore()
-    const tutorsRef = collection(db, `classes/${id}/tutors`)
-    const tutorsSnapshot = await getDocs(tutorsRef)
-    const temp = [] 
-    tutorsSnapshot.forEach(doc => {
-      temp.push({ id: doc.id, ...doc.data()})
-    })
-    classTutorsDocs = [...temp]
-  }
-
-  async function createTutorDoc ({ classID }) {
-    const classDbPath = `classes/${classID}/`
-    const classTutorDocPath = classDbPath + `tutors/${getRandomID()}`
-    const designatedRoomID = await createRoomDoc(`classes/${classID}/`) 
-    const tutorObject = {
-      uid: $user.uid,
-      firstName: inputFieldFirstName,
-      lastName: inputFieldLastName,
-      designatedRoomID
-    }
-    const db = getFirestore()
-
-    await setDoc(doc(db, classTutorDocPath), tutorObject)
-  }
-
-  function fetchVideoPortfolio () {
-    return new Promise(async resolve => {
-      designatedRoomBoardIDs = []
-      if (selectedTutorUID === '') {
-        return // the user has to login first before the room exists
-      }
-      await fetchTopFiveVideos()
-      // await fetchVideosOfTutorRoom()
-      resolve()
-    })
-  }
 
   // take a parameter ideally
-  async function fetchVideosOfTutorRoom (tutorUID) {
-    return new Promise(async resolve => {
-      let tutor 
-      for (const t of classTutorsDocs) {
-        if (t.uid === selectedTutorUID) {
-          tutor = t 
-        }
-      }
-      if (!tutor) {
-        console.log('cant find tutor')
-        return
-      }
-
-      // fetch the room
-      const db = getFirestore()
-      const roomSnapshot = await getDoc(doc(db, `classes/${id}/rooms/${tutor.designatedRoomID}`))
-      const roomDoc = { id: roomSnapshot.id, ...roomSnapshot.data() }
-
-      tutorRoomVideosIDs = [...roomDoc.blackboards]
-
-      designatedRoomBoardIDs = [...roomDoc.blackboards]
-
-      resolve()
-    })
-  }
 
   // fetch top 5 explanations in 14.01, with the text and the videos
   // have tutors be able to offer classes all by themselves (almost like Shopify, all you need is an iPad)
   // short on cash? 
-  async function fetchTopFiveVideos (node) {
+  async function fetchTopFiveVideos (selectedTutorUID) {
     const db = getFirestore()
     const blackboardsRef = collection(db, boardsCollectionDbPath)
 
@@ -312,10 +81,7 @@ Because lectures doesn't cover math, f(x, y) constrained optimization is the sou
     })
 
     designatedRoomBoardIDs = [...temp]
-
-    return {
-      // try empty
-    }
+    return designatedRoomBoardIDs
   }
 
   async function updateNewBlackboardLocation () {
@@ -356,73 +122,3 @@ Because lectures doesn't cover math, f(x, y) constrained optimization is the sou
   }
 </script>
 
-<style>
-  .drawer-container {
-    height: 100vh;
-    position: relative;
-    display: flex;
-  }
-
-  .section-container {
-    padding: 5px 5px; 
-  }
-
-  .section-title {
-    font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);
-  }
-
-  .section-subtitle {
-    font-size: 1.8rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); opacity: 0.8
-  }
-
-  .editorial-font-styles {
-    font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.4rem;
-  }
-
-  .mozilla-documentation-styles {
-    font-family: "Segoe UI", Roboto, sans-serif; 
-    font-size: 1.4rem;
-    line-height: 1.6;
-    letter-spacing: 0.001em;
-    color: rgba(1, 11, 1, 1);
-  }
-
-  .card:hover {
-    background-size: auto 100%;
-  }
-  .card {
-    margin-right: 10px;
-  }
-  .card:first-child { 
-    margin-left: 0; 
-  }
-  .card:last-child { 
-    margin-right: 0; 
-  }
-
-  .card p {
-    margin: 0;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    font-size: 10vw;
-    color: white;
-    transition: all 0.3s;
-    transform: scale(1);
-  }
-  .card:hover p {
-    background-color: rgba(0,0,0,0.3);
-    transform: scale(1.3);
-  }
-
-  .tutor-business-card {
-    max-width: 400px; 
-    width: 90%;
-    /* This is to match SMUI's card's border radius */
-    border-radius: 5px;
-  }
-
-  .orange-border {
-    border: 2px solid orange;
-  }
-</style>

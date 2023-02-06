@@ -16,7 +16,7 @@
 
         <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
           <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
-            Early signup for $20/week
+          Video-based tutoring for ${price}/week
           </Label>
         </Button>
 
@@ -65,58 +65,58 @@
             </Card>
           </div>
         {/each}
-      {/if}
 
-      {#if !didUserAlreadySignUpAsTutor}
-        <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
-          {#if selectedTutorUID !== ''}
-            <Card style="height: 150px;" variant="outlined">
-              <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
-                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                  Setup your shop
-                </h2>
-                <div style="font-family: sans-serif;">
-                  <ol>
-                    <li>Log in with phone</li>
-                    <li>Record 1 example video</li>
-                    <li>Add your Venmo</li>
-                  </ol>
-                </div>
-              </PrimaryAction>
-            </Card>
-          {:else}
-            {#if !$user.phoneNumber}
-              <Content>
-                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                  1. Log in with phone
-                </h2>
-                <PhoneLogin/>
-              </Content>
+        {#if !didUserAlreadySignUpAsTutor}
+          <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
+            {#if selectedTutorUID !== ''}
+              <Card style="height: 150px;" variant="outlined">
+                <PrimaryAction on:click={() => selectedTutorUID = ''} padded style="height: 100%;">
+                  <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                    Setup your shop
+                  </h2>
+                  <div style="font-family: sans-serif;">
+                    <ol>
+                      <li>Log in with phone</li>
+                      <li>Record 1 example video</li>
+                      <li>Add your Venmo</li>
+                    </ol>
+                  </div>
+                </PrimaryAction>
+              </Card>
             {:else}
-              <Content>
-                <div>
-                  Welcome { $user.name || '' }, create shop?
-                </div>
-          
-                {#if !$user.name}
-                  <div>First name</div>
-                  <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
-  
-                  <div>Last name</div>
-                  <input bind:value={inputFieldLastName} placeholder=""/>
+              {#if !$user.phoneNumber}
+                <Content>
+                  <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+                    1. Log in with phone
+                  </h2>
+                  <PhoneLogin/>
+                </Content>
+              {:else}
+                <Content>
+                  <div>
+                    Welcome { $user.name || '' }, create shop?
+                  </div>
+            
+                  {#if !$user.name}
+                    <div>First name</div>
+                    <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
+    
+                    <div>Last name</div>
+                    <input bind:value={inputFieldLastName} placeholder=""/>
 
-                  <Button on:click={createTutorDoc({ classID, firstName: inputFieldFirstName, lastName: inputFieldLastName })}>
-                    Submit
-                  </Button>
-                {:else if $user.name && !didUserAlreadySignUpAsTutor}
-                  <Button on:click={createTutorDoc({ classID, firstName: $user.name.split(" ")[0], lastName: $user.name.split(" ")[1] })}>
-                    Create shop
-                  </Button>
-                {/if}
-              </Content>
+                    <Button on:click={createTutorDoc({ classID, firstName: inputFieldFirstName, lastName: inputFieldLastName })}>
+                      Submit
+                    </Button>
+                  {:else if $user.name && !didUserAlreadySignUpAsTutor}
+                    <Button on:click={createTutorDoc({ classID, firstName: $user.name.split(" ")[0], lastName: $user.name.split(" ")[1] })}>
+                      Create shop
+                    </Button>
+                  {/if}
+                </Content>
+              {/if}
             {/if}
-          {/if}
-        </div>
+          </div>
+        {/if}
       {/if}
     </div>
   </div>
@@ -125,12 +125,13 @@
   
   <div style="margin-top: 20px;"></div>
 
-  <DetailedClassPageBoardsAndVideos
-    {selectedTutorUID}
-    fetchVideosFunc={fetchVideoPortfolio}
-    {classID}
-  />
-
+  {#if galleryBoardIDs}
+    <DetailedClassPageBoardsAndVideos
+      {galleryBoardIDs}
+      {selectedTutorUID}
+      {classID}
+    />
+  {/if}
 <script>
   import DetailedClassPageBoardsAndVideos from './DetailedClassPageBoardsAndVideos.svelte'
   import Card, { PrimaryAction, Content } from '@smui/card'
@@ -144,60 +145,62 @@
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
 
   export let classID
-
-  $: classID, fetchPageData()
+  export let price = 20
+  export let fetchVideosFunc = fetchVideoPortfolio
 
   let classDoc
   let classTutorsDocs = null
-  let designatedRoomBoardIDs = []
   let selectedTutorUID = null
   let inputFieldFirstName = '' 
   let inputFieldLastName = ''
 
-  let isInitialFetch = true
-
   let unsubTutorsListener
   let didUserAlreadySignUpAsTutor = false
+
+  let galleryBoardIDs
+
+  onMount(async () => {
+    if (unsubTutorsListener) unsubTutorsListener()
+    fetchClassDoc()
+    await listenToClassTutors()
+    if (classTutorsDocs.length > 0) {
+      selectedTutorUID = classTutorsDocs[0].uid
+    }
+  })
+
+  $: if (selectedTutorUID) {
+    fetchTutorPortfolio({ func: fetchVideosFunc })
+  } 
 
   $: if (classTutorsDocs) {
     didUserAlreadySignUpAsTutor = false
     for (const tutor of classTutorsDocs) {
       if (tutor.uid === $user.uid) didUserAlreadySignUpAsTutor = true
     }
-
-    if (classTutorsDocs.length > 0) {
-      if (isInitialFetch) {
-        selectedTutorUID = classTutorsDocs[0].uid
-        isInitialFetch = false
-      }
-    }
   }
-
-  onMount(() => {
-
-  })
 
   onDestroy(() => {
     if (unsubTutorsListener) unsubTutorsListener()
   })
 
-  function fetchPageData () {
-    if (unsubTutorsListener) unsubTutorsListener()
-
-    isInitialFetch = true
-    fetchClassDoc()
-    listenToClassTutors()
+  async function fetchTutorPortfolio ({ func }) {
+    galleryBoardIDs = await func(selectedTutorUID) // deprecate this parameter
   }
 
+  // resolves when data is hydrated
   function listenToClassTutors () {
-    const db = getFirestore()
-    const ref = collection(db, `classes/${classID}/tutors`)
-    unsubTutorsListener = onSnapshot(ref, snap => {
-      const temp = [] 
-      for (const doc of snap.docs) {
-        temp.push({ id: doc.id, ...doc.data() })
-      }
-      classTutorsDocs = [...temp]
+    return new Promise(resolve => {
+      const db = getFirestore()
+      const ref = collection(db, `classes/${classID}/tutors`)
+      unsubTutorsListener = onSnapshot(ref, snap => {
+        const temp = [] 
+        for (const doc of snap.docs) {
+          temp.push({ id: doc.id, ...doc.data() })
+        }
+        classTutorsDocs = [...temp]
+
+        resolve() // only the initial resolve timing matters
+      })
     })
   }
 
@@ -237,29 +240,17 @@
     classTutorsDocs = [...temp]
   }
 
-  async function setupCarouselData () {
-    await fetchVideoPortfolio()
-  }
-
-  function fetchVideoPortfolio () {
+  function fetchVideoPortfolio (selectedTutorUID) {
     return new Promise(async resolve => {
-      designatedRoomBoardIDs = []
-      if (isInitialFetch) {
-        selectedTutorUID = classTutorsDocs[0].uid
-        isInitialFetch = false
-      }
-      if (selectedTutorUID === '') {
-        return // the user has to login first before the room exists
-      }
-      await fetchVideosOfTutorRoom()
-      resolve()
+      // designatedRoomBoardIDs = []
+      const output = await fetchVideosOfTutorRoom(selectedTutorUID, [])
+      resolve(output)
     })
   }
 
    // take a parameter ideally
-   async function fetchVideosOfTutorRoom (node, tutorUID) {
+   async function fetchVideosOfTutorRoom (tutorUID, boardIDs) {
     return new Promise(async resolve => {
-      console.log("passing action parameter, tutorUID =, ", tutorUID)
       let tutor 
       for (const t of classTutorsDocs) {
         if (t.uid === tutorUID) {
@@ -275,8 +266,6 @@
       const db = getFirestore()
       const roomSnapshot = await getDoc(doc(db, `classes/${classID}/rooms/${tutor.designatedRoomID}`))
       const roomDoc = { id: roomSnapshot.id, ...roomSnapshot.data() }
-      // designatedRoomBoardIDs = [...roomDoc.blackboards]
-
       resolve([...roomDoc.blackboards])
     })
   }

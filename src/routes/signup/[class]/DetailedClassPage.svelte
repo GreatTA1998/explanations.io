@@ -6,20 +6,38 @@
         <!-- { classDoc.description } -->
       </div>
 
-      <div class="header-subcopy-wrapper">
-        <!-- <div class="header-subcopy">
-          The platform covers refunds anytime, any reason - so both student & tutor are protected
-        </div> -->
+      <!-- class="header-subcopy-wrapper" -->
+      <div style="display: flex; align-items: center; width: 70%; margin-left: 4%; margin-top: 2%;">
         <slot name="past-videos-button">
           
         </slot>
 
-        <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+        <Button on:click={() => isExplainTutoringPopupOpen = true} color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
           <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
-          Video-based tutoring for ${price}/week
+            Explain tutoring: ${price}/week
           </Label>
         </Button>
 
+        {#if isExplainTutoringPopupOpen}
+          <!-- <BasePopup>
+            <h2 slot="title">Explain-style tutoring</h2>
+
+            <div slot="popup-content">
+              Information: 
+                - How to pay: Venmo elton-lin-2 with description "14.01 and your phone number" 
+                - Refund policy: can refund anytime for any reason
+
+                  <div class="header-subcopy">
+                The platform covers refunds anytime, any reason - so both student & tutor are protected
+              </div>
+            </div>
+
+            <Button slot="popup-buttons">
+
+            </Button>
+          </BasePopup> -->
+        {/if}
+  
         <slot name="private-tutoring-button">
 
         </slot>
@@ -31,13 +49,13 @@
     </slot>
   {/if}
 
-  <div style="margin-top: 1%; margin-bottom: 1%">
+  {#if classTutorsDocs}
+  <div style="margin-top: 3%; margin-bottom: 1%">
     <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
       Tutor gallery
     </h2>
 
     <div style="display: flex;">
-      {#if classTutorsDocs}
         {#each classTutorsDocs as tutorDoc}
           <div class="tutor-business-card" style="margin-right: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
             <Card style="height: 150px;" variant="outlined">
@@ -117,9 +135,9 @@
             {/if}
           </div>
         {/if}
-      {/if}
     </div>
   </div>
+  {/if}
 
   </div>
   
@@ -143,6 +161,7 @@
   import { getRandomID } from '../../../helpers/utility.js'
   import { createRoomDoc, createBoardDoc } from '../../../helpers/crud.js'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
+  import BasePopup from '$lib/BasePopup.svelte'
 
   export let classID
   export let price = 20
@@ -158,6 +177,7 @@
   let didUserAlreadySignUpAsTutor = false
 
   let galleryBoardIDs
+  let isExplainTutoringPopupOpen = false
 
   onMount(async () => {
     if (unsubTutorsListener) unsubTutorsListener()

@@ -379,15 +379,15 @@
 </script>
 
 <style lang="scss">
-	.webflow-paragraph-1 {
-		font-size: 1.8rem;	
-	}
+	// .webflow-paragraph-1 {
+	// 	font-size: 1.8rem;	
+	// }
 
-	@media screen and (max-width: 991px) {
-		.webflow-paragraph-1 {
-			font-size: 1.1rem;
-		}
-	}
+	// @media screen and (max-width: 991px) {
+	// 	.webflow-paragraph-1 {
+	// 		font-size: 1.1rem;
+	// 	}
+	// }
 
 	.webflow-h1 {
 		font-size: 4rem;

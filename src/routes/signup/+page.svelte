@@ -3,17 +3,30 @@
   price={1}
   classID={'Mev5x66mSMEvNz3rijym'}
 >
-  <Button slot="past-videos-button">
-    See Past videos
+  <Button on:click={() => redirectToServer(id)} slot="past-videos-button" color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+    <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+      video archive
+    </Label>
   </Button>
 
-  <Button slot="private-tutoring-button">
-    Sign up for traditional tutoring $0/week
+  <!-- <Button color="secondary" variant="raised" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+    <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+    Video-based tutoring for ${price}/week
+    </Label>
+  </Button> -->
+
+  <Button slot="private-tutoring-button" color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+    <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+      traditional tutoring: $0/week
+    </Label>
   </Button>
 
-  <div slot="editorial-or-blog-paragraph" style="font-family: sans-serif;">
-    14.01, personally, has one of the most exciting lectures. What's hard about the class is the psets - the jump between the intuitive concepts to the 
-    hard math in psets can be abrupt, and there's only one math recitation each week.
+  <div slot="editorial-or-blog-paragraph" class="webflow-paragraph-1" style="font-family: sans-serif;">
+    What's special about 14.01 is that lectures focus on high-level intuition. While the in-class experience is very exciting, psets can feel disconnected because of the sudden need for math. Friday recitation and Office Hours therefore play a crucial role, and inspire a lot of the explanations here. 
+    <br><br>
+    Luckily, 90% of the math needed reduces to the constrained optimization of two variables f(x, y).
+    Besides math, common questions asked across semesters are: why the supply curve for perfection competition is completely flat, 
+    what happens when there are multiple firms, shutdown condition, income & substitution effect and cost minimization. Luckily - again, they call can be derived quickly in a few simple steps.
   </div>
 </DetailedClassPage>
 
@@ -32,11 +45,11 @@
 
 <script>
   import DetailedClassPage from './[class]/DetailedClassPage.svelte'
-
-  import Button from '@smui/button';
+  import Button, { Label } from '@smui/button';
   import { onMount } from 'svelte'
   import { collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { createRoomDoc, createBoardDoc } from '../../helpers/crud.js'
+  import { goto } from '$app/navigation'
 
   // HOW TUTOR SIGN UP WORKS AT THE DATABASE LEVEL: 
   // 1. On initial sign-up, fully initialize a normal room, and link it to tutorDoc.designatedRoomID property
@@ -58,10 +71,9 @@
 
   let carouselWidth
 
-  onMount(async () => {
-    await fetchClassTutors()
-  })
-
+  function redirectToServer (classID) {
+    goto(`/${id}/${id}`)
+  }
 
   // take a parameter ideally
 

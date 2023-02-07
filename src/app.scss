@@ -18,6 +18,16 @@ audio::-webkit-media-controls-panel {
 	box-sizing: border-box;
 }
 
+.webflow-paragraph-1 {
+	font-size: 1.8rem;	
+}
+
+@media screen and (max-width: 991px) {
+	.webflow-paragraph-1 {
+		font-size: 1.1rem;
+	}
+}
+
 .header-flex {
 	display: -webkit-box;
 	display: -webkit-flex;

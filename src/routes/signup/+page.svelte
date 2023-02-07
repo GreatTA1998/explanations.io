@@ -1,4 +1,5 @@
 <DetailedClassPage
+  isNewlyOfferedClass={false}
   fetchVideosFunc={fetchTopFiveVideos}
   price={1}
   classID={'Mev5x66mSMEvNz3rijym'}
@@ -15,8 +16,13 @@
     </Label>
   </Button>
 
-  <div slot="editorial-or-blog-paragraph" class="webflow-paragraph-1" style="font-family: sans-serif; margin-bottom: 2%;">
-    "14.01 lectures are probably the most exciting I've experienced in my 4 years here. Only thing is they don't cover the math needed for psets; therefore recitation and Office Hours play an extra-important role, and inspired the explanations here."
+  <div slot="editorial-or-blog-paragraph" class="webflow-paragraph-1" style="font-family: sans-serif; margin-bottom: 2%; opacity: 0.8;">
+    "14.01 lectures are probably the most exciting I've experienced in my 4 years here. Only thing is they don't cover the math needed for psets; therefore recitation and Office Hours play an extra-important role, and inspired the explanations here.
+
+    <br><br>
+    <!-- Commonly, questions arise because of implicit complexity - we superimpose 3D graphs onto only a 2D domain,
+    and not only that, super-impose not just one, but multiple graphs, all with the same color. Arguing optimality
+    becomes hard if we aren't already familiar with the constrained optimization of f(x, y). But a simple visualization and review of the fundamental math often does the trick." -->
   </div>
 </DetailedClassPage>
 
@@ -36,30 +42,16 @@
 <script>
   import DetailedClassPage from './[class]/DetailedClassPage.svelte'
   import Button, { Label } from '@smui/button';
-  import { onMount } from 'svelte'
   import { collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { createRoomDoc, createBoardDoc } from '../../helpers/crud.js'
   import { goto } from '$app/navigation'
 
-  // HOW TUTOR SIGN UP WORKS AT THE DATABASE LEVEL: 
-  // 1. On initial sign-up, fully initialize a normal room, and link it to tutorDoc.designatedRoomID property
-  // 2. Whenever a video finishes uploading, it will create a new room
-  let tutorRoomVideosIDs = [] 
   let designatedRoomBoardIDs = []
 
   const id = 'Mev5x66mSMEvNz3rijym' // 14.01
   const boardsCollectionDbPath = `classes/${id}/blackboards/`
 
   const eltonUID = 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'
-  let selectedTutorUID = eltonUID
-
-  let rerenderKeyForCarousel = 0
-
-  let isSigningUpAsTutor = false
-  let inputFieldFirstName = ''
-  let inputFieldLastName = '' 
-
-  let carouselWidth
 
   function redirectToServer (classID) {
     goto(`/${id}/${id}`)
@@ -84,43 +76,6 @@
 
     designatedRoomBoardIDs = [...temp]
     return designatedRoomBoardIDs
-  }
-
-  async function updateNewBlackboardLocation () {
-    const boardsDbPath = `classes/${id}/blackboards/`
-    const db = getFirestore()
-
-    let tutor
-    for (const t of classTutorsDocs) {
-      if (t.uid === selectedTutorUID) {
-        tutor = t 
-      }
-    }
-    if (!tutor) {
-      alert("tutor is undefined, can't update new blackboard location")
-      return 
-    }
-    const roomRef = doc(db, `classes/${id}/rooms/${tutor.designatedRoomID}`)
-    await createBoardDoc(boardsDbPath, roomRef)
-    rerenderKeyForCarousel += 1
-
-    // because everything is re-rendered, the video portfolio will be refetched, and the new blackboard location will be re-decided
-    // all we had to do is just create the docs here
-  }
-
-  async function debouncedUpdateBoardDescription ({ detail }, id) {
-    const debouncedVersion = debounce(
-      () => updateBoardDescription({ detail }, id),
-      3000
-    ) 
-    debouncedVersion({ detail }, id)
-  }
-
-  async function updateBoardDescription ({ detail }, id) {
-    const boardRef = doc(getFirestore(), boardsDbPath + id)
-    await updateDoc(boardRef, {
-      description: detail
-    })
   }
 </script>
 

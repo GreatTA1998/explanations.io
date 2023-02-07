@@ -71,24 +71,21 @@
 </div>
 
 <script>
-  import Card, { PrimaryAction, Content } from '@smui/card'
-  import Button, { Label } from '@smui/button';
   import { user } from '../../../store.js'
-  import { onDestroy, onMount, tick } from 'svelte'
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
-  import { getRandomID } from '../../../helpers/utility.js'
   import { createRoomDoc, createBoardDoc } from '../../../helpers/crud.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
+  import { createEventDispatcher } from 'svelte';
 
   export let classID
   export let selectedTutorUID 
   export let galleryBoardIDs
+  export let classTutorsDocs
 
-  let boardIDs = []
+  const dispatch = createEventDispatcher()
   let carouselWidth
   const boardsCollectionDbPath = `classes/${classID}/blackboards/`
   let textAreaPlaceholder = "Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, include links to outside content from Piazza, textbooks, Youtube etc. :)"
@@ -109,7 +106,6 @@
     const boardsDbPath = `classes/${classID}/blackboards/`
     const roomRef = doc(db, `classes/${classID}/rooms/${tutor.designatedRoomID}`)
     await createBoardDoc(boardsDbPath, roomRef)
-    // rerenderKeyForCarousel += 1
 
     // because everything is re-rendered, the video portfolio will be refetched, and the new blackboard location will be re-decided
     // all we had to do is just create the docs here
@@ -131,7 +127,6 @@
     await updateDoc(boardRef, {
       description: detail
     })
-    console.log("updated board, description =", detail)
   }
 
   async function debouncedUpdateTutorBio ({ detail }, id) {

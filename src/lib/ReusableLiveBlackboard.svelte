@@ -237,25 +237,25 @@
     })
   }
 
-    // A blackboard does not have an audioDownloadURL,
+  // A blackboard does not have an audioDownloadURL,
   // otherwise it's a video
-  function deleteBoard (boardID, deleteAllStrokesFromDb) {
-    if (roomDoc.blackboards.length === 1) {
-      alert("Can't delete the last blackboard")
-      return
-    }
+  // function deleteBoard (boardID, deleteAllStrokesFromDb) {
+  //   // if (roomDoc.blackboards.length === 1) {
+  //   //   alert("Can't delete the last blackboard")
+  //   //   return
+  //   // }
 
-    // 1. delete blackboard reference from parent
-    updateDoc(roomRef, {
-      blackboards: arrayRemove(boardID)
-    })
+  //   // 1. delete blackboard reference from parent
+  //   updateDoc(roomRef, {
+  //     blackboards: arrayRemove(boardID)
+  //   })
     
-    // 2. delete strokes
-    deleteAllStrokesFromDb()
+  //   // 2. delete strokes
+  //   deleteAllStrokesFromDb()
     
-    // 3. delete board itself
-    deleteDoc(
-      doc(getFirestore(), boardsDbPath + boardID)
-    )
-  }
+  //   // 3. delete board itself
+  //   deleteDoc(
+  //     doc(getFirestore(), boardsDbPath + boardID)
+  //   )
+  // }
 </script>

@@ -155,8 +155,8 @@
 		{:else}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Here you can directly create videos on your stylus-tablet and upload them within <i>seconds</i>. 
-					You also have use voice chat + shared blackboards to directly communicate with students.
+					Create videos here on your stylus-tablet and upload them within <i>seconds</i>. 
+					Use voice chat + shared blackboards to directly communicate with students.
 				</div>
 			</div>
 

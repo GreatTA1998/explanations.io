@@ -15,12 +15,8 @@
     </Label>
   </Button>
 
-  <div slot="editorial-or-blog-paragraph" class="webflow-paragraph-1" style="font-family: sans-serif;">
-    What's special about 14.01 is that lectures focus on high-level intuition. While the in-class experience is very exciting, psets can feel disconnected because of the sudden need for math. Friday recitation and Office Hours therefore play a crucial role, and inspire a lot of the explanations here. 
-    <br><br>
-    Luckily, 90% of the math needed reduces to the constrained optimization of two variables f(x, y).
-    Besides math, common questions asked across semesters are: why the supply curve for perfection competition is completely flat, 
-    what happens when there are multiple firms, shutdown condition, income & substitution effect and cost minimization. Luckily - again, they call can be derived quickly in a few simple steps.
+  <div slot="editorial-or-blog-paragraph" class="webflow-paragraph-1" style="font-family: sans-serif; margin-bottom: 2%;">
+    "14.01 lectures are probably the most exciting I've experienced in my 4 years here. Only thing is they don't cover the math needed for psets; therefore recitation and Office Hours play an extra-important role, and inspired the explanations here."
   </div>
 </DetailedClassPage>
 

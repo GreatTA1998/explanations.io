@@ -58,7 +58,7 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title">Less hours, more flexibility, unbounded pay</p>	
+				<p class="header-title">Teach what you enjoy, earn unbounded pay</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
 						Let video explanations multiply your impact
@@ -82,8 +82,8 @@
 		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Here you can hire former students for pset help, using a mix of blackboard videos and remote 1-on-1 tutoring,
-					for classes with overcrowded Office Hours.
+					Get pset help efficiently through blackboard videos and remote tutoring — when
+					Office Hours is too busy.
 				</div>
 			</div>
 
@@ -167,7 +167,7 @@
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
 				Because you get paid proportional to how many students you help, there's no limit on how high you get paid.
-				When starting with just 1 student, Explain subsidizes a minimum wage of $20/hr to match HKN ($17/hour) and Math Learning Center ($19/hour).
+				Too good to be true? Wrong! Explain takes a 10% cut.
 				<br>
 				<br>
 

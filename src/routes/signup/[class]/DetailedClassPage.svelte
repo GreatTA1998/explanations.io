@@ -59,16 +59,18 @@
 <div style="margin-top: 20px;"></div>
 
 {#if isNewlyOfferedClass && selectedTutorDoc}
-  <RenderlessListenToRoom dbPath={`/classes/${classID}/rooms/${selectedTutorDoc.designatedRoomID}`} let:roomDoc={roomDoc}>
-    {#if roomDoc}
-      <DetailedClassPageBoardsAndVideos
-        galleryBoardIDs={roomDoc.blackboards}
-        {selectedTutorUID}
-        {classTutorsDocs}
-        {classID}
-      />
-    {/if}
-  </RenderlessListenToRoom>
+  {#key selectedTutorUID}
+    <RenderlessListenToRoom dbPath={`/classes/${classID}/rooms/${selectedTutorDoc.designatedRoomID}`} let:roomDoc={roomDoc}>
+      {#if roomDoc}
+        <DetailedClassPageBoardsAndVideos
+          galleryBoardIDs={roomDoc.blackboards}
+          {selectedTutorUID}
+          {classTutorsDocs}
+          {classID}
+        />
+      {/if}
+    </RenderlessListenToRoom>
+  {/key}
 {:else}
   {#if classTutorsDocs && selectedTutorUID}
     <RenderlessFetch {fetchVideosFunc} {selectedTutorUID} let:galleryBoardIDs={galleryBoardIDs}>

@@ -1,3 +1,26 @@
+.one-blog-container {
+	margin-bottom: 50px;
+	display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px
+}
+
+.blog-text-section-container {
+	width: 48vw; max-width: 800px;
+}
+
+.blog-description-font-styles {
+	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.1rem;
+}
+
+.step-title-font-styles {
+	margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.7rem
+}
+
+@media screen and (max-width: 479px) {
+	.step-title-font-styles {
+		font-size: 1.1rem;
+	}
+}
+
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing  */
 audio::-internal-media-controls-download-button {
 	display:none;

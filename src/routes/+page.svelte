@@ -221,12 +221,34 @@
 	<!-- END OF TEACHER/DRIVER SECTION -->
 
 	<!-- BLOG SECTION -->
-	<!-- <div>
+	<div>
 		<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
 			Recent blogs
 		</p>
 
-		<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
+		<div class="one-blog-container">
+			<iframe 
+				style="margin-bottom: 30px;" 
+				width="{Math.min(w, 400)}" height="{Math.min(w, 400) * 300 / 560}" 
+				src="https://www.youtube-nocookie.com/embed/EKiZgooMjb8?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+			</iframe>
+			
+			<div class="blog-text-section-container">
+				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
+					Story behind 6.036 Piazza: Shaunticlair Ruiz
+				</h1>
+				<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
+					"There's a very common belief, especially at MIT, that if you derive it all yourself, if you put it all together yourself, you're a better learner. And I'd say, maybe if you have the time to do this rigorously and carefully, but there's lots of problems like students can form misconceptions, students can spend significantly longer and actually be less efficient. And the students may not care about a very specific kind of deep understanding they get."
+				</div>	
+				<a href="https://eltonlin.substack.com/publish/post/99258345" target="_blank" style="text-decoration: none !important;">
+					<Button variant="outlined">
+						Read story
+					</Button>		
+				</a>
+			</div>	
+		</div>
+
+		<!-- <div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
 			<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			
 			<div class="blog-text-section-container">
@@ -315,8 +337,8 @@
 					</Button>
 				</a>
 			</div>
-		</div>
-	</div> -->
+		</div> -->
+	</div>
 </AutoAdjust>
 
 <script>	
@@ -548,10 +570,6 @@
 	}
 }
 
-.blog-description-font-styles {
-	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.1rem;
-}
-
 :global(.room-title input) {
   font-size: 2rem;
 }
@@ -589,10 +607,6 @@ li {
 
 #make-your-own-video {
 
-}
-
-.one-blog-container {
-	margin-bottom: 50px;
 }
 
 :global(#smui-app),
@@ -637,10 +651,6 @@ li {
 		.webflow-container {
 			width: 85%;
 		}
-	}
-
-	.blog-text-section-container {
-		width: 48vw; max-width: 800px;
 	}
 </style>
 

@@ -41,16 +41,6 @@
 	font-size: 1.2rem;
 }
 
-.step-title-font-styles {
-	margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.7rem
-}
-
-@media screen and (max-width: 479px) {
-	.step-title-font-styles {
-		font-size: 1.1rem;
-	}
-}
-
 .step-description-font-styles {
 	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.4rem;
 }

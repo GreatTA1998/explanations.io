@@ -201,19 +201,20 @@
 				title="Step 3"
 				subtitle="Adjust as you get more students"
 				description="
-				Different students will have different needs, but their common concerns about a pset problem, or a fundamental concept 
-				is often addressable with a recorded explanation. Your salary scales O(n). 
-				This can be challenging, but it can also be easy. It requires a little bit of experimentation.
-				
-				1 student = $19/hour (up to 2 hours)
-				2 students: $19/hour (up to 3 hours)
-				3 students: $20/hour (3 hours)
-				4 students, $21/hour (up to 3 hours)
-				10 students: $38/hour, 4 hours
-				20 students: $60/hour, 5 hours
-				30 students: $90/hour, 5 hours
+				Different students have different needs, so it can be challenging to ensure every student gets what they need.
+				But it could also be easy, with a little experimentation. For example, their common concerns about a pset problem, or a fundamental concept 
+				is often addressable with a recorded explanation.
 				"
 			>
+				<div slot="step-description-slot">
+					<ul>
+						Your earning is approximately O(n). Here are realistic estimates: 
+						<li>1 student: $20/week => $20/hour if work 1 hour</li>
+						<li>2 students: $40/week => $26/hour if work 1.5 hours</li>
+						<li>10 students: $200/week => $50/hour if work 4 hours</li>
+						<li>n students: $20n/week</li>
+					</ul>
+				</div>
 
 			</HowItWorksStep>
 		</div>

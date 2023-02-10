@@ -9,6 +9,10 @@
       </div>
       <div class="step-description-font-styles">
         {description}
+
+        <slot name="step-description-slot">
+
+        </slot>
       </div>
     </div>
 

@@ -1,4 +1,4 @@
-<div class="webflow-container">
+<div class="webflow-container" style="width: 95%">
   {#if classDoc}
     <div class="header-flex">
       <div class="header-title">
@@ -96,18 +96,21 @@
     </RenderlessListenToRoom>
   {/key}
 {:else}
-  {#if classTutorsDocs && selectedTutorUID}
-    <RenderlessFetch {fetchVideosFunc} {selectedTutorUID} let:galleryBoardIDs={galleryBoardIDs}>
-      {#if galleryBoardIDs}
-        <DetailedClassPageBoardsAndVideos
-          {galleryBoardIDs}
-          {selectedTutorUID}
-          {classTutorsDocs}
-          {classID}
-        />
-      {/if}
-    </RenderlessFetch>
-  {/if}
+  <!-- `key` needed to need to refetch new videos when different tutors are clicked --> 
+  {#key selectedTutorUID}
+    {#if classTutorsDocs && selectedTutorUID}
+      <RenderlessFetch {fetchVideosFunc} {selectedTutorUID} let:galleryBoardIDs={galleryBoardIDs}>
+        {#if galleryBoardIDs}
+          <DetailedClassPageBoardsAndVideos
+            {galleryBoardIDs}
+            {selectedTutorUID}
+            {classTutorsDocs}
+            {classID}
+          />
+        {/if}
+      </RenderlessFetch>
+    {/if}
+  {/key}
 {/if}
 
 <script>

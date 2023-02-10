@@ -6,7 +6,7 @@
 
     <div style="display: flex;">
       {#each classTutorsDocs as tutorDoc}
-        <div class="tutor-business-card" style="margin-right: 20px;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
+        <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
           <Card style="height: 180px;" variant="outlined">
             <PrimaryAction on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="height: 100%">
               <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">

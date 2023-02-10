@@ -63,19 +63,22 @@
   // have tutors be able to offer classes all by themselves (almost like Shopify, all you need is an iPad)
   // short on cash? 
   async function fetchTopFiveVideos (selectedTutorUID) {
-    const db = getFirestore()
-    const blackboardsRef = collection(db, boardsCollectionDbPath)
+    return new Promise(async resolve => {
+      const db = getFirestore()
+      const blackboardsRef = collection(db, boardsCollectionDbPath)
 
-    const q = query(blackboardsRef, where('creatorUID', '==', selectedTutorUID), orderBy('viewMinutes', 'desc'), limit(5))
-    
-    const querySnapshot = await getDocs(q) 
-    const temp = []
-    querySnapshot.forEach(doc => {
-      temp.push(doc.id)
+      const q = query(blackboardsRef, where('creatorUID', '==', selectedTutorUID), orderBy('viewMinutes', 'desc'), limit(5))
+      
+      const querySnapshot = await getDocs(q) 
+      const temp = []
+      querySnapshot.forEach(doc => {
+        temp.push(doc.id)
+      })
+
+      designatedRoomBoardIDs = [...temp]
+      resolve(designatedRoomBoardIDs)
+      // return designatedRoomBoardIDs
     })
-
-    designatedRoomBoardIDs = [...temp]
-    return designatedRoomBoardIDs
   }
 </script>
 

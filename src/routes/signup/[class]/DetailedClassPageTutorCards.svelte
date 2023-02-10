@@ -64,7 +64,7 @@
                   Welcome { $user.name || '' }, create shop?
                 </div>
           
-                {#if !$user.name}
+                {#if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
                   <div>First name</div>
                   <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
 

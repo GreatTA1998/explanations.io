@@ -45,33 +45,27 @@
     </div>
 
     {#if classID === 'cLF9unbCuplsl3JmHRbu'}
-    <div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
-			<iframe 
-				style="margin-bottom: 30px;" 
-				width="{400}" height="{250}" 
-				src="https://www.youtube-nocookie.com/embed/EKiZgooMjb8?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-			</iframe>
-			
-			<div class="blog-text-section-container">
-				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-					Story behind 6.036 Piazza: Shaunticlair Ruiz
-				</h1>
-				<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
-					"There's a very common belief, especially at MIT, that if you derive it all yourself, if you put it all together yourself, you're a better learner. And I'd say, maybe if you have the time to do this rigorously and carefully, but there's lots of problems like students can form misconceptions, students can spend significantly longer and actually be less efficient. And the students may not care about a very specific kind of deep understanding they get."
-				</div>	
-				<a href="https://eltonlin.substack.com/publish/post/99258345" target="_blank" style="text-decoration: none !important;">
-					<Button variant="outlined">
-						Read story
-					</Button>		
-				</a>
-			</div>	
-		</div>
-
-      <!-- <iframe 
-        style="margin-bottom: 30px;" 
-        width="{Math.min(400)}" height="{Math.min(400) * 300 / 560}" 
-        src="https://www.youtube-nocookie.com/embed/EKiZgooMjb8?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-      </iframe> -->
+      <div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
+        <iframe 
+          style="margin-bottom: 30px;" 
+          width="{400}" height="{250}" 
+          src="https://www.youtube-nocookie.com/embed/EKiZgooMjb8?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+        
+        <div class="blog-text-section-container">
+          <h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
+            Story behind 6.036 Piazza: Shaunticlair Ruiz
+          </h1>
+          <div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
+            "There's a very common belief, especially at MIT, that if you derive it all yourself, if you put it all together yourself, you're a better learner. And I'd say, maybe if you have the time to do this rigorously and carefully, but there's lots of problems like students can form misconceptions, students can spend significantly longer and actually be less efficient. And the students may not care about a very specific kind of deep understanding they get."
+          </div>	
+          <a href="https://eltonlin.substack.com/publish/post/99258345" target="_blank" style="text-decoration: none !important;">
+            <Button variant="outlined">
+              Read story
+            </Button>		
+          </a>
+        </div>	
+      </div>
     {/if}
 
     <slot name="editorial-or-blog-paragraph">

@@ -1,6 +1,32 @@
 import { assumedCanvasWidth, maxAvailableWidth } from '../store.js'
 import { get } from 'svelte/store'
 
+export function computeMaxAvailableDimensionsGeneral (availableWidth, availableHeight) {
+  const aspectRatio = 4.4/3 //
+  const leftPadding = 16
+  const audioPlayerHeight = 40
+  const signUpPageNavbarHeight = 64
+  const maxBoardWidth = availableWidth - leftPadding
+  const maxBoardHeight = availableHeight - audioPlayerHeight // - signUpPageNavbarHeight
+
+  // width take precedence, we prefer horizontal displays that utilizes full horizontal space,
+  if ((maxBoardWidth * (1/aspectRatio)) <= maxBoardHeight) {
+    // use up all the width, don't use up all the height
+    return {
+      width: maxBoardWidth,
+      height: maxBoardWidth * (1/aspectRatio)
+    }
+  } 
+
+  else {
+    // use up all the height, don't use up all the width
+    return { 
+      height: maxBoardHeight,
+      width: maxBoardHeight * aspectRatio
+    }
+  }
+}
+
 export function computeMaxAvailableDimensions () {
   if (!document) return // to-do: fix later
   const appElement = document.getElementById('main-content')

@@ -1,13 +1,13 @@
 {#if classTutorsDocs}
   <div style="margin-top: 3%; margin-bottom: 1%">
     <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-      Tutor gallery
+      Video gallery
     </h2>
 
-    <div style="display: flex;">
+    <div style="display: flex; overflow-x: auto;">
       {#each classTutorsDocs as tutorDoc}
         <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-          <Card style="height: 180px;" variant="outlined">
+          <Card style="height: 200px;" variant="outlined">
             <PrimaryAction on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="height: 100%">
               <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
                 { tutorDoc.name }
@@ -36,7 +36,7 @@
       {#if !didUserAlreadySignUpAsTutor}
         <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
           {#if selectedTutorUID !== ''}
-            <Card style="height: 180px;" variant="outlined">
+            <Card style="height: 200px;" variant="outlined">
               <PrimaryAction on:click={() => { dispatch('input', { selectedTutorUID: '' })}} padded style="height: 100%;">
                 <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
                   Setup your shop
@@ -44,8 +44,9 @@
                 <div style="font-family: sans-serif;">
                   <ol>
                     <li>Log in with phone</li>
-                    <li>Record 1 example video</li>
+                    <li>Record example videos</li>
                     <li>Add your Venmo</li>
+                    <li>Technical issues? Call 503 250 3868</li>
                   </ol>
                 </div>
               </PrimaryAction>

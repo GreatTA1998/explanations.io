@@ -88,7 +88,8 @@
   const dispatch = createEventDispatcher()
   let carouselWidth
   const boardsCollectionDbPath = `classes/${classID}/blackboards/`
-  let textAreaPlaceholder = "Video ideas: talk about why the class can be hard, give a foresighted overview of the class, explain a concept that many students don't get, solve an example question, include links to outside content from Piazza, textbooks, Youtube etc. :)"
+  // Video ideas: give big picture of the class, explain a commonly misunderstood concept, solve an example question, include links to your outside work.
+  let textAreaPlaceholder = `Tip #1: when you run out of space, instead of erasing the board, just create a new board and new video. Small videos, with minimal erasing, makes your overall explanation easier to navigate and re-record in small parts`
 
   async function updateNewBlackboardLocation () {
     const db = getFirestore()

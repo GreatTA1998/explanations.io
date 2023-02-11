@@ -57,7 +57,7 @@
               </div>
 
               <Text style="margin-bottom: 10px; margin-left: 16px; font-size: 0.95rem; color: grey;">
-                Piloted in Fall 2022
+                Department sponsored
               </Text>
               <Item on:click={() => redirectToPage('')} style="font-size: 1.2rem;">
                 14.01

@@ -13,6 +13,7 @@
         {strokesArray} 
         audioDownloadURL={boardDoc.audioDownloadURL}
         backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+        on:six-seconds-elapsed
       > 
         {#if showEditDeleteButtons}
           <!-- <div style="

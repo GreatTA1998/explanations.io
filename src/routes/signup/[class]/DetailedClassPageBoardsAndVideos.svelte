@@ -23,6 +23,7 @@
               boardDbPath={boardsCollectionDbPath + boardID}
               canvasWidth={carouselWidth}
               canvasHeight={carouselWidth * 3/4 - 100}
+              on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
             />
           {:else if $user.uid === selectedTutorUID}
             <div style="width: {carouselWidth}px; margin-top: 0px; margin-bottom: 0px">
@@ -90,6 +91,13 @@
   const boardsCollectionDbPath = `classes/${classID}/blackboards/`
   // Video ideas: give big picture of the class, explain a commonly misunderstood concept, solve an example question, include links to your outside work.
   let textAreaPlaceholder = `Tip #1: when you run out of space, instead of erasing the board, just create a new board and new video. Small videos, with minimal erasing, makes your overall explanation easier to navigate and re-record in small parts`
+
+  function incrementViewMinutes (boardID, playbackSpeed) {
+    const blackboardRef = doc(getFirestore(), boardsCollectionDbPath + boardID)
+    updateDoc(blackboardRef, {
+      viewMinutes: increment(0.1 * playbackSpeed)
+    })
+  }
 
   async function updateNewBlackboardLocation () {
     const db = getFirestore()

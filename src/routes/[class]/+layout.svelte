@@ -183,6 +183,12 @@
 	// START OF RESIZE LOGIC 
   let resizeDebouncer = null
 
+  // NOTE: resize logic is currently scattered everywhere within this file, refactor later
+  // adjust dimensions whenever $drawerWidth changes
+  $: if ($drawerWidth) {
+    debouncedResizeHandler()
+  }
+
   $: if (classID) {
     unsubDbListeners()
     $roomToPeople = []

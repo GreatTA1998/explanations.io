@@ -111,6 +111,8 @@
                   {strokesArray} 
                   audioDownloadURL={boardDoc.audioDownloadURL}
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+                  canvasWidth={$maxAvailableWidth}
+                  canvasHeight={$maxAvailableHeight}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                 > 
                   <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
@@ -177,6 +179,8 @@
                       backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                       recordState={boardDoc.recordState}
                       {boardID}
+                      canvasWidth={$maxAvailableWidth}
+                      canvasHeight={$maxAvailableHeight}
                       originalIndex={i}
                       on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardID)}
                       on:background-reset={() => resetBackgroundImage(boardID)}

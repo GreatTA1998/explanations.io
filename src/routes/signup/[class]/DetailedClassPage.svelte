@@ -8,6 +8,14 @@
 
       <!-- class="header-subcopy-wrapper" -->
       <div style="display: flex; align-items: center; width: 70%; margin-left: 4%; margin-top: 2%;">
+        {#if classID === 'lvzQqyZIV1wjwYnRV9hn'}
+          <Button on:click={() => handleLoginAndEnterServer({ classID })} color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+            <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+              Spring '23 server
+            </Label>
+          </Button>
+        {/if}
+
         <slot name="past-videos-button">
           
         </slot>
@@ -121,6 +129,8 @@
   import Button, { Label } from '@smui/button';
   import { onDestroy, onMount, tick } from 'svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
+  import { user } from '../../../store.js'
+  import { goto } from '$app/navigation'
 
   export let classID
   export let isNewlyOfferedClass = true
@@ -156,6 +166,10 @@
   onDestroy(() => {
     if (unsubTutorsListener) unsubTutorsListener()
   })
+
+  function handleLoginAndEnterServer ({ classID }) {
+    goto(`/${classID}/${classID}`)
+  }
 
   function onTutorCardSelect (e) {
     selectedTutorUID = e.detail.selectedTutorUID

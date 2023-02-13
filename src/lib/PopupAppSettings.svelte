@@ -22,6 +22,10 @@
   </div> -->
   <!-- <input bind:value={newlyTypedDisplayName}> -->
   <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
+    <button on:click={() => goto('/')}>
+      Go to home page
+    </button>
+
     <button on:click={logOut} style="margin-right: 16px; margin-left: auto">
       Logout
     </button>

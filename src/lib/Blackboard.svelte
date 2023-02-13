@@ -91,8 +91,8 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil } from '../store.js'
 
-  export let canvasWidth = $maxAvailableWidth
-  export let canvasHeight = $maxAvailableHeight
+  export let canvasWidth
+  export let canvasHeight
 
   export let strokesArray
   export let currentTime = 0 // assumes it's always rounded to nearest 0.1

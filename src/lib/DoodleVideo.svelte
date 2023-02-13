@@ -86,8 +86,8 @@
    * Assumes `strokesArray` gets hydrated EXACTLY once
    */
 
-  export let canvasWidth = $maxAvailableWidth // reminder: `maxWidth` is just the default value
-  export let canvasHeight = $maxAvailableHeight
+  export let canvasWidth
+  export let canvasHeight 
   export let strokesArray
   export let audioDownloadURL
   export let backgroundImageDownloadURL

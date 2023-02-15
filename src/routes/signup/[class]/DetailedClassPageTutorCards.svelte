@@ -13,6 +13,10 @@
                 { tutorDoc.name }
               </h2>
 
+              <div style="font-family: sans-serif;">{tutorDoc.numOfStudents || 0} students</div>
+              <div style="font-family: sans-serif;">{tutorDoc.numOfVideos || 0} videos</div>
+              <!-- <div style="font-family: sans-serif;">total view-minutes: {tutorDoc.totalViewMinutes || 0}</div> -->
+
               <div style="margin-top: 16px;"></div>
 
               {#if $user.uid === tutorDoc.uid}
@@ -26,7 +30,9 @@
                   fontSizeIncludeUnits={'1rem'}
                 />
               {:else}
-                <div style="font-family: sans-serif; font-size: 1rem;">{tutorDoc.bio || 'No bio yet'}</div>
+                <div style="font-family: sans-serif; font-size: 1rem;">
+                  {tutorDoc.bio || 'No bio yet'}
+                </div>
               {/if}
             </PrimaryAction>
             <div>

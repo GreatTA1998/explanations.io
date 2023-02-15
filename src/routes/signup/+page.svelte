@@ -4,7 +4,7 @@
   price={1}
   classID={'Mev5x66mSMEvNz3rijym'}
 >
-  <Button on:click={() => redirectToServer(id)} slot="past-videos-button" color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+  <Button on:click={() => redirectToServer(id)} slot="past-videos-button" color="secondary" variant="outlined" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
     <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
       Fall '22 server
     </Label>
@@ -17,10 +17,8 @@
   </Button> -->
 
   <div slot="editorial-or-blog-paragraph" class="webflow-paragraph-1" style="font-family: sans-serif; margin-bottom: 2%; opacity: 0.8;">
-    "14.01 lectures are probably the most exciting I've experienced in my 4 years here. Only thing is they don't cover the math needed for psets; therefore recitation and Office Hours play an extra-important role, and inspired the explanations here."
-
-    <br><br>
-    Note: the economics department offers in-person tutoring for <i>free</i>, email our undergraduate administrator Gary King for details: gking@mit.edu
+    <!-- "14.01 lectures are probably the most exciting I've experienced in my 4 years here. Only thing is they don't cover the math needed for psets; therefore recitation and Office Hours play an extra-important role, and inspired the explanations here." -->
+    Note: the economics department also offers in-person tutoring for <i>free</i>, email gking@mit.edu for details
     <br><br>
     <!-- Commonly, questions arise because of implicit complexity - we superimpose 3D graphs onto only a 2D domain,
     and not only that, super-impose not just one, but multiple graphs, all with the same color. Arguing optimality

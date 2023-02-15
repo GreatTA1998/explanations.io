@@ -5,7 +5,7 @@
     target="_blank"
     style="color: white;"
   >
-    Click here to get notified when classes become available
+    Join waitlist here
   </a>
   <div style="margin-right: 0; margin-left: auto;">
     Tech support: 503 250 3868 / eltonlin@mit.edu

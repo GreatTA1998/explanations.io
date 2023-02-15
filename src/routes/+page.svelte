@@ -48,7 +48,7 @@
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Your psets should be an enjoyable challenge, not an overwhelming timesink.
+						Your psets should be an enjoyable challenge, not an all-consuming timesink.
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">

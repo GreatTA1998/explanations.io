@@ -1,88 +1,100 @@
 {#if classTutorsDocs}
   <div style="margin-top: 3%; margin-bottom: 1%">
     <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-      Video gallery
+      Teaching gallery
     </h2>
 
     <div style="display: flex; overflow-x: auto;">
       {#each classTutorsDocs as tutorDoc}
         <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-          <Card style="height: 600px;" variant="outlined">
-            <PrimaryAction on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="height: 100%">
+          <Card on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="min-height: 100px;" variant="outlined">
+            <RenderlessLocalVariables let:isCardExpanded={isCardExpanded} let:toggleIsCardExpanded={toggleIsCardExpanded}>
               <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                { tutorDoc.name }
+                { tutorDoc.name.split(' ')[0] }
+                <br>
+                { tutorDoc.name.split(' ')[1] }
               </h2>
 
-              <div style="font-family: sans-serif;">{tutorDoc.numOfStudents || 0} students</div>
-              <div style="font-family: sans-serif;">{tutorDoc.numOfVideos || 0} videos</div>
-              <!-- <div style="font-family: sans-serif;">total view-minutes: {tutorDoc.totalViewMinutes || 0}</div> -->
+              <div style="font-family: sans-serif; display: flex; align-items: center;">
+                {tutorDoc.numOfStudents || 0} students, {tutorDoc.numOfVideos || 0} videos
 
-              <div style="margin-top: 16px;"></div>
-
-              {#if $user.uid === tutorDoc.uid}
-                <TextAreaAutoResizing 
-                  value={tutorDoc.bio || ''} 
-                  on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
-                  placeholder="e.g. year, major, your teaching style/philosophy"
-                  readonly={$user.uid !== tutorDoc.uid}
-                  nonFocusedPlaceholderOpacity={0.6}
-                  numberOfInitialRowsIfEmpty={2}
-                  fontSizeIncludeUnits={'1rem'}
-                />
-              {:else}
-                <div style="font-family: sans-serif; font-size: 1rem;">
-                  {tutorDoc.bio || 'No bio yet'}
+                <div style="margin-right: 0; margin-left: auto;">
+                  {#if !isCardExpanded}
+                    <Icon on:click={toggleIsCardExpanded} class="material-icons" style="margin-right: 0; font-size: 2.2rem;">
+                      expand_more
+                    </Icon>
+                  {:else}
+                    <Icon on:click={toggleIsCardExpanded} class="material-icons" style="margin-right: 0; font-size: 2.2rem;">
+                      expand_less
+                    </Icon>
+                  {/if}
                 </div>
-              {/if}
-            </PrimaryAction>
-            <div>
+              </div>
+
               {#if $user.uid === tutorDoc.uid && price}
+                <div style="text-align: center; padding: 0; margin-top: 12px;">
+                  <ReusableButton on:click={handleSubscribeButtonClick}>
+                    <div style="font-size: 0.8rem;">
+                      Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
+                    </div>
+                  </ReusableButton>
+                </div>
+
+                <div style="margin-top: 12px;"></div>
+
                 <ReusableIncomeCalculator weeklyPrice={price} on:subscribe-click={handleSubscribeButtonClick}>
-                  <Slider
-                    bind:value={price}
-                    min={5}
-                    max={30}
-                    step={1}
-                    discrete
-                    tickMarks
-                  />
+                  <!-- <Slider/> doesn't emit events properly so I'm just avoiding the issue with <slot> -->
+                  <div style="display: flex; align-items: center;">
+                    <div style="font-family: sans-serif;">
+                      price
+                    </div>
+                    <Slider
+                      style="flex-grow: 1"
+                      bind:value={price}
+                      min={5}
+                      max={30}
+                      step={1}
+                      discrete
+                    />
+                  </div>
                 </ReusableIncomeCalculator>
               {:else}
-                <ReusableButton on:click={handleSubscribeButtonClick}>
-                  Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
-                </ReusableButton>
+                <div style="text-align: center; padding: 0; margin-top: 12px;">
+                  <ReusableButton on:click={handleSubscribeButtonClick}>
+                    <div style="font-size: 0.8rem;">
+                      Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
+                    </div>
+                  </ReusableButton>
+                </div>
               {/if}
 
               {#if isSubscribePopupOpen}
-                <BasePopup on:popup-close={() => isSubscribePopupOpen = false}>
-                  <h2 slot="title" style="font-family: sans-serif;">
-                    How to get started
-                  </h2>
-                  <div slot="popup-content">
-                    How to join
+                <PopupConfirmSubscription
+                  on:popup-close={() => isSubscribePopupOpen = false}
+                  on:confirm-clicked={() => handleConfirmSubscription(tutorDoc)}
+                />
+              {/if}   
 
-                    1. Log in with mobile number
-                    2. Venmo 
-                    3. Confirm, you'll receive an email
-                    4. Enter the server
+              {#if isCardExpanded}
+                <div style="margin-top: 16px;"></div>
 
-                    <div style="height: 20px; display: flex;">
-                      <Checkbox bind:checked touch />I have venmo'ed {tutorDoc.name.split(" ")[0]}
-                    </div>
+                {#if $user.uid === tutorDoc.uid}
+                  <TextAreaAutoResizing 
+                    value={tutorDoc.bio || ''} 
+                    on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
+                    placeholder="e.g. year, major, your teaching style/philosophy"
+                    readonly={$user.uid !== tutorDoc.uid}
+                    nonFocusedPlaceholderOpacity={0.6}
+                    numberOfInitialRowsIfEmpty={2}
+                    fontSizeIncludeUnits={'1rem'}
+                  />
+                {:else}
+                  <div style="font-family: sans-serif; font-size: 1rem;">
+                    {tutorDoc.bio || 'No bio yet'}
                   </div>
-
-                  <div slot="popup-buttons">
-                    <ReusableButton 
-                      disabled={!checked || !$user.phoneNumber}
-                      on:click={() => handleConfirmSubscription(tutorDoc)}
-                    >
-                      Confirm
-                    </ReusableButton>
-                    <ReusableButton>Cancel</ReusableButton>
-                  </div>
-                </BasePopup>
-              {/if}
-            </div>           
+                {/if}
+              {/if}  
+            </RenderlessLocalVariables>    
           </Card>
         </div>
       {/each}
@@ -90,18 +102,16 @@
       {#if !didUserAlreadySignUpAsTutor}
         <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
           {#if selectedTutorUID !== ''}
-            <Card style="height: 200px;" variant="outlined">
+            <Card style="min-height: 100px;" variant="outlined">
               <PrimaryAction on:click={() => { dispatch('input', { selectedTutorUID: '' })}} padded style="height: 100%;">
                 <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
                   Setup your shop
                 </h2>
-                <div style="font-family: sans-serif;">
-                  <ol>
-                    <li>Log in with phone</li>
-                    <li>Record example videos</li>
-                    <li>Add your Venmo</li>
-                    <li>Technical issues? Call 503 250 3868</li>
-                  </ol>
+                <div style="font-family: sans-serif; display: flex; align-items: center;">
+                  Takes ~20 minutes
+                  <Icon class="material-icons" style="margin-right: 0; font-size: 2.2rem; margin-left: auto;">
+                    expand_more
+                  </Icon>
                 </div>
               </PrimaryAction>
             </Card>
@@ -144,8 +154,9 @@
 {/if}
 
 <script>
+  import RenderlessLocalVariables from '$lib/RenderlessLocalVariables.svelte'
   import Card, { PrimaryAction, Content } from '@smui/card'
-  import Button, { Label } from '@smui/button';
+  import Button, { Label, Icon } from '@smui/button';
   import { user } from '../../../store.js'
   import { createEventDispatcher, onMount, tick } from 'svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
@@ -154,11 +165,10 @@
   import { createRoomDoc, createBoardDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
   import { sendTextMessage } from '../../../helpers/cloudFunctions.js';
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
-  import BasePopup from '$lib/BasePopup.svelte'
   import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
-  import Checkbox from '@smui/checkbox';
   import ReusableButton from '$lib/ReusableButton.svelte'
   import Slider from '@smui/slider'
+  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte';
 
   export let classTutorsDocs
   export let selectedTutorUID
@@ -227,7 +237,7 @@
   
   const debouncedUpdateTutorWeeklyPrice = debounce(
     updateTutorWeeklyPrice,
-    2000
+    1000
   )
 
   function updateTutorWeeklyPrice (weeklyPrice, idNotUID) {
@@ -271,9 +281,10 @@
 
 <style>
   .tutor-business-card {
-    max-width: 400px; 
-
-    width: 90%;
+    max-width: 260px; 
+    width: 100%;
+    height: fit-content;
+    
     /* This is to match SMUI's card's border radius */
     border-radius: 5px;
   }

@@ -1,8 +1,8 @@
 <Button on:click color="secondary" variant="raised" 
   {disabled}
-  style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;"
+  style="height: 40px; border-radius: 0px; width: 100%;"
 >
-  <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
+  <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 1rem; font-weight: 600">
     <slot>
       
     </slot>

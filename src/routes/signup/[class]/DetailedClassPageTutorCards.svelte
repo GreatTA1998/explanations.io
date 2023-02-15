@@ -7,7 +7,7 @@
     <div style="display: flex; overflow-x: auto;">
       {#each classTutorsDocs as tutorDoc}
         <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-          <Card style="height: 200px;" variant="outlined">
+          <Card style="height: 400px;" variant="outlined">
             <PrimaryAction on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="height: 100%">
               <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
                 { tutorDoc.name }
@@ -29,6 +29,41 @@
                 <div style="font-family: sans-serif; font-size: 1rem;">{tutorDoc.bio || 'No bio yet'}</div>
               {/if}
             </PrimaryAction>
+            <div>
+              {#if $user.uid === tutorDoc.uid}
+                <pre class="status">your listed price: ${price}/week</pre>
+                <Slider
+                  bind:value={price}
+                  min={5}
+                  max={25}
+                  step={1}
+                  discrete
+                  tickMarks
+                  input$aria-label="Tick mark slider"
+                />
+
+                <div style="font-family: sans-serif;">Income calculator</div>
+                <pre class="status">hypothetical # of students: {numOfSubs}</pre>
+                <Slider
+                  bind:value={numOfSubs}
+                  min={1}
+                  max={50}
+                  step={1}
+                  discrete
+                  tickMarks
+                  input$aria-label="Tick mark slider"
+                />
+                <div style="font-family: sans-serif;">
+                  <div>Total income = {price} x {numOfSubs} = ${ numOfSubs * price} / week</div>
+                  <div>Expected time commitment: {Math.round(expectedMinHours)} - {Math.round(expectedMaxHours)} hours</div>
+                  <div>Amortized hourly wage: ${ Math.round(amortizedMinHourlyWage)} - { Math.round(amortizedMaxHourlyWage) } / hour</div>
+                </div>
+              {:else}
+                <ReusableButton>
+                  Subscribe for $5/week
+                </ReusableButton>
+              {/if}
+            </div>           
           </Card>
         </div>
       {/each}
@@ -93,13 +128,15 @@
   import Card, { PrimaryAction, Content } from '@smui/card'
   import Button, { Label } from '@smui/button';
   import { user } from '../../../store.js'
-  import { createEventDispatcher, tick } from 'svelte'
+  import { createEventDispatcher, onMount, tick } from 'svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
-  import { getRandomID } from '../../../helpers/utility.js'
+  import { getRandomID, debounce } from '../../../helpers/utility.js'
   import { createRoomDoc, createBoardDoc } from '../../../helpers/crud.js'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import BasePopup from '$lib/BasePopup.svelte'
+  import ReusableButton from '$lib/ReusableButton.svelte'
+  import Slider from '@smui/slider'
 
   export let classTutorsDocs
   export let selectedTutorUID
@@ -112,12 +149,30 @@
 
   let didUserAlreadySignUpAsTutor = false
 
+  let price = 15
+  let numOfSubs = 10
+
+  // $: debouncedUpdateTutorWeeklyPrice(price)
+
+  $: totalPayment = price * numOfSubs
+
+  $: expectedMinHours = 0.5 + Math.log(numOfSubs)
+  $: expectedMaxHours = 3 + Math.log(numOfSubs)
+
+  $: amortizedMinHourlyWage = totalPayment / expectedMaxHours
+  $: amortizedMaxHourlyWage = totalPayment / expectedMinHours
+
   $: if (classTutorsDocs) {
     didUserAlreadySignUpAsTutor = false
     for (const tutor of classTutorsDocs) {
       if (tutor.uid === $user.uid) didUserAlreadySignUpAsTutor = true
     }
   }
+
+  const debouncedUpdateTutorBio = debounce(
+    ({ detail }, id) => updateTutorBio({ detail }, id),
+    2500
+  ) 
 
   async function createTutorDoc ({ classID, firstName, lastName }) {
     if (!firstName || !lastName) return
@@ -137,64 +192,11 @@
     selectedTutorUID = tutorObject.uid
   }
 
-  async function debouncedUpdateBoardDescription ({ detail }, id) {
-    const debouncedVersion = debounce(
-      () => updateBoardDescription({ detail }, id),
-      3000
-    ) 
-    debouncedVersion({ detail }, id)
-  }
-
-  async function updateBoardDescription ({ detail }, id) {
-    const boardsDbPath = `classes/${classID}/blackboards/`
-    const boardRef = doc(getFirestore(), boardsDbPath + id)
-
-    await updateDoc(boardRef, {
-      description: detail
-    })
-    console.log("updated board, description =", detail)
-  }
-
-  async function debouncedUpdateTutorBio ({ detail }, id) {
-    const debouncedVersion = debounce(
-      () => updateTutorBio({ detail }, id),
-      3000
-    ) 
-    debouncedVersion({ detail }, id)
-  }
-
   async function updateTutorBio ({ detail }, idNotUID) {
     const tutorRef = doc(getFirestore(), `classes/${classID}/tutors/${idNotUID}`)
     updateDoc(tutorRef, {
       bio: detail
     })
-  }
-
-  // WARNING: COULD BE DANGEROUS THAT THE DEBOUNCED VARIABLE T IS SHARED BETWEEN TWO FUNCTIONS, THEY COULD DEBOUNCE EACH OTHER WHICH IS BAD
-  let t = { promise: null, cancel: _ => void 0 }
-
-  // Snippet from: https://stackoverflow.com/a/68228099/7812829
-  // NOTE: this literally returns a function (you still have to call it)
-  function debounce (task, ms) {
-    return async (...args) => {
-      try {
-        t.cancel()
-        t = deferred(ms)
-        await t.promise
-        await task(...args)
-      }
-      catch (_) { 
-        /* prevent memory leak */ 
-      }
-    }
-  }
-
-  function deferred (ms) {
-    let cancel, promise = new Promise((resolve, reject) => {
-      cancel = reject
-      setTimeout(resolve, ms)
-    })
-    return { promise, cancel }
   }
 </script>
 

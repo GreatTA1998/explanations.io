@@ -31,6 +31,7 @@
 
 
   <AutoAdjust {topAppBar} style="overflow-y: hidden;">
+    <!-- <TopBannerWarnExperimental/> -->
     <div class="drawer-container">
       <!-- TO-DO: figure out why shadow is not working -->
       <Drawer style="overflow-y: auto; height: 100%; width: {$classDetailsDrawerWidth}px; box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%);">
@@ -92,6 +93,7 @@
 </div>
 
 <script>
+  import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte'
   import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
   import Drawer, { AppContent } from '@smui/drawer'
   import List, { Item, Text } from '@smui/list'

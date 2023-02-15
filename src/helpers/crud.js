@@ -2,6 +2,32 @@ import { getRandomID } from './utility.js'
 import { deleteField, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
 
+// I prefix all Firestore helper functions with `firestore` prefix
+// e.g. `firestoreRef` (written by me) vs `ref` (native to library)
+// TO-DO: test these functions
+export function firestoreRef (path) {
+  const db = getFirestore()
+  return doc(db, path)
+}
+
+export function getFirestoreDoc (path) {
+  return new Promise(async (resolve) => {
+    const ref = firestoreRef(path)
+    const snapshot = await getDoc(ref)
+    resolve(
+      { id: snapshot.id, path: snapshot.path, ...snapshot.data() }
+    )
+  })
+}
+
+export function updateFirestoreDoc (path, updateObject) {
+  return new Promise(async (resolve) => {
+    const ref = firestoreRef(path)
+    await updateDoc(ref, updateObject)
+    resolve()
+  })
+}
+
 export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStrokesFromDb) {
   return new Promise(async resolve => {
     if (!confirm('Are you sure you want to delete this video?')) {

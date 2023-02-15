@@ -14,6 +14,7 @@
     "@smui-extra/autocomplete": "^6.0.0-beta.15",
     "@smui/button": "^6.0.0-beta.4",
     "@smui/card": "^6.0.0-beta.4",
+    "@smui/checkbox": "^7.0.0-beta.0",
     "@smui/circular-progress": "^6.0.0-beta.4",
     "@smui/common": "^6.0.0-beta.4",
     "@smui/drawer": "^6.0.0-beta.4",

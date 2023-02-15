@@ -18,13 +18,24 @@
 
         <slot name="past-videos-button">
           
-        </slot>
+        </slot> 
 
-        <Button on:click={() => isExplainTutoringPopupOpen = true} color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
+        <!-- Open a popup that explains how the server works -->
+        {#if $user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)}
+          <ReusableButton on:click={() => goto(`/${classID}/${classID}`)}>
+            Enter server
+          </ReusableButton>
+        {:else}
+          <ReusableButton disabled={true}>
+            Log in to server
+          </ReusableButton>
+        {/if}
+
+        <!-- <Button on:click={() => isExplainTutoringPopupOpen = true} color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
           <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
             Youtube-style tutoring: ${price}/week
           </Label>
-        </Button>
+        </Button> -->
 
         {#if isExplainTutoringPopupOpen}
           <!-- <BasePopup>
@@ -131,6 +142,7 @@
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { user } from '../../../store.js'
   import { goto } from '$app/navigation'
+  import ReusableButton from '$lib/ReusableButton.svelte'
 
   export let classID
   export let isNewlyOfferedClass = true

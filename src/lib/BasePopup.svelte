@@ -1,7 +1,7 @@
 <div class="popup-window">
   <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px">
     <slot name="title">
-      <h2>Title</h2>
+      <h2>`title` slot</h2>
     </slot>
 
     <span on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0; margin-left: auto;">
@@ -11,7 +11,10 @@
 
   <slot name="popup-content">
     <div style="margin-left: 10px; margin-right: 10px;">
-      Problems? Call/text 503 250 3868 or reload the page or force restart Safari
+      1. Log in with mobile number
+      2. Venmo 
+      3. Confirm, you'll receive an email
+      4. Enter the server
     </div>
 
     <br>
@@ -28,11 +31,10 @@
   <slot name="popup-buttons">
     <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
       <button style="margin-right: 16px; margin-left: auto">
-        Logout
+        `popup-buttons` slot
       </button>
     </div> 
-  </slot>
-</div>
+  </slot></div>
  
 <script>
   import Button, { Label } from '@smui/button'
@@ -45,12 +47,13 @@
 	const dispatch = createEventDispatcher()
 
   onMount(() => {
-    console.log("popup mounted")
+    
   })
 </script>
 
 <style>
   .popup-window {
+    overflow: auto;
     position: fixed; 
     z-index: 10;
     background-color: white; 
@@ -58,7 +61,6 @@
     border-radius: 8px; 
     width: 500px; 
     height: 300px;
-
 
     /* center it within the page */
     left: 0;

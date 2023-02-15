@@ -7,7 +7,7 @@
     <div style="display: flex; overflow-x: auto;">
       {#each classTutorsDocs as tutorDoc}
         <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
-          <Card style="height: 400px;" variant="outlined">
+          <Card style="height: 600px;" variant="outlined">
             <PrimaryAction on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="height: 100%">
               <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
                 { tutorDoc.name }
@@ -30,38 +30,51 @@
               {/if}
             </PrimaryAction>
             <div>
-              {#if $user.uid === tutorDoc.uid}
-                <pre class="status">your listed price: ${price}/week</pre>
-                <Slider
-                  bind:value={price}
-                  min={5}
-                  max={25}
-                  step={1}
-                  discrete
-                  tickMarks
-                  input$aria-label="Tick mark slider"
-                />
-
-                <div style="font-family: sans-serif;">Income calculator</div>
-                <pre class="status">hypothetical # of students: {numOfSubs}</pre>
-                <Slider
-                  bind:value={numOfSubs}
-                  min={1}
-                  max={50}
-                  step={1}
-                  discrete
-                  tickMarks
-                  input$aria-label="Tick mark slider"
-                />
-                <div style="font-family: sans-serif;">
-                  <div>Total income = {price} x {numOfSubs} = ${ numOfSubs * price} / week</div>
-                  <div>Expected time commitment: {Math.round(expectedMinHours)} - {Math.round(expectedMaxHours)} hours</div>
-                  <div>Amortized hourly wage: ${ Math.round(amortizedMinHourlyWage)} - { Math.round(amortizedMaxHourlyWage) } / hour</div>
-                </div>
+              {#if $user.uid === tutorDoc.uid && price}
+                <ReusableIncomeCalculator weeklyPrice={price} on:subscribe-click={handleSubscribeButtonClick}>
+                  <Slider
+                    bind:value={price}
+                    min={5}
+                    max={30}
+                    step={1}
+                    discrete
+                    tickMarks
+                  />
+                </ReusableIncomeCalculator>
               {:else}
-                <ReusableButton>
-                  Subscribe for $5/week
+                <ReusableButton on:click={handleSubscribeButtonClick}>
+                  Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
                 </ReusableButton>
+              {/if}
+
+              {#if isSubscribePopupOpen}
+                <BasePopup on:popup-close={() => isSubscribePopupOpen = false}>
+                  <h2 slot="title" style="font-family: sans-serif;">
+                    How to get started
+                  </h2>
+                  <div slot="popup-content">
+                    How to join
+
+                    1. Log in with mobile number
+                    2. Venmo 
+                    3. Confirm, you'll receive an email
+                    4. Enter the server
+
+                    <div style="height: 20px; display: flex;">
+                      <Checkbox bind:checked touch />I have venmo'ed {tutorDoc.name.split(" ")[0]}
+                    </div>
+                  </div>
+
+                  <div slot="popup-buttons">
+                    <ReusableButton 
+                      disabled={!checked || !$user.phoneNumber}
+                      on:click={() => handleConfirmSubscription(tutorDoc)}
+                    >
+                      Confirm
+                    </ReusableButton>
+                    <ReusableButton>Cancel</ReusableButton>
+                  </div>
+                </BasePopup>
               {/if}
             </div>           
           </Card>
@@ -132,9 +145,12 @@
   import PhoneLogin from '$lib/PhoneLogin.svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { getRandomID, debounce } from '../../../helpers/utility.js'
-  import { createRoomDoc, createBoardDoc } from '../../../helpers/crud.js'
+  import { createRoomDoc, createBoardDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
+  import { sendTextMessage } from '../../../helpers/cloudFunctions.js';
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import BasePopup from '$lib/BasePopup.svelte'
+  import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
+  import Checkbox from '@smui/checkbox';
   import ReusableButton from '$lib/ReusableButton.svelte'
   import Slider from '@smui/slider'
 
@@ -143,36 +159,89 @@
   export let classID
 
   const dispatch = createEventDispatcher()
-
+  let checked = false
+  let price
   let inputFieldFirstName = '' 
   let inputFieldLastName = ''
-
   let didUserAlreadySignUpAsTutor = false
+  let isSubscribePopupOpen = false
 
-  let price = 15
-  let numOfSubs = 10
-
-  // $: debouncedUpdateTutorWeeklyPrice(price)
-
-  $: totalPayment = price * numOfSubs
-
-  $: expectedMinHours = 0.5 + Math.log(numOfSubs)
-  $: expectedMaxHours = 3 + Math.log(numOfSubs)
-
-  $: amortizedMinHourlyWage = totalPayment / expectedMaxHours
-  $: amortizedMaxHourlyWage = totalPayment / expectedMinHours
-
+  // DOES THIS COMPONENT ASSUME CLASS DOCS IS ALREADY HYDRATED?
   $: if (classTutorsDocs) {
     didUserAlreadySignUpAsTutor = false
     for (const tutor of classTutorsDocs) {
-      if (tutor.uid === $user.uid) didUserAlreadySignUpAsTutor = true
+      if (tutor.uid === $user.uid) {
+        didUserAlreadySignUpAsTutor = true
+        if (!price) price = tutor.weeklyPrice || 15
+      }
     }
   }
 
+  $: if (price) {
+    let tutorDocID 
+    if (classTutorsDocs) {
+      for (const tutorDoc of classTutorsDocs) {
+        if (tutorDoc.uid === $user.uid) {
+          tutorDocID = tutorDoc.id
+        }
+      }
+    }
+    debouncedUpdateTutorWeeklyPrice(price, tutorDocID)
+  }
+  
+  async function handleConfirmSubscription (tutor) {
+    isSubscribePopupOpen = false
+    const promises = []
+
+    // NOTE: Twilio's requirement differs from Firebase Auth, which requires +1 XXX-XXX-XXX hyphen format
+    const eltonMobileNumber = '+15032503868'
+    await promises.push(
+      sendTextMessage({ 
+        content: `New student ${$user.name} subscribed for $${price}, confirm on Venmo`,
+        toWho: tutor.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Confirmed for class, you can now enter the server and start asking questions`,
+        toWho: $user.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Student ${$user.name} subscribed to tutor ${tutor.name}`,
+        toWho: eltonMobileNumber
+      })
+    )
+
+    await updateFirestoreDoc(`/users/${$user.uid}`, {
+      idsOfSubscribedClasses: arrayUnion(classID)
+    })
+  }
+
+  function handleSubscribeButtonClick () {
+    isSubscribePopupOpen = true
+  }
+  
+  const debouncedUpdateTutorWeeklyPrice = debounce(
+    updateTutorWeeklyPrice,
+    2000
+  )
+
+  function updateTutorWeeklyPrice (weeklyPrice, idNotUID) {
+    const tutorRef = doc(getFirestore(), `classes/${classID}/tutors/${idNotUID}`)
+    updateDoc(tutorRef, {
+      weeklyPrice
+    })
+  }
+  
   const debouncedUpdateTutorBio = debounce(
     ({ detail }, id) => updateTutorBio({ detail }, id),
-    2500
+    2000
   ) 
+
+  async function updateTutorBio ({ detail }, idNotUID) {
+    const tutorRef = doc(getFirestore(), `classes/${classID}/tutors/${idNotUID}`)
+    updateDoc(tutorRef, {
+      bio: detail
+    })
+  }
 
   async function createTutorDoc ({ classID, firstName, lastName }) {
     if (!firstName || !lastName) return
@@ -183,6 +252,7 @@
     const tutorObject = {
       uid: $user.uid,
       name: firstName + ' ' + lastName,
+      phoneNumber: $user.phoneNumber,
       designatedRoomID
     }
     const db = getFirestore()
@@ -190,13 +260,6 @@
     await setDoc(doc(db, classTutorDocPath), tutorObject)
     await tick()
     selectedTutorUID = tutorObject.uid
-  }
-
-  async function updateTutorBio ({ detail }, idNotUID) {
-    const tutorRef = doc(getFirestore(), `classes/${classID}/tutors/${idNotUID}`)
-    updateDoc(tutorRef, {
-      bio: detail
-    })
   }
 </script>
 

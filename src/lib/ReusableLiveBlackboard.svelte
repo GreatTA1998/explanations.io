@@ -28,8 +28,8 @@
             on:background-reset={() => resetBackgroundImage(boardID)}
             on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
             on:board-wipe={deleteAllStrokesFromDb}
-            on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
           >
+            <!-- on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)} -->
             <RenderlessAudioRecorder
               let:startRecording={startRecording} 
               let:stopRecording={stopRecording}

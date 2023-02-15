@@ -1,4 +1,8 @@
 // Copied from: https://stackoverflow.com/a/68228099/7812829
+// after 3 hours, I realized the mistake is I keep calling debounce()
+// when it can only be called once
+// which is why setting obj to global worked because it prevented 
+// setting obj independently each time
 export function debounce (func, ms) { 
   // `obj` will be accessible by every instance of the inner function `debouncedFunc`
   // but also inaccessible and independent from other `debounce ()` contexts

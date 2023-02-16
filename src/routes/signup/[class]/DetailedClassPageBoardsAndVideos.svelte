@@ -9,7 +9,6 @@
               <DoodleVideoCommentsSection
                 boardDoc={boardDoc}
               />
-
               <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
                 <TextAreaAutoResizing 
                   value={boardDoc.description || ''} 

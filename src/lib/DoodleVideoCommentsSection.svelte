@@ -68,7 +68,8 @@ import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
 import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
 
 export let boardDoc
-export let roomDoc
-export let classID
-export let roomID
+
+export let roomDoc = null
+export let classID = null
+export let roomID = null
 </script>

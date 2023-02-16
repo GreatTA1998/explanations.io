@@ -10,7 +10,7 @@
           
         </slot> 
 
-        {#if $user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)}
+        {#if isSubscriber || isTutor}
           <Button on:click={() => goto(`/${classID}/${classID}`)} color="secondary" variant="outlined" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
             <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
               Spring '23 server
@@ -123,6 +123,9 @@
   let selectedTutorDoc
 
   let unsubTutorsListener
+
+  $: isSubscriber = $user.idsOfSubscribedClasses ? $user.idsOfSubscribedClasses.includes(classID) : false
+  $: isTutor = $user.idsOfTutoringClasses ? $user.idsOfTutoringClasses.includes(classID) : false
 
   onMount(async () => {
     if (unsubTutorsListener) unsubTutorsListener()

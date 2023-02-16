@@ -205,17 +205,13 @@
 				description="
 				Different students have different needs, so it can be challenging to ensure every student gets what they need.
 				But it could also be easy, with a little experimentation. For example, their common concerns about a pset problem, or a fundamental concept 
-				is often addressable with a recorded explanation.
+				is often addressable with a recorded explanation. 
+				
+				You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
 				"
 			>
 				<div slot="step-description-slot">
-					<ul>
-						Your earning is approximately O(n). Here are realistic estimates: 
-						<li>1 student: $20/week => $20/hour if work 1 hour</li>
-						<li>2 students: $40/week => $26/hour if work 1.5 hours</li>
-						<li>10 students: $200/week => $50/hour if work 4 hours</li>
-						<li>n students: $20n/week</li>
-					</ul>
+					<ReusableIncomeCalculator weeklyPrice={15}/>
 				</div>
 
 			</HowItWorksStep>
@@ -345,6 +341,7 @@
 </AutoAdjust>
 
 <script>	
+	import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
 	import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte'
 	import ImageGallery from '../lib/ImageGallery.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'

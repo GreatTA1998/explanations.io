@@ -17,7 +17,7 @@ import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, 
 import { onDestroy } from 'svelte'
 import { user } from '../store.js'
 import { getRandomID } from '../helpers/utility.js'
-import { getFunctions, httpsCallable } from 'firebase/functions'
+import { sendTextMessage } from '../helpers/cloudFunctions.js'
 
 export let dbPath
 export let boardDoc
@@ -77,16 +77,24 @@ async function submitNewComment () {
     batch.commit()
   )
 
-  // notify the video creator
+  // if somebody else commented, notify the video creator
   if ($user.uid !== boardDoc.creatorUID) {
-    const functions = getFunctions();
-    const sendTextMessage = httpsCallable(functions, 'sendTextMessage')
-    promises.push(
-      sendTextMessage({ 
-        content: `For your video in "${roomDoc.name}", ${$user.name} commented: "${newComment}": https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
-        toWho: boardDoc.creatorPhoneNumber
-      })
-    )
+    if (roomDoc && roomID && classID) {
+      promises.push(
+        sendTextMessage({
+         content: `For your video in "${roomDoc.name}", ${$user.name} commented: "${newComment}": https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
+         toWho: boardDoc.creatorPhoneNumber
+        })
+      )
+    } 
+    else {
+      promises.push(
+        sendTextMessage({ 
+          content: `Your video on explain.mit.edu received a comment: ${newComment}`,
+          toWho: boardDoc.creatorPhoneNumber
+        })
+      )
+    }
   }
   await Promise.all(promises)
   newComment = '' 

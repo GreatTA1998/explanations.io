@@ -1,7 +1,7 @@
 {#if classTutorsDocs}
   <div style="margin-top: 3%; margin-bottom: 1%">
     <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-      Teaching gallery
+      Video portfolio of tutors
     </h2>
 
     <div style="display: flex; overflow-x: auto;">
@@ -16,7 +16,7 @@
               </h2>
 
               <div style="font-family: sans-serif; display: flex; align-items: center;">
-                {tutorDoc.numOfStudents || 0} students, {tutorDoc.numOfVideos || 0} videos
+                {tutorDoc.numOfStudents || 0} students, {tutorDoc.numOfVideos || 'n'} videos
 
                 <div style="margin-right: 0; margin-left: auto;">
                   {#if !isCardExpanded}
@@ -223,12 +223,14 @@
       sendTextMessage({
         content: `Student ${$user.name} subscribed to tutor ${tutor.name}`,
         toWho: eltonMobileNumber
+      }),
+      updateFirestoreDoc(`/users/${$user.uid}`, {
+        idsOfSubscribedClasses: arrayUnion(classID)
+      }),
+      updateFirestoreDoc(`/classes/${classID}/tutors/${tutor.id}`, {
+        numOfStudents: increment(1)
       })
     )
-
-    await updateFirestoreDoc(`/users/${$user.uid}`, {
-      idsOfSubscribedClasses: arrayUnion(classID)
-    })
   }
 
   function handleSubscribeButtonClick () {
@@ -260,10 +262,17 @@
   }
 
   async function createTutorDoc ({ classID, firstName, lastName }) {
+
     if (!firstName || !lastName) return
     // const userDbPath = `users/${$user.uid}/`
     const classDbPath = `classes/${classID}/`
-    const classTutorDocPath = classDbPath + `tutors/${getRandomID()}`
+    const id = getRandomID()
+    const classTutorDocPath = classDbPath + `tutors/${id}`
+
+    updateFirestoreDoc(`classes/${classID}/tutors/${id}`, {
+      idsOfTutoringClasses: arrayUnion(classID)
+    })
+
     const designatedRoomID = await createRoomDoc(`classes/${classID}/`) 
     const tutorObject = {
       uid: $user.uid,

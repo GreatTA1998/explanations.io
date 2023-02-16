@@ -4,8 +4,8 @@
 </slot>
 
 
-<div style="margin-top: 12px; display: flex; align-items: center; width: 100%">
-  <pre class="status">students</pre>
+<div style="margin-top: 14px; display: flex; align-items: center; width: 100%">
+  <pre class="status">{numOfSubs} students</pre>
   <Slider
     style="flex-grow: 1"
     bind:value={numOfSubs}

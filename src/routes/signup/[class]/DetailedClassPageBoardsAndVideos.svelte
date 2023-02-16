@@ -6,6 +6,10 @@
         <RenderlessListenToBoard dbPath={boardsCollectionDbPath + boardID} let:boardDoc={boardDoc}> 
           {#if boardDoc}
             {#if boardDoc.audioDownloadURL}
+              <DoodleVideoCommentsSection
+                boardDoc={boardDoc}
+              />
+
               <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
                 <TextAreaAutoResizing 
                   value={boardDoc.description || ''} 
@@ -84,6 +88,7 @@
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
   import { createEventDispatcher, onMount } from 'svelte';
+  import DoodleVideoCommentsSection from '$lib/DoodleVideoCommentsSection.svelte'
 
   export let classID
   export let selectedTutorUID 

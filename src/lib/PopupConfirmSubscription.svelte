@@ -6,10 +6,18 @@
     {#if !$user.phoneNumber}
       1. Log in with mobile number
       <PhoneLogin/>
+    {:else if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
+      <div>First name</div>
+      <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
+
+      <div>Last name</div>
+      <input bind:value={inputFieldLastName} placeholder=""/>
+
+      <Button on:click={updateUserName}>Submit</Button>
     {/if}
 
     <div>
-      Refund policy: Explain covers refunds for any reason, any time, so students and tutors are protected.
+      Refund policy: Explain covers refunds anytime for oany reason, so both students and tutors are protected.
     </div>
 
     <div style="height: 20px; display: flex;">
@@ -35,8 +43,18 @@
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '../store.js'
+  import { updateFirestoreDoc } from '../helpers/crud.js'
+  import Button from '@smui/button'
 
   const dispatch = createEventDispatcher()
 
+  let inputFieldFirstName = ''
+  let inputFieldLastName = ''
   let checked = false
+
+  function updateUserName () {
+    updateFirestoreDoc(`users/${$user.uid}`, {
+      name: inputFieldFirstName + ' ' + inputFieldLastName
+    })
+  }
 </script>

@@ -9,11 +9,11 @@
 				</Section>
 
 				<Section align="end" toolbar>
-					<!-- <a href="https://eltonlin.substack.com/" target="_blank" style="text-decoration-color: transparent;"> -->
-						<Button style="margin-left: 40px; color: grey;">
-							Blog (coming soon)
+					<a href="https://eltonlin.substack.com/p/ef7865a8-8379-4f7a-82b3-827012485d8a" target="_blank" style="text-decoration-color: transparent;">
+						<Button style="margin-left: 40px;">
+							Blog
 						</Button>
-					<!-- </a> -->
+					</a>
 
 					<a href="https://github.com/greatTA1998/explain" target="_blank" style="text-decoration-color: transparent;">
 						<div style="margin-left: 20px; margin-right: 20px;">
@@ -44,11 +44,11 @@
 		{#if active.label === 'Students'}
 			<div class="header-flex">
 				<p class="header-title">
-					The help you want — without wasted time
+					Youtube-style tutoring for classes
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Your psets should be an enjoyable challenge, not an all-consuming timesink.
+						Sometimes a 5-minute video can save a semester of misunderstandings
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -59,11 +59,10 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title">Teach what you enjoy, earn unbounded pay</p>	
+				<p class="header-title">Teach what you love & help students</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Let video explanations multiply your impact
-						and earn money for you
+						Your income reflects how many people you helped
 					</div>
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
@@ -83,8 +82,9 @@
 		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Hire classmates, former students & TAs for pset help through blackboard videos and remote tutoring — 
-					to support teachers when Office Hours is too busy
+					Hire someone good at explaining things for pset help, 
+					with a mix of blackboard videos and realtime tutoring — 
+					to support teachers when Office Hours is too busy.
 				</div>
 			</div>
 
@@ -157,7 +157,7 @@
 		{:else}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Create videos here on your stylus-tablet and upload them within <i>seconds</i>. 
+					Create videos with your stylus-tablet and upload them within <i>seconds</i> on a blackboard-video-centric website. 
 					Use voice chat + shared blackboards to directly communicate with students.
 				</div>
 			</div>
@@ -169,7 +169,7 @@
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
 				Because you get paid proportional to how many students you help, there's no limit on how high you get paid.
-				Too good to be true? Wrong! Explain takes a 10% cut.
+				Too good to be true? Wrong! Explain takes a 10% cut. You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
 				<br>
 				<br>
 
@@ -177,7 +177,7 @@
 			</div>
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
-	
+				<ReusableIncomeCalculator weeklyPrice={15}/>
 			</div>
 
 			<HowItWorksStep
@@ -206,14 +206,8 @@
 				Different students have different needs, so it can be challenging to ensure every student gets what they need.
 				But it could also be easy, with a little experimentation. For example, their common concerns about a pset problem, or a fundamental concept 
 				is often addressable with a recorded explanation. 
-				
-				You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
 				"
 			>
-				<div slot="step-description-slot">
-					<ReusableIncomeCalculator weeklyPrice={15}/>
-				</div>
-
 			</HowItWorksStep>
 		</div>
 	{/if}
@@ -221,7 +215,7 @@
 
 	<!-- BLOG SECTION -->
 	<div>
-		<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
+		<!-- <p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
 			Recent blogs
 		</p>
 
@@ -245,7 +239,7 @@
 					</Button>		
 				</a>
 			</div>	
-		</div>
+		</div> -->
 
 		<!-- <div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
 			<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

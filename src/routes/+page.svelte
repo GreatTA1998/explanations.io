@@ -3,19 +3,19 @@
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
-					<img src="logo.png" alt="logo" width="52" height="46" style="margin-left: 0px;">
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
 					</Title>
-					<!-- <a href="https://medium.com/mit-soul" target="_blank" style="text-decoration-color: transparent;">
-						<Button style="margin-left: 40px;">
-							Blog
-						</Button>
-					</a> -->
 				</Section>
 
 				<Section align="end" toolbar>
-					<a href="https://github.com/verypopularguy/explain" target="_blank" style="text-decoration-color: transparent;">
+					<!-- <a href="https://eltonlin.substack.com/" target="_blank" style="text-decoration-color: transparent;"> -->
+						<Button style="margin-left: 40px; color: grey;">
+							Blog (coming soon)
+						</Button>
+					<!-- </a> -->
+
+					<a href="https://github.com/greatTA1998/explain" target="_blank" style="text-decoration-color: transparent;">
 						<div style="margin-left: 20px; margin-right: 20px;">
 							<svg
 								style="color: white; filter: invert(1); width: 40px; height: 50px; margin-top: 16px; margin-left: 10px;"

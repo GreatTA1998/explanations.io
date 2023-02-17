@@ -1,6 +1,14 @@
 <div class="webflow-container" style="width: 95%">
   {#if classDoc}
     <div class="header-flex">
+      {#if $classDetailsDrawerWidth === 0}
+        <Button on:click={toggleClassDetailsDrawerWidth} style="margin-right: 16px">
+          <span class="material-icons" style="font-size: 3rem;">
+            start
+          </span>
+        </Button>  
+      {/if} 
+
       <div class="header-title">
         { classDoc.name } 
       </div>
@@ -109,8 +117,9 @@
   import Button, { Label } from '@smui/button';
   import { onDestroy, onMount, tick } from 'svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
-  import { user } from '../../../store.js'
+  import { user, classDetailsDrawerWidth } from '../../../store.js'
   import { goto } from '$app/navigation'
+  import { toggleClassDetailsDrawerWidth } from '../../../helpers/everythingElse.js'
   import ReusableButton from '$lib/ReusableButton.svelte'
 
   export let classID

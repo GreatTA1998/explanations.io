@@ -1,8 +1,16 @@
 {#if classTutorsDocs}
   <div style="margin-top: 3%; margin-bottom: 1%">
     <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-      Video portfolio of tutors
+      Example videos of tutors
     </h2>
+
+    <!-- TO-DO: fix -->
+    {#if isSubscribePopupOpen}
+      <PopupConfirmSubscription
+        on:popup-close={() => isSubscribePopupOpen = false}
+        on:confirm-clicked={() => handleConfirmSubscription(tutorDocBeingConsidered)}
+      />
+    {/if}   
 
     <div style="display: flex; overflow-x: auto;">
       {#each classTutorsDocs as tutorDoc}
@@ -31,18 +39,17 @@
                 </div>
               </div>
 
+              <div style="text-align: center; padding: 0; margin-top: 12px;">
+                <ReusableButton on:click={() => handleSubscribeButtonClick(tutorDoc)}>
+                  <div style="font-size: 0.8rem;">
+                    Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
+                  </div>
+                </ReusableButton>
+              </div>
+
               {#if $user.uid === tutorDoc.uid && price}
-                <div style="text-align: center; padding: 0; margin-top: 12px;">
-                  <ReusableButton on:click={handleSubscribeButtonClick}>
-                    <div style="font-size: 0.8rem;">
-                      Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
-                    </div>
-                  </ReusableButton>
-                </div>
-
                 <div style="margin-top: 12px;"></div>
-
-                <ReusableIncomeCalculator weeklyPrice={price} on:subscribe-click={handleSubscribeButtonClick}>
+                <ReusableIncomeCalculator weeklyPrice={price}>
                   <!-- <Slider/> doesn't emit events properly so I'm just avoiding the issue with <slot> -->
                   <div style="display: flex; align-items: center;">
                     <div style="font-family: sans-serif;">
@@ -58,22 +65,7 @@
                     />
                   </div>
                 </ReusableIncomeCalculator>
-              {:else}
-                <div style="text-align: center; padding: 0; margin-top: 12px;">
-                  <ReusableButton on:click={handleSubscribeButtonClick}>
-                    <div style="font-size: 0.8rem;">
-                      Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
-                    </div>
-                  </ReusableButton>
-                </div>
               {/if}
-
-              {#if isSubscribePopupOpen}
-                <PopupConfirmSubscription
-                  on:popup-close={() => isSubscribePopupOpen = false}
-                  on:confirm-clicked={() => handleConfirmSubscription(tutorDoc)}
-                />
-              {/if}   
 
               {#if isCardExpanded}
                 <div style="margin-top: 16px;"></div>
@@ -181,6 +173,7 @@
   let inputFieldLastName = ''
   let didUserAlreadySignUpAsTutor = false
   let isSubscribePopupOpen = false
+  let tutorDocBeingConsidered
 
   // DOES THIS COMPONENT ASSUME CLASS DOCS IS ALREADY HYDRATED?
   $: if (classTutorsDocs) {
@@ -213,7 +206,7 @@
     const eltonMobileNumber = '+15032503868'
     await promises.push(
       sendTextMessage({ 
-        content: `New student ${$user.name} subscribed for $${price}, confirm on Venmo`,
+        content: `New student ${$user.name} subscribed for $${price || 15}, confirm on Venmo`,
         toWho: tutor.phoneNumber
       }),
       sendTextMessage({
@@ -233,8 +226,9 @@
     )
   }
 
-  function handleSubscribeButtonClick () {
+  function handleSubscribeButtonClick (tutorDoc) {
     isSubscribePopupOpen = true
+    tutorDocBeingConsidered = tutorDoc 
   }
   
   const debouncedUpdateTutorWeeklyPrice = debounce(

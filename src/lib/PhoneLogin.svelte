@@ -39,7 +39,7 @@
   import { goto } from '$app/navigation'
 
   // take an "acceptInternationalNumbers" prop
-  export let canTakeInternationalNumbers
+  export let canTakeInternationalNumbers = false
 
 
   let appVerifier

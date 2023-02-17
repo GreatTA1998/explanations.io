@@ -4,7 +4,6 @@
       Example videos of tutors
     </h2>
 
-    <!-- TO-DO: fix -->
     {#if isSubscribePopupOpen}
       <PopupConfirmSubscription
         on:popup-close={() => isSubscribePopupOpen = false}
@@ -24,7 +23,7 @@
               </h2>
 
               <div style="font-family: sans-serif; display: flex; align-items: center;">
-                {tutorDoc.numOfStudents || 0} students, {tutorDoc.numOfVideos || 'n'} videos
+                {tutorDoc.numOfStudents || 0} students, {tutorDoc.numOfVideos || 0} videos
 
                 <div style="margin-right: 0; margin-left: auto;">
                   {#if !isCardExpanded}

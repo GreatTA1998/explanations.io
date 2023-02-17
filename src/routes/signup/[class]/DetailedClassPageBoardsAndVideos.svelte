@@ -28,6 +28,7 @@
                 canvasWidth={computedBoardWidth}
                 canvasHeight={computedBoardHeight}
                 on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
+                on:video-deleted={() => incrementNumOfVideos(-1, selectedTutorDoc)}
               />
             {:else if $user.uid === selectedTutorUID}
               <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
@@ -47,7 +48,10 @@
                 canvasWidth={computedBoardWidth}
                 canvasHeight={computedBoardHeight}
                 hasFullscreenButton={false}
-                on:video-uploaded={updateNewBlackboardLocation}
+                on:video-uploading={() => {
+                  incrementNumOfVideos(1, selectedTutorDoc)
+                  createNewBoard()
+                }}
               />
             {/if}
           {/if}
@@ -57,7 +61,7 @@
     
     {#if $user.uid === selectedTutorUID}
       <div class="card">
-        <div on:click={updateNewBlackboardLocation}
+        <div on:click={createNewBoard}
           style="
             display: flex; 
             justify-content: center; 
@@ -80,7 +84,7 @@
 <script>
   import { user } from '../../../store.js'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
-  import { createRoomDoc, createBoardDoc } from '../../../helpers/crud.js'
+  import { createRoomDoc, createBoardDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
   import { computeMaxAvailableDimensionsGeneral } from '../../../helpers/canvas.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
@@ -91,6 +95,7 @@
 
   export let classID
   export let selectedTutorUID 
+  export let selectedTutorDoc
   export let galleryBoardIDs
   export let classTutorsDocs
 
@@ -118,7 +123,13 @@
     })
   }
 
-  async function updateNewBlackboardLocation () {
+  function incrementNumOfVideos (howMuch, tutorDoc) {
+    updateFirestoreDoc(`classes/${classID}/tutors/${tutorDoc.id}`, {
+      numOfVideos: increment(howMuch)
+    })  
+  }
+
+  async function createNewBoard () {
     const db = getFirestore()
 
     let tutor

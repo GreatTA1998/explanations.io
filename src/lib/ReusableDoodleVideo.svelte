@@ -26,10 +26,13 @@
             <!-- boardDoc will always have a creatorUID because anonymous login -->
             {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
               <Button 
-                on:click={() => revertVideoToBoard(
-                  boardDoc, 
-                  () => deleteAllStrokesFromDb({ boardPath: boardDoc.path, strokesArray })
-                )} 
+                on:click={async () => { 
+                  await revertVideoToBoard(
+                    boardDoc, 
+                    () => deleteAllStrokesFromDb({ boardPath: boardDoc.path, strokesArray })
+                  )
+                  dispatch('video-deleted')
+                }} 
                 style="background-color: rgb(90 90 90 / 100%); color: white; margin-right: 10px;">
                 Delete
               </Button>
@@ -56,6 +59,7 @@
   import { user, adminUIDs } from '../store.js'
   import { revertVideoToBoard } from '../helpers/crud.js'
   import { deleteAllStrokesFromDb } from '../helpers/properDelete.js'
+  import { createEventDispatcher } from 'svelte'
 
   export let boardDoc
   export let boardDbPath = '' // 
@@ -63,4 +67,6 @@
   export let canvasHeight = maxAvailableHeight
 
   export let showEditDeleteButtons = true
+
+  const dispatch = createEventDispatcher()
 </script>

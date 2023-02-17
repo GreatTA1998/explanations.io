@@ -87,6 +87,7 @@
           {selectedTutorUID}
           {classTutorsDocs}
           {classID}
+          {selectedTutorDoc}
         />
       {/if}
     </RenderlessListenToRoom>
@@ -102,6 +103,7 @@
             {selectedTutorUID}
             {classTutorsDocs}
             {classID}
+            {selectedTutorDoc}
           />
         {/if}
       </RenderlessFetch>

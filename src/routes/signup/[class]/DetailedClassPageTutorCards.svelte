@@ -12,7 +12,7 @@
     {/if}   
 
     <div style="display: flex; overflow-x: auto;">
-      {#each classTutorsDocs as tutorDoc}
+      {#each sortedClassTutorsDocs as tutorDoc}
         <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
           <Card on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="min-height: 100px;" variant="outlined">
             <RenderlessLocalVariables let:isCardExpanded={isCardExpanded} let:toggleIsCardExpanded={toggleIsCardExpanded}>
@@ -23,7 +23,7 @@
               </h2>
 
               <div style="font-family: sans-serif; display: flex; align-items: center;">
-                {tutorDoc.numOfStudents || 0} students, {tutorDoc.numOfVideos || 0} videos
+                Subscribed {tutorDoc.numOfStudents || 0} times, {tutorDoc.numOfVideos || 0} videos
 
                 <div style="margin-right: 0; margin-left: auto;">
                   {#if !isCardExpanded}
@@ -99,7 +99,7 @@
                   Setup your shop
                 </h2>
                 <div style="font-family: sans-serif; display: flex; align-items: center;">
-                  Takes ~20 minutes
+                  Or just log back in
                   <Icon class="material-icons" style="margin-right: 0; font-size: 2.2rem; margin-left: auto;">
                     expand_more
                   </Icon>
@@ -165,6 +165,7 @@
   export let selectedTutorUID
   export let classID
 
+  let sortedClassTutorsDocs 
   const dispatch = createEventDispatcher()
   let checked = false
   let price
@@ -173,6 +174,8 @@
   let didUserAlreadySignUpAsTutor = false
   let isSubscribePopupOpen = false
   let tutorDocBeingConsidered
+
+
 
   // DOES THIS COMPONENT ASSUME CLASS DOCS IS ALREADY HYDRATED?
   $: if (classTutorsDocs) {
@@ -183,6 +186,8 @@
         if (!price) price = tutor.weeklyPrice || 15
       }
     }
+    const copy = [...classTutorsDocs]
+    sortedClassTutorsDocs = copy.sort((t1, t2) => (t2.numOfVideos || 0) - (t1.numOfVideos || 0))
   }
 
   $: if (price) {

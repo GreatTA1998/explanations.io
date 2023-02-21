@@ -82,9 +82,8 @@
 		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Hire someone good at explaining things for pset help, 
-					with a mix of blackboard videos and realtime tutoring — 
-					to support teachers when Office Hours is too busy.
+					Hire someone with a fresh way of explaining things for pset help - via blackboard videos and realtime tutoring — 
+					particularly when Office Hours is too busy.
 				</div>
 			</div>
 
@@ -157,8 +156,8 @@
 		{:else}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Create videos with your stylus-tablet and upload them within <i>seconds</i> on a blackboard-video-centric website. 
-					Use voice chat + shared blackboards to directly communicate with students.
+					Draw & talk with stylus-tablet to create video explanations directly on this website.
+					Use voice chat + shared blackboards to efficiently communicate with students.
 				</div>
 			</div>
 

@@ -4,7 +4,7 @@
   <div class="drawer-container">
     <Drawer style="overflow-y: auto; height: 100%; width: {$classDetailsDrawerWidth}px; box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%);">
         <List>
-          <div style="display: flex; align-items: center; padding-left: 6px;">
+          <div style="display: flex; align-items: center; padding-left: 6px; border-bottom: 1px solid grey; height: 50px; padding-bottom: 7px;">
             <img 
               on:click={redirectToHomePage} 
               src="../logo.png" width="52" height="46" 

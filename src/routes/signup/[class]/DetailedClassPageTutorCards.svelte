@@ -1,7 +1,7 @@
 {#if classTutorsDocs}
   <div style="margin-top: 3%; margin-bottom: 1%">
     <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-      Example videos of tutors
+      Available shops
     </h2>
 
     {#if isSubscribePopupOpen}

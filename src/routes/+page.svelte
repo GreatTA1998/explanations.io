@@ -44,11 +44,11 @@
 		{#if active.label === 'Students'}
 			<div class="header-flex">
 				<p class="header-title">
-					Youtube-style tutoring for classes
+					Youtube-style pset help
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Sometimes a 5-minute video can save a semester of misunderstandings
+						Sometimes 5-minute videos can save a semester of misunderstandings
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -82,8 +82,9 @@
 		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Hire someone with a fresh way of explaining things for pset help - via blackboard videos and realtime tutoring — 
-					particularly when Office Hours is too busy.
+					Subscribe to people whose explanations are easy-to-understand — 
+					so you are equipped with the fundamentals needed to solve the psets without spending an
+					agonizing amount of time. 
 				</div>
 			</div>
 
@@ -359,7 +360,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Students', icon: 'hail'}, { label: 'Tutors', icon: 'local_taxi'}]
+	let tabs = [{ label: 'Students', icon: 'hail'}, { label: 'Youtubers', icon: 'local_taxi'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {

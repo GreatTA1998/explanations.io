@@ -1,15 +1,8 @@
 const functions = require("firebase-functions");
 const firebase_tools = require("firebase-tools");
 
-// const accountSid = import.meta.env.VITE_TWILIO_ACCOUNT_SID
-// const authToken = import.meta.env.VITE_TWILIO_AUTH_TOKEN
-
-const accountSid = functions.config().twilio.accountsid
-const authToken = functions.config().twilio.authtoken
-
-const client = require('twilio')(accountSid, authToken)
-
 exports.sendTextMessage = functions.https.onCall((data, context) => {
+  const client = require('twilio')(process.env.TWILIO_ACCOUNTSID, process.env.TWILIO_AUTHTOKEN)
   const { content, toWho } = data;
   console.log('content =', content)
   console.log("toWho =", toWho)

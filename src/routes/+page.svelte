@@ -3,28 +3,28 @@
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
-					<img src="logo.png" alt="logo" width="52" height="46" style="margin-left: 0px;">
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
 					</Title>
-					<!-- <a href="https://medium.com/mit-soul" target="_blank" style="text-decoration-color: transparent;">
-						<Button style="margin-left: 40px;">
-							Blog
-						</Button>
-					</a> -->
 				</Section>
 
 				<Section align="end" toolbar>
-					<a href="https://github.com/verypopularguy/explain" target="_blank" style="text-decoration-color: transparent;">
+					<a href="https://eltonlin.substack.com/p/ef7865a8-8379-4f7a-82b3-827012485d8a" target="_blank" style="text-decoration-color: transparent;">
+						<Button style="margin-left: 40px;">
+							Blog
+						</Button>
+					</a>
+
+					<a href="https://github.com/greatTA1998/explain" target="_blank" style="text-decoration-color: transparent;">
 						<div style="margin-left: 20px; margin-right: 20px;">
 							<svg
 								style="color: white; filter: invert(1); width: 40px; height: 50px; margin-top: 16px; margin-left: 10px;"
 								xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
 						</div>
 					</a>
-					<Button variant="outlined">
+					<!-- <Button variant="outlined">
 						Log in
-					</Button>
+					</Button> -->
 				</Section>
 			</Row>
 		</TopAppBar>
@@ -32,6 +32,7 @@
 </div>
 
 <AutoAdjust {topAppBar}>
+	<TopBannerWarnExperimental/>
 	<TabBar tabs={tabs} let:tab bind:active style="background-color: rgb(238, 238, 238)" variant="dense">
 		<Tab {tab} stacked minWidth indicatorSpanOnlyContent>
 			<Icon class="material-icons">{tab.icon}</Icon>
@@ -43,11 +44,11 @@
 		{#if active.label === 'Students'}
 			<div class="header-flex">
 				<p class="header-title">
-					The help you want — without wasted time
+					Youtube-style tutoring for classes
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Your psets should be an enjoyable challenge, not an overwhelming timesink.
+						Sometimes a 5-minute video can save a semester of misunderstandings
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -58,11 +59,10 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title">Teach what you enjoy, earn unbounded pay</p>	
+				<p class="header-title">Teach what you love & help students</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Let video explanations multiply your impact
-						and earn money for you
+						Your income reflects how many people you helped
 					</div>
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
@@ -82,8 +82,8 @@
 		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Get pset help efficiently through blackboard videos and remote tutoring — when
-					Office Hours is too busy.
+					Hire someone with a fresh way of explaining things for pset help - via blackboard videos and realtime tutoring — 
+					particularly when Office Hours is too busy.
 				</div>
 			</div>
 
@@ -92,10 +92,11 @@
 				<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 					How it works
 				</div>
-				
+				<!-- from how classes normally present the material -->
+				<!-- to hear things explained with a different perspective -->
 				<div class="webflow-paragraph-1" style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; margin-top: 1px; opacity: 0.8;">
-					We actively recruit former students who can explain things with a fresh perspective from how classes normally present the material; because the videos can efficiently benefit everyone with no additional effort, 
-					it is then possible for tutors to personally address your remaining questions, until nothing is left unexplained.
+					<!-- Here you can hire classmates, former students & TAs for pset help; because video help is efficient, 
+					it also frees up time for your tutor to help you until nothing is left unexplained.  -->
 					<br>
 					<br>
 
@@ -155,8 +156,8 @@
 		{:else}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Create videos here on your stylus-tablet and upload them within <i>seconds</i>. 
-					Use voice chat + shared blackboards to directly communicate with students.
+					Draw & talk with stylus-tablet to create video explanations directly on this website.
+					Use voice chat + shared blackboards to efficiently communicate with students.
 				</div>
 			</div>
 
@@ -167,7 +168,7 @@
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
 				Because you get paid proportional to how many students you help, there's no limit on how high you get paid.
-				Too good to be true? Wrong! Explain takes a 10% cut.
+				Too good to be true? Wrong! Explain takes a 10% cut. You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
 				<br>
 				<br>
 
@@ -175,7 +176,7 @@
 			</div>
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
-	
+				<ReusableIncomeCalculator weeklyPrice={15}/>
 			</div>
 
 			<HowItWorksStep
@@ -203,19 +204,9 @@
 				description="
 				Different students have different needs, so it can be challenging to ensure every student gets what they need.
 				But it could also be easy, with a little experimentation. For example, their common concerns about a pset problem, or a fundamental concept 
-				is often addressable with a recorded explanation.
+				is often addressable with a recorded explanation. 
 				"
 			>
-				<div slot="step-description-slot">
-					<ul>
-						Your earning is approximately O(n). Here are realistic estimates: 
-						<li>1 student: $20/week => $20/hour if work 1 hour</li>
-						<li>2 students: $40/week => $26/hour if work 1.5 hours</li>
-						<li>10 students: $200/week => $50/hour if work 4 hours</li>
-						<li>n students: $20n/week</li>
-					</ul>
-				</div>
-
 			</HowItWorksStep>
 		</div>
 	{/if}
@@ -223,7 +214,7 @@
 
 	<!-- BLOG SECTION -->
 	<div>
-		<p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
+		<!-- <p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
 			Recent blogs
 		</p>
 
@@ -247,7 +238,7 @@
 					</Button>		
 				</a>
 			</div>	
-		</div>
+		</div> -->
 
 		<!-- <div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
 			<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -343,6 +334,8 @@
 </AutoAdjust>
 
 <script>	
+	import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
+	import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte'
 	import ImageGallery from '../lib/ImageGallery.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'

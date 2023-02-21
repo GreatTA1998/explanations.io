@@ -28,8 +28,8 @@
             on:background-reset={() => resetBackgroundImage(boardID)}
             on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
             on:board-wipe={deleteAllStrokesFromDb}
-            on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
           >
+            <!-- on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)} -->
             <RenderlessAudioRecorder
               let:startRecording={startRecording} 
               let:stopRecording={stopRecording}
@@ -147,6 +147,8 @@
   }
 
   async function saveVideo (audioBlob, strokesArray, boardID) {
+    dispatch('video-uploading')
+
     // QUICK-FIX for concurrent drawings with no timestamp 
     // TODO: fails for edge case when all starting strokes are consecutively from other person
     function hasValidTimestamp (stroke) {
@@ -204,8 +206,6 @@
       }),
       updateRecordState(boardID, 'pre_record')
     ])
-
-    dispatch('video-uploaded')
 
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)

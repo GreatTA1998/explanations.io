@@ -1,58 +1,46 @@
 <div class="webflow-container" style="width: 95%">
   {#if classDoc}
     <div class="header-flex">
+      {#if $classDetailsDrawerWidth === 0}
+        <Button on:click={toggleClassDetailsDrawerWidth} style="margin-right: 16px">
+          <span class="material-icons" style="font-size: 3rem;">
+            start
+          </span>
+        </Button>  
+      {/if} 
+
       <div class="header-title">
         { classDoc.name } 
-        <!-- { classDoc.description } -->
       </div>
 
-      <!-- class="header-subcopy-wrapper" -->
       <div style="display: flex; align-items: center; width: 70%; margin-left: 4%; margin-top: 2%;">
-        {#if classID === 'lvzQqyZIV1wjwYnRV9hn'}
-          <Button on:click={() => handleLoginAndEnterServer({ classID })} color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
-            <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
+        <slot name="past-videos-button">
+          
+        </slot> 
+
+        {#if isSubscriber || isTutor}
+          <Button on:click={() => goto(`/${classID}/${classID}`)} color="secondary" variant="outlined" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
+            <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
               Spring '23 server
             </Label>
           </Button>
-        {/if}
-
-        <slot name="past-videos-button">
-          
-        </slot>
-
-        <Button on:click={() => isExplainTutoringPopupOpen = true} color="secondary" variant="outlined" style="height: 60px; margin-bottom: 2rem; border-radius: 0px;">
-          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; border-radius: 6px; font-weight: 600">
-            Youtube-style tutoring: ${price}/week
-          </Label>
-        </Button>
-
-        {#if isExplainTutoringPopupOpen}
-          <!-- <BasePopup>
-            <h2 slot="title">Explain-style tutoring</h2>
-
-            <div slot="popup-content">
-              Information: 
-                - How to pay: Venmo elton-lin-2 with description "14.01 and your phone number" 
-                - Refund policy: can refund anytime for any reason
-
-                  <div class="header-subcopy">
-                The platform covers refunds anytime, any reason - so both student & tutor are protected
-              </div>
+        {:else}
+          <div class="header-subcopy-wrapper">
+            <div class="header-subcopy">
+              During the semester, the server is subscribers-only.
+              After the semester is over, all videos are freely accessible forever.
             </div>
-
-            <Button slot="popup-buttons">
-
+            <Button disabled color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
+              <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
+                Spring '23 server
+              </Label>
             </Button>
-          </BasePopup> -->
+          </div>
         {/if}
-  
-        <slot name="private-tutoring-button">
-
-        </slot>
       </div>
     </div>
 
-    {#if classID === 'cLF9unbCuplsl3JmHRbu'}
+    <!-- {#if classID === 'cLF9unbCuplsl3JmHRbu'}
       <div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
         <iframe 
           style="margin-bottom: 30px;" 
@@ -74,7 +62,7 @@
           </a>
         </div>	
       </div>
-    {/if}
+    {/if} -->
 
     <slot name="editorial-or-blog-paragraph">
       <!-- CAN INCLUDE YOUTUBE FOR SHAUNTICLAIR -->
@@ -99,6 +87,7 @@
           {selectedTutorUID}
           {classTutorsDocs}
           {classID}
+          {selectedTutorDoc}
         />
       {/if}
     </RenderlessListenToRoom>
@@ -114,6 +103,7 @@
             {selectedTutorUID}
             {classTutorsDocs}
             {classID}
+            {selectedTutorDoc}
           />
         {/if}
       </RenderlessFetch>
@@ -129,12 +119,13 @@
   import Button, { Label } from '@smui/button';
   import { onDestroy, onMount, tick } from 'svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
-  import { user } from '../../../store.js'
+  import { user, classDetailsDrawerWidth } from '../../../store.js'
   import { goto } from '$app/navigation'
+  import { toggleClassDetailsDrawerWidth } from '../../../helpers/everythingElse.js'
+  import ReusableButton from '$lib/ReusableButton.svelte'
 
   export let classID
   export let isNewlyOfferedClass = true
-  export let price = 20
   export let fetchVideosFunc
 
   let classDoc
@@ -144,8 +135,8 @@
 
   let unsubTutorsListener
 
-  let galleryBoardIDs
-  let isExplainTutoringPopupOpen = false
+  $: isSubscriber = $user.idsOfSubscribedClasses ? $user.idsOfSubscribedClasses.includes(classID) : false
+  $: isTutor = $user.idsOfTutoringClasses ? $user.idsOfTutoringClasses.includes(classID) : false
 
   onMount(async () => {
     if (unsubTutorsListener) unsubTutorsListener()

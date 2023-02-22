@@ -109,7 +109,7 @@
 				</div> -->
 				<HowItWorksStep
 					title="Step 1"
-					subtitle="Open the website to type a question"
+					subtitle="Type a question in the class server"
 					description="Ask about pset questions, important concepts, anything."
 				>					
 					<img src="https://i.imgur.com/TYkGFHO.gif" width="{Math.min(w, 600)}" height="{Math.min(w, 600) * 1/5}" style="margin-top: 50px;">
@@ -118,7 +118,7 @@
 
 				<HowItWorksStep
 					title="Step 2"
-					subtitle="Your tutor responds with a blackboard video"
+					subtitle="Your subscribed tutor will respond with a video"
 					description="Reponse time differs depending on the arrangement set by you and your tutor. It will also depend on the situation e.g. faster response when there's an upcoming pset deadline."
 				>
 					<div style="display: flex; justify-content: space-evenly; justify-content: space-between">
@@ -137,28 +137,39 @@
 
 				<HowItWorksStep
 					title="Step 3"
-					subtitle="Follow-up over comments & voice chat"
-					description="You can ask follow-up questions via the comments section on the video.
-					You can also directly voice chat over shared blackboards."
+					subtitle="Ask further questions about the video using comments"
+					description="Every video has a comments section. If you and your tutor are 
+					on the comments section at the same time, you can instead choose to
+					join the voice chat and talk over any shared board"
 				>
 					<img src="https://i.imgur.com/8tnRfRB.gif" height="{Math.min(0.5 * w, 0.5 * 600) * 4/10}" width="{Math.min(0.5 * w, 0.5 * 600)}" style="margin-top: 50px;">
 				</HowItWorksStep>
 
+				
 				<HowItWorksStep
 					title="Step 4"
+					subtitle="Setup a regular upload-schedule"
+					description="Suppose you start 18.06 psets every Friday, because it's due Sunday.
+					Knowing this, your tutor can regularly upload videos before Friday, and reactively upload more videos and reply to comments 
+					over Saturday and Sunday."
+				>					
+				</HowItWorksStep>
+
+				<!-- <HowItWorksStep
+					title="Step 5"
 					subtitle="Re-watch any explanations in the server"
 					description="Within the server, all explanations are shared. This means every student benefits from each others' questions and their tutors' resultant videos. The server is restricted to paying students during the semester; afterwards it becomes freely accessible on the internet."	
 				>
 					<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
 						Explore last semester's 14.01 server
 					</Button>
-				</HowItWorksStep>
+				</HowItWorksStep> -->
 			</div>
 		{:else}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Draw & talk with stylus-tablet to create video explanations directly on this website.
-					Use voice chat + shared blackboards to efficiently communicate with students.
+					Draw & talk on any iPad-like device to create video explanations directly on this website.
+					Blackboard videos are lightweight, easily re-organizable and (soon to be) editable even after it's uploaded.
 				</div>
 			</div>
 
@@ -182,21 +193,24 @@
 
 			<HowItWorksStep
 				title="Step 1"
-				subtitle="Start with 1 student"
-				description="Depending on preferenes, you can tutor in-person, remotely, or asynchronously via videos"
-			/>
+				subtitle="Setup a shop with your example videos"
+				description="Putting up examples of how you explain things give potential subscribers a low pressure way to get to know your style of teaching and
+				whether it will be helpful for them. They do *not* need to be neat and well-edited, you can just talk and draw as if explaining to someone beside you casually.
+				"
+			>
+			<iframe 
+				src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="{Math.min(w, 600)}" height="{0.6 * Math.min(w, 600)}"
+				style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+			</iframe> 
+			</HowItWorksStep>
 
 			<HowItWorksStep
 				title="Step 2"
-				subtitle="Leverage video explanations wisely"
-				description="You start to use more video explanations (like Sal Khan and his nephew),
-						this brings more flexibility into your work hours e.g. get your work out of the way in the morning,
-						and commuting in the snow is no longer necessary"
+				subtitle="Agree on a regular upload schedule with your earliest subscribers"
+				description="For example, you and your subscribers could agree to have pre-uploaded videos every Friday
+				and reactively upload videos and reply to comments as needed until the deadline on Sunday."
 			>
-				<iframe 
-					src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="{Math.min(w, 600)}" height="{0.6 * Math.min(w, 600)}"
-					style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-				</iframe> 
+		
 			</HowItWorksStep>
 
 			<HowItWorksStep

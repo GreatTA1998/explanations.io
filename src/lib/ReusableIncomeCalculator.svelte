@@ -3,7 +3,6 @@
 
 </slot>
 
-
 <div style="margin-top: 14px; display: flex; align-items: center; width: 100%">
   <pre class="status">{numOfSubs} students</pre>
   <Slider

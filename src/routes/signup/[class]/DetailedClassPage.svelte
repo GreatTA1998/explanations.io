@@ -130,6 +130,7 @@
 
   let classDoc
   let classTutorsDocs = null
+  let sortedClassTutorsDocs = null
   let selectedTutorUID = null
   let selectedTutorDoc
 
@@ -145,12 +146,11 @@
 
     // by default select the first tutor's shop gallery
     if (classTutorsDocs.length > 0) {
-      selectedTutorUID = classTutorsDocs[0].uid
-      for (const tutorDoc of classTutorsDocs) {
-        if (tutorDoc.uid === selectedTutorUID) {
-          selectedTutorDoc = tutorDoc
-        }
-      }
+      const copy = [...classTutorsDocs]
+      sortedClassTutorsDocs = copy.sort((t1, t2) => (t2.numOfVideos || 0) - (t1.numOfVideos || 0))
+
+      selectedTutorDoc = sortedClassTutorsDocs[0]
+      selectedTutorUID = sortedClassTutorsDocs[0].uid
     }
   })
 

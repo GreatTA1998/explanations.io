@@ -77,21 +77,22 @@
         </div>
       </div>
     {/if}
-
   {/if}
 </div>
 
 <script>
-  import { user } from '../../../store.js'
+  import { user, classDetailsDrawerWidth  } from '../../../store.js'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { createRoomDoc, createBoardDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
   import { computeMaxAvailableDimensionsGeneral } from '../../../helpers/canvas.js'
+  import { drawerExpandedWidth } from '../../../helpers/everythingElse.js'
+  import { debounce } from '../../../helpers/utility.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
-  import { createEventDispatcher, onMount } from 'svelte';
   import DoodleVideoCommentsSection from '$lib/DoodleVideoCommentsSection.svelte'
+  import { createEventDispatcher, onMount } from 'svelte';
 
   export let classID
   export let selectedTutorUID 
@@ -106,11 +107,17 @@
   let computedBoardWidth
   let computedBoardHeight
 
-  onMount(() => {
+  let debouncedResizeHandler = debounce(resizeHandler, 500)
+
+  $: if ($classDetailsDrawerWidth === 0 || $classDetailsDrawerWidth === drawerExpandedWidth) {
+    debouncedResizeHandler()
+  }
+
+  function resizeHandler () {
     const { height, width} = computeMaxAvailableDimensionsGeneral(carouselWidth, carouselHeight) // 4.4 is not a typo // carouselWidth * 3/4.4
     computedBoardWidth = width
     computedBoardHeight = height 
-  })
+  }
 
   const boardsCollectionDbPath = `classes/${classID}/blackboards/`
   // Video ideas: give big picture of the class, explain a commonly misunderstood concept, solve an example question, include links to your outside work.
@@ -150,14 +157,7 @@
     // all we had to do is just create the docs here
   }
 
-  // DEBOUNCED RELATED FUNCTIONS 
-  async function debouncedUpdateBoardDescription ({ detail }, id) {
-    const debouncedVersion = debounce(
-      () => updateBoardDescription({ detail }, id),
-      3000
-    ) 
-    debouncedVersion({ detail }, id)
-  }
+  let debouncedUpdateBoardDescription = debounce(updateBoardDescription, 2000)
 
   async function updateBoardDescription ({ detail }, id) {
     const boardsDbPath = `classes/${classID}/blackboards/`
@@ -166,48 +166,6 @@
     await updateDoc(boardRef, {
       description: detail
     })
-  }
-
-  async function debouncedUpdateTutorBio ({ detail }, id) {
-    const debouncedVersion = debounce(
-      () => updateTutorBio({ detail }, id),
-      3000
-    ) 
-    debouncedVersion({ detail }, id)
-  }
-
-  async function updateTutorBio ({ detail }, idNotUID) {
-    const tutorRef = doc(getFirestore(), `classes/${classID}/tutors/${idNotUID}`)
-    updateDoc(tutorRef, {
-      bio: detail
-    })
-  }
-
-  // WARNING: COULD BE DANGEROUS THAT THE DEBOUNCED VARIABLE T IS SHARED BETWEEN TWO FUNCTIONS, THEY COULD DEBOUNCE EACH OTHER WHICH IS BAD
-  let t = { promise: null, cancel: _ => void 0 }
-
-  // Snippet from: https://stackoverflow.com/a/68228099/7812829
-  // NOTE: this literally returns a function (you still have to call it)
-  function debounce (task, ms) {
-    return async (...args) => {
-      try {
-        t.cancel()
-        t = deferred(ms)
-        await t.promise
-        await task(...args)
-      }
-      catch (_) { 
-        /* prevent memory leak */ 
-      }
-    }
-  }
-
-  function deferred (ms) {
-    let cancel, promise = new Promise((resolve, reject) => {
-      cancel = reject
-      setTimeout(resolve, ms)
-    })
-    return { promise, cancel }
   }
 </script>
 

@@ -79,7 +79,7 @@
 			<ImageGallery/>
 		</div>
 
-		{#if active.label === 'Students'}
+		{#if active.label === 'Viewers'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Subscribe to people whose explanations are easy-to-understand — 

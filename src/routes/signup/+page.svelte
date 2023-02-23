@@ -1,7 +1,6 @@
 <DetailedClassPage
   isNewlyOfferedClass={false}
   fetchVideosFunc={fetchTopFiveVideos}
-  price={1}
   classID={'Mev5x66mSMEvNz3rijym'}
 >
 

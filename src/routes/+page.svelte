@@ -33,7 +33,7 @@
 
 <AutoAdjust {topAppBar}>
 	<TopBannerWarnExperimental/>
-	<TabBar tabs={tabs} let:tab bind:active style="background-color: rgb(238, 238, 238)" variant="dense">
+	<TabBar tabs={tabs} let:tab bind:active variant="dense">
 		<Tab {tab} stacked minWidth indicatorSpanOnlyContent>
 			<Icon class="material-icons">{tab.icon}</Icon>
 			<Label>{tab.label}</Label>
@@ -41,7 +41,7 @@
 	</TabBar>
 	
 	<div class="webflow-container">
-		{#if active.label === 'Students'}
+		{#if active.label === 'Viewers'}
 			<div class="header-flex">
 				<p class="header-title">
 					Youtube-style pset help
@@ -374,7 +374,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Students', icon: 'hail'}, { label: 'Youtubers', icon: 'local_taxi'}]
+	let tabs = [{ label: 'Viewers', icon: 'person'}, { label: 'Helpers', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {

@@ -1,4 +1,9 @@
-<Button on:click color="secondary" variant="raised" 
+<!-- {color} prop are defined by _smui-theme.scss 
+    e.g. primary, secondary, error
+-->
+<Button on:click 
+  {color} 
+  {variant}
   {disabled}
   style="height: 40px; border-radius: 0px; width: 100%;"
 >
@@ -13,4 +18,6 @@
   import Button, { Label } from '@smui/button';
 
   export let disabled = false
+  export let color = "secondary"
+  export let variant = "raised"
 </script>

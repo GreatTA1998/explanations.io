@@ -11,6 +11,13 @@
       />
     {/if}   
 
+    {#if isTrialPopupOpen}
+      <PopupConfirmTrial
+        on:popup-close={() => isTrialPopupOpen = false}
+        on:confirm-clicked={() => handleConfirmTrial(tutorDocBeingConsidered)}
+      />
+    {/if}
+
     <div style="display: flex; overflow-x: auto;">
       {#each sortedClassTutorsDocs as tutorDoc}
         <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
@@ -42,6 +49,14 @@
                 <ReusableButton on:click={() => handleSubscribeButtonClick(tutorDoc)}>
                   <div style="font-size: 0.8rem;">
                     Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
+                  </div>
+                </ReusableButton>
+              </div>
+
+              <div style="text-align: center; padding: 0; margin-top: 12px;">
+                <ReusableButton on:click={() => handleTrialButtonClick(tutorDoc)} variant="outlined">
+                  <div style="font-size: 0.8rem;">
+                    Try for $1 + tip
                   </div>
                 </ReusableButton>
               </div>
@@ -160,6 +175,7 @@
   import ReusableButton from '$lib/ReusableButton.svelte'
   import Slider from '@smui/slider'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte';
+  import PopupConfirmTrial from '$lib/PopupConfirmTrial.svelte'
 
   export let classTutorsDocs
   export let selectedTutorUID
@@ -173,8 +189,8 @@
   let inputFieldLastName = ''
   let didUserAlreadySignUpAsTutor = false
   let isSubscribePopupOpen = false
+  let isTrialPopupOpen = false
   let tutorDocBeingConsidered
-
 
 
   // DOES THIS COMPONENT ASSUME CLASS DOCS IS ALREADY HYDRATED?
@@ -201,7 +217,35 @@
     }
     debouncedUpdateTutorWeeklyPrice(price, tutorDocID)
   }
-  
+
+  async function handleConfirmTrial (tutor) {
+    isTrialPopupOpen = false
+    const promises = [] 
+
+  // NOTE: Twilio's requirement differs from Firebase Auth, which requires +1 XXX-XXX-XXX hyphen format
+    const eltonMobileNumber = '+15032503868'
+    await promises.push(
+      sendTextMessage({ 
+        content: `New student ${$user.name} signed up for "$1 + tip" trial, confirm on Venmo`,
+        toWho: tutor.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Confirmed for class, you can now enter the server and start asking questions`,
+        toWho: $user.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Student ${$user.name} is trialing with tutor ${tutor.name}`,
+        toWho: eltonMobileNumber
+      }),
+      updateFirestoreDoc(`/users/${$user.uid}`, {
+        idsOfSubscribedClasses: arrayUnion(classID)
+      }),
+      updateFirestoreDoc(`/classes/${classID}/tutors/${tutor.id}`, {
+        numOfStudents: increment(1)
+      })
+    )
+  }
+
   async function handleConfirmSubscription (tutor) {
     isSubscribePopupOpen = false
     const promises = []
@@ -235,6 +279,11 @@
     tutorDocBeingConsidered = tutorDoc 
   }
   
+  function handleTrialButtonClick (tutorDoc) {
+    isTrialPopupOpen = true
+    tutorDocBeingConsidered = tutorDoc
+  }
+
   const debouncedUpdateTutorWeeklyPrice = debounce(
     updateTutorWeeklyPrice,
     1000

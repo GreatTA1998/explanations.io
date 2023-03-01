@@ -28,6 +28,7 @@
                 canvasWidth={computedBoardWidth}
                 canvasHeight={computedBoardHeight}
                 on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
+                on:video-rearrange
                 on:video-deleted={() => incrementNumOfVideos(-1, selectedTutorDoc)}
               />
             {:else if $user.uid === selectedTutorUID}

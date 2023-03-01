@@ -132,9 +132,10 @@
                       Upvote
                     </Button>
                   {/if}
-
+                  
                   <div style="
-                    margin-left: {$maxAvailableWidth - 240 - 164}px; 
+                    margin-left: auto;
+                    margin-right: 8px; 
                     display: flex; 
                     align-items: center; 
                     flex-direction: row-reverse"
@@ -151,6 +152,12 @@
                         draggable="true" on:dragstart={(e) => dragstart_handler(e, boardID, i)}
                         style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
                         Move
+                      </Button>
+
+                      <Button 
+                        on:click={() => shopifyVideo(boardDoc)}
+                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
+                        Shopify
                       </Button>
                     {/if}
                   </div>
@@ -283,13 +290,14 @@
 
 <script>
   import '$lib/_FourColor.scss'
+  import { portal, lazyCallable } from '../../../helpers/actions.js'
+  import { getFirestoreDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import { onMount, tick, onDestroy } from 'svelte'
   import Button, { Icon } from '@smui/button'
-  import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
   import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
@@ -322,6 +330,30 @@
   $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
   $: roomID, createRoomListener() // Yes, reactive statements DO trigger on initial assignment
 
+  onDestroy(() => {
+    unsubRoomListener()
+  })
+
+  async function shopifyVideo (boardDoc) {
+    // PART 1: all the code is for `maxShopGalleryOrder`
+    let tutorDoc 
+    const db = getFirestore()
+    const tutorsRef = collection(db, `classes/${classID}/tutors`)
+    const q = query(tutorsRef, where('uid', '==', $user.uid));
+    const querySnapshot = await getDocs(q) 
+    if (querySnapshot.empty) {
+      alert('Cannot shopify video as non-teacher')
+      return
+    }
+    querySnapshot.forEach((doc) => {
+      tutorDoc = doc.data()
+    })
+
+    await updateFirestoreDoc(boardDoc.path, {
+      shopGalleryOrder: tutorDoc.maxShopGalleryOrder || 1
+    })
+  }
+
   async function createRoomListener () {
     if (unsubRoomListener) unsubRoomListener() // assume it's not async
     unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
@@ -333,10 +365,6 @@
       }
     })
   }
-
-  onDestroy(() => {
-    unsubRoomListener()
-  })
 
   // TODO: rename to reflect sequential nature of operations
   async function callManyFuncs (...funcs) {

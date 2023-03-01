@@ -71,6 +71,7 @@
 
   <DetailedClassPageTutorCards 
     {classTutorsDocs}
+    {selectedTutorDoc}
     {selectedTutorUID} on:input={e => onTutorCardSelect(e)}
     {classID}
   />
@@ -93,12 +94,15 @@
     </RenderlessListenToRoom>
   {/key}
 {:else}
+  <!-- This one is the hard-coded version -->
+
   <!-- `key` needed to need to refetch new videos when different tutors are clicked --> 
   {#key selectedTutorUID}
     {#if classTutorsDocs && selectedTutorUID}
-      <RenderlessFetch {fetchVideosFunc} {selectedTutorUID} let:galleryBoardIDs={galleryBoardIDs}>
+      <RenderlessFetch {fetchVideosFunc} {selectedTutorUID} {classID} let:galleryBoardIDs={galleryBoardIDs}>
         {#if galleryBoardIDs}
           <DetailedClassPageBoardsAndVideos
+            on:video-rearrange={() => isRearrangeVideosPopupOpen = true}
             {galleryBoardIDs}
             {selectedTutorUID}
             {classTutorsDocs}
@@ -111,9 +115,17 @@
   {/key}
 {/if}
 
+{#if isRearrangeVideosPopupOpen}
+  <PopupRearrangeVideos
+    on:popup-close={() => isRearrangeVideosPopupOpen = false}
+    on:confirm-clicked={() => {}}
+  />
+{/if}
+
 <script>
   import DetailedClassPageTutorCards from './DetailedClassPageTutorCards.svelte'
   import DetailedClassPageBoardsAndVideos from './DetailedClassPageBoardsAndVideos.svelte'
+  import PopupRearrangeVideos from '$lib/PopupRearrangeVideos.svelte'
   import RenderlessListenToRoom from './RenderlessListenToRoom.svelte'
   import RenderlessFetch from './RenderlessFetch.svelte'
   import Button, { Label } from '@smui/button';
@@ -133,8 +145,8 @@
   let sortedClassTutorsDocs = null
   let selectedTutorUID = null
   let selectedTutorDoc
-
   let unsubTutorsListener
+  let isRearrangeVideosPopupOpen = false
 
   $: isSubscriber = $user.idsOfSubscribedClasses ? $user.idsOfSubscribedClasses.includes(classID) : false
   $: isTutor = $user.idsOfTutoringClasses ? $user.idsOfTutoringClasses.includes(classID) : false

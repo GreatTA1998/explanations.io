@@ -85,6 +85,7 @@
                 <div style="margin-top: 16px;"></div>
 
                 {#if $user.uid === tutorDoc.uid}
+                  <input value={tutorDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value, tutorDoc.id)} placeholder="venmo here e.g. elton-lin-2"/>
                   <TextAreaAutoResizing 
                     value={tutorDoc.bio || ''} 
                     on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
@@ -96,6 +97,9 @@
                   />
                 {:else}
                   <div style="font-family: sans-serif; font-size: 1rem;">
+                    Venmo: {tutorDoc.venmo || '[Venmo listed in bio]'}
+                  </div>
+                  <div style="margin-top: 12px; font-family: sans-serif; font-size: 1rem;">
                     {tutorDoc.bio || 'No bio yet'}
                   </div>
                 {/if}
@@ -178,6 +182,7 @@
   import PopupConfirmTrial from '$lib/PopupConfirmTrial.svelte'
 
   export let classTutorsDocs
+  export let selectedTutorDoc
   export let selectedTutorUID
   export let classID
 
@@ -191,7 +196,11 @@
   let isSubscribePopupOpen = false
   let isTrialPopupOpen = false
   let tutorDocBeingConsidered
+  let inputFieldVenmo = ''
 
+  $: if (inputFieldVenmo) {
+    debouncedUpdateTutorVenmo(inputFieldVenmo, selectedTutorDoc.id)
+  }
 
   // DOES THIS COMPONENT ASSUME CLASS DOCS IS ALREADY HYDRATED?
   $: if (classTutorsDocs) {
@@ -288,6 +297,17 @@
     updateTutorWeeklyPrice,
     1000
   )
+
+  const debouncedUpdateTutorVenmo = debounce(
+    updateTutorVenmo, 
+    1000
+  )
+
+  function updateTutorVenmo (venmo, idNotUID) {
+    updateFirestoreDoc(`classes/${classID}/tutors/${idNotUID}`, {
+      venmo
+    })
+  }
 
   function updateTutorWeeklyPrice (weeklyPrice, idNotUID) {
     const tutorRef = doc(getFirestore(), `classes/${classID}/tutors/${idNotUID}`)

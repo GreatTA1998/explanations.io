@@ -132,9 +132,10 @@
                       Upvote
                     </Button>
                   {/if}
-
+                  
                   <div style="
-                    margin-left: {$maxAvailableWidth - 240 - 164}px; 
+                    margin-left: auto;
+                    margin-right: 8px; 
                     display: flex; 
                     align-items: center; 
                     flex-direction: row-reverse"
@@ -152,6 +153,22 @@
                         style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
                         Move
                       </Button>
+
+                      {#if !boardDoc.shopGalleryOrder}
+                        <Button 
+                          on:click={() => shopifyVideo(boardDoc)}
+                          style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+                        >
+                          Shopify
+                        </Button>
+                      {:else}
+                        <Button
+                          on:click={() => unshopifyVideo(boardDoc)}
+                          style="margin-right: 6px; background-color: orange; color: white"
+                        >
+                          Unshopify
+                        </Button>
+                      {/if}
                     {/if}
                   </div>
                 </DoodleVideo>
@@ -283,19 +300,20 @@
 
 <script>
   import '$lib/_FourColor.scss'
+  import { portal, lazyCallable } from '../../../helpers/actions.js'
+  import { getFirestoreDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
+  import { sendTextMessage } from '../../../helpers/cloudFunctions.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '../../../lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import { onMount, tick, onDestroy } from 'svelte'
   import Button, { Icon } from '@smui/button'
-  import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { goto } from '$app/navigation';
   import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
-  import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
   import LinearProgress from '@smui/linear-progress'
@@ -322,6 +340,41 @@
   $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
   $: roomID, createRoomListener() // Yes, reactive statements DO trigger on initial assignment
 
+  onDestroy(() => {
+    unsubRoomListener()
+  })
+
+  async function shopifyVideo (boardDoc) {
+    // PART 1: all the code is for `maxShopGalleryOrder`
+    let tutorDoc 
+    const db = getFirestore()
+    const tutorsRef = collection(db, `classes/${classID}/tutors`)
+    const q = query(tutorsRef, where('uid', '==', $user.uid)); 
+    const querySnapshot = await getDocs(q) 
+    if (querySnapshot.empty) {
+      alert('Cannot shopify video as non-teacher')
+      return
+    }
+    querySnapshot.forEach((doc) => {
+      tutorDoc = { id: doc.id, path: doc.path, ...doc.data() }
+    })
+
+    const initialNumericalDifference = 3
+    const newVal = (tutorDoc.maxShopGalleryOrder || 3) + initialNumericalDifference
+    updateFirestoreDoc(boardDoc.path, {
+      shopGalleryOrder: newVal
+    })
+    updateFirestoreDoc(tutorDoc.path, {
+      maxShopGalleryOrder: newVal
+    })
+  }
+
+  async function unshopifyVideo (boardDoc) {
+    await updateFirestoreDoc(boardDoc.path, {
+      shopGalleryOrder: deleteField()
+    })
+  }
+
   async function createRoomListener () {
     if (unsubRoomListener) unsubRoomListener() // assume it's not async
     unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
@@ -333,10 +386,6 @@
       }
     })
   }
-
-  onDestroy(() => {
-    unsubRoomListener()
-  })
 
   // TODO: rename to reflect sequential nature of operations
   async function callManyFuncs (...funcs) {
@@ -484,10 +533,8 @@
 
   async function textNotifyServerMembers () {
     const promises = []
-    const functions = getFunctions();
-    const sendTextMessage = httpsCallable(functions, 'sendTextMessage');
     const usersRef = collection(getFirestore(), 'users')
-    const q = query(usersRef, where('willReceiveText', '==', true))
+    const q = query(usersRef, where('willReceiveText', '==', true)) // this is true for all users as of March 2nd 2023
     const snapshot = await getDocs(q)
     if (snapshot.docs) {
       for (const doc of snapshot.docs) {
@@ -496,7 +543,7 @@
           if (doc.id !== $user.uid) {
             promises.push(
               sendTextMessage({ 
-                content: `${$user.name} asked on https://explain.mit.edu/${classID}/${roomID}: ${roomDoc.name}`, // assumes roomDoc.name is not ''
+                content: `${$user.name} asked ${roomDoc.name}: https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
                 toWho: doc.data().phoneNumber
               })
             )
@@ -552,6 +599,8 @@
   }
 
   async function saveVideo (audioBlob, strokesArray, boardID) {
+    const db = getFirestore()
+
     // QUICK-FIX for concurrent drawings with no timestamp 
     // TODO: fails for edge case when all starting strokes are consecutively from other person
     function hasValidTimestamp (stroke) {
@@ -583,12 +632,28 @@
       for (let idx of indicesOfModifiedStrokes) {
         const stroke = strokesArray[idx]
         const dbPath = boardsDbPath + boardID
-        const strokesRef = doc(getFirestore(), `${dbPath}/strokes/${stroke.id}`)
+        const strokesRef = doc(db, `${dbPath}/strokes/${stroke.id}`)
         updateDoc(strokesRef, {
           startTime: stroke.startTime,
           endTime: stroke.endTime
         })
       }
+    }
+
+    // update metadata for tutor if it exists 
+    let tutorDoc
+    const q = query(
+      collection(db, `classes/${classID}/tutors`),
+      where('uid', '==', $user.uid)
+    )
+    const snap = await getDocs(q) 
+    if (!snap.empty) {
+      snap.docs.forEach(doc => {
+        tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
+      })
+      updateFirestoreDoc(`classes/${classID}/tutors/${tutorDoc.id}`, {
+        numOfVideos: increment(1)
+      })
     }
 
     const storage = getStorage()
@@ -606,6 +671,15 @@
       audioRefFullPath: audioRef.fullPath
     })
     updateRecordState(boardID, 'pre_record')
+
+    // IF SOMEBODY ASKED A QUESTION, TEXT NOTIFY THEM
+    if (roomDoc.askerUID) {
+      const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)
+      sendTextMessage({
+        content: `${$user.name || 'A helper'} replied with a video: https://explain.mit.edu/${classID}/${roomDoc.id}`,
+        toWho: askerDoc.phoneNumber
+      })  
+    }
 
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)

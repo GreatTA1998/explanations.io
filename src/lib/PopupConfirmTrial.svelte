@@ -19,12 +19,12 @@
     <div>
       During this trial week, you can ask questions in the server, and your helper will create videos in response.
       <br><br>
-      At the end of week, if the help was very good, you can tip generously to let them know. This gives 
-      your helper more confidence to know their worth and encourages them to continue their pursuit of creating more and better videos.
+      Tips are optional, and a great way to give your helper more confidence and encourage them to continue their pursuit of creating more and better videos.
     </div>
 
-    <div style="height: 20px; display: flex; margin-top: 20px;">
-      <Checkbox bind:checked touch />I've venmo'ed my tutor $1
+    <div style="display: flex; height: 20px; margin-top: 20px;">
+      <Checkbox bind:checked touch />
+      I've venmo'ed $1 to @{selectedTutorDoc.venmo || "(check Venmo in teachers's bio (press the v-shaped arrow on the teacher's rectangle)"} 
     </div>
   </div>
 
@@ -50,6 +50,8 @@
   import { user } from '../store.js'
   import { updateFirestoreDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
+
+  export let selectedTutorDoc
 
   const dispatch = createEventDispatcher()
 

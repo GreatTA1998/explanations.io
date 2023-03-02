@@ -1,7 +1,7 @@
 <div class="popup-window">
   <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px">
     <slot name="title">
-      <h2>`title` slot</h2>
+
     </slot>
 
     <span on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0; margin-left: auto;">
@@ -10,29 +10,12 @@
   </div>
 
   <slot name="popup-content">
-    <div style="margin-left: 10px; margin-right: 10px;">
-      1. Log in with mobile number
-      2. Venmo 
-      3. Confirm, you'll receive an email
-      4. Enter the server
-    </div>
 
-    <br>
-
-    <div style="margin-left: 10px; margin-right: 10px;">
-      TODO: notification settings and putting real name
-    </div>
   </slot>
-  <!-- <div on:click={changeName}>
-    Change name
-  </div> -->
-  <!-- <input bind:value={newlyTypedDisplayName}> -->
 
   <slot name="popup-buttons">
     <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
-      <button style="margin-right: 16px; margin-left: auto">
-        `popup-buttons` slot
-      </button>
+
     </div> 
   </slot></div>
  

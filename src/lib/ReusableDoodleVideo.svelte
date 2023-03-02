@@ -26,6 +26,12 @@
             <!-- boardDoc will always have a creatorUID because anonymous login -->
             {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
               <Button 
+                on:click={() => dispatch('video-rearrange')}
+                style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
+                Rearrange
+              </Button>  
+
+              <Button 
                 on:click={async () => { 
                   await revertVideoToBoard(
                     boardDoc, 
@@ -36,12 +42,6 @@
                 style="background-color: rgb(90 90 90 / 100%); color: white; margin-right: 10px;">
                 Delete
               </Button>
-
-              <!-- <Button 
-                draggable="true" on:dragstart={(e) => dragstart_handler(e, boardID, i)}
-                style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-                Move
-              </Button> -->
             {/if}
           </div>
         {/if}

@@ -302,6 +302,7 @@
   import '$lib/_FourColor.scss'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { getFirestoreDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
+  import { sendTextMessage } from '../../../helpers/cloudFunctions.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '../../../lib/Blackboard.svelte'
@@ -313,7 +314,6 @@
   import { getRandomID, displayDate } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
-  import { getFunctions, httpsCallable } from "firebase/functions";
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
   import LinearProgress from '@smui/linear-progress'
@@ -533,10 +533,8 @@
 
   async function textNotifyServerMembers () {
     const promises = []
-    const functions = getFunctions();
-    const sendTextMessage = httpsCallable(functions, 'sendTextMessage');
     const usersRef = collection(getFirestore(), 'users')
-    const q = query(usersRef, where('willReceiveText', '==', true))
+    const q = query(usersRef, where('willReceiveText', '==', true)) // this is true for all users as of March 2nd 2023
     const snapshot = await getDocs(q)
     if (snapshot.docs) {
       for (const doc of snapshot.docs) {
@@ -545,7 +543,7 @@
           if (doc.id !== $user.uid) {
             promises.push(
               sendTextMessage({ 
-                content: `${$user.name} asked on https://explain.mit.edu/${classID}/${roomID}: ${roomDoc.name}`, // assumes roomDoc.name is not ''
+                content: `${$user.name} asked ${roomDoc.name}: https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
                 toWho: doc.data().phoneNumber
               })
             )
@@ -673,6 +671,15 @@
       audioRefFullPath: audioRef.fullPath
     })
     updateRecordState(boardID, 'pre_record')
+
+    // IF SOMEBODY ASKED A QUESTION, TEXT NOTIFY THEM
+    if (roomDoc.askerUID) {
+      const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)
+      sendTextMessage({
+        content: `${$user.name || 'A helper'} replied with a video: https://explain.mit.edu/${classID}/${roomDoc.id}`,
+        toWho: askerDoc.phoneNumber
+      })  
+    }
 
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)

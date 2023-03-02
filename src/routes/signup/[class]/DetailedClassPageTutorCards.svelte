@@ -6,6 +6,7 @@
 
     {#if isSubscribePopupOpen}
       <PopupConfirmSubscription
+        {selectedTutorDoc}
         on:popup-close={() => isSubscribePopupOpen = false}
         on:confirm-clicked={() => handleConfirmSubscription(tutorDocBeingConsidered)}
       />
@@ -13,6 +14,7 @@
 
     {#if isTrialPopupOpen}
       <PopupConfirmTrial
+        {selectedTutorDoc}
         on:popup-close={() => isTrialPopupOpen = false}
         on:confirm-clicked={() => handleConfirmTrial(tutorDocBeingConsidered)}
       />
@@ -96,9 +98,6 @@
                     fontSizeIncludeUnits={'1rem'}
                   />
                 {:else}
-                  <div style="font-family: sans-serif; font-size: 1rem;">
-                    Venmo: {tutorDoc.venmo || '[Venmo listed in bio]'}
-                  </div>
                   <div style="margin-top: 12px; font-family: sans-serif; font-size: 1rem;">
                     {tutorDoc.bio || 'No bio yet'}
                   </div>
@@ -235,11 +234,21 @@
     const eltonMobileNumber = '+15032503868'
     await promises.push(
       sendTextMessage({ 
-        content: `New student ${$user.name} signed up for "$1 + tip" trial, confirm on Venmo`,
+        content: `${$user.name} signed up for your "$1 + tip" trial, confirm on Venmo`,
         toWho: tutor.phoneNumber
       }),
       sendTextMessage({
-        content: `Confirmed for class, you can now enter the server and start asking questions`,
+        content: `Welcome ${$user.name.split(' ')[0]}! to ask your question, just rename a room to your question, your helper will be text notified.
+          
+          If you don't know how to use the website, here's a 1-min screenshare tutorial: https://youtu.be/Yo7aPxLropU?t=58. 
+          Your tutor's phone is ${tutor.phoneNumber}. Texting is the fallback communication when there are unexpected problems e.g. ask for their email to
+          send the pset PDF, Explain's website broke down, or to follow-up sometimes if response time is unusually long etc.
+
+
+          If there's anything terribly inconvenient about the website, it probably is a bug, or a flawed design. You can call me/Elton (503 250 3868) 
+          (please don't hesitate, Explain is my full-time job and you're a paying customer, and more often than not I can change the code 
+          to incorporate your ideas within 1 week.)
+        `,
         toWho: $user.phoneNumber
       }),
       sendTextMessage({
@@ -267,7 +276,17 @@
         toWho: tutor.phoneNumber
       }),
       sendTextMessage({
-        content: `Confirmed for class, you can now enter the server and start asking questions`,
+        content: `Welcome ${$user.name.split(' ')[0]}! To ask your question, just rename a room to your question, your helper will be text notified.
+          
+          If you don't know how to use the website, here's a 1-min screenshare tutorial: https://youtu.be/Yo7aPxLropU?t=58. 
+          Your tutor's phone is ${tutor.phoneNumber}. Texting is the fallback communication when there are unexpected problems e.g. ask for their email to
+          send the pset PDF, Explain's website broke down, or to follow-up sometimes if response time is unusually long etc.
+
+
+          If there's anything terribly inconvenient about the website, it probably is a bug, or a flawed design. You can call me/Elton (503 250 3868) 
+          (please don't hesitate, Explain is my full-time job and you're a paying customer, and more often than not I can change the code 
+          to incorporate your ideas within 1 week.)
+        `,
         toWho: $user.phoneNumber
       }),
       sendTextMessage({

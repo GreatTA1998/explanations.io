@@ -21,7 +21,11 @@
     </div>
 
     <div style="height: 20px; display: flex; margin-top: 20px;">
-      <Checkbox bind:checked touch />I've venmo'ed my tutor
+      <Checkbox bind:checked touch />
+      I've venmo'ed 
+      ${selectedTutorDoc.weeklyPrice || 15} 
+      to 
+      @{selectedTutorDoc.venmo || "(check Venmo in teachers's bio (press the v-shaped arrow on the teacher's rectangle)"}
     </div>
   </div>
 
@@ -47,6 +51,8 @@
   import { user } from '../store.js'
   import { updateFirestoreDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
+
+  export let selectedTutorDoc
 
   const dispatch = createEventDispatcher()
 

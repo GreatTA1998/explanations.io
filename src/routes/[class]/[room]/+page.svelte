@@ -601,6 +601,8 @@
   }
 
   async function saveVideo (audioBlob, strokesArray, boardID) {
+    const db = getFirestore()
+
     // QUICK-FIX for concurrent drawings with no timestamp 
     // TODO: fails for edge case when all starting strokes are consecutively from other person
     function hasValidTimestamp (stroke) {
@@ -632,12 +634,28 @@
       for (let idx of indicesOfModifiedStrokes) {
         const stroke = strokesArray[idx]
         const dbPath = boardsDbPath + boardID
-        const strokesRef = doc(getFirestore(), `${dbPath}/strokes/${stroke.id}`)
+        const strokesRef = doc(db, `${dbPath}/strokes/${stroke.id}`)
         updateDoc(strokesRef, {
           startTime: stroke.startTime,
           endTime: stroke.endTime
         })
       }
+    }
+
+    // update metadata for tutor if it exists 
+    let tutorDoc
+    const q = query(
+      collection(db, `classes/${classID}/tutors`),
+      where('uid', '==', $user.uid)
+    )
+    const snap = await getDocs(q) 
+    if (!snap.empty) {
+      snap.docs.forEach(doc => {
+        tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
+      })
+      updateFirestoreDoc(`classes/${classID}/tutors/${tutorDoc.id}`, {
+        numOfVideos: increment(1)
+      })
     }
 
     const storage = getStorage()

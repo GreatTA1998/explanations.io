@@ -78,27 +78,10 @@
 </div>
 
 <div style="margin-top: 20px;"></div>
-
-{#if isNewlyOfferedClass && selectedTutorDoc}
-  {#key selectedTutorUID}
-    <RenderlessListenToRoom dbPath={`/classes/${classID}/rooms/${selectedTutorDoc.designatedRoomID}`} let:roomDoc={roomDoc}>
-      {#if roomDoc}
-        <DetailedClassPageBoardsAndVideos
-          galleryBoardIDs={roomDoc.blackboards}
-          {selectedTutorUID}
-          {classTutorsDocs}
-          {classID}
-          {selectedTutorDoc}
-        />
-      {/if}
-    </RenderlessListenToRoom>
-  {/key}
-{:else}
-  <!-- This one is the hard-coded version -->
-
-  <!-- `key` needed to need to refetch new videos when different tutors are clicked --> 
-  {#key selectedTutorUID}
-    {#if classTutorsDocs && selectedTutorUID}
+<!-- `key` needed to need to refetch new videos when different tutors are clicked --> 
+{#key selectedTutorUID}
+  {#if classTutorsDocs && selectedTutorUID}
+    {#key incrementWhenGalleryRearranged}
       <RenderlessFetch {fetchVideosFunc} {selectedTutorUID} {classID} let:galleryBoardIDs={galleryBoardIDs}>
         {#if galleryBoardIDs}
           <DetailedClassPageBoardsAndVideos
@@ -109,18 +92,22 @@
             {classID}
             {selectedTutorDoc}
           />
+          {#if isRearrangeVideosPopupOpen}
+            <PopupRearrangeVideos
+              {galleryBoardIDs}
+              {selectedTutorDoc}
+              {classID}
+              on:popup-close={() => isRearrangeVideosPopupOpen = false}
+              on:confirm-clicked={() => {}}
+              on:video-rearranged={() => incrementWhenGalleryRearranged += 1}
+            />
+          {/if}
         {/if}
       </RenderlessFetch>
-    {/if}
-  {/key}
-{/if}
+    {/key}
+  {/if}
+{/key}
 
-{#if isRearrangeVideosPopupOpen}
-  <PopupRearrangeVideos
-    on:popup-close={() => isRearrangeVideosPopupOpen = false}
-    on:confirm-clicked={() => {}}
-  />
-{/if}
 
 <script>
   import DetailedClassPageTutorCards from './DetailedClassPageTutorCards.svelte'
@@ -137,7 +124,6 @@
   import ReusableButton from '$lib/ReusableButton.svelte'
 
   export let classID
-  export let isNewlyOfferedClass = true
   export let fetchVideosFunc
 
   let classDoc
@@ -147,6 +133,7 @@
   let selectedTutorDoc
   let unsubTutorsListener
   let isRearrangeVideosPopupOpen = false
+  let incrementWhenGalleryRearranged = 0
 
   $: isSubscriber = $user.idsOfSubscribedClasses ? $user.idsOfSubscribedClasses.includes(classID) : false
   $: isTutor = $user.idsOfTutoringClasses ? $user.idsOfTutoringClasses.includes(classID) : false
@@ -187,7 +174,7 @@
       unsubTutorsListener = onSnapshot(ref, snap => {
         const temp = [] 
         for (const doc of snap.docs) {
-          temp.push({ id: doc.id, ...doc.data() })
+          temp.push({ id: doc.id, path: doc.ref.path, ...doc.data() })
         }
         classTutorsDocs = [...temp]
 

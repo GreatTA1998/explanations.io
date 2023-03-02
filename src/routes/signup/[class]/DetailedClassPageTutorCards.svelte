@@ -329,9 +329,7 @@
   }
 
   async function createTutorDoc ({ classID, firstName, lastName }) {
-
     if (!firstName || !lastName) return
-    // const userDbPath = `users/${$user.uid}/`
     const classDbPath = `classes/${classID}/`
     const id = getRandomID()
     const classTutorDocPath = classDbPath + `tutors/${id}`
@@ -341,15 +339,26 @@
     })
 
     const designatedRoomID = await createRoomDoc(`classes/${classID}/`) 
+
+    // shopify the room board
+    const initialNumericalDifference = 3
+    updateFirestoreDoc(`classes/${classID}/blackboards/${designatedRoomID}`, {
+      shopGalleryOrder: initialNumericalDifference
+    }) 
+    
     const tutorObject = {
       uid: $user.uid,
       name: firstName + ' ' + lastName,
       phoneNumber: $user.phoneNumber,
-      designatedRoomID
+      designatedRoomID,
+      maxShopGalleryOrder: initialNumericalDifference 
     }
     const db = getFirestore()
 
-    await setDoc(doc(db, classTutorDocPath), tutorObject)
+    await setDoc(
+      doc(db, classTutorDocPath), 
+      tutorObject
+    )
     await tick()
     selectedTutorUID = tutorObject.uid
   }

@@ -51,7 +51,7 @@
                 hasFullscreenButton={false}
                 on:video-uploading={() => {
                   incrementNumOfVideos(1, selectedTutorDoc)
-                  createNewBoard()
+                  createNewShopBoard()
                 }}
               />
             {/if}
@@ -62,7 +62,7 @@
     
     {#if $user.uid === selectedTutorUID}
       <div class="card">
-        <div on:click={createNewBoard}
+        <div on:click={createNewShopBoard}
           style="
             display: flex; 
             justify-content: center; 
@@ -110,8 +110,23 @@
 
   let debouncedResizeHandler = debounce(resizeHandler, 500)
 
+  const boardsCollectionDbPath = `classes/${classID}/blackboards/`
+  // Video ideas: give big picture of the class, explain a commonly misunderstood concept, solve an example question, include links to your outside work.
+  let textAreaPlaceholder = `Tip #1: when you run out of space, instead of erasing the board, just create a new board and new video. Small videos, with minimal erasing, makes your overall explanation easier to navigate and re-record in small parts`
+
   $: if ($classDetailsDrawerWidth === 0 || $classDetailsDrawerWidth === drawerExpandedWidth) {
     debouncedResizeHandler()
+  }
+
+  function shopifyBoard (boardPath) {
+    const initialNumericalDifference = 3
+    const newVal =  (selectedTutorDoc.maxOrder || 3) + initialNumericalDifference
+    updateFirestoreDoc(boardPath, {
+      shopGalleryOrder: newVal
+    })
+    updateFirestoreDoc(selectedTutorDoc.path, {
+      maxShopGalleryOrder: newVal
+    })
   }
 
   function resizeHandler () {
@@ -119,10 +134,6 @@
     computedBoardWidth = width
     computedBoardHeight = height 
   }
-
-  const boardsCollectionDbPath = `classes/${classID}/blackboards/`
-  // Video ideas: give big picture of the class, explain a commonly misunderstood concept, solve an example question, include links to your outside work.
-  let textAreaPlaceholder = `Tip #1: when you run out of space, instead of erasing the board, just create a new board and new video. Small videos, with minimal erasing, makes your overall explanation easier to navigate and re-record in small parts`
 
   function incrementViewMinutes (boardID, playbackSpeed) {
     const blackboardRef = doc(getFirestore(), boardsCollectionDbPath + boardID)
@@ -137,7 +148,9 @@
     })  
   }
 
-  async function createNewBoard () {
+
+  // NOTE: the blackboards created here are automatically shopified
+  async function createNewShopBoard () {
     const db = getFirestore()
 
     let tutor
@@ -152,8 +165,9 @@
     }
     const boardsDbPath = `classes/${classID}/blackboards/`
     const roomRef = doc(db, `classes/${classID}/rooms/${tutor.designatedRoomID}`)
-    await createBoardDoc(boardsDbPath, roomRef)
-
+    const newBoardID = await createBoardDoc(boardsDbPath, roomRef)
+    shopifyBoard(boardsDbPath + newBoardID)
+    
     // because everything is re-rendered, the video portfolio will be refetched, and the new blackboard location will be re-decided
     // all we had to do is just create the docs here
   }

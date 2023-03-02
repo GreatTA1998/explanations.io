@@ -28,7 +28,7 @@
               <Button 
                 on:click={() => dispatch('video-rearrange')}
                 style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-                Move
+                Rearrange
               </Button>  
 
               <Button 

@@ -154,11 +154,21 @@
                         Move
                       </Button>
 
-                      <Button 
-                        on:click={() => shopifyVideo(boardDoc)}
-                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-                        Shopify
-                      </Button>
+                      {#if !boardDoc.shopGalleryOrder}
+                        <Button 
+                          on:click={() => shopifyVideo(boardDoc)}
+                          style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+                        >
+                          Shopify
+                        </Button>
+                      {:else}
+                        <Button
+                          on:click={() => unshopifyVideo(boardDoc)}
+                          style="margin-right: 6px; background-color: orange; color: white"
+                        >
+                          Unshopify
+                        </Button>
+                      {/if}
                     {/if}
                   </div>
                 </DoodleVideo>
@@ -339,18 +349,29 @@
     let tutorDoc 
     const db = getFirestore()
     const tutorsRef = collection(db, `classes/${classID}/tutors`)
-    const q = query(tutorsRef, where('uid', '==', $user.uid));
+    const q = query(tutorsRef, where('uid', '==', $user.uid)); 
     const querySnapshot = await getDocs(q) 
     if (querySnapshot.empty) {
       alert('Cannot shopify video as non-teacher')
       return
     }
     querySnapshot.forEach((doc) => {
-      tutorDoc = doc.data()
+      tutorDoc = { id: doc.id, path: doc.path, ...doc.data() }
     })
 
+    const initialNumericalDifference = 3
+    const newVal = (tutorDoc.maxShopGalleryOrder || 3) + initialNumericalDifference
+    updateFirestoreDoc(boardDoc.path, {
+      shopGalleryOrder: newVal
+    })
+    updateFirestoreDoc(tutorDoc.path, {
+      maxShopGalleryOrder: newVal
+    })
+  }
+
+  async function unshopifyVideo (boardDoc) {
     await updateFirestoreDoc(boardDoc.path, {
-      shopGalleryOrder: tutorDoc.maxShopGalleryOrder || 1
+      shopGalleryOrder: deleteField()
     })
   }
 

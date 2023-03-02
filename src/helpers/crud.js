@@ -78,6 +78,7 @@ export function createRoomDoc (classPath) {
   })
 }
 
+// returns the ID of the board created
 export async function createBoardDoc (boardsDbPath, roomRef) {
   return new Promise(async resolve => {
     const newID = getRandomID();  
@@ -91,6 +92,6 @@ export async function createBoardDoc (boardsDbPath, roomRef) {
         blackboards: arrayUnion(newID)
       })
     ]);  
-    resolve()
+    resolve(newID)
   })
 }

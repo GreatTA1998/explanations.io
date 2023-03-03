@@ -353,7 +353,7 @@
     const id = getRandomID()
     const classTutorDocPath = classDbPath + `tutors/${id}`
 
-    updateFirestoreDoc(`classes/${classID}/tutors/${id}`, {
+    updateFirestoreDoc(`users/${$user.uid}`, {
       idsOfTutoringClasses: arrayUnion(classID)
     })
 

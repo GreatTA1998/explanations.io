@@ -534,23 +534,23 @@
   async function textNotifyServerMembers () {
     const promises = []
     const usersRef = collection(getFirestore(), 'users')
-    const q = query(usersRef, where('willReceiveText', '==', true)) // this is true for all users as of March 2nd 2023
-    const snapshot = await getDocs(q)
-    if (snapshot.docs) {
-      for (const doc of snapshot.docs) {
-        console.log('phoneNumber =', doc.data().phoneNumber)
-        try {
-          if (doc.id !== $user.uid) {
-            promises.push(
-              sendTextMessage({ 
-                content: `${$user.name} asked ${roomDoc.name}: https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
-                toWho: doc.data().phoneNumber
-              })
-            )
-          }       
-        } catch (error) {
-          alert(error)
+    const subscribersQuery = query(usersRef, where('idsOfSubscribedClasses', 'array-contains', classID))
+    const subscribersSnap = await getDocs(subscribersQuery)
+    const helpersQuery = query(usersRef, where('idsOfTutoringClasses', 'array-contains', classID))
+    const helpersSnap = await getDocs(helpersQuery)
+    for (const doc of [...subscribersSnap.docs, ...helpersSnap.docs]) {
+      try {
+        if (doc.id !== $user.uid) {
+          console.log('texting =', doc.data().phoneNumber)
+          promises.push(
+            sendTextMessage({ 
+              content: `${$user.name} asked ${roomDoc.name}: https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
+              toWho: doc.data().phoneNumber
+            })
+          )
         }
+      } catch (error) {
+        alert(error)
       }
     }
     await Promise.all(promises)

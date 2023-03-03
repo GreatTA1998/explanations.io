@@ -82,7 +82,7 @@
 {#key selectedTutorUID}
   {#if classTutorsDocs && selectedTutorUID}
     {#key incrementWhenGalleryRearranged}
-      <RenderlessFetch {fetchVideosFunc} {selectedTutorUID} {classID} let:galleryBoardIDs={galleryBoardIDs}>
+      <RenderlessFetch {selectedTutorUID} {classID} let:galleryBoardIDs={galleryBoardIDs}>
         {#if galleryBoardIDs}
           <DetailedClassPageBoardsAndVideos
             on:video-rearrange={() => isRearrangeVideosPopupOpen = true}
@@ -107,7 +107,6 @@
     {/key}
   {/if}
 {/key}
-
 
 <script>
   import DetailedClassPageTutorCards from './DetailedClassPageTutorCards.svelte'

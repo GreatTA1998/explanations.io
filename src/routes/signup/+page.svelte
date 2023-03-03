@@ -1,9 +1,7 @@
 <DetailedClassPage
   isNewlyOfferedClass={false}
-  fetchVideosFunc={fetchTopFiveVideos}
   classID={'Mev5x66mSMEvNz3rijym'}
 >
-
 
 <div slot="past-videos-button" class="header-subcopy-wrapper">
   <div class="header-subcopy">
@@ -27,43 +25,12 @@
 <script>
   import DetailedClassPage from './[class]/DetailedClassPage.svelte'
   import Button, { Label } from '@smui/button';
-  import { collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
-  import { createRoomDoc, createBoardDoc } from '../../helpers/crud.js'
   import { goto } from '$app/navigation'
 
-  let designatedRoomBoardIDs = []
-
   const id = 'Mev5x66mSMEvNz3rijym' // 14.01
-  const boardsCollectionDbPath = `classes/${id}/blackboards/`
-
-  const eltonUID = 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'
 
   function redirectToServer (classID) {
     goto(`/${id}/${id}`)
-  }
-
-  // take a parameter ideally
-
-  // fetch top 5 explanations in 14.01, with the text and the videos
-  // have tutors be able to offer classes all by themselves (almost like Shopify, all you need is an iPad)
-  // short on cash? 
-  async function fetchTopFiveVideos (selectedTutorUID) {
-    return new Promise(async resolve => {
-      const db = getFirestore()
-      const blackboardsRef = collection(db, boardsCollectionDbPath)
-
-      const q = query(blackboardsRef, where('creatorUID', '==', selectedTutorUID), orderBy('viewMinutes', 'desc'), limit(5))
-      
-      const querySnapshot = await getDocs(q) 
-      const temp = []
-      querySnapshot.forEach(doc => {
-        temp.push(doc.id)
-      })
-
-      designatedRoomBoardIDs = [...temp]
-      resolve(designatedRoomBoardIDs)
-      // return designatedRoomBoardIDs
-    })
   }
 </script>
 

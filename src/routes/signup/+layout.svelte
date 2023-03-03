@@ -18,21 +18,14 @@
               start
             </span>
           </div>
-
-          <!-- <div> -->
-            <!-- <Item on:click={redirectToRequestPage} style="display: flex; align-items: center;">
-              <span class="material-icons">
-                add
-              </span>
-              Request a class
-            </Item>
+          
+          <!-- <Item on:click={redirectToRequestPage} style="display: flex; align-items: center;">
+            <span class="material-icons">
+              add
+            </span>
+            Request a class
+          </Item> -->
             
-            <Item on:click={redirectToOpenAClassPage} style="display: flex; align-items: center;" disabled>
-              <span class="material-icons">
-                add
-              </span>
-              Open a class
-            </Item> -->
             <div style="margin-bottom: 40px;">
 
             </div>
@@ -56,6 +49,17 @@
             <Item on:click={() => redirectToPage(linearAlgebraID)} style="font-size: 1.2rem;" selected={classID === linearAlgebraID}>
               18.06
             </Item>
+
+            {#each youtubeClasses as youtubeClass}
+              <Item on:click={() => redirectToPage(youtubeClass.id)} style="font-size: 1.2rem;" selected={classID === youtubeClass.id}>
+                {youtubeClass.name}
+              </Item>
+            {/each}
+
+            <Item on:click={() => goto('/signup/new')}>
+              <span class="material-icons" style="margin-bottom: 2px;">add</span>
+                Open new class shop
+            </Item>
         </List>
     </Drawer>
 
@@ -70,6 +74,7 @@
 </div>
 
 <script>
+  import Button from '@smui/button'
   import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte'
   import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
   import Drawer, { AppContent } from '@smui/drawer'
@@ -78,8 +83,10 @@
   import { user, classDetailsDrawerWidth } from '../../store.js'
   import { toggleClassDetailsDrawerWidth } from '../../helpers/everythingElse.js';
   import { page } from '$app/stores'
+  import { deleteField, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
 
   let classID = ''
+  let youtubeClasses = []
 
   $: if (page) {
     const { pathname } = $page.url
@@ -88,6 +95,23 @@
 
   const linearAlgebraID = 'lvzQqyZIV1wjwYnRV9hn'
   const introToMachineLearningID = 'cLF9unbCuplsl3JmHRbu'
+
+  fetchYoutubeClasses()
+
+  async function fetchYoutubeClasses () {
+    const db = getFirestore()
+    const q = query(collection(db, `/classes`), where('isYoutubeClass', '==', true))
+    const snap = await getDocs(q) 
+    const temp = [] 
+    snap.docs.forEach(doc => {
+      temp.push({
+        id: doc.id, 
+        path: doc.ref.path,
+        ...doc.data()
+      })
+    })
+    youtubeClasses = temp
+  }
 
   function redirectToPage (id) {
     goto(`/signup/${id}`)

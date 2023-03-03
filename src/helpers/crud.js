@@ -10,6 +10,14 @@ export function firestoreRef (path) {
   return doc(db, path)
 }
 
+export function setFirestoreDoc (path, newObject) {
+  return new Promise(async (resolve) => {
+    const ref = firestoreRef(path)
+    await setDoc(ref, newObject)
+    resolve()
+  })
+}
+
 export function getFirestoreDoc (path) {
   return new Promise(async (resolve) => {
     const ref = firestoreRef(path)

@@ -44,11 +44,13 @@
 		{#if active.label === 'Viewers'}
 			<div class="header-flex">
 				<p class="header-title">
-					Youtube-style pset help
+					Get help for hard classes — without needing to schedule
 				</p>
 				<div class="header-subcopy-wrapper">
+					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Sometimes 5-minute videos can save a semester of misunderstandings
+						Hire ex-TAs, classmates...etc. to explain psets, exams and concepts
+						with easy-to-understand blackboard videos
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -82,9 +84,9 @@
 		{#if active.label === 'Viewers'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Subscribe to people whose explanations are easy-to-understand — 
-					so you are equipped with the fundamentals needed to solve the psets without spending an
-					agonizing amount of time. 
+					You can't always make it to Office Hours,
+					and the TA doesn't always have time to answer all your questions.
+					Explain is the catch-all resource so you have more free time to sleep, have fun, and be happy.
 				</div>
 			</div>
 
@@ -109,7 +111,7 @@
 				</div> -->
 				<HowItWorksStep
 					title="Step 1"
-					subtitle="Type a question in the class server"
+					subtitle="Request a blackboard video"
 					description="Ask about pset questions, important concepts, anything."
 				>					
 					<img src="https://i.imgur.com/TYkGFHO.gif" width="{Math.min(w, 600)}" height="{Math.min(w, 600) * 1/5}" style="margin-top: 50px;">
@@ -118,7 +120,7 @@
 
 				<HowItWorksStep
 					title="Step 2"
-					subtitle="Your subscribed tutor will respond with a video"
+					subtitle="Your helper responds"
 					description="Reponse time differs depending on the arrangement set by you and your tutor. It will also depend on the situation e.g. faster response when there's an upcoming pset deadline."
 				>
 					<div style="display: flex; justify-content: space-evenly; justify-content: space-between">

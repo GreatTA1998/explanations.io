@@ -1,7 +1,7 @@
 {#if classTutorsDocs}
   <div style="margin-top: 3%; margin-bottom: 1%">
     <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-      Available shops
+      Available shops & example videos
     </h2>
 
     {#if isSubscribePopupOpen}
@@ -50,7 +50,7 @@
               <div style="text-align: center; padding: 0; margin-top: 12px;">
                 <ReusableButton on:click={() => handleSubscribeButtonClick(tutorDoc)}>
                   <div style="font-size: 0.8rem;">
-                    Subscribe for ${ tutorDoc.weeklyPrice || 15 }/week
+                    Hire for ${ tutorDoc.weeklyPrice || 15 }/week
                   </div>
                 </ReusableButton>
               </div>
@@ -58,7 +58,7 @@
               <div style="text-align: center; padding: 0; margin-top: 12px;">
                 <ReusableButton on:click={() => handleTrialButtonClick(tutorDoc)} variant="outlined">
                   <div style="font-size: 0.8rem;">
-                    Try for $1 + tip
+                    In-person tutoring try-out for $1 + tip
                   </div>
                 </ReusableButton>
               </div>

@@ -104,7 +104,7 @@
             <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
-              let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
+              let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
             >
               <div use:lazyCallable={fetchStrokes} style={`width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight + 40}px; position: relative`}>
                 <DoodleVideo 
@@ -143,7 +143,7 @@
                     <!-- boardDoc will always have a creatorUID because anonymous login -->
                     {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
                       <Button 
-                        on:click={() => revertToBoard(boardDoc, deleteAllStrokesFromDb)} 
+                        on:click={() => revertToBoard(boardDoc, deleteNonInitialStrokesFromDb)} 
                         style="background-color: rgb(90 90 90 / 100%); color: white">
                         Delete
                       </Button>

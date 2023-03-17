@@ -2,13 +2,14 @@
   {fetchStrokes}  
   {strokesArray} 
   deleteAllStrokesFromDb={() => deleteAllStrokesFromDb({ boardPath: dbPath, strokesArray })}
+  deleteNonInitialStrokesFromDb={() => deleteNonInitialStrokesFromDb({ boardPath: dbPath, strokesArray })}
 >
 
 </slot>
 
 <script>
 import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, getDocs } from 'firebase/firestore'
-import { deleteAllStrokesFromDb } from '../helpers/properDelete'
+import { deleteAllStrokesFromDb, deleteNonInitialStrokesFromDb } from '../helpers/properDelete'
 
 export let dbPath
 export let autoFetchStrokes = false

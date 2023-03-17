@@ -58,7 +58,7 @@
 
             <Item on:click={() => goto('/signup/new')}>
               <span class="material-icons" style="margin-bottom: 2px;">add</span>
-                Open new class shop
+                Request new class
             </Item>
         </List>
     </Drawer>

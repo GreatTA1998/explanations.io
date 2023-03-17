@@ -1,8 +1,38 @@
 {#if classTutorsDocs}
   <div style="margin-top: 3%; margin-bottom: 1%">
-    <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-      Available shops & example videos
-    </h2>
+    <div style="display: flex">
+      <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
+        Video portfolio of helpers
+      </h2>
+    </div>
+
+    {#if isWatchingForNewShopPopupOpen}
+      <PopupGetNotifiedOnNewShops 
+        on:popup-close={() => isWatchingForNewShopPopupOpen = false}
+        {classID}
+      />
+    {/if}
+
+    { classDoc.numOfWatchers || 0 } people still looking for a new helper
+    <button on:click={() => isWatchingForNewShopPopupOpen = true}>
+      Notify me when new helper signs up
+    </button>
+
+    <div>
+      Pset PDFs (as prompts for videos)
+      {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
+        {#each classDoc.psetPDFsDownloadURLs as downloadURL, i}
+          <a href={downloadURL} target="_blank">
+            {classDoc.psetPDFsNames[i]}
+          </a>
+        {/each} 
+      {:else}
+        <div style="color: red">
+          Pset files missing for helpers to make example videos
+        </div>
+      {/if}
+      <PsetPDFUploader {classID}/>
+    </div>
 
     {#if isSubscribePopupOpen}
       <PopupConfirmSubscription
@@ -47,6 +77,27 @@
                 </div>
               </div>
 
+              {#if isCardExpanded}
+                <div style="margin-top: 16px;"></div>
+
+                {#if $user.uid === tutorDoc.uid}
+                  <input value={tutorDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value, tutorDoc.id)} placeholder="venmo here e.g. elton-lin-2"/>
+                  <TextAreaAutoResizing 
+                    value={tutorDoc.bio || ''} 
+                    on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
+                    placeholder="e.g. year, major, your teaching style/philosophy"
+                    readonly={$user.uid !== tutorDoc.uid}
+                    nonFocusedPlaceholderOpacity={0.6}
+                    numberOfInitialRowsIfEmpty={2}
+                    fontSizeIncludeUnits={'1rem'}
+                  />
+                {:else}
+                  <div style="margin-top: 12px; font-family: sans-serif; font-size: 1rem;">
+                    {tutorDoc.bio || 'No bio yet'}
+                  </div>
+                {/if}
+              {/if}  
+
               <div style="text-align: center; padding: 0; margin-top: 12px;">
                 <ReusableButton on:click={() => handleSubscribeButtonClick(tutorDoc)}>
                   <div style="font-size: 0.8rem;">
@@ -83,26 +134,7 @@
                 </ReusableIncomeCalculator>
               {/if}
 
-              {#if isCardExpanded}
-                <div style="margin-top: 16px;"></div>
-
-                {#if $user.uid === tutorDoc.uid}
-                  <input value={tutorDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value, tutorDoc.id)} placeholder="venmo here e.g. elton-lin-2"/>
-                  <TextAreaAutoResizing 
-                    value={tutorDoc.bio || ''} 
-                    on:input={(e) => debouncedUpdateTutorBio(e, tutorDoc.id)}
-                    placeholder="e.g. year, major, your teaching style/philosophy"
-                    readonly={$user.uid !== tutorDoc.uid}
-                    nonFocusedPlaceholderOpacity={0.6}
-                    numberOfInitialRowsIfEmpty={2}
-                    fontSizeIncludeUnits={'1rem'}
-                  />
-                {:else}
-                  <div style="margin-top: 12px; font-family: sans-serif; font-size: 1rem;">
-                    {tutorDoc.bio || 'No bio yet'}
-                  </div>
-                {/if}
-              {/if}  
+             
             </RenderlessLocalVariables>    
           </Card>
         </div>
@@ -164,26 +196,30 @@
 
 <script>
   import RenderlessLocalVariables from '$lib/RenderlessLocalVariables.svelte'
+  import PhoneLogin from '$lib/PhoneLogin.svelte'
+  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte';
+  import PopupConfirmTrial from '$lib/PopupConfirmTrial.svelte'
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
+  import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
+  import PsetPDFUploader from '$lib/PsetPDFUploader.svelte';
   import Card, { PrimaryAction, Content } from '@smui/card'
   import Button, { Label, Icon } from '@smui/button';
   import { user } from '../../../store.js'
   import { createEventDispatcher, onMount, tick } from 'svelte'
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { getRandomID, debounce } from '../../../helpers/utility.js'
   import { createRoomDoc, createBoardDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
   import { sendTextMessage } from '../../../helpers/cloudFunctions.js';
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
-  import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
   import Slider from '@smui/slider'
-  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte';
-  import PopupConfirmTrial from '$lib/PopupConfirmTrial.svelte'
+  import { goto } from '$app/navigation';
+  import PopupGetNotifiedOnNewShops from '$lib/PopupGetNotifiedOnNewShops.svelte';
 
   export let classTutorsDocs
   export let selectedTutorDoc
   export let selectedTutorUID
   export let classID
+  export let classDoc
 
   let sortedClassTutorsDocs 
   const dispatch = createEventDispatcher()
@@ -196,6 +232,7 @@
   let isTrialPopupOpen = false
   let tutorDocBeingConsidered
   let inputFieldVenmo = ''
+  let isWatchingForNewShopPopupOpen = false
 
   $: if (inputFieldVenmo) {
     debouncedUpdateTutorVenmo(inputFieldVenmo, selectedTutorDoc.id)
@@ -234,32 +271,19 @@
     const eltonMobileNumber = '+15032503868'
     await promises.push(
       sendTextMessage({ 
-        content: `${$user.name} signed up for your "$1 + tip" trial, confirm on Venmo`,
+        content: `${$user.name} signed up for your "$1 + tip" 30 minute in-person tutoring trial, confirm on Venmo and they should text you shortly to schedule a time.`,
         toWho: tutor.phoneNumber
       }),
       sendTextMessage({
-        content: `Welcome ${$user.name.split(' ')[0]}! to ask your question, just rename a room to your question, your helper will be text notified.
-          
-          If you don't know how to use the website, here's a 1-min screenshare tutorial: https://youtu.be/Yo7aPxLropU?t=58. 
-          Your tutor's phone is ${tutor.phoneNumber}. Texting is the fallback communication when there are unexpected problems e.g. ask for their email to
-          send the pset PDF, Explain's website broke down, or to follow-up sometimes if response time is unusually long etc.
-
-
-          If there's anything terribly inconvenient about the website, it probably is a bug, or a flawed design. You can call me/Elton (503 250 3868) 
-          (please don't hesitate, Explain is my full-time job and you're a paying customer, and more often than not I can change the code 
-          to incorporate your ideas within 1 week.)
+        content: `Welcome ${$user.name.split(' ')[0]}! 
+        Schedule a time and place to meet with your tutor e.g. give 3 distinct times like 1 pm Wednesday, Friday 3 pm, Tuesday 12 pm, student center 5th floor etc.)
+        and decide afterwards whether to hire them for youtube-style help : )
         `,
         toWho: $user.phoneNumber
       }),
       sendTextMessage({
         content: `Student ${$user.name} is trialing with tutor ${tutor.name}`,
         toWho: eltonMobileNumber
-      }),
-      updateFirestoreDoc(`/users/${$user.uid}`, {
-        idsOfSubscribedClasses: arrayUnion(classID)
-      }),
-      updateFirestoreDoc(`/classes/${classID}/tutors/${tutor.id}`, {
-        numOfStudents: increment(1)
       })
     )
   }
@@ -300,6 +324,7 @@
         numOfStudents: increment(1)
       })
     )
+    goto(`/${classID}/${classID}`)
   }
 
   function handleSubscribeButtonClick (tutorDoc) {

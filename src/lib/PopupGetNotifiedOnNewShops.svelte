@@ -1,6 +1,6 @@
 <BasePopup on:popup-close>
   <h2 slot="title" style="font-family: sans-serif;">
-    Get started
+    Get notified on new shops
   </h2>
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
     {#if !$user.phoneNumber}
@@ -17,28 +17,27 @@
     {/if}
 
     <div>
-      While video-based help is more efficient, meeting your helper once can help you decide if you want to hire them.
-
-      Text them to schedule a 30-min. tutoring session: { selectedTutorDoc.phoneNumber }
       <br><br>
-      Tips are greatly appreciated but not expected
-      <!-- Tips are optional, and a great way to give your helper more confidence and encourage them to continue their pursuit of creating more and better videos. -->
-    </div>
-
-    <div style="display: flex; height: 20px; margin-top: 20px;">
-      <Checkbox bind:checked touch />
-      I've venmo'ed $1 to @{selectedTutorDoc.venmo || "(check Venmo in teachers's bio (press the v-shaped arrow on the teacher's rectangle)"} 
     </div>
   </div>
 
   <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
-    <Button 
-      disabled={!checked || !$user.phoneNumber}
-      on:click={() => dispatch('confirm-clicked')}
-      color="secondary"
-    >
-      DONE
-    </Button>
+    {#if !isWatching}
+      <Button 
+        on:click={watch}
+        color="secondary"
+      >
+        Watch
+      </Button>
+    {:else}
+      <Button 
+        on:click={unwatch}
+        color="secondary"
+      >
+        Unwatch
+      </Button>
+    {/if}
+
     <Button on:click={() => dispatch('popup-close')}>
       Cancel
     </Button>
@@ -53,14 +52,42 @@
   import { user } from '../store.js'
   import { updateFirestoreDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
+  import { increment, arrayUnion, arrayRemove } from 'firebase/firestore';
 
-  export let selectedTutorDoc
+  export let classID
 
   const dispatch = createEventDispatcher()
 
   let inputFieldFirstName = ''
   let inputFieldLastName = ''
-  let checked = false
+
+  let isWatching = false
+
+  $: {
+    if ($user.idsOfWatchingClasses) {
+      if ($user.idsOfWatchingClasses.includes(classID)) {
+        isWatching = true
+      }
+    }
+  }
+
+  function watch () {
+    updateFirestoreDoc(`users/${$user.uid}`, {
+      idsOfWatchingClasses: arrayUnion(classID)
+    })
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfWatchers: increment(1)
+    })
+  }
+
+  function unwatch () {
+    updateFirestoreDoc(`users/${$user.uid}`, {
+      idsOfWatchingClasses: arrayRemove(classID)
+    })
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfWatchers: increment(-1)
+    })
+  }
 
   function updateUserName () {
     updateFirestoreDoc(`users/${$user.uid}`, {

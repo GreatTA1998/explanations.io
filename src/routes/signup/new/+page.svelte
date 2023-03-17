@@ -2,10 +2,9 @@
 <div>
   <div style="display: flex; height: 40px; align-items: center; margin-top: 20px;">
     <Checkbox bind:checked touch />
-    I confirm that I want to open a shop in the new class with at least one example video 
+    I confirm that I want to open a shop with videos in the new class
     - or - 
-    I confirm that I want to request helpers in a new class, and I've venmo'ed $1 to @elton-lin-2 to manually recruit teachers to setup shops 
-    in the new class for me to choose
+    I confirm that I want to request helpers in a new class
   </div>
 
   <div>
@@ -13,7 +12,12 @@
       <input bind:value={classNameInputField} placeholder="e.g. 18.02">
 
       <input bind:value={classDescInput} placeholder="e.g. Multivariable Calculus">
-      <ReusableButton on:click={createNewClassServer} disabled={!checked} on:click={createNewClassServer}>Create new class</ReusableButton>
+
+      <PsetPDFUploader/>
+
+      <ReusableButton on:click={createNewClassServer} disabled={!checked} on:click={createNewClassServer}>
+        Create new class
+      </ReusableButton>
     </div>
   </div>
 </div>
@@ -26,6 +30,7 @@
   import Checkbox from '@smui/checkbox'
   import { setFirestoreDoc } from '../../../helpers/crud.js'
   import { getRandomID } from '../../../helpers/utility.js'
+  import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
 
   let classNameInputField
   let classDescInput

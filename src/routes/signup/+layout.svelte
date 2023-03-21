@@ -93,6 +93,7 @@
     classID = pathname.split('/')[2]
   }
 
+  const microeconomicsID = 'Mev5x66mSMEvNz3rijym'
   const linearAlgebraID = 'lvzQqyZIV1wjwYnRV9hn'
   const introToMachineLearningID = 'cLF9unbCuplsl3JmHRbu'
 

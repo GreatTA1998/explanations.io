@@ -1,8 +1,9 @@
-{#if classTutorsDocs}
-  <div style="margin-top: 3%; margin-bottom: 1%">
+<!-- TO-DO: make it mobile responsive -->
+{#if classTutorsDocs && classDoc}
+  <div style="margin-top: 1%; margin-bottom: 1%">
     <div style="display: flex">
-      <h2 style="font-family: sans-serif; color: grey; font-size: 1.3rem; font-weight: 400;">
-        Video portfolio of helpers
+      <h2 style="font-family: sans-serif; color: grey; font-size: 1.8rem; font-weight: 400; margin-top: 0">
+        Hire someone based on their example videos (scroll down)
       </h2>
     </div>
 
@@ -13,25 +14,44 @@
       />
     {/if}
 
-    { classDoc.numOfWatchers || 0 } people still looking for a new helper
-    <button on:click={() => isWatchingForNewShopPopupOpen = true}>
-      Notify me when new helper signs up
-    </button>
+    <div style="display: flex; font-family: sans-serif;">
+      { classDoc.numOfWatchers || 0 } people still looking for a new helper
+      
+      <div style="margin-right: 12px;"></div>
+      
+      <button on:click={() => isWatchingForNewShopPopupOpen = true}>
+        Notify me when new helper opens shop
+      </button>
+    </div>
+    
+    <ol>
+      <li>"Office Hours just doesn't work with my schedule"</li>
+      <li>"There's too many people in Office Hours so I can't get all my questions answered"</li>
+      <li>"I want to know how to approach a problem"</li>
+    </ol>
 
-    <div>
-      Pset PDFs (as prompts for videos)
+    <div style="display: flex; font-family: sans-serif">
       {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
-        {#each classDoc.psetPDFsDownloadURLs as downloadURL, i}
-          <a href={downloadURL} target="_blank">
-            {classDoc.psetPDFsNames[i]}
-          </a>
-        {/each} 
+        Pset PDFs (as prompts for videos)
       {:else}
         <div style="color: red">
           Pset files missing for helpers to make example videos
         </div>
       {/if}
+
+      <div style="margin-right: 12px;"></div>
+
       <PsetPDFUploader {classID}/>
+    </div>
+
+    <div>
+      {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
+        {#each classDoc.psetPDFsDownloadURLs as downloadURL, i}
+          <a style="margin-left: 24px;" href={downloadURL} target="_blank">
+            {classDoc.psetPDFsNames[i]}
+          </a>
+        {/each} 
+      {/if}
     </div>
 
     {#if isSubscribePopupOpen}
@@ -50,7 +70,7 @@
       />
     {/if}
 
-    <div style="display: flex; overflow-x: auto;">
+    <div style="display: flex; overflow-x: auto; margin-top: 12px;">
       {#each sortedClassTutorsDocs as tutorDoc}
         <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
           <Card on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="min-height: 100px;" variant="outlined">
@@ -62,7 +82,7 @@
               </h2>
 
               <div style="font-family: sans-serif; display: flex; align-items: center;">
-                Subscribed {tutorDoc.numOfStudents || 0} times, {tutorDoc.numOfVideos || 0} videos
+                Hired {tutorDoc.numOfStudents || 0} times, {tutorDoc.numOfVideos || 0} videos
 
                 <div style="margin-right: 0; margin-left: auto;">
                   {#if !isCardExpanded}
@@ -101,7 +121,7 @@
               <div style="text-align: center; padding: 0; margin-top: 12px;">
                 <ReusableButton on:click={() => handleSubscribeButtonClick(tutorDoc)}>
                   <div style="font-size: 0.8rem;">
-                    Hire for ${ tutorDoc.weeklyPrice || 15 }/week
+                    Get video-based help ${ tutorDoc.weeklyPrice || 15 }/week
                   </div>
                 </ReusableButton>
               </div>
@@ -109,7 +129,7 @@
               <div style="text-align: center; padding: 0; margin-top: 12px;">
                 <ReusableButton on:click={() => handleTrialButtonClick(tutorDoc)} variant="outlined">
                   <div style="font-size: 0.8rem;">
-                    In-person tutoring try-out for $1 + tip
+                    In-person tutoring "trial" for $1
                   </div>
                 </ReusableButton>
               </div>

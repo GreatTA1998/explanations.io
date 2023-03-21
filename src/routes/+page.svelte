@@ -49,8 +49,8 @@
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Hire ex-TAs, classmates...etc. to explain psets, exams and concepts
-						with easy-to-understand blackboard videos
+						Hire ex-TAs, classmates...etc. to explain current psets & past exams with
+					  easy-to-understand blackboard videos — whenever you have questions, wherever you are
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">

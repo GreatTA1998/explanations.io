@@ -14,21 +14,29 @@
       />
     {/if}
 
-    <div style="display: flex; font-family: sans-serif;">
+    <div style="display: flex; font-family: sans-serif;" class:red-text={classDoc.numOfWatchers}>
       { classDoc.numOfWatchers || 0 } people still looking for a new helper
       
       <div style="margin-right: 12px;"></div>
       
-      <button on:click={() => isWatchingForNewShopPopupOpen = true}>
-        Notify me when new helper opens shop
-      </button>
+      {#if !isUserWatchingClass}
+        <button on:click={() => isWatchingForNewShopPopupOpen = true}>
+          Notify me when new helper opens shop
+        </button>
+      {:else}
+        <button on:click={() => isWatchingForNewShopPopupOpen = true}>
+          Remove myself from watchlist
+        </button>
+      {/if}
     </div>
-    
-    <ol>
-      <li>"Office Hours just doesn't work with my schedule"</li>
-      <li>"There's too many people in Office Hours so I can't get all my questions answered"</li>
-      <li>"I want to know how to approach a problem"</li>
-    </ol>
+
+    {#if classWatchers}
+      <ol>
+        {#each classWatchers as watcher}
+          <li>{watcher.name}: {watcher.reasonForWatching}</li>
+        {/each}
+      </ol>
+    {/if}
 
     <div style="display: flex; font-family: sans-serif">
       {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
@@ -121,17 +129,17 @@
               <div style="text-align: center; padding: 0; margin-top: 12px;">
                 <ReusableButton on:click={() => handleSubscribeButtonClick(tutorDoc)}>
                   <div style="font-size: 0.8rem;">
-                    Get video-based help ${ tutorDoc.weeklyPrice || 15 }/week
+                    Hire for ${ tutorDoc.weeklyPrice || 15 }/week
                   </div>
                 </ReusableButton>
               </div>
 
               <div style="text-align: center; padding: 0; margin-top: 12px;">
-                <ReusableButton on:click={() => handleTrialButtonClick(tutorDoc)} variant="outlined">
+                <!-- <ReusableButton on:click={() => handleTrialButtonClick(tutorDoc)} variant="outlined">
                   <div style="font-size: 0.8rem;">
                     In-person tutoring "trial" for $1
                   </div>
-                </ReusableButton>
+                </ReusableButton> -->
               </div>
 
               {#if $user.uid === tutorDoc.uid && price}
@@ -225,7 +233,7 @@
   import Card, { PrimaryAction, Content } from '@smui/card'
   import Button, { Label, Icon } from '@smui/button';
   import { user } from '../../../store.js'
-  import { createEventDispatcher, onMount, tick } from 'svelte'
+  import { createEventDispatcher, onMount, tick, onDestroy } from 'svelte'
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { getRandomID, debounce } from '../../../helpers/utility.js'
   import { createRoomDoc, createBoardDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
@@ -240,7 +248,8 @@
   export let selectedTutorUID
   export let classID
   export let classDoc
-
+  
+  let classWatchers = null
   let sortedClassTutorsDocs 
   const dispatch = createEventDispatcher()
   let checked = false
@@ -253,6 +262,26 @@
   let tutorDocBeingConsidered
   let inputFieldVenmo = ''
   let isWatchingForNewShopPopupOpen = false
+  let unsubClassWatchersListener
+
+  listenToClassWatchers()
+
+  onDestroy(() => {
+    if (unsubClassWatchersListener) {
+      unsubClassWatchersListener()
+    }
+  })
+
+  let isUserWatchingClass = false
+
+  $: {
+    isUserWatchingClass = false
+    if ($user.idsOfWatchingClasses) {
+      if ($user.idsOfWatchingClasses.includes(classID)) {
+        isUserWatchingClass = true
+      }
+    }
+  }
 
   $: if (inputFieldVenmo) {
     debouncedUpdateTutorVenmo(inputFieldVenmo, selectedTutorDoc.id)
@@ -281,6 +310,18 @@
       }
     }
     debouncedUpdateTutorWeeklyPrice(price, tutorDocID)
+  }
+
+  function listenToClassWatchers () {
+    const db = getFirestore()
+    const watchersRef = collection(db, `classes/${classID}/watchers`)
+    unsubClassWatchersListener = onSnapshot(watchersRef, (snap) => {
+      const temp = [] 
+      snap.docs.forEach(doc => {
+        temp.push({ id: doc.id, path: doc.ref.path, ...doc.data() })
+      })
+      classWatchers = temp
+    })
   }
 
   async function handleConfirmTrial (tutor) {
@@ -440,5 +481,9 @@
 
   .orange-border {
     border: 2px solid orange;
+  }
+  
+  .red-text {
+    color: red;
   }
 </style>

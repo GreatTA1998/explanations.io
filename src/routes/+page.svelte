@@ -33,7 +33,7 @@
 
 <AutoAdjust {topAppBar}>
 	<TopBannerWarnExperimental/>
-	<TabBar tabs={tabs} let:tab bind:active variant="dense">
+	<TabBar tabs={tabs} let:tab bind:active>
 		<Tab {tab} stacked minWidth indicatorSpanOnlyContent>
 			<Icon class="material-icons">{tab.icon}</Icon>
 			<Label>{tab.label}</Label>
@@ -41,7 +41,7 @@
 	</TabBar>
 	
 	<div class="webflow-container">
-		{#if active.label === 'Viewers'}
+		{#if active.label === 'Students'}
 			<div class="header-flex">
 				<p class="header-title">
 					Get help for hard classes — without needing to schedule
@@ -64,7 +64,7 @@
 				<p class="header-title">Teach what you love & help students</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Your income reflects how many people you helped
+						Help others and get paid for it
 					</div>
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
@@ -81,12 +81,14 @@
 			<ImageGallery/>
 		</div>
 
-		{#if active.label === 'Viewers'}
+		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					You can't always make it to Office Hours,
-					and the TA doesn't always have time to answer all your questions.
-					Explain is the catch-all resource so you have more free time to sleep, have fun, and be happy.
+					and TAs are sometimes overwhelmed with all the students they have to help.
+					<br><br>
+					You can think of <i>Explain</i> as Youtube / KhanAcademy made for your specific class,
+					so you can get help efficiently.
 				</div>
 			</div>
 
@@ -111,7 +113,7 @@
 				</div> -->
 				<HowItWorksStep
 					title="Step 1"
-					subtitle="Request a blackboard video"
+					subtitle="Request videos for anything you want"
 					description="Ask about pset questions, important concepts, anything."
 				>					
 					<img src="https://i.imgur.com/TYkGFHO.gif" width="{Math.min(w, 600)}" height="{Math.min(w, 600) * 1/5}" style="margin-top: 50px;">
@@ -152,7 +154,7 @@
 					title="Step 4"
 					subtitle="Setup a regular upload-schedule"
 					description="Suppose you start 18.06 psets every Friday, because it's due Sunday.
-					Knowing this, your tutor can regularly upload videos before Friday, and reactively upload more videos and reply to comments 
+					Knowing this, your tutor can regularly upload videos before Friday WIHTOUT you even having to ask questions, and reactively upload more videos and reply to comments 
 					over Saturday and Sunday."
 				>					
 				</HowItWorksStep>
@@ -376,7 +378,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Viewers', icon: 'person'}, { label: 'Helpers', icon: 'draw'}]
+	let tabs = [{ label: 'Students', icon: 'person'}, { label: 'Helpers', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {

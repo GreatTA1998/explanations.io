@@ -13,8 +13,6 @@
 
       <input bind:value={classDescInput} placeholder="e.g. Multivariable Calculus">
 
-      <PsetPDFUploader/>
-
       <ReusableButton on:click={createNewClassServer} disabled={!checked} on:click={createNewClassServer}>
         Create new class
       </ReusableButton>

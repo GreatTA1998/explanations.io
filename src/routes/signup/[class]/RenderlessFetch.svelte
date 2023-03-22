@@ -35,7 +35,6 @@ async function shopifyFetch () {
     )
     const querySnapshot = await getDocs(q) 
     if (querySnapshot.empty) {
-      alert('Shop is empty')
       return
     }
     querySnapshot.forEach((doc) => {

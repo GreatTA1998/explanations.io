@@ -13,7 +13,7 @@
 
       <input bind:value={classDescInput} placeholder="e.g. Multivariable Calculus">
 
-      <ReusableButton on:click={createNewClassServer} disabled={!checked} on:click={createNewClassServer}>
+      <ReusableButton on:click={createNewClassServer} disabled={!checked}>
         Create new class
       </ReusableButton>
     </div>

@@ -6,32 +6,33 @@
     {#if !$user.phoneNumber}
       1. Log in with mobile number
       <PhoneLogin/>
+    {:else}
+      <div>
+        What are you looking for in <i>Explain</i> that'd be better than your experience with existing resources e.g. more availability, more thorough help, more intution, more flexibility etc.? What problems 
+        do you face when you use existing resources like Office Hours, Piazza etc.?
+        <br>
+        <br>
+        This helps potential helpers shape their videos around what you really want
+
+        <br>
+        <br>
+        Examples:
+          "I understand concepts but don't know how to approach the problems"
+          "I can't go to Office Hours because it's 1 hour and a long walk there, so by the time I get there it's done"
+          "I'm lost in all the details of the class and have no simple intuition for why we're learning all these things"
+
+        <Textfield style="width: 100%" textarea bind:value placeholder="e.g. Don't know how to approach a new problem in general, can't make it to Office Hours, want more high-level intuition for the class before the daunting details">
+          <HelperText slot="helper">What gap should Explain fill?</HelperText>
+        </Textfield>
+        <br><br>
+      </div>
     {/if}
-
-    <div>
-      What are you looking for in <i>Explain</i> that'd be better than your experience with existing resources e.g. more availability, more thorough help, more intution, more flexibility etc.? What problems 
-      do you face when you use existing resources like Office Hours, Piazza etc.?
-      <br>
-      <br>
-      This helps potential helpers shape their videos around what you really want
-
-      <br>
-      <br>
-      Examples:
-        "I understand concepts but don't know how to approach the problems"
-        "I can't go to Office Hours because it's 1 hour and a long walk there, so by the time I get there it's done"
-        "I'm lost in all the details of the class and have no simple intuition for why we're learning all these things"
-
-      <Textfield style="width: 100%" textarea bind:value placeholder="e.g. Don't know how to approach a new problem in general, can't make it to Office Hours, want more high-level intuition for the class before the daunting details">
-        <HelperText slot="helper">What gap should Explain fill?</HelperText>
-      </Textfield>
-      <br><br>
-    </div>
   </div>
 
   <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
     {#if !isWatching}
       <Button 
+        disabled={!$user.phoneNumber}
         on:click={watch}
         color="secondary"
       >
@@ -39,6 +40,7 @@
       </Button>
     {:else}
       <Button 
+        disabled={!$user.phoneNumber}
         on:click={unwatch}
         color="secondary"
       >
@@ -90,7 +92,8 @@
     const watcherRef = doc(db, `classes/${classID}/watchers/${$user.uid}`)
     setDoc(watcherRef, {
       name: $user.name,
-      reasonForWatching: value  
+      phoneNumber: $user.phoneNumber,
+      reasonForWatching: value
     })
     updateFirestoreDoc(`users/${$user.uid}`, {
       idsOfWatchingClasses: arrayUnion(classID)

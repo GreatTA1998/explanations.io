@@ -33,11 +33,11 @@
 
     const downloadURL = await getDownloadURL(pdfRef)
     const name = pdfFile.name
-    console.log('name =', name)
     
-    updateFirestoreDoc(`classes/${classID}`, {
+    await updateFirestoreDoc(`classes/${classID}`, {
       psetPDFsDownloadURLs: arrayUnion(downloadURL),
       psetPDFsNames: arrayUnion(name)
     })
+    window.location.reload()
   }
 </script>

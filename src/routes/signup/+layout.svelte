@@ -44,10 +44,7 @@
               New for Spring 2023
             </Text>
             <Item on:click={() => redirectToPage(introToMachineLearningID)} style="font-size: 1.2rem;" selected={classID === introToMachineLearningID}>
-              6.390
-            </Item>
-            <Item on:click={() => redirectToPage(linearAlgebraID)} style="font-size: 1.2rem;" selected={classID === linearAlgebraID}>
-              18.06
+              6.390/6.036
             </Item>
 
             {#each youtubeClasses as youtubeClass}
@@ -110,6 +107,18 @@
         path: doc.ref.path,
         ...doc.data()
       })
+    })
+    temp.sort((a, b) => {
+      const deptNumberA = a.name.split(".")[0]
+      const deptNumberB = b.name.split(".")[0]
+      const classNumberA = a.name.split(".")[1]
+      const classNumberB = b.name.split(".")[1]
+      const A = Number(deptNumberA)
+      const B = Number(deptNumberB)
+      if (A === B) {
+        return Number(classNumberA) - Number(classNumberB)
+      }
+      return Number(deptNumberA) - Number(deptNumberB)
     })
     youtubeClasses = temp
   }

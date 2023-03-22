@@ -132,6 +132,7 @@
   let selectedTutorUID = null
   let selectedTutorDoc
   let unsubTutorsListener
+  let unsubClassDocListener
   let isRearrangeVideosPopupOpen = false
   let incrementWhenGalleryRearranged = 0
 
@@ -140,7 +141,7 @@
 
   onMount(async () => {
     if (unsubTutorsListener) unsubTutorsListener()
-    fetchClassDoc()
+    listenToClassDoc()
     await listenToClassTutors()
 
     // by default select the first tutor's shop gallery
@@ -155,6 +156,7 @@
 
   onDestroy(() => {
     if (unsubTutorsListener) unsubTutorsListener()
+    if (unsubClassDocListener) unsubClassDocListener()
   })
 
   function handleLoginAndEnterServer ({ classID }) {
@@ -183,11 +185,13 @@
     })
   }
 
-  async function fetchClassDoc () {
+
+  async function listenToClassDoc () {
     const db = getFirestore()
     const ref = doc(db, `classes/${classID}`)
-    const snapshot = await getDoc(ref)
-    classDoc = { id: snapshot.id, ...snapshot.data()}
+    unsubClassDocListener = onSnapshot(ref, (snapshot) => {
+      classDoc = { id: snapshot.id, ...snapshot.data()}
+    })
   }
 
   async function fetchClassTutors () {

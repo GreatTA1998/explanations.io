@@ -74,6 +74,7 @@
     {selectedTutorDoc}
     {selectedTutorUID} on:input={e => onTutorCardSelect(e)}
     {classID}
+    {classDoc}
   />
 </div>
 

@@ -58,7 +58,7 @@
 
             <Item on:click={() => goto('/signup/new')}>
               <span class="material-icons" style="margin-bottom: 2px;">add</span>
-                Open new class shop
+                Request new class
             </Item>
         </List>
     </Drawer>
@@ -93,6 +93,7 @@
     classID = pathname.split('/')[2]
   }
 
+  const microeconomicsID = 'Mev5x66mSMEvNz3rijym'
   const linearAlgebraID = 'lvzQqyZIV1wjwYnRV9hn'
   const introToMachineLearningID = 'cLF9unbCuplsl3JmHRbu'
 

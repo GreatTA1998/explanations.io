@@ -17,9 +17,12 @@
     {/if}
 
     <div>
-      During this trial week, you can ask questions in the server, and your helper will create videos in response.
+      While video-based help is more efficient, meeting your helper once can help you decide if you want to hire them.
+
+      Text them to schedule a 30-min. tutoring session: { selectedTutorDoc.phoneNumber }
       <br><br>
-      Tips are optional, and a great way to give your helper more confidence and encourage them to continue their pursuit of creating more and better videos.
+      Tips are greatly appreciated but not expected
+      <!-- Tips are optional, and a great way to give your helper more confidence and encourage them to continue their pursuit of creating more and better videos. -->
     </div>
 
     <div style="display: flex; height: 20px; margin-top: 20px;">
@@ -34,7 +37,7 @@
       on:click={() => dispatch('confirm-clicked')}
       color="secondary"
     >
-      Join the server
+      DONE
     </Button>
     <Button on:click={() => dispatch('popup-close')}>
       Cancel

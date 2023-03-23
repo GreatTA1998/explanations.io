@@ -66,21 +66,6 @@ audio::-webkit-media-controls-panel {
 	flex-wrap: wrap;
 }
 
-/* Copied from Webflow's home page inspector */
-@media only screen and (min-width: 1550px) {
-	.header-title {
-		font-size: 7rem !important;
-	}
-}
-
-@media only screen and (max-width: 991px) {
-	.header-title {
-		/* I don't know why !important is needed when webflow.com doesn't need it */
-		max-width: 85vw !important;
-		font-size: 11vw !important;
-	}
-}
-
 .header-title {
 	max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
@@ -104,6 +89,20 @@ audio::-webkit-media-controls-panel {
 
 	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
 	line-height: 1.25;
+}
+
+/* Copied from Webflow's home page inspector */
+@media only screen and (min-width: 1550px) {
+	.header-title {
+		font-size: 7rem;
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	.header-title {
+		max-width: 85vw;
+		font-size: 11vw;
+	}
 }
 
 @media screen and (max-width: 991px) {

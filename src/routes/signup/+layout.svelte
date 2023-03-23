@@ -19,37 +19,19 @@
             </span>
           </div>
           
-          <!-- <Item on:click={redirectToRequestPage} style="display: flex; align-items: center;">
-            <span class="material-icons">
-              add
-            </span>
-            Request a class
-          </Item> -->
             
             <div style="margin-bottom: 40px;">
 
             </div>
 
-            <Text style="margin-bottom: 10px; margin-left: 16px; font-size: 0.95rem; color: grey;">
-              Department sponsored
-            </Text>
-            <Item on:click={() => redirectToPage('')} style="font-size: 1.2rem;">
-              14.01
-            </Item>
 
             <div style="margin-top: 40px;">
 
             </div>
-            <Text style="margin-top: 80px; margin-bottom: 10px; margin-left: 16px; font-size: 0.95rem; color: grey">
-              New for Spring 2023
-            </Text>
-            <Item on:click={() => redirectToPage(introToMachineLearningID)} style="font-size: 1.2rem;" selected={classID === introToMachineLearningID}>
-              6.390/6.036
-            </Item>
 
             {#each youtubeClasses as youtubeClass}
               <Item on:click={() => redirectToPage(youtubeClass.id)} style="font-size: 1.2rem;" selected={classID === youtubeClass.id}>
-                {youtubeClass.name} 
+                <div class:purple-text={youtubeClass.hasShopWithVideos}>{youtubeClass.name}</div>
                 {#if youtubeClass.numOfWatchers}
                   <div style="font-size: 0.5rem; color: red">
                     {youtubeClass.numOfWatchers} unresolved demand
@@ -114,16 +96,28 @@
       })
     })
     temp.sort((a, b) => {
-      const deptNumberA = a.name.split(".")[0]
-      const deptNumberB = b.name.split(".")[0]
-      const classNumberA = a.name.split(".")[1]
-      const classNumberB = b.name.split(".")[1]
-      const A = Number(deptNumberA)
-      const B = Number(deptNumberB)
-      if (A === B) {
-        return Number(classNumberA) - Number(classNumberB)
+      // sort primarily by whether it has shops with videos
+      // then by course number
+      // then by class number
+      // false - true = 0 - 1 = -1
+      // !!undefined = false
+      console.log("a =", a)
+
+      if (!!a.hasShopWithVideos !== !!b.hasShopWithVideos) {
+        return !!b.hasShopWithVideos - !!a.hasShopWithVideos
       }
-      return Number(deptNumberA) - Number(deptNumberB)
+      else {
+        const deptNumberA = a.name.split(".")[0]
+        const deptNumberB = b.name.split(".")[0]
+        const classNumberA = a.name.split(".")[1]
+        const classNumberB = b.name.split(".")[1]
+        if (Number(deptNumberA) === Number(deptNumberB)) {
+          return Number(classNumberA) - Number(classNumberB)
+        }
+        else {
+          return Number(deptNumberA) - Number(deptNumberB)
+        }
+      }
     })
     youtubeClasses = temp
   }
@@ -149,5 +143,9 @@
     overflow: auto;
     position: relative;
     flex-grow: 1;
+  }
+
+  .purple-text {
+    color: purple;
   }
 </style>

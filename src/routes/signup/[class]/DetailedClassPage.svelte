@@ -1,6 +1,6 @@
 <div class="webflow-container" style="width: 95%">
   {#if classDoc}
-    <div class="header-flex">
+    <div style="display: flex; align-items: center">
       {#if $classDetailsDrawerWidth === 0}
         <Button on:click={toggleClassDetailsDrawerWidth} style="margin-right: 16px">
           <span class="material-icons" style="font-size: 3rem;">
@@ -8,34 +8,30 @@
           </span>
         </Button>  
       {/if} 
-
-      <div class="header-title">
+<!-- 
+      <div class="header-title" style="font-size: 2rem;">
         { classDoc.name } 
-      </div>
+      </div> -->
 
-      <div style="display: flex; align-items: center; width: 70%; margin-left: 4%; margin-top: 2%;">
+      <div style="display: flex; align-items: center; width: 70%;">
         <slot name="past-videos-button">
           
         </slot> 
 
         {#if isSubscriber || isTutor}
-          <Button on:click={() => goto(`/${classID}/${classID}`)} color="secondary" variant="outlined" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
+          <Button on:click={() => goto(`/${classID}/${classID}`)} color="secondary" variant="outlined" style="height: 60px; margin-top: 16px; margin-bottom: 1rem; border-radius: 0px;">
             <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-              Spring '23 server
+              { classDoc.name } server (videos are subscribers-only, but made freely available at end of semester)
             </Label>
           </Button>
         {:else}
-          <div class="header-subcopy-wrapper">
-            <div class="header-subcopy">
-              During the semester, the server is subscribers-only.
-              After the semester is over, all videos are freely accessible forever.
-            </div>
-            <Button disabled color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
+          <!-- <div class="header-subcopy-wrapper"> -->
+            <Button disabled color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 1rem; border-radius: 0px;">
               <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-                Spring '23 server
+                { classDoc.name } server (videos are subscribers-only, but made freely available at end of semester)
               </Label>
             </Button>
-          </div>
+          <!-- </div> -->
         {/if}
       </div>
     </div>

@@ -1,8 +1,8 @@
 <!-- TO-DO: make it mobile responsive -->
 {#if classTutorsDocs && classDoc}
-  <div style="margin-top: 1%; margin-bottom: 1%">
+  <div style="margin-top: 0%; margin-bottom: 0%">
     <div style="display: flex">
-      <h2 style="font-family: sans-serif; color: grey; font-size: 1.8rem; font-weight: 400; margin-top: 0">
+      <h2 style="font-family: sans-serif; color: black; font-size: 1.8rem; font-weight: 400; margin-top: 0; margin-bottom: 12px;">
         Hire someone based on their example videos (scroll down)
       </h2>
     </div>
@@ -31,7 +31,7 @@
     </div>
 
     {#if classWatchers}
-      <ol>
+      <ol style="margin-top: 2px;">
         {#each classWatchers as watcher}
           <li>{watcher.name}: {watcher.reasonForWatching}</li>
         {/each}
@@ -134,15 +134,15 @@
                 </ReusableButton>
               </div>
 
-              <div style="text-align: center; padding: 0; margin-top: 12px;">
-                <!-- <ReusableButton on:click={() => handleTrialButtonClick(tutorDoc)} variant="outlined">
+              <!-- <div style="text-align: center; padding: 0; margin-top: 12px;">
+                <ReusableButton on:click={() => handleTrialButtonClick(tutorDoc)} variant="outlined">
                   <div style="font-size: 0.8rem;">
                     In-person tutoring "trial" for $1
                   </div>
-                </ReusableButton> -->
-              </div>
+                </ReusableButton>
+              </div> -->
 
-              {#if $user.uid === tutorDoc.uid && price}
+              {#if $user.uid === tutorDoc.uid && price && isCardExpanded}
                 <div style="margin-top: 12px;"></div>
                 <ReusableIncomeCalculator weeklyPrice={price}>
                   <!-- <Slider/> doesn't emit events properly so I'm just avoiding the issue with <slot> -->
@@ -161,8 +161,6 @@
                   </div>
                 </ReusableIncomeCalculator>
               {/if}
-
-             
             </RenderlessLocalVariables>    
           </Card>
         </div>

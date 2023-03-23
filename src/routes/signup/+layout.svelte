@@ -49,7 +49,12 @@
 
             {#each youtubeClasses as youtubeClass}
               <Item on:click={() => redirectToPage(youtubeClass.id)} style="font-size: 1.2rem;" selected={classID === youtubeClass.id}>
-                {youtubeClass.name}
+                {youtubeClass.name} 
+                {#if youtubeClass.numOfWatchers}
+                  <div style="font-size: 0.5rem; color: red">
+                    {youtubeClass.numOfWatchers} unresolved demand
+                  </div>
+                {/if}
               </Item>
             {/each}
 

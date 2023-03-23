@@ -101,6 +101,7 @@
     updateFirestoreDoc(`classes/${classID}`, {
       numOfWatchers: increment(1)
     })
+    dispatch('popup-close')
   }
 
   function unwatch () {
@@ -113,6 +114,7 @@
     updateFirestoreDoc(`classes/${classID}`, {
       numOfWatchers: increment(-1)
     })
+    dispatch('popup-close')
   }
 
   function updateUserName () {

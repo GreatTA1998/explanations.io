@@ -8,22 +8,32 @@
       <PhoneLogin/>
     {:else}
       <div>
-        What are you looking for in <i>Explain</i> that'd be better than your experience with existing resources e.g. more availability, more thorough help, more intution, more flexibility etc.? What problems 
-        do you face when you use existing resources like Office Hours, Piazza etc.?
+        MIT has free resources like Office Hours, Piazza, Math Learning Center, TSR^2, and departmental tutoring.
+        So what exactly do you want out of Explain that you can't get out of existing resources?
+        For example, convenience, flexibility, quality of help, more detail, etc.
         <br>
         <br>
         This helps potential helpers shape their videos around what you really want
 
         <br>
         <br>
-        Examples:
-          "I understand concepts but don't know how to approach the problems"
-          "I can't go to Office Hours because it's 1 hour and a long walk there, so by the time I get there it's done"
-          "I'm lost in all the details of the class and have no simple intuition for why we're learning all these things"
 
         <Textfield style="width: 100%" textarea bind:value placeholder="e.g. Don't know how to approach a new problem in general, can't make it to Office Hours, want more high-level intuition for the class before the daunting details">
           <HelperText slot="helper">What gap should Explain fill?</HelperText>
         </Textfield>
+
+        <div style="display: flex; align-items: center">
+          Your budget:
+          <button on:click={() => budgetCategoryNumber = 1} class:orange-highlight={budgetCategoryNumber === 1}>
+            $5 - $10/week
+          </button>
+          <button on:click={() => budgetCategoryNumber = 2} class:orange-highlight={budgetCategoryNumber === 2}>
+            $5 - $20/week
+          </button>
+          <button on:click={() => budgetCategoryNumber = 3} class:orange-highlight={budgetCategoryNumber === 3}>
+            $5 - $50/week
+          </button>
+        </div>
         <br><br>
       </div>
     {/if}
@@ -71,6 +81,8 @@
 
   const dispatch = createEventDispatcher()
 
+  let budgetCategoryNumber = 2
+
   let value = ''
 
   let inputFieldFirstName = ''
@@ -92,7 +104,8 @@
     setDoc(watcherRef, {
       name: $user.name,
       phoneNumber: $user.phoneNumber,
-      reasonForWatching: value
+      reasonForWatching: value,
+      budgetCategoryNumber
     })
     updateFirestoreDoc(`users/${$user.uid}`, {
       idsOfWatchingClasses: arrayUnion(classID)
@@ -122,3 +135,10 @@
     })
   }
 </script>
+
+<style>
+  .orange-highlight {
+    background-color: orange;
+    color: white; 
+  }
+</style>

@@ -33,7 +33,7 @@
     {#if classWatchers}
       <ol style="margin-top: 2px;">
         {#each classWatchers as watcher}
-          <li>{watcher.name}: {watcher.reasonForWatching}</li>
+          <li>{watcher.name}: {watcher.reasonForWatching} (budget: {getWatcherBudget(watcher)})</li>
         {/each}
       </ol>
     {/if}
@@ -308,6 +308,20 @@
       }
     }
     debouncedUpdateTutorWeeklyPrice(price, tutorDocID)
+  }
+
+  function getWatcherBudget (watcher) {
+    if (!watcher.budgetCategoryNumber) {
+      return 'N/A'
+    }
+    const { budgetCategoryNumber } = watcher
+    if (budgetCategoryNumber === 1) {
+      return '$5 - $10/week'
+    } else if (budgetCategoryNumber === 2) {
+      return '$5 - $20/week'
+    } else if (budgetCategoryNumber === 3) {
+      return '$5 - $50/week'
+    } 
   }
 
   function listenToClassWatchers () {

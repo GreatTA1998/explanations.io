@@ -184,7 +184,7 @@
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
 				Because you get paid proportional to how many students you help, there's no limit on how high you get paid.
-				Too good to be true? Wrong! Explain takes a 10% cut. You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
+				You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
 				<br>
 				<br>
 

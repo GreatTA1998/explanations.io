@@ -9,11 +9,11 @@
 				</Section>
 
 				<Section align="end" toolbar>
-					<a href="https://eltonlin.substack.com/p/ef7865a8-8379-4f7a-82b3-827012485d8a" target="_blank" style="text-decoration-color: transparent;">
+					<!-- <a href="https://eltonlin.substack.com/p/ef7865a8-8379-4f7a-82b3-827012485d8a" target="_blank" style="text-decoration-color: transparent;">
 						<Button style="margin-left: 40px;">
 							Blog
 						</Button>
-					</a>
+					</a> -->
 
 					<a href="https://github.com/greatTA1998/explain" target="_blank" style="text-decoration-color: transparent;">
 						<div style="margin-left: 20px; margin-right: 20px;">

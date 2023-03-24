@@ -64,7 +64,6 @@
   import { debounce } from '../helpers/utility.js'
   import Button from '@smui/button'
   import { doc, increment, arrayUnion, arrayRemove, updateDoc, setDoc, getFirestore, deleteDoc } from 'firebase/firestore';
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import Textfield from '@smui/textfield';
   import HelperText from '@smui/textfield/helper-text';
 

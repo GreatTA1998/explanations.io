@@ -8,10 +8,6 @@
           </span>
         </Button>  
       {/if} 
-<!-- 
-      <div class="header-title" style="font-size: 2rem;">
-        { classDoc.name } 
-      </div> -->
 
       <div style="display: flex; align-items: center; width: 70%;">
         <slot name="past-videos-button">
@@ -25,13 +21,11 @@
             </Label>
           </Button>
         {:else}
-          <!-- <div class="header-subcopy-wrapper"> -->
             <Button disabled color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 1rem; border-radius: 0px;">
               <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
                 { classDoc.name } server (videos are subscribers-only, but made freely available at end of semester)
               </Label>
             </Button>
-          <!-- </div> -->
         {/if}
       </div>
     </div>

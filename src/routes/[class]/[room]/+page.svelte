@@ -59,6 +59,9 @@
                 <div 
                   style="color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 4px; margin-bottom: 4px;"
                 >
+                  <div>
+                    <a style="color: purple; font-size: 1rem; font-family: sans-serif">{boardDoc.creatorName}</a>
+                  </div>
                   {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0} upvotes, 
                   {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed,
                   {boardDoc.numOfComments || 0} comments

@@ -20,7 +20,7 @@
   // $user.name reaction needed because we only partial hydrated it in the root __layout for speed
   $: if ($isFirestoreDocCreated && $user.name) {
     updateDoc(myFirestoreRef, {
-      currentRoomID: roomID,
+      currentRoomID: roomID || 'request-video',
       name: $user.name,
       hasJoinedVoice: $hasJoinedVoice
     })
@@ -47,7 +47,7 @@
         setDoc(myFirestoreRef, {
           uid: $user.uid,
           browserTabID: $browserTabID,
-          currentRoomID: roomID,
+          currentRoomID: roomID || 'request-video',
           name: myName
         })
         isFirestoreDocCreated.set(true)

@@ -17,8 +17,9 @@
     <div>
       Welcome { $user.name || '' }.
       This is your helper profile, 
-      which contains your info, your statistics, and your top videos, 
+      which contains your info, your statistics (number of free videos, number of paid videos), and your top videos, 
       <div style="color: purple">and allows students to subscribe to you.</div>
+      <Button>Get subscribers-only videos and reliable reply time for $10/month</Button>
     </div>
     
     {#if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
@@ -44,6 +45,7 @@
   import { portal } from '../../../helpers/actions.js'
   import { user } from '../../../store.js'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
+  import Button from '@smui/button'
 
   let firstNameInput 
   let lastNameInput

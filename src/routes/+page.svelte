@@ -91,7 +91,7 @@
 					<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 					<br><br> -->
 					You can think of this as Youtube/KhanAcademy for MIT classes. The economies-of-scale of videos means that helpers gets paid in proportion to their impact,
-					while each student only has to pay a low price. After the semester, all videos are free forever to everyone.
+					while each student only has to pay a low price.
 				</div>
 			</div>
 

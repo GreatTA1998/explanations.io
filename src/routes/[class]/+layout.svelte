@@ -30,10 +30,10 @@
       New video
     </Item>
     
-    <Item on:click={() => goto(`/${classID}/become-helper`)}>
+    <!-- <Item on:click={() => goto(`/${classID}/become-helper`)}>
       <span class="material-icons">add</span>
       Sign up as helper
-    </Item>
+    </Item> -->
 
     <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
     {#each rooms as room (room.id + roomID)}

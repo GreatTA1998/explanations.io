@@ -1,4 +1,10 @@
-
+{#if isSubscribePopupOpen}
+  <PopupConfirmSubscription
+    selectedTutorDoc={creatorDoc}
+    on:popup-close={() => isSubscribePopupOpen = false}
+    on:confirm-clicked={() => handleConfirmSubscription(creatorDoc)}
+  />
+{/if}
 
 {#if roomDoc}
 	<div use:portal={'main-content'} style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
@@ -117,6 +123,10 @@
                   canvasWidth={$maxAvailableWidth}
                   canvasHeight={$maxAvailableHeight}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
+                  on:subscribe-to-helper={() => { 
+                    isSubscribePopupOpen = true
+                    creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
+                  }}
                 > 
                   <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
                     <span class="material-icons" style="color: white;">
@@ -326,6 +336,7 @@
   import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
   import RenderlessStopwatch from '$lib/RenderlessStopwatch.svelte'
   import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
+  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -337,6 +348,8 @@
     blackboards: [] 
   }
   let incrementKeyToDestroyComponent = 1
+  let isSubscribePopupOpen = false
+  let creatorDoc
 
   $: boardsDbPath = `classes/${classID}/blackboards/`
   $: roomsDbPath = `classes/${classID}/rooms/`
@@ -346,6 +359,10 @@
   onDestroy(() => {
     unsubRoomListener()
   })
+
+  function handleConfirmSubscription () {
+    // TODO: implement
+  }
 
   async function shopifyVideo (boardDoc) {
     // PART 1: all the code is for `maxShopGalleryOrder`

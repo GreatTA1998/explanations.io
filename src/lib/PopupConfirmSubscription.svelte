@@ -35,7 +35,7 @@
       on:click={() => dispatch('confirm-clicked')}
       color="secondary"
     >
-      Join the server
+      Confirm subscription
     </Button>
     <Button on:click={() => dispatch('popup-close')}>
       Cancel

@@ -20,13 +20,19 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
-    <Item on:click={() => goto(`/${classID}/request-video`)}>
+    <Item on:click={() => goto(`/${classID}/request-video`)} style="color: purple;">
       <span class="material-icons">add</span>
       Request video from helpers
     </Item>
-    <Item>
+
+    <Item on:click={() => goto(`/${classID}/become-helper`)}>
       <span class="material-icons">add</span>
       New video
+    </Item>
+    
+    <Item on:click={() => goto(`/${classID}/become-helper`)}>
+      <span class="material-icons">add</span>
+      Sign up as helper
     </Item>
 
     <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->

@@ -45,12 +45,12 @@
 			<div class="header-flex">
 				<p class="header-title">
 					<!-- Rediscover that learning can be enjoyable if you understand it -->
-					Save hours of pointless struggling — for $5 per week
+					Save a semester of suffering 
 				</p>
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Hire previous TAs, classmates, etc. to explain difficult things with easy-to-understand videos.
+						Ask previous TAs, students & classmates to explain difficult classes with easy-to-understand videos.
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -88,14 +88,10 @@
 		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
-
-					<br><br>
-					You can think of <i>Explain</i> as Youtube/KhanAcademy for MIT classes. The economies-of-scale of videos means that helpers gets paid in proportion to their impact,
+					<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
+					<br><br> -->
+					You can think of this as Youtube/KhanAcademy for MIT classes. The economies-of-scale of videos means that helpers gets paid in proportion to their impact,
 					while each student only has to pay a low price. After the semester, all videos are free forever to everyone.
-					
-					<br><br>
-					We provide a 80% subsidy for all students. For example, if you pay $5/week, we'll additionally contribute $20/week to your helper so they receive $25/week.
 				</div>
 			</div>
 

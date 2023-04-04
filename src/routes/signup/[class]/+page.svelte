@@ -1,9 +1,9 @@
-{#key classID}
+<!-- {#key classID}
   <DetailedClassPage {classID}/>
-{/key}
+{/key} -->
 
 <script>
-  import DetailedClassPage from './DetailedClassPage.svelte'
+  // import DetailedClassPage from './ToCommunityOrHelper.svelte'
 
   export let data
   let { classID } = data

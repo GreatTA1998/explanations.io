@@ -294,11 +294,13 @@
   async function createNewRoom () {
     for (const room of rooms) {
       if (room.name === '') {
-        alert('There is still an empty room available called "(no title)"')
+        alert('Redirecting you to an existing empty room')
+        goto(`/${classID}/${room.id}`)
         return
       }
     }
-    createRoomDoc(classPath)
+    const newRoomID = await createRoomDoc(classPath)
+    goto(`/${classID}/${newRoomID}`)
     // TODO: just import createRoomDoc from helpers/crud.js
     // const newDocID = getRandomID()
     // const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)

@@ -1,4 +1,4 @@
-<DetailedClassPage
+<!-- <DetailedClassPage
   isNewlyOfferedClass={false}
   classID={'Mev5x66mSMEvNz3rijym'}
 >
@@ -13,7 +13,7 @@
     </Label>
   </Button>
 </div>
-</DetailedClassPage>
+</DetailedClassPage> -->
 
 <!-- EDITORIAL HERE
   We're forced to overlap 2-3 different 3D graphs onto 2D, 
@@ -23,7 +23,7 @@
 -->
 
 <script>
-  import DetailedClassPage from './[class]/DetailedClassPage.svelte'
+  // import DetailedClassPage from './[class]/ToCommunityOrHelper.svelte'
   import Button, { Label } from '@smui/button';
   import { goto } from '$app/navigation'
 

@@ -12,13 +12,13 @@
     {/if}
 
 
-    {#if classWatchers}
+    <!-- {#if classWatchers}
       <ol style="margin-top: 2px;">
         {#each classWatchers as watcher}
           <li>{watcher.name}: {watcher.reasonForWatching} (budget: {getWatcherBudget(watcher)})</li>
         {/each}
       </ol>
-    {/if}
+    {/if} -->
 
     <!-- <div style="display: flex; font-family: sans-serif">
       {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
@@ -61,48 +61,51 @@
     {/if}
 
     <div style="display: flex">
-      <Card padded style="width: 400px;">
-        Ask the community
-        <Content>
-          Anyone can respond to your video request e.g. 
-          hobbyists, new helpers who want to try making videos, and existing helpers too sometimes
-        </Content>
-      </Card>
+      <div class="tutor-business-card" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
+        <Card padded style="width: 400px;">
+          Ask the community
+          <Content>
+            Anyone can respond to your video request e.g. 
+            hobbyists, new helpers who want to try making videos, and existing helpers too sometimes
+          </Content>
+        </Card>
+      </div>
+      <div class="tutor-business-card" on:click={() => dispatch('helper-asking')
+      } class:purple-border={isAskingCommunityOrHelper === 'helper'}>
+        <Card padded style="margin-left: 12px; width: 400px" clas>
+          Ask the community + your subscribed helper
+          <Content>
+            By subscribing to a designated helper, you can get a video response more reliably and in more detail
+            <!-- If highlighted, becomes purple -->
 
-      <Card padded style="margin-left: 12px; width: 400px">
-        Ask the community + your subscribed helper
-        <Content>
-          By subscribing to a designated helper, you can get a video response more reliably and in more detail
-          <!-- If highlighted, becomes purple -->
+            <!-- Just list out the helpers here directly so user doesn't have to click so much -->
 
-          <!-- Just list out the helpers here directly so user doesn't have to click so much -->
+            {#each classTutorsDocs as helper}
+              <div>
+                <PresentationalBeaverPreview 
+                  on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}}
+                  fullName={helper.name}
+                >
+                <div style="margin-bottom: 4px;"></div>
+                </PresentationalBeaverPreview>
+              </div>
+            {/each} 
 
-          {#each classTutorsDocs as helper}
-            <div>
-              <PresentationalBeaverPreview 
-                on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}}
-                fullName={helper.name}
-              >
-              <div style="margin-bottom: 4px;"></div>
-              </PresentationalBeaverPreview>
-              <!-- <a on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}}>
-                {helper.name}
-              </a> -->
-            </div>
-          {/each} 
-          <a on:click={() => isBecomeHelperPopupOpen = true}>Sign up as helper</a>
-          {#if isBecomeHelperPopupOpen}
-            <PopupBecomeHelper
-              helperDoc={selectedTutorDoc}
-              on:popup-close={() => isBecomeHelperPopupOpen = false}
-            />
-          {/if}
+            {#if !didUserAlreadySignUpAsTutor}
+              <a on:click={() => isBecomeHelperPopupOpen = true}>
+                Sign up as helper
+              </a>
+            {/if}
 
-          <!-- <Button style="background-color: purple; color: white;">  
-            Explore helpers gallery
-          </Button> -->
-        </Content>
-      </Card>
+            {#if isBecomeHelperPopupOpen}
+              <PopupBecomeHelper
+                helperDoc={selectedTutorDoc}
+                on:popup-close={() => isBecomeHelperPopupOpen = false}
+              />
+            {/if}
+          </Content>
+        </Card>
+      </div>
     </div>
 
     <div style="display: flex; overflow-x: auto; margin-top: 12px;">
@@ -184,64 +187,12 @@
           </Card>
         </div>
       {/each} -->
-
-      {#if !didUserAlreadySignUpAsTutor}
-        <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
-          {#if selectedTutorUID !== ''}
-            <Card style="min-height: 100px;" variant="outlined">
-              <PrimaryAction on:click={() => { dispatch('input', { selectedTutorUID: '' })}} padded style="height: 100%;">
-                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                  Setup your shop
-                </h2>
-                <div style="font-family: sans-serif; display: flex; align-items: center;">
-                  Or just log back in
-                  <Icon class="material-icons" style="margin-right: 0; font-size: 2.2rem; margin-left: auto;">
-                    expand_more
-                  </Icon>
-                </div>
-              </PrimaryAction>
-            </Card>
-          {:else}
-            {#if !$user.phoneNumber}
-              <Content>
-                <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-                  1. Log in with phone
-                </h2>
-                <PhoneLogin/>
-              </Content>
-            {:else}
-              <Content>
-                <div>
-                  Welcome { $user.name || '' }, create shop?
-                </div>
-          
-                {#if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
-                  <div>First name</div>
-                  <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
-
-                  <div>Last name</div>
-                  <input bind:value={inputFieldLastName} placeholder=""/>
-
-                  <Button on:click={createTutorDoc({ classID, firstName: inputFieldFirstName, lastName: inputFieldLastName })}>
-                    Submit
-                  </Button>
-                {:else if $user.name && !didUserAlreadySignUpAsTutor}
-                  <Button on:click={createTutorDoc({ classID, firstName: $user.name.split(" ")[0], lastName: $user.name.split(" ")[1] })}>
-                    Create shop
-                  </Button>
-                {/if}
-              </Content>
-            {/if}
-          {/if}
-        </div>
-      {/if}
     </div>
   </div>
 {/if}
 
 <script>
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
-
   import RenderlessLocalVariables from '$lib/RenderlessLocalVariables.svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte';
@@ -268,6 +219,7 @@
   export let selectedTutorUID
   export let classID
   export let classDoc
+  export let isAskingCommunityOrHelper
   
   let isBecomeHelperPopupOpen = false
   let classWatchers = null
@@ -467,41 +419,6 @@
       bio: detail
     })
   }
-
-  async function createTutorDoc ({ classID, firstName, lastName }) {
-    if (!firstName || !lastName) return
-    const classDbPath = `classes/${classID}/`
-    const id = getRandomID()
-    const classTutorDocPath = classDbPath + `tutors/${id}`
-
-    updateFirestoreDoc(`users/${$user.uid}`, {
-      idsOfTutoringClasses: arrayUnion(classID)
-    })
-
-    const designatedRoomID = await createRoomDoc(`classes/${classID}/`) 
-
-    // shopify the room board
-    const initialNumericalDifference = 3
-    updateFirestoreDoc(`classes/${classID}/blackboards/${designatedRoomID}`, {
-      shopGalleryOrder: initialNumericalDifference
-    }) 
-    
-    const tutorObject = {
-      uid: $user.uid,
-      name: firstName + ' ' + lastName,
-      phoneNumber: $user.phoneNumber,
-      designatedRoomID,
-      maxShopGalleryOrder: initialNumericalDifference 
-    }
-    const db = getFirestore()
-
-    await setDoc(
-      doc(db, classTutorDocPath), 
-      tutorObject
-    )
-    await tick()
-    selectedTutorUID = tutorObject.uid
-  }
 </script>
 
 <style>
@@ -516,6 +433,10 @@
 
   .orange-border {
     border: 2px solid orange;
+  }
+
+  .purple-border {
+    border: 2px solid purple; 
   }
   
   .red-text {

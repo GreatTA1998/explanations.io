@@ -1,7 +1,7 @@
 <BasePopup on:popup-close width={1000}>
-  <h2 slot="title" style="font-family: sans-serif;">
+  <!-- <h2 slot="title" style="font-family: sans-serif;">
     {helperDoc.name}
-  </h2>
+  </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
     {#if !$user.phoneNumber}
     <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
@@ -13,7 +13,7 @@
       Welcome { $user.name || '' }.
       <br>
       <br>
-      You can now be paid as a helper. Establish your presence by creating a few free videos or responding to unresolved questions
+      You can now be paid as a helper. Help others get to know you by creating a few free videos or responding to unresolved questions
       in the server. 
 
       "People subscribe not for a particular video necessarily, but because they 
@@ -28,7 +28,6 @@
       This is your helper profile, 
       which contains your info, your statistics (number of free videos, number of paid videos), and your top videos, 
       <div style="color: purple">and allows students to subscribe to you.</div>
-      <Button>Get subscribers-only videos and reliable reply time for $10/month</Button>
     </div>
     
     {#if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
@@ -101,6 +100,42 @@
     const temp = await shopifyFetch()
     shopVideosIDs = temp
   })
+
+  async function createTutorDoc ({ classID, firstName, lastName }) {
+    if (!firstName || !lastName) return
+    const classDbPath = `classes/${classID}/`
+    const id = getRandomID()
+    const classTutorDocPath = classDbPath + `tutors/${id}`
+
+    updateFirestoreDoc(`users/${$user.uid}`, {
+      idsOfTutoringClasses: arrayUnion(classID)
+    })
+
+    const designatedRoomID = await createRoomDoc(`classes/${classID}/`) 
+
+    // shopify the room board
+    const initialNumericalDifference = 3
+    updateFirestoreDoc(`classes/${classID}/blackboards/${designatedRoomID}`, {
+      shopGalleryOrder: initialNumericalDifference
+    }) 
+    
+    const tutorObject = {
+      uid: $user.uid,
+      name: firstName + ' ' + lastName,
+      phoneNumber: $user.phoneNumber,
+      designatedRoomID,
+      maxShopGalleryOrder: initialNumericalDifference 
+    }
+    const db = getFirestore()
+
+    await setDoc(
+      doc(db, classTutorDocPath), 
+      tutorObject
+    )
+    await tick()
+    selectedTutorUID = tutorObject.uid
+  }
+
   async function shopifyFetch () {
     return new Promise(async (resolve) => {
       // const shopVideoIDs = [] 

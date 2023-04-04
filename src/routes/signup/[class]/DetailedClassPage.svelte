@@ -31,6 +31,9 @@
 
 
   <DetailedClassPageTutorCards 
+    on:community-asking
+    on:helper-asking
+    {isAskingCommunityOrHelper}
     {classTutorsDocs}
     {selectedTutorDoc}
     {selectedTutorUID} on:input={e => onTutorCardSelect(e)}
@@ -88,6 +91,7 @@
 
   export let classID
   export let fetchVideosFunc
+  export let isAskingCommunityOrHelper
 
   let classDoc
   let classTutorsDocs = null

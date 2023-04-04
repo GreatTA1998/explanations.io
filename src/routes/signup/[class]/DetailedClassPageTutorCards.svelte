@@ -2,9 +2,6 @@
 {#if classTutorsDocs && classDoc}
   <div style="margin-top: 0%; margin-bottom: 0%">
     <div style="display: flex">
-      <h2 style="font-family: sans-serif; color: black; font-size: 1.8rem; font-weight: 400; margin-top: 0; margin-bottom: 12px;">
-        Hire someone based on their example videos (scroll down)
-      </h2>
     </div>
 
     {#if isWatchingForNewShopPopupOpen}
@@ -14,21 +11,6 @@
       />
     {/if}
 
-    <div style="display: flex; font-family: sans-serif;" class:red-text={classDoc.numOfWatchers}>
-      { classDoc.numOfWatchers || 0 } people still looking for a new helper
-      
-      <div style="margin-right: 12px;"></div>
-      
-      {#if !isUserWatchingClass}
-        <button on:click={() => isWatchingForNewShopPopupOpen = true}>
-          Notify me when new helper opens shop
-        </button>
-      {:else}
-        <button on:click={() => isWatchingForNewShopPopupOpen = true}>
-          Remove myself from watchlist
-        </button>
-      {/if}
-    </div>
 
     {#if classWatchers}
       <ol style="margin-top: 2px;">
@@ -38,7 +20,7 @@
       </ol>
     {/if}
 
-    <div style="display: flex; font-family: sans-serif">
+    <!-- <div style="display: flex; font-family: sans-serif">
       {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
         Pset PDFs (as prompts for videos)
       {:else}
@@ -50,9 +32,9 @@
       <div style="margin-right: 12px;"></div>
 
       <PsetPDFUploader {classID}/>
-    </div>
+    </div> -->
 
-    <div>
+    <!-- <div>
       {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
         {#each classDoc.psetPDFsDownloadURLs as downloadURL, i}
           <a style="margin-left: 24px;" href={downloadURL} target="_blank">
@@ -60,7 +42,7 @@
           </a>
         {/each} 
       {/if}
-    </div>
+    </div> -->
 
     {#if isSubscribePopupOpen}
       <PopupConfirmSubscription
@@ -78,8 +60,53 @@
       />
     {/if}
 
+    <div style="display: flex">
+      <Card padded style="width: 400px;">
+        Ask the community
+        <Content>
+          Anyone can respond to your video request e.g. 
+          hobbyists, new helpers who want to try making videos, and existing helpers too sometimes
+        </Content>
+      </Card>
+
+      <Card padded style="margin-left: 12px; width: 400px">
+        Ask the community + your subscribed helper
+        <Content>
+          By subscribing to a designated helper, you can get a video response more reliably and in more detail
+          <!-- If highlighted, becomes purple -->
+
+          <!-- Just list out the helpers here directly so user doesn't have to click so much -->
+
+          {#each classTutorsDocs as helper}
+            <div>
+              <PresentationalBeaverPreview 
+                on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}}
+                fullName={helper.name}
+              >
+              <div style="margin-bottom: 4px;"></div>
+              </PresentationalBeaverPreview>
+              <!-- <a on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}}>
+                {helper.name}
+              </a> -->
+            </div>
+          {/each} 
+          <a on:click={() => isBecomeHelperPopupOpen = true}>Sign up as helper</a>
+          {#if isBecomeHelperPopupOpen}
+            <PopupBecomeHelper
+              helperDoc={selectedTutorDoc}
+              on:popup-close={() => isBecomeHelperPopupOpen = false}
+            />
+          {/if}
+
+          <!-- <Button style="background-color: purple; color: white;">  
+            Explore helpers gallery
+          </Button> -->
+        </Content>
+      </Card>
+    </div>
+
     <div style="display: flex; overflow-x: auto; margin-top: 12px;">
-      {#each sortedClassTutorsDocs as tutorDoc}
+      <!-- {#each sortedClassTutorsDocs as tutorDoc}
         <div class="tutor-business-card" style="margin-right: 1%;" class:orange-border={selectedTutorUID === tutorDoc.uid}>
           <Card on:click={() => { dispatch('input', { selectedTutorUID: tutorDoc.uid, selectedTutorDoc: tutorDoc })}} padded style="min-height: 100px;" variant="outlined">
             <RenderlessLocalVariables let:isCardExpanded={isCardExpanded} let:toggleIsCardExpanded={toggleIsCardExpanded}>
@@ -129,23 +156,15 @@
               <div style="text-align: center; padding: 0; margin-top: 12px;">
                 <ReusableButton on:click={() => handleSubscribeButtonClick(tutorDoc)}>
                   <div style="font-size: 0.8rem;">
-                    Hire for ${ tutorDoc.weeklyPrice || 15 }/week
+                    Subscribe for $10/month
+                    ${ tutorDoc.weeklyPrice || 15 }/week
                   </div>
                 </ReusableButton>
               </div>
 
-              <!-- <div style="text-align: center; padding: 0; margin-top: 12px;">
-                <ReusableButton on:click={() => handleTrialButtonClick(tutorDoc)} variant="outlined">
-                  <div style="font-size: 0.8rem;">
-                    In-person tutoring "trial" for $1
-                  </div>
-                </ReusableButton>
-              </div> -->
-
               {#if $user.uid === tutorDoc.uid && price && isCardExpanded}
                 <div style="margin-top: 12px;"></div>
                 <ReusableIncomeCalculator weeklyPrice={price}>
-                  <!-- <Slider/> doesn't emit events properly so I'm just avoiding the issue with <slot> -->
                   <div style="display: flex; align-items: center;">
                     <div style="font-family: sans-serif;">
                       price
@@ -164,7 +183,7 @@
             </RenderlessLocalVariables>    
           </Card>
         </div>
-      {/each}
+      {/each} -->
 
       {#if !didUserAlreadySignUpAsTutor}
         <div class="tutor-business-card" style="" class:orange-border={selectedTutorUID === ''}>
@@ -221,6 +240,8 @@
 {/if}
 
 <script>
+  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
+
   import RenderlessLocalVariables from '$lib/RenderlessLocalVariables.svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte';
@@ -240,6 +261,7 @@
   import Slider from '@smui/slider'
   import { goto } from '$app/navigation';
   import PopupGetNotifiedOnNewShops from '$lib/PopupGetNotifiedOnNewShops.svelte';
+  import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
 
   export let classTutorsDocs
   export let selectedTutorDoc
@@ -247,6 +269,7 @@
   export let classID
   export let classDoc
   
+  let isBecomeHelperPopupOpen = false
   let classWatchers = null
   let sortedClassTutorsDocs 
   const dispatch = createEventDispatcher()

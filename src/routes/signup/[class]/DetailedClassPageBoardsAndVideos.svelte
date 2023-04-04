@@ -1,5 +1,7 @@
 
-<div bind:clientWidth={carouselWidth} bind:clientHeight={carouselHeight} style="margin-left: 1%; height: 100%;">
+<div bind:clientWidth={carouselWidth} bind:clientHeight={carouselHeight} 
+  style="display: flex; flex-wrap: wrap; justify-content: space-evenly; padding-left: 1%; padding-right: 1%; height: 100%; min-height: 300px; width: 100%; border: 2px solid red; box-sizing: border-box;"
+>
   {#if computedBoardWidth && computedBoardHeight}
     {#each galleryBoardIDs as boardID} 
       <div class="card">
@@ -10,14 +12,9 @@
                 boardDoc={boardDoc}
               />
               <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
-                <TextAreaAutoResizing 
-                  value={boardDoc.description || ''} 
-                  on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
-                  placeholder={textAreaPlaceholder}
-                  readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                  nonFocusedPlaceholderOpacity={0.6}
-                  numberOfInitialRowsIfEmpty=3
-                />
+                <div class="my-truncated-text" style="width: {computedBoardWidth}">
+                  {boardDoc.description}
+                </div>
               </div>
               <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
                 Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
@@ -129,10 +126,15 @@
     })
   }
 
+
   function resizeHandler () {
+    console.log('resizeHandler(), ', carouselWidth, carouselHeight)
     const { height, width} = computeMaxAvailableDimensionsGeneral(carouselWidth, carouselHeight) // 4.4 is not a typo // carouselWidth * 3/4.4
-    computedBoardWidth = width
-    computedBoardHeight = height 
+    computedBoardWidth = 300
+    computedBoardHeight = 300 * 3/4
+
+    // computedBoardWidth = width
+    // computedBoardHeight = height 
   }
 
   function incrementViewMinutes (boardID, playbackSpeed) {

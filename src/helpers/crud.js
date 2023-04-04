@@ -28,6 +28,18 @@ export function getFirestoreDoc (path) {
   })
 }
 
+export function getFirestoreCollection (path) {
+  return new Promise(async (resolve) => {
+    const ref = collection(getFirestore(), path)
+    const snapshot = await getDocs(ref)
+    const data = []
+    snapshot.forEach(doc => {
+      data.push({ id: doc.id, path: doc.path, ...doc.data() })
+    })
+    resolve(data)
+  })
+}
+
 export function updateFirestoreDoc (path, updateObject) {
   return new Promise(async (resolve) => {
     const ref = firestoreRef(path)

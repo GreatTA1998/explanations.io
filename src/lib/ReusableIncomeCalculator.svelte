@@ -1,4 +1,5 @@
 <!-- Bubbles up `on:input` event -->
+<!-- <Slider/> doesn't emit events properly so I'm just avoiding the issue with <slot> -->
 <slot>
 
 </slot>

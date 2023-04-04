@@ -20,14 +20,14 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
-    <Item on:click={() => goto(`/${classID}/request-video`)} style="color: purple;">
-      <span class="material-icons">add</span>
-      Request video from helpers
+    <Item on:click={() => goto(`/${classID}/request-video`)}>
+      <span class="material-icons">question_mark</span>
+      Request video
     </Item>
 
     <Item on:click={() => goto(`/${classID}/become-helper`)}>
-      <span class="material-icons">add</span>
-      New video
+      <span class="material-icons">draw</span>
+      Create video
     </Item>
     
     <!-- <Item on:click={() => goto(`/${classID}/become-helper`)}>

@@ -1,26 +1,36 @@
 <div use:portal={'main-content'} style="padding: 16px;">
-  <h2>
-    Choose a helper to ask the question to
+  <h2 style="font-family: sans-serif">
+    Request a video
   </h2>
+  <DetailedClassPage {classID}>
+    
+  </DetailedClassPage>
 
   <!-- Here you can modify your information, like your bio, and your profile, top videos, statistics, etc. -->
-  <div>Sign up as helper</div>
+  <!-- <div>Sign up as helper</div> -->
+  Question title <input>
+  Question description <input>
 
   <div style="font-size: 1.5rem;">
-    Anyone in the server can respond to your video request, especially 
-    new helpers who want to establish themselves.
     <br>
     <br>
-    <div style="color: purple;">
-      If you want to reliable reply times,
-      subscribe to your helper for $10/month.
-    </div>
   </div>
   <div>
     Can attach PDF or images here for the question
   </div>
+
+  <Button style="width: 100%; background-color: orange; color: white;">
+    Submit question
+  </Button>
 </div>
 
 <script>
   import { portal } from '../../../helpers/actions.js'
+  import { getFirestoreCollection } from '../../../helpers/crud.js'
+  import DetailedClassPage from '/src/routes/signup/[class]/DetailedClassPage.svelte'
+  import Button from '@smui/button'
+
+  export let data
+  let { classID, roomID } = data
+  $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 </script>

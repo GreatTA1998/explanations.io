@@ -81,8 +81,9 @@ export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStr
 export function createRoomDoc (classPath) {
   return new Promise(async resolve => {
     const newDocID = getRandomID()
-    const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
-    const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)
+    const db = getFirestore()
+    const roomRef = doc(db, classPath + `rooms/${newDocID}`)
+    const blackboardRef = doc(db, classPath + `blackboards/${newDocID}`)
     await Promise.all([
       setDoc(roomRef, {
         name: '',

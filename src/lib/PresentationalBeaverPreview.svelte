@@ -1,9 +1,11 @@
-<div on:click style="display: flex; align-items: center; background-color: rgb(208 213 207)">
-  <span class="material-icons">cruelty_free</span>
+<div style={$$props.style}>
+  <div on:click style="display: flex; align-items: center; background-color: rgb(208 213 207); cursor: pointer;">
+    <span class="material-icons">cruelty_free</span>
 
-  <div>
-    <div><a>{fullName}</a></div>
-    <div>{ numOfVideos } videos, { numOfSubscribers }subscribers</div>
+    <div>
+      <div><a>{fullName}</a></div>
+      <div>{ numOfVideos } videos, { numOfSubscribers } subscribers</div>
+    </div>
   </div>
 </div>
 

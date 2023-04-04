@@ -11,7 +11,6 @@
       />
     {/if}
 
-
     <!-- {#if classWatchers}
       <ol style="margin-top: 2px;">
         {#each classWatchers as watcher}
@@ -43,6 +42,7 @@
         {/each} 
       {/if}
     </div> -->
+  
 
     {#if isSubscribePopupOpen}
       <PopupConfirmSubscription
@@ -62,31 +62,41 @@
 
     <div style="display: flex">
       <div class="tutor-business-card" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
-        <Card padded style="width: 400px;">
+        <Card padded style="width: 400px; box-sizing: border-box">
+          <!-- <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif">
+           
+          </h2> -->
           Ask the community
+          <!-- Ask the community -->
           <Content>
             Anyone can respond to your video request e.g. 
             hobbyists, new helpers who want to try making videos, and existing helpers too sometimes
           </Content>
         </Card>
       </div>
-      <div class="tutor-business-card" on:click={() => dispatch('helper-asking')
+      <div style="margin-left: 12px;" class="tutor-business-card" on:click={() => dispatch('helper-asking')
       } class:purple-border={isAskingCommunityOrHelper === 'helper'}>
-        <Card padded style="margin-left: 12px; width: 400px" clas>
-          Ask the community + your subscribed helper
+        <Card padded style="width: 400px; box-sizing: border-box; ">
+          <!-- <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif">
+            Ask the community + your designated helper
+          </h2> -->
+          Ask the community + your designated helper
+        
           <Content>
-            By subscribing to a designated helper, you can get a video response more reliably and in more detail
+            By subscribing to a designated helper, you get more reliable video responses:
+
+            <div style="margin-bottom: 12px;"></div>
             <!-- If highlighted, becomes purple -->
 
             <!-- Just list out the helpers here directly so user doesn't have to click so much -->
-
             {#each classTutorsDocs as helper}
               <div>
                 <PresentationalBeaverPreview 
                   on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}}
                   fullName={helper.name}
+                  style="margin-bottom: 8px;"
                 >
-                <div style="margin-bottom: 4px;"></div>
+                  <div style="margin-bottom: 4px;"></div>
                 </PresentationalBeaverPreview>
               </div>
             {/each} 
@@ -423,12 +433,14 @@
 
 <style>
   .tutor-business-card {
-    max-width: 260px; 
+    /* 400 + epsilon, otherwise it doesn't wrap around the <Card> properly */
+    max-width: 404px; 
     width: 100%;
     height: fit-content;
     
     /* This is to match SMUI's card's border radius */
     border-radius: 5px;
+    box-sizing: border-box;
   }
 
   .orange-border {

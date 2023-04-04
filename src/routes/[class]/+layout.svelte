@@ -25,7 +25,7 @@
       Request video
     </Item>
 
-    <Item on:click={() => goto(`/${classID}/become-helper`)}>
+    <Item on:click={createNewRoom}>
       <span class="material-icons">draw</span>
       Create video
     </Item>
@@ -149,15 +149,6 @@
       </div>
     {/each}
 
-    <!-- New room -->
-    {#if $user.uid}
-      <div on:click={createNewRoom} style="padding: 6px; display: flex; align-items: center;">
-        <span class="material-icons" style="margin-left: 6px; margin-right: 5px; margin-top: 2.5px; font-size: 1.2rem;">
-          add
-        </span>
-        new question
-      </div>
-    {/if}
   </LeftDrawer>
 </DailyVideoConference>
 
@@ -179,8 +170,9 @@
   import { computeMaxAvailableDimensions } from '../../helpers/canvas'
   import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth } from '../../store.js'
   import { getRandomID } from '../../helpers/utility.js'
+  import { createRoomDoc } from '../../helpers/crud.js'
   import { deleteObject, getStorage, ref } from 'firebase/storage'
-  import { getFunctions, httpsCallable } from "firebase/functions";
+  import { getFunctions, httpsCallable } from "firebase/functions"
 
    export let data;
    let { classID, roomID } = data;
@@ -302,25 +294,26 @@
   async function createNewRoom () {
     for (const room of rooms) {
       if (room.name === '') {
-        alert('There is still an empty room available')
+        alert('There is still an empty room available called "(no title)"')
         return
       }
     }
+    createRoomDoc(classPath)
     // TODO: just import createRoomDoc from helpers/crud.js
-    const newDocID = getRandomID()
-    const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
-    const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)
-    await Promise.all([
-      setDoc(roomRef, {
-        name: '',
-        blackboards: [newDocID],
-        date: new Date().toISOString()
-          // rooms have an order property, look at v3's drag and drop source code
-      }),
-      setDoc(blackboardRef, {
-        recordState: 'pre_record'
-      })
-    ])
+    // const newDocID = getRandomID()
+    // const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
+    // const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)
+    // await Promise.all([
+    //   setDoc(roomRef, {
+    //     name: '',
+    //     blackboards: [newDocID],
+    //     date: new Date().toISOString()
+    //       // rooms have an order property, look at v3's drag and drop source code
+    //   }),
+    //   setDoc(blackboardRef, {
+    //     recordState: 'pre_record'
+    //   })
+    // ])
   }
 
   function recomputeMaxAvailableDimensions () {
@@ -381,7 +374,7 @@
     )
     const roomsQuery = query(
       roomsRef, 
-      orderBy('date', 'asc')
+      orderBy('date', 'desc')
     )
     unsubFuncs.push(
       onSnapshot(roomsQuery, async (snapshot) => { // onSnapshot does NOT return a promise

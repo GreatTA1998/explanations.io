@@ -16,14 +16,14 @@
       <Button on:click={updateUserName}>Submit</Button>
     {/if}
 
-    <div>
+    <div style="font-size: 1rem;">
       Refund policy: refund anytime for any reason; refunds are covered by Explain so it's painless for students and tutors if things don't work out.
     </div>
 
     <div style="height: 20px; display: flex; margin-top: 20px;">
       <Checkbox bind:checked touch />
-      I've venmo'ed 
-      ${selectedTutorDoc.weeklyPrice || 15} 
+      I've venmo'ed $10
+      <!-- ${selectedTutorDoc.weeklyPrice || 15}  -->
       to 
       @{selectedTutorDoc.venmo || "(check Venmo in teachers's bio (press the v-shaped arrow on the teacher's rectangle)"}
     </div>
@@ -53,6 +53,8 @@
   import Button from '@smui/button'
 
   export let selectedTutorDoc
+
+  console.log("popup confirm subscription: ")
 
   const dispatch = createEventDispatcher()
 

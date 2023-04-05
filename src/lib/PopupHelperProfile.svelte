@@ -1,4 +1,4 @@
-<BasePopup on:popup-close width={1000}>
+<BasePopup on:popup-close style="min-height: 90vh; min-width: 95vw;">
   <div slot="title" style="margin-top: 12px; display: flex; flex-wrap: wrap; width: 95%; align-items: center; justify-content: space-between">
     <h2 style="font-family: sans-serif; font-size: 2.8rem; margin-top: 0px; margin-bottom: 0;">
       {helperDoc.name}
@@ -40,14 +40,23 @@
 
     <div style="margin-top: 24px;"></div>
 
-    <ReusableButton color="secondary" style="color: white;">
+    {#if isSubscribePopupOpen}
+      <PopupConfirmSubscription
+        selectedTutorDoc={helperDoc}
+        {classID}
+        on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
+        on:popup-close={() => isSubscribePopupOpen = false}
+      />
+    {/if}
+
+    <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
       Directly ask {helperDoc.name} for new videos + unlock subscriber-only videos for $10/month
     </ReusableButton> 
 
     <div style="margin-top: 24px;"></div>
 
     <!-- Video portfolio here -->
-    <DetailedClassPageBoardsAndVideos
+    <ToCommunityOrHelpersBoardsAndVideos
       on:video-rearrange={() => isRearrangeVideosPopupOpen = true}
       galleryBoardIDs={shopVideosIDs}
       {classID}
@@ -66,18 +75,21 @@
   import { user } from '../store.js'
   import { updateFirestoreDoc } from '../helpers/crud.js'
   import { roundedToFixed } from '../helpers/utility.js'
+  import { sendTextMessage } from '../helpers/cloudFunctions.js'
   import Button from '@smui/button'
-  import { getFirestore, collection, query, where, orderBy, getDocs } from "firebase/firestore";
-  import DetailedClassPageBoardsAndVideos from '/src/routes/signup/[class]/DetailedClassPageBoardsAndVideos.svelte'
+  import { getFirestore, collection, query, where, orderBy, getDocs, arrayUnion, increment } from "firebase/firestore";
+  import ToCommunityOrHelpersBoardsAndVideos from '/src/routes/signup/[class]/ToCommunityOrHelpersBoardsAndVideos.svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
+  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
+  import { goto } from '$app/navigation'
 
   export let classTutorsDocs
-  export let selectedTutorDocs
   export let helperDoc 
-  export let helperUID
   export let classID
 
   const dispatch = createEventDispatcher()
+
+  let isSubscribePopupOpen = false
 
   let inputFieldFirstName = ''
   let inputFieldLastName = ''
@@ -137,5 +149,44 @@
     updateFirestoreDoc(`users/${$user.uid}`, {
       name: inputFieldFirstName + ' ' + inputFieldLastName
     })
+  }
+
+  async function handleConfirmSubscription (tutor) {
+    isSubscribePopupOpen = false
+    const promises = []
+
+    // NOTE: Twilio's requirement differs from Firebase Auth, which requires +1 XXX-XXX-XXX hyphen format
+    const eltonMobileNumber = '+15032503868'
+    await promises.push(
+      sendTextMessage({ 
+        content: `New student ${$user.name} subscribed for $10/month, confirm on Venmo`,
+        toWho: tutor.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Welcome ${$user.name.split(' ')[0]}! To ask your question, just rename a room to your question, your helper will be text notified.
+          
+          If you don't know how to use the website, here's a 1-min screenshare tutorial: https://youtu.be/Yo7aPxLropU?t=58. 
+          Your tutor's phone is ${tutor.phoneNumber}. Texting is the fallback communication when there are unexpected problems e.g. ask for their email to
+          send the pset PDF, Explain's website broke down, or to follow-up sometimes if response time is unusually long etc.
+
+
+          If there's anything terribly inconvenient about the website, it probably is a bug, or a flawed design. You can call me/Elton (503 250 3868) 
+          (please don't hesitate, Explain is my full-time job and you're a paying customer, and more often than not I can change the code 
+          to incorporate your ideas within 1 week.)
+        `,
+        toWho: $user.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Student ${$user.name} subscribed to tutor ${tutor.name}`,
+        toWho: eltonMobileNumber
+      }),
+      updateFirestoreDoc(`/users/${$user.uid}`, {
+        idsOfSubscribedClasses: arrayUnion(classID)
+      }),
+      updateFirestoreDoc(`/classes/${classID}/tutors/${tutor.id}`, {
+        numOfStudents: increment(1)
+      })
+    )
+    goto(`/${classID}/${classID}`)
   }
 </script>

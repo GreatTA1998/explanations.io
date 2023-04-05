@@ -1,4 +1,4 @@
-<div class="popup-window" style="width: {width}px; min-height: 90vh; height: 400px; min-width: 95vw; overflow-y: scroll;">
+<div class="popup-window" style={$$props.style}>
   <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px">
     <slot name="title">
 
@@ -46,5 +46,12 @@
     top: 0;
     bottom: 0;
     margin: auto;
+
+    /* dimensions */
+    width: 300px;
+    height: 300px; 
+    min-height: 10vh;
+    min-width: 33vw; 
+    overflow-y: scroll;
   }
 </style>

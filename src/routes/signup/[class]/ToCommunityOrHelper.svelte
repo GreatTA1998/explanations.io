@@ -20,17 +20,8 @@
     </slot>
   {/if}
 
-  {#if isHelperProfilePopupOpen}
-    <PopupHelperProfile 
-      {classID}
-      helperDoc={selectedTutorDoc}
-      {classTutorsDocs}
-      on:popup-close={() => isHelperProfilePopupOpen = false}
-    />
-  {/if}
 
-
-  <DetailedClassPageTutorCards 
+  <ToCommunityOrHelperCards
     on:community-asking
     on:helper-asking
     {isAskingCommunityOrHelper}
@@ -44,39 +35,7 @@
 
 <div style="margin-top: 20px;"></div>
 
-<!-- `key` needed to need to refetch new videos when different tutors are clicked --> 
-<!-- {#key selectedTutorUID}
-  {#if classTutorsDocs && selectedTutorUID}
-    {#key incrementWhenGalleryRearranged}
-      <RenderlessFetch {selectedTutorUID} {classID} let:galleryBoardIDs={galleryBoardIDs}>
-        {#if galleryBoardIDs}
-          <DetailedClassPageBoardsAndVideos
-            on:video-rearrange={() => isRearrangeVideosPopupOpen = true}
-            {galleryBoardIDs}
-            {selectedTutorUID}
-            {classTutorsDocs}
-            {classID}
-            {selectedTutorDoc}
-          />
-          {#if isRearrangeVideosPopupOpen}
-            <PopupRearrangeVideos
-              {galleryBoardIDs}
-              {selectedTutorDoc}
-              {classID}
-              on:popup-close={() => isRearrangeVideosPopupOpen = false}
-              on:confirm-clicked={() => {}}
-              on:video-rearranged={() => incrementWhenGalleryRearranged += 1}
-            />
-          {/if}
-        {/if}
-      </RenderlessFetch>
-    {/key}
-  {/if}
-{/key} -->
-
 <script>
-  import DetailedClassPageTutorCards from './DetailedClassPageTutorCards.svelte'
-  import DetailedClassPageBoardsAndVideos from './DetailedClassPageBoardsAndVideos.svelte'
   import PopupRearrangeVideos from '$lib/PopupRearrangeVideos.svelte'
   import RenderlessListenToRoom from './RenderlessListenToRoom.svelte'
   import RenderlessFetch from './RenderlessFetch.svelte'
@@ -88,6 +47,7 @@
   import { toggleClassDetailsDrawerWidth } from '../../../helpers/everythingElse.js'
   import ReusableButton from '$lib/ReusableButton.svelte'
   import PopupHelperProfile from '$lib/PopupHelperProfile.svelte'
+  import ToCommunityOrHelperCards from './ToCommunityOrHelperCards.svelte';
 
   export let classID
   export let fetchVideosFunc

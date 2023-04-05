@@ -129,11 +129,9 @@
 
 
   function resizeHandler () {
-    console.log('resizeHandler(), ', carouselWidth, carouselHeight)
     const { height, width} = computeMaxAvailableDimensionsGeneral(carouselWidth, carouselHeight) // 4.4 is not a typo // carouselWidth * 3/4.4
     computedBoardWidth = 400
     computedBoardHeight = 400 * 3/4
-
     // computedBoardWidth = width
     // computedBoardHeight = height 
   }

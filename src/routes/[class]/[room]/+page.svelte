@@ -63,14 +63,30 @@
             >  
               <div style="display: flex; align-items: center">
                 <div 
-                  style="color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 4px; margin-bottom: 4px;"
+                  style="display: flex; width: 100%; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 4px; margin-bottom: 4px; align-items: center;"
                 >
-                  <div>
-                    <a style="color: purple; font-size: 1rem; font-family: sans-serif">{boardDoc.creatorName}</a>
-                  </div>
                   {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0} upvotes, 
                   {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed,
-                  {boardDoc.numOfComments || 0} comments
+                  {boardDoc.numOfComments || 0} comments,
+                  
+                  <RenderlessFetchHelperDoc 
+                    {classID}
+                    creatorUID={boardDoc.creatorUID}
+                    let:helperDoc={helperDoc}
+                  >
+                    {#if helperDoc}
+                      <PresentationalBeaverPreview style="margin-left: 12px;"
+                        {helperDoc}
+                        {classID}
+                      />
+                    {:else}
+                      by {boardDoc.creatorName}
+                    {/if}
+                  </RenderlessFetchHelperDoc>
+                 
+                  <div style="margin-left: 12px;">
+              
+                  </div>
                 </div>
                 {#if !isShowingComments}
                   <Button on:click={listenToComments} >
@@ -338,6 +354,8 @@
   import RenderlessStopwatch from '$lib/RenderlessStopwatch.svelte'
   import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
+  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
+  import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
 
   export let data
   let { classID, roomID } = data

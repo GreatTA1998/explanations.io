@@ -11,39 +11,6 @@
       />
     {/if}
 
-    <!-- {#if classWatchers}
-      <ol style="margin-top: 2px;">
-        {#each classWatchers as watcher}
-          <li>{watcher.name}: {watcher.reasonForWatching} (budget: {getWatcherBudget(watcher)})</li>
-        {/each}
-      </ol>
-    {/if} -->
-
-    <!-- <div style="display: flex; font-family: sans-serif">
-      {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
-        Pset PDFs (as prompts for videos)
-      {:else}
-        <div style="color: red">
-          Pset files missing for helpers to make example videos
-        </div>
-      {/if}
-
-      <div style="margin-right: 12px;"></div>
-
-      <PsetPDFUploader {classID}/>
-    </div> -->
-
-    <!-- <div>
-      {#if classDoc.psetPDFsDownloadURLs && classDoc.psetPDFsNames}
-        {#each classDoc.psetPDFsDownloadURLs as downloadURL, i}
-          <a style="margin-left: 24px;" href={downloadURL} target="_blank">
-            {classDoc.psetPDFsNames[i]}
-          </a>
-        {/each} 
-      {/if}
-    </div> -->
-  
-
     {#if isSubscribePopupOpen}
       <PopupConfirmSubscription
         {selectedTutorDoc}
@@ -91,14 +58,12 @@
             <!-- Just list out the helpers here directly so user doesn't have to click so much -->
             {#each classTutorsDocs as helper}
               <div>
+                <!--   on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}} -->
                 <PresentationalBeaverPreview 
-                  on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}}
-                  fullName={helper.name}
-                  numOfVideos={helper.numOfVideos || 0}
-                  minutesViewed={helper.minutesViewed || 0}
+                  helperDoc={helper}
+                  {classID}
                   style="margin-bottom: 8px;"
                 >
-                  <div style="margin-bottom: 4px;"></div>
                 </PresentationalBeaverPreview>
               </div>
             {/each} 

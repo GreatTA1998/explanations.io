@@ -13,21 +13,25 @@
       Welcome { $user.name || '' }.
       <br>
       <br>
-      You can now be paid as a helper. Help others get to know you by creating a few free videos or responding to unresolved questions
-      in the server. 
-
-      "People subscribe not for a particular video necessarily, but because they 
-      fall in love with your particular perspective on explaining the subject matter"
-  
-      https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting
+      Thanks for considering to be a helper - here's a quick guide to help you think about it.
       <br>
       <br>
+      <i>"People subscribe not for a particular video necessarily, but because they 
+      fall in love with your particular perspective on explaining the subject matter"</i>
+      <a href="https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting" target="_blank"> read more here</a>
+      <br>
+      <br>
+      <div>
+        If you become a helper, students can subscribe to you for $10/month.
+        
+        Regardless of whether you're a helper, you can still answer questions and upload videos in the server and build up your profile.
+        You can become a helper whenever you want.  
+      </div>
+<!-- 
+      <button on:click={createTutorDoc}>Confirm sign-up as helper</button> -->
 
-      Your statistics and video portfolio will grow with your activity.
-
-      This is your helper profile, 
-      which contains your info, your statistics (number of free videos, number of paid videos), and your top videos, 
-      <div style="color: purple">and allows students to subscribe to you.</div>
+      <br>
+      <br>
     </div>
     
     {#if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
@@ -46,15 +50,9 @@
         Submit
       </Button>
     {/if}
-    
-    <!-- Basic statistics -->
-    <div>
-      free videos, subscriber videos, total subscriptions
-    </div>
-
   {/if}
     <!-- Video portfolio here -->
-    <DetailedClassPageBoardsAndVideos
+    <ToCommunityOrHelpersBoardsAndVideos
       on:video-rearrange={() => isRearrangeVideosPopupOpen = true}
       galleryBoardIDs={shopVideosIDs}
       {classID}
@@ -74,7 +72,7 @@
   import { updateFirestoreDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
   import { getFirestore, collection, query, where, orderBy, getDocs } from "firebase/firestore";
-  import DetailedClassPageBoardsAndVideos from '/src/routes/signup/[class]/DetailedClassPageBoardsAndVideos.svelte'
+  import ToCommunityOrHelpersBoardsAndVideos from '/src/routes/signup/[class]/ToCommunityOrHelpersBoardsAndVideos.svelte'
 
   import { portal } from '../helpers/actions.js'
 

@@ -1,4 +1,4 @@
-<div class="popup-window" style="width: {width}px; min-height: 80vh; height: 400px; min-width: 80vw; overflow-y: scroll;">
+<div class="popup-window" style="width: {width}px; min-height: 90vh; height: 400px; min-width: 95vw; overflow-y: scroll;">
   <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px">
     <slot name="title">
 

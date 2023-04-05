@@ -294,7 +294,7 @@
   async function createNewRoom () {
     for (const room of rooms) {
       if (room.name === '') {
-        alert('Redirecting you to an existing empty room')
+        alert('There is already an available room for creating videos, so redirecting you there')
         goto(`/${classID}/${room.id}`)
         return
       }

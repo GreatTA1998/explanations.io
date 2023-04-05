@@ -40,7 +40,7 @@
     </div>
   {/if}
 
-  <Button on:click={submitQuestion} style="margin-top: 24px; width: 100%; background-color: orange; color: white;">
+  <Button on:click={submitQuestion} style="margin-top: 24px; width: 100%; background-color: {isAskingCommunityOrHelper === 'community' ? 'orange' : 'purple'}; color: white;">
     Submit question
   </Button>
 </div>

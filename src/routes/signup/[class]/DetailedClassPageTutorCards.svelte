@@ -94,6 +94,8 @@
                 <PresentationalBeaverPreview 
                   on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}}
                   fullName={helper.name}
+                  numOfVideos={helper.numOfVideos || 0}
+                  minutesViewed={helper.minutesViewed || 0}
                   style="margin-bottom: 8px;"
                 >
                   <div style="margin-bottom: 4px;"></div>

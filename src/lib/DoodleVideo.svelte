@@ -31,9 +31,9 @@
     </span>
   {:else}
     <span class="overlay-center" style="width: {500 * scaleFactor}px; z-index: 5;">
-      <Button on:click={() => dispatch('subscribe-to-helper')} style="background-color: purple; color: white;">
+      <!-- <Button on:click={() => dispatch('subscribe-to-helper')} style="background-color: purple; color: white;">
         Subscribe for $10/month to watch this helper's videos
-      </Button>
+      </Button> -->
     </span>
   {/if}
 {/if}
@@ -101,7 +101,7 @@
   export let audioDownloadURL
   export let backgroundImageDownloadURL
   
-  export let isSubscriberOnly = true
+  export let isSubscriberOnly = false
 
   let hasPlayedOnce = false
   let isPlaying = false

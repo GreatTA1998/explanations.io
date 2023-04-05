@@ -1,24 +1,50 @@
 <BasePopup on:popup-close width={1000}>
-  <div slot="title" style="display: flex; flex-wrap: wrap">
-    <h2  style="font-family: sans-serif;">
+  <div slot="title" style="margin-top: 12px; display: flex; flex-wrap: wrap; width: 95%; align-items: center; justify-content: space-between">
+    <h2 style="font-family: sans-serif; font-size: 2.8rem; margin-top: 0px; margin-bottom: 0;">
       {helperDoc.name}
     </h2> 
-    <ReusableButton color="secondary" style="color: white;">
-      Subscribe for $10/month
-    </ReusableButton> 
+    
+    <div>
+      {helperDoc.bio}
+    </div>
   </div>
 
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
     <!-- Basic statistics -->
-    <div>
-      free videos, subscriber videos, total subscriptions
+    <div style="display: flex; align-items: center; justify-content: space-evenly">
+      <div>
+        <div style="font-size: 2.5rem">
+          { shopVideosDocs ? shopVideosDocs.length : 0}
+        </div>
+        free videos
+      </div>
+      <div>
+        <div style="font-size: 2.5rem">
+          0
+        </div>
+        subscriber-only videos
+      </div>
+      <div>
+        <div style="font-size: 2.5rem">
+          { roundedToFixed(totalViewMinutes, 1) }
+        </div>
+        minutes viewed
+      </div>
+      <div>
+        <div style="font-size: 2.5rem">
+          0
+        </div>
+        subscribers
+      </div>
     </div>
 
-    <br>
+    <div style="margin-top: 24px;"></div>
 
-    <div>
-      {helperDoc.bio}
-    </div>
+    <ReusableButton color="secondary" style="color: white;">
+      Directly ask {helperDoc.name} for new videos + unlock subscriber-only videos for $10/month
+    </ReusableButton> 
+
+    <div style="margin-top: 24px;"></div>
 
     <!-- Video portfolio here -->
     <DetailedClassPageBoardsAndVideos
@@ -39,6 +65,7 @@
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '../store.js'
   import { updateFirestoreDoc } from '../helpers/crud.js'
+  import { roundedToFixed } from '../helpers/utility.js'
   import Button from '@smui/button'
   import { getFirestore, collection, query, where, orderBy, getDocs } from "firebase/firestore";
   import DetailedClassPageBoardsAndVideos from '/src/routes/signup/[class]/DetailedClassPageBoardsAndVideos.svelte'
@@ -57,19 +84,34 @@
   let checked = false
 
   let shopVideosIDs = [] 
+  let shopVideosDocs = [] 
+  let totalViewMinutes = null
 
   onMount(async () => {
     const temp = await shopifyFetch()
-    shopVideosIDs = temp
-    console.log("shopVideosIds =", shopVideosIDs)
+    shopVideosDocs = temp
+    shopVideosIDs = shopVideosDocs.map((doc) => doc.id)
+    computeTotalViewMinutes()
+
+    // update preview statistics for the tutor/helper 
+    updateFirestoreDoc(`classes/${classID}/tutors/${helperDoc.id}`, {
+      minutesViewed: roundedToFixed(totalViewMinutes, 0),
+      numOfVideos: shopVideosDocs.length
+    })
   })
+
+  function computeTotalViewMinutes () {
+    let total = 0
+    shopVideosDocs.forEach((doc) => {
+      total += doc.viewMinutes
+    })
+    totalViewMinutes = total
+    return total
+  }
+
   async function shopifyFetch () {
     console.log("shopifyFetch()")
     return new Promise(async (resolve) => {
-      console.log('inside the promise')
-      console.log("classID =", classID)
-      console.log("helperDocUID =", helperDoc.uid)
-      // const shopVideoIDs = [] 
       const output = [] 
       const db = getFirestore()
       const blackboardsRef = collection(db, `classes/${classID}/blackboards`)
@@ -84,7 +126,7 @@
         return
       }
       querySnapshot.forEach((doc) => {
-        output.push(doc.id)
+        output.push({ id: doc.id, path: doc.ref.path, ...doc.data() })
       })
       console.log('FINALLY FINISHEDshopVideoIDs =', output)
       resolve(output)

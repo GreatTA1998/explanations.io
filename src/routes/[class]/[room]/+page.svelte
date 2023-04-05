@@ -122,6 +122,7 @@
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                   canvasWidth={$maxAvailableWidth}
                   canvasHeight={$maxAvailableHeight}
+                  isSubscriberOnly={boardDoc.shopGalleryOrder}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                   on:subscribe-to-helper={() => { 
                     isSubscribePopupOpen = true

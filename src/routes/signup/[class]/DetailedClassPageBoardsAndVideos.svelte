@@ -1,6 +1,6 @@
 
 <div bind:clientWidth={carouselWidth} bind:clientHeight={carouselHeight} 
-  style="display: flex; flex-wrap: wrap; justify-content: space-evenly; padding-left: 1%; padding-right: 1%; height: 100%; min-height: 300px; width: 100%; border: 2px solid red; box-sizing: border-box;"
+  style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-evenly; height: 100%; min-height: 300px; width: 100%; box-sizing: border-box;"
 >
   {#if computedBoardWidth && computedBoardHeight}
     {#each galleryBoardIDs as boardID} 
@@ -8,11 +8,11 @@
         <RenderlessListenToBoard dbPath={boardsCollectionDbPath + boardID} let:boardDoc={boardDoc}> 
           {#if boardDoc}
             {#if boardDoc.audioDownloadURL}
-              <DoodleVideoCommentsSection
+              <!-- <DoodleVideoCommentsSection
                 boardDoc={boardDoc}
-              />
+              /> -->
               <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
-                <div class="my-truncated-text" style="width: {computedBoardWidth}">
+                <div class="my-truncated-text" style="width: {computedBoardWidth}; color: purple; font-weight: 600;">
                   {boardDoc.description}
                 </div>
               </div>
@@ -20,6 +20,7 @@
                 Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
               </div>
               <ReusableDoodleVideo 
+                showEditDeleteButtons={false}
                 {boardDoc}
                 boardDbPath={boardsCollectionDbPath + boardID}
                 canvasWidth={computedBoardWidth}
@@ -130,8 +131,8 @@
   function resizeHandler () {
     console.log('resizeHandler(), ', carouselWidth, carouselHeight)
     const { height, width} = computeMaxAvailableDimensionsGeneral(carouselWidth, carouselHeight) // 4.4 is not a typo // carouselWidth * 3/4.4
-    computedBoardWidth = 300
-    computedBoardHeight = 300 * 3/4
+    computedBoardWidth = 400
+    computedBoardHeight = 400 * 3/4
 
     // computedBoardWidth = width
     // computedBoardHeight = height 

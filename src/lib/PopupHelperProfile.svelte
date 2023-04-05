@@ -1,40 +1,48 @@
 <BasePopup on:popup-close style="min-height: 90vh; min-width: 95vw;">
-  <div slot="title" style="margin-top: 12px; display: flex; flex-wrap: wrap; width: 95%; align-items: center; justify-content: space-between">
+  <!-- justify-content: space-between -->
+  <div slot="title" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 24px; width: 95%; align-items: center;">
     <h2 style="font-family: sans-serif; font-size: 2.8rem; margin-top: 0px; margin-bottom: 0;">
       {helperDoc.name}
     </h2> 
     
-    <div>
-      {helperDoc.bio}
-    </div>
+    <input readonly={$user.uid !== helperDoc.uid} style="margin-left: 24px;" value={helperDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value)} placeholder="venmo">
+
+    <div style="margin-top: 12px;"></div>
+
+    <TextAreaAutoResizing 
+      value={helperDoc.bio}
+      on:input={(e) => debouncedUpdateBio(e)}
+      placeholder="Short intro of yourself"
+      readonly={$user.uid !== helperDoc.uid}
+    />
   </div>
 
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
     <!-- Basic statistics -->
     <div style="display: flex; align-items: center; justify-content: space-evenly">
       <div>
-        <div style="font-size: 2.5rem">
+        <div style="font-size: 4rem">
           { shopVideosDocs ? shopVideosDocs.length : 0}
         </div>
         free videos
       </div>
       <div>
-        <div style="font-size: 2.5rem">
+        <div style="font-size: 4rem">
           0
         </div>
-        subscriber-only videos
+        subscriber videos
       </div>
       <div>
-        <div style="font-size: 2.5rem">
-          { roundedToFixed(totalViewMinutes, 1) }
+        <div style="font-size: 4rem">
+          { roundedToFixed(totalViewMinutes, 0) }
         </div>
         minutes viewed
       </div>
       <div>
-        <div style="font-size: 2.5rem">
+        <div style="font-size: 4rem">
           0
         </div>
-        subscribers
+        subscriptions
       </div>
     </div>
 
@@ -50,10 +58,10 @@
     {/if}
 
     <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
-      Directly ask {helperDoc.name} for new videos + unlock subscriber-only videos for $10/month
+      Directly ask {helperDoc.name} for new videos + access subscriber videos for $10/month
     </ReusableButton> 
 
-    <div style="margin-top: 24px;"></div>
+    <div style="margin-top: 36px;"></div>
 
     <!-- Video portfolio here -->
     <ToCommunityOrHelpersBoardsAndVideos
@@ -74,7 +82,7 @@
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '../store.js'
   import { updateFirestoreDoc } from '../helpers/crud.js'
-  import { roundedToFixed } from '../helpers/utility.js'
+  import { roundedToFixed, debounce } from '../helpers/utility.js'
   import { sendTextMessage } from '../helpers/cloudFunctions.js'
   import Button from '@smui/button'
   import { getFirestore, collection, query, where, orderBy, getDocs, arrayUnion, increment } from "firebase/firestore";
@@ -82,6 +90,7 @@
   import ReusableButton from '$lib/ReusableButton.svelte'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
   import { goto } from '$app/navigation'
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
 
   export let classTutorsDocs
   export let helperDoc 
@@ -148,6 +157,30 @@
   function updateUserName () {
     updateFirestoreDoc(`users/${$user.uid}`, {
       name: inputFieldFirstName + ' ' + inputFieldLastName
+    })
+  }
+
+  const debouncedUpdateTutorVenmo = debounce(
+    updateTutorVenmo, 
+    1000
+  )
+
+  function updateTutorVenmo (venmo) {
+    const idNotUID = helperDoc.id
+    updateFirestoreDoc(`classes/${classID}/tutors/${idNotUID}`, {
+      venmo
+    })
+  }
+    
+  const debouncedUpdateBio = debounce(
+    updateTutorBio,
+    1000
+  ) 
+
+  async function updateTutorBio ({ detail }) {
+    const idNotUID = helperDoc.id
+    updateFirestoreDoc(`classes/${classID}/tutors/${idNotUID}`, {
+      bio: detail
     })
   }
 

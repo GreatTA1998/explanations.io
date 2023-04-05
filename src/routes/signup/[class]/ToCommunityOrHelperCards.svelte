@@ -77,6 +77,7 @@
             {#if isBecomeHelperPopupOpen}
               <PopupBecomeHelper
                 helperDoc={selectedTutorDoc}
+                {classID}
                 on:popup-close={() => isBecomeHelperPopupOpen = false}
               />
             {/if}
@@ -352,48 +353,15 @@
     goto(`/${classID}/${classID}`)
   }
 
-  function handleSubscribeButtonClick (tutorDoc) {
-    isSubscribePopupOpen = true
-    tutorDocBeingConsidered = tutorDoc 
-  }
-  
-  function handleTrialButtonClick (tutorDoc) {
-    isTrialPopupOpen = true
-    tutorDocBeingConsidered = tutorDoc
-  }
-
   const debouncedUpdateTutorWeeklyPrice = debounce(
     updateTutorWeeklyPrice,
     1000
   )
 
-  const debouncedUpdateTutorVenmo = debounce(
-    updateTutorVenmo, 
-    1000
-  )
-
-  function updateTutorVenmo (venmo, idNotUID) {
-    updateFirestoreDoc(`classes/${classID}/tutors/${idNotUID}`, {
-      venmo
-    })
-  }
-
   function updateTutorWeeklyPrice (weeklyPrice, idNotUID) {
     const tutorRef = doc(getFirestore(), `classes/${classID}/tutors/${idNotUID}`)
     updateDoc(tutorRef, {
       weeklyPrice
-    })
-  }
-  
-  const debouncedUpdateTutorBio = debounce(
-    ({ detail }, id) => updateTutorBio({ detail }, id),
-    2000
-  ) 
-
-  async function updateTutorBio ({ detail }, idNotUID) {
-    const tutorRef = doc(getFirestore(), `classes/${classID}/tutors/${idNotUID}`)
-    updateDoc(tutorRef, {
-      bio: detail
     })
   }
 </script>

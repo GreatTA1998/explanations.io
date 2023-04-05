@@ -54,8 +54,6 @@
 
   export let selectedTutorDoc
 
-  console.log("popup confirm subscription: ")
-
   const dispatch = createEventDispatcher()
 
   let inputFieldFirstName = ''

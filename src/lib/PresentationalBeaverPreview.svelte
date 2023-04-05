@@ -12,7 +12,7 @@
 
     <div>
       <div>
-        <a>
+        <a style="color: purple;">
         {helperDoc.name}
         </a>
       </div>

@@ -69,6 +69,7 @@
 				<p class="header-title">Teach what you love — without having to grade</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
+						Something that takes you 5 minutes to explain could save someone else a semester of suffering.
 						Draw & talk on blackboards and upload videos within seconds
 					</div>
 				

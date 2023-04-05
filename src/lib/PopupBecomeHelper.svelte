@@ -24,12 +24,13 @@
       <div>
         If you become a helper, students can subscribe to you for $10/month.
         
-        Regardless of whether you're a helper, you can still answer questions and upload videos in the server and build up your profile.
-        You can become a helper whenever you want.  
-      </div>
-<!-- 
-      <button on:click={createTutorDoc}>Confirm sign-up as helper</button> -->
-
+        Regardless of whether you're a helper, you can still answer questions (highlighted in blue) and upload videos in the server, which automatically
+        build up your profile.
+        You can then become a helper whenever you want.  
+      </div> 
+      <button on:click={createTutorDoc({ classID, firstName: $user.name.split(' ')[0], lastName: $user.name.split(' ')[1]})}>
+        Confirm sign-up as helper
+      </button>
       <br>
       <br>
     </div>
@@ -41,25 +42,11 @@
       <div>Last name</div>
       <input bind:value={lastNameInput} placeholder=""/>
 
-      <!-- TO-DO:
-        1. Bio
-        2. Venmo
-        3. Can create more videos  
-      -->
       <Button on:click={createTutorDoc({ classID, firstName: firstNameInput, lastName: lastNameInput })}>
         Submit
       </Button>
     {/if}
   {/if}
-    <!-- Video portfolio here -->
-    <ToCommunityOrHelpersBoardsAndVideos
-      on:video-rearrange={() => isRearrangeVideosPopupOpen = true}
-      galleryBoardIDs={shopVideosIDs}
-      {classID}
-      {classTutorsDocs}
-      selectedTutorUID={helperDoc.uid}
-      selectedTutorDoc={helperDoc}
-    />
   </div>
 </BasePopup>
 
@@ -67,14 +54,14 @@
   import PhoneLogin from '$lib/PhoneLogin.svelte'
   import BasePopup from '$lib/BasePopup.svelte'
   import Checkbox from '@smui/checkbox'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher, onMount, tick } from 'svelte'
   import { user } from '../store.js'
-  import { updateFirestoreDoc } from '../helpers/crud.js'
+  import { updateFirestoreDoc, createRoomDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
-  import { getFirestore, collection, query, where, orderBy, getDocs } from "firebase/firestore";
+  import { doc, getFirestore, collection, query, where, orderBy, getDocs, setDoc, arrayUnion, } from "firebase/firestore";
   import ToCommunityOrHelpersBoardsAndVideos from '/src/routes/signup/[class]/ToCommunityOrHelpersBoardsAndVideos.svelte'
-
   import { portal } from '../helpers/actions.js'
+  import { getRandomID } from '../helpers/utility.js'
 
   let firstNameInput 
   let lastNameInput

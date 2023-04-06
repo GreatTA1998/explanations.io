@@ -82,7 +82,7 @@ async function submitNewComment () {
     if (roomDoc && roomID && classID) {
       promises.push(
         sendTextMessage({
-        content: `${$user.name} commented on your video in "${roomDoc.name}": "${newComment}": https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
+        content: `${$user.name} commented on your video in "${roomDoc.name}": "${newComment}": https://beavers.app/${classID}/${roomID}`, // assumes roomDoc.name is not ''
         toWho: boardDoc.creatorPhoneNumber
         })
       )
@@ -106,7 +106,7 @@ async function submitNewComment () {
         }
         promises.push(
           sendTextMessage({
-            content: `Somebody replied to the comment thread in video ${roomDoc.name}: "${newComment}": https://explain.mit.edu/${classID}/${roomID}`,
+            content: `Somebody replied to the comment thread in video ${roomDoc.name}: "${newComment}": https://beavers.app/${classID}/${roomID}`,
             toWho: number
           })
         )

@@ -583,7 +583,7 @@
           console.log('texting =', doc.data().phoneNumber)
           promises.push(
             sendTextMessage({ 
-              content: `${$user.name} asked ${roomDoc.name}: https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
+              content: `${$user.name} asked ${roomDoc.name}: https://beavers.app/${classID}/${roomID}`, // assumes roomDoc.name is not ''
               toWho: doc.data().phoneNumber
             })
           )
@@ -718,7 +718,7 @@
     if (roomDoc.askerUID) {
       const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)
       sendTextMessage({
-        content: `${$user.name || 'A helper'} replied with a video: https://explain.mit.edu/${classID}/${roomDoc.id}`,
+        content: `${$user.name || 'A helper'} replied with a video: https://beavers.app/${classID}/${roomDoc.id}`,
         toWho: askerDoc.phoneNumber
       })  
     }

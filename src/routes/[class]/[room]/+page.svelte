@@ -1,4 +1,10 @@
-
+{#if isSubscribePopupOpen}
+  <PopupConfirmSubscription
+    selectedTutorDoc={creatorDoc}
+    on:popup-close={() => isSubscribePopupOpen = false}
+    on:confirm-clicked={() => handleConfirmSubscription(creatorDoc)}
+  />
+{/if}
 
 {#if roomDoc}
 	<div use:portal={'main-content'} style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
@@ -57,11 +63,30 @@
             >  
               <div style="display: flex; align-items: center">
                 <div 
-                  style="color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 4px; margin-bottom: 4px;"
+                  style="display: flex; width: 100%; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 4px; margin-bottom: 4px; align-items: center;"
                 >
                   {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0} upvotes, 
                   {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed,
-                  {boardDoc.numOfComments || 0} comments
+                  {boardDoc.numOfComments || 0} comments,
+                  
+                  <RenderlessFetchHelperDoc 
+                    {classID}
+                    creatorUID={boardDoc.creatorUID}
+                    let:helperDoc={helperDoc}
+                  >
+                    {#if helperDoc}
+                      <PresentationalBeaverPreview style="margin-left: 12px;"
+                        {helperDoc}
+                        {classID}
+                      />
+                    {:else}
+                      by {boardDoc.creatorName}
+                    {/if}
+                  </RenderlessFetchHelperDoc>
+                 
+                  <div style="margin-left: 12px;">
+              
+                  </div>
                 </div>
                 {#if !isShowingComments}
                   <Button on:click={listenToComments} >
@@ -113,7 +138,12 @@
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                   canvasWidth={$maxAvailableWidth}
                   canvasHeight={$maxAvailableHeight}
+                  isSubscriberOnly={boardDoc.shopGalleryOrder}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
+                  on:subscribe-to-helper={() => { 
+                    isSubscribePopupOpen = true
+                    creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
+                  }}
                 > 
                   <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
                     <span class="material-icons" style="color: white;">
@@ -323,6 +353,9 @@
   import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
   import RenderlessStopwatch from '$lib/RenderlessStopwatch.svelte'
   import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
+  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
+  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
+  import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -334,6 +367,8 @@
     blackboards: [] 
   }
   let incrementKeyToDestroyComponent = 1
+  let isSubscribePopupOpen = false
+  let creatorDoc
 
   $: boardsDbPath = `classes/${classID}/blackboards/`
   $: roomsDbPath = `classes/${classID}/rooms/`
@@ -343,6 +378,10 @@
   onDestroy(() => {
     unsubRoomListener()
   })
+
+  function handleConfirmSubscription () {
+    // TODO: implement
+  }
 
   async function shopifyVideo (boardDoc) {
     // PART 1: all the code is for `maxShopGalleryOrder`
@@ -544,7 +583,7 @@
           console.log('texting =', doc.data().phoneNumber)
           promises.push(
             sendTextMessage({ 
-              content: `${$user.name} asked ${roomDoc.name}: https://explain.mit.edu/${classID}/${roomID}`, // assumes roomDoc.name is not ''
+              content: `${$user.name} asked ${roomDoc.name}: https://beavers.app/${classID}/${roomID}`, // assumes roomDoc.name is not ''
               toWho: doc.data().phoneNumber
             })
           )
@@ -655,6 +694,9 @@
         numOfVideos: increment(1)
       })
     }
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfVideos: increment(1)
+    })
 
     const storage = getStorage()
     const audioRef = ref(storage, `audio/${getRandomID()}`)
@@ -676,7 +718,7 @@
     if (roomDoc.askerUID) {
       const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)
       sendTextMessage({
-        content: `${$user.name || 'A helper'} replied with a video: https://explain.mit.edu/${classID}/${roomDoc.id}`,
+        content: `${$user.name || 'A helper'} replied with a video: https://beavers.app/${classID}/${roomDoc.id}`,
         toWho: askerDoc.phoneNumber
       })  
     }
@@ -709,6 +751,9 @@
         audioRefFullPath: deleteField()
       })
     )
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfVideos: increment(-1)
+    })
     promises.push(deleteAllStrokesFromDb())
     await Promise.all(promises)
   }

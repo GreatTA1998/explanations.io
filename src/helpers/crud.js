@@ -28,6 +28,18 @@ export function getFirestoreDoc (path) {
   })
 }
 
+export function getFirestoreCollection (path) {
+  return new Promise(async (resolve) => {
+    const ref = collection(getFirestore(), path)
+    const snapshot = await getDocs(ref)
+    const data = []
+    snapshot.forEach(doc => {
+      data.push({ id: doc.id, path: doc.path, ...doc.data() })
+    })
+    resolve(data)
+  })
+}
+
 export function updateFirestoreDoc (path, updateObject) {
   return new Promise(async (resolve) => {
     const ref = firestoreRef(path)
@@ -69,8 +81,9 @@ export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStr
 export function createRoomDoc (classPath) {
   return new Promise(async resolve => {
     const newDocID = getRandomID()
-    const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
-    const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)
+    const db = getFirestore()
+    const roomRef = doc(db, classPath + `rooms/${newDocID}`)
+    const blackboardRef = doc(db, classPath + `blackboards/${newDocID}`)
     await Promise.all([
       setDoc(roomRef, {
         name: '',

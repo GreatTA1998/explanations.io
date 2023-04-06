@@ -3,11 +3,11 @@
   on:change={(e) => uploadBackground(e)}
   style="display: none" 
   type="file" 
-  accept="application/pdf" 
+  accept="application/pdf, image/*" 
 >
 
 <button on:click={() => FileUploadButton.click()}>
-  Upload PDF
+  Upload image or PDF
 </button>
 
 <script>
@@ -15,29 +15,15 @@
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
   import { updateFirestoreDoc } from "../helpers/crud.js"
   import { getRandomID } from "../helpers/utility.js";
+  import { createEventDispatcher } from 'svelte'
 
-  export let classID
-
+  const dispatch = createEventDispatcher()
   let FileUploadButton
 
   function uploadBackground (e) {
-    const pdfFile = e.target.files[0]
-    console.log('pdfFile =', pdfFile)
-    uploadPDF(pdfFile)
-  }
-
-  async function uploadPDF (pdfFile) {
-    const storage = getStorage()
-    const pdfRef = ref(storage, `pdfs/${getRandomID()}`)
-    await uploadBytes(pdfRef, pdfFile)
-
-    const downloadURL = await getDownloadURL(pdfRef)
-    const name = pdfFile.name
-    
-    await updateFirestoreDoc(`classes/${classID}`, {
-      psetPDFsDownloadURLs: arrayUnion(downloadURL),
-      psetPDFsNames: arrayUnion(name)
-    })
-    window.location.reload()
+    const pdfOrImageFile = e.target.files[0]
+    // console.log('pdfFile =', pdfFile)
+    // uploadAttachment(pdfFile)
+    dispatch('file-uploaded', pdfOrImageFile)
   }
 </script>

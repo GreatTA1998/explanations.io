@@ -17,16 +17,25 @@
 <!-- The play button double-duties as an indication that the video has finished fetching -->
 {#if !recursiveSyncer && isPlaying === false && strokesArray}
   <!-- font-size: {60 * (canvasWidth / assumedCanvasWidth)}rem; -->
-  <span on:click={startAudioPlayer} 
-    class="material-icons overlay-center" 
-    style="color: white; 
-    width: {180 * scaleFactor}px; 
-    height: {180 * scaleFactor}px; 
-    z-index: 5;
-    font-size: {10 * scaleFactor}rem;"
-  >
-    play_circle
-  </span>
+
+  {#if !isSubscriberOnly}
+    <span on:click={startAudioPlayer} 
+      class="material-icons overlay-center" 
+      style="color: white; 
+      width: {180 * scaleFactor}px; 
+      height: {180 * scaleFactor}px; 
+      z-index: 5;
+      font-size: {10 * scaleFactor}rem;"
+    >
+      play_circle
+    </span>
+  {:else}
+    <span class="overlay-center" style="width: {500 * scaleFactor}px; z-index: 5;">
+      <!-- <Button on:click={() => dispatch('subscribe-to-helper')} style="background-color: purple; color: white;">
+        Subscribe for $10/month to watch this helper's videos
+      </Button> -->
+    </span>
+  {/if}
 {/if}
 
 <!-- 
@@ -91,6 +100,8 @@
   export let strokesArray
   export let audioDownloadURL
   export let backgroundImageDownloadURL
+  
+  export let isSubscriberOnly = false
 
   let hasPlayedOnce = false
   let isPlaying = false

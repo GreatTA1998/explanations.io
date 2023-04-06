@@ -33,10 +33,10 @@
 
 <AutoAdjust {topAppBar}>
 	<TopBannerWarnExperimental/>
-	<TabBar tabs={tabs} let:tab bind:active>
-		<Tab {tab} stacked minWidth indicatorSpanOnlyContent>
-			<Icon class="material-icons">{tab.icon}</Icon>
-			<Label>{tab.label}</Label>
+	<TabBar tabs={tabs} let:tab bind:active style="color: orange;">
+		<Tab {tab} stacked minWidth indicatorSpanOnlyContent style="color: orange;">
+			<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
+			<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
 		</Tab>
 	</TabBar>
 	
@@ -44,52 +44,63 @@
 		{#if active.label === 'Students'}
 			<div class="header-flex">
 				<p class="header-title">
-					Get help for hard classes — without needing to schedule
+					<!-- Rediscover that learning can be enjoyable if you understand it -->
+					Save a semester of suffering 
 				</p>
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Hire ex-TAs, classmates...etc. to explain current psets & past exams with
-					  easy-to-understand blackboard videos — whenever you have questions, wherever you are
+						Ask previous TAs, students & classmates to explain difficult classes with easy-to-understand videos.
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Explore shops
+							Explore class servers
 						</Label>
 					</Button>
 				</div>
 			</div>
+
+			<!-- ROTATING GALLERY -->
+			<div class="image-gallery-container">
+				<ImageGallery/>
+			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title">Teach what you love & help students</p>	
+				<p class="header-title">Teach what you love and earn money</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Help others and get paid for it
+						What takes you 5 minutes to explain could save someone else's day
 					</div>
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Setup shop
+							Explore class servers
 						</Label>
 					</Button>
 				</div>
 			</div>			
-		{/if}
 
-		<!-- ROTATING GALLERY -->
-		<div class="image-gallery-container">
-			<ImageGallery/>
-		</div>
+			<div style="position: relative; width: 600px; height: 500px;">
+				<Blackboard canvasWidth={600} canvasHeight={500} strokesArray={[]}/>
+			</div>
+		{/if}
 
 		{#if active.label === 'Students'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					You can't always make it to Office Hours,
-					and TAs are sometimes overwhelmed with all the students they have to help.
-					<br><br>
-					You can think of <i>Explain</i> as Youtube / KhanAcademy made for your specific class,
-					so you can get help efficiently.
+					<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
+					<br><br> -->
+					You can think of this as Youtube/KhanAcademy for MIT classes. The economies-of-scale of videos means that helpers gets paid in proportion to their impact,
+					while each student only has to pay a low price.
 				</div>
+			</div>
+
+			<div style="text-align: center">
+				<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
+					<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
+						Explore available classes
+					</Label>
+				</Button>
 			</div>
 
 			<!-- HOW IT WORKS SECTION-->
@@ -123,7 +134,7 @@
 				<HowItWorksStep
 					title="Step 2"
 					subtitle="Your helper responds"
-					description="Reponse time differs depending on the arrangement set by you and your tutor. It will also depend on the situation e.g. faster response when there's an upcoming pset deadline."
+					description="Reponse time differs depending on the arrangement set by you and your helper. It will also depend on the situation e.g. faster response when there's an upcoming pset deadline."
 				>
 					<div style="display: flex; justify-content: space-evenly; justify-content: space-between">
 						<div style="width: 90%; height: 70%; margin-top: 50px;">
@@ -142,43 +153,32 @@
 				<HowItWorksStep
 					title="Step 3"
 					subtitle="Ask further questions about the video using comments"
-					description="Every video has a comments section. If you and your tutor are 
+					description="Every video has a comments section. If you and your helper are 
 					on the comments section at the same time, you can instead choose to
 					join the voice chat and talk over any shared board"
 				>
 					<img src="https://i.imgur.com/8tnRfRB.gif" height="{Math.min(0.5 * w, 0.5 * 600) * 4/10}" width="{Math.min(0.5 * w, 0.5 * 600)}" style="margin-top: 50px;">
 				</HowItWorksStep>
 
-				
 				<HowItWorksStep
 					title="Step 4"
 					subtitle="Setup a regular upload-schedule"
 					description="Suppose you start 18.06 psets every Friday, because it's due Sunday.
-					Knowing this, your tutor can regularly upload videos before Friday WIHTOUT you even having to ask questions, and reactively upload more videos and reply to comments 
+					Knowing this, your tutor can regularly upload videos before Friday WITHOUT you even having to ask questions, and reactively upload more videos and reply to comments 
 					over Saturday and Sunday."
 				>					
 				</HowItWorksStep>
-
-				<!-- <HowItWorksStep
-					title="Step 5"
-					subtitle="Re-watch any explanations in the server"
-					description="Within the server, all explanations are shared. This means every student benefits from each others' questions and their tutors' resultant videos. The server is restricted to paying students during the semester; afterwards it becomes freely accessible on the internet."	
-				>
-					<Button on:click={redirectToExampleClass} color="primary" variant="raised" class="button-shaped-round" style="margin-top: 25px;">
-						Explore last semester's 14.01 server
-					</Button>
-				</HowItWorksStep> -->
 			</div>
 		{:else}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Draw & talk on any iPad-like device to create video explanations directly on this website.
+					Just draw & talk on blackboards directly - videos will upload within seconds.
 					Blackboard videos are lightweight, easily re-organizable and (soon to be) editable even after it's uploaded.
 				</div>
 			</div>
 
 		<div class="webflow-section">
-			<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+			<!-- <div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 				How pay works
 			</div>
 
@@ -187,13 +187,11 @@
 				You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
 				<br>
 				<br>
-
-				<!-- It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
 			</div>
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
 				<ReusableIncomeCalculator weeklyPrice={15}/>
-			</div>
+			</div> -->
 
 			<HowItWorksStep
 				title="Step 1"
@@ -229,127 +227,6 @@
 			</HowItWorksStep>
 		</div>
 	{/if}
-	<!-- END OF TEACHER/DRIVER SECTION -->
-
-	<!-- BLOG SECTION -->
-	<div>
-		<!-- <p style="font-size: 4rem; font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80);">
-			Recent blogs
-		</p>
-
-		<div class="one-blog-container">
-			<iframe 
-				style="margin-bottom: 30px;" 
-				width="{Math.min(w, 400)}" height="{Math.min(w, 400) * 300 / 560}" 
-				src="https://www.youtube-nocookie.com/embed/EKiZgooMjb8?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-			</iframe>
-			
-			<div class="blog-text-section-container">
-				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-					Story behind 6.036 Piazza: Shaunticlair Ruiz
-				</h1>
-				<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
-					"There's a very common belief, especially at MIT, that if you derive it all yourself, if you put it all together yourself, you're a better learner. And I'd say, maybe if you have the time to do this rigorously and carefully, but there's lots of problems like students can form misconceptions, students can spend significantly longer and actually be less efficient. And the students may not care about a very specific kind of deep understanding they get."
-				</div>	
-				<a href="https://eltonlin.substack.com/publish/post/99258345" target="_blank" style="text-decoration: none !important;">
-					<Button variant="outlined">
-						Read story
-					</Button>		
-				</a>
-			</div>	
-		</div> -->
-
-		<!-- <div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
-			<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/QNDT5hhEhYU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-			
-			<div class="blog-text-section-container">
-				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-					The impact of reducing workload on student life
-				</h1>
-				<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
-					I just think I would like to be at a place where everyone gets an A, when they take off, like double O six or six. Because that means we're doing I mean, that's better for everyone, right? Like, I don't want to lower the standard. Right? I want people to understand it. But if we can do a better job of getting people to understand it quicker, and better, and you that's a win, because then they can move on to more complicated things, and be in a better situation.
-				</div>			
-				<Button variant="outlined">
-					Read story
-				</Button>		
-			</div>	
-		</div>
-
-		<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
-			<iframe width="560" height="300" style="margin-bottom: 30px" src="https://www.youtube.com/embed/ED3K-X8iaEU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-			
-			<div class="blog-text-section-container">
-				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-					Preventative help vs reactive help on Piazza
-				</h1>
-				<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
-					There were a couple of questions about Adadelta, it's one approach to make machine learning gradient descent better. Course note explanation was a paragraph long. Nobody had any idea what it meant. I looked at it and realized, all the information you need is technically there. They didn't miss anything, it's just ridiculously dense and not. Broke it apart, several pieces, it was a lengthy piece of work. I understand how that happens, but at the same time staff should be more careful about these sorts of things. 
-				</div>			
-				<Button variant="outlined">
-					Read story
-				</Button>		
-			</div>	
-		</div>
-
-		<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
-			<iframe width="560" height="300" style="margin-bottom: 30px" src="https://www.youtube.com/embed/PVBRjv9Sdz0?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-			<div class="blog-text-section-container" style="width: 48vw; max-width: 800px;">
-				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-					Tutorial system of Oxford & Cambridge
-				</h1>
-				<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
-					A lot of the overhead is one copy right, it turns out if you use an image unlicensed, they have all licenses taken from some website where you can run into this issue where people sue you for using content. The second thing is that when they're thinking about is accessibility. There is a mandate for school where you have to have a transcript for a video. So hard of hearing can still access the entire lecture. As a result, these official channels have to work hard to have a big team of lawyers and editors go over the, fine-comb every screenshot used, textbook, then the transcripts, a ton of money, some subject matter to transcribe that lecture. Amazon mechanical turk to do it or something.
-				</div>			
-				<Button variant="outlined">
-					Read story
-				</Button>		
-			</div>	
-		</div>
-
-		<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; padding-bottom: 0; margin-bottom: 10px">
-			<iframe width="560" height="300" style="margin-bottom: 30px;" src="https://www.youtube-nocookie.com/embed/PozzlsHw87w?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-			<div class="blog-text-section-container">
-				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-					The complex debate around recorded lectures
-				</h1>
-				<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
-					The goal of this essay is to provide an educated guess - from the naive student perspective - as to whether the cost outweighs the benefits. 
-
-					To guess the size of these arrows, we need a criteria, which is some utility function of each individual student's learning experience. Here are naïve examples:
-					Total unweighted grade - number of unhappy students + number of very happy students
-					Average class satisfaction - number of failed students
-					What's important is not the exact coefficients of each variable, but rather what they reflect about college education's core goals. We'll discuss utility functions more in later essays.									
-				</div>			
-				<Button variant="outlined">
-					Read story
-				</Button>		
-			</div>	
-		</div>
-
-		<div class="one-blog-container" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-			<iframe style="margin-bottom: 30px;" width="560" height="300" src="https://www.youtube-nocookie.com/embed/tZ1Cbqs5WF0?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-			<div class="blog-text-section-container">
-				<h1 style="font-size: 2rem; margin-top: 0; color: hsl(0,0%,0%, 0.80)" class="step-title-font-styles">
-					The story of teaching at a research university
-				</h1>
-				<div style="margin-bottom: 20px; opacity: 0.8" class="blog-description-font-styles">
-					I had an inkling that the teaching at MIT didn’t live up to its world-class status. Yes, there were some great classes — but the quality was inconsistent.
-
-					To figure out why that is, I’ve talked to various faculty & students and went down rabbit holes. We talked about lots of specific things, things like how to keep semesters consistent despite rotating teachers, how we lose the TA explanations and student notes, pedagogical beliefs on attendance and collaboration, what does good material look like etc.
-
-					But after some recent interviews, I've come to believe that the most fundamental problem is incentives: what faculty would be so crazy as to focus on teaching, when their main focus should be research?
-				</div>
-				<a href="https://medium.com/@eltonlin1998/the-hidden-story-of-teaching-at-a-research-university-8bcd47bac62" target="_blank" style="text-decoration: none !important;">
-					<Button variant="outlined">
-						Read story
-					</Button>
-				</a>
-			</div>
-		</div> -->
-	</div>
 </AutoAdjust>
 
 <script>	
@@ -374,6 +251,7 @@
   } from '@smui/card';
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
+	import Blackboard from '$lib/Blackboard.svelte'
 
 	let w
 	let topAppBar
@@ -386,8 +264,9 @@
 	}
 
 	function redirectToSignUpPage () {
-		const linearAlgebraID = 'lvzQqyZIV1wjwYnRV9hn'
-		goto('/signup/' + linearAlgebraID)
+		goto('/overview')
+		// const linearAlgebraID = 'lvzQqyZIV1wjwYnRV9hn'
+		// goto('/signup/' + linearAlgebraID)
 	}
 
 	// TO-DO: maybe just redirect

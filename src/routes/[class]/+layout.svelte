@@ -20,6 +20,30 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
+    <Item on:click={() => goto(`/${classID}/request-video`)}>
+      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">question_mark</span>
+      <div style="margin-right: 4px;"></div>
+      Request video
+    </Item>
+
+    <Item on:click={createNewRoom}>
+      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">draw</span>
+      <div style="margin-right: 4px;"></div>
+      Create video
+    </Item>
+
+    <div style="margin-bottom: 24px;"></div>
+
+
+    <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
+      All blackboard rooms
+    </div>
+    
+    <!-- <Item on:click={() => goto(`/${classID}/become-helper`)}>
+      <span class="material-icons">add</span>
+      Sign up as helper
+    </Item> -->
+
     <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
     {#each rooms as room (room.id + roomID)}
       <div 
@@ -28,7 +52,8 @@
         on:drop={(e) => moveVideoIntoAnotherRoom(e, room.id)}
       >
         <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
-        <div class={room.id === roomID ? 'selected' : '' } style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
+        <!-- class={room.id === roomID ? 'selected' : '' } -->
+        <div class:selected={room.id === roomID} style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
           <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
           <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
             {#if room.name}
@@ -134,15 +159,6 @@
       </div>
     {/each}
 
-    <!-- New room -->
-    {#if $user.uid}
-      <div on:click={createNewRoom} style="padding: 6px; display: flex; align-items: center;">
-        <span class="material-icons" style="margin-left: 6px; margin-right: 5px; margin-top: 2.5px; font-size: 1.2rem;">
-          add
-        </span>
-        new question
-      </div>
-    {/if}
   </LeftDrawer>
 </DailyVideoConference>
 
@@ -164,8 +180,9 @@
   import { computeMaxAvailableDimensions } from '../../helpers/canvas'
   import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth } from '../../store.js'
   import { getRandomID } from '../../helpers/utility.js'
+  import { createRoomDoc } from '../../helpers/crud.js'
   import { deleteObject, getStorage, ref } from 'firebase/storage'
-  import { getFunctions, httpsCallable } from "firebase/functions";
+  import { getFunctions, httpsCallable } from "firebase/functions"
 
    export let data;
    let { classID, roomID } = data;
@@ -287,25 +304,28 @@
   async function createNewRoom () {
     for (const room of rooms) {
       if (room.name === '') {
-        alert('There is still an empty room available')
+        alert('There is already an available room for creating videos, so redirecting you there')
+        goto(`/${classID}/${room.id}`)
         return
       }
     }
+    const newRoomID = await createRoomDoc(classPath)
+    goto(`/${classID}/${newRoomID}`)
     // TODO: just import createRoomDoc from helpers/crud.js
-    const newDocID = getRandomID()
-    const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
-    const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)
-    await Promise.all([
-      setDoc(roomRef, {
-        name: '',
-        blackboards: [newDocID],
-        date: new Date().toISOString()
-          // rooms have an order property, look at v3's drag and drop source code
-      }),
-      setDoc(blackboardRef, {
-        recordState: 'pre_record'
-      })
-    ])
+    // const newDocID = getRandomID()
+    // const roomRef = doc(getFirestore(), classPath + `rooms/${newDocID}`)
+    // const blackboardRef = doc(getFirestore(), classPath + `blackboards/${newDocID}`)
+    // await Promise.all([
+    //   setDoc(roomRef, {
+    //     name: '',
+    //     blackboards: [newDocID],
+    //     date: new Date().toISOString()
+    //       // rooms have an order property, look at v3's drag and drop source code
+    //   }),
+    //   setDoc(blackboardRef, {
+    //     recordState: 'pre_record'
+    //   })
+    // ])
   }
 
   function recomputeMaxAvailableDimensions () {
@@ -366,7 +386,7 @@
     )
     const roomsQuery = query(
       roomsRef, 
-      orderBy('date', 'asc')
+      orderBy('date', 'desc')
     )
     unsubFuncs.push(
       onSnapshot(roomsQuery, async (snapshot) => { // onSnapshot does NOT return a promise
@@ -474,14 +494,14 @@
 </script>
 
 <style>
-  .question-item {
-    color: rgb(19, 145, 230);
-  }
-
   .selected {
     font-weight: 500;
     background-color:rgb(45, 44, 44);
     color: white;
+  }
+
+  .question-item {
+    color: rgb(34, 153, 231);
   }
 
   .speaking {

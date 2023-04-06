@@ -20,7 +20,7 @@
   // $user.name reaction needed because we only partial hydrated it in the root __layout for speed
   $: if ($isFirestoreDocCreated && $user.name) {
     updateDoc(myFirestoreRef, {
-      currentRoomID: roomID,
+      currentRoomID: roomID || 'request-video',
       name: $user.name,
       hasJoinedVoice: $hasJoinedVoice
     })
@@ -38,17 +38,19 @@
         onDisconnectRef = onDisconnect(myFirebaseRef)
 
         // NOTE 2: I deleted the `await`, and got ghost participants as a Heisenbug. For 100% reliability, keep it in. 
-        await onDisconnectRef.set({ // NOTE: we're `awaiting` the disconnect hook to setup - NOT the .set() operation
+        await onDisconnectRef.set({ // NOTE: we're `awaiting` the disconnect hook to setup - NOT the eventual .set() operation
           hasDisconnected: true,
           userUID: $user.uid // Cloud Functions will use `userUID` to set `isOnline` to false for the right user document
+                             // and delete the participant document
         })
         // set a Firestore document .set() operation
         myFirestoreRef = doc(getFirestore(), `classes/${classID}/participants/${disconnectID}`)
         setDoc(myFirestoreRef, {
           uid: $user.uid,
           browserTabID: $browserTabID,
-          currentRoomID: roomID,
-          name: myName
+          currentRoomID: roomID || 'request-video',
+          name: myName,
+          disconnectID,
         })
         isFirestoreDocCreated.set(true)
       } else {

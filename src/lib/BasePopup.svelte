@@ -1,4 +1,4 @@
-<div class="popup-window">
+<div class="popup-window" style={$$props.style}>
   <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px">
     <slot name="title">
 
@@ -20,12 +20,9 @@
   </slot></div>
  
 <script>
-  import Button, { Label } from '@smui/button'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { signOut, getAuth } from 'firebase/auth'
-  import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore'
-  import { goto } from '$app/navigation'
-  import { user } from '../store.js'
+
+  export let width = 500
 
 	const dispatch = createEventDispatcher()
 
@@ -42,8 +39,6 @@
     background-color: white; 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 8px; 
-    width: 500px; 
-    height: fit-content;
 
     /* center it within the page */
     left: 0;
@@ -51,5 +46,13 @@
     top: 0;
     bottom: 0;
     margin: auto;
+
+    /* dimensions */
+    width: 300px;
+    height: fit-content;
+    min-height: 10vh;
+    max-height: 90vh;
+    min-width: 33vw; 
+    overflow-y: scroll;
   }
 </style>

@@ -53,27 +53,29 @@
 </div>
 
 <script>
-  import { portal } from '../../../helpers/actions.js'
-  import { getFirestoreCollection, getFirestoreDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
+  import { portal } from '../helpers/actions.js'
+  import { getFirestoreCollection, getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
   import ToCommunityOrHelper from '/src/routes/signup/[class]/ToCommunityOrHelper.svelte'
   import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
   import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
-  import { createRoomDoc } from '../../../helpers/crud.js'
+  import { createRoomDoc } from '../helpers/crud.js'
 
   import { arrayUnion, increment } from "firebase/firestore"
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
-  import { getRandomID } from "../../../helpers/utility.js";
+  import { getRandomID } from "../helpers/utility.js";
   import { createEventDispatcher } from 'svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
-  import { user } from '../../../store.js'
-  import { sendTextMessage } from '../../../helpers/cloudFunctions.js';
+  import { user } from '../store.js'
+  import { sendTextMessage } from '../helpers/cloudFunctions.js';
 
-  export let data
-  let { classID, roomID } = data
-  $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
+  export let classID 
+  // export let roomID
+  // export let data
+  // let { classID, roomID } = data
+  // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 
   let questionTitleInput = 'Question title' 
   let questionDescriptionInput = ''

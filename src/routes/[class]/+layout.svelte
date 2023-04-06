@@ -158,7 +158,6 @@
         </div>
       </div>
     {/each}
-
   </LeftDrawer>
 </DailyVideoConference>
 

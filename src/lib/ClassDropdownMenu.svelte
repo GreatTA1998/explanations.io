@@ -1,6 +1,7 @@
 
 <div bind:this={anchor}>
-  <div on:click={openMenu} style="display: flex; align-items: center;">
+  <!-- open menu -->
+  <div on:click={() => goto('/overview')} style="display: flex; align-items: center;">
     <div>
       <h1 class="my-truncated-text" style="width: 150px; font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
         {nameOfClass} 
@@ -71,7 +72,6 @@
   import { collection, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc } from 'firebase/firestore';
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
-
 
   export let nameOfClass
   export let descriptionOfClass

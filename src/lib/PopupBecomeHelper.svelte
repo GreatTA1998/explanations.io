@@ -4,49 +4,49 @@
   </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
     {#if !$user.phoneNumber}
-    <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
-      1. Log in with phone
-    </h2>
-    <PhoneLogin/>
-  {:else}
-    <div>
-      Welcome { $user.name || '' }.
-      <br>
-      <br>
-      Thanks for considering to be a helper - here's a quick guide to help you think about it.
-      <br>
-      <br>
-      <i>"People subscribe not for a particular video necessarily, but because they 
-      fall in love with your particular perspective on explaining the subject matter"</i>
-      <a href="https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting" target="_blank"> read more here</a>
-      <br>
-      <br>
+      <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
+        1. Log in with phone
+      </h2>
+      <PhoneLogin/>
+    {:else}
       <div>
-        If you become a helper, students can subscribe to you for $10/month.
-        
-        Regardless of whether you're a helper, you can still answer questions (highlighted in blue) and upload videos in the server, which automatically
-        build up your profile.
-        You can then become a helper whenever you want.  
-      </div> 
-      <button on:click={createTutorDoc({ classID, firstName: $user.name.split(' ')[0], lastName: $user.name.split(' ')[1]})}>
-        Confirm sign-up as helper
-      </button>
-      <br>
-      <br>
-    </div>
-    
-    {#if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
-      <div>First name</div>
-      <input bind:value={firstNameInput} placeholder="Alice, Bob, Charlie"/>
+        Welcome { $user.name || '' }.
+        <br>
+        <br>
+        Thanks for considering to be a helper - here's a quick guide to help you think about it.
+        <br>
+        <br>
+        <i>"People subscribe not for a particular video necessarily, but because they 
+        fall in love with your particular perspective on explaining the subject matter"</i>
+        <a href="https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting" target="_blank"> read more here</a>
+        <br>
+        <br>
+        <div>
+          If you become a helper, students can subscribe to you for $10/month.
+          
+          Regardless of whether you're a helper, you can still answer questions (highlighted in blue) and upload videos in the server, which automatically
+          build up your profile.
+          You can then become a helper whenever you want.  
+        </div> 
+        <button on:click={createTutorDoc({ classID, firstName: $user.name.split(' ')[0], lastName: $user.name.split(' ')[1]})}>
+          Confirm sign-up as helper
+        </button>
+        <br>
+        <br>
+      </div>
+      
+      {#if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
+        <div>First name</div>
+        <input bind:value={firstNameInput} placeholder="Alice, Bob, Charlie"/>
 
-      <div>Last name</div>
-      <input bind:value={lastNameInput} placeholder=""/>
+        <div>Last name</div>
+        <input bind:value={lastNameInput} placeholder=""/>
 
-      <Button on:click={createTutorDoc({ classID, firstName: firstNameInput, lastName: lastNameInput })}>
-        Submit
-      </Button>
+        <Button on:click={createTutorDoc({ classID, firstName: firstNameInput, lastName: lastNameInput })}>
+          Submit
+        </Button>
+      {/if}
     {/if}
-  {/if}
   </div>
 </BasePopup>
 
@@ -58,7 +58,7 @@
   import { user } from '../store.js'
   import { updateFirestoreDoc, createRoomDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
-  import { doc, getFirestore, collection, query, where, orderBy, getDocs, setDoc, arrayUnion, } from "firebase/firestore";
+  import { doc, getFirestore, collection, query, where, orderBy, getDocs, setDoc, arrayUnion, increment, } from "firebase/firestore";
   import ToCommunityOrHelpersBoardsAndVideos from '/src/routes/signup/[class]/ToCommunityOrHelpersBoardsAndVideos.svelte'
   import { portal } from '../helpers/actions.js'
   import { getRandomID } from '../helpers/utility.js'
@@ -81,10 +81,6 @@
 
   let shopVideosIDs = [] 
 
-  onMount(async () => {
-    const temp = await shopifyFetch()
-    shopVideosIDs = temp
-  })
 
   async function createTutorDoc ({ classID, firstName, lastName }) {
     if (!firstName || !lastName) return
@@ -118,6 +114,9 @@
       tutorObject
     )
     await tick()
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfHelpers: increment(1)
+    })
     selectedTutorUID = tutorObject.uid
   }
 

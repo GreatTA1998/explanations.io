@@ -70,12 +70,12 @@
   let isShowingPopup = false
 
   function handleLogoClick () {
-    if ($user.phoneNumber) { 
-      isShowingPopup = true
-    } 
-    else {
+    // if ($user.phoneNumber) { 
+    //   isShowingPopup = true
+    // } 
+    // else {
       goto('/', { replaceState: true })
-    }
+    // }
   }
 </script>
  

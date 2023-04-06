@@ -54,7 +54,7 @@
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							See available classes
+							Explore class servers
 						</Label>
 					</Button>
 				</div>
@@ -66,16 +66,15 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title">Teach what you love — without having to grade</p>	
+				<p class="header-title">Teach what you love and earn money</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						Something that takes you 5 minutes to explain could save someone else a semester of suffering.
-						Draw & talk on blackboards and upload videos within seconds
+						What takes you 5 minutes to explain could save someone else's day
 					</div>
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Setup shop
+							Explore class servers
 						</Label>
 					</Button>
 				</div>
@@ -99,7 +98,7 @@
 			<div style="text-align: center">
 				<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 					<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-						See available classes
+						Explore available classes
 					</Label>
 				</Button>
 			</div>
@@ -135,7 +134,7 @@
 				<HowItWorksStep
 					title="Step 2"
 					subtitle="Your helper responds"
-					description="Reponse time differs depending on the arrangement set by you and your tutor. It will also depend on the situation e.g. faster response when there's an upcoming pset deadline."
+					description="Reponse time differs depending on the arrangement set by you and your helper. It will also depend on the situation e.g. faster response when there's an upcoming pset deadline."
 				>
 					<div style="display: flex; justify-content: space-evenly; justify-content: space-between">
 						<div style="width: 90%; height: 70%; margin-top: 50px;">
@@ -154,7 +153,7 @@
 				<HowItWorksStep
 					title="Step 3"
 					subtitle="Ask further questions about the video using comments"
-					description="Every video has a comments section. If you and your tutor are 
+					description="Every video has a comments section. If you and your helper are 
 					on the comments section at the same time, you can instead choose to
 					join the voice chat and talk over any shared board"
 				>
@@ -165,7 +164,7 @@
 					title="Step 4"
 					subtitle="Setup a regular upload-schedule"
 					description="Suppose you start 18.06 psets every Friday, because it's due Sunday.
-					Knowing this, your tutor can regularly upload videos before Friday WIHTOUT you even having to ask questions, and reactively upload more videos and reply to comments 
+					Knowing this, your tutor can regularly upload videos before Friday WITHOUT you even having to ask questions, and reactively upload more videos and reply to comments 
 					over Saturday and Sunday."
 				>					
 				</HowItWorksStep>
@@ -173,13 +172,13 @@
 		{:else}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
-					Draw & talk on any iPad-like device to create video explanations directly on this website.
+					Just draw & talk on blackboards directly - videos will upload within seconds.
 					Blackboard videos are lightweight, easily re-organizable and (soon to be) editable even after it's uploaded.
 				</div>
 			</div>
 
 		<div class="webflow-section">
-			<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+			<!-- <div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 				How pay works
 			</div>
 
@@ -188,12 +187,11 @@
 				You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
 				<br>
 				<br>
-				<!-- It's tutoring that uses helper videos whenever efficient, and personal one-on-one time for everything else. -->
 			</div>
 
 			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
 				<ReusableIncomeCalculator weeklyPrice={15}/>
-			</div>
+			</div> -->
 
 			<HowItWorksStep
 				title="Step 1"

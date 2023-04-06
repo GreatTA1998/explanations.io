@@ -50,7 +50,6 @@
   import ToCommunityOrHelperCards from './ToCommunityOrHelperCards.svelte';
 
   export let classID
-  export let fetchVideosFunc
   export let isAskingCommunityOrHelper
 
   let classDoc

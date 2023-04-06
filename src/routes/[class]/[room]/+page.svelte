@@ -694,6 +694,9 @@
         numOfVideos: increment(1)
       })
     }
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfVideos: increment(1)
+    })
 
     const storage = getStorage()
     const audioRef = ref(storage, `audio/${getRandomID()}`)
@@ -748,6 +751,9 @@
         audioRefFullPath: deleteField()
       })
     )
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfVideos: increment(-1)
+    })
     promises.push(deleteAllStrokesFromDb())
     await Promise.all(promises)
   }

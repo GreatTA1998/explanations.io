@@ -33,11 +33,10 @@
           <!-- <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif">
            
           </h2> -->
-          Ask the community
+          Ask the free community
           <!-- Ask the community -->
           <Content>
-            Anyone can respond to your video request e.g. 
-            hobbyists, new helpers who want to try making videos, and existing helpers too sometimes
+            Anyone e.g. classmates, passers-by and helpers can answer your question
           </Content>
         </Card>
       </div>
@@ -47,10 +46,11 @@
           <!-- <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif">
             Ask the community + your designated helper
           </h2> -->
-          Ask the community + your designated helper
+          Ask the free community + your paid helper
         
           <Content>
-            By subscribing to a designated helper, you get more reliable video responses:
+            By subscribing to a committed helper for $10/month, your questions are guaranteed to get proper responses
+            
 
             <div style="margin-bottom: 12px;"></div>
             <!-- If highlighted, becomes purple -->

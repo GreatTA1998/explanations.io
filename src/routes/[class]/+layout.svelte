@@ -21,14 +21,23 @@
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
     <Item on:click={() => goto(`/${classID}/request-video`)}>
-      <span class="material-icons">question_mark</span>
+      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">question_mark</span>
+      <div style="margin-right: 4px;"></div>
       Request video
     </Item>
 
     <Item on:click={createNewRoom}>
-      <span class="material-icons">draw</span>
+      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">draw</span>
+      <div style="margin-right: 4px;"></div>
       Create video
     </Item>
+
+    <div style="margin-bottom: 24px;"></div>
+
+
+    <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
+      All blackboard rooms
+    </div>
     
     <!-- <Item on:click={() => goto(`/${classID}/become-helper`)}>
       <span class="material-icons">add</span>
@@ -43,7 +52,8 @@
         on:drop={(e) => moveVideoIntoAnotherRoom(e, room.id)}
       >
         <!-- selected={room.id === roomID} class:not-selected={room.id !== roomID} -->
-        <div class={room.id === roomID ? 'selected' : '' } style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
+        <!-- class={room.id === roomID ? 'selected' : '' } -->
+        <div class:selected={room.id === roomID} style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
           <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
           <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
             {#if room.name}
@@ -484,14 +494,14 @@
 </script>
 
 <style>
-  .question-item {
-    color: rgb(19, 145, 230);
-  }
-
   .selected {
     font-weight: 500;
     background-color:rgb(45, 44, 44);
     color: white;
+  }
+
+  .question-item {
+    color: rgb(34, 153, 231);
   }
 
   .speaking {

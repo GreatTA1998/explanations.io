@@ -6,6 +6,10 @@
   />
 {/if}
 
+{#if roomID === 'request-video'}
+  <ClassServerRequestVideo {classID}/>
+{:else}
+
 {#if roomDoc}
 	<div use:portal={'main-content'} style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
     <Textfield 
@@ -328,6 +332,8 @@
   </div>
 {/if}
 
+{/if}
+
 <script>
   import '$lib/_FourColor.scss'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
@@ -356,6 +362,7 @@
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
+  import ClassServerRequestVideo from '$lib/ClassServerRequestVideo.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -419,7 +426,8 @@
     unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
       // a room can be deleted at any moment - when that happens, redirect
       if (!snapshot.exists()) {
-        goto(`/${classID}/${classID}`)
+        console.log('request-video')
+        // goto(`/${classID}/${classID}`)
       } else {
         roomDoc = { id: snapshot.id, ...snapshot.data() }
       }

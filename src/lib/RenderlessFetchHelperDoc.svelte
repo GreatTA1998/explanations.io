@@ -18,7 +18,6 @@
       return
     }
     snapshot.docs.forEach(doc => {
-      console.log(doc.id, '=>', doc.data())
       helperDoc = { id: doc.id, ...doc.data(), path: doc.ref.path }
     })
   })

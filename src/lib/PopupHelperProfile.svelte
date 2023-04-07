@@ -28,7 +28,7 @@
       </div>
       <div>
         <div style="font-size: 4rem">
-          0
+          { helperDoc.numPaidVideos || 0}
         </div>
         subscriber videos
       </div>
@@ -65,13 +65,16 @@
 
     <!-- Video portfolio here -->
     <!-- on:video-rearrange={() => isRearrangeVideosPopupOpen = true} -->
-    <ToCommunityOrHelpersBoardsAndVideos
-      galleryBoardIDs={shopVideosIDs}
-      {classID}
-      {classTutorsDocs}
-      selectedTutorUID={helperDoc.uid}
-      selectedTutorDoc={helperDoc}
-    />
+    {#key incrementWhenGalleryRearranged}
+      <PopupHelperProfileVideos
+        on:video-rearranged={() => incrementWhenGalleryRearranged += 1}
+        galleryBoardIDs={shopVideosIDs}
+        {classID}
+        {classTutorsDocs}
+        selectedTutorUID={helperDoc.uid}
+        selectedTutorDoc={helperDoc}
+      />
+    {/key}
   </div>
 </BasePopup>
 
@@ -86,7 +89,7 @@
   import { sendTextMessage } from '../helpers/cloudFunctions.js'
   import Button from '@smui/button'
   import { getFirestore, collection, query, where, orderBy, getDocs, arrayUnion, increment } from "firebase/firestore";
-  import ToCommunityOrHelpersBoardsAndVideos from '/src/routes/signup/[class]/ToCommunityOrHelpersBoardsAndVideos.svelte'
+  import PopupHelperProfileVideos from '/src/routes/signup/[class]/PopupHelperProfileVideos.svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
   import { goto } from '$app/navigation'
@@ -98,6 +101,7 @@
 
   const dispatch = createEventDispatcher()
 
+  let incrementWhenGalleryRearranged = 0
   let isSubscribePopupOpen = false
 
   let inputFieldFirstName = ''

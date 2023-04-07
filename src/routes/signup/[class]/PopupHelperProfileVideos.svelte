@@ -12,7 +12,11 @@
                 boardDoc={boardDoc}
               /> -->
               <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
-                <div on:click={() => goto(`/embed/${classID}/${boardDoc.id}`)} class="my-truncated-text" style="width: {computedBoardWidth}; color: purple; font-weight: 600;">
+                <div on:click={() => goto(`/embed/${classID}/${boardDoc.id}`)} 
+                  class="my-truncated-text" 
+                  class:purple-text={boardDoc.isPaid}
+                  style="width: {computedBoardWidth}; font-weight: 600;"
+                >
                   {boardDoc.description}
                 </div>
               </div>
@@ -25,6 +29,7 @@
                 boardDbPath={boardsCollectionDbPath + boardID}
                 canvasWidth={computedBoardWidth}
                 canvasHeight={computedBoardHeight}
+                {classID}
                 on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                 on:video-rearrange
                 on:video-deleted={() => incrementNumOfVideos(-1, selectedTutorDoc)}
@@ -57,25 +62,35 @@
         </RenderlessListenToBoard>
       </div>
     {/each}
-    
-    {#if $user.uid === selectedTutorUID}
-      <div class="card">
-        <div on:click={createNewShopBoard}
-          style="
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            margin-top: 40px; 
-            background-color: #2e3131; 
-            font-family: Roboto, sans-serif; text-transform: uppercase;
-            color: white;
-            height: 35px;
-            width: {computedBoardWidth}px;
-        ">
-          New blackboard
-        </div>
-      </div>
-    {/if}
+
+    <div style="display: flex; justify-content: space-between;">
+      {#if $user.uid === selectedTutorUID}
+        {#if isEditProfileVideosPopupOpen}
+          <PopupEditProfileVideos 
+            on:popup-close={() => isEditProfileVideosPopupOpen = false}
+            {classID}
+          /> 
+        {/if}
+
+        <button on:click={() => isEditProfileVideosPopupOpen = true}>
+          Add profile videos
+        </button>
+
+        {#if isRearrangeVideosPopupOpen}
+          <PopupRearrangeVideos 
+            {classID}
+            {galleryBoardIDs}
+            {selectedTutorDoc}
+            on:popup-close={() => isRearrangeVideosPopupOpen = false}
+            on:video-rearranged={() => dispatch('video-rearranged')}
+          />
+        {/if}
+
+        <button on:click={() => isRearrangeVideosPopupOpen = true}>
+          Rearrange profile videos
+        </button>
+      {/if}
+    </div>
   {/if}
 </div>
 
@@ -91,6 +106,8 @@
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
   import DoodleVideoCommentsSection from '$lib/DoodleVideoCommentsSection.svelte'
+  import PopupEditProfileVideos from '$lib/PopupEditProfileVideos.svelte'
+  import PopupRearrangeVideos from '$lib/PopupRearrangeVideos.svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import { goto } from '$app/navigation'
 
@@ -112,6 +129,9 @@
   const boardsCollectionDbPath = `classes/${classID}/blackboards/`
   // Video ideas: give big picture of the class, explain a commonly misunderstood concept, solve an example question, include links to your outside work.
   let textAreaPlaceholder = `Tip #1: when you run out of space, instead of erasing the board, just create a new board and new video. Small videos, with minimal erasing, makes your overall explanation easier to navigate and re-record in small parts`
+
+  let isEditProfileVideosPopupOpen = false
+  let isRearrangeVideosPopupOpen = false
 
   $: if ($classDetailsDrawerWidth === 0 || $classDetailsDrawerWidth === drawerExpandedWidth) {
     debouncedResizeHandler()
@@ -187,5 +207,7 @@
 </script>
 
 <style>
-
+.purple-text {
+  color: purple;
+}
 </style>

@@ -55,6 +55,7 @@
   $: n = galleryBoardIDs.length
 
   let allBoardDocs = []
+  const dispatch = createEventDispatcher()
 
   fetchAllBoards()
 
@@ -70,8 +71,6 @@
     await Promise.all(promises)
     allBoardDocs = [...temp] // trigger reactivity
   }
-
-  const dispatch = createEventDispatcher()
 
   function dragstart_handler (e, id) {
     e.dataTransfer.setData("text/plain", id)

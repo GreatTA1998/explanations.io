@@ -20,23 +20,24 @@
     </slot>
   {/if}
 
-
-  <ToCommunityOrHelperCards
-    on:community-asking
-    on:helper-asking
-    {isAskingCommunityOrHelper}
-    {classTutorsDocs}
-    {selectedTutorDoc}
-    {selectedTutorUID} on:input={e => onTutorCardSelect(e)}
-    {classID}
-    {classDoc}
-  />
+  {#key incrementWhenGalleryRearranged}
+    <ToCommunityOrHelperCards
+      on:community-asking
+      on:helper-asking
+      on:video-rearranged={() => incrementWhenGalleryRearranged += 1}
+      {isAskingCommunityOrHelper}
+      {classTutorsDocs}
+      {selectedTutorDoc}
+      {selectedTutorUID} on:input={e => onTutorCardSelect(e)}
+      {classID}
+      {classDoc}
+    />
+  {/key}
 </div>
 
 <div style="margin-top: 20px;"></div>
 
 <script>
-  import PopupRearrangeVideos from '$lib/PopupRearrangeVideos.svelte'
   import RenderlessListenToRoom from './RenderlessListenToRoom.svelte'
   import RenderlessFetch from './RenderlessFetch.svelte'
   import Button, { Label } from '@smui/button';
@@ -59,7 +60,6 @@
   let selectedTutorDoc
   let unsubTutorsListener
   let unsubClassDocListener
-  let isRearrangeVideosPopupOpen = false
   let incrementWhenGalleryRearranged = 0
   let isHelperProfilePopupOpen
 

@@ -9,6 +9,7 @@
         canvasWidth={width}
         canvasHeight={width * 3/4}
         boardDbPath={blackboardPath}
+        {classID}
       />
     </RenderlessListenToBoard>
   </div>

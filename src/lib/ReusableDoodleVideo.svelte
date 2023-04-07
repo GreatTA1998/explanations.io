@@ -78,6 +78,7 @@
   import { revertVideoToBoard, updateFirestoreDoc } from '../helpers/crud.js'
   import { deleteAllStrokesFromDb } from '../helpers/properDelete.js'
   import { createEventDispatcher } from 'svelte'
+  import { getFirestore, increment, collection, query, where, getDocs } from 'firebase/firestore';
 
   export let boardDoc
   export let boardDbPath = '' // 
@@ -86,17 +87,37 @@
 
   export let showEditDeleteButtons = true
 
+  export let classID
+
   const dispatch = createEventDispatcher()
 
-  function makePaid (boardDoc) {
+  async function makePaid (boardDoc) {
     updateFirestoreDoc(boardDoc.path, {
       isPaid: true
     })
+    incrementHelperPaidVideosCountBy(1)
   }
 
   function makeFree (boardDoc) {
     updateFirestoreDoc(boardDoc.path, {
       isPaid: false
     })
+    incrementHelperPaidVideosCountBy(-1)
+  }
+
+  async function incrementHelperPaidVideosCountBy (amount) {
+    const db = getFirestore()
+    const helpersRef = collection(db, `classes/${classID}/tutors`)
+    const helperQuery = query(helpersRef, where('uid', '==', boardDoc.creatorUID))
+    const helperQuerySnapshot = await getDocs(helperQuery)
+    if (!helperQuerySnapshot.empty) {
+      helperQuerySnapshot.docs.forEach(doc => {
+        // note: we expect only one doc 
+        const helperDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
+        updateFirestoreDoc(helperDoc.path, {
+          numPaidVideos: increment(amount)
+        })
+      })
+    }
   }
 </script>

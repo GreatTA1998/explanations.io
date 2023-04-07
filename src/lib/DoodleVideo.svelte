@@ -41,10 +41,15 @@
       play_arrow
     </span>
   {:else}
-    <span class="overlay-center" style="width: {500 * scaleFactor}px; z-index: 5;">
-      <Button on:click={() => dispatch('subscribe-to-helper')} style="background-color: purple; color: white;">
-        Subscribe for $10/month to watch this helper's videos
-      </Button>
+    <span on:click={startAudioPlayer} 
+      class="material-icons overlay-center" 
+      style="color: purple; background-color: white; border-radius: 50%;  
+      width: {156 * scaleFactor}px; 
+      height: {156 * scaleFactor}px; 
+      z-index: 5;
+      font-size: {9.5 * scaleFactor}rem;"
+    >
+      lock
     </span>
   {/if}
 {/if}

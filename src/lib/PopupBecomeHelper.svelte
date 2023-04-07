@@ -59,7 +59,6 @@
   import { updateFirestoreDoc, createRoomDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
   import { doc, getFirestore, collection, query, where, orderBy, getDocs, setDoc, arrayUnion, increment, } from "firebase/firestore";
-  import ToCommunityOrHelpersBoardsAndVideos from '/src/routes/signup/[class]/ToCommunityOrHelpersBoardsAndVideos.svelte'
   import { portal } from '../helpers/actions.js'
   import { getRandomID } from '../helpers/utility.js'
 

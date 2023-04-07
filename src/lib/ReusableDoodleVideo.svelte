@@ -13,6 +13,8 @@
         {strokesArray} 
         audioDownloadURL={boardDoc.audioDownloadURL}
         backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+        isPaid={!!boardDoc.isPaid}
+        creatorUID={boardDoc.creatorUID}
         on:six-seconds-elapsed
       > 
         {#if showEditDeleteButtons}
@@ -23,6 +25,22 @@
             flex-direction: row-reverse"
           > -->
           <div style="display: flex; align-items: center">
+            {#if !boardDoc.isPaid} 
+              <Button 
+                on:click={() => makePaid(boardDoc)}
+                style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+              >
+                Freely available
+              </Button>
+            {:else}
+              <Button
+                on:click={() => makeFree(boardDoc)}
+                style="margin-right: 6px; background-color: purple; color: white"
+              >
+                Subscribers-only
+              </Button>
+            {/if}
+
             <!-- boardDoc will always have a creatorUID because anonymous login -->
             {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
               <Button 
@@ -57,7 +75,7 @@
   import { lazyCallable } from '../helpers/actions.js'
   import Button, { Icon } from '@smui/button'
   import { user, adminUIDs } from '../store.js'
-  import { revertVideoToBoard } from '../helpers/crud.js'
+  import { revertVideoToBoard, updateFirestoreDoc } from '../helpers/crud.js'
   import { deleteAllStrokesFromDb } from '../helpers/properDelete.js'
   import { createEventDispatcher } from 'svelte'
 
@@ -69,4 +87,16 @@
   export let showEditDeleteButtons = true
 
   const dispatch = createEventDispatcher()
+
+  function makePaid (boardDoc) {
+    updateFirestoreDoc(boardDoc.path, {
+      isPaid: true
+    })
+  }
+
+  function makeFree (boardDoc) {
+    updateFirestoreDoc(boardDoc.path, {
+      isPaid: false
+    })
+  }
 </script>

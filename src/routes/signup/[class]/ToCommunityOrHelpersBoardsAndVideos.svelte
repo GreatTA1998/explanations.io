@@ -12,7 +12,7 @@
                 boardDoc={boardDoc}
               /> -->
               <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
-                <div class="my-truncated-text" style="width: {computedBoardWidth}; color: purple; font-weight: 600;">
+                <div on:click={() => goto(`/embed/${classID}/${boardDoc.id}`)} class="my-truncated-text" style="width: {computedBoardWidth}; color: purple; font-weight: 600;">
                   {boardDoc.description}
                 </div>
               </div>
@@ -91,7 +91,8 @@
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
   import DoodleVideoCommentsSection from '$lib/DoodleVideoCommentsSection.svelte'
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte'
+  import { goto } from '$app/navigation'
 
   export let classID
   export let selectedTutorUID 

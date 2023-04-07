@@ -64,8 +64,8 @@
     <div style="margin-top: 36px;"></div>
 
     <!-- Video portfolio here -->
+    <!-- on:video-rearrange={() => isRearrangeVideosPopupOpen = true} -->
     <ToCommunityOrHelpersBoardsAndVideos
-      on:video-rearrange={() => isRearrangeVideosPopupOpen = true}
       galleryBoardIDs={shopVideosIDs}
       {classID}
       {classTutorsDocs}

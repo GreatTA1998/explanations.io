@@ -1,10 +1,10 @@
-{#if isSubscribePopupOpen}
+<!-- {#if isSubscribePopupOpen}
   <PopupConfirmSubscription
     selectedTutorDoc={creatorDoc}
     on:popup-close={() => isSubscribePopupOpen = false}
     on:confirm-clicked={() => handleConfirmSubscription(creatorDoc)}
   />
-{/if}
+{/if} -->
 
 {#if roomID === 'request-video'}
   <ClassServerRequestVideo {classID}/>
@@ -142,7 +142,8 @@
                   backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
                   canvasWidth={$maxAvailableWidth}
                   canvasHeight={$maxAvailableHeight}
-                  isSubscriberOnly={boardDoc.shopGalleryOrder}
+                  isPaid={!!boardDoc.isPaid}
+                  creatorUID={boardDoc.creatorUID}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                   on:subscribe-to-helper={() => { 
                     isSubscribePopupOpen = true
@@ -188,7 +189,23 @@
                         Move
                       </Button>
 
-                      {#if !boardDoc.shopGalleryOrder}
+                      {#if !boardDoc.isPaid} 
+                        <Button 
+                          on:click={() => makePaid(boardDoc)}
+                          style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+                        >
+                          Freely available
+                        </Button>
+                      {:else}
+                        <Button
+                          on:click={() => makeFree(boardDoc)}
+                          style="margin-right: 6px; background-color: purple; color: white"
+                        >
+                          Subscribers-only
+                        </Button>
+                      {/if}
+                      
+                      <!-- {#if !boardDoc.shopGalleryOrder}
                         <Button 
                           on:click={() => shopifyVideo(boardDoc)}
                           style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
@@ -202,7 +219,7 @@
                         >
                           Unshopify
                         </Button>
-                      {/if}
+                      {/if} -->
                     {/if}
                   </div>
                 </DoodleVideo>
@@ -386,8 +403,21 @@
     unsubRoomListener()
   })
 
-  function handleConfirmSubscription () {
-    // TODO: implement
+
+  // function handleConfirmSubscription () {
+  //   // TODO: implement
+  // }
+  
+  function makePaid (boardDoc) {
+    updateFirestoreDoc(boardDoc.path, {
+      isPaid: true
+    })
+  }
+
+  function makeFree (boardDoc) {
+    updateFirestoreDoc(boardDoc.path, {
+      isPaid: false
+    })
   }
 
   async function shopifyVideo (boardDoc) {

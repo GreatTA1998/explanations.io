@@ -18,10 +18,10 @@
 {#if !recursiveSyncer && isPlaying === false && strokesArray}
   <!-- font-size: {60 * (canvasWidth / assumedCanvasWidth)}rem; -->
 
-  {#if !isSubscriberOnly}
+  {#if !isPaid}
     <span on:click={startAudioPlayer} 
       class="material-icons overlay-center" 
-      style="color: white; 
+      style="color: white;
       width: {180 * scaleFactor}px; 
       height: {180 * scaleFactor}px; 
       z-index: 5;
@@ -29,11 +29,22 @@
     >
       play_circle
     </span>
+  {:else if isPaid && creatorUID === $user.uid}
+    <span on:click={startAudioPlayer} 
+      class="material-icons overlay-center" 
+      style="color: purple; background-color: white; border-radius: 50%;  
+      width: {156 * scaleFactor}px; 
+      height: {156 * scaleFactor}px; 
+      z-index: 5;
+      font-size: {10 * scaleFactor}rem;"
+    >
+      play_arrow
+    </span>
   {:else}
     <span class="overlay-center" style="width: {500 * scaleFactor}px; z-index: 5;">
-      <!-- <Button on:click={() => dispatch('subscribe-to-helper')} style="background-color: purple; color: white;">
+      <Button on:click={() => dispatch('subscribe-to-helper')} style="background-color: purple; color: white;">
         Subscribe for $10/month to watch this helper's videos
-      </Button> -->
+      </Button>
     </span>
   {/if}
 {/if}
@@ -88,7 +99,7 @@
 <script>
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../store.js' // note `canvasWidth` was misleading
+  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '../store.js' // note `canvasWidth` was misleading
   import Button, { Label } from '@smui/button'
 
   /**
@@ -101,7 +112,8 @@
   export let audioDownloadURL
   export let backgroundImageDownloadURL
   
-  export let isSubscriberOnly = false
+  export let isPaid = false
+  export let creatorUID
 
   let hasPlayedOnce = false
   let isPlaying = false

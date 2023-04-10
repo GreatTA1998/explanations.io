@@ -4,13 +4,13 @@
       <!-- <div class="copied-from-koa" style="color: purple">Log in with phone:</div> -->
 
       {#if canTakeInternationalNumbers}
-        <input type="tel" inputmode="numeric" pattern="[0-9]*" id="phone-country-code" minlength="2" maxlength="4" placeholder="+1" bind:value={countryCode} class="phoneNumberFourDigitInput" style="margin-left: 15px; margin-right: 10px">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" bind:this={p0} id="phone-country-code" minlength="2" maxlength="4" placeholder="+1" bind:value={countryCode} class="phoneNumberFourDigitInput" style="margin-left: 15px; margin-right: 10px">
       {/if}
-      <input type="tel" inputmode="numeric" pattern="[0-9]*" id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} class="phoneNumberThreeDigitInput" style="margin-left: 15px; margin-right: 10px">
+      <input type="tel" inputmode="numeric" pattern="[0-9]*" bind:this={p1} id="phone-input-1" minlength="3" maxlength="3" placeholder="503" bind:value={phoneNumSegment1} class="phoneNumberThreeDigitInput" style="margin-left: 15px; margin-right: 10px">
 
-      <input type="tel" inputmode="numeric" pattern="[0-9]*" id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} class="phoneNumberThreeDigitInput" style="margin-right: 10px">
+      <input type="tel" inputmode="numeric" pattern="[0-9]*" bind:this={p2} id="phone-input-2" minlength="3" maxlength="3" placeholder="250" bind:value={phoneNumSegment2} class="phoneNumberThreeDigitInput" style="margin-right: 10px">
 
-      <input type="tel" inputmode="numeric" pattern="[0-9]*" id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} class="phoneNumberFourDigitInput" style="margin-right: 10px">
+      <input type="tel" inputmode="numeric" pattern="[0-9]*" bind:this={p3} id="phone-input-3" minlength="4" maxlength="4" placeholder="3868" bind:value={phoneNumSegment3} class="phoneNumberFourDigitInput" style="margin-right: 10px">
       <Button id="sign-in-button" on:click={signInWithPhone} style="display: none; color: {hasEnteredPhoneNumber ? 'rgb(116 28 183)' : 'grey'}; margin-bottom: 2px" disabled={!hasEnteredPhoneNumber}>
         Sign Up
       </Button>
@@ -49,6 +49,7 @@
 	let phoneNumSegment1 = ''
 	let phoneNumSegment2 = ''
 	let phoneNumSegment3 = ''
+  let p0, p1, p2, p3
 
   let confirm1 = ''
   let confirm2 = ''
@@ -63,11 +64,13 @@
 
 	$: hasEnteredPhoneNumber = phoneNumSegment1.length === 3 && phoneNumSegment2.length === 3 && phoneNumSegment3.length === 4
   
-  $: if (phoneNumSegment1.length === 3) {
-		document.getElementById('phone-input-2').focus()
+  $: if (phoneNumSegment1.length === 3 && !phoneConfirmationResult) {
+    p2.focus()
+		// document.getElementById('phone-input-2').focus()
 	}
-	$: if (phoneNumSegment2.length === 3) {
-		document.getElementById('phone-input-3').focus()
+	$: if (phoneNumSegment2.length === 3 && !phoneConfirmationResult) {
+    p3.focus()
+		// document.getElementById('phone-input-3').focus()
 	}
 	$: if (hasEnteredPhoneNumber) {
 		signInWithPhone()
@@ -106,7 +109,6 @@
 
 		function onSignInSubmit () {
 			const phoneNumber = `${countryCode} ${phoneNumSegment1}-${phoneNumSegment2}-${phoneNumSegment3}`
-			print(getAuth(), phoneNumber, appVerifier)
 			signInWithPhoneNumber(getAuth(), phoneNumber, appVerifier)
 				.then((confirmationResult) => {
 					console.log('confirmation result =', confirmationResult)
@@ -135,11 +137,9 @@
 
   // SIGN IN WITH CONFIRMATION CODE
   function verifyConfirmationCode () {
-    console.log('phoneConfirmCode =', phoneConfirmCode)
     window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
       // User signed in successfully.
       const user = result.user;
-      console.log('redirecting, user =', user)
 
       // COUPLING THE REDIRECT LOGIN IS NOT GOOD, YOU WANT TO SEPARATE IT OUT
 

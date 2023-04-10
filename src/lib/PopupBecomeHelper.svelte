@@ -13,24 +13,40 @@
         Welcome { $user.name || '' }.
         <br>
         <br>
-        Thanks for considering to be a helper - here's a quick guide to help you think about it.
+        When you become a helper, students can pay you $10/month to:
+          <ol>
+            <li>
+              Access your subscriber-only videos
+            </li>
+            <li>
+              Request new videos from you 
+            </li>
+          </ol>        
+        Subscriber-only videos aren't selfish. On the contrary, they enable quality content to be available to everyone for cheap prices (that otherwise wouldn't exist)     
         <br>
         <br>
+        Lastly, 
         <i>"People subscribe not for a particular video necessarily, but because they 
         fall in love with your particular perspective on explaining the subject matter"</i>
         <a href="https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting" target="_blank"> read more here</a>
         <br>
         <br>
         <div>
-          If you become a helper, students can subscribe to you for $10/month.
+          Recommendation: make your best videos free, and your weekly videos subscriber-only.
           
-          Regardless of whether you're a helper, you can still answer questions (highlighted in blue) and upload videos in the server, which automatically
-          build up your profile.
-          You can then become a helper whenever you want.  
+          <br>
+          <br>
+
+          Get started by making some free example videos that: 
+          <ol>
+            <li>Showcase your unique way of understanding the class</li>
+            <li>Answer an existing question in the server</li>
+          </ol>    
         </div> 
-        <button on:click={createTutorDoc({ classID, firstName: $user.name.split(' ')[0], lastName: $user.name.split(' ')[1]})}>
+
+        <ReusableButton on:click={createTutorDoc({ classID, firstName: $user.name.split(' ')[0], lastName: $user.name.split(' ')[1]})}>
           Confirm sign-up as helper
-        </button>
+        </ReusableButton>
         <br>
         <br>
       </div>
@@ -61,6 +77,7 @@
   import { doc, getFirestore, collection, query, where, orderBy, getDocs, setDoc, arrayUnion, increment, } from "firebase/firestore";
   import { portal } from '../helpers/actions.js'
   import { getRandomID } from '../helpers/utility.js'
+  import ReusableButton from '$lib/ReusableButton.svelte'
 
   let firstNameInput 
   let lastNameInput

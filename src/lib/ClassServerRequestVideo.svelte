@@ -1,7 +1,4 @@
 <div use:portal={'main-content'} style="padding: 16px;">
-  <h2 style="font-family: sans-serif">
-    Request video
-  </h2>
 
   {#if !$user.phoneNumber}
     <div style="margin-left: 24px; display: flex; align-items: center; width: 95%; margin-left: auto; margin-right: auto;">
@@ -10,13 +7,8 @@
     </div>
   {/if}
 
-  <ToCommunityOrHelper {classID} {isAskingCommunityOrHelper} 
-    on:community-asking={() => isAskingCommunityOrHelper = 'community'}
-    on:helper-asking={() => isAskingCommunityOrHelper = 'helper'}>
-  </ToCommunityOrHelper>
-
   <Textfield 
-    style="width: 100%"
+    style="width: 100%;"
     value={questionTitleInput} on:input={(e) => questionTitleInput = e.target.value}
     class="room-title" 
   >
@@ -29,6 +21,7 @@
     value={questionDescriptionInput} 
     on:input={(e) => questionDescriptionInput = e.detail}
     placeholder="Question description..."
+    numberOfInitialRowsIfEmpty={4}
   />
 
   <PsetPDFUploader
@@ -44,9 +37,15 @@
     </div>
   {/if}
 
+  <ToCommunityOrHelper {classID} {isAskingCommunityOrHelper} 
+    on:community-asking={() => isAskingCommunityOrHelper = 'community'}
+    on:helper-asking={() => isAskingCommunityOrHelper = 'helper'}>
+  </ToCommunityOrHelper>
+
   <Button 
     on:click={submitQuestion} 
-    style="margin-top: 24px; width: 100%; background-color: {isAskingCommunityOrHelper === 'community' ? 'orange' : 'purple'}; color: white;"
+    variant="raised"
+    style="border-radius: 0px; margin-top: 12px; width: 100%; background-color: {isAskingCommunityOrHelper === 'community' ? 'orange' : '#5d0068'}; color: white;"
   >
     Submit question
   </Button>
@@ -77,7 +76,7 @@
   // let { classID, roomID } = data
   // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 
-  let questionTitleInput = 'Question title' 
+  let questionTitleInput = 'Type in your question title here...' 
   let questionDescriptionInput = ''
   let isAskingCommunityOrHelper = 'community'
   let pdfOrImageAttachment = null
@@ -85,6 +84,11 @@
   async function submitQuestion () {
     if (!$user.phoneNumber) {
       alert('Need to log in with phone number first')
+      return
+    }
+    if (questionTitleInput === 'Type in your question title here...') {
+      alert('Have to type a question title first')
+      return
     }
 
     if (questionTitleInput.at(-1) !== '?') {

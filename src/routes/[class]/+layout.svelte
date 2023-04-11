@@ -20,11 +20,16 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
+    <div class:orange-highlight={roomID === "request-video"}>
+
     <Item on:click={() => goto(`/${classID}/request-video`)}>
       <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">question_mark</span>
       <div style="margin-right: 4px;"></div>
-      Request video
+      <div>
+        Ask question
+      </div>
     </Item>
+    </div>
 
     <Item on:click={createNewRoom}>
       <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">draw</span>
@@ -497,6 +502,10 @@
     font-weight: 500;
     background-color:rgb(45, 44, 44);
     color: white;
+  }
+
+  .orange-highlight {
+    border: 2px solid orange; 
   }
 
   .question-item {

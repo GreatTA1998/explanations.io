@@ -21,7 +21,7 @@
   export let value = ''
   export let placeholder
   export let readonly = false
-  export let nonFocusedPlaceholderOpacity = 0
+  export let nonFocusedPlaceholderOpacity = 0.6
   export let numberOfInitialRowsIfEmpty = 1
   export let fontSizeIncludeUnits = '1.4rem'
 

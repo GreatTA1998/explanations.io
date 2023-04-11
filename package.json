@@ -23,6 +23,7 @@
     "@smui/icon-button": "^6.0.0-beta.4",
     "@smui/linear-progress": "^6.1.0",
     "@smui/menu": "^6.0.0-beta.4",
+    "@smui/paper": "^7.0.0-beta.3",
     "@smui/slider": "^6.1.4",
     "@smui/switch": "^6.0.0-beta.4",
     "@smui/tab": "^7.0.0-beta.0",

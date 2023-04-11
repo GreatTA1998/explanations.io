@@ -332,7 +332,8 @@
 	font-weight: 600; 
 
 	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
-	line-height: 1.25;
+	line-height: 1.0; // used to be 1.25 but GF suggests otherwise
+
 }
 
 @media only screen and (min-width: 1550px) {
@@ -351,7 +352,7 @@
 .webflow-intro-type {
 	font-family: sans-serif; 
 	font-size: 5rem;
-	line-height: 1.25;
+	line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
 	letter-spacing: -.02em;
 	max-width: 100%;

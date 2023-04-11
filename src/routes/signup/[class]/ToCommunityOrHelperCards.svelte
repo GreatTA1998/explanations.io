@@ -27,33 +27,51 @@
       />
     {/if}
 
-    <div style="display: flex">
-      <div class="tutor-business-card" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
+    <br>
+
+    <div style="display: flex; font-family: sans-serif;">
+      <div class="tutor-business-card-1" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
         <Card padded style="width: 400px; box-sizing: border-box">
-          <!-- <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif">
-           
-          </h2> -->
-          Ask the free community
-          <!-- Ask the community -->
+          <div style="display: flex; align-items: center">
+            <input type="checkbox" checked={isAskingCommunityOrHelper === 'community'} style="height: 25px; width: 25px; font-size: 5rem;"/>
+
+            <b style="font-size: 1.2rem; margin-left: 8px;">
+              Ask community (free)
+            </b>
+          </div>
           <Content>
             Anyone e.g. classmates, passers-by and helpers can answer your question
           </Content>
         </Card>
       </div>
-      <div style="margin-left: 12px;" class="tutor-business-card" on:click={() => dispatch('helper-asking')
-      } class:purple-border={isAskingCommunityOrHelper === 'helper'}>
-        <Card padded style="width: 400px; box-sizing: border-box; ">
-          <!-- <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif">
-            Ask the community + your designated helper
-          </h2> -->
-          Ask the free community + your paid helper
+
+      <div style="margin-left: 12px;" class="tutor-business-card-2" on:click={() => dispatch('helper-asking')} class:purple-border={isAskingCommunityOrHelper === 'helper'}>
+        <Card padded style="width: 800px; box-sizing: border-box; ">
+          <div style="display: flex; align-items: center">
+            <input type="checkbox" checked={isAskingCommunityOrHelper === 'helper'} style="height: 25px; width: 25px; font-size: 5rem;"/>
+            <b style="font-size: 1.2rem; margin-left: 8px;">
+              Ask your helper + community ($10/month)
+            </b>
+          </div>
         
           <Content>
-            By subscribing to a committed helper for $10/month, your questions are guaranteed to get proper responses
-            
-
+            Subscribing to a helper gives you quality video responses more reliably
             <div style="margin-bottom: 12px;"></div>
             <!-- If highlighted, becomes purple -->
+
+            <div style="display: flex; align-items: center;">
+              <b style="font-size: 1.1rem;">Helpers</b>
+
+              <Button on:click={() => isBecomeHelperPopupOpen = true} color="secondary" variant="raised" style="height: 40px; border-radius: 0px; margin-left: 20px;">
+                <Label style="text-transform: uppercase; padding-left: 12px; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; font-size: 0.8rem; font-weight: 600">
+                  Become helper
+                </Label>
+              </Button>
+              <!-- <ReusableButton>Become helper</ReusableButton> -->
+            </div>
+            <!-- <b style="font-size: 1.1rem;">Helpers</b> -->
+
+            <div style="margin-bottom: 16px;"></div>
 
             <!-- Just list out the helpers here directly so user doesn't have to click so much -->
             {#each classTutorsDocs as helper}
@@ -69,9 +87,11 @@
             {/each} 
 
             {#if !didUserAlreadySignUpAsTutor}
-              <a on:click={() => isBecomeHelperPopupOpen = true}>
-                Sign up as helper
-              </a>
+              <Button on:click={() => isBecomeHelperPopupOpen = true} color="secondary" variant="raised" style="height: 60px; border-radius: 0px;">
+                <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
+                  Sign up as helper
+                </Label>
+              </Button>
             {/if}
 
             {#if isBecomeHelperPopupOpen}
@@ -191,6 +211,11 @@
   import { goto } from '$app/navigation';
   import PopupGetNotifiedOnNewShops from '$lib/PopupGetNotifiedOnNewShops.svelte';
   import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
+  import Checkbox from '@smui/checkbox';
+  import Paper, { Title, Subtitle} from '@smui/paper';
+  import FormField from '@smui/form-field';
+ 
+  let checked = false
 
   export let classTutorsDocs
   export let selectedTutorDoc
@@ -203,7 +228,6 @@
   let classWatchers = null
   let sortedClassTutorsDocs 
   const dispatch = createEventDispatcher()
-  let checked = false
   let price
   let inputFieldFirstName = '' 
   let inputFieldLastName = ''
@@ -367,9 +391,20 @@
 </script>
 
 <style>
-  .tutor-business-card {
+  .tutor-business-card-1 {
     /* 400 + epsilon, otherwise it doesn't wrap around the <Card> properly */
     max-width: 404px; 
+    width: 100%;
+    height: fit-content;
+    
+    /* This is to match SMUI's card's border radius */
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  .tutor-business-card-2 {
+    /* 400 + epsilon, otherwise it doesn't wrap around the <Card> properly */
+    max-width: 804px; 
     width: 100%;
     height: fit-content;
     

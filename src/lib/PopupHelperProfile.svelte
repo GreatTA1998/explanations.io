@@ -22,7 +22,7 @@
     <div style="display: flex; align-items: center; justify-content: space-evenly">
       <div>
         <div style="font-size: 4rem">
-          { shopVideosDocs ? shopVideosDocs.length : 0}
+          { helperDoc.numOfVideos - (helperDoc.numPaidVideos || 0) || 0}
         </div>
         free videos
       </div>
@@ -40,7 +40,7 @@
       </div>
       <div>
         <div style="font-size: 4rem">
-          0
+          { helperDoc.numOfStudents || 0}
         </div>
         subscriptions
       </div>
@@ -65,6 +65,12 @@
 
     <!-- Video portfolio here -->
     <!-- on:video-rearrange={() => isRearrangeVideosPopupOpen = true} -->
+    <b style="font-size: 1.5rem; margin-left: 2px;">Profile videos</b>
+
+    <br>
+    <br>
+    <br>
+    
     {#key incrementWhenGalleryRearranged}
       <PopupHelperProfileVideos
         on:video-rearranged={() => incrementWhenGalleryRearranged += 1}
@@ -84,7 +90,7 @@
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '../store.js'
-  import { updateFirestoreDoc } from '../helpers/crud.js'
+  import { updateFirestoreDoc, getFirestoreQuery } from '../helpers/crud.js'
   import { roundedToFixed, debounce } from '../helpers/utility.js'
   import { sendTextMessage } from '../helpers/cloudFunctions.js'
   import Button from '@smui/button'
@@ -117,13 +123,25 @@
     shopVideosDocs = temp
     shopVideosIDs = shopVideosDocs.map((doc) => doc.id)
     computeTotalViewMinutes()
-
     // update preview statistics for the tutor/helper 
     updateFirestoreDoc(`classes/${classID}/tutors/${helperDoc.id}`, {
       minutesViewed: roundedToFixed(totalViewMinutes, 0),
-      numOfVideos: shopVideosDocs.length
     })
+
+    // SCRIPT 
+    // countTotalNumOfVideos()
   })
+
+  // async function countTotalNumOfVideos () {
+  //   const db = getFirestore()
+  //   const blackboardsRef = collection(db, `classes/${classID}/blackboards`)
+  //   const q = query(
+  //     blackboardsRef, 
+  //     where('creatorUID', '==', helperDoc.uid)
+  //   )
+  //   const result = await getFirestoreQuery(q)
+  //   console.log('result.length =', result.length)
+  // }
 
   function computeTotalViewMinutes () {
     let total = 0

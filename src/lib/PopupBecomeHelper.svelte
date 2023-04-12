@@ -16,10 +16,10 @@
         When you become a helper, students can pay you $10/month to:
           <ol>
             <li>
-              Access your subscriber-only videos
+              Request new videos from you 
             </li>
             <li>
-              Request new videos from you 
+              Access your subscriber-only videos
             </li>
           </ol>        
         Subscriber-only videos aren't selfish. On the contrary, they enable quality content to be available to everyone for cheap prices (that otherwise wouldn't exist)     

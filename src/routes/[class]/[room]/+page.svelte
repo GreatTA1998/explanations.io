@@ -354,7 +354,7 @@
 <script>
   import '$lib/_FourColor.scss'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
-  import { getFirestoreDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
+  import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '../../../helpers/crud.js'
   import { sendTextMessage } from '../../../helpers/cloudFunctions.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
@@ -403,7 +403,6 @@
     unsubRoomListener()
   })
 
-
   // function handleConfirmSubscription () {
   //   // TODO: implement
   // }
@@ -412,12 +411,30 @@
     updateFirestoreDoc(boardDoc.path, {
       isPaid: true
     })
+    incrementHelperPaidVideosCountBy(1, boardDoc)
   }
 
   function makeFree (boardDoc) {
     updateFirestoreDoc(boardDoc.path, {
       isPaid: false
     })
+    incrementHelperPaidVideosCountBy(-1, boardDoc)
+  }
+
+  async function incrementHelperPaidVideosCountBy (amount, boardDoc) {
+    const db = getFirestore()
+    const helpersRef = collection(db, `classes/${classID}/tutors`)
+    const helperQuery = query(helpersRef, where('uid', '==', boardDoc.creatorUID))
+    const helperQuerySnapshot = await getDocs(helperQuery)
+    if (!helperQuerySnapshot.empty) {
+      helperQuerySnapshot.docs.forEach(doc => {
+        // note: we expect only one doc 
+        const helperDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
+        updateFirestoreDoc(helperDoc.path, {
+          numPaidVideos: increment(amount)
+        })
+      })
+    }
   }
 
   async function shopifyVideo (boardDoc) {
@@ -767,7 +784,7 @@
     window.location.reload()
   }
 
-  async function revertToBoard ({ id, audioRefFullPath }, deleteAllStrokesFromDb) {
+  async function revertToBoard ({ id, audioRefFullPath, isPaid, creatorUID }, deleteAllStrokesFromDb) {
     if (!confirm('Are you sure you want to delete this video?')) {
       return
     }
@@ -789,9 +806,26 @@
         audioRefFullPath: deleteField()
       })
     )
+      
+    // update class statistics
     updateFirestoreDoc(`classes/${classID}`, {
       numOfVideos: increment(-1)
     })
+
+    // update helper video statistics
+    const q = query(
+      collection(getFirestore(), `classes/${classID}/tutors`),
+      where('uid', '==', creatorUID)
+    )
+    const [helperDoc] = await getFirestoreQuery(q)
+    const updateObj = {
+      numOfVideos: increment(-1)
+    }
+    if (isPaid) {
+      updateObj.numPaidVideos = increment(-1)
+    }
+    updateFirestoreDoc(`classes/${classID}/tutors/${helperDoc.id}`, updateObj)
+
     promises.push(deleteAllStrokesFromDb())
     await Promise.all(promises)
   }

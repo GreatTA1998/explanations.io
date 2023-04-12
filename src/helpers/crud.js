@@ -45,7 +45,7 @@ export function getFirestoreQuery (query) {
     const snapshot = await getDocs(query)
     const data = []
     snapshot.forEach(doc => {
-      data.push({ id: doc.id, path: doc.path, ...doc.data() })
+      data.push({ id: doc.id, path: doc.ref.path, ...doc.data() })
     })
     resolve(data)
   })

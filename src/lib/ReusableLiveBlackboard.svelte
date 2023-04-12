@@ -1,3 +1,6 @@
+<!-- WARNING: functions like `saveVideo` diverges from the blackboard in [room].svelte 
+  and can lead to unexpected bugs
+-->
 {#if boardDoc}
   <RenderlessListenToStrokes dbPath={boardsDbPath + boardID}
     let:listenToStrokes={listenToStrokes} 

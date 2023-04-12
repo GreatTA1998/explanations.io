@@ -34,29 +34,6 @@
                 on:video-rearrange
                 on:video-deleted={() => incrementNumOfVideos(-1, selectedTutorDoc)}
               />
-            {:else if $user.uid === selectedTutorUID}
-              <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
-                <TextAreaAutoResizing 
-                  value={boardDoc.description || ''} 
-                  on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
-                  placeholder={textAreaPlaceholder}
-                  readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-                  nonFocusedPlaceholderOpacity={0.6}
-                  numberOfInitialRowsIfEmpty=3
-                />
-              </div>
-              <ReusableLiveBlackboard
-                {boardDoc}
-                boardID={boardID}
-                boardsDbPath={boardsCollectionDbPath}
-                canvasWidth={computedBoardWidth}
-                canvasHeight={computedBoardHeight}
-                hasFullscreenButton={false}
-                on:video-uploading={() => {
-                  incrementNumOfVideos(1, selectedTutorDoc)
-                  createNewShopBoard()
-                }}
-              />
             {/if}
           {/if}
         </RenderlessListenToBoard>

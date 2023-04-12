@@ -1,3 +1,6 @@
+<!-- DANGER: functions like `makePaid` differ between this file and [room].svelte
+  Refactor and unify these files soon.
+-->
 {#if boardDoc}
   <RenderlessFetchStrokes dbPath={boardDbPath}
     let:fetchStrokes={fetchStrokes}

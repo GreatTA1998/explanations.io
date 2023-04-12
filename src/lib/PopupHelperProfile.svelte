@@ -34,7 +34,7 @@
       </div>
       <div>
         <div style="font-size: 4rem">
-          { roundedToFixed(totalViewMinutes, 0) }
+          { helperDoc.minutesViewed || 0}
         </div>
         minutes viewed
       </div>
@@ -122,36 +122,28 @@
     const temp = await shopifyFetch()
     shopVideosDocs = temp
     shopVideosIDs = shopVideosDocs.map((doc) => doc.id)
-    computeTotalViewMinutes()
-    // update preview statistics for the tutor/helper 
-    updateFirestoreDoc(`classes/${classID}/tutors/${helperDoc.id}`, {
-      minutesViewed: roundedToFixed(totalViewMinutes, 0),
-    })
-
-    // SCRIPT 
-    // countTotalNumOfVideos()
+    updatePreviewStatistics()
   })
 
-  // async function countTotalNumOfVideos () {
-  //   const db = getFirestore()
-  //   const blackboardsRef = collection(db, `classes/${classID}/blackboards`)
-  //   const q = query(
-  //     blackboardsRef, 
-  //     where('creatorUID', '==', helperDoc.uid)
-  //   )
-  //   const result = await getFirestoreQuery(q)
-  //   console.log('result.length =', result.length)
-  // }
 
-  function computeTotalViewMinutes () {
+  async function updatePreviewStatistics () {
+    const db = getFirestore()
+    const blackboardsRef = collection(db, `classes/${classID}/blackboards`)
+    const q = query(
+      blackboardsRef, 
+      where('creatorUID', '==', helperDoc.uid)
+    )
+    const videos = await getFirestoreQuery(q)
+
     let total = 0
-    shopVideosDocs.forEach((doc) => {
-      total += doc.viewMinutes
+    for (const video of videos) {
+      total += video.viewMinutes || 0
+    }
+    updateFirestoreDoc(`classes/${classID}/tutors/${helperDoc.id}`, {
+      minutesViewed: roundedToFixed(total, 0),
+      numOfVideos: videos.length
     })
-    totalViewMinutes = total
-    return total
   }
-
   async function shopifyFetch () {
     console.log("shopifyFetch()")
     return new Promise(async (resolve) => {

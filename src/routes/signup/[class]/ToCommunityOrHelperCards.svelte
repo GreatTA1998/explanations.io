@@ -55,19 +55,19 @@
           </div>
         
           <Content>
-            Subscribing to a helper gives you quality video responses more reliably
+            Paying a helper ensures you get reliable responses during the busiest times of the semester from someone you're familiar with
             <div style="margin-bottom: 12px;"></div>
             <!-- If highlighted, becomes purple -->
 
             <div style="display: flex; align-items: center;">
               <b style="font-size: 1.1rem;">Helpers</b>
-
-              <Button on:click={() => isBecomeHelperPopupOpen = true} color="secondary" variant="raised" style="height: 40px; border-radius: 0px; margin-left: 20px;">
-                <Label style="text-transform: uppercase; padding-left: 12px; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; font-size: 0.8rem; font-weight: 600">
-                  Become helper
-                </Label>
-              </Button>
-              <!-- <ReusableButton>Become helper</ReusableButton> -->
+              {#if !didUserAlreadySignUpAsTutor}
+                <Button on:click={() => isBecomeHelperPopupOpen = true} color="secondary" variant="raised" style="height: 40px; border-radius: 0px; margin-left: 20px;">
+                  <Label style="text-transform: uppercase; padding-left: 12px; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; font-size: 0.8rem; font-weight: 600">
+                    Sign up as helper
+                  </Label>
+                </Button>
+              {/if}
             </div>
             <!-- <b style="font-size: 1.1rem;">Helpers</b> -->
 
@@ -86,13 +86,13 @@
               </div>
             {/each} 
 
-            {#if !didUserAlreadySignUpAsTutor}
+            <!-- {#if !didUserAlreadySignUpAsTutor}
               <Button on:click={() => isBecomeHelperPopupOpen = true} color="secondary" variant="raised" style="height: 60px; border-radius: 0px;">
                 <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
                   Sign up as helper
                 </Label>
               </Button>
-            {/if}
+            {/if} -->
 
             {#if isBecomeHelperPopupOpen}
               <PopupBecomeHelper

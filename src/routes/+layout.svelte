@@ -23,6 +23,11 @@
   const auth = getAuth()
 
   onMount(async () => {
+    console.log('window.location.origin =', window.location.origin)
+    if (window.location.origin === 'https://explain.mit.edu') {
+      goto('https://beavers.app')
+    }
+
     onAuthStateChanged(auth, reactToUserChange)
   })
 

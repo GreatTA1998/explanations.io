@@ -41,7 +41,8 @@
       play_arrow
     </span>
   {:else}
-    <span on:click={startAudioPlayer} 
+    <span
+      on:click={ () => alert('You can unlock this video by subscribing to the creator!')}
       class="material-icons overlay-center" 
       style="color: purple; background-color: white; border-radius: 50%;  
       width: {156 * scaleFactor}px; 
@@ -96,7 +97,7 @@
     on:seeking={syncStrokesToAudio}
     bind:this={AudioPlayer} 
     src={audioDownloadURL} 
-    controls 
+    controls={!isLocked}
     style={`width: ${canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}>
   </audio>
 </div>
@@ -133,6 +134,8 @@
   let recursiveSyncer
   let playbackSpeed = 2
   let updateViewMinutesTimeoutID
+
+  $: isLocked = isPaid && ($user.uid !== creatorUID)
 
   const dispatch = createEventDispatcher()
 
@@ -207,6 +210,10 @@
   }
 
   function togglePlayPause () {
+    if (isLocked) {
+      alert('You can unlock this video by subscribing to the creator!')
+      return
+    }
     if (!recursiveSyncer && isPlaying === false && strokesArray) {
       startAudioPlayer()
     } 

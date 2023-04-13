@@ -28,20 +28,22 @@
             flex-direction: row-reverse"
           > -->
           <div style="display: flex; align-items: center">
-            {#if !boardDoc.isPaid} 
-              <Button 
-                on:click={() => makePaid(boardDoc)}
-                style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
-              >
-                Freely available
-              </Button>
-            {:else}
-              <Button
-                on:click={() => makeFree(boardDoc)}
-                style="margin-right: 6px; background-color: purple; color: white"
-              >
-                Subscribers-only
-              </Button>
+            {#if $user.uid === boardDoc.creatorUID}
+              {#if !boardDoc.isPaid} 
+                <Button 
+                  on:click={() => makePaid(boardDoc)}
+                  style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+                >
+                  Freely available
+                </Button>
+              {:else}
+                <Button
+                  on:click={() => makeFree(boardDoc)}
+                  style="margin-right: 6px; background-color: purple; color: white"
+                >
+                  Subscribers-only
+                </Button>
+              {/if}
             {/if}
 
             <!-- boardDoc will always have a creatorUID because anonymous login -->

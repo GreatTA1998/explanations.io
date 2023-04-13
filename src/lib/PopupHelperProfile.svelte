@@ -65,7 +65,9 @@
 
     <!-- Video portfolio here -->
     <!-- on:video-rearrange={() => isRearrangeVideosPopupOpen = true} -->
-    <b style="font-size: 1.5rem; margin-left: 2px;">Profile videos</b>
+    <b style="font-size: 1.5rem; margin-left: 2px;">
+      Profile videos
+    </b>
 
     <br>
     <br>
@@ -73,7 +75,10 @@
     
     {#key incrementWhenGalleryRearranged}
       <PopupHelperProfileVideos
-        on:video-rearranged={() => incrementWhenGalleryRearranged += 1}
+        on:video-rearranged={() => {
+          incrementWhenGalleryRearranged += 
+          fetchProfileVideos()
+        }}
         galleryBoardIDs={shopVideosIDs}
         {classID}
         {classTutorsDocs}
@@ -119,12 +124,15 @@
   let totalViewMinutes = null
 
   onMount(async () => {
-    const temp = await shopifyFetch()
-    shopVideosDocs = temp
-    shopVideosIDs = shopVideosDocs.map((doc) => doc.id)
+    fetchProfileVideos()
     updatePreviewStatistics()
   })
 
+  async function fetchProfileVideos () {
+    const temp = await shopifyFetch()
+    shopVideosDocs = temp
+    shopVideosIDs = shopVideosDocs.map((doc) => doc.id)
+  }
 
   async function updatePreviewStatistics () {
     const db = getFirestore()

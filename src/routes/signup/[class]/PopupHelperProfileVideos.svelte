@@ -11,18 +11,21 @@
               <!-- <DoodleVideoCommentsSection
                 boardDoc={boardDoc}
               /> -->
-              <div style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px">
-                <div on:click={() => goto(`/embed/${classID}/${boardDoc.id}`)} 
+              <div on:click={() => goto(`/embed/${classID}/${boardDoc.id}`)}  
+                style="width: {computedBoardWidth}px; margin-top: 0px; margin-bottom: 0px; cursor: pointer"
+              >
+                <div 
                   class="my-truncated-text" 
                   class:purple-text={boardDoc.isPaid}
                   style="width: {computedBoardWidth}; font-weight: 600;"
                 >
                   {boardDoc.description}
                 </div>
+                <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
+                  Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
+                </div>
               </div>
-              <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
-                Minutes viewed: {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0}
-              </div>
+         
               <ReusableDoodleVideo 
                 showEditDeleteButtons={false}
                 {boardDoc}
@@ -43,14 +46,19 @@
     <div style="display: flex; justify-content: space-between;">
       {#if $user.uid === selectedTutorUID}
         {#if isEditProfileVideosPopupOpen}
+          <!-- we dispatch 'video-rearranged' to rerender the helper profile  -->
           <PopupEditProfileVideos 
-            on:popup-close={() => isEditProfileVideosPopupOpen = false}
+            helperDoc={selectedTutorDoc}
             {classID}
+            on:popup-close={() => {
+              isEditProfileVideosPopupOpen = false
+              dispatch('video-rearranged')
+            }}
           /> 
         {/if}
 
         <button on:click={() => isEditProfileVideosPopupOpen = true}>
-          Add profile videos
+          Add/remove profile videos
         </button>
 
         {#if isRearrangeVideosPopupOpen}

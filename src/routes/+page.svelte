@@ -45,7 +45,7 @@
 			<div class="header-flex">
 				<p class="header-title">
 					<!-- Rediscover that learning can be enjoyable if you understand it -->
-					Save a semester of suffering 
+					Understand things properly.
 				</p>
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
@@ -54,7 +54,7 @@
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Explore class servers
+							Join class servers
 						</Label>
 					</Button>
 				</div>
@@ -85,23 +85,30 @@
 			</div>
 		{/if}
 
-		{#if active.label === 'Students'}
-			<div class="webflow-section">
-				<div class="webflow-intro-type">
-					<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
-					<br><br> -->
-					You can think of this as Youtube/KhanAcademy for MIT classes. The economies-of-scale of videos means that helpers gets paid in proportion to their impact,
-					while each student only has to pay a low price.
-				</div>
-			</div>
+			{#if active.label === 'Students'}
+				<div class="webflow-section">
+					<div class="webflow-intro-type">
+						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
+						<br><br> -->
+						beavers.app is like Youtube for MIT classes. There are servers for each class where everyone can request <u>blackboard videos</u>
+						for things that are hard to explain in just words.  
 
-			<div style="text-align: center">
-				<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
-					<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-						Explore available classes
-					</Label>
-				</Button>
-			</div>
+						<br><br>
+						If everyone is too busy to help out, you can pay $10/month to subscribe to class helpers who are committed 
+						to support you through the hardest weeks. 
+					</div>
+				</div>
+
+				<div style="text-align: center">
+					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
+						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
+							Join class servers
+						</Label>
+					</Button>
+				</div>
+			{/if}
+
+			{#if active.label === 'Students deprecate for now'}
 
 			<!-- HOW IT WORKS SECTION-->
 			<div bind:clientWidth={w} class="webflow-section">
@@ -169,7 +176,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else}
+		{:else if active.label === 'helpers'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.

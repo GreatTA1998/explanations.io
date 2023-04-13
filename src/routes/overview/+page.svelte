@@ -35,7 +35,7 @@
       <tbody>
         {#each sortedYoutubeClasses as youtubeClass}
           <tr>
-            <th style="cursor: pointer;" on:click={() => goto(`${youtubeClass.id}/${youtubeClass.id}`)}>
+            <th style="cursor: pointer;" on:click={() => goto(`${youtubeClass.id}/request-video`)}>
               <div style="color: purple; text-decoration: underline; font-size: 2rem;">
                 {youtubeClass.name}
               </div>

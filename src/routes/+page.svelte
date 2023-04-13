@@ -50,7 +50,7 @@
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Ask previous TAs, students & classmates to explain difficult classes with easy-to-understand videos.
+						Ask previous TAs, students & classmates to explain things with <u>blackboard videos</u>
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">

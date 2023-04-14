@@ -35,6 +35,14 @@
       </HelperText>
     </Textfield>
 
+    {#if roomDoc.attachmentsDownloadURLs} 
+      {#each roomDoc.attachmentsDownloadURLs as attachmentURL, i}
+        <a href={attachmentURL} target="_blank">
+          {roomDoc.attachmentsNames[i]}
+        </a>
+      {/each}
+    {/if}
+
     <div style="margin-bottom: 14px;"></div>
 
 		{#each roomDoc.blackboards as boardID, i (boardID) }

@@ -152,6 +152,7 @@
                   canvasHeight={$maxAvailableHeight}
                   isPaid={!!boardDoc.isPaid}
                   creatorUID={boardDoc.creatorUID}
+                  {classID}
                   on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
                   on:subscribe-to-helper={() => { 
                     isSubscribePopupOpen = true

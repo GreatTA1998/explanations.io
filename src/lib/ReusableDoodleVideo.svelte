@@ -18,6 +18,7 @@
         backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
         isPaid={!!boardDoc.isPaid}
         creatorUID={boardDoc.creatorUID}
+        {classID}
         on:six-seconds-elapsed
       > 
         {#if showEditDeleteButtons}

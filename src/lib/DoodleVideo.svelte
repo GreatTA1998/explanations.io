@@ -29,7 +29,7 @@
     >
       play_circle
     </span>
-  {:else if isPaid && creatorUID === $user.uid}
+  {:else if isPaid && (($user.uid === creatorUID) || hasSubscribedToCreator)}
     <span on:click={startAudioPlayer} 
       class="material-icons overlay-center" 
       style="color: purple; background-color: white; border-radius: 50%;  
@@ -120,6 +120,7 @@
   
   export let isPaid = false
   export let creatorUID
+  export let classID
 
   let hasPlayedOnce = false
   let isPlaying = false
@@ -135,6 +136,7 @@
   let playbackSpeed = 2
   let updateViewMinutesTimeoutID
 
+  $: hasSubscribedToCreator = $user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)
   $: isLocked = isPaid && ($user.uid !== creatorUID)
 
   const dispatch = createEventDispatcher()

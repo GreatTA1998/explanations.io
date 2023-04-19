@@ -58,7 +58,7 @@
     {/if}
 
     <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
-      Directly ask {helperDoc.name} for new videos + access subscriber videos for $10/month
+      Subscribe for $10/month
     </ReusableButton> 
 
     <div style="margin-top: 36px;"></div>

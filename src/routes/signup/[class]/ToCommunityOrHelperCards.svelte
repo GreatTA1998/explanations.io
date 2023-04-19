@@ -29,78 +29,70 @@
 
     <br>
 
-    <div style="display: flex; font-family: sans-serif;">
-      <div class="tutor-business-card-1" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
+    <div style="display: flex; align-items: center; margin-top: 2%">
+      <b style="font-size: 1.2rem; font-family: sans-serif;">
+        Helpers
+      </b>
+      {#if !didUserAlreadySignUpAsTutor}
+        <Button on:click={() => isBecomeHelperPopupOpen = true} color="secondary" variant="raised" style="height: 40px; border-radius: 0px; margin-left: 20px;">
+          <Label style="text-transform: uppercase; padding-left: 12px; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; font-size: 0.8rem; font-weight: 600">
+            Sign up as helper
+          </Label>
+        </Button>
+      {/if}
+    </div>
+
+    {#if isBecomeHelperPopupOpen}
+      <PopupBecomeHelper
+        helperDoc={selectedTutorDoc}
+        {classID}
+        on:popup-close={() => isBecomeHelperPopupOpen = false}
+      />
+    {/if}
+
+    <div style="display: flex; font-family: sans-serif; margin-top: 1%;">
+      <div>
+        {#each classTutorsDocs as helper}
+          <div>
+            <!--   on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}} -->
+            <PresentationalBeaverPreview 
+              helperDoc={helper}
+              {classID}
+              style="margin-bottom: 8px;"
+            >
+            </PresentationalBeaverPreview>
+          </div>
+        {/each} 
+      </div>
+
+      <div class="tutor-business-card-1" style="margin-left: 2%" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
         <Card padded style="width: 400px; box-sizing: border-box">
           <div style="display: flex; align-items: center">
             <input type="checkbox" checked={isAskingCommunityOrHelper === 'community'} style="height: 25px; width: 25px; font-size: 5rem;"/>
 
             <b style="font-size: 1.2rem; margin-left: 8px;">
-              Ask community (free)
+              Free question
             </b>
           </div>
           <Content>
-            Anyone e.g. classmates, passers-by and helpers can answer your question
+            Anyone in the community can answer your question
           </Content>
         </Card>
       </div>
 
-      <div style="margin-left: 12px;" class="tutor-business-card-2" on:click={() => dispatch('helper-asking')} class:purple-border={isAskingCommunityOrHelper === 'helper'}>
-        <Card padded style="width: 800px; box-sizing: border-box; ">
+      <div style="margin-left: 2%;" class="tutor-business-card-2" on:click={() => dispatch('helper-asking')} class:purple-border={isAskingCommunityOrHelper === 'helper'}>
+        <Card padded style="width: 400px; box-sizing: border-box; ">
           <div style="display: flex; align-items: center">
             <input type="checkbox" checked={isAskingCommunityOrHelper === 'helper'} style="height: 25px; width: 25px; font-size: 5rem;"/>
             <b style="font-size: 1.2rem; margin-left: 8px;">
-              Ask your helper + community ($10/month)
+              Subscriber question
             </b>
           </div>
         
           <Content>
-            Paying a helper ensures you get reliable responses during the busiest times of the semester from someone you're familiar with
+            By subscribing to a video creator for $10/month, you get more reliable replies even during the busiest weeks
             <div style="margin-bottom: 12px;"></div>
             <!-- If highlighted, becomes purple -->
-
-            <div style="display: flex; align-items: center;">
-              <b style="font-size: 1.1rem;">Helpers</b>
-              {#if !didUserAlreadySignUpAsTutor}
-                <Button on:click={() => isBecomeHelperPopupOpen = true} color="secondary" variant="raised" style="height: 40px; border-radius: 0px; margin-left: 20px;">
-                  <Label style="text-transform: uppercase; padding-left: 12px; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; font-size: 0.8rem; font-weight: 600">
-                    Sign up as helper
-                  </Label>
-                </Button>
-              {/if}
-            </div>
-            <!-- <b style="font-size: 1.1rem;">Helpers</b> -->
-
-            <div style="margin-bottom: 16px;"></div>
-
-            <!-- Just list out the helpers here directly so user doesn't have to click so much -->
-            {#each classTutorsDocs as helper}
-              <div>
-                <!--   on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}} -->
-                <PresentationalBeaverPreview 
-                  helperDoc={helper}
-                  {classID}
-                  style="margin-bottom: 8px;"
-                >
-                </PresentationalBeaverPreview>
-              </div>
-            {/each} 
-
-            <!-- {#if !didUserAlreadySignUpAsTutor}
-              <Button on:click={() => isBecomeHelperPopupOpen = true} color="secondary" variant="raised" style="height: 60px; border-radius: 0px;">
-                <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-                  Sign up as helper
-                </Label>
-              </Button>
-            {/if} -->
-
-            {#if isBecomeHelperPopupOpen}
-              <PopupBecomeHelper
-                helperDoc={selectedTutorDoc}
-                {classID}
-                on:popup-close={() => isBecomeHelperPopupOpen = false}
-              />
-            {/if}
           </Content>
         </Card>
       </div>
@@ -404,7 +396,7 @@
 
   .tutor-business-card-2 {
     /* 400 + epsilon, otherwise it doesn't wrap around the <Card> properly */
-    max-width: 804px; 
+    max-width: 404px; 
     width: 100%;
     height: fit-content;
     

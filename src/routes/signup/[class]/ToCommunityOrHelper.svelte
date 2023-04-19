@@ -1,4 +1,4 @@
-<div class="webflow-container" style="width: 95%">
+<div class="webflow-container" style="width: 100%">
   {#if classDoc}
     <div style="display: flex; align-items: center">
       {#if $classDetailsDrawerWidth === 0}

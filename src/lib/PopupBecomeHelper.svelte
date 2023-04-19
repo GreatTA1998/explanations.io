@@ -32,7 +32,7 @@
         <br>
         <br>
         <div>
-          Recommendation: make your best videos free, and your weekly videos subscriber-only.
+          Recommendation: make your best videos free, and the rest subscriber-only.
           
           <br>
           <br>

@@ -50,7 +50,7 @@
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Ask previous TAs & students to explain things with <u>blackboard videos</u>
+						Ask previous TAs & students to explain hard things with <u>blackboard videos</u>
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -66,7 +66,7 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title">Teach what you love and earn money</p>	
+				<p class="header-title">Explain things you enjoy</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
 						What takes you 5 minutes to explain could save someone else's day
@@ -74,7 +74,7 @@
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Explore class servers
+							Create your channel
 						</Label>
 					</Button>
 				</div>
@@ -103,6 +103,26 @@
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
 							Join class servers
+						</Label>
+					</Button>
+				</div>
+			{/if}
+
+			{#if active.label === 'Helpers'}
+				<div class="webflow-section">
+					<div class="webflow-intro-type">
+						beavers.app makes it easy to explain things via blackboard videos - no camera is needed, just draw and talk, and your explanation uploads in <u>seconds</u>
+
+						<br><br>
+						Because videos are more expressive than text, you only need to create a small number of detailed explanations about the fundamentals of the subject, during <u>flexible times</u> of your week.
+
+					</div>
+				</div>
+
+				<div style="text-align: center">
+					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
+						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
+							Create your channel
 						</Label>
 					</Button>
 				</div>

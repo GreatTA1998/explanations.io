@@ -65,21 +65,6 @@
         {/each} 
       </div>
 
-      <div style="margin-left: 2%;" class="tutor-business-card-2" on:click={() => dispatch('helper-asking')} class:purple-border={isAskingCommunityOrHelper === 'helper'}>
-        <Card padded style="width: 400px; box-sizing: border-box; ">
-          <div style="display: flex; align-items: center">
-            <input type="checkbox" checked={isAskingCommunityOrHelper === 'helper'} style="height: 25px; width: 25px; font-size: 5rem;"/>
-            <b style="font-size: 1.2rem; margin-left: 8px;">
-              Subscriber question
-            </b>
-          </div>
-        
-          <Content>
-            By subscribing to a helper for $10/month, you get reliable replies even during the busiest weeks
-          </Content>
-        </Card>
-      </div>
-
       <div class="tutor-business-card-1" style="margin-left: 2%" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
         <Card padded style="width: 400px; box-sizing: border-box">
           <div style="display: flex; align-items: center">
@@ -92,6 +77,21 @@
           <Content>
             Your question will create a new room on the left navigation pane, where anyone
             in the server can answer your question
+          </Content>
+        </Card>
+      </div>
+
+      <div style="margin-left: 2%;" class="tutor-business-card-2" on:click={() => dispatch('helper-asking')} class:purple-border={isAskingCommunityOrHelper === 'helper'}>
+        <Card padded style="width: 400px; box-sizing: border-box; ">
+          <div style="display: flex; align-items: center">
+            <input type="checkbox" checked={isAskingCommunityOrHelper === 'helper'} style="height: 25px; width: 25px; font-size: 5rem;"/>
+            <b style="font-size: 1.2rem; margin-left: 8px;">
+              Subscriber question
+            </b>
+          </div>
+        
+          <Content>
+            By subscribing to a helper for $10/month, you get reliable replies even during the busiest weeks
           </Content>
         </Card>
       </div>

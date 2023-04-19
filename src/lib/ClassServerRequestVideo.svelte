@@ -78,7 +78,7 @@
 
   let questionTitleInput = 'Type in your question title here...' 
   let questionDescriptionInput = ''
-  let isAskingCommunityOrHelper = 'community'
+  $: isAskingCommunityOrHelper = ($user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)) ? 'helper' : 'community'
   let pdfOrImageAttachment = null
 
   async function submitQuestion () {
@@ -122,7 +122,7 @@
     for (const helper of classHelpers) {
       sendTextMessage({
         toWho: helper.phoneNumber,
-        content: `New question in ${classDoc.name}: ${questionTitleInput} https://beavers.app/${classID}/${newRoomDocID}`
+        content: `New question in ${classDoc.name}: ${questionTitleInput} https://beavers.app/${classID}/${newRoomDocID}. Email eltonlin@mit.edu UNSUB PLS to stop notifications`
       })
     }
   }

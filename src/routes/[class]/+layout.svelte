@@ -23,10 +23,10 @@
     <div class:orange-highlight={roomID === "request-video"}>
 
     <Item on:click={() => goto(`/${classID}/request-video`)}>
-      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">question_mark</span>
+      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">add</span>
       <div style="margin-right: 4px;"></div>
       <div>
-        Ask question
+        New question
       </div>
     </Item>
     </div>
@@ -41,7 +41,7 @@
 
 
     <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
-      All blackboard rooms
+      Blackboard rooms
     </div>
     
     <!-- <Item on:click={() => goto(`/${classID}/become-helper`)}>

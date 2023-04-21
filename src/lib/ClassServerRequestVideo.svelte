@@ -76,7 +76,7 @@
   // let { classID, roomID } = data
   // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 
-  let questionTitleInput = 'Type in your question title here...' 
+  let questionTitleInput = 'Edit question title here...' 
   let questionDescriptionInput = ''
   $: isAskingCommunityOrHelper = ($user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)) ? 'helper' : 'community'
   let pdfOrImageAttachment = null

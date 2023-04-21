@@ -18,14 +18,8 @@
       class="room-title" 
       style={`width: ${$maxAvailableWidth}px;`}
     >
-      <HelperText slot="helper">
-        {#if !lockQuestionIntervalID && !resolveQuestionIntervalID && !roomDoc.askerUID}
-          To ask the server a question, end your title with a question mark "?"
-        {:else if lockQuestionIntervalID}
-          Pinging server members in {lockQuestionCurrentTime}, cancel by backtracking the "?""
-        {:else if resolveQuestionIntervalID}
-          Resolving this question in {resolveQuestionCurrentTime}, cancel by re-adding ?
-        {:else if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
+      <HelperText slot="helper" persistent>
+        {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
           {roomDoc.askerName} asked on {displayDate(roomDoc.dateAsked)}
         {/if}
 

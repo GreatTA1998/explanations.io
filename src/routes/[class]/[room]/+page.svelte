@@ -73,8 +73,21 @@
                 >
                   {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0} upvotes, 
                   {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed,
-                  {boardDoc.numOfComments || 0} comments,
-                  
+                  {boardDoc.numOfComments || 0} comments
+                  {#if !isShowingComments}
+                    <Button on:click={listenToComments} >
+                      <Icon class="material-icons" style="margin-right: 0">
+                        expand_more
+                      </Icon>
+                    </Button>
+                  {:else}
+                    <Button on:click={hideComments}>
+                      <Icon class="material-icons" style="margin-right: 0">
+                        expand_less
+                      </Icon>
+                    </Button>
+                  {/if}
+
                   <RenderlessFetchHelperDoc 
                     {classID}
                     creatorUID={boardDoc.creatorUID}
@@ -94,19 +107,6 @@
               
                   </div>
                 </div>
-                {#if !isShowingComments}
-                  <Button on:click={listenToComments} >
-                    <Icon class="material-icons" style="margin-right: 0">
-                      expand_more
-                    </Icon>
-                  </Button>
-                {:else}
-                  <Button on:click={hideComments}>
-                    <Icon class="material-icons" style="margin-right: 0">
-                      expand_less
-                    </Icon>
-                  </Button>
-                {/if}
               </div>
 
               {#if isShowingComments}

@@ -1,5 +1,5 @@
 <div class="drawer-container">
-  <Drawer style="overflow-y: scroll; height: 100%; width: {$drawerWidth}px" class="mdc-elevation--z{5}">
+  <Drawer style="overflow-y: auto; height: 100%; width: {$drawerWidth}px" class="mdc-elevation--z{5}">
     <Content>
       <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;" class="mdc-elevation--z{4}">
         <div style="display: flex; align-items: center">

@@ -42,7 +42,7 @@
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       <Cell columnId="paidMonthlySubscriptions">
-        <Label>Paid monthly subscriptions</Label>
+        <Label>$10/month subscriptions</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
     </Row>

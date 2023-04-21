@@ -21,45 +21,19 @@
       Log out
     </button>
   {/if}
-
-  <div style="font-family: sans-serif; display: flex; justify-content: center">
-    <table style="margin-top: 4%">
-      <thead>
-        <tr>
-          <th>Class server</th>
-          <th># of questions</th>
-          <th># of helpers</th>
-          <th># of videos</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each sortedYoutubeClasses as youtubeClass}
-          <tr>
-            <th style="cursor: pointer;" on:click={() => goto(`${youtubeClass.id}/request-video`)}>
-              <div style="color: purple; text-decoration: underline; font-size: 2rem;">
-                {youtubeClass.name}
-              </div>
-            </th>
-            <td>
-              {youtubeClass.numOfQuestions}
-            </td>
-            <td>
-              {youtubeClass.numOfHelpers}
-            </td>
-            <td>
-              {youtubeClass.numOfVideos}
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
 </div>
 
+<div style="margin-bottom: 2%"></div>
+
+{#if sortedYoutubeClasses.length > 0} 
+  <ExperimentalTable initialItems={sortedYoutubeClasses}/>
+{/if}
+
 <script>
+  import ExperimentalTable from '$lib/ExperimentalTable.svelte'
   import { goto } from '$app/navigation';
   import { getFirestore, onSnapshot, collection, query, where } from 'firebase/firestore'
-  import { setFirestoreDoc, updateFirestoreDoc } from '../../helpers/crud.js'
+  import { setFirestoreDoc, updateFirestoreDoc, getFirestoreCollection } from '../../helpers/crud.js'
   import { getRandomID } from '../../helpers/utility.js'
   import ButtonPopupCreateNewClass from '$lib/ButtonPopupCreateNewClass.svelte'
   import { user } from '../../store.js'
@@ -72,6 +46,17 @@
   let sortedYoutubeClasses = [] 
 
   fetchYoutubeClasses().then(() => {
+    // then compute secondary statistics
+    for (const c of youtubeClasses) {
+      // update the statistics, it'll lag but it'll be correct
+      // for the next fetch
+      getFirestoreCollection(`classes/${c.id}/tutors`).then(classHelpers => {
+        updateFirestoreDoc(`classes/${c.id}`, {
+          minutesViewed: classHelpers.reduce((acc, helper) => acc + Number(helper.minutesViewed || 0), 0),
+          paidMonthlySubscriptions: classHelpers.reduce((acc, helper) => acc + Number(helper.numOfStudents || 0), 0),
+        })
+      })
+    }
     computeSortedYoutubeClasses()
   })
 
@@ -111,8 +96,8 @@
       else if (a.numOfHelpers !== b.numOfHelpers) {
         return b.numOfHelpers - a.numOfHelpers
       }
-      else if (a.numOfSubscriptions !== b.numOfSubscriptions) {
-        return b.numOfSubscriptions - a.numOfSubscriptions
+      else if (a.paidMonthlySubscriptions !== b.paidMonthlySubscriptions) {
+        return b.paidMonthlySubscriptions - a.paidMonthlySubscriptions
       }
       else {
         return 0

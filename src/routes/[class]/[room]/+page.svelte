@@ -241,83 +241,79 @@
                 {#if boardDoc.recordState === 'post_record'}
                   <LinearProgress indeterminate/>
                 {:else}
-                  <RenderlessStopwatch 
+                  <Blackboard 
+                    {strokesArray} 
+                    backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+                    recordState={boardDoc.recordState}
+                    {boardID}
+                    canvasWidth={$maxAvailableWidth}
+                    canvasHeight={$maxAvailableHeight}
+                    originalIndex={i}
+                    on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardID)}
+                    on:background-reset={() => resetBackgroundImage(boardID)}
+                    on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+                    on:board-wipe={deleteAllStrokesFromDb}
+                    on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
                     let:currentTime={currentTime} 
                     let:startStopwatch={startStopwatch} 
                     let:stopStopwatch={stopStopwatch}
                   >
-                    <Blackboard 
-                      {strokesArray} 
-                      {currentTime} 
-                      backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-                      recordState={boardDoc.recordState}
-                      {boardID}
-                      canvasWidth={$maxAvailableWidth}
-                      canvasHeight={$maxAvailableHeight}
-                      originalIndex={i}
-                      on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardID)}
-                      on:background-reset={() => resetBackgroundImage(boardID)}
-                      on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-                      on:board-wipe={deleteAllStrokesFromDb}
-                      on:board-delete={() => deleteBoard(boardID, deleteAllStrokesFromDb)}
+                    <RenderlessAudioRecorder
+                      let:startRecording={startRecording} 
+                      let:stopRecording={stopRecording}
+                      on:record-end={(e) => saveVideo(e.detail.audioBlob, strokesArray, boardID)}
                     >
-                      <RenderlessAudioRecorder
-                        let:startRecording={startRecording} 
-                        let:stopRecording={stopRecording}
-                        on:record-end={(e) => saveVideo(e.detail.audioBlob, strokesArray, boardID)}
-                      >
-                      <!-- 
-                        if an recording is active (rather than an interrupted session that isn't actually recording,
-                        currentTime will be incrementing 
-                      -->
-                      {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
-                        <span 
-                          on:click={() => callManyFuncs(
-                            startRecording, 
-                            startStopwatch,
-                            () => updateRecordState(boardID, 'mid_record'),
-                            () => updateRecorderBrowserTabID(boardID),
-                            () => willPreventPageLeave.set(true)
-                          )}
-                          style="
-                            font-size: 1.2rem; color: cyan; margin-left: 28px; margin-right: 26px; font-family: sans-serif; border: 1px solid cyan; 
-                            padding-top: 2px; 
-                            padding-bottom: 4px;
-                            padding-left: 10px;
-                            padding-right: 9px; 
-                            box-sizing: border-box;
-                            border-radius: 1px;
-                            cursor: pointer;"
-                        >
-                          record
-                        </span>
-                        <!-- color was `cyan`, icon was `album` -->
-      
-                      {:else if boardDoc.recordState === 'mid_record'}
-                        <span 
-                          on:click={() => callManyFuncs(
-                            stopRecording,
-                            stopStopwatch,
-                            () => updateRecordState(boardID, 'post_record'),
-                            () => willPreventPageLeave.set(false)
-                          )}
-                          class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
-                          class="material-icons" 
-                          style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
-                        >
-                          stop_circle
-                        </span>
-                      {/if}
-
+                    <!-- 
+                      if an recording is active (rather than an interrupted session that isn't actually recording,
+                      currentTime will be incrementing 
+                    -->
+                    {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
                       <span 
-                        on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} 
-                        class="material-icons" style="color: white; font-size: 2.2rem; margin-right: 8px"
+                        on:click={() => callManyFuncs(
+                          startRecording, 
+                          startStopwatch,
+                          () => updateRecordState(boardID, 'mid_record'),
+                          () => updateRecorderBrowserTabID(boardID),
+                          () => willPreventPageLeave.set(true)
+                        )}
+                        style="
+                          font-size: 1.2rem; color: cyan; margin-left: 28px; margin-right: 26px; font-family: sans-serif; border: 1px solid cyan; 
+                          padding-top: 2px; 
+                          padding-bottom: 4px;
+                          padding-left: 10px;
+                          padding-right: 9px; 
+                          box-sizing: border-box;
+                          border-radius: 1px;
+                          cursor: pointer;"
                       >
-                        fullscreen
+                        record
                       </span>
-                      </RenderlessAudioRecorder>
-                    </Blackboard>
-                  </RenderlessStopwatch>
+                      <!-- color was `cyan`, icon was `album` -->
+    
+                    {:else if boardDoc.recordState === 'mid_record'}
+                      <span 
+                        on:click={() => callManyFuncs(
+                          stopRecording,
+                          stopStopwatch,
+                          () => updateRecordState(boardID, 'post_record'),
+                          () => willPreventPageLeave.set(false)
+                        )}
+                        class:unclickable={$browserTabID !== boardDoc.recorderBrowserTabID}
+                        class="material-icons" 
+                        style="font-size: 2.5rem; color: cyan; margin-left: 22px; margin-right: 26px"
+                      >
+                        stop_circle
+                      </span>
+                    {/if}
+
+                    <span 
+                      on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} 
+                      class="material-icons" style="color: white; font-size: 2.2rem; margin-right: 8px"
+                    >
+                      fullscreen
+                    </span>
+                    </RenderlessAudioRecorder>
+                  </Blackboard>
                 {/if}
               </div>
             </RenderlessListenToStrokes>
@@ -379,7 +375,6 @@
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
-  import RenderlessStopwatch from '$lib/RenderlessStopwatch.svelte'
   import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'

@@ -23,10 +23,11 @@ export let dbPath
  * This is unsafe when multiple people draw while recording
  * think of a better solution after launch. 
  */
-let strokesArray // null means unfetched, [] means empty board
+let strokesArray = null // null means unfetched, [] means empty board
 let isFetchingStrokes = false // TODO: deprecate because `strokesArray` AF already covers it
 let unsubStrokesListener
-const strokesRef = collection(getFirestore(), `${dbPath}/strokes`)
+const db = getFirestore()
+const strokesRef = collection(db, `${dbPath}/strokes`)
 const strokesQuery = query(strokesRef, orderBy('timestamp'))
 
 onDestroy(() => {
@@ -37,74 +38,84 @@ onDestroy(() => {
 
 /**
  * NOTE: the snapshot listener is triggered TWICE whenever a new stroke is added. 
- * I'm guessing it's because I use `serverTimestamp` which changes value twice
+ * answer: it's because I use `serverTimestamp` which changes value twice
  */
 async function listenToStrokes () {
   isFetchingStrokes = true
 
-  unsubStrokesListener = onSnapshot(strokesQuery, async (snapshot) => {      
-    // CASE 1: wipe board operation
-    const removedDocs = snapshot.docChanges().filter(change => change.type === "removed"); 
-    if (removedDocs.length > 0) {
-      // trigger <Blackboard/> to wipe the canvas UI via resetting `strokesArray` 
-      strokesArray = []; 
-      /* Wait 1 tick, otherwise <Blackboard/> can't react to `strokesArray = []`,
-          because of Vue's reactivity caveat: "If the same watcher is triggered multiple times, it will be pushed into the queue only once."
-          More info here: https://vuejs.org/v2/guide/reactivity.html */
-      await tick()
-      /* If people added strokes while Firestore was still deleting documents,
-        then the blackboard should NOT end up being empty. */
+  unsubStrokesListener = onSnapshot(strokesQuery, async (snapshot) => {     
+    // latency compensation: if it's your own change, you don't want a delay 
+    // for your own data change, you want immediate effect.
+    const source = snapshot.metadata.hasPendingWrites ? 'Local' : 'Server'
+    if (source === 'Local') {
+      return
+    }
+    const m = snapshot.docs.length
+    if (!strokesArray) {
+      isFetchingStrokes = false
+      strokesArray = [] 
+    }
+    const n = strokesArray.length
 
-      if (snapshot.docs.length > 0) {
-        snapshot.docs.forEach(doc => {
-          strokesArray.push(
-            convertDocToStroke(doc)
-          );
-        });
+    if (m > n) {
+      // render each stroke, this takes O(m - n) time which is fine
+      for (let i = n; i < m; i++) {
+        const doc = snapshot.docs[i]
+        const stroke = convertDocToStroke(doc)
+        strokesArray.push(stroke)
       }
-    } 
-    // CASE 2: add stroke operation
-    else {
-      if (!strokesArray) {
-        isFetchingStrokes = false
-        strokesArray = []
-      }
-
-      // a: stroke added by the user himself/herself
-      if (snapshot.docs.length === strokesArray.length) {
-        // do nothing
-      } 
-      // b: stroke added by someone else 
-      else {
-        snapshot.docChanges().filter(change => change.type === "added").forEach(change => {
-          strokesArray = [...strokesArray, convertDocToStroke(change.doc)] // see reactivity caveat: https://svelte.dev/tutorial/updating-arrays-and-objects
-        });
-      }
+      strokesArray = strokesArray // this is more verbose, but faster than `strokesArray = [...strokesArray, stroke]`
+    }
+    else if (m === n) {
+      return 
+    }
+    else if (m < n) {
+      handleBoardWipeOperation(snapshot)
     }
   })
 }
 
+async function handleBoardWipeOperation (snapshot) {
+  // trigger <Blackboard/> to wipe the canvas UI via resetting `strokesArray` 
+  strokesArray = []; 
+  /* Wait 1 tick, otherwise <Blackboard/> can't react to `strokesArray = []`,
+      because of Vue's reactivity caveat: "If the same watcher is triggered multiple times, it will be pushed into the queue only once."
+      More info here: https://vuejs.org/v2/guide/reactivity.html */
+  await tick()
+
+  /* If people added strokes while Firestore was still deleting documents,
+    then the blackboard should NOT end up being empty. */
+  if (snapshot.docs.length > 0) {
+    snapshot.docs.forEach(doc => {
+      strokesArray.push(
+        convertDocToStroke(doc)
+      )
+    })
+  }
+}
+
 function handleNewlyDrawnStroke (stroke) {
   try {
+    stroke.timestamp = serverTimestamp()
     setDoc(
-      doc(getFirestore(), `${dbPath}/strokes/${stroke.id}`),
-      { timestamp: serverTimestamp(), ...stroke }
+      doc(db, `${dbPath}/strokes/${stroke.id}`),
+      stroke
     )
   } catch (error) {
     alert(error)
   }
 }
 
+// artifically add a 0.5 second grace period to the stroke so it doesn't appear too abruptly
 function convertDocToStroke (doc) {
   const strokeObject = {
     id: doc.id,
     ...doc.data(),
-  };
+  }
+
   // make the timestamp subjective
-  
   strokeObject.startTime = 0
   strokeObject.endTime = 0
-
 
   // strokeObject.startTime = blackboard.currentTime; 
   // strokeObject.endTime = blackboard.currentTime; 
@@ -112,21 +123,21 @@ function convertDocToStroke (doc) {
     // artifically add a 0.5 second period to the stroke
     strokeObject.endTime += 0.5;
   } 
-  return strokeObject;
+  return strokeObject
 }
 
 async function deleteAllStrokesFromDb () {
   return new Promise(async (resolve) => {
     const batchDeleteRequests = [];
-    let currentBatch = writeBatch(getFirestore())
+    let currentBatch = writeBatch(db)
     let currentBatchSize = 0;
     for (const stroke of strokesArray) {
       if (currentBatchSize >= 500) {
         batchDeleteRequests.push(currentBatch.commit());
-        currentBatch = writeBatch(getFirestore())
+        currentBatch = writeBatch(db)
         currentBatchSize = 0; 
       } 
-      const ref = doc(getFirestore(), `${dbPath}/strokes/${stroke.id}`)
+      const ref = doc(db, `${dbPath}/strokes/${stroke.id}`)
       currentBatch.delete(ref)
       currentBatchSize += 1;
     }

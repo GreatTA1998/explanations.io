@@ -8,7 +8,7 @@
     </span>
 
     <!-- uses `BlackboardToolbar`'s unnamed slot (the 2 other slots are named) -->
-    <slot>
+    <slot {currentTime} {startStopwatch} {stopStopwatch}>
 
     </slot>
 
@@ -95,7 +95,6 @@
   export let canvasHeight
 
   export let strokesArray
-  export let currentTime = 0 // assumes it's always rounded to nearest 0.1
   export let backgroundImageDownloadURL = ''
   export let recordState = ''
 
@@ -123,9 +122,105 @@
   let debouncerTimeout
 
   let DropdownMenu
-  let FileUploadButton 
+  let FileUploadButton  
+
+  // STOPWATCH SECTION
+  let currentTime = 0 // assumes it's always rounded to nearest 0.1
+  const tickSize = 100 // milliseconds
+  let startTimestamp = null // number of milliseconds since 1970 00:00:00 UTC
+  let etaOfNextTick = null // would use an Optional in 6.031, `0` doesn't make sense as it makes the AF inconsistent
+  let nextTimeoutID = ''
+
+  // rounds to nearest 0.1, see https://stackoverflow.com/a/12698296/7812829
+  function roundedToFixed(input, digits) {
+    var rounded = Math.pow(10, digits);
+    return (Math.round(input * rounded) / rounded).toFixed(digits);
+  }
+
+  // Timer that doesn't slowly drift late and get out of sync with visuals
+  // @see based on https://stackoverflow.com/a/29972322/7812829
+  // how the self-adjusting timer works 
+  //    - setInterval is at best, on time, but usually, late
+  //    - yes, the self-adjusting tick function will always increase time by 1 (even if 1.6 seconds has passed because it's again, late)
+  //    - ...but the 1 vs 1.6 error will be compensated next tick, because tick() will call itself after 0.4 seconds (it but it's constantly catching up) to achieve 2 vs 2
+  //    - if the tick function is super late i.e. 3 seconds passed by, it'll just call itself with setTimeout(0) 2 more times immediately
+  //    - therefore the maximum error is the infimum of the tick size. Get the tick size to be 0.1 second so the maximum error is <0.1
+  function startStopwatch () {
+    startTimestamp = Date.now()
+    etaOfNextTick = startTimestamp + tickSize
+    nextTimeoutID = setTimeout(
+      step, 
+      tickSize
+    )
+  }
+
+  function stopStopwatch () {
+    startTimestamp = null 
+    etaOfNextTick = null
+    currentTime = 0
+    clearTimeout(nextTimeoutID)
+    nextTimeoutID = ''
+  }
+
+  function step () {
+    const delay = Date.now() - etaOfNextTick; // how late was the setTimeout 
+    if (delay > tickSize) {
+      console.log('setTimeout is lagging greatly')
+      // something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile "catch up" run
+    }
+    etaOfNextTick += tickSize
+
+    const millisecondsInSecond = 1000
+    const nearestDecimalPoint = 1
+    currentTime = roundedToFixed(
+      (etaOfNextTick - startTimestamp) / millisecondsInSecond,
+      nearestDecimalPoint
+    )
+
+    nextTimeoutID = setTimeout(
+      step, 
+      Math.max(0, tickSize - delay)
+    )
+  }
+  // END OF STOPWATCH RELATED CODE
+
+
+  // REACTIVE STATEMENTS HERE
+  
+  // note, it DOES make a difference to separate this into a separate function,
+  // so when variables like `currentTime` gets updated during a recording session,
+  // this reactive statement does not execute 10 times per second (which is insane)
+
+  // A ‘direct dependency’ is a variable that is referenced inside the reactive declaration itself. References to variables inside functions that a reactive declaration calls are not considered dependencies.
+  // https://sveltesociety.dev/recipes/svelte-language-fundamentals/reactivity
+  $: if (strokesArray) {
+    updateUI()
+  }
+  
+  // resize on initialization
+  $: if (ctx) {
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+    bgCanvas.width = canvasWidth
+    bgCanvas.height = canvasHeight
+    if (strokesArray) {
+      for (const stroke of strokesArray) {
+        drawStroke(stroke, null, ctx, canvas, canvasWidth)
+      }
+    }
+  }
+
+  // detect backgroundImageDownloadURL
+  $: if (bgCtx) {
+      bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
+      renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+  }
+
+  $: normalizedLineWidth = $currentTool.lineWidth * (canvasWidth / $assumedCanvasWidth)
+
 
   onMount(() => {
+    console.log('blackboard mounted')
     ctx = canvas.getContext('2d')
     bgCtx = bgCanvas.getContext('2d')
 
@@ -180,26 +275,6 @@
     dispatch('board-delete')
   }
 
-  // resize on initialization
-  $: if (ctx) {
-    canvas.width = canvasWidth
-    canvas.height = canvasHeight
-    bgCanvas.width = canvasWidth
-    bgCanvas.height = canvasHeight
-    if (strokesArray) {
-      for (const stroke of strokesArray) {
-        drawStroke(stroke, null, ctx, canvas, canvasWidth)
-      }
-    }
-  }
-
-  // detect backgroundImageDownloadURL
-  $: if (bgCtx) {
-      bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
-      renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
-  }
-
-  $: normalizedLineWidth = $currentTool.lineWidth * (canvasWidth / $assumedCanvasWidth)
 
   /**
    * Reactive statement that triggers each time `strokesArray` changes
@@ -210,9 +285,14 @@
    * 
    * CRITICAL ASSUMPTION: strokesArray can be pushed singularly and deleted in batch, but can never be modified in place. 
    */
-  $: if (ctx && strokesArray) {
+  function updateUI () {
+    if (!strokesArray || !ctx) {
+      return
+    }
+
     let m = localStrokesArray.length
     let n = strokesArray.length
+
     // NOTE: this does not trigger!
     if (m === n) { 
       // do nothing: this blackboard updated its parent, and the change propagated back to itself
@@ -248,35 +328,37 @@
       }
     }
     else { 
-      function wipeThenDraw () {
-        // reset component
-        wipeUI() 
-        localStrokesArray = [];
-        prevPoint = { 
-          x: -1, 
-          y: -1 
-        };
-
-        // draw to current progress
-        for (const stroke of strokesArray) {
-          drawStroke(stroke, null, ctx, canvas, canvasWidth)
-        }
-      }
-      // [WHY USE DEBOUNCE]: if number of strokes > 500, then deletion happens in multiple batches that can 
-      // resolve very close to each other, and the resizeBlackboard()
-      // which draws hundreds of strokes instantly overfloods the event loop 
-      // and causes strange remnant strokes to linger on the board
-      function debouncedWipeThenDraw () {
-        console.log("debounced board reset");
-        if (debouncerTimeout) {
-          clearTimeout(debouncerTimeout)
-        }
-        debouncerTimeout = setTimeout(
-          wipeThenDraw, 
-          1000
-        )
-      }
       debouncedWipeThenDraw()
+    }
+  }
+
+  // [WHY USE DEBOUNCE]: if number of strokes > 500, then deletion happens in multiple batches that can 
+  // resolve very close to each other, and the resizeBlackboard()
+  // which draws hundreds of strokes instantly overfloods the event loop 
+  // and causes strange remnant strokes to linger on the board
+  function debouncedWipeThenDraw () {
+    console.log("debounced board reset");
+    if (debouncerTimeout) {
+      clearTimeout(debouncerTimeout)
+    }
+    debouncerTimeout = setTimeout(
+      wipeThenDraw, 
+      1000
+    )
+  }
+
+  function wipeThenDraw () {
+    // reset component
+    wipeUI() 
+    localStrokesArray = [];
+    prevPoint = { 
+      x: -1, 
+      y: -1 
+    };
+
+    // draw to current progress
+    for (const stroke of strokesArray) {
+      drawStroke(stroke, null, ctx, canvas, canvasWidth)
     }
   }
 

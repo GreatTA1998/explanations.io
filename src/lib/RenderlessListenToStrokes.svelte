@@ -50,7 +50,7 @@ async function listenToStrokes () {
     if (source === 'Local') {
       return
     }
-    const m = snapshot.docs.length
+    const m = snapshot.size // much faster than snapshot.docs.length
     if (!strokesArray) {
       isFetchingStrokes = false
       strokesArray = [] 

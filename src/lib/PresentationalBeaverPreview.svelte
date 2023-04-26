@@ -8,16 +8,18 @@
 
 <div style={$$props.style}>
   <div on:click={() => isPopupOpen = true} 
-    style="display: flex; align-items: center; background-color: hsl(0,0%,0%, 0.80); cursor: pointer; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;"
+    style="display: flex; align-items: center; background-color: purple; cursor: pointer; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;
+      border-radius: 4px;
+    "
     class="paper-shadow"
   >
     <span class="material-icons" style="font-size: 2rem; margin-left: 4px; margin-right: 4px; color: white;">
       engineering
     </span>
 
-    <div style="font-family: sans-serif;">
+    <div>
       <div>
-        <a>
+        <a style="color: white">
         {helperDoc.name}
         </a>
       </div>

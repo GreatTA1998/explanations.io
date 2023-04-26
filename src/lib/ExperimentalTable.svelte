@@ -93,8 +93,6 @@ type MITClass = {
 
   let items: MITClass[] = initialItems
 
-  console.log("items =", items)
-
   let sort: keyof MITClass = 'id';
   let sortDirection: Lowercase<keyof typeof SortValue> = 'ascending';
  

@@ -1,11 +1,3 @@
-<!-- {#if isSubscribePopupOpen}
-  <PopupConfirmSubscription
-    selectedTutorDoc={creatorDoc}
-    on:popup-close={() => isSubscribePopupOpen = false}
-    on:confirm-clicked={() => handleConfirmSubscription(creatorDoc)}
-  />
-{/if} -->
-
 {#if roomID === 'request-video'}
   <ClassServerRequestVideo {classID}/>
 {:else}
@@ -52,86 +44,6 @@
           </div>
 
           {#if boardDoc.audioDownloadURL }
-            <RenderlessFetchComments 
-              dbPath={boardsDbPath + boardID} 
-              {boardDoc}
-              {roomDoc}
-              {classID}
-              {roomID}
-              let:listenToComments={listenToComments} 
-              let:allComments={allComments}
-              let:newComment={newComment}
-              let:bindLocalValue={bindLocalValue}
-              let:submitNewComment={submitNewComment}
-              let:isShowingComments={isShowingComments}
-              let:hideComments={hideComments}
-              let:deleteComment={deleteComment}
-            >  
-              <div style="display: flex; align-items: center">
-                <div 
-                  style="display: flex; width: 100%; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 4px; margin-bottom: 4px; align-items: center;"
-                >
-                  {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0} upvotes, 
-                  {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed,
-                  {boardDoc.numOfComments || 0} comments
-                  {#if !isShowingComments}
-                    <Button on:click={listenToComments} >
-                      <Icon class="material-icons" style="margin-right: 0">
-                        expand_more
-                      </Icon>
-                    </Button>
-                  {:else}
-                    <Button on:click={hideComments}>
-                      <Icon class="material-icons" style="margin-right: 0">
-                        expand_less
-                      </Icon>
-                    </Button>
-                  {/if}
-
-                  <RenderlessFetchHelperDoc 
-                    {classID}
-                    creatorUID={boardDoc.creatorUID}
-                    let:helperDoc={helperDoc}
-                  >
-                    {#if helperDoc}
-                      <PresentationalBeaverPreview style="margin-left: 12px;"
-                        {helperDoc}
-                        {classID}
-                      />
-                    {:else}
-                      by {boardDoc.creatorName}
-                    {/if}
-                  </RenderlessFetchHelperDoc>
-                 
-                  <div style="margin-left: 12px;">
-              
-                  </div>
-                </div>
-              </div>
-
-              {#if isShowingComments}
-                <div style="width: {$maxAvailableWidth - 20}px; margin-left: 20px;">
-                  <DoodleVideoComments 
-                    {allComments}
-                    on:comment-delete={(e) => deleteComment(e.detail)}
-                  />
-                  
-                  <div style="margin-bottom: 4px;"></div>
-
-                  <TextAreaAutoResizing
-                    value={newComment} 
-                    on:input={(e) => bindLocalValue(e.detail)}
-                    placeholder="New comment..."
-                  />
-
-                  <Button on:click={submitNewComment}>
-                    SUBMIT
-                  </Button>
-                </div>
-                <div style="margin-bottom: 10px;"></div>
-              {/if}
-            </RenderlessFetchComments>
-
             <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
@@ -158,18 +70,6 @@
                       fullscreen
                     </span>
                   </Button>
-
-                  {#if $user.uid}
-                    <Button
-                      on:click={eureka(boardDoc)}
-                      style="
-                      background-color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'rgb(90 90 90 / 100%)') : 'rgb(90 90 90 / 100%)'};
-                      color: white;
-                      margin-left: 8px;"
-                    >
-                      Upvote
-                    </Button>
-                  {/if}
                   
                   <div style="
                     margin-left: auto;
@@ -230,6 +130,118 @@
                 </DoodleVideo>
               </div>
             </RenderlessFetchStrokes>
+
+            <!-- Comments section -->
+            <RenderlessFetchComments 
+              dbPath={boardsDbPath + boardID} 
+              {boardDoc}
+              {roomDoc}
+              {classID}
+              {roomID}
+              let:listenToComments={listenToComments} 
+              let:allComments={allComments}
+              let:newComment={newComment}
+              let:bindLocalValue={bindLocalValue}
+              let:submitNewComment={submitNewComment}
+              let:isShowingComments={isShowingComments}
+              let:hideComments={hideComments}
+              let:deleteComment={deleteComment}
+            >  
+              <div style="display: flex; align-items: center">
+                <div 
+                  style="display: flex; width: 100%; color: grey; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;"
+                >
+                  <RenderlessFetchHelperDoc 
+                    {classID}
+                    creatorUID={boardDoc.creatorUID}
+                    let:helperDoc={helperDoc}
+                  >
+                    {#if helperDoc}
+                      <PresentationalBeaverPreview style="margin-left: 4px;"
+                        {helperDoc}
+                        {classID}
+                      />
+                    {:else}
+                      {boardDoc.creatorName}
+                    {/if}
+                  </RenderlessFetchHelperDoc>
+
+                  <div style="margin-left: 24px;"></div>
+
+                  <div style="font-size: 1.1rem; color: black;">
+                    {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed
+                  </div>
+
+                  <div style="margin-left: 24px;"></div>
+
+                  <div style="font-size: 1.1rem; color: black;">
+                    {boardDoc.numOfComments || 0} comments
+                  </div>
+
+                  {#if !isShowingComments}
+                    <span on:click={listenToComments} class="material-icons" style="color: hsl(0,0%,0%, 0.80); font-size: 2rem;">
+                      expand_more
+                    </span>
+                  {:else}
+                    <span on:click={hideComments} class="material-icons" style="color: hsl(0,0%,0%, 0.80); font-size: 2rem;">
+                      expand_less
+                    </span>
+                  {/if}
+
+                  {#if $user.uid}
+                    <div style="
+                      margin-left: 24px; 
+                      display: flex; 
+                      justify-content: space-around; 
+                      align-items: center; 
+                      min-width: 100px; 
+                      border-radius: 12px; 
+                      border: 2px solid orange; 
+                      padding-left: 8px; 
+                      padding-right: 8px; 
+                      padding-top: 2px;
+                      padding-bottom: 4px;"
+                    >
+                      <span on:click={eureka(boardDoc)} class="material-icons" style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'hsl(0,0%,0%, 0.80)') : 'hsl(0,0%,0%, 0.80)'}; font-size: 2rem;">
+                        thumb_up
+                      </span>
+
+                      <div style="color: black; margin-left: 8px; font-weight: 500">
+                        {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
+                      </div>
+
+                      <div style="color: lightgrey; margin-left: 16px; margin-right:16px; font-size: 1.5rem;">|</div>
+
+                      <span on:click={() => alert('To be implemented')} class="material-icons" style="color: hsl(0,0%,0%, 0.80); font-size: 2rem;">
+                        thumb_down
+                      </span>
+                    </div>
+                  {/if}
+                </div>
+              </div>
+
+              {#if isShowingComments}
+                <div style="width: {$maxAvailableWidth - 20}px; margin-left: 20px;">
+                  <DoodleVideoComments 
+                    {allComments}
+                    on:comment-delete={(e) => deleteComment(e.detail)}
+                  />
+                  
+                  <div style="margin-bottom: 4px;"></div>
+
+                  <TextAreaAutoResizing
+                    value={newComment} 
+                    on:input={(e) => bindLocalValue(e.detail)}
+                    placeholder="New comment..."
+                  />
+
+                  <Button on:click={submitNewComment}>
+                    SUBMIT
+                  </Button>
+                </div>
+                <div style="margin-bottom: 10px;"></div>
+              {/if}
+            </RenderlessFetchComments>
           {:else}
             <RenderlessListenToStrokes dbPath={boardsDbPath + boardID}
               let:listenToStrokes={listenToStrokes} 
@@ -320,7 +332,7 @@
           {/if}
 
           <div
-            style="width: {$maxAvailableWidth}px; height: 40px; box-sizing: border-box"
+            style="width: {$maxAvailableWidth}px; height: 80px; box-sizing: border-box"
             on:dragover={(e) => dragover_handler(e)}
             on:drop={(e) => drop_handler(e, i+1)}
           >

@@ -125,6 +125,7 @@
         content: `New question in ${classDoc.name}: ${questionTitleInput} https://beavers.app/${classID}/${newRoomDocID}. Email eltonlin@mit.edu UNSUB PLS to stop notifications`
       })
     }
+    alert('Question submitted! Helpers will be notified')
   }
 
   async function uploadFileToStorage (pdfOrImageFile) {

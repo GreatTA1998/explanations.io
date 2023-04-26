@@ -169,7 +169,7 @@
                   <div style="margin-left: 24px;"></div>
 
                   <div style="font-size: 1.1rem; color: black;">
-                    {boardDoc.viewMinutes ? boardDoc.viewMinutes.toFixed(1) : 0} minutes viewed
+                    {boardDoc.viewMinutes ? roundedToFixed(boardDoc.viewMinutes, 0): 0} minutes viewed
                   </div>
 
                   <div style="margin-left: 24px;"></div>
@@ -377,7 +377,7 @@
   import Button, { Icon } from '@smui/button'
   import { goto } from '$app/navigation';
   import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
-  import { getRandomID, displayDate } from '../../../helpers/utility.js'
+  import { getRandomID, displayDate, roundedToFixed } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import Textfield from '@smui/textfield'

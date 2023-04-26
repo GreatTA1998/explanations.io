@@ -8,7 +8,7 @@
 
 <div style={$$props.style}>
   <div on:click={() => isPopupOpen = true} 
-    style="display: flex; align-items: center; background-color: purple; cursor: pointer; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;
+    style="display: flex; align-items: center; background-color: #5d0068; cursor: pointer; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;
       border-radius: 4px;
     "
     class="paper-shadow"

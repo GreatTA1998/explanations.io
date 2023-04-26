@@ -75,8 +75,8 @@
             </b>
           </div>
           <Content>
-            Your question will create a new room on the left navigation pane, where anyone
-            in the server can answer your question
+            Your question will appear on the leftside as a blackboard room, where anyone
+            can answer your question
           </Content>
         </Card>
       </div>
@@ -91,7 +91,7 @@
           </div>
         
           <Content>
-            By subscribing to a helper for $10/month, you get reliable replies even during the busiest weeks
+            Subscribing to a helper for $10/month <u>guarantees</u> you'll get help even if the community is busy
           </Content>
         </Card>
       </div>

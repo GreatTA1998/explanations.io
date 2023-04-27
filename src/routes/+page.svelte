@@ -45,12 +45,12 @@
 			<div class="header-flex">
 				<p class="header-title">
 					<!-- Rediscover that learning can be enjoyable if you understand it -->
-					Understand things deeply.
+					Thrive in your classes
 				</p>
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Ask former TAs, students & classmates to explain hard things with <u>blackboard videos</u>
+						Ask former TAs, students & classmates to demystify important things with <u>blackboard videos</u>
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -91,7 +91,7 @@
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 						<br><br> -->
 						beavers.app is like Youtube for MIT classes. There are servers for each class where everyone can request <u>blackboard videos</u>
-						for things that are hard to explain in just words.  
+						that properly & deeply resolves your question.
 
 						<br><br>
 						If everyone is too busy to help out, you can pay $10/month to subscribe to class helpers who are committed 

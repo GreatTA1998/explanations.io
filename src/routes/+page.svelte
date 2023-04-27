@@ -114,7 +114,8 @@
 						beavers.app makes it easy to explain things via blackboard videos - no camera is needed, just draw and talk, and your explanation uploads in <u>seconds</u>
 
 						<br><br>
-						Because videos are more expressive than text, you only need to create a small number of detailed explanations about the fundamentals of the subject, during <u>flexible times</u> of your week.
+						The video-format means that, instead of needing to reply quickly to shallow questions over text, you can take your time to deeply
+						explain a small number of things during <u>flexible times</u> of your week.
 
 					</div>
 				</div>

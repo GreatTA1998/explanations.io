@@ -69,7 +69,7 @@
 				<p class="header-title">Explain things you enjoy</p>	
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
-						What takes you 5 minutes to explain could save someone else's day
+						Teach what you love, supported by your subscribers
 					</div>
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
@@ -90,7 +90,7 @@
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 						<br><br> -->
-						beavers.app is like Youtube for MIT classes. There are servers for each class where everyone can request <u>blackboard videos</u>
+						<b style="color: navy">beavers.app</b> is like Youtube for MIT classes, where everyone can request blackboard videos
 						that properly & deeply resolves your question.
 
 						<br><br>
@@ -111,7 +111,7 @@
 			{#if active.label === 'Helpers'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						beavers.app makes it easy to explain things via blackboard videos - no camera is needed, just draw and talk, and your explanation uploads in <u>seconds</u>
+						<b style="color: navy">beavers.app</b> provides infrastructure so you can easily record blackboard explanations for free viewers and $10/month subscribers
 
 						<br><br>
 						The video-format means that, instead of needing to reply quickly to shallow questions over text, you can take your time to deeply

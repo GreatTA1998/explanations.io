@@ -39,17 +39,21 @@ onDestroy(() => {
 /**
  * NOTE: the snapshot listener is triggered TWICE whenever a new stroke is added. 
  * answer: it's because I use `serverTimestamp` which changes value twice
+ * 
+ *   // latency compensation: if it's your own change, you don't want a delay 
+    // for your own data change, you want immediate effect.
+ * 
+ * It's actually FASTER to trigger snapshot twice, which takes 10 milliseconds,
+ * then to do a if statement takes 100 milliseconds (10x as long)
+ *  const source = snapshot.metadata.hasPendingWrites ? 'Local' : 'Server'
+    if (source === 'Local') {
+      return
+    }
  */
 async function listenToStrokes () {
   isFetchingStrokes = true
 
   unsubStrokesListener = onSnapshot(strokesQuery, async (snapshot) => {     
-    // latency compensation: if it's your own change, you don't want a delay 
-    // for your own data change, you want immediate effect.
-    const source = snapshot.metadata.hasPendingWrites ? 'Local' : 'Server'
-    if (source === 'Local') {
-      return
-    }
     const m = snapshot.size // much faster than snapshot.docs.length
     if (!strokesArray) {
       isFetchingStrokes = false

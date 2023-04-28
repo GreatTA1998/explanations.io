@@ -189,9 +189,9 @@
   import { deleteObject, getStorage, ref } from 'firebase/storage'
   import { getFunctions, httpsCallable } from "firebase/functions"
 
-   export let data;
-   let { classID, roomID } = data;
-   $: ({ classID, roomID } = data); // so it stays in sync when `data` changes
+  export let data;
+  let { classID, roomID } = data;
+  $: ({ classID, roomID } = data); // so it stays in sync when `data` changes
 
   const classPath = `classes/${classID}/`
   let unsubFuncs = []
@@ -207,9 +207,7 @@
 
   // NOTE: resize logic is currently scattered everywhere within this file, refactor later
   // adjust dimensions whenever $drawerWidth changes
-  $: if ($drawerWidth) {
-    debouncedResizeHandler()
-  }
+  $: debouncedResizeHandler($drawerWidth)
 
   $: if (classID) {
     unsubDbListeners()
@@ -225,6 +223,28 @@
       mostRecentClassAndRoomID: `/${classID}/${roomID}`
     })
   }
+
+  onMount(async () => {
+    // AWAIT FIX: __layout mounts twice: see issue https://github.com/sveltejs/kit/issues/2130
+    if (browser) {
+      // if (window.matchMedia('screen and (max-width: 480px)').matches) {
+      //   drawerWidth.set(0)
+      // }
+
+      window.addEventListener('resize', debouncedResizeHandler)
+    } else {
+      console.log('no browser')
+    }
+    debouncedResizeHandler()
+  })
+
+  // the only possibility (I think) of this getting destroyed is logging out and returning to the home page
+  onDestroy(() => {
+    unsubDbListeners()
+    if (browser) {
+      window.removeEventListener('resize', debouncedResizeHandler)
+    }
+  })
 
   function dragover_handler (e) {
     e.preventDefault()
@@ -264,28 +284,6 @@
     nameOfClass = classDoc.data().name
     descriptionOfClass = classDoc.data().description
   }
-
-  onMount(async () => {
-    // AWAIT FIX: __layout mounts twice: see issue https://github.com/sveltejs/kit/issues/2130
-    if (browser) {
-      if (window.matchMedia('screen and (max-width: 480px)').matches) {
-        drawerWidth.set(0)
-      }
-
-      window.addEventListener('resize', debouncedResizeHandler)
-    } else {
-      console.log('no browser')
-    }
-    debouncedResizeHandler()
-  })
-
-  // the only possibility (I think) of this getting destroyed is logging out and returning to the home page
-  onDestroy(() => {
-    unsubDbListeners()
-    if (browser) {
-      window.removeEventListener('resize', debouncedResizeHandler)
-    }
-  })
 
   function handleRoomClick (roomID) { 
     // prevents in-app navigation

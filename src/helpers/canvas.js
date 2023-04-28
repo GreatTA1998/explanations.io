@@ -27,6 +27,7 @@ export function computeMaxAvailableDimensionsGeneral (availableWidth, availableH
   }
 }
 
+// will be deprecated since we have the general version above
 export function computeMaxAvailableDimensions () {
   if (!document) return // to-do: fix later
   const appElement = document.getElementById('main-content')

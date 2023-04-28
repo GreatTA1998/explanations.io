@@ -3,7 +3,12 @@
 {:else}
 
 {#if roomDoc}
-	<div use:portal={'main-content'} style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
+	<div use:portal={'main-content'} >
+    <LeftDrawerToggleButton/>
+    <div style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
+ 
+    <div></div>
+
     <Textfield 
       disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
       value={roomDoc.name} on:input={(e) => updateRoomName(e)}
@@ -65,11 +70,6 @@
                     creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
                   }}
                 > 
-                  <Button on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} style="background-color: rgb(90 90 90 / 100%); margin-left: 8px;">
-                    <span class="material-icons" style="color: white;">
-                      fullscreen
-                    </span>
-                  </Button>
                   
                   <div style="
                     margin-left: auto;
@@ -109,22 +109,6 @@
                           </Button>
                         {/if}
                       {/if}
-                      
-                      <!-- {#if !boardDoc.shopGalleryOrder}
-                        <Button 
-                          on:click={() => shopifyVideo(boardDoc)}
-                          style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
-                        >
-                          Shopify
-                        </Button>
-                      {:else}
-                        <Button
-                          on:click={() => unshopifyVideo(boardDoc)}
-                          style="margin-right: 6px; background-color: orange; color: white"
-                        >
-                          Unshopify
-                        </Button>
-                      {/if} -->
                     {/if}
                   </div>
                 </DoodleVideo>
@@ -318,12 +302,6 @@
                       </span>
                     {/if}
 
-                    <span 
-                      on:click={() => $drawerWidth === 1 ? drawerWidth.set(260) : drawerWidth.set(1)} 
-                      class="material-icons" style="color: white; font-size: 2.2rem; margin-right: 8px"
-                    >
-                      fullscreen
-                    </span>
                     </RenderlessAudioRecorder>
                   </Blackboard>
                 {/if}
@@ -360,12 +338,14 @@
       </RenderlessListenToBoard>      
 		{/each} 
   </div>
+</div>
 {/if}
 
 {/if}
 
 <script>
   import '$lib/_FourColor.scss'
+  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '../../../helpers/crud.js'
   import { sendTextMessage } from '../../../helpers/cloudFunctions.js'
@@ -376,7 +356,6 @@
   import { onMount, tick, onDestroy } from 'svelte'
   import Button, { Icon } from '@smui/button'
   import { goto } from '$app/navigation';
-  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
   import { getRandomID, displayDate, roundedToFixed } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
@@ -392,6 +371,7 @@
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
   import ClassServerRequestVideo from '$lib/ClassServerRequestVideo.svelte'
+  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -414,10 +394,6 @@
   onDestroy(() => {
     unsubRoomListener()
   })
-
-  // function handleConfirmSubscription () {
-  //   // TODO: implement
-  // }
   
   function makePaid (boardDoc) {
     updateFirestoreDoc(boardDoc.path, {

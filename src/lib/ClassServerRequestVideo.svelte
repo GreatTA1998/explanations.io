@@ -1,57 +1,64 @@
-<div use:portal={'main-content'} style="padding: 16px;">
+<div use:portal={'main-content'}>
+  <LeftDrawerToggleButton/>
 
-  {#if !$user.phoneNumber}
-    <div style="margin-left: 24px; display: flex; align-items: center; width: 95%; margin-left: auto; margin-right: auto;">
-      Log in first
-      <PhoneLogin/>
-    </div>
-  {/if}
-
-  <Textfield 
-    style="width: 100%;"
-    value={questionTitleInput} on:input={(e) => questionTitleInput = e.target.value}
-    class="room-title" 
-  >
-  </Textfield>
-    <!-- style={`width: ${$maxAvailableWidth}px;`} -->
-
-  <div style="margin-bottom: 12px;"></div>
-
-  <TextAreaAutoResizing
-    value={questionDescriptionInput} 
-    on:input={(e) => questionDescriptionInput = e.detail}
-    placeholder="Question description..."
-    numberOfInitialRowsIfEmpty={4}
-  />
-
-  <PsetPDFUploader
-    on:file-uploaded={(e) => { 
-      pdfOrImageAttachment = e.detail
-    }}
-  />
-  {#if pdfOrImageAttachment}
-    <div style="margin-top: 12px;">
-      <div style="font-size: 12px; color: gray;">
-        {pdfOrImageAttachment.name}
+  <div style="padding: 16px;">
+    {#if !$user.phoneNumber}
+      <div style="margin-left: 24px; display: flex; align-items: center; width: 95%; margin-left: auto; margin-right: auto;">
+        Log in first
+        <PhoneLogin/>
       </div>
-    </div>
-  {/if}
+    {/if}
 
-  <ToCommunityOrHelper {classID} {isAskingCommunityOrHelper} 
-    on:community-asking={() => isAskingCommunityOrHelper = 'community'}
-    on:helper-asking={() => isAskingCommunityOrHelper = 'helper'}>
-  </ToCommunityOrHelper>
+    <Textfield 
+      style="width: 100%;"
+      value={questionTitleInput} on:input={(e) => questionTitleInput = e.target.value}
+      class="room-title" 
+    >
+    </Textfield>
+      <!-- style={`width: ${$maxAvailableWidth}px;`} -->
 
-  <Button 
-    on:click={submitQuestion} 
-    variant="raised"
-    style="border-radius: 0px; margin-top: 12px; width: 100%; color: {isAskingCommunityOrHelper === 'community' ? 'orange' : '#5d0068'}; color: white;"
-  >
-    Submit question
-  </Button>
+    <div style="margin-bottom: 12px;"></div>
+
+    <TextAreaAutoResizing
+      value={questionDescriptionInput} 
+      on:input={(e) => questionDescriptionInput = e.detail}
+      placeholder="Question description..."
+      numberOfInitialRowsIfEmpty={4}
+    />
+
+    <PsetPDFUploader
+      on:file-uploaded={(e) => { 
+        pdfOrImageAttachment = e.detail
+      }}
+    />
+    {#if pdfOrImageAttachment}
+      <div style="margin-top: 12px;">
+        <div style="font-size: 12px; color: gray;">
+          {pdfOrImageAttachment.name}
+        </div>
+      </div>
+    {/if}
+
+    <ToCommunityOrHelper {classID} {isAskingCommunityOrHelper} 
+      on:community-asking={() => isAskingCommunityOrHelper = 'community'}
+      on:helper-asking={() => isAskingCommunityOrHelper = 'helper'}>
+    </ToCommunityOrHelper>
+
+    <Button 
+      on:click={submitQuestion} 
+      variant="raised"
+      style="border-radius: 0px; margin-top: 12px; width: 100%; color: {isAskingCommunityOrHelper === 'community' ? 'orange' : '#5d0068'}; 
+      color: white;
+      background-color: grey;
+      "
+    >
+      Submit question
+    </Button>
+  </div>
 </div>
 
 <script>
+  import { user } from '../store.js'
   import { portal } from '../helpers/actions.js'
   import { getFirestoreCollection, getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
   import ToCommunityOrHelper from '/src/routes/signup/[class]/ToCommunityOrHelper.svelte'
@@ -60,6 +67,7 @@
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
   import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
+  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import { createRoomDoc } from '../helpers/crud.js'
 
   import { arrayUnion, increment } from "firebase/firestore"
@@ -67,7 +75,6 @@
   import { getRandomID } from "../helpers/utility.js";
   import { createEventDispatcher } from 'svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
-  import { user } from '../store.js'
   import { sendTextMessage } from '../helpers/cloudFunctions.js';
 
   export let classID 

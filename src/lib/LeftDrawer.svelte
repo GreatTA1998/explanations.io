@@ -1,8 +1,8 @@
 <div class="drawer-container">
   <Drawer style="overflow-y: auto; height: 100%; width: {$drawerWidth}px" class="mdc-elevation--z{5}">
     <Content>
-      <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 8px;" class="mdc-elevation--z{4}">
-        <div style="display: flex; align-items: center">
+      <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 4px;" class="mdc-elevation--z{4}">
+        <div style="display: flex; align-items: center; width: 100%;">
           <img 
             on:click={handleLogoClick} 
             src="/logo.png" 
@@ -18,14 +18,16 @@
             />
           {/if}
 
-          <div>
+          <div style="flex-grow: 1">
             {#if $user.uid}
-              {#key nameOfClass}
-                <ClassDropdownMenu 
-                  {nameOfClass} 
-                  {descriptionOfClass}
-                />
-              {/key}
+              <div style="display: flex; align-items: center;">
+                {#key nameOfClass}
+                  <ClassDropdownMenu 
+                    {nameOfClass} 
+                    {descriptionOfClass}
+                  />
+                {/key}
+              </div>
             {:else}
               <div style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
                 {nameOfClass} 

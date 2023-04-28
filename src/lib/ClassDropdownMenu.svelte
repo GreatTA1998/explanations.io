@@ -3,10 +3,10 @@
   <!-- open menu -->
   <div on:click={() => goto('/overview')} style="display: flex; align-items: center; cursor: pointer;">
     <div>
-      <h1 class="my-truncated-text" style="width: 150px; font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
+      <h1 class="my-truncated-text" style="max-width: 148px; font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
         {nameOfClass} 
       </h1>
-      <div class="my-truncated-text" style="width: 150px; font-family: Roboto, sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: {6+2}px; margin-bottom: 12px">
+      <div class="my-truncated-text" style="max-width: 148px; font-family: Roboto, sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: {6+2}px; margin-bottom: 12px">
         {descriptionOfClass}
       </div>
     </div>

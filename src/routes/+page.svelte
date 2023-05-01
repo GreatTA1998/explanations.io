@@ -106,6 +106,37 @@
 						</Label>
 					</Button>
 				</div>
+
+				<div class="webflow-section">
+					Frequently Asked Questions
+
+					<ol>
+						<li>What situations is this good for?</li>
+						<div>
+							course 6: agonizing wait-times in Office hours because the student size grew by 100%, the staff size only 10%. 
+						</div>
+						<div>
+							ASEs: no Office Hours and Piazza available
+						</div>
+						<div>
+							Classes in general: as an affordable, flexible resource for getting proper help
+							used in conjunction with Office Hours and Piazza
+						</div>
+
+						<br>
+
+						<li>Why does it cost money?</li>
+
+						<div>
+							I'm the founder (6-14, '20), and tried for 4 years to work with departments. It's hard because admin doesn't believe 
+							it's necessary to introduce a new resource when there is already Office Hours. But I as a student know the actual experience on the day-to-day, and I've been throught the trenches. 
+
+							I'll still try to collaborate with the departments to bring it for free, but until then, the subscriptions directly supports the former TAs. 
+							In fact, this skin-in-the-game also brings benefits - people feel valued for helping others on this platform. The money isn't much, it's more the willingness to pay that says a lot. 
+						</div>
+					</ol>
+				</div>
+
 			{/if}
 
 			{#if active.label === 'Teach'}

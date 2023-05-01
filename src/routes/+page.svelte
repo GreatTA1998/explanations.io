@@ -41,16 +41,16 @@
 	</TabBar>
 	
 	<div class="webflow-container">
-		{#if active.label === 'Students'}
+		{#if active.label === 'Learn'}
 			<div class="header-flex">
 				<p class="header-title">
 					<!-- Rediscover that learning can be enjoyable if you understand it -->
-					Thrive in your classes
+					Understand things properly.
 				</p>
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Ask former TAs, students & classmates to demystify important things with <u>blackboard videos</u>
+						Ask former TAs, students & classmates to explain things using <u>blackboard videos</u>
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -85,7 +85,7 @@
 			</div>
 		{/if}
 
-			{#if active.label === 'Students'}
+			{#if active.label === 'Learn'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
@@ -94,8 +94,8 @@
 						that properly & deeply resolves your question.
 
 						<br><br>
-						If everyone is too busy to help out, you can pay $10/month to subscribe to class helpers who are committed 
-						to support you through the hardest weeks. 
+						If everyone is too busy to help out, you can pay $10/month to subscribe to teachers who are committed 
+						to help you through the hardest weeks. 
 					</div>
 				</div>
 
@@ -108,7 +108,7 @@
 				</div>
 			{/if}
 
-			{#if active.label === 'Helpers'}
+			{#if active.label === 'Teach'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						<b style="color: navy">beavers.app</b> provides infrastructure so you can easily record blackboard explanations for free viewers and $10/month subscribers
@@ -284,7 +284,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Students', icon: 'person'}, { label: 'Helpers', icon: 'draw'}]
+	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Teach', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {

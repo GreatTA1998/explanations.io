@@ -220,7 +220,6 @@
 
 
   onMount(() => {
-    console.log('blackboard mounted')
     ctx = canvas.getContext('2d')
     bgCtx = bgCanvas.getContext('2d')
 

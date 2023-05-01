@@ -166,6 +166,7 @@ export async function moveVideoToDifferentClassServer (videoPath) {
   const newRoomID = await createRoomDoc('classes/Mev5x66mSMEvNz3rijym/')
   console.log('newRoomID =', newRoomID)
   updateFirestoreDoc('classes/Mev5x66mSMEvNz3rijym/rooms/' + newRoomID, {
+    name: 'Untitled',
     blackboards: arrayUnion(boardDoc.id)
   })
 }

@@ -24,7 +24,7 @@
 						<Button
 							class="button-shaped-round"
 						>
-							<Label>codebase</Label>
+							<Label>github</Label>
 							<Icon class="material-icons">terminal</Icon>
 						</Button>
 					</a>

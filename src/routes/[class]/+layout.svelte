@@ -50,18 +50,23 @@
       Sign up as helper
     </Item> -->
 
+    <!-- (room.id + roomID) -->
     <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
     <!-- each root rooms -->
-    {#each rooms as room (room.id + roomID)}
-      <LeftDrawerRecursiveRoom 
-        {room} 
-        {firestoreIDToDailyID}
-        {toggleMic}
-        {activeSpeakerID}
-        {willJoinVoiceChat}
-        {roomID}
-        {classID}
-      />
+    {#each rooms as room, i}
+      {#if !room.parentRoomID}
+        <LeftDrawerRecursiveRoom 
+          {room} 
+          {firestoreIDToDailyID}
+          {toggleMic}
+          {activeSpeakerID}
+          {willJoinVoiceChat}
+          {roomID}
+          {classID}
+          orderWithinLevel={i}
+          roomsInThisLevel={rooms}
+        />
+      {/if}
     {/each}
   </LeftDrawer>
 </DailyVideoConference>
@@ -247,9 +252,11 @@
       getFirestore(),
       `classes/${classID}/rooms`
     )
+
     const roomsQuery = query(
       roomsRef, 
-      orderBy('date', 'desc')
+      orderBy('classServerOrder', 'asc')
+      // orderBy('date', 'desc')
     )
     unsubFuncs.push(
       onSnapshot(roomsQuery, async (snapshot) => { // onSnapshot does NOT return a promise
@@ -257,7 +264,7 @@
         snapshot.forEach(doc => { 
           docs.push({ 
             id: doc.id, 
-            ref: doc.ref.path, 
+            path: doc.ref.path, 
             ...doc.data()  
           })
         })

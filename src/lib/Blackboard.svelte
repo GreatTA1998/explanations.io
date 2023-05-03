@@ -89,7 +89,7 @@
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil } from '../store.js'
+  import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
 
   export let canvasWidth
   export let canvasHeight
@@ -494,6 +494,7 @@
   }
 
   function dragstart_handler (e, boardID, originalIndex) {
+    whatIsBeingDragged.set('board')
     e.dataTransfer.setData("text/plain", originalIndex + ':' + boardID)
     e.dataTransfer.dropEffect = 'move'
   }

@@ -1,10 +1,14 @@
 <div bind:this={ReorderDropzone} 
-  style="height: 6px;" 
-  on:dragenter={() => ReorderDropzone.style.background = 'rgb(87, 172, 247)' } 
+  style="height: 8px;" 
+  on:dragenter={() => {
+    if ($whatIsBeingDragged === 'room') {
+      ReorderDropzone.style.background = 'rgb(87, 172, 247)' 
+    }
+  }}
   on:dragleave={() => ReorderDropzone.style.background = '' }
-  class:reorder-dropzone={$whatIsBeingDragged === 'room'}
 
-  on:drop={() => console.log('parentID of this dropzone =', room.parentID)}
+  on:dragover={(e) => dragover_handler(e)}
+  on:drop={(e) => onReorderDrop(e)}
 >
 
 </div>
@@ -12,7 +16,6 @@
 <div bind:this={RoomElement}
   style="padding: 6px; cursor: pointer;"
   on:click={() => handleRoomClick(room.id)}
-  on:drop={(e) => handleSomethingDropped(e, room.id)}
   on:keydown={() => {}}
 
   on:dragenter={() => RoomElement.style.background = 'rgb(87, 172, 247)' }
@@ -22,6 +25,7 @@
     }
     RoomElement.style.background = '' 
   }}
+  on:drop={(e) => handleSomethingDropped(e, room.id)}
 
   draggable="true"
   on:dragstart={(e) => dragstart_handler(e, room.id)}
@@ -33,9 +37,7 @@
     <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
       {#if !isExpanded}
         <span on:click={() => {
-            if (!subpages) {
-              fetchSubpages()
-            }
+            fetchSubpages() // refetch every time, otherwise when you move a new child in, it will not update
             isExpanded = true
           }} 
           class="material-icons"
@@ -82,6 +84,7 @@
     <!-- ROOM PARTICIPANTS SECTION -->
     <!-- you can interpret this as `for each person in room.persons` -->
     {#if $roomToPeople[room.id]}
+      <div style="margin-bottom: 8px;"></div>
       {#each $roomToPeople[room.id] as person (person.browserTabID)}
         <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 8px;">
           <div 
@@ -153,17 +156,22 @@
 
 <!-- ROOM SUBPAGES SECTION -->
 {#if subpages && isExpanded}
-  {#each subpages as subpage}
-    <LeftDrawerRecursiveRoom 
-      room={subpage}
-      {firestoreIDToDailyID}
-      {toggleMic}
-      {activeSpeakerID}
-      {willJoinVoiceChat}
-      {roomID}
-      {classID}
-    />
-  {/each}
+  <div style="padding-left: {12 * (depth + 1)}px">
+    {#each subpages as subpage, i}
+      <LeftDrawerRecursiveRoom 
+        room={subpage}
+        {firestoreIDToDailyID}
+        {toggleMic}
+        {activeSpeakerID}
+        {willJoinVoiceChat}
+        {roomID}
+        {classID}
+        depth={depth + 1}
+        orderWithinLevel={i}
+        roomsInThisLevel={subpages}
+      />
+    {/each}
+  </div>
 {/if}
 
 <script>
@@ -180,7 +188,6 @@ import { getFunctions, httpsCallable } from "firebase/functions"
 import { getFirestoreQuery, updateFirestoreDoc} from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
 
-
 export let room
 export let willJoinVoiceChat
 export let firestoreIDToDailyID
@@ -188,6 +195,9 @@ export let toggleMic
 export let activeSpeakerID
 export let roomID
 export let classID
+export let depth = 0
+export let orderWithinLevel
+export let roomsInThisLevel
 
 let DropdownMenu
 let subpages = null
@@ -197,15 +207,54 @@ let isExpanded = false
 
 const classPath = `classes/${classID}/`
 
+$: n = roomsInThisLevel.length
+
+async function onReorderDrop (e) {
+  const data = e.dataTransfer.getData('text/plain')
+  const keyValuePairs = data.split(']')
+  const [key1, value1] = keyValuePairs[0].split(':')
+  const draggedRoomID = value1
+
+  const initialNumericalDifference = 3
+  let newVal 
+
+  // TO-DO: need the last drop zone to be manually added
+  const dropZoneIdx = orderWithinLevel
+  // copy `PopupRearrangeVideos` 
+  if (dropZoneIdx === 0) {
+    const topOfOrderDoc = roomsInThisLevel[0]
+    // halve the value so it never gets to 0 
+    newVal = (topOfOrderDoc.classServerOrder || 3) / 2
+  }
+  else if (dropZoneIdx === n) {
+    const bottomOfOrderDoc = roomsInThisLevel[n-1]
+    newVal = (bottomOfOrderDoc.classServerOrder || 3) + initialNumericalDifference
+    // update max class server order within this class
+    await updateFirestoreDoc(`classes/${classID}/`, {
+      maxClassServerOrder: newVal
+    })
+  }
+  else {
+    let topNeighborDoc = roomsInThisLevel[dropZoneIdx - 1]
+    let botNeighborDoc = roomsInThisLevel[dropZoneIdx]
+    const order1 = botNeighborDoc.classServerOrder || 3
+    const order2 = topNeighborDoc.classServerOrder || 3 + initialNumericalDifference
+    newVal = (order1 + order2) / 2
+  }
+
+  await updateFirestoreDoc(`classes/${classID}/rooms/${draggedRoomID}`, {
+    classServerOrder: newVal,
+    parentRoomID: roomsInThisLevel[0].parentRoomID || ''
+  })
+}
+
 // inspired by Notion subpages
 async function fetchSubpages () {
   const roomsPath = classPath + 'rooms'
-  console.log("roomsPath =", roomsPath)
   const roomsRef = collection(getFirestore(), roomsPath)
   // when you click a room, you want its childen, therefore `room.id`, NOT `roomID`
-  const q = query(roomsRef, where('parentRoomID', '==', room.id))
+  const q = query(roomsRef, where('parentRoomID', '==', room.id), orderBy('classServerOrder', 'asc'))
   const snapshot = await getFirestoreQuery(q)
-  console.log('snapshot =', snapshot)
   subpages = snapshot
 }
 
@@ -242,7 +291,6 @@ function handleSomethingDropped (e, droppedRoomID) {
   const keyValuePairs = data.split(']')
 
   const [key1, value1] = keyValuePairs[0].split(':')
-  console.log('key1, value1 =', key1, value1)
   if (key1 === 'roomID') {
     putRoomIntoRoom({ draggedRoomID: value1, droppedRoomID })
   }
@@ -262,6 +310,9 @@ function handleSomethingDropped (e, droppedRoomID) {
 
 // like subpages
 function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
+  if (draggedRoomID === droppedRoomID) {
+    return 
+  }
   updateFirestoreDoc(`classes/${classID}/rooms/${draggedRoomID}`, {
     parentRoomID: droppedRoomID
   })
@@ -363,10 +414,6 @@ async function deleteRoom (room) {
 </script>
 
 <style>
-  .reorder-dropzone:hover {
-    background: rgb(87, 172, 247)
-  }
-
   .selected {
     font-weight: 500;
     background-color:rgb(45, 44, 44);

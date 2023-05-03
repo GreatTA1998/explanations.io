@@ -1,20 +1,49 @@
-<div 
-  on:click={() => handleRoomClick(room.id)}
-  on:dragover={(e) => dragover_handler(e)}
-  on:drop={(e) => moveVideoIntoAnotherRoom(e, room.id)}
+<div bind:this={ReorderDropzone} 
+  style="height: 6px;" 
+  on:dragenter={() => ReorderDropzone.style.background = 'rgb(87, 172, 247)' } 
+  on:dragleave={() => ReorderDropzone.style.background = '' }
+  class:reorder-dropzone={$whatIsBeingDragged === 'room'}
+
+  on:drop={() => console.log('parentID of this dropzone =', room.parentID)}
+>
+
+</div>
+
+<div bind:this={RoomElement}
   style="padding: 6px; cursor: pointer;"
+  on:click={() => handleRoomClick(room.id)}
+  on:drop={(e) => handleSomethingDropped(e, room.id)}
   on:keydown={() => {}}
+
+  on:dragenter={() => RoomElement.style.background = 'rgb(87, 172, 247)' }
+  on:dragleave={(e) => { 
+    if (e.currentTarget.contains(e.relatedTarget)) {
+      return;
+    }
+    RoomElement.style.background = '' 
+  }}
+
+  draggable="true"
+  on:dragstart={(e) => dragstart_handler(e, room.id)}
+  on:dragover={(e) => dragover_handler(e)}
 >
   <div class:selected={room.id === roomID} style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
     <!-- ROOM NAME SECTION -->
     <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
     <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
-      {#if subpages === null}
-        <span on:click={fetchSubpages} class="material-icons">
+      {#if !isExpanded}
+        <span on:click={() => {
+            if (!subpages) {
+              fetchSubpages()
+            }
+            isExpanded = true
+          }} 
+          class="material-icons"
+        >
           expand_more
         </span>
       {:else}
-        <span class="material-icons">
+        <span on:click={() => isExpanded = false} class="material-icons">
           chevron_right
         </span>
       {/if}
@@ -123,7 +152,7 @@
 </div>
 
 <!-- ROOM SUBPAGES SECTION -->
-{#if subpages}
+{#if subpages && isExpanded}
   {#each subpages as subpage}
     <LeftDrawerRecursiveRoom 
       room={subpage}
@@ -148,7 +177,8 @@ import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, que
 import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth } from '/src/store.js'
 import { deleteObject, getStorage, ref } from 'firebase/storage'
 import { getFunctions, httpsCallable } from "firebase/functions"
-import { getFirestoreQuery } from '/src/helpers/crud.js'
+import { getFirestoreQuery, updateFirestoreDoc} from '/src/helpers/crud.js'
+import { whatIsBeingDragged } from '/src/store'
 
 
 export let room
@@ -161,6 +191,9 @@ export let classID
 
 let DropdownMenu
 let subpages = null
+let ReorderDropzone
+let RoomElement
+let isExpanded = false
 
 const classPath = `classes/${classID}/`
 
@@ -174,10 +207,6 @@ async function fetchSubpages () {
   const snapshot = await getFirestoreQuery(q)
   console.log('snapshot =', snapshot)
   subpages = snapshot
-}
-
-function dragover_handler (e) {
-  e.preventDefault()
 }
 
 function handleRoomClick (roomID) { 
@@ -199,8 +228,58 @@ function handleRoomClick (roomID) {
   }
 }
 
+function dragstart_handler (e, roomID) {
+  whatIsBeingDragged.set('room')
+  e.dataTransfer.setData("text/plain", `roomID:${roomID}`)
+}
+
+function dragover_handler (e) {
+  e.preventDefault()
+}
+
+function handleSomethingDropped (e, droppedRoomID) {
+  const data = e.dataTransfer.getData('text/plain')
+  const keyValuePairs = data.split(']')
+
+  const [key1, value1] = keyValuePairs[0].split(':')
+  console.log('key1, value1 =', key1, value1)
+  if (key1 === 'roomID') {
+    putRoomIntoRoom({ draggedRoomID: value1, droppedRoomID })
+  }
+  // if it's a blackboard, we expect first property to be `idx` adn second property to be `boardID`
+  else if (keyValuePairs[1].split(':')[0] === 'boardID') {
+    console.log('will handle like a dropped video')
+  }
+  
+  // figure out if it's blackboard or room
+  // if it's the identical room, skip
+}
+
+// TO-DO: 
+// we'll implement putting the room into this room, then implement the re-ordering. 
+// then we can do some refactoring of the drag-and-drop UI to move it everywhere across the app,
+// whether it's in reorder the blackboards, rooms, or the profile videos
+
+// like subpages
+function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
+  updateFirestoreDoc(`classes/${classID}/rooms/${draggedRoomID}`, {
+    parentRoomID: droppedRoomID
+  })
+  // TO-DO: initialize it to the last element
+}
+
+// REORDERING WILL INVOLVE THE ROOM ABOVE AND THE ROOM BELOW
+
+// used to be called (e, room.id)
+
 // user dragged video into another room
 async function moveVideoIntoAnotherRoom (e, droppedRoomID) {
+  
+  // handle drop
+
+
+  return
+
   const data = e.dataTransfer.getData('text/plain')
   const [i, boardID] = data.split(':')
 
@@ -284,6 +363,10 @@ async function deleteRoom (room) {
 </script>
 
 <style>
+  .reorder-dropzone:hover {
+    background: rgb(87, 172, 247)
+  }
+
   .selected {
     font-weight: 500;
     background-color:rgb(45, 44, 44);

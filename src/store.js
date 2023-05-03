@@ -43,3 +43,5 @@ export const drawerWidth = writable(260)
 export const classDetailsDrawerWidth = writable(drawerExpandedWidth)
 
 export const hasJoinedVoice = writable(false)
+
+export const whatIsBeingDragged = writable('')

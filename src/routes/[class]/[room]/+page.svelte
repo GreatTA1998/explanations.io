@@ -345,7 +345,7 @@
 
 <script>
   import '$lib/_FourColor.scss'
-  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs } from '../../../store.js'
+  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '../../../store.js'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '../../../helpers/crud.js'
   import { sendTextMessage } from '../../../helpers/cloudFunctions.js'
@@ -878,7 +878,12 @@
   async function drop_handler (e, j) {
     e.preventDefault()
     const data = e.dataTransfer.getData('text/plain')
+
+    // you also want a way to show the hover indicator
+    // now you need to get the boardID
     const [i, boardID] = data.split(':')
+
+
 
     // ACTUALLY UPDATE
     console.log('i, j =', i, j)
@@ -903,6 +908,7 @@
 
   // TO-DO: this is a copy-paste, do DRY 
   function dragstart_handler (e, boardID, originalIndex) {
+    whatIsBeingDragged.set('board')
     e.dataTransfer.setData("text/plain", originalIndex + ':' + boardID)
     e.dataTransfer.dropEffect = 'move'
   }

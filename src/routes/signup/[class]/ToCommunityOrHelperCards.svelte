@@ -31,12 +31,12 @@
 
     <div style="display: flex; align-items: center; margin-top: 2%">
       <b style="font-size: 1.2rem; font-family: sans-serif;">
-        Teachers
+        Explainers
       </b>
       {#if !didUserAlreadySignUpAsTutor}
         <Button on:click={() => isBecomeHelperPopupOpen = true} variant="raised" style="height: 40px; border-radius: 0px; margin-left: 20px; background-color: hsl(0,0%,0%, 0.80)">
           <Label style="text-transform: uppercase; padding-left: 12px; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; font-size: 0.8rem; font-weight: 600">
-            Sign up as helper
+            Sign up to teach
           </Label>
         </Button>
       {/if}

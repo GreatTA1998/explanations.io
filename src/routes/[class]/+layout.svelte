@@ -39,7 +39,7 @@
       Sign up to teach
     </Item> 
 
-    <div style="margin-bottom: 24px;"></div>
+    <div style="margin-bottom: 48px;"></div>
 
     <div style="display: flex; align-items: center;">
       <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">

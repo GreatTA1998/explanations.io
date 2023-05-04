@@ -20,7 +20,7 @@
 
           <div style="flex-grow: 1">
             {#if $user.uid}
-              <div style="display: flex; align-items: center;">
+              <div style="display: flex; align-items: center; width: 100%;">
                 {#key nameOfClass}
                   <ClassDropdownMenu 
                     {nameOfClass} 

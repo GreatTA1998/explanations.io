@@ -909,7 +909,7 @@
   // TO-DO: this is a copy-paste, do DRY 
   function dragstart_handler (e, boardID, originalIndex) {
     whatIsBeingDragged.set('board')
-    e.dataTransfer.setData("text/plain", originalIndex + ':' + boardID)
+    e.dataTransfer.setData("text/plain", `boardID:${boardID}`)
     e.dataTransfer.dropEffect = 'move'
   }
 

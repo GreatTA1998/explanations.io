@@ -34,7 +34,8 @@
     </div>
 
     <Item on:click={() => goto(`/${classID}/become-helper`)}>
-      <span class="material-icons">draw</span>
+      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px">draw</span>
+      <div style="margin-right: 4px;"></div>
       Sign up to teach
     </Item> 
 
@@ -44,11 +45,11 @@
       <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
         Blackboard rooms
       </div>
-      <button on:click={createNewRoom}>+</button>
+      <span on:click={createNewRoom} class="material-icons new-room-button">
+        add
+      </span>
     </div>
 
-    <!-- (room.id + roomID) -->
-    <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
     <!-- each root rooms -->
     {#each rootRooms as room, i (room.id)}
       {#if !room.parentRoomID}
@@ -66,6 +67,15 @@
         />
       {/if}
     {/each}
+
+    <div style="padding: 6px;">
+      <LeftDrawerRecursiveRoomReorderDropzone
+        orderWithinLevel={rootRooms.length}
+        parentRoomIDs={['']}
+        roomsInThisLevel={rootRooms}
+        {classID}
+      />
+    </div>
   </LeftDrawer>
 </DailyVideoConference>
 
@@ -83,9 +93,10 @@
   import { browser } from '$app/environment'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion} from 'firebase/firestore'
   import { computeMaxAvailableDimensions } from '../../helpers/canvas'
-  import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth } from '../../store.js'
+  import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth} from '../../store.js'
   import { createRoomDoc } from '../../helpers/crud.js'
   import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
+  import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
 
   export let data;
   let { classID, roomID } = data;
@@ -294,5 +305,17 @@
 <style>
   .orange-highlight {
     border: 2px solid orange; 
+  }
+
+  .new-room-button {
+    cursor: pointer;
+    color: grey; 
+    margin-left: auto; 
+    margin-right: 8px; 
+    font-size: 1.2rem;
+  }
+
+  .new-room-button:hover {
+    background-color: rgb(233, 233, 233);
   }
 </style>

@@ -3,48 +3,47 @@
 
   <div class="drawer-container">
     <Drawer style="overflow-y: auto; height: 100%; width: {$classDetailsDrawerWidth}px; box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%);">
-        <List>
-          <div style="display: flex; align-items: center; padding-left: 6px; border-bottom: 1px solid grey; height: 50px; padding-bottom: 7px;">
-            <img 
-              on:click={redirectToHomePage} 
-              src="../logo.png" width="52" height="46" 
-              style="margin-left: 0px;" alt="logo"
-            >
-            <Title style="font-size: 1.95rem; padding-left: 4px; padding-bottom: 1px;">
-              Explain
-            </Title>
+      <List>
+        <div style="display: flex; align-items: center; padding-left: 6px; border-bottom: 1px solid grey; height: 50px; padding-bottom: 7px;">
+          <img 
+            on:click={redirectToHomePage} 
+            src="../logo.png" width="52" height="46" 
+            style="margin-left: 0px;" alt="logo"
+          >
+          <Title style="font-size: 1.95rem; padding-left: 4px; padding-bottom: 1px;">
+            Explain
+          </Title>
 
-            <span on:click={toggleClassDetailsDrawerWidth} class="material-icons" style="font-size: 2.5rem; margin-right: 2px; margin-left: auto; transform: rotateY(180deg)" >
-              start
-            </span>
-          </div>
-          
+          <span on:click={toggleClassDetailsDrawerWidth} class="material-icons" style="font-size: 2.5rem; margin-right: 2px; margin-left: auto; transform: rotateY(180deg)" >
+            start
+          </span>
+        </div>
             
-            <div style="margin-bottom: 40px;">
+        <div style="margin-bottom: 40px;">
 
-            </div>
+        </div>
 
 
-            <div style="margin-top: 40px;">
+        <div style="margin-top: 40px;">
 
-            </div>
+        </div>
 
-            {#each youtubeClasses as youtubeClass}
-              <Item on:click={() => redirectToPage(youtubeClass.id)} style="font-size: 1.2rem;" selected={classID === youtubeClass.id}>
-                <div class:purple-text={youtubeClass.hasShopWithVideos}>{youtubeClass.name}</div>
-                {#if youtubeClass.numOfWatchers}
-                  <div style="font-size: 0.5rem; color: red">
-                    {youtubeClass.numOfWatchers} unresolved demand
-                  </div>
-                {/if}
-              </Item>
-            {/each}
+        {#each youtubeClasses as youtubeClass}
+          <Item on:click={() => redirectToPage(youtubeClass.id)} style="font-size: 1.2rem;" selected={classID === youtubeClass.id}>
+            <div class:purple-text={youtubeClass.hasShopWithVideos}>{youtubeClass.name}</div>
+            {#if youtubeClass.numOfWatchers}
+              <div style="font-size: 0.5rem; color: red">
+                {youtubeClass.numOfWatchers} unresolved demand
+              </div>
+            {/if}
+          </Item>
+        {/each}
 
-            <Item on:click={() => goto('/signup/new')}>
-              <span class="material-icons" style="margin-bottom: 2px;">add</span>
-                Request new class
-            </Item>
-        </List>
+        <Item on:click={() => goto('/signup/new')}>
+          <span class="material-icons" style="margin-bottom: 2px;">add</span>
+            Request new class
+        </Item>
+      </List>
     </Drawer>
 
     <!-- No idea why AppContent would be needed, nor the class name -->

@@ -1,41 +1,34 @@
-<div bind:this={ReorderDropzone} 
-  style="height: 8px; margin-left: 16px; margin-right: 6px;" 
-  on:dragenter={() => {
-    if (!isInvalidReorderDrop()) {
-      ReorderDropzone.style.background = 'rgb(87, 172, 247)' 
-    }
-  }}
-  on:dragleave={() => ReorderDropzone.style.background = '' }
+<div style="padding: 6px;">
+  <LeftDrawerRecursiveRoomReorderDropzone
+    {orderWithinLevel}
+    {parentRoomIDs}
+    {roomsInThisLevel}
+    {classID}
+  />
 
-  on:dragover={(e) => dragover_handler(e)}
-  on:drop={(e) => onReorderDrop(e)}
->
+  <div class:selected={room.id === roomID} 
+    bind:this={RoomElement}
+    on:click={() => handleRoomClick(room.id)}
+    on:keydown={() => {}}
 
-</div>
+    on:dragenter={() => { 
+      if (!isInvalidSubpageDrop()) {
+        RoomElement.style.background = 'rgb(87, 172, 247)' 
+      }
+    }}
+    on:dragleave={(e) => { 
+      if (e.currentTarget.contains(e.relatedTarget)) {
+        return;
+      }
+      RoomElement.style.background = '' 
+    }}
+    on:drop={(e) => handleSomethingDropped(e, room.id)}
 
-<div bind:this={RoomElement}
-  style="padding: 6px; cursor: pointer;"
-  on:click={() => handleRoomClick(room.id)}
-  on:keydown={() => {}}
-
-  on:dragenter={() => { 
-    if (!isInvalidSubpageDrop()) {
-      RoomElement.style.background = 'rgb(87, 172, 247)' 
-    }
-  }}
-  on:dragleave={(e) => { 
-    if (e.currentTarget.contains(e.relatedTarget)) {
-      return;
-    }
-    RoomElement.style.background = '' 
-  }}
-  on:drop={(e) => handleSomethingDropped(e, room.id)}
-
-  draggable="true"
-  on:dragstart={(e) => dragstart_handler(e, room.id)}
-  on:dragover={(e) => dragover_handler(e)}
->
-  <div class:selected={room.id === roomID} style="padding-bottom: 6px; opacity: 90%; border-radius: 5px;">
+    draggable="true"
+    on:dragstart={(e) => dragstart_handler(e, room.id)}
+    on:dragover={(e) => dragover_handler(e)}
+    style="padding-bottom: 6px; opacity: 90%; border-radius: 5px; cursor: pointer;"
+  >
     <!-- ROOM NAME SECTION -->
     <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
     <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
@@ -62,11 +55,11 @@
           class="my-truncated-text"
           style="margin-bottom: 2px;"
         >
-          {room.name}
+          {room.name} { room.numOfChildren ? `(${room.numOfChildren})` : '' }
         </div>
       {:else}
         <div style="margin-bottom: 2px;">
-          (no title)
+          untitled { room.numOfChildren ? `(${room.numOfChildren})` : '' }
         </div>
       {/if}
 
@@ -162,7 +155,7 @@
 
 <!-- ROOM SUBPAGES SECTION -->
 {#if subpages && isExpanded}
-  <div style="padding-left: {12 * (depth + 1)}px">
+  <div style="padding-left: {14 * (depth + 1)}px">
     {#each subpages as subpage, i (subpage.id)}
       <LeftDrawerRecursiveRoom 
         room={subpage}
@@ -178,21 +171,35 @@
         parentRoomIDs={[subpage.parentRoomID, ...parentRoomIDs]}
       />
     {/each}
+    <!-- `parentRoomIDs` is used to prevent a parent becoming a child of its children
+      For the last parentRoom it doesn't matter
+    -->
+    {#if subpages.length > 0}
+      <div style="padding: 6px;">
+        <LeftDrawerRecursiveRoomReorderDropzone
+          orderWithinLevel={subpages.length}
+          parentRoomIDs={[subpages[0].parentRoomID, ...parentRoomIDs]}
+          roomsInThisLevel={subpages}
+          {classID}
+        />
+      </div>
+    {/if}
   </div>
 {/if}
 
 <script>
 import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
+import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
 import List, { Item, Text } from '@smui/list'
 import Menu from '@smui/menu';
 import Switch from '@smui/switch'
 import Button from '@smui/button'
 import { goto } from '$app/navigation'
-import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where } from 'firebase/firestore'
+import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where, increment } from 'firebase/firestore'
 import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
 import { deleteObject, getStorage, ref } from 'firebase/storage'
 import { getFunctions, httpsCallable } from "firebase/functions"
-import { getFirestoreQuery, updateFirestoreDoc} from '/src/helpers/crud.js'
+import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
 import { onDestroy } from 'svelte'
 
@@ -201,77 +208,28 @@ export let willJoinVoiceChat
 export let firestoreIDToDailyID
 export let toggleMic
 export let activeSpeakerID
-export let roomID
-export let classID
 export let depth = 0
 export let orderWithinLevel
 export let roomsInThisLevel
 export let parentRoomIDs
 
+export let roomID
+export let classID
+
 let DropdownMenu
 let subpages = null
-let ReorderDropzone
 let RoomElement
 let isExpanded = false
 let unsubListener
 
 const classPath = `classes/${classID}/`
 
-$: n = roomsInThisLevel.length
-
 onDestroy(() => {
   if (unsubListener) unsubListener()
 })
 
-function isInvalidReorderDrop () {
-  return $whatIsBeingDragged !== 'room' || parentRoomIDs.includes($whatIsBeingDraggedID)
-}
-
 function isInvalidSubpageDrop () {
   return parentRoomIDs.includes($whatIsBeingDraggedID) || $whatIsBeingDraggedID === room.id 
-}
-
-
-async function onReorderDrop (e) {
-  if (isInvalidReorderDrop()) return
-  ReorderDropzone.style.background = ''
-
-  const data = e.dataTransfer.getData('text/plain')
-  const keyValuePairs = data.split(']')
-  const [key1, value1] = keyValuePairs[0].split(':')
-  const draggedRoomID = value1
-
-  const initialNumericalDifference = 3
-  let newVal 
-
-  // TO-DO: need the last drop zone to be manually added
-  const dropZoneIdx = orderWithinLevel
-  // copy `PopupRearrangeVideos` 
-  if (dropZoneIdx === 0) {
-    const topOfOrderDoc = roomsInThisLevel[0]
-    // halve the value so it never gets to 0 
-    newVal = (topOfOrderDoc.classServerOrder || 3) / 2
-  }
-  else if (dropZoneIdx === n) {
-    const bottomOfOrderDoc = roomsInThisLevel[n-1]
-    newVal = (bottomOfOrderDoc.classServerOrder || 3) + initialNumericalDifference
-    // update max class server order within this class
-    await updateFirestoreDoc(`classes/${classID}/`, {
-      maxClassServerOrder: newVal
-    })
-  }
-  else {
-    let topNeighborDoc = roomsInThisLevel[dropZoneIdx - 1]
-    let botNeighborDoc = roomsInThisLevel[dropZoneIdx]
-    const order1 = botNeighborDoc.classServerOrder || 3
-    const order2 = topNeighborDoc.classServerOrder || 3 + initialNumericalDifference
-    newVal = (order1 + order2) / 2
-  }
-
-  await updateFirestoreDoc(`classes/${classID}/rooms/${draggedRoomID}`, {
-    classServerOrder: newVal,
-    parentRoomID: roomsInThisLevel[0].parentRoomID || ''
-  })
 }
 
 // inspired by Notion subpages
@@ -336,8 +294,8 @@ function handleSomethingDropped (e, droppedRoomID) {
     putRoomIntoRoom({ draggedRoomID: value1, droppedRoomID })
   }
   // if it's a blackboard, we expect first property to be `idx` adn second property to be `boardID`
-  else if (keyValuePairs[1].split(':')[0] === 'boardID') {
-    console.log('will handle like a dropped video')
+  else if (key1 === 'boardID') {
+    moveVideoIntoAnotherRoom({ droppedRoomID, boardID: value1}) 
   }
   
   // figure out if it's blackboard or room
@@ -350,31 +308,38 @@ function handleSomethingDropped (e, droppedRoomID) {
 // whether it's in reorder the blackboards, rooms, or the profile videos
 
 // like subpages
-function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
+async function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
   if (draggedRoomID === droppedRoomID) {
     return 
   }
-  updateFirestoreDoc(`classes/${classID}/rooms/${draggedRoomID}`, {
+  const basePath = `classes/${classID}/rooms/`
+
+  // update metadata/statistics
+  // don't change sequence - you must update statistics before parentRoomID literally becomes
+  // the exact same room i.e. the droppedRoom
+  // it's silently correct when dragging to its own folder, 
+  // because +1 -1 = 0
+  const draggedRoomDoc = await getFirestoreDoc(basePath + draggedRoomID)
+  if (draggedRoomDoc.parentRoomID) {
+    updateFirestoreDoc(basePath + draggedRoomDoc.parentRoomID, {
+      numOfChildren: increment(-1)
+    })
+  }
+
+  updateFirestoreDoc(basePath + droppedRoomID, {
+    numOfChildren: increment(1)
+  })
+
+  // move the room
+  updateFirestoreDoc(basePath + draggedRoomID, {
     parentRoomID: droppedRoomID
   })
-  // TO-DO: initialize it to the last element
 }
 
 // REORDERING WILL INVOLVE THE ROOM ABOVE AND THE ROOM BELOW
-
 // used to be called (e, room.id)
-
 // user dragged video into another room
-async function moveVideoIntoAnotherRoom (e, droppedRoomID) {
-  
-  // handle drop
-
-
-  return
-
-  const data = e.dataTransfer.getData('text/plain')
-  const [i, boardID] = data.split(':')
-
+async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
   const db = getFirestore()
   const batch = writeBatch(db)
   const roomsPath = `classes/${classID}/rooms`

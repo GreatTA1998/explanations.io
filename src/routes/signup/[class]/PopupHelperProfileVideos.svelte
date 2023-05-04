@@ -61,7 +61,7 @@
           Add/remove profile videos
         </button>
 
-        {#if isMoveVideoPopupOpen}
+        {#if isRearrangeVideosPopupOpen}
           <PopupRearrangeProfileVideos
             {classID}
             {galleryBoardIDs}

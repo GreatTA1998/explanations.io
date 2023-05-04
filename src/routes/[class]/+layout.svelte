@@ -33,27 +33,24 @@
     </Item>
     </div>
 
-    <Item on:click={createNewRoom}>
-      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">draw</span>
-      <div style="margin-right: 4px;"></div>
-      Create video
-    </Item>
+    <Item on:click={() => goto(`/${classID}/become-helper`)}>
+      <span class="material-icons">draw</span>
+      Sign up to teach
+    </Item> 
 
     <div style="margin-bottom: 24px;"></div>
 
-    <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
-      Blackboard rooms
+    <div style="display: flex; align-items: center;">
+      <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
+        Blackboard rooms
+      </div>
+      <button on:click={createNewRoom}>+</button>
     </div>
-    
-    <!-- <Item on:click={() => goto(`/${classID}/become-helper`)}>
-      <span class="material-icons">add</span>
-      Sign up as helper
-    </Item> -->
 
     <!-- (room.id + roomID) -->
     <!-- `room.id + roomID` forces re-render when you switch rooms because sometimes the CSS styles don't update properly  -->
     <!-- each root rooms -->
-    {#each rooms as room, i}
+    {#each rootRooms as room, i (room.id)}
       {#if !room.parentRoomID}
         <LeftDrawerRecursiveRoom 
           {room} 
@@ -64,7 +61,8 @@
           {roomID}
           {classID}
           orderWithinLevel={i}
-          roomsInThisLevel={rooms}
+          roomsInThisLevel={rootRooms}
+          parentRoomIDs={['']}
         />
       {/if}
     {/each}
@@ -122,6 +120,8 @@
       mostRecentClassAndRoomID: `/${classID}/${roomID}`
     })
   }
+
+  $: rootRooms = rooms.filter(room => room.parentRoomID === '')
 
   onMount(async () => {
     // AWAIT FIX: __layout mounts twice: see issue https://github.com/sveltejs/kit/issues/2130
@@ -185,13 +185,6 @@
   }
 
   async function createNewRoom () {
-    for (const room of rooms) {
-      if (room.name === '') {
-        alert('There is already an available room for creating videos, so redirecting you there')
-        goto(`/${classID}/${room.id}`)
-        return
-      }
-    }
     const newRoomID = await createRoomDoc(classPath)
     goto(`/${classID}/${newRoomID}`)
   }

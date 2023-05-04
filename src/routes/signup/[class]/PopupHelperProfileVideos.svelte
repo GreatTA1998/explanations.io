@@ -84,7 +84,7 @@
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { createRoomDoc, createBoardDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
   import { computeMaxAvailableDimensionsGeneral } from '../../../helpers/canvas.js'
-  import { drawerExpandedWidth } from '../../../helpers/everythingElse.js'
+  import { DRAWER_EXPANDED_WIDTH } from '/src/helpers/CONSTANTS.js'
   import { debounce } from '../../../helpers/utility.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
@@ -118,7 +118,7 @@
   let isEditProfileVideosPopupOpen = false
   let isRearrangeVideosPopupOpen = false
 
-  $: if ($classDetailsDrawerWidth === 0 || $classDetailsDrawerWidth === drawerExpandedWidth) {
+  $: if ($classDetailsDrawerWidth === 0 || $classDetailsDrawerWidth === DRAWER_EXPANDED_WIDTH) {
     debouncedResizeHandler()
   }
 

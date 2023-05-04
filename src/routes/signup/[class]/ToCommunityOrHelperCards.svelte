@@ -31,7 +31,7 @@
 
     <div style="display: flex; align-items: center; margin-top: 2%">
       <b style="font-size: 1.2rem; font-family: sans-serif;">
-        Helpers
+        Teachers
       </b>
       {#if !didUserAlreadySignUpAsTutor}
         <Button on:click={() => isBecomeHelperPopupOpen = true} variant="raised" style="height: 40px; border-radius: 0px; margin-left: 20px; background-color: hsl(0,0%,0%, 0.80)">
@@ -91,7 +91,7 @@
           </div>
         
           <Content>
-            Subscribing to a helper for $10/month <u>guarantees</u> you'll get help even if the community is busy
+            Subscribing to a teacher for $10/month <u>guarantees</u> you'll get help even if the community is busy
           </Content>
         </Card>
       </div>

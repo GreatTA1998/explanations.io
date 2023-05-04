@@ -1,1 +1,1 @@
-export const drawerExpandedWidth = 260
+export const DRAWER_EXPANDED_WIDTH = 300

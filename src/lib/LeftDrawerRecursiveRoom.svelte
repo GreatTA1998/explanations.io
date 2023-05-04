@@ -1,7 +1,7 @@
 <div bind:this={ReorderDropzone} 
-  style="height: 8px;" 
+  style="height: 8px; margin-left: 16px; margin-right: 6px;" 
   on:dragenter={() => {
-    if ($whatIsBeingDragged === 'room') {
+    if (!isInvalidReorderDrop()) {
       ReorderDropzone.style.background = 'rgb(87, 172, 247)' 
     }
   }}
@@ -18,7 +18,11 @@
   on:click={() => handleRoomClick(room.id)}
   on:keydown={() => {}}
 
-  on:dragenter={() => RoomElement.style.background = 'rgb(87, 172, 247)' }
+  on:dragenter={() => { 
+    if (!isInvalidSubpageDrop()) {
+      RoomElement.style.background = 'rgb(87, 172, 247)' 
+    }
+  }}
   on:dragleave={(e) => { 
     if (e.currentTarget.contains(e.relatedTarget)) {
       return;
@@ -37,7 +41,9 @@
     <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
       {#if !isExpanded}
         <span on:click={() => {
-            fetchSubpages() // refetch every time, otherwise when you move a new child in, it will not update
+            if (!subpages) {
+              fetchSubpages()
+            }
             isExpanded = true
           }} 
           class="material-icons"
@@ -157,7 +163,7 @@
 <!-- ROOM SUBPAGES SECTION -->
 {#if subpages && isExpanded}
   <div style="padding-left: {12 * (depth + 1)}px">
-    {#each subpages as subpage, i}
+    {#each subpages as subpage, i (subpage.id)}
       <LeftDrawerRecursiveRoom 
         room={subpage}
         {firestoreIDToDailyID}
@@ -169,6 +175,7 @@
         depth={depth + 1}
         orderWithinLevel={i}
         roomsInThisLevel={subpages}
+        parentRoomIDs={[subpage.parentRoomID, ...parentRoomIDs]}
       />
     {/each}
   </div>
@@ -182,11 +189,12 @@ import Switch from '@smui/switch'
 import Button from '@smui/button'
 import { goto } from '$app/navigation'
 import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where } from 'firebase/firestore'
-import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth } from '/src/store.js'
+import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
 import { deleteObject, getStorage, ref } from 'firebase/storage'
 import { getFunctions, httpsCallable } from "firebase/functions"
 import { getFirestoreQuery, updateFirestoreDoc} from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
+import { onDestroy } from 'svelte'
 
 export let room
 export let willJoinVoiceChat
@@ -198,18 +206,36 @@ export let classID
 export let depth = 0
 export let orderWithinLevel
 export let roomsInThisLevel
+export let parentRoomIDs
 
 let DropdownMenu
 let subpages = null
 let ReorderDropzone
 let RoomElement
 let isExpanded = false
+let unsubListener
 
 const classPath = `classes/${classID}/`
 
 $: n = roomsInThisLevel.length
 
+onDestroy(() => {
+  if (unsubListener) unsubListener()
+})
+
+function isInvalidReorderDrop () {
+  return $whatIsBeingDragged !== 'room' || parentRoomIDs.includes($whatIsBeingDraggedID)
+}
+
+function isInvalidSubpageDrop () {
+  return parentRoomIDs.includes($whatIsBeingDraggedID) || $whatIsBeingDraggedID === room.id 
+}
+
+
 async function onReorderDrop (e) {
+  if (isInvalidReorderDrop()) return
+  ReorderDropzone.style.background = ''
+
   const data = e.dataTransfer.getData('text/plain')
   const keyValuePairs = data.split(']')
   const [key1, value1] = keyValuePairs[0].split(':')
@@ -252,10 +278,21 @@ async function onReorderDrop (e) {
 async function fetchSubpages () {
   const roomsPath = classPath + 'rooms'
   const roomsRef = collection(getFirestore(), roomsPath)
-  // when you click a room, you want its childen, therefore `room.id`, NOT `roomID`
+
+  // when you expand an arbitrary room, you want its childen, therefore `room.id`, NOT `roomID`
   const q = query(roomsRef, where('parentRoomID', '==', room.id), orderBy('classServerOrder', 'asc'))
-  const snapshot = await getFirestoreQuery(q)
-  subpages = snapshot
+  unsubListener = onSnapshot(q, (snapshot) => {
+    const temp = [] 
+    snapshot.docs.forEach(doc => {
+      temp.push({
+        id: doc.id,
+        path: doc.ref.path,
+        ...doc.data()
+      })
+    })
+
+    subpages = temp
+  })
 }
 
 function handleRoomClick (roomID) { 
@@ -279,6 +316,7 @@ function handleRoomClick (roomID) {
 
 function dragstart_handler (e, roomID) {
   whatIsBeingDragged.set('room')
+  whatIsBeingDraggedID.set(roomID)
   e.dataTransfer.setData("text/plain", `roomID:${roomID}`)
 }
 
@@ -287,6 +325,9 @@ function dragover_handler (e) {
 }
 
 function handleSomethingDropped (e, droppedRoomID) {
+  if (isInvalidSubpageDrop()) return
+  RoomElement.style.background = '' 
+
   const data = e.dataTransfer.getData('text/plain')
   const keyValuePairs = data.split(']')
 

@@ -61,8 +61,8 @@
           Add/remove profile videos
         </button>
 
-        {#if isRearrangeVideosPopupOpen}
-          <PopupRearrangeVideos 
+        {#if isMoveVideoPopupOpen}
+          <PopupRearrangeProfileVideos
             {classID}
             {galleryBoardIDs}
             {selectedTutorDoc}
@@ -92,7 +92,7 @@
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
   import DoodleVideoCommentsSection from '$lib/DoodleVideoCommentsSection.svelte'
   import PopupEditProfileVideos from '$lib/PopupEditProfileVideos.svelte'
-  import PopupRearrangeVideos from '$lib/PopupRearrangeVideos.svelte'
+  import PopupRearrangeProfileVideos from '$lib/PopupRearrangeProfileVideos.svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import { goto } from '$app/navigation'
 

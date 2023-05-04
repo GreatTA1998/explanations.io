@@ -36,6 +36,8 @@
 
     <div style="margin-bottom: 14px;"></div>
 
+    {#if roomDoc.blackboards}
+
 		{#each roomDoc.blackboards as boardID, i (boardID) }
 			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
         {#if boardDoc}
@@ -86,8 +88,18 @@
                         Delete
                       </Button>
 
+                      {#if isMoveVideoPopupOpen}
+                        <PopupMoveBlackboardVideo
+                          {classID}
+                          blackboardIDs={roomDoc.blackboards}
+                          {roomDoc}
+                          on:popup-close={() => isMoveVideoPopupOpen = false}
+                          on:video-rearranged={() => dispatch('video-rearranged')}
+                        />
+                      {/if}
+
                       <Button 
-                        draggable="true" on:dragstart={(e) => dragstart_handler(e, boardID, i)}
+                        on:click={() => isMoveVideoPopupOpen = true}
                         style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
                         Move
                       </Button>
@@ -316,27 +328,32 @@
           >
       
           </div>
-
-          {#if i === roomDoc.blackboards.length - 1}
-           <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
-            <div on:click={createNewBlackboard}
-                style="
-                  display: flex; 
-                  justify-content: center; 
-                  align-items: center;
-                  margin-top: 40px; 
-                  background-color: #2e3131; 
-                  font-family: Roboto, sans-serif; text-transform: uppercase;
-                  color: white;
-                  height: 35px;
-                  width: {$maxAvailableWidth}px;"
-                >
-              New blackboard
-            </div>
-          {/if}
         {/if}
       </RenderlessListenToBoard>      
 		{/each} 
+
+    {/if}
+
+    {#if roomDoc.blackboards}
+      <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
+     <div on:click={createNewBlackboard}
+        style="
+          display: flex; 
+          justify-content: center; 
+          align-items: center;
+          margin-top: 40px; 
+          background-color: #2e3131; 
+          font-family: Roboto, sans-serif; text-transform: uppercase;
+          color: white;
+          height: 35px;
+          width: {$maxAvailableWidth}px;
+          opacity 2.0s ease-in;
+          opacity: 1;
+          "
+        >
+       New blackboard
+     </div>
+   {/if}
   </div>
 </div>
 {/if}
@@ -372,6 +389,7 @@
   import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
   import ClassServerRequestVideo from '$lib/ClassServerRequestVideo.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
+  import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -380,11 +398,13 @@
   let unsubRoomListener
   let roomDoc = {
     name: '', 
-    blackboards: [] 
+    blackboards: null
   }
   let incrementKeyToDestroyComponent = 1
   let isSubscribePopupOpen = false
   let creatorDoc
+
+  let isMoveVideoPopupOpen = false
 
   $: boardsDbPath = `classes/${classID}/blackboards/`
   $: roomsDbPath = `classes/${classID}/rooms/`
@@ -464,7 +484,11 @@
         console.log('request-video')
         // goto(`/${classID}/${classID}`)
       } else {
-        roomDoc = { id: snapshot.id, ...snapshot.data() }
+        roomDoc = { 
+          id: snapshot.id, 
+          path: snapshot.ref.path, 
+          ...snapshot.data() 
+        }
       }
     })
   }
@@ -870,49 +894,6 @@
       eurekaUIDs: arrayUnion($user.uid)
     })
   }
-
-  function dragover_handler (e) {
-    e.preventDefault()
-  }
-  
-  async function drop_handler (e, j) {
-    e.preventDefault()
-    const data = e.dataTransfer.getData('text/plain')
-
-    // you also want a way to show the hover indicator
-    // now you need to get the boardID
-    const [i, boardID] = data.split(':')
-
-
-
-    // ACTUALLY UPDATE
-    console.log('i, j =', i, j)
-    const blackboardsCopy = [...roomDoc.blackboards]
-    const draggedBoardID = blackboardsCopy[i] // I know...turns out I only needed `i`, no need for `boardID`
-    // remove 
-    const removeOneElement = 1
-    blackboardsCopy.splice(i, removeOneElement)
-
-    console.log('after remove =', blackboardsCopy)
-
-    // insert
-    const removeNoElement = 0
-    blackboardsCopy.splice(j, removeNoElement, draggedBoardID)  
-    console.log('after insert =', blackboardsCopy)
-      
-    // make an update operation
-    updateDoc(roomRef, {
-      blackboards: blackboardsCopy
-    })
-  }
-
-  // TO-DO: this is a copy-paste, do DRY 
-  function dragstart_handler (e, boardID, originalIndex) {
-    whatIsBeingDragged.set('board')
-    e.dataTransfer.setData("text/plain", `boardID:${boardID}`)
-    e.dataTransfer.dropEffect = 'move'
-  }
-
 </script>
 
 <style>

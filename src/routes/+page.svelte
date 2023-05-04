@@ -54,7 +54,7 @@
 			<div class="header-flex">
 				<p class="header-title">
 					<!-- Rediscover that learning can be enjoyable if you understand it -->
-					Understand things properly.
+					Learn efficiently.
 				</p>
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->

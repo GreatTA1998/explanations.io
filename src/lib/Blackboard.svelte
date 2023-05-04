@@ -39,14 +39,6 @@
             </Item>
           {/if}
 
-          <!-- TO-DO: use a named slot -->
-          <Item on:SMUI:action={showHintForDragAndDrop} 
-            draggable="true" 
-            on:dragstart={(e) => dragstart_handler(e, boardID, originalIndex)}
-          >
-            Move
-          </Item>
-
           <Item on:SMUI:action={wipeBoard}>
             Wipe board
           </Item>    

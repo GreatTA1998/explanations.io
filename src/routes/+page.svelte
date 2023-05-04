@@ -122,13 +122,13 @@
 					<ol>
 						<li>What situations is this good for?</li>
 						<div>
-							course 6: agonizing wait-times in Office hours because the student size grew by 100%, the staff size only 10%. 
+							course 6: when wait-times are long, HKN is unavailable
 						</div>
 						<div>
-							ASEs: no Office Hours and Piazza available
+							ASEs: no access to Office Hours & Piazza 
 						</div>
 						<div>
-							Classes in general: as an affordable, flexible resource for getting proper help
+							Classes in general: as an efficient resource 
 							used in conjunction with Office Hours and Piazza
 						</div>
 

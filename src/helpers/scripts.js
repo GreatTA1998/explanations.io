@@ -1,9 +1,26 @@
-export async function initializeClassServerOrder (roomDocs) {
+import { getFirestoreCollection, updateFirestoreDoc } from "./crud.js"
+
+export async function updateAllServer () {
+  const allClassDocs = await getFirestoreCollection(`classes`)
+  for (const classDoc of allClassDocs) {
+    initializeClassServerOrder(classDoc.id)
+    console.log('fixing =', classDoc.name)
+  }
+}
+
+export async function initializeClassServerOrder (classID) {
+  const roomDocs = await getFirestoreCollection(`classes/${classID}/rooms`)
   let counter = 3
   for (const roomDoc of roomDocs) {
-    updateFirestoreDoc(roomDoc.path, {
-      classServerOrder: counter + 3
-    })
+    const updateObject = {}
+    if (!roomDoc.parentRoomID) {
+      updateObject.parentRoomID = ''
+    }
+    if (!roomDoc.classServerOrder) {
+      updateObject.classServerOrder = counter 
+    }
+    updateFirestoreDoc(roomDoc.path, updateObject)
+    counter += 3
   }
 }
 

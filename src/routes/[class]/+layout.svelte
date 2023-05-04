@@ -21,7 +21,6 @@
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
     <div class:orange-highlight={roomID === "request-video"}>
-
     <Item on:click={() => goto(`/${classID}/request-video`)}>
       <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">
         add
@@ -84,16 +83,17 @@
 </slot>
 
 <script>
+  import { onDestroy, onMount } from 'svelte'
+  import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth} from '../../store.js'
+  
   import List, { Item, Text } from '@smui/list'
 	import LeftDrawer from '$lib/LeftDrawer.svelte'
   import RenderlessMyDocUpdater from '$lib/RenderlessMyDocUpdater.svelte'
   import DailyVideoConference from '$lib/DailyVideoConference.svelte'
-  import { onDestroy, onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { browser } from '$app/environment'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion} from 'firebase/firestore'
   import { computeMaxAvailableDimensions } from '../../helpers/canvas'
-  import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth} from '../../store.js'
   import { createRoomDoc } from '../../helpers/crud.js'
   import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
   import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
@@ -273,30 +273,6 @@
           })
         })
         rooms = docs
-        
-        // QUICKFIX FOR BACKWARDS COMPATIBILITY
-        if (rooms.length === 0) {
-          // means they have no 'date property'
-            const roomsRef = collection(
-              getFirestore(),
-              `classes/${classID}/rooms`
-            )
-            const rooms = []
-            const roomsResult = await getDocs(roomsRef)
-            roomsResult.docs.forEach(doc => {
-              rooms.push({
-                id: doc.id,
-                ...doc.data()
-              })
-            })
-            for (const room of rooms) {
-              const roomRef = doc(getFirestore(), `classes/${classID}/rooms/${room.id}`)
-              updateDoc(roomRef, {
-                date: Date.toISOString()
-              })
-            }
-            // can make it atomic with a batch operation
-        }
       })
     )
   }

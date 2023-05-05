@@ -34,7 +34,7 @@
     <div style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; padding-top: 6px;">
       {#if room.numOfChildren}
         {#if !isExpanded}
-          <span on:click={() => {
+          <span on:click|stopPropagation={() => {
               if (!subpages) {
                 fetchSubpages()
               }
@@ -45,7 +45,7 @@
             expand_more
           </span>
         {:else}
-          <span on:click={() => isExpanded = false} class="material-icons">
+          <span on:click|stopPropagation={() => isExpanded = false} class="material-icons">
             chevron_right
           </span>
         {/if}

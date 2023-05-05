@@ -99,11 +99,11 @@
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 						<br><br> -->
-						<b style="color: navy">beavers.app</b> is like Youtube for MIT classes, where everyone can request blackboard videos
-						that properly & deeply resolves your question.
+						This website is like Youtube for MIT classes, where everyone can request blackboard videos
+						that <b style="color: navy">efficiently and properly</b> resolves your question.
 
 						<br><br>
-						If everyone is too busy to help out, you can pay $10/month to subscribe to teachers who are committed 
+						If everyone is too busy to help out, you can pay <b style="color: #5d0068">$10/month</b> to subscribe to teachers who are committed 
 						to help you through the hardest weeks. 
 					</div>
 				</div>
@@ -161,14 +161,14 @@
 
 			{/if}
 
-			{#if active.label === 'Teach'}
+			{#if active.label === 'Explain'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						<b style="color: navy">beavers.app</b> provides infrastructure so you can easily record blackboard explanations for free viewers and $10/month subscribers
+						This website provides infrastructure so you can easily record & manage blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>
 
 						<br><br>
-						The video-format means that, instead of needing to reply quickly to shallow questions over text, you can take your time to deeply
-						explain a small number of things during <u>flexible times</u> of your week.
+						The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
+						explain a small number of things during <b style="color: navy">flexible times</b> of your week.
 
 					</div>
 				</div>
@@ -208,7 +208,6 @@
 						</Label>
 					</Button>
 				</div>
-
 			{/if}
 
 			{#if active.label === 'Students deprecate for now'}
@@ -366,7 +365,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Teach', icon: 'draw'}]
+	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Explain', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {

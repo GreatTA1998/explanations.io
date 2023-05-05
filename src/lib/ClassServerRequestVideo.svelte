@@ -47,9 +47,9 @@
     <Button 
       on:click={submitQuestion} 
       variant="raised"
-      style="border-radius: 0px; margin-top: 12px; width: 100%; color: {isAskingCommunityOrHelper === 'community' ? 'orange' : '#5d0068'}; 
-      color: white;
-      background-color: grey;
+      style="border-radius: 0px; margin-top: 12px; width: 100%;; 
+      color: {isAskingCommunityOrHelper === 'community' ? 'white' : '#5d0068'};
+      background-color: {isAskingCommunityOrHelper === 'community' ? 'hsl(0,0%,0%, 0.80)' : 'white'};
       "
     >
       Submit question

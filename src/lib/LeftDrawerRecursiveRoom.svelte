@@ -6,7 +6,10 @@
     {classID}
   />
 
-  <div class:selected={room.id === roomID} 
+  <div 
+    class="room-item"
+    style="opacity: 90%; border-radius: 5px; cursor: pointer;"
+    class:selected={room.id === roomID} 
     bind:this={RoomElement}
     on:click={() => handleRoomClick(room.id)}
     on:keydown={() => {}}
@@ -27,11 +30,10 @@
     draggable="true"
     on:dragstart={(e) => dragstart_handler(e, room.id)}
     on:dragover={(e) => dragover_handler(e)}
-    style="opacity: 90%; border-radius: 5px; cursor: pointer;"
   >
     <!-- ROOM NAME SECTION -->
     <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
-    <div style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; padding-top: 6px;">
+    <div style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; padding-top: 6px; padding-bottom: 6px;">
       {#if room.numOfChildren}
         {#if !isExpanded}
           <span on:click|stopPropagation={() => {
@@ -423,6 +425,10 @@ async function deleteRoom (room) {
 </script>
 
 <style>
+  .room-item:hover {
+    background: lightgrey;
+  }
+
   .vertical-padding {
     padding-top: 8px; 
     padding-bottom: 8px
@@ -430,7 +436,7 @@ async function deleteRoom (room) {
 
   .selected {
     font-weight: 500;
-    background-color:rgb(45, 44, 44);
+    background-color:rgb(45, 44, 44) !important;
     color: white;
     transition: background 20ms ease-in 0s;
   }

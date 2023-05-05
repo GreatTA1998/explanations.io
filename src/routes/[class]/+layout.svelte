@@ -20,23 +20,48 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <LeftDrawer {nameOfClass} {descriptionOfClass}>
-    <div class:orange-highlight={roomID === "request-video"}>
-    <Item on:click={() => goto(`/${classID}/request-video`)}>
-      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px;">
+    <div style="margin-top: 16px;"></div>
+
+    <!-- Notion's icon color rgba(55, 53, 47, 0.45) -->
+    <!-- Notion's font color gba(25, 23, 17, 0.6) is  -->
+    <div on:click={() => goto(`/${classID}/request-video`)} 
+      class="action-item"
+      class:explain-item-selected={roomID === 'request-video'}
+      style="display: flex; align-items: center;"
+    >
+      <span class="material-icons" style="font-size: 1.4rem; margin-top: 2px;">
         add
       </span>
       <div style="margin-right: 4px;"></div>
-      <div>
+      <div style="font-size: 1rem; font-weight: 400;">
         New question
       </div>
-    </Item>
     </div>
 
-    <Item on:click={() => goto(`/${classID}/become-helper`)}>
-      <span class="material-icons" style="font-size: 0.9rem; margin-top: 2px">draw</span>
+    <div style="margin-top: 12px"></div>
+
+    {#if isBecomeHelperPopupOpen}
+      <PopupBecomeHelper
+        {classID}
+        on:popup-close={() => isBecomeHelperPopupOpen = false}
+      />
+    {/if}
+      
+    <div 
+      class:explain-item-selected={isBecomeHelperPopupOpen}
+      on:click={() => isBecomeHelperPopupOpen = true}  
+      class="action-item"
+      style="display: flex; align-items: center;"
+    >
+      <span class="material-icons" style="font-size: 1.3rem; margin-top: 2px; opacity: 0.9">
+        brush
+      </span>
       <div style="margin-right: 4px;"></div>
-      Sign up to teach
-    </Item> 
+
+      <div style="font-size: 1rem; font-weight: 400;">
+        Sign up as explainer
+      </div>
+    </div>
 
     <div style="margin-bottom: 48px;"></div>
 
@@ -97,6 +122,7 @@
   import { createRoomDoc } from '../../helpers/crud.js'
   import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
   import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
+  import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
 
   export let data;
   let { classID, roomID } = data;
@@ -109,6 +135,7 @@
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
 
   let willJoinVoiceChat = false
+  let isBecomeHelperPopupOpen = false
 
 	// START OF RESIZE LOGIC 
   let resizeDebouncer = null
@@ -279,8 +306,17 @@
 </script>
 
 <style>
-  .orange-highlight {
-    border: 2px solid orange; 
+  .action-item {
+    border-radius: 4px;
+    margin: 6px;
+    cursor: pointer;
+    padding-top: 4px; 
+    padding-bottom: 4px;
+    padding-left: 8px;
+  }
+
+  .action-item:hover {
+    background: lightgrey;
   }
 
   .new-room-button {
@@ -293,5 +329,11 @@
 
   .new-room-button:hover {
     background-color: rgb(233, 233, 233);
+  }
+
+  .explain-item-selected {
+    /* so it doesn't get overriden by hover stles */
+    background:hsl(0,0%,0%, 0.80) !important; 
+    color: white;
   }
 </style>

@@ -149,7 +149,7 @@
                 >
                   <RenderlessFetchHelperDoc 
                     {classID}
-                    creatorUID={boardDoc.creatorUID}
+                    creatorUID={boardDoc.creatorUID || ''}
                     let:helperDoc={helperDoc}
                   >
                     {#if helperDoc}

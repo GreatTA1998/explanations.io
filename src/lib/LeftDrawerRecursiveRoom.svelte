@@ -1,8 +1,8 @@
 <div style="padding: 6px;">
   <LeftDrawerRecursiveRoomReorderDropzone
+    {roomsInThisLevel}
     {orderWithinLevel}
     {parentRoomIDs}
-    {roomsInThisLevel}
     {classID}
   />
 
@@ -31,7 +31,7 @@
   >
     <!-- ROOM NAME SECTION -->
     <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
-    <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 5px; padding-top: 6px;">
+    <div style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; padding-top: 6px;">
       {#if room.numOfChildren}
         {#if !isExpanded}
           <span on:click={() => {
@@ -49,15 +49,21 @@
             chevron_right
           </span>
         {/if}
+      {:else}
+        <span class="material-icons" style="width: 24px">
+          <!-- Invisible div to keep the indentation consistent even if 
+          the room has no sub-rooms -->
+        </span>
       {/if}
       
+      <!--  needed otherwise `question-item` if statement will be undefined -->
       {#if room.name}
         <div 
           class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
           class="my-truncated-text"
-          style="margin-bottom: 2px;"
+          style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px"
         >
-          {room.name} { room.numOfChildren ? `(${room.numOfChildren})` : '' }
+          {room.name } { room.numOfChildren ? `(${room.numOfChildren})` : '' }
         </div>
       {:else}
         <div style="margin-bottom: 2px;">
@@ -158,7 +164,7 @@
 
 <!-- ROOM SUBPAGES SECTION -->
 {#if subpages && isExpanded}
-  <div style="padding-left: {14 * (depth + 1)}px">
+  <div style="padding-left: {totalIndentation}px">
     {#each subpages as subpage, i (subpage.id)}
       <LeftDrawerRecursiveRoom 
         room={subpage}
@@ -202,7 +208,9 @@ import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, que
 import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
 import { deleteObject, getStorage, ref } from 'firebase/storage'
 import { getFunctions, httpsCallable } from "firebase/functions"
-import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
+
+import { SUBPAGE_INDENATION_PX, DRAWER_EXPANDED_WIDTH } from '/src/helpers/CONSTANTS';
+import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
 import { onDestroy } from 'svelte'
 
@@ -226,6 +234,8 @@ let isExpanded = false
 let unsubListener
 
 const classPath = `classes/${classID}/`
+
+$: totalIndentation = SUBPAGE_INDENATION_PX * (depth + 1)
 
 onDestroy(() => {
   if (unsubListener) unsubListener()
@@ -317,20 +327,10 @@ async function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
   }
   const basePath = `classes/${classID}/rooms/`
 
-  // update metadata/statistics
-  // don't change sequence - you must update statistics before parentRoomID literally becomes
-  // the exact same room i.e. the droppedRoom
-  // it's silently correct when dragging to its own folder, 
-  // because +1 -1 = 0
-  const draggedRoomDoc = await getFirestoreDoc(basePath + draggedRoomID)
-  if (draggedRoomDoc.parentRoomID) {
-    updateFirestoreDoc(basePath + draggedRoomDoc.parentRoomID, {
-      numOfChildren: increment(-1)
-    })
-  }
-
-  updateFirestoreDoc(basePath + droppedRoomID, {
-    numOfChildren: increment(1)
+  await updateNumOfSubfolders({ 
+    draggedRoomID, 
+    droppedRoomID,
+    basePath
   })
 
   // move the room

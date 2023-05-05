@@ -49,3 +49,20 @@ export async function moveVideoToDifferentClassServer (videoPath) {
     blackboards: arrayUnion(boardDoc.id)
   })
 }
+
+// BACKWARDS COMPATIBILITY SCRIPT FUNCTIONS
+export async function changeVideoCreatorInfo () {
+  const boards = await getFirestoreCollection('classes/Mev5x66mSMEvNz3rijym/blackboards')
+  for (const board of boards) {
+    let n = 3
+    if (board.creatorUID === 'Q0J071uuDfdJVxTubCkYVhsTAxR2') {
+      console.log('found Jonathan Whyte\'s board')
+      n += 3
+      const creatorDoc = await getFirestoreDoc('users/' + board.creatorUID)
+      await updateFirestoreDoc(`classes/Mev5x66mSMEvNz3rijym/blackboards/${board.id}`, {
+        creatorName: 'Jonathan Whyte',
+        shopGalleryOrder: n
+      })
+    }
+  }
+}

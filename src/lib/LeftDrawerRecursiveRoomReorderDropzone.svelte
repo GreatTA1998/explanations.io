@@ -13,7 +13,7 @@
 
 <script>
   import { whatIsBeingDragged, whatIsBeingDraggedID } from '/src/store.js'
-  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { updateFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
 
   export let ReorderDropzone
   export let orderWithinLevel
@@ -39,6 +39,19 @@
     const keyValuePairs = data.split(']')
     const [key1, value1] = keyValuePairs[0].split(':')
     const draggedRoomID = value1
+
+    // before updating `classServerOrder`, we update
+    // the counter showing how many subfolders a foler has
+    const droppedRoomDoc = roomsInThisLevel[orderWithinLevel]
+    await updateNumOfSubfolders({ 
+      draggedRoomID, 
+
+      // this is subtle, the dropzone above this current room actually belongs to the PARENT,
+      // because the parent is what contains all the rooms in this current level
+      droppedRoomID: roomsInThisLevel[0].parentRoomID, 
+
+      basePath: `classes/${classID}/rooms/`
+    })
 
     const initialNumericalDifference = 3
     let newVal 

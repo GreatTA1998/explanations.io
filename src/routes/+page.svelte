@@ -63,7 +63,7 @@
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Join class servers
+							Ask a question
 						</Label>
 					</Button>
 				</div>
@@ -108,42 +108,55 @@
 					</div>
 				</div>
 
+				<div class="webflow-section">
+					<div style="text-align: center; font-size: 3rem;">Frequently Asked Questions</div>
+
+					<div style="margin-bottom: 100px;"></div>
+
+					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
+						<div style="font-size: 2rem;">What situations is this good for?</div>
+
+						<div style="font-size: 1.2rem;">
+							<div>
+								<b>Course 6:</b> Office Hours and HKN are high demand, resulting in longer wait-times
+							</div>
+							<div>
+								<b>Summer & winter ASEs:</b> Office Hours & Piazza aren't offered
+							</div>
+							<div>
+								<b>General classes:</b> as an efficient resource 
+								that complements Office Hours and Piazza
+							</div>
+						</div>
+					</div>
+
+					<div style="margin-bottom: 100px;"></div>
+
+										
+					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
+						<div style="font-size: 2rem;">
+							Why $10/month subscriptions?
+						</div>
+
+						<div style="min-width: 400px; width: 45vw; font-size: 1.2rem;">
+							I tried for 4 years to work within the school as explain.mit.edu - departments just aren't interested to spend more money
+							on a student resource when they already offer Office Hours, departmental tutoring, Math Learning Center, etc.
+							But I as a student know the actual experience of the day-to-day, and how there is a gap in how good the resources are. So I'll experiment with different ways to make it work.
+							
+							<br>
+							<br>
+							Currently, $10/month subscriptions directly support the explainers who dedicate their time to sharing knowledge. 
+							In fact, this skin-in-the-game also brings benefits - people feel valued for helping others on this platform. The money isn't much, it's more the willingness to pay that says a lot. 
+						</div>
+					</div>
+				</div>
+
 				<div style="text-align: center">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Join class servers
+							Ask a question
 						</Label>
 					</Button>
-				</div>
-
-				<div class="webflow-section">
-					Frequently Asked Questions
-
-					<ol>
-						<li>What situations is this good for?</li>
-						<div>
-							course 6: when wait-times are long, HKN is unavailable
-						</div>
-						<div>
-							ASEs: no access to Office Hours & Piazza 
-						</div>
-						<div>
-							Classes in general: as an efficient resource 
-							used in conjunction with Office Hours and Piazza
-						</div>
-
-						<br>
-
-						<li>Why does it cost money?</li>
-
-						<div>
-							I'm the founder (6-14, '20), and tried for 4 years to work with departments. It's hard because admin doesn't believe 
-							it's necessary to introduce a new resource when there is already Office Hours. But I as a student know the actual experience on the day-to-day, and I've been throught the trenches. 
-
-							I'll still try to collaborate with the departments to bring it for free, but until then, the subscriptions directly supports the former TAs. 
-							In fact, this skin-in-the-game also brings benefits - people feel valued for helping others on this platform. The money isn't much, it's more the willingness to pay that says a lot. 
-						</div>
-					</ol>
 				</div>
 
 			{/if}
@@ -160,6 +173,34 @@
 					</div>
 				</div>
 
+				<div class="webflow-section">
+					<div style="text-align: center; font-size: 3rem;">Frequently Asked Questions</div>
+
+					<div style="margin-bottom: 100px;"></div>
+
+					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
+						<div style="font-size: 2rem;">
+							What situations is this good for?
+						</div>
+
+						<div style="font-size: 1.2rem; min-width: 400px; width: 45vw;">
+							<div>
+								<b>Youtube project</b> Always considered to start a Youtube Channel / Substack blog. 
+								Enjoy explaining things in your field, but don't have the right setup and social environment to get started.
+								The student questions here can help guide the initial content you create.
+							</div>
+							<div>
+								<b>Light hobby</b> Enjoy answering questions on Stackoverflow and Quora, just want a flexible, low-time commitment hobby to 
+								engage with what you know
+							</div>
+							<div>
+								<b>Teaching/tutoring as full-time job</b> $10/month subscriptions are much lower initially, but with scale, 
+								the earnings could potentially be like that of top earners on Substack, Twitch etc.
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div style="text-align: center">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
@@ -167,6 +208,7 @@
 						</Label>
 					</Button>
 				</div>
+
 			{/if}
 
 			{#if active.label === 'Students deprecate for now'}

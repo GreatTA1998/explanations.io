@@ -377,12 +377,14 @@ async function deleteRoom (room) {
     return 
   }
 
+  const db = getFirestore()
+
   const boardsQueries = [] 
   for (const boardID of room.blackboards) {
     // if it's a video, delete the audio file
     boardsQueries.push(
       getDoc(
-        doc(getFirestore(), classPath + `blackboards/${boardID}`)
+        doc(db, classPath + `blackboards/${boardID}`)
       )
     )
   }
@@ -416,9 +418,30 @@ async function deleteRoom (room) {
   }
   await Promise.all(subdeleteRequests)
 
-  // delete the doc itself
+  // update pointers: move all the children OUT of the folder getting deleted
+  // 1. fetch all the sub-room 
+  // 2. update all the parent pointers
+  const folderPromises = []
+  const roomsRef = collection(db, `classes/${classID}/rooms/`)
+  const q = query(roomsRef, where('parentRoomID', '==', room.id))
+  const subRooms = await getFirestoreQuery(q)
+  for (const subRoom of subRooms) {
+    folderPromises.push(
+      updateFirestoreDoc(subRoom.path, {
+        parentRoomID: room.parentRoomID
+      })
+    )
+  }
+  folderPromises.push(
+    updateFirestoreDoc(`classes/${classID}/rooms/${room.parentRoomID}`, {
+      numOfChildren: increment(subRooms.length)
+    })
+  )
+  await Promise.all(folderPromises)
+
+  // finally delete the room doc itself
   await deleteDoc(
-    doc(getFirestore(), classPath + `rooms/${room.id}`)
+    doc(db, classPath + `rooms/${room.id}`)
   )
   // note, the [room].svelte page knows how to handle itself when its `roomDoc` no longer exists
 }

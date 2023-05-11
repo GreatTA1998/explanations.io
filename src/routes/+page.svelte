@@ -141,7 +141,7 @@
 						<div style="min-width: 400px; width: 45vw; font-size: 1.2rem;">
 							I tried for 4 years to work within the school as explain.mit.edu - departments just aren't interested to spend more money
 							on a student resource when they already offer Office Hours, departmental tutoring, Math Learning Center, etc.
-							But I as a student know the actual experience of the day-to-day, and how there is a gap in how good the resources are. So I'll experiment with different ways to make it work.
+							But I as a student I've been through the day-to-day trenches of navigating those resources...they're simply not good enough to overcome compounding inefficiencies of falling behind.
 							
 							<br>
 							<br>

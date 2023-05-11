@@ -107,37 +107,5 @@
 </script>
 
 <style>
-table {
-  width: 800px;
-  margin-top: 100px;
-  font-size: 18px;
-  border-collapse: collapse;
-}
 
-td,
-th {
-  padding: 16px 24px;
-  text-align: left;
-}
-
-thead tr {
-  background-color: grey;
-  color: #fff;
-}
-
-td {
-  font-size: 2rem;
-}
-
-thead th {
-  width: 25%;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #f8f9fa;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #e9ecef;
-}
 </style>

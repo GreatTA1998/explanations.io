@@ -91,6 +91,8 @@ export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStr
 // returns the ID of the new room created
 export function createRoomDoc (classPath) {
   return new Promise(async resolve => {
+    const classDoc = await getFirestoreDoc(classPath)
+
     const newDocID = getRandomID()
     const db = getFirestore()
     const roomRef = doc(db, classPath + `rooms/${newDocID}`)
@@ -99,11 +101,16 @@ export function createRoomDoc (classPath) {
       setDoc(roomRef, {
         name: '',
         blackboards: [newDocID],
-        date: new Date().toISOString()
-          // rooms have an order property, look at v3's drag and drop source code
+        date: new Date().toISOString(),
+        classServerOrder: classDoc.maxClassServerOrder + 3 || 3,
+        parentRoomID: ''
+        // rooms have an order property, look at v3's drag and drop source code
       }),
       setDoc(blackboardRef, {
         recordState: 'pre_record'
+      }),
+      updateFirestoreDoc(classPath, {
+        maxClassServerOrder: classDoc.maxClassServerOrder + 3
       })
     ])
     resolve(newDocID)
@@ -128,45 +135,23 @@ export async function createBoardDoc (boardsDbPath, roomRef) {
   })
 }
 
-// BACKWARDS COMPATIBILITY SCRIPT FUNCTIONS
-export async function changeVideoCreatorInfo () {
-  const boards = await getFirestoreCollection('classes/Mev5x66mSMEvNz3rijym/blackboards')
-  for (const board of boards) {
-    let n = 3
-    if (board.creatorUID === 'Q0J071uuDfdJVxTubCkYVhsTAxR2') {
-      console.log('found Jonathan Whyte\'s board')
-      n += 3
-      const creatorDoc = await getFirestoreDoc('users/' + board.creatorUID)
-      await updateFirestoreDoc(`classes/Mev5x66mSMEvNz3rijym/blackboards/${board.id}`, {
-        creatorName: 'Jonathan Whyte',
-        shopGalleryOrder: n
+// update metadata/statistics
+// MUST BE DONE BEFORE CHANGING OPERATIONS - you must update statistics before parentRoomID literally becomes
+// the exact same room i.e. the droppedRoom
+// it's silently correct when dragging to its own folder, 
+// because +1 -1 = 0  
+export async function updateNumOfSubfolders ({ draggedRoomID, droppedRoomID, basePath }) {
+  return new Promise(async (resolve) => {
+    const draggedRoomDoc = await getFirestoreDoc(basePath + draggedRoomID)
+    if (draggedRoomDoc.parentRoomID) {
+      await updateFirestoreDoc(basePath + draggedRoomDoc.parentRoomID, {
+        numOfChildren: increment(-1)
       })
     }
-  }
-}
-
-// this could be useful in the future, but it's only a temporary script now
-export async function moveVideoToDifferentClassServer (videoPath) {
-  console.log("videoPath =", videoPath)
-  const boardDoc = await getFirestoreDoc(videoPath)
-  const strokesDocs = await getFirestoreCollection(videoPath + '/strokes')
-
-  // create an independent copy of the video in the new class
-  const newBoardPath = `classes/Mev5x66mSMEvNz3rijym/blackboards/${boardDoc.id}`
-  const newStrokesPath = newBoardPath + '/strokes/'
-
-  setFirestoreDoc(newBoardPath, boardDoc)
-  for (const stroke of strokesDocs) {
-    setFirestoreDoc(newStrokesPath + stroke.id, stroke)
-  }
-  console.log('initiated copying of drawing strokes')
-
-
-  // you also need to create a room doc
-  const newRoomID = await createRoomDoc('classes/Mev5x66mSMEvNz3rijym/')
-  console.log('newRoomID =', newRoomID)
-  updateFirestoreDoc('classes/Mev5x66mSMEvNz3rijym/rooms/' + newRoomID, {
-    blackboards: arrayUnion(boardDoc.id)
+    await updateFirestoreDoc(basePath + droppedRoomID, {
+      numOfChildren: increment(1)
+    })
+    resolve()
   })
 }
 

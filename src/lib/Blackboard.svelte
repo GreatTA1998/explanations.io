@@ -39,14 +39,6 @@
             </Item>
           {/if}
 
-          <!-- TO-DO: use a named slot -->
-          <Item on:SMUI:action={showHintForDragAndDrop} 
-            draggable="true" 
-            on:dragstart={(e) => dragstart_handler(e, boardID, originalIndex)}
-          >
-            Move
-          </Item>
-
           <Item on:SMUI:action={wipeBoard}>
             Wipe board
           </Item>    
@@ -89,7 +81,7 @@
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil } from '../store.js'
+  import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
 
   export let canvasWidth
   export let canvasHeight
@@ -220,7 +212,6 @@
 
 
   onMount(() => {
-    console.log('blackboard mounted')
     ctx = canvas.getContext('2d')
     bgCtx = bgCanvas.getContext('2d')
 
@@ -495,7 +486,8 @@
   }
 
   function dragstart_handler (e, boardID, originalIndex) {
-    e.dataTransfer.setData("text/plain", originalIndex + ':' + boardID)
+    whatIsBeingDragged.set('board')
+    e.dataTransfer.setData("text/plain", `boardID:${boardID}`)
     e.dataTransfer.dropEffect = 'move'
   }
 

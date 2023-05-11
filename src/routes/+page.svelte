@@ -6,23 +6,32 @@
 					<Title style="font-size: 1.95rem; padding-left: 6px">
 						Explain
 					</Title>
-				</Section>
 
-				<Section align="end" toolbar>
-					<a href="https://eltonlin.substack.com/archive" target="_blank" style="text-decoration-color: transparent;">
-						<Button style="margin-left: 40px;">
-							Blog
+					<a href="https://eltonlin.substack.com/archive" target="_blank" 
+						style="margin-left: 40px; text-decoration-color: transparent;"
+					>
+						<Button
+							class="button-shaped-round"
+						>
+							<Label>blog</Label>
+							<Icon class="material-icons">auto_stories</Icon>
 						</Button>
 					</a>
 
-					<a href="https://github.com/greatTA1998/explain" target="_blank" style="text-decoration-color: transparent;">
-						<div style="margin-left: 20px; margin-right: 20px;">
-							<svg
-								style="color: white; filter: invert(1); width: 40px; height: 50px; margin-top: 16px; margin-left: 10px;"
-								xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-						</div>
+					<a href="https://github.com/greatTA1998/explain" target="_blank" 
+						style="margin-left: 20px; text-decoration-color: transparent;"
+					>
+						<Button
+							class="button-shaped-round"
+						>
+							<Label>github</Label>
+							<Icon class="material-icons">terminal</Icon>
+						</Button>
 					</a>
-					<!-- <Button variant="outlined">
+				</Section>
+
+				<Section align="end" toolbar>
+					<!-- <Button on:click={() => alert('You can now log-in in through the class server')} variant="outlined">
 						Log in
 					</Button> -->
 				</Section>
@@ -41,20 +50,20 @@
 	</TabBar>
 	
 	<div class="webflow-container">
-		{#if active.label === 'Students'}
+		{#if active.label === 'Learn'}
 			<div class="header-flex">
 				<p class="header-title">
 					<!-- Rediscover that learning can be enjoyable if you understand it -->
-					Thrive in your classes
+					Learn efficiently.
 				</p>
 				<div class="header-subcopy-wrapper">
 					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Ask former TAs, students & classmates to demystify important things with <u>blackboard videos</u>
+						Ask former TAs, students & classmates to explain things using <u>blackboard videos</u>
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Join class servers
+							Ask a question
 						</Label>
 					</Button>
 				</div>
@@ -85,38 +94,110 @@
 			</div>
 		{/if}
 
-			{#if active.label === 'Students'}
+			{#if active.label === 'Learn'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 						<br><br> -->
-						<b style="color: navy">beavers.app</b> is like Youtube for MIT classes, where everyone can request blackboard videos
-						that properly & deeply resolves your question.
+						This website is like Youtube for MIT classes, where everyone can request blackboard videos
+						that <b style="color: navy">efficiently and properly</b> resolves your question.
 
 						<br><br>
-						If everyone is too busy to help out, you can pay $10/month to subscribe to class helpers who are committed 
-						to support you through the hardest weeks. 
+						If everyone is too busy to help out, you can pay <b style="color: #5d0068">$10/month</b> to subscribe to teachers who are committed 
+						to help you through the hardest weeks. 
+					</div>
+				</div>
+
+				<div class="webflow-section">
+					<div style="text-align: center; font-size: 3rem;">Frequently Asked Questions</div>
+
+					<div style="margin-bottom: 100px;"></div>
+
+					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
+						<div style="font-size: 2rem;">What situations is this good for?</div>
+
+						<div style="font-size: 1.2rem;">
+							<div>
+								<b>Course 6:</b> Office Hours and HKN are high demand, resulting in longer wait-times
+							</div>
+							<div>
+								<b>Summer & winter ASEs:</b> Office Hours & Piazza aren't offered
+							</div>
+							<div>
+								<b>General classes:</b> as an efficient resource 
+								that complements Office Hours and Piazza
+							</div>
+						</div>
+					</div>
+
+					<div style="margin-bottom: 100px;"></div>
+
+										
+					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
+						<div style="font-size: 2rem;">
+							Why $10/month subscriptions?
+						</div>
+
+						<div style="min-width: 400px; width: 45vw; font-size: 1.2rem;">
+							I tried for 4 years to work within the school as explain.mit.edu - departments just aren't interested to spend more money
+							on a student resource when they already offer Office Hours, departmental tutoring, Math Learning Center, etc.
+							But I as a student know the actual experience of the day-to-day, and how there is a gap in how good the resources are. So I'll experiment with different ways to make it work.
+							
+							<br>
+							<br>
+							Currently, $10/month subscriptions directly support the explainers who dedicate their time to sharing knowledge. 
+							In fact, this skin-in-the-game also brings benefits - people feel valued for helping others on this platform. The money isn't much, it's more the willingness to pay that says a lot. 
+						</div>
 					</div>
 				</div>
 
 				<div style="text-align: center">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Join class servers
+							Ask a question
 						</Label>
 					</Button>
 				</div>
+
 			{/if}
 
-			{#if active.label === 'Helpers'}
+			{#if active.label === 'Explain'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						<b style="color: navy">beavers.app</b> provides infrastructure so you can easily record blackboard explanations for free viewers and $10/month subscribers
+						This website provides infrastructure so you can easily record & manage blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>
 
 						<br><br>
-						The video-format means that, instead of needing to reply quickly to shallow questions over text, you can take your time to deeply
-						explain a small number of things during <u>flexible times</u> of your week.
+						The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
+						explain a small number of things during <b style="color: navy">flexible times</b> of your week.
 
+					</div>
+				</div>
+
+				<div class="webflow-section">
+					<div style="text-align: center; font-size: 3rem;">Frequently Asked Questions</div>
+
+					<div style="margin-bottom: 100px;"></div>
+
+					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
+						<div style="font-size: 2rem;">
+							What situations is this good for?
+						</div>
+
+						<div style="font-size: 1.2rem; min-width: 400px; width: 45vw;">
+							<div>
+								<b>Youtube project</b> Always considered to start a Youtube Channel / Substack blog. 
+								Enjoy explaining things in your field, but don't have the right setup and social environment to get started.
+								The student questions here can help guide the initial content you create.
+							</div>
+							<div>
+								<b>Light hobby</b> Enjoy answering questions on Stackoverflow and Quora, just want a flexible, low-time commitment hobby to 
+								engage with what you know
+							</div>
+							<div>
+								<b>Teaching/tutoring as full-time job</b> $10/month subscriptions are much lower initially, but with scale, 
+								the earnings could potentially be like that of top earners on Substack, Twitch etc.
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -284,7 +365,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Students', icon: 'person'}, { label: 'Helpers', icon: 'draw'}]
+	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Explain', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {

@@ -1,7 +1,7 @@
 
-<div bind:this={anchor}>
+<div bind:this={anchor} style="width: 100%;">
   <!-- open menu -->
-  <div on:click={() => goto('/overview')} style="display: flex; align-items: center; cursor: pointer;">
+  <div on:click={() => goto('/overview')} style="display: flex; align-items: center; cursor: pointer; width: 100%;">
     <div>
       <h1 class="my-truncated-text" style="max-width: 148px; font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
         {nameOfClass} 
@@ -12,7 +12,9 @@
     </div>
     
     <!-- arrow_drop_down -->
-    <Icon class="material-icons">toc</Icon>
+    <div style="margin-right: 2%; margin-left: auto;">
+      <Icon class="material-icons">toc</Icon>
+    </div>
   </div>
 
   <!-- left: 50px; top: 50px; width: 200px -->

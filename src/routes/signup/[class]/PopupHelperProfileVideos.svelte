@@ -62,7 +62,7 @@
         </button>
 
         {#if isRearrangeVideosPopupOpen}
-          <PopupRearrangeVideos 
+          <PopupRearrangeProfileVideos
             {classID}
             {galleryBoardIDs}
             {selectedTutorDoc}
@@ -84,7 +84,7 @@
   import { onSnapshot, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
   import { createRoomDoc, createBoardDoc, updateFirestoreDoc } from '../../../helpers/crud.js'
   import { computeMaxAvailableDimensionsGeneral } from '../../../helpers/canvas.js'
-  import { drawerExpandedWidth } from '../../../helpers/everythingElse.js'
+  import { DRAWER_EXPANDED_WIDTH } from '/src/helpers/CONSTANTS.js'
   import { debounce } from '../../../helpers/utility.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
@@ -92,7 +92,7 @@
   import ReusableLiveBlackboard from '$lib/ReusableLiveBlackboard.svelte'
   import DoodleVideoCommentsSection from '$lib/DoodleVideoCommentsSection.svelte'
   import PopupEditProfileVideos from '$lib/PopupEditProfileVideos.svelte'
-  import PopupRearrangeVideos from '$lib/PopupRearrangeVideos.svelte'
+  import PopupRearrangeProfileVideos from '$lib/PopupRearrangeProfileVideos.svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import { goto } from '$app/navigation'
 
@@ -118,7 +118,7 @@
   let isEditProfileVideosPopupOpen = false
   let isRearrangeVideosPopupOpen = false
 
-  $: if ($classDetailsDrawerWidth === 0 || $classDetailsDrawerWidth === drawerExpandedWidth) {
+  $: if ($classDetailsDrawerWidth === 0 || $classDetailsDrawerWidth === DRAWER_EXPANDED_WIDTH) {
     debouncedResizeHandler()
   }
 

@@ -31,20 +31,12 @@
 
     <div style="display: flex; align-items: center; margin-top: 2%">
       <b style="font-size: 1.2rem; font-family: sans-serif;">
-        Helpers
+        Explainers
       </b>
-      {#if !didUserAlreadySignUpAsTutor}
-        <Button on:click={() => isBecomeHelperPopupOpen = true} variant="raised" style="height: 40px; border-radius: 0px; margin-left: 20px; background-color: hsl(0,0%,0%, 0.80)">
-          <Label style="text-transform: uppercase; padding-left: 12px; padding-right: 12px; padding-top: 4px; padding-bottom: 4px; font-size: 0.8rem; font-weight: 600">
-            Sign up as helper
-          </Label>
-        </Button>
-      {/if}
     </div>
 
     {#if isBecomeHelperPopupOpen}
       <PopupBecomeHelper
-        helperDoc={selectedTutorDoc}
         {classID}
         on:popup-close={() => isBecomeHelperPopupOpen = false}
       />
@@ -68,7 +60,7 @@
       <div class="tutor-business-card-1" style="margin-left: 2%" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
         <Card padded style="width: 400px; box-sizing: border-box">
           <div style="display: flex; align-items: center">
-            <input type="checkbox" checked={isAskingCommunityOrHelper === 'community'} style="height: 25px; width: 25px; font-size: 5rem;"/>
+            <input type="checkbox" checked={isAskingCommunityOrHelper === 'community'} style="accent-color: hsl(0,0%,0%, 0.80); height: 25px; width: 25px; font-size: 5rem;"/>
 
             <b style="font-size: 1.2rem; margin-left: 8px;">
               Free question
@@ -84,14 +76,19 @@
       <div style="margin-left: 2%;" class="tutor-business-card-2" on:click={() => dispatch('helper-asking')} class:purple-border={isAskingCommunityOrHelper === 'helper'}>
         <Card padded style="width: 400px; box-sizing: border-box; ">
           <div style="display: flex; align-items: center">
-            <input type="checkbox" checked={isAskingCommunityOrHelper === 'helper'} style="height: 25px; width: 25px; font-size: 5rem;"/>
+            <input type="checkbox" checked={isAskingCommunityOrHelper === 'helper'} style="accent-color: #5d0068; height: 25px; width: 25px; font-size: 5rem;"/>
             <b style="font-size: 1.2rem; margin-left: 8px;">
               Subscriber question
             </b>
           </div>
         
           <Content>
-            Subscribing to a helper for $10/month <u>guarantees</u> you'll get help even if the community is busy
+            Benefits:
+              <ol>
+                <li>Faster, more reliable reply</li>
+                <li>Supports your favorite creator</li>
+                <li>Funds affordable learning material for the internet</li>
+              </ol>
           </Content>
         </Card>
       </div>
@@ -405,14 +402,19 @@
   }
 
   .orange-border {
-    border: 2px solid orange;
+    border: 2px solid hsl(0,0%,0%, 0.80);
   }
 
   .purple-border {
-    border: 2px solid purple; 
+    /* used to be purple  */
+    border: 2px solid #5d0068;  
   }
   
   .red-text {
     color: red;
+  }
+
+  input[type="checkbox"] {
+    cursor: pointer;
   }
 </style>

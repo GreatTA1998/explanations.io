@@ -1,5 +1,5 @@
 <div class="drawer-container">
-  <Drawer style="overflow-y: auto; height: 100%; width: {$drawerWidth}px" class="mdc-elevation--z{5}">
+  <Drawer style="background: rgb(251, 251, 250); overflow-y: auto; height: 100%; width: {$drawerWidth}px" class="mdc-elevation--z{5}">
     <Content>
       <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 4px;" class="mdc-elevation--z{4}">
         <div style="display: flex; align-items: center; width: 100%;">
@@ -20,7 +20,7 @@
 
           <div style="flex-grow: 1">
             {#if $user.uid}
-              <div style="display: flex; align-items: center;">
+              <div style="display: flex; align-items: center; width: 100%;">
                 {#key nameOfClass}
                   <ClassDropdownMenu 
                     {nameOfClass} 

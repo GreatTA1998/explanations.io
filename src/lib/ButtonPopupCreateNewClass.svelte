@@ -1,5 +1,5 @@
 <button on:click={() => isPopupOpen = true}>
-  Create new class server
+  Create new server
 </button>
 
 {#if isPopupOpen}

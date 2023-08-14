@@ -72,7 +72,6 @@
                     creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
                   }}
                 > 
-                  
                   <div style="
                     margin-left: auto;
                     margin-right: 8px; 
@@ -80,7 +79,15 @@
                     align-items: center; 
                     flex-direction: row-reverse"
                   >
-                    <!-- boardDoc will always have a creatorUID because anonymous login -->
+                    <Button on:click={() => isShowingNanoQuestionPopup = true}>
+                      Nano-question
+                    </Button>
+
+                    {#if isShowingNanoQuestionPopup}
+                      <PopupNanoQuestion/>
+                    {/if}
+
+                    <!-- boardDoc will always have a `creatorUID` because anonymous login -->
                     {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
                       <Button 
                         on:click={() => revertToBoard(boardDoc, deleteNonInitialStrokesFromDb)} 
@@ -390,6 +397,7 @@
   import ClassServerRequestVideo from '$lib/ClassServerRequestVideo.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
+  import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -405,6 +413,7 @@
   let creatorDoc
 
   let isMoveVideoPopupOpen = false
+  let isShowingNanoQuestionPopup = false
 
   $: boardsDbPath = `classes/${classID}/blackboards/`
   $: roomsDbPath = `classes/${classID}/rooms/`

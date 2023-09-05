@@ -5,13 +5,15 @@
     creatorUID={$user.uid}
     let:helperDoc={helperDoc}
   >
+    {#if helperDoc}
     <!-- TO-DO:
       Profile picture
     -->
-    <ClassServerMyProfileHelperProfileCopy
-      {helperDoc}
-      {classID}
-    />
+      <ClassServerMyProfileHelperProfileCopy
+        {helperDoc}
+        {classID}
+      />
+    {/if}
   </RenderlessFetchHelperDoc>
   <!-- PopupBecomeHelper can be here -->
 </div>

@@ -1,0 +1,87 @@
+<BasePopup on:popup-close>
+  <!-- <h2 slot="title" style="font-family: sans-serif;">
+    Sign in
+  </h2> -->
+  <div slot="popup-content" style="font-family: sans-serif; padding: 12px; display: flex; justify-content: center;">
+
+    <div style="width: 200px; margin-top: 20px;">
+      <div style="display: flex">
+        <hr style="
+          display: block;
+          flex: 1 1 0px;
+          max-width: 100%;
+          height: 0;
+          max-height: 0;
+          border: solid;
+          border-width: thin 0 0 0;
+          transition: inherit;
+          border-color: rgba(0,0,0,.12);
+        ">
+        <div style="margin-left: 8px; margin-right: 8px; color: rgba(0,0,0,.6) !important; font-weight: 500;">Sign in with</div>
+        <hr style="
+          display: block;
+          flex: 1 1 0px;
+          max-width: 100%;
+          height: 0;
+          max-height: 0;
+          border: solid;
+          border-width: thin 0 0 0;
+          transition: inherit;
+          border-color: rgba(0,0,0,.12);
+        ">
+      </div>
+  
+      <div style="margin-top: 20px;">
+      </div>
+      
+      <TouchstoneLogin/>
+  
+      <div 
+        on:click={() => isShowingPhoneLogin = true}
+        style="
+        color: blue; 
+        border: 1px solid blue; 
+        margin-bottom: 2px;
+        width: 200px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-radius: 8px;
+        align-text: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      ">
+        <span class="material-icons" style="margin-right: 6px;">
+          phone
+        </span>
+        Phone
+      </div>    
+  
+      {#if isShowingPhoneLogin}
+        <PhoneLogin/>
+      {/if}
+    </div>
+
+  </div>
+</BasePopup>
+
+<script>
+  import BasePopup from '$lib/BasePopup.svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
+  import { user } from '../store.js'
+  import { getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
+  import Button from '@smui/button'
+  import { collection, query, where, getDocs } from "firebase/firestore";
+  import TouchstoneLogin from '$lib/TouchstoneLogin.svelte'
+  import PhoneLogin from '$lib/PhoneLogin.svelte'
+
+
+  let isShowingPhoneLogin = false
+  let allBoardDocs = []
+  const dispatch = createEventDispatcher()
+  
+  function dragover_handler (e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move'
+  }
+</script>

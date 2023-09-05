@@ -37,10 +37,7 @@
       {#if room.numOfChildren}
         {#if !isExpanded}
           <span on:click|stopPropagation={() => {
-              if (!subpages) {
-                fetchSubpages()
-              }
-              isExpanded = true
+              expandChildrenRooms()
             }} 
             class="material-icons"
           >
@@ -268,6 +265,13 @@ async function fetchSubpages () {
   })
 }
 
+function expandChildrenRooms () {
+  if (!subpages) {
+    fetchSubpages()
+  }
+  isExpanded = true
+}
+
 function handleRoomClick (roomID) { 
   // prevents in-app navigation
   if ($willPreventPageLeave) {
@@ -276,6 +280,8 @@ function handleRoomClick (roomID) {
       // NOTE: this will not handle some cases 
       // maybe fix from Blackboard rendering logic side?
       willPreventPageLeave.set(false)
+
+      expandChildrenRooms()
       goto(`/${classID}/${roomID}`)
     } else {
       // do nothing
@@ -283,6 +289,7 @@ function handleRoomClick (roomID) {
   }
 
   else {
+    expandChildrenRooms()
     goto(`/${classID}/${roomID}`)
   }
 }

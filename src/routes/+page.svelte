@@ -50,17 +50,17 @@
 	</TabBar>
 	
 	<div class="webflow-container">
-		{#if active.label === 'Learn'}
+		{#if active.label === 'Viewers'}
 			<div class="header-flex">
 				<p class="header-title" style="font-size: 4em;">
-					Watch blackboard explanations from previous TAs & students
+					Watch blackboard explanations by former TAs & students
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Find class servers to join
+							Join your class server
 						</Label>
 					</Button>
 				</div>
@@ -88,7 +88,7 @@
 			</div>
 		{/if}
 
-			{#if active.label === 'Learn'}
+			{#if active.label === 'Viewers'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
@@ -155,7 +155,7 @@
 
 			{/if}
 
-			{#if active.label === 'Explain'}
+			{#if active.label === 'Explainers'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						This website provides infrastructure so you can easily record & manage blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>
@@ -272,7 +272,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else if active.label === 'helpers'}
+		{:else if active.label === 'Explainers'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.
@@ -359,7 +359,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Explain', icon: 'draw'}]
+	let tabs = [{ label: 'Viewers', icon: 'smart_display'}, { label: 'Explainers', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {

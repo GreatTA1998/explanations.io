@@ -43,7 +43,6 @@
     {/if}
 
     <div style="display: flex; font-family: sans-serif; margin-top: 1%; flex-wrap: wrap;">
-      <!-- <div> -->
         {#each classTutorsDocs as helper}
           <!-- <div style="width: 300px;"> -->
             <!--   on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}} -->

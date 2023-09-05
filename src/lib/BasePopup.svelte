@@ -53,6 +53,6 @@
     min-height: 10vh;
     max-height: 90vh;
     min-width: 33vw; 
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 </style>

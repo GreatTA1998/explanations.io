@@ -10,7 +10,7 @@
       class="logo-image"
     >
     <h1 style="margin-left: 12px; font-family: sans-serif;">
-      All servers
+      Class servers
     </h1>
   </div>
 
@@ -22,63 +22,13 @@
     </button>
   {/if}
 
-  <div style="width: 200px; margin-top: 20px;">
-    <div style="display: flex">
-      <hr style="
-        display: block;
-        flex: 1 1 0px;
-        max-width: 100%;
-        height: 0;
-        max-height: 0;
-        border: solid;
-        border-width: thin 0 0 0;
-        transition: inherit;
-        border-color: rgba(0,0,0,.12);
-      ">
-      <div style="margin-left: 8px; margin-right: 8px; color: rgba(0,0,0,.6) !important; font-weight: 500;">Sign in with</div>
-      <hr style="
-        display: block;
-        flex: 1 1 0px;
-        max-width: 100%;
-        height: 0;
-        max-height: 0;
-        border: solid;
-        border-width: thin 0 0 0;
-        transition: inherit;
-        border-color: rgba(0,0,0,.12);
-      ">
-    </div>
+  <button on:click={() => isSignInPopupOpen = true}>
+    Show sign-in popup
+  </button>
 
-    <div style="margin-top: 20px;">
-    </div>
-    
-    <TouchstoneLogin/>
-
-    <div 
-      on:click={() => isShowingPhoneLogin = true}
-      style="
-      color: blue; 
-      border: 1px solid blue; 
-      margin-bottom: 2px;
-      width: 200px;
-      padding-top: 6px;
-      padding-bottom: 6px;
-      border-radius: 8px;
-      align-text: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    ">
-      <span class="material-icons" style="margin-right: 6px;">
-        phone
-      </span>
-      Phone
-    </div>    
-
-    {#if isShowingPhoneLogin}
-      <PhoneLogin/>
-    {/if}
-  </div>
+  {#if isSignInPopupOpen}
+    <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
+  {/if}
 </div>
 
 <div style="margin-bottom: 2%"></div>
@@ -92,6 +42,7 @@
   import { goto } from '$app/navigation';
   import { getFirestore, onSnapshot, collection, query, where } from 'firebase/firestore'
   import { setFirestoreDoc, updateFirestoreDoc, getFirestoreCollection } from '../../helpers/crud.js'
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import { getRandomID } from '../../helpers/utility.js'
   import ButtonPopupCreateNewClass from '$lib/ButtonPopupCreateNewClass.svelte'
   import { user } from '../../store.js'
@@ -107,6 +58,7 @@
   let sortedYoutubeClasses = [] 
 
   let isShowingPhoneLogin = false
+  let isSignInPopupOpen = false
 
   fetchYoutubeClasses().then(() => {
     // then compute secondary statistics

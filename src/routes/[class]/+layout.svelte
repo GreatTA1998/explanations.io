@@ -49,17 +49,17 @@
       
     <div 
       class:explain-item-selected={isBecomeHelperPopupOpen}
-      on:click={() => isBecomeHelperPopupOpen = true}  
+      on:click={() => goto(`/${classID}/my-profile`)} 
       class="action-item"
       style="display: flex; align-items: center;"
     >
       <span class="material-icons" style="font-size: 1.3rem; margin-top: 2px; opacity: 0.9">
-        brush
+        account_circle
       </span>
       <div style="margin-right: 4px;"></div>
 
       <div style="font-size: 1rem; font-weight: 400;">
-        Sign up as explainer
+        My profile
       </div>
     </div>
 

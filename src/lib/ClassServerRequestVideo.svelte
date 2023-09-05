@@ -2,12 +2,6 @@
   <LeftDrawerToggleButton/>
 
   <div style="padding: 16px;">
-    {#if !$user.phoneNumber}
-      <div style="margin-left: 24px; display: flex; align-items: center; width: 95%; margin-left: auto; margin-right: auto;">
-        Log in first
-        <PhoneLogin/>
-      </div>
-    {/if}
 
     <Textfield 
       style="width: 100%;"

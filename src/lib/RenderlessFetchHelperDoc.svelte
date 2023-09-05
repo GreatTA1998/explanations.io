@@ -15,6 +15,7 @@
   onSnapshot(q, (snapshot) => {
     if (snapshot.empty) {
       console.log('No matching documents.')
+      // TO-DO: throw an explicit error
       return
     }
     snapshot.docs.forEach(doc => {

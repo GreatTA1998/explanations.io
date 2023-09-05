@@ -21,6 +21,64 @@
       Log out
     </button>
   {/if}
+
+  <div style="width: 200px; margin-top: 20px;">
+    <div style="display: flex">
+      <hr style="
+        display: block;
+        flex: 1 1 0px;
+        max-width: 100%;
+        height: 0;
+        max-height: 0;
+        border: solid;
+        border-width: thin 0 0 0;
+        transition: inherit;
+        border-color: rgba(0,0,0,.12);
+      ">
+      <div style="margin-left: 8px; margin-right: 8px; color: rgba(0,0,0,.6) !important; font-weight: 500;">Sign in with</div>
+      <hr style="
+        display: block;
+        flex: 1 1 0px;
+        max-width: 100%;
+        height: 0;
+        max-height: 0;
+        border: solid;
+        border-width: thin 0 0 0;
+        transition: inherit;
+        border-color: rgba(0,0,0,.12);
+      ">
+    </div>
+
+    <div style="margin-top: 20px;">
+    </div>
+    
+    <TouchstoneLogin/>
+
+    <div 
+      on:click={() => isShowingPhoneLogin = true}
+      style="
+      color: blue; 
+      border: 1px solid blue; 
+      margin-bottom: 2px;
+      width: 200px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      border-radius: 8px;
+      align-text: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    ">
+      <span class="material-icons" style="margin-right: 6px;">
+        phone
+      </span>
+      Phone
+    </div>    
+
+    {#if isShowingPhoneLogin}
+      <PhoneLogin/>
+    {/if}
+  </div>
 </div>
 
 <div style="margin-bottom: 2%"></div>
@@ -42,8 +100,13 @@
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
 
+  import TouchstoneLogin from '$lib/TouchstoneLogin.svelte'
+  import PhoneLogin from '$lib/PhoneLogin.svelte'
+
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 
+
+  let isShowingPhoneLogin = false
 
   fetchYoutubeClasses().then(() => {
     // then compute secondary statistics

@@ -1,5 +1,8 @@
+<!-- This is a quickfix for routing -->
 {#if roomID === 'request-video'}
   <ClassServerRequestVideo {classID}/>
+{:else if roomID === 'my-profile'}
+  <ClassServerMyProfile {classID}/>
 {:else}
 
 {#if roomDoc}
@@ -168,6 +171,14 @@
                       {boardDoc.creatorName}
                     {/if}
                   </RenderlessFetchHelperDoc>
+
+                  <!-- Become free subscriber -->
+                  <!-- Become paid member -->
+                  <div>
+                    <button>Become free subscriber</button>
+                    <button>Become paid subscriber</button>
+                  </div>
+                  
 
                   <div style="margin-left: 24px;"></div>
 
@@ -398,6 +409,7 @@
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
   import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
+  import ClassServerMyProfile from '$lib/ClassServerMyProfile.svelte'
 
   export let data
   let { classID, roomID } = data

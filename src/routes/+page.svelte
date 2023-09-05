@@ -4,7 +4,7 @@
 			<Row>
 				<Section>
 					<Title style="font-size: 1.95rem; padding-left: 6px">
-						Explain
+						Explanations
 					</Title>
 
 					<a href="https://eltonlin.substack.com/archive" target="_blank" 
@@ -52,18 +52,15 @@
 	<div class="webflow-container">
 		{#if active.label === 'Learn'}
 			<div class="header-flex">
-				<p class="header-title">
-					<!-- Rediscover that learning can be enjoyable if you understand it -->
-					Learn efficiently.
+				<p class="header-title" style="font-size: 4em;">
+					Watch blackboard explanations from previous TAs & students
 				</p>
 				<div class="header-subcopy-wrapper">
-					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Ask former TAs, students & classmates to explain things using <u>blackboard videos</u>
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Ask a question
+							Find class servers to join
 						</Label>
 					</Button>
 				</div>
@@ -75,15 +72,12 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title">Explain things you enjoy</p>	
+				<p class="header-title" style="font-size: 4em;">Help people with your explanations, for free and for money</p>	
 				<div class="header-subcopy-wrapper">
-					<div class="header-subcopy">
-						Teach what you love, supported by your subscribers
-					</div>
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Create your channel
+							Start your channel
 						</Label>
 					</Button>
 				</div>

@@ -786,6 +786,7 @@
       numOfVideos: increment(1)
     })
 
+    // upload the audio file
     const storage = getStorage()
     const audioRef = ref(storage, `audio/${getRandomID()}`)
     await uploadBytes(audioRef, audioBlob)

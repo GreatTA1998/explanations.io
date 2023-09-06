@@ -1,33 +1,38 @@
-<!-- <audio 
-  on:play={initSyncing} 
-  on:seeking={syncStrokesToAudio}
-  bind:this={AudioPlayer} 
-  src={audioDownloadURL} 
-  controls={!isLocked}
-  style={`width: ${canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}>
-</audio> -->
 
-<MultislideDoodleVideoVisualSlide
-  {currentTime}
-  strokesArray={strokesArray1}
-  {hasPlaybackStarted}
-/>
-<MultislideDoodleVideoVisualSlide
-  {currentTime}
-  strokesArray={strokesArray2}
-  {hasPlaybackStarted}
-/>
-<MultislideDoodleVideoVisualSlide
-  {currentTime}
-  strokesArray={strokesArray3}
-  {hasPlaybackStarted}
-/>
+{#each slideIDs as slideID}
+  <RenderlessFetchStrokes 
+    dbPath={`/classes/${classID}/powerpoints/${powerpointID}/slides/${slideID}`}
+    let:fetchStrokes={fetchStrokes}
+    autoFetchStrokes
+    let:strokesArray={strokesArray}
+  >
+    {#if strokesArray}
+      <MultislideDoodleVideoVisualSlide
+        {currentTime}
+        strokesArray={strokesArray}
+        {hasPlaybackStarted}
+        {hasAudioSliderJumped}
+        on:slider-jump-sync={() => hasAudioSliderJumped = false}
+      />
+    {/if}
+  </RenderlessFetchStrokes>
+{/each}
 
 <audio
   bind:this={AudioPlayer}
-  on:play={() => hasPlaybackStarted = true}
-  on:seeking={() => currentTime = AudioPlayer.currentTime}
+  src={audioDownloadURL}
+  on:play={() => {
+    hasPlaybackStarted = true;
+    startTimer();
+  }}
+  on:seeking={() => {
+    currentTime = AudioPlayer.currentTime;
+    hasAudioSliderJumped = true
+  }}
+  controls
+  style={`width: ${400}px; height: 40px; position: absolute; bottom: 0; top: 800px;`}
 >
+<!-- top: auto -->
 </audio>
 
 <div>current time: {currentTime}</div>
@@ -38,7 +43,6 @@
   // as possible with reactive statements, so then we can use 
   // a reactive / declarative way to write the rest of this component
 
-
   // TO-DO:
   //   - an audio element that plays and dictates the time
   //   - all the doodle visuals will play simultaneously
@@ -48,21 +52,37 @@
   import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '../store.js' // note `canvasWidth` was misleading
   import Button, { Label } from '@smui/button'
   import MultislideDoodleVideoVisualSlide from '$lib/MultislideDoodleVideoVisualSlide.svelte'
+  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+
+  export let audioDownloadURL
+
+  const classID = 't5ZxK9RQcWBCHBeKFhcc'
+  const powerpointID = 'QWERTYUIOP'
+  let intervalID = ''
+  let hasAudioSliderJumped = false
+
+  let slideIDs = [
+    '123456789',
+    'abcdefghi',
+    'ABCDEFGHI'
+  ]
 
   let AudioPlayer
   let hasPlaybackStarted = false
 
-  let strokesArray1 = [] 
-  let strokesArray2 = []
-  let strokesArray3 = []
-
   let currentTime = 0
   const ONE_HUNDRED_MILLISECS = 100
 
-  setInterval(
-    () => { currentTime += 0.1 }, // note this is a floating point calculation 
-    ONE_HUNDRED_MILLISECS
-  )
+  onDestroy(() => {
+    if (intervalID) clearInterval(intervalID)
+  }) 
+
+  function startTimer () {
+    intervalID = setInterval(
+      () => { currentTime += 0.1 }, // note this is a floating point calculation 
+      ONE_HUNDRED_MILLISECS
+    )
+  }
 </script>
 
 

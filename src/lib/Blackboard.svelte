@@ -1,80 +1,84 @@
-<!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
-    (to distinguish between unfetched board and empty board) 
--->
-{#if strokesArray}
-  <BlackboardToolbar>
-    <span on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
-      undo
-    </span>
+<!-- TO-DO: emit an intersection API event -->
+<div use:lazyCallable={() => dispatch('intersect')} style="position: relative; width: {canvasWidth}px; height: {canvasHeight}px">
+  <!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
+      (to distinguish between unfetched board and empty board) 
+  -->
+  {#if strokesArray}
+    <BlackboardToolbar>
+      <span on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
+        undo
+      </span>
 
-    <!-- uses `BlackboardToolbar`'s unnamed slot (the 2 other slots are named) -->
-    <slot {currentTime} {startStopwatch} {stopStopwatch}>
+      <!-- uses `BlackboardToolbar`'s unnamed slot (the 2 other slots are named) -->
+      <slot {currentTime} {startStopwatch} {stopStopwatch} {setCurrentTime}>
 
-    </slot>
+      </slot>
 
-    <div slot="dropdown-menu">
-      {#if recordState === 'pre_record' || currentTime === 0 }
-        <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-top: 3px; margin-right: 10px; color: white; font-size: 2rem;">
-          more_vert
-        </span>
-      {/if}
-    
-      <input
-        bind:this={FileUploadButton}
-        on:change={(e) => uploadBackground(e)}
-        style="display: none" 
-        type="file" 
-        accept="image/gif, image/jpeg, image/png" 
-      >
+      <div slot="dropdown-menu">
+        {#if recordState === 'pre_record' || currentTime === 0 }
+          <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-top: 3px; margin-right: 10px; color: white; font-size: 2rem;">
+            more_vert
+          </span>
+        {/if}
       
-      <Menu bind:this={DropdownMenu} style="width: 300px">
-        <List>
-          {#if backgroundImageDownloadURL}
-            <Item on:click={resetBackgroundImage}>
-              Remove background
+        <input
+          bind:this={FileUploadButton}
+          on:change={(e) => uploadBackground(e)}
+          style="display: none" 
+          type="file" 
+          accept="image/gif, image/jpeg, image/png" 
+        >
+        
+        <Menu bind:this={DropdownMenu} style="width: 300px">
+          <List>
+            {#if backgroundImageDownloadURL}
+              <Item on:click={resetBackgroundImage}>
+                Remove background
+              </Item>
+            {:else}
+              <Item on:click={clickHiddenInput}>
+                Set background
+              </Item>
+            {/if}
+
+            <Item on:SMUI:action={wipeBoard}>
+              Wipe board
+            </Item>    
+
+            <Item on:SMUI:action={deleteBoard}>
+              Delete board 
             </Item>
-          {:else}
-            <Item on:click={clickHiddenInput}>
-              Set background
-            </Item>
-          {/if}
+          </List> 
+        </Menu>
+      </div>
+    </BlackboardToolbar>
+  {/if}
 
-          <Item on:SMUI:action={wipeBoard}>
-            Wipe board
-          </Item>    
+  <canvas bind:this={canvas}
+    on:touchstart={touchStart}
+    on:touchmove={touchMove}
+    on:touchend={touchEnd}
+    style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${canvasWidth}px; height: ${canvasHeight}px`}
+  >
+  </canvas>
 
-          <Item on:SMUI:action={deleteBoard}>
-            Delete board 
-          </Item>
-        </List> 
-      </Menu>
-    </div>
-  </BlackboardToolbar>
-{/if}
+  <!-- rgb(46, 49, 49) -->
+  <canvas bind:this={bgCanvas} 
+    style={`
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      display: block;
+      background-color: hsl(0,0%,0%, 0.80); width: ${canvasWidth}px; height: ${canvasHeight}px
+    `}
+  >
 
-<canvas bind:this={canvas}
-  on:touchstart={touchStart}
-  on:touchmove={touchMove}
-  on:touchend={touchEnd}
-  style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${canvasWidth}px; height: ${canvasHeight}px`}
->
-</canvas>
-
-<!-- rgb(46, 49, 49) -->
-<canvas bind:this={bgCanvas} 
-  style={`
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    display: block;
-    background-color: hsl(0,0%,0%, 0.80); width: ${canvasWidth}px; height: ${canvasHeight}px
-  `}
->
-
-</canvas>
+  </canvas>
+</div>
 
 <script>
+  import { lazyCallable } from '/src/helpers/actions.js';
   import List, { Item, Text } from '@smui/list'
   import Menu from '@smui/menu';
   import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
@@ -93,6 +97,13 @@
   // for drag-and-drop purposes
   export let boardID = ''
   export let originalIndex = null
+
+  // QUICKFIX to enable multislide blackboards to work
+  export let currentTimeOverride
+
+  $: if (currentTimeOverride) {
+    currentTime = currentTimeOverride
+  }
   
 	const dispatch = createEventDispatcher()
 
@@ -122,6 +133,10 @@
   let startTimestamp = null // number of milliseconds since 1970 00:00:00 UTC
   let etaOfNextTick = null // would use an Optional in 6.031, `0` doesn't make sense as it makes the AF inconsistent
   let nextTimeoutID = ''
+
+  function setCurrentTime (newVal) {
+    currentTime = newVal 
+  }
 
   // rounds to nearest 0.1, see https://stackoverflow.com/a/12698296/7812829
   function roundedToFixed(input, digits) {

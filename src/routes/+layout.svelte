@@ -14,39 +14,52 @@
   import { initializeDatabase } from '../database.js'
   import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
-  import { hasFetchedUser, user } from '../store.js'
+  import { hasFetchedUser, idOfServerNewUserWantedToEnter, user, userInfoFromAuthProvider } from '../store.js'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
   initializeDatabase()
   const auth = getAuth()
+  const db = getFirestore()
 
   onMount(async () => {
-    if (window.location.origin === 'https://explain.mit.edu') {
-      goto('https://beavers.app')
-    }
-
     onAuthStateChanged(auth, reactToUserChange)
   })
 
   async function reactToUserChange (resultUser) {
     if (resultUser) {
-      const { uid, phoneNumber } = resultUser 
+      const { uid } = resultUser 
 
-      // partially hydrate the user so we can start rendering the page
+      if ($idOfServerNewUserWantedToEnter) {
+        console.log('from a previous redirect request')
+        goto(`/${$idOfServerNewUserWantedToEnter}/my-profile`)
+      }
+
+      // partially hydrate the user so we can start rendering the page in parallel
       user.set({ 
-        phoneNumber: phoneNumber || '', // '' means it's an anonymous new user playing around
+        // email: resultUser.email || '', // email information is unavailable because Touchstone has some encoding for the properties
+        phoneNumber: resultUser.phoneNumber || '', // '' means it's an anonymous new user playing around
         uid,
         pencilColors: [] 
       })
 
       // fetch full user information in the background
-      const userRef = doc(getFirestore(), 'users/' + uid)
+      const userRef = doc(db, 'users/' + uid)
       let mirrorUser = await getDoc(userRef)
-      if (!mirrorUser.exists()) {
-        await createMirrorUser(uid, phoneNumber, userRef)
+
+      // new user creation
+      if (!mirrorUser.exists()) {      
+        await createMirrorUser({ 
+          uid, 
+          userRef, 
+          ...$userInfoFromAuthProvider 
+        })
       } 
+
+      await migrateOldUserSchemaToNew(mirrorUser.data())
+
       await listenToUserDoc(uid)
       // this promise resolves when we receive full user snapshot for the first time,
       // exactly the place to handle redirection
@@ -58,7 +71,7 @@
     // user not logged in
     else {
       try {
-        await signInAnonymously(auth)
+        // await signInAnonymously(auth)
       } catch (error) {
         console.error(error)
         alert("Error code & message, see console for details =", error.code + ' ' + error.message)
@@ -68,9 +81,42 @@
     hasFetchedUser.set(true) 
   }
 
-  async function createMirrorUser (uid, phoneNumber, userRef) {
+  function migrateOldUserSchemaToNew (mirrorUserDoc) {
     return new Promise(async (resolve) => {
-      const metadataRef = doc(getFirestore(), 'metadata/78tDSRCiMHGnf8zcXkQt')
+      const correctionObj = {}
+      if (!mirrorUserDoc.pencilColors) {
+        correctionObj.pencilColors = ['white', "#F69637", "#A9F8BD", "#6EE2EA", "hsla(147,100%,60%,1)", "hsla(6,100%,60%,1)", "hsla(143,100%,60%,1)"]
+      }
+      if (!mirrorUserDoc.pencilWidths) {
+        correctionObj.pencilWidths = [1, 1, 1, 1, 1, 1, 1]
+      }
+      if (!mirrorUserDoc.name) {
+        const metadataRef = doc(db, 'metadata/78tDSRCiMHGnf8zcXkQt')
+        const metadataSnap = await getDoc(metadataRef)
+        correctionObj.name = `Beaver #${metadataSnap.data().numOfUsers}`
+      }
+      if (!mirrorUserDoc.beaverProfilePicColor) {
+        function getRandomColor () {
+            return "hsla(" + ~~(360 * Math.random()) + "," + // hue i.e. the "color"
+                          "100%,"+  // 100% saturation i.e. maximize on its vividness and purity
+                          "60%,1)"; // 60% lightness (how much black / white mix, otherwise too faded), 1 alpha
+        }
+        correctionObj.beaverProfilePicColor = getRandomColor()
+      }
+      // ...more if statements can be added
+
+      if (Object.keys(correctionObj).length > 0) {
+        console.log('correctionObj =', correctionObj)
+        await updateFirestoreDoc(`users/${mirrorUserDoc.uid}`, correctionObj)
+        console.log('migrated to new schema')
+      }
+      resolve()
+    })
+  }
+
+  async function createMirrorUser ({ uid, firstName, lastName, fullName, phoneNumber, email, userRef }) {
+    return new Promise(async (resolve) => {
+      const metadataRef = doc(db, 'metadata/78tDSRCiMHGnf8zcXkQt')
       const metadataSnap = await getDoc(metadataRef)
 
       const exampleClass = {
@@ -81,8 +127,11 @@
       await Promise.all([
         setDoc(userRef, {
           name: `Beaver #${metadataSnap.data().numOfUsers}`, 
+          firstName: firstName || '',
+          lastName: lastName || '',
           uid,
           phoneNumber: phoneNumber || '', // anonymous user has no phone number
+          email: email || '',
           enrolledClasses: [exampleClass],
           mostRecentClassAndRoomID: '', // AF('') means no class was visited
           pencilColors: ['white', "#F69637", "#A9F8BD", "#6EE2EA", "hsla(147,100%,60%,1)", "hsla(6,100%,60%,1)", "hsla(143,100%,60%,1)"],
@@ -100,7 +149,6 @@
 
   async function listenToUserDoc (uid) {
     return new Promise((resolve, reject) => {
-      const db = getFirestore()
       const mirrorUserRef = doc(db, `users/${uid}`)
 
       // no need to unsub because it'd mean we quit the application

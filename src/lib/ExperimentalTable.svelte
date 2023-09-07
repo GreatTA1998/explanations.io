@@ -49,7 +49,7 @@
   </Head>
   <Body>
     {#each items as item (item.id)}
-      <Row on:click={() => goto(`${item.id}/request-video`)} >
+      <Row on:click={() => handleClassServerClick(item)} >
         <!-- <Cell numeric>{item.id}</Cell> -->
         <Cell numeric>
           <div style="color: purple; text-decoration: underline; cursor: pointer;">
@@ -75,21 +75,33 @@
     Label,
     SortValue,
   } from '@smui/data-table';
-  import IconButton from '@smui/icon-button';
-
+  import IconButton from '@smui/icon-button'
   import { goto } from '$app/navigation'
+  import { user, idOfServerNewUserWantedToEnter } from '/src/store.js'
+  import { createEventDispatcher } from 'svelte'
 
   export let initialItems 
+
+  const dispatch = createEventDispatcher()
+
+  function handleClassServerClick (item) {
+    if (!$user.uid) {
+      idOfServerNewUserWantedToEnter.set(item.id)
+      dispatch('login-required')
+    } else { 
+      goto(`${item.id}/request-video`)
+    }
+  }
  
-type MITClass = {
-  id: string; 
-  name: string;
-  numOfQuestions: number; 
-  numOfHelpers: number;
-  numOfVideos: number; 
-  minutesViewed: number;
-  paidMonthlySubscriptions: number; 
-}
+  type MITClass = {
+    id: string; 
+    name: string;
+    numOfQuestions: number; 
+    numOfHelpers: number;
+    numOfVideos: number; 
+    minutesViewed: number;
+    paidMonthlySubscriptions: number; 
+  }
 
   let items: MITClass[] = initialItems
 

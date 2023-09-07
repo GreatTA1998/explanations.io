@@ -3,11 +3,6 @@
     - Notification system (deprecate, instead let them communicate through group chat)
 -->
 
-<!-- Login popup that opens by default on the class overview page,
-  that way when you redirect to the overview page 
-  it will in effect act as a login-page
--->
-
 <!-- Direct login flow -->
 <div style="
   color: green; 
@@ -21,7 +16,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-">
+"
+  on:click={signInWithTouchstone}
+>
   <span class="material-icons" style="margin-right: 6px;">
     school
   </span>
@@ -29,53 +26,29 @@
 </div>
 
 <script>
+  import { SAMLAuthProvider } from "firebase/auth"
+  import { getAuth, signInWithRedirect, signInWithPopup } from "firebase/auth"
+  import { userInfoFromAuthProvider } from '/src/store.js'
 
-function signInWithTouchstone () {
-  const provider = new firebase.auth.SAMLAuthProvider("saml.mit-touchstone"); 
-  firebase.auth().signInWithPopup(provider)
-    .then(async result => {
-      await this.$_createMirrorDocIfNeeded(result); 
-      await this.$store.dispatch("listenToUserDoc", { uid: result.user.uid });
-      this.$store.commit("SET_HAS_FETCHED_USER_INFO", true); 
-      // redirect to most recent class
-      const { class_id, section_id, room_id } = this.$route.params; 
-      if (!(class_id && section_id && room_id)) {
-        const { mostRecentClassID } = this.$store.state.user; 
-        this.$router.replace(`/class/${mostRecentClassID}/section/${mostRecentClassID}/room/${mostRecentClassID}`);
-      }
-    })
-    .catch(error => {
-      console.log("error =", error);
-    });
-}
+  function signInWithTouchstone () {
+    const provider = new SAMLAuthProvider('saml.mit-touchstone');
+    signInWithPopup(getAuth(), provider) 
+      .then(async result => {
+        standardizeUserBasicInfo(result)
+      })
+      .catch(error => {
+        console.log("error =", error);
+      });
+  }
 
-async function createInitialMirrorDocFromTouchstoneMetadata (result) {
+async function standardizeUserBasicInfo (result) {
   try {
     return new Promise(async (resolve) => {  
-      // translate variable names
-      const userInfo = result.additionalUserInfo.profile; 
-      const fullName = userInfo["urn:oid:2.16.840.1.113730.3.1.241"];
-      const firstName = fullName.split(" ")[0];
-      const lastName = fullName.split(" ")[1];
-      const email = userInfo["urn:oid:1.3.6.1.4.1.5923.1.1.1.6"];
-      const kind = userInfo["urn:oid:1.3.6.1.4.1.5923.1.1.1.1"];
-      const year = userInfo["urn:oid:1.2.840.113554.1.4.1.1.15"];
 
-      const queryResult = await db.collection("users").where("email", "==", email).get();
-      console.log("queryResult =", queryResult);
-      if (queryResult.empty) {
-        await this.$_createAccount({
-          firstName,
-          lastName,
-          email,
-          uid: result.user.uid,
-          kind // "student", "staff", "affiliate"
-        });            
-        this.$root.$emit("show-snackbar", "Successfully created account");
-      } else {
-        // queryResult.docs[0].id
-        this.$root.$emit("show-snackbar", "Welcome back!");
-      }
+      userInfoFromAuthProvider.set({
+        email: result.user.email,
+        uid: result.user.uid,
+      })
       resolve(); 
     });
   }

@@ -16,15 +16,11 @@
 
   <ButtonPopupCreateNewClass/>
 
-  {#if $user.phoneNumber}
+  {#if $user.uid}
     <button on:click={logOut}>
       Log out
     </button>
   {/if}
-
-  <button on:click={() => isSignInPopupOpen = true}>
-    Show sign-in popup
-  </button>
 
   {#if isSignInPopupOpen}
     <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
@@ -34,7 +30,10 @@
 <div style="margin-bottom: 2%"></div>
 
 {#if sortedYoutubeClasses.length > 0} 
-  <ExperimentalTable initialItems={sortedYoutubeClasses}/>
+  <ExperimentalTable 
+    initialItems={sortedYoutubeClasses}
+    on:login-required={() => isSignInPopupOpen = true}
+  />
 {/if}
 
 <script>
@@ -50,10 +49,9 @@
   import { onDestroy } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
-
   import TouchstoneLogin from '$lib/TouchstoneLogin.svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
-
+  
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 
 
@@ -80,7 +78,10 @@
       const auth = getAuth()
       await signOut(auth)
     }
-    goto('/')
+    // clear the cookie cache otherwise the user persists for some reason
+    // or it could be store.js listeners not having a proper lifecycle for logout
+    window.location.reload()
+    // goto('/')
   }
 
   // snapshot listener of all the classes

@@ -1,64 +1,77 @@
 <!-- justify-content: space-between -->
-<div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 24px; width: 95%; align-items: center;">
-  <h2 style="font-family: sans-serif; font-size: 2.8rem; margin-top: 0px; margin-bottom: 0;">
-    {helperDoc.name}
-  </h2> 
+<!-- <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 24px; width: 95%; align-items: center;"> -->
+<div style="display: flex">
+  <slot>
+
+  </slot>
+  <div style="margin-left: 12px; margin-top: 8px;">
+    <h2 style="font-family: sans-serif; font-size: 2rem; margin-top: 0px; margin-bottom: 0;">
+      {helperDoc.name}
+    </h2> 
+
+    <div style="margin-top: 2px"></div>
+    <!-- Basic statistics -->
+    <div style="display: flex; align-items: center; justify-content: space-evenly">
+      <div style="margin-right: 16px;">
+        { helperDoc.numOfVideos - (helperDoc.numPaidVideos || 0) || 0}
+        free videos
+      </div>
+      <div style="margin-right: 16px;">
+        { helperDoc.numPaidVideos || 0}
+        subscriber videos
+      </div>
+      <div style="margin-right: 16px;">
+        { helperDoc.minutesViewed || 0}
+        minutes viewed
+      </div>
+      <div style="margin-right: 16px;">
+        { helperDoc.numOfStudents || 0}
+        subscriptions
+      </div>
+    </div>
+
+    <div style="margin-top: 6px;"></div>
+
+    <!-- bio -->
+    <TextAreaAutoResizing 
+      value={helperDoc.bio}
+      fontSizeIncludeUnits="1rem"
+      on:input={(e) => debouncedUpdateBio(e)}
+      placeholder="Short intro of yourself"
+      readonly={$user.uid !== helperDoc.uid}
+    />
+  </div>
+</div>
   
-  <input readonly={$user.uid !== helperDoc.uid} style="margin-left: 24px;" value={helperDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value)} placeholder="venmo">
+  <div style="display: flex; align-items: center">
+    <div style="width: 300px">
+      <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
+        Subscribe for $10/month
+      </ReusableButton> 
+    </div>
+
+    {#if isSubscribePopupOpen}
+      <PopupConfirmSubscription
+        selectedTutorDoc={helperDoc}
+        {classID}
+        on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
+        on:popup-close={() => isSubscribePopupOpen = false}
+      />
+    {/if}
+
+
+    <input readonly={$user.uid !== helperDoc.uid} style="margin-left: 24px;" value={helperDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value)} placeholder="venmo">
+  </div>
 
   <div style="margin-top: 12px;"></div>
 
-  <TextAreaAutoResizing 
-    value={helperDoc.bio}
-    on:input={(e) => debouncedUpdateBio(e)}
-    placeholder="Short intro of yourself"
-    readonly={$user.uid !== helperDoc.uid}
-  />
-</div>
+
+
 
 <div style="font-family: sans-serif; padding: 12px;">
-  <!-- Basic statistics -->
-  <div style="display: flex; align-items: center; justify-content: space-evenly">
-    <div>
-      <div style="font-size: 4rem">
-        { helperDoc.numOfVideos - (helperDoc.numPaidVideos || 0) || 0}
-      </div>
-      free videos
-    </div>
-    <div>
-      <div style="font-size: 4rem">
-        { helperDoc.numPaidVideos || 0}
-      </div>
-      subscriber videos
-    </div>
-    <div>
-      <div style="font-size: 4rem">
-        { helperDoc.minutesViewed || 0}
-      </div>
-      minutes viewed
-    </div>
-    <div>
-      <div style="font-size: 4rem">
-        { helperDoc.numOfStudents || 0}
-      </div>
-      subscriptions
-    </div>
-  </div>
+
 
   <div style="margin-top: 24px;"></div>
-
-  {#if isSubscribePopupOpen}
-    <PopupConfirmSubscription
-      selectedTutorDoc={helperDoc}
-      {classID}
-      on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
-      on:popup-close={() => isSubscribePopupOpen = false}
-    />
-  {/if}
-
-  <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
-    Subscribe for $10/month
-  </ReusableButton> 
 
   <div style="margin-top: 36px;"></div>
 
@@ -88,15 +101,11 @@
 </div>
 
 <script>
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
-  import BasePopup from '$lib/BasePopup.svelte'
-  import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '../store.js'
   import { updateFirestoreDoc, getFirestoreQuery } from '../helpers/crud.js'
   import { roundedToFixed, debounce } from '../helpers/utility.js'
   import { sendTextMessage } from '../helpers/cloudFunctions.js'
-  import Button from '@smui/button'
   import { getFirestore, collection, query, where, orderBy, getDocs, arrayUnion, increment } from "firebase/firestore";
   import PopupHelperProfileVideos from '/src/routes/signup/[class]/PopupHelperProfileVideos.svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
@@ -109,6 +118,8 @@
   export let classID
 
   const dispatch = createEventDispatcher()
+
+  console.log('helperDoc =', helperDoc)
 
   let incrementWhenGalleryRearranged = 0
   let isSubscribePopupOpen = false

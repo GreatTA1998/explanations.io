@@ -29,11 +29,11 @@
       class:explain-item-selected={roomID === 'request-video'}
       style="display: flex; align-items: center;"
     >
-      <span class="material-icons" style="font-size: 1.4rem; margin-top: 2px;">
+      <span class="material-icons" style="font-size: 2rem; margin-top: 2px;">
         add
       </span>
       <div style="margin-right: 4px;"></div>
-      <div style="font-size: 1rem; font-weight: 400;">
+      <div style="font-size: 1.2rem; font-weight: 400;">
         New question
       </div>
     </div>
@@ -53,12 +53,12 @@
       class="action-item"
       style="display: flex; align-items: center;"
     >
-      <span class="material-icons" style="font-size: 1.3rem; margin-top: 2px; opacity: 0.9">
+      <span class="material-icons" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
         account_circle
       </span>
       <div style="margin-right: 4px;"></div>
 
-      <div style="font-size: 1rem; font-weight: 400;">
+      <div style="font-size: 1.2rem; font-weight: 400;">
         My profile
       </div>
     </div>
@@ -167,6 +167,11 @@
       // if (window.matchMedia('screen and (max-width: 480px)').matches) {
       //   drawerWidth.set(0)
       // }
+      
+      // route guard: user must be logged in to enter class server
+      if (!$user.uid) {
+        goto('/')
+      }
 
       window.addEventListener('resize', debouncedResizeHandler)
     } else {

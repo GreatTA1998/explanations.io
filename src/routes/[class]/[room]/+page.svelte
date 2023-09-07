@@ -2,7 +2,7 @@
 {#if roomID === 'request-video'}
   <ClassServerRequestVideo {classID}/>
 {:else if roomID === 'my-profile'}
-  <ClassServerMyProfile {classID}/>
+  <ClassServerMyProfile {classID} profileUID={$user.uid}/>
 {:else}
 
 {#if roomDoc}
@@ -87,8 +87,12 @@
                     </Button>
 
                     {#if isShowingNanoQuestionPopup}
-                      <PopupNanoQuestion/>
+                      <PopupNanoQuestion on:popup-close={() => isShowingNanoQuestionPopup = false}/>
                     {/if}
+
+                    <Button on:click={() => createAndCopyShareLink(classID, boardDoc.id)}>
+                      Share
+                    </Button>
 
                     <!-- boardDoc will always have a `creatorUID` because anonymous login -->
                     {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
@@ -172,13 +176,24 @@
                     {/if}
                   </RenderlessFetchHelperDoc>
 
-                  <!-- Become free subscriber -->
-                  <!-- Become paid member -->
-                  <div>
-                    <button>Become free subscriber</button>
-                    <button>Become paid subscriber</button>
+                  <div style="width: 250px; margin-left: 30px;">
+                    <ReusableButton on:click={() => isSubscribePopupOpen = true} 
+                      fontSize="0.8rem"
+                      color="secondary" 
+                      style="color: white;"
+                    >
+                      Subscribe for $10/month
+                    </ReusableButton> 
                   </div>
-                  
+              
+                  {#if isSubscribePopupOpen}
+                    <PopupConfirmSubscription
+                      selectedTutorDoc={helperDoc}
+                      {classID}
+                      on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
+                      on:popup-close={() => isSubscribePopupOpen = false}
+                    />
+                  {/if}      
 
                   <div style="margin-left: 24px;"></div>
 
@@ -410,6 +425,7 @@
   import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
   import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
   import ClassServerMyProfile from '$lib/ClassServerMyProfile.svelte'
+  import ReusableButton from '$lib/ReusableButton.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -435,6 +451,14 @@
   onDestroy(() => {
     unsubRoomListener()
   })
+
+  function createAndCopyShareLink (classID, blackboardID) {
+    // videoID is defined as classID:blackboardID
+    // const shareLink = window.location.origin + '/video/' + classID + ':' + blackboardID 
+    const shareLink = window.location.origin + '/embed/' + classID + '/' + blackboardID
+    navigator.clipboard.writeText(shareLink)
+    alert('Share link has been copied, you can now paste it anywhere.')
+  }
   
   function makePaid (boardDoc) {
     updateFirestoreDoc(boardDoc.path, {

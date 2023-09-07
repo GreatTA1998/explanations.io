@@ -21,7 +21,7 @@
 <script>
   import BasePopup from '$lib/BasePopup.svelte'
   import Button from '@smui/button'
+  import { createEventDispatcher } from 'svelte'
 
-
-
+  const dispatch = createEventDispatcher()
 </script>

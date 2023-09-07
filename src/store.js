@@ -11,6 +11,8 @@ export const assumedCanvasWidth = writable(1200)
 
 export const hasFetchedUser = writable(false)
 export const user = writable({}) // {} means not logged in, cannot be null
+export const userInfoFromAuthProvider = writable({})
+export const idOfServerNewUserWantedToEnter = writable('')
 
 export const currentTool = writable({
     type: 'pencil',

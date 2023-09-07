@@ -7,29 +7,35 @@
 {/if}
 
 <div style={$$props.style}>
-  <div on:click={() => isPopupOpen = true} 
-    style="display: flex; align-items: center; background-color: #5d0068; cursor: pointer; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;
+  <!-- background-color: #5d0068; (that's a purple color)-->
+  <div on:click={() => goto(`/profile/${classID}/${helperDoc.uid}`)} 
+    style="display: flex; align-items: center; cursor: pointer; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;
       border-radius: 4px;
     "
     class="paper-shadow"
   >
-    <span class="material-icons" style="font-size: 2rem; margin-left: 4px; margin-right: 4px; color: white;">
-      engineering
-    </span>
+    <ClassServerMyProfilePicture
+      radiusInPixels={20}
+      circleBorderColor={$user.beaverProfilePicColor}
+    />
 
+    <!-- colors used to be white -->
     <div>
       <div>
-        <a style="color: white">
+        <a style="color: #5d0068;">
         {helperDoc.name}
         </a>
       </div>
-      <div style="color: white">{ helperDoc.numOfVideos || 0 } videos, { helperDoc.minutesViewed || 0 } minutes viewed</div>
+      <div style="color: #5d0068;">{ helperDoc.numOfVideos || 0 } videos, { helperDoc.minutesViewed || 0 } minutes viewed</div>
     </div>
   </div>
 </div>
 
 <script>
-  import PopupHelperProfile from "$lib/PopupHelperProfile.svelte";
+  import PopupHelperProfile from "$lib/PopupHelperProfile.svelte"
+  import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
+  import { user } from '/src/store.js'
+  import { goto } from '$app/navigation'
 
   export let helperDoc
   export let classID

@@ -58,7 +58,8 @@
     const tutorObject = {
       uid: $user.uid,
       name: firstName + ' ' + lastName,
-      phoneNumber: $user.phoneNumber,
+      phoneNumber: $user.phoneNumber || '',
+      email: $user.email || '',
       // designatedRoomID,
       maxShopGalleryOrder: initialNumericalDifference 
     }

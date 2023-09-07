@@ -31,7 +31,7 @@
 
     <div style="display: flex; align-items: center; margin-top: 2%">
       <b style="font-size: 1.2rem; font-family: sans-serif;">
-        n explainers, m members in the server:
+        There are {classTutorsDocs.length} explainers and `n` members in this server:
       </b>
     </div>
 

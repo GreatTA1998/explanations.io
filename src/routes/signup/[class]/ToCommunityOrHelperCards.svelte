@@ -11,14 +11,6 @@
       />
     {/if}
 
-    {#if isSubscribePopupOpen}
-      <PopupConfirmSubscription
-        {selectedTutorDoc}
-        on:popup-close={() => isSubscribePopupOpen = false}
-        on:confirm-clicked={() => handleConfirmSubscription(tutorDocBeingConsidered)}
-      />
-    {/if}   
-
     {#if isTrialPopupOpen}
       <PopupConfirmTrial
         {selectedTutorDoc}
@@ -182,7 +174,6 @@
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import RenderlessLocalVariables from '$lib/RenderlessLocalVariables.svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
-  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte';
   import PopupConfirmTrial from '$lib/PopupConfirmTrial.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'

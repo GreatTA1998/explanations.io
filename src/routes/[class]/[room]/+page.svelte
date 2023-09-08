@@ -82,7 +82,9 @@
                     align-items: center; 
                     flex-direction: row-reverse"
                   >
-                    <Button on:click={() => isShowingNanoQuestionPopup = true}>
+                    <Button on:click={() => isShowingNanoQuestionPopup = true}
+                      style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white;"
+                    >
                       Nano-question
                     </Button>
 
@@ -90,7 +92,9 @@
                       <PopupNanoQuestion on:popup-close={() => isShowingNanoQuestionPopup = false}/>
                     {/if}
 
-                    <Button on:click={() => createAndCopyShareLink(classID, boardDoc.id)}>
+                    <Button on:click={() => createAndCopyShareLink(classID, boardDoc.id)}
+                      style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+                    > 
                       Share
                     </Button>
 
@@ -98,7 +102,7 @@
                     {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
                       <Button 
                         on:click={() => revertToBoard(boardDoc, deleteNonInitialStrokesFromDb)} 
-                        style="background-color: rgb(90 90 90 / 100%); color: white">
+                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
                         Delete
                       </Button>
 
@@ -159,7 +163,7 @@
             >  
               <div style="display: flex; align-items: center">
                 <div 
-                  style="display: flex; width: 100%; color: grey; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;"
+                  style="display: flex; width: 100%; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;"
                 >
                   <RenderlessFetchHelperDoc 
                     {classID}
@@ -174,26 +178,26 @@
                     {:else}
                       {boardDoc.creatorName}
                     {/if}
-                  </RenderlessFetchHelperDoc>
 
-                  <div style="width: 250px; margin-left: 30px;">
-                    <ReusableButton on:click={() => isSubscribePopupOpen = true} 
-                      fontSize="0.8rem"
-                      color="secondary" 
-                      style="color: white;"
-                    >
-                      Subscribe for $10/month
-                    </ReusableButton> 
-                  </div>
-              
-                  {#if isSubscribePopupOpen}
-                    <PopupConfirmSubscription
-                      selectedTutorDoc={helperDoc}
-                      {classID}
-                      on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
-                      on:popup-close={() => isSubscribePopupOpen = false}
-                    />
-                  {/if}      
+                    <div style="width: 250px; margin-left: 30px;">
+                      <ReusableButton on:click={() => isSubscribePopupOpen = true} 
+                        fontSize="0.8rem"
+                        color="secondary" 
+                        style="color: white;"
+                      >
+                        Subscribe for $10/month
+                      </ReusableButton> 
+                    </div>
+                
+                    {#if isSubscribePopupOpen}
+                      <PopupConfirmSubscription
+                        selectedTutorDoc={helperDoc}
+                        {classID}
+                        on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
+                        on:popup-close={() => isSubscribePopupOpen = false}
+                      />
+                    {/if}      
+                  </RenderlessFetchHelperDoc>
 
                   <div style="margin-left: 24px;"></div>
 
@@ -451,6 +455,10 @@
   onDestroy(() => {
     unsubRoomListener()
   })
+
+  function handleConfirmSubscription (param) {
+    alert('Coming soon!')
+  }
 
   function createAndCopyShareLink (classID, blackboardID) {
     // videoID is defined as classID:blackboardID

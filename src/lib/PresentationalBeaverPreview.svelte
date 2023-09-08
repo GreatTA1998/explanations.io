@@ -1,11 +1,3 @@
-{#if isPopupOpen}
-  <PopupHelperProfile
-    {helperDoc}
-    {classID}
-    on:popup-close={() => isPopupOpen = false}
-  />
-{/if}
-
 <div style={$$props.style}>
   <!-- background-color: #5d0068; (that's a purple color)-->
   <div on:click={() => goto(`/profile/${classID}/${helperDoc.uid}`)} 
@@ -32,7 +24,6 @@
 </div>
 
 <script>
-  import PopupHelperProfile from "$lib/PopupHelperProfile.svelte"
   import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
   import { user } from '/src/store.js'
   import { goto } from '$app/navigation'

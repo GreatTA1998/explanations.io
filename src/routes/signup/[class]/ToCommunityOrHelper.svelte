@@ -47,7 +47,6 @@
   import { goto } from '$app/navigation'
   import { toggleClassDetailsDrawerWidth } from '../../../helpers/everythingElse.js'
   import ReusableButton from '$lib/ReusableButton.svelte'
-  import PopupHelperProfile from '$lib/PopupHelperProfile.svelte'
   import ToCommunityOrHelperCards from './ToCommunityOrHelperCards.svelte';
 
   export let classID

@@ -20,7 +20,6 @@
 
 <script>
   import { portal } from '../helpers/actions.js'
-  import PopupHelperProfile from '$lib/PopupHelperProfile.svelte'
   import ClassServerMyProfileHelperProfileCopy from '$lib/ClassServerMyProfileHelperProfileCopy.svelte';
   import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
   import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'

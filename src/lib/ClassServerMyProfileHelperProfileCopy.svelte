@@ -215,6 +215,9 @@
   }
 
   async function handleConfirmSubscription (tutor) {
+    alert('Coming soon!')
+
+    return
     isSubscribePopupOpen = false
     const promises = []
 

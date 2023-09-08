@@ -157,7 +157,7 @@
 
 			{/if}
 
-			{#if active.label === 'Explainers'}
+			{#if active.label === 'Creators'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						This website provides infrastructure so you can easily record & manage blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>
@@ -274,7 +274,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else if active.label === 'Explainers'}
+		{:else if active.label === 'Creators'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.
@@ -404,7 +404,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Viewers', icon: 'smart_display'}, { label: 'Explainers', icon: 'draw'}]
+	let tabs = [{ label: 'Viewers', icon: 'smart_display'}, { label: 'Creators', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {
@@ -533,7 +533,7 @@
 	flex-wrap: wrap;
 
 	// additional properties: 
-	margin-top: 80px;
+	margin-top: 60px;
 }
 
 @media screen and (max-width: 767px) {

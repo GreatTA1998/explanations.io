@@ -24,7 +24,7 @@
         <Label>Name</Label>
       </Cell>
 
-      <Cell columnId="numOfQuestions">
+      <Cell columnId="numOfMembers">
         <Label>Members</Label>
         <!-- For non-numeric columns, icon comes second. -->
         <IconButton class="material-icons">arrow_upward</IconButton>
@@ -63,7 +63,7 @@
             {item.name}
           </div>
         </Cell>
-        <Cell>{item.numOfMembers || 0}</Cell>
+        <Cell>{item.numOfMembers}</Cell>
         <Cell>{item.numOfQuestions}</Cell>
         <Cell>{item.numOfHelpers}</Cell>
         <Cell>{item.numOfVideos}</Cell>

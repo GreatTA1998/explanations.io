@@ -119,7 +119,7 @@
   import { browser } from '$app/environment'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion} from 'firebase/firestore'
   import { computeMaxAvailableDimensions } from '../../helpers/canvas'
-  import { createRoomDoc } from '../../helpers/crud.js'
+  import { createRoomDoc, updateFirestoreDoc } from '../../helpers/crud.js'
   import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
   import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
   import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
@@ -128,6 +128,7 @@
   let { classID, roomID } = data;
   $: ({ classID, roomID } = data); // so it stays in sync when `data` changes
 
+  let classDoc = null
   const classPath = `classes/${classID}/`
   let unsubFuncs = []
   let nameOfClass = ''
@@ -148,6 +149,7 @@
     unsubDbListeners()
     $roomToPeople = []
     fetchClassDoc()
+    updateClassMetadata()
     fetchParticipants()
     fetchRooms()
   }
@@ -167,13 +169,14 @@
       // if (window.matchMedia('screen and (max-width: 480px)').matches) {
       //   drawerWidth.set(0)
       // }
-      
       // route guard: user must be logged in to enter class server
       if (!$user.uid) {
         goto('/')
+        return
       }
 
       window.addEventListener('resize', debouncedResizeHandler)
+
     } else {
       console.log('no browser')
     }
@@ -187,6 +190,19 @@
       window.removeEventListener('resize', debouncedResizeHandler)
     }
   })
+
+  async function updateClassMetadata () {
+    // keep track of number of members regardless of where they are
+    let copyOfMemberUIDs = [] 
+    copyOfMemberUIDs.push($user.uid)
+    const setOfUniqueUIDs = new Set(copyOfMemberUIDs)
+    const arrayOfUniqueUIDs = [...setOfUniqueUIDs]
+        
+    await updateFirestoreDoc(classPath, {
+      memberUIDs: arrayOfUniqueUIDs,
+      numOfMembers: arrayOfUniqueUIDs.length
+    })
+  }
 
   function dragover_handler (e) {
     e.preventDefault()
@@ -222,7 +238,7 @@
 
   async function fetchClassDoc () {
     const classDocRef = doc(getFirestore(), `classes/${classID}`)
-    const classDoc = await getDoc(classDocRef)
+    classDoc = await getDoc(classDocRef)
     nameOfClass = classDoc.data().name
     descriptionOfClass = classDoc.data().description
   }

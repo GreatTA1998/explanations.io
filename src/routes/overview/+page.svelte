@@ -46,7 +46,7 @@
   import ButtonPopupCreateNewClass from '$lib/ButtonPopupCreateNewClass.svelte'
   import { user } from '../../store.js'
   import { signOut, getAuth } from 'firebase/auth'
-  import { onDestroy } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
   import TouchstoneLogin from '$lib/TouchstoneLogin.svelte'

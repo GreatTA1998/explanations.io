@@ -60,7 +60,7 @@
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Setup server for your class
+							Set it up for your class
 						</Label>
 					</Button>
 				</div>
@@ -68,7 +68,9 @@
 
 			<!-- ROTATING GALLERY -->
 			<div class="image-gallery-container">
-				<ImageGallery/>
+				{#if randomlyChosenExemplarVideos.length > 0}
+					<ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
+				{/if}
 			</div>
 		{:else}
 			<div class="header-flex">
@@ -356,6 +358,49 @@
 	import { page } from '$app/stores'
 	import Blackboard from '$lib/Blackboard.svelte'
 
+
+	// RANDOMLY CHOOSE DEMO VIDEOS
+	const exemplarVideos = [
+		{ titleForDebugging: 'Noam: overall idea of free body diagrams in 2.001' ,
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu'
+		},
+		{ titleForDebugging: 'Ben: eigenmatrices' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7' // this is either mine, tony or caleb's
+		},
+		{ titleForDebugging: 'Ammar: theory & application of linear algebra' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW'
+		},
+		{ titleForDebugging: 'Elton: f(x,y) optimization' ,
+			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ' // this is either mine, tony or caleb's
+		},
+		{ titleForDebugging: 'Tony: value iteration with an attached diagram' ,
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7' // this is either mine, tony or caleb's
+		},
+		{ titleForDebugging: 'Caleb: example recursion problem for midterm' ,
+			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q' // this is either mine, tony or caleb's
+		}
+	]
+
+	function getRandomIntInclusive({ min, max }) {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+	}
+
+	let randomlyChosenExemplarVideos = null
+	const nums = new Set();
+	while (nums.size < 3) {
+		nums.add(getRandomIntInclusive({ min: 0, max: 5 }));
+	}
+	const temp = [] 
+	const uniqueIndices = [...nums]
+	for (const uniqueIdx of uniqueIndices) {
+		temp.push(exemplarVideos[uniqueIdx])
+	}
+	randomlyChosenExemplarVideos = temp
+
+	// END OF GENERATING DEMO VIDEOS
+
 	let w
 	let topAppBar
 
@@ -486,6 +531,9 @@
 	justify-content: space-between; */
 
 	flex-wrap: wrap;
+
+	// additional properties: 
+	margin-top: 80px;
 }
 
 @media screen and (max-width: 767px) {
@@ -619,12 +667,15 @@ li {
 	}
 
 	.webflow-container {
-		width: 90%; 
-		max-width: 1280px; /* webflow's value is 1280, partly because their scrollbar takes up width */
+		width: 90%; /* 90% */
+		// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
 		margin-right: auto;
 		margin-left: auto; 
 
 		box-sizing: border-box;
+
+		// additional properties
+		margin-top: 20px;
 	}
 	
 	@media screen and (max-width: 991px) {

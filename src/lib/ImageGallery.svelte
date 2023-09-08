@@ -5,12 +5,12 @@
     <div class="container" style="transform: scale({scaleFactor})">
       <div id="carousel">
         <div style="border: none;">
-          <RenderlessListenToBoard dbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'} let:boardDoc={boardDoc}>
+          <RenderlessListenToBoard dbPath={galleryVideos[0].dbPath} let:boardDoc={boardDoc}>
             <ReusableDoodleVideo
               {boardDoc}
               canvasWidth={galleryItemWidth}
               canvasHeight={galleryItemHeight}
-              boardDbPath={'classes/Mev5x66mSMEvNz3rijym/blackboards/B0npFZMsV3PMAxapkGy1'}
+              boardDbPath={galleryVideos[0].dbPath}
             />
           </RenderlessListenToBoard>
         </div>
@@ -19,12 +19,12 @@
         <div class="unselectable"></div>
 
         <div style="border: none;">
-          <RenderlessListenToBoard dbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q'} let:boardDoc={boardDoc}>
+          <RenderlessListenToBoard dbPath={galleryVideos[1].dbPath} let:boardDoc={boardDoc}>
             <ReusableDoodleVideo
               {boardDoc}
               canvasWidth={galleryItemWidth}
               canvasHeight={galleryItemHeight}
-              boardDbPath={'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q'}
+              boardDbPath={galleryVideos[1].dbPath}
             />
           </RenderlessListenToBoard>
         </div>
@@ -33,12 +33,12 @@
         <div class="unselectable"></div>
 
         <div style="border: none;">
-          <RenderlessListenToBoard dbPath={'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7'} let:boardDoc={boardDoc}>
+          <RenderlessListenToBoard dbPath={galleryVideos[2].dbPath} let:boardDoc={boardDoc}>
             <ReusableDoodleVideo
               {boardDoc}
               canvasWidth={galleryItemWidth}
               canvasHeight={galleryItemHeight}
-              boardDbPath={'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7'}
+              boardDbPath={galleryVideos[2].dbPath}
             />
           </RenderlessListenToBoard>
         </div>
@@ -54,7 +54,9 @@
   import RenderlessListenToBoard from './RenderlessListenToBoard.svelte'
   import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'
   import { onMount } from 'svelte'
- 
+
+  export let galleryVideos
+
   let scaleFactor
 
   onMount(() => {

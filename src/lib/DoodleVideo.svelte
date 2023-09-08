@@ -133,7 +133,7 @@
   let bgCtx
   let AudioPlayer
   let recursiveSyncer
-  let playbackSpeed = 2
+  let playbackSpeed = 1
   let updateViewMinutesTimeoutID
 
   $: hasSubscribedToCreator = $user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)

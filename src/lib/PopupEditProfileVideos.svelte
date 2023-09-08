@@ -107,7 +107,8 @@
     return new Promise(async resolve => {
       const collectionRef = collection(getFirestore(), `classes/${classID}/blackboards`)
       const q = query(collectionRef, where('creatorUID', '==', $user.uid))
-      const allVideos = await getFirestoreQuery(q)
+      const allBlackboards = await getFirestoreQuery(q)
+      const allVideos = allBlackboards.filter(board => board.audioDownloadURL)
       resolve(allVideos)
     })
   }

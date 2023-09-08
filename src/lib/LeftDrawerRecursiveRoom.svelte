@@ -426,7 +426,7 @@ async function deleteRoom (room) {
   await Promise.all(subdeleteRequests)
 
   // update pointers: move all the children OUT of the folder getting deleted
-  // 1. fetch all the sub-room 
+  // 1. fetch all the sub-rooms
   // 2. update all the parent pointers
   const folderPromises = []
   const roomsRef = collection(db, `classes/${classID}/rooms/`)
@@ -439,11 +439,17 @@ async function deleteRoom (room) {
       })
     )
   }
-  folderPromises.push(
-    updateFirestoreDoc(`classes/${classID}/rooms/${room.parentRoomID}`, {
-      numOfChildren: increment(subRooms.length)
-    })
-  )
+
+  // update grandparent's children count (though if deleted room's children would end up at the top level, 
+  // the grandparent doesn't exist, hence if statement 
+  if (room.parentRoomID) {
+    folderPromises.push(
+      updateFirestoreDoc(`classes/${classID}/rooms/${room.parentRoomID}`, {
+        numOfChildren: increment(subRooms.length)
+      })
+    )
+  }
+
   await Promise.all(folderPromises)
 
   // finally delete the room doc itself

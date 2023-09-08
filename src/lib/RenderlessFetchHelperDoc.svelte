@@ -7,25 +7,34 @@
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomID } from '/src/helpers/utility.js'
   import { user } from '/src/store.js'
-  import { tick } from 'svelte'
+  import { tick, onMount, onDestroy } from 'svelte'
   
   export let classID 
   export let creatorUID
 
+  let unsubSnapshotListener = null 
   let helperDoc
-
   const helperRef = collection(getFirestore(), `classes/${classID}/tutors`)
   const q = query(helperRef, where('uid', '==', creatorUID))
-  onSnapshot(q, (snapshot) => {
-    if (snapshot.empty) {
-      console.log('No matching documents.')
-      // TO-DO: throw an explicit error
-      createInitialDoc()
-      return
-    }
-    snapshot.docs.forEach(doc => {
-      helperDoc = { id: doc.id, ...doc.data(), path: doc.ref.path }
+
+  onMount(() => {
+    unsubSnapshotListener = onSnapshot(q, (snapshot) => {
+      if (snapshot.empty) {
+        console.log('Cannot find tutor doc, creating a new profile')
+        // TO-DO: throw an explicit error
+        createInitialDoc()
+        return
+      }
+      snapshot.docs.forEach(doc => {
+        helperDoc = { id: doc.id, ...doc.data(), path: doc.ref.path }
+      })
     })
+  })
+
+  onDestroy(() => {
+    if (unsubSnapshotListener) {
+      unsubSnapshotListener()
+    }
   })
 
   function createInitialDoc () {

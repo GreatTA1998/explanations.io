@@ -14,9 +14,6 @@
 <script>
   export let radiusInPixels = 64
   export let circleBorderColor = ''
-
-  console.log("circleBorderColor =", circleBorderColor)
-
 </script>
 
 <style>

@@ -34,7 +34,7 @@
       </span>
       <div style="margin-right: 4px;"></div>
       <div style="font-size: 1.2rem; font-weight: 400;">
-        New question
+        Ask server
       </div>
     </div>
 

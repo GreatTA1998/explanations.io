@@ -180,7 +180,6 @@
       querySnapshot.forEach((doc) => {
         output.push({ id: doc.id, path: doc.ref.path, ...doc.data() })
       })
-      console.log('FINALLY FINISHEDshopVideoIDs =', output)
       resolve(output)
     })
   }

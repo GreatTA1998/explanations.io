@@ -23,6 +23,13 @@
         <IconButton class="material-icons">arrow_upward</IconButton>
         <Label>Name</Label>
       </Cell>
+
+      <Cell columnId="numOfQuestions">
+        <Label>Members</Label>
+        <!-- For non-numeric columns, icon comes second. -->
+        <IconButton class="material-icons">arrow_upward</IconButton>
+      </Cell>
+
       <Cell columnId="numOfQuestions">
         <Label>Questions</Label>
         <!-- For non-numeric columns, icon comes second. -->
@@ -30,7 +37,7 @@
       </Cell>
       <!-- The columnId is used for sorting -->
       <Cell columnId="numOfHelpers">
-        <Label>Helpers</Label>
+        <Label>Creators</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       <Cell columnId="numOfVideos">
@@ -42,7 +49,7 @@
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       <Cell columnId="paidMonthlySubscriptions">
-        <Label>$10/month subscriptions</Label>
+        <Label>Paid subscriptions</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
     </Row>
@@ -56,6 +63,7 @@
             {item.name}
           </div>
         </Cell>
+        <Cell>{item.numOfMembers || 0}</Cell>
         <Cell>{item.numOfQuestions}</Cell>
         <Cell>{item.numOfHelpers}</Cell>
         <Cell>{item.numOfVideos}</Cell>
@@ -96,6 +104,7 @@
   type MITClass = {
     id: string; 
     name: string;
+    numOfMembers: string;
     numOfQuestions: number; 
     numOfHelpers: number;
     numOfVideos: number; 

@@ -24,6 +24,8 @@
   const auth = getAuth()
   const db = getFirestore()
 
+  let unsubUserDocListener = null 
+
   onMount(async () => {
     onAuthStateChanged(auth, reactToUserChange)
   })
@@ -34,9 +36,10 @@
 
       if ($idOfServerNewUserWantedToEnter) {
         console.log('from a previous redirect request')
-        goto(`/${$idOfServerNewUserWantedToEnter}/my-profile`)
+        goto(`/${$idOfServerNewUserWantedToEnter}/request-video`)
       }
 
+      // NOTE: the partial hydration will give incorrect UIDs for accounts that need forwarding
       // partially hydrate the user so we can start rendering the page in parallel
       user.set({ 
         // email: resultUser.email || '', // email information is unavailable because Touchstone has some encoding for the properties
@@ -60,7 +63,8 @@
 
       await migrateOldUserSchemaToNew(mirrorUser.data())
 
-      await listenToUserDoc(uid)
+      await listenToUserDocAndHandleForwarding(uid)
+
       // this promise resolves when we receive full user snapshot for the first time,
       // exactly the place to handle redirection
       if ($page.url.pathname === '/' && $user.mostRecentClassAndRoomID) {
@@ -147,20 +151,29 @@
     })
   }
 
-  async function listenToUserDoc (uid) {
+  async function listenToUserDocAndHandleForwarding (uid) {
     return new Promise((resolve, reject) => {
       const mirrorUserRef = doc(db, `users/${uid}`)
 
-      // no need to unsub because it'd mean we quit the application
-      onSnapshot(mirrorUserRef, userDoc => {
-        if (!userDoc.exists) {
+      unsubUserDocListener = onSnapshot(mirrorUserRef, (snap) => {
+        if (!snap.exists) {
           reject("Error in listenToUserDoc: uid doesn't exist")
           user.set(null)
         } else {
-          user.set({ 
-            id: userDoc.id, 
-            ...userDoc.data() 
-          })
+          const userDoc = snap.data()
+          // keep forwarding to another account until we find a destination
+          //   e.g. Ben uses Touchstone but his old videos are with his phone account
+          if (userDoc.forwardingAccountUID) {
+            unsubUserDocListener()
+            listenToUserDocAndHandleForwarding(userDoc.forwardingAccountUID)
+          } 
+          else {
+            // arrived at destination
+            user.set({ 
+              id: snap.id, 
+              ...userDoc
+            })
+          }
           resolve()
         }
       })

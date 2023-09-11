@@ -14,7 +14,7 @@
 							class="button-shaped-round"
 						>
 							<Label>blog</Label>
-							<Icon class="material-icons">auto_stories</Icon>
+							<!-- <Icon class="material-icons">auto_stories</Icon> -->
 						</Button>
 					</a>
 
@@ -25,7 +25,7 @@
 							class="button-shaped-round"
 						>
 							<Label>github</Label>
-							<Icon class="material-icons">terminal</Icon>
+							<!-- <Icon class="material-icons">terminal</Icon> -->
 						</Button>
 					</a>
 				</Section>
@@ -79,7 +79,7 @@
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Start your channel
+							Create your first video
 						</Label>
 					</Button>
 				</div>

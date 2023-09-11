@@ -1,5 +1,5 @@
 <div class="top-banner-to-warn-experimental">
-  This website is in beta, any questions call 503 250 3868 or email elton@explanations.app
+  This website is in beta, for <i>absolutely anything</i> I can help with try calling 503 250 3868 or emailing elton@explanations.app
 </div>
 
 <style>

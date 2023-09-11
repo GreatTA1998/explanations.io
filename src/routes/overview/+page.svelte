@@ -1,3 +1,4 @@
+<TopBannerWarnExperimental/>
 <div style="margin-top: 2%; margin-left: 2%; ">
   <div style="display: flex; align-items: center">
     <img  
@@ -37,6 +38,7 @@
 {/if}
 
 <script>
+  import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte';
   import ExperimentalTable from '$lib/ExperimentalTable.svelte'
   import { goto } from '$app/navigation';
   import { getFirestore, onSnapshot, collection, query, where } from 'firebase/firestore'

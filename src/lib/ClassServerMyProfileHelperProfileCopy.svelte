@@ -119,8 +119,6 @@
 
   const dispatch = createEventDispatcher()
 
-  console.log('helperDoc =', helperDoc)
-
   let incrementWhenGalleryRearranged = 0
   let isSubscribePopupOpen = false
 

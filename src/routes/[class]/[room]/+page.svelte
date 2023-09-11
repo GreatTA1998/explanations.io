@@ -534,7 +534,6 @@
     unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
       // a room can be deleted at any moment - when that happens, redirect
       if (!snapshot.exists()) {
-        console.log('request-video')
         // goto(`/${classID}/${classID}`)
       } else {
         roomDoc = { 

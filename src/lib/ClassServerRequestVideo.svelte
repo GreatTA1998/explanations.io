@@ -2,12 +2,6 @@
   <LeftDrawerToggleButton/>
 
   <div style="padding: 16px;">
-    {#if !$user.phoneNumber}
-      <div style="margin-left: 24px; display: flex; align-items: center; width: 95%; margin-left: auto; margin-right: auto;">
-        Log in first
-        <PhoneLogin/>
-      </div>
-    {/if}
 
     <Textfield 
       style="width: 100%;"
@@ -83,7 +77,7 @@
   // let { classID, roomID } = data
   // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 
-  let questionTitleInput = 'Edit question title here...' 
+  let questionTitleInput = 'Question title...' 
   let questionDescriptionInput = ''
   $: isAskingCommunityOrHelper = ($user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)) ? 'helper' : 'community'
   let pdfOrImageAttachment = null

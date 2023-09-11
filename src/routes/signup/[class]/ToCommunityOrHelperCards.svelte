@@ -11,14 +11,6 @@
       />
     {/if}
 
-    {#if isSubscribePopupOpen}
-      <PopupConfirmSubscription
-        {selectedTutorDoc}
-        on:popup-close={() => isSubscribePopupOpen = false}
-        on:confirm-clicked={() => handleConfirmSubscription(tutorDocBeingConsidered)}
-      />
-    {/if}   
-
     {#if isTrialPopupOpen}
       <PopupConfirmTrial
         {selectedTutorDoc}
@@ -31,7 +23,7 @@
 
     <div style="display: flex; align-items: center; margin-top: 2%">
       <b style="font-size: 1.2rem; font-family: sans-serif;">
-        Explainers
+        There are {classTutorsDocs.length} explainers and `n` members in this server:
       </b>
     </div>
 
@@ -42,22 +34,21 @@
       />
     {/if}
 
-    <div style="display: flex; font-family: sans-serif; margin-top: 1%;">
-      <div>
+    <div style="display: flex; font-family: sans-serif; margin-top: 1%; flex-wrap: wrap;">
         {#each classTutorsDocs as helper}
-          <div>
+          <!-- <div style="width: 300px;"> -->
             <!--   on:click={() => { dispatch('input', { selectedTutorUID: helper.uid, selectedTutorDoc: helper })}} -->
             <PresentationalBeaverPreview 
               helperDoc={helper}
               {classID}
-              style="margin-bottom: 8px;"
+              style="margin-bottom: 8px; margin-right: 20px; width: 280px;"
             >
             </PresentationalBeaverPreview>
-          </div>
+          <!-- </div> -->
         {/each} 
-      </div>
+      <!-- </div> -->
 
-      <div class="tutor-business-card-1" style="margin-left: 2%" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
+      <!-- <div class="tutor-business-card-1" style="margin-left: 2%" on:click={() => dispatch('community-asking')} class:orange-border={isAskingCommunityOrHelper === 'community'}>
         <Card padded style="width: 400px; box-sizing: border-box">
           <div style="display: flex; align-items: center">
             <input type="checkbox" checked={isAskingCommunityOrHelper === 'community'} style="accent-color: hsl(0,0%,0%, 0.80); height: 25px; width: 25px; font-size: 5rem;"/>
@@ -71,8 +62,9 @@
             can answer your question
           </Content>
         </Card>
-      </div>
+      </div> -->
 
+      <!-- 
       <div style="margin-left: 2%;" class="tutor-business-card-2" on:click={() => dispatch('helper-asking')} class:purple-border={isAskingCommunityOrHelper === 'helper'}>
         <Card padded style="width: 400px; box-sizing: border-box; ">
           <div style="display: flex; align-items: center">
@@ -91,7 +83,8 @@
               </ol>
           </Content>
         </Card>
-      </div>
+      </div> 
+      -->
     </div>
 
     <div style="display: flex; overflow-x: auto; margin-top: 12px;">
@@ -181,7 +174,6 @@
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import RenderlessLocalVariables from '$lib/RenderlessLocalVariables.svelte'
   import PhoneLogin from '$lib/PhoneLogin.svelte'
-  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte';
   import PopupConfirmTrial from '$lib/PopupConfirmTrial.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte';
   import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'

@@ -43,7 +43,7 @@
       </div>
     {/each}
 
-    <div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; justify-content: space-between; height: 30px;">
       {#if $user.uid === selectedTutorUID}
         {#if isEditProfileVideosPopupOpen}
           <!-- we dispatch 'video-rearranged' to rerender the helper profile  -->

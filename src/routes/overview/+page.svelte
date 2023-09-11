@@ -1,3 +1,4 @@
+<TopBannerWarnExperimental/>
 <div style="margin-top: 2%; margin-left: 2%; ">
   <div style="display: flex; align-items: center">
     <img  
@@ -10,40 +11,54 @@
       class="logo-image"
     >
     <h1 style="margin-left: 12px; font-family: sans-serif;">
-      All servers
+      Class servers
     </h1>
   </div>
 
   <ButtonPopupCreateNewClass/>
 
-  {#if $user.phoneNumber}
+  {#if $user.uid}
     <button on:click={logOut}>
       Log out
     </button>
+  {/if}
+
+  {#if isSignInPopupOpen}
+    <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
   {/if}
 </div>
 
 <div style="margin-bottom: 2%"></div>
 
 {#if sortedYoutubeClasses.length > 0} 
-  <ExperimentalTable initialItems={sortedYoutubeClasses}/>
+  <ExperimentalTable 
+    initialItems={sortedYoutubeClasses}
+    on:login-required={() => isSignInPopupOpen = true}
+  />
 {/if}
 
 <script>
+  import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte';
   import ExperimentalTable from '$lib/ExperimentalTable.svelte'
   import { goto } from '$app/navigation';
   import { getFirestore, onSnapshot, collection, query, where } from 'firebase/firestore'
   import { setFirestoreDoc, updateFirestoreDoc, getFirestoreCollection } from '../../helpers/crud.js'
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import { getRandomID } from '../../helpers/utility.js'
   import ButtonPopupCreateNewClass from '$lib/ButtonPopupCreateNewClass.svelte'
   import { user } from '../../store.js'
   import { signOut, getAuth } from 'firebase/auth'
-  import { onDestroy } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
-
+  import TouchstoneLogin from '$lib/TouchstoneLogin.svelte'
+  import PhoneLogin from '$lib/PhoneLogin.svelte'
+  
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 
+
+  let isShowingPhoneLogin = false
+  let isSignInPopupOpen = false
 
   fetchYoutubeClasses().then(() => {
     // then compute secondary statistics
@@ -65,7 +80,10 @@
       const auth = getAuth()
       await signOut(auth)
     }
-    goto('/')
+    // clear the cookie cache otherwise the user persists for some reason
+    // or it could be store.js listeners not having a proper lifecycle for logout
+    window.location.reload()
+    // goto('/')
   }
 
   // snapshot listener of all the classes

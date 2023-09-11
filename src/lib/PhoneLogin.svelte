@@ -36,6 +36,7 @@
 <script>
   import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
   import Button from '@smui/button'
+  import { userInfoFromAuthProvider } from '/src/store.js'
   import { goto } from '$app/navigation'
 
   // take an "acceptInternationalNumbers" prop
@@ -139,10 +140,16 @@
   function verifyConfirmationCode () {
     window.confirmationResult.confirm(phoneConfirmCode).then((result) => {
       // User signed in successfully.
-      const user = result.user;
+      // const user = result.user;
+
+      // this information is used to create the first-time user `mirrorDoc`
+      userInfoFromAuthProvider.set(result.user)
+
+
+      // `onAuthStateChanged` listener in the root __layout will take care of the rest
+
 
       // COUPLING THE REDIRECT LOGIN IS NOT GOOD, YOU WANT TO SEPARATE IT OUT
-
       // goto('O00mSbBEYQxTnv3cKkbe/O00mSbBEYQxTnv3cKkbe', { replaceState: true })
       // goto('AsUl1VWQ7zzxZsD5epL7/AsUl1VWQ7zzxZsD5epL7', { replaceState: true })
       // ...

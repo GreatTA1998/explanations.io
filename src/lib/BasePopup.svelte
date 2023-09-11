@@ -1,5 +1,5 @@
 <div class="popup-window" style={$$props.style}>
-  <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px">
+  <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px; margin-top: 10px;">
     <slot name="title">
 
     </slot>
@@ -53,6 +53,6 @@
     min-height: 10vh;
     max-height: 90vh;
     min-width: 33vw; 
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 </style>

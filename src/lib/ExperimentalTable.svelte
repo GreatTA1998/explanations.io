@@ -23,6 +23,13 @@
         <IconButton class="material-icons">arrow_upward</IconButton>
         <Label>Name</Label>
       </Cell>
+
+      <Cell columnId="numOfMembers">
+        <Label>Members</Label>
+        <!-- For non-numeric columns, icon comes second. -->
+        <IconButton class="material-icons">arrow_upward</IconButton>
+      </Cell>
+
       <Cell columnId="numOfQuestions">
         <Label>Questions</Label>
         <!-- For non-numeric columns, icon comes second. -->
@@ -30,7 +37,7 @@
       </Cell>
       <!-- The columnId is used for sorting -->
       <Cell columnId="numOfHelpers">
-        <Label>Helpers</Label>
+        <Label>Creators</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       <Cell columnId="numOfVideos">
@@ -42,20 +49,21 @@
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       <Cell columnId="paidMonthlySubscriptions">
-        <Label>$10/month subscriptions</Label>
+        <Label>Paid subscriptions</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
     </Row>
   </Head>
   <Body>
     {#each items as item (item.id)}
-      <Row on:click={() => goto(`${item.id}/request-video`)} >
+      <Row on:click={() => handleClassServerClick(item)} >
         <!-- <Cell numeric>{item.id}</Cell> -->
         <Cell numeric>
           <div style="color: purple; text-decoration: underline; cursor: pointer;">
             {item.name}
           </div>
         </Cell>
+        <Cell>{item.numOfMembers}</Cell>
         <Cell>{item.numOfQuestions}</Cell>
         <Cell>{item.numOfHelpers}</Cell>
         <Cell>{item.numOfVideos}</Cell>
@@ -75,21 +83,34 @@
     Label,
     SortValue,
   } from '@smui/data-table';
-  import IconButton from '@smui/icon-button';
-
+  import IconButton from '@smui/icon-button'
   import { goto } from '$app/navigation'
+  import { user, idOfServerNewUserWantedToEnter } from '/src/store.js'
+  import { createEventDispatcher } from 'svelte'
 
   export let initialItems 
+
+  const dispatch = createEventDispatcher()
+
+  function handleClassServerClick (item) {
+    if (!$user.uid) {
+      idOfServerNewUserWantedToEnter.set(item.id)
+      dispatch('login-required')
+    } else { 
+      goto(`${item.id}/request-video`)
+    }
+  }
  
-type MITClass = {
-  id: string; 
-  name: string;
-  numOfQuestions: number; 
-  numOfHelpers: number;
-  numOfVideos: number; 
-  minutesViewed: number;
-  paidMonthlySubscriptions: number; 
-}
+  type MITClass = {
+    id: string; 
+    name: string;
+    numOfMembers: string;
+    numOfQuestions: number; 
+    numOfHelpers: number;
+    numOfVideos: number; 
+    minutesViewed: number;
+    paidMonthlySubscriptions: number; 
+  }
 
   let items: MITClass[] = initialItems
 

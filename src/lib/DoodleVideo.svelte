@@ -133,7 +133,7 @@
   let bgCtx
   let AudioPlayer
   let recursiveSyncer
-  let playbackSpeed = 2
+  let playbackSpeed = 1
   let updateViewMinutesTimeoutID
 
   $: hasSubscribedToCreator = $user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)
@@ -232,7 +232,7 @@
 
     /**
      * `allFrames` is computed only once, and stores INDICES, 
-     * so it relies on `strokesArray` staying the IMMUTABLE,
+     * so it relies on `strokesArray` staying IMMUTABLE,
      * otherwise strange errors happen when accesssing `strokesArray[index]`
      */
     const allPoints = [];
@@ -289,7 +289,9 @@
   function syncStrokesToAudio () {
     if (!AudioPlayer) return
     const nextFrame = allFrames[nextFrameIdx];
-    if (!nextFrame || nextFrame.startTime > AudioPlayer.currentTime) { // !nextFrame: nextFrame is undefined after a video finishes
+    // !nextFrame: nextFrame is undefined after a video finishes
+    // ahead of video now (maybe because we slid back the audio player): nextFrame.startTime > AudioPlayer.currentTime 
+    if (!nextFrame || nextFrame.startTime > AudioPlayer.currentTime) { 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       nextFrameIdx = 0
     }
@@ -322,6 +324,7 @@
     )
   }
 
+  // TO-DO: rename to "handleResize"
   function rerenderStrokes () {
     return new Promise(async (resolve) => {
       if (recursiveSyncer) {

@@ -1,26 +1,26 @@
 <BasePopup on:popup-close>
   <h2 slot="title" style="font-family: sans-serif;">
-    Get started
+    Become a subscriber
   </h2>
-  <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
-    {#if !$user.phoneNumber}
-      1. Log in with mobile number
-      <PhoneLogin/>
-    {:else if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
-      <div>First name</div>
-      <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
-
-      <div>Last name</div>
-      <input bind:value={inputFieldLastName} placeholder=""/>
-
-      <Button on:click={updateUserName}>Submit</Button>
-    {/if}
+  <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">    
 
     <div style="font-size: 1rem;">
-      Refund policy: refund anytime for any reason; refunds are covered by Explain so it's painless for students and tutors if things don't work out.
+      <b>Benefits of subscribing:</b>
+      <div style="padding-left: 8px;">
+        <li>
+          Directly communicate with {selectedTutorDoc.name.split(' ')[0]} in their subscribers-only group chat
+        </li>
+        <li>Access to subscriber-only videos</li>
+        <li>Gain pioneer subscriber badge permanently</li>
+        <li>Fund creation of affordable education content for the internet</li>
+      </div>
     </div>
 
-    <div style="height: 20px; display: flex; margin-top: 20px;">
+    <br>
+    
+    <b>Refund policy: </b> full refund any time, any reason before end of month. 
+
+    <div style="height: 20px; display: flex; align-items: center; margin-top: 20px;">
       <Checkbox bind:checked touch />
       I've venmo'ed $10
       <!-- ${selectedTutorDoc.weeklyPrice || 15}  -->

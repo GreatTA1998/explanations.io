@@ -7,7 +7,9 @@
   {disabled}
   style="height: 40px; border-radius: 0px; width: 100%;"
 >
-  <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 1rem; font-weight: 600">
+  <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; 
+    font-size: {fontSize}; font-weight: 600"
+  >
     <slot>
       
     </slot>
@@ -20,4 +22,5 @@
   export let disabled = false
   export let color = "secondary"
   export let variant = "raised"
+  export let fontSize = "1rem"
 </script>

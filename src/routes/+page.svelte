@@ -4,7 +4,7 @@
 			<Row>
 				<Section>
 					<Title style="font-size: 1.95rem; padding-left: 6px">
-						Explain
+						Explanations
 					</Title>
 
 					<a href="https://eltonlin.substack.com/archive" target="_blank" 
@@ -14,7 +14,7 @@
 							class="button-shaped-round"
 						>
 							<Label>blog</Label>
-							<Icon class="material-icons">auto_stories</Icon>
+							<!-- <Icon class="material-icons">auto_stories</Icon> -->
 						</Button>
 					</a>
 
@@ -25,7 +25,7 @@
 							class="button-shaped-round"
 						>
 							<Label>github</Label>
-							<Icon class="material-icons">terminal</Icon>
+							<!-- <Icon class="material-icons">terminal</Icon> -->
 						</Button>
 					</a>
 				</Section>
@@ -50,20 +50,17 @@
 	</TabBar>
 	
 	<div class="webflow-container">
-		{#if active.label === 'Learn'}
+		{#if active.label === 'Viewers'}
 			<div class="header-flex">
-				<p class="header-title">
-					<!-- Rediscover that learning can be enjoyable if you understand it -->
-					Learn efficiently.
+				<p class="header-title" style="font-size: 4em;">
+					Watch blackboard explanations by former TAs & students
 				</p>
 				<div class="header-subcopy-wrapper">
-					<!-- Sometimes 5-minute videos can save a semester of misunderstandings -->
 					<div class="header-subcopy">
-						Ask former TAs, students & classmates to explain things using <u>blackboard videos</u>
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Ask a question
+							Set it up for your class
 						</Label>
 					</Button>
 				</div>
@@ -71,30 +68,26 @@
 
 			<!-- ROTATING GALLERY -->
 			<div class="image-gallery-container">
-				<ImageGallery/>
+				{#if randomlyChosenExemplarVideos.length > 0}
+					<ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
+				{/if}
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title">Explain things you enjoy</p>	
+				<p class="header-title" style="font-size: 4em;">Help people with your explanations, for free and for money</p>	
 				<div class="header-subcopy-wrapper">
-					<div class="header-subcopy">
-						Teach what you love, supported by your subscribers
-					</div>
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Create your channel
+							Create your first video
 						</Label>
 					</Button>
 				</div>
 			</div>			
-
-			<div style="position: relative; width: 600px; height: 500px;">
-				<Blackboard canvasWidth={600} canvasHeight={500} strokesArray={[]}/>
-			</div>
+			<OfflineMultislideRecordingDemo/>
 		{/if}
 
-			{#if active.label === 'Learn'}
+			{#if active.label === 'Viewers'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
@@ -161,7 +154,7 @@
 
 			{/if}
 
-			{#if active.label === 'Explain'}
+			{#if active.label === 'Creators'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						This website provides infrastructure so you can easily record & manage blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>
@@ -278,7 +271,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else if active.label === 'helpers'}
+		{:else if active.label === 'Creators'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.
@@ -361,11 +354,55 @@
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
 	import Blackboard from '$lib/Blackboard.svelte'
+	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
+
+
+	// RANDOMLY CHOOSE DEMO VIDEOS
+	const exemplarVideos = [
+		{ titleForDebugging: 'Noam: overall idea of free body diagrams in 2.001' ,
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu'
+		},
+		{ titleForDebugging: 'Ben: eigenmatrices' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7' // this is either mine, tony or caleb's
+		},
+		{ titleForDebugging: 'Ammar: theory & application of linear algebra' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW'
+		},
+		{ titleForDebugging: 'Elton: f(x,y) optimization' ,
+			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ' // this is either mine, tony or caleb's
+		},
+		{ titleForDebugging: 'Tony: value iteration with an attached diagram' ,
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7' // this is either mine, tony or caleb's
+		},
+		{ titleForDebugging: 'Caleb: example recursion problem for midterm' ,
+			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q' // this is either mine, tony or caleb's
+		}
+	]
+
+	function getRandomIntInclusive({ min, max }) {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+	}
+
+	let randomlyChosenExemplarVideos = null
+	const nums = new Set();
+	while (nums.size < 3) {
+		nums.add(getRandomIntInclusive({ min: 0, max: 5 }));
+	}
+	const temp = [] 
+	const uniqueIndices = [...nums]
+	for (const uniqueIdx of uniqueIndices) {
+		temp.push(exemplarVideos[uniqueIdx])
+	}
+	randomlyChosenExemplarVideos = temp
+
+	// END OF GENERATING DEMO VIDEOS
 
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Explain', icon: 'draw'}]
+	let tabs = [{ label: 'Viewers', icon: 'smart_display'}, { label: 'Creators', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {
@@ -492,6 +529,9 @@
 	justify-content: space-between; */
 
 	flex-wrap: wrap;
+
+	// additional properties: 
+	margin-top: 60px;
 }
 
 @media screen and (max-width: 767px) {
@@ -625,12 +665,15 @@ li {
 	}
 
 	.webflow-container {
-		width: 90%; 
-		max-width: 1280px; /* webflow's value is 1280, partly because their scrollbar takes up width */
+		width: 90%; /* 90% */
+		// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
 		margin-right: auto;
 		margin-left: auto; 
 
 		box-sizing: border-box;
+
+		// additional properties
+		margin-top: 20px;
 	}
 	
 	@media screen and (max-width: 991px) {

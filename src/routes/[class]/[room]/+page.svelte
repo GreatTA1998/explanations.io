@@ -1,5 +1,8 @@
+<!-- This is a quickfix for routing -->
 {#if roomID === 'request-video'}
   <ClassServerRequestVideo {classID}/>
+{:else if roomID === 'my-profile'}
+  <ClassServerMyProfile {classID} profileUID={$user.uid}/>
 {:else}
 
 {#if roomDoc}
@@ -72,7 +75,6 @@
                     creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
                   }}
                 > 
-                  
                   <div style="
                     margin-left: auto;
                     margin-right: 8px; 
@@ -80,11 +82,27 @@
                     align-items: center; 
                     flex-direction: row-reverse"
                   >
-                    <!-- boardDoc will always have a creatorUID because anonymous login -->
+                    <Button on:click={() => isShowingNanoQuestionPopup = true}
+                      style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white;"
+                    >
+                      Nano-question
+                    </Button>
+
+                    {#if isShowingNanoQuestionPopup}
+                      <PopupNanoQuestion on:popup-close={() => isShowingNanoQuestionPopup = false}/>
+                    {/if}
+
+                    <Button on:click={() => createAndCopyShareLink(classID, boardDoc.id)}
+                      style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+                    > 
+                      Share
+                    </Button>
+
+                    <!-- boardDoc will always have a `creatorUID` because anonymous login -->
                     {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
                       <Button 
                         on:click={() => revertToBoard(boardDoc, deleteNonInitialStrokesFromDb)} 
-                        style="background-color: rgb(90 90 90 / 100%); color: white">
+                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
                         Delete
                       </Button>
 
@@ -145,7 +163,7 @@
             >  
               <div style="display: flex; align-items: center">
                 <div 
-                  style="display: flex; width: 100%; color: grey; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;"
+                  style="display: flex; width: 100%; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;"
                 >
                   <RenderlessFetchHelperDoc 
                     {classID}
@@ -160,6 +178,25 @@
                     {:else}
                       {boardDoc.creatorName}
                     {/if}
+
+                    <div style="width: 250px; margin-left: 30px;">
+                      <ReusableButton on:click={() => isSubscribePopupOpen = true} 
+                        fontSize="0.8rem"
+                        color="secondary" 
+                        style="color: white;"
+                      >
+                        Subscribe for $10/month
+                      </ReusableButton> 
+                    </div>
+                
+                    {#if isSubscribePopupOpen}
+                      <PopupConfirmSubscription
+                        selectedTutorDoc={helperDoc}
+                        {classID}
+                        on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
+                        on:popup-close={() => isSubscribePopupOpen = false}
+                      />
+                    {/if}      
                   </RenderlessFetchHelperDoc>
 
                   <div style="margin-left: 24px;"></div>
@@ -390,6 +427,9 @@
   import ClassServerRequestVideo from '$lib/ClassServerRequestVideo.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
+  import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
+  import ClassServerMyProfile from '$lib/ClassServerMyProfile.svelte'
+  import ReusableButton from '$lib/ReusableButton.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -405,6 +445,7 @@
   let creatorDoc
 
   let isMoveVideoPopupOpen = false
+  let isShowingNanoQuestionPopup = false
 
   $: boardsDbPath = `classes/${classID}/blackboards/`
   $: roomsDbPath = `classes/${classID}/rooms/`
@@ -414,6 +455,18 @@
   onDestroy(() => {
     unsubRoomListener()
   })
+
+  function handleConfirmSubscription (param) {
+    alert('Coming soon!')
+  }
+
+  function createAndCopyShareLink (classID, blackboardID) {
+    // videoID is defined as classID:blackboardID
+    // const shareLink = window.location.origin + '/video/' + classID + ':' + blackboardID 
+    const shareLink = window.location.origin + '/embed/' + classID + '/' + blackboardID
+    navigator.clipboard.writeText(shareLink)
+    alert('Share link has been copied, you can now paste it anywhere.')
+  }
   
   function makePaid (boardDoc) {
     updateFirestoreDoc(boardDoc.path, {
@@ -481,7 +534,6 @@
     unsubRoomListener = onSnapshot(roomRef, (snapshot) => {
       // a room can be deleted at any moment - when that happens, redirect
       if (!snapshot.exists()) {
-        console.log('request-video')
         // goto(`/${classID}/${classID}`)
       } else {
         roomDoc = { 
@@ -765,6 +817,7 @@
       numOfVideos: increment(1)
     })
 
+    // upload the audio file
     const storage = getStorage()
     const audioRef = ref(storage, `audio/${getRandomID()}`)
     await uploadBytes(audioRef, audioBlob)

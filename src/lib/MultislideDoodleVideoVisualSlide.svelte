@@ -3,7 +3,6 @@
     position: relative; 
     width: ${canvasWidth}px; 
     height: ${canvasHeight}px;
-    border: 2px solid red;
   `}
 >
   <!-- on:click={togglePlayPause} -->
@@ -47,8 +46,8 @@
   export let strokesArray
   export let currentTime
   export let hasPlaybackStarted
-  export let canvasWidth = 300
-  export let canvasHeight = 150 
+  export let canvasWidth
+  export let canvasHeight
   export let hasAudioSliderJumped
 
   const dispatch = createEventDispatcher()

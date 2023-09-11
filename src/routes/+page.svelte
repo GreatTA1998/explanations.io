@@ -84,10 +84,7 @@
 					</Button>
 				</div>
 			</div>			
-
-			<div style="position: relative; width: 600px; height: 500px;">
-				<Blackboard canvasWidth={600} canvasHeight={500} strokesArray={[]}/>
-			</div>
+			<OfflineMultislideRecordingDemo/>
 		{/if}
 
 			{#if active.label === 'Viewers'}
@@ -357,6 +354,7 @@
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
 	import Blackboard from '$lib/Blackboard.svelte'
+	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
 
 
 	// RANDOMLY CHOOSE DEMO VIDEOS

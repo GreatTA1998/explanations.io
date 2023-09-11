@@ -1,54 +1,91 @@
-<div bind:this={MultiboardContainer} style="border: 2px solid red;">
+
+<div style="display: flex">
   <div id="multislide-record-button-wrapper">
+ 
+  </div>
   
+  <div style="margin-left: 20px;"></div>
+
+  {#each [0, 1, 2] as i}
+    <div on:click={() => changeToSlideIdx(i)}
+      class:highlighted-glow={idxOfFocusedSlide === i}
+      style="width: 80px; height: 50px; border: 1px solid black; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"
+    >
+      Slide { i + 1}
+    </div>
+  {/each}
+</div>
+
+<!-- <div style="display: flex; justify-content: space-evenly;"> -->
+  <div style="display: {idxOfFocusedSlide === 0 ? '' : 'none'}">
+    <Blackboard
+      strokesArray={strokesArray1}
+      {canvasWidth}
+      {canvasHeight}
+      currentTimeOverride={currentTime}
+      on:stroke-drawn={(e) => dispatch(`stroke-drawn1`, { newStroke: e.detail.newStroke })}
+      on:board-wipe={() => dispatch(`board-wipe-1`)}
+    >
+    </Blackboard>
   </div>
 
-  <div style="display: flex; justify-content: space-evenly;">
-    {#each slideIDs as slide, i}
-      <RenderlessListenToStrokes dbPath="/classes/{classID}/powerpoints/{powerpointID}/slides/{slideIDs[i]}"
-        let:listenToStrokes={listenToStrokes} 
-        let:strokesArray={strokesArray}
-        let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
-        let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
-      >
-        <Blackboard
-          strokesArray={strokesArray}
-          canvasWidth={600}
-          canvasHeight={300}
-          currentTimeOverride={currentTime}
-          on:intersect={listenToStrokes}
-          on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-          on:board-wipe={deleteAllStrokesFromDb}
-        >
-        </Blackboard>
-      </RenderlessListenToStrokes>
-    {/each}
+  <div style="display: {idxOfFocusedSlide === 1 ? '' : 'none'}">
+    <Blackboard
+      strokesArray={strokesArray2}
+      {canvasWidth}
+      {canvasHeight}
+      currentTimeOverride={currentTime}
+      on:stroke-drawn={(e) => dispatch(`stroke-drawn2`, { newStroke: e.detail.newStroke })}
+      on:board-wipe={() => dispatch(`board-wipe-2`)}
+    >
+    </Blackboard>
   </div>
 
-  <RenderlessAudioRecorder
-    let:startRecording={startRecording} 
-    let:stopRecording={stopRecording}
-    on:record-end={(e) => saveVideo(e.detail.audioBlob)}
-  >
-    <div use:portal={'multislide-record-button-wrapper'}>
+  <div style="display: {idxOfFocusedSlide === 2 ? '' : 'none'}">
+    <Blackboard
+      strokesArray={strokesArray3}
+      {canvasWidth}
+      {canvasHeight}
+      currentTimeOverride={currentTime}
+      on:stroke-drawn={(e) => dispatch(`stroke-drawn3`, { newStroke: e.detail.newStroke })}
+      on:board-wipe={() => dispatch(`board-wipe-3`)}
+    >
+    </Blackboard>
+  </div>
+<!-- </div> -->
+
+<!-- on:record-end={(e) => saveVideo(e.detail.audioBlob)} -->
+<RenderlessAudioRecorder
+  let:startRecording={startRecording} 
+  let:stopRecording={stopRecording}
+  on:record-end={(e) => dispatch('recording-finished', { audioBlob: e.detail.audioBlob })}
+>
+  <div use:portal={'multislide-record-button-wrapper'}>
+    {#if !isRecording}
       <button on:click={() => callFuncsInSequence(
         lockMultislideBlackboard,
         startRecording,
-        startStopwatch
-      )}>
-        Start multislide recording
+        startStopwatch,
+        () => isRecording = true
+      )}
+        style="height: 50px; font-size: 1.1em"
+      >
+        Record local playground video
       </button>
-
+    {:else}
       <button on:click={() => callFuncsInSequence(
+        () => dispatch('timing-of-slide-changes-ready', { timingOfSlideChanges }),
         stopRecording,
         stopStopwatch,
-        unlockMultislideBlackboard,
-      )}>
-        Stop multislide recording
+        unlockMultislideBlackboard
+      )}
+        style="height: 50px; font-size: 1.1em"
+      >
+        Finish recording
       </button>
-    </div>
-  </RenderlessAudioRecorder>
-</div>
+    {/if}
+  </div>
+</RenderlessAudioRecorder>
 
 <script>
   import Blackboard from '$lib/Blackboard.svelte'
@@ -60,10 +97,20 @@
   import { user } from '/src/store.js'
   import { getFirestore, query, getDocs, collection, where, increment } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
-  import { onMount } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
+
+  export let strokesArray1
+  export let strokesArray2
+  export let strokesArray3
+  export let canvasWidth
+  export let canvasHeight
+
+  const dispatch = createEventDispatcher()
 
   const classID = 't5ZxK9RQcWBCHBeKFhcc'
   const powerpointID = 'QWERTYUIOP'
+
+  let isRecording = false
 
   let slideIDs = [
     '123456789',
@@ -79,19 +126,33 @@
   let startTimestamp = null
   let nextTimeoutID = null
   let etaOfNextTick = null
-  let MultiboardContainer
+  
   let idxOfFocusedSlide = 0 
 
+  function changeToSlideIdx (newSlideIdx) {
+    idxOfFocusedSlide = newSlideIdx 
+    if (currentTime > 0) {
+      timingOfSlideChanges.push({
+        toIdx: idxOfFocusedSlide,
+        timing: currentTime
+      })
+    }
+  }
 
+  const timingOfSlideChanges = []
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
   // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
   onMount(async () => {
-    const powerpoint = await getFirestoreDoc(`classes/${classID}/powerpoints/${powerpointID}`)
-    console.log('powerpoint =', powerpoint)
+    document.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case "ArrowLeft":
+          changeToSlideIdx(Math.max(0, idxOfFocusedSlide - 1))
+          break
+        case "ArrowRight":
+          changeToSlideIdx(Math.min(idxOfFocusedSlide + 1, 2))
+      }
+    })
 
-    // setFirestoreDoc(`classes/${classID}/powerpoints/${powerpointID}`, {
-    //   name: 'For testing purposes'
-    // })
   })
 
   async function saveVideo (audioBlob) {
@@ -221,10 +282,10 @@
 
     const millisecondsInSecond = 1000
     const nearestDecimalPoint = 1
-    currentTime = roundedToFixed(
+    currentTime = Number(roundedToFixed(
       (etaOfNextTick - startTimestamp) / millisecondsInSecond,
       nearestDecimalPoint
-    )
+    ))
 
     nextTimeoutID = setTimeout(
       step, 
@@ -241,3 +302,10 @@
   }
   // END OF TIMER-RELATED CODE
 </script>
+
+<style>
+  .highlighted-glow {
+    background-color: orange;
+    color: white;
+  }
+</style>

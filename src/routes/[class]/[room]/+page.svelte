@@ -89,7 +89,12 @@
                     </Button>
 
                     {#if isShowingNanoQuestionPopup}
-                      <PopupNanoQuestion on:popup-close={() => isShowingNanoQuestionPopup = false}/>
+                      <PopupNanoQuestion 
+                        isOriginalVideoCreator={$user.uid === boardDoc.creatorUID}
+                        {boardDoc}
+                        boardDbPath={boardsDbPath + boardID}
+                        on:popup-close={() => isShowingNanoQuestionPopup = false}
+                      />
                     {/if}
 
                     <Button on:click={() => createAndCopyShareLink(classID, boardDoc.id)}

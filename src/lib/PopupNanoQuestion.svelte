@@ -3,13 +3,45 @@
     Nano-question
   </h2>
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
-    <div style="font-size: 1rem;">
-      Open-ended question here...
-    </div>
+    {#if isOriginalVideoCreator}
+      <TextAreaAutoResizing 
+        value={boardDoc.nanoQuestion || ''}
+        fontSizeIncludeUnits="1rem"
+        on:input={(e) => debouncedUpdateNanoQuestion(e)}
+        placeholder="Nano-question"
+      />
+
+      <TextAreaAutoResizing 
+        value={boardDoc.nanoAnswer || ''}
+        fontSizeIncludeUnits="1rem"
+        on:input={(e) => debouncedUpdateNanoAnswer(e)}
+        placeholder="Nano-answer for reference"
+      />
+
+      <div style="color: green;">
+        {userFeedbackMsg}
+      </div>
+    {:else}
+      <TextAreaAutoResizing 
+        value={boardDoc.nanoQuestion}
+        fontSizeIncludeUnits="1rem"
+        on:input={(e) => debouncedUpdateNanoQuestion(e)}
+        placeholder="No nano-question provided yet"
+        readonly
+      />
+      {#if isRevealingAnswer}
+        <TextAreaAutoResizing 
+          value={boardDoc.nanoAnswer}
+          fontSizeIncludeUnits="1rem"
+          placeholder="No nano-answer provided yet"
+          readonly
+        />
+      {/if}
+    {/if}
   </div>
 
   <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
-    <Button>
+    <Button on:click={() => isRevealingAnswer = true}>
       Reveal reference answer
     </Button>
     <Button on:click={() => dispatch('popup-close')}>
@@ -21,7 +53,44 @@
 <script>
   import BasePopup from '$lib/BasePopup.svelte'
   import Button from '@smui/button'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { createEventDispatcher } from 'svelte'
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import { roundedToFixed, debounce } from '../helpers/utility.js'
+
+  export let isOriginalVideoCreator 
+  export let boardDbPath
+  export let boardDoc
+
+  let isRevealingAnswer = false
+  let userFeedbackMsg = ''
 
   const dispatch = createEventDispatcher()
+
+  const debouncedUpdateNanoQuestion = debounce(
+    updateNanoQuestion,
+    1000
+  ) 
+
+  const debouncedUpdateNanoAnswer = debounce(
+    updateNanoAnswer, 
+    1000
+  )
+
+  async function updateNanoQuestion ({ detail }) {
+    await updateFirestoreDoc(boardDbPath, {
+      nanoQuestion: detail
+    })
+    userFeedbackMsg = 'Successfully updated question.'
+    setTimeout(() => userFeedbackMsg  = '', 2000)
+  }
+
+  async function updateNanoAnswer ({ detail }) {
+    userFeedbackMsg = 'Saving...'
+    updateFirestoreDoc(boardDbPath, {
+      nanoAnswer: detail
+    })
+    userFeedbackMsg = 'Successfully updated answer.'
+    setTimeout(() => userFeedbackMsg = '', 2000)
+  }
 </script>

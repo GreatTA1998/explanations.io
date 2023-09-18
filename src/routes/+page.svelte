@@ -53,14 +53,14 @@
 		{#if active.label === 'Viewers'}
 			<div class="header-flex">
 				<p class="header-title" style="font-size: 4em;">
-					Watch blackboard explanations by former TAs & students
+					Watch blackboard explanations for your college classes
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Set it up for your class
+							Explore class servers
 						</Label>
 					</Button>
 				</div>
@@ -92,12 +92,11 @@
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 						<br><br> -->
-						This website is like Youtube for MIT classes, where everyone can request blackboard videos
-						that <b style="color: navy">efficiently and properly</b> resolves your question.
-
+						You can think of this website as Youtube, but focused on STEM blackboard videos for college.
 						<br><br>
-						If everyone is too busy to help out, you can pay <b style="color: #5d0068">$10/month</b> to subscribe to teachers who are committed 
-						to help you through the hardest weeks. 
+						Besides from free videos and public forums, you can subscribe to any creator for $10/month to join their group chat and access subscribers-only videos.
+						<br><br>
+						This is cheaper than hiring a tutor, and more efficient than walking & waiting at Office Hours 
 					</div>
 				</div>
 
@@ -324,6 +323,8 @@
 				Different students have different needs, so it can be challenging to ensure every student gets what they need.
 				But it could also be easy, with a little experimentation. For example, their common concerns about a pset problem, or a fundamental concept 
 				is often addressable with a recorded explanation. 
+
+				You don't need 1 million viewers to earn side-income - instead, just an engaged community of 5 - 20 subscribers paying affordable prices. 
 				"
 			>
 			</HowItWorksStep>
@@ -362,20 +363,33 @@
 		{ titleForDebugging: 'Noam: overall idea of free body diagrams in 2.001' ,
 			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu'
 		},
+		{ titleForDebugging: 'Noam: Where should you make your cuts along the bar?' ,
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/js7wFnC1YTPND10cNdiZ'
+		},
+		{ titleForDebugging: 'Noam: Keeping the left or right side of the bar for a FBD?',
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/wPK4FjL0BVVDSelzgghKfZ1xQx33'
+		},
+		{ titleForDebugging: 'Ben: HW3 Problem 8' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/pKRiHHADBzNgXp1nxJLB' 
+		},
 		{ titleForDebugging: 'Ben: eigenmatrices' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7' // this is either mine, tony or caleb's
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7'
+		},
+		{
+			titleForDebugging: 'Ben: intuitive explanation for why eignenvalue must be 1 or 0',
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp'
 		},
 		{ titleForDebugging: 'Ammar: theory & application of linear algebra' ,
 			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW'
 		},
 		{ titleForDebugging: 'Elton: f(x,y) optimization' ,
-			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ' // this is either mine, tony or caleb's
+			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ' 
 		},
 		{ titleForDebugging: 'Tony: value iteration with an attached diagram' ,
-			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7' // this is either mine, tony or caleb's
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7' 
 		},
 		{ titleForDebugging: 'Caleb: example recursion problem for midterm' ,
-			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q' // this is either mine, tony or caleb's
+			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q' 
 		}
 	]
 

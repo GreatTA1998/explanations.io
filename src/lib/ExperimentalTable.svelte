@@ -24,17 +24,18 @@
         <Label>Name</Label>
       </Cell>
 
+      <Cell columnId="numOfQuestions">
+        <Label style="color: red;">Unresolved questions</Label>
+        <!-- For non-numeric columns, icon comes second. -->
+        <IconButton class="material-icons">arrow_upward</IconButton>
+      </Cell>
+
       <Cell columnId="numOfMembers">
         <Label>Members</Label>
         <!-- For non-numeric columns, icon comes second. -->
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
 
-      <Cell columnId="numOfQuestions">
-        <Label>Questions</Label>
-        <!-- For non-numeric columns, icon comes second. -->
-        <IconButton class="material-icons">arrow_upward</IconButton>
-      </Cell>
       <!-- The columnId is used for sorting -->
       <Cell columnId="numOfHelpers">
         <Label>Creators</Label>
@@ -63,8 +64,9 @@
             {item.name}
           </div>
         </Cell>
+        <!-- TO-DO: change to number of UNRESOLVED question -->
+        <Cell style="color: {item.numOfQuestions > 0 ? 'red' : ''}">{item.numOfQuestions}</Cell>
         <Cell>{item.numOfMembers}</Cell>
-        <Cell>{item.numOfQuestions}</Cell>
         <Cell>{item.numOfHelpers}</Cell>
         <Cell>{item.numOfVideos}</Cell>
         <Cell>{item.minutesViewed}</Cell>

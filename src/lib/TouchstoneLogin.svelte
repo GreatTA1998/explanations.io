@@ -1,9 +1,7 @@
 <!-- TO-DO: 
-  2. Backwards compatibility argument
-    - Notification system (deprecate, instead let them communicate through group chat)
+  - Backwards compatibility argument
+  - Notification system (deprecate, instead let them communicate through group chat)
 -->
-
-<!-- Direct login flow -->
 <div style="
   color: green; 
   border: 1px solid green; 
@@ -22,7 +20,7 @@
   <span class="material-icons" style="margin-right: 6px;">
     school
   </span>
-  MIT 
+  Touchstone
 </div>
 
 <script>

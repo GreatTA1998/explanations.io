@@ -65,9 +65,6 @@
 
   <div style="margin-top: 12px;"></div>
 
-
-
-
 <div style="font-family: sans-serif; padding: 12px;">
 
 
@@ -172,7 +169,7 @@
       )
       const querySnapshot = await getDocs(q) 
       if (querySnapshot.empty) {
-        console.log("snapshot is empty")
+        console.log("snapshot is empty, no videos")
         return
       }
       querySnapshot.forEach((doc) => {

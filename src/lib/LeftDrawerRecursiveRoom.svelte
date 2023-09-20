@@ -478,7 +478,7 @@ async function deleteRoom (room) {
   }
 
   .question-item {
-    color: rgb(34, 153, 231);
+    color: red; /* rgb(34, 153, 231); */
   }
 
   .speaking {

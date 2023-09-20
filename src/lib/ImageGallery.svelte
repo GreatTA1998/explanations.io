@@ -138,7 +138,7 @@
   // -moz-animation: rotating 20s linear infinite;
   // -o-animation: rotating 20s linear infinite;
   // -ms-animation: rotating 20s linear infinite;
-  animation: rotating 50s linear infinite;
+  animation: rotating 70s linear infinite;
   &:hover {
   // animation-play-state:paused;
   // -o-animation-play-state:paused;

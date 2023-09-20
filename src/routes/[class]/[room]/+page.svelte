@@ -1,6 +1,6 @@
 <!-- This is a quickfix for routing -->
 {#if roomID === 'request-video'}
-  <ClassServerRequestVideo {classID}/>
+  <ClassServerAskQuestion {classID}/>
 {:else if roomID === 'my-profile'}
   <ClassServerMyProfile {classID} profileUID={$user.uid}/>
 {:else}
@@ -429,7 +429,7 @@
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
-  import ClassServerRequestVideo from '$lib/ClassServerRequestVideo.svelte'
+  import ClassServerAskQuestion from '$lib/ClassServerAskQuestion.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
   import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
@@ -960,7 +960,8 @@
 }
 
 :global(.question input) {
-  color: rgb(19, 145, 230) !important;
+  color: red !important;
+  /* color: rgb(19, 145, 230) !important; */
 }
 
 .unclickable {

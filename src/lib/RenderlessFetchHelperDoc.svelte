@@ -12,6 +12,8 @@
   export let classID 
   export let creatorUID
 
+  console.log('inside renderless, classID, creatorUID =', classID, creatorUID)
+
   let unsubSnapshotListener = null 
   let helperDoc
   const helperRef = collection(getFirestore(), `classes/${classID}/tutors`)
@@ -25,6 +27,8 @@
         createInitialDoc()
         return
       }
+      console.log("snapshot.docs.length =", snapshot.docs.length)
+      // now there is multiple
       snapshot.docs.forEach(doc => {
         helperDoc = { id: doc.id, ...doc.data(), path: doc.ref.path }
       })
@@ -44,10 +48,7 @@
 
   // "tutor" is a legacy naming term
   async function createTutorDoc ({ classID, firstName, lastName }) {
-    console.log("firstName =", firstName)
-    console.log('lastName =', lastName)
-
-
+    console.log('createTutorDoc()')
     if (!firstName || !lastName) return
     const classDbPath = `classes/${classID}/`
     const id = getRandomID()
@@ -65,7 +66,7 @@
     // }) 
     
     const tutorObject = {
-      uid: $user.uid,
+      uid: $user.uid, // notice this will create it based on a user, shouldn't it be based on creatorUID?
       name: firstName + ' ' + lastName,
       phoneNumber: $user.phoneNumber || '',
       email: $user.email || '',

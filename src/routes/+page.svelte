@@ -60,7 +60,7 @@
 					</div>
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Explore class servers
+							Ask your first question
 						</Label>
 					</Button>
 				</div>
@@ -146,7 +146,7 @@
 				<div style="text-align: center">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Ask a question
+							Ask your first question
 						</Label>
 					</Button>
 				</div>
@@ -379,8 +379,11 @@
 			titleForDebugging: 'Ben: intuitive explanation for why eignenvalue must be 1 or 0',
 			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp'
 		},
-		{ titleForDebugging: 'Ammar: theory & application of linear algebra' ,
+		{ titleForDebugging: 'Ammar: change of basis',
 			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW'
+		},
+		{ titleForDebugging: 'Ammar: application of change of basis ' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/GYpahmE2ULQ2ry34tBDv'
 		},
 		{ titleForDebugging: 'Elton: f(x,y) optimization' ,
 			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ' 
@@ -402,7 +405,7 @@
 	let randomlyChosenExemplarVideos = null
 	const nums = new Set();
 	while (nums.size < 3) {
-		nums.add(getRandomIntInclusive({ min: 0, max: 5 }));
+		nums.add(getRandomIntInclusive({ min: 0, max: exemplarVideos.length - 1 }));
 	}
 	const temp = [] 
 	const uniqueIndices = [...nums]

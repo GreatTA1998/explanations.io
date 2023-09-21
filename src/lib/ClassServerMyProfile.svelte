@@ -5,14 +5,14 @@
     let:serverMemberDoc={serverMemberDoc}
   >
     {#if serverMemberDoc}
-      <ClassServerMyProfileHelperProfileCopy
-        helperDoc={serverMemberDoc}
+      <ClassServerMyProfileContent
+        memberDoc={serverMemberDoc}
         {classID}
       >
         <ClassServerMyProfilePicture
           circleBorderColor={$user.beaverProfilePicColor}
         />
-      </ClassServerMyProfileHelperProfileCopy> 
+      </ClassServerMyProfileContent> 
     {/if}
   </RenderlessFetchServerMemberDoc>
 </div>
@@ -20,7 +20,7 @@
 
 <script>
   import { portal } from '../helpers/actions.js'
-  import ClassServerMyProfileHelperProfileCopy from '$lib/ClassServerMyProfileHelperProfileCopy.svelte';
+  import ClassServerMyProfileContent from '$lib/ClassServerMyProfileContent.svelte';
   import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
   import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
   import { user } from '/src/store.js'

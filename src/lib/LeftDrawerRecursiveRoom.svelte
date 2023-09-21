@@ -56,9 +56,10 @@
       {/if}
       
       <!--  needed otherwise `question-item` if statement will be undefined -->
+      <!--  question-item criteria use to require `&& room.id !== roomID` -->
       {#if room.name}
         <div 
-          class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
+          class:question-item={'?' === room.name.charAt(room.name.length - 1)} 
           class="my-truncated-text"
           style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px"
         >
@@ -425,7 +426,8 @@ async function deleteRoom (room) {
   }
   await Promise.all(subdeleteRequests)
 
-  // update pointers: move all the children OUT of the folder getting deleted
+
+  // MOVE CHILDREN: move all the children OUT of the folder getting deleted
   // 1. fetch all the sub-rooms
   // 2. update all the parent pointers
   const folderPromises = []
@@ -451,6 +453,19 @@ async function deleteRoom (room) {
   }
 
   await Promise.all(folderPromises)
+
+  // UPDATE METADATA/STATS
+  if (room.dateResolved) {
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfResolvedQuestions: increment(-1)
+    })
+  }
+  else if (room.dateAsked) {
+    updateFirestoreDoc(`classes/${classID}`,{
+      numOfUnresolvedQuestions: increment(-1)
+    })
+  }
+
 
   // finally delete the room doc itself
   await deleteDoc(

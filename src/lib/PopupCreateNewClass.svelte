@@ -46,7 +46,10 @@
         numOfHelpers: 0, // sign up as helper
         numOfQuestions: 0, 
         numOfVideos: 0, // keep +=1 on the metadata, initialize it to the right value
-        numOfSubscriptions: 0 // keep it +1 whenever someone subscribes to the class
+        numOfSubscriptions: 0, // keep it +1 whenever someone subscribes to the class
+        numOfUnresolvedQuestions: 0,
+        numOfResolvedQuestions: 0,
+        numOfCreators: 0
       }),
       setFirestoreDoc(`classes/${newClassID}/rooms/${newClassID}}`, {
         blackboards: [newClassID]

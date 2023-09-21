@@ -51,13 +51,10 @@
   import { onDestroy, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
-  import TouchstoneLogin from '$lib/TouchstoneLogin.svelte'
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
   
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 
 
-  let isShowingPhoneLogin = false
   let isSignInPopupOpen = false
 
   fetchYoutubeClasses().then(() => {
@@ -108,8 +105,8 @@
 
   function computeSortedYoutubeClasses () {
     sortedYoutubeClasses = youtubeClasses.sort((a, b) => {
-      if (a.numOfQuestions !== b.numOfQuestions) {
-        return b.numOfQuestions - a.numOfQuestions
+      if (a.numOfUnresolvedQuestions !== b.numOfUnresolvedQuestions) {
+        return b.numOfUnresolvedQuestions - a.numOfUnresolvedQuestions
       } 
       else if (a.numOfHelpers !== b.numOfHelpers) {
         return b.numOfHelpers - a.numOfHelpers

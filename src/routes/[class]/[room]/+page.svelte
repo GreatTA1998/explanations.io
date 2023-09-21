@@ -26,6 +26,9 @@
         {#if roomDoc.dateResolved}
           , resolved {displayDate(roomDoc.dateResolved)}
         {/if}
+
+        This question was asked by Bob Alice on Fri, Sep 3th, 3pm, and has 0 responses
+        This room has n boards
       </HelperText>
     </Textfield>
 
@@ -311,7 +314,7 @@
                     <RenderlessAudioRecorder
                       let:startRecording={startRecording} 
                       let:stopRecording={stopRecording}
-                      on:record-end={(e) => saveVideo(e.detail.audioBlob, strokesArray, boardID)}
+                      on:record-end={(e) => uploadVideo(e.detail.audioBlob, strokesArray, boardID)}
                     >
                     <!-- 
                       if an recording is active (rather than an interrupted session that isn't actually recording,
@@ -378,12 +381,12 @@
 
     {#if roomDoc.blackboards}
       <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
+      <!-- margin-top: 40px; -->
      <div on:click={createNewBlackboard}
         style="
           display: flex; 
           justify-content: center; 
           align-items: center;
-          margin-top: 40px; 
           background-color: #2e3131; 
           font-family: Roboto, sans-serif; text-transform: uppercase;
           color: white;
@@ -393,7 +396,11 @@
           opacity: 1;
           "
         >
-       New blackboard
+          {#if hasQuestionMark(roomDoc.name)}
+            Respond to question
+          {:else}
+            New blackboard
+          {/if}
      </div>
    {/if}
   </div>
@@ -674,6 +681,11 @@
     updateDoc(roomRef, {
       dateResolved: new Date().toISOString()
     })
+
+    // update metadata
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfResolvedQuestions: increment(1)
+    })  
   }
 
   function resetResolveQuestionCountdown () {
@@ -761,7 +773,7 @@
     })
   }
 
-  async function saveVideo (audioBlob, strokesArray, boardID) {
+  async function uploadVideo (audioBlob, strokesArray, boardID) {
     const db = getFirestore()
 
     // QUICK-FIX for concurrent drawings with no timestamp 
@@ -809,18 +821,25 @@
       collection(db, `classes/${classID}/tutors`),
       where('uid', '==', $user.uid)
     )
+    // base the member profile UID on the actual UID, so you don't need to do all these queries
+    const classDocUpdateObj = {} 
+
     const snap = await getDocs(q) 
     if (!snap.empty) {
+      // find the specific tutor doc
       snap.docs.forEach(doc => {
         tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
       })
+      // that means it's the member's first server video
+      if (!tutorDoc.numOfVideos) {
+        classDocUpdateObj.numOfCreators = increment(1)
+      }
       updateFirestoreDoc(`classes/${classID}/tutors/${tutorDoc.id}`, {
         numOfVideos: increment(1)
       })
     }
-    updateFirestoreDoc(`classes/${classID}`, {
-      numOfVideos: increment(1)
-    })
+    classDocUpdateObj.numOfVideos = increment(1) 
+    updateFirestoreDoc(`classes/${classID}`, classDocUpdateObj)
 
     // upload the audio file
     const storage = getStorage()

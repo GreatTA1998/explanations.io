@@ -4,7 +4,7 @@
   bind:sortDirection
   on:SMUIDataTable:sorted={handleSort}
   table$aria-label="User list"
-  style="width: 100%;"
+  style="width: 100%; font-size: 2em;"
 >
   <Head>
     <Row>
@@ -21,36 +21,36 @@
       <Cell numeric columnId="name">
         <!-- For numeric columns, icon comes first. -->
         <IconButton class="material-icons">arrow_upward</IconButton>
-        <Label>Name</Label>
+        <Label style="font-size: 2em;">Name</Label>
       </Cell>
 
       <Cell columnId="numOfQuestions">
-        <Label style="color: red;">Unresolved questions</Label>
+        <Label style="font-size: 2em;">Unresolved questions</Label>
         <!-- For non-numeric columns, icon comes second. -->
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
 
       <Cell columnId="numOfMembers">
-        <Label>Members</Label>
+        <Label style="font-size: 2em;">Members</Label>
         <!-- For non-numeric columns, icon comes second. -->
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
 
       <!-- The columnId is used for sorting -->
       <Cell columnId="numOfHelpers">
-        <Label>Creators</Label>
+        <Label style="font-size: 2em;">Creators</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       <Cell columnId="numOfVideos">
-        <Label>Videos</Label>
+        <Label style="font-size: 2em;">Videos</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       <Cell columnId="minutesViewed">
-        <Label>Minutes viewed</Label>
+        <Label style="font-size: 2em;">Minutes viewed</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
       <Cell columnId="paidMonthlySubscriptions">
-        <Label>Paid subscriptions</Label>
+        <Label style="font-size: 2em;">Paid subscriptions</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
     </Row>
@@ -65,12 +65,12 @@
           </div>
         </Cell>
         <!-- TO-DO: change to number of UNRESOLVED question -->
-        <Cell style="color: {item.numOfQuestions > 0 ? 'red' : ''}">{item.numOfQuestions}</Cell>
-        <Cell>{item.numOfMembers}</Cell>
-        <Cell>{item.numOfHelpers}</Cell>
-        <Cell>{item.numOfVideos}</Cell>
-        <Cell>{item.minutesViewed}</Cell>
-        <Cell>{item.paidMonthlySubscriptions}</Cell>
+        <Cell style="font-size: 1.5em; color: {item.numOfUnresolvedQuestions > 0 ? 'red' : ''}">{item.numOfUnresolvedQuestions}</Cell>
+        <Cell style="font-size: 1.5em;">{item.numOfMembers}</Cell>
+        <Cell style="font-size: 1.5em;">{item.numOfHelpers}</Cell>
+        <Cell style="font-size: 1.5em;">{item.numOfVideos}</Cell>
+        <Cell style="font-size: 1.5em;">{item.minutesViewed}</Cell>
+        <Cell style="font-size: 1.5em;">{item.paidMonthlySubscriptions}</Cell>
       </Row>
     {/each}
   </Body>
@@ -108,6 +108,7 @@
     name: string;
     numOfMembers: string;
     numOfQuestions: number; 
+    numOfUnresolvedQuestions: number;
     numOfHelpers: number;
     numOfVideos: number; 
     minutesViewed: number;
@@ -135,3 +136,9 @@
     items = items;
   }
 </script>
+
+<style>
+  div {
+    font-size: 2em;
+  }
+</style>

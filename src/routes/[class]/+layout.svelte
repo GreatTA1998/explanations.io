@@ -146,9 +146,13 @@
   $: debouncedResizeHandler($drawerWidth)
 
   $: if (classID) {
+    initializeEverything()
+  }
+
+  async function initializeEverything () {
     unsubDbListeners()
     $roomToPeople = []
-    fetchClassDoc()
+    await fetchClassDoc()
     updateClassMetadata()
     fetchParticipants()
     fetchRooms()
@@ -193,7 +197,7 @@
 
   async function updateClassMetadata () {
     // keep track of number of members regardless of where they are
-    let copyOfMemberUIDs = [] 
+    let copyOfMemberUIDs = [...(classDoc.memberUIDs || [])]
     copyOfMemberUIDs.push($user.uid)
     const setOfUniqueUIDs = new Set(copyOfMemberUIDs)
     const arrayOfUniqueUIDs = [...setOfUniqueUIDs]
@@ -237,10 +241,13 @@
   }
 
   async function fetchClassDoc () {
-    const classDocRef = doc(getFirestore(), `classes/${classID}`)
-    classDoc = await getDoc(classDocRef)
-    nameOfClass = classDoc.data().name
-    descriptionOfClass = classDoc.data().description
+    return new Promise(async (resolve) => {
+      const classDocRef = doc(getFirestore(), `classes/${classID}`)
+      classDoc = await getDoc(classDocRef)
+      nameOfClass = classDoc.data().name
+      descriptionOfClass = classDoc.data().description
+      resolve()
+    })
   }
 
   async function createNewRoom () {

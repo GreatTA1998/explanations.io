@@ -111,11 +111,13 @@
     updateFirestoreDoc(`classes/${classID}/blackboards/${newRoomDocID}`, {
       description: questionDescriptionInput,
     })
+
+    // Update stats/metadata that are affected by this operation
     updateFirestoreDoc(`classes/${classID}`, {
-      numOfQuestions: increment(1)
+      numOfUnresolvedQuestions: increment(1)
     })
 
-    // send text notification to all helpers
+    // Handle notifications
     const classDoc = await getFirestoreDoc(`classes/${classID}`)
     const classHelpers = await getFirestoreCollection(`classes/${classID}/tutors`)
     for (const helper of classHelpers) {

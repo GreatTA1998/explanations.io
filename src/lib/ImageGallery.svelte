@@ -33,7 +33,6 @@
 
 <script>
   // TO-DO: fix drifting center of rotation
-
   import RenderlessListenToBoard from './RenderlessListenToBoard.svelte'
   import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'
   import { onMount } from 'svelte'

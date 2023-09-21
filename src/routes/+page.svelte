@@ -486,7 +486,7 @@
 	}
 
 .image-gallery-container {
-	margin-top: 12%; 
+	margin-top: 10%; 
 	margin-bottom: 24%;
 }
 

@@ -20,15 +20,11 @@
     >
       <HelperText slot="helper" persistent>
         {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
-          {roomDoc.askerName} asked on {displayDate(roomDoc.dateAsked)}
+          This question was asked by {roomDoc.askerName} on {displayDate(roomDoc.dateAsked)},
+          and has {roomDoc.blackboards.length - 1} responses
+        {:else if roomDoc.blackboards} 
+          This room has {roomDoc.blackboards.length} boards
         {/if}
-
-        {#if roomDoc.dateResolved}
-          , resolved {displayDate(roomDoc.dateResolved)}
-        {/if}
-
-        This question was asked by Bob Alice on Fri, Sep 3th, 3pm, and has 0 responses
-        This room has n boards
       </HelperText>
     </Textfield>
 

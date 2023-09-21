@@ -1,12 +1,12 @@
 <div use:portal={'main-content'} style="padding: 16px;">
-  <RenderlessFetchHelperDoc 
+  <RenderlessFetchServerMemberDoc 
     {classID}
-    creatorUID={profileUID}
-    let:helperDoc={helperDoc}
+    memberUID={profileUID}
+    let:serverMemberDoc={serverMemberDoc}
   >
-    {#if helperDoc}
+    {#if serverMemberDoc}
       <ClassServerMyProfileHelperProfileCopy
-        {helperDoc}
+        helperDoc={serverMemberDoc}
         {classID}
       >
         <ClassServerMyProfilePicture
@@ -14,7 +14,7 @@
         />
       </ClassServerMyProfileHelperProfileCopy> 
     {/if}
-  </RenderlessFetchHelperDoc>
+  </RenderlessFetchServerMemberDoc>
 </div>
 
 
@@ -22,13 +22,9 @@
   import { portal } from '../helpers/actions.js'
   import ClassServerMyProfileHelperProfileCopy from '$lib/ClassServerMyProfileHelperProfileCopy.svelte';
   import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
-  import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
+  import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
   import { user } from '/src/store.js'
-  import { goto } from '$app/navigation'
 
   export let classID
   export let profileUID
-
-  let isPopupOpen = false
-
 </script>

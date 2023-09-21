@@ -123,7 +123,6 @@
 					</div>
 
 					<div style="margin-bottom: 100px;"></div>
-
 										
 					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
 						<div style="font-size: 2rem;">

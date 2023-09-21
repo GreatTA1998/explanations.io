@@ -466,7 +466,6 @@ async function deleteRoom (room) {
     })
   }
 
-
   // finally delete the room doc itself
   await deleteDoc(
     doc(db, classPath + `rooms/${room.id}`)

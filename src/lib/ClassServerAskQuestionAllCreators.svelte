@@ -44,7 +44,7 @@
   function listenToCreatorDocs () {
     return new Promise(resolve => {
       const db = getFirestore()
-      const ref = collection(db, `classes/${classID}/tutors`)
+      const ref = collection(db, `classes/${classID}/members`)
       unsubCreatorDocsListener = onSnapshot(ref, snap => {
         const temp = [] 
         for (const doc of snap.docs) {

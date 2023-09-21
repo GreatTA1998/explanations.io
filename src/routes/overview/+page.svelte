@@ -60,9 +60,8 @@
   fetchYoutubeClasses().then(() => {
     // then compute secondary statistics
     for (const c of youtubeClasses) {
-      // update the statistics, it'll lag but it'll be correct
-      // for the next fetch
-      getFirestoreCollection(`classes/${c.id}/tutors`).then(classHelpers => {
+      // update the statistics, it'll lag but it'll be correct for the next fetch
+      getFirestoreCollection(`classes/${c.id}/members`).then(classHelpers => {
         updateFirestoreDoc(`classes/${c.id}`, {
           minutesViewed: classHelpers.reduce((acc, helper) => acc + Number(helper.minutesViewed || 0), 0),
           paidMonthlySubscriptions: classHelpers.reduce((acc, helper) => acc + Number(helper.numOfStudents || 0), 0),

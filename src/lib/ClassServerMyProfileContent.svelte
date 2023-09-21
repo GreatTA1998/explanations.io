@@ -6,26 +6,26 @@
   </slot>
   <div style="margin-left: 12px; margin-top: 8px;">
     <h2 style="font-family: sans-serif; font-size: 2rem; margin-top: 0px; margin-bottom: 0;">
-      {helperDoc.name}
+      {memberDoc.name}
     </h2> 
 
     <div style="margin-top: 2px"></div>
     <!-- Basic statistics -->
     <div style="display: flex; align-items: center; justify-content: space-evenly">
       <div style="margin-right: 16px;">
-        { helperDoc.numOfVideos - (helperDoc.numPaidVideos || 0) || 0}
+        { memberDoc.numOfVideos - (memberDoc.numPaidVideos || 0) || 0}
         free videos
       </div>
       <div style="margin-right: 16px;">
-        { helperDoc.numPaidVideos || 0}
+        { memberDoc.numPaidVideos || 0}
         subscriber videos
       </div>
       <div style="margin-right: 16px;">
-        { helperDoc.minutesViewed || 0}
+        { memberDoc.minutesViewed || 0}
         minutes viewed
       </div>
       <div style="margin-right: 16px;">
-        { helperDoc.numOfStudents || 0}
+        { memberDoc.numOfStudents || 0}
         subscriptions
       </div>
     </div>
@@ -34,11 +34,11 @@
 
     <!-- bio -->
     <TextAreaAutoResizing 
-      value={helperDoc.bio}
+      value={memberDoc.bio}
       fontSizeIncludeUnits="1rem"
       on:input={(e) => debouncedUpdateBio(e)}
       placeholder="Short intro of yourself"
-      readonly={$user.uid !== helperDoc.uid}
+      readonly={$user.uid !== memberDoc.uid}
     />
   </div>
 </div>
@@ -52,15 +52,15 @@
 
     {#if isSubscribePopupOpen}
       <PopupConfirmSubscription
-        selectedTutorDoc={helperDoc}
+        selectedTutorDoc={memberDoc}
         {classID}
-        on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
+        on:confirm-clicked={() => handleConfirmSubscription(memberDoc)}
         on:popup-close={() => isSubscribePopupOpen = false}
       />
     {/if}
 
 
-    <input readonly={$user.uid !== helperDoc.uid} style="margin-left: 24px;" value={helperDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value)} placeholder="venmo">
+    <input readonly={$user.uid !== memberDoc.uid} style="margin-left: 24px;" value={memberDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value)} placeholder="venmo">
   </div>
 
   <div style="margin-top: 12px;"></div>
@@ -91,8 +91,8 @@
       galleryBoardIDs={shopVideosIDs}
       {classID}
       {classTutorsDocs}
-      selectedTutorUID={helperDoc.uid}
-      selectedTutorDoc={helperDoc}
+      selectedTutorUID={memberDoc.uid}
+      selectedTutorDoc={memberDoc}
     />
   {/key}
 </div>
@@ -111,7 +111,7 @@
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
 
   export let classTutorsDocs
-  export let helperDoc 
+  export let memberDoc 
   export let classID
 
   const dispatch = createEventDispatcher()
@@ -121,11 +121,9 @@
 
   let inputFieldFirstName = ''
   let inputFieldLastName = ''
-  let checked = false
 
   let shopVideosIDs = [] 
   let shopVideosDocs = [] 
-  let totalViewMinutes = null
 
   onMount(async () => {
     fetchProfileVideos()
@@ -143,28 +141,29 @@
     const blackboardsRef = collection(db, `classes/${classID}/blackboards`)
     const q = query(
       blackboardsRef, 
-      where('creatorUID', '==', helperDoc.uid)
+      where('creatorUID', '==', memberDoc.uid)
     )
     const videos = await getFirestoreQuery(q)
+    // unfortunately, we need one more condition
+    const actuallyVideos = videos.filter(v => v.audioDownloadURL)
 
     let total = 0
-    for (const video of videos) {
+    for (const video of actuallyVideos) {
       total += video.viewMinutes || 0
     }
-    updateFirestoreDoc(`classes/${classID}/tutors/${helperDoc.id}`, {
+    updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
       minutesViewed: roundedToFixed(total, 0),
-      numOfVideos: videos.length
+      numOfVideos: actuallyVideos.length
     })
   }
   async function shopifyFetch () {
-    console.log("shopifyFetch()")
     return new Promise(async (resolve) => {
       const output = [] 
       const db = getFirestore()
       const blackboardsRef = collection(db, `classes/${classID}/blackboards`)
       const q = query(
         blackboardsRef, 
-        where('creatorUID', '==', helperDoc.uid),
+        where('creatorUID', '==', memberDoc.uid),
         orderBy('shopGalleryOrder')
       )
       const querySnapshot = await getDocs(q) 
@@ -191,7 +190,7 @@
   )
 
   function updateTutorVenmo (venmo) {
-    const idNotUID = helperDoc.id
+    const idNotUID = memberDoc.id
     updateFirestoreDoc(`classes/${classID}/tutors/${idNotUID}`, {
       venmo
     })
@@ -203,7 +202,7 @@
   ) 
 
   async function updateTutorBio ({ detail }) {
-    const idNotUID = helperDoc.id
+    const idNotUID = memberDoc.id
     updateFirestoreDoc(`classes/${classID}/tutors/${idNotUID}`, {
       bio: detail
     })

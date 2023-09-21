@@ -173,9 +173,9 @@
                 <div 
                   style="display: flex; width: 100%; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;"
                 >
-                  <RenderlessFetchHelperDoc 
+                  <RenderlessFetchServerMemberDoc 
                     {classID}
-                    creatorUID={boardDoc.creatorUID || ''}
+                    memberUID={boardDoc.creatorUID}
                     let:helperDoc={helperDoc}
                   >
                     {#if helperDoc}
@@ -183,8 +183,6 @@
                         {helperDoc}
                         {classID}
                       />
-                    {:else}
-                      {boardDoc.creatorName}
                     {/if}
 
                     <div style="width: 250px; margin-left: 30px;">
@@ -205,7 +203,7 @@
                         on:popup-close={() => isSubscribePopupOpen = false}
                       />
                     {/if}      
-                  </RenderlessFetchHelperDoc>
+                  </RenderlessFetchServerMemberDoc>
 
                   <div style="margin-left: 24px;"></div>
 
@@ -381,7 +379,6 @@
 
     {#if roomDoc.blackboards}
       <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
-      <!-- margin-top: 40px; -->
      <div on:click={createNewBlackboard}
         style="
           display: flex; 
@@ -435,7 +432,7 @@
   import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
-  import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
+  import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
   import ClassServerAskQuestion from '$lib/ClassServerAskQuestion.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'

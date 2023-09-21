@@ -103,12 +103,12 @@
             <!-- CASE 1: it's me -->
             {#if person.browserTabID === $browserTabID}
               {#if !willJoinVoiceChat}
-                <div 
+                <!-- <div 
                   on:click={() => willJoinVoiceChat = true}
                   style="margin-right: 4px; margin-left: auto; background-color: green; color: white; font-size: 0.6rem; padding-left: 4px; padding-right: 4px; cursor: pointer; border-radius: 4px;"
                 >
                   Join voice 
-                </div>
+                </div> -->
 
               {:else if Object.keys($dailyRoomParticipants).length > 0}
                 <div style="display: flex; align-items: center; margin-right: 6px; margin-left: auto">

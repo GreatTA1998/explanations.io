@@ -148,9 +148,12 @@ export async function updateNumOfSubfolders ({ draggedRoomID, droppedRoomID, bas
         numOfChildren: increment(-1)
       })
     }
-    await updateFirestoreDoc(basePath + droppedRoomID, {
-      numOfChildren: increment(1)
-    })
+    // note: dropping to top level would mean there is no `droppedRoomID`
+    if (droppedRoomID) {
+      await updateFirestoreDoc(basePath + droppedRoomID, {
+        numOfChildren: increment(1)
+      })
+    }
     resolve()
   })
 }

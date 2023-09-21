@@ -53,7 +53,7 @@
 		{#if active.label === 'Viewers'}
 			<div class="header-flex">
 				<p class="header-title" style="font-size: 4em;">
-					Watch blackboard explanations for your college classes
+					Watch blackboard explanations for college classes
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">
@@ -360,39 +360,61 @@
 
 	// RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [
-		{ titleForDebugging: 'Noam: overall idea of free body diagrams in 2.001' ,
-			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu'
+		{ titleForDebugging: 'Free body diagrams' ,
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu',
+			creatorName: 'Noam Buckman',
+			className: 'Mechanics of Materials'
 		},
-		{ titleForDebugging: 'Noam: Where should you make your cuts along the bar?' ,
-			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/js7wFnC1YTPND10cNdiZ'
+		{ titleForDebugging: 'Where should you make your cuts along the bar?' ,
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/js7wFnC1YTPND10cNdiZ',
+			creatorName: 'Noam Buckman',
+			className: 'Mechanics of Materials'
 		},
-		{ titleForDebugging: 'Noam: Keeping the left or right side of the bar for a FBD?',
-			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/wPK4FjL0BVVDSelzgghKfZ1xQx33'
+		{ titleForDebugging: 'Keeping the left or right side of the bar for a FBD?',
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/wPK4FjL0BVVDSelzgghKfZ1xQx33',
+			creatorName: 'Noam Buckman',
+			className: 'Mechanics of Materials'
 		},
-		{ titleForDebugging: 'Ben: HW3 Problem 8' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/pKRiHHADBzNgXp1nxJLB' 
+		{ titleForDebugging: 'HW3 Problem 8' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/pKRiHHADBzNgXp1nxJLB',
+			creatorName: 'Ben Shimabukuro',
+			className: 'Linear Algebra'
 		},
-		{ titleForDebugging: 'Ben: eigenmatrices' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7'
+		{ titleForDebugging: 'Eigenmatrices' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7',
+			creatorName: 'Ben Shimabukuro',
+			className: 'Linear Algebra'
 		},
 		{
-			titleForDebugging: 'Ben: intuitive explanation for why eignenvalue must be 1 or 0',
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp'
+			titleForDebugging: 'Intuition behind why eignenvalue must be 1 or 0 here',
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp',
+			creatorName: 'Ben Shimabukuro',
+			className: 'Linear Algebra'
 		},
-		{ titleForDebugging: 'Ammar: change of basis',
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW'
+		{ titleForDebugging: 'Theory of change of basis',
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW',
+			creatorName: 'Ammar Fayad',
+			className: 'Linear Algebra'
 		},
-		{ titleForDebugging: 'Ammar: application of change of basis ' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/GYpahmE2ULQ2ry34tBDv'
+		{ titleForDebugging: 'Application of change of basis ' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/GYpahmE2ULQ2ry34tBDv',
+			creatorName: 'Ammar Fayad',
+			className: 'Linear Algebra'
 		},
-		{ titleForDebugging: 'Elton: f(x,y) optimization' ,
-			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ' 
+		{ titleForDebugging: 'Visualizing how to maximize f(x,y) subject to constraint' ,
+			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ',
+			creatorName: 'Elton Lin',
+			className: 'Microeconomics'
 		},
-		{ titleForDebugging: 'Tony: value iteration with an attached diagram' ,
-			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7' 
+		{ titleForDebugging: 'Value iteration in Machine learning',
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7',
+			creatorName: 'Tony Wang',
+			className: 'Intro to Machine Learning'
 		},
-		{ titleForDebugging: 'Caleb: example recursion problem for midterm' ,
-			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q' 
+		{ titleForDebugging: 'Midterm Review: Disjoint Dimensions (recursion)' ,
+			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q',
+			creatorName: 'Caleb Noble',
+			className: 'Intro to Algorithms'
 		}
 	]
 
@@ -404,7 +426,7 @@
 
 	let randomlyChosenExemplarVideos = null
 	const nums = new Set();
-	while (nums.size < 3) {
+	while (nums.size < 4) {
 		nums.add(getRandomIntInclusive({ min: 0, max: exemplarVideos.length - 1 }));
 	}
 	const temp = [] 

@@ -8,7 +8,7 @@
     let:strokesArray={strokesArray}
   >
     <div use:lazyCallable={fetchStrokes} 
-      style={`width: ${canvasWidth}px; height: ${canvasHeight + 40}px; position: relative`}
+      style={`width: ${canvasWidth}px; height: ${canvasHeight + (80 * scaleFactor)}px; position: relative`}
     >
       <DoodleVideo 
         {canvasWidth}
@@ -21,6 +21,18 @@
         {classID}
         on:six-seconds-elapsed
       > 
+        <div slot="twoTimesSpeedButtonSlot">
+          {#if className && title && creatorName}
+            <div 
+              class="my-truncated-text"
+              style="max-width: {canvasWidth * 0.92}px; margin-left: 8px; background-color:  rgba(255, 255, 255, .3); color: white; padding: 6px; border-radius: 12px;"
+            >
+              {className}: {title} by {creatorName}
+            </div>
+          {/if}
+        </div>
+  
+
         {#if showEditDeleteButtons}
           <!-- <div style="
             margin-left: {canvasWidth - 240 - 164}px; 
@@ -75,7 +87,7 @@
 {/if}
 
 <script>
-  import { maxAvailableWidth, maxAvailableHeight } from '../store.js'
+  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../store.js'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { lazyCallable } from '../helpers/actions.js'
@@ -90,10 +102,15 @@
   export let boardDbPath = '' // 
   export let canvasWidth = maxAvailableWidth
   export let canvasHeight = maxAvailableHeight
+  export let title
+  export let creatorName
+  export let className
 
   export let showEditDeleteButtons = true
 
   export let classID
+
+  $: scaleFactor = canvasWidth / $assumedCanvasWidth
 
   const dispatch = createEventDispatcher()
 

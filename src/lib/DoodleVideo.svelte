@@ -1,14 +1,17 @@
 <!-- The delete button is added here -->
 <div style="justify-content: space-between; width: 100%; position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5">
-  <Button on:click={togglePlaySpeed} 
-    variant="raised" 
-    style="height: {20 * (canvasWidth / assumedCanvasWidth)}px; margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;"
-  >
-    <div style="color: white">
-      {playbackSpeed}x speed
-    </div>
-    <span class="material-icons"></span>
-  </Button>
+  <slot name="twoTimesSpeedButtonSlot">
+    <Button on:click={togglePlaySpeed} 
+      variant="raised" 
+      style="height: {20 * (canvasWidth / assumedCanvasWidth)}px; margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;"
+    >
+      <div style="color: white">
+        {playbackSpeed}x speed
+      </div>
+      <span class="material-icons"></span>
+    </Button>
+  </slot>
+
   <slot>
 
   </slot>
@@ -98,7 +101,7 @@
     bind:this={AudioPlayer} 
     src={audioDownloadURL} 
     controls={!isLocked}
-    style={`width: ${canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}>
+    style={`width: ${canvasWidth}px; height: ${90 * scaleFactor}px; position: absolute; bottom: 0; top: auto;`}>
   </audio>
 </div>
 
@@ -344,6 +347,10 @@
 </script>
 
 <style>
+audio::-webkit-media-controls-enclosure {
+    border-radius: 0;
+}
+
 .overlay-center {
   position: absolute; 
   width: 20px; 

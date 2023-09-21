@@ -53,7 +53,7 @@
 		{#if active.label === 'Viewers'}
 			<div class="header-flex">
 				<p class="header-title" style="font-size: 4em;">
-					Watch blackboard explanations for college classes
+					Request blackboard explanations for college classes
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">

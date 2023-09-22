@@ -11,7 +11,7 @@
       class="logo-image"
     >
     <h1 style="margin-left: 12px; font-family: sans-serif;">
-      Class servers
+      Class Servers
     </h1>
   </div>
 

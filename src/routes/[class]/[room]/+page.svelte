@@ -172,11 +172,11 @@
                   <RenderlessFetchServerMemberDoc 
                     {classID}
                     memberUID={boardDoc.creatorUID}
-                    let:helperDoc={helperDoc}
+                    let:serverMemberDoc={memberDoc}
                   >
-                    {#if helperDoc}
+                    {#if memberDoc}
                       <PresentationalBeaverPreview style="margin-left: 4px;"
-                        {helperDoc}
+                        helperDoc={memberDoc}
                         {classID}
                       />
                     {/if}

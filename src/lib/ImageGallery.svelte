@@ -69,9 +69,6 @@
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
 
-  
-
-
   export let galleryVideos
 
   let scaleFactor
@@ -178,7 +175,7 @@
   // -moz-animation: rotating 20s linear infinite;
   // -o-animation: rotating 20s linear infinite;
   // -ms-animation: rotating 20s linear infinite;
-  animation: rotating 80s linear infinite;
+  animation: rotating 40s linear infinite;
   // &:hover {
   // animation-play-state:paused;
   // -o-animation-play-state:paused;

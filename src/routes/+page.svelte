@@ -56,7 +56,6 @@
 					Ask question, get video.
 				</p>
 				<div class="header-subcopy-wrapper">
-					<!-- margin-top: 16px; -->
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
 						style="	
 							height: 4.2vw; 
@@ -424,6 +423,12 @@
 		},
 		{ titleForDebugging: 'Practice Finals: Fall 2018 Problem 11 (Value Iteration)',
 			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7',
+			creatorName: 'Tony Wang',
+			className: 'Intro to Machine Learning',
+			classID: 'Mev5x66mSMEvNz3rijym'
+		},
+		{ titleForDebugging: 'Step 1 of 2: transforming circular separation to linear separation',
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW',
 			creatorName: 'Tony Wang',
 			className: 'Intro to Machine Learning',
 			classID: 'Mev5x66mSMEvNz3rijym'

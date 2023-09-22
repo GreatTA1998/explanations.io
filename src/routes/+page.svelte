@@ -52,8 +52,8 @@
 	<div class="webflow-container">
 		{#if active.label === 'Viewers'}
 			<div class="header-flex">
-				<p class="header-title" style="font-size: 4em;">
-					Request blackboard explanations for college classes
+				<p class="header-title" style="font-size: 5em;">
+					Ask questions, get blackboard explanations.
 				</p>
 				<div class="header-subcopy-wrapper">
 					<div class="header-subcopy">

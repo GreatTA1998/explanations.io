@@ -52,14 +52,22 @@
 	<div class="webflow-container">
 		{#if active.label === 'Viewers'}
 			<div class="header-flex">
-				<p class="header-title" style="font-size: 5em;">
-					Ask questions, get blackboard explanations.
+				<p class="header-title" style="line-height: 1.2">
+					Ask question, get video.
 				</p>
 				<div class="header-subcopy-wrapper">
-					<div class="header-subcopy">
-					</div>
-					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
+					<!-- margin-top: 16px; -->
+					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
+						style="	
+							height: 4.2vw; 
+							min-height: 42px;
+							margin-top: 0.85vw; 
+							margin-bottom: 0.8vw; 
+							border-radius: 0px;
+							
+						"
+					>
+						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.3em; font-weight: 600">
 							Ask your first question
 						</Label>
 					</Button>
@@ -92,11 +100,11 @@
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 						<br><br> -->
-						You can think of this website as Youtube, but focused on STEM blackboard videos for college.
+						explanations.app = Youtube specifically designed to help college students in science & engineering.
 						<br><br>
 						Besides from free videos and public forums, you can subscribe to any creator for $10/month to join their group chat and access subscribers-only videos.
 						<br><br>
-						This is cheaper than hiring a tutor, and more efficient than walking & waiting at Office Hours 
+						This is cheaper than hiring a tutor, and can be more efficient than resources like Office Hours.
 					</div>
 				</div>
 
@@ -362,58 +370,69 @@
 		{ titleForDebugging: 'Free body diagrams' ,
 			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu',
 			creatorName: 'Noam Buckman',
-			className: 'Mechanics of Materials'
+			className: 'Mechanics of Materials',
+			classID: 'qfWJFR2xTm9vYOJFXYfJ'
 		},
 		{ titleForDebugging: 'Where should you make your cuts along the bar?' ,
 			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/js7wFnC1YTPND10cNdiZ',
 			creatorName: 'Noam Buckman',
-			className: 'Mechanics of Materials'
+			className: 'Mechanics of Materials',
+			classID: 'qfWJFR2xTm9vYOJFXYfJ'
 		},
 		{ titleForDebugging: 'Keeping the left or right side of the bar for a FBD?',
 			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/wPK4FjL0BVVDSelzgghKfZ1xQx33',
 			creatorName: 'Noam Buckman',
-			className: 'Mechanics of Materials'
+			className: 'Mechanics of Materials',
+			classID: 'qfWJFR2xTm9vYOJFXYfJ'
 		},
 		{ titleForDebugging: 'HW3 Problem 8' ,
 			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/pKRiHHADBzNgXp1nxJLB',
 			creatorName: 'Ben Shimabukuro',
-			className: 'Linear Algebra'
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
 		},
 		{ titleForDebugging: 'Eigenmatrices' ,
 			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7',
 			creatorName: 'Ben Shimabukuro',
-			className: 'Linear Algebra'
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
 		},
 		{
 			titleForDebugging: 'Intuition behind why eignenvalue must be 1 or 0 here',
 			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp',
 			creatorName: 'Ben Shimabukuro',
-			className: 'Linear Algebra'
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
 		},
 		{ titleForDebugging: 'Theory of change of basis',
 			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW',
 			creatorName: 'Ammar Fayad',
-			className: 'Linear Algebra'
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
 		},
 		{ titleForDebugging: 'Application of change of basis ' ,
 			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/GYpahmE2ULQ2ry34tBDv',
 			creatorName: 'Ammar Fayad',
-			className: 'Linear Algebra'
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
 		},
-		{ titleForDebugging: 'Visualizing how to maximize f(x,y) subject to constraint' ,
+		{ titleForDebugging: 'Why is f(x, y) maximized when indifference curve meets the budget constraint?' ,
 			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ',
 			creatorName: 'Elton Lin',
-			className: 'Microeconomics'
+			className: 'Microeconomics',
+			classID: 'Mev5x66mSMEvNz3rijym'
 		},
-		{ titleForDebugging: 'Value iteration in Machine learning',
+		{ titleForDebugging: 'Practice Finals: Fall 2018 Problem 11 (Value Iteration)',
 			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7',
 			creatorName: 'Tony Wang',
-			className: 'Intro to Machine Learning'
+			className: 'Intro to Machine Learning',
+			classID: 'Mev5x66mSMEvNz3rijym'
 		},
 		{ titleForDebugging: 'Midterm Review: Disjoint Dimensions (recursion)' ,
 			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q',
 			creatorName: 'Caleb Noble',
-			className: 'Intro to Algorithms'
+			className: 'Intro to Algorithms',
+			classID: 'USb1mGxeLqufbgbPhSbV'
 		}
 	]
 
@@ -498,7 +517,7 @@
 	max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
 	margin-bottom: 0;
-	font-size: 7vw;
+	font-size: 4.5vw; /* was 6vw */
 	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
 	font-weight: 500;
 
@@ -522,7 +541,7 @@
 
 @media only screen and (min-width: 1550px) {
 	.header-title {
-		font-size: 7rem;
+		font-size: 4.5vw; /** webflow used 7rem*/
 	}
 }
 
@@ -533,10 +552,24 @@
 	}
 }
 
+.call-to-action-button {
+	height: 4.2vw; 
+	margin-top: 0.8vw; 
+	margin-bottom: 0.8vw;
+}
+
+@media only screen and (max-width: 991px) {
+	.call-to-action-button {
+		height: 60px;
+		margin-top: 16px;
+		margin-bottom: 2rem;
+	}	
+}
+
 .webflow-intro-type {
 	font-family: sans-serif; 
-	font-size: 5rem;
-	line-height: 1.125; // used to be 1.25 but you know what happened last time
+	font-size: 4rem; // used to be 5 rem
+ 	line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
 	letter-spacing: -.02em;
 	max-width: 100%;
@@ -617,8 +650,8 @@
 	// additional attributes
 	display: flex; 
 	flex-direction: column;
-	justify-content: flex-end; 
-	align-items: flex-start;
+	// justify-content: flex-end; 
+	// align-items: flex-start;
 
 	-webkit-flex-direction: column; 
 	-webkit-align-items: flex-start;

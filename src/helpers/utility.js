@@ -76,3 +76,9 @@ export function roundedToFixed(input, digits) {
   var rounded = Math.pow(10, digits);
   return (Math.round(input * rounded) / rounded).toFixed(digits);
 }
+
+export function getRandomColor () {
+  return "hsla(" + ~~(360 * Math.random()) + "," + // hue i.e. the "color"
+                "100%,"+  // 100% saturation i.e. maximize on its vividness and purity
+                "60%,1)"; // 60% lightness (how much black / white mix, otherwise too faded), 1 alpha
+}

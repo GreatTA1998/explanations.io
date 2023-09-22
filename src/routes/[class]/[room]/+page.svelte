@@ -851,6 +851,7 @@
     })
     updateRecordState(boardID, 'pre_record')
 
+    // TO-DO: change this back to email notifications
     // IF SOMEBODY ASKED A QUESTION, TEXT NOTIFY THEM
     if (roomDoc.askerUID) {
       const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)

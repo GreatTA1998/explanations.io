@@ -9,22 +9,48 @@
     <div class="container" style="transform: scale({scaleFactor})">
       <div id="carousel">
         {#each galleryVideos as galleryVideo}
-          <div style="border: none;">
+          <div class="gallery-item" style="border: none;">
             <RenderlessListenToBoard dbPath={galleryVideo.dbPath} let:boardDoc={boardDoc}>
               <ReusableDoodleVideo
                 {boardDoc}
-                title={galleryVideo.titleForDebugging}
-                creatorName={galleryVideo.creatorName}
-                className={galleryVideo.className}
                 canvasWidth={galleryItemWidth}
                 canvasHeight={galleryItemHeight}
                 showEditDeleteButtons={false}
                 boardDbPath={galleryVideo.dbPath}
               />
+
+              {#if boardDoc}
+                <div style="padding-top: 6px;">
+                  <div style="display: flex">
+                    <ClassServerMyProfilePicture
+                      radiusInPixels={14}
+                      circleBorderColor={getRandomColor()}
+                      on:click={() => goto(`profile/${galleryVideo.classID}/${boardDoc.creatorUID}`)}
+                    />
+                    <div style="margin-left: 4px;">
+                      <div class="youtube-title-font">
+                        {galleryVideo.titleForDebugging}
+                      </div>
+                      
+                      <div on:click={() => goto(`profile/${galleryVideo.classID}/${boardDoc.creatorUID}`)}
+                        class="creator-channel-name"   
+                      >
+                        {galleryVideo.creatorName}
+                      </div>
+                
+                      <div style="display: flex; color: #282828">
+                        {roundedToFixed(boardDoc.viewMinutes, 0)} minutes viewed,
+                        {galleryVideo.className}
+                      </div>
+                     </div>
+                  </div>
+                </div>
+              {/if}
+              
             </RenderlessListenToBoard>
           </div>
 
-          <div class="unselectable"></div>
+          <div class="unselectable gallery-item"></div>
         {/each}
       </div>
     </div>
@@ -35,7 +61,16 @@
   // TO-DO: fix drifting center of rotation
   import RenderlessListenToBoard from './RenderlessListenToBoard.svelte'
   import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'
+  import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
+  import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
+  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
+  import ReusableCreatorInfoCard from '$lib/ReusableCreatorInfoCard.svelte'
+  import { getRandomColor, roundedToFixed } from '/src/helpers/utility.js'
   import { onMount } from 'svelte'
+  import { goto } from '$app/navigation'
+
+  
+
 
   export let galleryVideos
 
@@ -51,6 +86,34 @@
 
 
 <style lang="scss">
+  .creator-channel-name {
+    color: #282828;
+  }
+
+  .creator-channel-name:hover {
+    cursor: pointer;
+    color: purple;
+    text-decoration: underline;
+  }
+
+  .youtube-title-font {
+    font-family: "Roboto","Arial",sans-serif;
+    font-size: 1.2rem; // 1.6
+    line-height: 1.3rem; // 2.2
+    font-weight: 500;
+    overflow: hidden;
+    display: block;
+    max-height: 4.4rem;
+    -webkit-line-clamp: 2;
+    display: box;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+
+
+
 @mixin transform($deg) {
   // RADIUS of rotation
   transform: rotateY($deg) translateZ(660px);  // rotateY($deg) //660px
@@ -122,7 +185,7 @@
   // -moz-animation-play-state:paused;
 	// -webkit-animation-play-state:paused;
   // }
-  div {
+  .gallery-item {
     display: block;
     box-sizing: border-box; // so same size as videos with/without border
     position: absolute; // removing this will create a spiral

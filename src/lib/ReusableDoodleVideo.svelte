@@ -22,16 +22,8 @@
         on:six-seconds-elapsed
       > 
         <div slot="twoTimesSpeedButtonSlot">
-          {#if className && title && creatorName}
-            <div 
-              class="my-truncated-text"
-              style="max-width: {canvasWidth * 0.92}px; margin-left: 8px; background-color:  rgba(1, 1, 1, .3); color: white; padding: 6px; border-radius: 12px;"
-            >
-              {className}: {title} by {creatorName}
-            </div>
-          {/if}
+
         </div>
-  
 
         {#if showEditDeleteButtons}
           <!-- <div style="

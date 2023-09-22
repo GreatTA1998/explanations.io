@@ -19,12 +19,16 @@ export function setFirestoreDoc (path, newObject) {
 }
 
 export function getFirestoreDoc (path) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     const ref = firestoreRef(path)
     const snapshot = await getDoc(ref)
-    resolve(
-      { id: snapshot.id, path: snapshot.ref.path, ...snapshot.data() }
-    )
+    if (snapshot.exists()) {
+      resolve(
+        { id: snapshot.id, path: snapshot.ref.path, ...snapshot.data() }
+      )
+    } else {
+      reject('Doc doesn not exist for path =', path)
+    }
   })
 }
 
@@ -148,9 +152,12 @@ export async function updateNumOfSubfolders ({ draggedRoomID, droppedRoomID, bas
         numOfChildren: increment(-1)
       })
     }
-    await updateFirestoreDoc(basePath + droppedRoomID, {
-      numOfChildren: increment(1)
-    })
+    // note: dropping to top level would mean there is no `droppedRoomID`
+    if (droppedRoomID) {
+      await updateFirestoreDoc(basePath + droppedRoomID, {
+        numOfChildren: increment(1)
+      })
+    }
     resolve()
   })
 }

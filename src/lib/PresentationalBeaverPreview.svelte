@@ -12,7 +12,7 @@
     />
 
     <!-- colors used to be white -->
-    <div>
+    <div style="margin-left: 4px;">
       <div>
         <a style="color: #5d0068;">
         {helperDoc.name}

@@ -1,6 +1,6 @@
 <!-- This is a quickfix for routing -->
 {#if roomID === 'request-video'}
-  <ClassServerRequestVideo {classID}/>
+  <ClassServerAskQuestion {classID}/>
 {:else if roomID === 'my-profile'}
   <ClassServerMyProfile {classID} profileUID={$user.uid}/>
 {:else}
@@ -20,11 +20,10 @@
     >
       <HelperText slot="helper" persistent>
         {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
-          {roomDoc.askerName} asked on {displayDate(roomDoc.dateAsked)}
-        {/if}
-
-        {#if roomDoc.dateResolved}
-          , resolved {displayDate(roomDoc.dateResolved)}
+          This question was asked by {roomDoc.askerName} on {displayDate(roomDoc.dateAsked)},
+          and has {roomDoc.blackboards.length - 1} responses
+        {:else if roomDoc.blackboards} 
+          This room has {roomDoc.blackboards.length} boards
         {/if}
       </HelperText>
     </Textfield>
@@ -170,18 +169,16 @@
                 <div 
                   style="display: flex; width: 100%; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;"
                 >
-                  <RenderlessFetchHelperDoc 
+                  <RenderlessFetchServerMemberDoc 
                     {classID}
-                    creatorUID={boardDoc.creatorUID || ''}
-                    let:helperDoc={helperDoc}
+                    memberUID={boardDoc.creatorUID}
+                    let:serverMemberDoc={memberDoc}
                   >
-                    {#if helperDoc}
+                    {#if memberDoc}
                       <PresentationalBeaverPreview style="margin-left: 4px;"
-                        {helperDoc}
+                        helperDoc={memberDoc}
                         {classID}
                       />
-                    {:else}
-                      {boardDoc.creatorName}
                     {/if}
 
                     <div style="width: 250px; margin-left: 30px;">
@@ -202,7 +199,7 @@
                         on:popup-close={() => isSubscribePopupOpen = false}
                       />
                     {/if}      
-                  </RenderlessFetchHelperDoc>
+                  </RenderlessFetchServerMemberDoc>
 
                   <div style="margin-left: 24px;"></div>
 
@@ -311,7 +308,7 @@
                     <RenderlessAudioRecorder
                       let:startRecording={startRecording} 
                       let:stopRecording={stopRecording}
-                      on:record-end={(e) => saveVideo(e.detail.audioBlob, strokesArray, boardID)}
+                      on:record-end={(e) => uploadVideo(e.detail.audioBlob, strokesArray, boardID)}
                     >
                     <!-- 
                       if an recording is active (rather than an interrupted session that isn't actually recording,
@@ -383,7 +380,6 @@
           display: flex; 
           justify-content: center; 
           align-items: center;
-          margin-top: 40px; 
           background-color: #2e3131; 
           font-family: Roboto, sans-serif; text-transform: uppercase;
           color: white;
@@ -393,7 +389,11 @@
           opacity: 1;
           "
         >
-       New blackboard
+          {#if hasQuestionMark(roomDoc.name)}
+            Respond to question
+          {:else}
+            New blackboard
+          {/if}
      </div>
    {/if}
   </div>
@@ -428,8 +428,8 @@
   import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
-  import RenderlessFetchHelperDoc from '$lib/RenderlessFetchHelperDoc.svelte'
-  import ClassServerRequestVideo from '$lib/ClassServerRequestVideo.svelte'
+  import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
+  import ClassServerAskQuestion from '$lib/ClassServerAskQuestion.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
   import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
@@ -674,6 +674,11 @@
     updateDoc(roomRef, {
       dateResolved: new Date().toISOString()
     })
+
+    // update metadata
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfResolvedQuestions: increment(1)
+    })  
   }
 
   function resetResolveQuestionCountdown () {
@@ -761,7 +766,7 @@
     })
   }
 
-  async function saveVideo (audioBlob, strokesArray, boardID) {
+  async function uploadVideo (audioBlob, strokesArray, boardID) {
     const db = getFirestore()
 
     // QUICK-FIX for concurrent drawings with no timestamp 
@@ -809,18 +814,25 @@
       collection(db, `classes/${classID}/tutors`),
       where('uid', '==', $user.uid)
     )
+    // base the member profile UID on the actual UID, so you don't need to do all these queries
+    const classDocUpdateObj = {} 
+
     const snap = await getDocs(q) 
     if (!snap.empty) {
+      // find the specific tutor doc
       snap.docs.forEach(doc => {
         tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
       })
+      // that means it's the member's first server video
+      if (!tutorDoc.numOfVideos) {
+        classDocUpdateObj.numOfCreators = increment(1)
+      }
       updateFirestoreDoc(`classes/${classID}/tutors/${tutorDoc.id}`, {
         numOfVideos: increment(1)
       })
     }
-    updateFirestoreDoc(`classes/${classID}`, {
-      numOfVideos: increment(1)
-    })
+    classDocUpdateObj.numOfVideos = increment(1) 
+    updateFirestoreDoc(`classes/${classID}`, classDocUpdateObj)
 
     // upload the audio file
     const storage = getStorage()
@@ -839,6 +851,7 @@
     })
     updateRecordState(boardID, 'pre_record')
 
+    // TO-DO: change this back to email notifications
     // IF SOMEBODY ASKED A QUESTION, TEXT NOTIFY THEM
     if (roomDoc.askerUID) {
       const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)
@@ -960,7 +973,8 @@
 }
 
 :global(.question input) {
-  color: rgb(19, 145, 230) !important;
+  color: red !important;
+  /* color: rgb(19, 145, 230) !important; */
 }
 
 .unclickable {

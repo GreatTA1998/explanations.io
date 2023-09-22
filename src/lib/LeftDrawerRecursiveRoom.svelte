@@ -56,9 +56,10 @@
       {/if}
       
       <!--  needed otherwise `question-item` if statement will be undefined -->
+      <!--  question-item criteria use to require `&& room.id !== roomID` -->
       {#if room.name}
         <div 
-          class:question-item={'?' === room.name.charAt(room.name.length - 1) && room.id !== roomID} 
+          class:question-item={'?' === room.name.charAt(room.name.length - 1)} 
           class="my-truncated-text"
           style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px"
         >
@@ -103,12 +104,12 @@
             <!-- CASE 1: it's me -->
             {#if person.browserTabID === $browserTabID}
               {#if !willJoinVoiceChat}
-                <div 
+                <!-- <div 
                   on:click={() => willJoinVoiceChat = true}
                   style="margin-right: 4px; margin-left: auto; background-color: green; color: white; font-size: 0.6rem; padding-left: 4px; padding-right: 4px; cursor: pointer; border-radius: 4px;"
                 >
                   Join voice 
-                </div>
+                </div> -->
 
               {:else if Object.keys($dailyRoomParticipants).length > 0}
                 <div style="display: flex; align-items: center; margin-right: 6px; margin-left: auto">
@@ -425,7 +426,8 @@ async function deleteRoom (room) {
   }
   await Promise.all(subdeleteRequests)
 
-  // update pointers: move all the children OUT of the folder getting deleted
+
+  // MOVE CHILDREN: move all the children OUT of the folder getting deleted
   // 1. fetch all the sub-rooms
   // 2. update all the parent pointers
   const folderPromises = []
@@ -451,6 +453,18 @@ async function deleteRoom (room) {
   }
 
   await Promise.all(folderPromises)
+
+  // UPDATE METADATA/STATS
+  if (room.dateResolved) {
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfResolvedQuestions: increment(-1)
+    })
+  }
+  else if (room.dateAsked) {
+    updateFirestoreDoc(`classes/${classID}`,{
+      numOfUnresolvedQuestions: increment(-1)
+    })
+  }
 
   // finally delete the room doc itself
   await deleteDoc(
@@ -478,7 +492,7 @@ async function deleteRoom (room) {
   }
 
   .question-item {
-    color: rgb(34, 153, 231);
+    color: red; /* rgb(34, 153, 231); */
   }
 
   .speaking {

@@ -16,6 +16,7 @@
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
   import { hasFetchedUser, idOfServerNewUserWantedToEnter, user, userInfoFromAuthProvider } from '../store.js'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { getRandomColor } from "/src/helpers/utility.js"
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -100,11 +101,6 @@
         correctionObj.name = `Beaver #${metadataSnap.data().numOfUsers}`
       }
       if (!mirrorUserDoc.beaverProfilePicColor) {
-        function getRandomColor () {
-            return "hsla(" + ~~(360 * Math.random()) + "," + // hue i.e. the "color"
-                          "100%,"+  // 100% saturation i.e. maximize on its vividness and purity
-                          "60%,1)"; // 60% lightness (how much black / white mix, otherwise too faded), 1 alpha
-        }
         correctionObj.beaverProfilePicColor = getRandomColor()
       }
       // ...more if statements can be added

@@ -65,4 +65,70 @@
       name: inputFieldFirstName + ' ' + inputFieldLastName
     })
   }
+
+
+  // BELOW CODE WAS PASTED FROM <ToCommunityOrHelperCards/>, does not work as it is
+  async function handleConfirmTrial (tutor) {
+    isTrialPopupOpen = false
+    const promises = [] 
+
+  // NOTE: Twilio's requirement differs from Firebase Auth, which requires +1 XXX-XXX-XXX hyphen format
+    const eltonMobileNumber = '+15032503868'
+    await promises.push(
+      sendTextMessage({ 
+        content: `${$user.name} signed up for your "$1 + tip" 30 minute in-person tutoring trial, confirm on Venmo and they should text you shortly to schedule a time.`,
+        toWho: tutor.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Welcome ${$user.name.split(' ')[0]}! 
+        Schedule a time and place to meet with your tutor e.g. give 3 distinct times like 1 pm Wednesday, Friday 3 pm, Tuesday 12 pm, student center 5th floor etc.)
+        and decide afterwards whether to hire them for youtube-style help : )
+        `,
+        toWho: $user.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Student ${$user.name} is trialing with tutor ${tutor.name}`,
+        toWho: eltonMobileNumber
+      })
+    )
+  }
+
+  async function handleConfirmSubscription (tutor) {
+    isSubscribePopupOpen = false
+    const promises = []
+
+    // NOTE: Twilio's requirement differs from Firebase Auth, which requires +1 XXX-XXX-XXX hyphen format
+    const eltonMobileNumber = '+15032503868'
+    await promises.push(
+      sendTextMessage({ 
+        content: `New student ${$user.name} subscribed for $${price || 15}, confirm on Venmo`,
+        toWho: tutor.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Welcome ${$user.name.split(' ')[0]}! To ask your question, just rename a room to your question, your helper will be text notified.
+          
+          If you don't know how to use the website, here's a 1-min screenshare tutorial: https://youtu.be/Yo7aPxLropU?t=58. 
+          Your tutor's phone is ${tutor.phoneNumber}. Texting is the fallback communication when there are unexpected problems e.g. ask for their email to
+          send the pset PDF, Explain's website broke down, or to follow-up sometimes if response time is unusually long etc.
+
+
+          If there's anything terribly inconvenient about the website, it probably is a bug, or a flawed design. You can call me/Elton (503 250 3868) 
+          (please don't hesitate, Explain is my full-time job and you're a paying customer, and more often than not I can change the code 
+          to incorporate your ideas within 1 week.)
+        `,
+        toWho: $user.phoneNumber
+      }),
+      sendTextMessage({
+        content: `Student ${$user.name} subscribed to tutor ${tutor.name}`,
+        toWho: eltonMobileNumber
+      }),
+      updateFirestoreDoc(`/users/${$user.uid}`, {
+        idsOfSubscribedClasses: arrayUnion(classID)
+      }),
+      updateFirestoreDoc(`/classes/${classID}/tutors/${tutor.id}`, {
+        numOfStudents: increment(1)
+      })
+    )
+    goto(`/${classID}/${classID}`)
+  }
 </script>

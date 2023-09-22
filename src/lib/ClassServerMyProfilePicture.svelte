@@ -1,9 +1,13 @@
 <!-- notice the detail, we  appended 'px' for the CSS variable version of the prop -->
-<a class="circle" style="
+<a
+  class="circle" 
+  style="
   --radiusInPixels: {radiusInPixels}px;
   background-color: {circleBorderColor};
+  margin: 0px;
 ">
 	<img 
+    on:click
     height={radiusInPixels * 2} 
     width="{radiusInPixels * 2}" 
     src="https://media.istockphoto.com/id/1072204920/vector/cute-cartoon-beaver.jpg?s=170667a&w=0&k=20&c=D41mYMs-actgfBdb8WvLt6CFyP91dhqGzXlZJjDqhKg=" 
@@ -43,12 +47,11 @@ a {
   font-weight: normal;
   text-decoration: none;
 }
-a:hover {
+/* a:hover {
   color: CornflowerBlue;
-}
+} */
 
 /* Circle Avatar Styles */
-
 .circle {
 	line-height: 0;		/* remove line-height */ 
 	display: inline-block;	/* circle wraps image */
@@ -64,11 +67,11 @@ a:hover {
 	border-radius: 50%;	/* relative value for
 				   adjustable image size */
 }
-.circle:hover {
+/* .circle:hover {
 	transition: ease-out 0.2s;
   border: 4px solid rgba(0,0,0,0.2);
   -webkit-transition: ease-out 0.2s;
-}
+} */
 a.circle {
   color: transparent;
 } /* IE fix: removes blue border */	

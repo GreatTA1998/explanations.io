@@ -9,6 +9,7 @@
   on:dragover={(e) => dragover_handler(e)}
   on:drop={(e) => onReorderDrop(e)}
 >
+
 </div>
 
 <script>
@@ -41,7 +42,7 @@
     const draggedRoomID = value1
 
     // before updating `classServerOrder`, we update
-    // the counter showing how many subfolders a foler has
+    // the counter showing how many subfolders a folder has
     const droppedRoomDoc = roomsInThisLevel[orderWithinLevel]
     await updateNumOfSubfolders({ 
       draggedRoomID, 

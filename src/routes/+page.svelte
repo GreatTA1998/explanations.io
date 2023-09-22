@@ -52,15 +52,22 @@
 	<div class="webflow-container">
 		{#if active.label === 'Viewers'}
 			<div class="header-flex">
-				<p class="header-title" style="font-size: 4em;">
-					Watch blackboard explanations by former TAs & students
+				<p class="header-title" style="line-height: 1.2">
+					Ask question, get video.
 				</p>
 				<div class="header-subcopy-wrapper">
-					<div class="header-subcopy">
-					</div>
-					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Set it up for your class
+					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
+						style="	
+							height: 4.2vw; 
+							min-height: 42px;
+							margin-top: 0.85vw; 
+							margin-bottom: 0.8vw; 
+							border-radius: 0px;
+							
+						"
+					>
+						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.3em; font-weight: 600">
+							Ask your first question
 						</Label>
 					</Button>
 				</div>
@@ -92,12 +99,11 @@
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 						<br><br> -->
-						This website is like Youtube for MIT classes, where everyone can request blackboard videos
-						that <b style="color: navy">efficiently and properly</b> resolves your question.
-
+						explanations.app = Youtube specifically designed to help college students in science & engineering.
 						<br><br>
-						If everyone is too busy to help out, you can pay <b style="color: #5d0068">$10/month</b> to subscribe to teachers who are committed 
-						to help you through the hardest weeks. 
+						Besides from free videos and public forums, you can subscribe to any creator for $10/month to join their group chat and access subscribers-only videos.
+						<br><br>
+						This is cheaper than hiring a tutor, and can be more efficient than resources like Office Hours.
 					</div>
 				</div>
 
@@ -124,7 +130,6 @@
 					</div>
 
 					<div style="margin-bottom: 100px;"></div>
-
 										
 					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
 						<div style="font-size: 2rem;">
@@ -147,7 +152,7 @@
 				<div style="text-align: center">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Ask a question
+							Ask your first question
 						</Label>
 					</Button>
 				</div>
@@ -324,6 +329,8 @@
 				Different students have different needs, so it can be challenging to ensure every student gets what they need.
 				But it could also be easy, with a little experimentation. For example, their common concerns about a pset problem, or a fundamental concept 
 				is often addressable with a recorded explanation. 
+
+				You don't need 1 million viewers to earn side-income - instead, just an engaged community of 5 - 20 subscribers paying affordable prices. 
 				"
 			>
 			</HowItWorksStep>
@@ -359,23 +366,78 @@
 
 	// RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [
-		{ titleForDebugging: 'Noam: overall idea of free body diagrams in 2.001' ,
-			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu'
+		{ titleForDebugging: 'Free body diagrams' ,
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu',
+			creatorName: 'Noam Buckman',
+			className: 'Mechanics of Materials',
+			classID: 'qfWJFR2xTm9vYOJFXYfJ'
 		},
-		{ titleForDebugging: 'Ben: eigenmatrices' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7' // this is either mine, tony or caleb's
+		{ titleForDebugging: 'Where should you make your cuts along the bar?' ,
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/js7wFnC1YTPND10cNdiZ',
+			creatorName: 'Noam Buckman',
+			className: 'Mechanics of Materials',
+			classID: 'qfWJFR2xTm9vYOJFXYfJ'
 		},
-		{ titleForDebugging: 'Ammar: theory & application of linear algebra' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW'
+		{ titleForDebugging: 'Keeping the left or right side of the bar for a FBD?',
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/wPK4FjL0BVVDSelzgghKfZ1xQx33',
+			creatorName: 'Noam Buckman',
+			className: 'Mechanics of Materials',
+			classID: 'qfWJFR2xTm9vYOJFXYfJ'
 		},
-		{ titleForDebugging: 'Elton: f(x,y) optimization' ,
-			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ' // this is either mine, tony or caleb's
+		{ titleForDebugging: 'HW3 Problem 8' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/pKRiHHADBzNgXp1nxJLB',
+			creatorName: 'Ben Shimabukuro',
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
 		},
-		{ titleForDebugging: 'Tony: value iteration with an attached diagram' ,
-			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7' // this is either mine, tony or caleb's
+		{ titleForDebugging: 'Eigenmatrices' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7',
+			creatorName: 'Ben Shimabukuro',
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
 		},
-		{ titleForDebugging: 'Caleb: example recursion problem for midterm' ,
-			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q' // this is either mine, tony or caleb's
+		{
+			titleForDebugging: 'Intuition behind why eignenvalue must be 1 or 0 here',
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp',
+			creatorName: 'Ben Shimabukuro',
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
+		},
+		{ titleForDebugging: 'Theory of change of basis',
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW',
+			creatorName: 'Ammar Fayad',
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
+		},
+		{ titleForDebugging: 'Application of change of basis ' ,
+			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/GYpahmE2ULQ2ry34tBDv',
+			creatorName: 'Ammar Fayad',
+			className: 'Linear Algebra',
+			classID: 'lvzQqyZIV1wjwYnRV9hn'
+		},
+		{ titleForDebugging: 'Why is f(x, y) maximized when indifference curve meets the budget constraint?' ,
+			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ',
+			creatorName: 'Elton Lin',
+			className: 'Microeconomics',
+			classID: 'Mev5x66mSMEvNz3rijym'
+		},
+		{ titleForDebugging: 'Practice Finals: Fall 2018 Problem 11 (Value Iteration)',
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7',
+			creatorName: 'Tony Wang',
+			className: 'Intro to Machine Learning',
+			classID: 'Mev5x66mSMEvNz3rijym'
+		},
+		{ titleForDebugging: 'Step 1 of 2: transforming circular separation to linear separation',
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW',
+			creatorName: 'Tony Wang',
+			className: 'Intro to Machine Learning',
+			classID: 'Mev5x66mSMEvNz3rijym'
+		},
+		{ titleForDebugging: 'Midterm Review: Disjoint Dimensions (recursion)' ,
+			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q',
+			creatorName: 'Caleb Noble',
+			className: 'Intro to Algorithms',
+			classID: 'USb1mGxeLqufbgbPhSbV'
 		}
 	]
 
@@ -387,8 +449,8 @@
 
 	let randomlyChosenExemplarVideos = null
 	const nums = new Set();
-	while (nums.size < 3) {
-		nums.add(getRandomIntInclusive({ min: 0, max: 5 }));
+	while (nums.size < 4) {
+		nums.add(getRandomIntInclusive({ min: 0, max: exemplarVideos.length - 1 }));
 	}
 	const temp = [] 
 	const uniqueIndices = [...nums]
@@ -447,7 +509,7 @@
 	}
 
 .image-gallery-container {
-	margin-top: 12%; 
+	margin-top: 10%; 
 	margin-bottom: 24%;
 }
 
@@ -460,7 +522,7 @@
 	max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
 	margin-bottom: 0;
-	font-size: 7vw;
+	font-size: 4.5vw; /* was 6vw */
 	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
 	font-weight: 500;
 
@@ -484,7 +546,7 @@
 
 @media only screen and (min-width: 1550px) {
 	.header-title {
-		font-size: 7rem;
+		font-size: 4.5vw; /** webflow used 7rem*/
 	}
 }
 
@@ -495,10 +557,24 @@
 	}
 }
 
+.call-to-action-button {
+	height: 4.2vw; 
+	margin-top: 0.8vw; 
+	margin-bottom: 0.8vw;
+}
+
+@media only screen and (max-width: 991px) {
+	.call-to-action-button {
+		height: 60px;
+		margin-top: 16px;
+		margin-bottom: 2rem;
+	}	
+}
+
 .webflow-intro-type {
 	font-family: sans-serif; 
-	font-size: 5rem;
-	line-height: 1.125; // used to be 1.25 but you know what happened last time
+	font-size: 4rem; // used to be 5 rem
+ 	line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
 	letter-spacing: -.02em;
 	max-width: 100%;
@@ -579,8 +655,8 @@
 	// additional attributes
 	display: flex; 
 	flex-direction: column;
-	justify-content: flex-end; 
-	align-items: flex-start;
+	// justify-content: flex-end; 
+	// align-items: flex-start;
 
 	-webkit-flex-direction: column; 
 	-webkit-align-items: flex-start;

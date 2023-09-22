@@ -2,7 +2,6 @@
   <LeftDrawerToggleButton/>
 
   <div style="padding: 16px;">
-
     <Textfield 
       style="width: 100%;"
       value={questionTitleInput} on:input={(e) => questionTitleInput = e.target.value}
@@ -33,10 +32,9 @@
       </div>
     {/if}
 
-    <ToCommunityOrHelper {classID} {isAskingCommunityOrHelper} 
-      on:community-asking={() => isAskingCommunityOrHelper = 'community'}
-      on:helper-asking={() => isAskingCommunityOrHelper = 'helper'}>
-    </ToCommunityOrHelper>
+    <ClassServerAskQuestionAllCreators 
+      {classID}
+    />
 
     <Button 
       on:click={submitQuestion} 
@@ -55,7 +53,7 @@
   import { user } from '../store.js'
   import { portal } from '../helpers/actions.js'
   import { getFirestoreCollection, getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
-  import ToCommunityOrHelper from '/src/routes/signup/[class]/ToCommunityOrHelper.svelte'
+  import ClassServerAskQuestionAllCreators from '$lib/ClassServerAskQuestionAllCreators.svelte'
   import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import Textfield from '@smui/textfield'
@@ -113,11 +111,13 @@
     updateFirestoreDoc(`classes/${classID}/blackboards/${newRoomDocID}`, {
       description: questionDescriptionInput,
     })
+
+    // Update stats/metadata that are affected by this operation
     updateFirestoreDoc(`classes/${classID}`, {
-      numOfQuestions: increment(1)
+      numOfUnresolvedQuestions: increment(1)
     })
 
-    // send text notification to all helpers
+    // Handle notifications
     const classDoc = await getFirestoreDoc(`classes/${classID}`)
     const classHelpers = await getFirestoreCollection(`classes/${classID}/tutors`)
     for (const helper of classHelpers) {

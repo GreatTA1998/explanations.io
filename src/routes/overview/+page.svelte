@@ -17,6 +17,10 @@
 
   <ButtonPopupCreateNewClass/>
 
+  <button on:click={() => goto('legacy')}>
+    Go to non-class servers
+  </button>
+
   {#if $user.uid}
     <button on:click={logOut}>
       Log out

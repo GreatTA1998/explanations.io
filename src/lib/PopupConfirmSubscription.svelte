@@ -44,7 +44,6 @@
 </BasePopup>
 
 <script>
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
   import BasePopup from '$lib/BasePopup.svelte'
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'

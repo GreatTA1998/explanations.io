@@ -5,7 +5,7 @@
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
     {#if !$user.phoneNumber}
       1. Log in with mobile number
-      <PhoneLogin/>
+      <LoginPhone/>
     {:else if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}
       <div>First name</div>
       <input bind:value={inputFieldFirstName} placeholder="Alice, Bob, Charlie"/>
@@ -46,7 +46,7 @@
 </BasePopup>
 
 <script>
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
+  import LoginPhone from '$lib/LoginPhone.svelte'
   import BasePopup from '$lib/BasePopup.svelte'
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'

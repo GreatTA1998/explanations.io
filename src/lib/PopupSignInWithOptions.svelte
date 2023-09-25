@@ -34,13 +34,19 @@
       <div style="margin-top: 20px;">
       </div>
       
-      <TouchstoneLogin/>
+      <LoginGoogle/>
+
+      <div style="margin-top: 4px;"></div>
+
+      <LoginTouchstone/>
+
+      <div style="margin-top: 4px;"></div>
   
       <div 
         on:click={() => isShowingPhoneLogin = true}
         style="
-        color: blue; 
-        border: 1px solid blue; 
+        color: orange; 
+        border: 1px solid orange; 
         margin-bottom: 2px;
         width: 200px;
         padding-top: 6px;
@@ -54,14 +60,15 @@
         <span class="material-icons" style="margin-right: 6px;">
           phone
         </span>
-        Phone
+        Phone number
       </div>    
   
       {#if isShowingPhoneLogin}
-        <PhoneLogin/>
+        <LoginPhone
+          canTakeInternationalNumbers
+        />
       {/if}
     </div>
-
   </div>
 </BasePopup>
 
@@ -72,8 +79,9 @@
   import { getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
   import { collection, query, where, getDocs } from "firebase/firestore";
-  import TouchstoneLogin from '$lib/TouchstoneLogin.svelte'
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
+  import LoginTouchstone from '$lib/LoginTouchstone.svelte'
+  import LoginPhone from '$lib/LoginPhone.svelte'
+  import LoginGoogle from '$lib/LoginGoogle.svelte'
 
 
   let isShowingPhoneLogin = false

@@ -1,30 +1,39 @@
 {#if legacyServers}
   {#each legacyServers as legacyServer}
-    <div on:click={() => goto(legacyServer.id + '/' + legacyServer.id)}>
+    <div on:click={() => handleClassServerClick({id: legacyServer.id})}>
         <u style="color: blue;">{legacyServer.name}</u>
-  
     </div>
-        
   {/each}
 {/if}
 
+{#if isLogInPopupOpen}
+  <PopupSignInWithOptions on:popup-close={() => isLogInPopupOpen = false}/>
+{/if}
+
 <script>
-  import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte';
-  import ExperimentalTable from '$lib/ExperimentalTable.svelte'
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
+  import { user, idOfServerNewUserWantedToEnter } from '../../store.js'
   import { goto } from '$app/navigation';
   import { getFirestore, onSnapshot, collection, query, where } from 'firebase/firestore'
-  import { setFirestoreDoc, updateFirestoreDoc, getFirestoreCollection } from '../../helpers/crud.js'
-  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
-  import { getRandomID } from '../../helpers/utility.js'
-  import ButtonPopupCreateNewClass from '$lib/ButtonPopupCreateNewClass.svelte'
-  import { user } from '../../store.js'
-  import { signOut, getAuth } from 'firebase/auth'
-  import { onDestroy, onMount } from 'svelte'
-  import ReusableButton from '$lib/ReusableButton.svelte';
-  import Checkbox from '@smui/checkbox'
+  import { createEventDispatcher } from 'svelte'
 
   let legacyServers = null
+  const dispatch = createEventDispatcher()
   fetchLegacyServers()
+  let isLogInPopupOpen = false
+
+  function handleClassServerClick (item) {
+    if (!$user.uid) {
+      idOfServerNewUserWantedToEnter.set(item.id)
+      dispatch('login-required')
+
+      // quick-fix
+      isLogInPopupOpen = true
+
+    } else { 
+      goto(`${item.id}/request-video`)
+    }
+  }
 
   function fetchLegacyServers () {
     return new Promise(async resolve => {

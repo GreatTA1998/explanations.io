@@ -45,7 +45,7 @@
       user.set({ 
         // email: resultUser.email || '', // email information is unavailable because Touchstone has some encoding for the properties
         phoneNumber: resultUser.phoneNumber || '', // '' means it's an anonymous new user playing around
-        uid,
+        uid: resultUser.uid,
         pencilColors: [] 
       })
 
@@ -61,10 +61,11 @@
           ...$userInfoFromAuthProvider 
         })
       } 
+      else {
+        await migrateOldUserSchemaToNew(mirrorUser.data())
+      }
 
-      await migrateOldUserSchemaToNew(mirrorUser.data())
-
-      await listenToUserDocAndHandleForwarding(uid)
+      await listenToUserDocAndHandleForwarding(resultUser.uid)
 
       // this promise resolves when we receive full user snapshot for the first time,
       // exactly the place to handle redirection
@@ -114,7 +115,7 @@
     })
   }
 
-  async function createMirrorUser ({ uid, firstName, lastName, fullName, phoneNumber, email, userRef }) {
+  async function createMirrorUser ({ uid, firstName, lastName, name, phoneNumber, email, userRef }) {
     return new Promise(async (resolve) => {
       const metadataRef = doc(db, 'metadata/78tDSRCiMHGnf8zcXkQt')
       const metadataSnap = await getDoc(metadataRef)
@@ -126,7 +127,7 @@
       }
       await Promise.all([
         setDoc(userRef, {
-          name: `Beaver #${metadataSnap.data().numOfUsers}`, 
+          name: name || `Beaver #${metadataSnap.data().numOfUsers}`, 
           firstName: firstName || '',
           lastName: lastName || '',
           uid,
@@ -149,11 +150,11 @@
 
   async function listenToUserDocAndHandleForwarding (uid) {
     return new Promise((resolve, reject) => {
-      const mirrorUserRef = doc(db, `users/${uid}`)
+      const mirrorUserRef = doc(db, `/users/${uid}`)
 
       unsubUserDocListener = onSnapshot(mirrorUserRef, (snap) => {
-        if (!snap.exists) {
-          reject("Error in listenToUserDoc: uid doesn't exist")
+        if (!snap.exists()) {
+          reject("Error in listenToUserDoc snapshot listener: uid doesn't exist for ref =", mirrorUserRef.path)
           user.set(null)
         } else {
           const userDoc = snap.data()

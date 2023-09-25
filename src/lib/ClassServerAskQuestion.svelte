@@ -66,7 +66,6 @@
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
   import { getRandomID } from "../helpers/utility.js";
   import { createEventDispatcher } from 'svelte'
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
   import { sendTextMessage } from '../helpers/cloudFunctions.js';
 
   export let classID 

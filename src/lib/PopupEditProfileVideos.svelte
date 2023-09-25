@@ -70,7 +70,6 @@
   import { getFirestoreQuery, updateFirestoreDoc } from '../helpers/crud.js'
   import { getFirestore, collection, query, where, increment, deleteField } from 'firebase/firestore'
   import Button from '@smui/button'
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
   import Checkbox from '@smui/checkbox'
 
   export let classID

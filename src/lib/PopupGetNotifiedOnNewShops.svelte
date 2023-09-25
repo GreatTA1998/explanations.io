@@ -5,7 +5,7 @@
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
     {#if !$user.phoneNumber}
       1. Log in with mobile number
-      <PhoneLogin/>
+      <LoginPhone/>
     {:else}
       <div>
         MIT has free resources like Office Hours, Piazza, Math Learning Center, TSR^2, and departmental tutoring.
@@ -65,7 +65,7 @@
 </BasePopup>
 
 <script>
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
+  import LoginPhone from '$lib/LoginPhone.svelte'
   import BasePopup from '$lib/BasePopup.svelte'
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'

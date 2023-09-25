@@ -7,7 +7,7 @@
       <h2 class="mdc-typography--headline6" style="margin: 0; font-family: sans-serif;">
         1. Log in with phone
       </h2>
-      <PhoneLogin/>
+      <LoginPhone/>
     {:else}
       <div>
         Welcome { $user.name || '' }.
@@ -67,7 +67,7 @@
 </BasePopup>
 
 <script>
-  import PhoneLogin from '$lib/PhoneLogin.svelte'
+  import LoginPhone from '$lib/LoginPhone.svelte'
   import BasePopup from '$lib/BasePopup.svelte'
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount, tick } from 'svelte'

@@ -30,17 +30,12 @@
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
 
-      <Cell columnId="numOfMembers">
-        <Label style="font-size: 2em;">Members</Label>
-        <!-- For non-numeric columns, icon comes second. -->
-        <IconButton class="material-icons">arrow_upward</IconButton>
-      </Cell>
-
       <!-- The columnId is used for sorting -->
-      <Cell columnId="numOfHelpers">
+      <Cell columnId="numOfCreators">
         <Label style="font-size: 2em;">Creators</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
+
       <Cell columnId="numOfVideos">
         <Label style="font-size: 2em;">Videos</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
@@ -49,6 +44,13 @@
         <Label style="font-size: 2em;">Minutes viewed</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
       </Cell>
+
+      <Cell columnId="numOfMembers">
+        <Label style="font-size: 2em;">Server members</Label>
+        <!-- For non-numeric columns, icon comes second. -->
+        <IconButton class="material-icons">arrow_upward</IconButton>
+      </Cell>
+
       <Cell columnId="paidMonthlySubscriptions">
         <Label style="font-size: 2em;">Paid subscriptions</Label>
         <IconButton class="material-icons">arrow_upward</IconButton>
@@ -66,10 +68,10 @@
         </Cell>
         <!-- TO-DO: change to number of UNRESOLVED question -->
         <Cell style="font-size: 1.5em; color: {item.numOfUnresolvedQuestions > 0 ? 'red' : ''}">{item.numOfUnresolvedQuestions}</Cell>
-        <Cell style="font-size: 1.5em;">{item.numOfMembers}</Cell>
-        <Cell style="font-size: 1.5em;">{item.numOfHelpers}</Cell>
+        <Cell style="font-size: 1.5em; color: {item.numOfCreators === 0 ? 'red' : ''}">{item.numOfCreators}</Cell>
         <Cell style="font-size: 1.5em;">{item.numOfVideos}</Cell>
         <Cell style="font-size: 1.5em;">{item.minutesViewed}</Cell>
+        <Cell style="font-size: 1.5em;">{item.numOfMembers}</Cell>
         <Cell style="font-size: 1.5em;">{item.paidMonthlySubscriptions}</Cell>
       </Row>
     {/each}
@@ -109,7 +111,7 @@
     numOfMembers: string;
     numOfQuestions: number; 
     numOfUnresolvedQuestions: number;
-    numOfHelpers: number;
+    numOfCreators: number;
     numOfVideos: number; 
     minutesViewed: number;
     paidMonthlySubscriptions: number; 

@@ -99,7 +99,7 @@
 					<div class="webflow-intro-type">
 						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
 						<br><br> -->
-						explanations.app = Youtube specifically designed to help college students in science & engineering.
+						explanations.app = Youtube designed to help college students in science & engineering.
 						<br><br>
 						Besides from free videos and public forums, you can subscribe to any creator for $10/month to join their group chat and access subscribers-only videos.
 						<br><br>
@@ -133,10 +133,13 @@
 										
 					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
 						<div style="font-size: 2rem;">
-							Why $10/month subscriptions?
+							Why free + $10/month subscriptions?
 						</div>
 
 						<div style="min-width: 400px; width: 45vw; font-size: 1.2rem;">
+							Short answer - I think giving creators the option to help students for free or for money is good. Teachers tend to be economically under-rewarded.
+
+							<br><br>
 							I tried for 4 years to work within the school as explain.mit.edu - departments just aren't interested to spend more money
 							on a student resource when they already offer Office Hours, departmental tutoring, Math Learning Center, etc.
 							But I as a student I've been through the day-to-day trenches of navigating those resources...they're simply not good enough to overcome compounding inefficiencies of falling behind.

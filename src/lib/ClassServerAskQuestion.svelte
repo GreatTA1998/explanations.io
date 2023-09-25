@@ -32,7 +32,7 @@
       </div>
     {/if}
 
-    <ClassServerAskQuestionAllCreators 
+    <ClassServerAskQuestionAllMembers 
       {classID}
     />
 
@@ -53,7 +53,7 @@
   import { user } from '../store.js'
   import { portal } from '../helpers/actions.js'
   import { getFirestoreCollection, getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
-  import ClassServerAskQuestionAllCreators from '$lib/ClassServerAskQuestionAllCreators.svelte'
+  import ClassServerAskQuestionAllMembers from '$lib/ClassServerAskQuestionAllMembers.svelte'
   import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import Textfield from '@smui/textfield'

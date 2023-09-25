@@ -68,7 +68,7 @@
       getFirestoreCollection(`classes/${c.id}/members`).then(classHelpers => {
         updateFirestoreDoc(`classes/${c.id}`, {
           minutesViewed: classHelpers.reduce((acc, helper) => acc + Number(helper.minutesViewed || 0), 0),
-          paidMonthlySubscriptions: classHelpers.reduce((acc, helper) => acc + Number(helper.numOfStudents || 0), 0),
+          paidMonthlySubscriptions: classHelpers.reduce((acc, helper) => acc + Number(helper.totalPaidSubscriptions || 0), 0),
         })
       })
     }

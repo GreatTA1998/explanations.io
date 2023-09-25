@@ -3,6 +3,10 @@
     Create new class server
   </h2>
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
+    <div>
+      To prevent having too many empty, unused servers, I ask for a $1 deposit (venmo: @elton-lin-2)
+      that will be refunded at the end of the month.
+    </div>
     <input bind:value={classNameInputField} placeholder="e.g. 18.02">
 
     <input bind:value={classDescInput} placeholder="e.g. Multivariable Calculus">

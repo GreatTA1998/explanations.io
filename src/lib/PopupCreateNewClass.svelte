@@ -4,8 +4,10 @@
   </h2>
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">
     <div>
-      Servers with no activity for 30 days will be deleted, but you can contact me to keep it open.
+      Servers will expire after 30 days of inactivity, but you can always call/email me and I'll keep it alive.
     </div>
+
+    <div style="margin-top: 12px;"></div>
     <input bind:value={classNameInputField} placeholder="e.g. 18.02">
 
     <input bind:value={classDescInput} placeholder="e.g. Multivariable Calculus">

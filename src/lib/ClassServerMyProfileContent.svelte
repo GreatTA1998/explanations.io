@@ -191,7 +191,7 @@
 
   function updateTutorVenmo (venmo) {
     const idNotUID = memberDoc.id
-    updateFirestoreDoc(`classes/${classID}/tutors/${idNotUID}`, {
+    updateFirestoreDoc(`classes/${classID}/members/${idNotUID}`, {
       venmo
     })
   }
@@ -203,7 +203,7 @@
 
   async function updateTutorBio ({ detail }) {
     const idNotUID = memberDoc.id
-    updateFirestoreDoc(`classes/${classID}/tutors/${idNotUID}`, {
+    updateFirestoreDoc(`classes/${classID}/members/${idNotUID}`, {
       bio: detail
     })
   }

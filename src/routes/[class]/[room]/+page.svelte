@@ -435,6 +435,7 @@
   import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
   import ClassServerMyProfile from '$lib/ClassServerMyProfile.svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
+  import { mixpanelLibrary } from '/src/mixpanel.js'
 
   export let data
   let { classID, roomID } = data
@@ -452,6 +453,7 @@
   let isMoveVideoPopupOpen = false
   let isShowingNanoQuestionPopup = false
 
+  $: membersDbPath = `classes/${classID}/members/`
   $: boardsDbPath = `classes/${classID}/blackboards/`
   $: roomsDbPath = `classes/${classID}/rooms/`
   $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
@@ -489,7 +491,7 @@
 
   async function incrementHelperPaidVideosCountBy (amount, boardDoc) {
     const db = getFirestore()
-    const helpersRef = collection(db, `classes/${classID}/tutors`)
+    const helpersRef = collection(db, `classes/${classID}/members`)
     const helperQuery = query(helpersRef, where('uid', '==', boardDoc.creatorUID))
     const helperQuerySnapshot = await getDocs(helperQuery)
     if (!helperQuerySnapshot.empty) {
@@ -507,8 +509,8 @@
     // PART 1: all the code is for `maxShopGalleryOrder`
     let tutorDoc 
     const db = getFirestore()
-    const tutorsRef = collection(db, `classes/${classID}/tutors`)
-    const q = query(tutorsRef, where('uid', '==', $user.uid)); 
+    const membersRef = collection(db, membersDbPath)
+    const q = query(membersRef, where('uid', '==', $user.uid)); 
     const querySnapshot = await getDocs(q) 
     if (querySnapshot.empty) {
       alert('Cannot shopify video as non-teacher')
@@ -677,7 +679,8 @@
 
     // update metadata
     updateFirestoreDoc(`classes/${classID}`, {
-      numOfResolvedQuestions: increment(1)
+      numOfResolvedQuestions: increment(1),
+      numOfUnresolvedQuestions: increment(-1)
     })  
   }
 
@@ -811,7 +814,7 @@
     // update metadata for tutor if it exists 
     let tutorDoc
     const q = query(
-      collection(db, `classes/${classID}/tutors`),
+      collection(db, membersDbPath),
       where('uid', '==', $user.uid)
     )
     // base the member profile UID on the actual UID, so you don't need to do all these queries
@@ -827,7 +830,7 @@
       if (!tutorDoc.numOfVideos) {
         classDocUpdateObj.numOfCreators = increment(1)
       }
-      updateFirestoreDoc(`classes/${classID}/tutors/${tutorDoc.id}`, {
+      updateFirestoreDoc(membersDbPath + tutorDoc.id, {
         numOfVideos: increment(1)
       })
     }
@@ -851,15 +854,18 @@
     })
     updateRecordState(boardID, 'pre_record')
 
+    mixpanelLibrary.track('Video created')
+
+    // NOTIFICATION SYSTEM
     // TO-DO: change this back to email notifications
     // IF SOMEBODY ASKED A QUESTION, TEXT NOTIFY THEM
-    if (roomDoc.askerUID) {
-      const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)
-      sendTextMessage({
-        content: `${$user.name || 'A helper'} replied with a video: https://beavers.app/${classID}/${roomDoc.id}`,
-        toWho: askerDoc.phoneNumber
-      })  
-    }
+    // if (roomDoc.askerUID) {
+    //   const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)
+    //   sendTextMessage({
+    //     content: `${$user.name || 'A helper'} replied with a video: https://beavers.app/${classID}/${roomDoc.id}`,
+    //     toWho: askerDoc.phoneNumber
+    //   })  
+    // }
 
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)
@@ -897,7 +903,7 @@
 
     // update helper video statistics
     const q = query(
-      collection(getFirestore(), `classes/${classID}/tutors`),
+      collection(getFirestore(), membersDbPath),
       where('uid', '==', creatorUID)
     )
     const [helperDoc] = await getFirestoreQuery(q)
@@ -907,7 +913,7 @@
     if (isPaid) {
       updateObj.numPaidVideos = increment(-1)
     }
-    updateFirestoreDoc(`classes/${classID}/tutors/${helperDoc.id}`, updateObj)
+    updateFirestoreDoc(membersDbPath + helperDoc.id, updateObj)
 
     promises.push(deleteAllStrokesFromDb())
     await Promise.all(promises)

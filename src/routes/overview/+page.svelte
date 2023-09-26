@@ -55,6 +55,7 @@
   import { onDestroy, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
+  import { mixpanelLibrary } from '/src/mixpanel.js'
   
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 
@@ -73,6 +74,10 @@
       })
     }
     computeSortedYoutubeClasses()
+  })
+
+  onMount(() => {
+    mixpanelLibrary.track('Class servers overview visited')
   })
 
   async function logOut () {

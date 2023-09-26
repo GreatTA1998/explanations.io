@@ -365,7 +365,11 @@
 	import { page } from '$app/stores'
 	import Blackboard from '$lib/Blackboard.svelte'
 	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
+	import { mixpanelLibrary } from '/src/mixpanel.js'
 
+	onMount(() => {
+		mixpanelLibrary.track('Home page visited')
+	})
 
 	// RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [

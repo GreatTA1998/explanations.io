@@ -67,6 +67,7 @@
   import { getRandomID } from "../helpers/utility.js";
   import { createEventDispatcher } from 'svelte'
   import { sendTextMessage } from '../helpers/cloudFunctions.js';
+  import { mixpanelLibrary } from '/src/mixpanel.js'
 
   export let classID 
   // export let roomID
@@ -116,15 +117,20 @@
       numOfUnresolvedQuestions: increment(1)
     })
 
+    mixpanelLibrary.track('Question asked', {
+      title: questionTitleInput 
+    })
+
     // Handle notifications
-    const classDoc = await getFirestoreDoc(`classes/${classID}`)
-    const classHelpers = await getFirestoreCollection(`classes/${classID}/tutors`)
-    for (const helper of classHelpers) {
-      sendTextMessage({
-        toWho: helper.phoneNumber,
-        content: `New question in ${classDoc.name}: ${questionTitleInput} https://beavers.app/${classID}/${newRoomDocID}. Email eltonlin@mit.edu UNSUB PLS to stop notifications`
-      })
-    }
+    // const classDoc = await getFirestoreDoc(`classes/${classID}`)
+    // const classHelpers = await getFirestoreCollection(`classes/${classID}/tutors`)
+    // for (const helper of classHelpers) {
+    //   sendTextMessage({
+    //     toWho: helper.phoneNumber,
+    //     content: `New question in ${classDoc.name}: ${questionTitleInput} https://beavers.app/${classID}/${newRoomDocID}. Email eltonlin@mit.edu UNSUB PLS to stop notifications`
+    //   })
+    // }
+
     alert('Question submitted! Helpers will be notified')
   }
 

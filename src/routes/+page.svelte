@@ -3,15 +3,16 @@
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
-					<Title style="font-size: 1.95rem; padding-left: 6px">
+					<!-- <Title style="font-size: 1.95rem; padding-left: 6px">
 						Explanations
-					</Title>
+					</Title> -->
 
 					<a href="https://eltonlin.substack.com/archive" target="_blank" 
-						style="margin-left: 40px; text-decoration-color: transparent;"
+						style="margin-left: 8px; text-decoration-color: transparent;"
 					>
 						<Button
 							class="button-shaped-round"
+							style="font-size: 1.25em;"
 						>
 							<Label>blog</Label>
 							<!-- <Icon class="material-icons">auto_stories</Icon> -->
@@ -23,6 +24,7 @@
 					>
 						<Button
 							class="button-shaped-round"
+							style="font-size: 1.25em"
 						>
 							<Label>github</Label>
 							<!-- <Icon class="material-icons">terminal</Icon> -->
@@ -41,7 +43,7 @@
 </div>
 
 <AutoAdjust {topAppBar}>
-	<TopBannerWarnExperimental/>
+	<!-- <TopBannerWarnExperimental/> -->
 	<TabBar tabs={tabs} let:tab bind:active style="color: orange;">
 		<Tab {tab} stacked minWidth indicatorSpanOnlyContent style="color: orange;">
 			<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
@@ -97,10 +99,13 @@
 			{#if active.label === 'Viewers'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						<!-- Office Hours, Piazza and departmental tutoring are imperfect because of limited availability, long wait-times, and weak incentives to innovate.
-						<br><br> -->
-						explanations.app = Youtube designed to help college students in science & engineering.
-						<br><br>
+						explanations.app = Youtube designed to help college students in math, science & engineering.
+						<!-- <br><br> -->
+						<div style="display: flex; justify-content: space-around;">
+							<img src="/roxbury-small-logo.jpg" width="300" height="165">
+							<img src="/small mit.png" width="300" height="135" style="margin-top: 10px;">
+						</div>
+
 						Besides from free videos and public forums, you can subscribe to any creator for $10/month to join their group chat and access subscribers-only videos.
 						<br><br>
 						This is cheaper than hiring a tutor, and can be more efficient than resources like Office Hours.

@@ -391,7 +391,7 @@
 			classID: 'qfWJFR2xTm9vYOJFXYfJ'
 		},
 		{ titleForDebugging: 'Keeping the left or right side of the bar for a FBD?',
-			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/wPK4FjL0BVVDSelzgghKfZ1xQx33',
+			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/0KBOPYgWUbK3VZTGyuUi',
 			creatorName: 'Noam Buckman',
 			className: 'Mechanics of Materials',
 			classID: 'qfWJFR2xTm9vYOJFXYfJ'

@@ -1,4 +1,11 @@
 <TopBannerWarnExperimental/>
+
+<div style="margin-top: 12px;"></div>
+
+<PlaygroundOverview/>
+
+<!-- <TopBannerWarnExperimental/>
+
 <div style="margin-top: 2%; margin-left: 2%; ">
   <div style="display: flex; align-items: center">
     <img  
@@ -39,7 +46,7 @@
     initialItems={sortedYoutubeClasses}
     on:login-required={() => isSignInPopupOpen = true}
   />
-{/if}
+{/if} -->
 
 <script>
   import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte';
@@ -56,6 +63,7 @@
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
   import { mixpanelLibrary } from '/src/mixpanel.js'
+  import PlaygroundOverview from '$lib/PlaygroundOverview.svelte'
   
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 

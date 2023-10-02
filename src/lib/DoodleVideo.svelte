@@ -78,6 +78,8 @@
   >
   </canvas>
   <!-- rgb(46, 49, 49) -->
+
+  <!-- the non-100% opacity makes the pencil colors very visible -->
   <canvas 
     bind:this={bgCanvas} 
     style={`
@@ -223,9 +225,14 @@
       startAudioPlayer()
     } 
     else {
-      if (isPlaying) AudioPlayer.pause()
-      else AudioPlayer.play()  
+      if (isPlaying) pauseAudioPlayer()
+      else startAudioPlayer()
     }
+  }
+
+  function pauseAudioPlayer () {
+    AudioPlayer.pause()
+    dispatch('video-pause')
   }
   
   function initDoodleVideo () {
@@ -256,6 +263,7 @@
 
   function startAudioPlayer () {
     AudioPlayer.play()
+    dispatch('video-start')
   }
 
   function getStartTime ({ strokeIndex, pointIndex }) {

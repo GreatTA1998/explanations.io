@@ -17,6 +17,8 @@
                 canvasHeight={galleryItemHeight}
                 showEditDeleteButtons={false}
                 boardDbPath={galleryVideo.dbPath}
+                on:video-start={pauseGalleryRotation}
+                on:video-pause={startGalleryRotation}
               />
 
               {#if boardDoc}
@@ -79,6 +81,14 @@
 
   const galleryItemWidth =  480 * 0.95 // 4:3 aspect ratio for the board, now take into account audio slider
   const galleryItemHeight = 360 * 0.95
+
+  function pauseGalleryRotation () {
+    document.getElementById("carousel").style.animationPlayState = "paused";
+  }
+  
+  function startGalleryRotation () {
+    document.getElementById("carousel").style.animationPlayState = "running";
+  }
 </script>
 
 

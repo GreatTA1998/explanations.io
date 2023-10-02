@@ -68,8 +68,8 @@
 							
 						"
 					>
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.3em; font-weight: 600">
-							Ask your first question
+						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.2em; font-weight: 600">
+							Find your class community
 						</Label>
 					</Button>
 				</div>
@@ -99,16 +99,18 @@
 			{#if active.label === 'Viewers'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						explanations.app = Youtube designed to help college students in math, science & engineering.
-						<!-- <br><br> -->
+						explanations.app = Youtube for college-specific classes in math, science & engineering.
+
 						<div style="display: flex; justify-content: space-around;">
+							<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
 							<img src="/roxbury-small-logo.jpg" width="300" height="165">
 							<img src="/small mit.png" width="300" height="135" style="margin-top: 10px;">
 						</div>
-
-						Besides from free videos and public forums, you can subscribe to any creator for $10/month to join their group chat and access subscribers-only videos.
+						You can ask questions & watch videos for free,
+						and optionally pay $10/month to explanation creators you seriously depend on.
+						
 						<br><br>
-						This is cheaper than hiring a tutor, and can be more efficient than resources like Office Hours.
+						It's much cheaper than hiring a tutor, and more time-flexible than Office Hours. 
 					</div>
 				</div>
 

@@ -2,13 +2,12 @@
   <LeftDrawerToggleButton/>
 
   <div style="padding: 16px;">
-    <Textfield 
-      style="width: 100%;"
-      value={questionTitleInput} on:input={(e) => questionTitleInput = e.target.value}
-      class="room-title" 
-    >
-    </Textfield>
-      <!-- style={`width: ${$maxAvailableWidth}px;`} -->
+    <CodepenInput
+      value={questionTitleInput}
+      on:input={(e) => questionTitleInput = e.target.value}
+    />
+    <span class="underline"></span>
+    <!-- style={`width: ${$maxAvailableWidth}px;`} -->
 
     <div style="margin-bottom: 12px;"></div>
 
@@ -34,14 +33,21 @@
 
     <ClassServerAskQuestionAllMembers 
       {classID}
-    />
+    />  
 
+    <!-- purple: '#5d0068' -->
+    <!-- blackboard color: hsl(0,0%,0%, 0.80) -->
     <Button 
       on:click={submitQuestion} 
       variant="raised"
-      style="border-radius: 0px; margin-top: 12px; width: 100%;; 
-      color: {isAskingCommunityOrHelper === 'community' ? 'white' : '#5d0068'};
-      background-color: {isAskingCommunityOrHelper === 'community' ? 'hsl(0,0%,0%, 0.80)' : 'white'};
+      style="
+        border-radius: 0px; 
+        margin-top: 36px; 
+        width: 300px;
+        height: 60px;
+        font-size: 1.5em;
+        color: white;
+        background-color: #5d0068;
       "
     >
       Submit question
@@ -68,6 +74,7 @@
   import { createEventDispatcher } from 'svelte'
   import { sendTextMessage } from '../helpers/cloudFunctions.js';
   import { mixpanelLibrary } from '/src/mixpanel.js'
+  import CodepenInput from '$lib/CodepenInput.svelte'
 
   export let classID 
   // export let roomID
@@ -75,7 +82,7 @@
   // let { classID, roomID } = data
   // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 
-  let questionTitleInput = 'Question title...' 
+  let questionTitleInput = ''
   let questionDescriptionInput = ''
   $: isAskingCommunityOrHelper = ($user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)) ? 'helper' : 'community'
   let pdfOrImageAttachment = null

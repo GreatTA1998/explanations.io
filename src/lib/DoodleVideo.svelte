@@ -25,10 +25,10 @@
     <span on:click={startAudioPlayer} 
       class="material-icons overlay-center" 
       style="color: white;
-      width: {180 * scaleFactor}px; 
-      height: {180 * scaleFactor}px; 
+      width: {270 * scaleFactor}px; 
+      height: {270 * scaleFactor}px; 
       z-index: 5;
-      font-size: {10 * scaleFactor}rem;"
+      font-size: {15 * scaleFactor}rem;"
     >
       play_circle
     </span>

@@ -65,11 +65,10 @@
 							margin-top: 0.85vw; 
 							margin-bottom: 0.8vw; 
 							border-radius: 0px;
-							
 						"
 					>
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.2em; font-weight: 600">
-							Find your class community
+						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
+							Find your community
 						</Label>
 					</Button>
 				</div>

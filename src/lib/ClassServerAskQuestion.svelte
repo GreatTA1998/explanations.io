@@ -88,10 +88,10 @@
   let pdfOrImageAttachment = null
 
   async function submitQuestion () {
-    if (!$user.phoneNumber) {
-      alert('Need to log in with phone number first')
-      return
-    }
+    // if (!$user.phoneNumber) {
+    //   alert('Need to log in with phone number first')
+    //   return
+    // }
     if (questionTitleInput === 'Type in your question title here...') {
       alert('Have to type a question title first')
       return

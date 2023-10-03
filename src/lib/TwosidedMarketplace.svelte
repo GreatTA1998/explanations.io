@@ -1,66 +1,69 @@
 <div style="display: flex;">
-  <div class="one-side-of-market" style="border-right: 1px solid black">
+  <div class="one-side-of-market">
     <div 
       class:red-text={numOfStudents === 0}
-      style="font-size: 1em; 
-      
-      font-weight: 500; display: flex; justify-content: center; align-items: center;"
+      class="marketplace-title"
+      style="color: {studentSideColor}"
     >
-      {numOfStudents} Student{numOfStudents === 1 ? '' : 's'}
-      <span class="material-icons" style="font-size: 4px; margin: 8px;">circle</span>
-      {numOfQuestions} questions asked
+      <div style="font-size: 2em; margin-right: 20px;">
+        {numOfStudents}
+      </div>
+       STUDENT{numOfStudents === 1 ? '' : 'S'}
+      <!-- <span class="material-icons" style="font-size: 4px; margin: 8px;">circle</span>
+      {numOfQuestions} questions -->
     </div>
     
-    <div style="display: flex; margin-top: 12px; padding-left: 16px;">
+    <div style="margin-top: 20px;">
+
+    </div>
+
+    <div style="display: flex; padding-left: 16px;">
       {#each {length: numOfStudents} as _, i}
-        <span class="material-icons" style="font-size: 3em; color: black;">
+        <span class="material-icons visualization-icon" style="font-size: {7 * (0.98 ** numOfStudents)}em; color: {studentSideColor};">
           emoji_people
         </span>
       {/each}
    </div>
 
-   <!-- <div class:red-text={numOfQuestions === 0} 
-      style="margin-top: 36px; display: flex; justify-content: center;"
-    >
-      {numOfQuestions} questions asked
-    </div> -->
-
    <div style="display: flex; align-items: center; padding-left: 20px; margin-top: 12px;">
       {#each {length: numOfQuestions} as _, i}
-        <span class="material-icons" style="font-size: {2 * (0.97 ** numOfVideos)}em; color: black;">
+        <span class="material-icons visualization-icon" style="font-size: {5 * (0.98 ** numOfQuestions)}em; color: {studentSideColor};">
           question_mark
         </span>
       {/each}
     </div>
 
   </div>
-  <div class="one-side-of-market" style="border-left: 1px black;">
+
+
+  <!-- Teacher side -->
+  <div class="one-side-of-market" style="border-left: 1px solid black;">
     <div 
       class:red-text={numOfTeachers === 0}
-      style="
-        font-size: 1em; 
-        font-weight: 500;
-        display: flex; 
-        justify-content: center;    
-      "
+      class="marketplace-title"
+      style="color: {teacherSideColor};"
     >
-      {numOfTeachers} Teacher{numOfTeachers === 1 ? '' : 's'}
-      <span class="material-icons" style="font-size: 4px; margin: 8px;">
+      <div style="font-size: 2em; margin-right: 20px;">
+        {numOfTeachers}
+      </div>
+
+      TEACHER{numOfTeachers === 1 ? '' : 'S'}
+      <!-- <span class="material-icons" style="font-size: 4px; margin: 8px;">
         circle
       </span>
-      {numOfVideos} videos created
+      {numOfVideos} videos -->
     </div>
 
     <div style="display: flex; margin-top: 12px; padding-left: 24px;">
       {#each {length: numOfTeachers} as _, i}
-        <span class="material-icons" style="font-size: 3em;">
+        <span class="material-icons visualization-icon" style="font-size: {7 * (0.98 ** numOfTeachers)}em; color: {teacherSideColor};">
           school
         </span>
       {/each}
    </div>
    <div style="padding-left: 24px; display: flex; align-items: center; margin-top: 12px; flex-wrap: wrap;">
       {#each {length: numOfVideos} as _, i}
-        <span class="material-icons" style="font-size: {2 * (0.97 ** numOfVideos)}em;">
+        <span class="material-icons visualization-icon" style="font-size: {5 * (0.98 ** numOfVideos)}em; color: {teacherSideColor};">
           slideshow
         </span>
       {/each}
@@ -73,9 +76,20 @@
   export let numOfTeachers
   export let numOfVideos
   export let numOfQuestions
+
+  let studentSideColor = '#1508c7'
+  let teacherSideColor = '#1508c7'
 </script>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .visualization-icon {
+    color: 	rgb(38, 38, 206);
+  }
+
   .one-side-of-market {
     width: 50%; 
     height: fit-content; 
@@ -85,7 +99,17 @@
     /* border-radius: 22px; */
   }
 
+  .marketplace-title {
+    font-size: 1.5em; 
+    font-weight: 400; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    color: 	rgb(38, 38, 206);
+    /* rgb(72,72,72); */
+  }
+
   .red-text {
-    color: red;
+    /* color: red; */
   }
 </style>

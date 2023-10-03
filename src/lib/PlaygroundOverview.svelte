@@ -25,13 +25,13 @@
       <div 
         style="
           border: 1px solid grey; 
-          margin-left: 10px; 
-          height: 50px;
+          margin-left: 38px; 
+          height: fit-content;
           padding-top: 50px;
-          padding-bottom: 70px;
+          padding-bottom: 50px;
           padding-right: 30px;
           padding-left: 30px;
-          white-space: nowrap;
+          width: 440px;
           font-size: 4em; 
           font-weight: 500;
         "
@@ -43,9 +43,9 @@
   </div>
 
   <!-- Right side to display server cards -->
-  <div style="flex-wrap: wrap; width: 57%">
+  <div style="flex-wrap: wrap; width: 60%">
     <!-- Filter tags -->
-    <div style="padding-left: 25px; display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
+    <div style="padding-left: 90px; display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
       <div style="font-size: 2em">
         Filters:
       </div>
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <div style="margin-bottom: 24px;">
+    <div style="margin-bottom: 48px;">
 
     </div>
 
@@ -79,7 +79,7 @@
           padding-left: 12px;
           padding-right: 12px;
           padding-bottom: 16px;
-          margin-left: 2%;
+          margin-left: 8%;
           height: fit-content;
         "
       >
@@ -124,7 +124,7 @@
   import ReusableButton from "$lib/ReusableButton.svelte";
   import TwosidedMarketplace from "$lib/TwosidedMarketplace.svelte";
 
-  let categories = ['All subjects (10)', 'Math', 'Mechanical Engineering', 'Nursing', 'Chemistry', 'Computer Science', 'Others' ]
+  let categories = ['All subjects', 'Math', 'Mechanical Engineering', 'Nursing', 'Chemistry', 'Computer Science', 'Others' ]
 
   let serversInCategory = [
     { 

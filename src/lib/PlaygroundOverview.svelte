@@ -40,7 +40,8 @@
         {category}
       </div>
     {/each}
-    <hr>
+    <!-- <hr> -->
+      <div style="margin-top: 24px;"></div>
 
     <div 
         style="
@@ -187,7 +188,7 @@
   import ReusableButton from "$lib/ReusableButton.svelte";
   import TwosidedMarketplace from "$lib/TwosidedMarketplace.svelte";
 
-  let categories = ['All subjects', 'Economics', 'Life science', 'Math', 'Mechanical Engineering', 'Physics']
+  let categories = ['All subjects', 'Economics', 'Life sciences', 'Math', 'Mechanical Engineering', 'Physics']
 
   let serversInCategory = [
     { 

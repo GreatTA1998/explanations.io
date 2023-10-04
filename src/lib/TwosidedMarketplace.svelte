@@ -8,7 +8,7 @@
       <div style="font-size: 2em; margin-right: 20px;">
         {numOfStudents}
       </div>
-       STUDENT{numOfStudents === 1 ? '' : 'S'}
+       LEARNER{numOfStudents === 1 ? '' : 'S'}
       <!-- <span class="material-icons" style="font-size: 4px; margin: 8px;">circle</span>
       {numOfQuestions} questions -->
     </div>
@@ -47,7 +47,7 @@
         {numOfTeachers}
       </div>
 
-      TEACHER{numOfTeachers === 1 ? '' : 'S'}
+      EXPLAINER{numOfTeachers === 1 ? '' : 'S'}
       <!-- <span class="material-icons" style="font-size: 4px; margin: 8px;">
         circle
       </span>

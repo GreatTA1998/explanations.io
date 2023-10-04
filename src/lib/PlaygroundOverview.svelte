@@ -24,15 +24,15 @@
     {#each categories as category, i}
       <div 
         style="
-          border: 1px solid grey; 
+          width: 300px;
+          font-size: 1.5em; 
           margin-left: 38px; 
           height: fit-content;
-          padding-top: 50px;
-          padding-bottom: 50px;
-          padding-right: 30px;
-          padding-left: 30px;
-          width: 440px;
-          font-size: 4em; 
+          padding-top: 12px;
+          padding-bottom: 12px;
+          padding-right: 16px;
+          padding-left: 16px;
+          border-radius: 8px;
           font-weight: 500;
         "
         class:orange-highlight={i === 0}
@@ -40,6 +40,24 @@
         {category}
       </div>
     {/each}
+    <hr>
+
+    <div 
+        style="
+          width: 300px;
+          font-size: 1.5em; 
+          margin-left: 38px; 
+          height: fit-content;
+          padding-top: 12px;
+          padding-bottom: 12px;
+          padding-right: 16px;
+          padding-left: 16px;
+          border-radius: 8px;
+          font-weight: 500;
+        "
+      >
+        Other servers
+      </div>
   </div>
 
   <!-- Right side to display server cards -->
@@ -53,37 +71,37 @@
         All servers
       </div>
       <div class="filter-tag" style="background-color: white; color: black;">
-        Ready to use
+        Has activity
       </div>
       <div class="filter-tag" style="background-color: white; color: black;">
         Need teachers
       </div>
-      <div class="filter-tag" style="background-color: white; color: black;">
+      <!-- <div class="filter-tag" style="background-color: white; color: black;">
         Need students
-      </div>
+      </div> -->
     </div>
 
     <div style="margin-bottom: 48px;">
 
     </div>
 
-    {#each serversInCategory as server}
+    {#each serversInCategory as server, i}
       <div 
         class="paper-shadow"
         style="
-          border-radius: 8px;
+          border-radius: 32px;
           min-width: 300px;
           width: 100%;
           margin-bottom: 20px;
           padding-top: 30px;
           padding-left: 12px;
           padding-right: 12px;
-          padding-bottom: 16px;
+          padding-bottom: 4px;
           margin-left: 8%;
           height: fit-content;
         "
       >
-        <div style="font-size: 3em; font-weight: 500; margin-left: 20px;">
+        <div style="font-size: 2.5em; font-weight: 500; margin-left: 20px;">
           {server.name}
           {#if server.description}
           ({server.description})
@@ -92,25 +110,70 @@
 
         <div style="margin-top: 12px;"></div>
 
-        <div style="display: flex; margin-left: 21px; color: rgb(120,120,120); font-size: 2em; align-items: center; font-weight: 400;">
-          {server.collegeSpecificType} 
-          <!-- <span class="material-icons" style="font-size: 4px; margin: 8px;">circle</span>
-          n members -->
+        <div style="display: flex; margin-left: 21px; color: rgb(60,60,60); font-size: 1.6em; align-items: center; font-weight: 400; margin-bottom: 4px;">
+          1 students
+          <span class="material-icons" style="font-size: 4px; margin: 8px;">circle</span>
+          {server.numOfUnresolvedQuestions + server.numOfResolvedQuestions} unresolved questions
+          <span class="material-icons" style="font-size: 4px; margin: 8px;">circle</span>
+          {server.numOfCreators} teachers
+          <span class="material-icons" style="font-size: 4px; margin: 8px;">circle</span>
+          {server.numOfVideos} videos
         </div>
+
+        
+        <div style="margin-top: 16px;"></div>
+
+
+        <!-- $1 accumulated crowdfund -->
+   
+        <div style="display: flex; margin-left: 21px; color: rgb(80,80,80); font-size: 1.2em; align-items: center; font-weight: 400; margin-bottom: 4px;">
+          <b style="margin-right: 6px;">College version:</b> 
+          {server.collegeSpecificType} 
+        </div>
+
+        <div style="display: flex; margin-left: 21px; color: rgb(80,80,80); font-size: 1.2em; align-items: center; font-weight: 400; margin-bottom: 4px;">
+          <b style="margin-right: 6px;">Crowdfund amount:</b> 
+          $2
+        </div>
+
+        <div style="display: flex; margin-left: 21px; color: rgb(80,80,80); font-size: 1.2em; align-items: center; font-weight: 400; margin-bottom: 4px;">
+          <b style="margin-right: 6px;">Total subscriptions:</b> 
+          0
+        </div>
+
+
+
+
+        <!-- <div style="display: flex; margin-left: 21px; color: rgb(120,120,120); font-size: 1.4em; align-items: center; font-weight: 400;">
+          crowdfund: $2 <span class="material-icons" style="font-size: 4px; margin: 8px;">circle</span> Total subscriptions: 2
+        </div> -->
+
+        
 
         <div style="margin-top: 8px;"></div>
 
-        <TwosidedMarketplace
+        <!-- <TwosidedMarketplace
           numOfStudents={server.numOfStudents || 0}
           numOfTeachers={server.numOfCreators}
           numOfVideos={server.numOfVideos}
           numOfQuestions={server.numOfUnresolvedQuestions + server.numOfResolvedQuestions}
-        />
+        /> -->
         <div style="margin-top: 36px;">
 
         </div>
         <div style="width: 100%; display: flex; justify-content: flex-end; margin-bottom: 24px;">
-          <div style="width: 159px; margin-right: 24px; border: 2px solid black; padding: 24px; font-size: 1.8em; color: white; font-weight: 500; background-color: #5d0068;">
+          <div style="width: fit-content; margin-right: 24px; border: 1px solid; padding: 20px; font-size: 1.6em; color: #5d0068; font-weight: 500; background-color: white;">
+            Pre-pay $1
+          </div>
+          
+          <!-- <div style="width: 240px; margin-right: 24px; border: 1px solid; padding: 24px; font-size: 1.8em; color: #5d0068; font-weight: 500; background-color: white;">
+            I'm willing to pay
+          </div>
+          <div style="width: 240px; margin-right: 24px; border: 1px solid; padding: 24px; font-size: 1.8em; color: #5d0068; font-weight: 500; background-color: white;">
+            I'm willing to help
+          </div> -->
+
+          <div style="width: fit-content; margin-right: 24px; padding: 20px; font-size: 1.6em; color: white; font-weight: 500; background-color: #5d0068;">
             Go to server
           </div>
         </div>
@@ -124,7 +187,7 @@
   import ReusableButton from "$lib/ReusableButton.svelte";
   import TwosidedMarketplace from "$lib/TwosidedMarketplace.svelte";
 
-  let categories = ['All subjects', 'Math', 'Mechanical Engineering', 'Nursing', 'Chemistry', 'Computer Science', 'Others' ]
+  let categories = ['All subjects', 'Economics', 'Life science', 'Math', 'Mechanical Engineering', 'Physics']
 
   let serversInCategory = [
     { 
@@ -181,10 +244,12 @@
     font-size: 1.8em;
   }
 
+  /* hsl(0,0%,0%, 0.80) */
+
   .orange-highlight {
-    background-color: hsl(0,0%,0%, 0.80);
-    color: white;
-    border: 1px solid white;
+    background-color: #e2dddd;
+    /* color: white;
+    border: 1px solid white; */
   }
 
   .paper-shadow {

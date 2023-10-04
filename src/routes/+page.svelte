@@ -52,7 +52,7 @@
 	</TabBar>
 	
 	<div class="webflow-container">
-		{#if active.label === 'Viewers'}
+		{#if active.label === 'Learn'}
 			<div class="header-flex">
 				<p class="header-title" style="line-height: 1.2">
 					Ask question, get video.
@@ -95,21 +95,36 @@
 			<OfflineMultislideRecordingDemo/>
 		{/if}
 
-			{#if active.label === 'Viewers'}
+			{#if active.label === 'Learn'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						explanations.app = Youtube for college-specific classes in math, science & engineering.
+						explanations.app = Youtube for college classes 
+						<br>
+						<br>
+						Each community has a blackboard-based forum where you can ask questions freely.
+						<br>
+						<br>
+						If free help isn't good enough, you can pre-pay $1 into a crowdfund to request new teachers from all over the world
+						to join.
+						<br>
+						<br>
+						You can then choose the best teacher among them and pay $10/month for direct communication and other benefits.
+						Everything is refundable within 30 days, for any reason.
+						<!-- An "explainer" is the middleground between a "tutor" and "youtuber".s
+						You can get explanations you need without having to schedule in-advance 
+						or pay high prices. -->
+						<div style="margin-top: 48px;">
+
+						</div>
 
 						<div style="display: flex; justify-content: space-around;">
 							<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
 							<img src="/roxbury-small-logo.jpg" width="300" height="165">
 							<img src="/small mit.png" width="300" height="135" style="margin-top: 10px;">
 						</div>
-						You can ask questions & watch videos for free,
-						and optionally pay $10/month to explanation creators you seriously depend on.
-						
+
 						<br><br>
-						It's much cheaper than hiring a tutor, and more time-flexible than Office Hours. 
+
 					</div>
 				</div>
 
@@ -168,7 +183,7 @@
 
 			{/if}
 
-			{#if active.label === 'Creators'}
+			{#if active.label === 'Teach'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						This website provides infrastructure so you can easily record & manage blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>
@@ -285,7 +300,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else if active.label === 'Creators'}
+		{:else if active.label === 'Teach'}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.
@@ -477,7 +492,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Viewers', icon: 'smart_display'}, { label: 'Creators', icon: 'draw'}]
+	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Teach', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {

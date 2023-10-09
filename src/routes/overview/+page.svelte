@@ -58,7 +58,6 @@
   import { getRandomID } from '../../helpers/utility.js'
   import ButtonPopupCreateNewClass from '$lib/ButtonPopupCreateNewClass.svelte'
   import { user } from '../../store.js'
-  import { signOut, getAuth } from 'firebase/auth'
   import { onDestroy, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
@@ -88,16 +87,6 @@
     mixpanelLibrary.track('Class servers overview visited')
   })
 
-  async function logOut () {
-    if ($user.uid) {
-      const auth = getAuth()
-      await signOut(auth)
-    }
-    // clear the cookie cache otherwise the user persists for some reason
-    // or it could be store.js listeners not having a proper lifecycle for logout
-    window.location.reload()
-    // goto('/')
-  }
 
   // snapshot listener of all the classes
   function fetchYoutubeClasses () {

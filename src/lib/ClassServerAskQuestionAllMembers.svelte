@@ -1,7 +1,7 @@
 {#if sortedVideoCreatorDocs}
   <div style="display: flex; align-items: center; margin-top: 2%">
     <b style="font-size: 1.2rem; font-family: sans-serif;">
-      This community has {sortedVideoCreatorDocs.length} members:
+      This community has {sortedVideoCreatorDocs.length} teachers and `n` students:
     </b>
   </div>
 

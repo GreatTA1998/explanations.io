@@ -33,9 +33,15 @@
 				</Section>
 
 				<Section align="end" toolbar>
-					<!-- <Button on:click={() => alert('You can now log-in in through the class server')} variant="outlined">
-						Log in
-					</Button> -->
+					{#if !$user.uid}
+						<Button on:click={() => alert('For now, log in through the class servers')} variant="outlined">
+							Log in
+						</Button>
+					{:else}
+						<Button on:click={logOut}>
+							Log out
+						</Button>
+					{/if}
 				</Section>
 			</Row>
 		</TopAppBar>
@@ -108,7 +114,7 @@
 						to join.
 						<br>
 						<br>
-						You can then choose the best teacher among them and pay $10/month for direct communication and other benefits.
+						You then pick a teacher based on their explanations, and subscribe to them for $10/month (minus the amount you already pre-paid).
 						Everything is refundable within 30 days, for any reason.
 						<!-- An "explainer" is the middleground between a "tutor" and "youtuber".s
 						You can get explanations you need without having to schedule in-advance 
@@ -371,7 +377,7 @@
 	import HowItWorksStep from '$lib/HowItWorksStep.svelte';
 	import Button, { Label } from '@smui/button';
 	import { goto } from '$app/navigation'
-	import { user, } from '../store.js'
+	import { user } from '../store.js'
 	import TabBar from '@smui/tab-bar';
 	import Tab, { Icon } from '@smui/tab';
 	import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
@@ -387,6 +393,7 @@
 	import Blackboard from '$lib/Blackboard.svelte'
 	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
 	import { mixpanelLibrary } from '/src/mixpanel.js'
+	import { signOut, getAuth } from 'firebase/auth'
 
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
@@ -510,6 +517,17 @@
 		const id = 'Mev5x66mSMEvNz3rijym' // 14.01
     goto(`/${id}/${id}`, { replaceState: true })
 	}
+
+	async function logOut () {
+    if ($user.uid) {
+      const auth = getAuth()
+      await signOut(auth)
+    }
+    // clear the cookie cache otherwise the user persists for some reason
+    // or it could be store.js listeners not having a proper lifecycle for logout
+    window.location.reload()
+    // goto('/')
+  }
 </script>
 
 <style lang="scss">
@@ -601,7 +619,7 @@
 
 .webflow-intro-type {
 	font-family: sans-serif; 
-	font-size: 4rem; // used to be 5 rem
+	font-size: 3.5rem; // used to be 5 rem
  	line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
 	letter-spacing: -.02em;

@@ -3,7 +3,7 @@
   <!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
       (to distinguish between unfetched board and empty board) 
   -->
-  {#if strokesArray}
+  {#if strokesArray && !hideToolbar}
     <BlackboardToolbar>
       <span on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
         undo
@@ -100,6 +100,9 @@
 
   // QUICKFIX to enable multislide blackboards to work
   export let currentTimeOverride
+
+  // QUICKFIX to let servers search page work
+  export let hideToolbar = false
 
   $: if (currentTimeOverride) {
     currentTime = currentTimeOverride

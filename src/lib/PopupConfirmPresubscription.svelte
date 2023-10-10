@@ -4,22 +4,26 @@
   </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 24px; padding-top: 12px;">    
     <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px; font-size: 32px;">
-      Why pre-subscribe?
+      Look for new teachers
     </h2>
 
+    <div style="font-size: 20px;">
+      By pre-paying, you're saying "I would subscribe if the <b>right teacher</b> comes."
+    </div>
+
+    <div style="margin-bottom: 24px;"></div>
 
     <div style="font-size: 20px;">
-      <div style="color: black; opacity: 0.8; font-weight: 600;">Benefits:</div>
+      <div style="font-weight: 600;">Why pre-subscribe?</div>
       <div style="padding-left: 8px;">
         <li>
-          <b>Attract great teachers to your class</b>:
-          By pre-paying even $1, it signals that you are serious, and great teachers
-          from all over the world will see this class's demand and help out
+          <b>Signal demand to the entire community</b>:
+          By pre-paying even $1, it signals that you are serious
         </li>
 
         <li>
           <b>Get notified when server is ready</b>:
-          You'll get an email when new teachers create videos
+          You'll get important email updates e.g. if new teachers sign up
         </li>
 
         <li>

@@ -1,11 +1,9 @@
-<div class="flexy">
+<!-- <div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
-					<!-- <Title style="font-size: 1.95rem; padding-left: 6px">
-						Explanations
-					</Title> -->
+	
 
 					<a href="https://eltonlin.substack.com/archive" target="_blank" 
 						style="margin-left: 8px; text-decoration-color: transparent;"
@@ -15,7 +13,7 @@
 							style="font-size: 1.25em;"
 						>
 							<Label>blog</Label>
-							<!-- <Icon class="material-icons">auto_stories</Icon> -->
+		
 						</Button>
 					</a>
 
@@ -27,7 +25,7 @@
 							style="font-size: 1.25em"
 						>
 							<Label>github</Label>
-							<!-- <Icon class="material-icons">terminal</Icon> -->
+				
 						</Button>
 					</a>
 				</Section>
@@ -38,7 +36,7 @@
 			</Row>
 		</TopAppBar>
 	</div>
-</div>
+</div> -->
 
 <AutoAdjust {topAppBar}>
 	<!-- <TopBannerWarnExperimental/> -->

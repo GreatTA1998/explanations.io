@@ -18,16 +18,49 @@
   >
 </div> -->
 
+<div style="margin-bottom: 80px;"></div>
+
 <div style="display: flex; width: 100%;">
   <!-- LEFT FLEX CHILD -->
-  <div style="margin-top: 20px; width: fit-content; flex-wrap: wrap;">
+  <div style="margin-left: 18%; margin-top: 20px; width: fit-content; flex-wrap: wrap;">
     {#each categories as category, i}
       <div 
         class="subject-category"
         on:click={() => currentlySelectedSubject = category}
         class:orange-highlight={currentlySelectedSubject === category}
       >
+        {#if category === 'Mechanical Engineering'}
+          <span class="material-icons">
+            build
+          </span>
+        {:else if category === 'Computer Science'}
+          <span class="material-icons">
+            data_array
+          </span>
+        {:else if category === 'Life Sciences'}
+          <span class="material-icons">
+            biotech
+          </span>
+        {:else if category === 'Economics'}
+          <span class="material-icons">
+            shopping_cart
+          </span>
+        {:else if category === 'Math'}
+          <span class="material-icons">
+            functions
+          </span>
+        {:else if category === 'Physics'}
+          <span class="material-icons">
+            air
+          </span>
+        {:else if category === 'All Subjects'}
+          <span class="material-icons">
+          explore
+          </span>
+        {/if}
         {category}
+
+  
         <!-- {#if categoriesCount[i]}
           ({categoriesCount[i]})
         {/if} -->
@@ -41,15 +74,18 @@
       on:click={() => currentlySelectedSubject = 'Other Servers'}
       class:orange-highlight={currentlySelectedSubject === 'Other Servers'}
     >
+    <span class="material-icons">
+      folder
+    </span>
       Other Servers
     </div>
   </div>
 
   <!-- RIGHT FLEX CHILD -->
-  <div style="flex-wrap: wrap; width: 100%; margin-left: 192px;">
+  <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
     <!-- Filters on top -->
     <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
-      <div style="font-size: 2em">
+      <div style="font-size: 24px; margin-left: 12px; margin-right: 12px;">
         Sort by:
       </div>
 
@@ -224,6 +260,10 @@
 </script>
 
 <style>
+  span {
+    margin-right: 8px;
+  }
+
   .server-card {
     /* Tweek this to change all the children font-sizes */
     font-size: 0.9em;
@@ -256,6 +296,8 @@
     /* background-color: red; 
     color: white;  */
     padding: 12px; 
+    padding-left: 20px;
+    padding-right: 20px;
     border-radius: 36px;
     margin-left: 12px;
     /* border: 2px solid orange; */
@@ -273,6 +315,8 @@
 
   .orange-highlight {
     background-color: #e2dddd;
+    color: black !important;
+    font-weight: 500 !important;
     /* color: white;
     border: 1px solid white; */
   }
@@ -282,15 +326,24 @@
   }
 
   .subject-category {
-    width: 300px;
-    font-size: 24px; 
+    display: flex;
+    align-items: center;
+
+    width: 220px;
+    font-size: 16px; 
     margin-left: 38px; 
     height: fit-content;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     padding-right: 16px;
     padding-left: 16px;
     border-radius: 8px;
     font-weight: 400;
+    margin-bottom: 12px;
+    color: hsl(0,0%,0%, 0.80);
+  }
+
+  .subject-category:hover {
+    background-color: rgb(214, 214, 214);
   }
 </style>

@@ -91,7 +91,7 @@
                 {serverObj.numOfHelpers + serverObj.numOfCreators}  -->
               </div>
 
-              <div style="margin-left: 12px; margin-bottom: 20px; font-size: 20px;">
+              <div style="margin-left: 12px; margin-bottom: 30px; font-size: 20px;">
                 teachers
               </div>
           </div>
@@ -149,7 +149,7 @@
                 {presubscriberDocs.length}
             </div>
 
-            <div style="margin-left: 12px; margin-bottom: 20px; font-size: 20px;">
+            <div style="margin-left: 12px; margin-bottom: 30px; font-size: 20px;">
               pre-subscribers
             </div>
           {/if}
@@ -220,7 +220,7 @@
             {serverObj.totalSubscriptions} 
           </div>
 
-          <div style="margin-left: 12px; margin-bottom: 20px; font-size: 20px;">
+          <div style="margin-left: 12px; margin-bottom: 30px; font-size: 20px;">
             subscribers
           </div>
         </div>

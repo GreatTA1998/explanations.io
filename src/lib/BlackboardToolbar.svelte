@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  {#if Object.keys($user).length > 0}
+  <!-- {#if Object.keys($user).length > 0} -->
     {#if open}
       <div class="popup-window">
         <!-- generate random colors -->
@@ -56,8 +56,8 @@
       </div>
     {/if}
 
-    {#each $user.pencilColors as color, i }
-      {#if i < $user.pencilColors.length - 1}
+    {#each pencilColors as color, i }
+      {#if i < pencilColors.length - 1}
         <div on:click={() => selectPencil({ i, color, lineWidth: pencilWidths[i] })} 
           class="color-pencil-button"
           class:pencil-selected={$currentTool.color === color}
@@ -86,24 +86,28 @@
             </g>
           </svg> 
 
-          <span 
-            class="material-icons" 
-            style="font-size: 0.7rem; 
-                   color: {$currentTool.color === color ? 'white' : 'white'};
-                   margin-top: 27px;
-            "
-            >
-            arrow_drop_down
-          </span>
+          {#if $user.uid}
+            <span 
+              class="material-icons" 
+              style="font-size: 0.7rem; 
+                    color: {$currentTool.color === color ? 'white' : 'white'};
+                    margin-top: 27px;
+              "
+              >
+              arrow_drop_down
+            </span>
+          {/if}
         </div>
       {:else}
-        <span on:click={handleDiceClick(color, i)} 
-          class="material-icons" 
-          class:highlighted-background={$currentTool.color === color}
-          style="font-size: 2.1rem; margin-left: 5px; color: {color}; border-radius: 4px; padding: 2px"
-        >
-          casino
-        </span>
+        {#if $user.uid}
+          <span on:click={handleDiceClick(color, i)} 
+            class="material-icons" 
+            class:highlighted-background={$currentTool.color === color}
+            style="font-size: 2.1rem; margin-left: 5px; color: {color}; border-radius: 4px; padding: 2px"
+          >
+            casino
+          </span>
+        {/if}
       {/if}
     {/each}
 
@@ -126,12 +130,12 @@
       src="https://i.imgur.com/Klln1yP.png"
       alt="small-eraser"
     >
-  {/if}
+  <!-- {/if} -->
   
   <slot>
 
   </slot>
-
+  
   <slot name="dropdown-menu">
 
   </slot>  
@@ -146,7 +150,7 @@
   import Slider from '@smui/slider'
   import { onMount } from 'svelte';
   
-  // let pencilColor = []
+  let pencilColors = []
   let pencilWidths = [] 
 
   let pencilIdx = null
@@ -157,9 +161,16 @@
 
   let randomPaletteColors = ['black', 'white', 'red', 'blue']
 
+  const defaultPencilWidths = [3, 3, 3, 3, 3, 3, 3]
+  const defaultPencilColors = ['white', "#F69637", "#A9F8BD", "#6EE2EA", "hsla(147,100%,60%,1)", "hsla(6,100%,60%,1)", "hsla(143,100%,60%,1)"]
+
   $: {
     if ($user.pencilWidths) pencilWidths = $user.pencilWidths
-    else [2, 2, 2, 2]
+    else pencilWidths = defaultPencilWidths
+
+    if ($user.pencilColors) pencilColors = $user.pencilColors
+    else pencilColors = defaultPencilColors
+    console.log('pencilColors =', pencilColors)
   }
 
   // TO-DO: rename `roomToParicipants`, this implies it's a map of ID to ID
@@ -193,18 +204,24 @@
       lineWidth: newWidth
     })
 
-    const colorsCopy = [...$user.pencilColors] 
+    let colorsCopy
     let widthsCopy 
+
+    if ($user.pencilColors) colorsCopy = [...$user.pencilColors] 
+    else colorsCopy = defaultPencilColors
     if ($user.pencilWidths) widthsCopy = [...$user.pencilWidths]
-    else widthsCopy = [2, 2, 2, 2]
+    else widthsCopy = defaultPencilWidths
+
     colorsCopy[i] = newColor
     widthsCopy[i] = newWidth
 
-    const userRef = doc(getFirestore(), 'users/' + $user.uid)
-    updateDoc(userRef, {
-      pencilColors: colorsCopy,
-      pencilWidths: widthsCopy
-    })  
+    if ($user.uid) {
+      const userRef = doc(getFirestore(), 'users/' + $user.uid)
+      updateDoc(userRef, {
+        pencilColors: colorsCopy,
+        pencilWidths: widthsCopy
+      })  
+    }
 
     open = false
     pencilIdx = null

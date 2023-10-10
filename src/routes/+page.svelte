@@ -33,15 +33,7 @@
 				</Section>
 
 				<Section align="end" toolbar>
-					{#if !$user.uid}
-						<Button on:click={() => alert('For now, log in through the class servers')} variant="outlined">
-							Log in
-						</Button>
-					{:else}
-						<Button on:click={logOut}>
-							Log out
-						</Button>
-					{/if}
+					<ReusableSignInButton/>
 				</Section>
 			</Row>
 		</TopAppBar>
@@ -88,12 +80,12 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title" style="font-size: 4em;">Help people with your explanations, for free and for money</p>	
+				<p class="header-title" style="font-size: 4em;">Teach what you love, supported by subscribers.</p>	
 				<div class="header-subcopy-wrapper">
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Create your first video
+							Explore communities
 						</Label>
 					</Button>
 				</div>
@@ -381,19 +373,11 @@
 	import TabBar from '@smui/tab-bar';
 	import Tab, { Icon } from '@smui/tab';
 	import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
-	import Card, {
-    Content,
-    PrimaryAction,
-    Actions,
-    ActionButtons,
-    ActionIcons,
-  } from '@smui/card';
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
-	import Blackboard from '$lib/Blackboard.svelte'
 	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
 	import { mixpanelLibrary } from '/src/mixpanel.js'
-	import { signOut, getAuth } from 'firebase/auth'
+	import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
@@ -517,17 +501,6 @@
 		const id = 'Mev5x66mSMEvNz3rijym' // 14.01
     goto(`/${id}/${id}`, { replaceState: true })
 	}
-
-	async function logOut () {
-    if ($user.uid) {
-      const auth = getAuth()
-      await signOut(auth)
-    }
-    // clear the cookie cache otherwise the user persists for some reason
-    // or it could be store.js listeners not having a proper lifecycle for logout
-    window.location.reload()
-    // goto('/')
-  }
 </script>
 
 <style lang="scss">

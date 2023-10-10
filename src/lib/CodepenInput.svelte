@@ -3,9 +3,11 @@
     style="font-family: sans-serif; font-size: 2em; height: 60px; width: 100%;"
     class="input" 
     value={value}
+    readonly={readonly}
     placeholder="Question title..." 
     type="text" 
     on:input
+    on:click
   >
   <span class="underline"></span>
 <!-- </div> -->
@@ -14,9 +16,9 @@
   import { createEventDispatcher } from 'svelte'
 
   export let value
+  export let readonly
 
   const dispatch = createEventDispatcher()
-
 </script>
 
 <style>

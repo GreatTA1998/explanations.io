@@ -1,4 +1,8 @@
 <!-- This is a quickfix for routing -->
+{#if isSignInPopupOpen}
+  <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
+{/if}
+
 {#if roomID === 'request-video'}
   <ClassServerAskQuestion {classID}/>
 {:else if roomID === 'my-profile'}
@@ -193,9 +197,9 @@
                 
                     {#if isSubscribePopupOpen}
                       <PopupConfirmSubscription
-                        selectedTutorDoc={helperDoc}
+                        selectedTutorDoc={memberDoc}
                         {classID}
-                        on:confirm-clicked={() => handleConfirmSubscription(helperDoc)}
+                        on:confirm-clicked={() => handleConfirmSubscription(memberDoc)}
                         on:popup-close={() => isSubscribePopupOpen = false}
                       />
                     {/if}      
@@ -224,32 +228,44 @@
                   {/if}
 
                   {#if $user.uid}
-                    <div style="
+                    <div 
+                    class="paper-shadow"
+                    style="
                       margin-left: 24px; 
                       display: flex; 
                       justify-content: space-around; 
                       align-items: center; 
                       min-width: 100px; 
                       border-radius: 12px; 
-                      border: 2px solid orange; 
+                  
                       padding-left: 8px; 
-                      padding-right: 8px; 
-                      padding-top: 2px;
-                      padding-bottom: 4px;"
+                      padding-right: 12px; 
+                      padding-top: 4px;
+                      padding-bottom: 6px;"
                     >
-                      <span on:click={eureka(boardDoc)} class="material-icons" style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'hsl(0,0%,0%, 0.80)') : 'hsl(0,0%,0%, 0.80)'}; font-size: 2rem;">
-                        thumb_up
-                      </span>
+                      <div on:click={eureka(boardDoc)} style="display: flex; align-items: center;">
+                        <span class="material-icons" 
+                          style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'grey') : 'grey'}; font-size: 2rem; margin-right: 4px;">
+                          lightbulb
+                        </span>
 
-                      <div style="color: black; margin-left: 8px; font-weight: 500">
-                        {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
+                        I now clearly understand 
+
+                        <div style="color: black; margin-left: 8px; font-weight: 500">
+                          {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
+                        </div>
                       </div>
 
+<!-- 
                       <div style="color: lightgrey; margin-left: 16px; margin-right:16px; font-size: 1.5rem;">|</div>
 
                       <span on:click={() => alert('To be implemented')} class="material-icons" style="color: hsl(0,0%,0%, 0.80); font-size: 2rem;">
-                        thumb_down
+                        help
                       </span>
+
+                      <div style="margin-right: 4px;"></div>
+
+                      I still don't understand -->
                     </div>
                   {/if}
                 </div>
@@ -315,26 +331,24 @@
                       currentTime will be incrementing 
                     -->
                     {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
-                      <span 
-                        on:click={() => callManyFuncs(
-                          startRecording, 
-                          startStopwatch,
-                          () => updateRecordState(boardID, 'mid_record'),
-                          () => updateRecorderBrowserTabID(boardID),
-                          () => willPreventPageLeave.set(true)
-                        )}
-                        style="
-                          font-size: 1.2rem; color: cyan; margin-left: 28px; margin-right: 26px; font-family: sans-serif; border: 1px solid cyan; 
-                          padding-top: 2px; 
-                          padding-bottom: 4px;
-                          padding-left: 10px;
-                          padding-right: 9px; 
-                          box-sizing: border-box;
-                          border-radius: 1px;
-                          cursor: pointer;"
-                      >
-                        record
-                      </span>
+                      {#if !!!$user.uid}
+                        <span on:click={() => isSignInPopupOpen = true} class="my-record-button">
+                          record
+                        </span>
+                      {:else}
+                        <span 
+                          on:click={() => callManyFuncs(
+                            startRecording, 
+                            startStopwatch,
+                            () => updateRecordState(boardID, 'mid_record'),
+                            () => updateRecorderBrowserTabID(boardID),
+                            () => willPreventPageLeave.set(true)
+                          )}
+                          class="my-record-button"
+                        >
+                          record
+                        </span>
+                      {/if}
                       <!-- color was `cyan`, icon was `album` -->
     
                     {:else if boardDoc.recordState === 'mid_record'}
@@ -436,6 +450,7 @@
   import ClassServerMyProfile from '$lib/ClassServerMyProfile.svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
   import { mixpanelLibrary } from '/src/mixpanel.js'
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -452,6 +467,7 @@
 
   let isMoveVideoPopupOpen = false
   let isShowingNanoQuestionPopup = false
+  let isSignInPopupOpen = false
 
   $: membersDbPath = `classes/${classID}/members/`
   $: boardsDbPath = `classes/${classID}/blackboards/`
@@ -985,6 +1001,26 @@
 
 .unclickable {
   pointer-events: none;
+}
+
+.paper-shadow {
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.my-record-button {
+  font-size: 1.2rem; 
+  color: cyan; 
+  margin-left: 28px; 
+  margin-right: 26px; 
+  font-family: sans-serif; 
+  border: 1px solid cyan; 
+  padding-top: 2px; 
+  padding-bottom: 4px;
+  padding-left: 10px;
+  padding-right: 9px; 
+  box-sizing: border-box;
+  border-radius: 1px;
+  cursor: pointer;
 }
 </style>
 

@@ -31,23 +31,27 @@
         
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>
-            {#if backgroundImageDownloadURL}
-              <Item on:click={resetBackgroundImage}>
-                Remove background
-              </Item>
-            {:else}
-              <Item on:click={clickHiddenInput}>
-                Set background
-              </Item>
+            {#if !isOfflineDemo}
+              {#if backgroundImageDownloadURL}
+                <Item on:click={resetBackgroundImage}>
+                  Remove background
+                </Item>
+              {:else}
+                <Item on:click={clickHiddenInput}>
+                  Set background
+                </Item>
+              {/if}
             {/if}
 
             <Item on:SMUI:action={wipeBoard}>
               Wipe board
             </Item>    
 
-            <Item on:SMUI:action={deleteBoard}>
-              Delete board 
-            </Item>
+            {#if !isOfflineDemo}
+              <Item on:SMUI:action={deleteBoard}>
+                Delete board 
+              </Item>
+            {/if}
           </List> 
         </Menu>
       </div>
@@ -103,6 +107,9 @@
 
   // QUICKFIX to let servers search page work
   export let hideToolbar = false
+
+  // QUICKFIX
+  export let isOfflineDemo = false
 
   $: if (currentTimeOverride) {
     currentTime = currentTimeOverride

@@ -19,90 +19,110 @@
   let:toggleMic={toggleMic}
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
-  <LeftDrawer {nameOfClass} {descriptionOfClass}>
-    <div style="margin-top: 16px;"></div>
+  <!-- {#if classDoc} -->
+    <LeftDrawer {classDoc}>
+      <div style="margin-top: 16px;"></div>
 
-    <!-- Notion's icon color rgba(55, 53, 47, 0.45) -->
-    <!-- Notion's font color gba(25, 23, 17, 0.6) is  -->
-    <div on:click={() => goto(`/${classID}/request-video`)} 
-      class="action-item"
-      class:explain-item-selected={roomID === 'request-video'}
-      style="display: flex; align-items: center;"
-    >
-      <span class="material-icons" style="font-size: 2rem; margin-top: 2px;">
-        add
-      </span>
-      <div style="margin-right: 4px;"></div>
-      <div style="font-size: 1.2rem; font-weight: 400;">
-        New question
-      </div>
-    </div>
-
-    <div style="margin-top: 12px"></div>
-
-    {#if isBecomeHelperPopupOpen}
-      <PopupBecomeHelper
-        {classID}
-        on:popup-close={() => isBecomeHelperPopupOpen = false}
-      />
-    {/if}
-      
-    {#if $user.uid}
-      <div 
-        class:explain-item-selected={isBecomeHelperPopupOpen}
-        on:click={() => goto(`/${classID}/my-profile`)} 
+      <!-- Notion's icon color rgba(55, 53, 47, 0.45) -->
+      <!-- Notion's font color gba(25, 23, 17, 0.6) is  -->
+      <div on:click={() => goto(`/${classID}/request-video`)} 
         class="action-item"
+        class:explain-item-selected={roomID === 'request-video'}
         style="display: flex; align-items: center;"
       >
-        <span class="material-icons" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
-          account_circle
+        <span class="material-icons" style="font-size: 2rem; margin-top: 2px;">
+          add
         </span>
         <div style="margin-right: 4px;"></div>
-
         <div style="font-size: 1.2rem; font-weight: 400;">
-          My profile
+          New question
         </div>
       </div>
-    {/if}
 
-    <div style="margin-bottom: 48px;"></div>
+      <div style="margin-top: 12px"></div>
 
-    <div style="display: flex; align-items: center;">
-      <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
-        Blackboard rooms
-      </div>
-      <span on:click={createNewRoom} class="material-icons new-room-button">
-        add
-      </span>
-    </div>
-
-    <!-- each root rooms -->
-    {#each rootRooms as room, i (room.id)}
-      {#if !room.parentRoomID}
-        <LeftDrawerRecursiveRoom 
-          {room} 
-          {firestoreIDToDailyID}
-          {toggleMic}
-          {activeSpeakerID}
-          {willJoinVoiceChat}
-          {roomID}
+      {#if isBecomeHelperPopupOpen}
+        <PopupBecomeHelper
           {classID}
-          orderWithinLevel={i}
-          roomsInThisLevel={rootRooms}
-          parentRoomIDs={['']}
+          on:popup-close={() => isBecomeHelperPopupOpen = false}
         />
       {/if}
-    {/each}
+        
+      {#if $user.uid}
+        <div 
+          class:explain-item-selected={isBecomeHelperPopupOpen}
+          on:click={() => goto(`/${classID}/my-profile`)} 
+          class="action-item"
+          style="display: flex; align-items: center;"
+        >
+          <span class="material-icons" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
+            account_circle
+          </span>
+          <div style="margin-right: 4px;"></div>
 
-    <div style="padding: 6px;">
-      <LeftDrawerRecursiveRoomReorderDropzone
-        orderWithinLevel={rootRooms.length}
-        parentRoomIDs={['']}
-        roomsInThisLevel={rootRooms}
-        {classID}
-      />
-    </div>
-  </LeftDrawer>
+          <div style="font-size: 1.2rem; font-weight: 400;">
+            My profile
+          </div>
+        </div>
+      {:else}
+        <div 
+            class:explain-item-selected={isBecomeHelperPopupOpen}
+            on:click={() => {}} 
+            class="action-item"
+            style="display: flex; align-items: center;"
+          >
+            <span class="material-icons" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
+              account_circle
+            </span>
+            <div style="margin-right: 5px;"></div>
+
+            <ReusableSignInButton outlined={false}/>
+
+            <!-- <div style="font-size: 1.2rem; font-weight: 400;">
+              Sign in
+            </div> -->
+          </div>
+      {/if}
+
+      <div style="margin-bottom: 48px;"></div>
+
+      <div style="display: flex; align-items: center;">
+        <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
+          Blackboard rooms
+        </div>
+        <span on:click={createNewRoom} class="material-icons new-room-button">
+          add
+        </span>
+      </div>
+
+      <!-- each root rooms -->
+      {#each rootRooms as room, i (room.id)}
+        {#if !room.parentRoomID}
+          <LeftDrawerRecursiveRoom 
+            {room} 
+            {firestoreIDToDailyID}
+            {toggleMic}
+            {activeSpeakerID}
+            {willJoinVoiceChat}
+            {roomID}
+            {classID}
+            orderWithinLevel={i}
+            roomsInThisLevel={rootRooms}
+            parentRoomIDs={['']}
+          />
+        {/if}
+      {/each}
+
+      <div style="padding: 6px;">
+        <LeftDrawerRecursiveRoomReorderDropzone
+          orderWithinLevel={rootRooms.length}
+          parentRoomIDs={['']}
+          roomsInThisLevel={rootRooms}
+          {classID}
+        />
+      </div>
+    </LeftDrawer>
+  <!-- {/if} -->
 </DailyVideoConference>
 
 <slot>
@@ -125,6 +145,7 @@
   import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
   import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
   import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
   export let data;
   let { classID, roomID } = data;
@@ -133,8 +154,6 @@
   let classDoc = null
   const classPath = `classes/${classID}/`
   let unsubFuncs = []
-  let nameOfClass = ''
-  let descriptionOfClass = ''
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
 
   let willJoinVoiceChat = false
@@ -249,9 +268,8 @@
   async function fetchClassDoc () {
     return new Promise(async (resolve) => {
       const classDocRef = doc(getFirestore(), `classes/${classID}`)
-      classDoc = await getDoc(classDocRef)
-      nameOfClass = classDoc.data().name
-      descriptionOfClass = classDoc.data().description
+      const result = await getDoc(classDocRef)
+      classDoc = result.data()
       resolve()
     })
   }

@@ -16,6 +16,8 @@
   {/each}
 </div>
 
+<div style="margin-bottom: 12px;"></div>
+
 <!-- <div style="display: flex; justify-content: space-evenly;"> -->
   <div style="display: {idxOfFocusedSlide === 0 ? '' : 'none'}">
     <Blackboard
@@ -23,6 +25,7 @@
       {canvasWidth}
       {canvasHeight}
       currentTimeOverride={currentTime}
+      isOfflineDemo
       on:stroke-drawn={(e) => dispatch(`stroke-drawn1`, { newStroke: e.detail.newStroke })}
       on:board-wipe={() => dispatch(`board-wipe-1`)}
     >
@@ -35,6 +38,7 @@
       {canvasWidth}
       {canvasHeight}
       currentTimeOverride={currentTime}
+      isOfflineDemo
       on:stroke-drawn={(e) => dispatch(`stroke-drawn2`, { newStroke: e.detail.newStroke })}
       on:board-wipe={() => dispatch(`board-wipe-2`)}
     >
@@ -47,6 +51,7 @@
       {canvasWidth}
       {canvasHeight}
       currentTimeOverride={currentTime}
+      isOfflineDemo
       on:stroke-drawn={(e) => dispatch(`stroke-drawn3`, { newStroke: e.detail.newStroke })}
       on:board-wipe={() => dispatch(`board-wipe-3`)}
     >
@@ -62,16 +67,16 @@
 >
   <div use:portal={'multislide-record-button-wrapper'}>
     {#if !isRecording}
-      <button on:click={() => callFuncsInSequence(
-        lockMultislideBlackboard,
-        startRecording,
-        startStopwatch,
-        () => isRecording = true
-      )}
-        style="height: 50px; font-size: 1.1em"
-      >
-        Record local playground video
-      </button>
+      <div 
+        on:click={() => callFuncsInSequence(
+          lockMultislideBlackboard,
+          startRecording,
+          startStopwatch,
+          () => isRecording = true
+        )}
+        class="offline-record-button">
+        Try recording
+      </div>
     {:else}
       <button on:click={() => callFuncsInSequence(
         () => dispatch('timing-of-slide-changes-ready', { timingOfSlideChanges }),
@@ -80,6 +85,7 @@
         unlockMultislideBlackboard
       )}
         style="height: 50px; font-size: 1.1em"
+        class="offline-record-button"
       >
         Finish recording
       </button>
@@ -98,6 +104,7 @@
   import { getFirestore, query, getDocs, collection, where, increment } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
   import { createEventDispatcher, onMount } from 'svelte'
+  import ReusableButton from '$lib/ReusableButton.svelte'
 
   export let strokesArray1
   export let strokesArray2
@@ -218,23 +225,23 @@
   }
 
   function lockMultislideBlackboard (id) {
-    return new Promise(async (resolve) => {
-      const path = `/classes/${classID}/powerpoints/${powerpointID}`
-      await updateFirestoreDoc(path, {
-        uidOfCurrentRecorder: $user.uid
-      })
-      resolve()
-    })
+    // return new Promise(async (resolve) => {
+    //   const path = `/classes/${classID}/powerpoints/${powerpointID}`
+    //   await updateFirestoreDoc(path, {
+    //     uidOfCurrentRecorder: $user.uid
+    //   })
+    //   resolve()
+    // })
   }
 
   function unlockMultislideBlackboard (id) {
-    return new Promise(async (resolve) => {
-      const path = `/classes/${classID}/powerpoints/${powerpointID}`
-      await updateFirestoreDoc(path, {
-        uidOfCurrentRecorder: ''
-      })
-      resolve()
-    })
+    // return new Promise(async (resolve) => {
+    //   const path = `/classes/${classID}/powerpoints/${powerpointID}`
+    //   await updateFirestoreDoc(path, {
+    //     uidOfCurrentRecorder: ''
+    //   })
+    //   resolve()
+    // })
   }
 
   function startMultislideRecording () {
@@ -305,7 +312,15 @@
 
 <style>
   .highlighted-glow {
-    background-color: orange;
+    background-color: hsl(0,0%,0%, 0.80);
     color: white;
+  }
+
+  .offline-record-button {
+    color: cyan; 
+    background-color: hsl(0,0%,0%, 0.80); 
+    border: 2px solid cyan; 
+    height: 48px; display: flex; align-items: center; padding-left: 16px; padding-right: 16px;
+    font-size: 24px;
   }
 </style>

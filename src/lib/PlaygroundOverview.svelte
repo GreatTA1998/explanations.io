@@ -114,19 +114,19 @@
 
   async function runScript () {
     const allServers = await getFirestoreCollection('/classes')
-    for (const server of allServers) {
-      // if (!server.isHighlyRecommended) {
-      //   updateFirestoreDoc(`/classes/${server.id}`, {
-      //     isHighlyRecommended: false
-      //   })
-      //   console.log('made it 0')
-      // }       
-      if (!server.minutesViewed) {
-        updateFirestoreDoc(`/classes/${server.id}`, {
-          minutesViewed: 0
-        })
-      }
-    }
+    // for (const server of allServers) {
+    //   if (!server.totalUpvotes) {
+    //     updateFirestoreDoc(`/classes/${server.id}`, {
+    //       totalUpvotes: 0
+    //     })
+    //     console.log('made it 0')
+    //   }       
+    //   if (!server.minutesViewed) {
+    //     updateFirestoreDoc(`/classes/${server.id}`, {
+    //       minutesViewed: 0
+    //     })
+    //   }
+    // }
   }
 
 
@@ -170,7 +170,7 @@
         return filteredServers
       case 'Has activity': 
         return subjectServers.filter(server => server.numOfUnresolvedQuestions + server.numOfVideos)
-      case 'Really need teachers':
+    case 'Really need teacrehers':
         const output = subjectServers.filter(server => server.crowdfundAmount > 0)
         output.sort((s1, s2) => {
           if (s1.numOfUnresolvedQuestions !== s2.numOfUnresolvedQuestions) {
@@ -182,13 +182,26 @@
         })
         return output 
       case 'Has teachers & videos': 
-        const output2 = subjectServers.filter(server => server.numOfVideos && (server.numOfHelpers || server.numOfCreators))
+        // const output2 = subjectServers.filter(server => server.numOfVideos && (server.numOfHelpers || server.numOfCreators))
+        const output2 = [...subjectServers]
         console.log('has teachers and videos =', output2)
         output2.sort((s1, s2) => {
-          return (s2.minutesViewed / s2.numOfVideos) - (s1.minutesViewed / s1.numOfVideos)
-          // if (s1.minutesViewed !== s2.minutesViewed) {
-          //   return s2.numOfUnresolvedQuestions - s1.minutesViewed
-          // } 
+          // if it has videos
+          if (s1.numOfVideos && s2.numOfVideos) {
+            // if both have upvotes, see which one has higher
+            if (s1.totalUpvotes && s2.totalUpvotes) {
+              return (s2.totalUpvotes / s2.numOfVideos) - (s1.totalUpvotes / s1.numOfVideos)
+            }
+            else {
+              return s2.numOfVideos - s1.numOfVideos
+            }
+          } 
+          else if (s1.numOfTeachers !== s2.numOfTeachers) {
+            return s2.numOfTeachers - s1.numOfTeachres
+          }
+          else {
+            return s2.numOfVideos - s1.numOfVideos
+          }
         })
         return output2;
       default:

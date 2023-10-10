@@ -3,53 +3,70 @@
     Why subscribe?
   </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 24px; padding-top: 12px;">    
-    <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px;">
-      Why subscribe?
+    <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px; font-size: 32px;">
+      Why pre-subscribe?
     </h2>
 
 
-    <div style="font-size: 16px;">
+    <div style="font-size: 20px;">
       <div style="color: black; opacity: 0.8; font-weight: 600;">Benefits:</div>
       <div style="padding-left: 8px;">
         <li>
-          Directly talk to {selectedTutorDoc.name.split(' ')[0]} and other active subscribers via <b>group chat</b>
+          <b>Attract great teachers to your class</b>:
+          By pre-paying even $1, it signals that you are serious, and great teachers
+          from all over the world will see this class's demand and help out
         </li>
+
         <li>
-          <b>High priority</b> whenever you ask questions
+          <b>Get notified when server is ready</b>:
+          You'll get an email when new teachers create videos
         </li>
+
         <li>
-          <b>Permanent access</b> to all videos by {selectedTutorDoc.name.split(' ')[0]}
-        </li>
-        <li>
-          <b>Refund for any reason</b> (covered by the platform)
+          <b>Zero risk:</b> If you change your mind anytime, just call 503 250 3868 or email elton@explanations.app,
+          refund anytime any reason. Seriously.
         </li>
         <br>
-        <li>
-          (For first 10 subscribers): your name is listed as "early supporter" for your teacher's most viewed videos
-        </li>
       </div>
     </div>
 
     <br>
     
+    <div style="color: purple;">
+      Venmo: elton-lin-2 
+      <br>
+      CashApp: $eltonlin1998
+    </div>
 
+    <div style="margin-top: 12px;">
 
-    <div style="height: 20px; display: flex; align-items: center; margin-top: 20px;">
+    </div>
+    <div style="display: flex">
+      <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 1} on:click={() => prepayAmount = 1}>
+        $1
+      </div>
+      <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 5} on:click={() => prepayAmount = 5}>
+        $5
+      </div>
+      <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 10} on:click={() => prepayAmount = 10}>
+        $10
+      </div>
+    </div>
+
+    <!-- <div style="height: 20px; display: flex; align-items: center; margin-top: 20px;">
       <Checkbox bind:checked touch />
       I've venmo'ed $10
-      <!-- ${selectedTutorDoc.weeklyPrice || 15}  -->
       to 
-      @{selectedTutorDoc.venmo || "(check Venmo in teachers's bio (press the v-shaped arrow on the teacher's rectangle)"}
-    </div>
+    </div> -->
   </div>
 
   <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
     <Button 
-      disabled={!checked || !$user.phoneNumber}
+      disabled={prepayAmount === 0}
       on:click={() => dispatch('confirm-clicked')}
       color="secondary"
     >
-      Confirm subscription
+      I SENT THE PAYMENT
     </Button>
     <Button on:click={() => dispatch('popup-close')}>
       Cancel
@@ -72,6 +89,8 @@
   let inputFieldFirstName = ''
   let inputFieldLastName = ''
   let checked = false
+
+  let prepayAmount = 1
 
   function updateUserName () {
     updateFirestoreDoc(`users/${$user.uid}`, {
@@ -148,7 +167,21 @@
 
 <style>
   li {
-    margin-bottom: 4px;
-    margin-top: 4px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+  }
+
+  .prepay-amount-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+    height: 40px;
+    border: 2px solid purple;
+  }
+
+  .highlighted-box {
+    background-color: purple;
+    color: white;
   }
 </style>

@@ -4,43 +4,27 @@
   </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 24px; padding-top: 12px;">    
     <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px;">
-      Why subscribe?
+      Teach
     </h2>
 
-
     <div style="font-size: 16px;">
-      <div style="color: black; opacity: 0.8; font-weight: 600;">Benefits:</div>
+      <div style="color: black; opacity: 0.8; font-weight: 600;">How it works:</div>
       <div style="padding-left: 8px;">
         <li>
-          Directly talk to {selectedTutorDoc.name.split(' ')[0]} and other active subscribers via <b>group chat</b>
+          Spend 5-10 minutes recording explanations about the class
         </li>
         <li>
-          <b>High priority</b> whenever you ask questions
+          Any student can subscribe to you - especially the pre-subscribers
         </li>
         <li>
-          <b>Permanent access</b> to all videos by {selectedTutorDoc.name.split(' ')[0]}
-        </li>
-        <li>
-          <b>Refund for any reason</b> (covered by the platform)
+          If the pre-subscribers don't choose you, your video portfolio remains - like a youtube channel.
+          You can leave it or update it over time, and new students can still watch your videos and subscribe to you. 
         </li>
         <br>
-        <li>
-          (For first 10 subscribers): your name is listed as "early supporter" for your teacher's most viewed videos
-        </li>
       </div>
     </div>
 
     <br>
-    
-
-
-    <div style="height: 20px; display: flex; align-items: center; margin-top: 20px;">
-      <Checkbox bind:checked touch />
-      I've venmo'ed $10
-      <!-- ${selectedTutorDoc.weeklyPrice || 15}  -->
-      to 
-      @{selectedTutorDoc.venmo || "(check Venmo in teachers's bio (press the v-shaped arrow on the teacher's rectangle)"}
-    </div>
   </div>
 
   <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
@@ -49,7 +33,7 @@
       on:click={() => dispatch('confirm-clicked')}
       color="secondary"
     >
-      Confirm subscription
+      Become teacher
     </Button>
     <Button on:click={() => dispatch('popup-close')}>
       Cancel

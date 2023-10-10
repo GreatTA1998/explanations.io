@@ -18,25 +18,27 @@
             />
           {/if}
 
-          <div style="flex-grow: 1">
-            <!-- {#if $user.uid} -->
-              <div style="display: flex; align-items: center; width: 100%;">
-                {#key nameOfClass}
-                  <ClassDropdownMenu 
-                    {nameOfClass} 
-                    {descriptionOfClass}
-                  />
-                {/key}
-              </div>
-            <!-- {:else}
-              <div style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
-                {nameOfClass} 
-              </div>
-              <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
-                {descriptionOfClass}
-              </div>
-            {/if} -->
-          </div>
+          {#if classDoc}
+            <div style="flex-grow: 1">
+              <!-- {#if $user.uid} -->
+                <div style="display: flex; align-items: center; width: 100%;">
+                  {#key classDoc}
+                    <ClassDropdownMenu 
+                      nameOfClass={classDoc.name}
+                      descriptionOfClass={classDoc.description}
+                    />
+                  {/key}
+                </div>
+              <!-- {:else}
+                <div style="font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 2.0rem">
+                  {nameOfClass} 
+                </div>
+                <div style="font-family: Roboto,sans-serif; font-size: 0.875rem; color: rgba(0,0,0,.6); margin-left: 8px; margin-bottom: 12px">
+                  {descriptionOfClass}
+                </div>
+              {/if} -->
+            </div>
+          {/if}
         </div>
       </div>
       <List>
@@ -66,8 +68,7 @@
   import { tick } from 'svelte'
   import { goto } from '$app/navigation'
 
-  export let nameOfClass
-  export let descriptionOfClass
+  export let classDoc
 
   let isShowingPopup = false
 

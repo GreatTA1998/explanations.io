@@ -14,6 +14,7 @@
 
   <button on:click={() => dispatch('recording-retry')}
     style="height: 50px; font-size: 1.1em"
+    class="offline-record-button"
   >
     Discard video and reset
   </button>
@@ -198,6 +199,14 @@
     bottom: 0;
     margin: auto; 
     color: white
+  }
+
+  .offline-record-button {
+    color: cyan; 
+    background-color: hsl(0,0%,0%, 0.80); 
+    border: 2px solid cyan; 
+    height: 40px; display: flex; align-items: center; padding-left: 16px; padding-right: 16px;
+    font-size: 24px;
   }
 </style>
 

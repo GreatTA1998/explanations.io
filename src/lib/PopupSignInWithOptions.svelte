@@ -3,7 +3,6 @@
     Sign in
   </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px; display: flex; justify-content: center;">
-
     <div style="width: 200px; margin-top: 20px;">
       <div style="display: flex">
         <hr style="
@@ -17,7 +16,9 @@
           transition: inherit;
           border-color: rgba(0,0,0,.12);
         ">
-        <div style="margin-left: 8px; margin-right: 8px; color: rgba(0,0,0,.6) !important; font-weight: 500;">Sign in with</div>
+        <div style="margin-left: 8px; margin-right: 8px; color: rgba(0,0,0,.6) !important; font-weight: 500;">
+          Sign in with
+        </div>
         <hr style="
           display: block;
           flex: 1 1 0px;
@@ -36,12 +37,8 @@
       
       <LoginGoogle/>
 
-      <div style="margin-top: 4px;"></div>
+      <div style="margin-top: 8px;"></div>
 
-      <LoginTouchstone/>
-
-      <div style="margin-top: 4px;"></div>
-  
       <div 
         on:click={() => isShowingPhoneLogin = true}
         style="
@@ -62,6 +59,15 @@
         </span>
         Phone number
       </div>    
+
+      
+      <div style="margin-top: 8px;"></div>
+
+      <LoginTouchstone/>
+
+      
+      <div style="margin-top: 8px;"></div>
+  
   
       {#if isShowingPhoneLogin}
         <LoginPhone
@@ -87,6 +93,10 @@
   let isShowingPhoneLogin = false
   let allBoardDocs = []
   const dispatch = createEventDispatcher()
+
+  $: if ($user.uid) {
+    dispatch('popup-close')
+  }
   
   function dragover_handler (e) {
     e.preventDefault();

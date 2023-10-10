@@ -1,8 +1,13 @@
 <div use:portal={'main-content'}>
+  {#if isSignInPopupOpen}
+    <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
+  {/if} 
+
   <LeftDrawerToggleButton/>
 
-  <div style="padding: 16px;">
+  <div style="padding: 16px;" on:click={checkIfUserSignedIn}>
     <CodepenInput
+      readonly={!!!$user.uid}
       value={questionTitleInput}
       on:input={(e) => questionTitleInput = e.target.value}
     />
@@ -16,20 +21,25 @@
       on:input={(e) => questionDescriptionInput = e.detail}
       placeholder="Question description..."
       numberOfInitialRowsIfEmpty={4}
+      readonly={!!!$user.uid}
     />
 
-    <PsetPDFUploader
-      on:file-uploaded={(e) => { 
-        pdfOrImageAttachment = e.detail
-      }}
-    />
-    {#if pdfOrImageAttachment}
-      <div style="margin-top: 12px;">
-        <div style="font-size: 12px; color: gray;">
-          {pdfOrImageAttachment.name}
+    <div style="margin-bottom: 12px;"></div>
+
+    <div>
+      <PsetPDFUploader
+        on:file-uploaded={(e) => { 
+          pdfOrImageAttachment = e.detail
+        }}
+      />
+      {#if pdfOrImageAttachment}
+        <div style="margin-top: 12px;">
+          <div style="font-size: 12px; color: gray;">
+            {pdfOrImageAttachment.name}
+          </div>
         </div>
-      </div>
-    {/if}
+      {/if}
+    </div>
 
     <ClassServerAskQuestionAllMembers 
       {classID}
@@ -75,6 +85,7 @@
   import { sendTextMessage } from '../helpers/cloudFunctions.js';
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import CodepenInput from '$lib/CodepenInput.svelte'
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
 
   export let classID 
   // export let roomID
@@ -82,18 +93,23 @@
   // let { classID, roomID } = data
   // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 
+  console.log('class server ask question mounting')
+
+  let isSignInPopupOpen = false
   let questionTitleInput = ''
   let questionDescriptionInput = ''
   $: isAskingCommunityOrHelper = ($user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)) ? 'helper' : 'community'
   let pdfOrImageAttachment = null
 
+  function checkIfUserSignedIn () {
+    if (!$user.uid) {
+      isSignInPopupOpen = true
+    }
+  }
+
   async function submitQuestion () {
-    // if (!$user.phoneNumber) {
-    //   alert('Need to log in with phone number first')
-    //   return
-    // }
-    if (questionTitleInput === 'Type in your question title here...') {
-      alert('Have to type a question title first')
+    if (questionTitleInput === '') {
+      alert('Question title cannot be blank')
       return
     }
 

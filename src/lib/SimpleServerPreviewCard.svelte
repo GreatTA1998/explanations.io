@@ -24,7 +24,7 @@
       </RenderlessFetchStrokes>
     </div>
   {:else}
-    <div style="box-sizing: border-box; border: 4px solid #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 0.62}px;">
+    <div style="box-sizing: border-box; border: 2px solid #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 0.62}px;">
 
     </div>
   {/if}
@@ -35,7 +35,7 @@
     <div style="font-size: 24px; font-weight: 600;">
       {serverObj.name}
       {#if serverObj.description}
-        ({serverObj.description})
+        {serverObj.description}
       {/if}
     </div>
 

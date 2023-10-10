@@ -1,8 +1,48 @@
-<TopBannerWarnExperimental/>
+<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
+  <Row>
+    <Section>
+      <img 
+        on:click={() => goto('/')}
+        src="/app-logo-no-bg.png" width="55" height="49" style="margin-right: 24px; cursor: pointer;"
+      >
 
-<div style="margin-top: 12px;"></div>
+      <a href="https://eltonlin.substack.com/archive" target="_blank" 
+        style="margin-left: 8px; text-decoration-color: transparent;"
+      >
+        <Button
+          class="button-shaped-round"
+          style="font-size: 1.25em;"
+        >
+          <Label>blog</Label>
+        </Button>
+      </a>
 
-<PlaygroundOverview/>
+      <a href="https://github.com/greatTA1998/explain" target="_blank" 
+        style="margin-left: 20px; text-decoration-color: transparent;"
+      >
+        <Button
+          class="button-shaped-round"
+          style="font-size: 1.25em"
+        >
+          <Label>github</Label>
+        </Button>
+      </a>
+    </Section>
+
+    <Section align="end" toolbar>
+      <ReusableSignInButton/>
+    </Section>
+  </Row>
+</TopAppBar>
+
+<AutoAdjust {topAppBar}>
+  <div style="margin-top: 12px;"></div>
+
+  <PlaygroundOverview/>
+
+</AutoAdjust>
+
+<!-- <TopBannerWarnExperimental/> -->
 
 <!-- <TopBannerWarnExperimental/>
 
@@ -49,6 +89,7 @@
 {/if} -->
 
 <script>
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte';
   import ExperimentalTable from '$lib/ExperimentalTable.svelte'
   import { goto } from '$app/navigation';
@@ -63,6 +104,10 @@
   import Checkbox from '@smui/checkbox'
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import PlaygroundOverview from '$lib/PlaygroundOverview.svelte'
+  import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
+  import Button, { Label } from '@smui/button'
+
+  let topAppBar
   
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 

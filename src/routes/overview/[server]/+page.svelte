@@ -42,9 +42,9 @@
           <div>
             <div style="font-size: 54px; font-weight: 600;" class="figma-inter-font">
               {serverObj.name}
-              {#if serverObj.description}
+              <!-- {#if serverObj.description}
                 {serverObj.description}
-              {/if}
+              {/if} -->
             </div>
 
             <div style="margin-top: 8px;"></div>

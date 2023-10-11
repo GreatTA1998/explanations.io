@@ -7,7 +7,7 @@
   on:click={() => goto(`/overview/${serverObj.id}`)}
 >
   {#if serverObj.featuredBlackboardID}
-    <div style="min-width: {thumbnailWidth}px; max-width: {thumbnailWidth}px; height: {thumbnailWidth * 0.62}px; overflow: hidden;">
+    <div style="min-width: {thumbnailWidth}px; max-width: {thumbnailWidth}px; height: {thumbnailWidth * 0.62}px; overflow: hidden; border-radius: 8px;">
       <RenderlessFetchStrokes 
         dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
         let:fetchStrokes={fetchStrokes}
@@ -29,7 +29,7 @@
     </div>
   {/if}
 
-  <div style="margin-left: 24px;"></div>
+  <div style="margin-left: 16px;"></div>
 
   <div class="server-card">
     <div style="font-size: 24px; font-weight: 600;">
@@ -92,7 +92,7 @@
     min-width: 300px;
     width: 100%;
     /* margin-bottom: 20px; */
-    padding-top: 12px;
+    padding-top: 8px;
     padding-left: 0px;
     padding-right: 12px;
     padding-bottom: 4px;

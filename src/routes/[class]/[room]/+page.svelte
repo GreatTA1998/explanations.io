@@ -333,7 +333,7 @@
                     {#if boardDoc.recordState === 'pre_record' || currentTime === 0}
                       {#if !!!$user.uid}
                         <span on:click={() => isSignInPopupOpen = true} class="my-record-button">
-                          record
+                          sign in & record
                         </span>
                       {:else}
                         <span 

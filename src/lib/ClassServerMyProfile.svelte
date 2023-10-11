@@ -1,4 +1,8 @@
 <div use:portal={'main-content'} style="padding: 16px;">
+  {#if !!!$user.uid}
+    Prompt to log in here
+  {/if}
+
   <RenderlessFetchServerMemberDoc 
     {classID}
     memberUID={profileUID}

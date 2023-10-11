@@ -16,8 +16,8 @@
       > 
         <Blackboard
           {strokesArray}
-          canvasWidth={500}
-          canvasHeight={500 * 3/4}
+          canvasWidth={460}
+          canvasHeight={460 * 3/4}
           hideToolbar={true}
           on:intersect={fetchStrokes}
         />
@@ -34,21 +34,21 @@
   <div class="server-card">
     <div style="font-size: 24px; font-weight: 600;">
       {serverObj.name}
-      {#if serverObj.description}
+      <!-- {#if serverObj.description}
         {serverObj.description}
-      {/if}
+      {/if} -->
     </div>
 
     <div style="margin-top: 8px;"></div>
 
     <div style="color: #7A7A7A; font-size: 16px;">
-      {serverObj.syllabusVersion || 'Not college specific'}
+      {serverObj.syllabusVersion || 'Cross-college compatible'}
     </div>
 
     <div style="margin-top: 12px;"></div>
 
     <div style="display: flex; align-items: center; font-size: 16px;">
-      <div>{serverObj.numOfCreators} teachers</div>
+      <div>{serverObj.numOfTeachers} teachers</div>
       <span class="material-icons" style="font-size: 4px; margin: 12px;">circle</span>
       <div>{serverObj.numOfVideos} videos</div>
     </div>
@@ -59,11 +59,11 @@
       <!-- subscribers, crowdfunded, unresolvedQuestions-->
       <!-- <div>{serverObj.totalSubscriptions} subscribers</div>
       <span class="material-icons" style="font-size: 4px; margin: 12px;">circle</span> -->
-      <div class:money-green={serverObj.crowdfundAmount > 0}>
-        {serverObj.crowdfundAmount} pre-paid students
+      <div class:money-green={serverObj.numOfPresubs > 0}>
+        {serverObj.numOfPresubs || 0} pre-subscribers
       </div>
       <span class="material-icons" style="font-size: 4px; margin: 12px;">circle</span>
-      <div>{serverObj.numOfUnresolvedQuestions} unresolved questions</div>
+      <div>{serverObj.numOfUnresolvedQuestions} questions</div>
     </div>
   </div>
 </div>
@@ -75,7 +75,7 @@
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { goto } from '$app/navigation'
 
-  let thumbnailWidth = 300
+  let thumbnailWidth = 260
 </script>
 
 
@@ -92,7 +92,7 @@
     min-width: 300px;
     width: 100%;
     margin-bottom: 20px;
-    padding-top: 16px;
+    padding-top: 12px;
     padding-left: 0px;
     padding-right: 12px;
     padding-bottom: 4px;
@@ -102,6 +102,7 @@
 
   .money-green {
     color: #3D8C4F;
+    font-weight: 500;
   }
 
   .overall-container:hover {

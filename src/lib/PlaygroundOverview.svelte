@@ -85,7 +85,7 @@
   <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
     <!-- Filters on top -->
     <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
-      <div style="font-size: 24px; margin-left: 12px; margin-right: 12px;">
+      <div style="font-size: 20px; margin-left: 12px; margin-right: 12px;">
         Sort by:
       </div>
 
@@ -126,13 +126,13 @@
   import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
 
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
-  let filterTags = ['Has teachers & videos', 'Really need teachers', 'Alphabetical']
+  let filterTags = ['Alphabetical', 'Featured', 'Need teachers', 'Teachers ready']
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
   let allServers = null
   let subjectServers = null
 
-  let currentlySelectedTag = 'Has teachers & videos'
+  let currentlySelectedTag = 'Featured'
   let finalFilteredServers = null
 
   $: finalFilteredServers = filterSubjectServersByTag(currentlySelectedTag, subjectServers)
@@ -150,19 +150,19 @@
 
   async function runScript () {
     const allServers = await getFirestoreCollection('/classes')
-    // for (const server of allServers) {
-    //   if (!server.totalUpvotes) {
-    //     updateFirestoreDoc(`/classes/${server.id}`, {
-    //       totalUpvotes: 0
-    //     })
-    //     console.log('made it 0')
-    //   }       
-    //   if (!server.minutesViewed) {
-    //     updateFirestoreDoc(`/classes/${server.id}`, {
-    //       minutesViewed: 0
-    //     })
-    //   }
-    // }
+    for (const server of allServers) {
+      // if (!server.numOfTeachers) {
+      //   updateFirestoreDoc(`/classes/${server.id}`, {
+      //     numOfTeachers: 0
+      //   })
+      //   console.log('made it 0')
+      // }       
+      // if (!server.minutesViewed) {
+      //   updateFirestoreDoc(`/classes/${server.id}`, {
+      //     minutesViewed: 0
+      //   })
+      // }
+    }
   }
 
 
@@ -178,6 +178,38 @@
   function filterSubjectServersByTag (tagName, ghostParamForReactivity) {
     if (!subjectServers) return null
     switch (tagName) {
+      case 'Alphabetical':
+        const copy5 = [...subjectServers]
+        copy5.sort((s1, s2) => {
+          s1.name.localeCompare(s2.name)
+        })
+        return copy5
+
+      case 'Teachers ready': 
+        const copy6 = subjectServers.filter(server => server.numOfTeachers > 0 && (server.numOfVideos === 0 || server.numOfPresubs === 0))
+        console.log('copy6 =', copy6)
+        return copy6
+
+      case 'Featured': 
+        const copy4 = subjectServers.filter(server => { 
+          return (server.numOfUnresolvedQuestions + server.numOfVideos + server.numOfPresubs + server.numOfTeachers) && server.numOfVideos
+        })
+        copy4.sort((s1, s2) => {
+          if (s1.isFeatured !== s2.isFeatured) {
+            return (s2.isFeatured || 0) - (s1.isFeatured || 0)
+          }
+          else if (s1.numOfVideos !== s2.numOfVideos) {
+            return s2.numOfVideos - s1.numOfVideos
+          }
+          else if (s1.numOfPresubs !== s2.numOfPresubs) {
+            return s2.numOfPresubs - s1.numOfPresubs
+          }
+          else {
+            return 0
+          }
+        })
+        return copy4
+
       case 'No filter': 
         const copy = [...subjectServers]
         copy.sort((s1, s2) => {
@@ -206,12 +238,23 @@
         return filteredServers
       case 'Has activity': 
         return subjectServers.filter(server => server.numOfUnresolvedQuestions + server.numOfVideos)
-    case 'Really need teacrehers':
-        const output = subjectServers.filter(server => server.crowdfundAmount > 0)
+    case 'Need teachers':
+        const output = subjectServers.filter(server => server.numOfPresubs + server.numOfUnresolvedQuestions > 0)
+        // const output = subjectServers.filter(server => server.crowdfundAmount > 0)
         output.sort((s1, s2) => {
-          if (s1.numOfUnresolvedQuestions !== s2.numOfUnresolvedQuestions) {
+          if (s1.numOfPresubs !== s2.numOfPresubs) {
+            return s2.numOfPresubs - s1.numOfPresubs
+          }
+          else if (s1.numOfTeachers !== s2.numOfTeachers) {
+            // if they already have a teacher, it's less of a need
+            return s1.numOfTeachers- s2.numOfTeachers
+          }
+          else if (s1.numOfUnresolvedQuestions !== s2.numOfUnresolvedQuestions) {
             return s2.numOfUnresolvedQuestions - s1.numOfUnresolvedQuestions
           } 
+          else {
+            return 0
+          }
           // else {
           //   return s2.minutesViewed - s1.minutesViewed
           // }
@@ -303,7 +346,7 @@
     /* border: 2px solid orange; */
     border: 1px solid grey;
     font-weight: 500;
-    font-size: 1.4em;
+    font-size: 16px;
   }
 
   /* hsl(0,0%,0%, 0.80) */

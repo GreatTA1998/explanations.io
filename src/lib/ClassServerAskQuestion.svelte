@@ -7,7 +7,6 @@
 
   <div style="padding: 16px;" on:click={checkIfUserSignedIn}>
     <CodepenInput
-      readonly={!!!$user.uid}
       value={questionTitleInput}
       on:input={(e) => questionTitleInput = e.target.value}
     />
@@ -21,7 +20,6 @@
       on:input={(e) => questionDescriptionInput = e.detail}
       placeholder="Question description..."
       numberOfInitialRowsIfEmpty={4}
-      readonly={!!!$user.uid}
     />
 
     <div style="margin-bottom: 12px;"></div>
@@ -47,21 +45,41 @@
 
     <!-- purple: '#5d0068' -->
     <!-- blackboard color: hsl(0,0%,0%, 0.80) -->
-    <Button 
-      on:click={submitQuestion} 
-      variant="raised"
-      style="
-        border-radius: 0px; 
+      <!-- {#if !!!$user.uid}
+        Step 1.
+        <Button style="   border-radius: 0px; 
         margin-top: 36px; 
-        width: 300px;
+        width: 460px;
         height: 60px;
         font-size: 1.5em;
         color: white;
-        background-color: #5d0068;
-      "
-    >
-      Submit question
-    </Button>
+        background-color: #5d0068;">
+          Sign in
+        </Button>
+      {/if}  -->
+
+      <div>
+        <Button 
+        on:click={submitQuestion} 
+        variant="raised"
+        disabled={true}
+        style="
+          border-radius: 0px; 
+          margin-top: 36px; 
+          width: 460px;
+          height: 60px;
+          font-size: 16px;
+          color: white;
+          background-color: #5d0068;
+        "
+      >
+        {#if !!!$user.uid}
+          Sign in & post my question to server (NEEDS FIXING)
+        {:else}
+          Post my question to server
+        {/if}
+      </Button>
+      </div>
   </div>
 </div>
 
@@ -102,9 +120,9 @@
   let pdfOrImageAttachment = null
 
   function checkIfUserSignedIn () {
-    if (!$user.uid) {
-      isSignInPopupOpen = true
-    }
+    // if (!$user.uid) {
+    //   isSignInPopupOpen = true
+    // }
   }
 
   async function submitQuestion () {

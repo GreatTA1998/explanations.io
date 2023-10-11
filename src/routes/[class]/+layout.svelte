@@ -76,11 +76,11 @@
             </span>
             <div style="margin-right: 5px;"></div>
 
-            <ReusableSignInButton outlined={false}/>
+            <!-- <ReusableSignInButton outlined={false}/> -->
 
-            <!-- <div style="font-size: 1.2rem; font-weight: 400;">
-              Sign in
-            </div> -->
+            <div style="font-size: 1.2rem; font-weight: 400;">
+              My profile
+            </div>
           </div>
       {/if}
 

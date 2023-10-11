@@ -91,7 +91,7 @@
     border-radius: 32px;
     min-width: 300px;
     width: 100%;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     padding-top: 12px;
     padding-left: 0px;
     padding-right: 12px;

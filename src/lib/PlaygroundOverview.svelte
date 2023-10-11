@@ -18,7 +18,7 @@
   >
 </div> -->
 
-<div style="margin-bottom: 80px;"></div>
+<div style="margin-bottom: 60px;"></div>
 
 <div style="display: flex; width: 100%;">
   <!-- LEFT FLEX CHILD -->
@@ -109,7 +109,7 @@
           <SimpleServerPreviewCard 
             {serverObj}
           />
-          <div style="margin-bottom: 24px;"></div>
+          <div style="margin-bottom: 12px;"></div>
         {/key}
       {/each}
     {/if}

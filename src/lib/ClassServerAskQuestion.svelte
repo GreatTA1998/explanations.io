@@ -39,9 +39,9 @@
       {/if}
     </div>
 
-    <!-- <ClassServerAskQuestionAllMembers 
+    <ClassServerAskQuestionAllMembers 
       {classID}
-    />   -->
+    />  
 
     <!-- purple: '#5d0068' -->
     <!-- blackboard color: hsl(0,0%,0%, 0.80) -->

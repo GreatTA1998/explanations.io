@@ -3,33 +3,48 @@
     <Section>
       <img 
         on:click={() => goto('/')}
-        src="/app-logo-no-bg.png" width="55" height="49" style="margin-right: 24px; cursor: pointer;"
+        src="/app-logo-no-bg.png" width="55" height="49" style="margin-right: 12px; cursor: pointer;"
       >
+					<div>
+						explanations.app
+					</div>
 
-      <a href="https://eltonlin.substack.com/archive" target="_blank" 
-        style="margin-left: 8px; text-decoration-color: transparent;"
-      >
-        <Button
-          class="button-shaped-round"
-          style="font-size: 1.25em;"
-        >
-          <Label>blog</Label>
-        </Button>
-      </a>
-
-      <a href="https://github.com/greatTA1998/explain" target="_blank" 
-        style="margin-left: 20px; text-decoration-color: transparent;"
-      >
-        <Button
-          class="button-shaped-round"
-          style="font-size: 1.25em"
-        >
-          <Label>github</Label>
-        </Button>
-      </a>
+  
     </Section>
 
     <Section align="end" toolbar>
+      <div style="margin-right: 48px;">
+        503 250 3868
+      </div>
+
+      <div style="margin-right: 24px;">
+        elton@explanations.app
+      </div>
+
+      <a href="https://eltonlin.substack.com/archive" target="_blank" 
+      style="margin-left: 8px; text-decoration-color: transparent;"
+    >
+      <Button
+        class="button-shaped-round"
+        style="font-size: 12px;"
+      >
+        <Label>blog</Label>
+      </Button>
+    </a>
+
+    <a href="https://github.com/greatTA1998/explain" target="_blank" 
+      style="margin-left: 20px; text-decoration-color: transparent;"
+    >
+      <Button
+        class="button-shaped-round"
+        style="font-size: 12px;"
+      >
+        <Label>github</Label>
+      </Button>
+    </a>
+
+    <div style="margin-right: 18px;"></div>
+
       <ReusableSignInButton/>
     </Section>
   </Row>

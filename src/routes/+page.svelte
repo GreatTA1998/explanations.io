@@ -1,16 +1,34 @@
-<!-- <div class="flexy">
+<div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
+					<img 
+						on:click={() => goto('/')}
+						src="/app-logo-no-bg.png" width="55" height="49" style="margin-left: 4px; margin-right: 12px;"
+					>
+					<div>
+						explanations.app
+					</div>
+		
 	
+				</Section>
+
+				<Section align="end" toolbar>
+					<div style="margin-right: 48px;">
+						503 250 3868
+					</div>
+
+					<div style="margin-right: 24px;">
+						elton@explanations.app
+					</div>
 
 					<a href="https://eltonlin.substack.com/archive" target="_blank" 
 						style="margin-left: 8px; text-decoration-color: transparent;"
 					>
 						<Button
 							class="button-shaped-round"
-							style="font-size: 1.25em;"
+							style="font-size: 12px;"
 						>
 							<Label>blog</Label>
 		
@@ -22,37 +40,60 @@
 					>
 						<Button
 							class="button-shaped-round"
-							style="font-size: 1.25em"
+							style="font-size: 12px"
 						>
 							<Label>github</Label>
 				
 						</Button>
 					</a>
-				</Section>
 
-				<Section align="end" toolbar>
-					<ReusableSignInButton/>
+					<div style="margin-right: 18px;"></div>
+
+
+					<ReusableSignInButton outlined={true}/>
 				</Section>
 			</Row>
 		</TopAppBar>
 	</div>
-</div> -->
+</div>
 
 <AutoAdjust {topAppBar}>
 	<!-- <TopBannerWarnExperimental/> -->
-	<TabBar tabs={tabs} let:tab bind:active style="color: orange;">
-		<Tab {tab} stacked minWidth indicatorSpanOnlyContent style="color: orange;">
-			<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
-			<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
-		</Tab>
-	</TabBar>
+	<!-- <div style="">
+		<TabBar tabs={tabs} let:tab bind:active style="color: orange; margin-top: 0%; margin-left: 0%;">
+			<Tab {tab} stacked minWidth indicatorSpanOnlyContent style="color: orange;">
+				<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
+				<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
+			</Tab>
+		</TabBar>
+	</div> -->
 	
-	<div class="webflow-container">
+	<div class="webflow-container" style="padding-top: 2%;">
+		<TabBar tabs={tabs} let:tab bind:active style="color: orange; margin-left: 0%;">
+			<Tab {tab} 
+				stacked minWidth indicatorSpanOnlyContent style="color: orange; border: 0px solid grey; border-radius: 0px; overflow: hidden;
+					background-color: {active.label === tab.label ? '#F1F1F1' : ''};
+					border-bottom: {active.label === tab.label ? 'orange 0px solid' : ''}
+
+				"
+			>
+				<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
+				<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
+			</Tab>
+		</TabBar>
+
 		{#if active.label === 'Learn'}
 			<div class="header-flex">
-				<p class="header-title" style="line-height: 1.2">
-					Ask question, get video.
-				</p>
+				<div>
+					<p class="header-title" style="line-height: 1.2">
+						Ask question, get video.
+					</p>
+					<div style="margin-top: 24px;"></div>
+					<div style="font-size: 24px; ">
+						Collectively hire a “Youtube Teacher” with other subscribers
+					</div>
+
+				</div>
 				<div class="header-subcopy-wrapper">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
 						style="	
@@ -64,7 +105,7 @@
 						"
 					>
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
-							Find your community
+							Find your classes
 						</Label>
 					</Button>
 				</div>
@@ -92,90 +133,43 @@
 		{/if}
 
 			{#if active.label === 'Learn'}
-				<div class="webflow-section">
-					<div class="webflow-intro-type">
-						explanations.app = Youtube for college classes 
-						<br>
-						<br>
-						Each community has a blackboard-based forum where you can ask questions freely.
-						<br>
-						<br>
-						If free help isn't good enough, you can pre-pay $1 into a crowdfund to request new teachers from all over the world
-						to join.
-						<br>
-						<br>
-						You then pick a teacher based on their explanations, and subscribe to them for $10/month (minus the amount you already pre-paid).
-						Everything is refundable within 30 days, for any reason.
-						<!-- An "explainer" is the middleground between a "tutor" and "youtuber".s
-						You can get explanations you need without having to schedule in-advance 
-						or pay high prices. -->
-						<div style="margin-top: 48px;">
-
-						</div>
-
-						<div style="display: flex; justify-content: space-around;">
-							<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
-							<img src="/roxbury-small-logo.jpg" width="300" height="165">
-							<img src="/small mit.png" width="300" height="135" style="margin-top: 10px;">
-						</div>
-
-						<br><br>
-
+			<div class="webflow-section">
+				<div class="webflow-intro-type">
+					<div style="font-weight: 500;">
+						explanations.app = Youtube + Kickstarter for college classes 
 					</div>
+
+					<div style="margin-bottom: 24px;"></div>
+				<ol style="font-weight: 400;">
+					<li>
+					Lots of people are great at explaining things, but don’t have the right audience
+					</li>
+
+					<li>
+					On this platform, you can pre-pay $1 to express demand for a class
+				</li>
+				<li>
+					“Teachers” from all over the world can sign up
+				</li>
+				<li>
+					You choose who to subscribe to for $10/month
+				</li>
+				<li>
+					Many communities here are taught by previous TAs and current students
+				</li>
+				</ol>
 				</div>
 
-				<div class="webflow-section">
-					<div style="text-align: center; font-size: 3rem;">Frequently Asked Questions</div>
-
-					<div style="margin-bottom: 100px;"></div>
-
-					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
-						<div style="font-size: 2rem;">What situations is this good for?</div>
-
-						<div style="font-size: 1.2rem;">
-							<div>
-								<b>Course 6:</b> Office Hours and HKN are high demand, resulting in longer wait-times
-							</div>
-							<div>
-								<b>Summer & winter ASEs:</b> Office Hours & Piazza aren't offered
-							</div>
-							<div>
-								<b>General classes:</b> as an efficient resource 
-								that complements Office Hours and Piazza
-							</div>
-						</div>
-					</div>
-
-					<div style="margin-bottom: 100px;"></div>
-										
-					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
-						<div style="font-size: 2rem;">
-							Why free + $10/month subscriptions?
-						</div>
-
-						<div style="min-width: 400px; width: 45vw; font-size: 1.2rem;">
-							Short answer - I think giving creators the option to help students for free or for money is good. Teachers tend to be economically under-rewarded.
-
-							<br><br>
-							I tried for 4 years to work within the school as explain.mit.edu - departments just aren't interested to spend more money
-							on a student resource when they already offer Office Hours, departmental tutoring, Math Learning Center, etc.
-							But I as a student I've been through the day-to-day trenches of navigating those resources...they're simply not good enough to overcome compounding inefficiencies of falling behind.
 							
-							<br>
-							<br>
-							Currently, $10/month subscriptions directly support the explainers who dedicate their time to sharing knowledge. 
-							In fact, this skin-in-the-game also brings benefits - people feel valued for helping others on this platform. The money isn't much, it's more the willingness to pay that says a lot. 
-						</div>
-					</div>
-				</div>
+			<div style="display: flex; justify-content: space-around;">
+				<img src="/small mit.png" width="260" height="120" style="margin-top: 14px;">
+				<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
+				<img src="/roxbury-small-logo.jpg" width="300" height="165">
+			</div>
+			</div>
 
-				<div style="text-align: center">
-					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Ask your first question
-						</Label>
-					</Button>
-				</div>
+
+
 
 			{/if}
 
@@ -528,6 +522,7 @@
 .image-gallery-container {
 	margin-top: 10%; 
 	margin-bottom: 24%;
+	// margin-left: 2%;
 }
 
 .webflow-section {
@@ -590,7 +585,7 @@
 
 .webflow-intro-type {
 	font-family: sans-serif; 
-	font-size: 3.5rem; // used to be 5 rem
+	font-size: 2.8rem; // used to be 5 rem
  	line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
 	letter-spacing: -.02em;
@@ -614,17 +609,18 @@
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
-	margin-top: 3%;
+	margin-top: 2%;
 	margin-bottom: 40px;
 	-webkit-box-pack: justify;
 	-ms-flex-pack: justify;
 	/* -webkit-justify-content: space-between;
-	justify-content: space-between; */
+	// justify-content: space-between; */
+	justify-content: space-between;
 
 	flex-wrap: wrap;
 
 	// additional properties: 
-	margin-top: 60px;
+	// margin-top: 60px;
 }
 
 @media screen and (max-width: 767px) {
@@ -670,6 +666,7 @@
 	max-width: 310px; 
 
 	// additional attributes
+	margin-right: 24px;
 	display: flex; 
 	flex-direction: column;
 	// justify-content: flex-end; 
@@ -773,6 +770,10 @@ li {
 		.webflow-container {
 			width: 85%;
 		}
+	}
+
+	li {
+		margin-bottom: 24px;
 	}
 </style>
 

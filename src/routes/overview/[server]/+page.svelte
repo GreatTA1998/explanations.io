@@ -29,7 +29,7 @@
           </RenderlessFetchStrokes>
         </div>
       {:else}
-        <div style="width: {backgroundWidth - 10}px; height: {454 - 8}px; border: 2px solid black; border-radius: 24px; box-sizing: border-box;">
+        <div style="width: {backgroundWidth - 10}px; height: {454 - 8}px; border: 2px dashed black; border-radius: 24px; box-sizing: border-box;">
         
         </div>
       {/if}
@@ -100,7 +100,7 @@
                   </div>
 
                   <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
-                    teachers
+                    Teachers
                   </div>
               </div>
 
@@ -144,7 +144,7 @@
               </div>
 
               <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
-                pre-subscribers
+                Pre-subscribers
               </div>
             </div>
 

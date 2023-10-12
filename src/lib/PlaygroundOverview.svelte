@@ -126,7 +126,7 @@
   import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
 
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
-  let filterTags = ['Alphabetical', 'Featured', 'Need teachers', 'Teachers ready']
+  let filterTags = ['Alphabetical', 'Featured', 'Has pre-subscribers', 'Teachers ready']
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
   let allServers = null
@@ -238,7 +238,7 @@
         return filteredServers
       case 'Has activity': 
         return subjectServers.filter(server => server.numOfUnresolvedQuestions + server.numOfVideos)
-    case 'Need teachers':
+    case 'Has pre-subscribers':
         const output = subjectServers.filter(server => server.numOfPresubs + server.numOfUnresolvedQuestions > 0)
         // const output = subjectServers.filter(server => server.crowdfundAmount > 0)
         output.sort((s1, s2) => {

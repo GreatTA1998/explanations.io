@@ -24,7 +24,7 @@
       </RenderlessFetchStrokes>
     </div>
   {:else}
-    <div style="box-sizing: border-box; border: 1px solid #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 0.62}px;">
+    <div style="box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 0.62}px; border-radius: 8px;">
 
     </div>
   {/if}

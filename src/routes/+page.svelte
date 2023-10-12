@@ -89,8 +89,9 @@
 						Ask question, get video.
 					</p>
 					<div style="margin-top: 24px;"></div>
-					<div style="font-size: 24px; ">
-						Collectively hire a “Youtube Teacher” with other subscribers
+					<div style="font-size: 24px; max-width: 900px;">
+						Crowdfund a “Youtube Teacher” for your hardest classes in college.<br>
+						Get clear explanations for all your questions — together with other subscribers.
 					</div>
 
 				</div>
@@ -105,7 +106,7 @@
 						"
 					>
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
-							Find your classes
+							Explore class servers
 						</Label>
 					</Button>
 				</div>
@@ -142,20 +143,20 @@
 					<div style="margin-bottom: 24px;"></div>
 				<ol style="font-weight: 400;">
 					<li>
-					Lots of people are great at explaining things, but don’t have the right audience
+					Lots of non-teachers are great at explaining things, but don’t have an audience
 					</li>
 
 					<li>
-					On this platform, you can pre-pay $1 to express demand for a class
-				</li>
+						Pre-pay $1 for classes you want new Explainers in
+					</li>
 				<li>
-					“Teachers” from all over the world can sign up
+					Explainers from all over the world can sign up
 				</li>
 				<li>
 					You choose who to subscribe to for $10/month
 				</li>
 				<li>
-					Many communities here are taught by previous TAs and current students
+					Explainers here are often previous TAs and current students
 				</li>
 				</ol>
 				</div>
@@ -163,8 +164,8 @@
 							
 			<div style="display: flex; justify-content: space-around;">
 				<img src="/small mit.png" width="260" height="120" style="margin-top: 14px;">
-				<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
 				<img src="/roxbury-small-logo.jpg" width="300" height="165">
+				<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
 			</div>
 			</div>
 
@@ -176,11 +177,17 @@
 			{#if active.label === 'Teach'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						This website provides infrastructure so you can easily record & manage blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>
+						This website provides infrastructure so you can easily share blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>,
+						without the typical headaches of creating video content.
 
 						<br><br>
-						The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
-						explain a small number of things during <b style="color: navy">flexible times</b> of your week.
+						
+						Just draw and talk on the blackboard - that's it. 
+						Let subscribers fall in love with the unique way you explain the subject.
+
+
+						<!-- The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
+						explain a small number of things during <b style="color: navy">flexible times</b> of your week. -->
 
 					</div>
 				</div>
@@ -201,10 +208,12 @@
 								Enjoy explaining things in your field, but don't have the right setup and social environment to get started.
 								The student questions here can help guide the initial content you create.
 							</div>
+							<br>
 							<div>
 								<b>Light hobby</b> Enjoy answering questions on Stackoverflow and Quora, just want a flexible, low-time commitment hobby to 
 								engage with what you know
 							</div>
+							<br>
 							<div>
 								<b>Teaching/tutoring as full-time job</b> $10/month subscriptions are much lower initially, but with scale, 
 								the earnings could potentially be like that of top earners on Substack, Twitch etc.
@@ -290,7 +299,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else if active.label === 'Teach'}
+		{:else if active.label === 'Teach' && false}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.

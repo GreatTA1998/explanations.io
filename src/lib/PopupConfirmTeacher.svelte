@@ -1,29 +1,65 @@
 <BasePopup on:popup-close>
-  <!-- <h2 slot="title" style="font-family: sans-serif; margin-left: 12px;">
-    Why subscribe?
-  </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 24px; padding-top: 12px;">    
-    <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px;">
-      Teach
+    <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px; font-size: 32px;">
+      Sign up to teach
     </h2>
 
     <div style="font-size: 16px;">
-      <div style="color: black; opacity: 0.8; font-weight: 600;">How it works:</div>
-      <div style="padding-left: 8px;">
-        <li>
-          Spend 5-10 minutes recording explanations about the class
-        </li>
-        <li>
-          Any student can subscribe to you - especially the pre-subscribers
-        </li>
-        <li>
-          If the pre-subscribers don't choose you, your video portfolio remains - like a youtube channel.
-          You can leave it or update it over time, and new students can still watch your videos and subscribe to you. 
-        </li>
-        <br>
-      </div>
+      "People subscribe not for a particular [video] necessarily, but because they 
+        fall in love with your particular perspective on explaining the subject matter"
+        <a href="https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting" target="_blank">read more</a>
     </div>
 
+    <div style="margin-top: 12px;">
+
+    </div>
+
+    <div style="display: flex">
+    </div>
+
+
+    <div style="margin-top: 24px"></div>
+
+    
+    <div style="font-weight: 600; font-size: 20px;">How to get started:</div>
+
+    <div style="font-size: 20px;">
+    <ol>
+      {#if !!!$user}
+        <div style="margin-bottom: 24px;"></div>
+
+        <li>
+          Sign in 
+        </li>
+        <ReusableSignInButton></ReusableSignInButton>
+      {/if}
+
+      <li>
+        Add bio & payment info
+      </li>
+
+      <li>
+        Spend 5 - 10 minutes recording your first explanation video
+      </li>
+
+      <div style="font-size: 16px;">
+        Either:
+        <ol>
+          <li>
+            Reply to an existing question in the server (there's n questions so far)
+          </li>
+          <li>
+            Explain anything you want
+          </li>
+       </ol>
+      </div>
+      <div style="margin-top: 24px;"></div>
+
+      <li>
+        Done. Your "youtube channel" now exists, and even if pre-subscribers choose someone else, new people can access your channel and subscribe to you anytime.
+      </li>
+    </ol>
+  </div>
     <br>
   </div>
 
@@ -33,7 +69,7 @@
       on:click={() => dispatch('confirm-clicked')}
       color="secondary"
     >
-      Become teacher
+      DONE
     </Button>
     <Button on:click={() => dispatch('popup-close')}>
       Cancel
@@ -48,6 +84,7 @@
   import { user } from '../store.js'
   import { updateFirestoreDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
   export let selectedTutorDoc
 
@@ -132,7 +169,8 @@
 
 <style>
   li {
-    margin-bottom: 4px;
+    margin-bottom: 12px;
     margin-top: 4px;
+    font-weight: 500;
   }
 </style>

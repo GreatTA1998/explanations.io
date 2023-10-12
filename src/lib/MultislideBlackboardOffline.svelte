@@ -75,7 +75,7 @@
           () => isRecording = true
         )}
         class="offline-record-button">
-        Try recording
+        Try recording offline
       </div>
     {:else}
       <button on:click={() => callFuncsInSequence(

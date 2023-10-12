@@ -4,58 +4,83 @@
   </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 24px; padding-top: 12px;">    
     <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px; font-size: 32px;">
-      Look for new teachers
+      Pre-subscribe to server
     </h2>
 
-    <div style="font-size: 20px;">
-      By pre-paying, you're saying "I would subscribe if the <b>right teacher</b> comes."
+
+    <div style="font-size: 24px; opacity: 0.9">
+      "I'd subscribe if the right teacher for me exists"
     </div>
+    <div style="margin-top: 36px;"></div>
 
     <div style="margin-bottom: 24px;"></div>
 
     <div style="font-size: 20px;">
-      <div style="font-weight: 600;">Why pre-subscribe?</div>
-      <div style="padding-left: 8px;">
+      <div style="font-weight: 600;">How to get started:</div>
+
+      <ol>
         <li>
-          <b>Signal demand to the entire community</b>:
-          By pre-paying even $1, it signals that you are serious
+          Send $1 - 10 to the founder (call 503 250 3868 or email elton@explanations.app to refund anytime)
         </li>
 
-        <li>
-          <b>Get notified when server is ready</b>:
-          You'll get important email updates e.g. if new teachers sign up
-        </li>
+        <div style="margin-top: 12px; font-size: 14px;">
+          Venmo: elton-lin-2 
+          <br>
+          CashApp: $eltonlin1998
+        </div>
+    
+        <div style="margin-top: 12px;">
+    
+        </div>
+
+        <div style="display: flex">
+          <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 1} on:click={() => prepayAmount = 1}>
+            $1
+          </div>
+
+          <div style="margin-right: 12px; "></div>
+          <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 5} on:click={() => prepayAmount = 5}>
+            $5
+          </div>
+          <div style="margin-right: 12px; "></div>
+          <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 10} on:click={() => prepayAmount = 10}>
+            $10
+          </div>
+        </div>
+
+        <div style="margin-top: 12px"></div>
+
+        <div style="display: flex; align-items: center;">
+          <input type="checkbox"> <div style="font-size: 14px">I sent the payment</div>
+        </div>
+
+        <div style="margin-bottom: 24px;"></div>
 
         <li>
-          <b>Zero risk:</b> If you change your mind anytime, just call 503 250 3868 or email elton@explanations.app,
-          refund anytime any reason. Seriously.
+          Write 1-3 sentences describing why you signed up 
         </li>
-        <br>
-      </div>
+
+        <TextAreaAutoResizing placeholder='This will be posted on the forum so teachers know how to be most helpful to you)' fontSizeIncludeUnits={'1rem'}/>
+
+        {#if !!!$user}
+          <div style="margin-bottom: 24px;"></div>
+
+          <li>
+            Sign in 
+          </li>
+          <ReusableSignInButton></ReusableSignInButton>
+        {/if}
+    
+        <div style="margin-bottom: 24px;"></div>
+        <li>
+          Done. You will be notified when new teachers sign up, and you can use your pre-paid amount for future subscriptions.
+        </li>
+      </ol>
+   
     </div>
 
     <br>
-    
-    <div style="color: purple;">
-      Venmo: elton-lin-2 
-      <br>
-      CashApp: $eltonlin1998
-    </div>
-
-    <div style="margin-top: 12px;">
-
-    </div>
-    <div style="display: flex">
-      <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 1} on:click={() => prepayAmount = 1}>
-        $1
-      </div>
-      <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 5} on:click={() => prepayAmount = 5}>
-        $5
-      </div>
-      <div class="prepay-amount-box" class:highlighted-box={prepayAmount === 10} on:click={() => prepayAmount = 10}>
-        $10
-      </div>
-    </div>
+  
 
     <!-- <div style="height: 20px; display: flex; align-items: center; margin-top: 20px;">
       <Checkbox bind:checked touch />
@@ -70,7 +95,7 @@
       on:click={() => dispatch('confirm-clicked')}
       color="secondary"
     >
-      I SENT THE PAYMENT
+      CONFIRM PRE-SUBSCRIPTION
     </Button>
     <Button on:click={() => dispatch('popup-close')}>
       Cancel
@@ -85,6 +110,8 @@
   import { user } from '../store.js'
   import { updateFirestoreDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
   export let selectedTutorDoc
 
@@ -173,6 +200,7 @@
   li {
     margin-bottom: 6px;
     margin-top: 6px;
+    font-weight: 500;
   }
 
   .prepay-amount-box {
@@ -181,11 +209,12 @@
     justify-content: center;
     width: 40px; 
     height: 40px;
-    border: 2px solid purple;
+    border: 1px solid #3D8C4F;
   }
 
   .highlighted-box {
-    background-color: purple;
+    background-color: #3D8C4F;
     color: white;
   }
+
 </style>

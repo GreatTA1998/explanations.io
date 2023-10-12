@@ -9,7 +9,7 @@
 
       <!-- Top half of grand card -->
       {#if serverObj.featuredBlackboardID}
-        <div style="min-width: {mobileWidth}px; max-width: {backgroundWidth}px; height: 50vh; overflow: hidden; border-radius: 24px;"
+        <div style="min-width: {mobileWidth}px; max-width: {backgroundWidth}px; height: 40vh; overflow: hidden; border-radius: 24px;"
           class="figma-inter-font"
         >
           <!-- change this to a reusable doodle video -->
@@ -29,7 +29,7 @@
           </RenderlessFetchStrokes>
         </div>
       {:else}
-        <div style="width: {backgroundWidth - 10}px; height: {454 - 8}px; border: 2px dashed black; border-radius: 24px; box-sizing: border-box;">
+        <div style="width: {backgroundWidth - 10}px; height: 40vh; border: 2px dashed black; border-radius: 24px; box-sizing: border-box;">
         
         </div>
       {/if}

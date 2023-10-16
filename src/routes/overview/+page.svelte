@@ -2,12 +2,14 @@
   <Row>
     <Section>
       <img 
-        on:click={() => goto('/')}
-        src="/app-logo-no-bg.png" width="55" height="49" style="margin-right: 12px; cursor: pointer;"
-      >
-      <div>
-        explanations.app
-      </div>  
+      on:click={() => goto('/')}
+      src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px; cursor: pointer;"
+      on:click={() => goto('/')}
+    >
+    <div style="font-weight: 400; font-size: 20px;">
+      explanations.app
+    </div>
+
     </Section>
 
     <Section align="end" toolbar>

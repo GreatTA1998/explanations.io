@@ -59,7 +59,6 @@
       />
     {/if}
 
-
     <input readonly={$user.uid !== memberDoc.uid} style="margin-left: 24px;" value={memberDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value)} placeholder="venmo">
   </div>
 

@@ -5,6 +5,7 @@
 <script>
   import { getFirestore, doc, setDoc, onSnapshot, collection, query, where } from 'firebase/firestore'
   import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
+  import { getMemberDocSchema } from '/src/helpers/schema.js'
   import { user } from '/src/store.js'
   import { tick, onMount, onDestroy } from 'svelte'
   
@@ -39,17 +40,9 @@
   async function createServerMemberDoc (userDoc) {
     const classDbPath = `classes/${classID}/`
     const memberDbPath = classDbPath + `members/${userDoc.uid}`
-    const initialNumericalDifference = 3
-    
-    const memberObj = {
-      uid: userDoc.uid, 
-      firstName: userDoc.name.split(' ')[0] , 
-      lastName: userDoc.name.split(' ')[1],
-      name: userDoc.name,
-      phoneNumber: userDoc.phoneNumber || '',
-      email: userDoc.email || '',
-      maxShopGalleryOrder: initialNumericalDifference 
-    }
+
+    const memberObj = getMemberDocSchema(userDoc)
+
     const db = getFirestore()
 
     await setDoc(

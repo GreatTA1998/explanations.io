@@ -190,7 +190,7 @@
   {#if isPresubscribePopupOpen}
     <PopupConfirmPresubscription
       classID={serverID}
-      on:confirm-clicked={() => {}}
+      on:confirm-clicked={(e) => handleConfirmPresubscription(e.detail.presubscribeAmount)}
       on:popup-close={() => isPresubscribePopupOpen = false}
     />
   {/if}
@@ -199,7 +199,7 @@
   {#if isTeacherPopupOpen}
     <PopupConfirmTeacher
       classID={serverID}
-      on:confirm-clicked={() => {}}
+      on:confirm-clicked={() => { isTeacherPopupOpen = false}}
       on:popup-close={() => isTeacherPopupOpen = false}
     />
   {/if}
@@ -216,6 +216,8 @@
   import PopupConfirmPresubscription from '$lib/PopupConfirmPresubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import PopupConfirmTeacher from '$lib/PopupConfirmTeacher.svelte'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { user } from '/src/store.js'
 
   export let data;
 
@@ -282,6 +284,14 @@
     fetchPresubscribers().then(docs => presubscriberDocs = docs)
     fetchTeachers().then(docs => teacherDocs = docs)
   })
+
+  async function handleConfirmPresubscription (presubscribeAmount) {
+    await updateFirestoreDoc(`classes/${serverID}/members/${$user.uid}`, {
+      isPresubscriber: true,
+      presubscribeAmount
+    })
+    isPresubscribePopupOpen = false
+  }
 
   async function animatePresubscribersCount (newVal) {
     for (let i = tweenedPresubsCount; i <= newVal; i++) {

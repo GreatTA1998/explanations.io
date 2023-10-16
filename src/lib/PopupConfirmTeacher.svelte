@@ -4,68 +4,76 @@
       Sign up to teach
     </h2>
 
-    <div style="font-size: 16px;">
+    <div style="font-size: 18px;">
       "People subscribe not for a particular [video] necessarily, but because they 
         fall in love with your particular perspective on explaining the subject matter"
         <a href="https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting" target="_blank">read more</a>
     </div>
 
-    <div style="margin-top: 12px;">
-
-    </div>
-
-    <div style="display: flex">
-    </div>
-
-
-    <div style="margin-top: 24px"></div>
-
-    
-    <div style="font-weight: 600; font-size: 20px;">How to get started:</div>
+    <div style="margin-top: 12px"></div>
 
     <div style="font-size: 20px;">
-    <ol>
-      {#if !!!$user}
-        <div style="margin-bottom: 24px;"></div>
-
-        <li>
-          Sign in 
-        </li>
-        <ReusableSignInButton></ReusableSignInButton>
-      {/if}
-
-      <li>
-        Add bio & payment info
-      </li>
-
-      <li>
-        Spend 5 - 10 minutes recording your first explanation video
-      </li>
-
-      <div style="font-size: 16px;">
-        Either:
+      <div style="margin-bottom: 48px;"></div>
         <ol>
           <li>
-            Reply to an existing question in the server (there's n questions so far)
+            Setup your account
           </li>
-          <li>
-            Explain anything you want
-          </li>
-       </ol>
-      </div>
-      <div style="margin-top: 24px;"></div>
 
-      <li>
-        Done. Your "youtube channel" now exists, and even if pre-subscribers choose someone else, new people can access your channel and subscribe to you anytime.
-      </li>
-    </ol>
-  </div>
+          {#if !!!$user.uid}
+            <ReusableSignInButton/>
+          {/if}
+
+          <div style="opacity: {!!!$user.uid && teacherDoc ? 0.1 : 1.0}">
+            {#if teacherDoc}
+              <TextAreaAutoResizing 
+                value={teacherDoc.bio}
+                fontSizeIncludeUnits="1rem"
+                on:input={(e) => debouncedUpdateBio(e)}
+                placeholder="Short intro of yourself"
+                readonly={!!!$user.uid}
+              />
+
+              <input value={teacherDoc.venmo || ''} on:input={(e) => debouncedUpdateTeacherVenmo(e.target.value)} placeholder="Venmo" readonly={!!!$user.uid}>
+              or 
+              <input value={teacherDoc.cashApp || ''} on:input={(e) => debouncedUpdateTeacherCashApp(e.target.value)} placeholder="CashApp" readonly={!!!$user.uid}>
+            {/if}
+          </div>
+
+        <div style="margin-top: 48px;"></div>
+
+        <li>
+          Spend 5 - 10 minutes recording your first explanation video
+        </li>
+
+        <div style="font-size: 16px;">
+          Either:
+          <ol>
+            <li style="font-weight: 400;">
+              Reply to an existing question in the server (there's n questions so far)
+            </li>
+            <li  style="font-weight: 400;">
+              Explain something you want to explain.
+            </li>
+        </ol>
+        </div>
+
+        <div style="margin-top: 48px;"></div>
+
+        <li>
+          Done. 
+        </li>
+
+        <div style="font-size: 16px;">
+          Your "youtube channel" now exists. Even if pre-subscribers choose someone else, new people can access your channel and subscribe to you anytime.
+        </div>
+      </ol>
+    </div>
     <br>
   </div>
 
   <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
     <Button 
-      disabled={!checked || !$user.phoneNumber}
+      disabled={!!!$user.uid}
       on:click={() => dispatch('confirm-clicked')}
       color="secondary"
     >
@@ -82,24 +90,94 @@
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '../store.js'
-  import { updateFirestoreDoc } from '../helpers/crud.js'
+  import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, setFirestoreDoc } from '../helpers/crud.js'
+  import { getMemberDocSchema } from '/src/helpers/schema.js'
+  import { debounce } from '/src/helpers/utility.js'
   import Button from '@smui/button'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
 
   export let selectedTutorDoc
+  export let classID
 
   const dispatch = createEventDispatcher()
 
+  let teacherDoc = null
   let inputFieldFirstName = ''
   let inputFieldLastName = ''
   let checked = false
+
+  $: if ($user.uid) {
+    handleTeacherDocLogic()
+  }
+
+  async function handleTeacherDocLogic () {
+    const membersPath = `classes/${classID}/members/`
+    const q = createFirestoreQuery({
+      collectionPath: membersPath,
+      criteriaTerms: ['isTeacher', '==', true]
+    })
+    const resultDocs = await getFirestoreQuery(q)
+    if (resultDocs.length === 0) {
+      await setFirestoreDoc(
+        membersPath + $user.uid, 
+        getMemberDocSchema({ userDoc: $user })
+      )
+    }
+
+    teacherDoc = resultDocs[0]
+    console.log('teacherDoc =', teacherDoc)
+
+    // NOTE isTeacher will not be reflected in real-time the first time on ou object,
+    // but the snapshot on the server overview should take care of it
+    updateFirestoreDoc(membersPath + $user.uid, {
+      isTeacher: true
+    })
+  }
+
+  const debouncedUpdateBio = debounce(
+    updateTeacherBio,
+    1000
+  ) 
+
+  async function updateTeacherBio ({ detail }) {
+    // const idNotUID = memberDoc.id
+    updateFirestoreDoc(`classes/${classID}/members/${teacherDoc.uid}`, {
+      bio: detail
+    })
+  }
+
+  // TO-DO: should be throttled
+  const debouncedUpdateTeacherVenmo = debounce(
+    updateTeacherVenmo, 
+    500
+  )
+
+  const debouncedUpdateTeacherCashApp= debounce(
+    updateTeacherCashApp, 
+    500
+  )
+
+  function updateTeacherVenmo (venmo) {
+    console.log("updateTeacherVenmo")
+    // const idNotUID = memberDoc.id
+    updateFirestoreDoc(`classes/${classID}/members/${teacherDoc.uid}`, {
+      venmo
+    })
+  }
+
+  function updateTeacherCashApp (cashApp) {
+    // const idNotUID = memberDoc.id
+    updateFirestoreDoc(`classes/${classID}/members/${teacherDoc.uid}`, {
+      cashApp
+    })
+  }
 
   function updateUserName () {
     updateFirestoreDoc(`users/${$user.uid}`, {
       name: inputFieldFirstName + ' ' + inputFieldLastName
     })
   }
-
 
   // BELOW CODE WAS PASTED FROM <ToCommunityOrHelperCards/>, does not work as it is
   async function handleConfirmTrial (tutor) {

@@ -7,26 +7,47 @@
       Pre-subscribe to server
     </h2>
 
-
-    <div style="font-size: 24px; opacity: 0.9">
-      "I'd subscribe if the right teacher for me exists"
+    <div style="font-size: 18px; opacity: 0.9">
+      "I'd subscribe if the right teacher for me joins the server"
     </div>
     <div style="margin-top: 36px;"></div>
 
     <div style="margin-bottom: 24px;"></div>
 
     <div style="font-size: 20px;">
-      <div style="font-weight: 600;">How to get started:</div>
-
       <ol>
+        {#if !!!$user.uid}
+          <li>
+            Setup your account
+          </li>
+
+        <!-- {#if !!!$user.uid} -->
+          <ReusableSignInButton/>
+        {/if}
+
+        <!-- {#if memberDoc}
+          <TextAreaAutoResizing 
+            value={memberDoc.bio} on:input={(e) => debouncedUpdateBio(e)}
+            placeholder='Tell potential teachers why you pre-subscribed - what kind of explanations are you hoping for?' 
+            fontSizeIncludeUnits={'1rem'}
+            readonly={!!!$user.uid}
+          />
+        {/if} -->
+
+        <div style="margin-bottom: 24px;"></div>
+
         <li>
-          Send $1 - 10 to the founder (call 503 250 3868 or email elton@explanations.app to refund anytime)
+          Post 1 - 3 questions inside the server
+        </li>
+    
+        <div style="margin-bottom: 24px;"></div>
+
+        <li>
+          Send 1 - 10 dollars to Elton (founder)
         </li>
 
-        <div style="margin-top: 12px; font-size: 14px;">
-          Venmo: elton-lin-2 
-          <br>
-          CashApp: $eltonlin1998
+        <div>
+         
         </div>
     
         <div style="margin-top: 12px;">
@@ -48,51 +69,47 @@
           </div>
         </div>
 
+        <div style="margin-top: 12px; font-size: 16px; display: flex;">
+          Venmo: elton-lin-2 
+          <!-- <br> -->
+          <div style="margin-left: 24px; font-size: 16px; margin-right: 24px;">or</div>
+          CashApp: $eltonlin1998
+        </div>
+
+        <div style="font-size: 16px; margin-top: 8px;">
+          (call 503 250 3868 or email elton@explanations.app to refund anytime)
+        </div>
+
         <div style="margin-top: 12px"></div>
 
         <div style="display: flex; align-items: center;">
-          <input type="checkbox"> <div style="font-size: 14px">I sent the payment</div>
+          <Checkbox bind:checked touch /> I sent ${prepayAmount}
+          <!-- <input type="checkbox"> <div style="font-size: 16px">I sent the payment</div> -->
         </div>
 
         <div style="margin-bottom: 24px;"></div>
 
         <li>
-          Write 1-3 sentences describing why you signed up 
+          Done. 
         </li>
-
-        <TextAreaAutoResizing placeholder='This will be posted on the forum so teachers know how to be most helpful to you)' fontSizeIncludeUnits={'1rem'}/>
-
-        {#if !!!$user}
-          <div style="margin-bottom: 24px;"></div>
-
-          <li>
-            Sign in 
-          </li>
-          <ReusableSignInButton></ReusableSignInButton>
-        {/if}
-    
-        <div style="margin-bottom: 24px;"></div>
-        <li>
-          Done. You will be notified when new teachers sign up, and you can use your pre-paid amount for future subscriptions.
-        </li>
+        <div style="font-size: 16px;">
+           I'll now prioritize recruiting teachers for this server. 
+          You will be notified when new teachers sign up, and you can use your pre-paid amount for future subscriptions.
+          </div>
       </ol>
    
     </div>
 
     <br>
-  
 
-    <!-- <div style="height: 20px; display: flex; align-items: center; margin-top: 20px;">
-      <Checkbox bind:checked touch />
-      I've venmo'ed $10
-      to 
-    </div> -->
   </div>
 
   <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
     <Button 
-      disabled={prepayAmount === 0}
-      on:click={() => dispatch('confirm-clicked')}
+      disabled={!checked}
+      on:click={() => dispatch('confirm-clicked', {
+        presubscribeAmount: prepayAmount
+      })}
       color="secondary"
     >
       CONFIRM PRE-SUBSCRIPTION
@@ -108,12 +125,12 @@
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '../store.js'
-  import { updateFirestoreDoc } from '../helpers/crud.js'
+  import { getFirestoreDoc, setFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
   import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
-  export let selectedTutorDoc
+  export let classID
 
   const dispatch = createEventDispatcher()
 
@@ -122,13 +139,33 @@
   let checked = false
 
   let prepayAmount = 1
+  let memberDoc = null
+
+  $: if ($user.uid) {
+    handleMemberDocLogic()
+  }
+
+  async function handleMemberDocLogic () {
+    let result = await getFirestoreDoc(`classes/${classID}/members/${$user.uid}`)
+    // TO-DO: test if memberDoc does not exist
+    console.log('memberDoc =', memberDoc)
+    if (!result) {
+      const memberDocSchema = getMemberDocSchema({ userDoc: $user })
+      setFirestoreDoc(
+        membersPath + $user.uid,
+        memberDocSchema
+      )
+      result = memberDocSchema
+    }
+    memberDoc = result
+    console.log('memberDoc =', memberDoc)
+  }
 
   function updateUserName () {
     updateFirestoreDoc(`users/${$user.uid}`, {
       name: inputFieldFirstName + ' ' + inputFieldLastName
     })
   }
-
 
   // BELOW CODE WAS PASTED FROM <ToCommunityOrHelperCards/>, does not work as it is
   async function handleConfirmTrial (tutor) {
@@ -207,8 +244,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px; 
-    height: 40px;
+    width: 33px; 
+    height: 33px;
+    font-size: 16px;
     border: 1px solid #3D8C4F;
   }
 

@@ -40,26 +40,30 @@
       placeholder="Short intro of yourself"
       readonly={$user.uid !== memberDoc.uid}
     />
+
+    <input readonly={$user.uid !== memberDoc.uid} value={memberDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value)} placeholder="venmo">
   </div>
 </div>
-  
+
+  <div style="margin-top: 24px;"></div>
+
   <div style="display: flex; align-items: center">
-    <div style="width: 300px">
-      <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
-        Subscribe for $10/month
-      </ReusableButton> 
-    </div>
+    {#if memberDoc.venmo}
+      <div style="width: 300px">
+        <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
+          Subscribe for $10/month
+        </ReusableButton> 
+      </div>
 
-    {#if isSubscribePopupOpen}
-      <PopupConfirmSubscription
-        selectedTutorDoc={memberDoc}
-        {classID}
-        on:confirm-clicked={() => handleConfirmSubscription(memberDoc)}
-        on:popup-close={() => isSubscribePopupOpen = false}
-      />
+      {#if isSubscribePopupOpen}
+        <PopupConfirmSubscription
+          selectedTutorDoc={memberDoc}
+          {classID}
+          on:confirm-clicked={() => handleConfirmSubscription(memberDoc)}
+          on:popup-close={() => isSubscribePopupOpen = false}
+        />
+      {/if}
     {/if}
-
-    <input readonly={$user.uid !== memberDoc.uid} style="margin-left: 24px;" value={memberDoc.venmo || ''} on:input={(e) => debouncedUpdateTutorVenmo(e.target.value)} placeholder="venmo">
   </div>
 
   <div style="margin-top: 12px;"></div>

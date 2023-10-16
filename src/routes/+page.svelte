@@ -143,20 +143,17 @@
 					<div style="margin-bottom: 24px;"></div>
 				<ol style="font-weight: 400;">
 					<li>
-					Lots of non-teachers are great at explaining things, but don’t have an audience
+					Some individuals are great at explaining things, but don’t have an audience
 					</li>
 
 					<li>
-						Pre-pay $1 for classes you want new Explainers in
+						Pre-pay $1 to request "Youtubers" for your class
 					</li>
 				<li>
-					Explainers from all over the world can sign up
+					Potential "Youtubers" — usually former TAs & students — create their channels
 				</li>
 				<li>
 					You choose who to subscribe to for $10/month
-				</li>
-				<li>
-					Explainers are often previous TAs, current students, professors, etc. 
 				</li>
 				</ol>
 				</div>
@@ -594,7 +591,7 @@
 
 .webflow-intro-type {
 	font-family: sans-serif; 
-	font-size: 2.8rem; // used to be 5 rem
+	font-size: 2.4rem; // used to be 5 rem
  	line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
 	letter-spacing: -.02em;

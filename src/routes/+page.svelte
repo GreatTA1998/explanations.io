@@ -147,7 +147,7 @@
 					</li>
 
 					<li>
-						Pre-pay $1 to request "Youtubers" for your class
+						Post a question & pre-pay $1 to request "Youtubers" for your class
 					</li>
 				<li>
 					Potential "Youtubers" — usually former TAs & students — create their channels

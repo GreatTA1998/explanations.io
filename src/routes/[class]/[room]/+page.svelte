@@ -183,26 +183,29 @@
                         helperDoc={memberDoc}
                         {classID}
                       />
-                    {/if}
 
-                    <div style="width: 250px; margin-left: 30px;">
-                      <ReusableButton on:click={() => isSubscribePopupOpen = true} 
-                        fontSize="0.8rem"
-                        color="secondary" 
-                        style="color: white;"
-                      >
-                        Subscribe for $10/month
-                      </ReusableButton> 
-                    </div>
-                
-                    {#if isSubscribePopupOpen}
-                      <PopupConfirmSubscription
-                        selectedTutorDoc={memberDoc}
-                        {classID}
-                        on:confirm-clicked={() => handleConfirmSubscription(memberDoc)}
-                        on:popup-close={() => isSubscribePopupOpen = false}
-                      />
-                    {/if}      
+                      {#if memberDoc.venmo || memberDoc.cashApp}
+                        <div style="width: 250px; margin-left: 30px;">
+                          <ReusableButton on:click={() => isSubscribePopupOpen = true} 
+                            fontSize="0.8rem"
+                            color="secondary" 
+                            style="color: white;"
+                          >
+                            Subscribe for $10/month
+                          </ReusableButton> 
+                  
+
+                          {#if isSubscribePopupOpen}
+                            <PopupConfirmSubscription
+                              selectedTutorDoc={memberDoc}
+                              {classID}
+                              on:confirm-clicked={() => handleConfirmSubscription(memberDoc)}
+                              on:popup-close={() => isSubscribePopupOpen = false}
+                            />
+                          {/if}      
+                        </div>
+                      {/if}
+                    {/if}
                   </RenderlessFetchServerMemberDoc>
 
                   <div style="margin-left: 24px;"></div>
@@ -486,7 +489,8 @@
   function createAndCopyShareLink (classID, blackboardID) {
     // videoID is defined as classID:blackboardID
     // const shareLink = window.location.origin + '/video/' + classID + ':' + blackboardID 
-    const shareLink = window.location.origin + '/embed/' + classID + '/' + blackboardID
+    const shareLink = window.location.href
+    // const shareLink = window.location.origin + '/embed/' + classID + '/' + blackboardID
     navigator.clipboard.writeText(shareLink)
     alert('Share link has been copied, you can now paste it anywhere.')
   }

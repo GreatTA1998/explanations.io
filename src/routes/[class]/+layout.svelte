@@ -48,41 +48,21 @@
         />
       {/if}
         
-      {#if $user.uid}
-        <div 
-          class:explain-item-selected={isBecomeHelperPopupOpen}
-          on:click={() => goto(`/${classID}/my-profile`)} 
-          class="action-item"
-          style="display: flex; align-items: center;"
-        >
-          <span class="material-icons" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
-            account_circle
-          </span>
-          <div style="margin-right: 4px;"></div>
+      <div 
+        class:explain-item-selected={isBecomeHelperPopupOpen}
+        on:click={() => goto(`/${classID}/my-profile`)} 
+        class="action-item"
+        style="display: flex; align-items: center;"
+      >
+        <span class="material-icons" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
+          account_circle
+        </span>
+        <div style="margin-right: 4px;"></div>
 
-          <div style="font-size: 1.2rem; font-weight: 400;">
-            My profile
-          </div>
+        <div style="font-size: 1.2rem; font-weight: 400;">
+          My profile
         </div>
-      {:else}
-        <div 
-            class:explain-item-selected={isBecomeHelperPopupOpen}
-            on:click={() => {}} 
-            class="action-item"
-            style="display: flex; align-items: center;"
-          >
-            <span class="material-icons" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
-              account_circle
-            </span>
-            <div style="margin-right: 5px;"></div>
-
-            <!-- <ReusableSignInButton outlined={false}/> -->
-
-            <div style="font-size: 1.2rem; font-weight: 400;">
-              My profile
-            </div>
-          </div>
-      {/if}
+      </div>
 
       <div style="margin-bottom: 48px;"></div>
 

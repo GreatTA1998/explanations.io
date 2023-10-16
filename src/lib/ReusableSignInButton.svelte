@@ -5,8 +5,13 @@
 {/if}
 
 {#if !$user.uid}
-  <Button on:click={() => isSignInPopupOpen = true} variant="{outlined ? 'outlined' : ''}">
-    Sign in
+  <Button on:click={() => isSignInPopupOpen = true}
+    variant="{outlined ? 'outlined' : ''}"
+    color={frameworkColor}
+  >
+    <slot>
+      Sign in
+    </slot>
   </Button>
   {:else}
   <Button on:click={logOut}>
@@ -23,6 +28,7 @@
   let isSignInPopupOpen = false
 
   export let outlined = true
+  export let frameworkColor
 
 	async function logOut () {
     if ($user.uid) {

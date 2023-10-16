@@ -70,7 +70,6 @@ export function createFirestoreQuery ({ collectionPath, criteriaTerms }) {
   return q
 }
 
-
 export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStrokesFromDb) {
   return new Promise(async resolve => {
     if (!confirm('Are you sure you want to delete this video?')) {

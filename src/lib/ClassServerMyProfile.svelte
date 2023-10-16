@@ -1,24 +1,24 @@
 <div use:portal={'main-content'} style="padding: 16px;">
   {#if !!!$user.uid}
-    Prompt to log in here
+    <ReusableSignInButton frameworkColor="secondary"/>
+  {:else}
+    <RenderlessFetchServerMemberDoc 
+      {classID}
+      memberUID={profileUID}
+      let:serverMemberDoc={serverMemberDoc}
+    >
+      {#if serverMemberDoc}
+        <ClassServerMyProfileContent
+          memberDoc={serverMemberDoc}
+          {classID}
+        >
+          <ClassServerMyProfilePicture
+            circleBorderColor={$user.beaverProfilePicColor}
+          />
+        </ClassServerMyProfileContent> 
+      {/if}
+    </RenderlessFetchServerMemberDoc>
   {/if}
-
-  <RenderlessFetchServerMemberDoc 
-    {classID}
-    memberUID={profileUID}
-    let:serverMemberDoc={serverMemberDoc}
-  >
-    {#if serverMemberDoc}
-      <ClassServerMyProfileContent
-        memberDoc={serverMemberDoc}
-        {classID}
-      >
-        <ClassServerMyProfilePicture
-          circleBorderColor={$user.beaverProfilePicColor}
-        />
-      </ClassServerMyProfileContent> 
-    {/if}
-  </RenderlessFetchServerMemberDoc>
 </div>
 
 
@@ -28,6 +28,7 @@
   import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
   import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
   import { user } from '/src/store.js'
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
   export let classID
   export let profileUID

@@ -13,7 +13,7 @@
   export let memberUID
 
   let unsubSnapshotListener = null 
-  let serverMemberDoc
+  let serverMemberDoc = null
 
   onMount(async () => {
     try {
@@ -23,9 +23,11 @@
       console.log('error =', error) // likely that getFirestoreDoc could not find the document
       if ($user.uid === memberUID) {
         createServerMemberDoc($user)
+        serverMemberDoc = getMemberDocSchema({ userDoc: $user })
       } else {
         const userDoc = await getFirestoreDoc(`users/${memberUID}`)
         createServerMemberDoc(userDoc)
+        serverMemberDoc = getMemberDocSchema({ userDoc })
       }
     }
   })

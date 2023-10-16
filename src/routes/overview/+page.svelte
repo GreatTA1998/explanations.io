@@ -5,11 +5,9 @@
         on:click={() => goto('/')}
         src="/app-logo-no-bg.png" width="55" height="49" style="margin-right: 12px; cursor: pointer;"
       >
-					<div>
-						explanations.app
-					</div>
-
-  
+      <div>
+        explanations.app
+      </div>  
     </Section>
 
     <Section align="end" toolbar>

@@ -18,7 +18,7 @@
     <TextAreaAutoResizing
       value={questionDescriptionInput} 
       on:input={(e) => questionDescriptionInput = e.detail}
-      placeholder="Question description..."
+      placeholder="Description..."
       numberOfInitialRowsIfEmpty={4}
     />
 
@@ -39,27 +39,32 @@
       {/if}
     </div>
 
-    <ClassServerAskQuestionAllMembers 
-      {classID}
-    />  
-
     <!-- purple: '#5d0068' -->
     <!-- blackboard color: hsl(0,0%,0%, 0.80) -->
-      <!-- {#if !!!$user.uid}
-        Step 1.
-        <Button style="   border-radius: 0px; 
-        margin-top: 36px; 
-        width: 460px;
-        height: 60px;
-        font-size: 1.5em;
-        color: white;
-        background-color: #5d0068;">
-          Sign in
-        </Button>
-      {/if}  -->
-
       <div>
-        <Button 
+        
+        <div style="margin-top: 24px;"></div>
+        {#if !!!$user.uid}
+          <ReusableSignInButton frameworkColor="secondary"/>
+        {/if}
+
+        <div style="margin-top: 24px;"></div>
+
+        <Button disabled={!!!$user.uid} on:click={submitQuestion} variant="outlined"
+          color="secondary"
+        >
+          Post my question to server
+        </Button>
+
+
+        <div style="margin-top: 60px;">
+
+        <ClassServerAskQuestionAllMembers 
+          {classID}
+        />  
+       </div>
+
+        <!-- <Button 
         on:click={submitQuestion} 
         variant="raised"
         disabled={true}
@@ -78,7 +83,7 @@
         {:else}
           Post my question to server
         {/if}
-      </Button>
+      </Button> -->
       </div>
   </div>
 </div>
@@ -104,14 +109,13 @@
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import CodepenInput from '$lib/CodepenInput.svelte'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
   export let classID 
   // export let roomID
   // export let data
   // let { classID, roomID } = data
   // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
-
-  console.log('class server ask question mounting')
 
   let isSignInPopupOpen = false
   let questionTitleInput = ''

@@ -1,5 +1,5 @@
 <div style="
-  background-color: grey;
+  background-color: rgb(87, 87, 87);
   color: white; 
   margin-bottom: 2px;
   width: 200px;

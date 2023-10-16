@@ -143,18 +143,20 @@
 					<div style="margin-bottom: 24px;"></div>
 				<ol style="font-weight: 400;">
 					<li>
-					Some individuals are great at explaining things, but don’t have an audience
+						Many people are great at explaining things, but don’t have an audience
 					</li>
 
 					<li>
-						Post a question & pre-pay $1 to request "Youtubers" for your class
+						Pre-pay $1 to encourage "Youtubers" to try helping out for your class
 					</li>
-				<li>
-					Potential "Youtubers" — usually former TAs & students — create their channels
-				</li>
-				<li>
-					You choose who to subscribe to for $10/month
-				</li>
+
+					<li>
+						Pick the <u>best teacher for you</u> (based on their videos) and subscribe for $10/month
+					</li>
+
+					<li>
+						Who teaches? Usually former TAs & students from all over the world.
+					</li>
 				</ol>
 				</div>
 

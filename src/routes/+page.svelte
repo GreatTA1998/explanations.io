@@ -147,11 +147,11 @@
 					</li>
 
 					<li>
-						Pre-pay $1 to encourage "Youtubers" to try helping out for your class
+						Pre-pay $1 to encourage "Youtubers" to tryout for your class
 					</li>
 
 					<li>
-						Pick the <u>best teacher for you</u> (based on their videos) and subscribe for $10/month
+						Pick the most helpful "Youtuber" for you (based on their videos) and subscribe for $10/month
 					</li>
 
 					<li>

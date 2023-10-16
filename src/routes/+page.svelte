@@ -156,15 +156,15 @@
 					You choose who to subscribe to for $10/month
 				</li>
 				<li>
-					Explainers here are often previous TAs and current students
+					Explainers are often previous TAs, current students, professors, etc. 
 				</li>
 				</ol>
 				</div>
 
 							
 			<div style="display: flex; justify-content: space-around;">
-				<img src="/small mit.png" width="260" height="120" style="margin-top: 14px;">
 				<img src="/roxbury-small-logo.jpg" width="300" height="165">
+				<img src="/small mit.png" width="260" height="120" style="margin-top: 14px;">
 				<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
 			</div>
 			</div>

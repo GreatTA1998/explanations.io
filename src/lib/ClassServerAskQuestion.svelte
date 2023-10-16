@@ -105,7 +105,7 @@
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
   import { getRandomID } from "../helpers/utility.js";
   import { createEventDispatcher } from 'svelte'
-  import { sendTextMessage } from '../helpers/cloudFunctions.js';
+  import { sendTextMessage, sendEmail } from '../helpers/cloudFunctions.js';
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import CodepenInput from '$lib/CodepenInput.svelte'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
@@ -138,6 +138,9 @@
     if (questionTitleInput.at(-1) !== '?') {
       questionTitleInput = questionTitleInput + '?'
     }
+
+    sendEmail()
+
     const roomUpdateObj = {
       name: questionTitleInput,
       // because we know who asked the question,

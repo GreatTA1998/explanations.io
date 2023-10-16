@@ -1,5 +1,21 @@
 const functions = require("firebase-functions");
 const firebase_tools = require("firebase-tools");
+var postmark = require("postmark");
+
+exports.sendEmail = functions.https.onCall((data, context) => {
+  var client = new postmark.ServerClient("25517a27-c9ee-49ed-a203-e3cfde01f497");
+
+  client.sendEmail({
+    "From": "elton@explanations.app",
+    "To": "elton@explanations.app",
+    "Subject": "Hello from Postmark",
+    "HtmlBody": "<strong>Hello</strong> dear Postmark user.",
+    "TextBody": "Hello from Postmark!",
+    "MessageStream": "outbound"
+  })
+})
+
+
 
 exports.sendTextMessage = functions.https.onCall((data, context) => {
   const client = require('twilio')(process.env.TWILIO_ACCOUNTSID, process.env.TWILIO_AUTHTOKEN)

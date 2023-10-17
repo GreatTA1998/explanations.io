@@ -85,9 +85,16 @@
   <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
     <!-- Filters on top -->
     <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
+      
+      <!-- <div class="filter-tag" style="display: flex;;">
+        <span class="material-icons" style="font-size: 20px;">tune</span>
+        Filters
+      </div> -->
+
       <div style="font-size: 20px; margin-left: 12px; margin-right: 12px;">
         Sort by:
       </div>
+
 
       {#each filterTags as filterTag}
         <div class="filter-tag"
@@ -132,7 +139,7 @@
   let allServers = null
   let subjectServers = null
 
-  let currentlySelectedTag = 'Featured'
+  let currentlySelectedTag = 'Alphabetical'
   let finalFilteredServers = null
 
   $: finalFilteredServers = filterSubjectServersByTag(currentlySelectedTag, subjectServers)

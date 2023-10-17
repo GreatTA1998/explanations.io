@@ -124,7 +124,7 @@
   import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
 
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
-  let filterTags = ['Featured', 'Teachers', 'Videos', 'Pre-subscribers', 'Questions']
+  let filterTags = ['Featured', 'Teachers', 'Pre-subscribers', 'Videos', 'Questions']
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
   let allServers = null

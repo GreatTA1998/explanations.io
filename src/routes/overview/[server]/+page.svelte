@@ -212,7 +212,7 @@
   import { onMount, tick } from 'svelte'
   import { getFirestoreDoc, getFirestoreQuery } from '/src/helpers/crud.js'
   import Button, { Label } from '@smui/button'
-  import { query, getFirestore, collection, where } from 'firebase/firestore'
+  import { query, getFirestore, collection, where, onSnapshot } from 'firebase/firestore'
   import PopupConfirmPresubscription from '$lib/PopupConfirmPresubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import PopupConfirmTeacher from '$lib/PopupConfirmTeacher.svelte'
@@ -224,13 +224,17 @@
   let tweenedTeacherCount = 0
   let tweenedPresubsCount = 0
   let isInitialLoad = true
+  let unsubTeachersListener = null
 
   $: if (teacherDocs) {
+    console.log('teacherDocs changed =', teacherDocs)
     animateNumber(teacherDocs.length)
+    // normalizeListHeights()
   }
 
   $: if (presubscriberDocs) {
     animatePresubscribersCount(presubscriberDocs.length)
+    // normalizeListHeights()
   }
 
   const mobileWidth = 400
@@ -267,10 +271,6 @@
     color: #5d0068;
   `
 
-  $: if (PresubscribersList && TeachersList && (PresubscribersListHeight || TeachersListHeight)) {
-    PresubscribersList.style.height = Math.max(PresubscribersListHeight, TeachersListHeight) + 'px'
-    TeachersList.style.height = Math.max(PresubscribersListHeight, TeachersListHeight) + 'px'
-  }
 
   // you need to fetch the server
   onMount(async () => {
@@ -282,8 +282,24 @@
     backgroundWidth = 0.8 * vw
 
     fetchPresubscribers().then(docs => presubscriberDocs = docs)
-    fetchTeachers().then(docs => teacherDocs = docs)
+    listenToTeacherDocs()
   })
+
+  async function normalizeListHeights () {
+    if (PresubscribersList && TeachersList && (PresubscribersListHeight || TeachersListHeight)) {
+      console.log('readjusting heights of the lists')
+      PresubscribersList.style.height = 'fit-content'
+      TeachersList.style.height = 'fit-content'
+      await tick()
+      // PresubscribersList.style.height = Math.max(PresubscribersListHeight, TeachersListHeight) + 'px'
+      // TeachersList.style.height = Math.max(PresubscribersListHeight, TeachersListHeight) + 'px'
+
+      // tick().then(() => {
+      //     PresubscribersList.style.height = Math.max(PresubscribersListHeight, TeachersListHeight) + 'px'
+      //     TeachersList.style.height = Math.max(PresubscribersListHeight, TeachersListHeight) + 'px'
+      // })
+    }
+  }
 
   async function handleConfirmPresubscription (presubscribeAmount) {
     await updateFirestoreDoc(`classes/${serverID}/members/${$user.uid}`, {
@@ -302,10 +318,11 @@
   }
 
   async function animateNumber (newVal) {
-    for (let i = tweenedTeacherCount; i <= newVal; i++) {
-      // if (i === 0) await delay(200)
+    let i = tweenedTeacherCount
+    while (tweenedTeacherCount !== newVal) {
+      if (tweenedTeacherCount < newVal) i += 1
+      if (tweenedTeacherCount > newVal) i -= 1
       tweenedTeacherCount = i
-      console.log('tweenedTeacherCount =', tweenedTeacherCount)
       await delay(50)
     }
   }
@@ -327,13 +344,18 @@
     })
   }
 
-  async function fetchTeachers () {
+  async function listenToTeacherDocs () {
     return new Promise(async (resolve) => {
-      const ref = collection(db, `classes/${serverID}/members`);
-
+      const ref = collection(db, `classes/${serverID}/members`)
       const q = query(ref, where("isTeacher", "==", true))
-      const result = await getFirestoreQuery(q)
-      resolve(result)
+      unsubTeachersListener = onSnapshot(q, (snap) => {
+        const temp = [] 
+        for (const doc of snap.docs) {
+          temp.push({ id: doc.id, ...doc.data() })
+        }
+        teacherDocs = temp
+        resolve()
+      })
     })
   }
 </script>

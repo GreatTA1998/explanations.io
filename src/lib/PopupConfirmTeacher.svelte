@@ -23,23 +23,35 @@
             <ReusableSignInButton/>
           {/if}
 
-          <div style="opacity: {!!!$user.uid && teacherDoc ? 0.1 : 1.0}">
-            {#if teacherDoc}
+          <div style="opacity: {!!!$user.uid && memberDoc ? 0.1 : 1.0};">
+            {#if memberDoc}
               <TextAreaAutoResizing 
-                value={teacherDoc.bio}
+                value={memberDoc.bio}
                 fontSizeIncludeUnits="1rem"
                 on:input={(e) => debouncedUpdateBio(e)}
                 placeholder="Short intro of yourself"
                 readonly={!!!$user.uid}
-              />
+              />  
 
-              <input value={teacherDoc.venmo || ''} on:input={(e) => debouncedUpdateTeacherVenmo(e.target.value)} placeholder="Venmo" readonly={!!!$user.uid}>
-              or 
-              <input value={teacherDoc.cashApp || ''} on:input={(e) => debouncedUpdateTeacherCashApp(e.target.value)} placeholder="CashApp" readonly={!!!$user.uid}>
+              <div style="display: flex; align-items: center">
+
+                <!-- bind:value={member} -->
+                <Textfield label="Venmo" value={memberDoc.venmo || ''} on:input={(e) => debouncedUpdateTeacherVenmo(e.target.value)} readonly={!!!$user.uid}>
+                  <!-- <HelperText slot="helper">Helper Text</HelperText> -->
+                </Textfield>
+          
+                <div style="margin: 24px;">
+                  or 
+                </div>
+
+                <Textfield label="CashApp" value={memberDoc.cashApp || ''} on:input={(e) => debouncedUpdateTeacherCashApp(e.target.value)} readonly={!!!$user.uid}>
+                  <!-- <HelperText slot="helper">Helper Text</HelperText> -->
+                </Textfield>
+              </div>
             {/if}
           </div>
 
-        <div style="margin-top: 48px;"></div>
+        <div style="margin-top: 24px;"></div>
 
         <li>
           Spend 5 - 10 minutes recording your first explanation video
@@ -72,14 +84,35 @@
   </div>
 
   <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
-    <Button 
-      disabled={!!!$user.uid}
-      on:click={() => dispatch('confirm-clicked')}
-      color="secondary"
-    >
-      DONE
-    </Button>
-    <Button on:click={() => dispatch('popup-close')}>
+    {#if memberDoc}
+      {#if !memberDoc.isTeacher}
+        <Button 
+          disabled={!!!$user.uid}
+          on:click={() => {
+            updateMemberAsTeacher();
+            dispatch('confirm-clicked');
+          }}
+          color="secondary"
+
+        >
+          ADD MYSELF TO TEACHER LIST
+        </Button>
+      {:else}
+        <Button 
+          disabled={!!!$user.uid}
+          on:click={() => {
+            updateMemberAsNotTeacher();
+            dispatch('confirm-clicked');
+          }}
+          color="secondary"
+        >
+          REMOVE MYSELF FROM TEACHER LIST
+        </Button>
+      {/if}
+    {/if}
+    <Button on:click={() => {
+      dispatch('popup-close')
+    }}>
       Cancel
     </Button>
   </div>
@@ -90,28 +123,44 @@
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '../store.js'
-  import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, setFirestoreDoc } from '../helpers/crud.js'
+  import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreDoc, setFirestoreDoc } from '../helpers/crud.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
   import { debounce } from '/src/helpers/utility.js'
   import Button from '@smui/button'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte' 
+  import Textfield from '@smui/textfield'
+  import HelperText from '@smui/textfield/helper-text';
 
-  export let selectedTutorDoc
   export let classID
 
   const dispatch = createEventDispatcher()
 
-  let teacherDoc = null
+  let memberDoc = null
   let inputFieldFirstName = ''
   let inputFieldLastName = ''
+  let valueA = ''
   let checked = false
 
+  const membersPath = `classes/${classID}/members/`
+
   $: if ($user.uid) {
-    handleTeacherDocLogic()
+    handleMemberDocLogic()
   }
 
-  async function handleTeacherDocLogic () {
+  function updateMemberAsTeacher () {
+    updateFirestoreDoc(membersPath + $user.uid, {
+      isTeacher: true
+    })
+  }
+
+  function updateMemberAsNotTeacher () {
+    updateFirestoreDoc(membersPath + $user.uid, {
+      isTeacher: false
+    })
+  }
+
+  async function handlememberDocLogic () {
     const membersPath = `classes/${classID}/members/`
     const q = createFirestoreQuery({
       collectionPath: membersPath,
@@ -125,14 +174,27 @@
       )
     }
 
-    teacherDoc = resultDocs[0]
-    console.log('teacherDoc =', teacherDoc)
+    memberDoc = resultDocs[0]
 
     // NOTE isTeacher will not be reflected in real-time the first time on ou object,
     // but the snapshot on the server overview should take care of it
     updateFirestoreDoc(membersPath + $user.uid, {
       isTeacher: true
     })
+  }
+
+  async function handleMemberDocLogic () {
+    let result = await getFirestoreDoc(`classes/${classID}/members/${$user.uid}`)
+    // TO-DO: test if memberDoc does not exist
+    if (!result) {
+      const memberDocSchema = getMemberDocSchema({ userDoc: $user })
+      setFirestoreDoc(
+        membersPath + $user.uid,
+        memberDocSchema
+      )
+      result = memberDocSchema
+    }
+    memberDoc = result
   }
 
   const debouncedUpdateBio = debounce(
@@ -142,7 +204,7 @@
 
   async function updateTeacherBio ({ detail }) {
     // const idNotUID = memberDoc.id
-    updateFirestoreDoc(`classes/${classID}/members/${teacherDoc.uid}`, {
+    updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
       bio: detail
     })
   }
@@ -161,14 +223,14 @@
   function updateTeacherVenmo (venmo) {
     console.log("updateTeacherVenmo")
     // const idNotUID = memberDoc.id
-    updateFirestoreDoc(`classes/${classID}/members/${teacherDoc.uid}`, {
+    updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
       venmo
     })
   }
 
   function updateTeacherCashApp (cashApp) {
     // const idNotUID = memberDoc.id
-    updateFirestoreDoc(`classes/${classID}/members/${teacherDoc.uid}`, {
+    updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
       cashApp
     })
   }

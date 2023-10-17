@@ -16,7 +16,6 @@ exports.sendEmail = functions.https.onCall((data, context) => {
 })
 
 
-
 exports.sendTextMessage = functions.https.onCall((data, context) => {
   const client = require('twilio')(process.env.TWILIO_ACCOUNTSID, process.env.TWILIO_AUTHTOKEN)
   const { content, toWho } = data;

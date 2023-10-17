@@ -3,6 +3,7 @@
 @use '@material/theme/color-palette';
 
 // Svelte Colors!
+// https://hslpicker.com/#c300ff
 @use '@material/theme/index' as theme with (
   $primary: hsl(0,0%,0%, 0.80), // #676778,
   $secondary: #5d0068,

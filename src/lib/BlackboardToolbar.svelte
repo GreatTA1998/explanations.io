@@ -170,7 +170,6 @@
 
     if ($user.pencilColors) pencilColors = $user.pencilColors
     else pencilColors = defaultPencilColors
-    console.log('pencilColors =', pencilColors)
   }
 
   // TO-DO: rename `roomToParicipants`, this implies it's a map of ID to ID

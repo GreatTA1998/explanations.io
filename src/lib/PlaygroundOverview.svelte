@@ -66,7 +66,7 @@
 
     <div style="margin-top: 48px;"></div>
 
-    <!-- <div class="subject-category"
+    <div class="subject-category"
       on:click={() => currentlySelectedSubject = 'Other Servers'}
       class:orange-highlight={currentlySelectedSubject === 'Other Servers'}
     >
@@ -74,7 +74,7 @@
       folder
     </span>
       Other Servers
-    </div> -->
+    </div>
   </div>
 
   <!-- RIGHT FLEX CHILD -->

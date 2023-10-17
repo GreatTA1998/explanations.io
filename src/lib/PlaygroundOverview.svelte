@@ -9,7 +9,7 @@
     type="text" 
     value=""
     style="
-      width: calc(70% - 200px); 
+      width: calc(70% - 220px); 
       height: 40px; 
       font-size: 1.8em; 
       border-radius: 8px; 

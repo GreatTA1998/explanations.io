@@ -77,7 +77,7 @@
         <!-- <div style="display: flex"> -->
 
         <div style="display: flex;" class:teacher-purple={serverObj.numOfTeachers > 0}>
-          <span class="material-icons" style="font-size: 20px;">brush</span>
+          <span class="material-icons" style="font-size: 17px;">brush</span>
           <div style="margin-right: 4px;"></div>
           <div>{serverObj.numOfTeachers} teachers</div>
         </div>
@@ -86,7 +86,7 @@
 
 
         <div style="display: flex;" class:video-orange={serverObj.numOfVideos > 0}>
-          <span class="material-icons" style="font-size: 20px;">smart_display</span>
+          <span class="material-icons" style="font-size: 19px;">smart_display</span>
           <div style="margin-right: 4px;"></div>
           <div>{serverObj.numOfVideos} videos</div>
         </div>
@@ -94,11 +94,10 @@
 
       <!-- </div> -->
 
-   
 <!-- 
       <div style="display: flex"> -->
         <div style="display: flex;" class:money-green={serverObj.crowdfundAmount > 0}>
-          <span class="material-icons" style="font-size: 20px;">payments</span>
+          <span class="material-icons" style="font-size: 19px;">credit_card</span>
           <div style="margin-right: 4px;"></div>
           <div>{serverObj.crowdfundAmount || 0} pre-subscribers</div>
         </div>
@@ -163,20 +162,20 @@
     font-weight: 500;
   }
 
-  .teacher-purple {
+  /* .teacher-purple {
     color: #5d0068;
     font-weight: 500;
-  }
+  } */
 
-  .video-orange {
+  /* .video-orange {
     color: #f78940;
     font-weight: 500;
-  }
+  } */
 
-  .question-red {
+  /* .question-red {
     color: red;
     font-weight: 500;
-  }
+  } */
 
   .overall-container:hover {
     background-color: rgba(106,116,128,.16);

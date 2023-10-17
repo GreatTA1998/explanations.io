@@ -1,5 +1,5 @@
 <div use:portal={'main-content'} style="padding: 16px;">
-  {#if !!!$user.uid}
+  {#if !profileUID}
     <ReusableSignInButton frameworkColor="secondary"/>
   {:else}
     <RenderlessFetchServerMemberDoc 

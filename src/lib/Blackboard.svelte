@@ -3,7 +3,7 @@
   <!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
       (to distinguish between unfetched board and empty board) 
   -->
-  {#if strokesArray}
+  {#if strokesArray && !hideToolbar}
     <BlackboardToolbar>
       <span on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
         undo
@@ -31,23 +31,27 @@
         
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>
-            {#if backgroundImageDownloadURL}
-              <Item on:click={resetBackgroundImage}>
-                Remove background
-              </Item>
-            {:else}
-              <Item on:click={clickHiddenInput}>
-                Set background
-              </Item>
+            {#if !isOfflineDemo}
+              {#if backgroundImageDownloadURL}
+                <Item on:click={resetBackgroundImage}>
+                  Remove background
+                </Item>
+              {:else}
+                <Item on:click={clickHiddenInput}>
+                  Set background
+                </Item>
+              {/if}
             {/if}
 
             <Item on:SMUI:action={wipeBoard}>
               Wipe board
             </Item>    
 
-            <Item on:SMUI:action={deleteBoard}>
-              Delete board 
-            </Item>
+            {#if !isOfflineDemo}
+              <Item on:SMUI:action={deleteBoard}>
+                Delete board 
+              </Item>
+            {/if}
           </List> 
         </Menu>
       </div>
@@ -100,6 +104,12 @@
 
   // QUICKFIX to enable multislide blackboards to work
   export let currentTimeOverride
+
+  // QUICKFIX to let servers search page work
+  export let hideToolbar = false
+
+  // QUICKFIX
+  export let isOfflineDemo = false
 
   $: if (currentTimeOverride) {
     currentTime = currentTimeOverride

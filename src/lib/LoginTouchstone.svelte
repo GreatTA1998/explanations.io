@@ -20,7 +20,7 @@
   <span class="material-icons" style="margin-right: 6px;">
     school
   </span>
-  MIT Touchstone
+  Touchstone
 </div>
 
 <script>

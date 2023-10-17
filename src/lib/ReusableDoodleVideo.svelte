@@ -20,6 +20,8 @@
         creatorUID={boardDoc.creatorUID}
         {classID}
         on:six-seconds-elapsed
+        on:video-start
+        on:video-pause
       > 
         <div slot="twoTimesSpeedButtonSlot">
 

@@ -61,7 +61,7 @@
   let canvasHeight
 
   onMount(async () => {
-    const { height, width } = computeMaxAvailableDimensionsGeneral(0.8 * window.screen.availWidth, 0.8 * window.screen.availHeight)
+    const { height, width } = computeMaxAvailableDimensionsGeneral(0.6 * window.screen.availWidth, 0.6 * window.screen.availHeight)
     canvasWidth = width
     canvasHeight = height
   })

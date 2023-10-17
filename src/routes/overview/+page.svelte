@@ -1,4 +1,66 @@
-<TopBannerWarnExperimental/>
+<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
+  <Row>
+    <Section>
+      <img 
+      on:click={() => goto('/')}
+      src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px; cursor: pointer;"
+      on:click={() => goto('/')}
+    >
+    <div style="font-weight: 400; font-size: 20px;">
+      explanations.app
+    </div>
+
+    </Section>
+
+    <Section align="end" toolbar>
+      <div style="margin-right: 48px;">
+        503 250 3868
+      </div>
+
+      <div style="margin-right: 24px;">
+        elton@explanations.app
+      </div>
+
+      <a href="https://eltonlin.substack.com/archive" target="_blank" 
+      style="margin-left: 8px; text-decoration-color: transparent;"
+    >
+      <Button
+        class="button-shaped-round"
+        style="font-size: 12px;"
+      >
+        <Label>blog</Label>
+      </Button>
+    </a>
+
+    <a href="https://github.com/greatTA1998/explain" target="_blank" 
+      style="margin-left: 20px; text-decoration-color: transparent;"
+    >
+      <Button
+        class="button-shaped-round"
+        style="font-size: 12px;"
+      >
+        <Label>github</Label>
+      </Button>
+    </a>
+
+    <div style="margin-right: 18px;"></div>
+
+      <ReusableSignInButton/>
+    </Section>
+  </Row>
+</TopAppBar>
+
+<AutoAdjust {topAppBar}>
+  <div style="margin-top: 12px;"></div>
+
+  <PlaygroundOverview/>
+
+</AutoAdjust>
+
+<!-- <TopBannerWarnExperimental/> -->
+
+<!-- <TopBannerWarnExperimental/>
+
 <div style="margin-top: 2%; margin-left: 2%; ">
   <div style="display: flex; align-items: center">
     <img  
@@ -39,9 +101,10 @@
     initialItems={sortedYoutubeClasses}
     on:login-required={() => isSignInPopupOpen = true}
   />
-{/if}
+{/if} -->
 
 <script>
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte';
   import ExperimentalTable from '$lib/ExperimentalTable.svelte'
   import { goto } from '$app/navigation';
@@ -51,11 +114,15 @@
   import { getRandomID } from '../../helpers/utility.js'
   import ButtonPopupCreateNewClass from '$lib/ButtonPopupCreateNewClass.svelte'
   import { user } from '../../store.js'
-  import { signOut, getAuth } from 'firebase/auth'
   import { onDestroy, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
   import { mixpanelLibrary } from '/src/mixpanel.js'
+  import PlaygroundOverview from '$lib/PlaygroundOverview.svelte'
+  import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
+  import Button, { Label } from '@smui/button'
+
+  let topAppBar
   
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 
@@ -80,16 +147,6 @@
     mixpanelLibrary.track('Class servers overview visited')
   })
 
-  async function logOut () {
-    if ($user.uid) {
-      const auth = getAuth()
-      await signOut(auth)
-    }
-    // clear the cookie cache otherwise the user persists for some reason
-    // or it could be store.js listeners not having a proper lifecycle for logout
-    window.location.reload()
-    // goto('/')
-  }
 
   // snapshot listener of all the classes
   function fetchYoutubeClasses () {

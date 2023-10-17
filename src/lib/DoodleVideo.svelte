@@ -25,10 +25,10 @@
     <span on:click={startAudioPlayer} 
       class="material-icons overlay-center" 
       style="color: white;
-      width: {180 * scaleFactor}px; 
-      height: {180 * scaleFactor}px; 
+      width: {270 * scaleFactor}px; 
+      height: {270 * scaleFactor}px; 
       z-index: 5;
-      font-size: {10 * scaleFactor}rem;"
+      font-size: {15 * scaleFactor}rem;"
     >
       play_circle
     </span>
@@ -78,6 +78,8 @@
   >
   </canvas>
   <!-- rgb(46, 49, 49) -->
+
+  <!-- the non-100% opacity makes the pencil colors very visible -->
   <canvas 
     bind:this={bgCanvas} 
     style={`
@@ -223,9 +225,14 @@
       startAudioPlayer()
     } 
     else {
-      if (isPlaying) AudioPlayer.pause()
-      else AudioPlayer.play()  
+      if (isPlaying) pauseAudioPlayer()
+      else startAudioPlayer()
     }
+  }
+
+  function pauseAudioPlayer () {
+    AudioPlayer.pause()
+    dispatch('video-pause')
   }
   
   function initDoodleVideo () {
@@ -256,6 +263,7 @@
 
   function startAudioPlayer () {
     AudioPlayer.play()
+    dispatch('video-start')
   }
 
   function getStartTime ({ strokeIndex, pointIndex }) {

@@ -1,13 +1,13 @@
 {#if boardWidth && boardHeight}
-  <div style="margin-left: auto; margin-right: auto; width: {boardWidth}px; height: {boardHeight}px">
+  <div style="margin-left: auto; margin-right: auto; width: {width}px; height: {height + audioSliderHeight}px">
     <RenderlessListenToBoard 
       dbPath={blackboardPath} 
       let:boardDoc={boardDoc}
     >
       <ReusableDoodleVideo
         {boardDoc}
-        canvasWidth={width}
-        canvasHeight={width * 3/4}
+        canvasWidth={boardWidth}
+        canvasHeight={boardHeight}
         boardDbPath={blackboardPath}
         {classID}
       />
@@ -29,8 +29,10 @@
 
   const websiteWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   const websiteHeight = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
-  const audioSliderHeight = 88
+  const audioSliderHeight = 33
   const { width, height } = computeMaxAvailableDimensionsGeneral(websiteWidth, websiteHeight - audioSliderHeight)
-  boardWidth = width
-  boardHeight = height
+  boardWidth = 0.9 * width
+  boardHeight = 0.9 * height
+
+  // slightly smaller
 </script>

@@ -5,6 +5,7 @@
 <script>
   import { getFirestore, doc, setDoc, onSnapshot, collection, query, where } from 'firebase/firestore'
   import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
+  import { getMemberDocSchema } from '/src/helpers/schema.js'
   import { user } from '/src/store.js'
   import { tick, onMount, onDestroy } from 'svelte'
   
@@ -12,7 +13,7 @@
   export let memberUID
 
   let unsubSnapshotListener = null 
-  let serverMemberDoc
+  let serverMemberDoc = null
 
   onMount(async () => {
     try {
@@ -22,9 +23,11 @@
       console.log('error =', error) // likely that getFirestoreDoc could not find the document
       if ($user.uid === memberUID) {
         createServerMemberDoc($user)
+        serverMemberDoc = getMemberDocSchema({ userDoc: $user })
       } else {
         const userDoc = await getFirestoreDoc(`users/${memberUID}`)
         createServerMemberDoc(userDoc)
+        serverMemberDoc = getMemberDocSchema({ userDoc })
       }
     }
   })
@@ -39,17 +42,9 @@
   async function createServerMemberDoc (userDoc) {
     const classDbPath = `classes/${classID}/`
     const memberDbPath = classDbPath + `members/${userDoc.uid}`
-    const initialNumericalDifference = 3
-    
-    const memberObj = {
-      uid: userDoc.uid, 
-      firstName: userDoc.name.split(' ')[0] , 
-      lastName: userDoc.name.split(' ')[1],
-      name: userDoc.name,
-      phoneNumber: userDoc.phoneNumber || '',
-      email: userDoc.email || '',
-      maxShopGalleryOrder: initialNumericalDifference 
-    }
+
+    const memberObj = getMemberDocSchema(userDoc)
+
     const db = getFirestore()
 
     await setDoc(

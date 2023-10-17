@@ -1,51 +1,90 @@
 <div use:portal={'main-content'}>
+  {#if isSignInPopupOpen}
+    <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
+  {/if} 
+
   <LeftDrawerToggleButton/>
 
-  <div style="padding: 16px;">
-    <Textfield 
-      style="width: 100%;"
-      value={questionTitleInput} on:input={(e) => questionTitleInput = e.target.value}
-      class="room-title" 
-    >
-    </Textfield>
-      <!-- style={`width: ${$maxAvailableWidth}px;`} -->
+  <div style="padding: 16px;" on:click={checkIfUserSignedIn}>
+    <CodepenInput
+      value={questionTitleInput}
+      on:input={(e) => questionTitleInput = e.target.value}
+    />
+    <span class="underline"></span>
+    <!-- style={`width: ${$maxAvailableWidth}px;`} -->
 
     <div style="margin-bottom: 12px;"></div>
 
     <TextAreaAutoResizing
       value={questionDescriptionInput} 
       on:input={(e) => questionDescriptionInput = e.detail}
-      placeholder="Question description..."
+      placeholder="Description..."
       numberOfInitialRowsIfEmpty={4}
     />
 
-    <PsetPDFUploader
-      on:file-uploaded={(e) => { 
-        pdfOrImageAttachment = e.detail
-      }}
-    />
-    {#if pdfOrImageAttachment}
-      <div style="margin-top: 12px;">
-        <div style="font-size: 12px; color: gray;">
-          {pdfOrImageAttachment.name}
+    <div style="margin-bottom: 12px;"></div>
+
+    <div>
+      <PsetPDFUploader
+        on:file-uploaded={(e) => { 
+          pdfOrImageAttachment = e.detail
+        }}
+      />
+      {#if pdfOrImageAttachment}
+        <div style="margin-top: 12px;">
+          <div style="font-size: 12px; color: gray;">
+            {pdfOrImageAttachment.name}
+          </div>
         </div>
+      {/if}
+    </div>
+
+    <!-- purple: '#5d0068' -->
+    <!-- blackboard color: hsl(0,0%,0%, 0.80) -->
+      <div>
+        
+        <div style="margin-top: 24px;"></div>
+        {#if !!!$user.uid}
+          <ReusableSignInButton frameworkColor="secondary"/>
+        {/if}
+
+        <div style="margin-top: 24px;"></div>
+
+        <Button disabled={!!!$user.uid} on:click={submitQuestion} variant="outlined"
+          color="secondary"
+        >
+          Post my question to server
+        </Button>
+
+
+        <div style="margin-top: 60px;">
+
+        <ClassServerAskQuestionAllMembers 
+          {classID}
+        />  
+       </div>
+
+        <!-- <Button 
+        on:click={submitQuestion} 
+        variant="raised"
+        disabled={true}
+        style="
+          border-radius: 0px; 
+          margin-top: 36px; 
+          width: 460px;
+          height: 60px;
+          font-size: 16px;
+          color: white;
+          background-color: #5d0068;
+        "
+      >
+        {#if !!!$user.uid}
+          Sign in & post my question to server (NEEDS FIXING)
+        {:else}
+          Post my question to server
+        {/if}
+      </Button> -->
       </div>
-    {/if}
-
-    <ClassServerAskQuestionAllMembers 
-      {classID}
-    />
-
-    <Button 
-      on:click={submitQuestion} 
-      variant="raised"
-      style="border-radius: 0px; margin-top: 12px; width: 100%;; 
-      color: {isAskingCommunityOrHelper === 'community' ? 'white' : '#5d0068'};
-      background-color: {isAskingCommunityOrHelper === 'community' ? 'hsl(0,0%,0%, 0.80)' : 'white'};
-      "
-    >
-      Submit question
-    </Button>
   </div>
 </div>
 
@@ -66,8 +105,11 @@
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
   import { getRandomID } from "../helpers/utility.js";
   import { createEventDispatcher } from 'svelte'
-  import { sendTextMessage } from '../helpers/cloudFunctions.js';
+  import { sendTextMessage, sendEmail } from '../helpers/cloudFunctions.js';
   import { mixpanelLibrary } from '/src/mixpanel.js'
+  import CodepenInput from '$lib/CodepenInput.svelte'
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
   export let classID 
   // export let roomID
@@ -75,20 +117,30 @@
   // let { classID, roomID } = data
   // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 
-  let questionTitleInput = 'Question title...' 
+  let isSignInPopupOpen = false
+  let questionTitleInput = ''
   let questionDescriptionInput = ''
   $: isAskingCommunityOrHelper = ($user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)) ? 'helper' : 'community'
   let pdfOrImageAttachment = null
 
+  function checkIfUserSignedIn () {
+    // if (!$user.uid) {
+    //   isSignInPopupOpen = true
+    // }
+  }
+
   async function submitQuestion () {
-    if (questionTitleInput === 'Type in your question title here...') {
-      alert('Have to type a question title first')
+    if (questionTitleInput === '') {
+      alert('Question title cannot be blank')
       return
     }
 
     if (questionTitleInput.at(-1) !== '?') {
       questionTitleInput = questionTitleInput + '?'
     }
+
+    sendEmail()
+
     const roomUpdateObj = {
       name: questionTitleInput,
       // because we know who asked the question,

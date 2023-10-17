@@ -1,24 +1,38 @@
 <BasePopup on:popup-close>
-  <h2 slot="title" style="font-family: sans-serif;">
-    Become a subscriber
-  </h2>
-  <div slot="popup-content" style="font-family: sans-serif; padding: 12px;">    
+  <!-- <h2 slot="title" style="font-family: sans-serif; margin-left: 12px;">
+    Why subscribe?
+  </h2> -->
+  <div slot="popup-content" style="font-family: sans-serif; padding: 24px; padding-top: 12px;">    
+    <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px;">
+      Why subscribe?
+    </h2>
 
-    <div style="font-size: 1rem;">
-      <b>Benefits of subscribing:</b>
+
+    <div style="font-size: 16px;">
+      <div style="color: black; opacity: 0.8; font-weight: 600;">Benefits:</div>
       <div style="padding-left: 8px;">
         <li>
-          Directly communicate with {selectedTutorDoc.name.split(' ')[0]} in their subscribers-only group chat
+          Directly talk to {selectedTutorDoc.name.split(' ')[0]} and other active subscribers via <b>group chat</b>
         </li>
-        <li>Access to subscriber-only videos</li>
-        <li>Gain pioneer subscriber badge permanently</li>
-        <li>Fund creation of affordable education content for the internet</li>
+        <li>
+          <b>High priority</b> whenever you ask questions
+        </li>
+        <li>
+          <b>Permanent access</b> to all videos by {selectedTutorDoc.name.split(' ')[0]}
+        </li>
+        <li>
+          <b>Refund for any reason</b> (covered by the platform)
+        </li>
+        <br>
+        <li>
+          (For first 10 subscribers): your name is listed as "early supporter" for your teacher's most viewed videos
+        </li>
       </div>
     </div>
 
     <br>
     
-    <b>Refund policy: </b> full refund any time, any reason before end of month. 
+
 
     <div style="height: 20px; display: flex; align-items: center; margin-top: 20px;">
       <Checkbox bind:checked touch />
@@ -131,3 +145,10 @@
     goto(`/${classID}/${classID}`)
   }
 </script>
+
+<style>
+  li {
+    margin-bottom: 4px;
+    margin-top: 4px;
+  }
+</style>

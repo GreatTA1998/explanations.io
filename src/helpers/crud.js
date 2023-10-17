@@ -63,6 +63,13 @@ export function updateFirestoreDoc (path, updateObject) {
   })
 }
 
+export function createFirestoreQuery ({ collectionPath, criteriaTerms }) {
+  const db = getFirestore()
+  const ref = collection(db, collectionPath)
+  const q = query(ref, where(criteriaTerms[0], criteriaTerms[1], criteriaTerms[2]))
+  return q
+}
+
 export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStrokesFromDb) {
   return new Promise(async resolve => {
     if (!confirm('Are you sure you want to delete this video?')) {

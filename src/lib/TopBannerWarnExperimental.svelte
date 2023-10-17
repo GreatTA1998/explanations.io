@@ -1,15 +1,17 @@
 <div class="top-banner-to-warn-experimental">
-  This website is in beta, for <i>absolutely anything</i> I can help with try calling 503 250 3868 or emailing elton@explanations.app
+  For anything I could help you with e.g. setting up new servers, call 503 250 3868 or email elton@explanations.app
 </div>
 
 <style>
 .top-banner-to-warn-experimental {
-	background-color: green;
+	font-size: 2em;
+	background-color: white;
 	font-family: sans-serif;
 	padding-left: 16px;
 	padding-right: 10px;
-	padding-top: 4px;
+	padding-top: 12px;
 	padding-bottom: 4px;
-	color: white;
+	color: hsl(0,0%,0%, 0.80);
+	height: 48px;
 }
 </style>

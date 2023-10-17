@@ -3,19 +3,35 @@
 		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
 			<Row>
 				<Section>
-					<!-- <Title style="font-size: 1.95rem; padding-left: 6px">
-						Explanations
-					</Title> -->
+					<img 
+						on:click={() => goto('/')}
+						src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px;"
+					>
+					<div style="font-weight: 400; font-size: 20px;">
+						explanations.app
+					</div>
+		
+	
+				</Section>
+
+				<Section align="end" toolbar>
+					<div style="margin-right: 48px;">
+						503 250 3868
+					</div>
+
+					<div style="margin-right: 24px;">
+						elton@explanations.app
+					</div>
 
 					<a href="https://eltonlin.substack.com/archive" target="_blank" 
 						style="margin-left: 8px; text-decoration-color: transparent;"
 					>
 						<Button
 							class="button-shaped-round"
-							style="font-size: 1.25em;"
+							style="font-size: 12px;"
 						>
 							<Label>blog</Label>
-							<!-- <Icon class="material-icons">auto_stories</Icon> -->
+		
 						</Button>
 					</a>
 
@@ -24,18 +40,17 @@
 					>
 						<Button
 							class="button-shaped-round"
-							style="font-size: 1.25em"
+							style="font-size: 12px"
 						>
 							<Label>github</Label>
-							<!-- <Icon class="material-icons">terminal</Icon> -->
+				
 						</Button>
 					</a>
-				</Section>
 
-				<Section align="end" toolbar>
-					<!-- <Button on:click={() => alert('You can now log-in in through the class server')} variant="outlined">
-						Log in
-					</Button> -->
+					<div style="margin-right: 18px;"></div>
+
+
+					<ReusableSignInButton outlined={true}/>
 				</Section>
 			</Row>
 		</TopAppBar>
@@ -44,19 +59,42 @@
 
 <AutoAdjust {topAppBar}>
 	<!-- <TopBannerWarnExperimental/> -->
-	<TabBar tabs={tabs} let:tab bind:active style="color: orange;">
-		<Tab {tab} stacked minWidth indicatorSpanOnlyContent style="color: orange;">
-			<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
-			<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
-		</Tab>
-	</TabBar>
+	<!-- <div style="">
+		<TabBar tabs={tabs} let:tab bind:active style="color: orange; margin-top: 0%; margin-left: 0%;">
+			<Tab {tab} stacked minWidth indicatorSpanOnlyContent style="color: orange;">
+				<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
+				<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
+			</Tab>
+		</TabBar>
+	</div> -->
 	
-	<div class="webflow-container">
-		{#if active.label === 'Viewers'}
+	<div class="webflow-container" style="padding-top: 2%;">
+		<TabBar tabs={tabs} let:tab bind:active style="color: orange; margin-left: 0%;">
+			<Tab {tab} 
+				stacked minWidth indicatorSpanOnlyContent style="color: orange; border: 0px solid grey; border-radius: 0px; overflow: hidden;
+					background-color: {active.label === tab.label ? '#F1F1F1' : ''};
+					border-bottom: {active.label === tab.label ? 'orange 0px solid' : ''}
+
+				"
+			>
+				<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
+				<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
+			</Tab>
+		</TabBar>
+
+		{#if active.label === 'Learn'}
 			<div class="header-flex">
-				<p class="header-title" style="line-height: 1.2">
-					Ask question, get video.
-				</p>
+				<div>
+					<p class="header-title" style="line-height: 1.2">
+						Ask question, get video.
+					</p>
+					<div style="margin-top: 24px;"></div>
+					<div style="font-size: 24px; max-width: 900px;">
+						Crowdfund a “Youtube Teacher” for your hardest classes in college.<br>
+						Get clear explanations for all your questions — together with other subscribers.
+					</div>
+
+				</div>
 				<div class="header-subcopy-wrapper">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
 						style="	
@@ -65,11 +103,10 @@
 							margin-top: 0.85vw; 
 							margin-bottom: 0.8vw; 
 							border-radius: 0px;
-							
 						"
 					>
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.3em; font-weight: 600">
-							Ask your first question
+						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
+							Explore class servers
 						</Label>
 					</Button>
 				</div>
@@ -83,12 +120,12 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title" style="font-size: 4em;">Help people with your explanations, for free and for money</p>	
+				<p class="header-title" style="font-size: 4em;">Teach what you love, supported by subscribers.</p>	
 				<div class="header-subcopy-wrapper">
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Create your first video
+							Explore communities
 						</Label>
 					</Button>
 				</div>
@@ -96,85 +133,60 @@
 			<OfflineMultislideRecordingDemo/>
 		{/if}
 
-			{#if active.label === 'Viewers'}
-				<div class="webflow-section">
-					<div class="webflow-intro-type">
-						explanations.app = Youtube designed to help college students in math, science & engineering.
-						<!-- <br><br> -->
-						<div style="display: flex; justify-content: space-around;">
-							<img src="/roxbury-small-logo.jpg" width="300" height="165">
-							<img src="/small mit.png" width="300" height="135" style="margin-top: 10px;">
-						</div>
-
-						Besides from free videos and public forums, you can subscribe to any creator for $10/month to join their group chat and access subscribers-only videos.
-						<br><br>
-						This is cheaper than hiring a tutor, and can be more efficient than resources like Office Hours.
+			{#if active.label === 'Learn'}
+			<div class="webflow-section">
+				<div class="webflow-intro-type">
+					<div style="font-weight: 500;">
+						explanations.app = Youtube + Kickstarter for college classes 
 					</div>
+
+					<div style="margin-bottom: 24px;"></div>
+				<ol style="font-weight: 400;">
+					<li>
+						Many people are great at explaining things, but don’t have an audience
+					</li>
+
+					<li>
+						Pre-pay $1 to encourage "Youtubers" to tryout for your class
+					</li>
+
+					<li>
+						Pick the most helpful "Youtuber" for you (based on their videos) and subscribe for $10/month
+					</li>
+
+					<li>
+						Who teaches? Usually former TAs & students from all over the world.
+					</li>
+				</ol>
 				</div>
 
-				<div class="webflow-section">
-					<div style="text-align: center; font-size: 3rem;">Frequently Asked Questions</div>
-
-					<div style="margin-bottom: 100px;"></div>
-
-					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
-						<div style="font-size: 2rem;">What situations is this good for?</div>
-
-						<div style="font-size: 1.2rem;">
-							<div>
-								<b>Course 6:</b> Office Hours and HKN are high demand, resulting in longer wait-times
-							</div>
-							<div>
-								<b>Summer & winter ASEs:</b> Office Hours & Piazza aren't offered
-							</div>
-							<div>
-								<b>General classes:</b> as an efficient resource 
-								that complements Office Hours and Piazza
-							</div>
-						</div>
-					</div>
-
-					<div style="margin-bottom: 100px;"></div>
-										
-					<div style="display: flex; align-items: start; flex-wrap: wrap; justify-content: space-between">
-						<div style="font-size: 2rem;">
-							Why free + $10/month subscriptions?
-						</div>
-
-						<div style="min-width: 400px; width: 45vw; font-size: 1.2rem;">
-							Short answer - I think giving creators the option to help students for free or for money is good. Teachers tend to be economically under-rewarded.
-
-							<br><br>
-							I tried for 4 years to work within the school as explain.mit.edu - departments just aren't interested to spend more money
-							on a student resource when they already offer Office Hours, departmental tutoring, Math Learning Center, etc.
-							But I as a student I've been through the day-to-day trenches of navigating those resources...they're simply not good enough to overcome compounding inefficiencies of falling behind.
 							
-							<br>
-							<br>
-							Currently, $10/month subscriptions directly support the explainers who dedicate their time to sharing knowledge. 
-							In fact, this skin-in-the-game also brings benefits - people feel valued for helping others on this platform. The money isn't much, it's more the willingness to pay that says a lot. 
-						</div>
-					</div>
-				</div>
+			<div style="display: flex; justify-content: space-around;">
+				<img src="/roxbury-small-logo.jpg" width="300" height="165">
+				<img src="/small mit.png" width="260" height="120" style="margin-top: 14px;">
+				<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
+			</div>
+			</div>
 
-				<div style="text-align: center">
-					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Ask your first question
-						</Label>
-					</Button>
-				</div>
+
+
 
 			{/if}
 
-			{#if active.label === 'Creators'}
+			{#if active.label === 'Teach'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						This website provides infrastructure so you can easily record & manage blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>
+						This website provides infrastructure so you can easily share blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>,
+						without the typical headaches of creating video content.
 
 						<br><br>
-						The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
-						explain a small number of things during <b style="color: navy">flexible times</b> of your week.
+						
+						Just draw and talk on the blackboard - that's it. 
+						Let subscribers fall in love with the unique way you explain the subject.
+
+
+						<!-- The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
+						explain a small number of things during <b style="color: navy">flexible times</b> of your week. -->
 
 					</div>
 				</div>
@@ -195,10 +207,12 @@
 								Enjoy explaining things in your field, but don't have the right setup and social environment to get started.
 								The student questions here can help guide the initial content you create.
 							</div>
+							<br>
 							<div>
 								<b>Light hobby</b> Enjoy answering questions on Stackoverflow and Quora, just want a flexible, low-time commitment hobby to 
 								engage with what you know
 							</div>
+							<br>
 							<div>
 								<b>Teaching/tutoring as full-time job</b> $10/month subscriptions are much lower initially, but with scale, 
 								the earnings could potentially be like that of top earners on Substack, Twitch etc.
@@ -284,7 +298,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else if active.label === 'Creators'}
+		{:else if active.label === 'Teach' && false}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.
@@ -355,22 +369,15 @@
 	import HowItWorksStep from '$lib/HowItWorksStep.svelte';
 	import Button, { Label } from '@smui/button';
 	import { goto } from '$app/navigation'
-	import { user, } from '../store.js'
+	import { user } from '../store.js'
 	import TabBar from '@smui/tab-bar';
 	import Tab, { Icon } from '@smui/tab';
 	import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
-	import Card, {
-    Content,
-    PrimaryAction,
-    Actions,
-    ActionButtons,
-    ActionIcons,
-  } from '@smui/card';
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
-	import Blackboard from '$lib/Blackboard.svelte'
 	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
 	import { mixpanelLibrary } from '/src/mixpanel.js'
+	import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
@@ -476,7 +483,7 @@
 	let w
 	let topAppBar
 
-	let tabs = [{ label: 'Viewers', icon: 'smart_display'}, { label: 'Creators', icon: 'draw'}]
+	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Teach', icon: 'draw'}]
 	let active = tabs[0]
 	
 	function resumeToMostRecentServer () {
@@ -523,6 +530,7 @@
 .image-gallery-container {
 	margin-top: 10%; 
 	margin-bottom: 24%;
+	// margin-left: 2%;
 }
 
 .webflow-section {
@@ -585,7 +593,7 @@
 
 .webflow-intro-type {
 	font-family: sans-serif; 
-	font-size: 4rem; // used to be 5 rem
+	font-size: 2.4rem; // used to be 5 rem
  	line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
 	letter-spacing: -.02em;
@@ -609,17 +617,18 @@
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
-	margin-top: 3%;
+	margin-top: 2%;
 	margin-bottom: 40px;
 	-webkit-box-pack: justify;
 	-ms-flex-pack: justify;
 	/* -webkit-justify-content: space-between;
-	justify-content: space-between; */
+	// justify-content: space-between; */
+	justify-content: space-between;
 
 	flex-wrap: wrap;
 
 	// additional properties: 
-	margin-top: 60px;
+	// margin-top: 60px;
 }
 
 @media screen and (max-width: 767px) {
@@ -665,6 +674,7 @@
 	max-width: 310px; 
 
 	// additional attributes
+	margin-right: 24px;
 	display: flex; 
 	flex-direction: column;
 	// justify-content: flex-end; 
@@ -768,6 +778,10 @@ li {
 		.webflow-container {
 			width: 85%;
 		}
+	}
+
+	li {
+		margin-bottom: 24px;
 	}
 </style>
 

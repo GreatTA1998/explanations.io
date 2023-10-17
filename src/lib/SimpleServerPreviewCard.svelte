@@ -4,7 +4,7 @@
 <!-- border: 1px solid hsl(0,0%,0%, 0.80);  -->
 <div 
   class="overall-container"
-  style="position: relative; display: flex; min-width: 800px; width: 40%; border-radius: 8px; padding: 12px; overflow: hidden;
+  style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: 8px; padding: 12px; overflow: hidden;
     
   " 
   on:click={() => goto(`/overview/${serverObj.id}`)}
@@ -46,60 +46,43 @@
         {/if} -->
         
       </div>
-
-      <div style="border-radius: 4px; background-color: grey; color: white; display: flex; align-items: center; justify-content: center; position: absolute; right: 8px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
-       <!-- {serverObj.syllabusVersion} -->
-       Cross-college 
-      </div>
-    </div>
-
-    <div style="margin-top: 8px;"></div>
-
-    <div style="color: #7A7A7A; font-size: 16px;">
-        {#if serverObj.name === 'Microeconomics'}
-          You don't need to memorize a bunch of rules like "MRTS = MRS; AVC > MC". 
-          All you need to understand is the maximization of f(x, y), which laughably takes 10 minutes.
-      {:else}
-        <!-- No description -->
-        This server has no description yet. Usually teachers who sign up
-        will provide clear visualization of the class concepts, and try to reframe 
-        a simpler way to think about the class especially when it's taught in an overcomplicated way.
-      {/if}
-      <!-- {serverObj.syllabusVersion || 'Cross-college compatible'} -->
-    </div>
-
-    <div style="margin-top: 36px;"></div>
-
-    <div style="display: flex; font-size: 16px;">
     </div>
 
     <div style="margin-top: 12px;"></div>
 
-    <!-- <hr style="position: absolute; top: auto; bottom: 20px;"> -->
+    <div style="color: hsl( 223 calc( 1 *6.7%) 20.6% /1); font-size: 16px;">
+        {#if serverObj.name === 'Microeconomics'}
+          You don't need to memorize a bunch of rules like "MRTS = MRS; AVC > MC". 
+          You just need to understand how to maximize f(x, y).
+      {:else}
+        <!-- No description -->
+        No server description yet. Teachers here often provide
+        a simpler way to understand the class.
+      {/if}
+      <!-- {serverObj.syllabusVersion || 'Cross-college compatible'} -->
+    </div>
 
-    <div style="position: absolute; top: auto; bottom: 32px; width: 500px; color: #2f3030;">
-<!--       
-      <hr> -->
-      <div style="margin-bottom: 12px;"></div>  
+    <div style="margin-top: 12px;"></div>
 
-      
+      <div style="font-size: 12px; border-radius: 4px; background-color: grey; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
+     
+       Cross-college 
+      </div>
 
-      <div style="display: flex; align-items: center; justify-content: space-evenly; font-size: 16px;">
+    <div style="margin-top: 36px;"></div>
+
+    <div style="position: absolute; top: auto; bottom: 20px; width: 460px; color: #2f3030;">
+      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; opacity: 1">
             
-        <div style="display: flex;" class:money-green={serverObj.crowdfundAmount > 0}>
-          <span class="material-icons" style="font-size: 20px;">payments</span>
-          <div style="margin-right: 4px;"></div>
-          <div>${serverObj.crowdfundAmount || 0} crowdfund</div>
-        </div>
-        <div style="margin-right: 8px;"></div>
-        
+        <!-- <div style="display: flex"> -->
+
         <div style="display: flex;" class:teacher-purple={serverObj.numOfTeachers > 0}>
           <span class="material-icons" style="font-size: 20px;">brush</span>
           <div style="margin-right: 4px;"></div>
           <div>{serverObj.numOfTeachers} teachers</div>
         </div>
 
-        <div style="margin-right: 8px;"></div>
+        <!-- <div style="margin-right: 24px;"></div> -->
 
 
         <div style="display: flex;" class:video-orange={serverObj.numOfVideos > 0}>
@@ -108,17 +91,31 @@
           <div>{serverObj.numOfVideos} videos</div>
         </div>
 
+
+      <!-- </div> -->
+
+   
+<!-- 
+      <div style="display: flex"> -->
+        <div style="display: flex;" class:money-green={serverObj.crowdfundAmount > 0}>
+          <span class="material-icons" style="font-size: 20px;">payments</span>
+          <div style="margin-right: 4px;"></div>
+          <div>{serverObj.crowdfundAmount || 0} pre-subscribers</div>
+        </div>
+<!--     
+        <div style="margin-right: 24px;"></div> -->
         
-        <div style="margin-right: 8px;"></div>
-
-
         <div style="display: flex;" class:question-red={serverObj.numOfUnresolvedQuestions > 0}>
           <span class="material-icons" style="font-size: 18px;">question_mark</span>
           <div style="margin-right: 2px;"></div>
           <div>{serverObj.numOfUnresolvedQuestions} questions</div>
+        </div>
+        
+      
+
+   
       </div>
-  
-      </div>
+      <!-- </div> -->
     <!-- END OF FOOTER METADATA FLEXBOX-->
     </div>
 
@@ -134,7 +131,7 @@
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { goto } from '$app/navigation'
 
-  let thumbnailWidth = 260
+  let thumbnailWidth = 270
   let thumbnailAspectRatio = 1 / 0.62
 </script>
 

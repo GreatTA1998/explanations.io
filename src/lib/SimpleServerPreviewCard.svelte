@@ -62,21 +62,28 @@
           You don't need to memorize a bunch of rules like "MRTS = MRS; AVC > MC". 
           You just need to understand how to maximize f(x, y).
       {:else}
-        <!-- No description -->
-        No server description yet. Teachers here often provide
-        a simpler way to understand the class.
+        Learn simpler, alternative 
+        ways to understand the class.
       {/if}
-      <!-- {serverObj.syllabusVersion || 'Cross-college compatible'} -->
     </div>
 
-    <div style="margin-top: 12px;"></div>
+       <div style="margin-top: 12px;"></div>
 
-      <div style="font-size: 12px; border-radius: 4px; background-color: grey; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
-     
-       Cross-college 
+    <div style="display: flex;">
+      <div style="margin-top: 12px;"></div>
+        {#if serverObj.syllabusVersion}
+          <div style="font-size: 12px; border-radius: 4px; background-color: grey; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
+            {serverObj.syllabusVersion}
+          </div>
+
+          <div style="margin-left: 12px;"></div>
+        {/if}
+
+       
+        <div style="font-size: 12px; border-radius: 4px; background-color: grey; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
+          Cross-college 
+        </div>
       </div>
-
-    <div style="margin-top: 36px;"></div>
 
     <div style="position: absolute; top: auto; bottom: 20px; width: 460px; color: #2f3030;">
       <div style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; opacity: 1">

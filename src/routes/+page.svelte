@@ -1,6 +1,6 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
-		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
+		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.75);">
 			<Row>
 				<Section>
 					<img 

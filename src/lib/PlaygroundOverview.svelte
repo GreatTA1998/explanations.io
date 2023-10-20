@@ -87,7 +87,7 @@
     <span class="material-icons">
       folder
     </span>
-      Other Servers
+      Non-college servers
     </div>
   </div>
 
@@ -124,6 +124,8 @@
           <div style="margin-bottom: 12px;"></div>
         {/key}
       {/each}
+
+      <PopupNewServer/>
     {/if}
   </div>
 </div>
@@ -136,7 +138,7 @@
   import { goto } from "$app/navigation"
   import { user } from '/src/store.js'
   import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
-
+  import PopupNewServer from '$lib/PopupNewServer.svelte'
 
   let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']

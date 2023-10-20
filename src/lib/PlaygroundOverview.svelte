@@ -10,11 +10,9 @@
   </span>
     <input 
       bind:this={SearchBar}
-      class="" 
       name="search" 
       maxlength="100" 
-      placeholder="" 
-      aria-label="Explore popular communities" 
+      placeholder="Find your class servers" 
       autocomplete="off" 
       type="text" 
       bind:value={searchVal}
@@ -73,9 +71,7 @@
           </span>
         {/if}
         {category}
-
       </div>
-      
     {/each}
 
     <div style="margin-top: 48px;"></div>
@@ -95,11 +91,9 @@
   <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
     <!-- Filters on top -->
     <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
-
       <div style="font-size: 16px; margin-left: 12px; margin-right: 12px;">
         Sort by:
       </div>
-
 
       {#each filterTags as filterTag}
         <div class="filter-tag"

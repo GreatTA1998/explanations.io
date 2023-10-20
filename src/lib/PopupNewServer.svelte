@@ -16,6 +16,10 @@
 
 {#if isPopupOpen}
   <BasePopup on:popup-close={() => isPopupOpen = false} style="min-width: 340px; width: 60%;">
+    <h2 slot="title" style="font-family: sans-serif; padding-left: 14px;">
+      Create new class server
+    </h2> 
+
     <div style="padding: 24px;" slot="popup-content">
 
       <div style="background-color: #f5f5f5; border-radius: 12px; width: 90%; height: fit-content; padding: 16px;">
@@ -36,9 +40,9 @@
           helperLine$style="width: 100%;"
           textarea
           bind:value
-          label="Class server description"
+          label="Server description"
         >
-          <HelperText slot="helper">Ideally, how exactly will this server help students</HelperText>
+          <HelperText slot="helper">What's the goal of this server, how will it help its members</HelperText>
         </Textfield>
 
         <input type="checkbox" value="true"> cross-college server
@@ -63,17 +67,6 @@
           </Label>
         </Button>
         </div>
-    </div>
-
-
-    <h2 slot="title" style="font-family: sans-serif; padding-left: 14px;">
-      Create new class server
-    </h2> 
-
-      <div style="margin-top: 12px;"></div>
-      <input bind:value={classNameInputField} placeholder="e.g. 18.02">
-
-      <input bind:value={classDescInput} placeholder="e.g. Multivariable Calculus">
     </div>
   </BasePopup>
 {/if}

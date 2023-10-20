@@ -52,56 +52,8 @@
 
 <AutoAdjust {topAppBar}>
   <div style="margin-top: 12px;"></div>
-
   <PlaygroundOverview/>
-
 </AutoAdjust>
-
-<!-- <TopBannerWarnExperimental/> -->
-
-<!-- <TopBannerWarnExperimental/>
-
-<div style="margin-top: 2%; margin-left: 2%; ">
-  <div style="display: flex; align-items: center">
-    <img  
-      style="cursor: pointer;"
-      on:click={() => goto('/')} 
-      src="/logo.png" 
-      width="60"
-      height="54" 
-      alt="web-logo" 
-      class="logo-image"
-    >
-    <h1 style="margin-left: 12px; font-family: sans-serif;">
-      Class Servers
-    </h1>
-  </div>
-
-  <ButtonPopupCreateNewClass/>
-
-  <button on:click={() => goto('legacy')}>
-    Go to non-class servers
-  </button>
-
-  {#if $user.uid}
-    <button on:click={logOut}>
-      Log out
-    </button>
-  {/if}
-
-  {#if isSignInPopupOpen}
-    <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
-  {/if}
-</div>
-
-<div style="margin-bottom: 2%"></div>
-
-{#if sortedYoutubeClasses.length > 0} 
-  <ExperimentalTable 
-    initialItems={sortedYoutubeClasses}
-    on:login-required={() => isSignInPopupOpen = true}
-  />
-{/if} -->
 
 <script>
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'

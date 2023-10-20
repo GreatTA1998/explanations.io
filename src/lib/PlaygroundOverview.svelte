@@ -1,21 +1,35 @@
-<div style="display: flex; justify-content: center">
-  <input 
-    class="" 
-    name="search" 
-    maxlength="100" 
-    placeholder="Coming soon: search by class name" 
-    aria-label="Explore popular communities" 
-    autocomplete="off" 
-    type="text" 
-    value=""
-    style="
-      width: calc(70% - 220px); 
-      height: 40px; 
-      font-size: 1.8em; 
-      border-radius: 8px; 
-      padding: 12px;
-    "
-  >
+<div style="display: flex; justify-content: center;">
+  <div class="input-container" style="position: relative; width: calc(70% - 180px);">
+    <span class="material-icons" style="position: absolute;
+      top: 18px;
+      left: 15px;
+      font-size: 32px;
+      "
+    >
+      search
+  </span>
+    <input 
+      bind:this={SearchBar}
+      class="" 
+      name="search" 
+      maxlength="100" 
+      placeholder="" 
+      aria-label="Explore popular communities" 
+      autocomplete="off" 
+      type="text" 
+      bind:value={searchVal}
+      style="
+        padding-left: 40px;
+        width: 100%; 
+        height: 40px; 
+        font-size: 1.8em; 
+        border-radius: 8px; 
+        padding: 12px;
+        padding-left: 58px;
+      "
+      on:input={(e) => searchWithinClassNames(e)}
+    >
+  </div>
 </div>
 
 <div style="margin-bottom: 12px;"></div>
@@ -123,25 +137,52 @@
   import { user } from '/src/store.js'
   import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
 
+
+  let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Featured', 'Teachers', 'Pre-subscribers', 'Videos', 'Questions']
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
+
+
+  
   let allServers = null
+  let searchMatchedServers = null
+
   let subjectServers = null
 
   let currentlySelectedTag = 'Featured'
   let finalFilteredServers = null
+  let searchVal = ''
 
-  $: finalFilteredServers = filterSubjectServersByTag(currentlySelectedTag, subjectServers)
-  $: subjectServers = filterServersBySubject(currentlySelectedSubject, allServers)
+  $: finalFilteredServers = sortSubjectServersByTag(currentlySelectedTag, subjectServers)
+  $: subjectServers = filterServersBySubject(currentlySelectedSubject, searchMatchedServers)
 
   onMount(async () => {
     allServers = await getFirestoreCollection('/classes')
+    searchWithinClassNames()
     console.log('allServers =', allServers)
+    SearchBar.focus()
     // runScript()
   })
 
+  function searchWithinClassNames () {
+    const uniqueSet = new Set()
+    const searchQuery = searchVal
+    for (const searchTerm of searchQuery.split(' ')) {
+      for (const server of allServers) {
+        console.log('index of is =', server.name.indexOf(searchTerm))
+        if (server.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
+          console.log('index of is =', server.name.indexOf(searchTerm))
+          uniqueSet.add(server)
+        }
+      }
+    }
+    searchMatchedServers = [...uniqueSet]
+    console.log('searchMatchedServers =', searchMatchedServers)
+    return [...uniqueSet]
+    // console.log('uniqueSet =', )
+  }
 
   async function runScript () {
     const allServers = await getFirestoreCollection('/classes')
@@ -170,7 +211,7 @@
     }
   }
 
-  function filterSubjectServersByTag (tagName, ghostParamForReactivity) {
+  function sortSubjectServersByTag (tagName, ghostParamForReactivity) {
     if (!subjectServers) return null
     switch (tagName) {
       case 'Alphabetical':
@@ -267,15 +308,14 @@
   }
 
   function filterServersBySubject (subjectName, ghostParamForReactivity) {
-    if (!allServers) return null
+    if (!searchMatchedServers) return null
 
     // special cases
-    if (subjectName === 'All Subjects') return allServers.filter(server => server.isYoutubeClass)
-    if (subjectName === 'Other Servers') return allServers.filter(server => !server.isYoutubeClass)
+    if (subjectName === 'All Subjects') return searchMatchedServers.filter(server => server.isYoutubeClass)
+    if (subjectName === 'Other Servers') return searchMatchedServers.filter(server => !server.isYoutubeClass)
 
     // general case
-    const output = allServers.filter(server => server.subjectTag === subjectName)
-    console.log('output =', output)
+    const output = searchMatchedServers.filter(server => server.subjectTag === subjectName)
     return output
   }
 </script>

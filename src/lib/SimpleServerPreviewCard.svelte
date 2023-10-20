@@ -2,9 +2,17 @@
 <!-- "color: #5d0068; border: 1px solid #5d0068;" -->
 <!--green:  #028858; -->
 <!-- border: 1px solid hsl(0,0%,0%, 0.80);  -->
+<!-- 
+<CodepenCardShadows/> -->
+
+  <!-- class=card style=--elevation:1 -->
+
+  <!-- class:my-low-elevation card -->
+  <!-- style:--elevation: 0;  -->
 <div 
-  class="overall-container"
-  style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: 8px; padding: 12px; overflow: hidden;
+
+  class="overall-container "
+  style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: {20}px; padding: 12px; overflow: hidden;
     
   " 
   on:click={() => goto(`/overview/${serverObj.id}`)}
@@ -35,7 +43,6 @@
 {/if}
 
 <div style="margin-left: 16px;"></div>
-
 
   <div class="server-card" style="">
     <div style="display: flex; position: relative;">
@@ -129,6 +136,7 @@
   import Blackboard from '$lib/Blackboard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { goto } from '$app/navigation'
+  import CodepenCardShadows from '$lib/CodepenCardShadows.svelte';
 
   let thumbnailWidth = 270
   let thumbnailAspectRatio = 1 / 0.62
@@ -136,8 +144,17 @@
 
 
 <style>
+  /* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate
+    We base low, medium and high elevation on this essay.
+  */
+
+  .my-low-elevation {
+    box-shadow: 1px 1px 1px 1px;
+  }
+
+
   .paper-shadow {
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 1px 1px 1px 1px rgba(0, 0, 0, 0.19);
   }
 
   .server-card {
@@ -180,4 +197,42 @@
   .overall-container:hover {
     background-color: rgba(106,116,128,.16);
   } 
+
+/* From Codepen */
+/* https://codepen.io/mrrain/pen/wvMEbJz */
+.card {
+  --elevation: 0;
+  --epx: calc(var(--elevation) * 1px);
+  
+  /* these 2 shadows serve as a border for  0-1 elevation    */
+  --shadow1: 0 0 1px rgba(0, 0, 0, .1);
+  --shadow2: 0 1px 2px rgba(0, 0, 0, .08);
+  
+  --offset-y: calc(var(--epx) + 1px);
+  --blur: calc(var(--epx) * 2);
+  --spread: calc(var(--epx) * .3);
+  --shadow3: 
+      0 var(--offset-y) 
+      var(--blur) 
+      var(--spread) 
+      rgba(0, 0, 0, 0.2);
+  
+  box-shadow: 
+    var(--shadow1),
+    var(--shadow2),
+    var(--shadow3);
+}
+
+/* .card:hover {
+  --elevation: calc(var(--elevation) + 4)
+} */
+
+/* .card {
+  line-height:200px;
+  text-align:center;
+  background: white;
+  border-radius: 4px;
+  width: 200px;
+  height: 200px;
+} */
 </style>

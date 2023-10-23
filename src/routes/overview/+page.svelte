@@ -51,7 +51,7 @@
 </TopAppBar>
 
 <AutoAdjust {topAppBar}>
-  <div style="margin-top: 12px;"></div>
+  <div style="margin-top: 36px;"></div>
   <PlaygroundOverview/>
 </AutoAdjust>
 

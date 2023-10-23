@@ -10,8 +10,7 @@
 					<div style="font-weight: 400; font-size: 20px;">
 						explanations.app
 					</div>
-		
-	
+
 				</Section>
 
 				<Section align="end" toolbar>
@@ -89,7 +88,7 @@
 						Ask question, get video.
 					</p>
 					<div style="margin-top: 24px;"></div>
-					<div style="font-size: 24px; max-width: 900px;">
+					<div style="font-size: 24px; max-width: 900px; line-height: 1.4">
 						Crowdfund a “Youtube Teacher” for your hardest classes in college.<br>
 						Get clear explanations for all your questions — together with other subscribers.
 					</div>

@@ -46,7 +46,7 @@
 
   <div class="server-card" style="">
     <div style="display: flex; position: relative;">
-      <div style="font-size: 24px; font-weight: 600;">
+      <div style="font-size: 24px; font-weight: 600; font-family: 'Inter'">
         {serverObj.name}
         <!-- {#if serverObj.description}
           {serverObj.description}
@@ -87,45 +87,31 @@
 
     <div style="position: absolute; top: auto; bottom: 20px; width: 460px; color: #2f3030;">
       <div style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; opacity: 1">
-            
-        <!-- <div style="display: flex"> -->
-
         <div style="display: flex;" class:teacher-purple={serverObj.numOfTeachers > 0}>
           <span class="material-icons" style="font-size: 17px;">brush</span>
           <div style="margin-right: 4px;"></div>
-          <div>{serverObj.numOfTeachers} teachers</div>
+          <div style="font-family: 'Inter'">{serverObj.numOfTeachers} teachers</div>
         </div>
-
-        <!-- <div style="margin-right: 24px;"></div> -->
-
 
         <div style="display: flex;" class:video-orange={serverObj.numOfVideos > 0}>
           <span class="material-icons" style="font-size: 19px;">smart_display</span>
           <div style="margin-right: 4px;"></div>
-          <div>{serverObj.numOfVideos} videos</div>
+          <div style="font-family: 'Inter'">{serverObj.numOfVideos} videos</div>
         </div>
 
-
-      <!-- </div> -->
-
-<!-- 
-      <div style="display: flex"> -->
         <div style="display: flex;" class:money-green={serverObj.crowdfundAmount > 0}>
           <span class="material-icons" style="font-size: 19px;">credit_card</span>
           <div style="margin-right: 4px;"></div>
-          <div>{serverObj.crowdfundAmount || 0} pre-subscribers</div>
+          <div style="font-family: 'Inter'">{serverObj.crowdfundAmount || 0} pre-subscribers</div>
         </div>
-<!--     
-        <div style="margin-right: 24px;"></div> -->
         
         <div style="display: flex;" class:question-red={serverObj.numOfUnresolvedQuestions > 0}>
           <span class="material-icons" style="font-size: 18px;">question_mark</span>
           <div style="margin-right: 2px;"></div>
-          <div>{serverObj.numOfUnresolvedQuestions} questions</div>
+          <div style="font-family: 'Inter'">{serverObj.numOfUnresolvedQuestions} questions</div>
         </div>
         
-      
-
+    
    
       </div>
       <!-- </div> -->

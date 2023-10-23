@@ -37,6 +37,7 @@
   <div style="margin-left: 18%; margin-top: 20px; width: fit-content; flex-wrap: wrap;">
     {#each categories as category, i}
       <div 
+        style="font-family: 'Inter'"
         class="subject-category"
         on:click={() => currentlySelectedSubject = category}
         class:orange-highlight={currentlySelectedSubject === category}

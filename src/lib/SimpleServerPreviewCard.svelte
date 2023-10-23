@@ -72,15 +72,14 @@
     <div style="display: flex;">
       <div style="margin-top: 12px;"></div>
         {#if serverObj.syllabusVersion}
-          <div style="font-size: 12px; border-radius: 4px; background-color: grey; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
+          <div style="font-size: 12px; border-radius: 4px; background-color: #2E3162; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
             {serverObj.syllabusVersion}
           </div>
 
           <div style="margin-left: 12px;"></div>
         {/if}
-
-       
-        <div style="font-size: 12px; border-radius: 4px; background-color: grey; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
+          
+        <div style="font-size: 12px; border-radius: 4px; background-color: #A46910; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px;">
           Cross-college 
         </div>
       </div>
@@ -90,25 +89,25 @@
         <div style="display: flex;" class:teacher-purple={serverObj.numOfTeachers > 0}>
           <span class="material-icons" style="font-size: 17px;">brush</span>
           <div style="margin-right: 4px;"></div>
-          <div style="font-family: 'Inter'">{serverObj.numOfTeachers} teachers</div>
+          <div>{serverObj.numOfTeachers} teachers</div>
         </div>
 
         <div style="display: flex;" class:video-orange={serverObj.numOfVideos > 0}>
           <span class="material-icons" style="font-size: 19px;">smart_display</span>
           <div style="margin-right: 4px;"></div>
-          <div style="font-family: 'Inter'">{serverObj.numOfVideos} videos</div>
+          <div>{serverObj.numOfVideos} videos</div>
         </div>
 
         <div style="display: flex;" class:money-green={serverObj.crowdfundAmount > 0}>
           <span class="material-icons" style="font-size: 19px;">credit_card</span>
           <div style="margin-right: 4px;"></div>
-          <div style="font-family: 'Inter'">{serverObj.crowdfundAmount || 0} pre-subscribers</div>
+          <div>{serverObj.crowdfundAmount || 0} pre-subscribers</div>
         </div>
         
         <div style="display: flex;" class:question-red={serverObj.numOfUnresolvedQuestions > 0}>
           <span class="material-icons" style="font-size: 18px;">question_mark</span>
           <div style="margin-right: 2px;"></div>
-          <div style="font-family: 'Inter'">{serverObj.numOfUnresolvedQuestions} questions</div>
+          <div>{serverObj.numOfUnresolvedQuestions} questions</div>
         </div>
         
     

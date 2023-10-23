@@ -96,14 +96,7 @@
         Sort by:
       </div>
 
-      {#each filterTags as filterTag}
-        <div class="filter-tag"
-          on:click={() => currentlySelectedTag = filterTag}
-          class:orange-highlight={currentlySelectedTag === filterTag}
-        >
-          {filterTag}
-        </div>
-      {/each}
+      <MySelect options={filterTags} on:option-clicked={(e) => {currentlySelectedTag = e.detail.value; console.log(e.detail.option)}}/>
     </div>
 
     <div style="margin-bottom: 24px;">
@@ -120,7 +113,9 @@
         {/key}
       {/each}
 
-      <PopupNewServer/>
+      <div style="margin-left: 12px;">
+        <PopupNewServer/>
+      </div>
     {/if}
   </div>
 </div>
@@ -134,6 +129,7 @@
   import { user } from '/src/store.js'
   import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
   import PopupNewServer from '$lib/PopupNewServer.svelte'
+  import MySelect from '$lib/MySelect.svelte'
 
   let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']

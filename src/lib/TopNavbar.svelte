@@ -8,14 +8,15 @@
 						on:click={() => goto('/')}
 						src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px; cursor: pointer;"
 					>
-					<div style="font-weight: 400; font-size: 20px; color: black;">
+					<div style="font-weight: 500; font-size: 20px; color: black;">
 						explanations.app
 					</div>
 
 				</Section>
 
 				<Section align="end" toolbar>
-					<a href="" target="_blank" 
+					<!-- href="" target="_blank" -->
+					<a on:click={() => alert("For absolutely anything, call 503 250 3868 or email elton@explanations.app, I can reply immediately unless it's past midnight / before 8 am.")}
 						style="margin-left: 8px; text-decoration-color: transparent;"
 					>
 						<Button

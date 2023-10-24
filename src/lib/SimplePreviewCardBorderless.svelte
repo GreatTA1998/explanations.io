@@ -143,7 +143,17 @@
 
 <style lang="scss">
   .college-chip {
-    font-size: 12px; font-weight: 500; border: 1px solid grey; border-radius: 4px; background-color: white; color: black; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 4px; padding-bottom: 4px;
+    font-size: 12px; 
+    font-weight: 500; 
+    border: 0px solid grey;
+    border-radius: 4px; 
+    background-color: grey; 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    width: fit-content; 
+    justify-content: center; 
+    right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 4px; padding-bottom: 4px;
   }
 
   /* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate

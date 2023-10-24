@@ -58,7 +58,7 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title" style="font-size: 4em;">Teach what you love, supported by subscribers.</p>	
+				<p class="header-title" style="font-size: 4em;">Teach what you love - supported by subscribers</p>	
 				<div class="header-subcopy-wrapper">
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
@@ -79,23 +79,25 @@
 					</div>
 
 					<div style="margin-bottom: 24px;"></div>
-				<ol style="font-weight: 400;">
-					<li>
-						Colleges classes aren't always well-taught or well-supported
-					</li>
-					<li>
-						Many former TAs & students all over the world are great at explaining things, but don’t know <i>where</i> they're needed
-					</li>
 
-					<li>
-						Pre-pay $10 to crowdfund "Youtubers" to tryout for your class. Earliest crowdfunders get permanent free subscriptions.
-					</li>
+					<ol style="font-weight: 400;">
+						<li>
+							Colleges classes aren't always well-taught; class resources aren't always good enough.
+						</li>
+						<li>
+							To do well in any class, <u>we just need someone good at explaining things and gives a sh*t about us.</u>
+							Many former TAs & students all over the world are great at explaining things, but don’t know <i>where</i> they're needed
+						</li>
 
-					<li>
-						Pick the most helpful "Youtuber" for you. The economies-of-scale creates a win-win: many students pay affordable prices of $10/month, 
-						and teachers get higher impact & reward from the collective support of subscribers.
-					</li>
-				</ol>
+						<li>
+							Pre-pay $10 to crowdfund potential teachers to tryout for your class. You get permanent free subscriptions for paying early.
+						</li>
+
+						<li>
+							Pick the most helpful "Youtuber" for you. It's a win-win: students get really good help for low prices of $10/month, 
+							while teachers can support themselves via economies-of-scale. 
+						</li>
+					</ol>
 				</div>
 
 							
@@ -111,13 +113,17 @@
 			{#if active.label === 'Teach'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						This website provides infrastructure so you can easily share blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>,
-						without the typical headaches of creating video content.
+						This website lets you teach people all over the world with blackboard videos (without additional responsibilities like grading). 
 
-						<br><br>
-						
+			
 						Just draw and talk on the blackboard - that's it. 
-						Let subscribers fall in love with the unique way you explain the subject.
+						You can help free viewers and <b style="color: #5d0068">$10/month subscribers</b>.
+						<br><br>
+
+						
+						
+					
+						It's the unique way you explain the subject that matters.
 
 
 						<!-- The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
@@ -509,9 +515,9 @@
 .webflow-intro-type {
 	// font-family: sans-serif; 
 	font-size: 2.4rem; // used to be 5 rem
- 	line-height: 1.125; // used to be 1.25 but you know what happened last time
+ 	// line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
-	letter-spacing: -.02em;
+	// letter-spacing: -.02em;
 	max-width: 100%;
 }
 

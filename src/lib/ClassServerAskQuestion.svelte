@@ -109,7 +109,7 @@
   import CodepenInput from '$lib/CodepenInput.svelte'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
-    import { goto } from '$app/navigation';
+  import { goto } from '$app/navigation';
 
   export let classID 
   // export let roomID
@@ -177,7 +177,7 @@
     for (const teacher of serverTeachers) { 
       console.log('teacher =', teacher)
       if (teacher.email) {
-        console.log('sending email')
+        console.log('sending email =', teacher.email)
         sendEmail({ 
           toWho: teacher.email,
           subject: 'New question on explanations.app', 

@@ -68,16 +68,22 @@
 	</div> -->
 	
 	<div class="webflow-container" style="padding-top: 2%;">
-		<TabBar tabs={tabs} let:tab bind:active style="color: orange; margin-left: 0%;">
+		<!-- '#F1F1F1' -->
+		<TabBar tabs={tabs} let:tab bind:active style="color: purple; margin-left: 0%;">
 			<Tab {tab} 
-				stacked minWidth indicatorSpanOnlyContent style="color: orange; border: 0px solid grey; border-radius: 0px; overflow: hidden;
-					background-color: {active.label === tab.label ? '#F1F1F1' : ''};
-					border-bottom: {active.label === tab.label ? 'orange 0px solid' : ''}
-
+				stacked minWidth style="color: orange; border: 0px solid grey; border-radius: 0px; overflow: hidden;
+					background-color: {active.label === tab.label ? '' : ''};
+					border-bottom: {active.label === tab.label ? 'purple 0px solid' : ''}
 				"
 			>
-				<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
-				<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
+				<Icon class="material-icons" style="color: {active.label === tab.label ? 'black' : 'grey'}; padding-top: 25px;">
+					{tab.icon}
+				</Icon>
+				<Label style="color: {active.label === tab.label ? 'black' : 'rgba(0, 0, 0, 0.9)'};
+						font-weight: {active.label === tab.label ? '600' : '400'};
+						margin-top: 5px; padding-bottom: 30px;">
+					{tab.label}
+				</Label>
 			</Tab>
 		</TabBar>
 
@@ -233,7 +239,7 @@
 
 			<!-- HOW IT WORKS SECTION-->
 			<div bind:clientWidth={w} class="webflow-section">
-				<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+				<div class="webflow-h1" style="font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 					How it works
 				</div>
 				<!-- from how classes normally present the material -->
@@ -306,21 +312,6 @@
 			</div>
 
 		<div class="webflow-section">
-			<!-- <div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
-				How pay works
-			</div>
-
-			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
-				Because you get paid proportional to how many students you help, there's no limit on how high you get paid.
-				You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
-				<br>
-				<br>
-			</div>
-
-			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
-				<ReusableIncomeCalculator weeklyPrice={15}/>
-			</div> -->
-
 			<HowItWorksStep
 				title="Step 1"
 				subtitle="Setup a shop with your example videos"
@@ -549,18 +540,15 @@
 	margin-top: 0;
 	margin-bottom: 0;
 
-
 	// BELOW ARE CSS ATTRIBUTES I PUT IN ADDITION TO BASE ATTRIBUTES
 	box-sizing: border-box;
 
 	/* The -0.02em is the secret sauce for making sans-serif fonts look good **/
 	letter-spacing: -.02em; 
-	font-family: sans-serif; 
 	font-weight: 600; 
 
 	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
 	line-height: 1.0; // used to be 1.25 but GF suggests otherwise
-
 }
 
 @media only screen and (min-width: 1550px) {
@@ -591,7 +579,7 @@
 }
 
 .webflow-intro-type {
-	font-family: sans-serif; 
+	// font-family: sans-serif; 
 	font-size: 2.4rem; // used to be 5 rem
  	line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;

@@ -37,7 +37,6 @@
   <div style="margin-left: 18%; margin-top: 20px; width: fit-content; flex-wrap: wrap;">
     {#each categories as category, i}
       <div 
-        style="font-family: 'Inter'"
         class="subject-category"
         on:click={() => currentlySelectedSubject = category}
         class:orange-highlight={currentlySelectedSubject === category}
@@ -112,11 +111,11 @@
           <!-- <SimpleServerPreviewCard 
             {serverObj}
           /> -->
-          <div style="margin-bottom: 28px;"></div>
+          <div style="margin-bottom: 18px;"></div>
         {/key}
       {/each}
 
-      <div style="margin-left: 12px;">
+      <div style="">
         <PopupNewServer/>
       </div>
     {/if}
@@ -141,7 +140,6 @@
   let filterTags = ['Featured', 'Teachers', 'Pre-subscribers', 'Videos', 'Questions']
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
-
 
   
   let allServers = null
@@ -379,9 +377,9 @@
   }
 
   .orange-highlight {
-    background-color: #e2dddd;
+    /* background-color: #e2dddd; */
     color: black !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     /* color: white;
     border: 1px solid white; */
   }
@@ -405,7 +403,7 @@
     border-radius: 8px;
     font-weight: 400;
     margin-bottom: 12px;
-    color: hsl(0,0%,0%, 0.80);
+    color: hsla(0, 0%, 13%, 0.8);
   }
 
   .subject-category:hover {

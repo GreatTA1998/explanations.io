@@ -1,59 +1,7 @@
-<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.75);">
-  <Row>
-    <Section>
-      <img 
-      on:click={() => goto('/')}
-      src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px; cursor: pointer;"
-      on:click={() => goto('/')}
-    >
-    <div style="font-weight: 400; font-size: 20px;">
-      explanations.app
-    </div>
-
-    </Section>
-
-    <Section align="end" toolbar>
-      <div style="margin-right: 48px;">
-        503 250 3868
-      </div>
-
-      <div style="margin-right: 24px;">
-        elton@explanations.app
-      </div>
-
-      <a href="https://eltonlin.substack.com/archive" target="_blank" 
-      style="margin-left: 8px; text-decoration-color: transparent;"
-    >
-      <Button
-        class="button-shaped-round"
-        style="font-size: 12px;"
-      >
-        <Label>blog</Label>
-      </Button>
-    </a>
-
-    <a href="https://github.com/greatTA1998/explain" target="_blank" 
-      style="margin-left: 20px; text-decoration-color: transparent;"
-    >
-      <Button
-        class="button-shaped-round"
-        style="font-size: 12px;"
-      >
-        <Label>github</Label>
-      </Button>
-    </a>
-
-    <div style="margin-right: 18px;"></div>
-
-      <ReusableSignInButton/>
-    </Section>
-  </Row>
-</TopAppBar>
-
-<AutoAdjust {topAppBar}>
+<TopNavbar>
   <div style="margin-top: 36px;"></div>
   <PlaygroundOverview/>
-</AutoAdjust>
+</TopNavbar>
 
 <script>
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
@@ -71,15 +19,11 @@
   import Checkbox from '@smui/checkbox'
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import PlaygroundOverview from '$lib/PlaygroundOverview.svelte'
-  import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
   import Button, { Label } from '@smui/button'
+  import TopNavbar from '$lib/TopNavbar.svelte'
 
-  let topAppBar
-  
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 
-
-  let isSignInPopupOpen = false
 
   fetchYoutubeClasses().then(() => {
     // then compute secondary statistics

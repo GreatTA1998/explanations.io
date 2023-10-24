@@ -1,74 +1,6 @@
-<div class="flexy">
-	<div class="top-app-bar-container flexor">
-		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.75);">
-			<Row>
-				<Section>
-					<img 
-						on:click={() => goto('/')}
-						src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px;"
-					>
-					<div style="font-weight: 400; font-size: 20px;">
-						explanations.app
-					</div>
-
-				</Section>
-
-				<Section align="end" toolbar>
-					<a href="" target="_blank" 
-						style="margin-left: 8px; text-decoration-color: transparent;"
-					>
-						<Button
-							class="button-shaped-round"
-							style="font-size: 12px;"
-						>
-							<Label>CONTACT</Label>
-							<!-- Phone & email -->
-						</Button>
-					</a>
-
-					<a href="https://eltonlin.substack.com/archive" target="_blank" 
-						style="margin-left: 8px; text-decoration-color: transparent;"
-					>
-						<Button
-							class="button-shaped-round"
-							style="font-size: 12px;"
-						>
-							<Label>blog</Label>
-		
-						</Button>
-					</a>
-
-					<a href="https://github.com/greatTA1998/explain" target="_blank" 
-						style="margin-left: 20px; text-decoration-color: transparent;"
-					>
-						<div style="width: 38px; height: 38px; border-radius: 19px; background-color: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
-							<img src="/github-logo-dark-mode-no-bg.png"
-							style="width: 54px; height: 54px;"
-							>
-						</div>
-<!-- 
-						<Button
-							class="button-shaped-round"
-							style="font-size: 12px"
-						>
-							<Label>github</Label>
-				
-						</Button> -->
-					</a>
-
-					<div style="margin-right: 18px;"></div>
-
-
-					<ReusableSignInButton outlined={true}/>
-				</Section>
-			</Row>
-		</TopAppBar>
-	</div>
-</div>
-
-<AutoAdjust {topAppBar}>
+<TopNavbar>
 	<!-- <TopBannerWarnExperimental/> -->
-	<div class="webflow-container" style="padding-top: 2%;">
+	<div class="webflow-container" style="padding-top: 1%;">
 		<!-- '#F1F1F1' -->
 		<TabBar tabs={tabs} let:tab bind:active style="color: purple; margin-left: 0%;">
 			<Tab {tab} 
@@ -149,19 +81,19 @@
 					<div style="margin-bottom: 24px;"></div>
 				<ol style="font-weight: 400;">
 					<li>
-						Many people are great at explaining things, but don’t have an audience
+						Colleges classes aren't always well-taught or well-supported
+					</li>
+					<li>
+						Many former TAs & students all over the world are great at explaining things, but don’t know <i>where</i> they're needed
 					</li>
 
 					<li>
-						Pre-pay $1 to encourage "Youtubers" to tryout for your class
+						Pre-pay $10 to crowdfund "Youtubers" to tryout for your class. Earliest crowdfunders get permanent free subscriptions.
 					</li>
 
 					<li>
-						Pick the most helpful "Youtuber" for you (based on their videos) and subscribe for $10/month
-					</li>
-
-					<li>
-						Who teaches? Usually former TAs & students from all over the world.
+						Pick the most helpful "Youtuber" for you. The economies-of-scale creates a win-win: many students pay affordable prices of $10/month, 
+						and teachers get higher impact & reward from the collective support of subscribers.
 					</li>
 				</ol>
 				</div>
@@ -346,7 +278,7 @@
 			</HowItWorksStep>
 		</div>
 	{/if}
-</AutoAdjust>
+	</TopNavbar>
 
 <script>	
 	import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
@@ -360,12 +292,11 @@
 	import { user } from '../store.js'
 	import TabBar from '@smui/tab-bar';
 	import Tab, { Icon } from '@smui/tab';
-	import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
 	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
 	import { mixpanelLibrary } from '/src/mixpanel.js'
-	import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+	import TopNavbar from '$lib/TopNavbar.svelte'
 
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
@@ -429,7 +360,7 @@
 			classID: 'Mev5x66mSMEvNz3rijym'
 		},
 		{ titleForDebugging: 'Practice Finals: Fall 2018 Problem 11 (Value Iteration)',
-			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7',
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/o',
 			creatorName: 'Tony Wang',
 			className: 'Intro to Machine Learning',
 			classID: 'Mev5x66mSMEvNz3rijym'
@@ -469,7 +400,6 @@
 	// END OF GENERATING DEMO VIDEOS
 
 	let w
-	let topAppBar
 
 	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Teach', icon: 'draw'}]
 	let active = tabs[0]

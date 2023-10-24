@@ -4,9 +4,7 @@
 <!-- border: 1px solid hsl(0,0%,0%, 0.80);  -->
 <!-- 
 <CodepenCardShadows/> -->
-
   <!-- class=card style=--elevation:1 -->
-
   <!-- class:my-low-elevation card -->
   <!-- style:--elevation: 0;  -->
 <div 
@@ -134,13 +132,17 @@
 </script>
 
 
-<style>
+<style lang="scss">
   /* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate
     We base low, medium and high elevation on this essay.
   */
 
   .my-low-elevation {
     box-shadow: 1px 1px 1px 1px;
+  }
+
+  .overall-container:hover {
+    @extend .core-shadow;
   }
 
   .core-shadow {
@@ -192,9 +194,6 @@
     font-weight: 500;
   } */
 
-  .overall-container:hover {
-    background-color: rgba(106,116,128,.16);
-  } 
 
 /* From Codepen */
 /* https://codepen.io/mrrain/pen/wvMEbJz */

@@ -10,9 +10,8 @@
   <!-- class:my-low-elevation card -->
   <!-- style:--elevation: 0;  -->
   <div 
-  class="overall-container core-shadow cast-shadow"
-  style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: {20}px; padding: 12px; overflow: hidden;
-    
+    class="overall-container"
+    style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: {20}px; padding: 12px; overflow: hidden;
   " 
   on:click={() => goto(`/overview/${serverObj.id}`)}
 >
@@ -64,31 +63,37 @@
 
        <div style="margin-top: 12px;"></div>
 
-    <div style="display: flex;">
+    <div style="display: flex; align-items: center;">
       <div style="margin-top: 12px;"></div>
         {#if serverObj.syllabusVersion}
-          <div style="font-size: 12px; border-radius: 4px; background-color: #2E3162; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 4px; padding-bottom: 4px;">
-            {serverObj.syllabusVersion}
-          </div>
+          {#if serverObj.syllabusVersion === 'MIT'}
+           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png" width="30" height="15">
+          {:else if ['RCC', 'Roxbury Community College'].includes(serverObj.syllabusVersion)}
+            <img src="https://res.cloudinary.com/doa6grfya/image/upload/v1549032496/bw8nu2czsyxszrpc6age.jpg" width="30" height="30">
+          {:else}
+            <div class='college-chip'>
+              {serverObj.syllabusVersion}
+            </div>
+          {/if}
+
 
           <div style="margin-left: 12px;"></div>
         {/if}
           
-        <div style="font-size: 12px; border-radius: 4px; background-color: #A46910; color: white; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 4px; padding-bottom: 4px;">
-          Cross-college 
+        <div class="college-chip">
+          cross-college
         </div>
       </div>
-<!-- 
-      <hr style="color: grey; margin-top: 12px; opacity: 0.8"> -->
+
       <div style="margin-top: 12px;"></div>
 
       <!-- position: absolute; top: auto; bottom: 20px; -->
     <div style=" width: 460px; color: #2f3030;">
-      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; opacity: 1">
+      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; opacity: 1; font-weight: 500">
 
         
         <div style="display: flex;" class:money-green={serverObj.crowdfundAmount > 0}>
-          <span class="material-icons" style="font-size: 19px;">attach_money</span>
+          <span class="material-icons" style="font-size: 17px;">attach_money</span>
           <div style="margin-right: -1px;"></div>
           <div>{serverObj.crowdfundAmount || 0} crowdfunded</div>
         </div>
@@ -136,11 +141,17 @@
 </script>
 
 
-<style>
+<style lang="scss">
+  .college-chip {
+    font-size: 12px; font-weight: 500; border: 1px solid grey; border-radius: 4px; background-color: white; color: black; display: flex; align-items: center; width: fit-content; justify-content: center; right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 4px; padding-bottom: 4px;
+  }
+
   /* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate
     We base low, medium and high elevation on this essay.
   */
 
+  // SEE image
+  // https://www.notion.so/Design-e87b085e3e0c4910b8ef770bb1268dfb?pvs=4#34e8c3917fca4a78b23f869647f452a9
   .my-low-elevation {
     box-shadow: 1px 1px 1px 1px;
   }
@@ -153,6 +164,9 @@
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.08);
   }
 
+  .high-elevation-cast-shadow {
+    box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08)
+  }
 
   .paper-shadow {
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 1px 1px 1px 1px rgba(0, 0, 0, 0.19);
@@ -194,8 +208,8 @@
   } */
 
   .overall-container:hover {
-    background-color: rgba(106,116,128,.16);
-  } 
+    @extend .high-elevation-cast-shadow;
+  }
 
 /* From Codepen */
 /* https://codepen.io/mrrain/pen/wvMEbJz */

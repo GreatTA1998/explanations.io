@@ -14,7 +14,7 @@
     </slot>
   </Button>
   {:else}
-  <Button on:click={logOut}>
+  <Button on:click={logOut} style="color: black; font-size: 12px; font-family: 'Inter'">
     Sign out
   </Button>
 {/if}

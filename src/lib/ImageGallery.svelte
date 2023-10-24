@@ -83,11 +83,11 @@
   const galleryItemHeight = 360 * 0.95
 
   function pauseGalleryRotation () {
-    document.getElementById("carousel").style.animationPlayState = "paused";
+    // document.getElementById("carousel").style.animationPlayState = "paused";
   }
   
   function startGalleryRotation () {
-    document.getElementById("carousel").style.animationPlayState = "running";
+    // document.getElementById("carousel").style.animationPlayState = "running";
   }
 </script>
 
@@ -185,7 +185,7 @@
   // -moz-animation: rotating 20s linear infinite;
   // -o-animation: rotating 20s linear infinite;
   // -ms-animation: rotating 20s linear infinite;
-  animation: rotating 40s linear infinite;
+  animation: rotating 100s linear infinite;
   // &:hover {
   // animation-play-state:paused;
   // -o-animation-play-state:paused;

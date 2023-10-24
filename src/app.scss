@@ -1,5 +1,6 @@
 * {
-	font-family: Roboto, sans-serif;
+	font-family: 'Inter', sans-serif; 
+	// font-family: Roboto, sans-serif;
 }
 
 .mdc-tab-indicator__content--underline {
@@ -73,45 +74,6 @@ audio::-webkit-media-controls-panel {
 	justify-content: space-between; */
 
 	flex-wrap: wrap;
-}
-
-.header-title {
-	max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
-	margin-top: 0; 
-	margin-bottom: 0;
-	font-size: 7vw;
-	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
-	font-weight: 500;
-
-	/* This turns to prevent <p> from taking additional height for no reason */
-	margin-top: 0;
-	margin-bottom: 0;
-
-
-	// BELOW ARE CSS ATTRIBUTES I PUT IN ADDITION TO BASE ATTRIBUTES
-	box-sizing: border-box;
-
-	/* The -0.02em is the secret sauce for making sans-serif fonts look good **/
-	letter-spacing: -.02em; 
-	font-family: sans-serif; 
-	font-weight: 600; 
-
-	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
-	line-height: 1.25;
-}
-
-/* Copied from Webflow's home page inspector */
-@media only screen and (min-width: 1550px) {
-	.header-title {
-		font-size: 7rem;
-	}
-}
-
-@media only screen and (max-width: 991px) {
-	.header-title {
-		max-width: 85vw;
-		font-size: 11vw;
-	}
 }
 
 @media screen and (max-width: 991px) {

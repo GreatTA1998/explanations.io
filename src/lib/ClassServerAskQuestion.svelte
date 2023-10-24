@@ -91,7 +91,6 @@
 <script>
   import { user } from '../store.js'
   import { portal } from '../helpers/actions.js'
-  import { getFirestoreCollection, getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
   import ClassServerAskQuestionAllMembers from '$lib/ClassServerAskQuestionAllMembers.svelte'
   import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
@@ -99,7 +98,7 @@
   import HelperText from '@smui/textfield/helper-text'
   import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import { createRoomDoc } from '../helpers/crud.js'
+  import { createRoomDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreCollection, getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
 
   import { arrayUnion, increment } from "firebase/firestore"
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
@@ -110,6 +109,7 @@
   import CodepenInput from '$lib/CodepenInput.svelte'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+  import { goto } from '$app/navigation';
 
   export let classID 
   // export let roomID
@@ -139,8 +139,6 @@
       questionTitleInput = questionTitleInput + '?'
     }
 
-    sendEmail()
-
     const roomUpdateObj = {
       name: questionTitleInput,
       // because we know who asked the question,
@@ -169,6 +167,28 @@
       title: questionTitleInput 
     })
 
+    // fetch teachers
+    const q = createFirestoreQuery({ 
+      collectionPath: `classes/${classID}/members`, 
+      criteriaTerms: ['isTeacher', '==', true]
+    })
+    const serverTeachers = await getFirestoreQuery(q)
+
+    for (const teacher of serverTeachers) { 
+      console.log('teacher =', teacher)
+      if (teacher.email) {
+        console.log('sending email =', teacher.email)
+        sendEmail({ 
+          toWho: teacher.email,
+          subject: 'New question on explanations.app', 
+          content: `${$user.name} asked: "${questionTitleInput}". Link: https://explanations.app/${classID}/${newRoomDocID}}`
+        })
+      } else {
+        console.error('Teacher has no email =', teacher)
+      }
+    }
+
+
     // Handle notifications
     // const classDoc = await getFirestoreDoc(`classes/${classID}`)
     // const classHelpers = await getFirestoreCollection(`classes/${classID}/tutors`)
@@ -180,6 +200,7 @@
     // }
 
     alert('Question submitted! Helpers will be notified')
+    goto(`/${classID}/${newRoomDocID}`)
   }
 
   async function uploadFileToStorage (pdfOrImageFile) {

@@ -9,11 +9,11 @@ export function sendTextMessage ({ content, toWho }) {
   })
 }
 
-export function sendEmail () {
+export function sendEmail ({ subject, content, toWho }) {
   const functions = getFunctions()
   const sendEmail = httpsCallable(functions, 'sendEmail')
   return new Promise(async resolve => {
-    await sendEmail()
+    await sendEmail({ subject, content, toWho })
     resolve()
   })
 }

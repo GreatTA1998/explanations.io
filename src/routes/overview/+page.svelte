@@ -1,107 +1,7 @@
-<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
-  <Row>
-    <Section>
-      <img 
-      on:click={() => goto('/')}
-      src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px; cursor: pointer;"
-      on:click={() => goto('/')}
-    >
-    <div style="font-weight: 400; font-size: 20px;">
-      explanations.app
-    </div>
-
-    </Section>
-
-    <Section align="end" toolbar>
-      <div style="margin-right: 48px;">
-        503 250 3868
-      </div>
-
-      <div style="margin-right: 24px;">
-        elton@explanations.app
-      </div>
-
-      <a href="https://eltonlin.substack.com/archive" target="_blank" 
-      style="margin-left: 8px; text-decoration-color: transparent;"
-    >
-      <Button
-        class="button-shaped-round"
-        style="font-size: 12px;"
-      >
-        <Label>blog</Label>
-      </Button>
-    </a>
-
-    <a href="https://github.com/greatTA1998/explain" target="_blank" 
-      style="margin-left: 20px; text-decoration-color: transparent;"
-    >
-      <Button
-        class="button-shaped-round"
-        style="font-size: 12px;"
-      >
-        <Label>github</Label>
-      </Button>
-    </a>
-
-    <div style="margin-right: 18px;"></div>
-
-      <ReusableSignInButton/>
-    </Section>
-  </Row>
-</TopAppBar>
-
-<AutoAdjust {topAppBar}>
-  <div style="margin-top: 12px;"></div>
-
+<TopNavbar>
+  <div style="margin-top: 36px;"></div>
   <PlaygroundOverview/>
-
-</AutoAdjust>
-
-<!-- <TopBannerWarnExperimental/> -->
-
-<!-- <TopBannerWarnExperimental/>
-
-<div style="margin-top: 2%; margin-left: 2%; ">
-  <div style="display: flex; align-items: center">
-    <img  
-      style="cursor: pointer;"
-      on:click={() => goto('/')} 
-      src="/logo.png" 
-      width="60"
-      height="54" 
-      alt="web-logo" 
-      class="logo-image"
-    >
-    <h1 style="margin-left: 12px; font-family: sans-serif;">
-      Class Servers
-    </h1>
-  </div>
-
-  <ButtonPopupCreateNewClass/>
-
-  <button on:click={() => goto('legacy')}>
-    Go to non-class servers
-  </button>
-
-  {#if $user.uid}
-    <button on:click={logOut}>
-      Log out
-    </button>
-  {/if}
-
-  {#if isSignInPopupOpen}
-    <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
-  {/if}
-</div>
-
-<div style="margin-bottom: 2%"></div>
-
-{#if sortedYoutubeClasses.length > 0} 
-  <ExperimentalTable 
-    initialItems={sortedYoutubeClasses}
-    on:login-required={() => isSignInPopupOpen = true}
-  />
-{/if} -->
+</TopNavbar>
 
 <script>
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
@@ -119,15 +19,11 @@
   import Checkbox from '@smui/checkbox'
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import PlaygroundOverview from '$lib/PlaygroundOverview.svelte'
-  import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
   import Button, { Label } from '@smui/button'
+  import TopNavbar from '$lib/TopNavbar.svelte'
 
-  let topAppBar
-  
   let youtubeClasses = [] 
   let sortedYoutubeClasses = [] 
-
-  let isSignInPopupOpen = false
 
   fetchYoutubeClasses().then(() => {
     // then compute secondary statistics

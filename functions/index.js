@@ -1,16 +1,20 @@
 const functions = require("firebase-functions");
 const firebase_tools = require("firebase-tools");
 var postmark = require("postmark");
+require("firebase-functions/logger/compat");
 
 exports.sendEmail = functions.https.onCall((data, context) => {
   var client = new postmark.ServerClient("25517a27-c9ee-49ed-a203-e3cfde01f497");
 
+  const { toWho, subject, content } = data
+  console.log('sending email to =', toWho)
+
   client.sendEmail({
     "From": "elton@explanations.app",
-    "To": "elton@explanations.app",
-    "Subject": "Hello from Postmark",
+    "To": toWho,
+    "Subject": subject,
     "HtmlBody": "<strong>Hello</strong> dear Postmark user.",
-    "TextBody": "Hello from Postmark!",
+    "TextBody": content,
     "MessageStream": "outbound"
   })
 })

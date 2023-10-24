@@ -1,84 +1,22 @@
-<div class="flexy">
-	<div class="top-app-bar-container flexor">
-		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: hsl(0,0%,0%, 0.80);">
-			<Row>
-				<Section>
-					<img 
-						on:click={() => goto('/')}
-						src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px;"
-					>
-					<div style="font-weight: 400; font-size: 20px;">
-						explanations.app
-					</div>
-		
-	
-				</Section>
-
-				<Section align="end" toolbar>
-					<div style="margin-right: 48px;">
-						503 250 3868
-					</div>
-
-					<div style="margin-right: 24px;">
-						elton@explanations.app
-					</div>
-
-					<a href="https://eltonlin.substack.com/archive" target="_blank" 
-						style="margin-left: 8px; text-decoration-color: transparent;"
-					>
-						<Button
-							class="button-shaped-round"
-							style="font-size: 12px;"
-						>
-							<Label>blog</Label>
-		
-						</Button>
-					</a>
-
-					<a href="https://github.com/greatTA1998/explain" target="_blank" 
-						style="margin-left: 20px; text-decoration-color: transparent;"
-					>
-						<Button
-							class="button-shaped-round"
-							style="font-size: 12px"
-						>
-							<Label>github</Label>
-				
-						</Button>
-					</a>
-
-					<div style="margin-right: 18px;"></div>
-
-
-					<ReusableSignInButton outlined={true}/>
-				</Section>
-			</Row>
-		</TopAppBar>
-	</div>
-</div>
-
-<AutoAdjust {topAppBar}>
+<TopNavbar>
 	<!-- <TopBannerWarnExperimental/> -->
-	<!-- <div style="">
-		<TabBar tabs={tabs} let:tab bind:active style="color: orange; margin-top: 0%; margin-left: 0%;">
-			<Tab {tab} stacked minWidth indicatorSpanOnlyContent style="color: orange;">
-				<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
-				<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
-			</Tab>
-		</TabBar>
-	</div> -->
-	
-	<div class="webflow-container" style="padding-top: 2%;">
-		<TabBar tabs={tabs} let:tab bind:active style="color: orange; margin-left: 0%;">
+	<div class="webflow-container" style="padding-top: 1%;">
+		<!-- '#F1F1F1' -->
+		<TabBar tabs={tabs} let:tab bind:active style="color: purple; margin-left: 0%;">
 			<Tab {tab} 
-				stacked minWidth indicatorSpanOnlyContent style="color: orange; border: 0px solid grey; border-radius: 0px; overflow: hidden;
-					background-color: {active.label === tab.label ? '#F1F1F1' : ''};
-					border-bottom: {active.label === tab.label ? 'orange 0px solid' : ''}
-
+				stacked minWidth style="color: orange; border: 0px solid grey; border-radius: 0px; overflow: hidden;
+					background-color: {active.label === tab.label ? '' : ''};
+					border-bottom: {active.label === tab.label ? 'purple 0px solid' : ''}
 				"
 			>
-				<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
-				<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
+				<Icon class="material-icons" style="color: {active.label === tab.label ? 'black' : 'grey'}; padding-top: 25px;">
+					{tab.icon}
+				</Icon>
+				<Label style="color: {active.label === tab.label ? 'black' : 'rgba(0, 0, 0, 0.9)'};
+						font-weight: {active.label === tab.label ? '600' : '400'};
+						margin-top: 5px; padding-bottom: 30px;">
+					{tab.label}
+				</Label>
 			</Tab>
 		</TabBar>
 
@@ -89,7 +27,7 @@
 						Ask question, get video.
 					</p>
 					<div style="margin-top: 24px;"></div>
-					<div style="font-size: 24px; max-width: 900px;">
+					<div style="font-size: 24px; max-width: 900px; line-height: 1.4">
 						Crowdfund a “Youtube Teacher” for your hardest classes in college.<br>
 						Get clear explanations for all your questions — together with other subscribers.
 					</div>
@@ -120,7 +58,7 @@
 			</div>
 		{:else}
 			<div class="header-flex">
-				<p class="header-title" style="font-size: 4em;">Teach what you love, supported by subscribers.</p>	
+				<p class="header-title" style="font-size: 4em;">Teach what you love - supported by subscribers</p>	
 				<div class="header-subcopy-wrapper">
 				
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
@@ -141,23 +79,25 @@
 					</div>
 
 					<div style="margin-bottom: 24px;"></div>
-				<ol style="font-weight: 400;">
-					<li>
-						Many people are great at explaining things, but don’t have an audience
-					</li>
 
-					<li>
-						Pre-pay $1 to encourage "Youtubers" to tryout for your class
-					</li>
+					<ol style="font-weight: 400;">
+						<li>
+							Colleges classes aren't always well-taught; class resources aren't always good enough.
+						</li>
+						<li>
+							To do well in any class, <u>we just need someone good at explaining things and gives a sh*t about us.</u>
+							Many former TAs & students all over the world are great at explaining things, but don’t know <i>where</i> they're needed
+						</li>
 
-					<li>
-						Pick the most helpful "Youtuber" for you (based on their videos) and subscribe for $10/month
-					</li>
+						<li>
+							Pre-pay $10 to crowdfund potential teachers to tryout for your class. You get permanent free subscriptions for paying early.
+						</li>
 
-					<li>
-						Who teaches? Usually former TAs & students from all over the world.
-					</li>
-				</ol>
+						<li>
+							Pick the most helpful "Youtuber" for you. It's a win-win: students get really good help for low prices of $10/month, 
+							while teachers can support themselves via economies-of-scale. 
+						</li>
+					</ol>
 				</div>
 
 							
@@ -168,21 +108,22 @@
 			</div>
 			</div>
 
-
-
-
 			{/if}
 
 			{#if active.label === 'Teach'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
-						This website provides infrastructure so you can easily share blackboard explanations for free viewers and <b style="color: #5d0068">$10/month subscribers</b>,
-						without the typical headaches of creating video content.
+						This website lets you teach people all over the world with blackboard videos (without additional responsibilities like grading). 
 
-						<br><br>
-						
+			
 						Just draw and talk on the blackboard - that's it. 
-						Let subscribers fall in love with the unique way you explain the subject.
+						You can help free viewers and <b style="color: #5d0068">$10/month subscribers</b>.
+						<br><br>
+
+						
+						
+					
+						It's the unique way you explain the subject that matters.
 
 
 						<!-- The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
@@ -234,7 +175,7 @@
 
 			<!-- HOW IT WORKS SECTION-->
 			<div bind:clientWidth={w} class="webflow-section">
-				<div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
+				<div class="webflow-h1" style="font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
 					How it works
 				</div>
 				<!-- from how classes normally present the material -->
@@ -307,21 +248,6 @@
 			</div>
 
 		<div class="webflow-section">
-			<!-- <div class="webflow-h1" style="font-family: sans-serif; font-weight: 600; color: hsl(0,0%,0%, 0.80); margin-bottom: 10px;">
-				How pay works
-			</div>
-
-			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; opacity: 0.8;">
-				Because you get paid proportional to how many students you help, there's no limit on how high you get paid.
-				You can set your own price from $5 - $50/week. Here's an income calculator assuming you charge $15/week.
-				<br>
-				<br>
-			</div>
-
-			<div style="font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 400; font-size: 1.8rem; margin-top: 1px; margin-bottom: 100px; opacity: 0.8;">
-				<ReusableIncomeCalculator weeklyPrice={15}/>
-			</div> -->
-
 			<HowItWorksStep
 				title="Step 1"
 				subtitle="Setup a shop with your example videos"
@@ -358,7 +284,7 @@
 			</HowItWorksStep>
 		</div>
 	{/if}
-</AutoAdjust>
+	</TopNavbar>
 
 <script>	
 	import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
@@ -372,12 +298,11 @@
 	import { user } from '../store.js'
 	import TabBar from '@smui/tab-bar';
 	import Tab, { Icon } from '@smui/tab';
-	import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
 	import { onMount, tick, onDestroy } from 'svelte'
 	import { page } from '$app/stores'
 	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
 	import { mixpanelLibrary } from '/src/mixpanel.js'
-	import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+	import TopNavbar from '$lib/TopNavbar.svelte'
 
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
@@ -441,7 +366,7 @@
 			classID: 'Mev5x66mSMEvNz3rijym'
 		},
 		{ titleForDebugging: 'Practice Finals: Fall 2018 Problem 11 (Value Iteration)',
-			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/AsUl1VWQ7zzxZsD5epL7',
+			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/o',
 			creatorName: 'Tony Wang',
 			className: 'Intro to Machine Learning',
 			classID: 'Mev5x66mSMEvNz3rijym'
@@ -481,7 +406,6 @@
 	// END OF GENERATING DEMO VIDEOS
 
 	let w
-	let topAppBar
 
 	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Teach', icon: 'draw'}]
 	let active = tabs[0]
@@ -550,18 +474,15 @@
 	margin-top: 0;
 	margin-bottom: 0;
 
-
 	// BELOW ARE CSS ATTRIBUTES I PUT IN ADDITION TO BASE ATTRIBUTES
 	box-sizing: border-box;
 
 	/* The -0.02em is the secret sauce for making sans-serif fonts look good **/
 	letter-spacing: -.02em; 
-	font-family: sans-serif; 
 	font-weight: 600; 
 
 	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
 	line-height: 1.0; // used to be 1.25 but GF suggests otherwise
-
 }
 
 @media only screen and (min-width: 1550px) {
@@ -592,11 +513,11 @@
 }
 
 .webflow-intro-type {
-	font-family: sans-serif; 
+	// font-family: sans-serif; 
 	font-size: 2.4rem; // used to be 5 rem
- 	line-height: 1.125; // used to be 1.25 but you know what happened last time
+ 	// line-height: 1.125; // used to be 1.25 but you know what happened last time
 	font-weight: 500;
-	letter-spacing: -.02em;
+	// letter-spacing: -.02em;
 	max-width: 100%;
 }
 

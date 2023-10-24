@@ -4,7 +4,7 @@
   </h2> -->
   <div slot="popup-content" style="font-family: sans-serif; padding: 12px; display: flex; justify-content: center;">
     <div style="width: 200px; margin-top: 20px;">
-      <div style="display: flex">
+      <div style="display: flex; align-items: center;">
         <hr style="
           display: block;
           flex: 1 1 0px;
@@ -14,9 +14,9 @@
           border: solid;
           border-width: thin 0 0 0;
           transition: inherit;
-          border-color: rgba(0,0,0,.12);
+          border-color: rgba(0,0,0,.50);
         ">
-        <div style="margin-left: 8px; margin-right: 8px; color: rgba(0,0,0,.6) !important; font-weight: 500;">
+        <div style="margin-left: 8px; margin-right: 8px; font-weight: 500; color: black; font-size: 20px;">
           Sign in with
         </div>
         <hr style="
@@ -28,7 +28,7 @@
           border: solid;
           border-width: thin 0 0 0;
           transition: inherit;
-          border-color: rgba(0,0,0,.12);
+          border-color: rgba(0,0,0,.50);
         ">
       </div>
   

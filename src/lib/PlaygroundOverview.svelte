@@ -10,11 +10,9 @@
   </span>
     <input 
       bind:this={SearchBar}
-      class="" 
       name="search" 
       maxlength="100" 
       placeholder="" 
-      aria-label="Explore popular communities" 
       autocomplete="off" 
       type="text" 
       bind:value={searchVal}
@@ -73,9 +71,7 @@
           </span>
         {/if}
         {category}
-
       </div>
-      
     {/each}
 
     <div style="margin-top: 48px;"></div>
@@ -87,7 +83,7 @@
     <span class="material-icons">
       folder
     </span>
-      Other Servers
+      Non-college servers
     </div>
   </div>
 
@@ -95,20 +91,11 @@
   <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
     <!-- Filters on top -->
     <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
-
       <div style="font-size: 16px; margin-left: 12px; margin-right: 12px;">
         Sort by:
       </div>
 
-
-      {#each filterTags as filterTag}
-        <div class="filter-tag"
-          on:click={() => currentlySelectedTag = filterTag}
-          class:orange-highlight={currentlySelectedTag === filterTag}
-        >
-          {filterTag}
-        </div>
-      {/each}
+      <MySelect options={filterTags} on:option-clicked={(e) => {currentlySelectedTag = e.detail.value; console.log(e.detail.option)}}/>
     </div>
 
     <div style="margin-bottom: 24px;">
@@ -118,12 +105,19 @@
     {#if subjectServers}
       {#each finalFilteredServers as serverObj, i}
         {#key serverObj.id}
-          <SimpleServerPreviewCard 
+          <SimpleServerPreviewCardBorderless
             {serverObj}
-          />
-          <div style="margin-bottom: 12px;"></div>
+          ></SimpleServerPreviewCardBorderless>
+          <!-- <SimpleServerPreviewCard 
+            {serverObj}
+          /> -->
+          <div style="margin-bottom: 18px;"></div>
         {/key}
       {/each}
+
+      <div style="">
+        <PopupNewServer/>
+      </div>
     {/if}
   </div>
 </div>
@@ -136,14 +130,16 @@
   import { goto } from "$app/navigation"
   import { user } from '/src/store.js'
   import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
-
+  import SimpleServerPreviewCardBorderless from '$lib/SimplePreviewCardBorderless.svelte'
+  import PopupNewServer from '$lib/PopupNewServer.svelte'
+  import MySelect from '$lib/MySelect.svelte'
+  import ShadowExperiment from "$lib/ShadowExperiment.svelte"
 
   let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Featured', 'Teachers', 'Pre-subscribers', 'Videos', 'Questions']
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
-
 
   
   let allServers = null
@@ -381,9 +377,9 @@
   }
 
   .orange-highlight {
-    background-color: #e2dddd;
+    /* background-color: #e2dddd; */
     color: black !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     /* color: white;
     border: 1px solid white; */
   }
@@ -407,7 +403,7 @@
     border-radius: 8px;
     font-weight: 400;
     margin-bottom: 12px;
-    color: hsl(0,0%,0%, 0.80);
+    color: hsla(0, 0%, 13%, 0.8);
   }
 
   .subject-category:hover {

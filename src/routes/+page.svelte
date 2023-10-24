@@ -14,13 +14,17 @@
 				</Section>
 
 				<Section align="end" toolbar>
-					<div style="margin-right: 48px;">
-						503 250 3868
-					</div>
-
-					<div style="margin-right: 24px;">
-						elton@explanations.app
-					</div>
+					<a href="" target="_blank" 
+						style="margin-left: 8px; text-decoration-color: transparent;"
+					>
+						<Button
+							class="button-shaped-round"
+							style="font-size: 12px;"
+						>
+							<Label>CONTACT</Label>
+							<!-- Phone & email -->
+						</Button>
+					</a>
 
 					<a href="https://eltonlin.substack.com/archive" target="_blank" 
 						style="margin-left: 8px; text-decoration-color: transparent;"
@@ -37,13 +41,19 @@
 					<a href="https://github.com/greatTA1998/explain" target="_blank" 
 						style="margin-left: 20px; text-decoration-color: transparent;"
 					>
+						<div style="width: 38px; height: 38px; border-radius: 19px; background-color: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
+							<img src="/github-logo-dark-mode-no-bg.png"
+							style="width: 54px; height: 54px;"
+							>
+						</div>
+<!-- 
 						<Button
 							class="button-shaped-round"
 							style="font-size: 12px"
 						>
 							<Label>github</Label>
 				
-						</Button>
+						</Button> -->
 					</a>
 
 					<div style="margin-right: 18px;"></div>
@@ -58,15 +68,6 @@
 
 <AutoAdjust {topAppBar}>
 	<!-- <TopBannerWarnExperimental/> -->
-	<!-- <div style="">
-		<TabBar tabs={tabs} let:tab bind:active style="color: orange; margin-top: 0%; margin-left: 0%;">
-			<Tab {tab} stacked minWidth indicatorSpanOnlyContent style="color: orange;">
-				<Icon class="material-icons" style="color: rgba(0, 0, 0, 0.9); padding-top: 25px;">{tab.icon}</Icon>
-				<Label style="color: rgba(0, 0, 0, 0.9); margin-top: 5px; padding-bottom: 30px;">{tab.label}</Label>
-			</Tab>
-		</TabBar>
-	</div> -->
-	
 	<div class="webflow-container" style="padding-top: 2%;">
 		<!-- '#F1F1F1' -->
 		<TabBar tabs={tabs} let:tab bind:active style="color: purple; margin-left: 0%;">
@@ -172,9 +173,6 @@
 				<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
 			</div>
 			</div>
-
-
-
 
 			{/if}
 

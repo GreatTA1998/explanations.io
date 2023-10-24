@@ -12,7 +12,7 @@
       bind:this={SearchBar}
       name="search" 
       maxlength="100" 
-      placeholder="Find your class servers" 
+      placeholder="" 
       autocomplete="off" 
       type="text" 
       bind:value={searchVal}
@@ -106,10 +106,13 @@
     {#if subjectServers}
       {#each finalFilteredServers as serverObj, i}
         {#key serverObj.id}
-          <SimpleServerPreviewCard 
+          <SimpleServerPreviewCardBorderless
             {serverObj}
-          />
-          <div style="margin-bottom: 12px;"></div>
+          ></SimpleServerPreviewCardBorderless>
+          <!-- <SimpleServerPreviewCard 
+            {serverObj}
+          /> -->
+          <div style="margin-bottom: 28px;"></div>
         {/key}
       {/each}
 
@@ -128,8 +131,10 @@
   import { goto } from "$app/navigation"
   import { user } from '/src/store.js'
   import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
+  import SimpleServerPreviewCardBorderless from '$lib/SimplePreviewCardBorderless.svelte'
   import PopupNewServer from '$lib/PopupNewServer.svelte'
   import MySelect from '$lib/MySelect.svelte'
+  import ShadowExperiment from "$lib/ShadowExperiment.svelte"
 
   let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']

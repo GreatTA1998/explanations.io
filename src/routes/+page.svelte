@@ -20,6 +20,8 @@
 			</Tab>
 		</TabBar>
 
+		<div style="margin-bottom: 58px"></div>
+
 		{#if active.label === 'Learn'}
 			<div class="header-flex">
 				<div>
@@ -27,7 +29,7 @@
 						Ask question, get video.
 					</p>
 					<div style="margin-top: 24px;"></div>
-					<div style="font-size: 24px; max-width: 900px; line-height: 1.4">
+					<div style="font-size: 22px; max-width: 900px; line-height: 1.4; font-weight: 500;">
 						Crowdfund a “Youtube Teacher” for your hardest classes in college.<br>
 						Get clear explanations for all your questions — together with other subscribers.
 					</div>
@@ -100,12 +102,12 @@
 					</ol>
 				</div>
 
-							
+<!-- 							
 			<div style="display: flex; justify-content: space-around;">
 				<img src="/roxbury-small-logo.jpg" width="300" height="165">
 				<img src="/small mit.png" width="260" height="120" style="margin-top: 14px;">
 				<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
-			</div>
+			</div> -->
 			</div>
 
 			{/if}
@@ -463,10 +465,10 @@
 }
 
 .header-title {
-	max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
+	// max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
 	margin-bottom: 0;
-	font-size: 4.5vw; /* was 6vw */
+	font-size: 6vw; /* was 6vw */
 	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
 	font-weight: 500;
 
@@ -693,6 +695,8 @@ li {
 
 		// additional properties
 		margin-top: 20px;
+
+		background-color: transparent;
 	}
 	
 	@media screen and (max-width: 991px) {

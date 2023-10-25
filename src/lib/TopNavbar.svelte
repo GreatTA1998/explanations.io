@@ -1,14 +1,20 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<!-- background-color: hsl(0,0%,0%, 0.75); -->
-		<TopAppBar bind:this={topAppBar} variant="standard" style="background-color: white; border-bottom: 0px solid lightgrey;">
-			<Row>
+		<TopAppBar bind:this={topAppBar} style="
+			border-bottom: 1px solid lightgrey; 
+		
+		">
+		<!-- 	box-shadow: 0 2px 4px -1px grey; -->
+				
+			<Row style="background-color: #f8f9f9;">
 				<Section>
+					<div style=""></div>
 					<img 
 						on:click={() => goto('/')}
-						src="/app-logo-no-bg.png" width="48" height="44" style="margin-left: 4px; margin-right: 8px; margin-top: 4px; cursor: pointer;"
+						src="/app-logo-no-bg.png" width="56" height="52" style="filter: brightness(80%); margin-left: 4px; margin-right: 6px; margin-top: 4px; cursor: pointer;"
 					>
-					<div style="font-weight: 500; font-size: 20px; color: black;">
+					<div style="font-weight: 400; font-size: 20px; color: hsl(0,0%,0%, 0.80);">
 						explanations.app
 					</div>
 
@@ -59,6 +65,7 @@
 						</div>
 					</ReusableSignInButton>
 
+					<div style=""></div>
 					
 				</Section>
 			</Row>
@@ -66,10 +73,12 @@
 	</div>
 </div>
 
-<AutoAdjust {topAppBar}>
-  <slot>
+<AutoAdjust {topAppBar} style="background-color: #f8f9f9;">
+	<div style="">
+		<slot>
 
-  </slot>
+		</slot>
+	</div>
 </AutoAdjust>
 
 <script>

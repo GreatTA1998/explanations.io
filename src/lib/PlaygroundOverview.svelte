@@ -83,7 +83,7 @@
     <span class="material-icons">
       folder
     </span>
-      Non-college servers
+      Uncategorized servers
     </div>
   </div>
 
@@ -167,9 +167,7 @@
     const searchQuery = searchVal
     for (const searchTerm of searchQuery.split(' ')) {
       for (const server of allServers) {
-        console.log('index of is =', server.name.indexOf(searchTerm))
         if (server.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
-          console.log('index of is =', server.name.indexOf(searchTerm))
           uniqueSet.add(server)
         }
       }
@@ -307,7 +305,7 @@
     if (!searchMatchedServers) return null
 
     // special cases
-    if (subjectName === 'All Subjects') return searchMatchedServers.filter(server => server.isYoutubeClass)
+    if (subjectName === 'All Subjects') return searchMatchedServers
     if (subjectName === 'Other Servers') return searchMatchedServers.filter(server => !server.isYoutubeClass)
 
     // general case

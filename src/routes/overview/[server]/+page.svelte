@@ -128,7 +128,7 @@
  
               >
                 <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 20px;">
-                  Sign up to teach
+                  Start teaching
                 </Label>
               </Button>
             </div>
@@ -177,7 +177,7 @@
 
             <Button on:click={() => isPresubscribePopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action">
               <Label style="text-transform: none; padding-left: 1px; padding-right: 1px; padding-top: 8px; padding-bottom: 8px; font-size: 20px;">
-                Pre-subscribe to server
+                Crowdfund more teachers
               </Label>
             </Button>
           </div>

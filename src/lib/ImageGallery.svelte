@@ -23,24 +23,26 @@
 
               {#if boardDoc}
                 <div style="padding-top: 6px;">
-                  <div style="display: flex">
+                  <!-- the width is doubled for so formatting is not messed up for 2x font size (which then gets scaled down) -->
+                  <div style="display: flex; width: {2*100}%;">
                     <ClassServerMyProfilePicture
                       radiusInPixels={14}
                       circleBorderColor={getRandomColor()}
                       on:click={() => goto(`profile/${galleryVideo.classID}/${boardDoc.creatorUID}`)}
                     />
-                    <div style="margin-left: 4px;">
-                      <div class="youtube-title-font">
+                    <div style="margin-left: 4px; font-size: 2rem; transform: scale(0.5); transform-origin: top left;">
+                      <div style="font-weight: 500;">
                         {galleryVideo.titleForDebugging}
                       </div>
                       
                       <div on:click={() => goto(`profile/${galleryVideo.classID}/${boardDoc.creatorUID}`)}
                         class="creator-channel-name"   
+                       
                       >
                         {galleryVideo.creatorName}
                       </div>
                 
-                      <div style="display: flex; color: #282828">
+                      <div style="display: flex; color: #282828;">
                         {roundedToFixed(boardDoc.viewMinutes, 0)} minutes viewed,
                         {galleryVideo.className}
                       </div>
@@ -104,19 +106,19 @@
   }
 
   .youtube-title-font {
-    font-family: "Roboto","Arial",sans-serif;
-    font-size: 1.2rem; // 1.6
-    line-height: 1.3rem; // 2.2
-    font-weight: 500;
-    overflow: hidden;
-    display: block;
-    max-height: 4.4rem;
-    -webkit-line-clamp: 2;
-    display: box;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    white-space: normal;
+    // font-family: "Roboto","Arial",sans-serif;
+    // font-size: 1.2rem; // 1.6
+    // line-height: 1.3rem; // 2.2
+    // font-weight: 500;
+    // overflow: hidden;
+    // display: block;
+    // max-height: 4.4rem;
+    // -webkit-line-clamp: 2;
+    // display: box;
+    // display: -webkit-box;
+    // -webkit-box-orient: vertical;
+    // text-overflow: ellipsis;
+    // white-space: normal;
   }
 
 

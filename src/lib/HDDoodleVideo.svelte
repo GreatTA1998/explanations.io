@@ -1,3 +1,10 @@
+<!-- Key techniques
+  Render in larger size, then scale down, rather than just render in current size
+  https://stackoverflow.com/questions/26176557/text-blurry-after-3d-transform
+
+  `transform-origin: top left` to preserve the formatting
+-->
+
 <div>
 
   <!-- The delete button is added here -->
@@ -64,6 +71,8 @@
     For reasons I don't understand, I need `position: absolute` 
     otherwise pencil strokes are submerged by back canvas 
   -->
+
+  <!-- WHEN THE SCALING GETS TOO MUCH, NOW IT'S THE SCALING DOWN THAT WILL CAUSE ERRORS E.G. SCALE (0.1) will produce lots of gaps-->
   <div style="position: relative; transform: scale(0.5); transform-origin: top left;">
     <canvas 
       bind:this={canvas} 

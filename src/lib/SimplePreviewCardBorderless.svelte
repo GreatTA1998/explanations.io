@@ -27,8 +27,8 @@
     > 
       <Blackboard
         {strokesArray}
-        canvasWidth={460}
-        canvasHeight={460 * 3/4}
+        canvasWidth={240}
+        canvasHeight={240 * 3/4}
         hideToolbar={true}
         on:intersect={fetchStrokes}
       />
@@ -69,50 +69,56 @@
           {#if serverObj.syllabusVersion === 'MIT'}
            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png" width="30" height="15">
           {:else if ['RCC', 'Roxbury Community College'].includes(serverObj.syllabusVersion)}
-            <img src="https://res.cloudinary.com/doa6grfya/image/upload/v1549032496/bw8nu2czsyxszrpc6age.jpg" width="30" height="30">
+            <img src="https://res.cloudinary.com/doa6grfya/image/upload/v1549032496/bw8nu2czsyxszrpc6age.jpg" width="24" height="24">
           {:else}
             <div class='college-chip'>
               {serverObj.syllabusVersion}
             </div>
           {/if}
 
-
           <div style="margin-left: 12px;"></div>
         {/if}
           
         <div class="college-chip">
-          cross-college
+          cross-colleges
         </div>
       </div>
 
       <div style="margin-top: 12px;"></div>
 
       <!-- position: absolute; top: auto; bottom: 20px; -->
-    <div style=" width: 460px; color: #2f3030;">
+    <div style="min-width: 360px; width: 100%; max-width: 500px; color: #2f3030;">
       <div style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; opacity: 1; font-weight: 500">
 
         
-        <div style="display: flex;" class:money-green={serverObj.crowdfundAmount > 0}>
-          <span class="material-icons" style="font-size: 17px;">attach_money</span>
+        <div style="display: flex; align-items: center;">
+          <span class="material-icons" style="font-size: 1.5rem;">attach_money</span>
           <div style="margin-right: -1px;"></div>
           <div>{serverObj.crowdfundAmount || 0} crowdfunded</div>
         </div>
 
-        <div style="display: flex;" class:teacher-purple={serverObj.numOfTeachers > 0}>
-          <span class="material-icons" style="font-size: 17px;">brush</span>
+        <div style="display: flex; align-items: center;" class:teacher-purple={serverObj.numOfTeachers > 0}>
+          <!-- brush -->
+          <span class="material-icons" style="font-size: 1.6rem;">draw</span>
           <div style="margin-right: 4px;"></div>
           <div>{serverObj.numOfTeachers} teachers</div>
         </div>
 
-        <div style="display: flex;" class:video-orange={serverObj.numOfVideos > 0}>
-          <span class="material-icons" style="font-size: 19px;">smart_display</span>
+        <div style="display: flex; align-items: center;" class:video-orange={serverObj.numOfVideos > 0}>
+          <span class="material-symbols-outlined" style="font-size: 1.65rem;">
+            smart_display
+            </span>
+          <!-- <span class="material-icons" style="font-size: 19px; color: white;">smart_display</span> -->
           <div style="margin-right: 4px;"></div>
           <div>{serverObj.numOfVideos} videos</div>
         </div>
         
-        <div style="display: flex;">
-          <span class="material-icons" style="font-size: 18px;">emoji_people</span>
-          <div style="margin-right: 2px;"></div>
+        <div style="display: flex; align-items: center;">
+          <span class="material-symbols-outlined" style="font-size: 1.6rem;">
+            sentiment_very_satisfied
+            </span>
+          <!-- <span class="material-icons" style="font-size: 18px;">mood</span> -->
+          <div style="margin-right: 4px;"></div>
           <div>0 subscribers</div>
         </div>
         
@@ -137,7 +143,7 @@
   import CodepenCardShadows from '$lib/CodepenCardShadows.svelte';
 
   let thumbnailWidth = 240
-  let thumbnailAspectRatio = 1 / 0.68
+  let thumbnailAspectRatio = 1 / 0.7
 </script>
 
 
@@ -145,15 +151,19 @@
   .college-chip {
     font-size: 12px; 
     font-weight: 500; 
-    border: 0px solid grey;
+    border: 1px solid lightgrey;
     border-radius: 4px; 
-    background-color: grey; 
-    color: white; 
+    background-color: transparent; 
+    color: grey; 
     display: flex; 
     align-items: center; 
     width: fit-content; 
     justify-content: center; 
-    right: 8px; top: 2px; left: auto; padding-left: 6px; padding-right: 6px; padding-top: 4px; padding-bottom: 4px;
+    right: 8px; top: 2px; left: auto; 
+    padding-left: 6px; 
+    padding-right: 6px; 
+    padding-top: 3px; 
+    padding-bottom: 3px;
   }
 
   /* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate

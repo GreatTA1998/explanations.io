@@ -177,7 +177,7 @@
 
             <Button on:click={() => isPresubscribePopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action">
               <Label style="text-transform: none; padding-left: 1px; padding-right: 1px; padding-top: 8px; padding-bottom: 8px; font-size: 20px;">
-                Crowdfund more teachers
+                Crowdfund a new teacher
               </Label>
             </Button>
           </div>

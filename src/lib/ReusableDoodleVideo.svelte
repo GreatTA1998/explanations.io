@@ -10,9 +10,10 @@
     <div use:lazyCallable={fetchStrokes} 
       style={`width: ${canvasWidth}px; height: ${canvasHeight + (80 * scaleFactor)}px; position: relative`}
     >
-      <DoodleVideo 
-        {canvasWidth}
-        {canvasHeight}
+
+      <HDDoodleVideo 
+        visualWidth={canvasWidth}
+        visualHeight={canvasHeight}
         {strokesArray} 
         audioDownloadURL={boardDoc.audioDownloadURL}
         backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
@@ -75,13 +76,14 @@
             {/if}
           </div>
         {/if}
-      </DoodleVideo>
+      </HDDoodleVideo>
     </div>
   </RenderlessFetchStrokes>
 {/if}
 
 <script>
   import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../store.js'
+  import HDDoodleVideo from '$lib/HDDoodleVideo.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { lazyCallable } from '../helpers/actions.js'

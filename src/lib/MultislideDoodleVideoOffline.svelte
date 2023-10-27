@@ -1,8 +1,10 @@
 <div style="display: flex;">
   {#each [0, 1, 2] as i}
     <div 
+      on:click={() => idxOfFocusedSlide = i}
       class:highlighted-glow={idxOfFocusedSlide === i}
-      style="width: 80px; height: 50px; border: 1px solid black; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"
+      class:low-lighted-glow={idxOfFocusedSlide !== i}
+      style="width: 80px; height: 50px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"
     >
       Slide { i + 1}
     </div>
@@ -13,12 +15,11 @@
   </div>
 
   <button on:click={() => dispatch('recording-retry')}
-    style="height: 50px; font-size: 1.1em"
+    style="height: 50px; font-size: 1.1em; border-radius: 25px;"
     class="offline-record-button"
   >
     Discard video and reset
   </button>
-
 </div>
 
 <div style="
@@ -185,8 +186,15 @@
 
 <style>
    .highlighted-glow {
-    background-color: orange;
+    background-color: hsl(0,0%,0%, 0.80);
     color: white;
+    font-weight: 500;
+    border-bottom: 4px solid orange;
+  }
+
+  .lowlighted-glow {
+    font-weight: 400;
+    border-bottom: 4px solid rgb(179, 179, 179);
   }
 
   .overlay-center {

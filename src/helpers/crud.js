@@ -105,6 +105,11 @@ export function createRoomDoc (classPath) {
     const classDoc = await getFirestoreDoc(classPath)
 
     const newDocID = getRandomID()
+        
+    const idOfSlide2 = getRandomID() 
+    const idOfSlide3 = getRandomID()
+
+
     const db = getFirestore()
     const roomRef = doc(db, classPath + `rooms/${newDocID}`)
     const blackboardRef = doc(db, classPath + `blackboards/${newDocID}`)
@@ -118,7 +123,18 @@ export function createRoomDoc (classPath) {
         // rooms have an order property, look at v3's drag and drop source code
       }),
       setDoc(blackboardRef, {
-        recordState: 'pre_record'
+        recordState: 'pre_record',
+        slideIDs: [newDocID, idOfSlide2, idOfSlide3],
+        isMultiboard: true
+      }),
+      setFirestoreDoc(classPath + `blackboards/${newDocID}/slides/${newDocID}`, {
+        // empty doc matters because it can then be updated with background images etc.
+      }),
+      setFirestoreDoc(classPath + `blackboards/${newDocID}/slides/${idOfSlide2}`, {
+        // empty doc matters because it can then be updated with background images etc.
+      }),
+      setFirestoreDoc(classPath + `blackboards/${newDocID}/slides/${idOfSlide3}`, {
+
       }),
       updateFirestoreDoc(classPath, {
         maxClassServerOrder: classDoc.maxClassServerOrder + 3
@@ -168,4 +184,3 @@ export async function updateNumOfSubfolders ({ draggedRoomID, droppedRoomID, bas
     resolve()
   })
 }
-

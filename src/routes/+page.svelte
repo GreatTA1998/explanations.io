@@ -42,7 +42,7 @@
 							min-height: 42px;
 							margin-top: 0.85vw; 
 							margin-bottom: 0.8vw; 
-							border-radius: 0px;
+							border-radius: 2.1vw;
 						"
 					>
 						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
@@ -70,6 +70,7 @@
 					</Button>
 				</div>
 			</div>			
+			<!-- MultislideRecordingDemo -->
 			<OfflineMultislideRecordingDemo/>
 		{/if}
 
@@ -120,11 +121,7 @@
 			
 						Just draw and talk on the blackboard - that's it. 
 						You can help free viewers and <b style="color: #5d0068">$10/month subscribers</b>.
-						<br><br>
-
-						
-						
-					
+						<br><br>					
 						It's the unique way you explain the subject that matters.
 
 

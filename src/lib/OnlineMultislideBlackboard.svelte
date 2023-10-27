@@ -1,12 +1,13 @@
 
 <div style="display: flex">
-  <div id="multislide-record-button-wrapper">
+  <div id="multislide-record-button-wrapper-{boardDoc.id}">
  
   </div>
   
   <div style="margin-left: 20px;"></div>
 
-  {#each [0, 1, 2] as i}
+  {#each boardDoc.slideIDs as slideID, i}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => changeToSlideIdx(i)}
       class:highlighted-glow={idxOfFocusedSlide === i}
       class:lowlighted-glow={idxOfFocusedSlide !== i}
@@ -19,73 +20,73 @@
 
 <div style="margin-bottom: 12px;"></div>
 
-<!-- <div style="display: flex; justify-content: space-evenly;"> -->
-  <div style="display: {idxOfFocusedSlide === 0 ? '' : 'none'}">
-    <Blackboard
-      strokesArray={strokesArray1}
-      {canvasWidth}
-      {canvasHeight}
-      currentTimeOverride={currentTime}
-      isOfflineDemo
-      on:stroke-drawn={(e) => dispatch(`stroke-drawn1`, { newStroke: e.detail.newStroke })}
-      on:board-wipe={() => dispatch(`board-wipe-1`)}
+{#each boardDoc.slideIDs as slideID, i}
+  <RenderlessListenToStrokes 
+    dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+    let:listenToStrokes={listenToStrokes} 
+    let:strokesArray={strokesArray}
+    let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
+    let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
+  >
+    <div 
+      use:lazyCallable={listenToStrokes} 
+      style="
+        display: {idxOfFocusedSlide === i ? '' : 'none'};
+        width: {canvasWidth}px; height: {canvasHeight}px; 
+        position: relative; 
+        border: 1px solid purple;
+      "
     >
-    </Blackboard>
-  </div>
-
-  <div style="display: {idxOfFocusedSlide === 1 ? '' : 'none'}">
-    <Blackboard
-      strokesArray={strokesArray2}
-      {canvasWidth}
-      {canvasHeight}
-      currentTimeOverride={currentTime}
-      isOfflineDemo
-      on:stroke-drawn={(e) => dispatch(`stroke-drawn2`, { newStroke: e.detail.newStroke })}
-      on:board-wipe={() => dispatch(`board-wipe-2`)}
-    >
-    </Blackboard>
-  </div>
-
-  <div style="display: {idxOfFocusedSlide === 2 ? '' : 'none'}">
-    <Blackboard
-      strokesArray={strokesArray3}
-      {canvasWidth}
-      {canvasHeight}
-      currentTimeOverride={currentTime}
-      isOfflineDemo
-      on:stroke-drawn={(e) => dispatch(`stroke-drawn3`, { newStroke: e.detail.newStroke })}
-      on:board-wipe={() => dispatch(`board-wipe-3`)}
-    >
-    </Blackboard>
-  </div>
-<!-- </div> -->
+    <!-- isOffline is a quickfix for functionalities that don't work such as uploading backgrounds -->
+      <Blackboard
+        isOfflineDemo
+        {strokesArray}
+        {canvasWidth}
+        {canvasHeight}
+        currentTimeOverride={currentTime}
+        on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+        on:board-wipe={deleteAllStrokesFromDb}
+        on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
+        on:background-reset={() => resetBackgroundImage(slideID)}
+      >
+      </Blackboard>
+    </div>
+  </RenderlessListenToStrokes>
+{/each}
 
 <!-- on:record-end={(e) => saveVideo(e.detail.audioBlob)} -->
 <RenderlessAudioRecorder
   let:startRecording={startRecording} 
   let:stopRecording={stopRecording}
-  on:record-end={(e) => dispatch('recording-finished', { audioBlob: e.detail.audioBlob })}
+  on:record-end={(e) => saveVideo(e.detail.audioBlob)}
 >
-  <div use:portal={'multislide-record-button-wrapper'}>
+  <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
     {#if !isRecording}
       <div 
         on:click={() => callFuncsInSequence(
-          lockMultislideBlackboard,
           startRecording,
           startStopwatch,
-          () => isRecording = true
+          () => isRecording = true,
+          () => {
+            // user doesn't necessarily start from slide 0,so ensure initial state is correct
+            timingOfSlideChanges.push({
+              toIdx: idxOfFocusedSlide,
+              timing: 0
+            })
+          }
         )}
-        class="offline-record-button" style="border-radius: 24px;">
-        Try recording offline
+        class="offline-record-button" style="border-radius: 24px;"
+      >
+        Record
       </div>
     {:else}
+      <!-- () => dispatch('timing-of-slide-changes-ready', { timingOfSlideChanges }) -->
       <button on:click={() => callFuncsInSequence(
-        () => dispatch('timing-of-slide-changes-ready', { timingOfSlideChanges }),
         stopRecording,
         stopStopwatch,
-        unlockMultislideBlackboard
+        () => willPreventPageLeave.set(true)
       )}
-        style="height: 50px; font-size: 1.1em"
+        style="height: 50px; font-size: 1.1em; border-radius: 25px;"
         class="offline-record-button"
       >
         Finish recording
@@ -98,33 +99,26 @@
   import Blackboard from '$lib/Blackboard.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte';
-  import { portal } from '/src/helpers/actions.js'
+  import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { user } from '/src/store.js'
-  import { getFirestore, query, getDocs, collection, where, increment } from 'firebase/firestore'
+  import { getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
   import { createEventDispatcher, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
+  import { willPreventPageLeave } from '/src/store'
+  import { mixpanelLibrary } from '/src/mixpanel.js'
 
-  export let strokesArray1
-  export let strokesArray2
-  export let strokesArray3
   export let canvasWidth
   export let canvasHeight
+  export let boardDoc // boardDoc.slideIDs
+  export let classID
 
   const dispatch = createEventDispatcher()
-
-  const classID = 't5ZxK9RQcWBCHBeKFhcc'
-  const powerpointID = 'QWERTYUIOP'
+  const boardPath = `classes/${classID}/blackboards/${boardDoc.id}/`
 
   let isRecording = false
-
-  let slideIDs = [
-    '123456789',
-    'abcdefghi',
-    'ABCDEFGHI'
-  ]
 
   const db = getFirestore()
 
@@ -136,16 +130,6 @@
   let etaOfNextTick = null
   
   let idxOfFocusedSlide = 0 
-
-  function changeToSlideIdx (newSlideIdx) {
-    idxOfFocusedSlide = newSlideIdx 
-    if (currentTime > 0) {
-      timingOfSlideChanges.push({
-        toIdx: idxOfFocusedSlide,
-        timing: currentTime
-      })
-    }
-  }
 
   const timingOfSlideChanges = []
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
@@ -160,12 +144,19 @@
           changeToSlideIdx(Math.min(idxOfFocusedSlide + 1, 2))
       }
     })
-
   })
 
-  async function saveVideo (audioBlob) {
-    console.log('check parameters =', audioBlob)
+  function changeToSlideIdx (newSlideIdx) {
+    idxOfFocusedSlide = newSlideIdx 
+    if (currentTime > 0) {
+      timingOfSlideChanges.push({
+        toIdx: idxOfFocusedSlide,
+        timing: currentTime
+      })
+    }
+  }
 
+  async function saveVideo (audioBlob) {
     // JOB #1: upload the audio blob
     let downloadURL 
     const storage = getStorage()
@@ -178,7 +169,7 @@
     // JOB #2: update metadata of dependent firestore docs (note "tutor" is a legacy name)
     let tutorDoc
     const q = query(
-      collection(db, `classes/${classID}/tutors`),
+      collection(db, `classes/${classID}/members`),
       where('uid', '==', $user.uid)
     )
     const otherDocsMetadataUpdateJob = getDocs(q).then(snap => {
@@ -186,7 +177,7 @@
       snap.docs.forEach(doc => {
         tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
       })
-      updateFirestoreDoc(`classes/${classID}/tutors/${tutorDoc.id}`, {
+      updateFirestoreDoc(`classes/${classID}/members/${tutorDoc.id}`, {
         numOfVideos: increment(1)
       })
       }
@@ -195,22 +186,21 @@
       })
     })
 
-    console.log('trying to resolve promise.all')
     await Promise.all([
       audioUploadJob,
       otherDocsMetadataUpdateJob
     ])
 
-    console.log('now updating the powerpoint itself')
-
     // FINALLY: update metadata of the multislide blackboard doc itself
-    updateFirestoreDoc(`classes/${classID}/powerpoints/${powerpointID}`, {
+    updateFirestoreDoc(boardPath, {
       creatorUID: $user.uid || '',
       creatorName: $user.name || '',
       creatorPhoneNumber: $user.phoneNumber || '',
       date: new Date().toISOString(),
       audioDownloadURL: downloadURL,
-      audioRefFullPath: audioRef.fullPath
+      audioRefFullPath: audioRef.fullPath,
+      timingOfSlideChanges,
+      isPaid: false
     })
   }
 
@@ -223,35 +213,6 @@
         return
       }
     }
-  }
-
-  function lockMultislideBlackboard (id) {
-    // return new Promise(async (resolve) => {
-    //   const path = `/classes/${classID}/powerpoints/${powerpointID}`
-    //   await updateFirestoreDoc(path, {
-    //     uidOfCurrentRecorder: $user.uid
-    //   })
-    //   resolve()
-    // })
-  }
-
-  function unlockMultislideBlackboard (id) {
-    // return new Promise(async (resolve) => {
-    //   const path = `/classes/${classID}/powerpoints/${powerpointID}`
-    //   await updateFirestoreDoc(path, {
-    //     uidOfCurrentRecorder: ''
-    //   })
-    //   resolve()
-    // })
-  }
-
-  function startMultislideRecording () {
-    startAudioRecord()
-    startStopwatch()
-  }
-
-  function stopMultislideRecording () {
-    stopAudioRecord(uploadVideoToCloud)
   }
 
   function uploadVideoToCloud ({ audioBlob }) {
@@ -309,6 +270,93 @@
     nextTimeoutID = ''
   }
   // END OF TIMER-RELATED CODE
+
+  // FILE UPLOAD RELATED CODE
+  async function handleWhatUserUploaded (imageFile, slideID) {
+    const slideRef = doc(getFirestore(), boardPath + `slides/${slideID}`)
+    if (!imageFile) return
+    if (imageFile.type.split("/")[0] === 'image') {
+      // rewrite
+      const storage = getStorage()
+      const imageRef = ref(storage, `images/${getRandomID()}`)
+      await uploadBytes(imageRef, imageFile)
+      const downloadURL = await getDownloadURL(imageRef)
+      updateDoc(slideRef, {
+        backgroundImageDownloadURL: downloadURL
+      })
+    } else {
+      alert("Error: only images can be used")
+    }
+  }
+
+  function resetBackgroundImage (boardID) {
+    const ref = doc(getFirestore(), boardPath + `slides/${slideID}`)
+    updateDoc(ref, {
+      backgroundImageDownloadURL: deleteField() // Svelte doesn't react to change to empty string, for some reason
+    })
+  }
+
+  // NOTE: we ignore the concurrent drawings with timestamp bug in this implementation
+  async function uploadVideo (audioBlob, boardID) {
+    const db = getFirestore()
+
+    // update metadata for tutor if it exists 
+    let tutorDoc
+    const q = query(
+      collection(db, membersDbPath),
+      where('uid', '==', $user.uid)
+    )
+    // base the member profile UID on the actual UID, so you don't need to do all these queries
+    const classDocUpdateObj = {} 
+
+    const snap = await getDocs(q) 
+    if (!snap.empty) {
+      // find the specific tutor doc
+      snap.docs.forEach(doc => {
+        tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
+      })
+      // that means it's the member's first server video
+      if (!tutorDoc.numOfVideos) {
+        classDocUpdateObj.numOfCreators = increment(1)
+      }
+      updateFirestoreDoc(membersDbPath + tutorDoc.id, {
+        numOfVideos: increment(1)
+      })
+    }
+    classDocUpdateObj.numOfVideos = increment(1) 
+    updateFirestoreDoc(`classes/${classID}`, classDocUpdateObj)
+
+    // upload the audio file
+    const storage = getStorage()
+    const audioRef = ref(storage, `audio/${getRandomID()}`)
+    await uploadBytes(audioRef, audioBlob)
+    const downloadURL = await getDownloadURL(audioRef)
+
+    const blackboardRef = doc(getFirestore(), boardPath)
+    await updateDoc(blackboardRef, {
+      creatorUID: $user.uid || '',
+      creatorName: $user.name || '',
+      creatorPhoneNumber: $user.phoneNumber || '',
+      date: new Date().toISOString(),
+      audioDownloadURL: downloadURL,
+      audioRefFullPath: audioRef.fullPath
+    })
+    updateRecordState(boardID, 'pre_record')
+
+    mixpanelLibrary.track('Video created')
+
+    // QUICKFIX
+    // only reproducible on my iPad (yet old Explain works for some reason)
+    // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
+    window.location.reload()
+  }
+
+  function updateRecordState (slideID, newRecordState) {
+    const blackboardRef = doc(getFirestore(), boardPath + slideID)
+    updateDoc(blackboardRef, {
+      recordState: newRecordState
+    })
+  }
 </script>
 
 <style>

@@ -55,9 +55,19 @@
               readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
             />
           </div>
-
-          {#if boardDoc.audioDownloadURL }
-            <RenderlessFetchStrokes dbPath={boardsDbPath + boardID}
+          {#if boardDoc.audioDownloadURL && boardDoc.isMultiboard}
+            <div style="margin-top: 24px;"></div>
+            <OnlineMultislideVideo
+              canvasWidth={0.95 * $maxAvailableWidth}
+              canvasHeight={0.95 * $maxAvailableHeight}
+              {boardDoc}
+              {classID}
+              audioDownloadURL={boardDoc.audioDownloadURL}
+              timingOfSlideChanges={boardDoc.timingOfSlideChanges}
+            />
+          {:else if boardDoc.audioDownloadURL}
+            <RenderlessFetchStrokes 
+              dbPath={boardsDbPath + boardID}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
               let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
@@ -296,6 +306,14 @@
                 <div style="margin-bottom: 10px;"></div>
               {/if}
             </RenderlessFetchComments>
+          {:else if boardDoc.isMultiboard}
+            <div style="margin-top: 24px;"></div>
+            <OnlineMultislideBlackboard 
+              {boardDoc}
+              canvasHeight={$maxAvailableHeight}
+              canvasWidth={$maxAvailableWidth}
+              {classID}
+            />
           {:else}
             <RenderlessListenToStrokes dbPath={boardsDbPath + boardID}
               let:listenToStrokes={listenToStrokes} 
@@ -392,7 +410,7 @@
 
     {#if roomDoc.blackboards}
       <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
-     <div on:click={createNewBlackboard}
+     <div on:click={createNewMultiboard}
         style="
           display: flex; 
           justify-content: center; 
@@ -409,7 +427,7 @@
           {#if hasQuestionMark(roomDoc.name)}
             Respond to question
           {:else}
-            New blackboard
+            New multiboard
           {/if}
      </div>
    {/if}
@@ -423,7 +441,7 @@
   import '$lib/_FourColor.scss'
   import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '../../../store.js'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
-  import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '../../../helpers/crud.js'
+  import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
   import { sendTextMessage } from '../../../helpers/cloudFunctions.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
@@ -454,6 +472,8 @@
   import ReusableButton from '$lib/ReusableButton.svelte'
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
+  import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
+  import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
 
   export let data
   let { classID, roomID } = data
@@ -953,6 +973,35 @@
     ]);  
     // await tick()
     // this.scrollToThisBoard(newID)
+  }
+
+  async function createNewMultiboard () {
+    const newID = getRandomID();  
+
+    const idOfSlide2 = getRandomID() 
+    const idOfSlide3 = getRandomID()
+
+    const blackboardRef = doc(getFirestore(), boardsDbPath + newID)
+    // TODO: use batch operation
+    await Promise.all([
+      setDoc(blackboardRef, { 
+        recordState: 'pre_record',
+        slideIDs: [newID, idOfSlide2, idOfSlide3],
+        isMultiboard: true
+      }),
+      setFirestoreDoc(boardsDbPath + newID + `/slides/${newID}`, {
+        // empty doc matters because it can then be updated with background images etc.
+      }),
+      setFirestoreDoc(boardsDbPath + newID + `/slides/${idOfSlide2}`, {
+        // empty doc matters because it can then be updated with background images etc.
+      }),
+      setFirestoreDoc(boardsDbPath + newID + `/slides/${idOfSlide3}`, {
+
+      }),
+      updateDoc(roomRef, {
+        blackboards: arrayUnion(newID)
+      })
+    ])
   }
 
   // A blackboard does not have an audioDownloadURL,

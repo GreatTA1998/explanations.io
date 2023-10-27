@@ -1,6 +1,6 @@
 
 <div style="display: flex">
-  <div id="multislide-record-button-wrapper">
+  <div id="multislide-record-button-wrapper-{boardDoc.id}">
  
   </div>
   
@@ -37,7 +37,9 @@
         border: 1px solid purple;
       "
     >
+    <!-- isOffline is a quickfix for functionalities that don't work such as uploading backgrounds -->
       <Blackboard
+        isOfflineDemo
         {strokesArray}
         {canvasWidth}
         {canvasHeight}
@@ -58,13 +60,20 @@
   let:stopRecording={stopRecording}
   on:record-end={(e) => saveVideo(e.detail.audioBlob)}
 >
-  <div use:portal={'multislide-record-button-wrapper'}>
+  <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
     {#if !isRecording}
       <div 
         on:click={() => callFuncsInSequence(
           startRecording,
           startStopwatch,
-          () => isRecording = true
+          () => isRecording = true,
+          () => {
+            // user doesn't necessarily start from slide 0,so ensure initial state is correct
+            timingOfSlideChanges.push({
+              toIdx: idxOfFocusedSlide,
+              timing: 0
+            })
+          }
         )}
         class="offline-record-button" style="border-radius: 24px;"
       >
@@ -94,7 +103,7 @@
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { user } from '/src/store.js'
-  import { getFirestore, query, getDocs, collection, where, increment } from 'firebase/firestore'
+  import { getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
   import { createEventDispatcher, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
@@ -148,12 +157,6 @@
   }
 
   async function saveVideo (audioBlob) {
-    // TO-DO: need timing of slide changes
-    // need audioDlwnloadURl
-
-
-    console.log('check audioBlob =', audioBlob)
-
     // JOB #1: upload the audio blob
     let downloadURL 
     const storage = getStorage()
@@ -183,13 +186,10 @@
       })
     })
 
-    console.log('trying to resolve promise.all')
     await Promise.all([
       audioUploadJob,
       otherDocsMetadataUpdateJob
     ])
-
-    console.log('now updating the powerpoint itself')
 
     // FINALLY: update metadata of the multislide blackboard doc itself
     updateFirestoreDoc(boardPath, {
@@ -213,15 +213,6 @@
         return
       }
     }
-  }
-
-  function startMultislideRecording () {
-    startAudioRecord()
-    startStopwatch()
-  }
-
-  function stopMultislideRecording () {
-    stopAudioRecord(uploadVideoToCloud)
   }
 
   function uploadVideoToCloud ({ audioBlob }) {

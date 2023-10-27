@@ -441,7 +441,7 @@
   import '$lib/_FourColor.scss'
   import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '../../../store.js'
   import { portal, lazyCallable } from '../../../helpers/actions.js'
-  import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '../../../helpers/crud.js'
+  import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
   import { sendTextMessage } from '../../../helpers/cloudFunctions.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
@@ -977,8 +977,10 @@
 
   async function createNewMultiboard () {
     const newID = getRandomID();  
+
     const idOfSlide2 = getRandomID() 
     const idOfSlide3 = getRandomID()
+
     const blackboardRef = doc(getFirestore(), boardsDbPath + newID)
     // TODO: use batch operation
     await Promise.all([
@@ -986,6 +988,15 @@
         recordState: 'pre_record',
         slideIDs: [newID, idOfSlide2, idOfSlide3],
         isMultiboard: true
+      }),
+      setFirestoreDoc(boardsDbPath + newID + `/slides/${newID}`, {
+        // empty doc matters because it can then be updated with background images etc.
+      }),
+      setFirestoreDoc(boardsDbPath + newID + `/slides/${idOfSlide2}`, {
+        // empty doc matters because it can then be updated with background images etc.
+      }),
+      setFirestoreDoc(boardsDbPath + newID + `/slides/${idOfSlide3}`, {
+
       }),
       updateDoc(roomRef, {
         blackboards: arrayUnion(newID)

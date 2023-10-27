@@ -41,7 +41,19 @@
     >
       play_circle
     </span>
-  {/if}
+  {/if} 
+
+  <div style="position: absolute; top: 8px; left: 8px; z-index: 6;">
+    <Button on:click={togglePlaySpeed} 
+      variant="raised" 
+      style="height: {20 * (canvasWidth / assumedCanvasWidth)}px; margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;"
+    >
+      <div style="color: white">
+        {playbackSpeed}x speed
+      </div>
+      <span class="material-icons"></span>
+    </Button>
+  </div>
 
   <!-- share, delete button overlay on top -->
   <div style="
@@ -76,9 +88,11 @@
       let:fetchStrokes={fetchStrokes}
       let:strokesArray={strokesArray}
       let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
+      let:deleteStrokesWithParam={deleteStrokesWithParam}
+      on:mounted={(e) => deleteFuncs = [...deleteFuncs, e.detail.deleteFunc]}
     > 
       <div style="display: none;" id="delete-button-{slideID}"
-        on:click={() => deleteNonInitialStrokesFromDb()}
+        on:click={() => deleteStrokesWithParam({ boardPath, strokesArray })}
       >
       </div>
 
@@ -107,10 +121,15 @@
   {/each}
 
   <audio
+    src={audioDownloadURL}
     bind:this={AudioPlayer}
     on:play={() => {
       hasPlaybackStarted = true;
+      isPlaying = true;
       startTimer();
+    }}
+    on:pause={() => {
+      isPlaying = false;
     }}
     on:seeking={() => {
       currentTime = AudioPlayer.currentTime;
@@ -145,7 +164,6 @@
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '/src/helpers/crud.js'
 
   export let audioDownloadURL
-  // export let audioBlob
   export let boardDoc
 
   export let classID
@@ -154,21 +172,23 @@
 
   export let timingOfSlideChanges
 
-  // $: blobURL = URL.createObjectURL(audioBlob)
-
-
   const boardPath = `classes/${classID}/blackboards/${boardDoc.id}`
   const dispatch = createEventDispatcher()
   let intervalID = ''
   let hasAudioSliderJumped = false
   let idxOfFocusedSlide = 0
+  let playbackSpeed = 1
 
+  let deleteFuncs = []
 
   let AudioPlayer
   let hasPlaybackStarted = false
 
   let currentTime = 0
   const ONE_HUNDRED_MILLISECS = 100
+  let isPlaying = false
+
+  let updateViewMinutesTimeoutID
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
 
@@ -189,15 +209,44 @@
     }
   }
 
+  $: if (AudioPlayer) {
+    playbackSpeed = AudioPlayer.playbackRate
+    // I know...AudioPlayer is not reactive because of bind:this, will refactor in future
+  }
+
   onMount(() => {
-    // const blobURL = URL.createObjectURL(audioBlob)
-    // console.log('blobURL =', blobURL)
-    AudioPlayer.src = audioDownloadURL
+    AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
+    // HANDLE INCREMENTING VIEW MINUTES
+    // after 6 seconds, if the video is still playing:
+    //   we tell parent to increment `viewMinutes` by 0.1,
+    //   we do another 6 seconds timeout (via recursion)
+    // BASE CASE: nothing will be updated nor called after the countdown if the video is no longer playing
+    const sixSeconds = 6000
+    function updateViewMinutes () {
+      updateViewMinutesTimeoutID = setTimeout(
+        () => {
+          if (isPlaying) {
+            dispatch('six-seconds-elapsed', { playbackSpeed })
+          }
+          updateViewMinutes()
+        },
+        sixSeconds
+      )
+    } 
+    updateViewMinutes()
   })
 
   onDestroy(() => {
     if (intervalID) clearInterval(intervalID)
   }) 
+
+  function togglePlaySpeed () {
+    if (AudioPlayer.playbackRate === 2) {
+      AudioPlayer.playbackRate = 1 
+    } else {
+      AudioPlayer.playbackRate = 2
+    }
+  }
 
   function startAudioPlayer () {
     if (AudioPlayer) {
@@ -212,10 +261,7 @@
     )
   }
   function createAndCopyShareLink () {
-    // videoID is defined as classID:blackboardID
-    // const shareLink = window.location.origin + '/video/' + classID + ':' + blackboardID 
     const shareLink = window.location.href
-    // const shareLink = window.location.origin + '/embed/' + classID + '/' + blackboardID
     navigator.clipboard.writeText(shareLink)
     alert('Share link has been copied, you can now paste it anywhere.')
   }
@@ -225,15 +271,12 @@
       return
     }
 
-    for (const slideID of boardDoc.slideIDs) {
-      // manually press each
-      const invisibleButton = document.getElementById(`delete-button-${slideID}`)
-      console.log('invisibleButton =', invisibleButton)
-      invisibleButton.click()
-      console.log('clicked element')
-      // const path = boardPath + `slides/${slideID}`
-      // deleteNonInitialStrokesFromDb(path, strokesArray)
+    const tempPromises = [] 
+
+    for (const deleteFunc of deleteFuncs) {
+      tempPromises.push(deleteFunc())
     }
+    await Promise.all(tempPromises)
 
     const promises = []
     const boardRef = doc(getFirestore(), boardPath)

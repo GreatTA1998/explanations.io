@@ -168,4 +168,3 @@ export async function updateNumOfSubfolders ({ draggedRoomID, droppedRoomID, bas
     resolve()
   })
 }
-

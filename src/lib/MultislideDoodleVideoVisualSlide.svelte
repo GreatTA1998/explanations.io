@@ -148,8 +148,6 @@
 
   function syncVisualsToCurrentTime (t) {
     if (!frontCtx) return
-    console.log('syncing, because currentTime is =', t)
-
     const nextDot = sequenceOfDots[nextDotIdx]
     // !nextFrame: nextFrame is undefined after a video finishes
     // ahead of video now (maybe because we slid back the audio player): nextFrame.startTime > AudioPlayer.currentTime 

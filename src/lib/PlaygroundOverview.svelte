@@ -42,7 +42,7 @@
         class:orange-highlight={currentlySelectedSubject === category}
       >
         {#if category === 'Mechanical Engineering'}
-          <span class="material-icons">
+          <span class="material-symbols-outlined">
             build
           </span>
         {:else if category === 'Computer Science'}
@@ -50,24 +50,24 @@
             data_array
           </span>
         {:else if category === 'Life Sciences'}
-          <span class="material-icons">
+          <span class="material-symbols-outlined">
             biotech
           </span>
         {:else if category === 'Economics'}
-          <span class="material-icons">
+          <span class="material-symbols-outlined">
             shopping_cart
           </span>
         {:else if category === 'Math'}
-          <span class="material-icons">
-            functions
+          <span class="material-symbols-outlined">
+            percent
           </span>
         {:else if category === 'Physics'}
           <span class="material-icons">
             air
           </span>
         {:else if category === 'All Subjects'}
-          <span class="material-icons">
-          explore
+          <span class="material-symbols-outlined">
+            explore
           </span>
         {/if}
         {category}
@@ -80,9 +80,9 @@
       on:click={() => currentlySelectedSubject = 'Other Servers'}
       class:orange-highlight={currentlySelectedSubject === 'Other Servers'}
     >
-    <span class="material-icons">
-      folder
-    </span>
+      <span class="material-symbols-outlined">
+        folder
+      </span>
       Uncategorized servers
     </div>
   </div>

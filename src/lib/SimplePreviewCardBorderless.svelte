@@ -54,10 +54,29 @@
 <div style="margin-left: 16px;"></div>
 
   <div class="server-card">
-    <div style="display: flex; position: relative;">
-      <div style="font-size: 24px; font-weight: 600; font-family: 'Inter'">
+    <div style="display: flex; position: relative; align-items: center;">
+      <div style="font-size: 24px; font-weight: 700; font-family: 'Inter'">
         {serverObj.name}
       </div>
+
+      <div style="right: 8px; left: auto; position: absolute;">
+        {#if serverObj.syllabusVersion}
+          {#if serverObj.syllabusVersion === 'MIT'}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png" width="30" height="15">
+          {:else if ['RCC', 'Roxbury Community College'].includes(serverObj.syllabusVersion)}
+            <img src="https://res.cloudinary.com/doa6grfya/image/upload/v1549032496/bw8nu2czsyxszrpc6age.jpg" width="24" height="24">
+          {:else}
+            <div class='college-chip'>
+              {serverObj.syllabusVersion}
+            </div>
+          {/if}
+        {:else}
+          <div class="college-chip">
+            cross-college
+          </div>
+        {/if}
+      </div>
+
     </div>
 
     <div style="margin-top: 4px;"></div>
@@ -76,24 +95,9 @@
 
     <div style="display: flex; align-items: center;">
       <div style="margin-top: 12px;"></div>
-        {#if serverObj.syllabusVersion}
-          {#if serverObj.syllabusVersion === 'MIT'}
-           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png" width="30" height="15">
-          {:else if ['RCC', 'Roxbury Community College'].includes(serverObj.syllabusVersion)}
-            <img src="https://res.cloudinary.com/doa6grfya/image/upload/v1549032496/bw8nu2czsyxszrpc6age.jpg" width="24" height="24">
-          {:else}
-            <div class='college-chip'>
-              {serverObj.syllabusVersion}
-            </div>
-          {/if}
 
-          <div style="margin-left: 12px;"></div>
-        {/if}
-          
-        <div class="college-chip">
-          cross-colleges
-        </div>
-      </div>
+    
+    </div>
 
       <div style="margin-top: 12px;"></div>
 
@@ -110,7 +114,9 @@
 
         <div style="display: flex; align-items: center;" class:teacher-purple={serverObj.numOfTeachers > 0}>
           <!-- brush -->
-          <span class="material-icons" style="font-size: 1.6rem;">draw</span>
+          <span class="material-symbols-outlined" style="font-size: 1.6rem;">
+            draw
+          </span>
           <div style="margin-right: 4px;"></div>
           <div>{serverObj.numOfTeachers} teachers</div>
         </div>
@@ -132,9 +138,7 @@
           <div style="margin-right: 4px;"></div>
           <div>0 subscribers</div>
         </div>
-        
     
-   
       </div>
       <!-- </div> -->
     <!-- END OF FOOTER METADATA FLEXBOX-->
@@ -164,12 +168,12 @@
 
 <style lang="scss">
   .college-chip {
-    font-size: 12px; 
-    font-weight: 500; 
-    border: 1px solid lightgrey;
+    font-size: 14px; 
+    font-weight: 700; 
+    border: 1px solid rgb(40, 14, 82);
     border-radius: 4px; 
     background-color: transparent; 
-    color: grey; 
+    color: rgb(40, 14, 82);   
     display: flex; 
     align-items: center; 
     width: fit-content; 
@@ -179,6 +183,7 @@
     padding-right: 6px; 
     padding-top: 3px; 
     padding-bottom: 3px;
+    text-transform: uppercase;
   }
 
   /* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate

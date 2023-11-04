@@ -77,27 +77,6 @@ audio::-webkit-media-controls-panel {
 }
 
 @media screen and (max-width: 991px) {
-	.header-subcopy-wrapper {
-		max-width: 700px;
-		margin-top: 30px;
-		margin-left: 0;
-		font-size: 1.2rem;
-	}
-}
-
-.header-subcopy-wrapper {
-	margin-left: 5vw;
-	max-width: 310px; 
-
-	// additional properties I copied from inspector 
-	display: flex; 
-	-webkit-flex-direction: column; 
-	justify-content: flex-end; 
-	-webkit-align-items: flex-start;
-	align-items: flex-start;
-}
-
-@media screen and (max-width: 991px) {
 	.header-subcopy {
 			max-width: 55vw;
 			font-size: 1.3rem;

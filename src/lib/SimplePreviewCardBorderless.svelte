@@ -11,47 +11,10 @@
   <!-- style:--elevation: 0;  -->
   <div 
     class="overall-container"
-    style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: {8}px; padding: 12px; overflow: hidden;
+    style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: {8 * 1}px; padding: 12px; overflow: hidden;
   " 
   on:click={() => goto(`/overview/${serverObj.id}`)}
 >
-
-  
-{#if serverObj.featuredBlackboardID}
-  <div style="
-    margin-left: -12px; 
-    margin-top: -12px; 
-    margin-bottom: -12px; 
-    min-width: {thumbnailWidth}px; 
-    max-width: {thumbnailWidth}px; 
-    height: {thumbnailWidth * 1/thumbnailAspectRatio}px; 
-    overflow: hidden;
-    border-radius: 8px;"
-  >
-    <RenderlessFetchStrokes 
-      dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
-      let:fetchStrokes={fetchStrokes}
-      let:strokesArray={strokesArray}
-      autoFetchStrokes={false}
-    > 
-      <HDBlackboard
-        {strokesArray}
-        canvasWidth={highDefinitionWidth * 0.7}
-        canvasHeight={highDefinitionWidth * 3/4 * 0.7}
-        {thumbnailWidth}
-        thumbnailHeight={thumbnailWidth * 3/4}
-        hideToolbar={true}
-        on:intersect={fetchStrokes}
-      />
-    </RenderlessFetchStrokes>
-  </div>
-{:else}
-  <div style="margin-left: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
-
-  </div>
-{/if}
-
-<div style="margin-left: 16px;"></div>
 
   <div class="server-card">
     <div style="display: flex; position: relative; align-items: center;">
@@ -147,6 +110,43 @@
     <div style="margin-top: 0px;"></div>
   </div>
 
+
+  <div style="margin-left: 16px;"></div>
+
+  {#if serverObj.featuredBlackboardID}
+    <div style="
+      margin-right: -12px; 
+      margin-top: -12px; 
+      margin-bottom: -12px; 
+      min-width: {thumbnailWidth}px; 
+      max-width: {thumbnailWidth}px; 
+      height: {thumbnailWidth * 1/thumbnailAspectRatio}px; 
+      overflow: hidden;
+      border-radius: 8px;"
+    >
+      <RenderlessFetchStrokes 
+        dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
+        let:fetchStrokes={fetchStrokes}
+        let:strokesArray={strokesArray}
+        autoFetchStrokes={false}
+      > 
+        <HDBlackboard
+          {strokesArray}
+          canvasWidth={highDefinitionWidth * 0.7}
+          canvasHeight={highDefinitionWidth * 3/4 * 0.7}
+          {thumbnailWidth}
+          thumbnailHeight={thumbnailWidth * 3/4}
+          hideToolbar={true}
+          on:intersect={fetchStrokes}
+        />
+      </RenderlessFetchStrokes>
+    </div>
+  {:else}
+    <div style="margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: 8px; border-bottom-right-radius: 8px;">
+
+    </div>
+  {/if}
+
 </div>
 
 <script>
@@ -225,7 +225,8 @@
     // margin-top: -12px;
     // margin-bottom: -12px;
     
-    padding-left: 0px;
+    padding-left: 12px;
+    padding-top: 6px;
     padding-right: 12px;
     /* margin-left: 8%; */
     /* height: 160px; */

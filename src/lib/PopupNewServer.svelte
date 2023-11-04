@@ -2,11 +2,11 @@
   on:click={() => isPopupOpen = true}
   color="secondary" variant="outlined" class="call-to-action-button" 
   style="	
-    height: 4.2vw; 
+    height: 3vw; 
     min-height: 42px;
     margin-top: 0.85vw; 
     margin-bottom: 0.8vw; 
-    border-radius: 2.1vw;
+    border-radius: 1.5vw;
   "
 >
   <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">

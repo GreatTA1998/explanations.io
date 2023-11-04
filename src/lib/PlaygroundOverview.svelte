@@ -1,9 +1,9 @@
 <div style="display: flex; justify-content: center;">
   <div class="input-container" style="position: relative; width: calc(70% - 180px);">
     <span class="material-icons" style="position: absolute;
-      top: 18px;
-      left: 15px;
-      font-size: 32px;
+      top: 20px;
+      left: 18px;
+      font-size: 48px;
       "
     >
       search
@@ -12,18 +12,18 @@
       bind:this={SearchBar}
       name="search" 
       maxlength="100" 
-      placeholder="" 
+      placeholder="Search by class name" 
       autocomplete="off" 
       type="text" 
       bind:value={searchVal}
       style="
         padding-left: 40px;
         width: 100%; 
-        height: 40px; 
-        font-size: 1.8em; 
+        height: 60px; 
+        font-size: 2.2em; 
         border-radius: 8px; 
         padding: 12px;
-        padding-left: 58px;
+        padding-left: 74px;
       "
       on:input={(e) => searchWithinClassNames(e)}
     >
@@ -375,7 +375,7 @@
   }
 
   .orange-highlight {
-    /* background-color: #e2dddd; */
+    background-color: #e2dddd;
     color: black !important;
     font-weight: 600 !important;
     /* color: white;

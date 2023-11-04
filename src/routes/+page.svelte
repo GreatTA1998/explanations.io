@@ -33,8 +33,8 @@
 						Crowdfund a “Youtube Teacher” for your hardest classes in college.<br>
 						Get clear explanations for all your questions — together with other subscribers.
 					</div>
-
 				</div>
+
 				<div class="header-subcopy-wrapper">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
 						style="	
@@ -43,10 +43,19 @@
 							margin-top: 0.85vw; 
 							margin-bottom: 0.8vw; 
 							border-radius: 2.1vw;
+							
 						"
 					>
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
-							Explore class servers
+						<Label style="text-transform: none; 
+							padding-left: 24px; padding-right: 24px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600;
+							display: flex; align-items: center;
+
+						">
+							Find your classes
+
+							<span style="margin-left: 4px;" class="material-symbols-outlined">
+								arrow_forward
+								</span>
 						</Label>
 					</Button>
 				</div>
@@ -486,7 +495,7 @@
 
 @media only screen and (min-width: 1550px) {
 	.header-title {
-		font-size: 4.5vw; /** webflow used 7rem*/
+		font-size: 6rem; // webflow's original is 7rem
 	}
 }
 
@@ -544,8 +553,10 @@
 	/* -webkit-justify-content: space-between;
 	// justify-content: space-between; */
 	justify-content: space-between;
+	align-items: center;
 
 	flex-wrap: wrap;
+	
 
 	// additional properties: 
 	// margin-top: 60px;
@@ -589,7 +600,8 @@
 }
 
 .header-subcopy-wrapper {
-	margin-left: 5vw;
+	// margin-left: 5vw;
+	margin-left: 0.5vw;
 	width: 90%;
 	max-width: 310px; 
 

@@ -50,8 +50,11 @@
 
         <div style="margin-top: 24px;"></div>
 
-        <Button disabled={!!!$user.uid} on:click={submitQuestion} variant="outlined"
+        <Button disabled={!!!$user.uid} 
+          on:click={submitQuestion} 
+          variant="outlined"
           color="secondary"
+          style="border-radius: 40px;"
         >
           Post my question to server
         </Button>

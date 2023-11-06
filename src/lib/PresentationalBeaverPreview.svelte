@@ -10,15 +10,18 @@
       radiusInPixels={20}
       circleBorderColor={$user.beaverProfilePicColor}
     />
+    <!-- purple color: #5d0068; -->
 
     <!-- colors used to be white -->
     <div style="margin-left: 4px;">
       <div>
-        <a style="color: #5d0068;">
+        <a style="color: black; font-weight: 500;">
         {helperDoc.name}
         </a>
       </div>
-      <div style="color: #5d0068;">{ helperDoc.numOfVideos || 0 } videos, { helperDoc.minutesViewed || 0 } minutes viewed</div>
+      <div style="font-size: 0.9rem;">
+        { helperDoc.numOfVideos || 0 } videos, { helperDoc.minutesViewed || 0 } minutes viewed
+      </div>
     </div>
   </div>
 </div>

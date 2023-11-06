@@ -318,7 +318,7 @@ function handleSomethingDropped (e, droppedRoomID) {
   }
   // if it's a blackboard, we expect first property to be `idx` adn second property to be `boardID`
   else if (key1 === 'boardID') {
-    moveVideoIntoAnotherRoom({ droppedRoomID, boardID: value1}) 
+    // moveVideoIntoAnotherRoom({ droppedRoomID, boardID: value1}) 
   }
   
   // figure out if it's blackboard or room
@@ -352,6 +352,9 @@ async function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
 // REORDERING WILL INVOLVE THE ROOM ABOVE AND THE ROOM BELOW
 // used to be called (e, room.id)
 // user dragged video into another room
+
+
+// the room ID should be kept track differently, maybe through the store
 async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
   const db = getFirestore()
   const batch = writeBatch(db)

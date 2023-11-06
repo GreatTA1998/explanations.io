@@ -23,7 +23,35 @@
   let:toggleMic={toggleMic}
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
-  <DrawerLayoutSkeleton {classDoc}>
+  <!-- MINI TOP APP BAR -->
+  <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 4px;" class="mdc-elevation--z{4}">
+    <div style="display: flex; align-items: center; width: 100%;">
+      <img 
+        on:click={handleLogoClick} 
+        src="/logo.png" 
+        width="60"
+        height="54" 
+        alt="web-logo" 
+        class="logo-image"
+      >
+
+      {#if classDoc}
+        <div style="flex-grow: 1">
+            <div style="display: flex; align-items: center; width: 100%;">
+              {#key classDoc}
+                <ClassDropdownMenu 
+                  nameOfClass={classDoc.name}
+                  descriptionOfClass={classDoc.description}
+                />
+              {/key}
+            </div>
+        </div>
+      {/if}
+    </div>
+  </div>
+
+  <!-- REST OF DRAWER CONTENT -->
+  <List>
     <div style="margin-top: 16px;"></div>
 
     <div 
@@ -123,16 +151,16 @@
         {classID}
       />
     </div>
-  </DrawerLayoutSkeleton>
+  </List>
 </RenderlessDailyVideoConference>
 
 
 <script>
+  import ClassDropdownMenu from '$lib/ClassDropdownMenu.svelte'
   import { onDestroy, onMount } from 'svelte'
   import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth} from '/src/store.js'
   
   import List, { Item, Text } from '@smui/list'
-	import DrawerLayoutSkeleton from '$lib/DrawerLayoutSkeleton.svelte'
   import RenderlessMyDocUpdater from '$lib/RenderlessMyDocUpdater.svelte'
   import RenderlessDailyVideoConference from '$lib/RenderlessDailyVideoConference.svelte'
   import { goto } from '$app/navigation'
@@ -158,10 +186,6 @@
 
 	// START OF RESIZE LOGIC 
   let resizeDebouncer = null
-
-
-  console.log('loading class layout')
-
 
   // NOTE: resize logic is currently scattered everywhere within this file, refactor later
   // adjust dimensions whenever $drawerWidth changes
@@ -218,6 +242,10 @@
       window.removeEventListener('resize', debouncedResizeHandler)
     }
   })
+
+  function handleLogoClick () {
+    goto('/', { replaceState: true })
+  }
 
   async function updateClassMetadata () {
     // keep track of number of members regardless of where they are

@@ -1,4 +1,4 @@
-<div use:portal={'main-content'} style="padding: 16px;">
+<div style="padding: 16px;">
   {#if !profileUID}
     <ReusableSignInButton frameworkColor="secondary"/>
   {:else}

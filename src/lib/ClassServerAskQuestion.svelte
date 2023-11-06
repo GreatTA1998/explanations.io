@@ -1,4 +1,4 @@
-<div use:portal={'main-content'}>
+<div>
   {#if isSignInPopupOpen}
     <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
   {/if} 

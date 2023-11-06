@@ -4,7 +4,7 @@
 {/if}
 
 {#if roomDoc}
-	<div use:portal={'main-content'}>
+	<div>
     <LeftDrawerToggleButton/>
     <div style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
  

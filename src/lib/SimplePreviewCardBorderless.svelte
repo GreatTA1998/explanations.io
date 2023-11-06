@@ -13,7 +13,7 @@
     class="overall-container"
     style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: {8 * 1}px; padding: 12px; overflow: hidden;
   " 
-  on:click={() => goto(`/overview/${serverObj.id}`)}
+  on:click={() => goto(`/${serverObj.id}/overview`)}
 >
 
   <div class="server-card">

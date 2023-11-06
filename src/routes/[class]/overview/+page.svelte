@@ -1,4 +1,4 @@
-<div use:portal={'main-content'}>
+<div style="padding: 16px;">
   This is the overview page where you can clearly get a good sense of the server activities and 
   easily sign up to teach / or crowdfund more teachers
 </div>

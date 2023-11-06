@@ -1,3 +1,7 @@
+<div id="container-for-audio-elements">
+
+</div>
+
 <slot {toggleMic} {activeSpeakerID} {firestoreIDToDailyID}>
 
 </slot>

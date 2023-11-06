@@ -7,17 +7,8 @@
     />
   {/key}
 {/if} -->
-
-<!-- TO-DO: what's unintuitive about this is that, this is not just a left frawer - this component 
-  also specifies where the main content goes. In the future, decouple that out of this component.
--->
-
-<div id="container-for-audio-elements">
-
-</div>
-
 <RenderlessDailyVideoConference 
-  roomID='Undefined for now'
+  {roomID}
   {willJoinVoiceChat}
   let:activeSpeakerID={activeSpeakerID}
   let:toggleMic={toggleMic}
@@ -55,18 +46,16 @@
     <div style="margin-top: 16px;"></div>
 
     <div 
-      class:explain-item-selected={isBecomeHelperPopupOpen}
+      class:drawer-item-glow={$page.routeId === '[class]/overview'}
       on:click={() => goto(`/${classID}/overview`)} 
       class="action-item"
       style="display: flex; align-items: center;"
     >
-      <span class="material-symbols-outlined" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
+      <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; opacity: 0.9">
         home
       </span>
 
-      <div style="margin-right: 4px;"></div>
-
-      <div style="font-size: 1.2rem; font-weight: 400;">
+      <div style="margin-left: 12px; font-size: 1.2rem; font-weight: 400;">
         Server Overview
       </div>
     </div>
@@ -77,14 +66,13 @@
     <!-- Notion's font color is rgba(25, 23, 17, 0.6) -->
     <div on:click={() => goto(`/${classID}/question`)} 
       class="action-item"
-      class:explain-item-selected={false}
+      class:drawer-item-glow={$page.routeId === '[class]/question'}
       style="display: flex; align-items: center;"
     >
-      <span class="material-icons" style="font-size: 2rem; margin-top: 2px;">
+      <span class="material-symbols-outlined" style="font-size: 1.8rem; margin-top: 2px;">
         add
       </span>
-      <div style="margin-right: 4px;"></div>
-      <div style="font-size: 1.2rem; font-weight: 400;">
+      <div style="margin-left: 10px; font-size: 1.2rem; font-weight: 400;">
         New question
       </div>
     </div> 
@@ -99,17 +87,16 @@
     {/if}
 
     <div 
-      class:explain-item-selected={isBecomeHelperPopupOpen}
+      class:drawer-item-glow={$page.routeId === '[class]/profile'}
       on:click={() => goto(`/${classID}/profile`)} 
       class="action-item"
       style="display: flex; align-items: center;"
     >
-      <span class="material-icons" style="font-size: 2rem; margin-top: 2px; opacity: 0.9">
+      <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; opacity: 0.9">
         account_circle
       </span>
-      <div style="margin-right: 4px;"></div>
-
-      <div style="font-size: 1.2rem; font-weight: 400;">
+      
+      <div style="margin-left: 12px; font-size: 1.2rem; font-weight: 400;">
         My profile
       </div>
     </div>
@@ -134,7 +121,7 @@
           {toggleMic}
           {activeSpeakerID}
           {willJoinVoiceChat}
-          roomID='This is used for moving videos to different rooms, fix later'
+          {roomID}
           {classID}
           orderWithinLevel={i}
           roomsInThisLevel={rootRooms}
@@ -172,6 +159,7 @@
   import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
   import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+  import { page } from '$app/stores'
 
   export let classID
   export let roomID
@@ -391,7 +379,7 @@
     background-color: rgb(233, 233, 233);
   }
 
-  .explain-item-selected {
+  .drawer-item-glow {
     /* so it doesn't get overriden by hover stles */
     background:hsl(0,0%,0%, 0.80) !important; 
     color: white;

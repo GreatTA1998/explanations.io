@@ -61,7 +61,7 @@
         <div 
           class:question-item={'?' === room.name.charAt(room.name.length - 1)} 
           class="my-truncated-text"
-          style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px"
+          style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px; font-weight: 500;"
         >
           {room.name } { room.numOfChildren ? `(${room.numOfChildren})` : '' }
         </div>

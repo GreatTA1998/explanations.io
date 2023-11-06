@@ -3,6 +3,7 @@
     <Content>
       <TheLeftDrawer 
         {classID}
+        {roomID}
       />
     </Content>
   </Drawer>
@@ -23,8 +24,8 @@
   import { user, drawerWidth, maxAvailableWidth, maxAvailableHeight } from '/src/store.js'
 
   export let data;
-  let { classID } = data;
-  $: ({ classID } = data); // so it stays in sync when `data` changes
+  let { classID, roomID } = data;
+  $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
 </script>
 
 <style>

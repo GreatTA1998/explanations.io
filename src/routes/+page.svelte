@@ -12,7 +12,7 @@
 				<Icon class="material-icons" style="color: {active.label === tab.label ? 'black' : 'grey'}; padding-top: 25px;">
 					{tab.icon}
 				</Icon>
-				<Label style="color: {active.label === tab.label ? 'black' : 'rgba(0, 0, 0, 0.9)'};
+				<Label style="color: {active.label === tab.label ? 'black' : 'rgba(0, 0, 0, 1)'};
 						font-weight: {active.label === tab.label ? '600' : '400'};
 						margin-top: 5px; padding-bottom: 30px;">
 					{tab.label}
@@ -26,16 +26,16 @@
 			<div class="header-flex">
 				<div>
 					<p class="header-title" style="line-height: 1.2">
-						Ask question, get video.
+						Get it properly explained
 					</p>
 					<div style="margin-top: 24px;"></div>
-					<div style="font-size: 22px; max-width: 900px; line-height: 1.4; font-weight: 500;">
-						Crowdfund a “Youtube Teacher” for your hardest classes in college.<br>
-						Get clear explanations for all your questions — together with other subscribers.
+					<div style="font-size: 32px; max-width: 100%; line-height: 1.4; font-weight: 500;">
+						Crowdfund the best “Youtube Teachers” to answer your long unresolved questions — once and for all.
 					</div>
 				</div>
+	
 
-				<div class="header-subcopy-wrapper">
+				<div class="header-subcopy-wrapper" style="margin-top: 32px; margin-left: 0px;">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
 						style="	
 							height: 4.2vw; 
@@ -51,10 +51,10 @@
 							display: flex; align-items: center;
 
 						">
-							Find your classes
+							Search classes
 
-							<span style="margin-left: 4px;" class="material-symbols-outlined">
-								arrow_forward
+							<span style="margin-left: 8px; font-size: 36px;" class="material-symbols-outlined">
+								search
 								</span>
 						</Label>
 					</Button>
@@ -84,7 +84,80 @@
 		{/if}
 
 			{#if active.label === 'Learn'}
+
 			<div class="webflow-section">
+				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 100px;">
+					Instructors have little skin-in-the-game in your learning outcome,
+					but are opinionated on how you learn
+					<div style="color: rgb(95, 95, 94);">
+						Evidence: making you attend all lectures, 
+						making you commute and wait in an overcrowded Office Hours instead of 
+						just making the material better. 
+						"Free tutoring program" often have no tutors available because why would someone good 
+						do it for minimum wage?
+					</div>
+				</div>
+
+				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 100px;">
+					Teachers on explanations.app respect your learning & your time
+				</div>
+
+				<div style="margin-bottom: 80px;"></div>
+
+				<div style="display: flex; justify-content: space-between; margin-left: 4%; margin-right: 4%">
+					<div>
+						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
+							globe
+						</span>
+
+						<div style="margin-top: 12px;"></div>
+
+						<div class="" style="font-size: 24px;">
+							Meritocratic teaching
+						</div>
+
+						<div style="margin-top: 12px;"></div>
+
+						<div style="width: 300px; color: rgb(61, 61, 61)">
+							Choose teachers from all over the world - including previous TAs & students 
+							- based on their explanations.
+						</div>
+					</div>
+
+					<div>
+						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
+							savings
+						</span>
+
+						<div style="margin-top: 12px;"></div>
+						<div class="" style="font-size: 24px;">
+							Affordable price
+						</div>
+
+						<div style="margin-top: 12px;"></div>
+						<div style="width: 300px; color: rgb(61, 61, 61)">
+							The crowdfund model, unlike private tutoring,
+							allows each learner to pay $10/month instead of $30/hour.
+						</div>
+					</div>
+
+				
+
+					<div>
+						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
+						local_convenience_store
+						</span>
+
+						<div style="margin-top: 12px;"></div>
+						<div style="font-size: 24px;"> 
+							Convenient
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="webflow-section" style="display: none;">
 				<div class="webflow-intro-type">
 					<div style="font-weight: 500;">
 						explanations.app = Youtube + Kickstarter for college classes 
@@ -452,18 +525,19 @@
 		}
 	}
 
-	@media screen and (max-width: 991px) {
+
+.image-gallery-container {
+	margin-top: 10%; 
+	margin-bottom: 24%; // was 24%
+	// margin-left: 2%;
+}
+
+@media screen and (max-width: 991px) {
 		.image-gallery-container {
 			margin-top: 0% !important;
 			margin-bottom: 8% !important;
 		}
 	}
-
-.image-gallery-container {
-	margin-top: 10%; 
-	margin-bottom: 24%;
-	// margin-left: 2%;
-}
 
 .webflow-section {
 	padding-top: 8%; 
@@ -495,7 +569,7 @@
 
 @media only screen and (min-width: 1550px) {
 	.header-title {
-		font-size: 6rem; // webflow's original is 7rem
+		font-size: 7rem; // webflow's original is 7rem
 	}
 }
 

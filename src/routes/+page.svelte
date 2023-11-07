@@ -87,19 +87,15 @@
 
 			<div class="webflow-section">
 				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 100px;">
-					Instructors have little skin-in-the-game in your learning outcome,
-					but are opinionated on how you learn
 					<div style="color: rgb(95, 95, 94);">
-						Evidence: making you attend all lectures, 
-						making you commute and wait in an overcrowded Office Hours instead of 
-						just making the material better. 
-						"Free tutoring program" often have no tutors available because why would someone good 
-						do it for minimum wage?
+					If your college class is hard to understand,
 					</div>
-				</div>
-
-				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 100px;">
-					Teachers on explanations.app respect your learning & your time
+					<div >
+						explanations.app has visual forums where you can ask for better explanations. 
+					</div>
+					<div style="color: rgb(95, 95, 94);">People worldwide reply with blackboard videos,
+						and you can subscribe to your favorite teacher for $10/month to regularly learn from their content.
+					</div>
 				</div>
 
 				<div style="margin-bottom: 80px;"></div>
@@ -137,7 +133,7 @@
 						<div style="margin-top: 12px;"></div>
 						<div style="width: 300px; color: rgb(61, 61, 61)">
 							The crowdfund model, unlike private tutoring,
-							allows each learner to pay $10/month instead of $30/hour.
+							allows each learner to pay $10/month instead of $30-100/hour.
 						</div>
 					</div>
 
@@ -151,6 +147,11 @@
 						<div style="margin-top: 12px;"></div>
 						<div style="font-size: 24px;"> 
 							Convenient
+						</div>
+						<div style="margin-top: 12px;"></div>
+						<div style="width: 300px; color: rgb(61, 61, 61)">
+							No need for long commutes and 
+							having to schedule sessions. Communicate async. without losing clarity because of videos and comments.
 						</div>
 					</div>
 				</div>

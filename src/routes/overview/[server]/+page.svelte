@@ -380,14 +380,6 @@
     color: #5d0068;
   }
 
-  @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter-Regular.woff2') format('woff2');
-    /* Add more src lines for different font weights/styles as needed */
-    font-weight: normal;
-    font-style: normal;
-  }
-
   .figma-inter-font {
     font-family: 'Inter', sans-serif;
   }

@@ -4,7 +4,7 @@
     style="display: flex; align-items: center; cursor: pointer; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;
       border-radius: 4px;
     "
-    class="paper-shadow"
+    class="core-shadow"
   >
     <ClassServerMyProfilePicture
       radiusInPixels={20}
@@ -38,7 +38,7 @@
 </script>
 
 <style>
-  .paper-shadow {
+  /* .paper-shadow {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
+  } */
 </style>

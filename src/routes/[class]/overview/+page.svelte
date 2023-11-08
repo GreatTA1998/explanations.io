@@ -6,11 +6,42 @@
 -->
 
 <div style="padding: 36px;">
-  <div style="font-size: 64px; font-weight: 600; color: rgb(50, 50, 50)">
-    Server Overview
-  </div>
+  {#if classDoc}
+    <div style="font-size: 64px; font-weight: 600; color: rgb(50, 50, 50)">
+      {classDoc.name}
+    </div>
+  {/if}
 
   <div style="margin-bottom: 48px;"></div>
+
+  <div style="display: flex; align-items: center; width: 100%;">
+    <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 140px">
+
+    <div style="margin-left: 24px; width: 100%;">
+      <div style="display: flex; align-items: center;">
+        <div style="font-size: 32px; color: #036E15">
+          $0 raised 
+        </div>
+      </div>
+
+      <div style="height: 8px; width: 100%; background-color: #7AEB8D; margin-top: 12px; position: relative; opacity: 0.4;">
+        <div style="height: 8px; width: {0}px; background-color: #036E15; margin-top: 12px; position: absolute;">
+     
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px;"></div>
+
+  <div style="width: 240px; height: 60px; font-size: 24px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
+    Add to crowdfund
+    <!-- <span class="material-symbols-outlined" style="font-size: 36px; margin-left: 12px;">
+      monetization_on
+      </span> -->
+  </div>
+
+
 
   <div style="display: flex; width: calc(100% - 400px - 80px); padding-top: 24px; padding-bottom: 24px;">         
     <!-- Teacher section -->
@@ -46,17 +77,17 @@
 
       <div style="margin-top: 40px;"></div>
 
-      <Button on:click={() => isTeacherPopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action" 
+      <!-- <Button on:click={() => isTeacherPopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action" 
 
       >
         <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 20px;">
-          Teach
+          Start teaching
         </Label>
 
         <span class="material-symbols-outlined" style="font-size: 1.6rem;">
           draw
         </span>
-      </Button>
+      </Button> -->
     </div>
 
     <!-- VERTICAL LINE THAT SPLITS THE FLEXBOX -->
@@ -101,14 +132,14 @@
 
       <div style="margin-top: 40px;"></div>
 
-      <Button on:click={() => isPresubscribePopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action">
+      <!-- <Button on:click={() => isPresubscribePopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action">
         <Label style="text-transform: none; padding-left: 1px; padding-right: 1px; padding-top: 8px; padding-bottom: 8px; font-size: 16px;">
-          Crowdfund ideal teacher to join
+          Start learning
         </Label>
         <span class="material-symbols-outlined">
-          globe
+          money
         </span>
-      </Button>
+      </Button> -->
     </div>
   </div>
 </div>
@@ -148,6 +179,8 @@
   export let data;
   let { classID } = data
   $: ({ classID } = data)
+
+  let classDoc
 
   let tweenedTeacherCount = 0
   let tweenedPresubsCount = 0
@@ -206,6 +239,8 @@
 
     fetchPresubscribers().then(docs => presubscriberDocs = docs)
     listenToTeacherDocs()
+
+    classDoc = await getFirestoreDoc(`/classes/${classID}`)
   })
 
   async function normalizeListHeights () {
@@ -300,14 +335,6 @@
     border: 2px solid #5d0068;
     background-color: white;
     color: #5d0068;
-  }
-
-  @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter-Regular.woff2') format('woff2');
-    /* Add more src lines for different font weights/styles as needed */
-    font-weight: normal;
-    font-style: normal;
   }
 
   .figma-inter-font {

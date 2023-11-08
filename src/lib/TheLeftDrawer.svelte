@@ -15,7 +15,8 @@
   let:firestoreIDToDailyID={firestoreIDToDailyID}
 >
   <!-- MINI TOP APP BAR -->
-  <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 4px;" class="mdc-elevation--z{4}">
+  <!-- class="mdc-elevation--z{4}" -->
+  <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 4px; border-bottom: 1px solid lightgrey;">
     <div style="display: flex; align-items: center; width: 100%;">
       <img 
         on:click={handleLogoClick} 
@@ -41,6 +42,26 @@
     </div>
   </div>
 
+  <!-- Notion's icon color is rgba(55, 53, 47, 0.45) -->
+  <!-- Notion's font color is rgba(25, 23, 17, 0.6) -->
+  <div style="width: 100%; display: flex; justify-content: center">
+    <div on:click={() => goto(`/${classID}/question`)} 
+      class="action-item"
+      class:drawer-item-glow={$page.routeId === '[class]/question'}
+      style="display: flex; align-items: center; justify-content: center; width: 80%; border-radius: 24px; 
+        color: #5d0068; 
+        background-color: white; 
+        border: 2px solid #5d0068;
+        height: 36px;"
+    >
+      <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px;">
+        add
+      </span>
+      <div style="margin-left: 4px; font-size: 1.2rem; font-weight: 400;">
+        New Post
+      </div>
+    </div> 
+  </div>
   <!-- REST OF DRAWER CONTENT -->
   <List>
     <div style="margin-top: 16px;"></div>
@@ -62,21 +83,6 @@
 
     <div style="margin-top: 12px;"></div>
 
-    <!-- Notion's icon color is rgba(55, 53, 47, 0.45) -->
-    <!-- Notion's font color is rgba(25, 23, 17, 0.6) -->
-    <div on:click={() => goto(`/${classID}/question`)} 
-      class="action-item"
-      class:drawer-item-glow={$page.routeId === '[class]/question'}
-      style="display: flex; align-items: center;"
-    >
-      <span class="material-symbols-outlined" style="font-size: 1.8rem; margin-top: 2px;">
-        add
-      </span>
-      <div style="margin-left: 10px; font-size: 1.2rem; font-weight: 400;">
-        New question
-      </div>
-    </div> 
-
     <div style="margin-top: 12px"></div>
 
     {#if isBecomeHelperPopupOpen}
@@ -85,21 +91,6 @@
         on:popup-close={() => isBecomeHelperPopupOpen = false}
       />
     {/if}
-
-    <div 
-      class:drawer-item-glow={$page.routeId === '[class]/profile'}
-      on:click={() => goto(`/${classID}/profile`)} 
-      class="action-item"
-      style="display: flex; align-items: center;"
-    >
-      <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; opacity: 0.9">
-        account_circle
-      </span>
-      
-      <div style="margin-left: 12px; font-size: 1.2rem; font-weight: 400;">
-        My profile
-      </div>
-    </div>
 
     <div style="margin-bottom: 48px;"></div>
 
@@ -139,6 +130,23 @@
       />
     </div>
   </List>
+  
+  <div style="position: absolute; bottom: 24px; top: auto;">
+    <div 
+      class:drawer-item-glow={$page.routeId === '[class]/profile'}
+      on:click={() => goto(`/${classID}/profile`)} 
+      class="action-item"
+      style="display: flex; align-items: center; width: 100%;"
+    >
+      <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; opacity: 0.9">
+        account_circle
+      </span>
+      
+      <div style="margin-left: 12px; font-size: 1.2rem; font-weight: 400;">
+        My profile
+      </div>
+    </div>
+  </div>
 </RenderlessDailyVideoConference>
 
 
@@ -380,8 +388,16 @@
   }
 
   .drawer-item-glow {
+    /* app purple: #5d0068 */
     /* so it doesn't get overriden by hover stles */
-    background:hsl(0,0%,0%, 0.80) !important; 
-    color: white;
+    background: #e2dddd !important; 
+    color: black !important;
+    font-weight: 600 !important;
+
+
+
+    /* so it doesn't get overriden by hover stles */
+    /* background:hsl(0,0%,0%, 0.80) !important; 
+    color: white; */
   }
 </style>

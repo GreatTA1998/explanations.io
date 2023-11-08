@@ -13,7 +13,6 @@
     bind:this={RoomElement}
     on:click={() => handleRoomClick(room.id)}
     on:keydown={() => {}}
-
     on:dragenter={() => { 
       if (!isInvalidSubpageDrop()) {
         RoomElement.style.background = 'rgb(87, 172, 247)' 
@@ -36,16 +35,25 @@
     <div style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; padding-top: 6px; padding-bottom: 6px;">
       {#if room.numOfChildren}
         {#if !isExpanded}
-          <span on:click|stopPropagation={() => {
-              expandChildrenRooms()
-            }} 
-            class="material-icons"
-          >
-            expand_more
-          </span>
+          <div style="border: 0px solid black; width: 40px; justify-content: center; display: flex;">
+            <div style="position: relative;">
+              <div style="display: flex; justify-content: center; margin-bottom: -16px; font-size: 12px; position: absolute; left: 12px; right: 12px; top: 8px; font-weight: 500">
+                {room.numOfChildren}
+              </div>
+            
+              <span class="material-symbols-outlined"
+              
+              on:click|stopPropagation={() => {
+                expandChildrenRooms()
+              }} 
+              style="font-size: 36px;">
+                folder
+              </span>
+            </div>
+          </div>
         {:else}
-          <span on:click|stopPropagation={() => isExpanded = false} class="material-icons">
-            chevron_right
+          <span on:click|stopPropagation={() => isExpanded = false} class="material-symbols-outlined" style="margin-right: 8px;">
+            folder_open
           </span>
         {/if}
       {:else}
@@ -63,11 +71,11 @@
           class="my-truncated-text"
           style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px; font-weight: 500;"
         >
-          {room.name } { room.numOfChildren ? `(${room.numOfChildren})` : '' }
+          {room.name } 
         </div>
       {:else}
         <div style="margin-bottom: 2px;">
-          untitled { room.numOfChildren ? `(${room.numOfChildren})` : '' }
+          untitled
         </div>
       {/if}
 
@@ -282,7 +290,14 @@ function handleRoomClick (roomID) {
       // maybe fix from Blackboard rendering logic side?
       willPreventPageLeave.set(false)
 
-      expandChildrenRooms()
+      if (!isExpanded) {
+        expandChildrenRooms()
+      } else {
+       
+        isExpanded = false
+      }
+
+
       goto(`/${classID}/${roomID}`)
     } else {
       // do nothing
@@ -290,7 +305,11 @@ function handleRoomClick (roomID) {
   }
 
   else {
-    expandChildrenRooms()
+    if (!isExpanded) {
+      expandChildrenRooms()
+    } else {
+      isExpanded = false
+    }
     goto(`/${classID}/${roomID}`)
   }
 }
@@ -488,9 +507,9 @@ async function deleteRoom (room) {
   }
 
   .selected {
-    font-weight: 500;
-    background-color:rgb(45, 44, 44) !important;
-    color: white;
+    font-weight: 700;
+    background-color: #e2dddd !important;
+    color: black;
     transition: background 20ms ease-in 0s;
   }
 

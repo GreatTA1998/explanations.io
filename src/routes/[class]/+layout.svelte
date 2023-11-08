@@ -1,5 +1,6 @@
 <div class="drawer-container">
-  <Drawer style="background: rgb(251, 251, 250); overflow-y: auto; height: 100%; width: {$drawerWidth}px" class="mdc-elevation--z{5}">
+  <!-- class="mdc-elevation--z{5}" -->
+  <Drawer style="background: rgb(251, 251, 250); overflow-y: auto; height: 100%; width: {$drawerWidth}px">
     <Content>
       <TheLeftDrawer 
         {classID}

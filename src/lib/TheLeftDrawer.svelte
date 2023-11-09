@@ -58,7 +58,7 @@
         add
       </span>
       <div style="margin-left: 4px; font-size: 1.2rem; font-weight: 400;">
-        New Post
+        New Question
       </div>
     </div> 
   </div>

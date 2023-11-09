@@ -1,4 +1,3 @@
-
 <div style="display: flex">
   <div id="multislide-record-button-wrapper-{boardDoc.id}">
  
@@ -62,23 +61,33 @@
 >
   <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
     {#if !isRecording}
-      <div 
-        on:click={() => callFuncsInSequence(
-          startRecording,
-          startStopwatch,
-          () => isRecording = true,
-          () => {
-            // user doesn't necessarily start from slide 0,so ensure initial state is correct
-            timingOfSlideChanges.push({
-              toIdx: idxOfFocusedSlide,
-              timing: 0
-            })
-          }
-        )}
-        class="offline-record-button" style="border-radius: 24px;"
-      >
-        Record
-      </div>
+      {#if !!!$user.uid}
+        <span on:click={() => isSignInPopupOpen = true} class="my-record-button">
+          sign in & record
+        </span>
+
+        {#if isSignInPopupOpen}
+          <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
+        {/if}
+      {:else}
+        <div 
+          on:click={() => callFuncsInSequence(
+            startRecording,
+            startStopwatch,
+            () => isRecording = true,
+            () => {
+              // user doesn't necessarily start from slide 0,so ensure initial state is correct
+              timingOfSlideChanges.push({
+                toIdx: idxOfFocusedSlide,
+                timing: 0
+              })
+            }
+          )}
+          class="offline-record-button" style="border-radius: 24px;"
+        >
+          Record
+        </div>
+      {/if}
     {:else}
       <!-- () => dispatch('timing-of-slide-changes-ready', { timingOfSlideChanges }) -->
       <button on:click={() => callFuncsInSequence(
@@ -96,6 +105,7 @@
 </RenderlessAudioRecorder>
 
 <script>
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte';
   import Blackboard from '$lib/Blackboard.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte';
@@ -114,6 +124,8 @@
   export let canvasHeight
   export let boardDoc // boardDoc.slideIDs
   export let classID
+
+  let isSignInPopupOpen = false
 
   const dispatch = createEventDispatcher()
   const boardPath = `classes/${classID}/blackboards/${boardDoc.id}/`
@@ -360,6 +372,22 @@
 </script>
 
 <style>
+  .my-record-button {
+    font-size: 1.2rem; 
+    color: cyan; 
+    margin-left: 28px; 
+    margin-right: 26px; 
+    font-family: sans-serif; 
+    border: 1px solid cyan; 
+    padding-top: 2px; 
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 9px; 
+    box-sizing: border-box;
+    border-radius: 1px;
+    cursor: pointer;
+  }
+
   .highlighted-glow {
     background-color: hsl(0,0%,0%, 0.80);
     color: white;

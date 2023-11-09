@@ -15,7 +15,7 @@
   <div style="margin-bottom: 48px;"></div>
 
   <div style="display: flex; align-items: center; width: 100%;">
-    <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 140px">
+    <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 160px">
 
     <div style="margin-left: 24px; width: 100%;">
       <div style="display: flex; align-items: center;">

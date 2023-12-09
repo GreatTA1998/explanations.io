@@ -5,43 +5,99 @@
   - Makes it easy to sign up to teach / or crowdfund new teachers
 -->
 
-<div style="padding-left: 36px; padding-right: 36px; padding-top: 24px; padding-bottom: 24px; background-color: #e2dddd">
+<div style="padding-left: 36px; padding-right: 36px; padding-top: 24px; padding-bottom: {100 + featuredVideoBleedMargin}px; background-color: #e2dddd">
     {#if classDoc}
       <div style="font-size: 36px; font-weight: 600; color: rgb(50, 50, 50)">
         {classDoc.name}
       </div>
-      <div style="font-size: 20px; margin-top: 12px; margin-bottom: 48px;">
+      <div style="font-size: 20px; margin-top: 12px;">
         {classDoc.description}
       </div>
     {/if}
 </div>
 
 <!-- Video gallery section -->
-<div style="display: flex; align-items: end; margin-top: -48px; margin-left: 36px; margin-right: 36px;">
-  {#each mostWatchedExplanations as explanation, i}
-    <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
-      <ReusableDoodleVideo
-        {boardDoc}
-        canvasWidth={i === currentlyWatchingIdx ? 400 : 120}
-        canvasHeight={i === currentlyWatchingIdx ? 300 : 90}
-        showEditDeleteButtons={false}
-        boardDbPath={explanation.path}
-      />
-    </RenderlessListenToBoard>
-    
-    <div style="margin-right: 12px;"></div>
-  {/each}
+<div style="display: flex; align-items: end; margin-top: {-76 - featuredVideoBleedMargin}px; margin-left: 36px; margin-right: 36px; position: relative;">
+  {#key mostWatchedExplanations}
+    {#each mostWatchedExplanations as explanation, i}
+      {#if i === currentlyWatchingIdx}
+        <div style="margin-right: 24px;">
+          <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
+            <ReusableDoodleVideo
+              {boardDoc}
+              canvasWidth={600}
+              canvasHeight={450}
+              showEditDeleteButtons={false}
+              boardDbPath={explanation.path}
+            />
+          </RenderlessListenToBoard>
+        </div>
+      {:else}
+        <!-- 17px is the title height -->
+        <!-- Rotate the gallery -->
+        <div 
+          on:click={() => rotateCarousel(i)} 
+          style="
+            width: {244}px; 
+            height: {244 * 3/4 + 17}px; 
+            overflow: hidden; 
+            margin-right: 24px;
+            position: {i === 0 ? 'absolute' : ''};
+            left: {i === 0 ? -260 : 0}px
+          "
+        >
+          <div style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 200px">
+            {explanation.title}
+          </div>
+
+          <RenderlessFetchStrokes 
+            dbPath={explanation.path}
+            let:fetchStrokes={fetchStrokes}
+            let:strokesArray={strokesArray}
+            autoFetchStrokes={false}
+          > 
+            <HDBlackboard
+              {strokesArray}
+              canvasWidth={$assumedCanvasWidth * 0.7}
+              canvasHeight={$assumedCanvasWidth * 3/4 * 0.7}
+              thumbnailWidth={200}
+              thumbnailHeight={200 * 3/4}
+              hideToolbar={true}
+              on:intersect={fetchStrokes}
+            />
+          </RenderlessFetchStrokes>
+        </div>
+      {/if}
+    {/each}
+  {/key}
+
+  {#if mostWatchedExplanations.length > 0}
+    <!-- Display featured video title, description and stats -->
+    <div style="position: absolute; left: {400 + 212}px; right: auto; top: 0px; bottom: auto; padding: 16px; background-color: rgb(251, 251, 251)">
+      <div style="color: rgb(90, 90, 90); font-size: 16px;">Most watched explanation</div>
+      <div style="font-size: 20px">{mostWatchedExplanations[currentlyWatchingIdx].title}</div>
+      <div style="margin-top: 28px; font-size: 14px;">
+        {mostWatchedExplanations[currentlyWatchingIdx].description}
+      </div>
+      <!-- Statistics -->
+      <div style="margin-top: 28px; font-size: 16px;">
+        {roundedToFixed(mostWatchedExplanations[currentlyWatchingIdx].viewMinutes, 0)} minutes viewed 
+        | 
+        See all {mostWatchedExplanations[currentlyWatchingIdx].numOfComments} comments
+      </div>
+    </div>
+  {/if}
 </div>
 
 <div style="padding-left: 36px; padding-right: 36px;">
-  <div style="margin-bottom: 48px;"></div>
+  <div style="margin-bottom: 24px;"></div>
 
   <div style="display: flex; align-items: center; width: 100%;">
-    <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 160px">
+    <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
 
     <div style="margin-left: 24px; width: 100%;">
       <div style="display: flex; align-items: center;">
-        <div style="font-size: 32px; color: #036E15">
+        <div style="font-size: 24px; color: #036E15; font-weight: 500;">
           $0 raised 
         </div>
       </div>
@@ -54,11 +110,9 @@
     </div>
   </div>
 
-  <div style="margin-top: 24px;"></div>
+  <div style="margin-top: 12px;"></div>
 
-  
-
-  <div style="width: 240px; height: 60px; font-size: 24px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
+  <div style="width: 136px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
     Add to crowdfund
   </div>
 
@@ -76,7 +130,7 @@
           </div>
       </div>
 
-      <div style="margin-bottom: 24px;"></div>
+      <div style="margin-bottom: 16px;"></div>
       
       {#if teacherDocs}
         <div class="people-list" bind:this={TeachersList} bind:clientHeight={TeachersListHeight}>
@@ -187,8 +241,11 @@
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import PopupConfirmTeacher from '$lib/PopupConfirmTeacher.svelte'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
+  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import HDBlackboard from '$lib/HDBlackboard.svelte'
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
-  import { user } from '/src/store.js'
+  import { user, assumedCanvasWidth } from '/src/store.js'
+  import { roundedToFixed } from '/src/helpers/utility.js'
 
   export let data;
 
@@ -196,11 +253,11 @@
   $: ({ classID } = data)
 
   let classDoc
-
   let tweenedTeacherCount = 0
   let tweenedPresubsCount = 0
   let isInitialLoad = true
   let unsubTeachersListener = null
+  const featuredVideoBleedMargin = 200
 
   $: if (teacherDocs) {
     animateNumber(teacherDocs.length)
@@ -263,6 +320,17 @@
     classDoc = await getFirestoreDoc(`/classes/${classID}`)
   })
 
+  function rotateCarousel (i) {
+    const copy = [...mostWatchedExplanations]
+    for (let j = 0; j < i; j += 1) {
+      const removedElems = copy.splice(j, 1) // remove jth element
+      copy.push(removedElems[0]) // put it in the back instead
+    }
+    mostWatchedExplanations = []
+    mostWatchedExplanations = copy
+    mostWatchedExplanations = [...mostWatchedExplanations]
+  }
+
   async function fetchMostWatchedExplanations () { 
     // query orderBy('viewMinutes') I assume it's a number
     // createFirestoreQuery({ 
@@ -276,9 +344,7 @@
     const q1 = query(q0, orderBy('viewMinutes', 'desc'))
     const q2 = query(q1, limit(3))
     const result = await getFirestoreQuery(q2)
-    console.log("result =", result)
     mostWatchedExplanations = result
-    
   }
 
 

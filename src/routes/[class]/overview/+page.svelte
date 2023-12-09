@@ -5,13 +5,35 @@
   - Makes it easy to sign up to teach / or crowdfund new teachers
 -->
 
-<div style="padding: 36px;">
-  {#if classDoc}
-    <div style="font-size: 64px; font-weight: 600; color: rgb(50, 50, 50)">
-      {classDoc.name}
-    </div>
-  {/if}
+<div style="padding-left: 36px; padding-right: 36px; padding-top: 24px; padding-bottom: 24px; background-color: #e2dddd">
+    {#if classDoc}
+      <div style="font-size: 36px; font-weight: 600; color: rgb(50, 50, 50)">
+        {classDoc.name}
+      </div>
+      <div style="font-size: 20px; margin-top: 12px; margin-bottom: 48px;">
+        {classDoc.description}
+      </div>
+    {/if}
+</div>
 
+<!-- Video gallery section -->
+<div style="display: flex; align-items: end; margin-top: -48px; margin-left: 36px; margin-right: 36px;">
+  {#each mostWatchedExplanations as explanation, i}
+    <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
+      <ReusableDoodleVideo
+        {boardDoc}
+        canvasWidth={i === currentlyWatchingIdx ? 400 : 120}
+        canvasHeight={i === currentlyWatchingIdx ? 300 : 90}
+        showEditDeleteButtons={false}
+        boardDbPath={explanation.path}
+      />
+    </RenderlessListenToBoard>
+    
+    <div style="margin-right: 12px;"></div>
+  {/each}
+</div>
+
+<div style="padding-left: 36px; padding-right: 36px;">
   <div style="margin-bottom: 48px;"></div>
 
   <div style="display: flex; align-items: center; width: 100%;">
@@ -34,14 +56,11 @@
 
   <div style="margin-top: 24px;"></div>
 
+  
+
   <div style="width: 240px; height: 60px; font-size: 24px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
     Add to crowdfund
-    <!-- <span class="material-symbols-outlined" style="font-size: 36px; margin-left: 12px;">
-      monetization_on
-      </span> -->
   </div>
-
-
 
   <div style="display: flex; width: calc(100% - 400px - 80px); padding-top: 24px; padding-bottom: 24px;">         
     <!-- Teacher section -->
@@ -78,7 +97,6 @@
       <div style="margin-top: 40px;"></div>
 
       <!-- <Button on:click={() => isTeacherPopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action" 
-
       >
         <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 20px;">
           Start teaching
@@ -162,21 +180,18 @@
 {/if}
 
 <script>
-  import { portal, lazyCallable } from '/src/helpers/actions.js'
-  import Blackboard from '$lib/Blackboard.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import { goto } from '$app/navigation'
   import { onMount, tick } from 'svelte'
-  import { getFirestoreDoc, getFirestoreQuery } from '/src/helpers/crud.js'
-  import Button, { Label } from '@smui/button'
-  import { query, getFirestore, collection, where, onSnapshot } from 'firebase/firestore'
+  import { getFirestoreDoc, getFirestoreQuery, updateFirestoreDoc, firestoreCollection } from '/src/helpers/crud.js'
+  import { query, getFirestore, collection, where, onSnapshot, limit, orderBy } from 'firebase/firestore'
   import PopupConfirmPresubscription from '$lib/PopupConfirmPresubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import PopupConfirmTeacher from '$lib/PopupConfirmTeacher.svelte'
-  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
+  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import { user } from '/src/store.js'
 
   export let data;
+
   let { classID } = data
   $: ({ classID } = data)
 
@@ -196,6 +211,9 @@
     animatePresubscribersCount(presubscriberDocs.length)
     // normalizeListHeights()
   }
+
+  let mostWatchedExplanations = []
+  let currentlyWatchingIdx = 0
 
   const mobileWidth = 400
   const navbarHeight = 24
@@ -230,6 +248,8 @@
 
   // you need to fetch the server
   onMount(async () => {
+    fetchMostWatchedExplanations()
+
     const serverDoc = await getFirestoreDoc(`classes/${classID}`)
     serverObj = serverDoc
 
@@ -242,6 +262,25 @@
 
     classDoc = await getFirestoreDoc(`/classes/${classID}`)
   })
+
+  async function fetchMostWatchedExplanations () { 
+    // query orderBy('viewMinutes') I assume it's a number
+    // createFirestoreQuery({ 
+    //   collectionPath: `classes/${classID}/blackboards`,
+    //   criteriaTerms: []
+    // })
+    // orderBy `viewMinutes`
+    // limit by 3
+
+    const q0 = firestoreCollection(`classes/${classID}/blackboards`)
+    const q1 = query(q0, orderBy('viewMinutes', 'desc'))
+    const q2 = query(q1, limit(3))
+    const result = await getFirestoreQuery(q2)
+    console.log("result =", result)
+    mostWatchedExplanations = result
+    
+  }
+
 
   async function normalizeListHeights () {
     if (PresubscribersList && TeachersList && (PresubscribersListHeight || TeachersListHeight)) {

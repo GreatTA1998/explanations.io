@@ -51,8 +51,8 @@
             left: {i === 0 ? -260 : 0}px
           "
         >
-          <div style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 200px">
-            {explanation.title}
+          <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 200px">
+            {explanation.title || explanation.description}
           </div>
           
           <div>
@@ -84,7 +84,9 @@
       <div style="color: rgb(90, 90, 90); font-size: 16px;">
         Most watched explanation
       </div>
-      <div style="font-size: 24px; font-weight: 500">{mostWatchedExplanations[currentlyWatchingIdx].title}</div>
+      <div style="font-size: 24px; font-weight: 500; max-width: 600px;" class="my-truncated-text">
+        {mostWatchedExplanations[currentlyWatchingIdx].title || mostWatchedExplanations[currentlyWatchingIdx].description}
+      </div>
       <div style="margin-top: 28px; font-size: 14px;">
         {mostWatchedExplanations[currentlyWatchingIdx].description}
       </div>
@@ -101,34 +103,37 @@
 <div style="padding-left: 36px; padding-right: 36px;">
   <div style="margin-bottom: 24px;"></div>
 
-  <div style="display: flex; align-items: center; width: 100%;">
-    <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
+  {#if classDoc}
+    <div style="display: flex; align-items: center; width: 100%;">
+      <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
 
-    <div style="margin-left: 24px; width: 100%;">
-      <div style="display: flex; align-items: center;">
-        <div style="font-size: 24px; color: #036E15; font-weight: 500;">
-          $0 raised 
+      <div style="margin-left: 24px; width: 100%;">
+        <div style="display: flex; align-items: center;">
+          <div style="font-size: 24px; color: #036E15; font-weight: 500;">
+            $0 raised 
+          </div>
         </div>
-      </div>
 
-      <div style="height: 8px; width: 100%; background-color: #7AEB8D; margin-top: 12px; position: relative; opacity: 0.4;">
-        <div style="height: 8px; width: {0}px; background-color: #036E15; margin-top: 12px; position: absolute;">
-     
+        <div style="height: 8px; width: 100%; background-color: #7AEB8D; margin-top: 12px; position: relative; opacity: 0.4;">
+          <div style="height: 8px; width: {0}px; background-color: #036E15; margin-top: 12px; position: absolute;">
+      
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div style="margin-top: 12px;"></div>
+    <div style="margin-top: 12px;"></div>
 
-  <div style="width: 136px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
-    Add to crowdfund
-  </div>
+    <div style="width: 136px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
+      Add to crowdfund
+    </div>
+  {/if}
 
-  <div style="display: flex; width: calc(100% - 400px - 80px); padding-top: 24px; padding-bottom: 24px;">         
-    <!-- Teacher section -->
-    <div style="min-width: 340px; width: 50%; height: 400px;">
-      <div style="display: flex; align-items: flex-end;">
+  <div style="display: flex; width: calc(100% - 400px - 80px); padding-top: 24px; padding-bottom: 24px;">    
+    {#if teacherDocs}     
+      <!-- Teacher section -->
+      <div style="min-width: 340px; width: 50%; height: 400px;">
+        <div style="display: flex; align-items: flex-end;">
           <!-- Need width otherwise digits jump 0 takes less width than 1  -->
           <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
             {tweenedTeacherCount}
@@ -137,11 +142,10 @@
           <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
             Teachers
           </div>
-      </div>
+        </div>
 
-      <div style="margin-bottom: 16px;"></div>
-      
-      {#if teacherDocs}
+        <div style="margin-bottom: 16px;"></div>
+
         <div class="people-list" bind:this={TeachersList} bind:clientHeight={TeachersListHeight}>
           {#each teacherDocs as teacherDoc}
             <div style="display: flex; align-items: center;">
@@ -154,74 +158,73 @@
             </div>
           {/each}
         </div>
-      {/if}
 
+        <div style="margin-top: 40px;"></div>
 
-      <div style="margin-top: 40px;"></div>
+        <!-- <Button on:click={() => isTeacherPopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action" 
+        >
+          <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 20px;">
+            Start teaching
+          </Label>
 
-      <!-- <Button on:click={() => isTeacherPopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action" 
-      >
-        <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 20px;">
-          Start teaching
-        </Label>
-
-        <span class="material-symbols-outlined" style="font-size: 1.6rem;">
-          draw
-        </span>
-      </Button> -->
-    </div>
+          <span class="material-symbols-outlined" style="font-size: 1.6rem;">
+            draw
+          </span>
+        </Button> -->
+      </div>
+    {/if}
 
     <!-- VERTICAL LINE THAT SPLITS THE FLEXBOX -->
     <div style="border-left: 1px solid lightgrey; height: {TeachersListHeight + 240}px; width: 1px; margin-left: {24}px; margin-right: {24-1}px;"></div>
 
     <!-- Pre-subscribers section -->
-    <div style="min-width: 340px; width: 50%; height: 400px;">
-      <div style="display: flex; align-items: flex-end;">
-        <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
-            {tweenedPresubsCount}
+    {#if presubscriberDocs}
+      <div style="min-width: 340px; width: 50%; height: 400px;">
+        <div style="display: flex; align-items: flex-end;">
+          <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
+              {tweenedPresubsCount}
+          </div>
+
+          <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
+            Learners
+          </div>
         </div>
 
-        <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
-          Learners
-        </div>
-      </div>
+        <div style="margin-bottom: 24px;"></div>
 
-      <div style="margin-bottom: 24px;"></div>
+        <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
+            {#each presubscriberDocs as presubscriberDoc}
+              <div style="display: flex; align-items: center;">
+                <span class="material-symbols-outlined" style="font-size: 54px; color: #9A9A9A; margin-top: 0px;">
+                  school
+                </span>
 
-      <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
-        {#if presubscriberDocs}
-          {#each presubscriberDocs as presubscriberDoc}
-            <div style="display: flex; align-items: center;">
-              <span class="material-symbols-outlined" style="font-size: 54px; color: #9A9A9A; margin-top: 0px;">
-                school
-              </span>
+                <div style="margin-right: 12px;"></div>
 
-              <div style="margin-right: 12px;"></div>
-
-              <div>
-                <div style="color: #7A7A7A;">
-                  {presubscriberDoc.name}
-                </div>
-                <div class="figma-inter-font">
-                  ${presubscriberDoc.presubscribeAmount}
+                <div>
+                  <div style="color: #7A7A7A;">
+                    {presubscriberDoc.name}
+                  </div>
+                  <div class="figma-inter-font">
+                    ${presubscriberDoc.presubscribeAmount}
+                  </div>
                 </div>
               </div>
-            </div>
-          {/each}
-        {/if}
+            {/each}
+        </div>
+
+        <div style="margin-top: 40px;"></div>
+
+        <!-- <Button on:click={() => isPresubscribePopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action">
+          <Label style="text-transform: none; padding-left: 1px; padding-right: 1px; padding-top: 8px; padding-bottom: 8px; font-size: 16px;">
+            Start learning
+          </Label>
+          <span class="material-symbols-outlined">
+            money
+          </span>
+        </Button> -->
       </div>
-
-      <div style="margin-top: 40px;"></div>
-
-      <!-- <Button on:click={() => isPresubscribePopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action">
-        <Label style="text-transform: none; padding-left: 1px; padding-right: 1px; padding-top: 8px; padding-bottom: 8px; font-size: 16px;">
-          Start learning
-        </Label>
-        <span class="material-symbols-outlined">
-          money
-        </span>
-      </Button> -->
-    </div>
+    {/if}
   </div>
 </div>
 
@@ -319,8 +322,8 @@
   onMount(async () => {
     fetchMostWatchedExplanations()
 
-    const serverDoc = await getFirestoreDoc(`classes/${classID}`)
-    serverObj = serverDoc
+    getFirestoreDoc(`/classes/${classID}`).then(result => classDoc = result)
+    getFirestoreDoc(`classes/${classID}`).then(result => serverObj = result)
 
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -328,8 +331,6 @@
 
     fetchPresubscribers().then(docs => presubscriberDocs = docs)
     listenToTeacherDocs()
-
-    classDoc = await getFirestoreDoc(`/classes/${classID}`)
   })
 
   function rotateCarousel (i) {

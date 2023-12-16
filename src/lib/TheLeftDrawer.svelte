@@ -16,7 +16,7 @@
 >
   <!-- MINI TOP APP BAR -->
   <!-- class="mdc-elevation--z{4}" -->
-  <div style="margin-bottom: 12px; padding-top: 2px; padding-bottom: 0; padding-left: 4px; border-bottom: 1px solid lightgrey;">
+  <div style="padding-top: 2px; padding-bottom: 0; padding-left: 4px;">
     <div style="display: flex; align-items: center; width: 100%;">
       <img 
         on:click={handleLogoClick} 
@@ -44,26 +44,34 @@
 
   <!-- Notion's icon color is rgba(55, 53, 47, 0.45) -->
   <!-- Notion's font color is rgba(25, 23, 17, 0.6) -->
-  <div style="width: 100%; display: flex; justify-content: center">
+  <!-- hsl(294, 100%, 20%) -->
+  <!-- Lighter purple (based on our theme color) #67416b -->
+  <div style="width: 100%; display: flex; margin-top: 12px; margin-bottom: 12px;">
     <div on:click={() => goto(`/${classID}/question`)} 
       class="action-item"
       class:drawer-item-glow={$page.routeId === '[class]/question'}
-      style="display: flex; align-items: center; justify-content: center; width: 80%; border-radius: 24px; 
-        color: #5d0068; 
-        background-color: white; 
-        border: 2px solid #5d0068;
-        height: 36px;"
+      style="
+        display: flex; 
+        align-items: center; 
+        width: 50%; 
+        border-radius: 24px; 
+
+        color: black; 
+        background-color: #e5e3e6; 
+        height: 28px;"
     >
-      <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px;">
+      <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px; margin-left: 8px;">
         add
       </span>
-      <div style="margin-left: 4px; font-size: 1.2rem; font-weight: 400;">
-        New Question
+      <div style="margin-left: 6px; font-size: 14px; font-weight: 400;">
+        New question
       </div>
     </div> 
   </div>
   <!-- REST OF DRAWER CONTENT -->
-  <List>
+  <List style="padding: 0">
+    <div style="width: 100%; border-top: 1px solid lightgrey;"></div>
+    
     <div style="margin-top: 16px;"></div>
 
     <div 
@@ -72,16 +80,18 @@
       class="action-item"
       style="display: flex; align-items: center;"
     >
-      <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; opacity: 0.9">
-        home
+      <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; margin-left: 8px; opacity: 0.9">
+        cottage
       </span>
 
-      <div style="margin-left: 12px; font-size: 1.2rem; font-weight: 400;">
+      <div style="margin-left: 12px; font-size: 16px;">
         Server Overview
       </div>
     </div>
 
-    <div style="margin-top: 12px;"></div>
+    <div style="margin-top: 16px;"></div>
+
+    <div style="width: 100%; border-bottom: 1px solid lightgrey;"></div>
 
     <div style="margin-top: 12px"></div>
 
@@ -92,10 +102,10 @@
       />
     {/if}
 
-    <div style="margin-bottom: 48px;"></div>
+    <div style="margin-bottom: 24px;"></div>
 
     <div style="display: flex; align-items: center;">
-      <div style="text-transform: uppercase; font-weight: 500; color: grey; margin-left: 12px;">
+      <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 24px;">
         Blackboard rooms
       </div>
       <span on:click={createNewRoom} class="material-icons new-room-button">
@@ -131,12 +141,12 @@
     </div>
   </List>
   
-  <div style="position: absolute; bottom: 24px; top: auto;">
+  <div style="position: absolute; bottom: 0px; top: auto; width: {DRAWER_EXPANDED_WIDTH - 2}px; background: white; height: 60px">
     <div 
       class:drawer-item-glow={$page.routeId === '[class]/profile'}
       on:click={() => goto(`/${classID}/profile`)} 
       class="action-item"
-      style="display: flex; align-items: center; width: 100%;"
+      style="display: flex; align-items: center;"
     >
       <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; opacity: 0.9">
         account_circle
@@ -168,6 +178,7 @@
   import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import { page } from '$app/stores'
+  import { DRAWER_EXPANDED_WIDTH } from '/src/helpers/CONSTANTS.js'
 
   export let classID
   export let roomID
@@ -389,12 +400,12 @@
 
   .drawer-item-glow {
     /* app purple: #5d0068 */
+    /* new orange: #f7c37e */
     /* so it doesn't get overriden by hover stles */
-    background: #e2dddd !important; 
+    background: #f7c686;
+    /* background: #e2dddd !important;  */
     color: black !important;
     font-weight: 600 !important;
-
-
 
     /* so it doesn't get overriden by hover stles */
     /* background:hsl(0,0%,0%, 0.80) !important; 

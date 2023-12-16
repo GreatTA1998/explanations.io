@@ -5,9 +5,14 @@
   - Makes it easy to sign up to teach / or crowdfund new teachers
 -->
 
-<div style="padding-left: 36px; padding-right: 36px; padding-top: 24px; padding-bottom: {100 + featuredVideoBleedMargin}px; background-color: #e2dddd">
+<!--
+  Previous colors: 
+  #e2dddd
+  #ffad42
+ -->
+<div style="padding-left: 36px; padding-right: 36px; padding-top: 24px; padding-bottom: {100 + featuredVideoBleedMargin}px; background-color: #f7c686">
     {#if classDoc}
-      <div style="font-size: 36px; font-weight: 600; color: rgb(50, 50, 50)">
+      <div style="font-size: 36px; font-weight: 600; color: rgb(20, 20, 20)">
         {classDoc.name}
       </div>
       <div style="font-size: 20px; margin-top: 12px;">
@@ -17,11 +22,11 @@
 </div>
 
 <!-- Video gallery section -->
-<div style="display: flex; align-items: end; margin-top: {-76 - featuredVideoBleedMargin}px; margin-left: 36px; margin-right: 36px; position: relative;">
+<div style="display: flex; align-items: end; margin-top: {-76 + finalAdjustment - featuredVideoBleedMargin}px; margin-left: 36px; margin-right: 36px; position: relative;">
   {#key mostWatchedExplanations}
     {#each mostWatchedExplanations as explanation, i}
       {#if i === currentlyWatchingIdx}
-        <div style="margin-right: 24px;">
+        <div style="margin-right: {gapBetweenEachVideo}px; border-radius: 12px; overflow: hidden;">
           <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
             <ReusableDoodleVideo
               {boardDoc}
@@ -38,10 +43,10 @@
         <div 
           on:click={() => rotateCarousel(i)} 
           style="
-            width: {244}px; 
-            height: {244 * 3/4 + 17}px; 
+            width: {carouselItemPreviewWidth}px; 
+            height: {carouselItemPreviewWidth * 3/4 + 17}px; 
             overflow: hidden; 
-            margin-right: 24px;
+            margin-right: {gapBetweenEachVideo}px;
             position: {i === 0 ? 'absolute' : ''};
             left: {i === 0 ? -260 : 0}px
           "
@@ -49,23 +54,25 @@
           <div style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 200px">
             {explanation.title}
           </div>
-
-          <RenderlessFetchStrokes 
-            dbPath={explanation.path}
-            let:fetchStrokes={fetchStrokes}
-            let:strokesArray={strokesArray}
-            autoFetchStrokes={false}
-          > 
-            <HDBlackboard
-              {strokesArray}
-              canvasWidth={$assumedCanvasWidth * 0.7}
-              canvasHeight={$assumedCanvasWidth * 3/4 * 0.7}
-              thumbnailWidth={200}
-              thumbnailHeight={200 * 3/4}
-              hideToolbar={true}
-              on:intersect={fetchStrokes}
-            />
-          </RenderlessFetchStrokes>
+          
+          <div>
+            <RenderlessFetchStrokes 
+              dbPath={explanation.path}
+              let:fetchStrokes={fetchStrokes}
+              let:strokesArray={strokesArray}
+              autoFetchStrokes={false}
+            > 
+              <HDBlackboard
+                {strokesArray}
+                canvasWidth={$assumedCanvasWidth * 0.7}
+                canvasHeight={$assumedCanvasWidth * 3/4 * 0.7}
+                thumbnailWidth={200}
+                thumbnailHeight={200 * 3/4}
+                hideToolbar={true}
+                on:intersect={fetchStrokes}
+              />
+            </RenderlessFetchStrokes>
+          </div>
         </div>
       {/if}
     {/each}
@@ -73,9 +80,11 @@
 
   {#if mostWatchedExplanations.length > 0}
     <!-- Display featured video title, description and stats -->
-    <div style="position: absolute; left: {400 + 212}px; right: auto; top: 0px; bottom: auto; padding: 16px; background-color: rgb(251, 251, 251)">
-      <div style="color: rgb(90, 90, 90); font-size: 16px;">Most watched explanation</div>
-      <div style="font-size: 20px">{mostWatchedExplanations[currentlyWatchingIdx].title}</div>
+    <div style="border-radius: 12px; position: absolute; left: {400 + 212}px; right: auto; top: 0px; bottom: auto; padding: 16px; background-color: rgb(251, 251, 251)">
+      <div style="color: rgb(90, 90, 90); font-size: 16px;">
+        Most watched explanation
+      </div>
+      <div style="font-size: 24px; font-weight: 500">{mostWatchedExplanations[currentlyWatchingIdx].title}</div>
       <div style="margin-top: 28px; font-size: 14px;">
         {mostWatchedExplanations[currentlyWatchingIdx].description}
       </div>
@@ -257,7 +266,10 @@
   let tweenedPresubsCount = 0
   let isInitialLoad = true
   let unsubTeachersListener = null
-  const featuredVideoBleedMargin = 200
+  const featuredVideoBleedMargin = 200 
+  let finalAdjustment = 8
+  let carouselItemPreviewWidth = 212
+  let gapBetweenEachVideo = 36
 
   $: if (teacherDocs) {
     animateNumber(teacherDocs.length)

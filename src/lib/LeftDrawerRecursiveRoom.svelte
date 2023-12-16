@@ -35,18 +35,19 @@
     <div style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; padding-top: 6px; padding-bottom: 6px;">
       {#if room.numOfChildren}
         {#if !isExpanded}
-          <div style="border: 0px solid black; width: 40px; justify-content: center; display: flex;">
-            <div style="position: relative;">
-              <div style="display: flex; justify-content: center; margin-bottom: -16px; font-size: 12px; position: absolute; left: 12px; right: 12px; top: 8px; font-weight: 500">
+          <div style="width: 40px; display: flex; justify-content: center; align-items: center; margin-right: 8px;">
+            <!-- CSS question: why doesn't this relative div take the height of its children? It also doesn't respond to "height: fit-content" -->
+            <div style="position: relative; height: 30px">
+              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: -16px; font-size: 12px; position: absolute; left: 18px; right: auto; top: 0px; font-weight: 500; background-color: grey; border-radius: 20px; width: 16px; height: 16px; color: white;">
                 {room.numOfChildren}
               </div>
             
               <span class="material-symbols-outlined"
-              
-              on:click|stopPropagation={() => {
-                expandChildrenRooms()
-              }} 
-              style="font-size: 36px;">
+                on:click|stopPropagation={() => {
+                  expandChildrenRooms()
+                }} 
+                style="font-size: 30px;"
+              >
                 folder
               </span>
             </div>

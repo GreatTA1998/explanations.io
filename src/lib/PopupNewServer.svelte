@@ -15,55 +15,51 @@
 </Button>
 
 {#if isPopupOpen}
-  <BasePopup on:popup-close={() => isPopupOpen = false} style="min-width: 340px; width: 60%;">
-    <h2 slot="title" style="font-family: sans-serif; padding-left: 14px;">
-      Create new class server
-    </h2> 
+  <BasePopup on:popup-close={() => isPopupOpen = false} style="min-width: 340px; width: 60%; max-width: 620px; padding: 24px;">
+    <div slot="title" style="margin: 0; font-size: 28px; font-weight: 600;">
+      New server
+    </div> 
 
-    <div style="padding: 24px;" slot="popup-content">
+    <div slot="popup-content">
+      <div style="display: flex; justify-content: center;">
+        <div style="margin-top: 24px; background-color: #f5f5f5; border-radius: 12px; width: 90%; height: fit-content; padding: 24px; box-sizing: border-box;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;"
+          >  
+            <div style="margin-right: 6px;; flex: 1">
+              <UXFormField
+                fieldLabel="Full class name"       
+              />
+            </div>
+            
+            <div style="margin-left: 6px; flex: 1">
+              <UXFormField
+                fieldLabel="College version"
+              />
+            </div>
+          </div>
 
-      <div style="background-color: #f5f5f5; border-radius: 12px; width: 90%; height: fit-content; padding: 16px;">
-        <Textfield variant="outlined" bind:value={valueA} label="Official class name" style="background-color: white;">
-          <HelperText slot="helper">Colleges sometimes use code names e.g. 18.06, MAT 271</HelperText>
-        </Textfield>
 
-        <Textfield variant="outlined" bind:value={valueA} label="Readable name" style="background-color: white;">
-          <HelperText slot="helper">The name that most of the world understands e.g. Linear Algebra, Multivariable Calculus</HelperText>
-        </Textfield>
-
-        <Textfield variant="outlined" bind:value={valueA} label="College" style="background-color: white;">
-          <HelperText slot="helper">This affects the syllabus version</HelperText>
-        </Textfield>
-
-        <Textfield
-          style="width: 100%;  background-color: white;"
-          helperLine$style="width: 100%;"
-          textarea
-          bind:value
-          label="Server description"
-        >
-          <HelperText slot="helper">What's the goal of this server, how will it help its members</HelperText>
-        </Textfield>
-
-        <input type="checkbox" value="true"> cross-college server
+        <!-- What's the goal of this server, how will it help its members -->
+        <div style="flex: 1">
+          <UXFormField
+            fieldLabel="Server description"
+          />
+        </div>
       </div>
+    </div>
 
-      <div style="display: flex; justify-content: flex-end; align-items: center;">
-        <Button on:click={() => isPopupOpen = false}>
-          Cancel
-        </Button>
+      <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 24px;">
 
         <Button color="secondary" variant="raised" class="call-to-action-button" 
           style="	
-            height: 3vw; 
+            height: 1.5vw; 
             min-height: 42px;
-            margin-top: 0.85vw; 
-            margin-bottom: 0.8vw; 
             border-radius: 36px;
+            margin-right: 2px;
           "
         >
-          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
-            Create this server
+          <Label style="text-transform: none; padding-left: 8px; padding-right: 8px; padding-top: 10px; padding-bottom: 10px; font-size: 16px; font-weight: 600">
+            Create server
           </Label>
         </Button>
         </div>
@@ -80,6 +76,7 @@
   import { getRandomID } from '../helpers/utility.js'
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text';
+  import UXFormField from '$lib/UXFormField.svelte'
  
   let valueA = '';
   let valueB = '';

@@ -123,10 +123,15 @@
     </div>
 
     <div style="margin-top: 12px;"></div>
-
-    <div style="width: 136px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
-      Add to crowdfund
-    </div>
+    
+    <PopupCrowdfund
+      let:isPopupOpen={isPopupOpen}
+      let:setIsPopupOpen={setIsPopupOpen}
+    >
+      <div on:click={() => setIsPopupOpen({ newVal: true })} style="width: 136px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
+        Add to crowdfund
+      </div>
+    </PopupCrowdfund>
   {/if}
 
   <div style="display: flex; width: calc(100% - 400px - 80px); padding-top: 24px; padding-bottom: 24px;">    
@@ -258,6 +263,7 @@
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import { user, assumedCanvasWidth } from '/src/store.js'
   import { roundedToFixed } from '/src/helpers/utility.js'
+  import PopupCrowdfund from '$lib/PopupCrowdfund.svelte'
 
   export let data;
 

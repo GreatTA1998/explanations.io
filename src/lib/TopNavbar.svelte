@@ -14,9 +14,9 @@
 						on:click={() => goto('/')}
 						src="/app-logo-no-bg.png" width="56" height="52" style="filter: brightness(80%); margin-left: 4px; margin-right: 6px; margin-top: 4px; cursor: pointer;"
 					>
-					<div style="font-weight: 400; font-size: 20px; color: hsl(0,0%,0%, 0.80);">
+					<!-- <div style="font-weight: 400; font-size: 20px; color: hsl(0,0%,0%, 0.80);">
 						explanations.app
-					</div>
+					</div> -->
 
 				</Section>
 

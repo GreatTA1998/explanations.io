@@ -6,10 +6,11 @@
     "
     class="core-shadow"
   >
+    <!-- beaverProfileColor is not working, random color for now -->
     <ClassServerMyProfilePicture
       radiusInPixels={20}
-      circleBorderColor={$user.beaverProfilePicColor}
-    />
+      circleBorderColor={getRandomColor()}
+    /> 
     <!-- purple color: #5d0068; -->
 
     <!-- colors used to be white -->
@@ -30,6 +31,7 @@
   import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
   import { user } from '/src/store.js'
   import { goto } from '$app/navigation'
+  import { getRandomColor } from '/src/helpers/utility.js';
 
   export let helperDoc
   export let classID

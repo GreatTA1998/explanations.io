@@ -62,9 +62,9 @@
 
         <div style="margin-top: 60px;">
 
-        <ClassServerAskQuestionAllMembers 
+        <!-- <ClassServerAskQuestionAllMembers 
           {classID}
-        />  
+        />   -->
        </div>
 
         <!-- <Button 

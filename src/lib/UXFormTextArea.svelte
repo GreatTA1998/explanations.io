@@ -1,5 +1,4 @@
 <div 
-  on:click={() => InputElem.focus()}
   class="ux-form-field"
   class:grey-border={!isFocused}
   class:blue-border={isFocused}
@@ -8,7 +7,10 @@
     {fieldLabel}
   </div>
 
-  <input 
+  <!-- input interface is a quick-fix, 
+  
+  and parent will need to consume `e.detail` instead of `e.target value` -->
+  <TextAreaAutoResizing
     {value}
     on:input
     on:focusin={() => isFocused = true}
@@ -16,11 +18,14 @@
     bind:this={InputElem}
     {placeholder}
     class="ux-input-text" 
-    style="width: 100%;"
-  >
+    style="width: 100%; border: 0px solid grey;"
+    resetDefaultStyling={true}
+  />
 </div>
 
 <script>
+  import TextAreaAutoResizing from "$lib/TextAreaAutoResizing.svelte";
+
     export let fieldLabel = ''
     export let placeholder
 
@@ -46,7 +51,7 @@
   }
 
   .ux-form-field {
-    height: 60px;
+    height: 100px;
     padding-left: 9px;
     padding-right: 9px;
     border-radius: 4px;

@@ -127,61 +127,15 @@
     <PopupCrowdfund
       let:isPopupOpen={isPopupOpen}
       let:setIsPopupOpen={setIsPopupOpen}
+      {classID}
     >
-      <div on:click={() => setIsPopupOpen({ newVal: true })} style="width: 136px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
+      <div on:click={() => setIsPopupOpen({ newVal: true })} style="cursor: pointer; width: 136px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
         Add to crowdfund
       </div>
     </PopupCrowdfund>
   {/if}
 
-  <div style="display: flex; width: calc(100% - 400px - 80px); padding-top: 24px; padding-bottom: 24px;">    
-    {#if teacherDocs}     
-      <!-- Teacher section -->
-      <div style="min-width: 340px; width: 50%; height: 400px;">
-        <div style="display: flex; align-items: flex-end;">
-          <!-- Need width otherwise digits jump 0 takes less width than 1  -->
-          <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
-            {tweenedTeacherCount}
-          </div>
-
-          <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
-            Teachers
-          </div>
-        </div>
-
-        <div style="margin-bottom: 16px;"></div>
-
-        <div class="people-list" bind:this={TeachersList} bind:clientHeight={TeachersListHeight}>
-          {#each teacherDocs as teacherDoc}
-            <div style="display: flex; align-items: center;">
-              <PresentationalBeaverPreview 
-                helperDoc={teacherDoc}
-                classID={classID}
-                style="margin-bottom: 8px; margin-right: 20px; width: 280px;"
-              >
-              </PresentationalBeaverPreview>
-            </div>
-          {/each}
-        </div>
-
-        <div style="margin-top: 40px;"></div>
-
-        <!-- <Button on:click={() => isTeacherPopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action" 
-        >
-          <Label style="text-transform: none; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 20px;">
-            Start teaching
-          </Label>
-
-          <span class="material-symbols-outlined" style="font-size: 1.6rem;">
-            draw
-          </span>
-        </Button> -->
-      </div>
-    {/if}
-
-    <!-- VERTICAL LINE THAT SPLITS THE FLEXBOX -->
-    <div style="border-left: 1px solid lightgrey; height: {TeachersListHeight + 240}px; width: 1px; margin-left: {24}px; margin-right: {24-1}px;"></div>
-
+  <div style="display: flex; width: calc(100% - 400px - 80px + 200px); padding-top: 24px; padding-bottom: 24px;">    
     <!-- Pre-subscribers section -->
     {#if presubscriberDocs}
       <div style="min-width: 340px; width: 50%; height: 400px;">
@@ -192,6 +146,23 @@
 
           <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
             Learners
+          </div>
+
+          <div style="margin-left: 32px; margin-bottom: 20px;">
+            <PopupConfirmLearner
+              {classID}
+              let:isPopupOpen={isPopupOpen}
+              let:setIsPopupOpen={setIsPopupOpen}
+            >
+              <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#e5e3e6">
+                <span class="material-symbols-outlined" style="font-size: 26px;">
+                  school
+                </span>
+                <div style="margin-left: 8px;">
+                  Sign up as learner
+                </div>
+              </ReusableRoundButton>
+            </PopupConfirmLearner>
           </div>
         </div>
 
@@ -210,8 +181,16 @@
                   <div style="color: #7A7A7A;">
                     {presubscriberDoc.name}
                   </div>
+
                   <div class="figma-inter-font">
-                    ${presubscriberDoc.presubscribeAmount}
+                    {#if presubscriberDoc.presubscribeAmount}
+                      ${presubscriberDoc.presubscribeAmount}
+                    {:else if presubscriberDoc.crowdfundAmount}
+                      <b>{presubscriberDoc.crowdfundAmount}</b>
+                      <div>{presubscriberDoc.reasonForCrowdfunding}</div>
+                    {:else if presubscriberDoc.reasonForLearning}
+                      {presubscriberDoc.reasonForLearning}
+                    {/if}
                   </div>
                 </div>
               </div>
@@ -219,22 +198,65 @@
         </div>
 
         <div style="margin-top: 40px;"></div>
-
-        <!-- <Button on:click={() => isPresubscribePopupOpen = true} color="secondary" style={secondaryActionStringCSS} class="secondary-action">
-          <Label style="text-transform: none; padding-left: 1px; padding-right: 1px; padding-top: 8px; padding-bottom: 8px; font-size: 16px;">
-            Start learning
-          </Label>
-          <span class="material-symbols-outlined">
-            money
-          </span>
-        </Button> -->
       </div>
     {/if}
+
+
+    <!-- VERTICAL LINE THAT SPLITS THE FLEXBOX -->
+    <div style="border-left: 1px solid lightgrey; height: {TeachersListHeight + 240}px; width: 1px; margin-left: {24}px; margin-right: {24-1}px;"></div>
+
+    {#if teacherDocs}     
+    <!-- Teacher section -->
+    <div style="min-width: 340px; width: 50%; height: 400px;">
+      <div style="display: flex; align-items: flex-end;">
+        <!-- Need width otherwise digits jump 0 takes less width than 1  -->
+        <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
+          {tweenedTeacherCount}
+        </div>
+
+        <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
+          Teachers
+        </div>
+
+        <div style="margin-left: 32px; margin-bottom: 20px;">
+          <PopupConfirmTeacher 
+            {classID}
+            let:isPopupOpen={isPopupOpen}
+            let:setIsPopupOpen={setIsPopupOpen}
+          >
+            <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#e5e3e6">
+              <span class="material-symbols-outlined" style="font-size: 30px">
+                stylus_note
+              </span>
+              <div style="margin-left: 8px;">
+                Sign up as teacher
+              </div>
+            </ReusableRoundButton>
+          </PopupConfirmTeacher>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 16px;"></div>
+
+      <div class="people-list" bind:this={TeachersList} bind:clientHeight={TeachersListHeight}>
+        {#each teacherDocs as teacherDoc}
+          <div style="display: flex; align-items: center;">
+            <PresentationalBeaverPreview 
+              helperDoc={teacherDoc}
+              classID={classID}
+              style="margin-bottom: 8px; margin-right: 20px; width: 280px;"
+            >
+            </PresentationalBeaverPreview>
+          </div>
+        {/each}
+      </div>
+    </div>
+  {/if}
   </div>
 </div>
 
 {#if isPresubscribePopupOpen}
-  <PopupConfirmPresubscription
+  <PopupConfirmLearner
     classID={classID}
     on:confirm-clicked={(e) => handleConfirmPresubscription(e.detail.presubscribeAmount)}
     on:popup-close={() => isPresubscribePopupOpen = false}
@@ -254,7 +276,7 @@
   import { onMount, tick } from 'svelte'
   import { getFirestoreDoc, getFirestoreQuery, updateFirestoreDoc, firestoreCollection } from '/src/helpers/crud.js'
   import { query, getFirestore, collection, where, onSnapshot, limit, orderBy } from 'firebase/firestore'
-  import PopupConfirmPresubscription from '$lib/PopupConfirmPresubscription.svelte'
+  import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import PopupConfirmTeacher from '$lib/PopupConfirmTeacher.svelte'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
@@ -264,6 +286,7 @@
   import { user, assumedCanvasWidth } from '/src/store.js'
   import { roundedToFixed } from '/src/helpers/utility.js'
   import PopupCrowdfund from '$lib/PopupCrowdfund.svelte'
+  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
 
   export let data;
 
@@ -419,7 +442,7 @@
     return new Promise(async (resolve) => {
       const ref = collection(db, `classes/${classID}/members`);
 
-      const q = query(ref, where("isPresubscriber", "==", true))
+      const q = query(ref, where("isLearner", "==", true))
       const result = await getFirestoreQuery(q)
       resolve(result)
     })

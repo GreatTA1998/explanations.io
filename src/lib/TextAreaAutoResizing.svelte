@@ -7,12 +7,15 @@
     auto_grow(element)
     dispatch('input', e.target.value)
   }}
+  on:focusin
+  on:focusout
   rows={numberOfInitialRowsIfEmpty}
   style="
     width: 100%;
    --nonFocusedPlaceholderOpacity: {nonFocusedPlaceholderOpacity};
    --fontSizeIncludeUnits: {fontSizeIncludeUnits};
   "
+  class:reset-default-styling={resetDefaultStyling}
 />
 
 <script>
@@ -24,6 +27,7 @@
   export let nonFocusedPlaceholderOpacity = 0.6
   export let numberOfInitialRowsIfEmpty = 1
   export let fontSizeIncludeUnits = '1.4rem'
+  export let resetDefaultStyling = false
 
   const dispatch = createEventDispatcher()
 
@@ -52,5 +56,9 @@
 
   textarea:focus::placeholder{
     opacity: 0.6;
+  }
+
+  .reset-default-styling {
+    all: unset;
   }
 </style>

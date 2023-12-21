@@ -49,7 +49,6 @@
     </div>
 
       <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 24px;">
-
         <Button color="secondary" variant="raised" class="call-to-action-button" 
           style="	
             height: 1.5vw; 

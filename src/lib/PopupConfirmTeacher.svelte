@@ -1,151 +1,160 @@
-<BasePopup on:popup-close>
-  <div slot="popup-content" style="font-family: sans-serif; padding: 24px; padding-top: 12px;">    
-    <h2 style="font-family: sans-serif; margin-top: 0px; margin-bottom: 16px; font-size: 32px;">
-      Sign up to teach
-    </h2>
+<slot 
+  {isPopupOpen} 
+  {setIsPopupOpen}
+>
 
-    <div style="font-size: 18px;">
-      "People subscribe not for a particular [video] necessarily, but because they 
-        fall in love with your particular perspective on explaining the subject matter"
-        <a href="https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting" target="_blank">read more</a>
+</slot>
+
+{#if isPopupOpen}
+  <BasePopup on:popup-close={() => isPopupOpen = false} style="padding: 24px;">
+    <div slot="title" style="font-size: 24px; font-weight: 500;">
+      Teacher sign-up
     </div>
 
-    <div style="margin-top: 12px"></div>
+    <div slot="popup-content">    
 
-    <div style="font-size: 20px;">
-      <div style="margin-bottom: 48px;"></div>
-        <ol>
+      <div style="font-size: 14px; color: rgb(100, 100, 100); margin-top: 10px;">
+        "People subscribe not for a particular [video] necessarily, but because they 
+          fall in love with your particular perspective on explaining the subject matter"
+          <a href="https://on.substack.com/p/why-free-posts-pay-avoiding-a-tempting" target="_blank">article from Substack</a>
+      </div>
+
+      <div style="margin-top: 12px"></div>
+
+      <div style="font-size: 16px;">
+        <div style="margin-bottom: 24px;"></div>
+          <ol>
+            <li>
+              Setup basic info
+            </li>
+
+            {#if !!!$user.uid}
+              <ReusableSignInButton/>
+            {:else}
+
+            {/if}
+
+
+            <div style="opacity: {!!!$user.uid && memberDoc ? 0.1 : 1.0};">
+              {#if memberDoc}
+                <div style="margin-bottom: 12px;"></div>
+
+                <UXFormField 
+                  fieldLabel="Teaching style & background"
+                  value={memberDoc.bio}
+                  on:input={(e) => debouncedUpdateBio({ newVal: e.target.value })}                
+                />
+
+                <div style="margin-bottom: 12px;"></div>
+                    
+                <UXFormField 
+                  value={memberDoc.venmo}
+                  on:input={(e) => debouncedUpdateTeacherVenmo({ newVal: e.target.value })}
+                  fieldLabel="Payment info (Stripe integration coming soon!)" 
+                  placeholder="e.g. @venmo-username, $cashapp-username"
+                />
+              {/if}
+            </div>
+
+          <div style="margin-top: 16px;"></div>
+
           <li>
-            Setup your account
+            <div style="display: flex; align-items: center; margin-top: 20px; position: relative; top: 5px;">
+              <span class="material-symbols-outlined" style="margin-right: 6px;">
+                stylus_note
+              </span>
+              Record your first explanation
+            </div>
           </li>
 
-          {#if !!!$user.uid}
-            <ReusableSignInButton/>
-          {/if}
+          <div style="font-size: 14px;">
+            On the left navigation pane, create a blackboard room for recording explanations. Or reply to existing questions.
 
-          <div style="opacity: {!!!$user.uid && memberDoc ? 0.1 : 1.0};">
-            {#if memberDoc}
-              <TextAreaAutoResizing 
-                value={memberDoc.bio}
-                fontSizeIncludeUnits="1rem"
-                on:input={(e) => debouncedUpdateBio(e)}
-                placeholder="Short intro of yourself"
-                readonly={!!!$user.uid}
-              />  
-
-              <div style="display: flex; align-items: center">
-
-                <!-- bind:value={member} -->
-                <Textfield label="Venmo" value={memberDoc.venmo || ''} on:input={(e) => debouncedUpdateTeacherVenmo(e.target.value)} readonly={!!!$user.uid}>
-                  <!-- <HelperText slot="helper">Helper Text</HelperText> -->
-                </Textfield>
-          
-                <div style="margin: 24px;">
-                  or 
-                </div>
-
-                <Textfield label="CashApp" value={memberDoc.cashApp || ''} on:input={(e) => debouncedUpdateTeacherCashApp(e.target.value)} readonly={!!!$user.uid}>
-                  <!-- <HelperText slot="helper">Helper Text</HelperText> -->
-                </Textfield>
-              </div>
-            {/if}
           </div>
 
-        <div style="margin-top: 24px;"></div>
+          <div style="margin-top: 24px;"></div>
 
-        <li>
-          Spend 5 - 10 minutes recording your first explanation video
-        </li>
-
-        <div style="font-size: 16px;">
-          Either:
-          <ol>
-            <li style="font-weight: 400;">
-              Reply to an existing question in the server (there's n questions so far)
-            </li>
-            <li  style="font-weight: 400;">
-              Explain something you want to explain.
-            </li>
+          <li>
+            Setup complete!
+          </li>
+          <div style="font-size: 14px;">
+            As time goes on, you can accept paid subscribers, record more explanations, organize your content in folders, reply to follow-up questions in your video comments, edit your profile, etc.
+          </div>
         </ol>
-        </div>
-
-        <div style="margin-top: 48px;"></div>
-
-        <li>
-          Done. 
-        </li>
-
-        <div style="font-size: 16px;">
-          Your "youtube channel" now exists. Even if pre-subscribers choose someone else, new people can access your channel and subscribe to you anytime.
-        </div>
-      </ol>
+      </div>
+      <br>
     </div>
-    <br>
-  </div>
 
-  <div slot="popup-buttons" style="direction: rtl; margin-bottom: 12px; margin-right: 4px;">
-    {#if memberDoc}
-      {#if !memberDoc.isTeacher}
-        <Button 
-          disabled={!!!$user.uid}
-          on:click={() => {
-            updateMemberAsTeacher();
-            dispatch('confirm-clicked');
-          }}
-          color="secondary"
-
-        >
-          ADD MYSELF TO TEACHER LIST
-        </Button>
-      {:else}
-        <Button 
-          disabled={!!!$user.uid}
-          on:click={() => {
-            updateMemberAsNotTeacher();
-            dispatch('confirm-clicked');
-          }}
-          color="secondary"
-        >
-          REMOVE MYSELF FROM TEACHER LIST
-        </Button>
+    <div slot="popup-buttons" style="display: flex; justify-content: flex-end">
+      {#if memberDoc}
+        {#if !!!memberDoc.isTeacher}
+          <ReusableRoundButton 
+            on:click={doTeacherSignUp}
+            backgroundColor="#5d0068" textColor="white"
+          >
+            Confirm sign-up
+          </ReusableRoundButton>
+        {:else}
+          <ReusableRoundButton on:click={undoTeacherSignUp}
+            backgroundColor="#5d0068" textColor="white"
+          >
+            Cancel sign-up
+          </ReusableRoundButton>
+        {/if}
       {/if}
-    {/if}
-    <Button on:click={() => {
-      dispatch('popup-close')
-    }}>
-      Cancel
-    </Button>
-  </div>
-</BasePopup>
+    </div>
+  </BasePopup>
+{/if}
 
 <script>
   import BasePopup from '$lib/BasePopup.svelte'
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { user } from '../store.js'
+  import { user } from '/src/store.js'
   import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreDoc, setFirestoreDoc } from '../helpers/crud.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
   import { debounce } from '/src/helpers/utility.js'
   import Button from '@smui/button'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+  import ReusableButton from '$lib/ReusableButton.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte' 
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text';
+  import UXFormField from '$lib/UXFormField.svelte';
+  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
 
   export let classID
-
-  const dispatch = createEventDispatcher()
-
+    
   let memberDoc = null
   let inputFieldFirstName = ''
   let inputFieldLastName = ''
-  let valueA = ''
-  let checked = false
 
   const membersPath = `classes/${classID}/members/`
+  const dispatch = createEventDispatcher()
+  let isPopupOpen = false
 
-  $: if ($user.uid) {
-    handleMemberDocLogic()
+  $: if (memberDoc) {
+    console.log("memberDoc =", memberDoc)
+  }
+
+  $: if (isPopupOpen) {
+    fetchOrCreateMemberDoc()
+  }
+
+  function setIsPopupOpen ({ newVal }) {
+    isPopupOpen = newVal
+  }
+
+  function doTeacherSignUp () {
+    updateMemberAsTeacher();
+    dispatch('confirm-clicked');
+    isPopupOpen = false;
+  }
+
+  function undoTeacherSignUp () {
+    updateMemberAsNotTeacher()
+    dispatch('confirm-clicked')
+    isPopupOpen = false
   }
 
   function updateMemberAsTeacher () {
@@ -160,52 +169,32 @@
     })
   }
 
-  async function handlememberDocLogic () {
-    const membersPath = `classes/${classID}/members/`
-    const q = createFirestoreQuery({
-      collectionPath: membersPath,
-      criteriaTerms: ['isTeacher', '==', true]
-    })
-    const resultDocs = await getFirestoreQuery(q)
-    if (resultDocs.length === 0) {
-      await setFirestoreDoc(
-        membersPath + $user.uid, 
-        getMemberDocSchema({ userDoc: $user })
-      )
-    }
-
-    memberDoc = resultDocs[0]
-
-    // NOTE isTeacher will not be reflected in real-time the first time on ou object,
-    // but the snapshot on the server overview should take care of it
-    updateFirestoreDoc(membersPath + $user.uid, {
-      isTeacher: true
-    })
-  }
-
-  async function handleMemberDocLogic () {
-    let result = await getFirestoreDoc(`classes/${classID}/members/${$user.uid}`)
-    // TO-DO: test if memberDoc does not exist
-    if (!result) {
+  async function fetchOrCreateMemberDoc () {
+    memberDoc = {}
+    const membersPath = `classes/${classID}/members/${$user.uid}`
+    const resultDoc = await getFirestoreDoc(membersPath)
+    if (!resultDoc) {
+      console.log('memberDoc does not exist!')
       const memberDocSchema = getMemberDocSchema({ userDoc: $user })
-      setFirestoreDoc(
+      await setFirestoreDoc(
         membersPath + $user.uid,
         memberDocSchema
       )
-      result = memberDocSchema
+      memberDoc = memberDocSchema
     }
-    memberDoc = result
+    else {
+      memberDoc = resultDoc
+    }
   }
-
+  
   const debouncedUpdateBio = debounce(
     updateTeacherBio,
     1000
   ) 
 
-  async function updateTeacherBio ({ detail }) {
-    // const idNotUID = memberDoc.id
+  async function updateTeacherBio ({ newVal }) {
     updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
-      bio: detail
+      bio: newVal
     })
   }
 
@@ -215,21 +204,13 @@
     500
   )
 
-  const debouncedUpdateTeacherCashApp= debounce(
-    updateTeacherCashApp, 
-    500
-  )
-
-  function updateTeacherVenmo (venmo) {
-    console.log("updateTeacherVenmo")
-    // const idNotUID = memberDoc.id
+  function updateTeacherVenmo ({ newVal }) {
     updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
-      venmo
+      venmo: newVal
     })
   }
 
   function updateTeacherCashApp (cashApp) {
-    // const idNotUID = memberDoc.id
     updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
       cashApp
     })
@@ -266,50 +247,11 @@
       })
     )
   }
-
-  async function handleConfirmSubscription (tutor) {
-    isSubscribePopupOpen = false
-    const promises = []
-
-    // NOTE: Twilio's requirement differs from Firebase Auth, which requires +1 XXX-XXX-XXX hyphen format
-    const eltonMobileNumber = '+15032503868'
-    await promises.push(
-      sendTextMessage({ 
-        content: `New student ${$user.name} subscribed for $${price || 15}, confirm on Venmo`,
-        toWho: tutor.phoneNumber
-      }),
-      sendTextMessage({
-        content: `Welcome ${$user.name.split(' ')[0]}! To ask your question, just rename a room to your question, your helper will be text notified.
-          
-          If you don't know how to use the website, here's a 1-min screenshare tutorial: https://youtu.be/Yo7aPxLropU?t=58. 
-          Your tutor's phone is ${tutor.phoneNumber}. Texting is the fallback communication when there are unexpected problems e.g. ask for their email to
-          send the pset PDF, Explain's website broke down, or to follow-up sometimes if response time is unusually long etc.
-
-
-          If there's anything terribly inconvenient about the website, it probably is a bug, or a flawed design. You can call me/Elton (503 250 3868) 
-          (please don't hesitate, Explain is my full-time job and you're a paying customer, and more often than not I can change the code 
-          to incorporate your ideas within 1 week.)
-        `,
-        toWho: $user.phoneNumber
-      }),
-      sendTextMessage({
-        content: `Student ${$user.name} subscribed to tutor ${tutor.name}`,
-        toWho: eltonMobileNumber
-      }),
-      updateFirestoreDoc(`/users/${$user.uid}`, {
-        idsOfSubscribedClasses: arrayUnion(classID)
-      }),
-      updateFirestoreDoc(`/classes/${classID}/tutors/${tutor.id}`, {
-        numOfStudents: increment(1)
-      })
-    )
-    goto(`/${classID}/${classID}`)
-  }
 </script>
 
 <style>
   li {
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     margin-top: 4px;
     font-weight: 500;
   }

@@ -5,7 +5,8 @@
     transform-origin: top left;
     position: relative; 
     width: {canvasWidth}px; 
-    height: {canvasHeight}px;"
+    height: {canvasHeight}px;
+  "
   >
   <!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
       (to distinguish between unfetched board and empty board) 
@@ -69,7 +70,7 @@
     on:touchstart={touchStart}
     on:touchmove={touchMove}
     on:touchend={touchEnd}
-    style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${canvasWidth}px; height: ${canvasHeight}px`}
+    style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${canvasWidth}px; height: ${canvasHeight}px;`}
   >
   </canvas>
 
@@ -81,7 +82,7 @@
       left: 0;
       z-index: 0;
       display: block;
-      background-color: hsl(0,0%,0%, 0.80); width: ${canvasWidth}px; height: ${canvasHeight}px
+      background-color: hsl(0,0%,0%, 0.80); width: ${canvasWidth}px; height: ${canvasHeight}px;
     `}
   >
 

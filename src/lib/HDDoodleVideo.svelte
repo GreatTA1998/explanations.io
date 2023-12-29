@@ -33,11 +33,14 @@
     {#if !isPaid}
       <span on:click={startAudioPlayer} 
         class="material-icons overlay-center" 
-        style="color: white;
+        style="
+        color: rgba(230, 230, 230, 0.8);
         width: {270 * scaleFactor}px; 
         height: {270 * scaleFactor}px; 
         z-index: 5;
-        font-size: {15 * scaleFactor}rem;"
+        font-size: {15 * scaleFactor}rem;
+        cursor: pointer;
+      "
       >
         play_circle
       </span>
@@ -387,6 +390,5 @@ audio::-webkit-media-controls-enclosure {
   right: 0;
   bottom: 0;
   margin: auto; 
-  color: white
 }
 </style>

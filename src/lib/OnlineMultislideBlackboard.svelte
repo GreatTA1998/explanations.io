@@ -1,20 +1,15 @@
-<div style="display: flex">
+<div style="display: flex; align-items: end;">
   <div id="multislide-record-button-wrapper-{boardDoc.id}">
  
   </div>
   
   <div style="margin-left: 20px;"></div>
 
-  {#each boardDoc.slideIDs as slideID, i}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div on:click={() => changeToSlideIdx(i)}
-      class:highlighted-glow={idxOfFocusedSlide === i}
-      class:lowlighted-glow={idxOfFocusedSlide !== i}
-      style="width: 80px; height: 50px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"
-    >
-      Slide { i + 1}
-    </div>
-  {/each}
+  <MultislideSlideChanger
+    slideIDs={boardDoc.slideIDs}
+    {idxOfFocusedSlide}
+    on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
+  />
 </div>
 
 <div style="margin-bottom: 12px;"></div>
@@ -70,22 +65,24 @@
           <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
         {/if}
       {:else}
-        <div 
-          on:click={() => callFuncsInSequence(
+        <div style="margin-top: 0px;">
+          <!-- user doesn't necessarily start from slide 0, so ensure initial state is correct -->
+          <ReusableRoundButton on:click={() => callFuncsInSequence(
+            () => updateBoardRecordState(boardDoc.path, 'mid_record'),
             startRecording,
             startStopwatch,
-            () => isRecording = true,
-            () => {
-              // user doesn't necessarily start from slide 0,so ensure initial state is correct
-              timingOfSlideChanges.push({
-                toIdx: idxOfFocusedSlide,
-                timing: 0
-              })
-            }
-          )}
-          class="offline-record-button" style="border-radius: 24px;"
-        >
-          Record
+              () => isRecording = true,
+              () => {
+                timingOfSlideChanges.push({
+                  toIdx: idxOfFocusedSlide,
+                  timing: 0
+                })
+              }
+            )}
+            backgroundColor="rgb(80, 80, 80, 0.9)" textColor="cyan" isBordered
+          >
+            Record
+          </ReusableRoundButton>
         </div>
       {/if}
     {:else}
@@ -93,12 +90,17 @@
       <button on:click={() => callFuncsInSequence(
         stopRecording,
         stopStopwatch,
+        () => updateBoardRecordState(boardDoc.path, 'post_record'),
         () => willPreventPageLeave.set(true)
       )}
         style="height: 50px; font-size: 1.1em; border-radius: 25px;"
         class="offline-record-button"
       >
-        Finish recording
+        {#if boardDoc.recordState === 'post_record'}
+          <CircularSpinnerFourColor/>
+        {:else} 
+          Finish
+        {/if}
       </button>
     {/if}
   </div>
@@ -119,6 +121,9 @@
   import ReusableButton from '$lib/ReusableButton.svelte'
   import { willPreventPageLeave } from '/src/store'
   import { mixpanelLibrary } from '/src/mixpanel.js'
+  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
+  import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
+  import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
 
   export let canvasWidth
   export let canvasHeight
@@ -369,6 +374,12 @@
       recordState: newRecordState
     })
   }
+  function updateBoardRecordState (boardPath, newRecordState) {
+    const blackboardRef = doc(getFirestore(), boardPath)
+    updateDoc(blackboardRef, {
+      recordState: newRecordState
+    })
+  }
 </script>
 
 <style>
@@ -386,18 +397,6 @@
     box-sizing: border-box;
     border-radius: 1px;
     cursor: pointer;
-  }
-
-  .highlighted-glow {
-    background-color: hsl(0,0%,0%, 0.80);
-    color: white;
-    font-weight: 500;
-    border-bottom: 4px solid orange;
-  }
-
-  .lowlighted-glow {
-    font-weight: 400;
-    border-bottom: 4px solid rgb(179, 179, 179);
   }
 
   .offline-record-button {

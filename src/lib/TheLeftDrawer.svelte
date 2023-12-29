@@ -16,15 +16,11 @@
 >
   <!-- MINI TOP APP BAR -->
   <!-- class="mdc-elevation--z{4}" -->
-  <div style="padding-top: 2px; padding-bottom: 0; padding-left: 4px;">
+  <div style="padding-top: 4px; padding-bottom: 0; padding-left: 4px;">
     <div style="display: flex; align-items: center; width: 100%;">
       <img 
-        on:click={handleLogoClick} 
-        src="/logo.png" 
-        width="60"
-        height="54" 
-        alt="web-logo" 
-        class="logo-image"
+        on:click={handleLogoClick}
+        src="/app-logo-no-bg.png" width="52" height="48" style="filter: brightness(80%); margin-left: 4px; margin-right: 6px; margin-top: 4px; cursor: pointer;"
       >
 
       {#if classDoc}

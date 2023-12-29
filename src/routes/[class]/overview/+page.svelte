@@ -10,7 +10,7 @@
   #e2dddd
   #ffad42
  -->
-<div style="padding-left: 36px; padding-right: 36px; padding-top: 24px; padding-bottom: {100 + featuredVideoBleedMargin}px; background-color: #f7c686">
+<div style="padding-left: 36px; padding-right: 36px; padding-top: 36px; padding-bottom: {120 + featuredVideoBleedMargin}px; background-color: #f7c686">
     {#if classDoc}
       <div style="font-size: 36px; font-weight: 600; color: rgb(20, 20, 20)">
         {classDoc.name}
@@ -48,14 +48,14 @@
             overflow: hidden; 
             margin-right: {gapBetweenEachVideo}px;
             position: {i === 0 ? 'absolute' : ''};
-            left: {i === 0 ? -260 : 0}px
+            left: {i === 0 ? -260 : 0}px;
           "
         >
           <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 200px">
             {explanation.title || explanation.description}
           </div>
           
-          <div>
+          <div style="border-radius: 6px; width: {carouselItemPreviewWidth * 0.98}px; height: {carouselItemPreviewWidth * 3/4 * 0.97}px; overflow: hidden;">
             <RenderlessFetchStrokes 
               dbPath={explanation.path}
               let:fetchStrokes={fetchStrokes}
@@ -80,11 +80,11 @@
 
   {#if mostWatchedExplanations.length > 0}
     <!-- Display featured video title, description and stats -->
-    <div style="border-radius: 12px; position: absolute; left: {400 + 212}px; right: auto; top: 0px; bottom: auto; padding: 16px; background-color: rgb(251, 251, 251)">
-      <div style="color: rgb(90, 90, 90); font-size: 16px;">
+    <div style="border-radius: 12px; position: absolute; left: {400 + 212}px; right: auto; top: 0px; bottom: auto; padding: 16px; background-color: hsl(0,0%,0%, 0.6); color: white;">
+      <div style="color: rgb(200, 200, 200); font-weight: 400; font-size: 14px;">
         Most watched explanation
       </div>
-      <div style="font-size: 24px; font-weight: 500; max-width: 600px;" class="my-truncated-text">
+      <div style="font-size: 24px; font-weight: 500; max-width: 500px; color: white" class="my-truncated-text">
         {mostWatchedExplanations[currentlyWatchingIdx].title || mostWatchedExplanations[currentlyWatchingIdx].description}
       </div>
       <div style="margin-top: 28px; font-size: 14px;">
@@ -101,13 +101,13 @@
 </div>
 
 <div style="padding-left: 36px; padding-right: 36px;">
-  <div style="margin-bottom: 24px;"></div>
+  <div style="margin-bottom: 48px;"></div>
 
   {#if classDoc}
-    <div style="display: flex; align-items: center; width: 100%;">
+    <div style="display: flex; align-items: center; width: 100%; justify-content: space-around; border: 0px solid red;">
       <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
 
-      <div style="margin-left: 24px; width: 100%;">
+      <div style="margin-left: 12px; width: 70%; border: 0px solid purple;">
         <div style="display: flex; align-items: center;">
           <div style="font-size: 24px; color: #036E15; font-weight: 500;">
             $0 raised 
@@ -120,25 +120,27 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div style="margin-top: 12px;"></div>
-    
     <PopupCrowdfund
       let:isPopupOpen={isPopupOpen}
       let:setIsPopupOpen={setIsPopupOpen}
       {classID}
-    >
-      <div on:click={() => setIsPopupOpen({ newVal: true })} style="cursor: pointer; width: 136px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
+    > 
+      <!-- #036E15 -->
+      <div on:click={() => setIsPopupOpen({ newVal: true })} style="cursor: pointer; width: 150px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
         Add to crowdfund
       </div>
     </PopupCrowdfund>
+
+    </div>
+
+    <div style="margin-top: 24px;"></div>
   {/if}
 
-  <div style="display: flex; width: calc(100% - 400px - 80px + 200px); padding-top: 24px; padding-bottom: 24px;">    
+  <div style="display: flex; width: calc(100% - 400px - 80px + 480px); padding-top: 24px; padding-bottom: 24px; padding-left: 6px; padding-right: 6px;">    
     <!-- Pre-subscribers section -->
     {#if presubscriberDocs}
-      <div style="min-width: 340px; width: 50%; height: 400px;">
+      <div style="min-width: 340px; max-width: 50%; height: 400px;">
         <div style="display: flex; align-items: flex-end;">
           <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
               {tweenedPresubsCount}
@@ -148,13 +150,14 @@
             Learners
           </div>
 
-          <div style="margin-left: 32px; margin-bottom: 20px;">
+          <div style="margin-right: 0; margin-left: auto; margin-bottom: 20px;">
             <PopupConfirmLearner
               {classID}
               let:isPopupOpen={isPopupOpen}
               let:setIsPopupOpen={setIsPopupOpen}
             >
-              <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#e5e3e6">
+              <!-- background color:  -->
+              <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
                 <span class="material-symbols-outlined" style="font-size: 26px;">
                   school
                 </span>
@@ -182,7 +185,7 @@
                     {presubscriberDoc.name}
                   </div>
 
-                  <div class="figma-inter-font">
+                  <div class="figma-inter-font" style="max-width: 320px">
                     {#if presubscriberDoc.presubscribeAmount}
                       ${presubscriberDoc.presubscribeAmount}
                     {:else if presubscriberDoc.crowdfundAmount}
@@ -224,11 +227,11 @@
             let:isPopupOpen={isPopupOpen}
             let:setIsPopupOpen={setIsPopupOpen}
           >
-            <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#e5e3e6">
+            <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
               <span class="material-symbols-outlined" style="font-size: 30px">
                 stylus_note
               </span>
-              <div style="margin-left: 8px;">
+              <div style="margin-right: 0; margin-left: auto;">
                 Sign up as teacher
               </div>
             </ReusableRoundButton>
@@ -300,7 +303,7 @@
   let unsubTeachersListener = null
   const featuredVideoBleedMargin = 200 
   let finalAdjustment = 8
-  let carouselItemPreviewWidth = 212
+  let carouselItemPreviewWidth = 238
   let gapBetweenEachVideo = 36
 
   $: if (teacherDocs) {

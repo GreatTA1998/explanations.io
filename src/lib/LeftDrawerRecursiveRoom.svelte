@@ -499,7 +499,8 @@ async function deleteRoom (room) {
 
 <style>
   .room-item:hover {
-    background: lightgrey;
+    /* previously lightgrey */
+    background: #F7C686;
   }
 
   .vertical-padding {
@@ -507,9 +508,10 @@ async function deleteRoom (room) {
     padding-bottom: 8px
   }
 
+  /* legacy grey: #e2dddd */
   .selected {
     font-weight: 700;
-    background-color: #e2dddd !important;
+    background-color: #F7C686 !important;
     color: black;
     transition: background 20ms ease-in 0s;
   }

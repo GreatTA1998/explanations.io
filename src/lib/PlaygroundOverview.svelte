@@ -4,6 +4,7 @@
       top: 20px;
       left: 18px;
       font-size: 48px;
+      color: #5D0068;
       "
     >
       search
@@ -20,6 +21,7 @@
         padding-left: 40px;
         width: 100%; 
         height: 60px; 
+        border: 3px solid #5D0068;
         font-size: 2.2em; 
         border-radius: 8px; 
         padding: 12px;
@@ -375,6 +377,7 @@
   }
 
   .orange-highlight {
+    /* legacy grey: #e2dddd */
     background-color: #e2dddd;
     color: black !important;
     font-weight: 600 !important;

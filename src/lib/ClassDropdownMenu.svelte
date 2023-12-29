@@ -3,7 +3,7 @@
   <!-- open menu -->
   <div on:click={() => goto('/overview')} style="display: flex; align-items: center; cursor: pointer; width: 100%;">
     <div>
-      <h1 class="my-truncated-text" style="max-width: 230px; font-family: Roboto, sans-serif; font-weight: 400; margin-left: 6px; margin-top: 5px; margin-bottom: 0px; font-size: 1.4rem">
+      <h1 class="my-truncated-text" style="color: rgb(60, 60, 60); max-width: 230px; font-weight: 500; margin-left: 3px; margin-top: 5px; margin-bottom: 0px; font-size: 1.4rem">
         {nameOfClass} 
       </h1>
     </div>

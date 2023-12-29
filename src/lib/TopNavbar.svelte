@@ -1,23 +1,18 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
-		<!-- background-color: hsl(0,0%,0%, 0.75); -->
-		<TopAppBar bind:this={topAppBar} style="
-			border-bottom: 1px solid lightgrey; 
-		
-		">
-		<!-- 	box-shadow: 0 2px 4px -1px grey; -->
-				
+		<TopAppBar bind:this={topAppBar} style="border-bottom: 1px solid lightgrey;">
 			<Row style="background-color: #f8f9f9;">
-				<Section>
+				<div style="margin-left: 4%; padding: 8px 12px; box-sizing: border-box;">
 					<img 
-						on:click={() => goto('/')}
-						src="/app-logo-no-bg.png" width="52" height="48" style="filter: brightness(80%); margin-left: 4px; margin-right: 6px; margin-top: 4px; cursor: pointer;"
-					>
+					on:click={() => goto('/')}
+					src="/app-logo-no-bg.png" width="52" height="48" style="filter: brightness(80%); margin-left: 4px; margin-right: 6px; margin-top: 2px; cursor: pointer;"
+				>
+	
+				</div>
 
-					<slot name="tab-section">
+				<slot name="tab-section">
 
-					</slot>
-				</Section>
+				</slot>
 
 				<Section align="end" toolbar>
 					<!-- href="" target="_blank" -->

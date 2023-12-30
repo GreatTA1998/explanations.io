@@ -1,41 +1,39 @@
 <TopNavbar>
+	<div slot="tab-section" style="margin-left: 24px; margin-right: auto; display: flex; align-items: center; justify-content: space-evenly; color: black; width: 160px; box-sizing: border-box;">
+		<div on:click={() => activeTabName = 'Learn'} style="text-align: center; box-sizing: border-box; height: 64px; padding: 8px 6px 4px 6px" class:active-underline-indicator={activeTabName === 'Learn'}>
+			<span class="material-symbols-outlined" style="font-size: 26px; color: rgb(30, 30, 30)">
+				smart_display
+			</span>
+			<div style="font-size: 14px; margin-top: -2px; font-weight: 600;">
+				Learn
+			</div>
+		</div>
+
+		<div on:click={() => activeTabName = 'Teach'} style="text-align: center; height: 64px; box-sizing: border-box; padding: 8px 6px 4px 6px" class:active-underline-indicator={activeTabName === 'Teach'}>
+			<span class="material-symbols-outlined" style="font-size: 26px; color: rgb(30, 30, 30)">
+				stylus_note
+			</span>
+			<div style="font-size: 14px; margin-top: -2px;">
+				Teach
+			</div>
+		</div>
+	</div>
+
 	<!-- <TopBannerWarnExperimental/> -->
-	<div class="webflow-container" style="padding-top: 1%;">
-		<!-- '#F1F1F1' -->
-		<TabBar tabs={tabs} let:tab bind:active style="color: purple; margin-left: 0%;">
-			<Tab {tab} 
-				stacked minWidth style="color: orange; border: 0px solid grey; border-radius: 0px; overflow: hidden;
-					background-color: {active.label === tab.label ? '' : ''};
-					border-bottom: {active.label === tab.label ? 'purple 0px solid' : ''}
-				"
-			>
-				<Icon class="material-icons" style="color: {active.label === tab.label ? 'black' : 'grey'}; padding-top: 25px;">
-					{tab.icon}
-				</Icon>
-				<Label style="color: {active.label === tab.label ? 'black' : 'rgba(0, 0, 0, 1)'};
-						font-weight: {active.label === tab.label ? '600' : '400'};
-						margin-top: 5px; padding-bottom: 30px;">
-					{tab.label}
-				</Label>
-			</Tab>
-		</TabBar>
-
-		<div style="margin-bottom: 58px"></div>
-
-		{#if active.label === 'Learn'}
-			<div class="header-flex">
-				<div>
-					<p class="header-title" style="line-height: 1.2">
-						Get it properly explained
+	<div class="webflow-container" style="padding-top: 2%;">
+		{#if activeTabName === 'Learn'}
+			<div class="header-flex" style="border: 0px solid black;">
+				<div style="width: max-content;">
+					<p class="header-title" style="line-height: 1; margin-bottom: 36px;">
+						Get it properly explained.
 					</p>
-					<div style="margin-top: 24px;"></div>
-					<div style="font-size: 32px; max-width: 100%; line-height: 1.4; font-weight: 500;">
-						Crowdfund the best “Youtube Teachers” to answer your long unresolved questions — once and for all.
+					<div class="header-subtitle" style="font-size: 20px; line-height: 1.4; font-weight: 500; color: rgb(60, 60, 60);">
+						Crowdfund the best “Youtube Teachers” to answer your long, unresolved questions — once and for all —
+						on this blackboard-video oriented platform.
 					</div>
 				</div>
 	
-
-				<div class="header-subcopy-wrapper" style="margin-top: 32px; margin-left: 0px;">
+				<div class="header-subcopy-wrapper" style="margin-top: 32px; margin-left: 0px; border: 0px solid orange;">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
 						style="	
 							height: 4.2vw; 
@@ -43,17 +41,16 @@
 							margin-top: 0.85vw; 
 							margin-bottom: 0.8vw; 
 							border-radius: 2.1vw;
-							
 						"
 					>
 						<Label style="text-transform: none; 
-							padding-left: 24px; padding-right: 24px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600;
+							padding-left: 24px; padding-right: 24px; padding-top: 10px; padding-bottom: 10px; font-size: 1.2em; font-weight: 600;
 							display: flex; align-items: center;
 
 						">
-							Search classes
+							 Find your class
 
-							<span style="margin-left: 8px; font-size: 36px;" class="material-symbols-outlined">
+							<span style="margin-left: 8px; font-size: 32px;" class="material-symbols-outlined">
 								search
 								</span>
 						</Label>
@@ -83,7 +80,7 @@
 			<OfflineMultislideRecordingDemo/>
 		{/if}
 
-			{#if active.label === 'Learn'}
+			{#if activeTabName === 'Learn'}
 
 			<div class="webflow-section">
 				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 100px;">
@@ -196,7 +193,7 @@
 
 			{/if}
 
-			{#if active.label === 'Teach'}
+			{#if activeTabName === 'Teach'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						This website lets you teach people all over the world with blackboard videos (without additional responsibilities like grading). 
@@ -253,7 +250,7 @@
 				</div>
 			{/if}
 
-			{#if active.label === 'Students deprecate for now'}
+			{#if activeTabName === 'Students deprecate for now'}
 
 			<!-- HOW IT WORKS SECTION-->
 			<div bind:clientWidth={w} class="webflow-section">
@@ -321,7 +318,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else if active.label === 'Teach' && false}
+		{:else if activeTabName === 'Teach' && false}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.
@@ -389,6 +386,8 @@
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
 	})
+
+	let activeTabName = 'Learn'
 
 	// RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [
@@ -510,6 +509,24 @@
 </script>
 
 <style lang="scss">
+	.webflow-container {
+		width: 90%; /* 90% */
+		// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
+		margin-right: auto;
+		margin-left: auto; 
+
+		box-sizing: border-box;
+
+		// additional properties
+		margin-top: 20px;
+
+		background-color: transparent;
+	}
+		
+	.active-underline-indicator {
+		border-bottom: 2px solid #F7C686;
+	}
+
 	.webflow-h1 {
 		font-size: 4rem;
 	}
@@ -528,7 +545,7 @@
 
 
 .image-gallery-container {
-	margin-top: 10%; 
+	margin-top: 6%; 
 	margin-bottom: 24%; // was 24%
 	// margin-left: 2%;
 }
@@ -549,7 +566,7 @@
 	// max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
 	margin-bottom: 0;
-	font-size: 6vw; /* was 6vw */
+	font-size: 4vw; /* was 6vw */
 	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
 	font-weight: 500;
 
@@ -568,16 +585,28 @@
 	line-height: 1.0; // used to be 1.25 but GF suggests otherwise
 }
 
-@media only screen and (min-width: 1550px) {
+// As soon as we achieve minimum width of 1280,
+// the layout will make use of horizontal space 
+@media only screen and (min-width: 1280px) {
 	.header-title {
-		font-size: 7rem; // webflow's original is 7rem
+		font-size: 5.6vw; // webflow's original is 7rem
+		max-width: calc(100vw - 380px);
+	}
+	.header-subtitle {
+		max-width: calc(100vw - 480px);
+	}
+	.webflow-container {
+		width: 92%;
 	}
 }
 
 @media only screen and (max-width: 991px) {
 	.header-title {
 		max-width: 85vw;
-		font-size: 11vw;
+		font-size: 4vw;
+	}
+	.webflow-container {
+		width: 85%;
 	}
 }
 
@@ -617,9 +646,6 @@
 }
 
 .header-flex {
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	margin-top: 2%;
 	margin-bottom: 40px;
@@ -678,10 +704,10 @@
 	// margin-left: 5vw;
 	margin-left: 0.5vw;
 	width: 90%;
-	max-width: 310px; 
+	max-width: 280px; 
 
 	// additional attributes
-	margin-right: 24px;
+	margin-right: 0px;
 	display: flex; 
 	flex-direction: column;
 	// justify-content: flex-end; 
@@ -765,29 +791,10 @@ li {
 		width: 100%;
 	}
 
-	.mdc-tab__text-label {
-		color: orange;
-	}
+	// .mdc-tab__text-label {
+	// 	color: black;
+	// }
 
-	.webflow-container {
-		width: 90%; /* 90% */
-		// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
-		margin-right: auto;
-		margin-left: auto; 
-
-		box-sizing: border-box;
-
-		// additional properties
-		margin-top: 20px;
-
-		background-color: transparent;
-	}
-	
-	@media screen and (max-width: 991px) {
-		.webflow-container {
-			width: 85%;
-		}
-	}
 
 	li {
 		margin-bottom: 24px;

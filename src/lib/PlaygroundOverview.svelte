@@ -8,7 +8,8 @@
       "
     >
       search
-  </span>
+    </span>
+
     <input 
       bind:this={SearchBar}
       name="search" 
@@ -21,7 +22,6 @@
         padding-left: 40px;
         width: 100%; 
         height: 60px; 
-        border: 3px solid #5D0068;
         font-size: 2.2em; 
         border-radius: 8px; 
         padding: 12px;
@@ -109,10 +109,7 @@
         {#key serverObj.id}
           <SimpleServerPreviewCardBorderless
             {serverObj}
-          ></SimpleServerPreviewCardBorderless>
-          <!-- <SimpleServerPreviewCard 
-            {serverObj}
-          /> -->
+          />
           <div style="margin-bottom: 18px;"></div>
         {/key}
       {/each}

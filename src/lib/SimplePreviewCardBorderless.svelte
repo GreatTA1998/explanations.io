@@ -263,6 +263,7 @@
   } */
 
   .overall-container:hover {
+    border: 2px solid #F7C686;
     @extend .high-elevation-cast-shadow;
   }
 

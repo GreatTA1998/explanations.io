@@ -177,7 +177,7 @@
   }
 
   .college-chip {
-    font-size: 14px; 
+    font-size: 12px; 
     font-weight: 700; 
     border: 1px solid rgb(40, 14, 82);
     border-radius: 4px; 

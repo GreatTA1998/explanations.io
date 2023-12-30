@@ -25,11 +25,11 @@
 			<div class="header-flex" style="border: 0px solid black;">
 				<div style="width: max-content;">
 					<p class="header-title" style="line-height: 1; margin-bottom: 36px;">
-						Get it properly explained.
+						Get it properly explained
 					</p>
 					<div class="header-subtitle" style="font-size: 20px; line-height: 1.4; font-weight: 500; color: rgb(60, 60, 60);">
 						Crowdfund the best “Youtube Teachers” to answer your long, unresolved questions — once and for all —
-						on this blackboard-video oriented platform.
+						on this blackboard-video oriented platform
 					</div>
 				</div>
 	
@@ -791,46 +791,8 @@ li {
 		width: 100%;
 	}
 
-	// .mdc-tab__text-label {
-	// 	color: black;
-	// }
-
 
 	li {
 		margin-bottom: 24px;
 	}
 </style>
-
-<!-- 	
-	<picture>
-		<source srcset="svelte-welcome.webp" type="image/webp" />
-		<img src="svelte-welcome.png" alt="Welcome" />
-	</picture> 
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style> -->

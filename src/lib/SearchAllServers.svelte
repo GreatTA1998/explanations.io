@@ -1,138 +1,142 @@
-<div style="display: flex; justify-content: center;">
-  <div class="input-container" style="position: relative; width: calc(70% - 180px);">
-    <span class="material-icons" style="position: absolute;
-      top: 20px;
-      left: 18px;
-      font-size: 48px;
-      color: #5D0068;
-      "
-    >
-      search
-    </span>
-
-    <input 
-      bind:this={SearchBar}
-      name="search" 
-      maxlength="100" 
-      placeholder="Search by class name" 
-      autocomplete="off" 
-      type="text" 
-      bind:value={searchVal}
-      style="
-        padding-left: 40px;
-        width: 100%; 
-        height: 60px; 
-        font-size: 2.2em; 
-        border-radius: 8px; 
-        padding: 12px;
-        padding-left: 74px;
-      "
-      on:input={(e) => searchWithinClassNames(e)}
-    >
-  </div>
-</div>
-
-<div style="margin-bottom: 12px;"></div>
-
-<div style="display: flex; width: 100%;">
-  <!-- LEFT FLEX CHILD -->
-  <div style="margin-left: 18%; margin-top: 20px; width: fit-content; flex-wrap: wrap;">
-    {#each categories as category, i}
-      <div 
-        class="subject-category"
-        on:click={() => currentlySelectedSubject = category}
-        class:orange-highlight={currentlySelectedSubject === category}
+<div style="width: 1000px; margin: auto;">
+  <div style="display: flex; justify-content: center; width: 100%;">
+    <div class="input-container" style="position: relative; width: 100%;">
+      <span 
+        bind:clientWidth={searchIconWidth}
+        class="material-icons" 
+        style="position: absolute;
+        top: 18px;
+        left: 18px;
+        font-size: 48px;
+        color: #5D0068;
+        "
       >
-        {#if category === 'Mechanical Engineering'}
-          <span class="material-symbols-outlined">
-            build
-          </span>
-        {:else if category === 'Computer Science'}
-          <span class="material-icons">
-            data_array
-          </span>
-        {:else if category === 'Life Sciences'}
-          <span class="material-symbols-outlined">
-            biotech
-          </span>
-        {:else if category === 'Economics'}
-          <span class="material-symbols-outlined">
-            shopping_cart
-          </span>
-        {:else if category === 'Math'}
-          <span class="material-symbols-outlined">
-            percent
-          </span>
-        {:else if category === 'Physics'}
-          <span class="material-icons">
-            air
-          </span>
-        {:else if category === 'All Subjects'}
-          <span class="material-symbols-outlined">
-            explore
-          </span>
-        {/if}
-        {category}
-      </div>
-    {/each}
-
-    <div style="margin-top: 48px;"></div>
-
-    <div class="subject-category"
-      on:click={() => currentlySelectedSubject = 'Other Servers'}
-      class:orange-highlight={currentlySelectedSubject === 'Other Servers'}
-    >
-      <span class="material-symbols-outlined">
-        folder
+        search
       </span>
-      Uncategorized servers
+
+      <input 
+        bind:this={SearchBar}
+        name="search" 
+        maxlength="100" 
+        placeholder="Search all servers" 
+        autocomplete="off" 
+        type="text" 
+        bind:value={searchVal}
+        style="
+          padding-left: 40px;
+          width: 100%; 
+          height: 80px; 
+          font-size: 2.2em; 
+          box-sizing: border-box;
+          border-radius: 8px; 
+          padding: 12px;
+          padding-left: 74px;
+        "
+        on:input={(e) => searchWithinClassNames(e)}
+      >
     </div>
   </div>
 
-  <!-- RIGHT FLEX CHILD -->
-  <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
-    <!-- Filters on top -->
-    <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
-      <div style="font-size: 16px; margin-left: 12px; margin-right: 12px;">
-        Sort by:
-      </div>
+  <div style="margin-bottom: 12px;"></div>
 
-      <MySelect options={filterTags} on:option-clicked={(e) => {currentlySelectedTag = e.detail.value; console.log(e.detail.option)}}/>
-    </div>
-
-    <div style="margin-bottom: 24px;">
-
-    </div>
-
-    {#if subjectServers}
-      {#each finalFilteredServers as serverObj, i}
-        {#key serverObj.id}
-          <SimpleServerPreviewCardBorderless
-            {serverObj}
-          />
-          <div style="margin-bottom: 18px;"></div>
-        {/key}
+  <div style="display: flex; width: 100%;">
+    <!-- LEFT FLEX CHILD -->
+    <div style="margin-top: 20px; width: fit-content; flex-wrap: wrap;">
+      {#each categories as category, i}
+        <div 
+          class="subject-category"
+          on:click={() => currentlySelectedSubject = category}
+          class:orange-highlight={currentlySelectedSubject === category}
+        >
+          {#if category === 'Mechanical Engineering'}
+            <span class="material-symbols-outlined">
+              build
+            </span>
+          {:else if category === 'Computer Science'}
+            <span class="material-icons">
+              data_array
+            </span>
+          {:else if category === 'Life Sciences'}
+            <span class="material-symbols-outlined">
+              biotech
+            </span>
+          {:else if category === 'Economics'}
+            <span class="material-symbols-outlined">
+              shopping_cart
+            </span>
+          {:else if category === 'Math'}
+            <span class="material-symbols-outlined">
+              percent
+            </span>
+          {:else if category === 'Physics'}
+            <span class="material-icons">
+              air
+            </span>
+          {:else if category === 'All Subjects'}
+            <span class="material-symbols-outlined">
+              explore
+            </span>
+          {/if}
+          {category}
+        </div>
       {/each}
 
-      <div style="">
-        <PopupNewServer/>
+      <div style="margin-top: 48px;"></div>
+
+      <div class="subject-category"
+        on:click={() => currentlySelectedSubject = 'Other Servers'}
+        class:orange-highlight={currentlySelectedSubject === 'Other Servers'}
+      >
+        <span class="material-symbols-outlined">
+          folder
+        </span>
+        Uncategorized servers
       </div>
-    {/if}
+    </div>
+
+    <!-- RIGHT FLEX CHILD -->
+    <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
+      <!-- Filters on top -->
+      <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
+        <div style="font-size: 16px; margin-left: 12px; margin-right: 12px;">
+          Sort by:
+        </div>
+
+        <div></div>
+
+        <MySelect options={filterTags} on:option-clicked={(e) => {currentlySelectedTag = e.detail.value; console.log(e.detail.option)}}/>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+
+      </div>
+
+      {#if subjectServers}
+        {#each finalFilteredServers as serverObj, i}
+          {#key serverObj.id}
+            <SimpleServerPreviewCardBorderless
+              {serverObj}
+            />
+            <div style="margin-bottom: 18px;"></div>
+          {/key}
+        {/each}
+
+        <div style="">
+          <PopupNewServer/>
+        </div>
+      {/if}
+    </div>
   </div>
 </div>
 
 <script>
-  import ReusableButton from "$lib/ReusableButton.svelte"
-  import TwosidedMarketplace from "$lib/TwosidedMarketplace.svelte"
   import { onMount } from 'svelte'
   import { getFirestoreCollection, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { goto } from "$app/navigation"
   import { user } from '/src/store.js'
-  import SimpleServerPreviewCard from '$lib/SimpleServerPreviewCard.svelte'
   import SimpleServerPreviewCardBorderless from '$lib/SimplePreviewCardBorderless.svelte'
   import PopupNewServer from '$lib/PopupNewServer.svelte'
   import MySelect from '$lib/MySelect.svelte'
-  import ShadowExperiment from "$lib/ShadowExperiment.svelte"
 
   let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
@@ -140,6 +144,7 @@
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
 
+  let searchIconWidth 
   
   let allServers = null
   let searchMatchedServers = null
@@ -318,34 +323,6 @@
     margin-right: 8px;
   }
 
-  .server-card {
-    /* Tweek this to change all the children font-sizes */
-    font-size: 0.9em;
-
-    border-radius: 32px;
-    min-width: 300px;
-    width: 100%;
-    margin-bottom: 20px;
-    padding-top: 30px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-bottom: 4px;
-    margin-left: 8%;
-    height: fit-content;
-  }
-
-  .card-action-button {
-    width: fit-content; 
-    margin-right: 24px; 
-    padding-top: 16px; 
-    padding-bottom: 16px;
-    padding-left: 36px; 
-    padding-right: 36px; 
-    font-size: 1.4em; 
-    font-weight: 600; 
-    font-weight: 600
-  }
-
   .filter-tag {
     /* background-color: red; 
     color: white;  */
@@ -392,7 +369,6 @@
 
     width: 220px;
     font-size: 16px; 
-    margin-left: 38px; 
     height: fit-content;
     padding-top: 8px;
     padding-bottom: 8px;

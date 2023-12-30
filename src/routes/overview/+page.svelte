@@ -1,6 +1,6 @@
 <TopNavbar>
   <div style="margin-top: 36px;"></div>
-  <PlaygroundOverview/>
+  <SearchAllServers/>
 </TopNavbar>
 
 <script>
@@ -18,7 +18,7 @@
   import ReusableButton from '$lib/ReusableButton.svelte';
   import Checkbox from '@smui/checkbox'
   import { mixpanelLibrary } from '/src/mixpanel.js'
-  import PlaygroundOverview from '$lib/PlaygroundOverview.svelte'
+  import SearchAllServers from '$lib/SearchAllServers.svelte'
   import Button, { Label } from '@smui/button'
   import TopNavbar from '$lib/TopNavbar.svelte'
 

@@ -25,11 +25,6 @@
         on:video-start
         on:video-pause
       > 
-        <div slot="twoTimesSpeedButtonSlot">
-          <div style="background: rgba(120, 120, 120, 0.2); border-radius: 4px; color: white; margin-left: 6px; margin-top:0px; padding: 6px;">
-              2x
-          </div>
-        </div>
 
         {#if showEditDeleteButtons}
           <!-- <div style="

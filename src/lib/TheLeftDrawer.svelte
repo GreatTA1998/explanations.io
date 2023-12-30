@@ -101,7 +101,7 @@
     <div style="margin-bottom: 24px;"></div>
 
     <div style="display: flex; align-items: center;">
-      <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 24px;">
+      <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 16px;">
         Blackboard rooms
       </div>
       <span on:click={createNewRoom} class="material-icons new-room-button">
@@ -137,7 +137,7 @@
     </div>
   </List>
   
-  <div style="position: absolute; bottom: 0px; top: auto; width: {DRAWER_EXPANDED_WIDTH - 2}px; background: white; height: 60px">
+  <div style="position: absolute; bottom: 0px; top: auto; width: {DRAWER_EXPANDED_WIDTH - 2}px; background: white; height: 48px; box-sizing: border-box;" class="core-shadow" >
     <div 
       class:drawer-item-glow={$page.routeId === '[class]/profile'}
       on:click={() => goto(`/${classID}/profile`)} 
@@ -386,7 +386,7 @@
     cursor: pointer;
     color: grey; 
     margin-left: auto; 
-    margin-right: 8px; 
+    margin-right: 12px; 
     font-size: 1.2rem;
   }
 

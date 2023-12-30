@@ -43,7 +43,7 @@
 
           <div style="margin-bottom: 24px;"></div>
 
-          <UXFormField fieldLabel="What kind of explanations are you looking for?" placeholder=""
+          <UXFormField fieldLabel="What kind of explanations are you hoping for?" placeholder=""
             value={reasonForCrowdfunding}
             on:input={(e) => reasonForCrowdfunding = e.target.value}
           />

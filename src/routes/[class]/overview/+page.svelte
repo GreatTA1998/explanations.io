@@ -10,104 +10,118 @@
   #e2dddd
   #ffad42
  -->
-<div style="padding-left: 36px; padding-right: 36px; padding-top: 36px; padding-bottom: {120 + featuredVideoBleedMargin}px; background-color: #f7c686">
-    {#if classDoc}
-      <div style="font-size: 36px; font-weight: 600; color: rgb(20, 20, 20)">
-        {classDoc.name}
-      </div>
-      <div style="font-size: 20px; margin-top: 12px;">
-        {classDoc.description}
-      </div>
-    {/if}
+<div style="padding-left: 4%; padding-right: 4%; padding-top: 36px; padding-bottom: {120 + featuredVideoBleedMargin}px; background-color: #f7c686"
+  bind:clientWidth={availablePageContentWidth}
+>
+  {#if classDoc}
+    <!-- 36px is the original title size-->
+    <div style="font-size: 2.8vw; font-weight: 600; color: rgb(20, 20, 20)">
+      {classDoc.name}
+    </div>
+    <div style="font-size: 20px; margin-top: 12px;">
+      {classDoc.description}
+    </div>
+  {/if}
 </div>
 
 <!-- Video gallery section -->
-<div style="display: flex; align-items: end; margin-top: {-76 + finalAdjustment - featuredVideoBleedMargin}px; margin-left: 36px; margin-right: 36px; position: relative;">
+<div style="position: relative; display: flex; align-items: end; margin-top: {-76 + finalAdjustment - featuredVideoBleedMargin}px; margin-left: 4%; flex-wrap: nowrap;">
   {#key mostWatchedExplanations}
     {#each mostWatchedExplanations as explanation, i}
       {#if i === currentlyWatchingIdx}
-        <div style="margin-right: {gapBetweenEachVideo}px; border-radius: 12px; overflow: hidden;">
+        <div style="margin-right: {0.02 * availablePageContentWidth}px; border-radius: 12px; overflow: hidden; width: {featuredItemWidth}px;">
           <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
             <ReusableDoodleVideo
               {boardDoc}
-              canvasWidth={600}
-              canvasHeight={450}
+              canvasWidth={featuredItemWidth} 
+              canvasHeight={featuredItemWidth * 3/4}
               showEditDeleteButtons={false}
               boardDbPath={explanation.path}
             />
           </RenderlessListenToBoard>
         </div>
       {:else}
-        <!-- 17px is the title height -->
-        <!-- Rotate the gallery -->
-        <div 
-          on:click={() => rotateCarousel(i)} 
-          style="
-            width: {carouselItemPreviewWidth}px; 
-            height: {carouselItemPreviewWidth * 3/4 + 17}px; 
-            overflow: hidden; 
-            margin-right: {gapBetweenEachVideo}px;
-            position: {i === 0 ? 'absolute' : ''};
-            left: {i === 0 ? -260 : 0}px;
-          "
-        >
-          <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 200px">
-            {explanation.title || explanation.description}
+        {#if carouselItemPreviewWidth}
+          <div 
+            on:click={() => rotateCarousel(i)} 
+            style="
+              width: {carouselItemPreviewWidth}px; 
+              height: {carouselItemPreviewWidth * 3/4 + 17}px; 
+              overflow: hidden; 
+              margin-right: {i <= 2 ? `${0.02 * availablePageContentWidth}px` : ''};
+            "
+          >
+            <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 100%">
+              {explanation.title || explanation.description}
+            </div>
+            
+            <div style="border-radius: 6px; width: {carouselItemPreviewWidth * 0.98}px; height: {carouselItemPreviewWidth * 3/4 * 0.97}px; overflow: hidden;">
+              <RenderlessFetchStrokes 
+                dbPath={explanation.path}
+                let:fetchStrokes={fetchStrokes}
+                let:strokesArray={strokesArray}
+                autoFetchStrokes={false}
+              > 
+                <!-- Note: there will be rounding error with the scaling up & back of the NewHDBlackboard, causing some 1-4px shifts in the margin -->
+                <NewHDBlackboard
+                  {strokesArray}
+                  thumbnailWidth={carouselItemPreviewWidth}
+                  hideToolbar={true}
+                  on:intersect={fetchStrokes}
+                />
+              </RenderlessFetchStrokes>
+            </div>
           </div>
-          
-          <div style="border-radius: 6px; width: {carouselItemPreviewWidth * 0.98}px; height: {carouselItemPreviewWidth * 3/4 * 0.97}px; overflow: hidden;">
-            <RenderlessFetchStrokes 
-              dbPath={explanation.path}
-              let:fetchStrokes={fetchStrokes}
-              let:strokesArray={strokesArray}
-              autoFetchStrokes={false}
-            > 
-              <HDBlackboard
-                {strokesArray}
-                canvasWidth={$assumedCanvasWidth * 0.7}
-                canvasHeight={$assumedCanvasWidth * 3/4 * 0.7}
-                thumbnailWidth={200}
-                thumbnailHeight={200 * 3/4}
-                hideToolbar={true}
-                on:intersect={fetchStrokes}
-              />
-            </RenderlessFetchStrokes>
-          </div>
-        </div>
+        {/if}
       {/if}
     {/each}
   {/key}
 
-  {#if mostWatchedExplanations.length > 0}
+  {#if mostWatchedExplanations.length > 0 && featuredItemWidth}
     <!-- Display featured video title, description and stats -->
-    <div style="border-radius: 12px; position: absolute; left: {400 + 212}px; right: auto; top: 0px; bottom: auto; padding: 16px; background-color: hsl(0,0%,0%, 0.6); color: white;">
+    <!-- {featuredItemWidth + 212}px -->
+    <!-- 50% (featured item), 8% (left right padding), 2% gap from featured video, 40%-->
+    <div style="
+      position: absolute; 
+      max-height: {availablePageContentWidth * 0.24}px; 
+      width: {0.4 * availablePageContentWidth }px;
+      left: calc({featuredItemWidth}px + {availablePageContentWidth * 0.01}px); 
+      right: auto; 
+      top: 0px; 
+      bottom: auto; 
+      padding: 16px; 
+      background-color: hsl(0,0%,0%, 0.6); 
+      color: white; 
+      border-radius: 12px;"
+    >
       <div style="color: rgb(200, 200, 200); font-weight: 400; font-size: 14px;">
         Most watched explanation
       </div>
-      <div style="font-size: 24px; font-weight: 500; max-width: 500px; color: white" class="my-truncated-text">
+      <div style="font-size: 24px; font-weight: 500; width: 100%; color: white" class="my-truncated-text">
         {mostWatchedExplanations[currentlyWatchingIdx].title || mostWatchedExplanations[currentlyWatchingIdx].description}
       </div>
-      <div style="margin-top: 28px; font-size: 14px;">
+      <div style="margin-top: 24px; font-size: 14px; width: 100%;" class="my-truncated-paragraph">
         {mostWatchedExplanations[currentlyWatchingIdx].description}
       </div>
       <!-- Statistics -->
-      <div style="margin-top: 28px; font-size: 16px;">
-        {roundedToFixed(mostWatchedExplanations[currentlyWatchingIdx].viewMinutes, 0)} minutes viewed 
-        | 
-        See all {mostWatchedExplanations[currentlyWatchingIdx].numOfComments} comments
+      <div style="margin-top: 24px; font-size: 16px; font-style: underline">
+        <!-- <u>Full explanation</u> -->
+        {roundedToFixed(mostWatchedExplanations[currentlyWatchingIdx].viewMinutes, 0)} minutes viewed, 
+       
+        {mostWatchedExplanations[currentlyWatchingIdx].numOfComments || 0} comments
       </div>
     </div>
   {/if}
 </div>
 
-<div style="padding-left: 36px; padding-right: 36px;">
+<div style="padding-left: 4%; padding-right: 4%;">
   <div style="margin-bottom: 48px;"></div>
 
   {#if classDoc}
     <div style="display: flex; align-items: center; width: 100%; justify-content: space-around; border: 0px solid red;">
       <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
 
-      <div style="margin-left: 12px; width: 70%; border: 0px solid purple;">
+      <div style="margin-left: 12px; margin-right: 12px; width: 70%; border: 0px solid purple;">
         <div style="display: flex; align-items: center;">
           <div style="font-size: 24px; color: #036E15; font-weight: 500;">
             $0 raised 
@@ -127,7 +141,7 @@
       {classID}
     > 
       <!-- #036E15 -->
-      <div on:click={() => setIsPopupOpen({ newVal: true })} style="cursor: pointer; width: 150px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
+      <div on:click={() => setIsPopupOpen({ newVal: true })} style="cursor: pointer; width: 150px; margin-top: 9px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
         Add to crowdfund
       </div>
     </PopupCrowdfund>
@@ -231,7 +245,7 @@
               <span class="material-symbols-outlined" style="font-size: 30px">
                 stylus_note
               </span>
-              <div style="margin-right: 0; margin-left: auto;">
+              <div style="margin-left: 8px;">
                 Sign up as teacher
               </div>
             </ReusableRoundButton>
@@ -285,6 +299,7 @@
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import HDBlackboard from '$lib/HDBlackboard.svelte'
+  import NewHDBlackboard from '$lib/NewHDBlackboard.svelte'
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import { user, assumedCanvasWidth } from '/src/store.js'
   import { roundedToFixed } from '/src/helpers/utility.js'
@@ -301,10 +316,17 @@
   let tweenedPresubsCount = 0
   let isInitialLoad = true
   let unsubTeachersListener = null
-  const featuredVideoBleedMargin = 200 
+
+  let featuredVideoBleedMargin 
   let finalAdjustment = 8
-  let carouselItemPreviewWidth = 238
+  let featuredItemWidth 
+  let carouselItemPreviewWidth
   let gapBetweenEachVideo = 36
+  let availablePageContentWidth 
+
+  $: featuredItemWidth = availablePageContentWidth * 0.5
+  $: carouselItemPreviewWidth = availablePageContentWidth * 0.13
+  $: featuredVideoBleedMargin = availablePageContentWidth * 0.2
 
   $: if (teacherDocs) {
     animateNumber(teacherDocs.length)
@@ -387,7 +409,7 @@
 
     const q0 = firestoreCollection(`classes/${classID}/blackboards`)
     const q1 = query(q0, orderBy('viewMinutes', 'desc'))
-    const q2 = query(q1, limit(3))
+    const q2 = query(q1, limit(4))
     const result = await getFirestoreQuery(q2)
     mostWatchedExplanations = result
   }
@@ -468,6 +490,14 @@
 </script>
 
 <style>
+  .my-truncated-paragraph {
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .people-list {
     max-height: 240px; 
     height: fit-content;

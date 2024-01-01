@@ -3,14 +3,8 @@
   <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
 {/if}
 
-{#if roomID === 'request-video'}
-  <ClassServerAskQuestion {classID}/>
-{:else if roomID === 'my-profile'}
-  <ClassServerMyProfile {classID} profileUID={$user.uid}/>
-{:else}
-
 {#if roomDoc}
-	<div use:portal={'main-content'} >
+	<div>
     <LeftDrawerToggleButton/>
     <div style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
  
@@ -435,22 +429,20 @@
 </div>
 {/if}
 
-{/if}
-
 <script>
   import '$lib/_FourColor.scss'
-  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '../../../store.js'
-  import { portal, lazyCallable } from '../../../helpers/actions.js'
+  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '/src/store.js'
+  import { portal, lazyCallable } from '/src/helpers/actions.js'
+  import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
-  import { sendTextMessage } from '../../../helpers/cloudFunctions.js'
+  import { sendTextMessage } from '/src/helpers/cloudFunctions.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
-  import Blackboard from '../../../lib/Blackboard.svelte'
+  import Blackboard from '$lib/Blackboard.svelte'
   import DoodleVideo from '$lib/DoodleVideo.svelte'
   import { onMount, tick, onDestroy } from 'svelte'
   import Button, { Icon } from '@smui/button'
   import { goto } from '$app/navigation';
-  import { getRandomID, displayDate, roundedToFixed } from '../../../helpers/utility.js'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import Textfield from '@smui/textfield'
@@ -464,11 +456,9 @@
   import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
   import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
-  import ClassServerAskQuestion from '$lib/ClassServerAskQuestion.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
   import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
-  import ClassServerMyProfile from '$lib/ClassServerMyProfile.svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
@@ -497,6 +487,15 @@
   $: roomsDbPath = `classes/${classID}/rooms/`
   $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
   $: roomID, createRoomListener() // Yes, reactive statements DO trigger on initial assignment
+
+  
+  $: if (roomID && $user.uid) {
+    const userRef = doc(getFirestore(), `users/${$user.uid}`)
+    updateDoc(userRef, {
+      mostRecentClassAndRoomID: `/${classID}/${roomID}`
+    })
+  }
+
 
   onDestroy(() => {
     unsubRoomListener()

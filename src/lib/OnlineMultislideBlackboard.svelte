@@ -1,21 +1,15 @@
-
-<div style="display: flex">
+<div style="display: flex; align-items: end;">
   <div id="multislide-record-button-wrapper-{boardDoc.id}">
  
   </div>
   
   <div style="margin-left: 20px;"></div>
 
-  {#each boardDoc.slideIDs as slideID, i}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div on:click={() => changeToSlideIdx(i)}
-      class:highlighted-glow={idxOfFocusedSlide === i}
-      class:lowlighted-glow={idxOfFocusedSlide !== i}
-      style="width: 80px; height: 50px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"
-    >
-      Slide { i + 1}
-    </div>
-  {/each}
+  <MultislideSlideChanger
+    slideIDs={boardDoc.slideIDs}
+    {idxOfFocusedSlide}
+    on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
+  />
 </div>
 
 <div style="margin-bottom: 12px;"></div>
@@ -37,7 +31,7 @@
         border: 1px solid purple;
       "
     >
-    <!-- isOffline is a quickfix for functionalities that don't work such as uploading backgrounds -->
+      <!-- isOffline is a quickfix for functionalities that don't work such as uploading backgrounds -->
       <Blackboard
         isOfflineDemo
         {strokesArray}
@@ -48,8 +42,7 @@
         on:board-wipe={deleteAllStrokesFromDb}
         on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
         on:background-reset={() => resetBackgroundImage(slideID)}
-      >
-      </Blackboard>
+      />
     </div>
   </RenderlessListenToStrokes>
 {/each}
@@ -62,40 +55,58 @@
 >
   <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
     {#if !isRecording}
-      <div 
-        on:click={() => callFuncsInSequence(
-          startRecording,
-          startStopwatch,
-          () => isRecording = true,
-          () => {
-            // user doesn't necessarily start from slide 0,so ensure initial state is correct
-            timingOfSlideChanges.push({
-              toIdx: idxOfFocusedSlide,
-              timing: 0
-            })
-          }
-        )}
-        class="offline-record-button" style="border-radius: 24px;"
-      >
-        Record
-      </div>
+      {#if !!!$user.uid}
+        <span on:click={() => isSignInPopupOpen = true} class="my-record-button">
+          sign in & record
+        </span>
+
+        {#if isSignInPopupOpen}
+          <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
+        {/if}
+      {:else}
+        <div style="margin-top: 0px;">
+          <!-- user doesn't necessarily start from slide 0, so ensure initial state is correct -->
+          <ReusableRoundButton on:click={() => callFuncsInSequence(
+            () => updateBoardRecordState(boardDoc.path, 'mid_record'),
+            startRecording,
+            startStopwatch,
+              () => isRecording = true,
+              () => {
+                timingOfSlideChanges.push({
+                  toIdx: idxOfFocusedSlide,
+                  timing: 0
+                })
+              }
+            )}
+            backgroundColor="rgb(80, 80, 80, 0.9)" textColor="cyan" isBordered
+          >
+            Record
+          </ReusableRoundButton>
+        </div>
+      {/if}
     {:else}
       <!-- () => dispatch('timing-of-slide-changes-ready', { timingOfSlideChanges }) -->
       <button on:click={() => callFuncsInSequence(
         stopRecording,
         stopStopwatch,
+        () => updateBoardRecordState(boardDoc.path, 'post_record'),
         () => willPreventPageLeave.set(true)
       )}
         style="height: 50px; font-size: 1.1em; border-radius: 25px;"
         class="offline-record-button"
       >
-        Finish recording
+        {#if boardDoc.recordState === 'post_record'}
+          <CircularSpinnerFourColor/>
+        {:else} 
+          Finish
+        {/if}
       </button>
     {/if}
   </div>
 </RenderlessAudioRecorder>
 
 <script>
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte';
   import Blackboard from '$lib/Blackboard.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte';
@@ -109,11 +120,16 @@
   import ReusableButton from '$lib/ReusableButton.svelte'
   import { willPreventPageLeave } from '/src/store'
   import { mixpanelLibrary } from '/src/mixpanel.js'
+  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
+  import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
+  import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
 
   export let canvasWidth
   export let canvasHeight
   export let boardDoc // boardDoc.slideIDs
   export let classID
+
+  let isSignInPopupOpen = false
 
   const dispatch = createEventDispatcher()
   const boardPath = `classes/${classID}/blackboards/${boardDoc.id}/`
@@ -213,15 +229,6 @@
         return
       }
     }
-  }
-
-  function uploadVideoToCloud ({ audioBlob }) {
-    console.log('in future, will upload audioBlob =', audioBlob)
-  }
-
-  function handleNewlyDrawnStroke (e, slideID) {
-    console.log('e =', e)
-    console.log('slideID =', slideID)
   }
 
   // Timer that doesn't slowly drift late and get out of sync with visuals
@@ -357,19 +364,29 @@
       recordState: newRecordState
     })
   }
+  function updateBoardRecordState (boardPath, newRecordState) {
+    const blackboardRef = doc(getFirestore(), boardPath)
+    updateDoc(blackboardRef, {
+      recordState: newRecordState
+    })
+  }
 </script>
 
 <style>
-  .highlighted-glow {
-    background-color: hsl(0,0%,0%, 0.80);
-    color: white;
-    font-weight: 500;
-    border-bottom: 4px solid orange;
-  }
-
-  .lowlighted-glow {
-    font-weight: 400;
-    border-bottom: 4px solid rgb(179, 179, 179);
+  .my-record-button {
+    font-size: 1.2rem; 
+    color: cyan; 
+    margin-left: 28px; 
+    margin-right: 26px; 
+    font-family: sans-serif; 
+    border: 1px solid cyan; 
+    padding-top: 2px; 
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 9px; 
+    box-sizing: border-box;
+    border-radius: 1px;
+    cursor: pointer;
   }
 
   .offline-record-button {

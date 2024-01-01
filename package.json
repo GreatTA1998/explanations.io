@@ -15,7 +15,7 @@
     "@smui/button": "^6.0.0-beta.4",
     "@smui/card": "^6.0.0-beta.4",
     "@smui/checkbox": "^7.0.0-beta.0",
-    "@smui/circular-progress": "^6.0.0-beta.4",
+    "@smui/circular-progress": "^6.1.4",
     "@smui/common": "^6.0.0-beta.4",
     "@smui/data-table": "^7.0.0-beta.3",
     "@smui/drawer": "^6.0.0-beta.4",

@@ -1,14 +1,9 @@
 <div style="display: flex;">
-  {#each boardDoc.slideIDs as slideID, i}
-    <div 
-      on:click={() => idxOfFocusedSlide = i}
-      class:highlighted-glow={idxOfFocusedSlide === i}
-      class:lowlighted-glow={idxOfFocusedSlide !== i}
-      style="width: 80px; height: 50px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"
-    >
-      Slide { i + 1}
-    </div>
-  {/each}
+  <MultislideSlideChanger
+    slideIDs={boardDoc.slideIDs}
+    {idxOfFocusedSlide}
+    on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
+  />
 
   <div style="margin-left: 20px">
 
@@ -162,6 +157,7 @@
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '/src/helpers/crud.js'
+  import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
 
   export let audioDownloadURL
   export let boardDoc
@@ -323,18 +319,6 @@
 </script>
 
 <style>
-   .highlighted-glow {
-    background-color: hsl(0,0%,0%, 0.80);
-    color: white;
-    font-weight: 500;
-    border-bottom: 4px solid orange;
-  }
-
-  .lowlighted-glow {
-    font-weight: 400;
-    border-bottom: 4px solid rgb(179, 179, 179);
-  }
-
   .overlay-center {
     position: absolute; 
     width: 20px; 
@@ -344,7 +328,6 @@
     right: 0;
     bottom: 0;
     margin: auto; 
-    color: white
   }
 
   .offline-record-button {

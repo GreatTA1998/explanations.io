@@ -10,15 +10,9 @@
   <!-- The delete button is added here -->
   <div style="justify-content: space-between; width: 100%; position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5">
     <slot name="twoTimesSpeedButtonSlot">
-      <Button on:click={togglePlaySpeed} 
-        variant="raised" 
-        style="height: {20 * (visualWidth / assumedCanvasWidth)}px; margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;"
-      >
-        <div style="color: white">
-          {playbackSpeed}x speed
-        </div>
-        <span class="material-icons"></span>
-      </Button>
+      <div on:click={togglePlaySpeed} style="background: rgba(120, 120, 120, 0.2); border-radius: 4px; color: white; margin-left: 6px; margin-top:0px; padding: 6px;">
+        {playbackSpeed}x 
+      </div>
     </slot>
 
     <slot>
@@ -33,11 +27,14 @@
     {#if !isPaid}
       <span on:click={startAudioPlayer} 
         class="material-icons overlay-center" 
-        style="color: white;
+        style="
+        color: rgba(230, 230, 230, 0.8);
         width: {270 * scaleFactor}px; 
         height: {270 * scaleFactor}px; 
         z-index: 5;
-        font-size: {15 * scaleFactor}rem;"
+        font-size: {15 * scaleFactor}rem;
+        cursor: pointer;
+      "
       >
         play_circle
       </span>
@@ -387,6 +384,5 @@ audio::-webkit-media-controls-enclosure {
   right: 0;
   bottom: 0;
   margin: auto; 
-  color: white
 }
 </style>

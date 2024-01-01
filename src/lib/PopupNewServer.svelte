@@ -1,72 +1,61 @@
-<Button 
-  on:click={() => isPopupOpen = true}
-  color="secondary" variant="outlined" class="call-to-action-button" 
-  style="	
-    height: 4.2vw; 
-    min-height: 42px;
-    margin-top: 0.85vw; 
-    margin-bottom: 0.8vw; 
-    border-radius: 0px;
-  "
->
-  <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
+<ReusableRoundButton on:click={() => isPopupOpen = true} backgroundColor="#5d0068" textColor="white">
+  <span class="material-symbols-outlined" style="margin-right: 6px;">
+    add
+  </span>
+  <div style="font-weight: 500;">
     Create new server
-  </Label>
-</Button>
+  </div>
+</ReusableRoundButton>
 
 {#if isPopupOpen}
-  <BasePopup on:popup-close={() => isPopupOpen = false} style="min-width: 340px; width: 60%;">
-    <h2 slot="title" style="font-family: sans-serif; padding-left: 14px;">
-      Create new class server
-    </h2> 
+  <BasePopup on:popup-close={() => isPopupOpen = false} style="min-width: 340px; width: 60%; max-width: 620px; padding: 24px;">
+    <div slot="title" style="margin: 0; font-size: 28px; font-weight: 600;">
+      New server
+    </div> 
 
-    <div style="padding: 24px;" slot="popup-content">
+    <div slot="popup-content">
+      <div style="display: flex; justify-content: center;">
+        <div style="margin-top: 24px; background-color: #f5f5f5; border-radius: 12px; width: 90%; height: fit-content; padding: 24px; box-sizing: border-box;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">  
+            <div style="flex: 1">
+              <UXFormField
+                value={serverFullName}
+                on:input={(e) => serverFullName = e.target.value}
+                fieldLabel="Full server name (for a college-class, include code-names too)"    
+                placeholder="Intro to Algorithms (abc-123)"   
+              />
+            </div>
+          </div>
+                     
+          <div style="flex: 1; margin-bottom: 24px;">
+            <UXFormField
+              value={serverSyllabusVersion}
+              on:input={(e) => serverSyllabusVersion = e.target.value}
+              fieldLabel="(OPTIONAL) Is it college-specific? If so which?"
+              placeholder="Cross-college"
+            />
+          </div>
 
-      <div style="background-color: #f5f5f5; border-radius: 12px; width: 90%; height: fit-content; padding: 16px;">
-        <Textfield variant="outlined" bind:value={valueA} label="Official class name" style="background-color: white;">
-          <HelperText slot="helper">Colleges sometimes use code names e.g. 18.06, MAT 271</HelperText>
-        </Textfield>
-
-        <Textfield variant="outlined" bind:value={valueA} label="Readable name" style="background-color: white;">
-          <HelperText slot="helper">The name that most of the world understands e.g. Linear Algebra, Multivariable Calculus</HelperText>
-        </Textfield>
-
-        <Textfield variant="outlined" bind:value={valueA} label="College" style="background-color: white;">
-          <HelperText slot="helper">This affects the syllabus version</HelperText>
-        </Textfield>
-
-        <Textfield
-          style="width: 100%;  background-color: white;"
-          helperLine$style="width: 100%;"
-          textarea
-          bind:value
-          label="Server description"
-        >
-          <HelperText slot="helper">What's the goal of this server, how will it help its members</HelperText>
-        </Textfield>
-
-        <input type="checkbox" value="true"> cross-college server
-      </div>
-
-      <div style="display: flex; justify-content: flex-end; align-items: center;">
-        <Button on:click={() => isPopupOpen = false}>
-          Cancel
-        </Button>
-
-        <Button color="secondary" variant="raised" class="call-to-action-button" 
-          style="	
-            height: 3vw; 
-            min-height: 42px;
-            margin-top: 0.85vw; 
-            margin-bottom: 0.8vw; 
-            border-radius: 36px;
-          "
-        >
-          <Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
-            Create this server
-          </Label>
-        </Button>
+        <!-- What's the goal of this server, how will it help its members -->
+        <div style="flex: 1">
+          <UXFormField
+            value={serverGoalDescription}
+            on:input={(e) => serverGoalDescription = e.target.value}
+            fieldLabel="What is the goal of this server?"
+            placeholder=""
+          />
         </div>
+      </div>
+    </div>
+
+      <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 24px;">
+        <ReusableRoundButton on:click={createNewClassServer} backgroundColor="#5d0068" textColor="white" isDisabled={!serverFullName || !serverGoalDescription}>
+          <span class="material-symbols-outlined" style="margin-right: 6px;">
+            add
+          </span>
+          <div style="font-weight: 500;">Create server</div>
+        </ReusableRoundButton>
+      </div>
     </div>
   </BasePopup>
 {/if}
@@ -74,36 +63,27 @@
 <script>
   import BasePopup from '$lib/BasePopup.svelte'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { user } from '../store.js'
   import { updateFirestoreDoc, setFirestoreDoc } from '../helpers/crud.js'
-  import Button, { Label } from '@smui/button'
   import { getRandomID } from '../helpers/utility.js'
-  import Textfield from '@smui/textfield'
-  import HelperText from '@smui/textfield/helper-text';
- 
-  let valueA = '';
-  let valueB = '';
-  let valueC = '';
-  let valueD = '';
-  let value = ''
+  import UXFormField from '$lib/UXFormField.svelte'
+  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
+
+  let serverFullName = '' 
+  let serverGoalDescription = ''
+  let serverSyllabusVersion = ''
 
   const dispatch = createEventDispatcher()
 
-  let classNameInputField
-  let classDescInput
-
   let isPopupOpen = false
 
+  // ASSUMES NAME & DESCRIPTION ARE NOT EMPTY STRINGS (BECAUSE THE SUBMIT BUTTON IS DISABLED OTHERWISE)
   async function createNewClassServer () {
-    if (!(classNameInputField && classDescInput)) {
-      alert('Need class number and class name')
-      return
-    }
     const newClassID = getRandomID()
     await Promise.all([
       setFirestoreDoc(`/classes/${newClassID}`, {
-        name: classNameInputField,
-        description: classDescInput,
+        name: serverFullName,
+        description: serverGoalDescription,
+        syllabusVersion: serverSyllabusVersion,
         isYoutubeClass: true,
         numOfMembers: 0, // has a phoneNumber
         numOfHelpers: 0, // sign up as helper

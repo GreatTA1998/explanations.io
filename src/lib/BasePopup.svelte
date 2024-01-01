@@ -1,10 +1,10 @@
 <div class="popup-window" style={$$props.style}>
-  <div style="display: flex; align-items: center; margin-left: 10px; margin-right: 10px; margin-top: 10px;">
+  <div style="display: flex; align-items: center;">
     <slot name="title">
 
     </slot>
 
-    <span on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0; margin-left: auto; color: black;">
+    <span on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0px; margin-left: auto; color: black; cursor: pointer;">
       close
     </span>
   </div>
@@ -38,7 +38,7 @@
     z-index: 10;
     background-color: white; 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 8px; 
+    border-radius: 26px; 
 
     /* center it within the page */
     left: 0;
@@ -48,11 +48,12 @@
     margin: auto;
 
     /* dimensions */
-    width: 300px;
     height: fit-content;
     min-height: 10vh;
     max-height: 90vh;
-    min-width: 33vw; 
+    min-width: 380px;
+    width: 40vw; 
+    max-width: 600px;
     overflow-y: auto;
   }
 </style>

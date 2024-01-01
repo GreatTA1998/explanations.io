@@ -214,17 +214,9 @@
     updateUI()
   }
   
-  // resize on initialization
+  // resize whenever `ctx` changes (note we hide other variables like `strokesArray` inside the function, so them changing won't trigger this block)
   $: if (ctx) {
-    canvas.width = canvasWidth
-    canvas.height = canvasHeight
-    bgCanvas.width = canvasWidth
-    bgCanvas.height = canvasHeight
-    if (strokesArray) {
-      for (const stroke of strokesArray) {
-        drawStroke(stroke, null, ctx, canvas, canvasWidth)
-      }
-    }
+    resizeFrontCtx(ctx)
   }
 
   // detect backgroundImageDownloadURL
@@ -257,6 +249,18 @@
   onDestroy(() => {
     window.removeEventListener('popstate', onBackOrForward)
   })
+
+  function resizeFrontCtx () {
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+    bgCanvas.width = canvasWidth
+    bgCanvas.height = canvasHeight
+    if (strokesArray) {
+      for (const stroke of strokesArray) {
+        drawStroke(stroke, null, ctx, canvas, canvasWidth)
+      }
+    }
+  }
 
   function onBackOrForward () {
     if (recordState === 'mid_record') {
@@ -311,6 +315,8 @@
 
     // NOTE: this does not trigger!
     if (m === n) { 
+      return 
+
       // do nothing: this blackboard updated its parent, and the change propagated back to itself
       if (strokesArray[n-1] && !strokesArray[n-1].isErasing) {
         undoStrokeIdx = n - 1 // when a new visible stroke is drawn, set it to that index

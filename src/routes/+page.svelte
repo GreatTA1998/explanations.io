@@ -1,41 +1,39 @@
 <TopNavbar>
+	<div slot="tab-section" style="margin-left: 24px; margin-right: auto; display: flex; align-items: center; justify-content: space-evenly; color: black; width: 160px; box-sizing: border-box;">
+		<div on:click={() => activeTabName = 'Learn'} style="text-align: center; box-sizing: border-box; height: 64px; padding: 8px 6px 4px 6px" class:active-underline-indicator={activeTabName === 'Learn'}>
+			<span class="material-symbols-outlined" style="font-size: 26px; color: rgb(30, 30, 30)">
+				smart_display
+			</span>
+			<div style="font-size: 14px; margin-top: -2px;" class:active-bold={activeTabName === 'Learn'}>
+				Learn
+			</div>
+		</div>
+
+		<div on:click={() => activeTabName = 'Teach'} style="text-align: center; height: 64px; box-sizing: border-box; padding: 8px 6px 4px 6px" class:active-underline-indicator={activeTabName === 'Teach'}>
+			<span class="material-symbols-outlined" style="font-size: 26px; color: rgb(30, 30, 30)">
+				stylus_note
+			</span>
+			<div style="font-size: 14px; margin-top: -2px;" class:active-bold={activeTabName === 'Teach'}>
+				Teach
+			</div>
+		</div>
+	</div>
+
 	<!-- <TopBannerWarnExperimental/> -->
-	<div class="webflow-container" style="padding-top: 1%;">
-		<!-- '#F1F1F1' -->
-		<TabBar tabs={tabs} let:tab bind:active style="color: purple; margin-left: 0%;">
-			<Tab {tab} 
-				stacked minWidth style="color: orange; border: 0px solid grey; border-radius: 0px; overflow: hidden;
-					background-color: {active.label === tab.label ? '' : ''};
-					border-bottom: {active.label === tab.label ? 'purple 0px solid' : ''}
-				"
-			>
-				<Icon class="material-icons" style="color: {active.label === tab.label ? 'black' : 'grey'}; padding-top: 25px;">
-					{tab.icon}
-				</Icon>
-				<Label style="color: {active.label === tab.label ? 'black' : 'rgba(0, 0, 0, 0.9)'};
-						font-weight: {active.label === tab.label ? '600' : '400'};
-						margin-top: 5px; padding-bottom: 30px;">
-					{tab.label}
-				</Label>
-			</Tab>
-		</TabBar>
-
-		<div style="margin-bottom: 58px"></div>
-
-		{#if active.label === 'Learn'}
-			<div class="header-flex">
-				<div>
-					<p class="header-title" style="line-height: 1.2">
-						Ask question, get video.
+	<div class="webflow-container" style="padding-top: 2%;">
+		{#if activeTabName === 'Learn'}
+			<div class="header-flex" style="border: 0px solid black;">
+				<div style="width: max-content;">
+					<p class="header-title" style="line-height: 1; margin-bottom: 36px;">
+						Get it properly explained
 					</p>
-					<div style="margin-top: 24px;"></div>
-					<div style="font-size: 22px; max-width: 900px; line-height: 1.4; font-weight: 500;">
-						Crowdfund a “Youtube Teacher” for your hardest classes in college.<br>
-						Get clear explanations for all your questions — together with other subscribers.
+					<div class="header-subtitle" style="font-size: 20px; line-height: 1.4; font-weight: 500; color: rgb(60, 60, 60);">
+						Crowdfund the best “Youtube Teachers” to answer your long, unresolved questions — once and for all —
+						on this blackboard-video oriented platform
 					</div>
-
 				</div>
-				<div class="header-subcopy-wrapper">
+	
+				<div class="header-subcopy-wrapper" style="margin-top: 32px; margin-left: 0px; border: 0px solid orange;">
 					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
 						style="	
 							height: 4.2vw; 
@@ -45,8 +43,16 @@
 							border-radius: 2.1vw;
 						"
 					>
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1.4em; font-weight: 600">
-							Explore class servers
+						<Label style="text-transform: none; 
+							padding-left: 24px; padding-right: 24px; padding-top: 10px; padding-bottom: 10px; font-size: 1.2em; font-weight: 600;
+							display: flex; align-items: center;
+
+						">
+							 Find your class
+
+							<span style="margin-left: 8px; font-size: 32px;" class="material-symbols-outlined">
+								search
+								</span>
 						</Label>
 					</Button>
 				</div>
@@ -74,8 +80,82 @@
 			<OfflineMultislideRecordingDemo/>
 		{/if}
 
-			{#if active.label === 'Learn'}
+			{#if activeTabName === 'Learn'}
+
 			<div class="webflow-section">
+				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 48px;">
+					<div style="color: rgb(95, 95, 94);">
+					If your college class is hard to understand,
+					</div>
+					<div >
+						explanations.app has visual forums where you can ask for better explanations. 
+					</div>
+					<div style="color: rgb(95, 95, 94);">People worldwide reply with blackboard videos,
+						and you can subscribe to your favorite teacher for $10/month to regularly learn from their content.
+					</div>
+				</div>
+
+				<div style="margin-bottom: 120px;"></div>
+
+				<div style="display: flex; justify-content: space-between; margin-left: 4%; margin-right: 4%">
+					<div>
+						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
+							globe
+						</span>
+
+						<div style="margin-top: 12px;"></div>
+
+						<div class="" style="font-size: 24px;">
+							Meritocratic teaching
+						</div>
+
+						<div style="margin-top: 12px;"></div>
+
+						<div style="width: 300px; color: rgb(61, 61, 61)">
+							Choose teachers from all over the world - including previous TAs & students 
+							- based on their explanations.
+						</div>
+					</div>
+
+					<div>
+						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
+							savings
+						</span>
+
+						<div style="margin-top: 12px;"></div>
+						<div class="" style="font-size: 24px;">
+							Affordable price
+						</div>
+
+						<div style="margin-top: 12px;"></div>
+						<div style="width: 300px; color: rgb(61, 61, 61)">
+							The crowdfund model, unlike private tutoring,
+							allows each learner to pay $10/month instead of $30-100/hour.
+						</div>
+					</div>
+
+				
+
+					<div>
+						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
+						local_convenience_store
+						</span>
+
+						<div style="margin-top: 12px;"></div>
+						<div style="font-size: 24px;"> 
+							Convenient
+						</div>
+						<div style="margin-top: 12px;"></div>
+						<div style="width: 300px; color: rgb(61, 61, 61)">
+							No need for long commutes and 
+							having to schedule sessions. Communicate async. without losing clarity because of videos and comments.
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="webflow-section" style="display: none;">
 				<div class="webflow-intro-type">
 					<div style="font-weight: 500;">
 						explanations.app = Youtube + Kickstarter for college classes 
@@ -113,7 +193,7 @@
 
 			{/if}
 
-			{#if active.label === 'Teach'}
+			{#if activeTabName === 'Teach'}
 				<div class="webflow-section">
 					<div class="webflow-intro-type">
 						This website lets you teach people all over the world with blackboard videos (without additional responsibilities like grading). 
@@ -170,7 +250,7 @@
 				</div>
 			{/if}
 
-			{#if active.label === 'Students deprecate for now'}
+			{#if activeTabName === 'Students deprecate for now'}
 
 			<!-- HOW IT WORKS SECTION-->
 			<div bind:clientWidth={w} class="webflow-section">
@@ -238,7 +318,7 @@
 				>					
 				</HowItWorksStep>
 			</div>
-		{:else if active.label === 'Teach' && false}
+		{:else if activeTabName === 'Teach' && false}
 			<div class="webflow-section">
 				<div class="webflow-intro-type">
 					Just draw & talk on blackboards directly - videos will upload within seconds.
@@ -306,6 +386,8 @@
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
 	})
+
+	let activeTabName = 'Learn'
 
 	// RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [
@@ -427,6 +509,28 @@
 </script>
 
 <style lang="scss">
+	.active-bold {
+		font-weight: 600;
+	}
+
+	.webflow-container {
+		width: 90%; /* 90% */
+		// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
+		margin-right: auto;
+		margin-left: auto; 
+
+		box-sizing: border-box;
+
+		// additional properties
+		margin-top: 20px;
+
+		background-color: transparent;
+	}
+		
+	.active-underline-indicator {
+		border-bottom: 2px solid #F7C686;
+	}
+
 	.webflow-h1 {
 		font-size: 4rem;
 	}
@@ -443,18 +547,19 @@
 		}
 	}
 
-	@media screen and (max-width: 991px) {
+
+.image-gallery-container {
+	margin-top: 6%; 
+	margin-bottom: 20%; // was 24%
+	// margin-left: 2%;
+}
+
+@media screen and (max-width: 991px) {
 		.image-gallery-container {
 			margin-top: 0% !important;
 			margin-bottom: 8% !important;
 		}
 	}
-
-.image-gallery-container {
-	margin-top: 10%; 
-	margin-bottom: 24%;
-	// margin-left: 2%;
-}
 
 .webflow-section {
 	padding-top: 8%; 
@@ -465,7 +570,7 @@
 	// max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
 	margin-bottom: 0;
-	font-size: 6vw; /* was 6vw */
+	font-size: 4vw; /* was 6vw */
 	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
 	font-weight: 500;
 
@@ -484,16 +589,28 @@
 	line-height: 1.0; // used to be 1.25 but GF suggests otherwise
 }
 
-@media only screen and (min-width: 1550px) {
+// As soon as we achieve minimum width of 1280,
+// the layout will make use of horizontal space 
+@media only screen and (min-width: 1280px) {
 	.header-title {
-		font-size: 4.5vw; /** webflow used 7rem*/
+		font-size: 5.6vw; // webflow's original is 7rem
+		max-width: calc(100vw - 380px);
+	}
+	.header-subtitle {
+		max-width: calc(100vw - 480px);
+	}
+	.webflow-container {
+		width: 92%;
 	}
 }
 
 @media only screen and (max-width: 991px) {
 	.header-title {
 		max-width: 85vw;
-		font-size: 11vw;
+		font-size: 4vw;
+	}
+	.webflow-container {
+		width: 85%;
 	}
 }
 
@@ -533,9 +650,6 @@
 }
 
 .header-flex {
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	margin-top: 2%;
 	margin-bottom: 40px;
@@ -544,8 +658,10 @@
 	/* -webkit-justify-content: space-between;
 	// justify-content: space-between; */
 	justify-content: space-between;
+	align-items: center;
 
 	flex-wrap: wrap;
+	
 
 	// additional properties: 
 	// margin-top: 60px;
@@ -589,12 +705,13 @@
 }
 
 .header-subcopy-wrapper {
-	margin-left: 5vw;
+	// margin-left: 5vw;
+	margin-left: 0.5vw;
 	width: 90%;
-	max-width: 310px; 
+	max-width: 280px; 
 
 	// additional attributes
-	margin-right: 24px;
+	margin-right: 0px;
 	display: flex; 
 	flex-direction: column;
 	// justify-content: flex-end; 
@@ -678,65 +795,8 @@ li {
 		width: 100%;
 	}
 
-	.mdc-tab__text-label {
-		color: orange;
-	}
-
-	.webflow-container {
-		width: 90%; /* 90% */
-		// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
-		margin-right: auto;
-		margin-left: auto; 
-
-		box-sizing: border-box;
-
-		// additional properties
-		margin-top: 20px;
-
-		background-color: transparent;
-	}
-	
-	@media screen and (max-width: 991px) {
-		.webflow-container {
-			width: 85%;
-		}
-	}
 
 	li {
 		margin-bottom: 24px;
 	}
 </style>
-
-<!-- 	
-	<picture>
-		<source srcset="svelte-welcome.webp" type="image/webp" />
-		<img src="svelte-welcome.png" alt="Welcome" />
-	</picture> 
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style> -->

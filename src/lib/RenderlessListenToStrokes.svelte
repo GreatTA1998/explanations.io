@@ -100,6 +100,7 @@ async function handleBoardWipeOperation (snapshot) {
 
 function handleNewlyDrawnStroke (stroke) {
   try {
+    // takes about 0.015 seconds
     stroke.timestamp = serverTimestamp()
     setDoc(
       doc(db, `${dbPath}/strokes/${stroke.id}`),

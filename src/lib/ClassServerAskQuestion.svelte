@@ -1,4 +1,4 @@
-<div use:portal={'main-content'}>
+<div>
   {#if isSignInPopupOpen}
     <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
   {/if} 
@@ -50,8 +50,11 @@
 
         <div style="margin-top: 24px;"></div>
 
-        <Button disabled={!!!$user.uid} on:click={submitQuestion} variant="outlined"
+        <Button disabled={!!!$user.uid} 
+          on:click={submitQuestion} 
+          variant="outlined"
           color="secondary"
+          style="border-radius: 40px;"
         >
           Post my question to server
         </Button>
@@ -59,9 +62,9 @@
 
         <div style="margin-top: 60px;">
 
-        <ClassServerAskQuestionAllMembers 
+        <!-- <ClassServerAskQuestionAllMembers 
           {classID}
-        />  
+        />   -->
        </div>
 
         <!-- <Button 

@@ -1,26 +1,20 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
-		<!-- background-color: hsl(0,0%,0%, 0.75); -->
-		<TopAppBar bind:this={topAppBar} style="
-			border-bottom: 1px solid lightgrey; 
-		
-		">
-		<!-- 	box-shadow: 0 2px 4px -1px grey; -->
-				
-			<Row style="background-color: #f8f9f9;">
-				<Section>
-					<div style=""></div>
+		<TopAppBar bind:this={topAppBar} style="border-bottom: 1px solid lightgrey;">
+			<Row style="background-color: #f8f9f9; padding-left: 4%; padding-right: 4%;">
+				<div style="padding: 8px 12px 8px 0px; box-sizing: border-box;">
 					<img 
-						on:click={() => goto('/')}
-						src="/app-logo-no-bg.png" width="56" height="52" style="filter: brightness(80%); margin-left: 4px; margin-right: 6px; margin-top: 4px; cursor: pointer;"
-					>
-					<div style="font-weight: 400; font-size: 20px; color: hsl(0,0%,0%, 0.80);">
-						explanations.app
-					</div>
+					on:click={() => goto('/')}
+					src="/app-logo-no-bg.png" width="52" height="48" style="filter: brightness(80%); margin-right: 6px; margin-top: 2px; cursor: pointer;"
+				>
+	
+				</div>
 
-				</Section>
+				<slot name="tab-section">
 
-				<Section align="end" toolbar>
+				</slot>
+
+				<Section align="end" toolbar style="padding-right: 0;">
 					<!-- href="" target="_blank" -->
 					<a on:click={() => alert("For absolutely anything, call 503 250 3868 or email elton@explanations.app, I can reply immediately unless it's past midnight / before 8 am.")}
 						style="margin-left: 8px; text-decoration-color: transparent;"

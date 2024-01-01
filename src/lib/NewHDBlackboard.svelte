@@ -1,7 +1,7 @@
 <!-- TO-DO: emit an intersection API event -->
 <div use:lazyCallable={() => dispatch('intersect')} 
   style="
-    transform: scale(0.29); 
+    transform: scale({scaleFactor}); 
     transform-origin: top left;
     position: relative; 
     width: {canvasWidth}px; 
@@ -66,11 +66,12 @@
     </BlackboardToolbar>
   {/if}
 
+  <!-- Purposely just zoom in on the top-left corner for readability (showing the whole picture at the thumbnail size is completely illegible) -->
   <canvas bind:this={canvas}
     on:touchstart={touchStart}
     on:touchmove={touchMove}
     on:touchend={touchEnd}
-    style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${canvasWidth}px; height: ${canvasHeight}px;`}
+    style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${2.5 * canvasWidth}px; height: ${2.5 * canvasHeight}px;`}
   >
   </canvas>
 
@@ -102,8 +103,13 @@
   export let thumbnailWidth
   export let thumbnailHeight
 
-  export let canvasWidth
-  export let canvasHeight
+  // export let canvasWidth
+  // export let canvasHeight
+  let canvasWidth = $assumedCanvasWidth
+  let canvasHeight = $assumedCanvasWidth * 3/4
+
+
+  let scaleFactor = thumbnailWidth / $assumedCanvasWidth
 
   console.log('canvasWidth =', canvasWidth)
   console.log('canvasHeight =', canvasHeight)

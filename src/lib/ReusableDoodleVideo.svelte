@@ -25,9 +25,6 @@
         on:video-start
         on:video-pause
       > 
-        <div slot="twoTimesSpeedButtonSlot">
-
-        </div>
 
         {#if showEditDeleteButtons}
           <!-- <div style="

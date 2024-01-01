@@ -4,81 +4,27 @@
 <!-- border: 1px solid hsl(0,0%,0%, 0.80);  -->
 <!-- 
 <CodepenCardShadows/> -->
-
   <!-- class=card style=--elevation:1 -->
 
   <!-- class:my-low-elevation card -->
   <!-- style:--elevation: 0;  -->
   <div 
-    class="overall-container"
-    style="position: relative; display: flex; min-width: 600px; width: 60%; max-width: 800px; border-radius: {8}px; padding: 12px; overflow: hidden;
+    class="overall-container core-shadow"
+    style="position: relative; display: flex; min-width: 700px; width: 60%; max-width: 1000px; border-radius: {8 * 3}px; padding: 12px; overflow: hidden;
   " 
-  on:click={() => goto(`/overview/${serverObj.id}`)}
->
-
-  
-{#if serverObj.featuredBlackboardID}
-  <div style="
-    margin-left: -12px; 
-    margin-top: -12px; 
-    margin-bottom: -12px; 
-    min-width: {thumbnailWidth}px; 
-    max-width: {thumbnailWidth}px; 
-    height: {thumbnailWidth * 1/thumbnailAspectRatio}px; 
-    overflow: hidden;
-    border-radius: 8px;"
+    on:click={() => goto(`/${serverObj.id}/overview`)}
   >
-    <RenderlessFetchStrokes 
-      dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
-      let:fetchStrokes={fetchStrokes}
-      let:strokesArray={strokesArray}
-      autoFetchStrokes={false}
-    > 
-      <HDBlackboard
-        {strokesArray}
-        canvasWidth={highDefinitionWidth * 0.7}
-        canvasHeight={highDefinitionWidth * 3/4 * 0.7}
-        {thumbnailWidth}
-        thumbnailHeight={thumbnailWidth * 3/4}
-        hideToolbar={true}
-        on:intersect={fetchStrokes}
-      />
-    </RenderlessFetchStrokes>
-  </div>
-{:else}
-  <div style="margin-left: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
-
-  </div>
-{/if}
-
-<div style="margin-left: 16px;"></div>
 
   <div class="server-card">
-    <div style="display: flex; position: relative;">
-      <div style="font-size: 24px; font-weight: 600; font-family: 'Inter'">
+    <div style="display: flex; position: relative; align-items: center;">
+      <div style="font-size: 24px; font-weight: 700; font-family: 'Inter'">
         {serverObj.name}
       </div>
-    </div>
 
-    <div style="margin-top: 4px;"></div>
-
-    <div style="color: hsl( 223 calc( 1 *6.7%) 20.6% /1); font-size: 16px; height: 36px;">
-        {#if serverObj.name === 'Microeconomics'}
-          You don't need to memorize a bunch of rules like "MRTS = MRS; AVC > MC". 
-          You just need to understand how to maximize f(x, y).
-      {:else}
-        Learn simpler, alternative 
-        ways to understand the class.
-      {/if}
-    </div>
-
-       <div style="margin-top: 12px;"></div>
-
-    <div style="display: flex; align-items: center;">
-      <div style="margin-top: 12px;"></div>
+      <div style="right: 8px; left: auto; position: absolute;">
         {#if serverObj.syllabusVersion}
           {#if serverObj.syllabusVersion === 'MIT'}
-           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png" width="30" height="15">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png" width="30" height="15">
           {:else if ['RCC', 'Roxbury Community College'].includes(serverObj.syllabusVersion)}
             <img src="https://res.cloudinary.com/doa6grfya/image/upload/v1549032496/bw8nu2czsyxszrpc6age.jpg" width="24" height="24">
           {:else}
@@ -86,62 +32,114 @@
               {serverObj.syllabusVersion}
             </div>
           {/if}
-
-          <div style="margin-left: 12px;"></div>
+        {:else}
+          <span class="material-symbols-outlined" style="font-size: 32px; color: hsl(0,0%,0%, 0.80);">
+            globe
+          </span>
         {/if}
-          
-        <div class="college-chip">
-          cross-colleges
-        </div>
       </div>
 
-      <div style="margin-top: 12px;"></div>
+    </div>
+
+    <div style="margin-top: 12px;"></div>
+
+    <div class="two-lines-maximum" style="color: hsl( 223 calc( 1 *6.7%) 20.6% /1); font-size: 16px; height: fit-content; max-height: 42px; font-weight: 400; opacity: 0.96;">
+      {#if serverObj.description}
+        {serverObj.description}
+      {:else if serverObj.name === 'Microeconomics'}
+          You don't need to memorize a bunch of rules like "MRTS = MRS; AVC > MC". 
+          You just need to understand how to maximize f(x, y).
+      {:else}
+        An open server where anyone can ask questions and teach through blackboard videos
+      {/if}
+    </div>
+
+      <div style="margin-top: 24px;"></div>
 
       <!-- position: absolute; top: auto; bottom: 20px; -->
-    <div style="min-width: 360px; width: 100%; max-width: 500px; color: #2f3030;">
-      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; opacity: 1; font-weight: 500">
-
-        
+    <div style="min-width: 360px; width: 100%; max-width: 500px; color: #2f3030; margin-left: -6px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 16px; opacity: 1.0; font-weight: 500; 
+        padding-left: -12px;"
+      >
         <div style="display: flex; align-items: center;">
-          <span class="material-icons" style="font-size: 1.5rem;">attach_money</span>
+          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.65rem; ">
+            attach_money
+            </span>
           <div style="margin-right: -1px;"></div>
-          <div>{serverObj.crowdfundAmount || 0} crowdfunded</div>
+          <div class="footer-data-value">{serverObj.crowdfundAmount || 0} raised</div>
         </div>
 
         <div style="display: flex; align-items: center;" class:teacher-purple={serverObj.numOfTeachers > 0}>
           <!-- brush -->
-          <span class="material-icons" style="font-size: 1.6rem;">draw</span>
+          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.5rem;">
+            draw
+          </span>
           <div style="margin-right: 4px;"></div>
-          <div>{serverObj.numOfTeachers} teachers</div>
+          <div class="footer-data-value">{serverObj.numOfTeachers || 0} teachers</div>
         </div>
 
         <div style="display: flex; align-items: center;" class:video-orange={serverObj.numOfVideos > 0}>
-          <span class="material-symbols-outlined" style="font-size: 1.65rem;">
+          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.65rem; ">
             smart_display
             </span>
-          <!-- <span class="material-icons" style="font-size: 19px; color: white;">smart_display</span> -->
           <div style="margin-right: 4px;"></div>
-          <div>{serverObj.numOfVideos} videos</div>
+          <div class="footer-data-value">{serverObj.numOfVideos} videos</div>
         </div>
         
         <div style="display: flex; align-items: center;">
-          <span class="material-symbols-outlined" style="font-size: 1.6rem;">
+          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.6rem;">
             sentiment_very_satisfied
             </span>
-          <!-- <span class="material-icons" style="font-size: 18px;">mood</span> -->
           <div style="margin-right: 4px;"></div>
-          <div>0 subscribers</div>
+          <div class="footer-data-value">0 subs</div>
         </div>
-        
     
-   
       </div>
-      <!-- </div> -->
     <!-- END OF FOOTER METADATA FLEXBOX-->
     </div>
 
     <div style="margin-top: 0px;"></div>
   </div>
+
+
+  <!-- The total padding from card to left and card to thumbnail should both be 24px; -->
+  <div style="margin-left: 12px;"></div>
+
+  {#if serverObj.featuredBlackboardID}
+    <div style="
+      margin-right: -12px; 
+      margin-top: -12px; 
+      margin-bottom: -12px; 
+      min-width: {thumbnailWidth}px; 
+      max-width: {thumbnailWidth}px; 
+      height: {thumbnailWidth * 1/thumbnailAspectRatio}px; 
+      overflow: hidden;
+      border-radius: 8px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;"
+    >
+      <RenderlessFetchStrokes 
+        dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
+        let:fetchStrokes={fetchStrokes}
+        let:strokesArray={strokesArray}
+        autoFetchStrokes={false}
+      > 
+        <HDBlackboard
+          {strokesArray}
+          canvasWidth={highDefinitionWidth * 0.7}
+          canvasHeight={highDefinitionWidth * 3/4 * 0.7}
+          {thumbnailWidth}
+          thumbnailHeight={thumbnailWidth * 3/4}
+          hideToolbar={true}
+          on:intersect={fetchStrokes}
+        />
+      </RenderlessFetchStrokes>
+    </div>
+  {:else}
+    <div style="margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
+
+    </div>
+  {/if}
 
 </div>
 
@@ -163,13 +161,30 @@
 
 
 <style lang="scss">
+  .two-lines-maximum {
+    width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+  }
+
+  .footer-data-value {
+    font-size: 16px;
+    opacity: 0.8;
+  }
+
+  .footer-data-icon {
+    opacity: 0.9
+  }
+
   .college-chip {
     font-size: 12px; 
-    font-weight: 500; 
-    border: 1px solid lightgrey;
+    font-weight: 700; 
+    border: 1px solid rgb(40, 14, 82);
     border-radius: 4px; 
     background-color: transparent; 
-    color: grey; 
+    color: rgb(40, 14, 82);   
     display: flex; 
     align-items: center; 
     width: fit-content; 
@@ -179,6 +194,7 @@
     padding-right: 6px; 
     padding-top: 3px; 
     padding-bottom: 3px;
+    text-transform: uppercase;
   }
 
   /* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate
@@ -220,7 +236,8 @@
     // margin-top: -12px;
     // margin-bottom: -12px;
     
-    padding-left: 0px;
+    padding-left: 12px;
+    padding-top: 6px;
     padding-right: 12px;
     /* margin-left: 8%; */
     /* height: 160px; */
@@ -248,6 +265,7 @@
   } */
 
   .overall-container:hover {
+    border: 2px solid #F7C686;
     @extend .high-elevation-cast-shadow;
   }
 

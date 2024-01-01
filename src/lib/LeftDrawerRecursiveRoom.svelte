@@ -13,7 +13,6 @@
     bind:this={RoomElement}
     on:click={() => handleRoomClick(room.id)}
     on:keydown={() => {}}
-
     on:dragenter={() => { 
       if (!isInvalidSubpageDrop()) {
         RoomElement.style.background = 'rgb(87, 172, 247)' 
@@ -36,16 +35,26 @@
     <div style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; padding-top: 6px; padding-bottom: 6px;">
       {#if room.numOfChildren}
         {#if !isExpanded}
-          <span on:click|stopPropagation={() => {
-              expandChildrenRooms()
-            }} 
-            class="material-icons"
-          >
-            expand_more
-          </span>
+          <div style="width: 40px; display: flex; justify-content: center; align-items: center; margin-right: 8px;">
+            <!-- CSS question: why doesn't this relative div take the height of its children? It also doesn't respond to "height: fit-content" -->
+            <div style="position: relative; height: 30px">
+              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: -16px; font-size: 12px; position: absolute; left: 18px; right: auto; top: 0px; font-weight: 500; background-color: grey; border-radius: 20px; width: 16px; height: 16px; color: white;">
+                {room.numOfChildren}
+              </div>
+            
+              <span class="material-symbols-outlined"
+                on:click|stopPropagation={() => {
+                  expandChildrenRooms()
+                }} 
+                style="font-size: 30px;"
+              >
+                folder
+              </span>
+            </div>
+          </div>
         {:else}
-          <span on:click|stopPropagation={() => isExpanded = false} class="material-icons">
-            chevron_right
+          <span on:click|stopPropagation={() => isExpanded = false} class="material-symbols-outlined" style="margin-right: 8px;">
+            folder_open
           </span>
         {/if}
       {:else}
@@ -61,13 +70,13 @@
         <div 
           class:question-item={'?' === room.name.charAt(room.name.length - 1)} 
           class="my-truncated-text"
-          style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px"
+          style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px; font-weight: 500;"
         >
-          {room.name } { room.numOfChildren ? `(${room.numOfChildren})` : '' }
+          {room.name } 
         </div>
       {:else}
         <div style="margin-bottom: 2px;">
-          untitled { room.numOfChildren ? `(${room.numOfChildren})` : '' }
+          untitled
         </div>
       {/if}
 
@@ -282,7 +291,14 @@ function handleRoomClick (roomID) {
       // maybe fix from Blackboard rendering logic side?
       willPreventPageLeave.set(false)
 
-      expandChildrenRooms()
+      if (!isExpanded) {
+        expandChildrenRooms()
+      } else {
+       
+        isExpanded = false
+      }
+
+
       goto(`/${classID}/${roomID}`)
     } else {
       // do nothing
@@ -290,7 +306,11 @@ function handleRoomClick (roomID) {
   }
 
   else {
-    expandChildrenRooms()
+    if (!isExpanded) {
+      expandChildrenRooms()
+    } else {
+      isExpanded = false
+    }
     goto(`/${classID}/${roomID}`)
   }
 }
@@ -318,7 +338,7 @@ function handleSomethingDropped (e, droppedRoomID) {
   }
   // if it's a blackboard, we expect first property to be `idx` adn second property to be `boardID`
   else if (key1 === 'boardID') {
-    moveVideoIntoAnotherRoom({ droppedRoomID, boardID: value1}) 
+    // moveVideoIntoAnotherRoom({ droppedRoomID, boardID: value1}) 
   }
   
   // figure out if it's blackboard or room
@@ -352,6 +372,9 @@ async function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
 // REORDERING WILL INVOLVE THE ROOM ABOVE AND THE ROOM BELOW
 // used to be called (e, room.id)
 // user dragged video into another room
+
+
+// the room ID should be kept track differently, maybe through the store
 async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
   const db = getFirestore()
   const batch = writeBatch(db)
@@ -476,7 +499,8 @@ async function deleteRoom (room) {
 
 <style>
   .room-item:hover {
-    background: lightgrey;
+    /* previously lightgrey */
+    background: #F7C686;
   }
 
   .vertical-padding {
@@ -484,10 +508,11 @@ async function deleteRoom (room) {
     padding-bottom: 8px
   }
 
+  /* legacy grey: #e2dddd */
   .selected {
-    font-weight: 500;
-    background-color:rgb(45, 44, 44) !important;
-    color: white;
+    font-weight: 700;
+    background-color: #F7C686 !important;
+    color: black;
     transition: background 20ms ease-in 0s;
   }
 

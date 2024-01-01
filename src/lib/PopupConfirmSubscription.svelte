@@ -18,7 +18,7 @@
           <b>High priority</b> whenever you ask questions
         </li>
         <li>
-          <b>Permanent access</b> to all videos by {selectedTutorDoc.name.split(' ')[0]}
+          <b>Access</b> to all videos by {selectedTutorDoc.name.split(' ')[0]}
         </li>
         <li>
           <b>Refund for any reason</b> (covered by the platform)
@@ -31,8 +31,6 @@
     </div>
 
     <br>
-    
-
 
     <div style="height: 20px; display: flex; align-items: center; margin-top: 20px;">
       <Checkbox bind:checked touch />

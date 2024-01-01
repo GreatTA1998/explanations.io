@@ -63,15 +63,15 @@
 
 <script>
   // TO-DO: fix drifting center of rotation
-  import RenderlessListenToBoard from './RenderlessListenToBoard.svelte'
-  import ReusableDoodleVideo from './ReusableDoodleVideo.svelte'
+  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
+  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
-  import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
-  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
-  import ReusableCreatorInfoCard from '$lib/ReusableCreatorInfoCard.svelte'
   import { getRandomColor, roundedToFixed } from '/src/helpers/utility.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
+  import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
+  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
+  import ReusableCreatorInfoCard from '$lib/ReusableCreatorInfoCard.svelte'
 
   export let galleryVideos
 

@@ -4,21 +4,25 @@
     style="display: flex; align-items: center; cursor: pointer; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;
       border-radius: 4px;
     "
-    class="paper-shadow"
+    class="core-shadow"
   >
+    <!-- beaverProfileColor is not working, random color for now -->
     <ClassServerMyProfilePicture
       radiusInPixels={20}
-      circleBorderColor={$user.beaverProfilePicColor}
-    />
+      circleBorderColor={getRandomColor()}
+    /> 
+    <!-- purple color: #5d0068; -->
 
     <!-- colors used to be white -->
     <div style="margin-left: 4px;">
       <div>
-        <a style="color: #5d0068;">
+        <a style="color: black; font-weight: 500;">
         {helperDoc.name}
         </a>
       </div>
-      <div style="color: #5d0068;">{ helperDoc.numOfVideos || 0 } videos, { helperDoc.minutesViewed || 0 } minutes viewed</div>
+      <div style="font-size: 0.9rem;">
+        { helperDoc.numOfVideos || 0 } videos, { helperDoc.minutesViewed || 0 } minutes viewed
+      </div>
     </div>
   </div>
 </div>
@@ -27,6 +31,7 @@
   import ClassServerMyProfilePicture from '$lib/ClassServerMyProfilePicture.svelte'
   import { user } from '/src/store.js'
   import { goto } from '$app/navigation'
+  import { getRandomColor } from '/src/helpers/utility.js';
 
   export let helperDoc
   export let classID
@@ -35,7 +40,7 @@
 </script>
 
 <style>
-  .paper-shadow {
+  /* .paper-shadow {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
+  } */
 </style>

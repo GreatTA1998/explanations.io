@@ -31,7 +31,7 @@
         border: 1px solid purple;
       "
     >
-    <!-- isOffline is a quickfix for functionalities that don't work such as uploading backgrounds -->
+      <!-- isOffline is a quickfix for functionalities that don't work such as uploading backgrounds -->
       <Blackboard
         isOfflineDemo
         {strokesArray}
@@ -42,8 +42,7 @@
         on:board-wipe={deleteAllStrokesFromDb}
         on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
         on:background-reset={() => resetBackgroundImage(slideID)}
-      >
-      </Blackboard>
+      />
     </div>
   </RenderlessListenToStrokes>
 {/each}
@@ -230,15 +229,6 @@
         return
       }
     }
-  }
-
-  function uploadVideoToCloud ({ audioBlob }) {
-    console.log('in future, will upload audioBlob =', audioBlob)
-  }
-
-  function handleNewlyDrawnStroke (e, slideID) {
-    console.log('e =', e)
-    console.log('slideID =', slideID)
   }
 
   // Timer that doesn't slowly drift late and get out of sync with visuals

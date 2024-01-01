@@ -33,9 +33,9 @@
             </div>
           {/if}
         {:else}
-          <div class="college-chip">
-            cross-college
-          </div>
+          <span class="material-symbols-outlined" style="font-size: 32px; color: hsl(0,0%,0%, 0.80);">
+            globe
+          </span>
         {/if}
       </div>
 
@@ -44,7 +44,9 @@
     <div style="margin-top: 12px;"></div>
 
     <div class="two-lines-maximum" style="color: hsl( 223 calc( 1 *6.7%) 20.6% /1); font-size: 16px; height: fit-content; max-height: 42px; font-weight: 400; opacity: 0.96;">
-        {#if serverObj.name === 'Microeconomics'}
+      {#if serverObj.description}
+        {serverObj.description}
+      {:else if serverObj.name === 'Microeconomics'}
           You don't need to memorize a bunch of rules like "MRTS = MRS; AVC > MC". 
           You just need to understand how to maximize f(x, y).
       {:else}
@@ -73,7 +75,7 @@
             draw
           </span>
           <div style="margin-right: 4px;"></div>
-          <div class="footer-data-value">{serverObj.numOfTeachers} teachers</div>
+          <div class="footer-data-value">{serverObj.numOfTeachers || 0} teachers</div>
         </div>
 
         <div style="display: flex; align-items: center;" class:video-orange={serverObj.numOfVideos > 0}>

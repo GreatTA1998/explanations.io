@@ -388,14 +388,11 @@
   })
 
   function rotateCarousel (i) {
-    const copy = [...mostWatchedExplanations]
-    for (let j = 0; j < i; j += 1) {
-      const removedElems = copy.splice(j, 1) // remove jth element
-      copy.push(removedElems[0]) // put it in the back instead
-    }
-    mostWatchedExplanations = []
+    // quick-fix: don't care about the resultant order, just make sure the clicked item becomes FIRST
+    let copy = [...mostWatchedExplanations]
+    const removedElem = copy.splice(i, 1)[0]
+    copy = [removedElem, ...copy]
     mostWatchedExplanations = copy
-    mostWatchedExplanations = [...mostWatchedExplanations]
   }
 
   async function fetchMostWatchedExplanations () { 

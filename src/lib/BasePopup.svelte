@@ -4,7 +4,7 @@
 
     </slot>
 
-    <span on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0px; margin-left: auto; color: black;">
+    <span on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0px; margin-left: auto; color: black; cursor: pointer;">
       close
     </span>
   </div>

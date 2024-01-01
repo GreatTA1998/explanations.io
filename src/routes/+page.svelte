@@ -4,7 +4,7 @@
 			<span class="material-symbols-outlined" style="font-size: 26px; color: rgb(30, 30, 30)">
 				smart_display
 			</span>
-			<div style="font-size: 14px; margin-top: -2px; font-weight: 600;">
+			<div style="font-size: 14px; margin-top: -2px;" class:active-bold={activeTabName === 'Learn'}>
 				Learn
 			</div>
 		</div>
@@ -13,7 +13,7 @@
 			<span class="material-symbols-outlined" style="font-size: 26px; color: rgb(30, 30, 30)">
 				stylus_note
 			</span>
-			<div style="font-size: 14px; margin-top: -2px;">
+			<div style="font-size: 14px; margin-top: -2px;" class:active-bold={activeTabName === 'Teach'}>
 				Teach
 			</div>
 		</div>
@@ -83,7 +83,7 @@
 			{#if activeTabName === 'Learn'}
 
 			<div class="webflow-section">
-				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 100px;">
+				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 48px;">
 					<div style="color: rgb(95, 95, 94);">
 					If your college class is hard to understand,
 					</div>
@@ -95,7 +95,7 @@
 					</div>
 				</div>
 
-				<div style="margin-bottom: 80px;"></div>
+				<div style="margin-bottom: 120px;"></div>
 
 				<div style="display: flex; justify-content: space-between; margin-left: 4%; margin-right: 4%">
 					<div>
@@ -509,6 +509,10 @@
 </script>
 
 <style lang="scss">
+	.active-bold {
+		font-weight: 600;
+	}
+
 	.webflow-container {
 		width: 90%; /* 90% */
 		// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
@@ -546,7 +550,7 @@
 
 .image-gallery-container {
 	margin-top: 6%; 
-	margin-bottom: 24%; // was 24%
+	margin-bottom: 20%; // was 24%
 	// margin-left: 2%;
 }
 

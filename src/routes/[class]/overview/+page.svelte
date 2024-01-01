@@ -29,7 +29,8 @@
   {#key mostWatchedExplanations}
     {#each mostWatchedExplanations as explanation, i}
       {#if i === currentlyWatchingIdx}
-        <div style="margin-right: {0.02 * availablePageContentWidth}px; border-radius: 12px; overflow: hidden; width: {featuredItemWidth}px;">
+        <!-- we set an explicit width & height on the container, so that the layout doesn't shift from the delayed mounting of <DoodleVideo/>  -->
+        <div style="margin-right: {0.02 * availablePageContentWidth}px; width: {featuredItemWidth}px; min-height: {featuredItemWidth * 3/4}px; border-radius: 12px; overflow: hidden;">
           <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
             <ReusableDoodleVideo
               {boardDoc}

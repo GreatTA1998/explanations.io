@@ -2,7 +2,9 @@
   <span class="material-symbols-outlined" style="margin-right: 6px;">
     add
   </span>
-  Create new server
+  <div style="font-weight: 500;">
+    Create new server
+  </div>
 </ReusableRoundButton>
 
 {#if isPopupOpen}

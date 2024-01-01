@@ -1,20 +1,8 @@
-<!-- A great overview page has 3 requirements: 
-  - Makes it easy to visualize the lively activity within the server (including people who haven't subscribed but asks questions)
-  - (start with 2 broad categories, learners and teachers, and then prioritize people who crowdfunded, who subscribed etc. This also
-    allows freemium to co-exist with each other
-  - Makes it easy to sign up to teach / or crowdfund new teachers
+<!-- NOTE, bind:clientWidth will set the element to position relative, which means it'll create a new stacking context and cover other non-relative element,
+  which is very subtle
 -->
-
-<!--
-  Previous colors: 
-  #e2dddd
-  #ffad42
- -->
-<div style="padding-left: 4%; padding-right: 4%; padding-top: 36px; padding-bottom: {120 + featuredVideoBleedMargin}px; background-color: #f7c686"
-  bind:clientWidth={availablePageContentWidth}
->
+<div bind:clientWidth={availablePageContentWidth} style="padding-left: 4%; padding-right: 4%; padding-top: 36px; padding-bottom: {120 + featuredVideoBleedMargin}px; background-color: #f7c686;">
   {#if classDoc}
-    <!-- 36px is the original title size-->
     <div style="font-size: 2.8vw; font-weight: 600; color: rgb(20, 20, 20)">
       {classDoc.name}
     </div>
@@ -25,101 +13,105 @@
 </div>
 
 <!-- Video gallery section -->
-<div style="position: relative; display: flex; align-items: end; margin-top: {-76 + finalAdjustment - featuredVideoBleedMargin}px; margin-left: 4%; flex-wrap: nowrap;">
-  {#key mostWatchedExplanations}
-    {#each mostWatchedExplanations as explanation, i}
-      {#if i === currentlyWatchingIdx}
-        <!-- we set an explicit width & height on the container, so that the layout doesn't shift from the delayed mounting of <DoodleVideo/>  -->
-        <div style="margin-right: {0.02 * availablePageContentWidth}px; width: {featuredItemWidth}px; min-height: {featuredItemWidth * 3/4}px; border-radius: 12px; overflow: hidden;">
-          <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
-            <ReusableDoodleVideo
-              {boardDoc}
-              canvasWidth={featuredItemWidth} 
-              canvasHeight={featuredItemWidth * 3/4}
-              showEditDeleteButtons={false}
-              boardDbPath={explanation.path}
-            />
-          </RenderlessListenToBoard>
-        </div>
-      {:else}
-        {#if carouselItemPreviewWidth}
-          <div 
-            on:click={() => rotateCarousel(i)} 
-            style="
-              width: {carouselItemPreviewWidth}px; 
-              height: {carouselItemPreviewWidth * 3/4 + 17}px; 
-              overflow: hidden; 
-              margin-right: {i <= 2 ? `${0.02 * availablePageContentWidth}px` : ''};
-            "
-          >
-            <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 100%">
-              {explanation.title || explanation.description}
-            </div>
-            
-            <div style="border-radius: 6px; width: {carouselItemPreviewWidth * 0.98}px; height: {carouselItemPreviewWidth * 3/4 * 0.97}px; overflow: hidden;">
-              <RenderlessFetchStrokes 
-                dbPath={explanation.path}
-                let:fetchStrokes={fetchStrokes}
-                let:strokesArray={strokesArray}
-                autoFetchStrokes={false}
-              > 
-                <!-- Note: there will be rounding error with the scaling up & back of the NewHDBlackboard, causing some 1-4px shifts in the margin -->
-                <NewHDBlackboard
-                  {strokesArray}
-                  thumbnailWidth={carouselItemPreviewWidth}
-                  hideToolbar={true}
-                  on:intersect={fetchStrokes}
-                />
-              </RenderlessFetchStrokes>
-            </div>
+{#if mostWatchedExplanations.length > 0}
+  <div style="position: relative; display: flex; align-items: end; margin-top: {-76 + finalAdjustment - featuredVideoBleedMargin}px; margin-left: 4%; flex-wrap: nowrap;">
+    {#key mostWatchedExplanations}
+      {#each mostWatchedExplanations as explanation, i}
+        {#if i === currentlyWatchingIdx}
+          <!-- we set an explicit width & height on the container, so that the layout doesn't shift from the delayed mounting of <DoodleVideo/>  -->
+          <div style="margin-right: {0.02 * availablePageContentWidth}px; width: {featuredItemWidth}px; min-height: {featuredItemWidth * 3/4}px; border-radius: 12px; overflow: hidden;">
+            <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
+              <ReusableDoodleVideo
+                {boardDoc}
+                canvasWidth={featuredItemWidth} 
+                canvasHeight={featuredItemWidth * 3/4}
+                showEditDeleteButtons={false}
+                boardDbPath={explanation.path}
+              />
+            </RenderlessListenToBoard>
           </div>
+        {:else}
+          {#if carouselItemPreviewWidth}
+            <div 
+              on:click={() => rotateCarousel(i)} 
+              style="
+                width: {carouselItemPreviewWidth}px; 
+                height: {carouselItemPreviewWidth * 3/4 + 17}px; 
+                overflow: hidden; 
+                margin-right: {i <= 2 ? `${0.02 * availablePageContentWidth}px` : ''};
+              "
+            >
+              <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 100%">
+                {explanation.title || explanation.description}
+              </div>
+              
+              <div style="border-radius: 6px; width: {carouselItemPreviewWidth * 0.98}px; height: {carouselItemPreviewWidth * 3/4 * 0.97}px; overflow: hidden;">
+                <RenderlessFetchStrokes 
+                  dbPath={explanation.path}
+                  let:fetchStrokes={fetchStrokes}
+                  let:strokesArray={strokesArray}
+                  autoFetchStrokes={false}
+                > 
+                  <!-- Note: there will be rounding error with the scaling up & back of the NewHDBlackboard, causing some 1-4px shifts in the margin -->
+                  <NewHDBlackboard
+                    {strokesArray}
+                    thumbnailWidth={carouselItemPreviewWidth}
+                    hideToolbar={true}
+                    on:intersect={fetchStrokes}
+                  />
+                </RenderlessFetchStrokes>
+              </div>
+            </div>
+          {/if}
         {/if}
-      {/if}
-    {/each}
-  {/key}
+      {/each}
+    {/key}
 
-  {#if mostWatchedExplanations.length > 0 && featuredItemWidth}
-    <!-- Display featured video title, description and stats -->
-    <!-- {featuredItemWidth + 212}px -->
-    <!-- 50% (featured item), 8% (left right padding), 2% gap from featured video, 40%-->
-    <div style="
-      position: absolute; 
-      max-height: {availablePageContentWidth * 0.24}px; 
-      width: {0.4 * availablePageContentWidth }px;
-      left: calc({featuredItemWidth}px + {availablePageContentWidth * 0.01}px); 
-      right: auto; 
-      top: 0px; 
-      bottom: auto; 
-      padding: 16px; 
-      background-color: hsl(0,0%,0%, 0.6); 
-      color: white; 
-      border-radius: 12px;"
-    >
-      <div style="color: rgb(200, 200, 200); font-weight: 400; font-size: 14px;">
-        Most watched explanation
+    {#if mostWatchedExplanations.length > 0 && featuredItemWidth}
+      <!-- Display featured video title, description and stats -->
+      <!-- {featuredItemWidth + 212}px -->
+      <!-- 50% (featured item), 8% (left right padding), 2% gap from featured video, 40%-->
+      <div style="
+        position: absolute; 
+        max-height: {availablePageContentWidth * 0.24}px; 
+        width: {0.4 * availablePageContentWidth }px;
+        left: calc({featuredItemWidth}px + {availablePageContentWidth * 0.01}px); 
+        right: auto; 
+        top: 0px; 
+        bottom: auto; 
+        padding: 16px; 
+        background-color: hsl(0,0%,0%, 0.6); 
+        color: white; 
+        border-radius: 12px;"
+      >
+        <div style="color: rgb(200, 200, 200); font-weight: 400; font-size: 14px;">
+          Most watched explanation
+        </div>
+        <div style="font-size: 24px; font-weight: 500; width: 100%; color: white" class="my-truncated-text">
+          {mostWatchedExplanations[currentlyWatchingIdx].title || mostWatchedExplanations[currentlyWatchingIdx].description}
+        </div>
+        <div style="margin-top: 24px; font-size: 14px; width: 100%;" class="my-truncated-paragraph">
+          {mostWatchedExplanations[currentlyWatchingIdx].description}
+        </div>
+        <!-- Statistics -->
+        <div style="margin-top: 24px; font-size: 16px; font-style: underline">
+          <!-- <u>Full explanation</u> -->
+          {roundedToFixed(mostWatchedExplanations[currentlyWatchingIdx].viewMinutes, 0)} minutes viewed, 
+        
+          {mostWatchedExplanations[currentlyWatchingIdx].numOfComments || 0} comments
+        </div>
       </div>
-      <div style="font-size: 24px; font-weight: 500; width: 100%; color: white" class="my-truncated-text">
-        {mostWatchedExplanations[currentlyWatchingIdx].title || mostWatchedExplanations[currentlyWatchingIdx].description}
-      </div>
-      <div style="margin-top: 24px; font-size: 14px; width: 100%;" class="my-truncated-paragraph">
-        {mostWatchedExplanations[currentlyWatchingIdx].description}
-      </div>
-      <!-- Statistics -->
-      <div style="margin-top: 24px; font-size: 16px; font-style: underline">
-        <!-- <u>Full explanation</u> -->
-        {roundedToFixed(mostWatchedExplanations[currentlyWatchingIdx].viewMinutes, 0)} minutes viewed, 
-       
-        {mostWatchedExplanations[currentlyWatchingIdx].numOfComments || 0} comments
-      </div>
-    </div>
-  {/if}
-</div>
+    {/if}
+  </div>
+{/if}
+<!-- End of video gallery section -->
 
-<div style="padding-left: 4%; padding-right: 4%;">
-  <div style="margin-bottom: 48px;"></div>
-
+<!-- Crowdfund section & two-sided marketplace section 
+  position: relative prevents it from getting covered by the orange background (which would take priority because it's relative due to its `bind:clientWidth` directive)
+-->
+<div style="position: relative; padding-left: 4%; padding-right: 4%; padding-top: 48px;">
   {#if classDoc}
-    <div style="display: flex; align-items: center; width: 100%; justify-content: space-around; border: 0px solid red;">
+    <div style="display: flex; align-items: center; width: 100%; justify-content: space-around; margin-bottom: 24px;">
       <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
 
       <div style="margin-left: 12px; margin-right: 12px; width: 70%; border: 0px solid purple;">
@@ -129,54 +121,45 @@
           </div>
         </div>
 
-        <div style="height: 8px; width: 100%; background-color: #7AEB8D; margin-top: 12px; position: relative; opacity: 0.4;">
+        <div style="position: relative; height: 8px; width: 100%; background-color: #7AEB8D; margin-top: 12px; opacity: 0.4;">
           <div style="height: 8px; width: {0}px; background-color: #036E15; margin-top: 12px; position: absolute;">
       
           </div>
         </div>
       </div>
 
-    <PopupCrowdfund
-      let:isPopupOpen={isPopupOpen}
-      let:setIsPopupOpen={setIsPopupOpen}
-      {classID}
-    > 
-      <!-- #036E15 -->
-      <div on:click={() => setIsPopupOpen({ newVal: true })} style="cursor: pointer; width: 150px; margin-top: 9px; height: 40px; font-size: 16px; background-color: #036E15; color: white; border-radius: 30px; display: flex; align-items: center; justify-content: center; padding-left: 24px; padding-right: 24px;">
-        Add to crowdfund
-      </div>
-    </PopupCrowdfund>
-
+      <PopupCrowdfund
+        let:setIsPopupOpen={setIsPopupOpen}
+        {classID}
+      > 
+        <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#036E15">
+          <div style="font-weight: 500; color: white;">
+            Add to crowdfund
+          </div>
+        </ReusableRoundButton>
+      </PopupCrowdfund>
     </div>
-
-    <div style="margin-top: 24px;"></div>
   {/if}
 
-  <div style="display: flex; width: calc(100% - 400px - 80px + 480px); padding-top: 24px; padding-bottom: 24px; padding-left: 6px; padding-right: 6px;">    
-    <!-- Pre-subscribers section -->
+  <div style="display: flex; width: calc(100% - 400px - 80px + 480px); padding-top: 24px; padding-bottom: 24px;">    
     {#if presubscriberDocs}
-      <div style="min-width: 340px; max-width: 50%; height: 400px;">
+      <div style="min-width: 400px; flex-grow: 1; height: 400px;">
         <div style="display: flex; align-items: flex-end;">
-          <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
-              {tweenedPresubsCount}
+          <div style="font-size: 80px; min-width: 50px;">
+            {tweenedPresubsCount}
           </div>
 
           <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
             Learners
           </div>
 
-          <div style="margin-right: 0; margin-left: auto; margin-bottom: 20px;">
-            <PopupConfirmLearner
-              {classID}
-              let:isPopupOpen={isPopupOpen}
-              let:setIsPopupOpen={setIsPopupOpen}
-            >
-              <!-- background color:  -->
+          <div style="margin-right: 12px; margin-left: auto; margin-bottom: 20px;">
+            <PopupConfirmLearner {classID} let:setIsPopupOpen={setIsPopupOpen}>
               <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
                 <span class="material-symbols-outlined" style="font-size: 26px;">
                   school
                 </span>
-                <div style="margin-left: 8px;">
+                <div style="margin-left: 8px; font-weight: 500;">
                   Sign up as learner
                 </div>
               </ReusableRoundButton>
@@ -187,108 +170,92 @@
         <div style="margin-bottom: 24px;"></div>
 
         <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
-            {#each presubscriberDocs as presubscriberDoc}
-              <div style="display: flex; align-items: center;">
-                <span class="material-symbols-outlined" style="font-size: 54px; color: #9A9A9A; margin-top: 0px;">
-                  school
-                </span>
+          {#each presubscriberDocs as presubscriberDoc}
+            <div style="display: flex; align-items: center;">
+              <span class="material-symbols-outlined" style="font-size: 54px; color: #9A9A9A; margin-top: 0px;">
+                school
+              </span>
 
-                <div style="margin-right: 12px;"></div>
+              <div style="margin-right: 12px;"></div>
 
-                <div>
-                  <div style="color: #7A7A7A;">
-                    {presubscriberDoc.name}
-                  </div>
+              <div>
+                <div style="color: #7A7A7A;">
+                  {presubscriberDoc.name}
+                </div>
 
-                  <div class="figma-inter-font" style="max-width: 320px">
-                    {#if presubscriberDoc.presubscribeAmount}
-                      ${presubscriberDoc.presubscribeAmount}
-                    {:else if presubscriberDoc.crowdfundAmount}
-                      <b>{presubscriberDoc.crowdfundAmount}</b>
-                      <div>{presubscriberDoc.reasonForCrowdfunding}</div>
-                    {:else if presubscriberDoc.reasonForLearning}
-                      {presubscriberDoc.reasonForLearning}
-                    {/if}
-                  </div>
+                <div style="max-width: 320px;">
+                  {#if presubscriberDoc.presubscribeAmount}
+                    ${presubscriberDoc.presubscribeAmount}
+                  {:else if presubscriberDoc.crowdfundAmount}
+                    <b>{presubscriberDoc.crowdfundAmount}</b>
+                    <div>{presubscriberDoc.reasonForCrowdfunding}</div>
+                  {:else if presubscriberDoc.reasonForLearning}
+                    {presubscriberDoc.reasonForLearning}
+                  {/if}
                 </div>
               </div>
-            {/each}
+            </div>
+          {/each}
         </div>
 
         <div style="margin-top: 40px;"></div>
       </div>
     {/if}
 
-
     <!-- VERTICAL LINE THAT SPLITS THE FLEXBOX -->
     <div style="border-left: 1px solid lightgrey; height: {TeachersListHeight + 240}px; width: 1px; margin-left: {24}px; margin-right: {24-1}px;"></div>
-
+    
     {#if teacherDocs}     
-    <!-- Teacher section -->
-    <div style="min-width: 340px; width: 50%; height: 400px;">
-      <div style="display: flex; align-items: flex-end;">
-        <!-- Need width otherwise digits jump 0 takes less width than 1  -->
-        <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
-          {tweenedTeacherCount}
-        </div>
-
-        <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
-          Teachers
-        </div>
-
-        <div style="margin-left: 32px; margin-bottom: 20px;">
-          <PopupConfirmTeacher 
-            {classID}
-            let:isPopupOpen={isPopupOpen}
-            let:setIsPopupOpen={setIsPopupOpen}
-          >
-            <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
-              <span class="material-symbols-outlined" style="font-size: 30px">
-                stylus_note
-              </span>
-              <div style="margin-left: 8px;">
-                Sign up as teacher
-              </div>
-            </ReusableRoundButton>
-          </PopupConfirmTeacher>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 16px;"></div>
-
-      <div class="people-list" bind:this={TeachersList} bind:clientHeight={TeachersListHeight}>
-        {#each teacherDocs as teacherDoc}
-          <div style="display: flex; align-items: center;">
-            <PresentationalBeaverPreview 
-              helperDoc={teacherDoc}
-              classID={classID}
-              style="margin-bottom: 8px; margin-right: 20px; width: 280px;"
-            >
-            </PresentationalBeaverPreview>
+      <div style="min-width: 400px; flex-grow: 1; height: 400px;">
+        <div style="display: flex; align-items: flex-end;">
+          <!-- Need width otherwise digits jump 0 takes less width than 1  -->
+          <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
+            {tweenedTeacherCount}
           </div>
-        {/each}
+
+          <!--   <div style="margin-right: 0; margin-left: auto; margin-bottom: 20px;"> -->
+            <!-- before: margin-left: 16px; margin-bottom: 30px; font-size: 20px; -->
+
+          <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
+            Teachers
+          </div>
+
+          <div style="margin-right: 12px; margin-left: auto; margin-bottom: 20px;">
+            <PopupConfirmTeacher 
+              {classID}
+              let:isPopupOpen={isPopupOpen}
+              let:setIsPopupOpen={setIsPopupOpen}
+            >
+              <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
+                <span class="material-symbols-outlined" style="font-size: 30px">
+                  stylus_note
+                </span>
+                <div style="margin-left: 8px; font-weight: 500;">
+                  Sign up as teacher
+                </div>
+              </ReusableRoundButton>
+            </PopupConfirmTeacher>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 16px;"></div>
+
+        <div class="people-list" bind:this={TeachersList} bind:clientHeight={TeachersListHeight} style="max-width: 400px;">
+          {#each teacherDocs as teacherDoc}
+            <div style="display: flex; align-items: center;">
+              <PresentationalBeaverPreview 
+                helperDoc={teacherDoc}
+                classID={classID}
+                style="margin-bottom: 8px; margin-right: 20px; width: 280px;"
+              >
+              </PresentationalBeaverPreview>
+            </div>
+          {/each}
+        </div>
       </div>
-    </div>
-  {/if}
+    {/if}
   </div>
 </div>
-
-{#if isPresubscribePopupOpen}
-  <PopupConfirmLearner
-    classID={classID}
-    on:confirm-clicked={(e) => handleConfirmPresubscription(e.detail.presubscribeAmount)}
-    on:popup-close={() => isPresubscribePopupOpen = false}
-  />
-{/if}
-
-
-{#if isTeacherPopupOpen}
-  <PopupConfirmTeacher
-    {classID}
-    on:confirm-clicked={() => { isTeacherPopupOpen = false}}
-    on:popup-close={() => isTeacherPopupOpen = false}
-  />
-{/if}
 
 <script>
   import { onMount, tick } from 'svelte'
@@ -323,7 +290,7 @@
   let featuredItemWidth 
   let carouselItemPreviewWidth
   let gapBetweenEachVideo = 36
-  let availablePageContentWidth 
+  let availablePageContentWidth
 
   $: featuredItemWidth = availablePageContentWidth * 0.5
   $: carouselItemPreviewWidth = availablePageContentWidth * 0.13
@@ -356,9 +323,6 @@
 
   let teacherDocs = null
   let presubscriberDocs = null
-  let isPresubscribePopupOpen = false
-
-  let isTeacherPopupOpen = false
 
   const secondaryActionStringCSS = `
     width: 100%;
@@ -513,10 +477,6 @@
     border: 2px solid #5d0068;
     background-color: white;
     color: #5d0068;
-  }
-
-  .figma-inter-font {
-    font-family: 'Inter', sans-serif;
   }
 
   .money-green {

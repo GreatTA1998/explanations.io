@@ -1,7 +1,7 @@
 
 <div bind:this={anchor} style="width: 100%;">
   <!-- open menu -->
-  <div on:click={() => goto('/overview')} style="display: flex; align-items: center; cursor: pointer; width: 100%;">
+  <div on:click={() => goto('/overview')} style="display: flex; align-items: center; cursor: pointer; width: 100%; cursor: pointer;">
     <div>
       <h1 class="my-truncated-text" style="color: rgb(60, 60, 60); max-width: 230px; font-weight: 500; margin-left: 3px; margin-top: 5px; margin-bottom: 0px; font-size: 1.4rem">
         {nameOfClass} 

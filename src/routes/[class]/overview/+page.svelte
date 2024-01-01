@@ -114,35 +114,37 @@
     <div style="display: flex; align-items: center; width: 100%; justify-content: space-around; margin-bottom: 24px;">
       <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
 
-      <div style="margin-left: 12px; margin-right: 12px; width: 70%; border: 0px solid purple;">
+      <div style="margin-left: 12px; margin-right: 12px; width: 68%; border: 0px solid purple;">
         <div style="display: flex; align-items: center;">
           <div style="font-size: 24px; color: #036E15; font-weight: 500;">
-            $0 raised 
+            ${classDoc.crowdfundAmount || 0} raised 
           </div>
         </div>
 
         <div style="position: relative; height: 8px; width: 100%; background-color: #7AEB8D; margin-top: 12px; opacity: 0.4;">
-          <div style="height: 8px; width: {0}px; background-color: #036E15; margin-top: 12px; position: absolute;">
+          <div style="height: 8px; width: {(classDoc.crowdfundAmount || 0) * 12}px; background-color: #036E15; position: absolute;">
       
           </div>
         </div>
       </div>
 
-      <PopupCrowdfund
-        let:setIsPopupOpen={setIsPopupOpen}
-        {classID}
-      > 
-        <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#036E15">
-          <div style="font-weight: 500; color: white;">
-            Add to crowdfund
-          </div>
-        </ReusableRoundButton>
-      </PopupCrowdfund>
+      <div style="padding-top: 20px;">
+        <PopupCrowdfund
+          let:setIsPopupOpen={setIsPopupOpen}
+          {classID}
+        > 
+          <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#036E15">
+            <div style="font-weight: 500; color: white;">
+              Add to crowdfund
+            </div>
+          </ReusableRoundButton>
+        </PopupCrowdfund>
+      </div>
     </div>
   {/if}
 
   <div style="display: flex; width: calc(100% - 400px - 80px + 480px); padding-top: 24px; padding-bottom: 24px;">    
-    {#if presubscriberDocs}
+    {#if learnerDocs}
       <div style="min-width: 400px; flex-grow: 1; height: 400px;">
         <div style="display: flex; align-items: flex-end;">
           <div style="font-size: 80px; min-width: 50px;">
@@ -170,7 +172,7 @@
         <div style="margin-bottom: 24px;"></div>
 
         <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
-          {#each presubscriberDocs as presubscriberDoc}
+          {#each learnerDocs as learnerDoc}
             <div style="display: flex; align-items: center;">
               <span class="material-symbols-outlined" style="font-size: 54px; color: #9A9A9A; margin-top: 0px;">
                 school
@@ -180,17 +182,17 @@
 
               <div>
                 <div style="color: #7A7A7A;">
-                  {presubscriberDoc.name}
+                  {learnerDoc.name}
                 </div>
 
                 <div style="max-width: 320px;">
-                  {#if presubscriberDoc.presubscribeAmount}
-                    ${presubscriberDoc.presubscribeAmount}
-                  {:else if presubscriberDoc.crowdfundAmount}
-                    <b>{presubscriberDoc.crowdfundAmount}</b>
-                    <div>{presubscriberDoc.reasonForCrowdfunding}</div>
-                  {:else if presubscriberDoc.reasonForLearning}
-                    {presubscriberDoc.reasonForLearning}
+                  {#if learnerDoc.presubscribeAmount}
+                    ${learnerDoc.presubscribeAmount}
+                  {:else if learnerDoc.reasonForLearning}
+                    {learnerDoc.reasonForLearning}
+                  {:else if learnerDoc.crowdfundAmount}
+                    <b>{learnerDoc.crowdfundAmount}</b>
+                    <div>{learnerDoc.reasonForCrowdfunding}</div>
                   {/if}
                 </div>
               </div>
@@ -213,9 +215,6 @@
             {tweenedTeacherCount}
           </div>
 
-          <!--   <div style="margin-right: 0; margin-left: auto; margin-bottom: 20px;"> -->
-            <!-- before: margin-left: 16px; margin-bottom: 30px; font-size: 20px; -->
-
           <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
             Teachers
           </div>
@@ -223,7 +222,6 @@
           <div style="margin-right: 12px; margin-left: auto; margin-bottom: 20px;">
             <PopupConfirmTeacher 
               {classID}
-              let:isPopupOpen={isPopupOpen}
               let:setIsPopupOpen={setIsPopupOpen}
             >
               <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
@@ -283,6 +281,8 @@
   let tweenedTeacherCount = 0
   let tweenedPresubsCount = 0
   let isInitialLoad = true
+
+  let unsubLearnersListener
   let unsubTeachersListener = null
 
   let featuredVideoBleedMargin 
@@ -301,8 +301,8 @@
     // normalizeListHeights()
   }
 
-  $: if (presubscriberDocs) {
-    animatePresubscribersCount(presubscriberDocs.length)
+  $: if (learnerDocs) {
+    animatePresubscribersCount(learnerDocs.length)
     // normalizeListHeights()
   }
 
@@ -322,7 +322,7 @@
   let db = getFirestore()
 
   let teacherDocs = null
-  let presubscriberDocs = null
+  let learnerDocs = null
 
   const secondaryActionStringCSS = `
     width: 100%;
@@ -348,7 +348,7 @@
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     backgroundWidth = 0.8 * vw
 
-    fetchPresubscribers().then(docs => presubscriberDocs = docs)
+    listenToLearnerDocs()
     listenToTeacherDocs()
   })
 
@@ -435,13 +435,28 @@
     })
   }
 
+  async function listenToLearnerDocs () {
+    return new Promise(async (resolve) => {
+      const ref = collection(db, `classes/${classID}/members`)
+      const q = query(ref, where("isLearner", "==", true))
+      unsubLearnersListener = onSnapshot(q, (snap) => {
+        const temp = [] 
+        for (const doc of snap.docs) {
+          temp.push({ id: doc.id, ...doc.data() })
+        }
+        learnerDocs = temp
+        resolve()
+      })
+    })
+  }
+
   async function listenToTeacherDocs () {
     return new Promise(async (resolve) => {
       const ref = collection(db, `classes/${classID}/members`)
       const q = query(ref, where("isTeacher", "==", true))
       unsubTeachersListener = onSnapshot(q, (snap) => {
         const temp = [] 
-      for (const doc of snap.docs) {
+        for (const doc of snap.docs) {
           temp.push({ id: doc.id, ...doc.data() })
         }
         teacherDocs = temp

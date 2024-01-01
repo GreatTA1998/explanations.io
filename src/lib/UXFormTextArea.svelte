@@ -1,7 +1,9 @@
 <div 
+  on:click={() => willTriggerFocus = true}
   class="ux-form-field"
   class:grey-border={!isFocused}
   class:blue-border={isFocused}
+  style="height: fit-content;"
 >
   <div class="ux-field-label">
     {fieldLabel}
@@ -10,35 +12,33 @@
   <!-- input interface is a quick-fix, 
   
   and parent will need to consume `e.detail` instead of `e.target value` -->
-  <TextAreaAutoResizing
-    {value}
-    on:input
-    on:focusin={() => isFocused = true}
-    on:focusout={() => isFocused = false}
-    bind:this={InputElem}
-    {placeholder}
-    class="ux-input-text" 
-    style="width: 100%; border: 0px solid grey;"
-    resetDefaultStyling={true}
-  />
+  <div bind:this={InputElem}>
+    <TextAreaAutoResizing
+      {value}
+      {willTriggerFocus}
+      on:input
+      on:manually-focused={() => willTriggerFocus = false}
+      on:focusin={() => isFocused = true}
+      on:focusout={() => isFocused = false}
+      {placeholder}
+      class="ux-input-text" 
+      style="width: 100%; border: 0px solid grey;"
+      resetDefaultStyling={true}
+    />
+  </div>
 </div>
 
 <script>
+  export let fieldLabel = ''
+  export let placeholder
+  export let value = ''
+
   import TextAreaAutoResizing from "$lib/TextAreaAutoResizing.svelte";
 
-    export let fieldLabel = ''
-    export let placeholder
+  let InputElem
+  let willTriggerFocus = false
+  let isFocused = false
 
-    export let value = ''
-
-    
-
-    let InputElem
-    let isFocused = false
-
-    function showBlueBorders () {
-      isFocused = true
-    }
 </script>
 
 <style>

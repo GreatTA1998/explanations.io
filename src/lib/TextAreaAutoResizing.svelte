@@ -28,6 +28,12 @@
   export let numberOfInitialRowsIfEmpty = 1
   export let fontSizeIncludeUnits = '1.4rem'
   export let resetDefaultStyling = false
+  export let willTriggerFocus
+
+  $: if (willTriggerFocus) {
+    element.focus()
+    dispatch("manually-focused")
+  }
 
   const dispatch = createEventDispatcher()
 

@@ -1,8 +1,5 @@
-<BasePopup on:popup-close>
-  <!-- <h2 slot="title" style="font-family: sans-serif;">
-    Sign in
-  </h2> -->
-  <div slot="popup-content" style="font-family: sans-serif; padding: 12px; display: flex; justify-content: center;">
+<BasePopup on:popup-close style="padding: 24px;">
+  <div slot="popup-content" style="display: flex; justify-content: center;">
     <div style="width: 200px; margin-top: 20px;">
       <div style="display: flex; align-items: center;">
         <hr style="

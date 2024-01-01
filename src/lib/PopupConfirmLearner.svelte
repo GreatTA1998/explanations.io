@@ -10,6 +10,7 @@
     <div slot="title" style="font-size: 24px; font-weight: 500;">
       Learner sign-up
     </div>
+
     <div slot="popup-content">    
       <div style="font-size: 14px; color: rgb(100, 100, 100); margin-top: 10px;">
         By officially becoming a learner, you become part of the active community 
@@ -17,17 +18,17 @@
       </div>
       <div style="margin-top: 36px;"></div>
 
+      {#if !!!$user.uid}
+        <ReusableSignInButton/>
+      {/if}
+
       <div style="margin-bottom: 24px;"></div>
 
-      <div style="font-size: 16px;">
+      <div style="font-size: 16px;" class:greyed-out-section={!!!$user.uid || !memberDoc}>
         <ol>
           <li>
             Setup basic info
           </li>
-
-          {#if !!!$user.uid}
-            <ReusableSignInButton/>
-          {/if}
 
           {#if memberDoc}
             <UXFormTextArea
@@ -41,11 +42,12 @@
           <div style="margin-bottom: 24px;"></div>
 
           <li>
-            Post your first question
+            + Post your first new question 
           </li>
           <div style="font-size: 14px;">
-            Especially if it's a question that has been bothering you for a long time
-            that you found no truly compelling explanation for.
+            The button is near the top left. 
+            Great if you have a question that's been bothering you for a long time,
+            that you found no truly compelling explanation for anywhere. 
           </div>
 
           <div style="margin-top: 12px"></div> 
@@ -70,6 +72,7 @@
         on:click={doLearnerSignUp}
         backgroundColor="#5d0068" 
         textColor="white"
+        isDisabled={!!!$user.uid || !memberDoc}
       >
         Confirm sign-up
       </ReusableRoundButton>
@@ -77,7 +80,9 @@
   </BasePopup>
 {/if}
 
-<script>
+<script>  
+  export let classID
+
   import BasePopup from '$lib/BasePopup.svelte'
   import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
@@ -90,8 +95,11 @@
   import UXFormTextArea from '$lib/UXFormTextArea.svelte'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
   import { debounce } from '/src/helpers/utility.js'
-
-  export let classID
+  import { getMemberDocSchema } from '/src/helpers/schema.js'
+  
+  $: if (isPopupOpen) {
+    handleMemberDocLogic($user)
+  }
 
   const dispatch = createEventDispatcher()
 
@@ -102,17 +110,15 @@
 
   let memberDoc = null
 
-  $: if (isPopupOpen) {
-    handleMemberDocLogic()
-  }
-
   const debouncedUpdateBio = debounce(
     updateTeacherBio,
     1000
   ) 
 
   async function doLearnerSignUp () {
-    await updateFirestoreDoc(`classes/${classID}/members/${$user.uid}`, {
+    dispatch('confirm-clicked')
+    isPopupOpen = false
+    updateFirestoreDoc(`classes/${classID}/members/${$user.uid}`, {
       isLearner: true
     })
   }
@@ -123,22 +129,32 @@
     })
   }
 
-  async function handleMemberDocLogic () {
-    let result = await getFirestoreDoc(`classes/${classID}/members/${$user.uid}`)
-    // TO-DO: test if memberDoc does not exist
-    if (!result) {
-      const memberDocSchema = getMemberDocSchema({ userDoc: $user })
+  async function handleMemberDocLogic (userDoc) {
+    const membersPath = `classes/${classID}/members/`
+    
+    let result
+    try {
+      result = await getFirestoreDoc(membersPath + userDoc.uid)
+      memberDoc = result
+    }
+    catch (error) {
+      console.log('error =', error)
+      const memberDocSchema = getMemberDocSchema({ userDoc })
       setFirestoreDoc(
-        membersPath + $user.uid,
+        membersPath + userDoc.uid,
         memberDocSchema
       )
       result = memberDocSchema
+      memberDoc = result
     }
-    memberDoc = result
   }
 </script>
 
 <style>
+  .greyed-out-section {
+    opacity: 0.5;
+  }
+
   li {
     margin-bottom: 6px;
     margin-top: 6px;

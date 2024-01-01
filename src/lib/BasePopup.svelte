@@ -48,11 +48,12 @@
     margin: auto;
 
     /* dimensions */
-    width: 300px;
     height: fit-content;
     min-height: 10vh;
     max-height: 90vh;
-    min-width: 33vw; 
+    min-width: 380px;
+    width: 40vw; 
+    max-width: 600px;
     overflow-y: auto;
   }
 </style>

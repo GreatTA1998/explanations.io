@@ -21,21 +21,21 @@
 
       <div style="margin-top: 12px"></div>
 
-      <div style="font-size: 16px;">
-        <div style="margin-bottom: 24px;"></div>
+      {#if !!!$user.uid}
+        <ReusableSignInButton/>
+      {/if}
+
+      <div style="margin-bottom: 24px;"></div>
+
+      <div style="font-size: 16px;" class:greyed-out-section={!!!$user.uid || !memberDoc}>
+  
           <ol>
             <li>
               Setup basic info
             </li>
 
-            {#if !!!$user.uid}
-              <ReusableSignInButton/>
-            {:else}
 
-            {/if}
-
-
-            <div style="opacity: {!!!$user.uid && memberDoc ? 0.1 : 1.0};">
+            <div>
               {#if memberDoc}
                 <div style="margin-bottom: 12px;"></div>
 
@@ -108,18 +108,12 @@
 
 <script>
   import BasePopup from '$lib/BasePopup.svelte'
-  import Checkbox from '@smui/checkbox'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '/src/store.js'
   import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreDoc, setFirestoreDoc } from '../helpers/crud.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
   import { debounce } from '/src/helpers/utility.js'
-  import Button from '@smui/button'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
-  import ReusableButton from '$lib/ReusableButton.svelte'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte' 
-  import Textfield from '@smui/textfield'
-  import HelperText from '@smui/textfield/helper-text';
   import UXFormField from '$lib/UXFormField.svelte';
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
 
@@ -138,7 +132,7 @@
   }
 
   $: if (isPopupOpen) {
-    fetchOrCreateMemberDoc()
+    handleMemberDocLogic($user)
   }
 
   function setIsPopupOpen ({ newVal }) {
@@ -169,21 +163,23 @@
     })
   }
 
-  async function fetchOrCreateMemberDoc () {
-    memberDoc = {}
-    const membersPath = `classes/${classID}/members/${$user.uid}`
-    const resultDoc = await getFirestoreDoc(membersPath)
-    if (!resultDoc) {
-      console.log('memberDoc does not exist!')
-      const memberDocSchema = getMemberDocSchema({ userDoc: $user })
-      await setFirestoreDoc(
-        membersPath + $user.uid,
+  async function handleMemberDocLogic (userDoc) {
+    const membersPath = `classes/${classID}/members/`
+    
+    let result
+    try {
+      result = await getFirestoreDoc(membersPath + userDoc.uid)
+      memberDoc = result
+    }
+    catch (error) {
+      console.log('error =', error)
+      const memberDocSchema = getMemberDocSchema({ userDoc })
+      setFirestoreDoc(
+        membersPath + userDoc.uid,
         memberDocSchema
       )
-      memberDoc = memberDocSchema
-    }
-    else {
-      memberDoc = resultDoc
+      result = memberDocSchema
+      memberDoc = result
     }
   }
   
@@ -221,35 +217,13 @@
       name: inputFieldFirstName + ' ' + inputFieldLastName
     })
   }
-
-  // BELOW CODE WAS PASTED FROM <ToCommunityOrHelperCards/>, does not work as it is
-  async function handleConfirmTrial (tutor) {
-    isTrialPopupOpen = false
-    const promises = [] 
-
-  // NOTE: Twilio's requirement differs from Firebase Auth, which requires +1 XXX-XXX-XXX hyphen format
-    const eltonMobileNumber = '+15032503868'
-    await promises.push(
-      sendTextMessage({ 
-        content: `${$user.name} signed up for your "$1 + tip" 30 minute in-person tutoring trial, confirm on Venmo and they should text you shortly to schedule a time.`,
-        toWho: tutor.phoneNumber
-      }),
-      sendTextMessage({
-        content: `Welcome ${$user.name.split(' ')[0]}! 
-        Schedule a time and place to meet with your tutor e.g. give 3 distinct times like 1 pm Wednesday, Friday 3 pm, Tuesday 12 pm, student center 5th floor etc.)
-        and decide afterwards whether to hire them for youtube-style help : )
-        `,
-        toWho: $user.phoneNumber
-      }),
-      sendTextMessage({
-        content: `Student ${$user.name} is trialing with tutor ${tutor.name}`,
-        toWho: eltonMobileNumber
-      })
-    )
-  }
 </script>
 
 <style>
+  .greyed-out-section {
+    opacity: 0.5;
+  }
+
   li {
     margin-bottom: 6px;
     margin-top: 4px;

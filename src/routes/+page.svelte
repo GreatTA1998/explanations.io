@@ -496,9 +496,7 @@
 	}
 
 	function redirectToSignUpPage () {
-		goto('/overview')
-		// const linearAlgebraID = 'lvzQqyZIV1wjwYnRV9hn'
-		// goto('/signup/' + linearAlgebraID)
+		goto('/servers')
 	}
 
 	// TO-DO: maybe just redirect

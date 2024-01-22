@@ -6,7 +6,7 @@
     <div style="font-size: 2.8vw; font-weight: 600; color: rgb(20, 20, 20)">
       {classDoc.name}
     </div>
-    <div style="font-size: 20px; margin-top: 12px;">
+    <div style="font-size: 24px; margin-top: 12px; font-weight: 500; color: rgb(80, 80, 80);">
       {classDoc.description}
     </div>
   {/if}
@@ -114,7 +114,7 @@
     <div style="display: flex; align-items: center; width: 100%; justify-content: space-around; margin-bottom: 24px;">
       <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
 
-      <div style="margin-left: 12px; margin-right: 12px; width: 68%; border: 0px solid purple;">
+      <div style="margin-left: 24px; width: 100%; border: 0px solid purple;">
         <div style="display: flex; align-items: center;">
           <div style="font-size: 24px; color: #036E15; font-weight: 500;">
             ${classDoc.crowdfundAmount || 0} raised 
@@ -128,18 +128,6 @@
         </div>
       </div>
 
-      <div style="padding-top: 20px;">
-        <PopupCrowdfund
-          let:setIsPopupOpen={setIsPopupOpen}
-          {classID}
-        > 
-          <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#036E15">
-            <div style="font-weight: 500; color: white;">
-              Add to crowdfund
-            </div>
-          </ReusableRoundButton>
-        </PopupCrowdfund>
-      </div>
     </div>
   {/if}
 

@@ -3,10 +3,11 @@
 -->
 <div bind:clientWidth={availablePageContentWidth} style="padding-left: 4%; padding-right: 4%; padding-top: 36px; padding-bottom: {120 + featuredVideoBleedMargin}px; background-color: #f7c686;">
   {#if classDoc}
-    <div style="font-size: 2.8vw; font-weight: 600; color: rgb(20, 20, 20)">
+    <!-- #493504 is a black-grey color with a subtle orange tint, inspired by Firebase's subtle-blue primary text -->
+    <div style="font-size: 2.8vw; font-weight: 600; color: #493504;">
       {classDoc.name}
     </div>
-    <div style="font-size: 24px; margin-top: 12px; font-weight: 500; color: rgb(80, 80, 80);">
+    <div style="font-size: 24px; margin-top: 12px; font-weight: 400; color: #493504;">
       {classDoc.description}
     </div>
   {/if}
@@ -41,7 +42,7 @@
                 margin-right: {i <= 2 ? `${0.02 * availablePageContentWidth}px` : ''};
               "
             >
-              <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 100%">
+              <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 100%;">
                 {explanation.title || explanation.description}
               </div>
               
@@ -90,7 +91,7 @@
         <div style="font-size: 24px; font-weight: 500; width: 100%; color: white" class="my-truncated-text">
           {mostWatchedExplanations[currentlyWatchingIdx].title || mostWatchedExplanations[currentlyWatchingIdx].description}
         </div>
-        <div style="margin-top: 24px; font-size: 14px; width: 100%;" class="my-truncated-paragraph">
+        <div style="margin-top: 24px; font-size: 14px; width: 100%; font-weight: 300;" class="my-truncated-paragraph">
           {mostWatchedExplanations[currentlyWatchingIdx].description}
         </div>
         <!-- Statistics -->

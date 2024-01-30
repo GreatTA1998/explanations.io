@@ -6,15 +6,11 @@
   
   <div style="margin-left: 20px;"></div>
 
-  {#each [0, 1, 2] as i}
-    <div on:click={() => changeToSlideIdx(i)}
-      class:highlighted-glow={idxOfFocusedSlide === i}
-      class:lowlighted-glow={idxOfFocusedSlide !== i}
-      style="width: 80px; height: 50px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"
-    >
-      Slide { i + 1}
-    </div>
-  {/each}
+  <MultislideSlideChanger
+    slideIDs={[0, 1, 2]}
+    {idxOfFocusedSlide}
+    on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
+  />
 </div>
 
 <div style="margin-bottom: 12px;"></div>
@@ -75,8 +71,10 @@
           startStopwatch,
           () => isRecording = true
         )}
-        class="offline-record-button" style="border-radius: 24px;">
-        Try recording offline
+        class="offline-record-button" 
+        style="border-radius: 24px; font-size: 16px; cursor: pointer;"
+      >
+        Record offline
       </div>
     {:else}
       <button on:click={() => callFuncsInSequence(
@@ -96,7 +94,6 @@
 
 <script>
   import Blackboard from '$lib/Blackboard.svelte'
-  import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte';
   import { portal } from '/src/helpers/actions.js'
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
@@ -105,7 +102,9 @@
   import { getFirestore, query, getDocs, collection, where, increment } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
   import { createEventDispatcher, onMount } from 'svelte'
+  import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
+  import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
 
   export let strokesArray1
   export let strokesArray2

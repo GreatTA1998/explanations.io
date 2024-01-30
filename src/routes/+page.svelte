@@ -19,177 +19,14 @@
 		</div>
 	</div>
 
-	<!-- <TopBannerWarnExperimental/> -->
 	<div class="webflow-container" style="padding-top: 2%;">
 		{#if activeTabName === 'Learn'}
-			<div class="header-flex" style="border: 0px solid black;">
-				<div style="width: max-content;">
-					<p class="header-title" style="line-height: 1; margin-bottom: 36px;">
-						Get it properly explained
-					</p>
-					<div class="header-subtitle" style="font-size: 20px; line-height: 1.4; font-weight: 500; color: rgb(60, 60, 60);">
-						Crowdfund the best “Youtube Teachers” to answer your long, unresolved questions — once and for all —
-						on this blackboard-video oriented platform
-					</div>
-				</div>
-	
-				<div class="header-subcopy-wrapper" style="margin-top: 32px; margin-left: 0px; border: 0px solid orange;">
-					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
-						style="	
-							height: 4.2vw; 
-							min-height: 42px;
-							margin-top: 0.85vw; 
-							margin-bottom: 0.8vw; 
-							border-radius: 2.1vw;
-						"
-					>
-						<Label style="text-transform: none; 
-							padding-left: 24px; padding-right: 24px; padding-top: 10px; padding-bottom: 10px; font-size: 1.2em; font-weight: 600;
-							display: flex; align-items: center;
-
-						">
-							 Find your class
-
-							<span style="margin-left: 8px; font-size: 32px;" class="material-symbols-outlined">
-								search
-								</span>
-						</Label>
-					</Button>
-				</div>
-			</div>
-
-			<!-- ROTATING GALLERY -->
-			<div class="image-gallery-container">
-				{#if randomlyChosenExemplarVideos.length > 0}
-					<ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
-				{/if}
-			</div>
+			<HomePageForLearner/>
 		{:else}
-			<div class="header-flex">
-				<p class="header-title" style="font-size: 4em;">Teach what you love - supported by subscribers</p>	
-				<div class="header-subcopy-wrapper">
-				
-					<Button on:click={redirectToSignUpPage} color="secondary" variant="raised" style="height: 60px; margin-top: 16px; margin-bottom: 2rem; border-radius: 0px;">
-						<Label style="text-transform: none; padding-left: 16px; padding-right: 16px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; font-weight: 600">
-							Explore communities
-						</Label>
-					</Button>
-				</div>
-			</div>			
-			<!-- MultislideRecordingDemo -->
-			<OfflineMultislideRecordingDemo/>
+			<HomePageForTeacher/>
 		{/if}
 
-			{#if activeTabName === 'Learn'}
-
-			<div class="webflow-section">
-				<div style="width: 1000px; height: fit-content; font-size: 42px; margin-top: 48px;">
-					<div style="color: rgb(95, 95, 94);">
-					If your college class is hard to understand,
-					</div>
-					<div >
-						explanations.app has visual forums where you can ask for better explanations. 
-					</div>
-					<div style="color: rgb(95, 95, 94);">People worldwide reply with blackboard videos,
-						and you can subscribe to your favorite teacher for $10/month to regularly learn from their content.
-					</div>
-				</div>
-
-				<div style="margin-bottom: 120px;"></div>
-
-				<div style="display: flex; justify-content: space-between; margin-left: 4%; margin-right: 4%">
-					<div>
-						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
-							globe
-						</span>
-
-						<div style="margin-top: 12px;"></div>
-
-						<div class="" style="font-size: 24px;">
-							Meritocratic teaching
-						</div>
-
-						<div style="margin-top: 12px;"></div>
-
-						<div style="width: 300px; color: rgb(61, 61, 61)">
-							Choose teachers from all over the world - including previous TAs & students 
-							- based on their explanations.
-						</div>
-					</div>
-
-					<div>
-						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
-							savings
-						</span>
-
-						<div style="margin-top: 12px;"></div>
-						<div class="" style="font-size: 24px;">
-							Affordable price
-						</div>
-
-						<div style="margin-top: 12px;"></div>
-						<div style="width: 300px; color: rgb(61, 61, 61)">
-							The crowdfund model, unlike private tutoring,
-							allows each learner to pay $10/month instead of $30-100/hour.
-						</div>
-					</div>
-
-				
-
-					<div>
-						<span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.7">
-						local_convenience_store
-						</span>
-
-						<div style="margin-top: 12px;"></div>
-						<div style="font-size: 24px;"> 
-							Convenient
-						</div>
-						<div style="margin-top: 12px;"></div>
-						<div style="width: 300px; color: rgb(61, 61, 61)">
-							No need for long commutes and 
-							having to schedule sessions. Communicate async. without losing clarity because of videos and comments.
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="webflow-section" style="display: none;">
-				<div class="webflow-intro-type">
-					<div style="font-weight: 500;">
-						explanations.app = Youtube + Kickstarter for college classes 
-					</div>
-
-					<div style="margin-bottom: 24px;"></div>
-
-					<ol style="font-weight: 400;">
-						<li>
-							Colleges classes aren't always well-taught; class resources aren't always good enough.
-						</li>
-						<li>
-							To do well in any class, <u>we just need someone good at explaining things and gives a sh*t about us.</u>
-							Many former TAs & students all over the world are great at explaining things, but don’t know <i>where</i> they're needed
-						</li>
-
-						<li>
-							Pre-pay $10 to crowdfund potential teachers to tryout for your class. You get permanent free subscriptions for paying early.
-						</li>
-
-						<li>
-							Pick the most helpful "Youtuber" for you. It's a win-win: students get really good help for low prices of $10/month, 
-							while teachers can support themselves via economies-of-scale. 
-						</li>
-					</ol>
-				</div>
-
-<!-- 							
-			<div style="display: flex; justify-content: space-around;">
-				<img src="/roxbury-small-logo.jpg" width="300" height="165">
-				<img src="/small mit.png" width="260" height="120" style="margin-top: 14px;">
-				<img src="/bunkerhill.png" width="300" height="110" style="margin-top: 20px;">
-			</div> -->
-			</div>
+		{#if activeTabName === 'Learn'}
 
 			{/if}
 
@@ -198,16 +35,15 @@
 					<div class="webflow-intro-type">
 						This website lets you teach people all over the world with blackboard videos (without additional responsibilities like grading). 
 
-			
 						Just draw and talk on the blackboard - that's it. 
 						You can help free viewers and <b style="color: #5d0068">$10/month subscribers</b>.
 						<br><br>					
 						It's the unique way you explain the subject that matters.
 
-
-						<!-- The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
-						explain a small number of things during <b style="color: navy">flexible times</b> of your week. -->
-
+						<!-- 
+							The video-format means that, instead of needing to reply quickly to questions over text, you can take your time to deeply
+							explain a small number of things during <b style="color: navy">flexible times</b> of your week. 
+						-->
 					</div>
 				</div>
 
@@ -326,187 +162,74 @@
 				</div>
 			</div>
 
-		<div class="webflow-section">
-			<HowItWorksStep
-				title="Step 1"
-				subtitle="Setup a shop with your example videos"
-				description="Putting up examples of how you explain things give potential subscribers a low pressure way to get to know your style of teaching and
-				whether it will be helpful for them. They do *not* need to be neat and well-edited, you can just talk and draw as if explaining to someone beside you casually.
-				"
-			>
-			<iframe 
-				src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="{Math.min(w, 600)}" height="{0.6 * Math.min(w, 600)}"
-				style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
-			</iframe> 
-			</HowItWorksStep>
+			<div class="webflow-section">
+				<HowItWorksStep
+					title="Step 1"
+					subtitle="Setup a shop with your example videos"
+					description="Putting up examples of how you explain things give potential subscribers a low pressure way to get to know your style of teaching and
+					whether it will be helpful for them. They do *not* need to be neat and well-edited, you can just talk and draw as if explaining to someone beside you casually.
+					"
+				>
+					<iframe 
+						src="https://giphy.com/embed/NrtarMHJrLU4sRO5mG" width="{Math.min(w, 600)}" height="{0.6 * Math.min(w, 600)}"
+						style="display:block; margin-top: 20px;" frameBorder="0" class="giphy-embed" allowFullScreen>
+					</iframe> 
+				</HowItWorksStep>
 
-			<HowItWorksStep
-				title="Step 2"
-				subtitle="Agree on a regular upload schedule with your earliest subscribers"
-				description="For example, you and your subscribers could agree to have pre-uploaded videos every Friday
-				and reactively upload videos and reply to comments as needed until the deadline on Sunday."
-			>
-		
-			</HowItWorksStep>
+				<HowItWorksStep
+					title="Step 2"
+					subtitle="Agree on a regular upload schedule with your earliest subscribers"
+					description="For example, you and your subscribers could agree to have pre-uploaded videos every Friday
+					and reactively upload videos and reply to comments as needed until the deadline on Sunday."
+				>
+			
+				</HowItWorksStep>
 
-			<HowItWorksStep
-				title="Step 3"
-				subtitle="Adjust as you get more students"
-				description="
-				Different students have different needs, so it can be challenging to ensure every student gets what they need.
-				But it could also be easy, with a little experimentation. For example, their common concerns about a pset problem, or a fundamental concept 
-				is often addressable with a recorded explanation. 
+				<HowItWorksStep
+					title="Step 3"
+					subtitle="Adjust as you get more students"
+					description="
+					Different students have different needs, so it can be challenging to ensure every student gets what they need.
+					But it could also be easy, with a little experimentation. For example, their common concerns about a pset problem, or a fundamental concept 
+					is often addressable with a recorded explanation. 
 
-				You don't need 1 million viewers to earn side-income - instead, just an engaged community of 5 - 20 subscribers paying affordable prices. 
-				"
-			>
-			</HowItWorksStep>
-		</div>
-	{/if}
+					You don't need 1 million viewers to earn side-income - instead, just an engaged community of 5 - 20 subscribers paying affordable prices. 
+					"
+				>
+				</HowItWorksStep>
+			</div>
+		{/if}
 	</TopNavbar>
 
 <script>	
-	import ReusableIncomeCalculator from '$lib/ReusableIncomeCalculator.svelte'
-	import TopBannerWarnExperimental from '$lib/TopBannerWarnExperimental.svelte'
-	import ImageGallery from '../lib/ImageGallery.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
 	import HowItWorksStep from '$lib/HowItWorksStep.svelte';
 	import Button, { Label } from '@smui/button';
 	import { goto } from '$app/navigation'
-	import { user } from '../store.js'
-	import TabBar from '@smui/tab-bar';
-	import Tab, { Icon } from '@smui/tab';
 	import { onMount, tick, onDestroy } from 'svelte'
-	import { page } from '$app/stores'
-	import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
 	import { mixpanelLibrary } from '/src/mixpanel.js'
 	import TopNavbar from '$lib/TopNavbar.svelte'
+	import HomePageForLearner from '$lib/HomePageForLearner.svelte'
+	import HomePageForTeacher from '$lib/HomePageForTeacher.svelte'
+
+	let activeTabName = 'Learn'
+	let w
 
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
 	})
 
-	let activeTabName = 'Learn'
-
-	// RANDOMLY CHOOSE DEMO VIDEOS
-	const exemplarVideos = [
-		{ titleForDebugging: 'Free body diagrams' ,
-			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/eSScStbUyFOtWZPaSWvu',
-			creatorName: 'Noam Buckman',
-			className: 'Mechanics of Materials',
-			classID: 'qfWJFR2xTm9vYOJFXYfJ'
-		},
-		{ titleForDebugging: 'Where should you make your cuts along the bar?' ,
-			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/js7wFnC1YTPND10cNdiZ',
-			creatorName: 'Noam Buckman',
-			className: 'Mechanics of Materials',
-			classID: 'qfWJFR2xTm9vYOJFXYfJ'
-		},
-		{ titleForDebugging: 'Keeping the left or right side of the bar for a FBD?',
-			dbPath: 'classes/qfWJFR2xTm9vYOJFXYfJ/blackboards/0KBOPYgWUbK3VZTGyuUi',
-			creatorName: 'Noam Buckman',
-			className: 'Mechanics of Materials',
-			classID: 'qfWJFR2xTm9vYOJFXYfJ'
-		},
-		{ titleForDebugging: 'HW3 Problem 8' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/pKRiHHADBzNgXp1nxJLB',
-			creatorName: 'Ben Shimabukuro',
-			className: 'Linear Algebra',
-			classID: 'lvzQqyZIV1wjwYnRV9hn'
-		},
-		{ titleForDebugging: 'Eigenmatrices' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/5uM4TNDPOwmicFKZBsO7',
-			creatorName: 'Ben Shimabukuro',
-			className: 'Linear Algebra',
-			classID: 'lvzQqyZIV1wjwYnRV9hn'
-		},
-		{
-			titleForDebugging: 'Intuition behind why eignenvalue must be 1 or 0 here',
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp',
-			creatorName: 'Ben Shimabukuro',
-			className: 'Linear Algebra',
-			classID: 'lvzQqyZIV1wjwYnRV9hn'
-		},
-		{ titleForDebugging: 'Theory of change of basis',
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW',
-			creatorName: 'Ammar Fayad',
-			className: 'Linear Algebra',
-			classID: 'lvzQqyZIV1wjwYnRV9hn'
-		},
-		{ titleForDebugging: 'Application of change of basis ' ,
-			dbPath: 'classes/lvzQqyZIV1wjwYnRV9hn/blackboards/GYpahmE2ULQ2ry34tBDv',
-			creatorName: 'Ammar Fayad',
-			className: 'Linear Algebra',
-			classID: 'lvzQqyZIV1wjwYnRV9hn'
-		},
-		{ titleForDebugging: 'Why is f(x, y) maximized when indifference curve meets the budget constraint?' ,
-			dbPath: 'classes/Mev5x66mSMEvNz3rijym/blackboards/GEdj8PlbdTb3tHj5MqlJ',
-			creatorName: 'Elton Lin',
-			className: 'Microeconomics',
-			classID: 'Mev5x66mSMEvNz3rijym'
-		},
-		{ titleForDebugging: 'Practice Finals: Fall 2018 Problem 11 (Value Iteration)',
-			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/o',
-			creatorName: 'Tony Wang',
-			className: 'Intro to Machine Learning',
-			classID: 'Mev5x66mSMEvNz3rijym'
-		},
-		{ titleForDebugging: 'Step 1 of 2: transforming circular separation to linear separation',
-			dbPath: 'classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW',
-			creatorName: 'Tony Wang',
-			className: 'Intro to Machine Learning',
-			classID: 'Mev5x66mSMEvNz3rijym'
-		},
-		{ titleForDebugging: 'Midterm Review: Disjoint Dimensions (recursion)' ,
-			dbPath: 'classes/USb1mGxeLqufbgbPhSbV/blackboards/K7kZAAhGIhlcYWTjzh4q',
-			creatorName: 'Caleb Noble',
-			className: 'Intro to Algorithms',
-			classID: 'USb1mGxeLqufbgbPhSbV'
-		}
-	]
-
-	function getRandomIntInclusive({ min, max }) {
-		min = Math.ceil(min);
-		max = Math.floor(max);
-		return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-	}
-
-	let randomlyChosenExemplarVideos = null
-	const nums = new Set();
-	while (nums.size < 4) {
-		nums.add(getRandomIntInclusive({ min: 0, max: exemplarVideos.length - 1 }));
-	}
-	const temp = [] 
-	const uniqueIndices = [...nums]
-	for (const uniqueIdx of uniqueIndices) {
-		temp.push(exemplarVideos[uniqueIdx])
-	}
-	randomlyChosenExemplarVideos = temp
-
-	// END OF GENERATING DEMO VIDEOS
-
-	let w
-
-	let tabs = [{ label: 'Learn', icon: 'smart_display'}, { label: 'Teach', icon: 'draw'}]
-	let active = tabs[0]
-	
-	function resumeToMostRecentServer () {
-		goto($user.mostRecentClassAndRoomID, { replaceState: true })
-	}
-
 	function redirectToSignUpPage () {
 		goto('/servers')
-	}
-
-	// TO-DO: maybe just redirect
-	function redirectToExampleClass () {
-		const id = 'Mev5x66mSMEvNz3rijym' // 14.01
-    goto(`/${id}/${id}`, { replaceState: true })
 	}
 </script>
 
 <style lang="scss">
+	strong {
+		color: rgb(30, 30, 30)	
+	}
+
 	.active-bold {
 		font-weight: 600;
 	}
@@ -553,11 +276,11 @@
 }
 
 @media screen and (max-width: 991px) {
-		.image-gallery-container {
-			margin-top: 0% !important;
-			margin-bottom: 8% !important;
-		}
+	.image-gallery-container {
+		margin-top: 0% !important;
+		margin-bottom: 8% !important;
 	}
+}
 
 .webflow-section {
 	padding-top: 8%; 
@@ -764,11 +487,7 @@ li {
 	margin-bottom: 2px;
 }
 
-#make-your-own-video {
-
-}
-
-:global(#smui-app),
+	:global(#smui-app),
   :global(body),
   :global(html) {
     display: block !important;

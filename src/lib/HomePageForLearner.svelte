@@ -1,35 +1,26 @@
 <div class="header-flex" style="border: 0px solid black;">
   <div style="width: max-content;">
-    <p class="header-title" style="line-height: 1; margin-bottom: 36px;">
-      Get it properly explained
+    <p class="header-title" style="margin-bottom: 36px;">
+      Get it properly explained.
     </p>
     <div class="header-subtitle" style="font-size: 20px; line-height: 1.4; font-weight: 500; color: rgb(60, 60, 60);">
       Join group lessons taught by your favorite “Youtube Teachers” to answer your long, unresolved questions — once and for all.
     </div>
   </div>
 
-  <div class="header-subcopy-wrapper" style="margin-top: 32px; margin-left: 0px; border: 0px solid orange;">
-    <Button on:click={redirectToSignUpPage} color="secondary" variant="raised" class="call-to-action-button" 
-      style="	
-        height: 4.2vw; 
-        min-height: 42px;
-        margin-top: 0.85vw; 
-        margin-bottom: 0.8vw; 
-        border-radius: 2.1vw;
-      "
+  <div class="header-subcopy-wrapper">
+    <ReusableRoundButton on:click={redirectToSignUpPage}
+      backgroundColor="#5d0068"
+      textColor="white"
     >
-      <Label style="text-transform: none; 
-        padding-left: 24px; padding-right: 24px; padding-top: 10px; padding-bottom: 10px; font-size: 1.2em; font-weight: 600;
-        display: flex; align-items: center;
-
-      ">
-         Find your class
-
-        <span style="margin-left: 8px; font-size: 32px;" class="material-symbols-outlined">
-          search
-          </span>
-      </Label>
-    </Button>
+      <div style="font-weight: 600; font-size: 18px; padding: 12px 12px;">
+        Find your class
+      </div>
+      
+      <span style="margin-left: 0px; font-size: 32px;" class="material-symbols-outlined">
+        search
+      </span>
+    </ReusableRoundButton>
   </div>
 </div>
 
@@ -51,35 +42,35 @@
       over research & prestige.
 
       Meanwhile, tutoring is expensive, and online courses are just unavailable for advanced subjects.
-      <br>
     </div>
 
     <div style="margin-top: 48px; background-color: black; border-radius: 16px; padding: 16px; color: rgb(160, 160, 160); position: relative;">
-        <strong style="color: white;">Here, you can directly request blackboard explanations from unofficial teachers all over the world.</strong> 
-        This combines the clarity of an in-person explanation with the efficiency of async communication.
-
-      <!-- <br> -->
-
-        By leveraging the power of recorded videos, affordability skyrockets.
-        Can't afford $100/hour sessions and $60K/year tuitions? How about <strong style="color: white;"> $10/month.</strong>
- 
-
-      </div>
+      <strong style="color: white;">
+        Here, you can directly request blackboard explanations from unofficial teachers all over the world.
+      </strong> 
+      This combines the clarity of an in-person explanation with the efficiency of async communication.
+      By leveraging the power of recorded videos, affordability skyrockets.
+      Can't afford $100/hour sessions and $60K/year tuitions? How about 
+      <strong style="color: white;"> $10/month.</strong>
     </div>
+  </div>
 
-    <hr style="margin-top: 80px; color: grey;">
+  <hr style="margin-top: 80px; color: grey;">
     
   <div style="
     margin-top: 80px; 
     display: flex; 
     justify-content: space-between; 
     margin-left: 4%; 
-    margin-right: 4%"
+    margin-right: 4%;
+    flex-wrap: wrap; 
+    row-gap: 48px;
+  "
   >
     <div>
 
-      <div style="display: flex; align-items: center;">
-        <span class="material-symbols-outlined" style="font-size: 3rem; opacity: 1; margin-right: 8px;">
+      <div style="display: flex; align-items: center; width: 100%;">
+        <span class="material-symbols-outlined" style="font-size: 2rem; opacity: 1; margin-right: 8px;">
           travel_explore
         </span>
 
@@ -90,7 +81,7 @@
 
       <div style="margin-top: 12px;"></div>
 
-      <div style="width: 360px; color: rgb(95, 95, 94); font-weight: 500;">
+      <div class="triplet-paragraph">
         In the past, a lot of great explainers don't want to be teachers.
         Under this low-barrier, meritocratic system, you'll find former TAs, previous students,
         working professionals, etc. all kinds of previously undiscovered teaching talent.
@@ -100,7 +91,7 @@
     <div>
 
       <div style="display: flex; align-items: center; ">
-        <span class="material-symbols-outlined" style="font-size: 3rem; opacity: 1; margin-right: 8px;">
+        <span class="material-symbols-outlined" style="font-size: 2rem; opacity: 1; margin-right: 8px;">
           person_raised_hand
         </span>
 
@@ -111,7 +102,7 @@
 
       <div style="margin-top: 12px;"></div>
 
-      <div style="width: 360px; color: rgb(95, 95, 94); font-weight: 500;">
+      <div class="triplet-paragraph">
         If in rare cases that the explanation library and comment follow-ups aren't enough to resolve your question
         - you can still schedule a live-one-on-one with your teacher.
       </div>
@@ -119,7 +110,7 @@
 
     <div>
       <div style="display: flex; align-items: center;">
-        <span class="material-symbols-outlined" style="font-size: 3rem; margin-right: 10px;">
+        <span class="material-symbols-outlined" style="font-size: 2rem; margin-right: 10px;">
           diversity_1
         </span>
 
@@ -129,7 +120,8 @@
       </div>
 
       <div style="margin-top: 12px;"></div>
-      <div style="width: 360px; color: rgb(95, 95, 94); font-weight: 500;">
+
+      <div class="triplet-paragraph">
         Surround yourself with other active learners in the server, while still being able to 
         go at your most efficient pace at a flexible schedule towards your own goal.
       </div>
@@ -140,6 +132,7 @@
 <script>
   import ImageGallery from '$lib/ImageGallery.svelte'
   import Button, { Label } from '@smui/button'
+  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import { goto } from '$app/navigation'
 
   // RANDOMLY CHOOSE DEMO VIDEOS
@@ -245,6 +238,13 @@
 
 <style>
   strong {
-		color: rgb(30, 30, 30)	
+		color: rgb(30, 30, 30);
 	}
+
+  .triplet-paragraph {
+    width: 100%;
+    max-width: 360px; 
+    color: rgb(95, 95, 94); 
+    font-weight: 500;
+  }
 </style>

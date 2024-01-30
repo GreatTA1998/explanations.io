@@ -33,8 +33,8 @@
             </div>
           {/if}
         {:else}
-          <span class="material-symbols-outlined" style="font-size: 32px; color: hsl(0,0%,0%, 0.80);">
-            globe
+          <span class="material-symbols-outlined" style="font-size: 32px; color: black; padding-left: 1px; box-shadow: 0 0 5px green; border-radius: 20px;">
+            globe_asia
           </span>
         {/if}
       </div>

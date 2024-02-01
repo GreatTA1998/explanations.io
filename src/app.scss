@@ -43,6 +43,12 @@
 	}
 }
 
+// tab component css 
+.active-underline-indicator {
+	border-bottom: 2px solid #F7C686;
+}
+// end of tab component css
+
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing  */
 audio::-internal-media-controls-download-button {
 	display:none;

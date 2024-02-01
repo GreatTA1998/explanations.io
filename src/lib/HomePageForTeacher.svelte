@@ -80,7 +80,7 @@
         and the students, out of interest or not, has to follow it. 
 
         Here, you don't have to talk to a wall. Learners here are willing to pay you to 
-        ask questions, keeping it refreshing and keeping it a two-way street.
+        ask questions, keeping it a vibrant two-way street.
       </div>
     </div>
     

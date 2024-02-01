@@ -69,10 +69,6 @@
 
 		background-color: transparent;
 	}
-		
-	.active-underline-indicator {
-		border-bottom: 2px solid #F7C686;
-	}
 
 	.webflow-h1 {
 		font-size: 4rem;

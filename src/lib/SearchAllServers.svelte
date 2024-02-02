@@ -142,7 +142,7 @@
 
   let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
-  let filterTags = ['Teachers', 'Videos', 'Prepaid learners'] // 'Subscribers'
+  let filterTags = ['Teachers', 'Videos', 'Prepaid learners', 'Subscribers'] 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
 
@@ -267,23 +267,14 @@
           }
         })
         return sortedByPresubs
-      case 'Featured': 
+      case 'Subscribers': 
         const copy4 = [...subjectServers]
-
-        // const copy44 = copy4.filter(server => { 
-        //   return (server.numOfUnresolvedQuestions + server.numOfVideos + server.numOfPresubs + server.numOfTeachers) && server.numOfVideos
-        // })
-        copy4.sort((a, b) => {
-          if (!!a.isFeatured !== !!b.isFeatured) {
-            return !!b.isFeatured - !!a.isFeatured
+        copy4.sort((s1, s2) => {
+          if (!!s1.isYoutubeClass !== !!s2.isYoutubeClass) {
+            return !!s2.isYoutubeClass - !!s1.isYoutubeClass
           }
-
-          else if (a.name === 'Linear Algebra') {
-            return -1;
-          }
-
           else {
-            return a.numOfTeachers - b.numOfTeachers
+            return (s2.numOfSubscribers || 0) - (s1.numOfSubscribers || 0)
           }
         })
         return copy4

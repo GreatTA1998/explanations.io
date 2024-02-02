@@ -44,6 +44,14 @@
               />
 
               <div style="margin-bottom: 12px;"></div>
+
+              <div style='width: 280px;'>
+                <UXFormField 
+                  fieldLabel="(OPTIONAL) Minimum group size"
+                  value={memberDoc.minGroupSize || 1}
+                  on:input={(e) => updateMinGroupSize({ newVal: e.target.value })}                
+                />
+              </div>
             {/if}
           </div>
 
@@ -145,6 +153,12 @@
   function updateMemberAsTeacher () {
     updateFirestoreDoc(membersPath + $user.uid, {
       isTeacher: true
+    })
+  }
+
+  function updateMinGroupSize ({ newVal }) {
+    updateFirestoreDoc(membersPath + $user.uid, {
+      minGroupSize: newVal
     })
   }
 

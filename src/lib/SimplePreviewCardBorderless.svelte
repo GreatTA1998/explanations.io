@@ -43,7 +43,7 @@
 
     <div style="margin-top: 12px;"></div>
 
-    <div class="two-lines-maximum" style="color: rgb(80, 80, 80); font-size: 16px; height: fit-content; max-height: 42px; font-weight: 400; opacity: 0.96;">
+    <div class="two-lines-maximum" style="color: rgb(80, 80, 80); font-size: 16px; height: 40px; max-height: 42px; font-weight: 400; opacity: 0.96;">
       {#if serverObj.description}
         {serverObj.description}
       {:else if serverObj.name === 'Microeconomics'}
@@ -61,7 +61,6 @@
       <div style="display: flex; align-items: center; justify-content: space-between; font-size: 16px; opacity: 1.0; font-weight: 500; 
         padding-left: -12px;"
       >
-
         <div style="display: flex; align-items: center;" class:teacher-purple={serverObj.numOfTeachers > 0}>
           <!-- brush -->
           <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.45rem;">

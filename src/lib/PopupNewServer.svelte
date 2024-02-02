@@ -41,7 +41,7 @@
           <UXFormField
             value={serverGoalDescription}
             on:input={(e) => serverGoalDescription = e.target.value}
-            fieldLabel="What is the goal of this server?"
+            fieldLabel="(OPTIONAL) Server description"
             placeholder=""
           />
         </div>

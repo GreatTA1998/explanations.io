@@ -170,17 +170,17 @@
           on:click={doSubscriberSignUp}
           backgroundColor="#5d0068" 
           textColor="white"
-          isDisabled={!!!$user.uid || !memberDoc || (!chosenTeacherUID && !memberDoc.reasonForLearning)}
+          isDisabled={!!!$user.uid || !memberDoc || (!chosenTeacherUID && !quickfix)}
         >
           Confirm sign-up
         </ReusableRoundButton>
 
       {:else if activeTabName === 'new'}
-        <ReusableRoundButton 
+        <ReusableRoundButton  
           on:click={doPrepaidLearnerSignUp}
           backgroundColor="#5d0068" 
           textColor="white"
-          isDisabled={!!!$user.uid || !memberDoc || !memberDoc.reasonForLearning}
+          isDisabled={!!!$user.uid || !memberDoc || !quickfix}
         >
           Confirm sign-up
         </ReusableRoundButton>
@@ -209,6 +209,7 @@
   let chosenTeacherUID = currentTeacherUID
 
   let activeTabName = 'old'
+  let quickfix = ''
   
   $: if (isPopupOpen) {
     handleMemberDocLogic($user)
@@ -268,6 +269,7 @@
   }
   
   async function updateTeacherBio ({ newVal }) {
+    quickfix = newVal
     updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
       reasonForLearning: newVal
     })
@@ -284,7 +286,7 @@
     catch (error) {
       console.log('error =', error)
       const memberDocSchema = getMemberDocSchema({ userDoc })
-      setFirestoreDoc(
+      await setFirestoreDoc(
         membersPath + userDoc.uid,
         memberDocSchema
       )

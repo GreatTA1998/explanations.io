@@ -106,8 +106,8 @@
             </li>
             
             <div style="font-size: 14px; margin-bottom: 8px;">
-              You'll have to enter your email address once more - apologies.
-              explanations.app covers refunds, anytime, for any reason, via Stripe. 
+              Payments are handled by Stripe. 
+              To refund, simply email elton@explanations.app
             </div>
 
               <a target="_blank" href="https://buy.stripe.com/7sI6sbaKBc5y5uUbII"
@@ -142,8 +142,8 @@
           </li>
           
           <div style="font-size: 14px; margin-bottom: 8px;">
-            You'll have to enter your email address once more - apologies.
-            explanations.app covers refunds, anytime, for any reason, via Stripe. 
+            Payments are handled by Stripe. 
+            To refund, simply email elton@explanations.app
           </div>
             <a target="_blank" href="https://buy.stripe.com/7sI6sbaKBc5y5uUbII"
               style="text-decoration: none;"
@@ -170,7 +170,7 @@
           on:click={doSubscriberSignUp}
           backgroundColor="#5d0068" 
           textColor="white"
-          isDisabled={!!!$user.uid || !memberDoc || (!chosenTeacherUID && !quickfix)}
+          isDisabled={!!!$user.uid || !memberDoc || !chosenTeacherUID || !quickfix || memberDoc.subscribedTeacherUID}
         >
           Confirm sign-up
         </ReusableRoundButton>
@@ -180,7 +180,7 @@
           on:click={doPrepaidLearnerSignUp}
           backgroundColor="#5d0068" 
           textColor="white"
-          isDisabled={!!!$user.uid || !memberDoc || !quickfix}
+          isDisabled={!!!$user.uid || !memberDoc || !quickfix || memberDoc.isLearner}
         >
           Confirm sign-up
         </ReusableRoundButton>
@@ -213,6 +213,10 @@
   
   $: if (isPopupOpen) {
     handleMemberDocLogic($user)
+  }
+
+  $: if (memberDoc) {
+    quickfix = memberDoc.reasonForLearning
   }
 
   const dispatch = createEventDispatcher()

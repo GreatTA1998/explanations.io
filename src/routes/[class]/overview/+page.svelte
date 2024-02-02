@@ -91,10 +91,10 @@
           Most watched explanation
         </div>
         <div style="font-size: 24px; font-weight: 500; width: 100%; color: white" class="my-truncated-text">
-          {mostWatchedExplanations[currentlyWatchingIdx].title || mostWatchedExplanations[currentlyWatchingIdx].description}
+          {mostWatchedExplanations[currentlyWatchingIdx].title || mostWatchedExplanations[currentlyWatchingIdx].description || ''}
         </div>
         <div style="margin-top: 24px; font-size: 14px; width: 100%; font-weight: 300;" class="my-truncated-paragraph">
-          {mostWatchedExplanations[currentlyWatchingIdx].description}
+          {mostWatchedExplanations[currentlyWatchingIdx].description || ''}
         </div>
         <!-- Statistics -->
         <div style="margin-top: 24px; font-size: 16px; font-style: underline">

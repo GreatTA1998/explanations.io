@@ -256,14 +256,14 @@
         })
         return copy6
 
-      case 'Prepaid':
+      case 'Prepaid learners':
         const sortedByPresubs = [...subjectServers]
         sortedByPresubs.sort((s1, s2) => {
           if (!!s1.isYoutubeClass !== !!s2.isYoutubeClass) {
             return !!s2.isYoutubeClass - !!s1.isYoutubeClass
           }
           else {
-            return (s2.numOfPrepaidLearners - s1.numOfPrepaidLearners)
+            return (s2.numOfPrepaidLearners || 0) - (s1.numOfPrepaidLearners || 0)
           }
         })
         return sortedByPresubs

@@ -200,7 +200,7 @@
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
   import { debounce } from '/src/helpers/utility.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
-  import { arrayUnion } from 'firebase/firestore'
+  import { arrayUnion, increment } from 'firebase/firestore'
 
   export let teacherDocs
   export let classID
@@ -230,7 +230,19 @@
 
   // assumes `chosenTeacherUID` is hydrated because the button is disabled otherwise.
   async function doPrepaidLearnerSignUp () {
-    // 
+    dispatch('confirm-clicked')
+    isPopupOpen = false
+
+    // update learner metadata
+    updateFirestoreDoc(`classes/${classID}/members/${$user.uid}`, {
+      isLearner: true,
+      subscribedTeacherUID: ''
+    })
+
+    // update server metadata
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfPrepaidLearners: increment(1)
+    })
   }
 
   // TO-DO: also update server statistics
@@ -247,6 +259,11 @@
     // update teacher metadata
     updateFirestoreDoc(`classes/${classID}/members/${chosenTeacherUID}`, {
       subscriberUIDs: arrayUnion($user.uid)
+    })
+
+    // update server metadata
+    updateFirestoreDoc(`classes/${classID}`, {
+      numOfSubscribers: increment(1)
     })
   }
   

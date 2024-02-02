@@ -85,7 +85,7 @@
             </span>
           <div style="margin-right: 4px;"></div>
           
-          <div class="footer-data-value">{serverObj.crowdfundAmount || 0} prepaid learners</div>
+          <div class="footer-data-value">{serverObj.numOfPrepaidLearners || 0} prepaid learners</div>
         </div>
         
         <div style="display: flex; align-items: center;">
@@ -93,7 +93,7 @@
             sentiment_very_satisfied
             </span>
           <div style="margin-right: 4px;"></div>
-          <div class="footer-data-value">0 subscribers</div>
+          <div class="footer-data-value">{serverObj.numOfSubscribers || 0} subscribers</div>
         </div>
       </div>
     <!-- END OF FOOTER METADATA FLEXBOX-->

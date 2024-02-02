@@ -105,9 +105,6 @@
   export let canvasWidth
   export let canvasHeight
 
-  console.log('canvasWidth =', canvasWidth)
-  console.log('canvasHeight =', canvasHeight)
-
   export let strokesArray
   export let backgroundImageDownloadURL = ''
   export let recordState = ''

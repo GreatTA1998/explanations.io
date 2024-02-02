@@ -128,7 +128,7 @@
 
           <div style="margin-right: 12px; margin-left: auto; margin-bottom: 20px;">
             {#if teacherDocs}
-              <PopupConfirmLearner {classID} {teacherDocs} let:setIsPopupOpen={setIsPopupOpen}>
+              <PopupConfirmLearner {classID} {teacherDocs} {currentTeacherUID} let:setIsPopupOpen={setIsPopupOpen}>
                 <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
                   <span class="material-symbols-outlined" style="font-size: 26px;">
                     person_raised_hand
@@ -147,26 +147,29 @@
         <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
           {#each learnerDocs as learnerDoc}
             <div style="display: flex; align-items: center;">
-              <span class="material-symbols-outlined" style="font-size: 54px; color: #9A9A9A; margin-top: 0px;">
+              <span class="material-symbols-outlined" style="font-size: 36px; margin-top: 0px;">
                 person_raised_hand
               </span>
 
               <div style="margin-right: 12px;"></div>
 
-              <div>
-                <div style="color: #7A7A7A;">
-                  {learnerDoc.name}
+              <div style="width: 100%;">
+                <div style="display: flex; align-items: center;">
+                  <div style="color: rgb(60, 60, 60);">
+                    {learnerDoc.name.split(" ")[0]}
+                  </div>
+
+                  <div style="margin-right: 0px; margin-left: auto; font-size: 14px; color: green;">
+                    {#if learnerDoc.subscribedTeacherUID}
+                      <div>Subscribed for 1 month</div>
+                    {:else}
+                      <div style="margin-right: 0px; margin-left: auto; font-size: 14px; color: green;">Prepaid learner</div>
+                    {/if}
+                  </div>
                 </div>
 
-                <div style="max-width: 320px;">
-                  {#if learnerDoc.presubscribeAmount}
-                    ${learnerDoc.presubscribeAmount}
-                  {:else if learnerDoc.reasonForLearning}
-                    {learnerDoc.reasonForLearning}
-                  {:else if learnerDoc.crowdfundAmount}
-                    <b>{learnerDoc.crowdfundAmount}</b>
-                    <div>{learnerDoc.reasonForCrowdfunding}</div>
-                  {/if}
+                <div style="max-width: 360px; margin-top: 12px;">
+                  "{learnerDoc.reasonForLearning}"
                 </div>
               </div>
             </div>

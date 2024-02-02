@@ -25,12 +25,13 @@
       </div>
     </div>
 
-    <div style="margin-top: 16px; margin-bottom; 4px; position: relative; background-color: lightgreen; height: 4px; width: 100%; border-radius: 4px;">
-      <div style="position: absolute; background-color: green; width: {25}%; height: 4px; border-radius: 4px;"></div>
+    <div style="margin-top: 16px; margin-bottom; 4px; position: relative; background-color: #b7d0b7; height: 4px; width: 100%; border-radius: 4px;">
+      <div style="position: absolute; background-color: green; width: {(numJoined / numNeeded) * 100}%; height: 4px; border-radius: 4px;"></div>
     </div>  
 
-    <li style="font-size: 12px; color: darkgreen; font-weight: 500; margin-top: 4px; margin-right: 0px; margin-left: auto;">
-      1 learner joined, 3 more to start
+    <li style="font-size: 12px; color: darkgreen; font-weight: 400; margin-top: 4px; margin-right: 0px; margin-left: auto;">
+      {numJoined} learner subscribed, 
+      {numNeeded} needed to start
     </li>
 
     <div style="display: flex; justify-content: space-between; margin-top: 16px; align-items: center;">
@@ -75,6 +76,9 @@
   export let helperDoc
   export let currentTeacherUID
   export let classID
+
+  $: numJoined = helperDoc.subscriberUIDs ? helperDoc.subscriberUIDs.length : 0
+  $: numNeeded = helperDoc.minGroupSize ? helperDoc.minGroupSize : 1
 </script>
 
 <style lang="scss">

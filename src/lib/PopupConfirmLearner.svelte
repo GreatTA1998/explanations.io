@@ -23,10 +23,12 @@
         </div>
       {/if}
 
-      <hr style="margin-top: 16px; margin-bottom: 16px; height: 1px;
-                color: rgb(220, 220, 220);
-                background-color: rgb(220, 220, 220);
-                border: none;"
+      <hr style="
+        margin-top: 16px; margin-bottom: 16px; height: 1px;
+        color: rgb(220, 220, 220);
+        background-color: rgb(220, 220, 220);
+        border: none;
+      "
       >
 
       <div style="margin-left: 24px;margin-bottom: 12px; display: flex; gap: 12px; align-items: center; justify-content: space-between; color: black; width: 400px; box-sizing: border-box;">
@@ -67,13 +69,16 @@
         {#if activeTabName === 'old'}
           <ol>
             <li>
-              Choose a teacher to subscribe to
+              Choose a teacher to subscribe to:
             </li>
             
-            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
               {#each teacherDocs as teacherDoc}
-                <div style="cursor: pointer; border-radius: 16px; padding: 6px 16px; border: 2px solid black; width: fit-content;">
-                  {teacherDoc.name}
+                <div on:click={() => chosenTeacherUID = teacherDoc.uid} 
+                  class:highlighted-chip={teacherDoc.uid === chosenTeacherUID}
+                  style="cursor: pointer; border-radius: 16px; padding: 6px 16px; border: 2px solid black; width: fit-content;"
+                >
+                  {teacherDoc.name.split(" ")[0]}
                 </div>
               {/each}
             </div>
@@ -81,15 +86,19 @@
             <div style="margin-bottom: 36px;"></div>
   
             <li>
-              + Post your first question 
+              Tell them what you're looking for
             </li>
             
-            <div style="font-size: 14px;">
-              The button is near the top left. 
-              Great if you have a question that's been bothering you for a long time,
-              that you found no compelling explanation anywhere. 
-            </div>
-  
+            {#if memberDoc}
+              <UXFormTextArea
+                value={memberDoc.reasonForLearning}
+                on:input={(e) => debouncedUpdateBio({ newVal: e.detail })}
+                fieldLabel="What kind of explanations are you looking for?"
+                placeholder="I have some questions that's been bothering me for a long time,
+                that I found no compelling explanation anywhere. "
+              />
+            {/if}
+
             <div style="margin-top: 36px"></div> 
             
             <li>
@@ -97,9 +106,9 @@
             </li>
             
             <div style="font-size: 14px; margin-bottom: 8px;">
+              You'll have to enter your email address once more - apologies.
               explanations.app covers refunds, anytime, for any reason, via Stripe. 
             </div>
-
 
               <a target="_blank" href="https://buy.stripe.com/7sI6sbaKBc5y5uUbII"
                 style="text-decoration: none;"
@@ -128,17 +137,14 @@
             {/if}
 
             <div style="margin-bottom: 24px;"></div>
-
-              
           <li>
             Prepay $10
           </li>
           
           <div style="font-size: 14px; margin-bottom: 8px;">
+            You'll have to enter your email address once more - apologies.
             explanations.app covers refunds, anytime, for any reason, via Stripe. 
           </div>
-
-
             <a target="_blank" href="https://buy.stripe.com/7sI6sbaKBc5y5uUbII"
               style="text-decoration: none;"
             > 
@@ -148,8 +154,6 @@
                 Go to payment
               </Button>
             </a>
-
-
 
             <div style="margin-bottom: 24px;"></div>
           </ol>
@@ -161,14 +165,26 @@
     </div>
 
     <div slot="popup-buttons" style="display: flex; justify-content: flex-end">
-      <ReusableRoundButton 
-        on:click={doLearnerSignUp}
-        backgroundColor="#5d0068" 
-        textColor="white"
-        isDisabled={!!!$user.uid || !memberDoc}
-      >
-        Confirm sign-up
-      </ReusableRoundButton>
+      {#if activeTabName === 'old'}
+        <ReusableRoundButton 
+          on:click={doSubscriberSignUp}
+          backgroundColor="#5d0068" 
+          textColor="white"
+          isDisabled={!!!$user.uid || !memberDoc || (!chosenTeacherUID && !memberDoc.reasonForLearning)}
+        >
+          Confirm sign-up
+        </ReusableRoundButton>
+
+      {:else if activeTabName === 'new'}
+        <ReusableRoundButton 
+          on:click={doPrepaidLearnerSignUp}
+          backgroundColor="#5d0068" 
+          textColor="white"
+          isDisabled={!!!$user.uid || !memberDoc || !memberDoc.reasonForLearning}
+        >
+          Confirm sign-up
+        </ReusableRoundButton>
+      {/if}
     </div>
   </BasePopup>
 {/if}
@@ -184,9 +200,13 @@
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
   import { debounce } from '/src/helpers/utility.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
+  import { arrayUnion } from 'firebase/firestore'
 
   export let teacherDocs
   export let classID
+  export let currentTeacherUID // i.e. the teacher selected in the Server Page
+
+  let chosenTeacherUID = currentTeacherUID
 
   let activeTabName = 'old'
   
@@ -208,11 +228,25 @@
     1000
   ) 
 
-  async function doLearnerSignUp () {
+  // assumes `chosenTeacherUID` is hydrated because the button is disabled otherwise.
+  async function doPrepaidLearnerSignUp () {
+    // 
+  }
+
+  // TO-DO: also update server statistics
+  async function doSubscriberSignUp () {
     dispatch('confirm-clicked')
     isPopupOpen = false
+
+    // update learner metadata
     updateFirestoreDoc(`classes/${classID}/members/${$user.uid}`, {
-      isLearner: true
+      isLearner: true,
+      subscribedTeacherUID: chosenTeacherUID
+    })
+    
+    // update teacher metadata
+    updateFirestoreDoc(`classes/${classID}/members/${chosenTeacherUID}`, {
+      subscriberUIDs: arrayUnion($user.uid)
     })
   }
   
@@ -244,6 +278,11 @@
 </script>
 
 <style>
+  .highlighted-chip {
+    background-color: black; 
+    color: white;
+  }
+
   .tab-item-container {
     cursor: pointer; text-align: center; height: 72px; box-sizing: border-box; padding: 8px 6px 8px 6px;
   }

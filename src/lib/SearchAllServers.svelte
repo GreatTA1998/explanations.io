@@ -142,7 +142,7 @@
 
   let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
-  let filterTags = ['Teachers', 'Videos', 'Prepaid learners', 'Subscribers']
+  let filterTags = ['Teachers', 'Videos', 'Prepaid learners'] // 'Subscribers'
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
 
@@ -224,7 +224,10 @@
       case 'Videos': 
         const sortedByVideos = [...subjectServers]
         sortedByVideos.sort((s1, s2) => {
-          if (s1.numOfVideos !== s2.numOfVideos) {
+          if (!!s1.isYoutubeClass !== !!s2.isYoutubeClass) {
+            return !!s2.isYoutubeClass - !!s1.isYoutubeClass
+          }
+          else {
             return s2.numOfVideos - s1.numOfVideos
           }
         })
@@ -244,25 +247,23 @@
         const copy6 = [...subjectServers]
         // const copy6 = subjectServers.filter(server => server.numOfTeachers > 0 && (server.numOfVideos === 0 || server.numOfPresubs === 0))
         copy6.sort((a, b) => {
-          // if (!!a.isFeatured !== !!b.isFeatured) {
-          //   return !!a.isFeatured - !!b.isFeatured
-          // }
-          return b.numOfTeachers - a.numOfTeachers
+          if (!!a.isYoutubeClass !== !!b.isYoutubeClass) {
+            return !!b.isYoutubeClass - !!a.isYoutubeClass
+          } 
+          else {
+            return (b.numOfTeachers || 0) - (a.numOfTeachers || 0)
+          }
         })
         return copy6
 
       case 'Prepaid':
         const sortedByPresubs = [...subjectServers]
         sortedByPresubs.sort((s1, s2) => {
-          const val1 = s1.crowdfundAmount
-          const val2 = s2.crowdfundAmount
-          if (val1 !== val2) {
-            return val2 - val1
-          } 
-          else if (s1.numOfUnresolvedQuestions !== s2.numOfUnresolvedQuestions) {
-            return s2.numOfUnresolvedQuestions - s1.numOfUnresolvedQuestions
-          } else {
-            return 0
+          if (!!s1.isYoutubeClass !== !!s2.isYoutubeClass) {
+            return !!s2.isYoutubeClass - !!s1.isYoutubeClass
+          }
+          else {
+            return (s2.numOfPrepaidLearners - s1.numOfPrepaidLearners)
           }
         })
         return sortedByPresubs

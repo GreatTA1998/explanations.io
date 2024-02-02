@@ -437,6 +437,11 @@
         for (const doc of snap.docs) {
           temp.push({ id: doc.id, ...doc.data() })
         }
+        temp.sort((a, b) => {
+          let a1 = (Number(a.minutesViewed) || 0)
+          let b1 = (Number(b.minutesViewed) || 0)
+          return b1 - a1
+        })
         teacherDocs = temp
         resolve()
       })

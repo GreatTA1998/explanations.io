@@ -315,7 +315,6 @@
 
     // NOTE: this does not trigger!
     if (m === n) { 
-      return 
 
       // do nothing: this blackboard updated its parent, and the change propagated back to itself
       if (strokesArray[n-1] && !strokesArray[n-1].isErasing) {

@@ -40,6 +40,7 @@
                 height: {carouselItemPreviewWidth * 3/4 + 17}px; 
                 overflow: hidden; 
                 margin-right: {i <= 2 ? `${0.02 * availablePageContentWidth}px` : ''};
+                cursor: pointer;
               "
             >
               <div class="my-truncated-text" style="font-size: 14px; margin-bottom: 4px; z-index: 20; width: 100%;">
@@ -83,7 +84,8 @@
         padding: 16px; 
         background-color: hsl(0,0%,0%, 0.6); 
         color: white; 
-        border-radius: 12px;"
+        border-radius: 12px;
+        "
       >
         <div style="color: rgb(200, 200, 200); font-weight: 400; font-size: 14px;">
           Most watched explanation
@@ -110,31 +112,11 @@
 <!-- Crowdfund section & two-sided marketplace section 
   position: relative prevents it from getting covered by the orange background (which would take priority because it's relative due to its `bind:clientWidth` directive)
 -->
-<div style="position: relative; padding-left: 4%; padding-right: 4%; padding-top: 48px;">
-  {#if classDoc}
-    <div style="display: flex; align-items: center; width: 100%; justify-content: space-around; margin-bottom: 24px;">
-      <img src="https://cdn-icons-png.flaticon.com/512/2246/2246969.png" style="width: 80px">
-
-      <div style="margin-left: 24px; width: 100%; border: 0px solid purple;">
-        <div style="display: flex; align-items: center;">
-          <div style="font-size: 24px; color: #036E15; font-weight: 500;">
-            ${classDoc.crowdfundAmount || 0} raised 
-          </div>
-        </div>
-
-        <div style="position: relative; height: 8px; width: 100%; background-color: #7AEB8D; margin-top: 12px; opacity: 0.4;">
-          <div style="height: 8px; width: {(classDoc.crowdfundAmount || 0) * 12}px; background-color: #036E15; position: absolute;">
-      
-          </div>
-        </div>
-      </div>
-
-    </div>
-  {/if}
+<div style="position: relative; padding-left: 4%; padding-right: 4%; padding-top: 24px;">
 
   <div style="display: flex; width: calc(100% - 400px - 80px + 480px); padding-top: 24px; padding-bottom: 24px;">    
     {#if learnerDocs}
-      <div style="min-width: 400px; flex-grow: 1; height: 400px;">
+      <div style="flex: 2 0 auto; height: 400px;">
         <div style="display: flex; align-items: flex-end;">
           <div style="font-size: 80px; min-width: 50px;">
             {tweenedPresubsCount}
@@ -145,16 +127,18 @@
           </div>
 
           <div style="margin-right: 12px; margin-left: auto; margin-bottom: 20px;">
-            <PopupConfirmLearner {classID} let:setIsPopupOpen={setIsPopupOpen}>
-              <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
-                <span class="material-symbols-outlined" style="font-size: 26px;">
-                  school
-                </span>
-                <div style="margin-left: 8px; font-weight: 500;">
-                  Sign up as learner
-                </div>
-              </ReusableRoundButton>
-            </PopupConfirmLearner>
+            {#if teacherDocs}
+              <PopupConfirmLearner {classID} {teacherDocs} {currentTeacherUID} let:setIsPopupOpen={setIsPopupOpen}>
+                <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
+                  <span class="material-symbols-outlined" style="font-size: 26px;">
+                    person_raised_hand
+                  </span>
+                  <div style="margin-left: 8px; font-weight: 500;">
+                    Sign up to learn
+                  </div>
+                </ReusableRoundButton>
+              </PopupConfirmLearner>
+            {/if}
           </div>
         </div>
 
@@ -163,26 +147,29 @@
         <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
           {#each learnerDocs as learnerDoc}
             <div style="display: flex; align-items: center;">
-              <span class="material-symbols-outlined" style="font-size: 54px; color: #9A9A9A; margin-top: 0px;">
-                school
+              <span class="material-symbols-outlined" style="font-size: 36px; margin-top: 0px;">
+                person_raised_hand
               </span>
 
               <div style="margin-right: 12px;"></div>
 
-              <div>
-                <div style="color: #7A7A7A;">
-                  {learnerDoc.name}
+              <div style="width: 100%;">
+                <div style="display: flex; align-items: center;">
+                  <div style="color: rgb(60, 60, 60);">
+                    {learnerDoc.name.split(" ")[0]}
+                  </div>
+
+                  <div style="margin-right: 0px; margin-left: auto; font-size: 14px; color: green;">
+                    {#if learnerDoc.subscribedTeacherUID}
+                      <div>Subscribed for 1 month</div>
+                    {:else}
+                      <div style="margin-right: 0px; margin-left: auto; font-size: 14px; color: green;">Prepaid learner</div>
+                    {/if}
+                  </div>
                 </div>
 
-                <div style="max-width: 320px;">
-                  {#if learnerDoc.presubscribeAmount}
-                    ${learnerDoc.presubscribeAmount}
-                  {:else if learnerDoc.reasonForLearning}
-                    {learnerDoc.reasonForLearning}
-                  {:else if learnerDoc.crowdfundAmount}
-                    <b>{learnerDoc.crowdfundAmount}</b>
-                    <div>{learnerDoc.reasonForCrowdfunding}</div>
-                  {/if}
+                <div style="max-width: 360px; margin-top: 12px;">
+                  "{learnerDoc.reasonForLearning}"
                 </div>
               </div>
             </div>
@@ -197,7 +184,7 @@
     <div style="border-left: 1px solid lightgrey; height: {TeachersListHeight + 240}px; width: 1px; margin-left: {24}px; margin-right: {24-1}px;"></div>
     
     {#if teacherDocs}     
-      <div style="min-width: 400px; flex-grow: 1; height: 400px;">
+      <div style="flex: 2 0 auto; height: 400px;">
         <div style="display: flex; align-items: flex-end;">
           <!-- Need width otherwise digits jump 0 takes less width than 1  -->
           <div style="font-size: 80px; min-width: 50px;" class="figma-inter-font">
@@ -218,7 +205,7 @@
                   stylus_note
                 </span>
                 <div style="margin-left: 8px; font-weight: 500;">
-                  Sign up as teacher
+                  Sign up to teach
                 </div>
               </ReusableRoundButton>
             </PopupConfirmTeacher>
@@ -227,16 +214,15 @@
 
         <div style="margin-bottom: 16px;"></div>
 
-        <div class="people-list" bind:this={TeachersList} bind:clientHeight={TeachersListHeight} style="max-width: 400px;">
+        <div class="people-list" bind:this={TeachersList} bind:clientHeight={TeachersListHeight} style="width: 100%;">
           {#each teacherDocs as teacherDoc}
-            <div style="display: flex; align-items: center;">
-              <PresentationalBeaverPreview 
-                helperDoc={teacherDoc}
-                classID={classID}
-                style="margin-bottom: 8px; margin-right: 20px; width: 280px;"
-              >
-              </PresentationalBeaverPreview>
-            </div>
+            <TeacherInformationCard 
+              on:click={() => showTeacherHighlightVideos(teacherDoc.uid)}
+              helperDoc={teacherDoc}
+              {currentTeacherUID}
+              {classID}
+              style="margin-bottom: 8px; width: 100%;"
+            />
           {/each}
         </div>
       </div>
@@ -260,6 +246,7 @@
   import { roundedToFixed } from '/src/helpers/utility.js'
   import PopupCrowdfund from '$lib/PopupCrowdfund.svelte'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
+  import TeacherInformationCard from '$lib/TeacherInformationCard.svelte'
 
   export let data;
 
@@ -312,6 +299,7 @@
 
   let teacherDocs = null
   let learnerDocs = null
+  let currentTeacherUID = ''
 
   const secondaryActionStringCSS = `
     width: 100%;
@@ -341,6 +329,11 @@
     listenToTeacherDocs()
   })
 
+  function showTeacherHighlightVideos (uid) {
+    fetchMostWatchedExplanations(uid)
+    currentTeacherUID = uid
+  }
+
   function rotateCarousel (i) {
     // quick-fix: don't care about the resultant order, just make sure the clicked item becomes FIRST
     let copy = [...mostWatchedExplanations]
@@ -349,19 +342,15 @@
     mostWatchedExplanations = copy
   }
 
-  async function fetchMostWatchedExplanations () { 
-    // query orderBy('viewMinutes') I assume it's a number
-    // createFirestoreQuery({ 
-    //   collectionPath: `classes/${classID}/blackboards`,
-    //   criteriaTerms: []
-    // })
-    // orderBy `viewMinutes`
-    // limit by 3
+  async function fetchMostWatchedExplanations (creatorUID = "") { 
+    let q = firestoreCollection(`classes/${classID}/blackboards`)
+    q = query(q, orderBy('viewMinutes', 'desc'))
+    q = query(q, limit(4))
+    if (creatorUID) {
+      q = query(q, where('creatorUID', '==', creatorUID))
+    } 
 
-    const q0 = firestoreCollection(`classes/${classID}/blackboards`)
-    const q1 = query(q0, orderBy('viewMinutes', 'desc'))
-    const q2 = query(q1, limit(4))
-    const result = await getFirestoreQuery(q2)
+    const result = await getFirestoreQuery(q)
     mostWatchedExplanations = result
   }
 

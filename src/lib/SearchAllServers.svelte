@@ -98,13 +98,15 @@
     <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
       <!-- Filters on top -->
       <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
-        <div style="font-size: 16px; margin-left: 12px; margin-right: 12px;">
+        <div style="margin-left: 12px; margin-right: 0px; font-size: 12px;">
           Sort by:
         </div>
+        {#each filterTags as filterTag}
+          <div class="sort-by-tag" class:active-tag={currentlySelectedTag === filterTag} on:click={() => currentlySelectedTag = filterTag}>
+            {filterTag}
+          </div>
+        {/each} 
 
-        <div></div>
-
-        <MySelect options={filterTags} on:option-clicked={(e) => {currentlySelectedTag = e.detail.value; console.log(e.detail.option)}}/>
       </div>
 
       <div style="margin-bottom: 24px;">
@@ -140,7 +142,7 @@
 
   let SearchBar
   let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
-  let filterTags = ['Featured', 'Teachers', 'Pre-subscribers', 'Videos', 'Questions']
+  let filterTags = ['Teachers', 'Videos', 'Prepaid learners'] // 'Subscribers'
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
 
@@ -151,7 +153,7 @@
 
   let subjectServers = null
 
-  let currentlySelectedTag = 'Featured'
+  let currentlySelectedTag = 'Teachers'
   let finalFilteredServers = null
   let searchVal = ''
 
@@ -222,7 +224,10 @@
       case 'Videos': 
         const sortedByVideos = [...subjectServers]
         sortedByVideos.sort((s1, s2) => {
-          if (s1.numOfVideos !== s2.numOfVideos) {
+          if (!!s1.isYoutubeClass !== !!s2.isYoutubeClass) {
+            return !!s2.isYoutubeClass - !!s1.isYoutubeClass
+          }
+          else {
             return s2.numOfVideos - s1.numOfVideos
           }
         })
@@ -241,37 +246,24 @@
       case 'Teachers': 
         const copy6 = [...subjectServers]
         // const copy6 = subjectServers.filter(server => server.numOfTeachers > 0 && (server.numOfVideos === 0 || server.numOfPresubs === 0))
-        copy6.sort((s1, s2) => {
-          if (s1.numOfTeachers !== s2.numOfTeachers) {
-            return s2.numOfTeachers - s1.numOfTeachers
-          }
-          else if (s1.isFeatured !== s2.isFeatured) {
-            return (s2.isFeatured || 0) - (s1.isFeatured || 0)
-          }
-          else if (s1.numOfVideos !== s2.numOfVideos) {
-            return s2.numOfVideos - s1.numOfVideos
-          }
-          else if (s1.numOfPresubs !== s2.numOfPresubs) {
-            return s2.numOfPresubs - s1.numOfPresubs
-          }
+        copy6.sort((a, b) => {
+          if (!!a.isYoutubeClass !== !!b.isYoutubeClass) {
+            return !!b.isYoutubeClass - !!a.isYoutubeClass
+          } 
           else {
-            return 0
+            return (b.numOfTeachers || 0) - (a.numOfTeachers || 0)
           }
         })
         return copy6
 
-      case 'Pre-subscribers':
+      case 'Prepaid learners':
         const sortedByPresubs = [...subjectServers]
         sortedByPresubs.sort((s1, s2) => {
-          const val1 = s1.crowdfundAmount
-          const val2 = s2.crowdfundAmount
-          if (val1 !== val2) {
-            return val2 - val1
-          } 
-          else if (s1.numOfUnresolvedQuestions !== s2.numOfUnresolvedQuestions) {
-            return s2.numOfUnresolvedQuestions - s1.numOfUnresolvedQuestions
-          } else {
-            return 0
+          if (!!s1.isYoutubeClass !== !!s2.isYoutubeClass) {
+            return !!s2.isYoutubeClass - !!s1.isYoutubeClass
+          }
+          else {
+            return (s2.numOfPrepaidLearners || 0) - (s1.numOfPrepaidLearners || 0)
           }
         })
         return sortedByPresubs
@@ -281,21 +273,17 @@
         // const copy44 = copy4.filter(server => { 
         //   return (server.numOfUnresolvedQuestions + server.numOfVideos + server.numOfPresubs + server.numOfTeachers) && server.numOfVideos
         // })
-        copy4.sort((s1, s2) => {
-          if (s1.isFeatured !== s2.isFeatured) {
-            return (s2.isFeatured) - (s1.isFeatured)
+        copy4.sort((a, b) => {
+          if (!!a.isFeatured !== !!b.isFeatured) {
+            return !!b.isFeatured - !!a.isFeatured
           }
-          if (s1.numOfTeachers !== s2.numOfTeachers) {
-            return s2.numOfTeachers - s1.numOfTeachers
+
+          else if (a.name === 'Linear Algebra') {
+            return -1;
           }
-          else if (s1.numOfVideos !== s2.numOfVideos) {
-            return s2.numOfVideos - s1.numOfVideos
-          }
-          else if (s1.numOfPresubs !== s2.numOfPresubs) {
-            return s2.numOfPresubs - s1.numOfPresubs
-          }
+
           else {
-            return 0
+            return a.numOfTeachers - b.numOfTeachers
           }
         })
         return copy4
@@ -323,23 +311,29 @@
     margin-right: 8px;
   }
 
-  .filter-tag {
+  .sort-by-tag {
     /* background-color: red; 
     color: white;  */
-    padding: 8px; 
+    padding: 6px 12px;
     /* padding-left: 20px;
     padding-right: 20px; */
-    border-radius: 36px;
+    border-radius: 12px;
     margin-left: 12px;
     /* border: 2px solid orange; */
-    border: 1px solid grey;
-    font-weight: 400;
+    /* border: 2px solid rgb(189, 189, 189); */
     color: hsl(0,0%,0%, 0.80);
-    font-size: 16px;
+    background-color: rgb(218, 218, 218);
+    font-size: 12px;
   }
 
-  .filter-tag:hover {
+  .sort-by-tag:hover {
     background-color: rgb(214, 214, 214);
+  }
+
+  .active-tag {
+    background-color: grey; 
+    color: white;
+    font-weight: 500;
   }
 
   /* hsl(0,0%,0%, 0.80) */

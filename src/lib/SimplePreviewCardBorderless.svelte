@@ -10,14 +10,14 @@
   <!-- style:--elevation: 0;  -->
   <div 
     class="overall-container core-shadow"
-    style="position: relative; display: flex; min-width: 700px; width: 60%; max-width: 1000px; border-radius: {8 * 3}px; padding: 12px; overflow: hidden;
+    style="position: relative; display: flex; min-width: 760px; width: 60%; max-width: 1000px; border-radius: {8 * 3}px; padding: 12px; overflow: hidden;
   " 
     on:click={() => goto(`/${serverObj.id}/overview`)}
   >
 
   <div class="server-card">
     <div style="display: flex; position: relative; align-items: center;">
-      <div style="font-size: 24px; font-weight: 700; font-family: 'Inter'">
+      <div style="font-size: 24px; font-weight: 700;">
         {serverObj.name}
       </div>
 
@@ -33,8 +33,8 @@
             </div>
           {/if}
         {:else}
-          <span class="material-symbols-outlined" style="font-size: 32px; color: hsl(0,0%,0%, 0.80);">
-            globe
+          <span class="material-symbols-outlined" style="font-size: 32px; color: black; padding-left: 1px; box-shadow: 0 0 5px green; border-radius: 20px;">
+            globe_asia
           </span>
         {/if}
       </div>
@@ -43,7 +43,7 @@
 
     <div style="margin-top: 12px;"></div>
 
-    <div class="two-lines-maximum" style="color: hsl( 223 calc( 1 *6.7%) 20.6% /1); font-size: 16px; height: fit-content; max-height: 42px; font-weight: 400; opacity: 0.96;">
+    <div class="two-lines-maximum" style="color: rgb(80, 80, 80); font-size: 16px; height: fit-content; max-height: 42px; font-weight: 400; opacity: 0.96;">
       {#if serverObj.description}
         {serverObj.description}
       {:else if serverObj.name === 'Microeconomics'}
@@ -57,21 +57,14 @@
       <div style="margin-top: 24px;"></div>
 
       <!-- position: absolute; top: auto; bottom: 20px; -->
-    <div style="min-width: 360px; width: 100%; max-width: 500px; color: #2f3030; margin-left: -6px;">
+    <div style="min-width: 380px; width: 100%; max-width: 500px; color: rgb(30, 30, 30); margin-left: -6px;">
       <div style="display: flex; align-items: center; justify-content: space-between; font-size: 16px; opacity: 1.0; font-weight: 500; 
         padding-left: -12px;"
       >
-        <div style="display: flex; align-items: center;">
-          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.65rem; ">
-            attach_money
-            </span>
-          <div style="margin-right: -1px;"></div>
-          <div class="footer-data-value">{serverObj.crowdfundAmount || 0} raised</div>
-        </div>
 
         <div style="display: flex; align-items: center;" class:teacher-purple={serverObj.numOfTeachers > 0}>
           <!-- brush -->
-          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.5rem;">
+          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.45rem;">
             draw
           </span>
           <div style="margin-right: 4px;"></div>
@@ -79,21 +72,29 @@
         </div>
 
         <div style="display: flex; align-items: center;" class:video-orange={serverObj.numOfVideos > 0}>
-          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.65rem; ">
+          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.60rem; ">
             smart_display
             </span>
           <div style="margin-right: 4px;"></div>
           <div class="footer-data-value">{serverObj.numOfVideos} videos</div>
         </div>
+
+        <div style="display: flex; align-items: center;">
+          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.5rem; ">
+            wb_twilight
+            </span>
+          <div style="margin-right: 4px;"></div>
+          
+          <div class="footer-data-value">{serverObj.numOfPrepaidLearners || 0} prepaid learners</div>
+        </div>
         
         <div style="display: flex; align-items: center;">
-          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.6rem;">
+          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.5rem;">
             sentiment_very_satisfied
             </span>
           <div style="margin-right: 4px;"></div>
-          <div class="footer-data-value">0 subs</div>
+          <div class="footer-data-value">{serverObj.numOfSubscribers || 0} subscribers</div>
         </div>
-    
       </div>
     <!-- END OF FOOTER METADATA FLEXBOX-->
     </div>
@@ -170,7 +171,7 @@
   }
 
   .footer-data-value {
-    font-size: 16px;
+    font-size: 14px;
     opacity: 0.8;
   }
 

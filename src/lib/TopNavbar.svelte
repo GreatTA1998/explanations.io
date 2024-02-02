@@ -1,7 +1,7 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} style="border-bottom: 1px solid lightgrey;">
-			<Row style="background-color: #f8f9f9; padding-left: 4%; padding-right: 4%;">
+			<Row style="height: 64px; background-color: #f8f9f9; padding-left: 4%; padding-right: 4%;">
 				<div style="padding: 8px 12px 8px 0px; box-sizing: border-box;">
 					<img 
 					on:click={() => goto('/')}
@@ -15,52 +15,48 @@
 				</slot>
 
 				<Section align="end" toolbar style="padding-right: 0;">
-					<!-- href="" target="_blank" -->
-					<a on:click={() => alert("For absolutely anything, call 503 250 3868 or email elton@explanations.app, I can reply immediately unless it's past midnight / before 8 am.")}
-						style="margin-left: 8px; text-decoration-color: transparent;"
-					>
-						<Button
-							class="button-shaped-round"
-							style="font-size: 12px; color: black;"
+					<div class="hide-on-mobile">
+						<a on:click={() => alert("For absolutely anything, call 503 250 3868 or email elton@explanations.app, I can reply immediately unless it's past midnight / before 8 am.")}
+							style="margin-left: 8px; text-decoration-color: transparent;"
 						>
-							<Label>CONTACT</Label>
-							<!-- Phone & email -->
-						</Button>
-					</a>
-
-					<a href="https://eltonlin.substack.com/archive" target="_blank" 
-						style="margin-left: 8px; text-decoration-color: transparent;"
-					>
-						<Button
-							class="button-shaped-round"
-							style="font-size: 12px; color: black;"
-						>
-							<Label>blog</Label>
-		
-						</Button>
-					</a>
-
-					<a href="https://github.com/greatTA1998/explain" target="_blank" 
-						style="margin-left: 20px; text-decoration-color: transparent;"
-					>
-						<div style="width: 38px; height: 38px; border-radius: 19px; background-color: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
-							<img src="/github-logo-dark-mode-no-bg.png"
-							style="width: 54px; height: 54px;"
+							<Button
+								class="button-shaped-round"
+								style="font-size: 12px; color: black;"
 							>
-						</div>
-					</a>
+								<Label>CONTACT</Label>
+								<!-- Phone & email -->
+							</Button>
+						</a>
+
+						<a href="https://eltonlin.substack.com/archive" target="_blank" 
+							style="margin-left: 8px; text-decoration-color: transparent;"
+						>
+							<Button
+								class="button-shaped-round"
+								style="font-size: 12px; color: black;"
+							>
+								<Label>blog</Label>
+							</Button>
+						</a>
+
+						<a href="https://github.com/greatTA1998/explain" target="_blank" 
+							style="margin-left: 20px; text-decoration-color: transparent;"
+						>
+							<div style="width: 38px; height: 38px; border-radius: 19px; background-color: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
+								<img src="/github-logo-dark-mode-no-bg.png"
+								style="width: 54px; height: 54px;"
+								>
+							</div>
+						</a>
+					</div>
 
 					<div style="margin-right: 18px;"></div>
-
 
 					<ReusableSignInButton outlined={false} style="color: black;">
 						<div style="color: black; font-size: 12px;">
 							Log in
 						</div>
-					</ReusableSignInButton>
-
-					<div style=""></div>
-					
+					</ReusableSignInButton>					
 				</Section>
 			</Row>
 		</TopAppBar>
@@ -83,3 +79,15 @@
 
   let topAppBar = null
 </script>
+
+<style>
+	.hide-on-mobile {
+		display: flex;
+	}
+
+	@media only screen and (max-width: 767px) {
+		.hide-on-mobile {
+			display: none;
+		}
+	}
+</style>

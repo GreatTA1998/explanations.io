@@ -28,33 +28,24 @@
       <div style="margin-bottom: 24px;"></div>
 
       <div style="font-size: 16px;" class:greyed-out-section={!!!$user.uid || !memberDoc}>
-  
-          <ol>
-            <li>
-              Setup basic info
-            </li>
+        <ol>
+          <li>
+            Setup basic info
+          </li>
 
+          <div>
+            {#if memberDoc}
+              <div style="margin-bottom: 12px;"></div>
 
-            <div>
-              {#if memberDoc}
-                <div style="margin-bottom: 12px;"></div>
+              <UXFormField 
+                fieldLabel="Bio"
+                value={memberDoc.bio}
+                on:input={(e) => debouncedUpdateBio({ newVal: e.target.value })}                
+              />
 
-                <UXFormField 
-                  fieldLabel="Teaching style & background"
-                  value={memberDoc.bio}
-                  on:input={(e) => debouncedUpdateBio({ newVal: e.target.value })}                
-                />
-
-                <div style="margin-bottom: 12px;"></div>
-                    
-                <UXFormField 
-                  value={memberDoc.venmo}
-                  on:input={(e) => debouncedUpdateTeacherVenmo({ newVal: e.target.value })}
-                  fieldLabel="Payment info (Stripe integration coming soon!)" 
-                  placeholder="e.g. @venmo-username, $cashapp-username"
-                />
-              {/if}
-            </div>
+              <div style="margin-bottom: 12px;"></div>
+            {/if}
+          </div>
 
           <div style="margin-top: 16px;"></div>
 
@@ -75,10 +66,10 @@
           <div style="margin-top: 24px;"></div>
 
           <li>
-            Setup complete!
+            Initial setup complete!
           </li>
           <div style="font-size: 14px;">
-            As time goes on, you can accept paid subscribers, record more explanations, organize your content in folders, reply to follow-up questions in your video comments, edit your profile, etc.
+            As time goes on, you can accept paid subscribers (you'll receive an email to setup payment info), record more explanations, organize your content in folders, reply to follow-up questions in your video comments, edit your profile, etc.
           </div>
         </ol>
       </div>

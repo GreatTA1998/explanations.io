@@ -50,9 +50,9 @@
   <div style="display: flex; align-items: center">
     {#if memberDoc.venmo}
       <div style="width: 300px">
-        <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
+        <!-- <ReusableButton on:click={() => isSubscribePopupOpen = true} color="secondary" style="color: white;">
           Subscribe for $10/month
-        </ReusableButton> 
+        </ReusableButton>  -->
       </div>
 
       {#if isSubscribePopupOpen}

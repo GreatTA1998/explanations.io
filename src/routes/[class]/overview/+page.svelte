@@ -146,16 +146,16 @@
 
         <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
           {#each learnerDocs as learnerDoc}
-            <div style="display: flex; align-items: center;">
-              <span class="material-symbols-outlined" style="font-size: 36px; margin-top: 0px;">
-                person_raised_hand
-              </span>
-
+            <div style="display: flex; align-items: center; margin-bottom: 48px;">
               <div style="margin-right: 12px;"></div>
 
               <div style="width: 100%;">
                 <div style="display: flex; align-items: center;">
-                  <div style="color: rgb(60, 60, 60);">
+                  <span class="material-symbols-outlined" style="font-size: 26px; margin-top: 0px; margin-right: 8px;">
+                    person_raised_hand
+                  </span>
+    
+                  <div style="color: rgb(60, 60, 60); font-size: 20px; font-weight: 500;">
                     {learnerDoc.name.split(" ")[0]}
                   </div>
 

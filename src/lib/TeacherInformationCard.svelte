@@ -22,7 +22,7 @@
       </a>     
     </div>
 
-    <div style="margin-left: auto; margin-top: 12px; margin-right: 2px; color: black; font-size: 12px; max-width: 480px;">
+    <div style="margin-left: auto; margin-top: 12px; margin-right: 2px; color: black; font-size: 1\6px; max-width: 480px;">
       {helperDoc.bio || ''}
     </div>
 

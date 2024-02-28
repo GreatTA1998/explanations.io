@@ -5,6 +5,7 @@
       align-items: center;
       border-radius: 12px;
       width: 100%;
+      max-width: 440px;
       max-height: 360px;
       cursor: pointer;
     "
@@ -19,10 +20,10 @@
       <a style="color: black; font-weight: 500; margin-left: 6px; font-size: 20px;">
         {helperDoc.name.split(' ')[0]}
       </a>     
+    </div>
 
-      <div style="margin-left: auto; margin-right: 2px; color: black; font-size: 14px;">
-        {helperDoc.bio || ''}
-      </div>
+    <div style="margin-left: auto; margin-top: 12px; margin-right: 2px; color: black; font-size: 12px; max-width: 480px;">
+      {helperDoc.bio || ''}
     </div>
 
     <div style="margin-top: 16px; margin-bottom; 4px; position: relative; background-color: #e4ebe4; height: 4px; width: 100%; border-radius: 4px;">
@@ -30,37 +31,33 @@
     </div>  
 
     <li style="font-size: 12px; color: darkgreen; font-weight: 400; margin-top: 4px; margin-right: 0px; margin-left: auto;">
-      {numJoined} learner subscribed, 
-      {numNeeded} needed to start learning group
+      {numJoined}/{numNeeded} to start teaching group
     </li>
 
     <div style="display: flex; justify-content: space-between; margin-top: 16px; align-items: center;">
       <li>
         <b></b>    
-        <span class="material-symbols-outlined my-icon">
-          smart_display
-          </span>
-          <div style="font-size: 14px;">
-          { helperDoc.numOfVideos || 0 } videos
-          </div>
+        <BaseStatDisplayIcon
+          iconName="smart_display"
+          statName="Videos"
+          statValue={helperDoc.numOfVideos || 0}
+        />
       </li>
 
       <li>
-        <span class="material-symbols-outlined my-icon">
-          timer
-        </span>
-        <div style="font-size: 14px;">
-          { helperDoc.minutesViewed || 0 } view-minutes
-        </div>
+        <BaseStatDisplayIcon
+          iconName="timer"
+          statName="Watch time"
+          statValue={(helperDoc.minutesViewed || 0) + ' minutes'}
+        />
       </li>
 
       <li>
-        <span class="material-symbols-outlined">
-          lightbulb
-        </span>
-        <div style="font-size: 14px;">
-          { helperDoc.upvotes || 'n' } upvotes
-        </div>
+        <BaseStatDisplayIcon
+          iconName="lightbulb"
+          statName="Upvotes"
+          statValue={helperDoc.upvotes || 'n'}
+        />
       </li>
 
       <div on:click={() => goto(`/profile/${classID}/${helperDoc.uid}`)} style="font-size: 14px; border-radius: 8px; outline: 2px solid grey; padding: 4px 8px;">
@@ -72,6 +69,7 @@
 
 <script>
   import { goto } from '$app/navigation'
+  import BaseStatDisplayIcon from '$lib/BaseStatDisplayIcon.svelte';
 
   export let helperDoc
   export let currentTeacherUID
@@ -98,7 +96,9 @@
   }
 
   .highlighted {
-    background-color: rgb(247, 198, 134);
+    // background-color: rgb(247, 198, 134);
+    border: 2px solid #F7C686;
+    @extend .high-elevation-cast-shadow;
 
   }
 

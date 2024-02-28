@@ -14,7 +14,7 @@
     <div slot="popup-content">    
       {#if activeTabName === 'old'}
         <div style="font-size: 14px; color: rgb(100, 100, 100); margin-top: 10px;">
-          Join other committed learners, browse the pool of explanations you build up together in the server, ask follow-up questions via comments, etc. 
+          Ask your teacher questions directly, join other committed learners, and browse the pool of explanations you build up together. 
         </div>
       {:else}
         <div style="font-size: 14px; color: rgb(100, 100, 100); margin-top: 10px;">
@@ -31,7 +31,7 @@
       "
       >
 
-      <div style="margin-left: 24px;margin-bottom: 12px; display: flex; gap: 12px; align-items: center; justify-content: space-between; color: black; width: 400px; box-sizing: border-box;">
+      <div style="margin-left: 24px;margin-bottom: 12px; display: flex; gap: 12px; align-items: center; justify-content: space-between; color: black; width: 340px; box-sizing: border-box;">
         <div on:click={() => activeTabName = 'old'} 
           class="tab-item-container" 
           class:active-underline-indicator={activeTabName === 'old'}
@@ -40,7 +40,7 @@
             psychology
           </span>
           <div style="font-size: 16px; margin-top: 0px;" class:active-bold={activeTabName === 'old'}>
-            Subscribe to someone
+            Pick a teacher
           </div>
         </div>
     
@@ -69,7 +69,7 @@
         {#if activeTabName === 'old'}
           <ol>
             <li>
-              Choose a teacher to subscribe to:
+              I want to directly learn & ask questions for 1 month from this teacher:
             </li>
             
             <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
@@ -86,16 +86,16 @@
             <div style="margin-bottom: 36px;"></div>
   
             <li>
-              Tell them what you're looking for
+              What'd be the ideal learning experience for you?
             </li>
             
             {#if memberDoc}
               <UXFormTextArea
                 value={memberDoc.reasonForLearning}
                 on:input={(e) => debouncedUpdateBio({ newVal: e.detail })}
-                fieldLabel="What kind of explanations are you looking for?"
-                placeholder="I have some questions that's been bothering me for a long time,
-                that I found no compelling explanation anywhere. "
+                fieldLabel="Ideal learning experience"
+                placeholder="There are some concepts that I just don't understand, 
+                I want to finally understand them. "
               />
             {/if}
 

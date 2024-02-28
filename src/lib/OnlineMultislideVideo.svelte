@@ -1,23 +1,16 @@
-<div style="display: flex;">
-  <MultislideSlideChanger
-    slideIDs={boardDoc.slideIDs}
-    {idxOfFocusedSlide}
-    on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
-  />
+{#if showSlideChanger}
+  <div style="display: flex; margin-bottom: 12px;">
+    <MultislideSlideChanger
+      slideIDs={boardDoc.slideIDs}
+      {idxOfFocusedSlide}
+      on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
+    />
 
-  <div style="margin-left: 20px">
+    <div style="margin-left: 20px">
 
+    </div>
   </div>
-
-  <!-- <button on:click={() => dispatch('recording-retry')}
-    style="height: 50px; font-size: 1.1em; border-radius: 25px;"
-    class="offline-record-button"
-  >
-    Discard video and reset
-  </button> -->
-</div>
-
-<div style="margin-bottom: 12px;"></div>
+{/if}
 
 <div style="
   position: relative; 
@@ -26,7 +19,8 @@
   height: {canvasHeight + 40}px"
 >
   {#if !hasPlaybackStarted}
-    <span on:click={startAudioPlayer} 
+    <span
+      on:click={startAudioPlayer} 
       class="material-icons overlay-center" 
       style="color: white;
       width: {180 * scaleFactor}px; 
@@ -39,43 +33,39 @@
   {/if} 
 
   <div style="position: absolute; top: 8px; left: 8px; z-index: 6;">
-    <Button on:click={togglePlaySpeed} 
-      variant="raised" 
-      style="height: {20 * (canvasWidth / assumedCanvasWidth)}px; margin-left: 8px; padding-left: 8px; padding-right: 8px; background-color: rgb(90 90 90 / 100%); color: white;"
-    >
-      <div style="color: white">
-        {playbackSpeed}x speed
-      </div>
-      <span class="material-icons"></span>
-    </Button>
+    <BaseTransparentButton on:click={togglePlaySpeed}>
+      {playbackSpeed}x 
+    </BaseTransparentButton>
   </div>
 
   <!-- share, delete button overlay on top -->
-  <div style="
-    margin-left: auto;
-    margin-right: 8px; 
-    display: flex; 
-    align-items: center; 
-    flex-direction: row-reverse;
-    position: absolute; 
-    top: 8px; 
-    bottom: auto;
-    width: 100%;
-    z-index: 5;
+  {#if showEditDeleteButtons}
+    <div style="
+      margin-left: auto;
+      margin-right: 8px; 
+      display: flex; 
+      align-items: center; 
+      flex-direction: row-reverse;
+      position: absolute; 
+      top: 8px; 
+      bottom: auto;
+      width: 100%;
+      z-index: 5;
     "
-  >
-    <Button on:click={() => createAndCopyShareLink()}
-      style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
-    > 
-      Share
-    </Button>
+    >
+      <Button on:click={() => createAndCopyShareLink()}
+        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+      > 
+        Share
+      </Button>
 
-    <Button 
-      on:click={() => revertToBoard(boardDoc)} 
-      style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-      Delete
-    </Button>
-  </div>
+      <Button 
+        on:click={() => revertToBoard(boardDoc)} 
+        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
+        Delete
+      </Button>
+    </div>
+  {/if}
   
   {#each boardDoc.slideIDs as slideID, i}
     <RenderlessFetchStrokes
@@ -133,7 +123,6 @@
     controls
     style={`width: ${canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}
   >
-  <!-- top: auto -->
   </audio>
 </div>
 
@@ -158,6 +147,7 @@
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '/src/helpers/crud.js'
   import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
+  import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
 
   export let audioDownloadURL
   export let boardDoc
@@ -167,6 +157,8 @@
   export let canvasHeight
 
   export let timingOfSlideChanges
+  export let showEditDeleteButtons
+  export let showSlideChanger
 
   const boardPath = `classes/${classID}/blackboards/${boardDoc.id}`
   const dispatch = createEventDispatcher()

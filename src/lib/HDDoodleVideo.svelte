@@ -10,9 +10,9 @@
   <!-- The delete button is added here -->
   <div style="justify-content: space-between; width: 100%; position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5">
     <slot name="twoTimesSpeedButtonSlot">
-      <div on:click={togglePlaySpeed} style="background: rgba(120, 120, 120, 0.2); border-radius: 4px; color: white; margin-left: 6px; margin-top:0px; padding: 6px;">
+      <BaseTransparentButton on:click={togglePlaySpeed}>
         {playbackSpeed}x 
-      </div>
+      </BaseTransparentButton>
     </slot>
 
     <slot>
@@ -122,6 +122,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '../store.js' // note `canvasWidth` was misleading
   import Button, { Label } from '@smui/button'
+  import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once

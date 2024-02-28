@@ -49,115 +49,122 @@
               readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
             />
           </div>
-          {#if boardDoc.audioDownloadURL && boardDoc.isMultiboard}
-            <div style="margin-top: 24px;"></div>
-            <OnlineMultislideVideo
-              canvasWidth={0.95 * $maxAvailableWidth}
-              canvasHeight={0.95 * $maxAvailableHeight}
-              {boardDoc}
-              {classID}
-              audioDownloadURL={boardDoc.audioDownloadURL}
-              timingOfSlideChanges={boardDoc.timingOfSlideChanges}
-            />
-          {:else if boardDoc.audioDownloadURL}
-            <RenderlessFetchStrokes 
-              dbPath={boardsDbPath + boardID}
-              let:fetchStrokes={fetchStrokes}
-              let:strokesArray={strokesArray}
-              let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
-            >
-              <div use:lazyCallable={fetchStrokes} style={`width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight + 40}px; position: relative`}>
-                <DoodleVideo 
-                  {strokesArray} 
-                  audioDownloadURL={boardDoc.audioDownloadURL}
-                  backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-                  canvasWidth={$maxAvailableWidth}
-                  canvasHeight={$maxAvailableHeight}
-                  isPaid={!!boardDoc.isPaid}
-                  creatorUID={boardDoc.creatorUID}
-                  {classID}
-                  on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
-                  on:subscribe-to-helper={() => { 
-                    isSubscribePopupOpen = true
-                    creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
-                  }}
-                > 
-                  <div style="
-                    margin-left: auto;
-                    margin-right: 8px; 
-                    display: flex; 
-                    align-items: center; 
-                    flex-direction: row-reverse"
-                  >
-                    <Button on:click={() => isShowingNanoQuestionPopup = true}
-                      style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white;"
+          {#if boardDoc.audioDownloadURL}
+            {#if boardDoc.isMultiboard}
+              <div style="margin-top: 24px;"></div>
+
+              <OnlineMultislideVideo
+                canvasWidth={0.95 * $maxAvailableWidth}
+                canvasHeight={0.95 * $maxAvailableHeight}
+                {boardDoc}
+                {classID}
+                audioDownloadURL={boardDoc.audioDownloadURL}
+                timingOfSlideChanges={boardDoc.timingOfSlideChanges}
+                on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
+                on:subscribe-to-helper={() => { 
+                  isSubscribePopupOpen = true
+                  creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
+                }}
+              />
+            {:else}
+              <RenderlessFetchStrokes 
+                dbPath={boardsDbPath + boardID}
+                let:fetchStrokes={fetchStrokes}
+                let:strokesArray={strokesArray}
+                let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
+              >
+                <div use:lazyCallable={fetchStrokes} style={`width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight + 40}px; position: relative`}>
+                  <DoodleVideo 
+                    {strokesArray} 
+                    audioDownloadURL={boardDoc.audioDownloadURL}
+                    backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+                    canvasWidth={$maxAvailableWidth}
+                    canvasHeight={$maxAvailableHeight}
+                    isPaid={!!boardDoc.isPaid}
+                    creatorUID={boardDoc.creatorUID}
+                    {classID}
+                    on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
+                    on:subscribe-to-helper={() => { 
+                      isSubscribePopupOpen = true
+                      creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
+                    }}
+                  > 
+                    <div style="
+                      margin-left: auto;
+                      margin-right: 8px; 
+                      display: flex; 
+                      align-items: center; 
+                      flex-direction: row-reverse"
                     >
-                      Nano-question
-                    </Button>
-
-                    {#if isShowingNanoQuestionPopup}
-                      <PopupNanoQuestion 
-                        isOriginalVideoCreator={$user.uid === boardDoc.creatorUID}
-                        {boardDoc}
-                        boardDbPath={boardsDbPath + boardID}
-                        on:popup-close={() => isShowingNanoQuestionPopup = false}
-                      />
-                    {/if}
-
-                    <Button on:click={() => createAndCopyShareLink(classID, boardDoc.id)}
-                      style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
-                    > 
-                      Share
-                    </Button>
-
-                    <!-- boardDoc will always have a `creatorUID` because anonymous login -->
-                    {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
-                      <Button 
-                        on:click={() => revertToBoard(boardDoc, deleteNonInitialStrokesFromDb)} 
-                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-                        Delete
+                      <Button on:click={() => isShowingNanoQuestionPopup = true}
+                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white;"
+                      >
+                        Nano-question
                       </Button>
 
-                      {#if isMoveVideoPopupOpen}
-                        <PopupMoveBlackboardVideo
-                          {classID}
-                          blackboardIDs={roomDoc.blackboards}
-                          {roomDoc}
-                          on:popup-close={() => isMoveVideoPopupOpen = false}
-                          on:video-rearranged={() => dispatch('video-rearranged')}
+                      {#if isShowingNanoQuestionPopup}
+                        <PopupNanoQuestion 
+                          isOriginalVideoCreator={$user.uid === boardDoc.creatorUID}
+                          {boardDoc}
+                          boardDbPath={boardsDbPath + boardID}
+                          on:popup-close={() => isShowingNanoQuestionPopup = false}
                         />
                       {/if}
 
-                      <Button 
-                        on:click={() => isMoveVideoPopupOpen = true}
-                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-                        Move
+                      <Button on:click={() => createAndCopyShareLink(classID, boardDoc.id)}
+                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+                      > 
+                        Share
                       </Button>
 
-                      {#if $user.uid === boardDoc.creatorUID}
-                        {#if !boardDoc.isPaid} 
-                          <Button 
-                            on:click={() => makePaid(boardDoc)}
-                            style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
-                          >
-                            Freely available
-                          </Button>
-                        {:else}
-                          <Button
-                            on:click={() => makeFree(boardDoc)}
-                            style="margin-right: 6px; background-color: purple; color: white"
-                          >
-                            Subscribers-only
-                          </Button>
+                      <!-- boardDoc will always have a `creatorUID` because anonymous login -->
+                      {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
+                        <Button 
+                          on:click={() => revertToBoard(boardDoc, deleteNonInitialStrokesFromDb)} 
+                          style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
+                          Delete
+                        </Button>
+
+                        {#if isMoveVideoPopupOpen}
+                          <PopupMoveBlackboardVideo
+                            {classID}
+                            blackboardIDs={roomDoc.blackboards}
+                            {roomDoc}
+                            on:popup-close={() => isMoveVideoPopupOpen = false}
+                            on:video-rearranged={() => dispatch('video-rearranged')}
+                          />
+                        {/if}
+
+                        <Button 
+                          on:click={() => isMoveVideoPopupOpen = true}
+                          style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
+                          Move
+                        </Button>
+
+                        {#if $user.uid === boardDoc.creatorUID}
+                          {#if !boardDoc.isPaid} 
+                            <Button 
+                              on:click={() => makePaid(boardDoc)}
+                              style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
+                            >
+                              Freely available
+                            </Button>
+                          {:else}
+                            <Button
+                              on:click={() => makeFree(boardDoc)}
+                              style="margin-right: 6px; background-color: purple; color: white"
+                            >
+                              Subscribers-only
+                            </Button>
+                          {/if}
                         {/if}
                       {/if}
-                    {/if}
-                  </div>
-                </DoodleVideo>
-              </div>
-            </RenderlessFetchStrokes>
+                    </div>
+                  </DoodleVideo>
+                </div>
+              </RenderlessFetchStrokes>
+            {/if}
 
-            <!-- Comments section -->
             <RenderlessFetchComments 
               dbPath={boardsDbPath + boardID} 
               {boardDoc}
@@ -174,9 +181,7 @@
               let:deleteComment={deleteComment}
             >  
               <div style="display: flex; align-items: center">
-                <div 
-                  style="display: flex; width: 100%; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;"
-                >
+                <div style="display: flex; width: 100%; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;">
                   <RenderlessFetchServerMemberDoc 
                     {classID}
                     memberUID={boardDoc.creatorUID}
@@ -250,7 +255,7 @@
                       padding-top: 4px;
                       padding-bottom: 6px;"
                     >
-                      <div on:click={eureka(boardDoc)} style="display: flex; align-items: center;">
+                      <div on:click={eureka(boardDoc)} style="display: flex; align-items: center; cursor: pointer;">
                         <span class="material-icons" 
                           style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'grey') : 'grey'}; font-size: 2rem; margin-right: 4px;">
                           lightbulb
@@ -262,17 +267,6 @@
                           {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
                         </div>
                       </div>
-
-<!-- 
-                      <div style="color: lightgrey; margin-left: 16px; margin-right:16px; font-size: 1.5rem;">|</div>
-
-                      <span on:click={() => alert('To be implemented')} class="material-icons" style="color: hsl(0,0%,0%, 0.80); font-size: 2rem;">
-                        help
-                      </span>
-
-                      <div style="margin-right: 4px;"></div>
-
-                      I still don't understand -->
                     </div>
                   {/if}
                 </div>
@@ -300,6 +294,7 @@
                 <div style="margin-bottom: 10px;"></div>
               {/if}
             </RenderlessFetchComments>
+
           {:else if boardDoc.isMultiboard}
             <div style="margin-top: 24px;"></div>
             <OnlineMultislideBlackboard 
@@ -308,6 +303,8 @@
               canvasWidth={$maxAvailableWidth}
               {classID}
             />
+
+          <!-- BLACKBOARD -->
           {:else}
             <RenderlessListenToStrokes dbPath={boardsDbPath + boardID}
               let:listenToStrokes={listenToStrokes} 

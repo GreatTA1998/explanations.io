@@ -118,22 +118,48 @@
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;"
     >
-      <RenderlessFetchStrokes 
+      <RenderlessListenToBoard
         dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
-        let:fetchStrokes={fetchStrokes}
-        let:strokesArray={strokesArray}
-        autoFetchStrokes={false}
-      > 
-        <HDBlackboard
-          {strokesArray}
-          canvasWidth={highDefinitionWidth * 0.7}
-          canvasHeight={highDefinitionWidth * 3/4 * 0.7}
-          {thumbnailWidth}
-          thumbnailHeight={thumbnailWidth * 3/4}
-          hideToolbar={true}
-          on:intersect={fetchStrokes}
-        />
-      </RenderlessFetchStrokes>
+        let:boardDoc={boardDoc}
+      >
+        {#if boardDoc}
+          {#if boardDoc.isMultiboard}
+            <RenderlessFetchStrokes 
+              dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}/slides/${boardDoc.slideIDs[0]}`}
+              let:fetchStrokes={fetchStrokes}
+              let:strokesArray={strokesArray}
+              autoFetchStrokes={false}
+            > 
+              <HDBlackboard
+                {strokesArray}
+                canvasWidth={highDefinitionWidth * 0.7}
+                canvasHeight={highDefinitionWidth * 3/4 * 0.7}
+                {thumbnailWidth}
+                thumbnailHeight={thumbnailWidth * 3/4}
+                hideToolbar={true}
+                on:intersect={fetchStrokes}
+              />
+            </RenderlessFetchStrokes>
+          {:else}
+            <RenderlessFetchStrokes 
+              dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
+              let:fetchStrokes={fetchStrokes}
+              let:strokesArray={strokesArray}
+              autoFetchStrokes={false}
+            > 
+              <HDBlackboard
+                {strokesArray}
+                canvasWidth={highDefinitionWidth * 0.7}
+                canvasHeight={highDefinitionWidth * 3/4 * 0.7}
+                {thumbnailWidth}
+                thumbnailHeight={thumbnailWidth * 3/4}
+                hideToolbar={true}
+                on:intersect={fetchStrokes}
+              />
+            </RenderlessFetchStrokes>
+          {/if}
+        {/if}
+      </RenderlessListenToBoard>
     </div>
   {:else}
     <div style="margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
@@ -146,10 +172,9 @@
 <script>
   export let serverObj
 
-  import Blackboard from '$lib/Blackboard.svelte'
+  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { goto } from '$app/navigation'
-  import CodepenCardShadows from '$lib/CodepenCardShadows.svelte';
   import { assumedCanvasWidth, assumedCanvasHeight } from '/src/store.js'
   import HDBlackboard from '$lib/HDBlackboard.svelte'
 

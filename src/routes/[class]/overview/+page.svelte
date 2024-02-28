@@ -1,15 +1,15 @@
 <!-- NOTE, bind:clientWidth will set the element to position relative, which means it'll create a new stacking context and cover other non-relative element,
   which is very subtle
 -->
-<div bind:clientWidth={availablePageContentWidth} style="padding-left: 4%; padding-right: 4%; padding-top: 36px; padding-bottom: {120 + featuredVideoBleedMargin}px; background-color: #f7c686;">
+<div bind:clientWidth={availablePageContentWidth} style="padding-left: 4%; padding-right: 4%; padding-top: 36px; padding-bottom: {80 + featuredVideoBleedMargin}px; background-color: #f7c686;">
   {#if classDoc}
     <!-- #493504 is a black-grey color with a subtle orange tint, inspired by Firebase's subtle-blue primary text -->
-    <div style="font-size: 2.8vw; font-weight: 600; color: #493504;">
+    <!-- <div style="font-size: 2.8vw; font-weight: 600; color: #493504;">
       {classDoc.name}
     </div>
     <div style="font-size: 24px; margin-top: 12px; font-weight: 400; color: #493504;">
       {classDoc.description}
-    </div>
+    </div> -->
   {/if}
 </div>
 
@@ -22,12 +22,12 @@
           <!-- we set an explicit width & height on the container, so that the layout doesn't shift from the delayed mounting of <DoodleVideo/>  -->
           <div style="margin-right: {0.02 * availablePageContentWidth}px; width: {featuredItemWidth}px; min-height: {featuredItemWidth * 3/4}px; border-radius: 12px; overflow: hidden;">
             <RenderlessListenToBoard dbPath={explanation.path} let:boardDoc={boardDoc}>
-              <ReusableDoodleVideo
+              <BackwardsCompatibleReusableMultislideVideo
                 {boardDoc}
+                {classID}
                 canvasWidth={featuredItemWidth} 
                 canvasHeight={featuredItemWidth * 3/4}
-                showEditDeleteButtons={false}
-                boardDbPath={explanation.path}
+                showSlideChanger={false}
               />
             </RenderlessListenToBoard>
           </div>
@@ -112,77 +112,9 @@
 <!-- Crowdfund section & two-sided marketplace section 
   position: relative prevents it from getting covered by the orange background (which would take priority because it's relative due to its `bind:clientWidth` directive)
 -->
-<div style="position: relative; padding-left: 4%; padding-right: 4%; padding-top: 24px;">
+<div style="position: relative; padding-left: 4%; padding-right: 4%; padding-top: 12px;">
 
   <div style="display: flex; width: calc(100% - 400px - 80px + 480px); padding-top: 24px; padding-bottom: 24px;">    
-    {#if learnerDocs}
-      <div style="flex: 2 0 auto; height: 400px;">
-        <div style="display: flex; align-items: flex-end;">
-          <div style="font-size: 80px; min-width: 50px;">
-            {tweenedPresubsCount}
-          </div>
-
-          <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
-            Learners
-          </div>
-
-          <div style="margin-right: 12px; margin-left: auto; margin-bottom: 20px;">
-            {#if teacherDocs}
-              <PopupConfirmLearner {classID} {teacherDocs} {currentTeacherUID} let:setIsPopupOpen={setIsPopupOpen}>
-                <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
-                  <span class="material-symbols-outlined" style="font-size: 26px;">
-                    person_raised_hand
-                  </span>
-                  <div style="margin-left: 8px; font-weight: 500;">
-                    Sign up to learn
-                  </div>
-                </ReusableRoundButton>
-              </PopupConfirmLearner>
-            {/if}
-          </div>
-        </div>
-
-        <div style="margin-bottom: 24px;"></div>
-
-        <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
-          {#each learnerDocs as learnerDoc}
-            <div style="display: flex; align-items: center; margin-bottom: 48px;">
-              <div style="margin-right: 12px;"></div>
-
-              <div style="width: 100%;">
-                <div style="display: flex; align-items: center;">
-                  <span class="material-symbols-outlined" style="font-size: 26px; margin-top: 0px; margin-right: 8px;">
-                    person_raised_hand
-                  </span>
-    
-                  <div style="color: rgb(60, 60, 60); font-size: 20px; font-weight: 500;">
-                    {learnerDoc.name.split(" ")[0]}
-                  </div>
-
-                  <div style="margin-right: 0px; margin-left: auto; font-size: 14px; color: green;">
-                    {#if learnerDoc.subscribedTeacherUID}
-                      <div>Subscribed for 1 month</div>
-                    {:else}
-                      <div style="margin-right: 0px; margin-left: auto; font-size: 14px; color: green;">Prepaid learner</div>
-                    {/if}
-                  </div>
-                </div>
-
-                <div style="max-width: 360px; margin-top: 12px;">
-                  "{learnerDoc.reasonForLearning}"
-                </div>
-              </div>
-            </div>
-          {/each}
-        </div>
-
-        <div style="margin-top: 40px;"></div>
-      </div>
-    {/if}
-
-    <!-- VERTICAL LINE THAT SPLITS THE FLEXBOX -->
-    <div style="border-left: 1px solid lightgrey; height: {TeachersListHeight + 240}px; width: 1px; margin-left: {24}px; margin-right: {24-1}px;"></div>
-    
     {#if teacherDocs}     
       <div style="flex: 2 0 auto; height: 400px;">
         <div style="display: flex; align-items: flex-end;">
@@ -227,6 +159,74 @@
         </div>
       </div>
     {/if}
+
+    <!-- VERTICAL LINE THAT SPLITS THE FLEXBOX -->
+    <div style="border-left: 1px solid lightgrey; height: {TeachersListHeight + 240}px; width: 1px; margin-left: {24}px; margin-right: {24-1}px;"></div>
+
+    {#if learnerDocs}
+      <div style="flex: 2 0 auto; height: 400px;">
+        <div style="display: flex; align-items: flex-end;">
+          <div style="font-size: 80px; min-width: 50px;">
+            {tweenedPresubsCount}
+          </div>
+
+          <div style="margin-left: 16px; margin-bottom: 30px; font-size: 20px;">
+            Learners
+          </div>
+
+          <div style="margin-right: 12px; margin-left: auto; margin-bottom: 20px;">
+            {#if teacherDocs}
+              <PopupConfirmLearner {classID} {teacherDocs} {currentTeacherUID} let:setIsPopupOpen={setIsPopupOpen}>
+                <ReusableRoundButton on:click={() => setIsPopupOpen({ newVal: true})} backgroundColor="#5d0068" textColor="white">
+                  <span class="material-symbols-outlined" style="font-size: 26px;">
+                    person_raised_hand
+                  </span>
+                  <div style="margin-left: 8px; font-weight: 500;">
+                    Sign up to learn
+                  </div>
+                </ReusableRoundButton>
+              </PopupConfirmLearner>
+            {/if}
+          </div>
+        </div>
+
+        <div style="margin-bottom: 24px;"></div>
+
+        <div class="people-list" bind:this={PresubscribersList} bind:clientHeight={PresubscribersListHeight}>
+          {#each learnerDocs as learnerDoc}
+            <div style="display: flex; align-items: center; margin-bottom: 48px;">
+              <div style="margin-right: 12px;"></div>
+
+              <div style="width: 100%;">
+                <div style="display: flex; align-items: center;">
+                  <span class="material-symbols-outlined" style="font-size: 26px; margin-top: 0px; margin-right: 8px;">
+                    person_raised_hand
+                  </span>
+    
+                  <div style="color: rgb(60, 60, 60); font-size: 20px; font-weight: 500;">
+                    {learnerDoc.name.split(" ")[0]}
+                  </div>
+
+                  <div style="margin-right: 0px; margin-left: auto; font-size: 14px; color: green; font-weight: 600;">
+                    {#if learnerDoc.subscribedTeacherUID}
+                      <div>Subscribed for 1 month</div>
+                    {:else}
+                      <div style="margin-right: 0px; margin-left: auto; font-size: 14px; color: green;">Prepaid learner</div>
+                    {/if}
+                  </div>
+                </div>
+
+                <div style="max-width: 360px; margin-top: 12px;">
+                  "{learnerDoc.reasonForLearning}"
+                </div>
+              </div>
+            </div>
+          {/each}
+        </div>
+
+        <div style="margin-top: 40px;"></div>
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -247,6 +247,7 @@
   import PopupCrowdfund from '$lib/PopupCrowdfund.svelte'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import TeacherInformationCard from '$lib/TeacherInformationCard.svelte'
+  import BackwardsCompatibleReusableMultislideVideo from '$lib/BackwardsCompatibleReusableMultislideVideo.svelte'
 
   export let data;
 
@@ -440,7 +441,8 @@
         temp.sort((a, b) => {
           let a1 = (Number(a.minutesViewed) || 0)
           let b1 = (Number(b.minutesViewed) || 0)
-          return b1 - a1
+          if (a1 !== b1) return b1 - a1 
+          else return b.numOfVideos - a.numOfVideos
         })
         teacherDocs = temp
         resolve()

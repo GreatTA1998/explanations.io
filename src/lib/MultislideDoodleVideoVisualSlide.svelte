@@ -113,8 +113,12 @@
     if (nextDotIdx < sequenceOfDots.length) {
       // calculate sleep duration
       const nextFrame = sequenceOfDots[nextDotIdx]
-      const timeTilNextStroke = 1000 * (nextFrame.startTime - currentTime)
-      recursiveSyncer = setTimeout(syncRecursively, timeTilNextStroke/playbackSpeed) // use recursion instead of `setInterval` to prevent overlapping calls
+      let timeTilNextStroke = 1000 * (nextFrame.startTime - currentTime)
+      timeTilNextStroke = timeTilNextStroke / playbackSpeed
+      // quickfix: sometimes the timeTilNextStroke is ridiculously long
+      // probably due to calculation error in `nextFrame.startTime`
+      timeTilNextStroke = Math.min(timeTilNextStroke, 2000)
+      recursiveSyncer = setTimeout(syncRecursively, timeTilNextStroke) // use recursion instead of `setInterval` to prevent overlapping calls
     }
   }
 

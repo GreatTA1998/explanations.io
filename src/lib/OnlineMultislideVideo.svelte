@@ -32,8 +32,8 @@
     </span>
   {/if} 
 
-  <div style="position: absolute; top: 8px; left: 8px; z-index: 6;">
-    <BaseTransparentButton on:click={togglePlaySpeed}>
+  <div style="position: absolute; top: 8px; left: 8px; z-index: 6; display: flex; align-items: center;">
+    <BaseTransparentButton on:click={togglePlaySpeed} style="font-weight: 500;">
       {playbackSpeed}x 
     </BaseTransparentButton>
   </div>
@@ -53,17 +53,14 @@
       z-index: 5;
     "
     >
-      <Button on:click={() => createAndCopyShareLink()}
-        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
-      > 
-        Share
-      </Button>
-
-      <Button 
-        on:click={() => revertToBoard(boardDoc)} 
-        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-        Delete
-      </Button>
+      <!-- $adminUIDs.includes($user.uid) -->
+      {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
+        <div style="margin-right: 6px;">
+          <BaseTransparentButton on:click={() => revertToBoard(boardDoc)}>
+            <span class="material-icons">delete_forever</span>
+          </BaseTransparentButton>
+        </div>
+      {/if}
     </div>
   {/if}
   
@@ -138,7 +135,7 @@
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { lazyCallable } from '/src/helpers/actions.js'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '../store.js' // note `canvasWidth` was misleading
+  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user, adminUIDs } from '/src/store.js' // note `canvasWidth` was misleading
   import Button, { Label } from '@smui/button'
   import MultislideDoodleVideoVisualSlide from '$lib/MultislideDoodleVideoVisualSlide.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'

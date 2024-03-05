@@ -231,13 +231,17 @@
                   </div>
 
                   {#if !isShowingComments}
-                    <span on:click={listenToComments} class="material-icons" style="color: hsl(0,0%,0%, 0.80); font-size: 2rem;">
-                      expand_more
-                    </span>
+                    <div on:click={listenToComments} style="cursor: pointer;">
+                      <span class="material-icons" style="color: hsl(0,0%,0%, 0.99); font-size: 2rem;">
+                        expand_more
+                      </span>     
+                    </div>
                   {:else}
-                    <span on:click={hideComments} class="material-icons" style="color: hsl(0,0%,0%, 0.80); font-size: 2rem;">
-                      expand_less
-                    </span>
+                    <div on:click={hideComments} style="cursor: pointer;">
+                      <span class="material-icons" style="color: hsl(0,0%,0%, 0.99); font-size: 2rem;">
+                        expand_less
+                      </span>
+                    </div>
                   {/if}
 
                   {#if $user.uid}

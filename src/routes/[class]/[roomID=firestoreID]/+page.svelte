@@ -307,6 +307,7 @@
               canvasHeight={$maxAvailableHeight}
               canvasWidth={$maxAvailableWidth}
               {classID}
+              {roomDoc}
             />
 
           <!-- BLACKBOARD -->
@@ -437,7 +438,7 @@
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
-  import { sendTextMessage } from '/src/helpers/cloudFunctions.js'
+  import { sendTextMessage, sendEmail } from '/src/helpers/cloudFunctions.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '$lib/Blackboard.svelte'
@@ -466,6 +467,7 @@
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
   import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
+  import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
 
   export let data
   let { classID, roomID } = data
@@ -897,16 +899,7 @@
 
     mixpanelLibrary.track('Video created')
 
-    // NOTIFICATION SYSTEM
-    // TO-DO: change this back to email notifications
-    // IF SOMEBODY ASKED A QUESTION, TEXT NOTIFY THEM
-    // if (roomDoc.askerUID) {
-    //   const askerDoc = await getFirestoreDoc(`users/${roomDoc.askerUID}`)
-    //   sendTextMessage({
-    //     content: `${$user.name || 'A helper'} replied with a video: https://beavers.app/${classID}/${roomDoc.id}`,
-    //     toWho: askerDoc.phoneNumber
-    //   })  
-    // }
+    await handleVideoUploadEmailNotifications(classID, roomDoc)
 
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)

@@ -13,7 +13,7 @@ exports.sendEmail = functions.https.onCall((data, context) => {
     "From": "elton@explanations.app",
     "To": toWho,
     "Subject": subject,
-    "HtmlBody": "<strong>Hello</strong> dear Postmark user.",
+    "HtmlBody": content, // "<strong>Hello</strong> dear Postmark user."
     "TextBody": content,
     "MessageStream": "outbound"
   })

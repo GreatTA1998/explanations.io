@@ -123,11 +123,13 @@
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
   import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
+  import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
 
   export let canvasWidth
   export let canvasHeight
   export let boardDoc // boardDoc.slideIDs
   export let classID
+  export let roomDoc
 
   let isSignInPopupOpen = false
 
@@ -218,6 +220,8 @@
       timingOfSlideChanges,
       isPaid: false
     })
+
+    handleVideoUploadEmailNotifications(classID, roomDoc, $user)
   }
 
   async function callFuncsInSequence (...funcs) {

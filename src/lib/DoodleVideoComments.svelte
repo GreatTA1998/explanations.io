@@ -3,12 +3,13 @@
     <div class="copied-from-old-explain">
       {comment.content}
     </div>
-    <div class="copied-from-old-explain-2">
+
+    <div class="copied-from-old-explain-2" style="display: flex; align-items: center;">
       {displayDate(comment.isoStringOfDate)} by {comment.creatorName || comment.creatorUID}
       {#if comment.creatorUID === $user.uid}
-        <Button on:click={() => deleteComment(comment.id)} style="margin-left: 6px;">
-          Delete comment
-        </Button>
+        <span style="margin-left: 6px; cursor: pointer; font-size: 16px;" on:click={() => deleteComment(comment.id)} class="material-icons">
+          delete_forever
+        </span>
       {/if}
     </div>
   {/each}

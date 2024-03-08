@@ -17,8 +17,7 @@ import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, 
 import { onDestroy } from 'svelte'
 import { user } from '../store.js'
 import { getRandomID } from '../helpers/utility.js'
-import { sendTextMessage } from '../helpers/cloudFunctions.js'
-import { updateFirestoreDoc } from '../helpers/crud.js'
+import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
 
 export let dbPath
 export let boardDoc
@@ -76,58 +75,9 @@ async function submitNewComment () {
   promises.push(
     batch.commit()
   )
+
+  handleNewCommentEmailNotifications({ boardDoc, userDoc: $user, classID, roomID })
   
-  // notify the board creator
-  if ($user.uid !== boardDoc.creatorUID) {
-    if (roomDoc && roomID && classID) {
-      promises.push(
-        sendTextMessage({
-        content: `${$user.name} commented on your video in "${roomDoc.name}": "${newComment}": https://beavers.app/${classID}/${roomID}`, // assumes roomDoc.name is not ''
-        toWho: boardDoc.creatorPhoneNumber
-        })
-      )
-    } 
-    else {
-      promises.push(
-        sendTextMessage({ 
-          content: `Someone commented on your class shop video: ${newComment}`,
-          toWho: boardDoc.creatorPhoneNumber
-        })
-      )
-    }
-  }
-
-  // notify other people subscribed on the comment thread (i.e. other commenters i.e. hear back replies from the video creator)
-  if (boardDoc.mobileNumbersToNotifyOnNewComment) {
-    for (const number of boardDoc.mobileNumbersToNotifyOnNewComment) {
-      if (roomDoc && roomID && classID) {
-        if ($user.phoneNumber && $user.phoneNumber === number) {
-          continue
-        }
-        promises.push(
-          sendTextMessage({
-            content: `Somebody replied to the comment thread in video ${roomDoc.name}: "${newComment}": https://beavers.app/${classID}/${roomID}`,
-            toWho: number
-          })
-        )
-      } else {
-        promises.push(
-          sendTextMessage({
-            content: `A new comment was added to a shop video you commented in: ${newComment}`
-          })
-        )
-      }
-    }
-  }
-
-  // from now on, you are subscribed to the comment thread
-  if ($user.phoneNumber && $user.uid !== boardDoc.creatorUID) {
-    promises.push(updateFirestoreDoc(boardDoc.path, {
-      mobileNumbersToNotifyOnNewComment: arrayUnion($user.phoneNumber)
-    }))
-  }
-
-  await Promise.all(promises)
   newComment = '' 
 }
 

@@ -76,7 +76,7 @@ async function submitNewComment () {
     batch.commit()
   )
 
-  handleNewCommentEmailNotifications({ boardDoc, userDoc: $user, classID, roomID })
+  handleNewCommentEmailNotifications({ boardDoc, userDoc: $user, classID, roomID, commentString: newComment })
   
   newComment = '' 
 }

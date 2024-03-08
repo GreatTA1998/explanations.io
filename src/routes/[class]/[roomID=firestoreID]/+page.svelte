@@ -18,7 +18,7 @@
     >
       <HelperText slot="helper" persistent>
         {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
-          This question was asked by {roomDoc.askerName} on {displayDate(roomDoc.dateAsked)},
+          Question asked by {roomDoc.askerName.split(" ")[0]} on {displayDate(roomDoc.dateAsked)},
           and has {roomDoc.blackboards.length - 1} responses
         {:else if roomDoc.blackboards} 
           This room has {roomDoc.blackboards.length} boards

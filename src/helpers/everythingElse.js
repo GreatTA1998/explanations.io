@@ -15,7 +15,7 @@ export function  toggleClassDetailsDrawerWidth () {
   }
 }
 
-export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, classID, roomID }) {
+export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, classID, roomID, commentString }) {
   // board creator
   if (userDoc.uid !== boardDoc.creatorUID) {
     const creatorDoc = await getFirestoreDoc(`/users/${boardDoc.creatorUID}`)
@@ -24,7 +24,7 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
       sendEmail({ 
         toWho: creatorDoc.email,
         subject: 'New comment on your video [explanations.app]', 
-        content: `<strong>${userDoc.name.split(" ")[0]}</strong> commented on your video: 
+        content: `<strong>${userDoc.name.split(" ")[0]}</strong> commented on your video: "${commentString}"
         <a href="https://explanations.app/${classID}/${roomID}">Link here</a>`
       })
     }
@@ -32,16 +32,14 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
 
   if (boardDoc.commentParticipantUIDs) {
     for (const uid of boardDoc.commentParticipantUIDs) {
-      const participantDoc = await getFirestoreDoc(`classes/${classID}/members/${uid}`)
+      const participantDoc = await getFirestoreDoc(`/users/${uid}`)
       if (!participantDoc) continue
       if (!participantDoc.email) continue
       console.log("sending email to participant =", participantDoc.email)
       sendEmail({ 
         toWho: participantDoc.email,
         subject: 'New comment follow-up [explanations.app]', 
-        content: `<strong>${userDoc.name.split(" ")[0]}</strong> added a new comment on a thread you participated in.
-        <br>
-        <br>
+        content: `<strong>${userDoc.name.split(" ")[0]}</strong> added a new comment on a thread you participated in: "${commentString}"
         <a href="https://explanations.app/${classID}/${roomID}">Link here</a>`
       })
     }
@@ -56,7 +54,7 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
 export function handleVideoUploadEmailNotifications (classID, roomDoc, userDoc) {
   return new Promise(async resolve => {
     if (roomDoc.askerUID) {
-      const askerDoc = await getFirestoreDoc(`classes/${classID}/members/${roomDoc.askerUID}`)
+      const askerDoc = await getFirestoreDoc(`/users/${roomDoc.askerUID}`)
       if (askerDoc.email) {
         console.log("sending an email to asker =", askerDoc.email)
         sendEmail({ 
@@ -70,7 +68,7 @@ export function handleVideoUploadEmailNotifications (classID, roomDoc, userDoc) 
 
     if (roomDoc.questionParticipantUIDs) {
       for (const uid of roomDoc.questionParticipantUIDs) {
-        const participantDoc = await getFirestoreDoc(`classes/${classID}/members/${uid}`)
+        const participantDoc = await getFirestoreDoc(`/users/${uid}`)
         if (!participantDoc) continue
         if (!participantDoc.email) continue
 
@@ -86,10 +84,11 @@ export function handleVideoUploadEmailNotifications (classID, roomDoc, userDoc) 
         })
       }
     }
-
+    
     await updateFirestoreDoc(`classes/${classID}/rooms/` + roomDoc.id, {
       questionParticipantUIDs: arrayUnion(userDoc.uid)
     })
+    
     resolve()
   })
 }

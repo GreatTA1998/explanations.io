@@ -19,7 +19,7 @@
 		</div>
 	</div>
 
-	<div class="webflow-container" style="padding-top: 2%;">
+	<div class="webflow-container">
 		{#if activeTabName === 'Learn'}
 			<HomePageForLearner/>
 		{:else}

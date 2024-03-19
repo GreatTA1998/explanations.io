@@ -1,7 +1,7 @@
 <div class="header-flex">
   <div style="width: max-content;">
     <p class="header-title" style="margin-bottom: 36px;">
-      Explain your insights.
+      Teach what you love to lots of students paying affordable prices
     </p>	
     <div class="header-subtitle" style="font-size: 20px; line-height: 1.4; font-weight: 500; color: rgb(60, 60, 60);">
       Draw & talk on your stylus device to create blackboard videos.

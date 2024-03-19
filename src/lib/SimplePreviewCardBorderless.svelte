@@ -21,7 +21,7 @@
         {serverObj.name}
       </div>
 
-      <div style="right: 8px; left: auto; position: absolute;">
+      <!-- <div style="right: 8px; left: auto; position: absolute;">
         {#if serverObj.syllabusVersion}
           {#if serverObj.syllabusVersion === 'MIT'}
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png" width="30" height="15">
@@ -37,7 +37,7 @@
             globe_asia
           </span>
         {/if}
-      </div>
+      </div> -->
 
     </div>
 

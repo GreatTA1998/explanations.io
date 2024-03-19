@@ -16,7 +16,7 @@
 
 				<Section align="end" toolbar style="padding-right: 0;">
 					<div class="hide-on-mobile">
-						<a on:click={() => alert("For absolutely anything, call 503 250 3868 or email elton@explanations.app, I can reply immediately unless it's past midnight / before 8 am.")}
+						<a on:click={() => alert("For absolutely anything, call 503 250 3868 or email eltonlin@alum.mit.edu, I can reply immediately unless it's past midnight / before 8 am.")}
 							style="margin-left: 8px; text-decoration-color: transparent;"
 						>
 							<Button

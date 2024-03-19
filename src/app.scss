@@ -85,7 +85,7 @@ audio::-webkit-media-controls-panel {
 	display: -ms-flexbox;
 	display: flex;
 	margin-top: 3%;
-	margin-bottom: 40px;
+	margin-bottom: 3%;
 	-webkit-box-pack: justify;
 	-ms-flex-pack: justify;
 	/* -webkit-justify-content: space-between;
@@ -210,7 +210,7 @@ body {
 	// max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
 	margin-bottom: 0;
-	font-size: 4vw; /* was 6vw */
+	font-size: 3vw; /* was 6vw */
 	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
 	font-weight: 500;
 
@@ -222,22 +222,22 @@ body {
 	box-sizing: border-box;
 
 	/* The -0.02em is the secret sauce for making sans-serif fonts look good **/
-	letter-spacing: -.02em; 
+	// letter-spacing: -.02em; 
 	font-weight: 600; 
 
 	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
-	line-height: 1.0; // used to be 1.25 but GF suggests otherwise
+	// line-height: 1.25; // used to be 1.25 but GF suggests otherwise
 }
 
 // As soon as we achieve minimum width of 1280,
 // the layout will make use of horizontal space 
 @media only screen and (min-width: 1280px) {
 	.header-title {
-		font-size: 5.6vw; // webflow's original is 7rem
-		max-width: calc(100vw - 380px);
+		font-size: 4vw; // webflow's original is 7rem
+		max-width: calc(100vw - 200px);
 	}
 	.header-subtitle {
-		max-width: calc(100vw - 480px);
+		max-width: calc(100vw - 800px);
 	}
 	.webflow-container {
 		width: 92%;
@@ -302,8 +302,8 @@ body {
 
 .header-flex {
 	display: flex;
-	margin-top: 2%;
-	margin-bottom: 40px;
+	// margin-top: 2%;
+	// margin-bottom: 40px;
 	-webkit-box-pack: justify;
 	-ms-flex-pack: justify;
 	/* -webkit-justify-content: space-between;

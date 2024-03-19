@@ -141,7 +141,7 @@
   import MySelect from '$lib/MySelect.svelte'
 
   let SearchBar
-  let categories = ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
+  let categories = ['All Subjects', 'Math', 'Physics', 'Other Subjects']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Teachers', 'Videos', 'Prepaid learners', 'Subscribers'] 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'

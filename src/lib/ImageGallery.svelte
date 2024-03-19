@@ -24,7 +24,7 @@
               {#if boardDoc}
                 <div style="padding-top: 6px;">
                   <!-- the width is doubled for so formatting is not messed up for 2x font size (which then gets scaled down) -->
-                  <div style="display: flex; width: {2*100}%;">
+                  <!-- <div style="display: flex; width: {2*100}%;">
                     <ClassServerMyProfilePicture
                       radiusInPixels={14}
                       circleBorderColor={getRandomColor()}
@@ -47,7 +47,7 @@
                         {galleryVideo.className}
                       </div>
                      </div>
-                  </div>
+                  </div> -->
                 </div>
               {/if}
               

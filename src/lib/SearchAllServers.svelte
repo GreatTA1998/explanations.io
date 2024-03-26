@@ -1,4 +1,4 @@
-<div style="width: 1000px; margin: auto;">
+<div style="width: 1000px; margin: auto; height: 840px;">
   <div style="display: flex; justify-content: center; width: 100%;">
     <div class="input-container" style="position: relative; width: 100%;">
       <span 
@@ -80,47 +80,30 @@
             <span class="material-symbols-outlined">
               explore
             </span>
-          {:else if category === 'Other Servers'}
+          {:else if category === 'All Servers'}
             <span class="material-symbols-outlined">
-              folder
+              explore
             </span>
           {/if}
           {category}
         </div>
       {/each}
-
-      <div style="margin-top: 48px;"></div>
-
-      <!-- <div class="subject-category"
-        on:click={() => currentlySelectedSubject = 'Other Servers'}
-        class:orange-highlight={currentlySelectedSubject === 'Other Servers'}
-      >
-        <span class="material-symbols-outlined">
-          folder
-        </span>
-        Uncategorized servers
-      </div> -->
     </div>
 
     <!-- RIGHT FLEX CHILD -->
     <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
       <!-- Filters on top -->
-      <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center;">
+      <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center; margin-bottom: 24px;">
         <div style="margin-left: 12px; margin-right: 0px; font-size: 12px;">
           Sort by:
         </div>
+
         {#each filterTags as filterTag}
           <div class="sort-by-tag" class:active-tag={currentlySelectedTag === filterTag} on:click={() => currentlySelectedTag = filterTag}>
             {filterTag}
           </div>
         {/each} 
-
       </div>
-
-      <div style="margin-bottom: 24px;">
-
-      </div>
-
 
       <div class="my-grid-layout">
         {#if subjectServers}
@@ -152,7 +135,7 @@
   import MySelect from '$lib/MySelect.svelte'
 
   let SearchBar
-  let categories = ['Math & Physics', 'Math', 'Physics', 'Other Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
+  let categories = ['Math & Physics', 'Math', 'Physics', 'All Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Teachers', 'Videos', 'Prepaid learners', 'Subscribers'] 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'Math & Physics'
@@ -301,7 +284,7 @@
     // special cases
     if (subjectName === 'Math & Physics') return searchMatchedServers.filter(server => ['Math', 'Physics'].includes(server.subjectTag))
     if (subjectName === 'All Subjects') return searchMatchedServers
-    if (subjectName === 'Other Servers') return searchMatchedServers // .filter(server => !server.isYoutubeClass)
+    if (subjectName === 'All Servers') return searchMatchedServers // .filter(server => !server.isYoutubeClass)
 
     // general case
     const output = searchMatchedServers.filter(server => server.subjectTag === subjectName)
@@ -370,7 +353,7 @@
     display: flex;
     align-items: center;
 
-    width: 220px;
+    width: 188px;
     font-size: 16px; 
     height: fit-content;
     padding-top: 8px;

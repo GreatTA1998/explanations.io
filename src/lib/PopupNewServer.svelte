@@ -1,4 +1,4 @@
-<ReusableRoundButton on:click={() => isPopupOpen = true} backgroundColor="#5d0068" textColor="white">
+<ReusableRoundButton on:click={() => isPopupOpen = true} backgroundColor="" textColor="purple">
   <span class="material-symbols-outlined" style="margin-right: 6px;">
     add
   </span>

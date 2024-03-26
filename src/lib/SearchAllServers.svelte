@@ -66,15 +66,19 @@
             </span>
           {:else if category === 'Math'}
             <span class="material-symbols-outlined">
-              percent
+              function
             </span>
           {:else if category === 'Physics'}
             <span class="material-icons">
-              air
+              electric_bolt
             </span>
           {:else if category === 'All Subjects'}
             <span class="material-symbols-outlined">
               explore
+            </span>
+          {:else if category === 'Other Servers'}
+            <span class="material-symbols-outlined">
+              folder
             </span>
           {/if}
           {category}
@@ -83,7 +87,7 @@
 
       <div style="margin-top: 48px;"></div>
 
-      <div class="subject-category"
+      <!-- <div class="subject-category"
         on:click={() => currentlySelectedSubject = 'Other Servers'}
         class:orange-highlight={currentlySelectedSubject === 'Other Servers'}
       >
@@ -91,7 +95,7 @@
           folder
         </span>
         Uncategorized servers
-      </div>
+      </div> -->
     </div>
 
     <!-- RIGHT FLEX CHILD -->
@@ -113,20 +117,22 @@
 
       </div>
 
-      {#if subjectServers}
-        {#each finalFilteredServers as serverObj, i}
-          {#key serverObj.id}
-            <SimpleServerPreviewCardBorderless
-              {serverObj}
-            />
-            <div style="margin-bottom: 18px;"></div>
-          {/key}
-        {/each}
 
-        <div style="">
-          <PopupNewServer/>
-        </div>
-      {/if}
+      <div class="my-grid-layout">
+        {#if subjectServers}
+          {#each finalFilteredServers as serverObj, i}
+            {#key serverObj.id}
+              <CompactServerCard
+                {serverObj}
+              />
+            {/key}
+          {/each}
+
+          <div style="">
+            <PopupNewServer/>
+          </div>
+        {/if}
+      </div>
     </div>
   </div>
 </div>
@@ -137,11 +143,12 @@
   import { goto } from "$app/navigation"
   import { user } from '/src/store.js'
   import SimpleServerPreviewCardBorderless from '$lib/SimplePreviewCardBorderless.svelte'
+  import CompactServerCard from '$lib/CompactServerCard.svelte'
   import PopupNewServer from '$lib/PopupNewServer.svelte'
   import MySelect from '$lib/MySelect.svelte'
 
   let SearchBar
-  let categories = ['All Subjects', 'Math', 'Physics', 'Other Subjects']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
+  let categories = ['All Subjects', 'Math', 'Physics', 'Other Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Teachers', 'Videos', 'Prepaid learners', 'Subscribers'] 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'All Subjects'
@@ -298,6 +305,12 @@
 </script>
 
 <style>
+  .my-grid-layout {
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+  }
+
   span {
     margin-right: 8px;
   }

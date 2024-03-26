@@ -1,5 +1,5 @@
 {#if !$hasFetchedUser}
-  <h4 style="margin-left: 16px; font-family: Roboto, sans-serif; opacity: 70%; font-weight: 400">
+  <h4 style="margin-left: 16px; opacity: 70%; font-weight: 400">
     Fetching your info...
   </h4>
 {:else}

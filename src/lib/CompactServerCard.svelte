@@ -1,90 +1,43 @@
-<!-- purple #5d0068; background-color: white; -->
-<!-- "color: #5d0068; border: 1px solid #5d0068;" -->
-<!--green:  #028858; -->
-<!-- border: 1px solid hsl(0,0%,0%, 0.80);  -->
-<!-- 
-<CodepenCardShadows/> -->
-  <!-- class=card style=--elevation:1 -->
-
-  <!-- class:my-low-elevation card -->
-  <!-- style:--elevation: 0;  -->
-  <div 
-    class="overall-container core-shadow"
-    style="position: relative; display: flex; min-width: 760px; width: 60%; max-width: 1000px; border-radius: {8 * 3}px; padding: 12px; overflow: hidden;
-  " 
-    on:click={() => goto(`/${serverObj.id}/overview`)}
-  >
-
-  <div class="server-card">
-    <div style="display: flex; position: relative; align-items: center;">
-      <div style="font-size: 24px; font-weight: 700;">
-        {serverObj.name}
-      </div>
+<div 
+  class="overall-container core-shadow"
+  style="position: relative; display: flex; width: 240px; border-radius: {8 * 2}px; padding: 0px; overflow: hidden;" 
+  on:click={() => goto(`/${serverObj.id}/overview`)}
+>
+  <div style="position: absolute; top: 8px; left: 16px; color: rgb(248, 249, 249); z-index: 1;">
+    <div style="color: white; font-weight: 600;">
+      {serverObj.name}
     </div>
-
-    <div style="margin-top: 12px;"></div>
-
-    <div class="two-lines-maximum" style="color: rgb(80, 80, 80); font-size: 16px; height: 40px; max-height: 42px; font-weight: 400; opacity: 0.96;">
-      {#if serverObj.description}
-        {serverObj.description}
-      {:else if serverObj.name === 'Microeconomics'}
-          You don't need to memorize a bunch of rules like "MRTS = MRS; AVC > MC". 
-          You just need to understand how to maximize f(x, y).
-      {:else}
-        An open server where anyone can ask questions and teach through blackboard videos
-      {/if}
-    </div>
-
-      <div style="margin-top: 24px;"></div>
-
-      <!-- position: absolute; top: auto; bottom: 20px; -->
-    <div style="min-width: 380px; width: 100%; max-width: 500px; color: rgb(30, 30, 30); margin-left: -6px;">
-      <div style="display: flex; align-items: center; justify-content: space-between; font-size: 16px; opacity: 1.0; font-weight: 500; 
-        padding-left: -12px;"
-      >
-        <div style="display: flex; align-items: center;" class:teacher-purple={serverObj.numOfTeachers > 0}>
-          <!-- brush -->
-          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.45rem;">
-            draw
-          </span>
-          <div style="margin-right: 4px;"></div>
-          <div class="footer-data-value">{serverObj.numOfTeachers || 0} teachers</div>
-        </div>
-
-        <div style="display: flex; align-items: center;" class:video-orange={serverObj.numOfVideos > 0}>
-          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.60rem; ">
-            smart_display
-            </span>
-          <div style="margin-right: 4px;"></div>
-          <div class="footer-data-value">{serverObj.numOfVideos} videos</div>
-        </div>
-
-        <div style="display: flex; align-items: center;">
-          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.5rem; ">
-            wb_twilight
-            </span>
-          <div style="margin-right: 4px;"></div>
-          
-          <div class="footer-data-value">{serverObj.numOfPrepaidLearners || 0} prepaid learners</div>
-        </div>
-        
-        <div style="display: flex; align-items: center;">
-          <span class="material-symbols-outlined footer-data-icon" style="font-size: 1.5rem;">
-            sentiment_very_satisfied
-            </span>
-          <div style="margin-right: 4px;"></div>
-          <div class="footer-data-value">{serverObj.numOfSubscribers || 0} subscribers</div>
-        </div>
-      </div>
-    <!-- END OF FOOTER METADATA FLEXBOX-->
-    </div>
-
-    <div style="margin-top: 0px;"></div>
   </div>
 
+  <div style="width: 100%; z-index: 1; position: absolute; bottom: 8px; color: rgb(248, 249, 249);">
+    <div style="display: flex; align-items: center; justify-content: space-around; font-size: 16px; opacity: 1.0; font-weight: 500;"
+    >
 
-  <!-- The total padding from card to left and card to thumbnail should both be 24px; -->
-  <div style="margin-left: 12px;"></div>
+      <BaseStatDisplayIcon
+        iconName="draw"
+        statName=""
+        statValue={serverObj.numOfTeachers || 0}
+      />
+
+      <BaseStatDisplayIcon
+        statName=""
+        iconName="smart_display"
+        statValue={serverObj.numOfVideos || 0}
+      />
+
+      <BaseStatDisplayIcon
+        statName=""
+        iconName="wb_twilight"
+        statValue={serverObj.numOfPrepaidLearners || 0}
+      />
+
+      <BaseStatDisplayIcon
+        statName=""
+        iconName="sentiment_very_satisfied"
+        statValue={serverObj.numOfSubscribers || 0}
+      />
+    </div>
+  </div>
 
   {#if serverObj.featuredBlackboardID}
     <div style="
@@ -97,7 +50,9 @@
       overflow: hidden;
       border-radius: 8px;
       border-top-left-radius: 0;
-      border-bottom-left-radius: 0;"
+      border-bottom-left-radius: 0;
+      opacity: 0.95;
+      "
     >
       <RenderlessListenToBoard
         dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
@@ -143,11 +98,10 @@
       </RenderlessListenToBoard>
     </div>
   {:else}
-    <div style="margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
+    <div style="opacity: 0.2; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
 
     </div>
   {/if}
-
 </div>
 
 <script>
@@ -158,6 +112,7 @@
   import { goto } from '$app/navigation'
   import { assumedCanvasWidth, assumedCanvasHeight } from '/src/store.js'
   import HDBlackboard from '$lib/HDBlackboard.svelte'
+  import BaseStatDisplayIcon from '$lib/BaseStatDisplayIcon.svelte'
 
   let thumbnailWidth = 240
   let thumbnailAspectRatio = 1 / 0.7
@@ -234,7 +189,7 @@
     font-size: 0.9em;
 
     border-radius: 32px;
-    min-width: 340px;
+    min-width: 200px;
     width: 100%;
     /* margin-bottom: 20px; */
 

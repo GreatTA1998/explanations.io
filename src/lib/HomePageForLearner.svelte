@@ -6,7 +6,7 @@
       for 1/10<sup>th</sup> the cost
     </p>
     <div class="header-subtitle" style="font-size: 20px; line-height: 1.6; font-weight: 500; color: rgb(60, 60, 60);">
-      A blackboard-centric website where university grads are willing to <b style="color: black;">answer all your questions for $10/week</b>,
+      A blackboard-centric website where university grads are willing to answer all your questions for $10/week,
       because the video explanations also benefit other students.
     </div>
   </div>
@@ -31,82 +31,32 @@
   <div class="tutor-card">
     <div style="display: flex; align-items: center; justify-content: space-between;">
       <div class="tutor-name">Ben</div>
-
-      <div>MIT</div>
-      <!-- <span class="flag-icon flag-icon-us" style="font-size: 20px;"></span> -->
+      MIT '25
     </div>
     
     <div class="tutor-description">
-      Competitive math, 4-year tutor
+      <a href="https://www.linkedin.com/in/benjamin-shimabukuro-a43b9b22a/" target="_blank" style="display: inline;">
+        Competitive math tutor since 2020
+      </a>
+      for calculus, probabilties, differential equations, linear algebra etc. with 4 students here
     </div>
-
-    <a href="" style="margin-top: 24px;">
-      LinkedIn
-    </a>
-    <!-- <div class="tutor-college">
-      MIT
-    </div> -->
-
-    <!-- <img src="/mit-logo-black-small.jpg" width="134" height="40" style="margin-top: 12px;"> -->
-
   </div>
 
   
   <div class="tutor-card">
     <div style="display: flex; align-items: center; justify-content: space-between;">
       <div class="tutor-name">Esther</div>
-      <div>MIT</div>
-      <!-- <span class="flag-icon flag-icon-us"></span> -->
+      MIT '20
     </div>
 
-    <div style="tutor-description">
-      Oversubscribed at $160/hour
-    </div>
-
-    <a href="https://www.socratictutoring.com/book-online" target="_blank" style="margin-top: 24px;">
-      Socratic Tutoring
-    </a>
-
-    <!-- <img src="/mit-logo-black-small.jpg" width="134" height="40"> -->
-  </div>
-
-  <div class="tutor-card">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div class="tutor-name">Asma</div>
-      Government College University
-      <!-- <span class="flag-icon flag-icon-pk"></span> -->
-    </div>
-  
     <div class="tutor-description">
-      10 years of learning experience
+      Physics tutor since 2020 for E&M, mechanics, quantum mechanics etc. for rate of $160/hour,
+      founder of
+      <a href="https://www.socratictutoring.com/book-online" target="_blank" style="margin-top: 24px; display: inline;">
+        Socratic Tutoring
+      </a>
     </div>
-    
-    <a href="https://www.youtube.com/@eevibessite" target="_blank" style="margin-top: 24px;">
-      Youtube: EE vibes 
-      1.68K subscribers
-    </a>
-
-    <!-- <img src="https://i0.wp.com/academiamag.com/wp-content/uploads/2023/08/12.png?fit=815%2C466&ssl=1" width="80" height="40"> -->
   </div>
-
-  <div class="tutor-card">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div class="tutor-name">Sahand</div>
-      Tokyo University
-      <!-- <span class="flag-icon flag-icon-pk"></span> -->
-    </div>
-    <!-- <img src="https://www.u-tokyo.ac.jp/content/400097920.jpg" width="120" height="80"> -->
-
-    <!-- <span class="flag-icon flag-icon-ir" target="_blank" style="margin-top: 24px;">
-      How to be a physicist
-    </span> -->
-    
-    <a href="" target="_blank" style="margin-top: 24px;">
-      Youtube: How to be a Physciist
-    </a>
-  </div>
-
-
 </div>
 
 <!-- ROTATING GALLERY -->
@@ -254,6 +204,8 @@
 
   .tutor-description {
     margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 14px;
   }
 
   .flag-icon {

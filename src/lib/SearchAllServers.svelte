@@ -56,6 +56,10 @@
             <span class="material-icons">
               data_array
             </span>
+          {:else if category === 'Math & Physics'}
+            <span class="material-symbols-outlined">
+              functions
+            </span>
           {:else if category === 'Life Sciences'}
             <span class="material-symbols-outlined">
               biotech
@@ -66,11 +70,11 @@
             </span>
           {:else if category === 'Math'}
             <span class="material-symbols-outlined">
-              function
+              calculate
             </span>
           {:else if category === 'Physics'}
             <span class="material-icons">
-              electric_bolt
+              bolt
             </span>
           {:else if category === 'All Subjects'}
             <span class="material-symbols-outlined">
@@ -148,10 +152,10 @@
   import MySelect from '$lib/MySelect.svelte'
 
   let SearchBar
-  let categories = ['All Subjects', 'Math', 'Physics', 'Other Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
+  let categories = ['Math & Physics', 'Math', 'Physics', 'Other Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Teachers', 'Videos', 'Prepaid learners', 'Subscribers'] 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
-  let currentlySelectedSubject = 'All Subjects'
+  let currentlySelectedSubject = 'Math & Physics'
 
   let searchIconWidth 
   
@@ -295,8 +299,9 @@
     if (!searchMatchedServers) return null
 
     // special cases
+    if (subjectName === 'Math & Physics') return searchMatchedServers.filter(server => ['Math', 'Physics'].includes(server.subjectTag))
     if (subjectName === 'All Subjects') return searchMatchedServers
-    if (subjectName === 'Other Servers') return searchMatchedServers.filter(server => !server.isYoutubeClass)
+    if (subjectName === 'Other Servers') return searchMatchedServers // .filter(server => !server.isYoutubeClass)
 
     // general case
     const output = searchMatchedServers.filter(server => server.subjectTag === subjectName)

@@ -27,7 +27,7 @@
   </div>
 </div>
 
-<div style="display: flex; gap: 24px;">
+<div style="display: flex; gap: 1vw; flex-wrap: wrap;">
   <div class="tutor-card">
     <div style="display: flex; align-items: center; justify-content: space-between;">
       <div class="tutor-name">Ben</div>
@@ -36,9 +36,9 @@
     
     <div class="tutor-description">
       <a href="https://www.linkedin.com/in/benjamin-shimabukuro-a43b9b22a/" target="_blank" style="display: inline;">
-        Competitive math tutor since 2020
+        Competitive math tutor since 2018
       </a>
-      for calculus, probabilties, differential equations, linear algebra etc. with 4 students here
+      for calculus, probabilties, differential equations, linear algebra etc. with 4 students here.
     </div>
   </div>
 
@@ -50,7 +50,7 @@
     </div>
 
     <div class="tutor-description">
-      Physics tutor since 2020 for E&M, mechanics, quantum mechanics etc. for rate of $160/hour,
+      Full-time physics tutor since 2020 for E&M, mechanics, quantum mechanics etc. for rate of $160/hour,
       founder of
       <a href="https://www.socratictutoring.com/book-online" target="_blank" style="margin-top: 24px; display: inline;">
         Socratic Tutoring
@@ -193,7 +193,8 @@
   }
 
   .tutor-card {
-    border: 2px solid black; width: 300px; height: 80px; padding: 16px;
+    border: 2px solid black; width: 300px; 
+		height: 80px; padding: 16px;
     border-radius: 16px;
   }
 

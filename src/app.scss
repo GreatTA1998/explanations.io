@@ -222,11 +222,11 @@ body {
 	box-sizing: border-box;
 
 	/* The -0.02em is the secret sauce for making sans-serif fonts look good **/
-	// letter-spacing: -.02em; 
+	letter-spacing: -.02em; 
 	font-weight: 600; 
 
 	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
-	// line-height: 1.25; // used to be 1.25 but GF suggests otherwise
+	line-height: 1.25; // used to be 1.25 but GF suggests otherwise
 }
 
 // As soon as we achieve minimum width of 1280,

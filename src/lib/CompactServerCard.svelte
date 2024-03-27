@@ -1,4 +1,5 @@
 <div 
+  class:red-alert-border={needsTeachers}
   class="overall-container core-shadow"
   style="position: relative; display: flex; width: 240px; border-radius: {8 * 2}px; padding: 0px; overflow: hidden;" 
   on:click={() => goto(`/${serverObj.id}/overview`)}
@@ -8,6 +9,12 @@
       {serverObj.name}
     </div>
   </div>
+
+  {#if needsTeachers}
+    <div style="background-color: red; color: black; position: absolute; top: 36px; left: 16px; padding: 4px; border-radius: 4px; font-size: 14px;">
+      Needs teachers
+    </div>
+  {/if}
 
   <div style="width: 100%; z-index: 1; position: absolute; bottom: 8px; color: rgb(248, 249, 249);">
     <div style="display: flex; align-items: center; justify-content: space-around; font-size: 16px; opacity: 1.0; font-weight: 500;"
@@ -105,8 +112,6 @@
 </div>
 
 <script>
-  export let serverObj
-
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { goto } from '$app/navigation'
@@ -114,14 +119,22 @@
   import HDBlackboard from '$lib/HDBlackboard.svelte'
   import BaseStatDisplayIcon from '$lib/BaseStatDisplayIcon.svelte'
 
+  export let serverObj
+
   let thumbnailWidth = 240
   let thumbnailAspectRatio = 1 / 0.7
+
+  $: needsTeachers = serverObj.numOfPrepaidLearners > 0 && !serverObj.numOfTeachers
 
   const highDefinitionWidth = $assumedCanvasWidth
 </script>
 
 
 <style lang="scss">
+  .red-alert-border {
+    border: 2px solid red;
+  }
+
   .two-lines-maximum {
     width: 100%;
     display: -webkit-box;

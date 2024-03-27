@@ -50,7 +50,7 @@
     </div>
 
     <div class="tutor-description">
-      Full-time physics tutor since 2020 for E&M, mechanics, quantum mechanics etc. for rate of $160/hour,
+      Full-time physics tutor since 2020 for E&M, mechanics, quantum mechanics etc.
       founder of
       <a href="https://www.socratictutoring.com/book-online" target="_blank" style="margin-top: 24px; display: inline;">
         Socratic Tutoring

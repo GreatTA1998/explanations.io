@@ -6,7 +6,7 @@
       for 1/10<sup>th</sup> the cost
     </p>
     <div class="header-subtitle" style="font-size: 20px; line-height: 1.6; font-weight: 500; color: rgb(60, 60, 60);">
-      A blackboard-centric website where university grads are willing to answer all your questions for $10/week,
+      explanations.app has visual forums where university grads will properly resolve all your questions for $10/week,
       because the video explanations also benefit other students.
     </div>
   </div>

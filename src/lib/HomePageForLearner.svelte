@@ -6,7 +6,7 @@
       for 1/10<sup>th</sup> the cost
     </p>
     <div class="header-subtitle" style="font-size: 20px; line-height: 1.6; font-weight: 500; color: rgb(60, 60, 60);">
-      Choose the best "Youtube teacher", and ask them questions - they'll reply with proper video explanations.
+      Choose the best "Youtube teacher" and ask them questions - they'll reply with proper video explanations.
 			It only costs <b>$10/week</b> because other students can watch the same videos.
     </div>
   </div>
@@ -31,7 +31,7 @@
   <div class="tutor-card">
     <div style="display: flex; align-items: center; justify-content: space-between;">
       <div class="tutor-name">Ben</div>
-      MIT '25
+      <div style="color: #A31F34; font-weight: 600;">MIT 2025</div>
     </div>
     
     <div class="tutor-description">
@@ -46,7 +46,7 @@
   <div class="tutor-card">
     <div style="display: flex; align-items: center; justify-content: space-between;">
       <div class="tutor-name">Esther</div>
-      MIT '20
+			<div style="color: #A31F34; font-weight: 600;">MIT 2020</div>
     </div>
 
     <div class="tutor-description">

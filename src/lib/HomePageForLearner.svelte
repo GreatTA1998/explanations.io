@@ -30,7 +30,7 @@
 <div style="display: flex; gap: 1vw; flex-wrap: wrap;">
   <div class="tutor-card">
     <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div class="tutor-name">Ben</div>
+      <div class="tutor-name">Ben Shimabukuro</div>
       <div style="color: #A31F34; font-weight: 600;">MIT 2025</div>
     </div>
     
@@ -45,14 +45,14 @@
   
   <div class="tutor-card">
     <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div class="tutor-name">Esther</div>
+      <div class="tutor-name">Esther Goldberger</div>
 			<div style="color: #A31F34; font-weight: 600;">MIT 2020</div>
     </div>
 
     <div class="tutor-description">
       Full-time physics tutor since 2020 for E&M, mechanics, quantum mechanics etc.
       founder of
-      <a href="https://www.socratictutoring.com/book-online" target="_blank" style="margin-top: 24px; display: inline;">
+      <a href="https://www.socratictutoring.com/" target="_blank" style="margin-top: 24px; display: inline;">
         Socratic Tutoring
       </a>
     </div>

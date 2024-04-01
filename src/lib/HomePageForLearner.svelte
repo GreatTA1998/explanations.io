@@ -68,7 +68,7 @@
 		<br>
 
 		389 upvotes on
-		<a href="https://news.ycombinator.com/item?id=39836630" target="_blank">
+		<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
 			YC HackerNews 
 		</a>
 	</div>

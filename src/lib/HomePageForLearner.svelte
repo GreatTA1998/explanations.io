@@ -6,8 +6,8 @@
       for 1/10<sup>th</sup> the cost
     </p>
     <div class="header-subtitle" style="font-size: 20px; line-height: 1.6; font-weight: 500; color: rgb(60, 60, 60);">
-      explanations.app has visual forums where university grads will properly resolve all your questions for $10/week,
-      because the video explanations also benefit other students.
+      Choose the best "Youtube teacher", and ask them questions - they'll reply with proper video explanations.
+			It only costs <b>$10/week</b> because other students can watch the same videos.
     </div>
   </div>
 
@@ -57,6 +57,21 @@
       </a>
     </div>
   </div>
+
+	<div class="tutor-card" style="margin-left: auto; width: 340px; border: 2px solid white; background-color: rgb(20, 20, 20); color: rgb(240, 240, 240); font-size: 16px;">	
+		First 3 students joined in March 2024 from
+		<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
+			r/PhysicsStudents
+		</a>
+
+		<br>
+		<br>
+
+		389 upvotes on
+		<a href="https://news.ycombinator.com/item?id=39836630" target="_blank">
+			YC HackerNews 
+		</a>
+	</div>
 </div>
 
 <!-- ROTATING GALLERY -->
@@ -176,22 +191,6 @@
 </script>
 
 <style>
-  .tutor-college {
-    margin-top: 12px;
-    font-size: 16px;
-  }
-
-  strong {
-		color: rgb(30, 30, 30);
-	}
-
-  .triplet-paragraph {
-    width: 100%;
-    max-width: 360px; 
-    color: rgb(95, 95, 94); 
-    font-weight: 500;
-  }
-
   .tutor-card {
     border: 2px solid black; width: 300px; 
 		height: 80px; padding: 16px;

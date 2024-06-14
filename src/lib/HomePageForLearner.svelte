@@ -1,72 +1,122 @@
-<div class="header-flex" style="border: 0px solid black;">
+<div class="header-flex" style="border: 0px solid black; gap: 2vw;">
   <div style="width: max-content;">
-    <p class="header-title" style="margin-bottom: 36px;">
-      College math & physics tutoring 
-      <br>
-      for 1/10<sup>th</sup> the cost
+    <p class="header-title">
+      Youtube-style help for competitive math
     </p>
-    <div class="header-subtitle" style="font-size: 20px; line-height: 1.6; font-weight: 500; color: rgb(60, 60, 60);">
-      Choose the best "Youtube teacher" and ask them questions - they'll reply with proper video explanations.
-			It only costs <b>$10/week</b> because other students can watch the same videos.
-    </div>
   </div>
 
-  <div class="header-subcopy-wrapper">
-    <ReusableRoundButton on:click={redirectToSignUpPage}
-      backgroundColor="#5d0068"
-      textColor="white"
-    >
-      <div style="font-weight: 600; font-size: 18px; padding: 12px 12px;">
-        Search subjects
-      </div>
-      
-      <span style="margin-left: 0px; font-size: 32px;" class="material-symbols-outlined">
-        search
-      </span>
-    </ReusableRoundButton>
-  </div>
+	<div class="header-subtitle" style="font-size: 1.5vw; line-height: 1.6; font-weight: 500; color: rgb(60, 60, 60);">
+		Choose a teacher. Ask them lots of questions. Get detailed visual explanations until you truly understand everything.
+		$10/week.
+	</div>
+
+	<ReusableRoundButton on:click={redirectToSignUpPage}
+		backgroundColor="#5d0068"
+		textColor="white"
+	>
+		<div style="font-weight: 600; font-size: 18px; padding: 12px 12px;">
+			Schedule setup call
+		</div>
+		
+		<span style="margin-left: 0px; margin-right: 4px; font-size: 1.8vw;" class="material-symbols-outlined">
+			phone
+		</span>
+	</ReusableRoundButton>
+</div>
+
+<div class="my-video-grid">
+	<div>
+		<div class="youtube-video-title">
+			Q: Why eigenvalue must be 0 or 1?
+		</div>
+		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80)">
+		 	Answered by: Ben, MIT '25, 21st in US junior olympiad 2019
+		</div>
+
+		<RenderlessListenToBoard 
+			dbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
+			let:boardDoc={boardDoc}
+		>
+			<ReusableDoodleVideo
+				{boardDoc}
+				canvasWidth={window.innerWidth * 0.3}
+				canvasHeight={window.innerWidth * 0.3 * 3/4}
+				showEditDeleteButtons={false}
+				boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
+			/>
+		</RenderlessListenToBoard>
+	</div>
+
+	<div>
+		<div class="youtube-video-title">
+			Q: Transforming circular seperation --> linear 
+		</div>
+		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80)">
+			Answered by: Tony Wang, MIT '20, competitive programmer
+		</div>
+
+		<RenderlessListenToBoard 
+			dbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
+			let:boardDoc={boardDoc}
+		>
+			<ReusableDoodleVideo
+					{boardDoc}
+					canvasWidth={window.innerWidth * 0.3}
+					canvasHeight={window.innerWidth * 0.3 * 3/4}
+					showEditDeleteButtons={false}
+					boardDbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
+			/>
+		</RenderlessListenToBoard>
+	</div>
+
+	<div>
+			<div class="youtube-video-title">
+				Q: Review on change of basis
+			</div>
+			<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80)">
+				Answered by: Ammar, MIT '24, Syria National Captain
+			</div>
+
+		<RenderlessListenToBoard 
+			dbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW"
+			let:boardDoc={boardDoc}
+		>
+			<ReusableDoodleVideo
+				{boardDoc}
+				canvasWidth={window.innerWidth * 0.3}
+				canvasHeight={window.innerWidth * 0.3 * 3/4}
+				showEditDeleteButtons={false}
+				boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW" 
+			/>
+		</RenderlessListenToBoard>
+	</div>
+
+	<!-- TO-DO: add Esther's video since she tutors competitive physics too f = ma -->
 </div>
 
 <div style="display: flex; gap: 1vw; flex-wrap: wrap;">
-  <div class="tutor-card">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div class="tutor-name">Ben Shimabukuro</div>
-      <div style="color: #A31F34; font-weight: 600;">MIT 2025</div>
-    </div>
-    
-    <div class="tutor-description">
-      <a href="https://www.linkedin.com/in/benjamin-shimabukuro-a43b9b22a/" target="_blank" style="display: inline;">
-        Competitive math tutor since 2018
-      </a>
-      for calculus, probabilties, differential equations, linear algebra etc. with 4 students here.
-    </div>
-  </div>
 
-  
-  <div class="tutor-card">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div class="tutor-name">Esther Goldberger</div>
-			<div style="color: #A31F34; font-weight: 600;">MIT 2020</div>
-    </div>
+	<div class="tutor-card">
+		Served ~50 teachers & 800 students for MIT math & physics as 
+		<a target="_blank" href="https://physics.mit.edu/wp-content/uploads/2021/09/PhysicsAtMIT_2021_Zoom_Feature.pdf">
+			explain.mit.edu
+		</a> (details on page 5) during covid 2020-2021
+	</div>
 
-    <div class="tutor-description">
-      Full-time physics tutor since 2020 for E&M, mechanics, quantum mechanics etc.
-      founder of
-      <a href="https://www.socratictutoring.com/" target="_blank" style="margin-top: 24px; display: inline;">
-        Socratic Tutoring
-      </a>
-    </div>
-  </div>
+	<div class="tutor-card">
+		Raised 500K seed round from 
+		<a href="https://oss.capital/portfolio" target="_blank">OSS Capital</a> (undisclosed)
+		in July 2021. Pivoted from realtime blackboards to focus on video explanations.
+	</div>
 
-	<div class="tutor-card" style="margin-left: auto; width: 340px; border: 2px solid white; background-color: rgb(20, 20, 20); color: rgb(240, 240, 240); font-size: 16px;">	
-		First 3 students joined in March 2024 from
+	<div class="tutor-card">
+		Learnt that universities don't compete on teaching quality, but prestige. Pivoted. First 3 students joined in March 2024 from
 		<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
 			r/PhysicsStudents
 		</a>
+	</div>
 
-		<br>
-		<br>
-
+	<div class="tutor-card" style="height: fit-content; margin-left: auto; width: 340px; border: 2px solid white; background-color: rgb(20, 20, 20); color: rgb(240, 240, 240); font-size: 16px;">		
 		389 upvotes on
 		<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
 			YC HackerNews 
@@ -74,20 +124,21 @@
 	</div>
 </div>
 
-<!-- ROTATING GALLERY -->
-<div class="image-gallery-container">
-  {#if randomlyChosenExemplarVideos.length > 0}
-    <ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
-  {/if}
+<div style="text-align: center; padding-top: 4vw; padding-bottom: 4vw;">
+	<img 
+		style="width: 60vw; height: auto"
+		src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/home%20page%20assets%2Fmap%20of%20explanations.app%20(top%20left).png?alt=media&token=574503bf-de88-4adb-815d-c46b54047401"
+	> 
 </div>
-
-
 
 <script>
   import ImageGallery from '$lib/ImageGallery.svelte'
   import Button, { Label } from '@smui/button'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import { goto } from '$app/navigation'
+	import HdDoodleVideo from '$lib/HDDoodleVideo.svelte';
+	import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
+	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 
   // RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [
@@ -191,6 +242,17 @@
 </script>
 
 <style>
+	.youtube-video-title {
+		font-size: 20px;
+	}
+
+	.my-video-grid {
+		display: grid; 
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1vw;
+		padding: 1vw;
+	}
+
   .tutor-card {
     border: 2px solid black; width: 300px; 
 		height: 80px; padding: 16px;

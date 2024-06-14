@@ -210,7 +210,6 @@ body {
 	// max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
 	margin-top: 0; 
 	margin-bottom: 0;
-	font-size: 3vw; /* was 6vw */
 	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
 	font-weight: 500;
 
@@ -233,11 +232,11 @@ body {
 // the layout will make use of horizontal space 
 @media only screen and (min-width: 1280px) {
 	.header-title {
-		font-size: 4vw; // webflow's original is 7rem
+		font-size: 4.4vw; // webflow's original is 7rem
 		max-width: calc(100vw - 200px);
 	}
 	.header-subtitle {
-		max-width: calc(100vw - 800px);
+		max-width: 50vw;
 	}
 	.webflow-container {
 		width: 92%;
@@ -354,12 +353,9 @@ body {
 
 .header-subcopy-wrapper {
 	// margin-left: 5vw;
-	margin-left: 0.5vw;
-	width: 90%;
 	max-width: 280px; 
 
 	// additional attributes
-	margin-right: 0px;
 	display: flex; 
 	flex-direction: column;
 	// justify-content: flex-end; 

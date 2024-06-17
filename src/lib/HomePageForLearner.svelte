@@ -6,11 +6,11 @@
   </div>
 
 	<div class="header-subtitle" style="font-size: 1.5vw; line-height: 1.6; font-weight: 500; color: rgb(60, 60, 60);">
-		Choose a teacher. Ask them lots of questions. Get detailed visual explanations until you truly understand everything.
-		$10/week.
+		Choose a teacher. Ask them lots of questions. Get detailed video explanations until you truly understand everything.
+		$16/month.
 	</div>
 
-	<ReusableRoundButton on:click={redirectToSignUpPage}
+	<ReusableRoundButton on:click={redirectToCalMeetingPage}
 		backgroundColor="#5d0068"
 		textColor="white"
 	>
@@ -29,8 +29,15 @@
 		<div class="youtube-video-title">
 			Q: Why eigenvalue must be 0 or 1?
 		</div>
-		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80)">
-		 	Answered by: Ben, MIT '25, 21st in US junior olympiad 2019
+		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80); display: flex; align-items: center;">
+		 	Answered by:
+				<a target="_blank" href="https://explanations.app/profile/lvzQqyZIV1wjwYnRV9hn/lX5yMlh4abTJycsFyLySoRhUItE3" style="text-decoration: none;margin-left: 4px; text-decoration: underline; color: purple; cursor: pointer; font-weight: 500; ">
+					Ben
+				</a> 	
+			 <div class="separator"></div> 
+			 <div class="color: purple;">MIT '25</div>
+			 	
+			 <div class="separator"></div> top 21 in USA(J)MO
 		</div>
 
 		<RenderlessListenToBoard 
@@ -47,34 +54,21 @@
 		</RenderlessListenToBoard>
 	</div>
 
-	<div>
-		<div class="youtube-video-title">
-			Q: Transforming circular seperation --> linear 
-		</div>
-		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80)">
-			Answered by: Tony Wang, MIT '20, competitive programmer
-		</div>
-
-		<RenderlessListenToBoard 
-			dbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
-			let:boardDoc={boardDoc}
-		>
-			<ReusableDoodleVideo
-					{boardDoc}
-					canvasWidth={window.innerWidth * 0.3}
-					canvasHeight={window.innerWidth * 0.3 * 3/4}
-					showEditDeleteButtons={false}
-					boardDbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
-			/>
-		</RenderlessListenToBoard>
-	</div>
-
-	<div>
+		<div>
 			<div class="youtube-video-title">
 				Q: Review on change of basis
 			</div>
-			<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80)">
-				Answered by: Ammar, MIT '24, Syria National Captain
+			<div style="margin-top: 4px; margin-bottom: 8px;  color: rgb(80, 80, 80); display: flex; align-items: center;">
+				Answered by: 
+				<div style="margin-left: 4px;">Ammar (retired)</div>
+				
+				<div class="separator"></div>
+
+				MIT '24
+				
+				<div class="separator"></div>
+								
+				Syria IPhO Captain 
 			</div>
 
 		<RenderlessListenToBoard 
@@ -91,11 +85,39 @@
 		</RenderlessListenToBoard>
 	</div>
 
+	<div>
+		<div class="youtube-video-title">
+			Q: Transforming circular separation --> linear 
+		</div>
+		<div style="margin-top: 4px; margin-bottom: 8px;  color: rgb(80, 80, 80); display: flex; align-items: center;">
+			Answered by: Tony (retired)		<div style="font-size: 12px; margin-left: 4px">
+					
+				<div class="separator"></div>
+
+			</div> MIT '20
+				
+			<div class="separator"></div>
+			CSAIL PhD	
+		</div>
+
+		<RenderlessListenToBoard 
+			dbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
+			let:boardDoc={boardDoc}
+		>
+			<ReusableDoodleVideo
+					{boardDoc}
+					canvasWidth={window.innerWidth * 0.3}
+					canvasHeight={window.innerWidth * 0.3 * 3/4}
+					showEditDeleteButtons={false}
+					boardDbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
+			/>
+		</RenderlessListenToBoard>
+	</div>
+
 	<!-- TO-DO: add Esther's video since she tutors competitive physics too f = ma -->
 </div>
 
-<div style="display: flex; gap: 1vw; flex-wrap: wrap;">
-
+<div style="display: flex; gap: 1vw; flex-wrap: wrap; margin-top: 2vw;">
 	<div class="tutor-card">
 		Served ~50 teachers & 800 students for MIT math & physics as 
 		<a target="_blank" href="https://physics.mit.edu/wp-content/uploads/2021/09/PhysicsAtMIT_2021_Zoom_Feature.pdf">
@@ -110,7 +132,7 @@
 	</div>
 
 	<div class="tutor-card">
-		Learnt that universities don't compete on teaching quality, but prestige. Pivoted. First 3 students joined in March 2024 from
+		Failed to work with college classes for various reasons (coming soon on blog). Pivoted. First 3 students joined in March 2024 from
 		<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
 			r/PhysicsStudents
 		</a>
@@ -127,7 +149,7 @@
 <div style="text-align: center; padding-top: 4vw; padding-bottom: 4vw;">
 	<img 
 		style="width: 60vw; height: auto"
-		src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/home%20page%20assets%2Fmap%20of%20explanations.app%20(top%20left).png?alt=media&token=574503bf-de88-4adb-815d-c46b54047401"
+		src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
 	> 
 </div>
 
@@ -236,12 +258,20 @@
 		return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 	}
 
-  function redirectToSignUpPage () {
-		goto('/servers')
+	function redirectToCalMeetingPage () {
+		goto('https://cal.com/eltonlin1998/setup-call')
 	}
 </script>
 
 <style>
+	.separator {
+		width: 2px;
+		height: 2px;
+		background-color: #606060;
+		border-radius: 50%;
+		margin: 4px;
+	}
+
 	.youtube-video-title {
 		font-size: 20px;
 	}

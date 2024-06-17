@@ -5,7 +5,7 @@
 {#if boardDoc}
   <RenderlessFetchStrokes dbPath={boardDbPath}
     let:fetchStrokes={fetchStrokes}
-    autoFetchStrokes
+    {autoFetchStrokes}
     let:strokesArray={strokesArray}
   >
     <div use:lazyCallable={fetchStrokes} 
@@ -92,6 +92,7 @@
   import { createEventDispatcher } from 'svelte'
   import { getFirestore, increment, collection, query, where, getDocs } from 'firebase/firestore';
 
+  export let autoFetchStrokes = true
   export let boardDoc
   export let boardDbPath = '' // 
   export let canvasWidth = maxAvailableWidth

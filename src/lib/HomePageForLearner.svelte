@@ -31,7 +31,7 @@
 		</div>
 		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80); display: flex; align-items: center;">
 		 	Answered by:
-				<a target="_blank" href="https://explanations.app/profile/lvzQqyZIV1wjwYnRV9hn/lX5yMlh4abTJycsFyLySoRhUItE3" style="text-decoration: none;margin-left: 4px; text-decoration: underline; color: purple; cursor: pointer; font-weight: 500; ">
+				<a target="_blank" href="https://explanations.app/user/lX5yMlh4abTJycsFyLySoRhUItE3" style="text-decoration: none;margin-left: 4px; text-decoration: underline; color: purple; cursor: pointer; font-weight: 500; ">
 					Ben
 				</a> 	
 			 <div class="separator"></div> 

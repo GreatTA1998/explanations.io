@@ -29,9 +29,10 @@
 		<div class="youtube-video-title">
 			Q: Why eigenvalue must be 0 or 1?
 		</div>
+
 		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80); display: flex; align-items: center;">
 		 	Answered by:
-				<a target="_blank" href="https://explanations.app/user/lX5yMlh4abTJycsFyLySoRhUItE3" style="text-decoration: none;margin-left: 4px; text-decoration: underline; color: purple; cursor: pointer; font-weight: 500; ">
+				<a target="_blank" on:click={() => goto('/user/lX5yMlh4abTJycsFyLySoRhUItE3')} style="text-decoration: none;margin-left: 4px; text-decoration: underline; color: purple; cursor: pointer; font-weight: 500; ">
 					Ben
 				</a> 	
 			 <div class="separator"></div> 
@@ -105,11 +106,11 @@
 			let:boardDoc={boardDoc}
 		>
 			<ReusableDoodleVideo
-					{boardDoc}
-					canvasWidth={window.innerWidth * 0.3}
-					canvasHeight={window.innerWidth * 0.3 * 3/4}
-					showEditDeleteButtons={false}
-					boardDbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
+				{boardDoc}
+				canvasWidth={window.innerWidth * 0.3}
+				canvasHeight={window.innerWidth * 0.3 * 3/4}
+				showEditDeleteButtons={false}
+				boardDbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
 			/>
 		</RenderlessListenToBoard>
 	</div>

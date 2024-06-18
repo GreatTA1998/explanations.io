@@ -1,32 +1,54 @@
 <div>
-  Cross server profile page
+  <div style="padding: 1vw;">
+    <div style="font-size: 2vw;">
+      Ben Shimabukuro
+    </div>
+    <div>
+      Subscribed 5 times
+    </div>
+    <div>
+      Linear Algebra, Probabilities, Statistics, Calculus
+    </div>
+    <div>
+      MIT'25, LinkedIn
+    </div>
+  </div>
 
-  TO-DO:
-    - Show watch time
-    - Show subscribers
-    - Show name 
-    - Also multislide vs single-slide compatibility.
+  <!-- TO-DO: show individual video watch-time, and comments -->
   {#if allVideos}
-    <div class="profile-videos-grid">
+    <div class="alternative-flexbox">
       {#each allVideos as video}
-      <div>
-        <div style="height: 24px; overflow: hidden;">
-          {video.description}
-        </div>
+        <div style="align-self: end;">
+          <div class="youtube-video-title" style="width: {window.innerWidth * 0.3}px; margin-bottom: 0.2vw;">
+            {video.description}
+          </div>
 
-        <RenderlessListenToBoard
-          dbPath={video.path}
-          let:boardDoc={boardDoc}
-        >
-          <ReusableDoodleVideo
-            autoFetchStrokes={false}
-            {boardDoc}
-            canvasWidth={window.innerWidth * 0.3}
-            canvasHeight={window.innerWidth * 0.3 * 3/4}
-            showEditDeleteButtons={false}
-            boardDbPath={video.path}
-          />
-        </RenderlessListenToBoard>
+          {#if video.isMultiboard}
+            <OnlineMultislideVideo
+              canvasWidth={window.innerWidth * 0.3}
+              canvasHeight={window.innerWidth * 0.3 * 3/4}
+              boardDoc={video}
+              classID={quickfixClassIDFrom(video)}
+              audioDownloadURL={video.audioDownloadURL}
+              timingOfSlideChanges={video.timingOfSlideChanges}
+              showEditDeleteButtons={true}
+              on:six-seconds-elapsed={(e) => incrementViewMinutes(video.id, e.detail.playbackSpeed)}
+            />
+          {:else}
+            <RenderlessListenToBoard
+              dbPath={video.path}
+              let:boardDoc={boardDoc}
+            >
+              <ReusableDoodleVideo
+                autoFetchStrokes={false}
+                {boardDoc}
+                canvasWidth={window.innerWidth * 0.3}
+                canvasHeight={window.innerWidth * 0.3 * 3/4}
+                showEditDeleteButtons={false}
+                boardDbPath={video.path}
+              />
+            </RenderlessListenToBoard>
+          {/if}
         </div> 
       {/each}
     </div>
@@ -39,12 +61,27 @@
   import { getFirestoreQuery } from '/src/helpers/crud.js'
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
+  import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
 
   export let profileUID
 
   let allVideos = null
 
   fetchTop10Videos()
+
+  function quickfixClassIDFrom (video) {
+    console.log("video.poath =", video.path)
+    const classID = video.path.split('/')[1]
+    console.log('classID =', classID)
+    return classID
+  }
+
+  function incrementViewMinutes (boardID, playbackSpeed) {
+    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
+    updateDoc(blackboardRef, {
+      viewMinutes: increment(0.1 * playbackSpeed)
+    })
+  }
 
   async function fetchTop10Videos () {
     const db = getFirestore()
@@ -63,10 +100,15 @@
 </script>
 
 <style>
-  .profile-videos-grid {
-    display: grid; 
-		grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-		gap: 1vw;
-		padding: 1vw;
+  .alternative-flexbox {
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 1.5vw;
+    justify-content: space-evenly;
+  }
+
+  .youtube-video-title {
+    font-weight: 500; 
+    font-size: 0.8vw;
   }
 </style>

@@ -16,7 +16,7 @@
   position: relative; 
   box-sizing: border-box;
   width: {canvasWidth}px; 
-  height: {canvasHeight + 40}px"
+  height: {canvasHeight + (80 * scaleFactor)}px"
 >
   {#if !hasPlaybackStarted}
     <span
@@ -26,7 +26,8 @@
       width: {180 * scaleFactor}px; 
       height: {180 * scaleFactor}px; 
       z-index: 5;
-      font-size: {10 * scaleFactor}rem;"
+      font-size: {10 * scaleFactor}rem;
+      cursor: pointer;"
     >
       play_circle
     </span>
@@ -118,7 +119,7 @@
       hasAudioSliderJumped = true
     }}
     controls
-    style={`width: ${canvasWidth}px; height: 40px; position: absolute; bottom: 0; top: auto;`}
+    style={`width: ${canvasWidth}px; height: ${90 * scaleFactor}px; position: absolute; bottom: 0; top: auto;`}
   >
   </audio>
 </div>
@@ -308,6 +309,10 @@
 </script>
 
 <style>
+  audio::-webkit-media-controls-enclosure {
+    border-radius: 0;
+  }
+
   .overlay-center {
     position: absolute; 
     width: 20px; 

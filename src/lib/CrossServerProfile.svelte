@@ -1,10 +1,10 @@
 <div>
-  <div style="padding: 1vw;">
+  <div style="padding: 2vw;">
     <div style="font-size: 2vw;">
       Ben Shimabukuro
     </div>
     <div>
-      Subscribed 5 times
+      Subscribed 5 times, 20 videos
     </div>
     <div>
       Linear Algebra, Probabilities, Statistics, Calculus
@@ -49,6 +49,7 @@
               />
             </RenderlessListenToBoard>
           {/if}
+          <VideoFooterInfo {video}></VideoFooterInfo>
         </div> 
       {/each}
     </div>
@@ -62,6 +63,7 @@
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
+  import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
 
   export let profileUID
 
@@ -70,9 +72,7 @@
   fetchTop10Videos()
 
   function quickfixClassIDFrom (video) {
-    console.log("video.poath =", video.path)
     const classID = video.path.split('/')[1]
-    console.log('classID =', classID)
     return classID
   }
 
@@ -103,12 +103,12 @@
   .alternative-flexbox {
     display: flex; 
     flex-wrap: wrap;
-    gap: 1.5vw;
+    gap: 2vw;
     justify-content: space-evenly;
   }
 
   .youtube-video-title {
-    font-weight: 500; 
+    font-weight: 600; 
     font-size: 0.8vw;
   }
 </style>

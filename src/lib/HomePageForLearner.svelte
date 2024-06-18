@@ -32,13 +32,21 @@
 
 		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80); display: flex; align-items: center;">
 		 	Answered by:
-				<a target="_blank" on:click={() => goto('/user/lX5yMlh4abTJycsFyLySoRhUItE3')} style="text-decoration: none;margin-left: 4px; text-decoration: underline; color: purple; cursor: pointer; font-weight: 500; ">
+			<div style="display: flex; cursor: pointer; align-items: center;">
+				<a target="_blank" on:click={() => goto('/user/lX5yMlh4abTJycsFyLySoRhUItE3')} style="text-decoration: none; text-decoration: underline; margin-left: 4px; color: purple; cursor: pointer; font-weight: 500; ">
 					Ben
 				</a> 	
-			 <div class="separator"></div> 
-			 <div class="color: purple;">MIT '25</div>
-			 	
-			 <div class="separator"></div> top 21 in USA(J)MO
+
+				<div class="separator"></div> 
+
+				<div>MIT '25</div>
+						
+				<div class="separator"></div> 
+
+				<div>
+					Top 21 in USA(J)MO		
+				</div>
+			</div>
 		</div>
 
 		<RenderlessListenToBoard 
@@ -52,6 +60,10 @@
 				showEditDeleteButtons={false}
 				boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
 			/>
+
+			<div style="width: {window.innerWidth * 0.3}px">
+				<VideoFooterInfo video={boardDoc}/>
+			</div>
 		</RenderlessListenToBoard>
 	</div>
 
@@ -83,6 +95,10 @@
 				showEditDeleteButtons={false}
 				boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW" 
 			/>
+
+			<div style="width: {window.innerWidth * 0.3}px">
+				<VideoFooterInfo video={boardDoc}/>
+			</div>
 		</RenderlessListenToBoard>
 	</div>
 
@@ -112,6 +128,10 @@
 				showEditDeleteButtons={false}
 				boardDbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
 			/>
+			
+			<div style="width: {window.innerWidth * 0.3}px">
+				<VideoFooterInfo video={boardDoc}/>
+			</div>
 		</RenderlessListenToBoard>
 	</div>
 
@@ -162,6 +182,7 @@
 	import HdDoodleVideo from '$lib/HDDoodleVideo.svelte';
 	import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
+	import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
 
   // RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [

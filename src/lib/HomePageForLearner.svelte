@@ -51,41 +51,35 @@
 			</div>
 		</div>
 
-		<div class:fullscreen-mode={fullscreenVideoID === 'UwXpkXqKTYfrnz5FybRp'} style="outline: 2px solid red;">
-			<RenderlessListenToBoard 
-				dbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
-				let:boardDoc={boardDoc}
-			>	
-				<div>
-					<ReusableDoodleVideo
-						{boardDoc}
-						canvasWidth={fullscreenVideoID === 'UwXpkXqKTYfrnz5FybRp' ? window.innerWidth * 0.72 : window.innerWidth * 0.3}
-						canvasHeight={fullscreenVideoID === 'UwXpkXqKTYfrnz5FybRp' ? window.innerWidth * 0.72 * 3/4 : window.innerWidth * 0.3 * 3/4}
-						showEditDeleteButtons={false}
-						boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
-					/>
+		<RenderlessListenToBoard 
+			dbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
+			let:boardDoc={boardDoc}
+		>	
+			<FullscreenModule {boardDoc}
+				let:toggleFullscreen={toggleFullscreen}
+				let:canvasWidth={canvasWidth}
+				let:canvasHeight={canvasHeight}
+				let:isFullscreen={isFullscreen}
+			>
+				<ReusableDoodleVideo
+					{boardDoc}
+					{canvasWidth}
+					{canvasHeight}
+					showEditDeleteButtons={false}
+					boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
+				/>
 
+				{#if !isFullscreen}
 					<div style="width: {window.innerWidth * 0.3}px">
-						{#if fullscreenVideoID !== 'UwXpkXqKTYfrnz5FybRp'}
-							<VideoFooterInfo video={boardDoc}>
-								<div on:click={toggleFullscreen(boardDoc)} class="my-round-button" style="margin-right: 0; margin-left: auto;">
-									Full View
-								</div>
-							</VideoFooterInfo>
-						{/if}
+						<VideoFooterInfo video={boardDoc}>
+							<div on:click={toggleFullscreen(boardDoc)} class="my-round-button" style="margin-right: 0; margin-left: auto;">
+								Full View
+							</div>
+						</VideoFooterInfo>
 					</div>
-				</div>
-
-				{#if boardDoc && fullscreenVideoID === 'UwXpkXqKTYfrnz5FybRp'}
-					<span on:click={toggleFullscreen(boardDoc)} class="material-symbols-outlined" 
-						style="position: absolute; top: 1vw;  bottom: auto; right: 1vw; left: auto; cursor: pointer; font-size: 2vw;"
-					>
-						close
-					</span>
-					<CommentsColumn videoDoc={boardDoc}/>
 				{/if}
-			</RenderlessListenToBoard>
-		</div>
+			</FullscreenModule>
+		</RenderlessListenToBoard>
 	</div>
 
 		<div>
@@ -105,21 +99,36 @@
 				Syria IPhO Captain 
 			</div>
 
+
+
 		<RenderlessListenToBoard 
 			dbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW"
 			let:boardDoc={boardDoc}
 		>
-			<ReusableDoodleVideo
-				{boardDoc}
-				canvasWidth={window.innerWidth * 0.3}
-				canvasHeight={window.innerWidth * 0.3 * 3/4}
-				showEditDeleteButtons={false}
-				boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW" 
-			/>
-
-			<div style="width: {window.innerWidth * 0.3}px">
-				<VideoFooterInfo video={boardDoc}/>
-			</div>
+			<FullscreenModule {boardDoc}
+				let:toggleFullscreen={toggleFullscreen}
+				let:canvasWidth={canvasWidth}
+				let:canvasHeight={canvasHeight}
+				let:isFullscreen={isFullscreen}
+			>
+				<ReusableDoodleVideo
+					{boardDoc}
+					canvasWidth={canvasWidth}
+					canvasHeight={canvasHeight}
+					showEditDeleteButtons={false}
+					boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW" 
+				/>
+				
+				{#if !isFullscreen}
+					<div style="width: {window.innerWidth * 0.3}px">
+						<VideoFooterInfo video={boardDoc}>
+							<div on:click={toggleFullscreen} class="my-round-button" style="margin-right: 0; margin-left: auto;">
+								Full View
+							</div>
+						</VideoFooterInfo>
+					</div>
+				{/if}
+			</FullscreenModule>
 		</RenderlessListenToBoard>
 	</div>
 
@@ -205,6 +214,7 @@
 	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
 	import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
 	import CommentsColumn from '$lib/CommentsColumn.svelte'
+	import FullscreenModule from '$lib/FullscreenModule.svelte'
 
 	let fullscreenVideoID = ''
 
@@ -307,11 +317,6 @@
 	function redirectToCalMeetingPage () {
 		goto('https://cal.com/eltonlin1998/setup-call')
 	}
-
-	function toggleFullscreen (boardDoc) {
-		if (!fullscreenVideoID) fullscreenVideoID = boardDoc.id
-		else fullscreenVideoID = ''
-	}
 </script>
 
 <style>
@@ -325,17 +330,6 @@
     padding: 0.5vw; 
     border: 1px solid black;
     cursor: pointer;
-	}
-
-	.fullscreen-mode {
-		z-index: 10;
-		width: 100%;
-		height: 100%;
-		background-color: rgb(250, 250, 250);
-		position: fixed;
-		left: 0; 
-		top: 0;
-		display: flex;
 	}
 
 	.separator {

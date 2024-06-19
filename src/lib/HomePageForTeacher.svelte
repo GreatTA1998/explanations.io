@@ -4,7 +4,7 @@
       Explain things you love
     </p>	
     <div class="header-subtitle" style="font-size: 20px; line-height: 1.4; font-weight: 500; color: rgb(60, 60, 60);">
-      Share your unique insight with the world, supported by paying subscribers. (Try the demo blackboard with an iPad-like device drawing device)
+      Share your unique insight with the world, supported by paying subscribers. (Try the demo blackboard with an iPad-like drawing device)
     </div>
   </div>
 

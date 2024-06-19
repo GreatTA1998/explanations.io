@@ -9,7 +9,7 @@
     let:strokesArray={strokesArray}
   >
     <div use:lazyCallable={fetchStrokes} 
-      style={`width: ${canvasWidth}px; height: ${canvasHeight + (80 * scaleFactor)}px; position: relative`}
+      style={`width: ${canvasWidth}px; height: ${canvasHeight + Math.min(54, (80 * scaleFactor))}px; position: relative`}
     >
 
       <HDDoodleVideo 

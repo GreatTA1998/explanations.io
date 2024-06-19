@@ -20,9 +20,9 @@
       </div>
     </div>
 
-    <div on:click={() => goto(createRedirectURL(video))} class="my-round-button" style="margin-left: auto;">
-      Full view
-    </div>
+    <slot>
+
+    </slot>
   </div>
 {/if}
 

@@ -1,5 +1,15 @@
 <div style="padding: 1vw;">
-  <h2>Comments</h2>
+  <div style="display: flex; margin-bottom: 2vw;">
+    <div class="my-tab-item">
+      <div style="font-size: 12px; text-align: center;">
+        (coming soon)
+      </div>
+      Transcript 
+    </div>
+    <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
+      Comments
+    </div>
+  </div>
 
   <RenderlessListenToCollection
     collectionPath={videoDoc.path + '/comments'}
@@ -84,6 +94,19 @@
 </script>
 
 <style>
+  .my-tab-item {
+    font-size: 1.4rem;
+    border-bottom: 2px solid rgb(160, 160, 160);
+    padding: 1vw;
+    color: rgb(160, 160, 160);
+  }
+
+  .my-active-tab {
+    border-bottom: 2px solid black;
+    color: black;
+    font-weight: 600;
+  }
+
   .copied-from-old-explain {
     font-size: .875rem;
     font-weight: 400;

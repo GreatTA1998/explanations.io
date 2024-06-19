@@ -25,7 +25,8 @@
 		{:else}
 			<HomePageForTeacher/>
 		{/if}
-	</TopNavbar>
+	</div>
+</TopNavbar>
 
 <script>	
 	import { goto } from '$app/navigation'

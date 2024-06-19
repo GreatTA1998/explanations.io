@@ -20,16 +20,23 @@
       </div>
     </div>
 
-    <div class="my-round-button" style="margin-left: auto;">
+    <div on:click={() => goto(createRedirectURL(video))} class="my-round-button" style="margin-left: auto;">
       Full view
     </div>
   </div>
 {/if}
 
 <script>
+  import { goto } from '$app/navigation'
   import { roundedToFixed } from '/src/helpers/utility.js'
 
   export let video
+
+  function createRedirectURL (video) {
+    const classID = video.path.split('/')[1]
+    const blackboardID = video.path.split('/')[3]
+    return '/video/' + classID + ':' + blackboardID
+  }
 </script>
 
 <style>

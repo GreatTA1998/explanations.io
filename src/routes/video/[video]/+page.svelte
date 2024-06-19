@@ -1,15 +1,9 @@
-<RenderlessListenToBoard dbPath="classes/{classID}/blackboards/{blackboardID}" let:boardDoc={boardDoc}>
-  <ReusableDoodleVideo
-    canvasWidth={600}
-    canvasHeight={450}
-    {boardDoc}
-    boardDbPath="classes/{classID}/blackboards/{blackboardID}"
-  />
-</RenderlessListenToBoard>
+<FullVideoDisplay
+  videoPath="/classes/{classID}/blackboards/{blackboardID}"
+/>
 
 <script>
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
+  import FullVideoDisplay from '$lib/FullVideoDisplay.svelte'
 
   export let data;
 
@@ -18,6 +12,4 @@
 
   const classID = videoID.split(':')[0]
   const blackboardID = videoID.split(':')[1]
-  
-  const epsilon = 40
 </script>

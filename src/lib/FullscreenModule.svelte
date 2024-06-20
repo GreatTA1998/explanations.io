@@ -1,11 +1,11 @@
-<div class:fullscreen-mode={isFullscreen} style="outline: 2px solid red;">
+<div class:fullscreen-mode={isFullscreen}>
   <slot {toggleFullscreen} {canvasWidth} {canvasHeight} {isFullscreen}>
 
   </slot>
 
   {#if isFullscreen}
     <span on:click={toggleFullscreen(boardDoc)} class="material-symbols-outlined" 
-      style="position: absolute; top: 1vw;  bottom: auto; right: 1vw; left: auto; cursor: pointer; font-size: 2vw;"
+      style="position: absolute; top: 1vw; bottom: auto; right: 1vw; left: auto; cursor: pointer; font-size: 2vw;"
     >
       close
     </span>
@@ -15,22 +15,20 @@
 </div>
 
 <script>
-  export let previewWidth = window.innerWidth * 0.72
-  export let previewHeight = previewWidth * 3/4
+  export let previewWidth = window.innerWidth * 0.35
   
   export let boardDoc
 
   import CommentsColumn from '$lib/CommentsColumn.svelte'
 
-  let canvasWidth = window.innerWidth * 0.72
-  let canvasHeight = canvasWidth * 3/4
-
   let isFullscreen = false
+  let canvasWidth = previewWidth
+
+  $: canvasHeight = canvasWidth * 3/4
 
   $: {
     if (isFullscreen) canvasWidth = window.innerWidth * 0.72
-    else canvasWidth = window.innerWidth * 0.3
-    canvasHeight = canvasWidth * 3/4
+    else canvasWidth = previewWidth
   }
 
   function toggleFullscreen () {

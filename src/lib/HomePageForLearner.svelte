@@ -5,8 +5,8 @@
     </p>
   </div>
 
-	<div class="header-subtitle" style="font-size: 1.5vw; line-height: 1.6; font-weight: 500; color: rgb(60, 60, 60);">
-		Choose a teacher. Ask them lots of questions. Get detailed video explanations until you truly understand everything.
+	<div class="header-subtitle" style="font-size: 1.5vw; line-height: 1.6; font-weight: 500; color: rgb(40, 40, 40);">
+		Choose a teacher. Ask them questions. Get detailed video explanations until you truly understand everything.
 		$16/month.
 	</div>
 
@@ -15,157 +15,28 @@
 		textColor="white"
 	>
 		<div style="font-weight: 600; font-size: 18px; padding: 12px 12px;">
-			Schedule setup call
+			Book Setup Call
 		</div>
 		
 		<span style="margin-left: 0px; margin-right: 4px; font-size: 1.8vw;" class="material-symbols-outlined">
-			phone
+			videocam
 		</span>
 	</ReusableRoundButton>
 </div>
 
-<div class="my-video-grid">
-	<div>
-		<div class="youtube-video-title">
-			Q: Why eigenvalue must be 0 or 1?
-		</div>
-
-		<div style="margin-top: 4px; margin-bottom: 8px; color: rgb(80, 80, 80); display: flex; align-items: center;">
-		 	Answered by:
-			<div style="display: flex; cursor: pointer; align-items: center;">
-				<a target="_blank" on:click={() => goto('/user/lX5yMlh4abTJycsFyLySoRhUItE3')} 
-					style="text-decoration: none; text-decoration: underline; margin-left: 4px; color: purple; cursor: pointer; font-weight: 500;"
-				>
-					Ben
-				</a> 	
-
-				<div class="separator"></div> 
-
-				<div>MIT '25</div>
-						
-				<div class="separator"></div> 
-
-				<div>
-					Top 21 in USA(J)MO		
-				</div>
-			</div>
-		</div>
-
-		<RenderlessListenToBoard 
-			dbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
-			let:boardDoc={boardDoc}
-		>	
-			<FullscreenModule {boardDoc}
-				let:toggleFullscreen={toggleFullscreen}
-				let:canvasWidth={canvasWidth}
-				let:canvasHeight={canvasHeight}
-				let:isFullscreen={isFullscreen}
-			>
-				<ReusableDoodleVideo
-					{boardDoc}
-					{canvasWidth}
-					{canvasHeight}
-					showEditDeleteButtons={false}
-					boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp"
-				/>
-
-				{#if !isFullscreen}
-					<div style="width: {window.innerWidth * 0.3}px">
-						<VideoFooterInfo video={boardDoc}>
-							<div on:click={toggleFullscreen(boardDoc)} class="my-round-button" style="margin-right: 0; margin-left: auto;">
-								Full View
-							</div>
-						</VideoFooterInfo>
-					</div>
-				{/if}
-			</FullscreenModule>
-		</RenderlessListenToBoard>
-	</div>
-
-		<div>
-			<div class="youtube-video-title">
-				Q: Review on change of basis
-			</div>
-			<div style="margin-top: 4px; margin-bottom: 8px;  color: rgb(80, 80, 80); display: flex; align-items: center;">
-				Answered by: 
-				<div style="margin-left: 4px;">Ammar (retired)</div>
-				
-				<div class="separator"></div>
-
-				MIT '24
-				
-				<div class="separator"></div>
-								
-				Syria IPhO Captain 
-			</div>
-
-
-
-		<RenderlessListenToBoard 
-			dbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW"
-			let:boardDoc={boardDoc}
-		>
-			<FullscreenModule {boardDoc}
-				let:toggleFullscreen={toggleFullscreen}
-				let:canvasWidth={canvasWidth}
-				let:canvasHeight={canvasHeight}
-				let:isFullscreen={isFullscreen}
-			>
-				<ReusableDoodleVideo
-					{boardDoc}
-					canvasWidth={canvasWidth}
-					canvasHeight={canvasHeight}
-					showEditDeleteButtons={false}
-					boardDbPath="classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW" 
-				/>
-				
-				{#if !isFullscreen}
-					<div style="width: {window.innerWidth * 0.3}px">
-						<VideoFooterInfo video={boardDoc}>
-							<div on:click={toggleFullscreen} class="my-round-button" style="margin-right: 0; margin-left: auto;">
-								Full View
-							</div>
-						</VideoFooterInfo>
-					</div>
-				{/if}
-			</FullscreenModule>
-		</RenderlessListenToBoard>
-	</div>
-
-	<div>
-		<div class="youtube-video-title">
-			Q: Transforming circular separation --> linear 
-		</div>
-		<div style="margin-top: 4px; margin-bottom: 8px;  color: rgb(80, 80, 80); display: flex; align-items: center;">
-			Answered by: Tony (retired)		<div style="font-size: 12px; margin-left: 4px">
-					
-				<div class="separator"></div>
-
-			</div> MIT '20
-				
-			<div class="separator"></div>
-			CSAIL PhD	
-		</div>
-
-		<RenderlessListenToBoard 
-			dbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
-			let:boardDoc={boardDoc}
-		>
-			<ReusableDoodleVideo
-				{boardDoc}
-				canvasWidth={window.innerWidth * 0.3}
-				canvasHeight={window.innerWidth * 0.3 * 3/4}
-				showEditDeleteButtons={false}
-				boardDbPath="classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW" 
+<div class="alternative-flexbox">
+	{#each showcasedCreators as creator}
+		<div style="width: fit-content;">
+			<CreatorFeaturedVideoShowcase 
+				originalQuestion={creator.originalQuestion}
+				boardDbPath={creator.boardDbPath}
+				firstNameAndKeyInfo={creator.firstNameAndKeyInfo}
+				collegeAndYear={creator.collegeAndYear}
+				bio={creator.bio}
+				uid={creator.uid}
 			/>
-			
-			<div style="width: {window.innerWidth * 0.3}px">
-				<VideoFooterInfo video={boardDoc}/>
-			</div>
-		</RenderlessListenToBoard>
-	</div>
-
-	<!-- TO-DO: add Esther's video since she tutors competitive physics too f = ma -->
+		</div>
+	{/each}
 </div>
 
 <div style="display: flex; gap: 1vw; flex-wrap: wrap; margin-top: 2vw;">
@@ -190,7 +61,7 @@
 	</div>
 
 	<div class="tutor-card" style="height: fit-content; margin-left: auto; width: 340px; border: 2px solid white; background-color: rgb(20, 20, 20); color: rgb(240, 240, 240); font-size: 16px;">		
-		389 upvotes on
+		Received 390 points on
 		<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
 			YC HackerNews 
 		</a>
@@ -205,18 +76,37 @@
 </div>
 
 <script>
-  import ImageGallery from '$lib/ImageGallery.svelte'
-  import Button, { Label } from '@smui/button'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import { goto } from '$app/navigation'
-	import HdDoodleVideo from '$lib/HDDoodleVideo.svelte';
-	import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
-	import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-	import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
-	import CommentsColumn from '$lib/CommentsColumn.svelte'
-	import FullscreenModule from '$lib/FullscreenModule.svelte'
+	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte';
 
-	let fullscreenVideoID = ''
+	const showcasedCreators = [
+		{
+			originalQuestion: "Q: Why eigenvalue must be 0 or 1?",
+			boardDbPath: "classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp",
+			firstNameAndKeyInfo: "Ben (subscribed 5 times)",
+			collegeAndYear: "MIT '25",
+			bio: "Top 21 USA(J)MO",
+			uid: "lX5yMlh4abTJycsFyLySoRhUItE3"
+		},
+		{
+			originalQuestion: "Q: Review on change of basis",
+			boardDbPath: "classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW",
+			firstNameAndKeyInfo: "Ammar (retired)",
+			collegeAndYear: "MIT '24",
+			bio: "Syria IPhO Captain",
+			uid: "uyZJl2yX6hXkiXemCdoMPrYqRfC3"
+		},
+		{
+			originalQuestion: "Q: Circular separation --> linear ",
+			boardDbPath: "classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW",
+			firstNameAndKeyInfo: "Tony (retired)",
+			collegeAndYear: "MIT '20",
+			bio: "CSAIL PhD",
+			uid: "xHwn0o2nrkW4wUZs7XYVUAvZeWV2"
+		}
+	]
+
 
   // RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [
@@ -320,55 +210,16 @@
 </script>
 
 <style>
-	.my-round-button {
+	.alternative-flexbox {
     display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    border-radius: 24px; 
-    min-width: 48px; 
-    min-height: 16px; 
-    padding: 0.5vw; 
-    border: 1px solid black;
-    cursor: pointer;
-	}
-
-	.separator {
-		width: 2px;
-		height: 2px;
-		background-color: #606060;
-		border-radius: 50%;
-		margin: 4px;
-	}
-
-	.youtube-video-title {
-		font-size: 20px;
-	}
-
-	.my-video-grid {
-		display: grid; 
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1vw;
+    gap: 2vw;
+    justify-content: space-evenly;
 		padding: 1vw;
-	}
+  }
 
   .tutor-card {
     border: 2px solid black; width: 300px; 
 		height: 80px; padding: 16px;
     border-radius: 16px;
-  }
-
-  .tutor-name {
-    font-weight: 600;
-    font-size: 16px;
-  }
-
-  .tutor-description {
-    margin-top: 12px;
-    margin-bottom: 12px;
-    font-size: 14px;
-  }
-
-  .flag-icon {
-    font-size: 20px;
   }
 </style>

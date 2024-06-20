@@ -1,5 +1,6 @@
 <div>
   <div style="padding: 2vw;">
+    <!-- TO-DO: actually fetch the user  -->
     <div style="font-size: 2vw;">
       Ben Shimabukuro
     </div>
@@ -23,33 +24,51 @@
             {video.description}
           </div>
 
-          {#if video.isMultiboard}
-            <OnlineMultislideVideo
-              canvasWidth={window.innerWidth * 0.3}
-              canvasHeight={window.innerWidth * 0.3 * 3/4}
-              boardDoc={video}
-              classID={quickfixClassIDFrom(video)}
-              audioDownloadURL={video.audioDownloadURL}
-              timingOfSlideChanges={video.timingOfSlideChanges}
-              showEditDeleteButtons={true}
-              on:six-seconds-elapsed={(e) => incrementViewMinutes(video.id, e.detail.playbackSpeed)}
-            />
-          {:else}
-            <RenderlessListenToBoard
-              dbPath={video.path}
-              let:boardDoc={boardDoc}
-            >
-              <ReusableDoodleVideo
-                autoFetchStrokes={false}
-                {boardDoc}
-                canvasWidth={window.innerWidth * 0.3}
-                canvasHeight={window.innerWidth * 0.3 * 3/4}
-                showEditDeleteButtons={false}
-                boardDbPath={video.path}
+          <FullscreenModule boardDoc={video} previewWidth={0.3 * window.innerWidth}
+            let:toggleFullscreen={toggleFullscreen}
+            let:canvasWidth={canvasWidth}
+            let:canvasHeight={canvasHeight}
+            let:isFullscreen={isFullscreen}
+          >
+            {#if video.isMultiboard}
+              <OnlineMultislideVideo
+                {canvasWidth}
+                {canvasHeight}
+                boardDoc={video}
+                classID={quickfixClassIDFrom(video)}
+                audioDownloadURL={video.audioDownloadURL}
+                timingOfSlideChanges={video.timingOfSlideChanges}
+                showEditDeleteButtons={true}
+                showSlideChanger={true}
+                on:six-seconds-elapsed={(e) => incrementViewMinutes(video.id, e.detail.playbackSpeed)}
               />
-            </RenderlessListenToBoard>
-          {/if}
-          <VideoFooterInfo {video}></VideoFooterInfo>
+            {:else}
+              <RenderlessListenToBoard
+                dbPath={video.path}
+                let:boardDoc={boardDoc}
+              >
+                <ReusableDoodleVideo
+                  autoFetchStrokes={false}
+                  {boardDoc}
+                  {canvasWidth}
+                  {canvasHeight}
+                  showEditDeleteButtons={false}
+                  boardDbPath={video.path}
+                />
+              </RenderlessListenToBoard>
+            {/if}
+
+            {#if !isFullscreen}
+              <div style="width: {canvasWidth}px">
+
+              <VideoFooterInfo {video}>
+                <div on:click={toggleFullscreen} class="my-round-button" style="margin-right: 0; margin-left: auto;">
+                  Full View
+                </div>
+              </VideoFooterInfo>
+              </div>
+            {/if}
+          </FullscreenModule>
         </div> 
       {/each}
     </div>
@@ -64,6 +83,7 @@
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
   import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
+  import FullscreenModule from '$lib/FullscreenModule.svelte'
 
   export let profileUID
 
@@ -88,13 +108,10 @@
 
     const museums = query(
       collectionGroup(db, 'blackboards'), 
-      where('creatorUID', '==', 'lX5yMlh4abTJycsFyLySoRhUItE3')
+      where('creatorUID', '==', profileUID)
     )
     
     const finalResult = await getFirestoreQuery(museums)
-    for (const doc of finalResult) {
-      console.log('doc =', doc)
-    }
     allVideos = finalResult
   }
 </script>

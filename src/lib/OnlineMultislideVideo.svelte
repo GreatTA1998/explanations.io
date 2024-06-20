@@ -1,127 +1,129 @@
-{#if showSlideChanger}
-  <div style="display: flex; margin-bottom: 12px;">
-    <MultislideSlideChanger
-      slideIDs={boardDoc.slideIDs}
-      {idxOfFocusedSlide}
-      on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
-    />
+<div>
+  {#if showSlideChanger}
+    <div style="display: flex; margin-bottom: 12px;">
+      <MultislideSlideChanger
+        slideIDs={boardDoc.slideIDs}
+        {idxOfFocusedSlide}
+        on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
+      />
 
-    <div style="margin-left: 20px">
+      <div style="margin-left: 20px">
 
-    </div>
-  </div>
-{/if}
-
-<div style="
-  position: relative; 
-  box-sizing: border-box;
-  width: {canvasWidth}px; 
-  height: {canvasHeight + (80 * scaleFactor)}px"
->
-  {#if !hasPlaybackStarted}
-    <span
-      on:click={startAudioPlayer} 
-      class="material-icons overlay-center" 
-      style="color: white;
-      width: {180 * scaleFactor}px; 
-      height: {180 * scaleFactor}px; 
-      z-index: 5;
-      font-size: {10 * scaleFactor}rem;
-      cursor: pointer;"
-    >
-      play_circle
-    </span>
-  {/if} 
-
-  <div style="position: absolute; top: 8px; left: 8px; z-index: 6; display: flex; align-items: center;">
-    <BaseTransparentButton on:click={togglePlaySpeed} style="font-weight: 500;">
-      {playbackSpeed}x 
-    </BaseTransparentButton>
-  </div>
-
-  <!-- share, delete button overlay on top -->
-  {#if showEditDeleteButtons}
-    <div style="
-      margin-left: auto;
-      margin-right: 8px; 
-      display: flex; 
-      align-items: center; 
-      flex-direction: row-reverse;
-      position: absolute; 
-      top: 8px; 
-      bottom: auto;
-      width: 100%;
-      z-index: 5;
-    "
-    >
-      <!-- $adminUIDs.includes($user.uid) -->
-      {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
-        <div style="margin-right: 6px;">
-          <BaseTransparentButton on:click={() => revertToBoard(boardDoc)}>
-            <span class="material-icons">delete_forever</span>
-          </BaseTransparentButton>
-        </div>
-      {/if}
+      </div>
     </div>
   {/if}
-  
-  {#each boardDoc.slideIDs as slideID, i}
-    <RenderlessFetchStrokes
-      dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-      let:fetchStrokes={fetchStrokes}
-      let:strokesArray={strokesArray}
-      let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
-      let:deleteStrokesWithParam={deleteStrokesWithParam}
-      on:mounted={(e) => deleteFuncs = [...deleteFuncs, e.detail.deleteFunc]}
-    > 
-      <div style="display: none;" id="delete-button-{slideID}"
-        on:click={() => deleteStrokesWithParam({ boardPath, strokesArray })}
-      >
-      </div>
 
-      <div 
-        use:lazyCallable={fetchStrokes}  
-        style="
-          display: {idxOfFocusedSlide === i ? '' : 'none'};
-          width: {$maxAvailableWidth}px; 
-          height: {$maxAvailableHeight + 40}px; 
-          position: relative;
-        "
-      > 
-        {#if strokesArray}
-          <MultislideDoodleVideoVisualSlide
-            {currentTime}
-            {strokesArray}
-            {canvasWidth}
-            {canvasHeight}
-            {hasPlaybackStarted}
-            {hasAudioSliderJumped}
-            on:slider-jump-sync={() => hasAudioSliderJumped = false}
-          />
+  <div style="
+    position: relative; 
+    box-sizing: border-box;
+    width: {canvasWidth}px; 
+    height: {canvasHeight + (80 * scaleFactor)}px"
+  >
+    {#if !hasPlaybackStarted}
+      <span
+        on:click={startAudioPlayer} 
+        class="material-icons overlay-center" 
+        style="color: white;
+        width: {180 * scaleFactor}px; 
+        height: {180 * scaleFactor}px; 
+        z-index: 5;
+        font-size: {10 * scaleFactor}rem;
+        cursor: pointer;"
+      >
+        play_circle
+      </span>
+    {/if} 
+
+    <div style="position: absolute; top: 8px; left: 8px; z-index: 6; display: flex; align-items: center;">
+      <BaseTransparentButton on:click={togglePlaySpeed} style="font-weight: 500;">
+        {playbackSpeed}x 
+      </BaseTransparentButton>
+    </div>
+
+    <!-- share, delete button overlay on top -->
+    {#if showEditDeleteButtons}
+      <div style="
+        margin-left: auto;
+        margin-right: 8px; 
+        display: flex; 
+        align-items: center; 
+        flex-direction: row-reverse;
+        position: absolute; 
+        top: 8px; 
+        bottom: auto;
+        width: 100%;
+        z-index: 5;
+      "
+      >
+        <!-- $adminUIDs.includes($user.uid) -->
+        {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
+          <div style="margin-right: 6px;">
+            <BaseTransparentButton on:click={() => revertToBoard(boardDoc)}>
+              <span class="material-icons">delete_forever</span>
+            </BaseTransparentButton>
+          </div>
         {/if}
       </div>
-    </RenderlessFetchStrokes>
-  {/each}
+    {/if}
+    
+    {#each boardDoc.slideIDs as slideID, i}
+      <RenderlessFetchStrokes
+        dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+        let:fetchStrokes={fetchStrokes}
+        let:strokesArray={strokesArray}
+        let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
+        let:deleteStrokesWithParam={deleteStrokesWithParam}
+        on:mounted={(e) => deleteFuncs = [...deleteFuncs, e.detail.deleteFunc]}
+      > 
+        <div style="display: none;" id="delete-button-{slideID}"
+          on:click={() => deleteStrokesWithParam({ boardPath, strokesArray })}
+        >
+        </div>
 
-  <audio
-    src={audioDownloadURL}
-    bind:this={AudioPlayer}
-    on:play={() => {
-      hasPlaybackStarted = true;
-      isPlaying = true;
-      startTimer();
-    }}
-    on:pause={() => {
-      isPlaying = false;
-    }}
-    on:seeking={() => {
-      currentTime = AudioPlayer.currentTime;
-      hasAudioSliderJumped = true
-    }}
-    controls
-    style={`width: ${canvasWidth}px; height: ${90 * scaleFactor}px; position: absolute; bottom: 0; top: auto;`}
-  >
-  </audio>
+        <div 
+          use:lazyCallable={fetchStrokes}  
+          style="
+            display: {idxOfFocusedSlide === i ? '' : 'none'};
+            width: {$maxAvailableWidth}px; 
+            height: {$maxAvailableHeight + 40}px; 
+            position: relative;
+          "
+        > 
+          {#if strokesArray}
+            <MultislideDoodleVideoVisualSlide
+              {currentTime}
+              {strokesArray}
+              {canvasWidth}
+              {canvasHeight}
+              {hasPlaybackStarted}
+              {hasAudioSliderJumped}
+              on:slider-jump-sync={() => hasAudioSliderJumped = false}
+            />
+          {/if}
+        </div>
+      </RenderlessFetchStrokes>
+    {/each}
+
+    <audio
+      src={audioDownloadURL}
+      bind:this={AudioPlayer}
+      on:play={() => {
+        hasPlaybackStarted = true;
+        isPlaying = true;
+        startTimer();
+      }}
+      on:pause={() => {
+        isPlaying = false;
+      }}
+      on:seeking={() => {
+        currentTime = AudioPlayer.currentTime;
+        hasAudioSliderJumped = true
+      }}
+      controls
+      style={`width: ${canvasWidth}px; height: ${90 * scaleFactor}px; position: absolute; bottom: 0; top: auto;`}
+    >
+    </audio>
+  </div>
 </div>
 
 <script>

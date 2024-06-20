@@ -4,7 +4,7 @@
       Explain things you love
     </p>	
     <div class="header-subtitle" style="font-size: 20px; line-height: 1.4; font-weight: 500; color: rgb(60, 60, 60);">
-      Share your unique insight with the world, supported by paying subscribers. (Try the demo blackboard with an iPad-like drawing device)
+      Record your insights for yourself. Decide later if you want to share it with the world, supported by paying subscribers. (Try the demo blackboard with an iPad-like drawing device)
     </div>
   </div>
 
@@ -14,7 +14,7 @@
       textColor="white"
     >
       <div style="font-weight: 600; font-size: 18px; padding: 12px 12px;">
-        Explore class servers
+        Start personal channel (coming soon!)
       </div>
       
       <span style="margin-left: 0px; font-size: 32px;" class="material-symbols-outlined">

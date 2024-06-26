@@ -1,6 +1,6 @@
-<div>
-  <div style="padding: 2vw;">
-    <!-- TO-DO: actually fetch the user  -->
+<div style="padding-top: 2vw;">
+  <!-- TO-DO: actually fetch the user  -->
+  <!-- <div style="padding: 2vw;">
     <div style="font-size: 2vw;">
       Ben Shimabukuro
     </div>
@@ -13,7 +13,7 @@
     <div>
       MIT'25, LinkedIn
     </div>
-  </div>
+  </div> -->
 
   <!-- TO-DO: show individual video watch-time, and comments -->
   {#if allVideos}

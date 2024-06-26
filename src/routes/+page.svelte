@@ -149,9 +149,6 @@
 		max-width: 85vw;
 		font-size: 4vw;
 	}
-	.webflow-container {
-		width: 85%;
-	}
 }
 
 .call-to-action-button {
@@ -330,7 +327,6 @@ li {
 		margin-top: 0px;
 		width: 100%;
 	}
-
 
 	li {
 		margin-bottom: 24px;

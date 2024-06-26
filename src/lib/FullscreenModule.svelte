@@ -23,6 +23,7 @@
 
   let isFullscreen = false
   let canvasWidth = previewWidth
+  let canvasHeight = canvasWidth * 3/4
 
   $: canvasHeight = canvasWidth * 3/4
 

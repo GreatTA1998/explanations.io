@@ -2,6 +2,20 @@
 	font-family: 'Inter', sans-serif;
 }
 
+// responsive typography based on Kevin Powell
+:root {
+	--fs-xl: clamp(2.4rem, 3.8vw, 4.8rem);
+	--fs-l: clamp(1.4rem, 2.2vw, 3.4rem);
+	--fs-m: clamp(1rem, 1.6vw, 2rem);
+	--fs-s: clamp(0.875rem, 1.2vw, 1.8rem);
+	--fs-xs: clamp(0.75rem, 1vw, 1.6rem);
+
+	--fs-700: 2rem;
+	--fs-500: 1.25rem;
+	--fs-400: 1rem;
+	--fs-300: 0.75rem; 
+}
+
 // paper-shadow system based on UX Movement Newsletter
 .core-shadow {
 	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1)
@@ -29,14 +43,6 @@
 	width: 48vw; max-width: 800px;
 }
 
-.blog-description-font-styles {
-	font-family: UberMoveText, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;; font-weight: 400; font-size: 1.1rem;
-}
-
-.step-title-font-styles {
-	margin-bottom: 12px; font-family: sans-serif; font-weight: 600; font-size: 1.7rem
-}
-
 @media screen and (max-width: 479px) {
 	.step-title-font-styles {
 		font-size: 1.1rem;
@@ -61,8 +67,6 @@ audio::-webkit-media-controls-panel {
 }  
 
 .webflow-container {
-	width: 90%; 
-	max-width: 1600px; /* webflow's value is 1280, partly because their scrollbar takes up width */
 	margin-right: auto;
 	margin-left: auto; 
 
@@ -80,17 +84,9 @@ audio::-webkit-media-controls-panel {
 }
 
 .header-flex {
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
-	margin-top: 3%;
-	margin-bottom: 3%;
 	-webkit-box-pack: justify;
 	-ms-flex-pack: justify;
-	/* -webkit-justify-content: space-between;
-	justify-content: space-between; */
-
 	flex-wrap: wrap;
 }
 
@@ -107,15 +103,7 @@ audio::-webkit-media-controls-panel {
 	margin-bottom: 0.4em;
 	font-size: 1.2rem;
 	line-height: 1.5;
-
-	// ADDITIONAL PROPERTIES I ADDED ON TOP OF WEBFLOW
-	font-family: sans-serif;
 }
-
-// * {
-// 	box-sizing: border-box;
-// }
-
 
 body {
   margin: 0;
@@ -206,63 +194,38 @@ body {
 	padding-bottom: 8%;
 }
 
+/////////
+//// FONT SECTION HERE
+/// /////
+
 .header-title {
-	// max-width: 52vw; /* webflow is 52vw, but explanations is a long word */
-	margin-top: 0; 
-	margin-bottom: 0;
-	/* line-height: 1.1; /* webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though */
-	font-weight: 500;
+	// Warp uses: pre-line; 
+	white-space: pre-wrap;
+
+	font-size: var(--fs-xl);
 
 	/* This turns to prevent <p> from taking additional height for no reason */
 	margin-top: 0;
 	margin-bottom: 0;
 
 	// BELOW ARE CSS ATTRIBUTES I PUT IN ADDITION TO BASE ATTRIBUTES
-	box-sizing: border-box;
 
 	/* The -0.02em is the secret sauce for making sans-serif fonts look good **/
 	letter-spacing: -.02em; 
 	font-weight: 600; 
 
 	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
-	line-height: 1.25; // used to be 1.25 but GF suggests otherwise
+	line-height: 1.25;
+	// webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though
+	// used to be 1.25 but GF suggests otherwise
 }
 
-// As soon as we achieve minimum width of 1280,
-// the layout will make use of horizontal space 
-@media only screen and (min-width: 1280px) {
-	.header-title {
-		font-size: 4.4vw; // webflow's original is 7rem
-		max-width: calc(100vw - 200px);
-	}
-	.header-subtitle {
-		max-width: 50vw;
-	}
-	.webflow-container {
-		width: 92%;
-	}
-}
-
-@media only screen and (max-width: 991px) {
-	.header-title {
-		max-width: 85vw;
-		font-size: 4vw;
-	}
-	.webflow-container {
-		width: 85%;
-	}
-}
-
-@media only screen and (max-width: 767px) {
-	.header-title {
-		max-width: 100vw;
-		font-size: 12vw;
-		line-height: 1.4;
-		margin-top: 12px;
-	}
-	.webflow-container {
-		width: 85%;
-	}
+.header-subtitle {
+	font-size: var(--fs-m); 
+	line-height: 1.6; 
+	font-weight: 500; 
+	color: rgb(40, 40, 40);
+	max-width: 55ch; // 50-60 characters
 }
 
 .call-to-action-button {

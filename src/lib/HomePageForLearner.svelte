@@ -1,32 +1,32 @@
-<div class="header-flex" style="border: 0px solid black; gap: 2vw;">
-  <div style="width: max-content;">
-    <p class="header-title">
-      Youtube-style help for competitive math
-    </p>
-  </div>
+<div style="display: flex; flex-direction: column; gap: 16px;">
+	<p class="header-title" bind:clientWidth={containerWidth}>
+		Youtube-style tutoring&nbsp;for competitive&nbsp;math
+	</p>
 
-	<div class="header-subtitle" style="font-size: 1.5vw; line-height: 1.6; font-weight: 500; color: rgb(40, 40, 40);">
-		Choose a teacher. Ask them questions. Get detailed video explanations until you truly understand everything.
-		$16/month.
-	</div>
-
-	<ReusableRoundButton on:click={redirectToCalMeetingPage}
-		backgroundColor="#5d0068"
-		textColor="white"
-	>
-		<div style="font-weight: 600; font-size: 18px; padding: 12px 12px;">
-			Book Setup Call
+	<div style="display: flex; flex-wrap: wrap; gap: 2vw; align-items: center;">
+		<div class="header-subtitle">
+			Subscribe to a teacher. Ask them questions directly. Get detailed video explanations until you understand everything.
+			$16/month.
 		</div>
-		
-		<span style="margin-left: 0px; margin-right: 4px; font-size: 1.8vw;" class="material-symbols-outlined">
-			videocam
-		</span>
-	</ReusableRoundButton>
+
+		<ReusableRoundButton on:click={redirectToCalMeetingPage}
+			backgroundColor="#5d0068"
+			textColor="white"
+		>
+			<div style="font-weight: 600; font-size: var(--fs-m); padding: 12px 12px;">
+				Book Setup Call
+			</div>
+			
+			<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
+				videocam
+			</span>
+		</ReusableRoundButton>
+	</div>
 </div>
 
-<div class="alternative-flexbox">
-	{#each showcasedCreators as creator}
-		<div style="width: fit-content;">
+{#if videoWidth}
+	<div class="alternative-flexbox" style="margin-top: 32px;">
+		{#each showcasedCreators as creator}
 			<CreatorFeaturedVideoShowcase 
 				originalQuestion={creator.originalQuestion}
 				boardDbPath={creator.boardDbPath}
@@ -34,10 +34,11 @@
 				collegeAndYear={creator.collegeAndYear}
 				bio={creator.bio}
 				uid={creator.uid}
+				previewWidth={videoWidth}
 			/>
-		</div>
-	{/each}
-</div>
+		{/each}
+	</div>
+{/if}
 
 <div style="display: flex; gap: 1vw; flex-wrap: wrap; margin-top: 2vw;">
 	<div class="tutor-card">
@@ -54,7 +55,7 @@
 	</div>
 
 	<div class="tutor-card">
-		Failed to work with college classes for various reasons (coming soon on blog). Pivoted. First 3 students joined in March 2024 from
+		Failed to work with college classes for various reasons (blog coming soon). Pivoted. First 3 students joined in March 2024 from
 		<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
 			r/PhysicsStudents
 		</a>
@@ -70,7 +71,7 @@
 
 <div style="text-align: center; padding-top: 4vw; padding-bottom: 4vw;">
 	<img 
-		style="width: 60vw; height: auto"
+		style="min-width: 400px; width: 60vw; height: auto"
 		src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
 	> 
 </div>
@@ -78,7 +79,17 @@
 <script>
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import { goto } from '$app/navigation'
+	import { onMount } from 'svelte'
 	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte';
+
+	let videoWidth = 0
+	let videoHeight = 0 // AF(0) means not yet calculated
+
+	let containerWidth
+
+	onMount(() => {
+		calculateVideoSizes()
+	})
 
 	const showcasedCreators = [
 		{
@@ -198,6 +209,35 @@
 	}
 	randomlyChosenExemplarVideos = temp
 
+	// TO-DO: doesn't work for intermediate sizes
+	function calculateVideoSizes() {
+		// Configuration
+		const minMobileWidth = 320;
+		const tabletBreakpoint = 768;
+		const desktopBreakpoint = 1024;
+		const videoAspectRatio = 16 / 9;
+		const containerPadding = 20; // Padding on each side
+
+		let videosPerRow
+
+		// 320px is the minimum width needed for video title and description to stay on one-line
+		const minWidth = 320
+
+		if (containerWidth >= tabletBreakpoint) {
+			videosPerRow = 3
+		} else {
+			videosPerRow = 1
+		}
+
+		// 0.9 multiplier accounts for spacing
+		videoWidth = 0.9 * Math.floor(containerWidth / videosPerRow); 
+		const decidedWidth = Math.max(minWidth, videoWidth)
+
+		videoHeight = Math.floor(decidedWidth / videoAspectRatio);
+
+		return { videoWidth: decidedWidth, videoHeight, videosPerRow };
+	}
+
 	function getRandomIntInclusive({ min, max }) {
 		min = Math.ceil(min)
 		max = Math.floor(max)
@@ -215,6 +255,7 @@
     gap: 2vw;
     justify-content: space-evenly;
 		padding: 1vw;
+		flex-wrap: wrap;
   }
 
   .tutor-card {

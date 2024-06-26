@@ -1,19 +1,26 @@
 <TopNavbar>
 	<div slot="tab-section" style="margin-left: 24px; margin-right: auto; display: flex; align-items: center; justify-content: space-evenly; color: black; width: 160px; box-sizing: border-box;">
-		<div on:click={() => activeTabName = 'Learn'} style="cursor: pointer; text-align: center; box-sizing: border-box; height: 64px; padding: 8px 6px 4px 6px" class:active-underline-indicator={activeTabName === 'Learn'}>
-			<span class="material-symbols-outlined" style="font-size: 26px; color: rgb(30, 30, 30)">
+		<div on:click={() => activeTabName = 'Learn'} 
+			class="tab-full-item"
+			class:active-underline-indicator={activeTabName === 'Learn'}
+		>
+			
+			<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Learn'}>
 				smart_display
 			</span>
-			<div style="font-size: 14px; margin-top: -2px;" class:active-bold={activeTabName === 'Learn'}>
+			<div class="tab-name" class:active-bold={activeTabName === 'Learn'}>
 				Learn
 			</div>
 		</div>
 
-		<div on:click={() => activeTabName = 'Teach'} style="cursor: pointer; text-align: center; height: 64px; box-sizing: border-box; padding: 8px 6px 4px 6px" class:active-underline-indicator={activeTabName === 'Teach'}>
-			<span class="material-symbols-outlined" style="font-size: 26px; color: rgb(30, 30, 30)">
+		<div on:click={() => activeTabName = 'Teach'} 
+			class="tab-full-item"
+			class:active-underline-indicator={activeTabName === 'Teach'}
+		>
+			<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Teach'}>
 				stylus_note
 			</span>
-			<div style="font-size: 14px; margin-top: -2px;" class:active-bold={activeTabName === 'Teach'}>
+			<div class="tab-name" class:active-bold={activeTabName === 'Teach'}>
 				Teach
 			</div>
 		</div>
@@ -37,15 +44,10 @@
 	import HomePageForTeacher from '$lib/HomePageForTeacher.svelte'
 
 	let activeTabName = 'Learn'
-	let w
 
 	onMount(() => {
 		mixpanelLibrary.track('Home page visited')
 	})
-
-	function redirectToSignUpPage () {
-		goto('/servers')
-	}
 </script>
 
 <style lang="scss">
@@ -53,22 +55,32 @@
 		color: rgb(30, 30, 30)	
 	}
 
-	.active-bold {
-		font-weight: 600;
+	.tab-full-item {
+		cursor: pointer; 
+		text-align: center; 
+		height: var(--navbar-height); 
+		box-sizing: border-box; 
+		padding: 6px;
 	}
 
-	.webflow-container {
-		width: 90%; /* 90% */
-		// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
-		margin-right: auto;
-		margin-left: auto; 
+	.tab-name {
+		font-size: 14px; 
+		margin-top: -2px; 
+		color: rgb(90, 90, 90);
+	}
 
-		box-sizing: border-box;
+	.tab-icon {
+		font-size: 26px; 
+		color: rgb(90, 90, 90);
+	}
 
-		// additional properties
-		margin-top: 20px;
+	.active-bold {
+		font-weight: 500;
+		color: rgb(0, 0, 0);
+	}
 
-		background-color: transparent;
+	.active-tab-icon {
+		color: rgb(0, 0, 0);
 	}
 
 	.webflow-h1 {

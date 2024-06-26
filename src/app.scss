@@ -14,6 +14,8 @@
 	--fs-500: 1.25rem;
 	--fs-400: 1rem;
 	--fs-300: 0.75rem; 
+
+	--navbar-height: 56px
 }
 
 // paper-shadow system based on UX Movement Newsletter
@@ -143,14 +145,11 @@ body {
 
 .webflow-container {
 	width: 90%; /* 90% */
-	// max-width: 1400px; /* webflow's value is 1280, partly because their scrollbar takes up width */
 	margin-right: auto;
 	margin-left: auto; 
 
-	box-sizing: border-box;
-
 	// additional properties
-	margin-top: 20px;
+	margin-top: 16px;
 
 	background-color: transparent;
 }

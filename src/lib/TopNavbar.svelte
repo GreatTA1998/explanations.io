@@ -1,12 +1,12 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} style="border-bottom: 1px solid lightgrey;">
-			<Row style="height: 64px; background-color: #f8f9f9; padding-left: 4%; padding-right: 4%;">
-				<div style="padding: 8px 12px 8px 0px; box-sizing: border-box;">
+			<Row style="height: var(--navbar-height); background-color: #f8f9f9; padding-left: 4%; padding-right: 4%;">
+				<div style="padding: 6px 12px 8px 0px; box-sizing: border-box;">
 					<img 
-					on:click={() => goto('/')}
-					src="/app-logo-no-bg.png" width="52" height="48" style="filter: brightness(80%); margin-right: 6px; margin-top: 2px; cursor: pointer;"
-				>
+						on:click={() => goto('/')}
+						src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
+					>
 	
 				</div>
 

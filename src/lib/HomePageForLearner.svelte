@@ -1,9 +1,9 @@
 <div style="display: flex; flex-direction: column; gap: 16px;">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube-style tutoring&nbsp;for competitive&nbsp;math
+		Youtube-style tutoring for competitive math
 	</p>
 
-	<div style="display: flex; flex-wrap: wrap; gap: 2vw; align-items: center;">
+	<div style="display: flex; flex-wrap: wrap; gap: 16px	; align-items: center;">
 		<div class="header-subtitle">
 			Subscribe to a teacher. Ask them questions directly. Get detailed video explanations until you understand everything.
 			$16/month.
@@ -22,8 +22,6 @@
 			</span>
 		</ReusableRoundButton>
 	</div>
-
-
 
 	{#if videoWidth}
 		<div class="alternative-flexbox" style="padding: 32px 0px; outline: 0px solid red;">
@@ -70,17 +68,13 @@
 		</div>
 	</div>
 	
-	<div style="text-align: center; padding-top: 4vw; padding-bottom: 4vw;">
+	<div style="text-align: center;">
 		<img 
-			style="min-width: 400px; width: 60vw; height: auto"
+			style="min-width: 300px; width: 60vw; height: auto"
 			src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
 		> 
 	</div>
 </div>
-
-
-
-
 
 <script>
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
@@ -227,6 +221,8 @@
 		let videosPerRow
 
 		// 320px is the minimum width needed for video title and description to stay on one-line
+		// actually the min. width is different, because it depends on the font-size
+		// so I'd find a minimum 
 		const minWidth = 320
 
 		if (containerWidth >= tabletBreakpoint) {
@@ -236,7 +232,7 @@
 		}
 
 		// 0.9 multiplier accounts for spacing
-		videoWidth = 0.9 * Math.floor(containerWidth / videosPerRow); 
+		videoWidth = 1 * Math.floor(containerWidth / videosPerRow); 
 		const decidedWidth = Math.max(minWidth, videoWidth)
 
 		videoHeight = Math.floor(decidedWidth / videoAspectRatio);

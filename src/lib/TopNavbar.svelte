@@ -1,6 +1,7 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} style="border-bottom: 1px solid lightgrey;">
+			<!-- 4% padding matches 92% container width -->
 			<Row style="height: var(--navbar-height); background-color: #f8f9f9; padding-left: 4%; padding-right: 4%;">
 				<div style="padding: 6px 12px 8px 0px; box-sizing: border-box;">
 					<img 

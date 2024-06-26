@@ -69,9 +69,14 @@ audio::-webkit-media-controls-panel {
 }  
 
 .webflow-container {
+	width: 92%; 
 	margin-right: auto;
 	margin-left: auto; 
 
+	// additional properties
+	margin-top: 24px;
+
+	background-color: transparent;
 	box-sizing: border-box;
 }
 
@@ -141,17 +146,6 @@ body {
 // HOME PAGE STYLES (copied entirely from /+page.svelte)
 .active-bold {
 	font-weight: 600;
-}
-
-.webflow-container {
-	width: 90%; /* 90% */
-	margin-right: auto;
-	margin-left: auto; 
-
-	// additional properties
-	margin-top: 16px;
-
-	background-color: transparent;
 }
 	
 .active-underline-indicator {

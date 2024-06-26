@@ -1,4 +1,4 @@
-<div>
+<div style="width: fit-content;">
   <div class="youtube-video-title" style="width: {previewWidth}px;">
     {originalQuestion}
   </div>
@@ -59,7 +59,7 @@
   export let collegeAndYear = ''
   export let bio = ''
   export let uid = ''
-  export let previewWidth = 0.28 * window.innerWidth
+  export let previewWidth = 0
 </script>
 
 <style>

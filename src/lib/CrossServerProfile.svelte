@@ -16,15 +16,15 @@
   </div> -->
 
   <!-- TO-DO: show individual video watch-time, and comments -->
-  {#if allVideos}
+  {#if allVideos && videoWidth}
     <div class="alternative-flexbox">
       {#each allVideos as video}
         <div style="align-self: end;">
-          <div class="youtube-video-title" style="width: {window.innerWidth * 0.3}px; margin-bottom: 0.2vw;">
+          <div class="youtube-video-title" style="width: {videoWidth}px; margin-bottom: 0.2vw;">
             {video.description}
           </div>
 
-          <FullscreenModule boardDoc={video} previewWidth={0.3 * window.innerWidth}
+          <FullscreenModule boardDoc={video} previewWidth={videoWidth}
             let:toggleFullscreen={toggleFullscreen}
             let:canvasWidth={canvasWidth}
             let:canvasHeight={canvasHeight}
@@ -77,6 +77,7 @@
 </div>
 
 <script>
+  import { onMount } from 'svelte'
   import { collectionGroup, query, where, getDocs, limit, getFirestore } from "firebase/firestore"
   import { getFirestoreQuery } from '/src/helpers/crud.js'
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
@@ -88,8 +89,27 @@
   export let profileUID
 
   let allVideos = null
+  let videoWidth = 0
+  let videoHeight = 0
 
-  fetchTop10Videos()
+  onMount(() => {
+    calculateVideoSizes()
+    fetchTop10Videos()
+  })
+
+  function calculateVideoSizes() {
+    const containerWidth = 0.9 * window.innerWidth
+
+		const videoAspectRatio = 16 / 9;
+
+		// 320px is the minimum width needed for video title and description to stay on one-line
+		// actually the min. width is different, because it depends on the font-size
+		const minWidth = 320 + 0.04 * containerWidth
+		videoWidth = minWidth
+		videoHeight = Math.floor(videoWidth / videoAspectRatio);
+
+		return { videoWidth, videoHeight };
+	}
 
   function quickfixClassIDFrom (video) {
     const classID = video.path.split('/')[1]
@@ -119,13 +139,15 @@
 <style>
   .alternative-flexbox {
     display: flex; 
-    flex-wrap: wrap;
-    gap: 2vw;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    gap: 2vw;
+    /* row-gap: 36px;  */
   }
 
   .youtube-video-title {
     font-weight: 600; 
-    font-size: 0.8vw;
+    font-size: var(--fs-s);
   }
 </style>

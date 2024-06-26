@@ -13,7 +13,7 @@
 			backgroundColor="#5d0068"
 			textColor="white"
 		>
-			<div style="font-weight: 600; font-size: var(--fs-m); padding: 12px 12px;">
+			<div style="font-weight: 600; font-size: var(--fs-s); padding: 12px;">
 				Book Setup Call
 			</div>
 			
@@ -209,35 +209,16 @@
 	}
 	randomlyChosenExemplarVideos = temp
 
-	// TO-DO: doesn't work for intermediate sizes
 	function calculateVideoSizes() {
-		// Configuration
-		const minMobileWidth = 320;
-		const tabletBreakpoint = 768;
-		const desktopBreakpoint = 1024;
 		const videoAspectRatio = 16 / 9;
-		const containerPadding = 20; // Padding on each side
-
-		let videosPerRow
 
 		// 320px is the minimum width needed for video title and description to stay on one-line
 		// actually the min. width is different, because it depends on the font-size
-		// so I'd find a minimum 
-		const minWidth = 320
+		const minWidth = 320 + 0.04 * containerWidth
+		videoWidth = minWidth
+		videoHeight = Math.floor(videoWidth / videoAspectRatio);
 
-		if (containerWidth >= tabletBreakpoint) {
-			videosPerRow = 3
-		} else {
-			videosPerRow = 1
-		}
-
-		// 0.9 multiplier accounts for spacing
-		videoWidth = 1 * Math.floor(containerWidth / videosPerRow); 
-		const decidedWidth = Math.max(minWidth, videoWidth)
-
-		videoHeight = Math.floor(decidedWidth / videoAspectRatio);
-
-		return { videoWidth: decidedWidth, videoHeight, videosPerRow };
+		return { videoWidth, videoHeight };
 	}
 
 	function getRandomIntInclusive({ min, max }) {
@@ -254,15 +235,18 @@
 <style>
 	.alternative-flexbox {
     display: flex; 
-    gap: 2vw;
     justify-content: space-evenly;
-		padding: 1vw;
 		flex-wrap: wrap;
+
+		padding: 1vw;
+		row-gap: 36px;
   }
 
   .tutor-card {
-    border: 2px solid black; width: 300px; 
-		height: 80px; padding: 16px;
+    border: 2px solid black; 
+		width: 300px; 
+		padding: 16px;
     border-radius: 16px;
+		font-size: var(--fs-400);
   }
 </style>

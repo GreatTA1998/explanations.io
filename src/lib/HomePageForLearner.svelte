@@ -22,59 +22,65 @@
 			</span>
 		</ReusableRoundButton>
 	</div>
+
+
+
+	{#if videoWidth}
+		<div class="alternative-flexbox" style="padding: 32px 0px; outline: 0px solid red;">
+			{#each showcasedCreators as creator}
+				<CreatorFeaturedVideoShowcase 
+					originalQuestion={creator.originalQuestion}
+					boardDbPath={creator.boardDbPath}
+					firstNameAndKeyInfo={creator.firstNameAndKeyInfo}
+					collegeAndYear={creator.collegeAndYear}
+					bio={creator.bio}
+					uid={creator.uid}
+					previewWidth={videoWidth}
+				/>
+			{/each}
+		</div>
+	{/if}
+
+	<div style="display: flex; gap: 1vw; flex-wrap: wrap;">
+		<div class="tutor-card">
+			Served 50 teachers & 800 students for MIT math & physics as 
+			<a target="_blank" href="https://physics.mit.edu/wp-content/uploads/2021/09/PhysicsAtMIT_2021_Zoom_Feature.pdf">
+				explain.mit.edu
+			</a> (details on page 5) during covid 2020-2021
+		</div>
+	
+		<div class="tutor-card">
+			Raised 500K seed round from 
+			<a href="https://oss.capital/portfolio" target="_blank">OSS Capital</a> (undisclosed)
+			in July 2021. Pivoted from realtime blackboards to focus on video explanations.
+		</div>
+	
+		<div class="tutor-card">
+			Failed to work with college classes for various reasons (blog coming soon). Pivoted. First 3 students joined in March 2024 from
+			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
+				r/PhysicsStudents
+			</a>
+		</div>
+	
+		<div class="tutor-card" style="height: fit-content; margin-left: auto; width: 340px; border: 2px solid white; background-color: rgb(20, 20, 20); color: rgb(240, 240, 240); font-size: 16px;">		
+			Received 390 points on
+			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
+				YC HackerNews 
+			</a>
+		</div>
+	</div>
+	
+	<div style="text-align: center; padding-top: 4vw; padding-bottom: 4vw;">
+		<img 
+			style="min-width: 400px; width: 60vw; height: auto"
+			src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
+		> 
+	</div>
 </div>
 
-{#if videoWidth}
-	<div class="alternative-flexbox" style="margin-top: 32px;">
-		{#each showcasedCreators as creator}
-			<CreatorFeaturedVideoShowcase 
-				originalQuestion={creator.originalQuestion}
-				boardDbPath={creator.boardDbPath}
-				firstNameAndKeyInfo={creator.firstNameAndKeyInfo}
-				collegeAndYear={creator.collegeAndYear}
-				bio={creator.bio}
-				uid={creator.uid}
-				previewWidth={videoWidth}
-			/>
-		{/each}
-	</div>
-{/if}
 
-<div style="display: flex; gap: 1vw; flex-wrap: wrap; margin-top: 2vw;">
-	<div class="tutor-card">
-		Served ~50 teachers & 800 students for MIT math & physics as 
-		<a target="_blank" href="https://physics.mit.edu/wp-content/uploads/2021/09/PhysicsAtMIT_2021_Zoom_Feature.pdf">
-			explain.mit.edu
-		</a> (details on page 5) during covid 2020-2021
-	</div>
 
-	<div class="tutor-card">
-		Raised 500K seed round from 
-		<a href="https://oss.capital/portfolio" target="_blank">OSS Capital</a> (undisclosed)
-		in July 2021. Pivoted from realtime blackboards to focus on video explanations.
-	</div>
 
-	<div class="tutor-card">
-		Failed to work with college classes for various reasons (blog coming soon). Pivoted. First 3 students joined in March 2024 from
-		<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
-			r/PhysicsStudents
-		</a>
-	</div>
-
-	<div class="tutor-card" style="height: fit-content; margin-left: auto; width: 340px; border: 2px solid white; background-color: rgb(20, 20, 20); color: rgb(240, 240, 240); font-size: 16px;">		
-		Received 390 points on
-		<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
-			YC HackerNews 
-		</a>
-	</div>
-</div>
-
-<div style="text-align: center; padding-top: 4vw; padding-bottom: 4vw;">
-	<img 
-		style="min-width: 400px; width: 60vw; height: auto"
-		src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
-	> 
-</div>
 
 <script>
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'

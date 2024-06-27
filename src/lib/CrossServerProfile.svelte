@@ -142,12 +142,11 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
 
-    gap: 2vw;
-    /* row-gap: 36px;  */
+    row-gap: 48px; 
   }
 
   .youtube-video-title {
     font-weight: 600; 
-    font-size: var(--fs-s);
+    font-size: var(--fs-xs);
   }
 </style>

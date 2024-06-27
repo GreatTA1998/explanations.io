@@ -2,7 +2,7 @@
   <div style="display: flex; margin-bottom: 2vw;">
     <div class="my-tab-item">
       <div style="font-size: 12px; text-align: start; font-weight: 300; margin-left: 2px;">
-        coming soon!
+        (coming soon)
       </div>
       Transcript 
     </div>
@@ -20,7 +20,7 @@
     <TextAreaAutoResizing
       value={newInputComment} 
       on:input={(e) => newInputComment = e.detail}
-      placeholder="New follow-up question..."
+      placeholder="Follow-up questions..."
     />
     
     <button on:click={createComment}>SUBMIT</button>

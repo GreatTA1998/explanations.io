@@ -3,9 +3,9 @@
 		Youtube-style tutoring for competitive math
 	</p>
 
-	<div style="display: flex; flex-wrap: wrap; gap: 16px	; align-items: center;">
+	<div style="display: flex; flex-wrap: wrap; row-gap: 30px; align-items: center;">
 		<div class="header-subtitle">
-			Subscribe to a teacher. Ask them questions directly. Get detailed video explanations until you understand everything.
+			Subscribe to a teacher. Type your questions. Get detailed video explanations until you understand everything.
 			$16/month.
 		</div>
 

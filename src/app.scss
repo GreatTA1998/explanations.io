@@ -192,8 +192,8 @@ body {
 /// /////
 
 .header-title {
-	// Warp uses: pre-line; 
-	white-space: pre-wrap;
+	// Warp uses `white-space: pre-line;` pre-wrap is also an option but didn't achieve anything
+	text-wrap: balance;
 
 	font-size: var(--fs-xl);
 
@@ -208,12 +208,11 @@ body {
 	font-weight: 600; 
 
 	color: #1b1b1b; // exact complement of Webflow's contrast black/white contrast
-	line-height: 1.25;
-	// webflow's is 1.0, but squishes the text on Explain, looks good on Webflow though
-	// used to be 1.25 but GF suggests otherwise
+	line-height: 1.4;
 }
 
 .header-subtitle {
+	text-wrap: balance;
 	font-size: var(--fs-m); 
 	line-height: 1.6; 
 	font-weight: 500; 

@@ -357,19 +357,19 @@
 </script>
 
 <style>
-audio::-webkit-media-controls-enclosure {
+  audio::-webkit-media-controls-enclosure {
     border-radius: 0;
-}
+  }
 
-.overlay-center {
-  position: absolute; 
-  width: 20px; 
-  height: 20px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto; 
-  /* color: rgba(250, 250, 250, 0.8); */
-}
+  .overlay-center {
+    position: absolute; 
+    width: 20px; 
+    height: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto; 
+    /* color: rgba(250, 250, 250, 0.8); */
+  }
 </style>

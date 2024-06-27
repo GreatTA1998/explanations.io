@@ -1,12 +1,13 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} style="border-bottom: 1px solid lightgrey;">
-			<Row style="height: 64px; background-color: #f8f9f9; padding-left: 4%; padding-right: 4%;">
-				<div style="padding: 8px 12px 8px 0px; box-sizing: border-box;">
+			<!-- 4% padding matches 92% container width -->
+			<Row style="height: var(--navbar-height); background-color: #f8f9f9; padding-left: 4%; padding-right: 4%;">
+				<div style="padding: 6px 12px 8px 0px; box-sizing: border-box;">
 					<img 
-					on:click={() => goto('/')}
-					src="/app-logo-no-bg.png" width="52" height="48" style="filter: brightness(80%); margin-right: 6px; margin-top: 2px; cursor: pointer;"
-				>
+						on:click={() => goto('/')}
+						src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
+					>
 	
 				</div>
 
@@ -16,6 +17,12 @@
 
 				<Section align="end" toolbar style="padding-right: 0;">
 					<div class="hide-on-mobile">
+						<Button on:click={() => goto('/servers')} style="color: black; font-size: 12px;" class="button-shaped-round">
+							<Label>
+								Servers
+							</Label>
+						</Button>
+
 						<a on:click={() => alert("For absolutely anything, call 503 250 3868 or email eltonlin@alum.mit.edu, I can reply immediately unless it's past midnight / before 8 am.")}
 							style="margin-left: 8px; text-decoration-color: transparent;"
 						>

@@ -27,10 +27,8 @@
 <style>
   .reusable-round-button {
     display: flex; 
-    width: fit-content;
-    justify-content: center;
     align-items: center; 
-    padding: 10px 18px 10px 18px; 
+    padding: 4px 16px;
     border-radius: 999px; 
   }
 

@@ -49,6 +49,7 @@
     "cookie": "^0.4.1",
     "firebase": "^9.5.0",
     "mixpanel-browser": "^2.47.0",
+    "posthog-js": "^1.142.1",
     "svelte-css-vars": "^0.0.3"
   }
 }

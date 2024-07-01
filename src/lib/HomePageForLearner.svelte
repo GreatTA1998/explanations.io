@@ -1,6 +1,6 @@
 <div style="display: flex; flex-direction: column; gap: 16px;">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube-style tutoring for competitive math
+		Youtube-style help for competitive math
 	</p>
 
 	<div style="display: flex; flex-wrap: wrap; row-gap: 30px; align-items: center;">
@@ -24,7 +24,7 @@
 	</div>
 
 	{#if videoWidth}
-		<div class="alternative-flexbox" style="padding: 32px 0px; outline: 0px solid red;">
+		<div class="alternative-flexbox">
 			{#each showcasedCreators as creator}
 				<CreatorFeaturedVideoShowcase 
 					originalQuestion={creator.originalQuestion}
@@ -68,12 +68,14 @@
 		</div>
 	</div>
 	
-	<div style="text-align: center;">
+	<div style="text-align: center; padding: 48px 0px;">
 		<img 
 			style="min-width: 300px; width: 60vw; height: auto"
 			src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
 		> 
 	</div>
+
+	<FounderSelfIntro/>
 </div>
 
 <script>
@@ -81,6 +83,7 @@
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte';
+	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated
@@ -235,11 +238,12 @@
 <style>
 	.alternative-flexbox {
     display: flex; 
-    justify-content: space-evenly;
+		justify-content: space-between;
 		flex-wrap: wrap;
-
-		padding: 1vw;
 		row-gap: 36px;
+
+		padding: 32px 8px; 
+		outline: 0px solid red;
   }
 
   .tutor-card {

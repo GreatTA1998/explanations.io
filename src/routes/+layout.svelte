@@ -21,6 +21,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { mixpanelLibrary } from '/src/mixpanel.js'
+  import posthog from 'posthog-js'
 
   initializeDatabase()
   const auth = getAuth()
@@ -30,7 +31,17 @@
 
   onMount(async () => {
     onAuthStateChanged(auth, reactToUserChange)
+    createSessionRecording()
   })
+  
+  function createSessionRecording () {
+    posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7',
+      {
+        api_host: 'https://us.i.posthog.com',
+        person_profiles: 'always' // or 'always' to create profiles for anonymous users as well
+      }
+    )
+  }
 
   async function reactToUserChange (resultUser) {
     if (resultUser) {

@@ -1,6 +1,6 @@
 <div style="display: flex; flex-direction: column; gap: 16px;">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube-style tutoring for competitive math
+		Youtube-style help for competitive math
 	</p>
 
 	<div style="display: flex; flex-wrap: wrap; row-gap: 30px; align-items: center;">

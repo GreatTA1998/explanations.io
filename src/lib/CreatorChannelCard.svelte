@@ -6,7 +6,7 @@
 
 <div style="margin-left: 0.5vw;">
   <div style="display: flex; align-items: center; cursor: pointer;">	
-    <div style="color: black; font-weight: 600; font-size: var(--fs-400);">
+    <div style="color: black; font-weight: 500; font-size: var(--fs-400);">
       {firstNameAndKeyInfo}
     </div>
   </div> 	

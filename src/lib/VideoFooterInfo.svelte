@@ -1,7 +1,7 @@
 {#if video}
   <div 
     class="below-video-section" 
-    style="font-size: var(--fs-300); margin-top: 0.2vw; padding: 0.2vw;"
+    style="font-size: var(--fs-300); padding: 6px"
   >
     <div style="display: flex; align-items: center;">
       <span class="material-symbols-outlined video-footer-icon">
@@ -13,7 +13,7 @@
     </div>
 
     <div style="color: black; display: flex; align-items: center;">
-      <span class="material-symbols-outlined video-footer-icon" style="font-size: 24=9px; padding-top: 0px; margin-right: 2px;">
+      <span class="material-symbols-outlined video-footer-icon" style="font-size: 20px; padding-top: 0px; margin-right: 2px;">
         forum
       </span>
       <div class="stat-number">

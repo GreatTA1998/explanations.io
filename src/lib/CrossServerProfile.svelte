@@ -145,6 +145,19 @@
     row-gap: 48px; 
   }
 
+  .my-round-button {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border-radius: 24px; 
+    min-width: 48px; 
+    min-height: 16px; 
+    padding: 4px 8px; 
+    border: 2px solid black;
+    color: black;
+    cursor: pointer;
+	}
+
   .youtube-video-title {
     font-weight: 600; 
     font-size: var(--fs-xs);

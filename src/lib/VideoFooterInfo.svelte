@@ -3,23 +3,21 @@
     class="below-video-section" 
     style="font-size: var(--fs-300); margin-top: 0.2vw; padding: 0.2vw;"
   >
-    <div style="color: black; display: flex; align-items: center;">
+    <div style="display: flex; align-items: center;">
       <span class="material-symbols-outlined video-footer-icon">
-        hourglass
+        hourglass_bottom
       </span>
-      <div style="margin-left: 4px;">
-        {video.viewMinutes ? roundedToFixed(video.viewMinutes, 0): 0} minutes viewed
+      <div class="stat-number">
+        {video.viewMinutes ? roundedToFixed(video.viewMinutes / 60, 1) : 0} 
       </div>            
     </div>
 
-    <div style="margin-left: 24px;"></div>
-
-    <div style="color: black; display: flex;">
-      <span class="material-symbols-outlined video-footer-icon">
+    <div style="color: black; display: flex; align-items: center;">
+      <span class="material-symbols-outlined video-footer-icon" style="font-size: 24=9px; padding-top: 0px; margin-right: 2px;">
         forum
       </span>
-      <div style="margin-left: 4px;">
-        {video.numOfComments || 0} comments
+      <div class="stat-number">
+        {video.numOfComments || 0}
       </div>
     </div>
 
@@ -36,12 +34,18 @@
 </script>
 
 <style>
+  .stat-number {
+    font-size: 12px;
+    font-weight: 500;
+  }
 
   .below-video-section {
-    display: flex; align-items: center;
+    display: flex; 
+    align-items: center;
+    gap: 12px;
   }
 
   .video-footer-icon {
-    font-size: 16px;
+    font-size: 20px;
   }
 </style>

@@ -37,6 +37,7 @@
   .arcane-quote {
     border-left: 2px solid #efe2d7;
     padding: 0 24px;
+    margin: 0px;
     font-style: italic; 
     line-height: 180%;
     color: #0c1d37;

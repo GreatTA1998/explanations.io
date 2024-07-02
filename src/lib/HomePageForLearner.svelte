@@ -39,7 +39,14 @@
 		</div>
 	{/if}
 
-	<div style="display: flex; gap: 1vw; flex-wrap: wrap;">
+	<div style="text-align: center; padding: 8px 0px;">
+		<img 
+			style="min-width: 332px; width: 60vw; height: auto"
+			src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
+		> 
+	</div>
+
+	<div style="display: flex; gap: 1vw; flex-wrap: wrap; padding: 48px 0px;">
 		<div class="tutor-card">
 			Served 50 teachers & 800 students for MIT math & physics as 
 			<a target="_blank" href="https://physics.mit.edu/wp-content/uploads/2021/09/PhysicsAtMIT_2021_Zoom_Feature.pdf">
@@ -66,13 +73,6 @@
 				YC HackerNews 
 			</a>
 		</div>
-	</div>
-	
-	<div style="text-align: center; padding: 48px 0px;">
-		<img 
-			style="min-width: 300px; width: 60vw; height: auto"
-			src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
-		> 
 	</div>
 
 	<FounderSelfIntro/>
@@ -217,8 +217,10 @@
 
 		// 320px is the minimum width needed for video title and description to stay on one-line
 		// actually the min. width is different, because it depends on the font-size
-		const minWidth = 320 + 0.04 * containerWidth
-		videoWidth = minWidth
+		// const minWidth = 300 + 0.06 * containerWidth
+		const minWidth = 332
+		const scalingWidth = 220 + 0.12 * containerWidth
+		videoWidth = Math.max(minWidth, scalingWidth)
 		videoHeight = Math.floor(videoWidth / videoAspectRatio);
 
 		return { videoWidth, videoHeight };
@@ -242,7 +244,7 @@
 		flex-wrap: wrap;
 		row-gap: 36px;
 
-		padding: 32px 8px; 
+		padding: 48px 6px; 
 		outline: 0px solid red;
   }
 
@@ -250,7 +252,7 @@
     border: 2px solid black; 
 		width: 300px; 
 		padding: 16px;
-    border-radius: 16px;
+    border-radius: 6px;
 		font-size: var(--fs-400);
   }
 </style>

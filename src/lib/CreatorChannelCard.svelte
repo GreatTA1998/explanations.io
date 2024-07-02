@@ -1,17 +1,17 @@
-<div class="avatar" id="avatar" style="border: 1px solid {pickedColor}; background: none;">
+<div class="avatar" id="avatar" style="border: 2px solid {pickedColor}; background: none;">
   <span class="material-symbols-outlined" style="color: {pickedColor}; font-size: var(--fs-700);">
     psychology
   </span>
 </div>
 
-<div style="margin-left: 0.5vw;">
+<div style="margin-left: 4px;">
   <div style="display: flex; align-items: center; cursor: pointer;">	
-    <div style="color: black; font-weight: 500; font-size: var(--fs-400);">
+    <div style="color: black; font-weight: 500; font-size: var(--fs-xs);">
       {firstNameAndKeyInfo}
     </div>
   </div> 	
 
-  <div style="margin-top: 1px; display: flex; align-items: center; font-weight: 300; font-size: var(--fs-300);">
+  <div style="margin-top: 1px; display: flex; align-items: center; font-weight: 400; font-size: var(--fs-300);">
     <div>{collegeAndYear}</div>
     <div class="separator"></div> 
     <div>{bio}</div>

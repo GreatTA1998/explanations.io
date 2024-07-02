@@ -35,7 +35,9 @@
       {#if !isFullscreen}
         <div style="width: {canvasWidth}px">
           <VideoFooterInfo video={boardDoc}>
-            <div on:click={toggleFullscreen(boardDoc)} class="my-round-button" style="margin-right: 0; margin-left: auto; font-size: var(--fs-300)">
+            <div on:click={toggleFullscreen(boardDoc)} class="my-round-button"
+              style="margin-right: 0; margin-left: auto; font-size: var(--fs-300); font-weight: 600;"
+            >
               Full View
             </div>
           </VideoFooterInfo>
@@ -76,7 +78,8 @@
     min-width: 48px; 
     min-height: 16px; 
     padding: 4px 8px; 
-    border: 1px solid black;
+    border: 2px solid black;
+    color: black;
     cursor: pointer;
 	}
 </style>

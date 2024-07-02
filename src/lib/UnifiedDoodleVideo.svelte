@@ -9,7 +9,7 @@
     let:isFullscreen={isFullscreen}
   >
     {#if video.isMultiboard}
-      <OnlineMultislideVideo
+      <HDMultislideVideo
         {canvasWidth}
         {canvasHeight}
         boardDoc={video}
@@ -49,9 +49,10 @@
 
 <script>
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
-  import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
   import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
   import FullscreenModule from '$lib/FullscreenModule.svelte'
+  import HDMultislideVideo from '$lib/HDMultislideVideo.svelte'
+  import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
 
   export let video
   export let videoWidth

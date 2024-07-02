@@ -18,7 +18,7 @@
 			</div>
 			
 			<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
-				videocam
+				arrow_forward
 			</span>
 		</ReusableRoundButton>
 	</div>
@@ -96,8 +96,8 @@
 
 	const showcasedCreators = [
 		{
-			originalQuestion: "Q: Why eigenvalue must be 0 or 1?",
-			boardDbPath: "classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp",
+			originalQuestion: "Q: 2024 AIME I Problem 8",
+			boardDbPath: "classes/SifuBglyIefGej71TvS2/blackboards/A8wmIO4q4g5G7jqZCUAz",
 			firstNameAndKeyInfo: "Ben (subscribed 5 times)",
 			collegeAndYear: "MIT '25",
 			bio: "Top 21 USA(J)MO",

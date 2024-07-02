@@ -16,11 +16,11 @@
     <div class="arcane-paragraph">
       I was inspired by Youtube and KhanAcademy - they've shown the promise of making great explanations accessible to people.
       But there is far too few content creators for advanced subjects. explanations.app is a more balanced, creator-centric platform, 
-      where anyone can explain things they love to a small audience of paying subscribers in a Q&A format, without the need for virality and unpredictable recommendation algorithms.
+      where anyone can explain things they love to a small audience of paying subscribers in a Q&A format, without the need for time-consuming editing, virality and unpredictable recommendation algorithms.
     </div>
 
     <div class="arcane-paragraph">
-      I declined my full-time offer from Apple in 2020 to work on this full-time. Working with universities has scarred me, but now I live in Tokyo to save money, 
+      I quit my job at Apple in 2020 to work on this full-time. Working with universities has scarred me, but now I live in Tokyo to save money, 
       living in a $450/month sharehouse. I take out the trash for all my roommates to save a further $50/month. Even though I burn out easily, <b>I'll do what it takes to make this happen</b>.
     </div>
 

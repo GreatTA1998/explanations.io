@@ -201,7 +201,7 @@
                             color="secondary" 
                             style="color: white;"
                           >
-                            Subscribe for $10/month
+                            Subscribe for $16/month
                           </ReusableButton> 
                   
 

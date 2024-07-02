@@ -8,7 +8,7 @@
         hourglass_bottom
       </span>
       <div class="stat-number">
-        {video.viewMinutes ? roundedToFixed(video.viewMinutes / 60, 1) : 0} 
+        {video.viewMinutes ? roundedToFixed(video.viewMinutes / 60, 2) : 0} 
       </div>            
     </div>
 

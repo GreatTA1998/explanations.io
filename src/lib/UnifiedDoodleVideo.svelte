@@ -28,6 +28,7 @@
         {canvasHeight}
         showEditDeleteButtons={false}
         boardDbPath={video.path}
+        on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
       />
     {/if}
 
@@ -53,6 +54,8 @@
   import FullscreenModule from '$lib/FullscreenModule.svelte'
   import HDMultislideVideo from '$lib/HDMultislideVideo.svelte'
   import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { increment } from 'firebase/firestore'
 
   export let video
   export let videoWidth
@@ -63,9 +66,8 @@
     return classID
   }
 
-  function incrementViewMinutes (boardID, playbackSpeed) {
-    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
-    updateDoc(blackboardRef, {
+  function incrementViewMinutes (playbackSpeed) {
+    updateFirestoreDoc(video.path, {
       viewMinutes: increment(0.1 * playbackSpeed)
     })
   }

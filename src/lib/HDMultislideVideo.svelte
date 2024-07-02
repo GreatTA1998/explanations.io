@@ -228,6 +228,7 @@
 
   onDestroy(() => {
     if (intervalID) clearInterval(intervalID)
+    if (updateViewMinutesTimeoutID) clearTimeout(updateViewMinutesTimeoutID)
   }) 
 
   function togglePlaySpeed () {

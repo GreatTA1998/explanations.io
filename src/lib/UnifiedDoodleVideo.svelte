@@ -18,7 +18,7 @@
         timingOfSlideChanges={video.timingOfSlideChanges}
         showEditDeleteButtons={true}
         showSlideChanger={!willHideSliderForPreview || isFullscreen}
-        on:six-seconds-elapsed={(e) => incrementViewMinutes(video.id, e.detail.playbackSpeed)}
+        on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
       />
     {:else}
       <ReusableDoodleVideo

@@ -20,7 +20,7 @@
     <UnifiedDoodleVideo
       video={boardDoc}
       videoWidth={previewWidth}
-      willShowSlideChanger={false}
+      willHideSliderForPreview={true}
     />
   </RenderlessListenToBoard>
 </div>

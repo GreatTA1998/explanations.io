@@ -17,7 +17,7 @@
         audioDownloadURL={video.audioDownloadURL}
         timingOfSlideChanges={video.timingOfSlideChanges}
         showEditDeleteButtons={true}
-        showSlideChanger={willShowSlideChanger}
+        showSlideChanger={!willHideSliderForPreview || isFullscreen}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(video.id, e.detail.playbackSpeed)}
       />
     {:else}
@@ -56,7 +56,7 @@
 
   export let video
   export let videoWidth
-  export let willShowSlideChanger = true
+  export let willHideSliderForPreview = false
 
   function quickfixClassIDFrom (video) {
     const classID = video.path.split('/')[1]

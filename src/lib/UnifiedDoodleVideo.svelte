@@ -40,6 +40,9 @@
             class="my-round-button" 
             style="margin-right: 0; margin-left: auto;"
           >
+            <span class="material-symbols-outlined" style="font-size: 20px;">
+              open_in_full
+            </span>
             Full View
           </div>
         </VideoFooterInfo>
@@ -78,15 +81,17 @@
     display: flex; 
     align-items: center; 
     justify-content: center; 
+    gap: 4px;
+
     border-radius: 24px; 
-    min-width: 48px; 
+    min-width: 0px; 
     min-height: 16px; 
     padding: 4px 8px; 
-    border: 2px solid black;
+    border: 1px solid black;
     color: black;
     cursor: pointer;
 
     font-size: var(--fs-300); 
-    font-weight: 600;
+    font-weight: 400;
 	}
 </style>

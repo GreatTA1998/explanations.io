@@ -1,10 +1,10 @@
 <div style={$$props.style}>
   <!-- background-color: #5d0068; (that's a purple color)-->
   <div on:click={() => goto(`/profile/${classID}/${helperDoc.uid}`)} 
+    class="core-shadow"
     style="display: flex; align-items: center; cursor: pointer; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px;
       border-radius: 4px;
     "
-    class="core-shadow"
   >
     <!-- beaverProfileColor is not working, random color for now -->
     <ClassServerMyProfilePicture

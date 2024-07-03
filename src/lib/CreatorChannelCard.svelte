@@ -1,20 +1,24 @@
-<div class="avatar" id="avatar" style="border: 2px solid {pickedColor}; background: none;">
-  <span class="material-symbols-outlined" style="color: {pickedColor}; font-size: var(--fs-700);">
-    psychology
-  </span>
-</div>
+<div on:click class="my-rounded-card ux-low-elevation">
+  <div class="avatar" id="avatar" style="border: 0px solid {pickedColor};">
+    <img
+      src="https://api.dicebear.com/9.x/bottts/svg?seed=Molly"
+      alt="avatar" 
+      style="filter: hue-rotate({Math.random() * 360}deg) brightness(100%); background: rgb(140, 140, 140);"  
+    />
+  </div>
 
-<div style="margin-left: 4px;">
-  <div style="display: flex; align-items: center; cursor: pointer;">	
-    <div style="color: black; font-weight: 500; font-size: var(--fs-xs);">
-      {firstNameAndKeyInfo}
+  <div style="margin-left: 6px; ">
+    <div style="display: flex; align-items: center; cursor: pointer;">	
+      <div style="color: black; font-weight: 500; font-size: var(--fs-xs);">
+        {firstNameAndKeyInfo}
+      </div>
+    </div> 	
+
+    <div style="margin-top: 1px; display: flex; align-items: center; font-weight: 400; font-size: var(--fs-300);">
+      <div>{collegeAndYear}</div>
+      <div class="separator"></div> 
+      <div>{bio}</div>
     </div>
-  </div> 	
-
-  <div style="margin-top: 1px; display: flex; align-items: center; font-weight: 400; font-size: var(--fs-300);">
-    <div>{collegeAndYear}</div>
-    <div class="separator"></div> 
-    <div>{bio}</div>
   </div>
 </div>
 
@@ -47,9 +51,17 @@
 </script>
 
 <style>
+  .my-rounded-card {
+    display: flex; 
+    cursor: pointer; 
+    align-items: center; 
+    border-radius: 48px;
+    padding: 4px 10px 4px 4px;
+  }
+
   .avatar {
-    width: 40px;
-    height: 40px;
+    width: var(--is-m);
+    height: var(--is-m);
     border-radius: 50%;
     background-color: #fff;
     position: relative;

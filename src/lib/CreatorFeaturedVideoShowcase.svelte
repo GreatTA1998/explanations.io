@@ -3,15 +3,14 @@
     {originalQuestion}
   </div>
 
-  <div style="width: {previewWidth}px; margin: 6px 0px; color: rgb(80, 80, 80); display: flex; align-items: center;">
-    Answered by:
-    <div on:click={() => goto(`/user/${uid}`)}  style="margin-left: 0.5vw; display: flex; cursor: pointer; align-items: center;">
-      <CreatorChannelCard
-        {firstNameAndKeyInfo}    
-        {collegeAndYear}
-        {bio}
-      />
-    </div>
+  <div style="width: {previewWidth}px; margin: 6px 0px; color: rgb(80, 80, 80); display: flex; align-items: center; gap: 8px;">
+    Answered by
+
+    <CreatorChannelCard on:click={() => goto(`/user/${uid}`)}
+      {firstNameAndKeyInfo}    
+      {collegeAndYear}
+      {bio}
+    />
   </div>
   
   <RenderlessListenToBoard dbPath={boardDbPath}

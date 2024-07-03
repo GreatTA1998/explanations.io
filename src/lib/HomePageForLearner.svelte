@@ -46,87 +46,9 @@
 		> 
 	</div>
 
-	<div style="font-size: var(--fs-l); font-weight: 500;">
-		Timeline
-	</div>
-
-	<div style="display: flex; gap: 1vw; flex-wrap: wrap; padding: 48px 0px;">
-		<div class="tutor-card">
-			<div class="my-card-title">
-				Prototyping: 2018 - 2021 
-			</div>
-			Developed blackboard video prototype with Dr Jason Ku, Professor Gilbert Strang, Dr Peter Dourmashkin.
-
-			Served 10 classes and 800 students during covid as 
-			<a target="_blank" href="https://physics.mit.edu/wp-content/uploads/2021/09/PhysicsAtMIT_2021_Zoom_Feature.pdf">
-				explain.mit.edu
-			</a> 
-			Launched visual forum for physics.
-		</div>
-	
-		<div class="tutor-card">
-			<div class="my-card-title">
-				2021 summer - 2021 winter
-			</div>
-			Raised 500K from 
-			<a href="https://oss.capital/portfolio" target="_blank">OSS Capital</a> (undisclosed).
-			Targetted overcrowded CS classes 6.006 and 6.036 with severe TA shortages. 
-			Turns out there were shortages in the first place not because MIT can't solve it,
-			but because MIT doesn't want to solve it.
-
-		</div>
-	
-		<div class="tutor-card">
-			<div class="my-card-title">
-				2022 - 2023
-			</div>
-			<ul>
-				<li>2022 first-half: tried monetization, working outside the system. 
-					After months of campaign only 1 student signed up
-
-				</li>
-				<li>2022 second-half: become the economics department tutor that did free tutoring.
-					with 4000 total minutes viewed by students. 
-
-				</li>
-				<li>2023 first-half: one of my students requested for Linear Algebra help. 
-					Found Ben, Ammar, Josue, Noam. Creators signed up, 
-					but only for well-taught classes. Reported by MIT for running a paid service.
-				</li>
-				<li>Worked with Roxbury Community College and Bunker Hill Community College. Ignored.</li>
-			</ul>
-		</div>
-		
-		<!--  background-color: rgb(20, 20, 20); color: rgb(240, 240, 240);  -->
-		<div class="tutor-card" style="height: fit-content; margin-left: auto; border: 0px solid white; 
-		font-size: 16px; color: black;'"
-		
-	>		
-	<div class="my-card-title">
-		Tokyo 2024
-	</div>
-		<li>
-			Pivoted to self-learning online communities
-		</li>
-			First 3 students joined in March 2024 from
-			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
-				r/PhysicsStudents
-			</a>
-			<br>
-			Top 3 with 390 upvotes on 
-			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
-				YC HackerNews 
-			</a>
-			<li>
-				Pivoted to online competitive math
-			</li>
-			<li>
-				Goal is to create an alternative that dismantles the artificial scarcity of education opportunities
-				that universities (to increase their prestige)
-		</div>
-	</div>
-
 	<FounderSelfIntro/>
+
+	<HistoricalTimeline/>
 </div>
 
 <script>
@@ -135,6 +57,7 @@
 	import { onMount } from 'svelte'
 	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte';
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
+	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated
@@ -298,18 +221,4 @@
 		padding: 48px 6px; 
 		outline: 0px solid red;
   }
-
-  .tutor-card {
-    /* border: 2px solid #3b4555;  */
-		color: #3b4555;
-		width: 300px; 
-		padding: 12px;
-    /* border-radius: 6px; */
-		font-size: var(--fs-400);
-  }
-
-	.my-card-title {
-		font-size: var(--fs-500);
-		font-weight: 500;
-	}
 </style>

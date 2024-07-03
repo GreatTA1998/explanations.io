@@ -42,7 +42,7 @@
 
     <div class="arcane-paragraph">
       Without a higher power - "wins" or "losses", there is simply no mechanism for backward beliefs to be corrected.
-      MIT, unlike the Yankees, can't lose lest a miracle. There's something ugly about the way modern education has evolved.
+      MIT, unlike the Yankees, can't lose lest a miracle. There's something really wrong here.
     </div>
 
     <hr style="border: 2px solid black;">

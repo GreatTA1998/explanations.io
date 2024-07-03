@@ -8,8 +8,8 @@
       close
     </span>
 
-    <div style="width: 320px; height: fit-content;">
-      <div style="font-size: var(--fs-s); padding: 12px 12px 0px 12px;">
+    <div style="flex-basis: 320px; flex-grow: 1; height: fit-content;">
+      <div style="max-width: 60ch; font-size: var(--fs-s); padding: 12px 12px 0px 12px;">
         {boardDoc.description}
       </div>
 

@@ -1,4 +1,4 @@
-<div style="padding: 12px;">
+<div style="max-width: 60ch; padding: 12px;">
   <div style="display: flex; margin-bottom: 2vw;">
     <div class="my-tab-item">
       <div style="font-size: 12px; text-align: start; font-weight: 300; margin-left: 2px;">

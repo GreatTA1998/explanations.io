@@ -5,18 +5,27 @@
     </div>
     
     <blockquote class="arcane-quote">
-      Youtube and KhanAcademy are amazing. But starting a channel is so unpredictable and time-consuming that many great explainers can't afford to do it.
+      I noticed how often a casual, 5-minute explanation from someone great would save me from hours of pointless suffering.
     </blockquote>
   
     <div class="arcane-paragraph">
-      When I was studying at MIT, I often had to wait 40-60 minutes in line just to get 5 minutes of “help” from a TA - when I needed 1-2 hours. 
+      When I was studying in college, I often had to wait 40-60 minutes in line just to get 5 minutes of “help” from a TA - when I needed 1-2 hours. 
       I lost count of the times I’ve been abandoned in Office Hours, or signed up for “free tutoring” that never became available. 
+      Yet I noticed how often a casual, 5-minute explanation from someone great would save me from hours of pointless suffering.
     </div>
 
     <div class="arcane-paragraph">
-      It turns out universities operate like luxury markets, where they compete on prestige. Yet prestige in education isn't based on teaching performance, but
+      I think "struggling is necessary in learning" is too often used to justify inefficient Office Hours, poor material, 
+      and overly concise solutions that not only confuse students, but TAs themselves.
+      Struggling on a hard problem is only meaningful if the basics are well-taught in the first place. 
+    </div>
+
+    <hr style="border: 2px solid black;">
+
+    <div class="arcane-paragraph">
+      It turns out <a href="https://freakonomics.com/podcast/the-university-of-impossible-to-get-into/" target="_blank">universities operate like luxury markets</a>, where they compete on prestige. Yet prestige in education isn't based on teaching performance, but
       how prestigious you already are (peer-assessed reputation), how much money you have (endowment size), how many papers you publish (research output), how many students you turn away (selectivity), 
-      and many factors that have nothing to do with teaching performance. 
+      and many factors that have nothing to do with teaching performance, yet have disproportionate impact on the overall score.
     </div>
 
     <div class="arcane-paragraph">
@@ -26,23 +35,24 @@
 
      <div class="arcane-paragraph">
       This creates perverse incentives, incentives that explains all kinds of perverse phenomenon. 
-      For one, how could a well-funded, top ranked computer science program have
+      For one, how a school can have
       <a href="https://docs.google.com/document/d/1jeW_oJqI9WjQtBOjc7NPdVkx0GRuEc0Mjr8Gjo_CEqM/edit?usp=sharing" target="_blank">
-        110 students signing a petition outcrying the lack of TA support in 2022</a>. Today, MIT is still ranked #1 on QS. 
-        This contrast with sport, where the NY Yankees can be the richest team but still lose, and the Oakland As can be the poorest but still win. Despite the uneven budgets, there's at least fair competition in the MLB.
+        110 students signing a petition outcrying that TAs didn't even show up to Office Hours before final exams</a> and still be ranked #1.
+        This contrasts with sports, where teams aren't valued by how much famous they are, how much they spend, but whether they actually win.
      </div>
 
     <div class="arcane-paragraph">
-      Ultimately, there is no skin-in-the-game for anyone to care about student outcomes. Ironically, even when people care, it usually causes harm: banning video recordings due to its effect on attendance. Restricting access to past material to prevent cheating and misuse, 
-      even if it'd have been immensely useful for most reasonable students.
-      Insisting on 1-on-1 Office Hours no matter how overwhelmed the TAs are. In other words, "We know what's best for you even though we don't care about you."
-      Such a paradoxical combination is deadly - to be deeply opinionated about how you live, but not care at all if you actually live well;
-      at least controlling parents still wish their children to succeed.
+      Systematically, there is no skin-in-the-game for universities to develop students, as supposed to filtering them. 
+      Even if instructors are passionate, it often makes things worse: banning video recordings due to its effect on attendance. Restricting access to past material to prevent cheating and misuse, 
+      to the detriment of any reasonable student.
+      Insisting on 1-on-1 Office Hours no matter how overwhelmed the TAs are. 
+      In a pedagogical monopoly, there is simply no mechanism for conservative, backward beliefs to change.
     </div>
 
     <div class="arcane-paragraph">
-      Without a higher power - "wins" or "losses", there is simply no mechanism for backward beliefs to be corrected.
-      MIT, unlike the Yankees, can't lose lest a miracle. There's something really wrong here.
+      In other words, "We know what's best for you, more than yourself."
+      To be deeply opinionated about how you must learn, but not care at all if you actually learn well, is a deadly combination.
+      Even the most toxic, controlling parents fare better than paternalistic instructors - at least they care if you actually succeed. 
     </div>
 
     <hr style="border: 2px solid black;">
@@ -55,11 +65,12 @@
     </div>
 
     <div class="arcane-paragraph"> 
-      explanations.app is a more creator-friendly model, where every student pays a little, so creators can explain things they love without worrying about "coming up with video ideas", time-consuming editing, virality and unpredictable recommendation algorithms.
+      explanations.app is trying to resemble a crowdfund model, where every student pays a little, so creators can explain things they love without worrying about "coming up with video ideas", time-consuming editing, virality and unpredictable recommendation algorithms.
     </div>
 
     <div class="arcane-paragraph">
-      I quit my job at Apple in 2020 to work on this full-time. Working with universities has scarred me, but now I live in Tokyo to save money, 
+      I quit my job at Apple in 2020 to work on this full-time. Although I failed in Boston, I learnt a lot, and now I live in Tokyo searching for inspiration, 
+      and to save money, 
       living in a $450/month sharehouse, taking out the trash for everyone. For as long as I believe this is right, <b>I'm willing to do whatever it takes to make this happen</b>.
     </div>
 
@@ -68,8 +79,22 @@
     </div>
 
     <img class="arcane-image" src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/IMG_0227.JPG?alt=media&token=0ace8bae-ea67-4346-a9a2-34b90efd416a">
+  
+    <div style="width: 300px;">
+      <CreatorChannelCard
+        on:click={() => goto(`/user/xC05mXTCFIRxLnyxfKnxY7oNBPi2`)}
+        firstNameAndKeyInfo="Elton Lin"
+        collegeAndYear="Founder"
+        bio="elton@explanations.app"
+      />
+    </div>
   </div>
 </div>
+
+<script>
+  import { goto } from '$app/navigation';
+  import CreatorChannelCard from '$lib/CreatorChannelCard.svelte'
+</script>
 
 <style>
   /* Inspired by arcanelabs.ai */

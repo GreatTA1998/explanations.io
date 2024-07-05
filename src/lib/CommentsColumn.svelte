@@ -31,7 +31,7 @@
 
         <div class="copied-from-old-explain-2" style="display: flex; align-items: center;">
           {displayDate(commentDoc.isoStringOfDate)} by {commentDoc.creatorName || commentDoc.creatorUID}
-          {#if commentDoc.creatorUID === $user.uid}
+          {#if commentDoc.creatorUID === $user.uid || !commentDoc.creatorUID}
             <span style="margin-left: 6px; cursor: pointer; font-size: 16px;" on:click={() => deleteComment(commentDoc)} class="material-icons">
               delete_forever
             </span>
@@ -64,8 +64,8 @@
     batch.set(commentRef, {  
       content: newInputComment,
       isoStringOfDate: new Date().toISOString(),
-      creatorUID: $user.uid,
-      creatorName: $user.name
+      creatorUID: $user.uid || '',
+      creatorName: $user.name || ''
     })
 
     const blackboardRef = doc(db, videoDoc.path)

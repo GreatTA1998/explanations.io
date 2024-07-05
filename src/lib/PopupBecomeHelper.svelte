@@ -13,7 +13,7 @@
         Welcome { $user.name || '' }.
         <br>
         <br>
-        When you become a helper, students can pay you $10/month to:
+        When you become a helper, students can pay you $16/month to:
           <ol>
             <li>
               Request new videos from you 

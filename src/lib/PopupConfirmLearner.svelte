@@ -102,7 +102,7 @@
             <div style="margin-top: 36px"></div> 
             
             <li>
-              Pay $10
+              Pay $16
             </li>
             
             <div style="font-size: 14px; margin-bottom: 8px;">
@@ -110,7 +110,7 @@
               To refund, simply email elton@explanations.app
             </div>
 
-              <a target="_blank" href="https://buy.stripe.com/7sI6sbaKBc5y5uUbII"
+              <a target="_blank" href="https://buy.stripe.com/28ocQz05XglO9LaeUX"
                 style="text-decoration: none;"
               > 
                 <Button 
@@ -138,14 +138,14 @@
 
             <div style="margin-bottom: 24px;"></div>
           <li>
-            Prepay $10
+            Prepay $16
           </li>
           
           <div style="font-size: 14px; margin-bottom: 8px;">
             Payments are handled by Stripe. 
             To refund, simply email elton@explanations.app
           </div>
-            <a target="_blank" href="https://buy.stripe.com/7sI6sbaKBc5y5uUbII"
+            <a target="_blank" href="https://buy.stripe.com/28ocQz05XglO9LaeUX"
               style="text-decoration: none;"
             > 
               <Button 

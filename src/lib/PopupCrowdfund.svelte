@@ -20,7 +20,7 @@
         In addition, all crowdfunders get a special 10% discount rate permanently. 
         <br>
         <br>
-        Initially, we will experiment with subscriptions costing $10/month
+        Initially, we will experiment with subscriptions costing $16/month
       </div>
 
       {#if !!!$user.uid}

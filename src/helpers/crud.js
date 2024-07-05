@@ -92,6 +92,7 @@ export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStr
     promises.push(
       updateDoc(boardRef, {
         creator: deleteField(),
+        creatorUID: deleteField(),
         creatorPhoneNumber: deleteField(),
         date: deleteField(),
         audioDownloadURL: deleteField(),

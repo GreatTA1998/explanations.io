@@ -3,9 +3,9 @@
 		Youtube-style help for competitive math
 	</p>
 
-	<div style="display: flex; flex-wrap: wrap; row-gap: 30px; align-items: center;">
+	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
-			Subscribe to a teacher. Type your questions. Get detailed video explanations until you understand everything.
+			Subscribe to a teacher. Ask questions flexibly. Get detailed video explanations until you understand everything.
 			$16/month.
 		</div>
 
@@ -18,9 +18,16 @@
 			</div>
 			
 			<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
-				videocam
+				calendar_add_on
 			</span>
 		</ReusableRoundButton>
+
+		<div style="display: flex; gap: 6px; justify-content: center; align-items: center; font-size: var(--fs-xs);">
+			Frontpage #3 with 390 upvotes on 
+			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
+				YC HackerNews 
+			</a>
+		</div>
 	</div>
 
 	{#if videoWidth}
@@ -39,43 +46,16 @@
 		</div>
 	{/if}
 
-	<div style="text-align: center; padding: 8px 0px;">
+	<div style="text-align: center; padding: 48px 0px;">
 		<img 
 			style="min-width: 332px; width: 60vw; height: auto"
 			src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
 		> 
 	</div>
 
-	<div style="display: flex; gap: 1vw; flex-wrap: wrap; padding: 48px 0px;">
-		<div class="tutor-card">
-			Served 50 teachers & 800 students for MIT math & physics as 
-			<a target="_blank" href="https://physics.mit.edu/wp-content/uploads/2021/09/PhysicsAtMIT_2021_Zoom_Feature.pdf">
-				explain.mit.edu
-			</a> (details on page 5) during covid 2020-2021
-		</div>
-	
-		<div class="tutor-card">
-			Raised 500K seed round from 
-			<a href="https://oss.capital/portfolio" target="_blank">OSS Capital</a> (undisclosed)
-			in July 2021. Pivoted from realtime blackboards to focus on video explanations.
-		</div>
-	
-		<div class="tutor-card">
-			Failed to work with college classes for various reasons (blog coming soon). Pivoted. First 3 students joined in March 2024 from
-			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
-				r/PhysicsStudents
-			</a>
-		</div>
-	
-		<div class="tutor-card" style="height: fit-content; margin-left: auto; width: 340px; border: 2px solid white; background-color: rgb(20, 20, 20); color: rgb(240, 240, 240); font-size: 16px;">		
-			Received 390 points on
-			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
-				YC HackerNews 
-			</a>
-		</div>
-	</div>
-
 	<FounderSelfIntro/>
+
+	<HistoricalTimeline/>
 </div>
 
 <script>
@@ -84,6 +64,7 @@
 	import { onMount } from 'svelte'
 	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte';
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
+	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated
@@ -96,8 +77,8 @@
 
 	const showcasedCreators = [
 		{
-			originalQuestion: "Q: Why eigenvalue must be 0 or 1?",
-			boardDbPath: "classes/lvzQqyZIV1wjwYnRV9hn/blackboards/UwXpkXqKTYfrnz5FybRp",
+			originalQuestion: "Q: 2024 AIME I Problem 8",
+			boardDbPath: "classes/SifuBglyIefGej71TvS2/blackboards/A8wmIO4q4g5G7jqZCUAz",
 			firstNameAndKeyInfo: "Ben (subscribed 5 times)",
 			collegeAndYear: "MIT '25",
 			bio: "Top 21 USA(J)MO",
@@ -246,13 +227,5 @@
 
 		padding: 48px 6px; 
 		outline: 0px solid red;
-  }
-
-  .tutor-card {
-    border: 2px solid black; 
-		width: 300px; 
-		padding: 16px;
-    border-radius: 6px;
-		font-size: var(--fs-400);
   }
 </style>

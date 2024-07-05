@@ -15,7 +15,27 @@
 	--fs-400: 1rem;
 	--fs-300: 0.75rem; 
 
-	--navbar-height: 56px
+	--is-l: clamp(2.4rem, 3.2vw, 4rem);
+	--is-m: clamp(1.8rem, 2.4vw, 2.7rem);
+	--is-s: clamp(1rem, 1.9vw, 2rem);
+
+	--is-400: 36px;
+
+	--navbar-height: 56px;
+  --bg-off-white: #f8f9f9;
+}
+
+// 0.1 is too low
+// 0.25 is too much
+// 0.5 is too much
+.ux-low-elevation  {
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.ux-high-elevation {
+	box-shadow: 
+		0px 1px 3px rgba(0, 0, 0, 0.2),
+		0 18px 36px rgba(0, 0, 0, 0.2); 
 }
 
 // paper-shadow system based on UX Movement Newsletter

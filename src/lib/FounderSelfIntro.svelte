@@ -59,7 +59,7 @@
 
     <div class="arcane-paragraph">
       I love Youtube and KhanAcademy. They've have shown the promise of making great explanations accessible to people.
-      But there is far too few content creators for advanced subjects, because it's too time-consuming, and low rewards. 
+      But there is far too few content creators for advanced subjects, because it's too unrewarding and time-consuming.
     </div>
 
     <div class="arcane-paragraph">
@@ -72,7 +72,7 @@
     </div>
 
     <div class="arcane-paragraph"> 
-      Moving beyond all this noise, I believe in a model where lots of students contribute a little to a teacher, because the economies-of-scale of video content creates a win-win - lower price for students, higher pay for teachers.
+      Moving beyond all this noise, I believe in a model where 100s of passionate learners support teachers they love. The economies-of-scale of video content creates a win-win - low price for students, high pay for teachers.
       More concretely, with a Q&A, blackboard-centric platform, creators can explain things they love without worrying about "coming up with video ideas", time-consuming editing, and dealing with virality-based recommendation algorithms.
     </div>
 

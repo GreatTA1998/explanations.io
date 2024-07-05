@@ -3,7 +3,7 @@
     Timeline
   </div>
 
-  <div style="display: flex; gap: 36px; flex-wrap: wrap;">
+  <div style="display: flex; row-gap: 36px; flex-wrap: wrap;">
     <div class="tutor-card">
       <div class="my-card-title">
         2018 - 2021 
@@ -149,4 +149,8 @@
 	.my-card-subtitle {
 		font-size: var(--fs-00);
 	}
+
+  ul {
+    padding-left: 24px;
+  }
 </style>

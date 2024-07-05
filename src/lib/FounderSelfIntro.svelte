@@ -15,9 +15,9 @@
     </div>
 
     <div class="arcane-paragraph">
-      I think "struggling is necessary in learning" is too often used to justify inefficient Office Hours, poor material, 
-      and overly concise solutions that not only confuse students, but TAs themselves.
-      Struggling on a hard problem is only meaningful if the basics are well-taught in the first place. 
+      I think the well-intentioned principle of "struggling is necessary in learning" is too often used to justify inefficient Office Hours, poor material, 
+      and vague, concise solutions that confuse not only students, but even TAs themselves! How can I learn without fully understanding why something is right or wrong?
+      Why glorify difficulty, without the commitment to provide proper feedback mechanisms?
     </div>
 
     <hr style="border: 2px solid black;">
@@ -25,28 +25,28 @@
     <div class="arcane-paragraph">
       It turns out <a href="https://freakonomics.com/podcast/the-university-of-impossible-to-get-into/" target="_blank">universities operate like luxury markets</a>, where they compete on prestige. Yet prestige in education isn't based on teaching performance, but
       how prestigious you already are (peer-assessed reputation), how much money you have (endowment size), how many papers you publish (research output), how many students you turn away (selectivity), 
-      and many factors that have nothing to do with teaching performance, yet have disproportionate impact on the overall score.
+      and many factors that have little to do with actual quality of teaching. This contrasts with sports, where teams aren't valued by how much famous they are, how much they spend, but if they're actually good. 
     </div>
 
     <div class="arcane-paragraph">
-      (I concede that prestige create secondary effects for the institution and its members - effects that are highly valuable. It attracts world talent to the institution, resulting in a network effect that attracts even more resources. 
-      It's a good deal for those who get the credentials and benefit from peer effects. But this misses the point. Of course a monopoly benefits from its monopoly status! The point is that it has negative effects for everyone else - with the ridiculous tuition expenses being the obvious tell.)
+      (I concede that prestige creates secondary benefits that are highly valuable. It attracts world talent to the institution, resulting in a network effect that attracts even more resources. 
+      It's a good deal for those who benefit from the credentials and peer effects. But this misses the point. 
+      Monopolies poison the ecosystem, forcing consumers to spend $60,000/year for mediocre teaching, because it's the best product on the market).
     </div>
 
      <div class="arcane-paragraph">
       This creates perverse incentives, incentives that explains all kinds of perverse phenomenon. 
-      For one, how a school can have
+      For one, how a school can have a
       <a href="https://docs.google.com/document/d/1jeW_oJqI9WjQtBOjc7NPdVkx0GRuEc0Mjr8Gjo_CEqM/edit?usp=sharing" target="_blank">
-        110 students signing a petition outcrying that TAs didn't even show up to Office Hours before final exams</a> and still be ranked #1.
-        This contrasts with sports, where teams aren't valued by how much famous they are, how much they spend, but whether they actually win.
+        mass absence of TAs from Office Hours before final exams</a> and still be ranked world #1.
      </div>
 
     <div class="arcane-paragraph">
       Systematically, there is no skin-in-the-game for universities to develop students, as supposed to filtering them. 
-      Even if instructors are passionate, it often makes things worse: banning video recordings due to its effect on attendance. Restricting access to past material to prevent cheating and misuse, 
-      to the detriment of any reasonable student.
-      Insisting on 1-on-1 Office Hours no matter how overwhelmed the TAs are. 
-      In a pedagogical monopoly, there is simply no mechanism for conservative, backward beliefs to change.
+      Even if instructors are passionate, they routinely cause harm: 
+      <a href="https://imgur.com/gallery/we-purposely-choose-to-delay-release-of-lecture-recordings-4S7a0K0" target="_blank">banning video recordings due to its effect on attendance</a>, restricting access to past material to prevent cheating and misuse,
+      insisting on 1-on-1 Office Hours no matter how overwhelmed the TAs are. 
+      In a pedagogical monopoly where students have no alternatives to take the class from - there is just no mechanism for conservative, backward beliefs to correct across time.
     </div>
 
     <div class="arcane-paragraph">
@@ -58,14 +58,22 @@
     <hr style="border: 2px solid black;">
 
     <div class="arcane-paragraph">
-      I love Youtube and KhanAcademy, they've have shown the promise of making great explanations accessible to people.
-      As imperfect and flawed it is, especially that students need social structure, it's far better than the
-      rottenness of higher education.
-      But there is far too few content creators for advanced subjects.
+      I love Youtube and KhanAcademy. They've have shown the promise of making great explanations accessible to people.
+      But there is far too few content creators for advanced subjects, because it's too time-consuming, and low rewards. 
+    </div>
+
+    <div class="arcane-paragraph">
+      Go into a zero-sum game like high frequency trading,
+      and nobody would question a $500K/year salary for a new grad. You'd be seen as ambitious, high status even. 
+      Create video explanations that enables people to learn better and create things for even $5/month,
+      <a href="https://www.facebook.com/beaverconfessions/posts/pfbid02efSgT5adZjNhpni6o24AZ3sHKAXmuMJMnAeSur55UseH7iRSa1r7DxtbUEEkxpbZl" target="_blank">
+        and students will publicly criticize the ethics of paying for education.
+      </a>
     </div>
 
     <div class="arcane-paragraph"> 
-      explanations.app is trying to resemble a crowdfund model, where every student pays a little, so creators can explain things they love without worrying about "coming up with video ideas", time-consuming editing, virality and unpredictable recommendation algorithms.
+      Moving beyond all this noise, I believe in a model where lots of students contribute a little to a teacher, because the economies-of-scale of video content creates a win-win - lower price for students, higher pay for teachers.
+      More concretely, with a Q&A, blackboard-centric platform, creators can explain things they love without worrying about "coming up with video ideas", time-consuming editing, and dealing with virality-based recommendation algorithms.
     </div>
 
     <div class="arcane-paragraph">

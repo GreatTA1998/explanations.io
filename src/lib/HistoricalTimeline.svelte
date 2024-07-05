@@ -11,7 +11,7 @@
 
       <ul>
         <li>
-          Developed prototypes with passionate instructors - primarily senior lecturers - Dr Jason Ku, Professor Gilbert Strang, Dr Peter Dourmashkin
+          Developed prototypes with teammates Prabhakar Kafle, Winston Fee, Tony Wang and worked with passionate instructors - Dr Jason Ku, Professor Gilbert Strang, Dr Peter Dourmashkin
         </li>
         <li>	Served 10 classes and 800 students during covid as 
           <a target="_blank" href="https://physics.mit.edu/wp-content/uploads/2021/09/PhysicsAtMIT_2021_Zoom_Feature.pdf">
@@ -72,24 +72,18 @@
            But it was hard to find independent teachers for classes that, for similar reasons, were lacking TAs in the first place.
         </li>
         <li>
-          I became a teacher myself and uploaded weekly videos unofficially on Piazza. I also became an official free tutor for the economics department, hourly rate of $16/hr.
-          I learnt that tutoring was less rewarding than I expected. In contrast, my videos had 66 hours total watch time from lots of 14.01 students, despite that they knew
-          I was not a TA.
+          I tried making videos myself and uploaded weekly explanations on Piazza as a "volunteer teacher". I also became an official tutor for the economics department. My videos had 66 hours total watch time from students across 12 weeks.
         </li>
         <li>
           One of my tutees requested explain.mit.edu for linear algebra. 
-          I recruited specifically for math and 4 passionate teachers Ben, Ammar, Josue and Noam. 
+          I recruited specifically for math and 4 passionate teachers Ben, Ammar, Josue (linear algebra) and Noam (mechanics of materials).
         </li>
         <li>
-          Failed. Ben and Noam uploaded videos for Linear Algebra and Mechanics of Materials, 
-          but these classes were fairly well-supported, and students didn't want to trust a resource that isn't endorsed by 
-          their instructors that requires payment. 
+          I failed to recruit students. Students didn't want to trust a resource that isn't endorsed by 
+          their instructors that requires payment. I was criticized publicly by students for running a paid service, and reported by anonymous faculty.
         </li>
         <li>
-          I was criticized publicly by students for running a paid service, and reported by anonymous faculty for misuse of the school domain. explanations.app became the new domain.
-        </li>
-        <li>
-          Worked with students and teachers at Roxbury Community College and Bunker Hill Community College. Similar problems.
+          Talked to students and teachers at Roxbury Community College and Bunker Hill Community College. Similar problems.
         </li>
       </ul>
     </div>
@@ -110,7 +104,7 @@
     </li>
 
     <li>
-      Moved to Tokyo searching for a new perspective. Pivoted to self-learning online communities
+      Left Boston. Moved to Tokyo searching for a new perspective. Pivoted to self-learning online communities
     </li>
 
     <li>

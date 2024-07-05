@@ -1,9 +1,9 @@
-<div style="padding: 48px 0px;">
+<div style="padding: 0px 0px;">
   <div style="font-size: var(--fs-l); font-weight: 600; padding: 36px 0px;">
     Timeline
   </div>
 
-  <div style="display: flex; gap: 1vw; flex-wrap: wrap;">
+  <div style="display: flex; gap: 36px; flex-wrap: wrap;">
     <div class="tutor-card">
       <div class="my-card-title">
         2018 - 2021 

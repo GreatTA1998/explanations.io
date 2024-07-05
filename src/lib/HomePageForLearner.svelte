@@ -39,6 +39,13 @@
 		</div>
 	{/if}
 
+	<div style="display: flex; gap: 6px; justify-content: center; align-items: center;">
+		Frontpage #3 with 390 upvotes on 
+		<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
+			YC HackerNews 
+		</a>
+	</div>
+
 	<div style="text-align: center; padding: 8px 0px;">
 		<img 
 			style="min-width: 332px; width: 60vw; height: auto"

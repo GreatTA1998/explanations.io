@@ -63,11 +63,11 @@
     </div>
 
     <div class="arcane-paragraph">
-      Go into a zero-sum game like high frequency trading,
-      and nobody would question a $500K/year salary for a new grad. You'd be seen as ambitious, high status even. 
-      Create video explanations that enables people to learn better and create things for even $5/month,
+      Non-profit culture is not always better. Get a lucrative job,
+      and people will be impressed.
+      Become an educational content creator, and
       <a href="https://www.facebook.com/beaverconfessions/posts/pfbid02efSgT5adZjNhpni6o24AZ3sHKAXmuMJMnAeSur55UseH7iRSa1r7DxtbUEEkxpbZl" target="_blank">
-        and students will publicly criticize the ethics of paying for education.
+        students will publicly criticize the morality of paid education.
       </a>
     </div>
 

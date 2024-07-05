@@ -56,6 +56,10 @@
             <span class="material-icons">
               data_array
             </span>
+          {:else if category === 'Competition Math'}
+            <span class="material-icons">
+              functions
+            </span>
           {:else if category === 'Math & Physics'}
             <span class="material-symbols-outlined">
               functions
@@ -135,10 +139,10 @@
   import MySelect from '$lib/MySelect.svelte'
 
   let SearchBar
-  let categories = ['Math & Physics', 'Math', 'Physics', 'All Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
+  let categories = ['Competition Math', 'Math', 'Physics', 'All Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Teachers', 'Videos', 'Prepaid learners', 'Subscribers'] 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
-  let currentlySelectedSubject = 'Math & Physics'
+  let currentlySelectedSubject = 'Competition Math'
 
   let searchIconWidth 
   

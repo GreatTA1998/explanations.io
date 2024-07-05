@@ -23,7 +23,7 @@
 		</ReusableRoundButton>
 
 		<div style="display: flex; gap: 6px; justify-content: center; align-items: center; font-size: var(--fs-xs);">
-			Frontpage #3 with 390 upvotes on 
+			Front page #3 with 390 upvotes on 
 			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
 				YC HackerNews 
 			</a>

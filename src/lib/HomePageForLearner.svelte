@@ -3,7 +3,7 @@
 		Youtube-style help for competitive math
 	</p>
 
-	<div style="display: flex; flex-wrap: wrap; row-gap: 30px; align-items: center;">
+	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
 			Subscribe to a teacher. Ask questions flexibly. Get detailed video explanations until you understand everything.
 			$16/month.
@@ -21,6 +21,13 @@
 				calendar_add_on
 			</span>
 		</ReusableRoundButton>
+
+		<div style="display: flex; gap: 6px; justify-content: center; align-items: center; font-size: var(--fs-xs);">
+			Frontpage #3 with 390 upvotes on 
+			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
+				YC HackerNews 
+			</a>
+		</div>
 	</div>
 
 	{#if videoWidth}
@@ -39,14 +46,7 @@
 		</div>
 	{/if}
 
-	<div style="display: flex; gap: 6px; justify-content: center; align-items: center;">
-		Frontpage #3 with 390 upvotes on 
-		<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
-			YC HackerNews 
-		</a>
-	</div>
-
-	<div style="text-align: center; padding: 8px 0px;">
+	<div style="text-align: center; padding: 48px 0px;">
 		<img 
 			style="min-width: 332px; width: 60vw; height: auto"
 			src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"

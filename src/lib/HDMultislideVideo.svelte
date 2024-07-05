@@ -257,7 +257,7 @@
     alert('Share link has been copied, you can now paste it anywhere.')
   }
 
-  async function revertToBoard ({ id, isPaid, audioRefFullPath, creatorUID }) {
+  async function revertToBoard ({ isPaid, audioRefFullPath, creatorUID }) {
     if (!confirm('Are you sure you want to delete this video?')) {
       return
     }
@@ -280,6 +280,7 @@
     promises.push(
       updateDoc(boardRef, {
         creator: deleteField(),
+        creatorUID: deleteField(),
         creatorPhoneNumber: deleteField(),
         date: deleteField(),
         audioDownloadURL: deleteField(),
@@ -306,7 +307,7 @@
     if (isPaid) {
       updateObj.numPaidVideos = increment(-1)
     }
-    updateFirestoreDoc(membersDbPath + '/' + helperDoc.id, updateObj)
+    // updateFirestoreDoc(membersDbPath + '/' + helperDoc.id, updateObj)
 
     // promises.push(deleteAllStrokesFromDb())
     await Promise.all(promises)

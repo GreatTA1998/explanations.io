@@ -9,18 +9,24 @@
 			$16/month.
 		</div>
 
-		<ReusableRoundButton on:click={redirectToCalMeetingPage}
-			backgroundColor="#5d0068"
-			textColor="white"
-		>
-			<div style="font-weight: 600; font-size: var(--fs-s); padding: 12px;">
-				Book Setup Call
+		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+			<ReusableRoundButton on:click={redirectToCalMeetingPage}
+				backgroundColor="#5d0068"
+				textColor="white"
+			>
+				<div style="font-weight: 600; font-size: var(--fs-s); padding: 12px;">
+					Book Setup Call
+				</div>
+				
+				<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
+					calendar_add_on
+				</span>
+			</ReusableRoundButton>
+
+			<div style="font-size: var(--fs-xs); color: #5d0068;">
+				3 subscribers joined this year
 			</div>
-			
-			<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
-				calendar_add_on
-			</span>
-		</ReusableRoundButton>
+		</div>
 
 		<div style="display: flex; gap: 6px; justify-content: center; align-items: center; font-size: var(--fs-xs);">
 			Front page #3 with 390 upvotes on 

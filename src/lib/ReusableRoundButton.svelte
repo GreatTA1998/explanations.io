@@ -5,7 +5,7 @@
 {:else}
   <div 
     on:click
-    class="reusable-round-button glow-on-hover ux-high-elevation"
+    class="reusable-round-button glow-on-hover ux-low-elevation"
     style="
       color: {textColor}; 
       background-color: {backgroundColor};

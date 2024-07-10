@@ -1,11 +1,11 @@
 <div style="display: flex; flex-direction: column; gap: 16px;">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube-style help for competitive math
+		Youtube style tutoring for competitive math
 	</p>
 
 	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
-			Subscribe to a teacher. Ask questions flexibly. Get detailed video explanations until you understand everything.
+			Subscribe to someone. Ask them questions. Get detailed video explanations until you understand everything.
 			$16/month.
 		</div>
 
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 
-		<div style="display: flex; gap: 6px; justify-content: center; align-items: center; font-size: var(--fs-xs);">
+		<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
 			#3 front page 
 			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
 				YC Hacker News

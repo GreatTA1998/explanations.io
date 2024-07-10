@@ -29,9 +29,16 @@
 		</div>
 
 		<div style="display: flex; gap: 6px; justify-content: center; align-items: center; font-size: var(--fs-xs);">
-			Front page #3 with 390 upvotes on 
+			#3 front page 
 			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
-				YC HackerNews 
+				YC Hacker News
+			</a>
+
+			<div class="separator"></div>
+
+			20 upvotes
+			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
+				r/PhysicsStudents
 			</a>
 		</div>
 	</div>
@@ -234,4 +241,12 @@
 		padding: 48px 6px; 
 		outline: 0px solid red;
   }
+
+	.separator {
+		width: 2px;
+		height: 2px;
+		background-color: #606060;
+		border-radius: 50%;
+		margin: 4px 6px;
+	}
 </style>

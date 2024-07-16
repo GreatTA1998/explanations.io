@@ -23,7 +23,7 @@
         classID={quickfixClassIDFrom(video)}
         audioDownloadURL={video.audioDownloadURL}
         timingOfSlideChanges={video.timingOfSlideChanges}
-        showEditDeleteButtons={false}
+        {showEditDeleteButtons}
         showSlideChanger={!willHideSliderForPreview || isFullscreen}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
       />
@@ -33,7 +33,7 @@
         boardDoc={video}
         {canvasWidth}
         {canvasHeight}
-        showEditDeleteButtons={false}
+        {showEditDeleteButtons}
         boardDbPath={video.path}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
       />
@@ -72,6 +72,7 @@
   export let video
   export let videoWidth
   export let willHideSliderForPreview = false
+  export let showEditDeleteButtons = false
 
   function quickfixClassIDFrom (video) {
     const classID = video.path.split('/')[1]

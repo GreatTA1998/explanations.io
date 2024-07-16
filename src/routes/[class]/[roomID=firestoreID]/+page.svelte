@@ -54,6 +54,7 @@
             <UnifiedDoodleVideo
               video={boardDoc}
               videoWidth={$maxAvailableWidth}
+              showEditDeleteButtons={true}
             />
           {:else if boardDoc.isMultiboard}
             <div style="margin-top: 24px;"></div>

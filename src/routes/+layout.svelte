@@ -78,12 +78,6 @@
       }
 
       await listenToUserDocAndHandleForwarding(resultUser.uid)
-
-      // this promise resolves when we receive full user snapshot for the first time,
-      // exactly the place to handle redirection
-      if ($page.url.pathname === '/' && $user.mostRecentClassAndRoomID) {
-        goto($user.mostRecentClassAndRoomID)
-      }
     } 
 
     // user not logged in
@@ -189,6 +183,12 @@
               id: snap.id, 
               ...userDoc
             })
+          }
+
+          // QUICKFIX: for some reason user.set() is still not hydrated even after `await listenToUserDocAndHandleForwarding()`, so we just 
+          // handle navigation directly here
+          if ($page.url.pathname === '/' && $user.mostRecentServerID) {
+            goto(`/${$user.mostRecentServerID}/question`)
           }
           resolve()
         }

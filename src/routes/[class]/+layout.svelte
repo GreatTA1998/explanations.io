@@ -23,10 +23,18 @@
   import '$lib/_Elevation.scss'
   import Drawer, { AppContent, Content } from '@smui/drawer'
   import { user, drawerWidth, maxAvailableWidth, maxAvailableHeight } from '/src/store.js'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { onMount } from 'svelte'
 
   export let data;
   let { classID, roomID } = data;
   $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
+
+  onMount(() => {
+    updateFirestoreDoc(`/users/${$user.uid}`, {
+      mostRecentServerID: classID 
+    })
+  })
 </script>
 
 <style>

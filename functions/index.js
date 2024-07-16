@@ -4,13 +4,15 @@ var postmark = require("postmark");
 require("firebase-functions/logger/compat");
 
 exports.sendEmail = functions.https.onCall((data, context) => {
-  var client = new postmark.ServerClient("25517a27-c9ee-49ed-a203-e3cfde01f497");
+  // I configured Firebase environment variables:
+  //   `firebase functions:config:set postmark.apikey="YOUR_POSTMARK_API_KEY"`
+  var client = new postmark.ServerClient(functions.config().postmark.apikey);
 
   const { toWho, subject, content } = data
-  console.log('sending email to =', toWho)
-
+  console.log('functions sending email to:', toWho)
+ 
   client.sendEmail({
-    "From": "elton@explanations.app",
+    "From": "elton@explanations.io",
     "To": toWho,
     "Subject": subject,
     "HtmlBody": content, // "<strong>Hello</strong> dear Postmark user."

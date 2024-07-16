@@ -137,7 +137,7 @@
     </div>
   </List>
   
-  <div style="position: absolute; bottom: 0px; top: auto; width: {DRAWER_EXPANDED_WIDTH - 2}px; background: white; height: 48px; box-sizing: border-box;" class="core-shadow" >
+  <!-- <div style="position: absolute; bottom: 0px; top: auto; width: {DRAWER_EXPANDED_WIDTH - 2}px; background: white; height: 48px; box-sizing: border-box;" class="core-shadow" >
     <div 
       class:drawer-item-glow={$page.routeId === '[class]/profile'}
       on:click={() => goto(`/${classID}/profile`)} 
@@ -152,7 +152,7 @@
         My profile
       </div>
     </div>
-  </div>
+  </div> -->
 </RenderlessDailyVideoConference>
 
 

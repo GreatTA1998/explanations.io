@@ -52,9 +52,8 @@
 
         <Button disabled={!!!$user.uid} 
           on:click={submitQuestion} 
-          variant="outlined"
           color="secondary"
-          style="border-radius: 40px;"
+          style="border-radius: 40px; color: white; background-color: #5d0068; padding: 0px 24px;"
         >
           Post my question to server
         </Button>

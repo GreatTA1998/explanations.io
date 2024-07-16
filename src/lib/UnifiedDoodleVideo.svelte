@@ -1,4 +1,11 @@
-<!-- TO-DO: show full problem description -->
+<!-- 
+  TO-DO:
+    - Re-introduce ability to toggle videos as free vs paid
+    - Re-introduce ability to re-arrange videos
+    - Re-introduce ability for nano questions
+    - Re-introduce ability to share video as a link
+    - Display the creator card somewhere
+-->
 {#if video}
   <FullscreenModule 
     boardDoc={video} 
@@ -35,6 +42,8 @@
     {#if !isFullscreen}
       <div style="width: {canvasWidth}px">
         <VideoFooterInfo {video}>
+          <EurekaButton boardDoc={video}/>
+
           <div 
             on:click={toggleFullscreen} 
             class="my-round-button" 
@@ -52,11 +61,11 @@
 {/if}
 
 <script>
+  import EurekaButton from '$lib/EurekaButton.svelte'
   import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
   import FullscreenModule from '$lib/FullscreenModule.svelte'
   import HDMultislideVideo from '$lib/HDMultislideVideo.svelte'
-  import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { increment } from 'firebase/firestore'
 

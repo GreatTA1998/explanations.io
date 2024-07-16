@@ -49,257 +49,12 @@
               readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
             />
           </div>
+
           {#if boardDoc.audioDownloadURL}
-            {#if boardDoc.isMultiboard}
-              <div style="margin-top: 24px;"></div>
-
-              <OnlineMultislideVideo
-                canvasWidth={0.95 * $maxAvailableWidth}
-                canvasHeight={0.95 * $maxAvailableHeight}
-                {boardDoc}
-                {classID}
-                audioDownloadURL={boardDoc.audioDownloadURL}
-                timingOfSlideChanges={boardDoc.timingOfSlideChanges}
-                showEditDeleteButtons={true}
-                on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
-                on:subscribe-to-helper={() => { 
-                  isSubscribePopupOpen = true
-                  creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
-                }}
-              />
-            {:else}
-              <RenderlessFetchStrokes 
-                dbPath={boardsDbPath + boardID}
-                let:fetchStrokes={fetchStrokes}
-                let:strokesArray={strokesArray}
-                let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
-              >
-                <div use:lazyCallable={fetchStrokes} style={`width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight + 40}px; position: relative`}>
-                  <DoodleVideo 
-                    {strokesArray} 
-                    audioDownloadURL={boardDoc.audioDownloadURL}
-                    backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
-                    canvasWidth={$maxAvailableWidth}
-                    canvasHeight={$maxAvailableHeight}
-                    isPaid={!!boardDoc.isPaid}
-                    creatorUID={boardDoc.creatorUID}
-                    {classID}
-                    on:six-seconds-elapsed={(e) => incrementViewMinutes(boardID, e.detail.playbackSpeed)}
-                    on:subscribe-to-helper={() => { 
-                      isSubscribePopupOpen = true
-                      creatorDoc = { uid: boardDoc.creatorUID, name: boardDoc.creatorName, phoneNumber: boardDoc.creatorPhoneNumber}
-                    }}
-                  > 
-                    <div style="
-                      margin-left: auto;
-                      margin-right: 8px; 
-                      display: flex; 
-                      align-items: center; 
-                      flex-direction: row-reverse"
-                    >
-                      <Button on:click={() => isShowingNanoQuestionPopup = true}
-                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white;"
-                      >
-                        Nano-question
-                      </Button>
-
-                      {#if isShowingNanoQuestionPopup}
-                        <PopupNanoQuestion 
-                          isOriginalVideoCreator={$user.uid === boardDoc.creatorUID}
-                          {boardDoc}
-                          boardDbPath={boardsDbPath + boardID}
-                          on:popup-close={() => isShowingNanoQuestionPopup = false}
-                        />
-                      {/if}
-
-                      <Button on:click={() => createAndCopyShareLink(classID, boardDoc.id)}
-                        style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
-                      > 
-                        Share
-                      </Button>
-
-                      <!-- boardDoc will always have a `creatorUID` because anonymous login -->
-                      {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID || $adminUIDs.includes($user.uid)}
-                        <Button 
-                          on:click={() => revertToBoard(boardDoc, deleteNonInitialStrokesFromDb)} 
-                          style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-                          Delete
-                        </Button>
-
-                        {#if isMoveVideoPopupOpen}
-                          <PopupMoveBlackboardVideo
-                            {classID}
-                            blackboardIDs={roomDoc.blackboards}
-                            {roomDoc}
-                            on:popup-close={() => isMoveVideoPopupOpen = false}
-                            on:video-rearranged={() => dispatch('video-rearranged')}
-                          />
-                        {/if}
-
-                        <Button 
-                          on:click={() => isMoveVideoPopupOpen = true}
-                          style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white">
-                          Move
-                        </Button>
-
-                        {#if $user.uid === boardDoc.creatorUID}
-                          {#if !boardDoc.isPaid} 
-                            <Button 
-                              on:click={() => makePaid(boardDoc)}
-                              style="margin-right: 6px; background-color: rgb(90 90 90 / 100%); color: white"
-                            >
-                              Freely available
-                            </Button>
-                          {:else}
-                            <Button
-                              on:click={() => makeFree(boardDoc)}
-                              style="margin-right: 6px; background-color: purple; color: white"
-                            >
-                              Subscribers-only
-                            </Button>
-                          {/if}
-                        {/if}
-                      {/if}
-                    </div>
-                  </DoodleVideo>
-                </div>
-              </RenderlessFetchStrokes>
-            {/if}
-
-            <RenderlessFetchComments 
-              dbPath={boardsDbPath + boardID} 
-              {boardDoc}
-              {roomDoc}
-              {classID}
-              {roomID}
-              let:listenToComments={listenToComments} 
-              let:allComments={allComments}
-              let:newComment={newComment}
-              let:bindLocalValue={bindLocalValue}
-              let:submitNewComment={submitNewComment}
-              let:isShowingComments={isShowingComments}
-              let:hideComments={hideComments}
-              let:deleteComment={deleteComment}
-            >  
-              <div style="display: flex; align-items: center">
-                <div style="display: flex; width: 100%; font-size: 1rem; margin-left: 0px; margin-top: 1%; margin-bottom: 4px; align-items: center;">
-                  <RenderlessFetchServerMemberDoc 
-                    {classID}
-                    memberUID={boardDoc.creatorUID}
-                    let:serverMemberDoc={memberDoc}
-                  >
-                    {#if memberDoc}
-                      <PresentationalBeaverPreview style="margin-left: 4px;"
-                        helperDoc={memberDoc}
-                        {classID}
-                      />
-
-                      {#if memberDoc.venmo || memberDoc.cashApp}
-                        <div style="width: 250px; margin-left: 30px;">
-                          <ReusableButton on:click={() => isSubscribePopupOpen = true} 
-                            fontSize="0.8rem"
-                            color="secondary" 
-                            style="color: white;"
-                          >
-                            Subscribe for $16/month
-                          </ReusableButton> 
-                  
-
-                          {#if isSubscribePopupOpen}
-                            <PopupConfirmSubscription
-                              selectedTutorDoc={memberDoc}
-                              {classID}
-                              on:confirm-clicked={() => handleConfirmSubscription(memberDoc)}
-                              on:popup-close={() => isSubscribePopupOpen = false}
-                            />
-                          {/if}      
-                        </div>
-                      {/if}
-                    {/if}
-                  </RenderlessFetchServerMemberDoc>
-
-                  <div style="margin-left: 24px;"></div>
-
-                  <div style="font-size: 1.1rem; color: black;">
-                    {boardDoc.viewMinutes ? roundedToFixed(boardDoc.viewMinutes, 0): 0} minutes viewed
-                  </div>
-
-                  <div style="margin-left: 24px;"></div>
-
-                  <div style="font-size: 1.1rem; color: black;">
-                    {boardDoc.numOfComments || 0} comments
-                  </div>
-
-                  {#if !isShowingComments}
-                    <div on:click={listenToComments} style="cursor: pointer;">
-                      <span class="material-icons" style="color: hsl(0,0%,0%, 0.99); font-size: 2rem;">
-                        expand_more
-                      </span>     
-                    </div>
-                  {:else}
-                    <div on:click={hideComments} style="cursor: pointer;">
-                      <span class="material-icons" style="color: hsl(0,0%,0%, 0.99); font-size: 2rem;">
-                        expand_less
-                      </span>
-                    </div>
-                  {/if}
-
-                  {#if $user.uid}
-                    <div 
-                    class="paper-shadow"
-                    style="
-                      margin-left: 24px; 
-                      display: flex; 
-                      justify-content: space-around; 
-                      align-items: center; 
-                      min-width: 100px; 
-                      border-radius: 12px; 
-                  
-                      padding-left: 8px; 
-                      padding-right: 12px; 
-                      padding-top: 4px;
-                      padding-bottom: 6px;"
-                    >
-                      <div on:click={eureka(boardDoc)} style="display: flex; align-items: center; cursor: pointer;">
-                        <span class="material-icons" 
-                          style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'grey') : 'grey'}; font-size: 2rem; margin-right: 4px;">
-                          lightbulb
-                        </span>
-
-                        I now clearly understand 
-
-                        <div style="color: black; margin-left: 8px; font-weight: 500">
-                          {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
-                        </div>
-                      </div>
-                    </div>
-                  {/if}
-                </div>
-              </div>
-
-              {#if isShowingComments}
-                <div style="width: {$maxAvailableWidth - 20}px; margin-left: 20px;">
-                  <DoodleVideoComments 
-                    {allComments}
-                    on:comment-delete={(e) => deleteComment(e.detail)}
-                  />
-                  
-                  <div style="margin-bottom: 4px;"></div>
-
-                  <TextAreaAutoResizing
-                    value={newComment} 
-                    on:input={(e) => bindLocalValue(e.detail)}
-                    placeholder="New comment..."
-                  />
-
-                  <Button on:click={submitNewComment}>
-                    SUBMIT
-                  </Button>
-                </div>
-                <div style="margin-bottom: 10px;"></div>
-              {/if}
-            </RenderlessFetchComments>
-
+            <UnifiedDoodleVideo
+              video={boardDoc}
+              videoWidth={$maxAvailableWidth}
+            />
           {:else if boardDoc.isMultiboard}
             <div style="margin-top: 24px;"></div>
             <OnlineMultislideBlackboard 
@@ -442,7 +197,6 @@
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '$lib/Blackboard.svelte'
-  import DoodleVideo from '$lib/DoodleVideo.svelte'
   import { onMount, tick, onDestroy } from 'svelte'
   import Button, { Icon } from '@smui/button'
   import { goto } from '$app/navigation';
@@ -453,20 +207,11 @@
   import LinearProgress from '@smui/linear-progress'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
-  import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'
-  import PopupConfirmSubscription from '$lib/PopupConfirmSubscription.svelte'
-  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
-  import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import PopupMoveBlackboardVideo from '$lib/PopupMoveBlackboardVideo.svelte'
-  import PopupNanoQuestion from '$lib/PopupNanoQuestion.svelte'
-  import ReusableButton from '$lib/ReusableButton.svelte'
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
-  import OnlineMultislideVideo from '$lib/OnlineMultislideVideo.svelte'
+  import UnifiedDoodleVideo from '$lib/UnifiedDoodleVideo.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
 
   export let data
@@ -1019,21 +764,6 @@
       doc(getFirestore(), boardsDbPath + boardID)
     )
   }
-
-  function eureka (boardDoc) {
-    const boardRef = doc(getFirestore(), boardsDbPath + boardDoc.id)
-    if (boardDoc.eurekaUIDs instanceof Array) {
-      if (boardDoc.eurekaUIDs.includes($user.uid)) {
-        updateDoc(boardRef, {
-          eurekaUIDs: arrayRemove($user.uid)
-        })
-        return 
-      }
-    } 
-    updateDoc(boardRef, {
-      eurekaUIDs: arrayUnion($user.uid)
-    })
-  }
 </script>
 
 <style>
@@ -1048,10 +778,6 @@
 
 .unclickable {
   pointer-events: none;
-}
-
-.paper-shadow {
-  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .my-record-button {

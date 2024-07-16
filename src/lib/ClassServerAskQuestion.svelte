@@ -177,23 +177,31 @@
     const serverTeachers = await getFirestoreQuery(q)
 
     for (const teacher of serverTeachers) { 
-      if (teacher.email && teacher.subscriberUIDs) {
-        if (teacher.subscriberUIDs.length === 0) {
-          continue
-        }
+      if (teacher.email) {
         console.log('sending email =', teacher.email)
         sendEmail({ 
           toWho: teacher.email,
-          subject: 'New question [explanations.app]', 
+          subject: 'New question [explanations.io]', 
           content: `<strong>${$user.name}</strong> asked: "${questionTitleInput}"
           <br>
           <br>
-          <a href="https://explanations.app/${classID}/${newRoomDocID}">Link to question</a>`
+          <a href="https://explanations.io/${classID}/${newRoomDocID}">
+            Link to question
+          </a>
+          `
         })
-      } else {
-        console.log('Teacher has no email/subscribers =', teacher)
-      }
+      } 
     }
+
+    // also send it to me the founder
+    sendEmail({ 
+      toWho: 'elton@explanations.io',
+      subject: 'Activity alert: student asked a question', 
+      content: `<strong>${$user.name}</strong> asked: "${questionTitleInput}"
+      <br>
+      <br>
+      <a href="https://explanations.io/${classID}/${newRoomDocID}">Link to question</a>`
+    })
 
     alert('Question submitted! Helpers will be notified')
     goto(`/${classID}/${newRoomDocID}`)

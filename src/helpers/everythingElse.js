@@ -23,9 +23,9 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
       console.log("sending email to creator =,", creatorDoc.email)
       sendEmail({ 
         toWho: creatorDoc.email,
-        subject: 'New comment on your video [explanations.app]', 
+        subject: 'New comment on your video [explanations.io]', 
         content: `<strong>${userDoc.name.split(" ")[0]}</strong> commented on your video: "${commentString}"
-        <a href="https://explanations.app/${classID}/${roomID}">Link here</a>`
+        <a href="https://explanations.io/${classID}/${roomID}">Link here</a>`
       })
     }
   }
@@ -38,9 +38,9 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
       console.log("sending email to participant =", participantDoc.email)
       sendEmail({ 
         toWho: participantDoc.email,
-        subject: 'New comment follow-up [explanations.app]', 
+        subject: 'New comment follow-up [explanations.io]', 
         content: `<strong>${userDoc.name.split(" ")[0]}</strong> added a new comment on a thread you participated in: "${commentString}"
-        <a href="https://explanations.app/${classID}/${roomID}">Link here</a>`
+        <a href="https://explanations.io/${classID}/${roomID}">Link here</a>`
       })
     }
   }
@@ -59,9 +59,16 @@ export function handleVideoUploadEmailNotifications (classID, roomDoc, userDoc) 
         console.log("sending an email to asker =", askerDoc.email)
         sendEmail({ 
           toWho: askerDoc.email,
-          subject: 'Your teacher replied [explanations.app]', 
+          subject: 'Your teacher replied [explanations.io]', 
           content: `<strong>${userDoc.name.split(" ")[0]}</strong> uploaded a video in response to your question: 
-          <a href="https://explanations.app/${classID}/${roomDoc.id}">Link here</a>`
+          <a href="https://explanations.io/${classID}/${roomDoc.id}">Link here</a>`
+        })
+
+        sendEmail({ 
+          toWho: 'elton@explanations.io',
+          subject: 'Activity alert: teacher replied with video', 
+          content: `<strong>${userDoc.name.split(" ")[0]}</strong> uploaded a video in response to your question: 
+          <a href="https://explanations.io/${classID}/${roomDoc.id}">Link here</a>`
         })
       }
     } 
@@ -76,11 +83,11 @@ export function handleVideoUploadEmailNotifications (classID, roomDoc, userDoc) 
 
         sendEmail({ 
           toWho: participantDoc.email,
-          subject: 'New follow-up [explanations.app]', 
+          subject: 'New follow-up [explanations.io]', 
           content: `<strong>${userDoc.name.split(" ")[0]}</strong> uploaded a video in a question thread you participated in.
           <br>
           <br>
-          <a href="https://explanations.app/${classID}/${roomDoc.id}">Link to question</a>`
+          <a href="https://explanations.io/${classID}/${roomDoc.id}">Link to question</a>`
         })
       }
     }

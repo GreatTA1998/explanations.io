@@ -64,8 +64,6 @@
         </span>
       {/if}
       
-      <!--  needed otherwise `question-item` if statement will be undefined -->
-      <!--  question-item criteria use to require `&& room.id !== roomID` -->
       {#if room.name}
         <div 
           class:question-item={'?' === room.name.charAt(room.name.length - 1)} 
@@ -74,6 +72,8 @@
         >
           {room.name } 
         </div>
+      <!--  needed otherwise `question-item` if statement will be undefined -->
+      <!--  question-item criteria use to require `&& room.id !== roomID` -->
       {:else}
         <div style="margin-bottom: 2px;">
           untitled
@@ -297,7 +297,6 @@ function handleRoomClick (roomID) {
        
         isExpanded = false
       }
-
 
       goto(`/${classID}/${roomID}`)
     } else {

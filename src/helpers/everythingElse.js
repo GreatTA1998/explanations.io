@@ -56,7 +56,7 @@ export function handleVideoUploadEmailNotifications (classID, roomDoc, userDoc) 
     if (roomDoc.askerUID) {
       const askerDoc = await getFirestoreDoc(`/users/${roomDoc.askerUID}`)
       if (askerDoc.email) {
-        console.log("sending an email to asker =", askerDoc.email)
+        console.log("emailing asker =", askerDoc.email)
         sendEmail({ 
           toWho: askerDoc.email,
           subject: 'Your teacher replied [explanations.io]', 
@@ -79,7 +79,7 @@ export function handleVideoUploadEmailNotifications (classID, roomDoc, userDoc) 
         if (!participantDoc) continue
         if (!participantDoc.email) continue
 
-        console.log('sending email to =', participantDoc.email)
+        console.log('emailing participant:', participantDoc.email)
 
         sendEmail({ 
           toWho: participantDoc.email,

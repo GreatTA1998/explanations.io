@@ -83,12 +83,12 @@
         <div 
           use:lazyCallable={fetchStrokes}  
           style="
-            display: {idxOfFocusedSlide === i ? '' : 'none'};
-            width: {$maxAvailableWidth}px; 
-            height: {$maxAvailableHeight + 40}px; 
-            position: relative;
-
             transform: scale(0.5); transform-origin: top left;
+
+            display: {idxOfFocusedSlide === i ? '' : 'none'};
+            width: {canvasWidth * 2}px; 
+            height: {canvasHeight + (80 * scaleFactor)}px; 
+            position: relative;
           "
         > 
           {#if strokesArray}

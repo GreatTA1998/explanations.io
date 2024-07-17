@@ -19,28 +19,27 @@
   <div style="width: 100%; z-index: 1; position: absolute; bottom: 8px; color: rgb(248, 249, 249);">
     <div style="display: flex; align-items: center; justify-content: space-around; font-size: 16px; opacity: 1.0; font-weight: 500;"
     >
-
-      <BaseStatDisplayIcon
+      <!-- <BaseStatDisplayIcon
         iconName="draw"
         statName=""
         statValue={serverObj.numOfTeachers || 0}
-      />
+      /> -->
 
-      <BaseStatDisplayIcon
+      <!-- <BaseStatDisplayIcon
         statName=""
         iconName="smart_display"
         statValue={serverObj.numOfVideos || 0}
-      />
+      /> -->
 
-      <BaseStatDisplayIcon
+      <!-- <BaseStatDisplayIcon
         statName=""
         iconName="wb_twilight"
         statValue={serverObj.numOfPrepaidLearners || 0}
-      />
+      /> -->
 
       <BaseStatDisplayIcon
         statName=""
-        iconName="sentiment_very_satisfied"
+        iconName="person"
         statValue={serverObj.numOfSubscribers || 0}
       />
     </div>

@@ -1,4 +1,4 @@
-<div style="width: 1000px; margin: auto; height: 840px;">
+<div style="width: 1000px; margin: auto; height: fit-content;">
   <div style="display: flex; justify-content: center; width: 100%;">
     <div class="input-container" style="position: relative; width: 100%;">
       <span 
@@ -140,7 +140,7 @@
 
   let SearchBar
   let categories = ['Competition Math', 'Math', 'Physics', 'All Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
-  let filterTags = ['Teachers', 'Videos', 'Prepaid learners', 'Subscribers'] 
+  let filterTags = ['Unique Subscribers'] // 'Teachers', 'Videos', 'Prepaid learners', 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'Competition Math'
 
@@ -265,7 +265,7 @@
           }
         })
         return sortedByPresubs
-      case 'Subscribers': 
+      case 'Unique Subscribers': 
         const copy4 = [...subjectServers]
         copy4.sort((s1, s2) => {
           if (!!s1.isYoutubeClass !== !!s2.isYoutubeClass) {

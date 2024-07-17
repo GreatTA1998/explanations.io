@@ -6,7 +6,7 @@
 	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
 			Subscribe to someone. Ask them questions. Get detailed video explanations until you understand everything.
-			$16/month.
+			$4/week.
 		</div>
 
 		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
@@ -24,7 +24,7 @@
 			</ReusableRoundButton>
 
 			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				4 subscribers joined this year
+				1 learner joined this week
 			</div>
 		</div>
 
@@ -59,6 +59,8 @@
 		</div>
 	{/if}
 
+	<SearchAllServers/>
+
 	<div style="text-align: center; padding: 48px 0px;">
 		<img 
 			style="min-width: 332px; width: 60vw; height: auto"
@@ -75,7 +77,8 @@
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
-	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte';
+	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte'
+	import SearchAllServers from '$lib/SearchAllServers.svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
 	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
 

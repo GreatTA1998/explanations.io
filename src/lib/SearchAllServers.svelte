@@ -1,4 +1,4 @@
-<div style="width: 1000px; margin: auto; height: fit-content;">
+<div style="width: 100%; padding: 0px 6px; max-width: 1000px; margin: auto; height: fit-content;">
   <div style="display: flex; justify-content: center; width: 100%;">
     <div class="input-container" style="position: relative; width: 100%;">
       <span 
@@ -39,9 +39,9 @@
 
   <div style="margin-bottom: 12px;"></div>
 
-  <div style="display: flex; width: 100%;">
+  <div class="container-below-searchbar">
     <!-- LEFT FLEX CHILD -->
-    <div style="margin-top: 20px; width: fit-content; flex-wrap: wrap;">
+    <div class="subject-categories">
       {#each categories as category, i}
         <div 
           class="subject-category"
@@ -89,13 +89,15 @@
               explore
             </span>
           {/if}
-          {category}
+          <div class="category-name">
+            {category}
+          </div>
         </div>
       {/each}
     </div>
 
     <!-- RIGHT FLEX CHILD -->
-    <div style="flex-wrap: wrap; width: 100%; margin-left: 24px;">
+    <div style="flex-grow: 1;">
       <!-- Filters on top -->
       <div style="display: flex; margin-top: 20px; justify-content: space-around; width: fit-content; align-items: center; margin-bottom: 24px;">
         <div style="margin-left: 12px; margin-right: 0px; font-size: 12px;">
@@ -119,7 +121,7 @@
             {/key}
           {/each}
 
-          <div style="">
+          <div style="width: 240px;">
             <PopupNewServer/>
           </div>
         {/if}
@@ -139,7 +141,7 @@
   import MySelect from '$lib/MySelect.svelte'
 
   let SearchBar
-  let categories = ['Competition Math', 'Math', 'Physics', 'All Servers']  // ['All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
+  let categories = ['Competition Math', 'Math', 'Physics', 'All Servers']  // ['Physics', 'All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Unique Subscribers'] // 'Teachers', 'Videos', 'Prepaid learners', 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'Competition Math'
@@ -298,9 +300,10 @@
 
 <style>
   .my-grid-layout {
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 1em;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
 
   span {
@@ -332,14 +335,6 @@
     font-weight: 500;
   }
 
-  /* hsl(0,0%,0%, 0.80) */
-
-  .glow-highlight {
-    background-color: grey;
-    color: white;
-    font-weight: 500;
-  }
-
   .orange-highlight {
     /* legacy grey: #e2dddd */
     background-color: #e2dddd;
@@ -349,8 +344,11 @@
     border: 1px solid white; */
   }
 
-  .paper-shadow {
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  .subject-categories {
+    margin-top: 20px; 
+    width: fit-content; 
+    display: flex; 
+    flex-direction: column;
   }
 
   .subject-category {
@@ -372,5 +370,32 @@
 
   .subject-category:hover {
     background-color: rgb(214, 214, 214);
+  }
+
+  .category-name {
+    text-wrap: nowrap;
+  }
+  
+  .container-below-searchbar {
+    display: flex; 
+    width: 100%; 
+    column-gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .container-below-searchbar {
+      flex-wrap: wrap;
+    }
+
+    /* It becomes horizontal */
+    .subject-categories {
+      flex-direction: row;
+      width: 100%;
+    }
+
+    .subject-category {
+      flex-shrink: 1;
+      flex-basis: 0;
+    }
   }
 </style>

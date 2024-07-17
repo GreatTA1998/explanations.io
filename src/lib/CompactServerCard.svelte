@@ -2,7 +2,7 @@
   class:red-alert-border={needsTeachers}
   class="overall-container core-shadow"
   style="position: relative; display: flex; width: 240px; border-radius: {8 * 2}px; padding: 0px; overflow: hidden;" 
-  on:click={() => goto(`/${serverObj.id}/overview`)}
+  on:click|stopPropagation={() => goto(`/${serverObj.id}/overview`)}
 >
   <div style="position: absolute; top: 8px; left: 16px; color: rgb(248, 249, 249); z-index: 1;">
     <div style="color: white; font-weight: 600;">
@@ -11,7 +11,7 @@
   </div>
 
   {#if needsTeachers}
-    <div style="background-color: red; color: black; position: absolute; top: 36px; left: 16px; padding: 4px; border-radius: 4px; font-size: 14px;">
+    <div style="background-color: red; color: white; position: absolute; top: 36px; left: 16px; padding: 4px 8px; border-radius: 4px; font-size: 14px;">
       Needs teachers
     </div>
   {/if}
@@ -31,17 +31,17 @@
         statValue={serverObj.numOfVideos || 0}
       /> -->
 
-      <!-- <BaseStatDisplayIcon
-        statName=""
-        iconName="wb_twilight"
-        statValue={serverObj.numOfPrepaidLearners || 0}
-      /> -->
-
       <BaseStatDisplayIcon
         statName=""
         iconName="person"
         statValue={serverObj.numOfSubscribers || 0}
       />
+
+      <!-- <BaseStatDisplayIcon
+        statName=""
+        iconName="wb_twilight"
+        statValue={serverObj.numOfPrepaidLearners || 0}
+      /> -->
     </div>
   </div>
 
@@ -104,7 +104,7 @@
       </RenderlessListenToBoard>
     </div>
   {:else}
-    <div style="opacity: 0.2; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
+    <div style="opacity: 0.3; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
 
     </div>
   {/if}
@@ -131,7 +131,7 @@
 
 <style lang="scss">
   .red-alert-border {
-    border: 2px solid red;
+    outline: 2px solid red;
   }
 
   .two-lines-maximum {
@@ -238,7 +238,7 @@
   } */
 
   .overall-container:hover {
-    border: 2px solid #F7C686;
+    outline: 2px solid #F7C686;
     @extend .high-elevation-cast-shadow;
   }
 

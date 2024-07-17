@@ -72,7 +72,7 @@
         {room.name || '(untitled)'} 
       </div>
 
-      {#if room.id === roomID && $user.uid}
+      {#if $page.params.roomID && $user.uid}
         {#if $adminUIDs.includes($user.uid)}
           <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
             more_vert

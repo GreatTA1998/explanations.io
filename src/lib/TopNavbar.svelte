@@ -17,24 +17,6 @@
 
 				<Section align="end" toolbar style="padding-right: 0;">
 					<div class="hide-on-mobile">
-						<Button on:click={() => goto('/servers')} style="color: black; font-size: 12px;" class="button-shaped-round">
-							<Label>
-								Servers
-							</Label>
-						</Button>
-
-						<a on:click={() => alert("For absolutely anything, call 503 250 3868 or email eltonlin@alum.mit.edu, I can reply immediately unless it's past midnight / before 8 am.")}
-							style="margin-left: 8px; text-decoration-color: transparent;"
-						>
-							<Button
-								class="button-shaped-round"
-								style="font-size: 12px; color: black;"
-							>
-								<Label>CONTACT</Label>
-								<!-- Phone & email -->
-							</Button>
-						</a>
-
 						<a href="https://eltonlin.substack.com/archive" target="_blank" 
 							style="margin-left: 8px; text-decoration-color: transparent;"
 						>

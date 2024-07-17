@@ -231,7 +231,7 @@
   })
 
   function handleLogoClick () {
-    goto('/servers', { replaceState: true })
+    goto('/', { replaceState: true })
   }
 
   async function updateClassMetadata () {

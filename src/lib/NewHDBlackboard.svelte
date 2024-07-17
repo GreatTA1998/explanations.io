@@ -68,9 +68,9 @@
 
   <!-- Purposely just zoom in on the top-left corner for readability (showing the whole picture at the thumbnail size is completely illegible) -->
   <canvas bind:this={canvas}
-    on:touchstart={touchStart}
-    on:touchmove={touchMove}
-    on:touchend={touchEnd}
+    on:touchstart|nonpassive={touchStart}
+    on:touchmove|nonpassive={touchMove}
+    on:touchend|nonpassive={touchEnd}
     style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${2.5 * canvasWidth}px; height: ${2.5 * canvasHeight}px;`}
   >
   </canvas>

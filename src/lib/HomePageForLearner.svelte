@@ -24,7 +24,7 @@
 			</ReusableRoundButton>
 
 			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				3 subscribers joined this year
+				4 subscribers joined this year
 			</div>
 		</div>
 

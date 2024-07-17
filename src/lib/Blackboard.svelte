@@ -57,11 +57,13 @@
       </div>
     </BlackboardToolbar>
   {/if}
-
+  
+  <!-- explicitly set `passive: false`, Rich Harris describes the problem 
+   very well: https://github.com/sveltejs/svelte/issues/2068 -->
   <canvas bind:this={canvas}
-    on:touchstart={touchStart}
-    on:touchmove={touchMove}
-    on:touchend={touchEnd}
+    on:touchstart|nonpassive={touchStart}
+    on:touchmove|nonpassive={touchMove}
+    on:touchend|nonpassive={touchEnd}
     style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${canvasWidth}px; height: ${canvasHeight}px`}
   >
   </canvas>

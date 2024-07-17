@@ -44,17 +44,8 @@
   <!-- Lighter purple (based on our theme color) #67416b -->
   <div style="width: 100%; display: flex; margin-top: 12px; margin-bottom: 12px;">
     <div on:click={() => goto(`/${classID}/question`)} 
-      class="action-item"
+      class="new-question-button"
       class:drawer-item-glow={$page.routeId === '[class]/question'}
-      style="
-        display: flex; 
-        align-items: center; 
-        width: 50%; 
-        border-radius: 24px; 
-
-        color: black; 
-        background-color: #e5e3e6; 
-        height: 28px;"
     >
       <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px; margin-left: 8px;">
         add
@@ -114,10 +105,6 @@
       {#if !room.parentRoomID}
         <LeftDrawerRecursiveRoom 
           {room} 
-          {firestoreIDToDailyID}
-          {toggleMic}
-          {activeSpeakerID}
-          {willJoinVoiceChat}
           {roomID}
           {classID}
           orderWithinLevel={i}
@@ -162,7 +149,6 @@
   import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, drawerWidth, maxAvailableHeight, maxAvailableWidth} from '/src/store.js'
   
   import List, { Item, Text } from '@smui/list'
-  import RenderlessMyDocUpdater from '$lib/RenderlessMyDocUpdater.svelte'
   import RenderlessDailyVideoConference from '$lib/RenderlessDailyVideoConference.svelte'
   import { goto } from '$app/navigation'
   import { browser } from '$app/environment'
@@ -172,9 +158,7 @@
   import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
   import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
   import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
-  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import { page } from '$app/stores'
-  import { DRAWER_EXPANDED_WIDTH } from '/src/helpers/CONSTANTS.js'
 
   export let classID
   export let roomID
@@ -369,6 +353,24 @@
 </script>
 
 <style>
+  .new-question-button {
+    display: flex; 
+    align-items: center; 
+    width: 50%; 
+    border-radius: 24px; 
+
+    color: black; 
+    background-color: #e5e3e6; 
+    height: 28px;
+
+    /* copied from action-item except bigger border-radius */
+    margin: 6px;
+    cursor: pointer;
+    padding-top: 4px; 
+    padding-bottom: 4px;
+    padding-left: 8px;
+  }
+
   .action-item {
     border-radius: 4px;
     margin: 6px;

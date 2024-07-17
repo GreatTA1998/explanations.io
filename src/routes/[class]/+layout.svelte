@@ -31,9 +31,11 @@
   $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
 
   onMount(() => {
-    updateFirestoreDoc(`/users/${$user.uid}`, {
-      mostRecentServerID: classID 
-    })
+    if ($user.uid) {
+      updateFirestoreDoc(`/users/${$user.uid}`, {
+        mostRecentServerID: classID 
+      })
+    }
   })
 </script>
 

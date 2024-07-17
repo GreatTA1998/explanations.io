@@ -6,10 +6,10 @@
     {classID}
   />
 
-  <div 
+  <div
     class="room-item"
     style="opacity: 90%; border-radius: 5px; cursor: pointer;"
-    class:selected={room.id === roomID} 
+    class:selected={room.id === $page.params.roomID} 
     bind:this={RoomElement}
     on:click={() => handleRoomClick(room.id)}
     on:keydown={() => {}}
@@ -64,21 +64,13 @@
         </span>
       {/if}
       
-      {#if room.name}
-        <div 
-          class:question-item={'?' === room.name.charAt(room.name.length - 1)} 
-          class="my-truncated-text"
-          style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px; font-weight: 500;"
-        >
-          {room.name } 
-        </div>
-      <!--  needed otherwise `question-item` if statement will be undefined -->
-      <!--  question-item criteria use to require `&& room.id !== roomID` -->
-      {:else}
-        <div style="margin-bottom: 2px;">
-          untitled
-        </div>
-      {/if}
+      <div 
+        class:question-item={isQuestion(room)} 
+        class="my-truncated-text"
+        style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px; font-weight: 500;"
+      >
+        {room.name || '(untitled)'} 
+      </div>
 
       {#if room.id === roomID && $user.uid}
         {#if $adminUIDs.includes($user.uid)}
@@ -96,78 +88,6 @@
         {/if}
       {/if}
     </div>
-    
-    <!-- ROOM PARTICIPANTS SECTION -->
-    <!-- you can interpret this as `for each person in room.persons` -->
-    {#if $roomToPeople[room.id]}
-      <div class:vertical-padding={$roomToPeople[room.id].length > 0}>
-        {#each $roomToPeople[room.id] as person (person.browserTabID)}
-          <div style="display: flex; align-items: center; padding-left: 8px; padding-right: 8px;">
-            <div 
-              style="font-size: 0.7rem; margin-left: 6px;" 
-              class:speaking={firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID}
-            >
-              {person.name} 
-            </div> 
-
-            <!-- CASE 1: it's me -->
-            {#if person.browserTabID === $browserTabID}
-              {#if !willJoinVoiceChat}
-                <!-- <div 
-                  on:click={() => willJoinVoiceChat = true}
-                  style="margin-right: 4px; margin-left: auto; background-color: green; color: white; font-size: 0.6rem; padding-left: 4px; padding-right: 4px; cursor: pointer; border-radius: 4px;"
-                >
-                  Join voice 
-                </div> -->
-
-              {:else if Object.keys($dailyRoomParticipants).length > 0}
-                <div style="display: flex; align-items: center; margin-right: 6px; margin-left: auto">
-                  <div on:click|preventDefault|stopPropagation={toggleMic} style="padding-top: 5px">
-                    <Switch checked={$dailyRoomParticipants.local.audio} style="margin: 0 !important"/>
-                  </div>
-
-                  {#if $dailyRoomParticipants.local.audio}
-                    <div style="font-size: 0.7rem; margin-left: 6px; color: #33ff33">
-                      voice on
-                    </div>
-                  {:else}
-                    <div style="font-size: 0.7rem; margin-left: 6px; color: red">
-                      muted
-                    </div>
-                  {/if}
-                </div>     
-              {/if}
-        
-            <!-- CASE 2: it's not me -->
-            {:else}
-              <!-- case 2.1: this person is connected to my voice chat -->
-              {#if Object.keys($dailyRoomParticipants).length > 0 && $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]]}
-                {#if $dailyRoomParticipants[firestoreIDToDailyID[person.browserTabID]].audio} 
-                  <!-- display mute status -->
-                  <span 
-                    class="material-icons" 
-                    style="
-                      margin-right: 0; margin-left: auto; font-size: 1.1rem; 
-                      color: {(firestoreIDToDailyID && (firestoreIDToDailyID[person.browserTabID]) && (firestoreIDToDailyID[person.browserTabID]) === activeSpeakerID) ? 'white' : ''}"
-                  >
-                    mic
-                  </span>
-                {:else}
-                  <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: red">
-                    mic_off
-                  </span>
-                {/if}
-              <!-- case 2.2: otherwise visually indicate if they're in voice chat (whichever room they're in) -->
-              {:else if person.hasJoinedVoice}
-                <span class="material-icons" style="margin-right: 0; margin-left: auto; font-size: 1.1rem; color: #33ff33;">
-                  volume_up
-                </span>
-              {/if}
-            {/if}
-          </div>
-        {/each}
-      </div>
-    {/if}
   </div>
 </div>
 
@@ -177,10 +97,6 @@
     {#each subpages as subpage, i (subpage.id)}
       <LeftDrawerRecursiveRoom 
         room={subpage}
-        {firestoreIDToDailyID}
-        {toggleMic}
-        {activeSpeakerID}
-        {willJoinVoiceChat}
         {roomID}
         {classID}
         depth={depth + 1}
@@ -210,11 +126,9 @@ import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
 import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
 import List, { Item, Text } from '@smui/list'
 import Menu from '@smui/menu';
-import Switch from '@smui/switch'
-import Button from '@smui/button'
 import { goto } from '$app/navigation'
 import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where, increment } from 'firebase/firestore'
-import { user, roomToPeople, browserTabID, dailyRoomParticipants, willPreventPageLeave, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
+import { user, willPreventPageLeave, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
 import { deleteObject, getStorage, ref } from 'firebase/storage'
 import { getFunctions, httpsCallable } from "firebase/functions"
 
@@ -222,12 +136,9 @@ import { SUBPAGE_INDENATION_PX, DRAWER_EXPANDED_WIDTH } from '/src/helpers/CONST
 import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
 import { onDestroy } from 'svelte'
+import { page } from '$app/stores'
 
 export let room
-export let willJoinVoiceChat
-export let firestoreIDToDailyID
-export let toggleMic
-export let activeSpeakerID
 export let depth = 0
 export let orderWithinLevel
 export let roomsInThisLevel
@@ -249,6 +160,10 @@ $: totalIndentation = SUBPAGE_INDENATION_PX * (depth + 1)
 onDestroy(() => {
   if (unsubListener) unsubListener()
 })
+
+function isQuestion (roomDoc) {
+  return roomDoc.name && '?' === roomDoc.name.charAt(room.name.length - 1)
+}
 
 function isInvalidSubpageDrop () {
   return parentRoomIDs.includes($whatIsBeingDraggedID) || $whatIsBeingDraggedID === room.id 
@@ -498,19 +413,13 @@ async function deleteRoom (room) {
 
 <style>
   .room-item:hover {
-    /* previously lightgrey */
-    background: #F7C686;
-  }
-
-  .vertical-padding {
-    padding-top: 8px; 
-    padding-bottom: 8px
+    background: lightgrey;
   }
 
   /* legacy grey: #e2dddd */
   .selected {
     font-weight: 700;
-    background-color: #F7C686 !important;
+    background-color: #F7C686;
     color: black;
     transition: background 20ms ease-in 0s;
   }

@@ -107,7 +107,7 @@
             
             <div style="font-size: 14px; margin-bottom: 8px;">
               Payments are handled by Stripe. 
-              To refund, simply email elton@explanations.app
+              To refund, simply email elton@explanations.io
             </div>
 
               <a target="_blank" href="https://buy.stripe.com/28ocQz05XglO9LaeUX"
@@ -143,7 +143,7 @@
           
           <div style="font-size: 14px; margin-bottom: 8px;">
             Payments are handled by Stripe. 
-            To refund, simply email elton@explanations.app
+            To refund, simply email elton@explanations.io
           </div>
             <a target="_blank" href="https://buy.stripe.com/28ocQz05XglO9LaeUX"
               style="text-decoration: none;"

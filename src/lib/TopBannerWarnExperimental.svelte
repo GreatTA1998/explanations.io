@@ -1,5 +1,5 @@
 <div class="top-banner-to-warn-experimental">
-  For anything I could help you with e.g. setting up new servers, call 503 250 3868 or email elton@explanations.app
+  For anything I could help you with e.g. setting up new servers, call 503 250 3868 or email elton@explanations.io
 </div>
 
 <style>

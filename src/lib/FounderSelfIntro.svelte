@@ -1,7 +1,7 @@
 <div style="display: flex; justify-content: center; padding: 24px;">
   <div style="max-width: 720px; display: flex; flex-direction: column; gap: 16px;">
     <div class="arcane-heading">
-      About explanations.app
+      About explanations.io
     </div>
     
     <blockquote class="arcane-quote">
@@ -83,7 +83,7 @@
     </div>
 
     <div class="arcane-paragraph">
-      If you're considering teaching or learning on explanations.app, give me a chance to work for you!
+      If you're considering teaching or learning on explanations.io, give me a chance to work for you!
     </div>
 
     <img class="arcane-image" src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/IMG_0227.JPG?alt=media&token=0ace8bae-ea67-4346-a9a2-34b90efd416a">
@@ -93,7 +93,7 @@
         on:click={() => goto(`/user/xC05mXTCFIRxLnyxfKnxY7oNBPi2`)}
         firstNameAndKeyInfo="Elton Lin"
         collegeAndYear="Founder"
-        bio="elton@explanations.app"
+        bio="elton@explanations.io"
       />
     </div>
   </div>

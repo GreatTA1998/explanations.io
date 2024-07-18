@@ -69,7 +69,7 @@
         {#if activeTabName === 'old'}
           <ol>
             <li>
-              I want to directly learn & ask questions for 1 month from this teacher:
+              I want to directly learn & ask questions for 1 week from this teacher:
             </li>
             
             <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
@@ -102,7 +102,7 @@
             <div style="margin-top: 36px"></div> 
             
             <li>
-              Pay $16
+              Pay $10
             </li>
             
             <div style="font-size: 14px; margin-bottom: 8px;">
@@ -110,7 +110,7 @@
               To refund, simply email elton@explanations.io
             </div>
 
-              <a target="_blank" href="https://buy.stripe.com/28ocQz05XglO9LaeUX"
+              <a target="_blank" href="https://buy.stripe.com/3cs03Ng4V4D66yY3cg"
                 style="text-decoration: none;"
               > 
                 <Button 
@@ -138,14 +138,14 @@
 
             <div style="margin-bottom: 24px;"></div>
           <li>
-            Prepay $16
+            Prepay $10
           </li>
           
           <div style="font-size: 14px; margin-bottom: 8px;">
             Payments are handled by Stripe. 
             To refund, simply email elton@explanations.io
           </div>
-            <a target="_blank" href="https://buy.stripe.com/28ocQz05XglO9LaeUX"
+            <a target="_blank" href="https://buy.stripe.com/3cs03Ng4V4D66yY3cg"
               style="text-decoration: none;"
             > 
               <Button 

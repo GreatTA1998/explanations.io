@@ -336,12 +336,9 @@
   }
 
   .orange-highlight {
-    /* legacy grey: #e2dddd */
     background-color: #e2dddd;
     color: black !important;
     font-weight: 600 !important;
-    /* color: white;
-    border: 1px solid white; */
   }
 
   .subject-categories {
@@ -391,6 +388,7 @@
     .subject-categories {
       flex-direction: row;
       width: 100%;
+      flex-wrap: wrap;
     }
 
     .subject-category {

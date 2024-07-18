@@ -6,7 +6,7 @@
 	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
 			Subscribe to someone. Ask them questions. Get detailed video explanations until you understand everything.
-			$4/week.
+			$10/week.
 		</div>
 
 		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
@@ -64,9 +64,16 @@
 	<div style="text-align: center; padding: 48px 0px;">
 		<img 
 			style="min-width: 332px; width: 60vw; height: auto"
-			src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/homePageAssets%2Freframe-positioning-in-matrix.png?alt=media&token=6e70e3ba-5559-4b45-91dd-9b95d1275271"
+			src="https://i.imgur.com/TRxyjmU.png"
 		> 
+
+		<img
+			style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
+			src="https://i.imgur.com/B9a5Nfp.png"
+		/>
 	</div>
+
+
 
 	<FounderSelfIntro/>
 

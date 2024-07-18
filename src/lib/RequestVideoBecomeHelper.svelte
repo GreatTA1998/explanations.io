@@ -19,7 +19,7 @@
       This is your helper profile, 
       which contains your info, your statistics (number of free videos, number of paid videos), and your top videos, 
       <div style="color: purple">and allows students to subscribe to you.</div>
-      <Button>Get subscribers-only videos and reliable reply time for $16/month</Button>
+      <Button>Get subscribers-only videos and reliable reply time for $10/week</Button>
     </div>
     
     {#if !$user.name || ($user.name && $user.name.split(' ')[0] === 'Beaver')}

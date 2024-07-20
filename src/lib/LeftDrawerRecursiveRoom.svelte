@@ -200,7 +200,7 @@ function expandChildrenRooms () {
 function handleRoomClick (roomID) { 
   // prevents in-app navigation
   if ($willPreventPageLeave) {
-    if (window.confirm("You're still recording, are you sure you want to leave?")) {
+    if (window.confirm("WARNING: video is still recording / uploading, are you sure you want to discard it and leave?")) {
       // TODO: reset the board so it's not perpetually uploading in nothing?
       // NOTE: this will not handle some cases 
       // maybe fix from Blackboard rendering logic side?

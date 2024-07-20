@@ -66,18 +66,21 @@
       {:else}
         <div style="margin-top: 0px;">
           <!-- user doesn't necessarily start from slide 0, so ensure initial state is correct -->
-          <ReusableRoundButton on:click={() => callFuncsInSequence(
-            () => updateBoardRecordState(boardDoc.path, 'mid_record'),
-            startRecording,
-            startStopwatch,
-              () => isRecording = true,
-              () => {
-                timingOfSlideChanges.push({
-                  toIdx: idxOfFocusedSlide,
-                  timing: 0
-                })
-              }
-            )}
+          <ReusableRoundButton 
+            on:click={() => callFuncsInSequence(
+                () => updateBoardRecordState(boardDoc.path, 'mid_record'),
+                startRecording,
+                startStopwatch,
+                () => isRecording = true,
+                () => {
+                  timingOfSlideChanges.push({
+                    toIdx: idxOfFocusedSlide,
+                    timing: 0
+                  })
+                },
+                () => willPreventPageLeave.set(true)
+              )
+            }
             backgroundColor="rgb(80, 80, 80, 0.9)" textColor="cyan" isBordered
           >
             Record
@@ -89,8 +92,7 @@
       <button on:click={() => callFuncsInSequence(
         stopRecording,
         stopStopwatch,
-        () => updateBoardRecordState(boardDoc.path, 'post_record'),
-        () => willPreventPageLeave.set(true)
+        () => updateBoardRecordState(boardDoc.path, 'post_record')
       )}
         style="height: 50px; font-size: 1.1em; border-radius: 25px;"
         class="offline-record-button"
@@ -226,6 +228,9 @@
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)
     // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
+
+    willPreventPageLeave.set(false) // technically does nothing because we defensively reload, but it's still here for correctness
+
     window.location.reload()
   }
 

@@ -233,23 +233,6 @@
   onMount(() => {
     ctx = canvas.getContext('2d')
     bgCtx = bgCanvas.getContext('2d')
-
-    // PREVENTS USER FROM ACCIDENTALLY LEAVING THE PAGE
-    // correctness argument: https://explain.mit.edu/mDbUrvjy4pe8Q5s5wyoD/3IAf1lUTz1gdwxi3blth
-    // catches forward and backward
-    window.addEventListener('popstate', onBackOrForward)
-
-    // catches reload AND closing browser (was surprised it works for Chrome at least)
-    window.onbeforeunload = function (event) {
-      if (recordState === 'mid_record') {
-        event.returnValue = ''
-      } 
-      // no need to unlisten - because it means the page was destroyed
-    }
-  })
-
-  onDestroy(() => {
-    window.removeEventListener('popstate', onBackOrForward)
   })
 
   function resizeFrontCtx () {

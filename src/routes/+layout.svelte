@@ -8,7 +8,10 @@
   </slot>
 {/if}
 
+<RenderlessPreventAccidentalNavigation/>
+
 <script>
+  import RenderlessPreventAccidentalNavigation from '$lib/RenderlessPreventAccidentalNavigation.svelte'
 	import "../app.scss";
   import 'firebase/app'
   import { initializeDatabase } from '../database.js'

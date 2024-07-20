@@ -118,7 +118,7 @@
     // this results in a silent recording but 0:05
 
     // TESTED:
-    audioTrack.enabled = false // prevent the track from outputting data
+    // audioTrack.enabled = false // prevent the track from outputting data
     // stop() is more final. It releases the media device and changes the `readyState` to "ended" and you can't enable it again. 
   
     if (audioTrack) {
@@ -131,8 +131,8 @@
     }
 
     if (errorMessages.length > 0) {
-      console.log(errorMessages.join(', '))
-      alert('errorMessages: ', errorMessages.join(', '))
+      const string = errorMessages.join(', ')
+      alert(`WARNING, audio recording will likely fail: ${string}`)
     }
   }
 </script>

@@ -247,7 +247,11 @@
 
   function startTimer () {
     intervalID = setInterval(
-      () => { currentTime = AudioPlayer.currentTime }, // note this is a floating point calculation 
+      () => { 
+        if (AudioPlayer) {
+          currentTime = AudioPlayer.currentTime 
+        }
+      }, // note this is a floating point calculation 
       ONE_HUNDRED_MILLISECS
     )
   }

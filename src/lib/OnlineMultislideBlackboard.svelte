@@ -222,6 +222,11 @@
     })
 
     handleVideoUploadEmailNotifications(classID, roomDoc, $user)
+
+    // QUICKFIX
+    // only reproducible on my iPad (yet old Explain works for some reason)
+    // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
+    window.location.reload()
   }
 
   async function callFuncsInSequence (...funcs) {

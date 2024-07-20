@@ -28,7 +28,7 @@
   export let numberOfInitialRowsIfEmpty = 1
   export let fontSizeIncludeUnits = '1.4rem'
   export let resetDefaultStyling = false
-  export let willTriggerFocus
+  export let willTriggerFocus = false
 
   $: if (willTriggerFocus) {
     element.focus()

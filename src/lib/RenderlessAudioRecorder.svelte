@@ -63,6 +63,7 @@
   function startRecording () {
     return new Promise(async (resolve, reject) => {
       if (!$baseMicStream) {
+        // because we're asking for user access, this can throw exceptions
         await initializeMicStream()
       }
       
@@ -70,25 +71,68 @@
       //   1. aliasing a stream for video call, different recording sessions, etc. causes unpredictable issues on Safari iOS
       //   2. By using a copy, we naturally handle the edge case where the user mutes voice in the MIDDLE of recording
       const micStreamCopy = $baseMicStream.clone() // new copies I assume will have active tracks, even if the base is deactivated
+
+      // this doesn't throw exceptions, no need for try-catch
       recorder = new MediaRecorder(micStreamCopy); 
+
+      checkAudioTrack(recorder.stream)
+    
+      // event handlers are attached synchronously
+      // without specifying a timeslice, it will only fire at the end
+      recorder.addEventListener("dataavailable", e => {
+        const audioBlob = e.data
+        dispatch('record-end', { audioBlob })
+      })
+
       recorder.start()
       dispatch('record-start')
+
       resolve()
     })
   }
 
   function stopRecording () {
     return new Promise((resolve, reject) => {
-      recorder.addEventListener("dataavailable", e => {
-        const audioBlob = e.data
-        dispatch('record-end', { audioBlob })
-        resolve()
-      })
       recorder.stop()
-      //  turn off the red circle that indicates you're being recorded (however the baseMicStream is still accessing the mic so red will be on still)
+
+      // turn off the red circle that indicates you're being recorded
+      // technically not necessary because we're hard reloading after video upload anyway
+      for (const track of $baseMicStream.getTracks()) {
+        track.stop()
+      }
+      baseMicStream.set(null)
+
       for (const track of recorder.stream.getTracks()) {
         track.stop()
       }
+      recorder = null
+
+      resolve()
     })
+  }
+
+  function checkAudioTrack (stream) {
+    const errorMessages = [] 
+    const audioTrack = stream.getAudioTracks()[0]
+
+    // this results in a silent recording but 0:05
+
+    // TESTED:
+    audioTrack.enabled = false // prevent the track from outputting data
+    // stop() is more final. It releases the media device and changes the `readyState` to "ended" and you can't enable it again. 
+  
+    if (audioTrack) {
+      if (!audioTrack.enabled) errorMessages.push('audioTrack.enabled is false')
+      if (audioTrack.readyState !== 'live') errorMessages.push('audioTrack.readyState is ', audioTrack.readyState) // ready-state is a read-only property
+      if (audioTrack.muted) errorMessages.push('audioTrack.muted is true') // read-only property, it's affected by the computer system settings not the app itself or browser usually
+    } 
+    else {
+      errorMessages.push("No audio track found in the stream")
+    }
+
+    if (errorMessages.length > 0) {
+      console.log(errorMessages.join(', '))
+      alert('errorMessages: ', errorMessages.join(', '))
+    }
   }
 </script>

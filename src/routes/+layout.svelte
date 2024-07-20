@@ -8,7 +8,7 @@
   </slot>
 {/if}
 
-<RenderlessPreventAccidentalNavigation/>
+<!-- <RenderlessPreventAccidentalNavigation/> -->
 
 <script>
   import RenderlessPreventAccidentalNavigation from '$lib/RenderlessPreventAccidentalNavigation.svelte'

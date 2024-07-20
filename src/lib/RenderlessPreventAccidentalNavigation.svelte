@@ -11,9 +11,15 @@
     askForConfirmation(cancel)
   })
 
+  // TO-DO: known problems
+  //    iOS back-and-forth behaves differently to windows
+  //    Even though redirect is prevented, the audio recording stops for iOS
+  //    For Windows, it messes up the stream in the middle but then it resumes to normal
+
   onMount(() => {
     if (browser) {
       // handles reloading or quitting
+      // note: doesn't trigger for iOS Safari
       window.onbeforeunload = function (event) {
         // setting `event` to an empty magically will handle the confirmation behavior
         event.returnValue = '' 
@@ -38,7 +44,7 @@
     }
   }
 
-  //   // PREVENTS USER FROM ACCIDENTALLY LEAVING THE PAGE
+  // PREVENTS USER FROM ACCIDENTALLY LEAVING THE PAGE
   // correctness argument: https://explain.mit.edu/mDbUrvjy4pe8Q5s5wyoD/3IAf1lUTz1gdwxi3blth
   // catches forward and backward
   // window.addEventListener('popstate', onBackOrForward)

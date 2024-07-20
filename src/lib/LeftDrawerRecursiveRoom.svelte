@@ -198,35 +198,10 @@ function expandChildrenRooms () {
 }
 
 function handleRoomClick (roomID) { 
-  // prevents in-app navigation
-  if ($willPreventPageLeave) {
-    if (window.confirm("WARNING: video is still recording / uploading, are you sure you want to discard it and leave?")) {
-      // TODO: reset the board so it's not perpetually uploading in nothing?
-      // NOTE: this will not handle some cases 
-      // maybe fix from Blackboard rendering logic side?
-      willPreventPageLeave.set(false)
-
-      if (!isExpanded) {
-        expandChildrenRooms()
-      } else {
-       
-        isExpanded = false
-      }
-
-      goto(`/${classID}/${roomID}`)
-    } else {
-      // do nothing
-    }
-  }
-
-  else {
-    if (!isExpanded) {
-      expandChildrenRooms()
-    } else {
-      isExpanded = false
-    }
-    goto(`/${classID}/${roomID}`)
-  }
+  if (!isExpanded) expandChildrenRooms()
+  else isExpanded = false
+  
+  goto(`/${classID}/${roomID}`)
 }
 
 function dragstart_handler (e, roomID) {

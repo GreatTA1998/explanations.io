@@ -1,11 +1,11 @@
 <div style="display: flex; flex-direction: column; gap: 16px;">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube style tutoring for competitive math
+		Youtube style tutoring for math olympiads
 	</p>
 
 	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
-			Subscribe to someone. Ask them questions. Get detailed video explanations until you understand everything.
+			Pick your teacher. Ask them questions. Get detailed video explanations until you understand everything.
 			$10/week.
 		</div>
 

@@ -25,6 +25,12 @@
   --bg-off-white: #f8f9f9;
 }
 
+/* prevent accidental going back page */
+/* https://stackoverflow.com/questions/30636930/disable-web-page-navigation-on-swipeback-and-forward?rq=1 */
+html, body {
+  overscroll-behavior-x: none;
+}
+
 // 0.1 is too low
 // 0.25 is too much
 // 0.5 is too much

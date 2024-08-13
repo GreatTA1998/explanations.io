@@ -111,7 +111,8 @@
   import CodepenInput from '$lib/CodepenInput.svelte'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
-  import { goto } from '$app/navigation';
+  import { goto } from '$app/navigation'
+  import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
 
   export let classID 
   // export let roomID
@@ -169,41 +170,14 @@
       title: questionTitleInput 
     })
 
-    // fetch teachers
-    const q = createFirestoreQuery({ 
-      collectionPath: `classes/${classID}/members`, 
-      criteriaTerms: ['isTeacher', '==', true]
-    })
-    const serverTeachers = await getFirestoreQuery(q)
-
-    for (const teacher of serverTeachers) { 
-      if (teacher.email) {
-        console.log('sending email =', teacher.email)
-        sendEmail({ 
-          toWho: teacher.email,
-          subject: 'New question [explanations.io]', 
-          content: `<strong>${$user.name}</strong> asked: "${questionTitleInput}"
-          <br>
-          <br>
-          <a href="https://explanations.io/${classID}/${newRoomDocID}">
-            Link to question
-          </a>
-          `
-        })
-      } 
-    }
-
-    // also send it to me the founder
-    sendEmail({ 
-      toWho: 'elton@explanations.io',
-      subject: 'Activity alert: student asked a question', 
-      content: `<strong>${$user.name}</strong> asked: "${questionTitleInput}"
-      <br>
-      <br>
-      <a href="https://explanations.io/${classID}/${newRoomDocID}">Link to question</a>`
+    handleNewQuestionNotifications({ 
+      classID, 
+      roomID: newRoomDocID, 
+      userDoc: $user, 
+      questionTitleInput 
     })
 
-    alert('Question submitted! Helpers will be notified')
+    alert('Question submitted! Your teacher will usually reply within 2 days')
     goto(`/${classID}/${newRoomDocID}`)
   }
 

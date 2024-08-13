@@ -24,7 +24,7 @@
 			</ReusableRoundButton>
 
 			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				1 learner joined this week
+				2 learners joined this month
 			</div>
 		</div>
 

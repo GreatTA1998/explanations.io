@@ -1,6 +1,11 @@
 import { classDetailsDrawerWidth } from "../store.js"
 import { get } from 'svelte/store'
-import { getFirestoreDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
+import { 
+  getFirestoreDoc, 
+  updateFirestoreDoc, 
+  getFirestoreQuery,
+  createFirestoreQuery
+} from '/src/helpers/crud.js'
 import { arrayUnion } from 'firebase/firestore'
 import { sendEmail } from '/src/helpers/cloudFunctions.js'
 
@@ -50,10 +55,45 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
   })
 }
 
+export async function handleNewQuestionNotifications ({ classID, roomID, userDoc, questionTitleInput}) {
+   const q = createFirestoreQuery({ 
+    collectionPath: `classes/${classID}/members`, 
+    criteriaTerms: ['isTeacher', '==', true]
+  })
+  const serverTeachers = await getFirestoreQuery(q)
+
+  for (const teacher of serverTeachers) { 
+    if (teacher.email) {
+      sendEmail({ 
+        toWho: teacher.email,
+        subject: 'New question [explanations.io]', 
+        content: `<strong>${userDoc.name}</strong> asked: "${questionTitleInput}"
+        <br>
+        <br>
+        <a href="https://explanations.io/${classID}/${roomID}">
+          Link to question
+        </a>
+        `
+      })
+    } 
+  }
+
+  // also send it to me the founder
+  sendEmail({ 
+    toWho: 'elton@explanations.io',
+    subject: 'Activity alert: student asked a question', 
+    content: `<strong>${userDoc.name}</strong> asked: "${questionTitleInput}"
+    <br>
+    <br>
+    <a href="https://explanations.io/${classID}/${roomID}">Link to question</a>`
+  })
+}
+
 
 export function handleVideoUploadEmailNotifications (classID, roomDoc, userDoc) {
   return new Promise(async resolve => {
     if (roomDoc.askerUID) {
+      console.log('roomDoc.askerUID =', roomDoc.askerUID)
       const askerDoc = await getFirestoreDoc(`/users/${roomDoc.askerUID}`)
       if (askerDoc.email) {
         console.log("emailing asker =", askerDoc.email)

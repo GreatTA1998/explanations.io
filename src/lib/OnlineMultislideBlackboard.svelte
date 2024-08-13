@@ -223,7 +223,7 @@
       isPaid: false
     })
 
-    handleVideoUploadEmailNotifications(classID, roomDoc, $user)
+    await handleVideoUploadEmailNotifications(classID, roomDoc, $user)
 
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)

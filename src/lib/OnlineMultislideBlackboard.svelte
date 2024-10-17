@@ -239,15 +239,32 @@
       isPaid: false
     })
 
-    await handleVideoUploadEmailNotifications(classID, roomDoc, $user)
+    // set the question to be resolved
+    updateFirestoreDoc(roomDoc.path, {
+      isAnswered: true
+    })
 
+    // note because this component is used in both questions and rooms, `roomDoc` 
+    // represents both `questions`and `rooms`. In the futuer we'll refactor to prevent this confusion.
+    if (roomDoc.askerUID) {
+      await handleVideoUploadEmailNotifications({ 
+        classID, 
+        questionDoc: roomDoc, 
+        userDoc: $user 
+      })
+    }
+    
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)
     // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
 
     willPreventPageLeave.set(false) // technically does nothing because we defensively reload, but it's still here for correctness
 
-    window.location.reload()
+    // because async operations are not strictly waiting properly,
+    // as a quick-fix we give a 2 second cushion for the email notifications to properly resolve
+    setTimeout(() => {
+      window.location.reload()
+    }, 2000)
   }
 
   async function callFuncsInSequence (...funcs) {
@@ -333,67 +350,13 @@
     })
   }
 
-  // NOTE: we ignore the concurrent drawings with timestamp bug in this implementation
-  async function uploadVideo (audioBlob, boardID) {
-    const db = getFirestore()
-
-    // update metadata for tutor if it exists 
-    let tutorDoc
-    const q = query(
-      collection(db, membersDbPath),
-      where('uid', '==', $user.uid)
-    )
-    // base the member profile UID on the actual UID, so you don't need to do all these queries
-    const classDocUpdateObj = {} 
-
-    const snap = await getDocs(q) 
-    if (!snap.empty) {
-      // find the specific tutor doc
-      snap.docs.forEach(doc => {
-        tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
-      })
-      // that means it's the member's first server video
-      if (!tutorDoc.numOfVideos) {
-        classDocUpdateObj.numOfCreators = increment(1)
-      }
-      updateFirestoreDoc(membersDbPath + tutorDoc.id, {
-        numOfVideos: increment(1)
-      })
-    }
-    classDocUpdateObj.numOfVideos = increment(1) 
-    updateFirestoreDoc(`classes/${classID}`, classDocUpdateObj)
-
-    // upload the audio file
-    const storage = getStorage()
-    const audioRef = ref(storage, `audio/${getRandomID()}`)
-    await uploadBytes(audioRef, audioBlob)
-    const downloadURL = await getDownloadURL(audioRef)
-
-    const blackboardRef = doc(getFirestore(), boardPath)
-    await updateDoc(blackboardRef, {
-      creatorUID: $user.uid || '',
-      creatorName: $user.name || '',
-      creatorPhoneNumber: $user.phoneNumber || '',
-      date: new Date().toISOString(),
-      audioDownloadURL: downloadURL,
-      audioRefFullPath: audioRef.fullPath
-    })
-    updateRecordState(boardID, 'pre_record')
-
-    mixpanelLibrary.track('Video created')
-
-    // QUICKFIX
-    // only reproducible on my iPad (yet old Explain works for some reason)
-    // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
-    window.location.reload()
-  }
-
   function updateRecordState (slideID, newRecordState) {
     const blackboardRef = doc(getFirestore(), boardPath + slideID)
     updateDoc(blackboardRef, {
       recordState: newRecordState
     })
   }
+
   function updateBoardRecordState (boardPath, newRecordState) {
     const blackboardRef = doc(getFirestore(), boardPath)
     updateDoc(blackboardRef, {

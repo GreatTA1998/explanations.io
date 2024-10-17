@@ -1,15 +1,18 @@
 <script>
   import { onMount } from 'svelte'
   import { collection, getFirestore, onSnapshot, query, orderBy } from 'firebase/firestore'
-  import { user } from '/src/store.js'
+  import { user, adminUIDs } from '/src/store.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { DateTime } from 'luxon'
+  import List, { Item, Text } from '@smui/list'
+  import Menu from '@smui/menu'
 
   export let classID
 
   let unsub = null
   let allQuestions = null
+  let DropdownMenu
 
   onMount(() => {
     listenToQuestions()
@@ -43,6 +46,13 @@
       serverTimestamp.toMillis()
     ).toRelative()
   }
+
+  function deleteQuestion (questionDoc) {
+    if (!confirm('Are you sure you want to delete this question?')) {
+      return
+    }
+    alert('Not yet implemented')
+  }
 </script>
 
 <div class="q-section-container">
@@ -58,21 +68,42 @@
             on:click={() => goto(`/${classID}/question/${question.id}`)} 
             class:selected={question.id === $page.params.questionID} 
             class="q-list-item"
-          >
-            <div 
-              class="q-title my-truncated-text"
-              class:red-urgent-text={question.blackboardIDs.length === 0}
-            >
-              {question.title}
+          > 
+            <div style="display: flex;">
+              <div 
+                class="q-title my-truncated-text"
+                class:red-urgent-text={!question.isAnswered}
+              > 
+                {question.title}
+              </div>
+
+              {#if $page.params.questionID && $user.uid}
+                {#if question.askerUID === $user.uid || $adminUIDs.includes($user.uid)}
+                  <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+                    more_vert
+                  </span>
+
+                  <Menu bind:this={DropdownMenu} style="width: 300px">
+                    <List>      
+                      <Item on:SMUI:action={() => deleteQuestion(question)}>
+                        Delete question
+                      </Item>
+                    </List> 
+                  </Menu>
+                {/if}
+              {/if}
             </div>
 
             <!-- <div class="q-description">
               {question.description}
             </div> -->
-
-            <div class="q-asker">
-              {question.askerName} asked {getDaysAgo(question.timestamp)}
-            </div>
+            
+            <!-- `serverTimestamp` sometimes needs a few seconds to hydrate after the doc is created -->
+            {#if question.timestamp}
+              <div class="q-asker">
+                {question.askerName} asked {getDaysAgo(question.timestamp)}
+              </div>
+            {/if}
           </div>
 
           <div style="width: 100%; border-bottom: 1px solid lightgrey;"></div>

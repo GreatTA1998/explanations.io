@@ -92,15 +92,10 @@
   import { serverTimestamp } from 'firebase/firestore'
 
   export let classID 
-  // export let roomID
-  // export let data
-  // let { classID, roomID } = data
-  // $: ({ classID, roomID } = data) // so it stays in sync when `data` changes
 
   let isSignInPopupOpen = false
   let questionTitleInput = ''
   let questionDescriptionInput = ''
-  $: isAskingCommunityOrHelper = ($user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)) ? 'helper' : 'community'
   let pdfOrImageAttachment = null
 
   function checkIfUserSignedIn () {
@@ -122,7 +117,8 @@
       title: questionTitleInput,
       description: questionDescriptionInput,
       timestamp: serverTimestamp(),
-      blackboardIDs: []
+      blackboardIDs: [],
+      isAnswered: false
     }
     if (pdfOrImageAttachment) {
       const { fileName, fileDownloadURL } = await uploadFileToStorage(pdfOrImageAttachment)
@@ -150,13 +146,12 @@
       title: questionTitleInput 
     })
 
-    // TO-DO: handle notifications
-    // handleNewQuestionNotifications({ 
-    //   classID, 
-    //   roomID: newRoomDocID, 
-    //   userDoc: $user, 
-    //   questionTitleInput 
-    // })
+    await handleNewQuestionNotifications({ 
+      classID, 
+      questionID: newQuestionID,
+      userDoc: $user, 
+      questionTitleInput 
+    })
 
     alert('Question submitted! Your teacher will usually reply within 2 days')
     goto(`/${classID}/question/${newQuestionID}`)

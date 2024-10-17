@@ -131,7 +131,7 @@
           <GeneralizedBlackboardDisplay 
             {boardID}
             {classID}
-            questionDoc={questionDoc}
+            roomDoc={questionDoc}
           />
         {/each}
 

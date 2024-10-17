@@ -65,7 +65,6 @@
 <script>
   import { user } from '../store.js'
   import { portal } from '../helpers/actions.js'
-  import ClassServerAskQuestionAllMembers from '$lib/ClassServerAskQuestionAllMembers.svelte'
   import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import Textfield from '@smui/textfield'
@@ -122,7 +121,8 @@
       dateAsked: new Date().toISOString(),
       title: questionTitleInput,
       description: questionDescriptionInput,
-      timestamp: serverTimestamp()
+      timestamp: serverTimestamp(),
+      blackboardIDs: []
     }
     if (pdfOrImageAttachment) {
       const { fileName, fileDownloadURL } = await uploadFileToStorage(pdfOrImageAttachment)
@@ -135,7 +135,7 @@
     const classPath = `classes/${classID}/`
     setFirestoreDoc(classPath + `questions/${newQuestionID}`, questionUpdateObj)
 
-    // initialize the first blackboard
+    // initialize the first blackboard, this function will also update the `questionDoc` itself
     createNewMultiboard({ 
       baseDocPath: `${classPath}questions/${newQuestionID}`,
       boardsPath:`${classPath}blackboards/`

@@ -6,7 +6,7 @@
 {#if roomDoc}
 	<div>
     <LeftDrawerToggleButton/>
-    <div style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
+    <div style="padding: 16px;">
  
     <div></div>
 
@@ -751,11 +751,6 @@
 <style>
 :global(.room-title input) {
   font-size: 2rem;
-}
-
-:global(.question input) {
-  color: red !important;
-  /* color: rgb(19, 145, 230) !important; */
 }
 
 .unclickable {

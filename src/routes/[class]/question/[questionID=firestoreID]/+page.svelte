@@ -7,6 +7,8 @@
   import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { maxAvailableWidth, user } from '/src/store.js'
   import Textfield from '@smui/textfield'
+  import HelperText from '@smui/textfield/helper-text'
+  import { DateTime } from 'luxon'
 
   export let data
 
@@ -80,6 +82,11 @@
     })
     return { promise, cancel }
   }
+
+  function displayMonthDayYYYY (serverTimestamp) {
+    const dt = DateTime.fromMillis(serverTimestamp.toMillis())
+    return dt.toLocaleString({ month: 'short', day: 'numeric', year: 'numeric'})
+  }
 </script>
 
 {#if questionDoc.id}
@@ -89,11 +96,16 @@
     <Textfield 
       disabled={$user.uid !== questionDoc.askerUID}
       value={questionDoc.title} on:input={(e) => updateQuestionTitle(e)}
-      class="room-title" 
+      class="room-title question" 
       style={`width: ${$maxAvailableWidth}px;`}
-    />
+    >
+      <HelperText slot="helper" persistent>
+        Question asked by {questionDoc.askerName} on {displayMonthDayYYYY(questionDoc.timestamp)}.
+        There are {questionDoc.blackboardIDs.length} blackboards.
+      </HelperText>
+    </Textfield>
 
-    <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
+    <div style="width: {$maxAvailableWidth}px; margin-top: 14px; margin-bottom: 0px">
       <TextAreaAutoResizing 
         value={questionDoc.description} 
         on:input={(e) => debouncedUpdateQuestionDescription(e)}
@@ -110,7 +122,7 @@
       {/each}
     {/if}
 
-    <div style="width: {$maxAvailableWidth}px; border-bottom: 2px solid black; margin-top: 16px; margin-bottom: 16px;"></div>
+    <div style="width: {$maxAvailableWidth}px; border-bottom: 2px dashed black; margin-top: 16px; margin-bottom: 16px;"></div>
 
     <!-- Blackboards section -->
     <div style="display: flex; flex-direction: column; gap: 40px;">
@@ -129,7 +141,7 @@
           })}
           class="new-blackboard-button"
           style="width: {$maxAvailableWidth}px;">
-            NEW BLACKBOARD
+            RESPOND WITH A BLACKBOARD
         </div>
       {/if}
     </div>
@@ -154,4 +166,8 @@
   :global(.room-title input) {
     font-size: 2rem;
   }
+
+  /* :global(.question input) {
+    color: red !important;
+  } */
 </style>

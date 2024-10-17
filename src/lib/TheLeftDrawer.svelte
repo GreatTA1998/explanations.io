@@ -63,7 +63,7 @@
 
     <div style="width: 100%; border-bottom: 1px solid lightgrey;"></div>
 
-    <div style="margin-bottom: 40px;"></div>
+    <div style="margin-bottom: 36px;"></div>
 
     <QuestionsSection {classID}>
       <div style="width: 100%; display: flex;">
@@ -81,9 +81,7 @@
       </div>
     </QuestionsSection>
 
-    <div style="margin-top: 40px;">
-      
-    </div>
+    <div style="margin-top: 36px;"></div>
 
     <div style="display: flex; align-items: center;">
       <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 16px;">
@@ -353,15 +351,13 @@
     border-radius: 24px; 
 
     color: black; 
-    background-color: #e5e3e6; 
+    background-color: #f1e8f3; 
     height: 28px;
 
     /* copied from action-item except bigger border-radius */
     margin: 6px;
     cursor: pointer;
-    padding-top: 4px; 
-    padding-bottom: 4px;
-    padding-left: 8px;
+    padding: 4px 8px;
   }
 
   .action-item {

@@ -59,7 +59,10 @@
             class:selected={question.id === $page.params.questionID} 
             class="q-list-item"
           >
-            <div class="q-title my-truncated-text">
+            <div 
+              class="q-title my-truncated-text"
+              class:red-urgent-text={question.blackboardIDs.length === 0}
+            >
               {question.title}
             </div>
 
@@ -115,5 +118,9 @@
   .selected {
     background-color: #F7C686;
     transition: background 20ms ease-in 0s;
+  }
+
+  .red-urgent-text {
+    color: red;
   }
 </style>

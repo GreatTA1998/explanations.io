@@ -5,7 +5,7 @@
 
   <LeftDrawerToggleButton/>
 
-  <div style="padding: 16px;" on:click={checkIfUserSignedIn}>
+  <div style="padding: 16px;">
     <CodepenInput
       value={questionTitleInput}
       on:input={(e) => questionTitleInput = e.target.value}
@@ -49,12 +49,12 @@
 
         <div style="margin-top: 24px;"></div>
 
-        <Button disabled={!!!$user.uid} 
+        <Button disabled={!!!$user.uid || isUploadingQuestion} 
           on:click={submitQuestion} 
           color="secondary"
           style="border-radius: 40px; color: white; background-color: {!!!$user.uid ? 'lightgrey' : '#5d0068' }; padding: 0px 24px;"
         >
-          Post my question to server
+          {isUploadingQuestion ? 'Submitting question...' : 'Post my question to server'}
         </Button>
 
         <div style="margin-top: 60px;"></div>
@@ -64,15 +64,11 @@
 
 <script>
   import { user } from '../store.js'
-  import { portal } from '../helpers/actions.js'
   import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
-  import Textfield from '@smui/textfield'
-  import HelperText from '@smui/textfield/helper-text'
   import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import { 
-    createRoomDoc, 
     updateFirestoreDoc, 
     setFirestoreDoc,
     createNewMultiboard
@@ -81,8 +77,6 @@
   import { arrayUnion, increment } from "firebase/firestore"
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
   import { getRandomID } from "../helpers/utility.js";
-  import { createEventDispatcher } from 'svelte'
-  import { sendTextMessage, sendEmail } from '../helpers/cloudFunctions.js';
   import { mixpanelLibrary } from '/src/mixpanel.js'
   import CodepenInput from '$lib/CodepenInput.svelte'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
@@ -97,18 +91,16 @@
   let questionTitleInput = ''
   let questionDescriptionInput = ''
   let pdfOrImageAttachment = null
+  let isUploadingQuestion = false
 
-  function checkIfUserSignedIn () {
-    // if (!$user.uid) {
-    //   isSignInPopupOpen = true
-    // }
-  }
 
   async function submitQuestion () {
     if (questionTitleInput === '') {
       alert('Question title cannot be blank')
       return
     }
+    isUploadingQuestion = true
+
     const questionUpdateObj = {
       name: questionTitleInput,
       askerName: $user.name,
@@ -164,7 +156,7 @@
     )
 
     await Promise.all(promises)
-
+    isUploadingQuestion = false
     alert('Question submitted! Your teacher will usually reply within 2 days')
     goto(`/${classID}/question/${newQuestionID}`)
   }

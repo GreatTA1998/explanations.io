@@ -128,20 +128,6 @@
 
     const newQuestionID = getRandomID()
 
-    const classPath = `classes/${classID}/`
-    setFirestoreDoc(classPath + `questions/${newQuestionID}`, questionUpdateObj)
-
-    // initialize the first blackboard, this function will also update the `questionDoc` itself
-    createNewMultiboard({ 
-      baseDocPath: `${classPath}questions/${newQuestionID}`,
-      boardsPath:`${classPath}blackboards/`
-    })
-
-    // Update stats/metadata that are affected by this operation
-    updateFirestoreDoc(`classes/${classID}`, {
-      numOfUnresolvedQuestions: increment(1)
-    })
-
     mixpanelLibrary.track('Question asked', {
       title: questionTitleInput 
     })
@@ -152,6 +138,32 @@
       userDoc: $user, 
       questionTitleInput 
     })
+
+    // wait till notification resolves,
+    // otherwise UI updates so fast they think it's already done 
+
+    const promises = []
+    
+    const classPath = `classes/${classID}/`
+    promises.push(
+      setFirestoreDoc(classPath + `questions/${newQuestionID}`, questionUpdateObj)
+    )
+
+    promises.push(
+      // initialize the first blackboard, this function will also update the `questionDoc` itself
+      createNewMultiboard({ 
+        baseDocPath: `${classPath}questions/${newQuestionID}`,
+        boardsPath:`${classPath}blackboards/`
+      })
+    )
+      
+    promises.push(
+      updateFirestoreDoc(`classes/${classID}`, {
+        numOfUnresolvedQuestions: increment(1)
+      })
+    )
+
+    await Promise.all(promises)
 
     alert('Question submitted! Your teacher will usually reply within 2 days')
     goto(`/${classID}/question/${newQuestionID}`)

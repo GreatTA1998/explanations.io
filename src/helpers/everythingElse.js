@@ -57,6 +57,8 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
 
 export async function handleNewQuestionNotifications ({ classID, questionID, userDoc, questionTitleInput}) {
   return new Promise(async (resolve) => {
+    const promises = []
+
     const q = createFirestoreQuery({ 
       collectionPath: `/classes/${classID}/members`, 
       criteriaTerms: ['isTeacher', '==', true]
@@ -75,23 +77,31 @@ export async function handleNewQuestionNotifications ({ classID, questionID, use
     }
 
     for (const teacher of serverTeachers) { 
+      promises.push(
+        sendEmail({ 
+          toWho: teacher.email,
+          ...emailSubjectAndContent
+        })
+      )
+    }
+    
+    promises.push(
       sendEmail({ 
-        toWho: teacher.email,
+        toWho: 'elton@explanations.io',
         ...emailSubjectAndContent
       })
-    }
-  
-    sendEmail({ 
-      toWho: 'elton@explanations.io',
-      ...emailSubjectAndContent
-    })
-  
-    sendEmail({
-      toWho: userDoc.email,
-      subject: '[explanations.io] Question received!',
-      content: `Hello! This is an auto-reply to confirm that your question has been received, and that your teacher should respond within 2 days. Have a great week!
-      (BTW anytime you encounter any problems, you can always directly email me for troubleshooting etc. You can also give me honest, negative feedback about explanations.io anytime :> so I have a chance to improve the experience for you and be successful)`
-    })
+    )
+    
+    promises.push(
+      sendEmail({
+        toWho: userDoc.email,
+        subject: '[explanations.io] Question received!',
+        content: `Hello! This is an auto-reply to confirm that your question has been received, and that your teacher should respond within 2 days. Have a great week!
+        (BTW anytime you encounter any problems, you can always directly email me for troubleshooting etc. You can also give me honest, negative feedback about explanations.io anytime :> so I have a chance to improve the experience for you and be successful)`
+      })
+    )
+
+    await Promise.all(promises)
 
     resolve()
   })
@@ -99,6 +109,8 @@ export async function handleNewQuestionNotifications ({ classID, questionID, use
 
 export function handleVideoUploadEmailNotifications ({ classID, questionDoc, userDoc }) {
   return new Promise(async resolve => {
+    const promises = []
+
     if (questionDoc.askerUID) {
       const askerDoc = await getFirestoreDoc(`/users/${questionDoc.askerUID}`)
 
@@ -108,15 +120,19 @@ export function handleVideoUploadEmailNotifications ({ classID, questionDoc, use
         <a href="https://explanations.io/${classID}/${questionDoc.id}">Link here</a>`
       }
 
-      sendEmail({ 
-        toWho: askerDoc.email,
-        ...emailSubjectAndContent
-      })
-
-      sendEmail({ 
-        toWho: 'elton@explanations.io',
-        ...emailSubjectAndContent
-      })
+      promises.push(
+        sendEmail({ 
+          toWho: askerDoc.email,
+          ...emailSubjectAndContent
+        })
+      )
+    
+      promises.push(
+        sendEmail({ 
+          toWho: 'elton@explanations.io',
+          ...emailSubjectAndContent
+        })
+      )
     } 
 
     if (questionDoc.questionParticipantUIDs) {
@@ -127,21 +143,26 @@ export function handleVideoUploadEmailNotifications ({ classID, questionDoc, use
 
         console.log('emailing participant:', participantDoc.email)
 
-        sendEmail({ 
-          toWho: participantDoc.email,
-          subject: '[explanations.io] New follow-up', 
-          content: `<strong>${userDoc.name.split(" ")[0]}</strong> uploaded a video in a question thread you participated in.
-          <br>
-          <br>
-          <a href="https://explanations.io/${classID}/${questionDoc.id}">Link to question</a>`
-        })
+        promises.push(
+          sendEmail({ 
+            toWho: participantDoc.email,
+            subject: '[explanations.io] New follow-up', 
+            content: `<strong>${userDoc.name.split(" ")[0]}</strong> uploaded a video in a question thread you participated in.
+            <br>
+            <br>
+            <a href="https://explanations.io/${classID}/${questionDoc.id}">Link to question</a>`
+          })
+        )
       }
     }
     
-    await updateFirestoreDoc(`/classes/${classID}/questions/` + questionDoc.id, {
-      questionParticipantUIDs: arrayUnion(userDoc.uid)
-    })
-    
+    promises.push(
+      updateFirestoreDoc(`/classes/${classID}/questions/` + questionDoc.id, {
+        questionParticipantUIDs: arrayUnion(userDoc.uid)
+      })
+    )
+   
+    await Promise.all(promises)
     resolve()
   })
 }

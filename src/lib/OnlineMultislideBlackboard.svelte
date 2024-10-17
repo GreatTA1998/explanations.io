@@ -260,11 +260,7 @@
 
     willPreventPageLeave.set(false) // technically does nothing because we defensively reload, but it's still here for correctness
 
-    // because async operations are not strictly waiting properly,
-    // as a quick-fix we give a 2 second cushion for the email notifications to properly resolve
-    setTimeout(() => {
-      window.location.reload()
-    }, 2000)
+    window.location.reload()
   }
 
   async function callFuncsInSequence (...funcs) {

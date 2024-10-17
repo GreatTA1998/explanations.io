@@ -82,13 +82,6 @@
 
     <div style="margin-top: 12px"></div>
 
-    {#if isBecomeHelperPopupOpen}
-      <PopupBecomeHelper
-        {classID}
-        on:popup-close={() => isBecomeHelperPopupOpen = false}
-      />
-    {/if}
-
     <div style="margin-bottom: 24px;"></div>
 
     <div style="display: flex; align-items: center;">
@@ -169,7 +162,6 @@
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
 
   let willJoinVoiceChat = false
-  let isBecomeHelperPopupOpen = false
 
 	// START OF RESIZE LOGIC 
   let resizeDebouncer = null

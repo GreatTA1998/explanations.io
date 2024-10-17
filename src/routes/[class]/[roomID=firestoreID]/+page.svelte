@@ -169,7 +169,7 @@
           justify-content: center; 
           align-items: center;
           background-color: #2e3131; 
-          font-family: Roboto, sans-serif; text-transform: uppercase;
+          text-transform: uppercase;
           color: white;
           height: 35px;
           width: {$maxAvailableWidth}px;
@@ -695,6 +695,7 @@
     // this.scrollToThisBoard(newID)
   }
 
+  // TO-DO: refactor/unify with the existing helper function API in crud.js
   async function createNewMultiboard () {
     const newID = getRandomID();  
 

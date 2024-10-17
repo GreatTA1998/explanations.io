@@ -65,7 +65,6 @@
       {/if}
       
       <div 
-        class:question-item={isQuestion(room)} 
         class="my-truncated-text"
         style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px; font-weight: 500;"
       >
@@ -160,10 +159,6 @@ $: totalIndentation = SUBPAGE_INDENATION_PX * (depth + 1)
 onDestroy(() => {
   if (unsubListener) unsubListener()
 })
-
-function isQuestion (roomDoc) {
-  return roomDoc.name && '?' === roomDoc.name.charAt(room.name.length - 1)
-}
 
 function isInvalidSubpageDrop () {
   return parentRoomIDs.includes($whatIsBeingDraggedID) || $whatIsBeingDraggedID === room.id 
@@ -397,10 +392,6 @@ async function deleteRoom (room) {
     background-color: #F7C686;
     color: black;
     transition: background 20ms ease-in 0s;
-  }
-
-  .question-item {
-    color: red; /* rgb(34, 153, 231); */
   }
 
   .speaking {

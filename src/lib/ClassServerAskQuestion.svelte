@@ -18,7 +18,7 @@
     <TextAreaAutoResizing
       value={questionDescriptionInput} 
       on:input={(e) => questionDescriptionInput = e.detail}
-      placeholder="Description..."
+      placeholder="Details"
       numberOfInitialRowsIfEmpty={4}
     />
 
@@ -53,39 +53,13 @@
         <Button disabled={!!!$user.uid} 
           on:click={submitQuestion} 
           color="secondary"
-          style="border-radius: 40px; color: white; background-color: #5d0068; padding: 0px 24px;"
+          style="border-radius: 40px; color: white; background-color: {!!!$user.uid ? 'lightgrey' : '#5d0068' }; padding: 0px 24px;"
         >
           Post my question to server
         </Button>
 
 
         <div style="margin-top: 60px;">
-
-        <!-- <ClassServerAskQuestionAllMembers 
-          {classID}
-        />   -->
-       </div>
-
-        <!-- <Button 
-        on:click={submitQuestion} 
-        variant="raised"
-        disabled={true}
-        style="
-          border-radius: 0px; 
-          margin-top: 36px; 
-          width: 460px;
-          height: 60px;
-          font-size: 16px;
-          color: white;
-          background-color: #5d0068;
-        "
-      >
-        {#if !!!$user.uid}
-          Sign in & post my question to server (NEEDS FIXING)
-        {:else}
-          Post my question to server
-        {/if}
-      </Button> -->
       </div>
   </div>
 </div>
@@ -100,7 +74,12 @@
   import HelperText from '@smui/textfield/helper-text'
   import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import { createRoomDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreCollection, getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
+  import { 
+    createRoomDoc, 
+    updateFirestoreDoc, 
+    setFirestoreDoc,
+    createNewMultiboard
+  } from '../helpers/crud.js'
 
   import { arrayUnion, increment } from "firebase/firestore"
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
@@ -113,6 +92,7 @@
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import { goto } from '$app/navigation'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
+  import { serverTimestamp } from 'firebase/firestore'
 
   export let classID 
   // export let roomID
@@ -137,28 +117,30 @@
       alert('Question title cannot be blank')
       return
     }
-
-    if (questionTitleInput.at(-1) !== '?') {
-      questionTitleInput = questionTitleInput + '?'
-    }
-
-    const roomUpdateObj = {
+    const questionUpdateObj = {
       name: questionTitleInput,
-      // because we know who asked the question,
-      // we can notify them later whenever anyone replies
       askerName: $user.name,
       askerUID: $user.uid,
-      dateAsked: new Date().toISOString()
+      dateAsked: new Date().toISOString(),
+      title: questionTitleInput,
+      description: questionDescriptionInput,
+      timestamp: serverTimestamp()
     }
     if (pdfOrImageAttachment) {
       const { fileName, fileDownloadURL } = await uploadFileToStorage(pdfOrImageAttachment)
-      roomUpdateObj.attachmentsDownloadURLs = arrayUnion(fileDownloadURL)
-      roomUpdateObj.attachmentsNames = arrayUnion(fileName)
+      questionUpdateObj.attachmentsDownloadURLs = arrayUnion(fileDownloadURL)
+      questionUpdateObj.attachmentsNames = arrayUnion(fileName)
     }
-    const newRoomDocID = await createRoomDoc(`classes/${classID}/`)
-    updateFirestoreDoc(`classes/${classID}/rooms/${newRoomDocID}`, roomUpdateObj)
-    updateFirestoreDoc(`classes/${classID}/blackboards/${newRoomDocID}`, {
-      description: questionDescriptionInput,
+
+    const newQuestionID = getRandomID()
+
+    const classPath = `classes/${classID}/`
+    setFirestoreDoc(classPath + `questions/${newQuestionID}`, questionUpdateObj)
+
+    // initialize the first blackboard
+    createNewMultiboard({ 
+      baseDocPath: `${classPath}questions/${newQuestionID}`,
+      boardsPath:`${classPath}blackboards/`
     })
 
     // Update stats/metadata that are affected by this operation
@@ -170,15 +152,16 @@
       title: questionTitleInput 
     })
 
-    handleNewQuestionNotifications({ 
-      classID, 
-      roomID: newRoomDocID, 
-      userDoc: $user, 
-      questionTitleInput 
-    })
+    // TO-DO: handle notifications
+    // handleNewQuestionNotifications({ 
+    //   classID, 
+    //   roomID: newRoomDocID, 
+    //   userDoc: $user, 
+    //   questionTitleInput 
+    // })
 
     alert('Question submitted! Your teacher will usually reply within 2 days')
-    goto(`/${classID}/${newRoomDocID}`)
+    goto(`/${classID}/question/${newQuestionID}`)
   }
 
   async function uploadFileToStorage (pdfOrImageFile) {

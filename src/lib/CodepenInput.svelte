@@ -4,7 +4,7 @@
     class="input" 
     value={value}
     readonly={readonly}
-    placeholder="Question title..." 
+    placeholder="Title"
     type="text" 
     on:input
     on:click

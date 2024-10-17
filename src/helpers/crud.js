@@ -190,3 +190,23 @@ export async function updateNumOfSubfolders ({ draggedRoomID, droppedRoomID, bas
     resolve()
   })
 }
+
+export async function createNewMultiboard ({ baseDocPath, boardsPath }) {
+  const newID = getRandomID()
+  const boardPath = `${boardsPath}${newID}/`
+
+  await setFirestoreDoc(boardPath, { 
+    recordState: 'pre_record',
+    slideIDs: [newID],
+    isMultiboard: true
+  })
+
+  await Promise.all([
+    setFirestoreDoc(boardPath + `slides/${newID}/`, {
+      // empty doc matters because it can then be updated with background images etc.
+    }),
+    updateFirestoreDoc(baseDocPath, {
+      blackboardIDs: arrayUnion(newID)
+    })
+  ])
+}

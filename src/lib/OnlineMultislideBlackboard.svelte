@@ -9,6 +9,7 @@
     slideIDs={boardDoc.slideIDs}
     {idxOfFocusedSlide}
     on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
+    on:slide-create={createNewSlide}
   />
 </div>
 
@@ -116,7 +117,7 @@
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { user } from '/src/store.js'
-  import { getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
+  import { arrayUnion, getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
   import { createEventDispatcher, onMount } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
@@ -165,6 +166,21 @@
       }
     })
   })
+
+  async function createNewSlide () {
+    const newSlideID = getRandomID()
+    
+    await Promise.all([
+      setFirestoreDoc(`${boardPath}slides/${newSlideID}/`, {
+        // empty doc matters because it can then be updated with background images etc.
+      }),
+      updateFirestoreDoc(boardPath, {
+        slideIDs: arrayUnion(newSlideID)
+      })
+    ])
+
+    changeToSlideIdx(boardDoc.slideIDs.length - 1)
+  }
 
   function changeToSlideIdx (newSlideIdx) {
     idxOfFocusedSlide = newSlideIdx 

@@ -16,7 +16,7 @@
 >
   <!-- MINI TOP APP BAR -->
   <!-- class="mdc-elevation--z{4}" -->
-  <div style="padding-top: 4px; padding-bottom: 0; padding-left: 4px;">
+  <div style="padding: 4px;">
     <div style="display: flex; align-items: center; width: 100%;">
       <img 
         on:click={handleLogoClick}
@@ -38,23 +38,6 @@
     </div>
   </div>
 
-  <!-- Notion's icon color is rgba(55, 53, 47, 0.45) -->
-  <!-- Notion's font color is rgba(25, 23, 17, 0.6) -->
-  <!-- hsl(294, 100%, 20%) -->
-  <!-- Lighter purple (based on our theme color) #67416b -->
-  <div style="width: 100%; display: flex; margin-top: 12px; margin-bottom: 12px;">
-    <div on:click={() => goto(`/${classID}/question`)} 
-      class="new-question-button"
-      class:drawer-item-glow={$page.routeId === '[class]/question'}
-    >
-      <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px; margin-left: 8px;">
-        add
-      </span>
-      <div style="margin-left: 6px; font-size: 14px; font-weight: 400;">
-        New question
-      </div>
-    </div> 
-  </div>
   <!-- REST OF DRAWER CONTENT -->
   <List style="padding: 0">
     <div style="width: 100%; border-top: 1px solid lightgrey;"></div>
@@ -80,13 +63,31 @@
 
     <div style="width: 100%; border-bottom: 1px solid lightgrey;"></div>
 
-    <div style="margin-top: 12px"></div>
+    <div style="margin-bottom: 40px;"></div>
 
-    <div style="margin-bottom: 24px;"></div>
+    <QuestionsSection {classID}>
+      <div style="width: 100%; display: flex;">
+        <div on:click={() => goto(`/${classID}/question`)} 
+          class="new-question-button"
+          class:drawer-item-glow={$page.routeId === '[class]/question'}
+        >
+          <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px; margin-left: 8px;">
+            add
+          </span>
+          <div style="margin-left: 6px; font-size: 14px; font-weight: 400;">
+            New question
+          </div>
+        </div> 
+      </div>
+    </QuestionsSection>
+
+    <div style="margin-top: 40px;">
+      
+    </div>
 
     <div style="display: flex; align-items: center;">
       <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 16px;">
-        Blackboard rooms
+        Library Archive
       </div>
       <span on:click={createNewRoom} class="material-icons new-room-button">
         add
@@ -150,8 +151,8 @@
   import { createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
   import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
   import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
-  import PopupBecomeHelper from '$lib/PopupBecomeHelper.svelte'
   import { page } from '$app/stores'
+  import QuestionsSection from '$lib/QuestionsSection.svelte'
 
   export let classID
   export let roomID

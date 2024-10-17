@@ -129,7 +129,7 @@
           })}
           class="new-blackboard-button"
           style="width: {$maxAvailableWidth}px;">
-            New multiboard
+            NEW BLACKBOARD
         </div>
       {/if}
     </div>
@@ -147,6 +147,8 @@
     height: 35px;
     opacity: 2.0s ease-in;
     opacity: 1;
+
+    cursor: pointer;
   }
   
   :global(.room-title input) {

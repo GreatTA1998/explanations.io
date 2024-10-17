@@ -180,7 +180,7 @@
           {#if hasQuestionMark(roomDoc.name)}
             Respond to question
           {:else}
-            New multiboard
+            NEW BLACKBOARD
           {/if}
      </div>
    {/if}

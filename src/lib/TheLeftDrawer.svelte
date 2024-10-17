@@ -16,7 +16,7 @@
 >
   <!-- MINI TOP APP BAR -->
   <!-- class="mdc-elevation--z{4}" -->
-  <div style="padding: 4px;">
+  <div style="padding: 4px; padding-bottom: 6px;">
     <div style="display: flex; align-items: center; width: 100%;">
       <img 
         on:click={handleLogoClick}

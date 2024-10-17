@@ -90,6 +90,8 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+
+    cursor: pointer;
   }
 
   .q-title {

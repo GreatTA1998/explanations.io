@@ -42,7 +42,6 @@
     <!-- purple: '#5d0068' -->
     <!-- blackboard color: hsl(0,0%,0%, 0.80) -->
       <div>
-        
         <div style="margin-top: 24px;"></div>
         {#if !!!$user.uid}
           <ReusableSignInButton frameworkColor="secondary"/>
@@ -58,8 +57,7 @@
           Post my question to server
         </Button>
 
-
-        <div style="margin-top: 60px;">
+        <div style="margin-top: 60px;"></div>
       </div>
   </div>
 </div>

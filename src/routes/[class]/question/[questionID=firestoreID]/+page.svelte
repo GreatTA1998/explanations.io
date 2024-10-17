@@ -1,9 +1,12 @@
 <script>
-  import { onMount} from 'svelte'
+  import { onMount } from 'svelte'
   import { doc, getFirestore, onSnapshot } from 'firebase/firestore'
   import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
-  import { createNewMultiboard } from '/src/helpers/crud.js'
-  import { maxAvailableWidth } from '/src/store.js'
+  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
+  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { maxAvailableWidth, user } from '/src/store.js'
+  import Textfield from '@smui/textfield'
 
   export let data
 
@@ -29,19 +32,74 @@
         path: snapshot.ref.path, 
         ...snapshot.data() 
       }
-      console.log('questionDoc =', questionDoc)
     })
+  }
+
+  function updateQuestionTitle ({ srcElement }) {
+    updateFirestoreDoc(questionPath, {
+      title: srcElement.value
+    })
+  }
+
+  async function debouncedUpdateQuestionDescription ({ detail }) {
+    const debouncedVersion = debounce(
+      () => updateQuestionDescription({ detail }),
+      1000
+    ) 
+    debouncedVersion({ detail })
+  }
+
+  async function updateQuestionDescription ({ detail }) {
+    updateFirestoreDoc(questionPath, {
+      description: detail
+    })
+  }
+
+  let t = { promise: null, cancel: _ => void 0 }
+
+  // Snippet from: https://stackoverflow.com/a/68228099/7812829
+  // NOTE: this literally returns a function (you still have to call it)
+  function debounce (task, ms) {
+    return async (...args) => {
+      try {
+        t.cancel()
+        t = deferred(ms)
+        await t.promise
+        await task(...args)
+      }
+      catch (_) { 
+        /* prevent memory leak */ 
+      }
+    }
+  }
+
+  function deferred (ms) {
+    let cancel, promise = new Promise((resolve, reject) => {
+      cancel = reject
+      setTimeout(resolve, ms)
+    })
+    return { promise, cancel }
   }
 </script>
 
 {#if questionDoc.id}
-  <div style="padding: 8px 16px;">
-    <div class="full-q-title">
-      {questionDoc.title}
-    </div>  
+  <LeftDrawerToggleButton/>
 
-    <div style="margin-top: 8px;">
-      {questionDoc.description}
+  <div style="padding: 16px;">
+    <Textfield 
+      disabled={$user.uid !== questionDoc.askerUID}
+      value={questionDoc.title} on:input={(e) => updateQuestionTitle(e)}
+      class="room-title" 
+      style={`width: ${$maxAvailableWidth}px;`}
+    />
+
+    <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
+      <TextAreaAutoResizing 
+        value={questionDoc.description} 
+        on:input={(e) => debouncedUpdateQuestionDescription(e)}
+        placeholder=""
+        readonly={$user.uid !== questionDoc.askerUID}
+      />
     </div>
 
     {#if questionDoc.attachmentsDownloadURLs} 
@@ -52,7 +110,7 @@
       {/each}
     {/if}
 
-    <div style="width: 100%; border-bottom: 2px solid black; margin-top: 16px; margin-bottom: 16px;"></div>
+    <div style="width: {$maxAvailableWidth}px; border-bottom: 2px solid black; margin-top: 16px; margin-bottom: 16px;"></div>
 
     <!-- Blackboards section -->
     <div style="display: flex; flex-direction: column; gap: 40px;">
@@ -61,7 +119,7 @@
           <GeneralizedBlackboardDisplay 
             {boardID}
             {classID}
-            roomDoc={questionDoc}
+            questionDoc={questionDoc}
           />
         {/each}
 
@@ -79,10 +137,6 @@
 {/if}
 
 <style>
-  .full-q-title {
-    font-size: 1.8rem;
-  }
-
   .new-blackboard-button {
     display: flex; 
     justify-content: center; 
@@ -93,5 +147,9 @@
     height: 35px;
     opacity: 2.0s ease-in;
     opacity: 1;
+  }
+  
+  :global(.room-title input) {
+    font-size: 2rem;
   }
 </style>

@@ -41,9 +41,9 @@ exports.sendTextMessage = functions.https.onCall((data, context) => {
     .done();
 });
 
-exports.recursiveDelete = functions
+exports.deleteRecursively = functions
   .runWith({ 
-    timeoutSeconds: 540, memory: "2GB" 
+    timeoutSeconds: 540, memory: "2GB"
   })
   .https.onCall(async (data, context) => {
     // Only allow admin users to execute this function.

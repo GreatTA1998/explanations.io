@@ -234,26 +234,4 @@
       backgroundImageDownloadURL: deleteField() // Svelte doesn't react to change to empty string, for some reason
     })
   }
-
-  // A blackboard does not have an audioDownloadURL,
-  // otherwise it's a video
-  // function deleteBoard (boardID, deleteAllStrokesFromDb) {
-  //   // if (roomDoc.blackboards.length === 1) {
-  //   //   alert("Can't delete the last blackboard")
-  //   //   return
-  //   // }
-
-  //   // 1. delete blackboard reference from parent
-  //   updateDoc(roomRef, {
-  //     blackboards: arrayRemove(boardID)
-  //   })
-    
-  //   // 2. delete strokes
-  //   deleteAllStrokesFromDb()
-    
-  //   // 3. delete board itself
-  //   deleteDoc(
-  //     doc(getFirestore(), boardsDbPath + boardID)
-  //   )
-  // }
 </script>

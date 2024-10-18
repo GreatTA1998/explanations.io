@@ -1,18 +1,16 @@
 <script>
   import { onMount } from 'svelte'
-  import { collection, getFirestore, onSnapshot, query, orderBy } from 'firebase/firestore'
-  import { user, adminUIDs } from '/src/store.js'
+  import { collection, getFirestore, onSnapshot, query, orderBy, increment} from 'firebase/firestore'
+  import { getFirestoreDoc, updateFirestoreDoc, 
+    deleteFirestoreDoc, deleteArbitraryBlackboard, deleteFromStorage 
+  } from '/src/helpers/crud.js'
+  import QuestionsSectionItem from '$lib/QuestionsSectionItem.svelte'
   import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
-  import { DateTime } from 'luxon'
-  import List, { Item, Text } from '@smui/list'
-  import Menu from '@smui/menu'
 
   export let classID
 
   let unsub = null
   let allQuestions = null
-  let DropdownMenu
 
   onMount(() => {
     listenToQuestions()
@@ -41,17 +39,56 @@
     })
   }
 
-  function getDaysAgo (serverTimestamp) {
-    return DateTime.fromMillis(
-      serverTimestamp.toMillis()
-    ).toRelative()
-  }
-
-  function deleteQuestion (questionDoc) {
+  // TO-DO: also delete attachments in the future
+  async function deleteQuestion (questionDoc) {
     if (!confirm('Are you sure you want to delete this question?')) {
       return
     }
-    alert('Not yet implemented')
+
+    alert('Initiated a delete, this might take 10 seconds, the UI will update')
+
+    const classPath = `classes/${classID}/`
+    const db = getFirestore()
+
+    // DELETE BLACKBOARDS
+    const boardDeletePromises = []
+    for (const boardID of questionDoc.blackboardIDs) {
+      boardDeletePromises.push(
+        getFirestoreDoc(classPath + `blackboards/${boardID}/`)
+          .then(boardDoc => deleteArbitraryBlackboard({ boardDoc, classID }))
+          .catch(error => console.log(error))
+      )
+    }
+    await Promise.all(boardDeletePromises)
+
+    // TO-DO: needs fixing in the future, but not urgent
+    // DELETE ATTACHMENTS (note the double plural)
+    // if (questionDoc.attachmentsDownloadURLs) {
+    //   for (const downloadURL of questionDoc.attachmentsDownloadURLs) {
+    //     // find path
+    //     // https://firebasestorage.googleapis.com/v0/b/(project id).appspot.com/o/(storage path)?alt=media
+    //     // original answer: https://stackoverflow.com/a/58443247/7812829
+    //     const path = downloadURL.substring(downloadURL.indexOf('/o/') + 3, downloadURL.indexOf('?'))
+    //     deleteFromStorage({ path })
+    //   }
+    // }
+
+    // UPDATE METADATA/STATS
+    if (questionDoc.isAnswered) {
+      updateFirestoreDoc(`classes/${classID}`, {
+        numOfResolvedQuestions: increment(-1)
+      })
+    }
+    else {
+      updateFirestoreDoc(`classes/${classID}/`,{
+        numOfUnresolvedQuestions: increment(-1)
+      })
+    }
+
+     // finally delete the room doc itself
+    await deleteFirestoreDoc(classPath + `questions/${questionDoc.id}/`)
+
+    goto(`/${classID}/question`)
   }
 </script>
 
@@ -64,49 +101,7 @@
     <div style="margin-top: 0px;">
       {#if allQuestions}
         {#each allQuestions as question (question.id)}
-          <div 
-            on:click={() => goto(`/${classID}/question/${question.id}`)} 
-            class:selected={question.id === $page.params.questionID} 
-            class="q-list-item"
-          > 
-            <div style="display: flex;">
-              <div 
-                class="q-title my-truncated-text"
-                class:red-urgent-text={!question.isAnswered}
-              > 
-                {question.title}
-              </div>
-
-              {#if $page.params.questionID && $user.uid}
-                {#if question.askerUID === $user.uid || $adminUIDs.includes($user.uid)}
-                  <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
-                    more_vert
-                  </span>
-
-                  <Menu bind:this={DropdownMenu} style="width: 300px">
-                    <List>      
-                      <Item on:SMUI:action={() => deleteQuestion(question)}>
-                        Delete question
-                      </Item>
-                    </List> 
-                  </Menu>
-                {/if}
-              {/if}
-            </div>
-
-            <!-- <div class="q-description">
-              {question.description}
-            </div> -->
-            
-            <!-- `serverTimestamp` sometimes needs a few seconds to hydrate after the doc is created -->
-            {#if question.timestamp}
-              <div class="q-asker">
-                {question.askerName} asked {getDaysAgo(question.timestamp)}
-              </div>
-            {/if}
-          </div>
-
-          <div style="width: 100%; border-bottom: 1px solid lightgrey;"></div>
+          <QuestionsSectionItem {question} {deleteQuestion} {classID}/>
         {/each}
       {/if}
     </div>
@@ -116,42 +111,5 @@
 <style>
   .q-list-container {
     padding: 4px 8px;
-  }
-
-  .q-list-item {
-    padding: 8px; 
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-
-    cursor: pointer;
-  }
-
-  .q-title {
-    font-size: 1rem;
-  }
-
-  .q-description {
-    font-size: 0.875rem;
-    color: rgb(120, 120, 120);
-    line-height: 1.2;
-  }
-
-  /* Copied from Firebase's section header */
-  .q-asker {
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.6);
-  }
-
-  .selected {
-    background-color: #F7C686;
-    transition: background 20ms ease-in 0s;
-  }
-
-  .red-urgent-text {
-    color: red;
   }
 </style>

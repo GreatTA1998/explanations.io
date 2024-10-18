@@ -1,6 +1,19 @@
 import { getRandomID } from './utility.js'
-import { deleteField, collection, query, orderBy, limit, getDoc, getDocs, getFirestore, updateDoc, arrayUnion, arrayRemove, increment, doc, setDoc, where } from 'firebase/firestore'
+import { 
+  deleteField, 
+  collection, 
+  query, 
+  orderBy, 
+  limit, 
+  setDoc, getDoc, getDocs, updateDoc, deleteDoc,
+  getFirestore, 
+  arrayUnion, arrayRemove, 
+  increment, 
+  doc, 
+  where 
+} from 'firebase/firestore'
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
+import { deleteRecursively } from '/src/helpers/cloudFunctions.js'
 
 // I prefix all Firestore helper functions with `firestore` prefix
 // e.g. `firestoreRef` (written by me) vs `ref` (native to library)
@@ -68,6 +81,14 @@ export function updateFirestoreDoc (path, updateObject) {
   })
 }
 
+export function deleteFirestoreDoc (path) {
+  return new Promise(async (resolve) => {
+    const ref = firestoreRef(path)
+    await deleteDoc(ref)
+    resolve()
+  })
+}
+
 export function createFirestoreQuery ({ collectionPath, criteriaTerms }) {
   const db = getFirestore()
   const ref = collection(db, collectionPath)
@@ -103,6 +124,12 @@ export function revertVideoToBoard ({ id, audioRefFullPath, path }, deleteAllStr
     await Promise.all(promises)
     resolve()
   })
+}
+
+export function deleteFromStorage ({ path }) {
+  deleteObject(
+    ref(getStorage(), path)
+  )
 }
 
 // returns the ID of the new room created
@@ -212,4 +239,23 @@ export async function createNewMultiboard ({ baseDocPath, boardsPath }) {
     ])
     resolve()
   })
+}
+
+export async function deleteArbitraryBlackboard ({ boardDoc, classID }) {
+  if (boardDoc.audioRefFullPath) {
+    try {
+      // we no longer push it onto this promise array - otherwise it'll be resolved OUTSIDE of catch block and interrupt the entire function when audio is empty
+      // subdeleteRequests.push(
+        deleteObject(
+          ref(getStorage(), boardDoc.audioRefFullPath)
+        )
+      // )
+    } catch (error) {
+      console.alert(error)
+    }
+  }
+  await deleteRecursively({
+    path: `/classes/${classID}/blackboards/${boardDoc.id}` 
+  })
+  console.log(`Successfully deleted board with ID ${boardDoc.id}`)
 }

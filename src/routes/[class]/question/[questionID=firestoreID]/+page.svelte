@@ -100,8 +100,10 @@
       style={`width: ${$maxAvailableWidth}px;`}
     >
       <HelperText slot="helper" persistent>
-        Question asked by {questionDoc.askerName} on {displayMonthDayYYYY(questionDoc.timestamp)}.
-        There are {questionDoc.blackboardIDs.length} blackboards.
+        {#if questionDoc.timestamp}
+          Question asked by {questionDoc.askerName} on {displayMonthDayYYYY(questionDoc.timestamp)}.
+          There are {questionDoc.blackboardIDs.length} blackboards.
+        {/if}
       </HelperText>
     </Textfield>
 

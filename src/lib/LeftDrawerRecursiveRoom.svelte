@@ -136,6 +136,7 @@ import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc, updateNumOfSubf
 import { whatIsBeingDragged } from '/src/store'
 import { onDestroy } from 'svelte'
 import { page } from '$app/stores'
+import { deleteArbitraryBlackboard } from '/src/helpers/crud.js'
 
 export let room
 export let depth = 0
@@ -292,47 +293,19 @@ async function deleteRoom (room) {
     return 
   }
 
+  alert('Initiated a delete, this might take 10 seconds, the UI will update')
+
   const db = getFirestore()
 
-  const boardsQueries = [] 
+  const boardDeletePromises = []
   for (const boardID of room.blackboards) {
-    // if it's a video, delete the audio file
-    boardsQueries.push(
-      getDoc(
-        doc(db, classPath + `blackboards/${boardID}`)
-      )
+    boardDeletePromises.push(
+      getFirestoreDoc(classPath + `blackboards/${boardID}/`)
+        .then(boardDoc => deleteArbitraryBlackboard({ boardDoc, classID }))
+        .catch(error => console.log(error))
     )
   }
-  await Promise.all(boardsQueries)
-
-  const subdeleteRequests = [] 
-  for (const boardQuery of boardsQueries) {
-    const result = await boardQuery
-    if (!result.exists()) continue // sometimes I have empty blackboard pointers for some reason, so quick-fix
-    const boardDoc = result.data()
-    // delete audio
-    if (boardDoc.audioRefFullPath) {
-      // `try-catch` because sometimes the audioRefFUllPath is invalid, but we don't want it to break the delete method
-      try {
-        // we no longer push it onto this promise array - otherwise it'll be resolved OUTSIDE of catch block and interrupt the entire function when audio is empty
-        // subdeleteRequests.push(
-          deleteObject(
-            ref(getStorage(), boardDoc.audioRefFullPath)
-          )
-        // )
-      } catch (error) {
-        console.alert(error)
-      }
-    }
-    // delete strokes
-    const functions = getFunctions();
-    const deleteRecursively = httpsCallable(functions, 'recursiveDelete')
-    subdeleteRequests.push(
-      deleteRecursively({ path: `/classes/${classID}/blackboards/${result.id}` }).then(console.log(`Deleted blackboard /classes/${classID}/blackboards/${result.id}`))
-    )
-  }
-  await Promise.all(subdeleteRequests)
-
+  await Promise.all(boardDeletePromises)
 
   // MOVE CHILDREN: move all the children OUT of the folder getting deleted
   // 1. fetch all the sub-rooms
@@ -360,18 +333,6 @@ async function deleteRoom (room) {
   }
 
   await Promise.all(folderPromises)
-
-  // UPDATE METADATA/STATS
-  if (room.dateResolved) {
-    updateFirestoreDoc(`classes/${classID}`, {
-      numOfResolvedQuestions: increment(-1)
-    })
-  }
-  else if (room.dateAsked) {
-    updateFirestoreDoc(`classes/${classID}`,{
-      numOfUnresolvedQuestions: increment(-1)
-    })
-  }
 
   // finally delete the room doc itself
   await deleteDoc(

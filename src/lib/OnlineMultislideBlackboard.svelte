@@ -253,7 +253,7 @@
         classID, 
         questionDoc: roomDoc, 
         userDoc: $user,
-        linkToQuestion: `${$page.url.origin}/${classID}/question/${newQuestionID}`
+        linkToQuestion: `${$page.url.origin}/${classID}/question/${roomDoc.id}`
       })
     }
     

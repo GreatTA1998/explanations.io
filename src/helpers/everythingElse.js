@@ -20,7 +20,7 @@ export function  toggleClassDetailsDrawerWidth () {
   }
 }
 
-export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, classID, roomID, commentString }) {
+export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, classID, questionID, commentString, linkToQuestion }) {
   // board creator
   if (userDoc.uid !== boardDoc.creatorUID) {
     const creatorDoc = await getFirestoreDoc(`/users/${boardDoc.creatorUID}`)
@@ -30,7 +30,7 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
         toWho: creatorDoc.email,
         subject: 'New comment on your video [explanations.io]', 
         content: `<strong>${userDoc.name.split(" ")[0]}</strong> commented on your video: "${commentString}"
-        <a href="https://explanations.io/${classID}/${roomID}">Link here</a>`
+        <a href="${linkToQuestion}">Link here</a>`
       })
     }
   }
@@ -45,7 +45,7 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
         toWho: participantDoc.email,
         subject: 'New comment follow-up [explanations.io]', 
         content: `<strong>${userDoc.name.split(" ")[0]}</strong> added a new comment on a thread you participated in: "${commentString}"
-        <a href="https://explanations.io/${classID}/${roomID}">Link here</a>`
+        <a href="${linkToQuestion}">Link here</a>`
       })
     }
   }
@@ -55,7 +55,7 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
   })
 }
 
-export async function handleNewQuestionNotifications ({ classID, questionID, userDoc, questionTitleInput}) {
+export async function handleNewQuestionNotifications ({ classID, questionID, userDoc, questionTitleInput, linkToQuestion }) {
   return new Promise(async (resolve) => {
     const promises = []
 
@@ -70,7 +70,7 @@ export async function handleNewQuestionNotifications ({ classID, questionID, use
       content: `<strong>${userDoc.name}</strong> asked: "${questionTitleInput}"
       <br>
       <br>
-      <a href="https://explanations.io/${classID}/${questionID}">
+      <a href="${linkToQuestion}">
         Link to question
       </a>
       `
@@ -107,7 +107,7 @@ export async function handleNewQuestionNotifications ({ classID, questionID, use
   })
 }
 
-export function handleVideoUploadEmailNotifications ({ classID, questionDoc, userDoc }) {
+export function handleVideoUploadEmailNotifications ({ classID, questionDoc, userDoc, linkToQuestion }) {
   return new Promise(async resolve => {
     const promises = []
 
@@ -117,7 +117,7 @@ export function handleVideoUploadEmailNotifications ({ classID, questionDoc, use
       const emailSubjectAndContent = {
         subject: '[explanations.io] Your teacher replied!', 
         content: `<strong>${userDoc.name.split(" ")[0]}</strong> uploaded a video in response to your question: 
-        <a href="https://explanations.io/${classID}/${questionDoc.id}">Link here</a>`
+        <a href="${linkToQuestion}">Link here</a>`
       }
 
       promises.push(
@@ -150,7 +150,7 @@ export function handleVideoUploadEmailNotifications ({ classID, questionDoc, use
             content: `<strong>${userDoc.name.split(" ")[0]}</strong> uploaded a video in a question thread you participated in.
             <br>
             <br>
-            <a href="https://explanations.io/${classID}/${questionDoc.id}">Link to question</a>`
+            <a href="${linkToQuestion}">Link to question</a>`
           })
         )
       }

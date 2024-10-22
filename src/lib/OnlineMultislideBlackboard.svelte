@@ -8,6 +8,7 @@
   <MultislideSlideChanger
     slideIDs={boardDoc.slideIDs}
     {idxOfFocusedSlide}
+    canCreateNewSlide
     on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
     on:slide-create={createNewSlide}
   />
@@ -127,6 +128,7 @@
   import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
   import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
+  import { page } from '$app/stores'
 
   export let canvasWidth
   export let canvasHeight
@@ -250,7 +252,8 @@
       await handleVideoUploadEmailNotifications({ 
         classID, 
         questionDoc: roomDoc, 
-        userDoc: $user 
+        userDoc: $user,
+        linkToQuestion: `${$page.url.origin}/${classID}/question/${newQuestionID}`
       })
     }
     

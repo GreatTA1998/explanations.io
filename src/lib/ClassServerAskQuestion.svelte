@@ -82,6 +82,7 @@
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
   import { serverTimestamp } from 'firebase/firestore'
 
@@ -125,10 +126,11 @@
     })
 
     await handleNewQuestionNotifications({ 
-      classID, 
-      questionID: newQuestionID,
       userDoc: $user, 
-      questionTitleInput 
+      questionTitleInput,
+      linkToQuestion: `${$page.url.origin}/${classID}/question/${newQuestionID}`,
+      classID,
+      questionID: newQuestionID
     })
 
     // wait till notification resolves,

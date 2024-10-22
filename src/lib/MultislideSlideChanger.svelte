@@ -10,16 +10,19 @@
   </div>
 {/each}
 
-<div on:click={() => dispatch('slide-create')}
-	class="slide-rectangle" 
-	style="font-size: 1.4rem;"
->
-	+
-</div>
+{#if canCreateNewSlide}
+	<div on:click={() => dispatch('slide-create')}
+		class="slide-rectangle" 
+		style="font-size: 1.4rem;"
+	>
+		+
+	</div>
+{/if}
 
 <script>
   export let idxOfFocusedSlide
   export let slideIDs
+	export let canCreateNewSlide = false
 
   import { createEventDispatcher } from "svelte";
 

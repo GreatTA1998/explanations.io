@@ -44,10 +44,12 @@
 
 <script>
   import RenderlessListenToCollection from '$lib/RenderlessListenToCollection.svelte'
+  import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID, displayDate } from '/src/helpers/utility.js'
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
   import { user } from '/src/store.js'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import { page } from '$app/stores'
 
   export let videoDoc
 
@@ -74,8 +76,14 @@
     promises.push(
       batch.commit()
     )
-
-    // TO-DO: handle email notifications based on video ID
+    handleNewCommentEmailNotifications({ 
+      boardDoc: videoDoc, 
+      userDoc: $user, 
+      classID: $page.params.class, // don't know why there is no ID in this case...
+      questionID: $page.params.questionID,
+      commentString: newInputComment,
+      linkToQuestion: `${$page.url.origin}/${classID}/question/${newQuestionID}`
+    })
     newInputComment = '' 
   }
 

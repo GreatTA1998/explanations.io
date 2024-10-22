@@ -43,7 +43,7 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
       console.log("sending email to participant =", participantDoc.email)
       sendEmail({ 
         toWho: participantDoc.email,
-        subject: 'New comment follow-up [explanations.io]', 
+        subject: '[explanations.io] New comment follow-up', 
         content: `<strong>${userDoc.name.split(" ")[0]}</strong> added a new comment on a thread you participated in: "${commentString}"
         <a href="${linkToQuestion}">Link here</a>`
       })
@@ -70,9 +70,7 @@ export async function handleNewQuestionNotifications ({ classID, questionID, use
       content: `<strong>${userDoc.name}</strong> asked: "${questionTitleInput}"
       <br>
       <br>
-      <a href="${linkToQuestion}">
-        Link to question
-      </a>
+      <a href="${linkToQuestion}">Link to question</a>
       `
     }
 

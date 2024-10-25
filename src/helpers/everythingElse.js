@@ -94,7 +94,7 @@ export async function handleNewQuestionNotifications ({ classID, questionID, use
       sendEmail({
         toWho: userDoc.email,
         subject: '[explanations.io] Question received!',
-        content: `Hello! This is an auto-reply to confirm that your question has been received, and that your teacher should respond within 2 days. Have a great week!
+        content: `Hello! This is an auto-reply to confirm that your question has been received, and your teacher usually replies within 48 hours. Have a great week!
         (BTW anytime you encounter any problems, you can always directly email me for troubleshooting etc. You can also give me honest, negative feedback about explanations.io anytime :> so I have a chance to improve the experience for you and be successful)`
       })
     )

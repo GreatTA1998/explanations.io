@@ -46,7 +46,7 @@
       Even if instructors are passionate, they routinely cause harm: 
       <a href="https://imgur.com/gallery/we-purposely-choose-to-delay-release-of-lecture-recordings-4S7a0K0" target="_blank">banning video recordings due to its effect on attendance</a>, restricting access to past material to prevent cheating and misuse,
       insisting on 1-on-1 Office Hours no matter how overwhelmed the TAs are. 
-      In a pedagogical monopoly where students have no alternatives to take the class from - there is just no mechanism for conservative, backward beliefs to correct across time.
+      In a pedagogical monopoly where students have no alternatives, there is no true mechanism for instructor beliefs to correct across time.
     </div>
 
     <div class="arcane-paragraph">
@@ -59,7 +59,7 @@
 
     <div class="arcane-paragraph">
       I love Youtube and KhanAcademy. They've have shown the promise of making great explanations accessible to people.
-      But there is far too few content creators for advanced subjects, because it's hard to justify spending time recording explanations for, who exactly?
+      But there is far too few content creators for advanced subjects, because it's hard to justify spending time recording explanations for an unpredictable audience.
     </div>
 
     <!-- <div class="arcane-paragraph">
@@ -78,8 +78,7 @@
 
     <div class="arcane-paragraph">
       I quit my job at Apple in 2020 to work on this full-time. Although I failed in Boston, I learnt a lot, and now I live in Tokyo searching for inspiration, 
-      and to save money, 
-      living in a $450/month sharehouse, taking out the trash for everyone. For as long as I believe this is right, <b>I'm willing to do whatever it takes to make this happen</b>.
+      and to save money. For as long as I believe this is right, <b>I'm willing to do what it takes to make this happen</b>.
     </div>
 
     <div class="arcane-paragraph">

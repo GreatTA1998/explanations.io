@@ -120,7 +120,7 @@
   import { user } from '/src/store.js'
   import { arrayUnion, getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher, onMount, onDestroy } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
   import { willPreventPageLeave } from '/src/store'
   import { mixpanelLibrary } from '/src/mixpanel.js'
@@ -158,16 +158,22 @@
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
   // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
   onMount(async () => {
-    document.addEventListener('keydown', (e) => {
-      switch (e.key) {
-        case "ArrowLeft":
-          changeToSlideIdx(Math.max(0, idxOfFocusedSlide - 1))
-          break
-        case "ArrowRight":
-          changeToSlideIdx(Math.min(idxOfFocusedSlide + 1, 2))
-      }
-    })
+    document.addEventListener('keydown', keydownHandler)
   })
+
+  onDestroy(() => {
+    document.removeEventListener('keydown', keydownHandler)
+  })
+
+  function keydownHandler (e) {
+    switch (e.key) {
+      case "ArrowLeft":
+        changeToSlideIdx(Math.max(0, idxOfFocusedSlide - 1))
+        break
+      case "ArrowRight":
+        changeToSlideIdx(Math.min(idxOfFocusedSlide + 1, boardDoc.slideIDs.length - 1))
+    }
+  }
 
   async function createNewSlide () {
     const newSlideID = getRandomID()

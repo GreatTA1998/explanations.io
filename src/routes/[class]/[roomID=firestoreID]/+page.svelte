@@ -51,9 +51,13 @@
           </div>
 
           {#if boardDoc.audioDownloadURL}
+            <!-- 
+              QUICKFIX: scale factor of 0.8 to take into account of the slides so you can see the whole video with the slider
+              TO-DO: add a scroll snap to the bottom of the video 
+            -->
             <UnifiedDoodleVideo
               video={boardDoc}
-              videoWidth={$maxAvailableWidth}
+              videoWidth={$maxAvailableWidth * 0.8}
               showEditDeleteButtons={true}
             />
           {:else if boardDoc.isMultiboard}

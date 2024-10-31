@@ -16,23 +16,8 @@
   <div style="
     position: relative; 
     box-sizing: border-box;
-    width: {canvasWidth}px; 
-    height: {canvasHeight + (80 * scaleFactor)}px"
+  "
   >
-    {#if !hasPlaybackStarted}
-      <span
-        on:click={startAudioPlayer} 
-        class="material-icons overlay-center" 
-        style="color: rgba(230, 230, 230, 0.8);
-        width: {270 * scaleFactor}px; 
-        height: {270 * scaleFactor}px; 
-        z-index: 5;
-        font-size: {15 * scaleFactor}rem;
-        cursor: pointer;"
-      >
-        play_circle
-      </span>
-    {/if} 
 
     <div style="position: absolute; top: 8px; left: 8px; z-index: 6; display: flex; align-items: center;">
       <BaseTransparentButton on:click={togglePlaySpeed} style="font-weight: 500;">
@@ -42,19 +27,7 @@
 
     <!-- share, delete button overlay on top -->
     {#if showEditDeleteButtons}
-      <div style="
-        margin-left: auto;
-        margin-right: 8px; 
-        display: flex; 
-        align-items: center; 
-        flex-direction: row-reverse;
-        position: absolute; 
-        top: 8px; 
-        bottom: auto;
-        width: 100%;
-        z-index: 5;
-      "
-      >
+      <div class="edit-delete-buttons">
         <!-- $adminUIDs.includes($user.uid) -->
         {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
           <div style="margin-right: 6px;">
@@ -66,46 +39,63 @@
       </div>
     {/if}
     
-    {#each boardDoc.slideIDs as slideID, i}
-      <RenderlessFetchStrokes
-        dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-        let:fetchStrokes={fetchStrokes}
-        let:strokesArray={strokesArray}
-        let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
-        let:deleteStrokesWithParam={deleteStrokesWithParam}
-        on:mounted={(e) => deleteFuncs = [...deleteFuncs, e.detail.deleteFunc]}
-      > 
-        <div style="display: none;" id="delete-button-{slideID}"
-          on:click={() => deleteStrokesWithParam({ boardPath, strokesArray })}
+    <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
+      {#if !hasPlaybackStarted}
+        <span
+          on:click={startAudioPlayer} 
+          class="material-icons overlay-center" 
+          style="color: rgba(230, 230, 230, 0.8);
+          width: {240 * scaleFactor}px; 
+          height: {240 * scaleFactor}px; 
+          z-index: 5;
+          font-size: {15 * scaleFactor}rem;
+          cursor: pointer;"
         >
-        </div>
+          play_circle
+        </span>
+      {/if} 
 
-        <div 
-          use:lazyCallable={fetchStrokes}  
-          style="
-            transform: scale(0.5); transform-origin: top left;
-
-            display: {idxOfFocusedSlide === i ? '' : 'none'};
-            width: {canvasWidth * 2}px; 
-            height: {canvasHeight + (80 * scaleFactor)}px; 
-            position: relative;
-          "
+      {#each boardDoc.slideIDs as slideID, i}
+        <RenderlessFetchStrokes
+          dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+          let:fetchStrokes={fetchStrokes}
+          let:strokesArray={strokesArray}
+          let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
+          let:deleteStrokesWithParam={deleteStrokesWithParam}
+          on:mounted={(e) => deleteFuncs = [...deleteFuncs, e.detail.deleteFunc]}
         > 
-          {#if strokesArray}
-            <MultislideDoodleVideoVisualSlide
-              {currentTime}
-              {strokesArray}
-              canvasWidth={canvasWidth * 2}
-              canvasHeight={canvasHeight * 2}
-              {hasPlaybackStarted}
-              {hasAudioSliderJumped}
-              on:slider-jump-sync={() => hasAudioSliderJumped = false}
-            />
-          {/if}
-        </div>
-      </RenderlessFetchStrokes>
-    {/each}
+          <div style="display: none;" id="delete-button-{slideID}"
+            on:click={() => deleteStrokesWithParam({ boardPath, strokesArray })}
+          >
+          </div>
 
+          <div 
+            use:lazyCallable={fetchStrokes}  
+            style="
+              position: absolute;
+              transform: scale(0.5); transform-origin: top left;
+              display: {idxOfFocusedSlide === i ? '' : 'none'};
+              width: {canvasWidth * 2}px; 
+              height: {canvasHeight * 2};
+            "
+          > 
+            {#if strokesArray}
+              <MultislideDoodleVideoVisualSlide
+                {currentTime}
+                {strokesArray}
+                canvasWidth={canvasWidth * 2}
+                canvasHeight={canvasHeight * 2}
+                {hasPlaybackStarted}
+                {hasAudioSliderJumped}
+                on:slider-jump-sync={() => hasAudioSliderJumped = false}
+              />
+            {/if}
+          </div>
+        </RenderlessFetchStrokes>
+      {/each}
+    </div>
+
+    <!-- <audio> can't grow beyond 50px, it just introduces unexpected spacing -->
     <audio
       src={audioDownloadURL}
       bind:this={AudioPlayer}
@@ -122,7 +112,7 @@
         hasAudioSliderJumped = true
       }}
       controls
-      style={`width: ${canvasWidth}px; height: ${90 * scaleFactor}px; position: absolute; bottom: 0; top: auto;`}
+      style={`width: ${canvasWidth}px; height: ${Math.min(90 * scaleFactor, 50)}px;`}
     >
     </audio>
   </div>
@@ -332,6 +322,19 @@
     right: 0;
     bottom: 0;
     margin: auto; 
+  }
+
+  .edit-delete-buttons {
+    margin-left: auto;
+    margin-right: 8px; 
+    display: flex; 
+    align-items: center; 
+    flex-direction: row-reverse;
+    position: absolute; 
+    top: 8px; 
+    bottom: auto;
+    width: 100%;
+    z-index: 5;
   }
 </style>
 

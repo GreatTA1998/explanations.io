@@ -13,6 +13,10 @@
         {boardDoc.description}
       </div>
 
+      <div style="width: 70%; margin: 8px 4px;">
+        <EurekaButton {boardDoc}/>
+      </div>
+
       <CommentsColumn videoDoc={boardDoc}/>
     </div>
   {/if}
@@ -21,6 +25,7 @@
 <script>
   import { onMount } from 'svelte'
   import CommentsColumn from '$lib/CommentsColumn.svelte'
+  import EurekaButton from '$lib/EurekaButton.svelte'
 
   export let previewWidth = window.innerWidth * 0.35
   export let boardDoc

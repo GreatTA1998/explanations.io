@@ -6,18 +6,20 @@
         lightbulb
       </span>
 
-      Eureka!
+      I understand this video
 
-      <div style="color: black; margin-left: 8px; font-weight: 500">
+      <!-- <div style="color: black; margin-left: 8px; font-weight: 500;">
         {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
-      </div>
+      </div> -->
     </div>
   </div>
 {/if}
 
 <script>
   import { user } from '/src/store.js'
+  import { getFirestoreDoc } from '/src/helpers/crud.js'
   import { updateDoc, arrayUnion, arrayRemove, getFirestore, doc } from 'firebase/firestore'
+  import { sendEmail } from '/src/helpers/cloudFunctions.js'
 
   export let boardDoc
 
@@ -28,12 +30,21 @@
         updateDoc(boardRef, {
           eurekaUIDs: arrayRemove($user.uid)
         })
-        return 
+        return
       }
     } 
     updateDoc(boardRef, {
       eurekaUIDs: arrayUnion($user.uid)
     })
+
+    getFirestoreDoc(`/users/${boardDoc.creatorUID}`)
+      .then(creatorDoc => 
+        sendEmail({
+          toWho: creatorDoc.email,
+          subject: `[explanations.io] ${$user.name} understood your video`,
+          content: `Just a quick email to let you know ${$user.name} clicked "I understand this video" for your ${boardDoc.description} video.`
+        })
+    )
   }
 </script>
 

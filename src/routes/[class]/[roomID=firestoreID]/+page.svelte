@@ -6,7 +6,7 @@
 {#if roomDoc}
 	<div>
     <LeftDrawerToggleButton/>
-    <div style="padding: 16px;" class:question={hasQuestionMark(roomDoc.name)}>
+    <div style="padding: 16px;">
  
     <div></div>
 
@@ -169,7 +169,7 @@
           justify-content: center; 
           align-items: center;
           background-color: #2e3131; 
-          font-family: Roboto, sans-serif; text-transform: uppercase;
+          text-transform: uppercase;
           color: white;
           height: 35px;
           width: {$maxAvailableWidth}px;
@@ -180,7 +180,7 @@
           {#if hasQuestionMark(roomDoc.name)}
             Respond to question
           {:else}
-            New multiboard
+            NEW BLACKBOARD
           {/if}
      </div>
    {/if}
@@ -695,6 +695,7 @@
     // this.scrollToThisBoard(newID)
   }
 
+  // TO-DO: refactor/unify with the existing helper function API in crud.js
   async function createNewMultiboard () {
     const newID = getRandomID();  
 
@@ -750,11 +751,6 @@
 <style>
 :global(.room-title input) {
   font-size: 2rem;
-}
-
-:global(.question input) {
-  color: red !important;
-  /* color: rgb(19, 145, 230) !important; */
 }
 
 .unclickable {

@@ -8,7 +8,9 @@
   <MultislideSlideChanger
     slideIDs={boardDoc.slideIDs}
     {idxOfFocusedSlide}
+    canCreateNewSlide
     on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
+    on:slide-create={createNewSlide}
   />
 </div>
 
@@ -116,9 +118,9 @@
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { user } from '/src/store.js'
-  import { getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
+  import { arrayUnion, getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher, onMount, onDestroy } from 'svelte'
   import ReusableButton from '$lib/ReusableButton.svelte'
   import { willPreventPageLeave } from '/src/store'
   import { mixpanelLibrary } from '/src/mixpanel.js'
@@ -126,6 +128,7 @@
   import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
   import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
+  import { page } from '$app/stores'
 
   export let canvasWidth
   export let canvasHeight
@@ -155,16 +158,37 @@
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
   // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
   onMount(async () => {
-    document.addEventListener('keydown', (e) => {
-      switch (e.key) {
-        case "ArrowLeft":
-          changeToSlideIdx(Math.max(0, idxOfFocusedSlide - 1))
-          break
-        case "ArrowRight":
-          changeToSlideIdx(Math.min(idxOfFocusedSlide + 1, 2))
-      }
-    })
+    document.addEventListener('keydown', keydownHandler)
   })
+
+  onDestroy(() => {
+    document.removeEventListener('keydown', keydownHandler)
+  })
+
+  function keydownHandler (e) {
+    switch (e.key) {
+      case "ArrowLeft":
+        changeToSlideIdx(Math.max(0, idxOfFocusedSlide - 1))
+        break
+      case "ArrowRight":
+        changeToSlideIdx(Math.min(idxOfFocusedSlide + 1, boardDoc.slideIDs.length - 1))
+    }
+  }
+
+  async function createNewSlide () {
+    const newSlideID = getRandomID()
+    
+    await Promise.all([
+      setFirestoreDoc(`${boardPath}slides/${newSlideID}/`, {
+        // empty doc matters because it can then be updated with background images etc.
+      }),
+      updateFirestoreDoc(boardPath, {
+        slideIDs: arrayUnion(newSlideID)
+      })
+    ])
+
+    changeToSlideIdx(boardDoc.slideIDs.length - 1)
+  }
 
   function changeToSlideIdx (newSlideIdx) {
     idxOfFocusedSlide = newSlideIdx 
@@ -223,8 +247,22 @@
       isPaid: false
     })
 
-    await handleVideoUploadEmailNotifications(classID, roomDoc, $user)
+    // set the question to be resolved
+    updateFirestoreDoc(roomDoc.path, {
+      isAnswered: true
+    })
 
+    // note because this component is used in both questions and rooms, `roomDoc` 
+    // represents both `questions`and `rooms`. In the futuer we'll refactor to prevent this confusion.
+    if (roomDoc.askerUID) {
+      await handleVideoUploadEmailNotifications({ 
+        classID, 
+        questionDoc: roomDoc, 
+        userDoc: $user,
+        linkToQuestion: `${$page.url.origin}/${classID}/question/${roomDoc.id}`
+      })
+    }
+    
     // QUICKFIX
     // only reproducible on my iPad (yet old Explain works for some reason)
     // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
@@ -317,67 +355,13 @@
     })
   }
 
-  // NOTE: we ignore the concurrent drawings with timestamp bug in this implementation
-  async function uploadVideo (audioBlob, boardID) {
-    const db = getFirestore()
-
-    // update metadata for tutor if it exists 
-    let tutorDoc
-    const q = query(
-      collection(db, membersDbPath),
-      where('uid', '==', $user.uid)
-    )
-    // base the member profile UID on the actual UID, so you don't need to do all these queries
-    const classDocUpdateObj = {} 
-
-    const snap = await getDocs(q) 
-    if (!snap.empty) {
-      // find the specific tutor doc
-      snap.docs.forEach(doc => {
-        tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
-      })
-      // that means it's the member's first server video
-      if (!tutorDoc.numOfVideos) {
-        classDocUpdateObj.numOfCreators = increment(1)
-      }
-      updateFirestoreDoc(membersDbPath + tutorDoc.id, {
-        numOfVideos: increment(1)
-      })
-    }
-    classDocUpdateObj.numOfVideos = increment(1) 
-    updateFirestoreDoc(`classes/${classID}`, classDocUpdateObj)
-
-    // upload the audio file
-    const storage = getStorage()
-    const audioRef = ref(storage, `audio/${getRandomID()}`)
-    await uploadBytes(audioRef, audioBlob)
-    const downloadURL = await getDownloadURL(audioRef)
-
-    const blackboardRef = doc(getFirestore(), boardPath)
-    await updateDoc(blackboardRef, {
-      creatorUID: $user.uid || '',
-      creatorName: $user.name || '',
-      creatorPhoneNumber: $user.phoneNumber || '',
-      date: new Date().toISOString(),
-      audioDownloadURL: downloadURL,
-      audioRefFullPath: audioRef.fullPath
-    })
-    updateRecordState(boardID, 'pre_record')
-
-    mixpanelLibrary.track('Video created')
-
-    // QUICKFIX
-    // only reproducible on my iPad (yet old Explain works for some reason)
-    // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
-    window.location.reload()
-  }
-
   function updateRecordState (slideID, newRecordState) {
     const blackboardRef = doc(getFirestore(), boardPath + slideID)
     updateDoc(blackboardRef, {
       recordState: newRecordState
     })
   }
+
   function updateBoardRecordState (boardPath, newRecordState) {
     const blackboardRef = doc(getFirestore(), boardPath)
     updateDoc(blackboardRef, {

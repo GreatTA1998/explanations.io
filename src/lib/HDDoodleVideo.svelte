@@ -8,7 +8,7 @@
 <div>
 
   <!-- The delete button is added here -->
-  <div style="justify-content: space-between; width: 100%; position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px; z-index: 5">
+  <div style="z-index: 3; justify-content: space-between; width: 100%; position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px;">
     <slot name="twoTimesSpeedButtonSlot">
       <BaseTransparentButton on:click={togglePlaySpeed}>
         {playbackSpeed}x 
@@ -31,7 +31,7 @@
         color: rgba(230, 230, 230, 0.8);
         width: {270 * scaleFactor}px; 
         height: {270 * scaleFactor}px; 
-        z-index: 5;
+        z-index: 3;
         font-size: {15 * scaleFactor}rem;
         cursor: pointer;
       "
@@ -44,7 +44,7 @@
         style="color: purple; background-color: white; border-radius: 50%;  
         width: {156 * scaleFactor}px; 
         height: {156 * scaleFactor}px; 
-        z-index: 5;
+        z-index: 3;
         font-size: {10 * scaleFactor}rem;"
       >
         play_arrow
@@ -56,7 +56,7 @@
         style="color: purple; background-color: white; border-radius: 50%;  
         width: {156 * scaleFactor}px; 
         height: {156 * scaleFactor}px; 
-        z-index: 5;
+        z-index: 3;
         font-size: {9.5 * scaleFactor}rem;"
       >
         lock

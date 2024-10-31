@@ -3,7 +3,7 @@ const firebase_tools = require("firebase-tools");
 var postmark = require("postmark");
 require("firebase-functions/logger/compat");
 
-exports.sendEmail = functions.https.onCall((data, context) => {
+exports.sendEmail = functions.https.onCall(async (data, context) => {
   // I configured Firebase environment variables:
   //   `firebase functions:config:set postmark.apikey="YOUR_POSTMARK_API_KEY"`
   var client = new postmark.ServerClient(functions.config().postmark.apikey);
@@ -11,7 +11,7 @@ exports.sendEmail = functions.https.onCall((data, context) => {
   const { toWho, subject, content } = data
   console.log('functions sending email to:', toWho)
  
-  client.sendEmail({
+  const result = await client.sendEmail({
     "From": "elton@explanations.io",
     "To": toWho,
     "Subject": subject,
@@ -19,6 +19,10 @@ exports.sendEmail = functions.https.onCall((data, context) => {
     "TextBody": content,
     "MessageStream": "outbound"
   })
+
+  console.log('finished sending email')
+
+  return { success: true, result }
 })
 
 
@@ -37,9 +41,9 @@ exports.sendTextMessage = functions.https.onCall((data, context) => {
     .done();
 });
 
-exports.recursiveDelete = functions
+exports.deleteRecursively = functions
   .runWith({ 
-    timeoutSeconds: 540, memory: "2GB" 
+    timeoutSeconds: 540, memory: "2GB"
   })
   .https.onCall(async (data, context) => {
     // Only allow admin users to execute this function.

@@ -29,8 +29,7 @@
       style="
         display: {idxOfFocusedSlide === i ? '' : 'none'};
         width: {canvasWidth}px; height: {canvasHeight}px; 
-        position: relative; 
-        border: 1px solid purple;
+        position: relative;
       "
     >
       <!-- isOffline is a quickfix for functionalities that don't work such as uploading backgrounds -->

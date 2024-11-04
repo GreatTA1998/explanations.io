@@ -60,26 +60,18 @@
   
   <!-- explicitly set `passive: false`, Rich Harris describes the problem 
    very well: https://github.com/sveltejs/svelte/issues/2068 -->
+
   <canvas bind:this={canvas}
     on:touchstart|nonpassive={touchStart}
     on:touchmove|nonpassive={touchMove}
     on:touchend|nonpassive={touchEnd}
-    style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${canvasWidth}px; height: ${canvasHeight}px`}
+    class="front-canvas"
   >
   </canvas>
 
-  <!-- rgb(46, 49, 49) -->
   <canvas bind:this={bgCanvas} 
-    style={`
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      display: block;
-      background-color: hsl(0,0%,0%, 0.80); width: ${canvasWidth}px; height: ${canvasHeight}px
-    `}
+    class="background-canvas"
   >
-
   </canvas>
 </div>
 
@@ -203,49 +195,41 @@
   }
   // END OF STOPWATCH RELATED CODE
 
-
-  // REACTIVE STATEMENTS HERE
-  
-  // note, it DOES make a difference to separate this into a separate function,
-  // so when variables like `currentTime` gets updated during a recording session,
-  // this reactive statement does not execute 10 times per second (which is insane)
-
-  // A ‘direct dependency’ is a variable that is referenced inside the reactive declaration itself. References to variables inside functions that a reactive declaration calls are not considered dependencies.
-  // https://sveltesociety.dev/recipes/svelte-language-fundamentals/reactivity
-  $: if (strokesArray) {
-    updateUI()
-  }
-  
   // resize whenever `ctx` changes (note we hide other variables like `strokesArray` inside the function, so them changing won't trigger this block)
-  $: if (ctx && canvasWidth && canvasHeight) {
-    resizeFrontCtx()
+  $: if (canvas && bgCanvas && canvasWidth && canvasHeight) {
+    renderBlackboardFromScratch()
   }
 
-  // detect backgroundImageDownloadURL
+  // syncCanvasToState() will only execute after `renderBlackboardFromScratch()` because `ctx` is initialized in `renderBlackboardFromScratch()`
+  $: if (strokesArray && ctx) {
+    updateCanvasUI()
+  }
+
+  function renderBlackboardFromScratch () {
+    setCanvasDimensions({ w: canvasWidth, h: canvasHeight }) // this will destroy existing drawings
+
+    ctx = canvas.getContext('2d') // according to browser specs, if the 2d ctx was already created, .getContext() will return the existing one
+    bgCtx = bgCanvas.getContext('2d')
+
+    localStrokesArray = []
+    if (strokesArray) {
+      drawStrokesGeneral({ array: strokesArray, startIdx: 0, endIdx: strokesArray.length - 1 })
+    }
+  }
+
   $: if (bgCtx) {
-      bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
-      renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+    updateBackground(backgroundImageDownloadURL)
   }
 
   $: normalizedLineWidth = $currentTool.lineWidth * (canvasWidth / $assumedCanvasWidth)
 
-
-  onMount(() => {
-    ctx = canvas.getContext('2d')
-    bgCtx = bgCanvas.getContext('2d')
-  })
-
-  function resizeFrontCtx () {
-    canvas.width = canvasWidth
-    canvas.height = canvasHeight
-    bgCanvas.width = canvasWidth
-    bgCanvas.height = canvasHeight
-    
-    if (strokesArray) {
-      for (const stroke of strokesArray) {
-        drawStroke(stroke, null, ctx, canvas, canvasWidth)
-      }
-    }
+  // NOTE: setting canvas.width will change  CSS width as well. But the opposite isn't true.
+  // read more in the specs
+  function setCanvasDimensions ({ w, h }) {
+    canvas.width = w
+    canvas.height = h
+    bgCanvas.width = w
+    bgCanvas.height = h
   }
 
   function clickHiddenInput () {
@@ -255,101 +239,49 @@
   function uploadBackground (e) {
     dispatch('background-upload', { imageFile: e.target.files[0] })
   }
-  /**
-   * Reactive statement that triggers each time `strokesArray` changes
-   * Ensures `strokesArray => UI`, that is whenever the client mutates the `strokesArray` prop, we update <canvas/> accordingly`. 
-   * 
-   * Note we ignore the case where (n == this.localStrokesArray.length)
-   * because it means that user drew on canvas --> emits event --> client changes --> triggers our own watch hook
-   * 
-   * CRITICAL ASSUMPTION: strokesArray can be pushed singularly and deleted in batch, but can never be modified in place. 
-   */
-  function updateUI () {
-    if (!strokesArray || !ctx) {
-      return
-    }
 
+  // detect backgroundImageDownloadURL
+  function updateBackground () {
+    bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
+    renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+  }
+
+  function updateCanvasUI () {
     let m = localStrokesArray.length
     let n = strokesArray.length
 
-    // NOTE: this does not trigger!
-    if (m === n) { 
-
-      // do nothing: this blackboard updated its parent, and the change propagated back to itself
-      if (strokesArray[n-1] && !strokesArray[n-1].isErasing) {
-        undoStrokeIdx = n - 1 // when a new visible stroke is drawn, set it to that index
-      } 
+    if (m === n) { // the stroke's been drawn already i.e this blackboard updated its parent, and the change propagated back to itself
+      if (!strokesArray[n-1]?.isErasing) undoStrokeIdx = n-1
     } 
-    else if (m < n) {
-      if (m === 0) { // blackboard just finished loading i.e. there can be 500 strokes
-        for (const stroke of strokesArray) {
-          drawStroke(stroke, null, ctx, canvas, canvasWidth)
-        }
-        localStrokesArray = [...strokesArray]
 
-        undoStrokeIdx = n - 1 // correct at initialization (TO-DO: video proof of correctness)
-      }
-      else { // normal update
-        for (let i = m; i < n; i++) {
-          const newStroke = strokesArray[i]
-          drawStroke(
-            newStroke, 
-            newStroke.startTime !== newStroke.endTime ? getPointDuration(newStroke) : null, // instantly or smoothly,
-            ctx, 
-            canvas,
-            canvasWidth
-          )
-          localStrokesArray.push(newStroke)
-
-          if (!newStroke.isErasing) { // means it's a eraser stroke
-            undoStrokeIdx = i // when a new visible stroke is drawn, set it to that index
-          } 
-        }
-      }
+    else if (m < n) { // note multiple strokes might have been added, so the difference could be > 1
+      drawStrokesGeneral({ 
+        array: strokesArray,
+        startIdx: m, 
+        endIdx: n-1 
+      })
     }
+
     else { 
-      debouncedWipeThenDraw()
+      renderBlackboardFromScratch()
     }
   }
 
-  // [WHY USE DEBOUNCE]: if number of strokes > 500, then deletion happens in multiple batches that can 
-  // resolve very close to each other, and the resizeBlackboard()
-  // which draws hundreds of strokes instantly overfloods the event loop 
-  // and causes strange remnant strokes to linger on the board
-  function debouncedWipeThenDraw () {
-    console.log("debounced board reset");
-    if (debouncerTimeout) {
-      clearTimeout(debouncerTimeout)
-    }
-    debouncerTimeout = setTimeout(
-      wipeThenDraw, 
-      1000
-    )
-  }
-
-  function wipeThenDraw () {
-    // reset component
-    wipeUI() 
-    localStrokesArray = [];
-    prevPoint = { 
-      x: -1, 
-      y: -1 
-    };
-
-    // draw to current progress
-    for (const stroke of strokesArray) {
-      drawStroke(stroke, null, ctx, canvas, canvasWidth)
+  function drawStrokesGeneral ({ array, startIdx, endIdx }) {
+    for (let i = startIdx; i <= endIdx; i++) {
+      drawStroke(array[i], null, ctx, canvas, canvasWidth)
+      localStrokesArray.push(array[i])
+      if (!array[i].isErasing) undoStrokeIdx = i
     }
   }
 
   function touchStart (e) {
-    if (e.touches.length > 1) {
-      // console.log("error: only 1 finger allowed");
-      return;
+    if (e.touches.length > 1) { // only 1 finger allowed
+      return
     }
     const isApplePencil = e.touches[0].touchType === "stylus"
     if ($onlyAllowApplePencil && !isApplePencil)   {
-      console.log('error: cannot use finger during Apple Pencil mode');
+      console.log('error: cannot use finger during Apple Pencil mode')
       return;
     }
     handleContactWithBlackboard(e, { isInitialContact: true })
@@ -360,15 +292,15 @@
       return; // concurrent touches
     }
     if (e.touches.length > 1) {
-      console.log("touchmove ignored: only 1 finger allowed");
-      return;
+      console.log("touchmove ignored: only 1 finger allowed")
+      return
     }
     const isApplePencil = e.touches[0].touchType === "stylus"
     if ($onlyAllowApplePencil && !isApplePencil)   {
-      console.log('error: cannot use finger during Apple Pencil mode');
-      return;
+      console.log('error: cannot use finger during Apple Pencil mode')
+      return
     }
-    handleContactWithBlackboard(e, { isInitialContact: false });
+    handleContactWithBlackboard(e, { isInitialContact: false })
   }
 
   function touchEnd (e) {
@@ -387,7 +319,7 @@
       return;
     }
     handleEndOfStroke(currentStroke)
-    // this.currentStroke = { points: [] }; // this line might not be necessary, it's an attempt to fix stray strokes
+
     isInMiddleOfStroke = false
   }
 
@@ -465,23 +397,10 @@
     }
   }
 
-  function getPointDuration (stroke) {
-    const strokePeriod = (stroke.endTime - stroke.startTime);
-    return strokePeriod / stroke.points.length;
-  }
-
-  function wipeUI () {
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-  }
-
   function dragstart_handler (e, boardID, originalIndex) {
     whatIsBeingDragged.set('board')
     e.dataTransfer.setData("text/plain", `boardID:${boardID}`)
     e.dataTransfer.dropEffect = 'move'
-  }
-
-  function showHintForDragAndDrop () {
-
   }
 
   // assumes undoStroke
@@ -517,3 +436,19 @@
     }
   }
 </script>
+
+<style>
+  .front-canvas {
+    z-index: 1;
+    position: absolute;
+  }
+
+  .background-canvas {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background-color: hsl(0,0%,0%, 0.80); 
+  }
+</style>

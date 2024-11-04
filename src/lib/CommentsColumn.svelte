@@ -62,7 +62,6 @@
     const db = getFirestore()
     const batch = writeBatch(db)
 
-
     const newCommentID = getRandomID()
     const commentRef = doc(db, `${videoDoc.path}/comments/${newCommentID}`)
     batch.set(commentRef, {  

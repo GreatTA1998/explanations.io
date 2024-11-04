@@ -5,6 +5,7 @@
   import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
   import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '/src/store.js'
   import { updateDoc } from 'firebase/firestore'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
 
   export let classID
   export let boardID
@@ -20,11 +21,9 @@
     debouncedVersion({ detail }, id)
   }
 
-  async function updateBoardDescription ({ detail }, id) {
-    const boardRef = doc(getFirestore(), boardsDbPath + id)
-
-    await updateDoc(boardRef, {
-      description: detail
+  async function updateBoardDescription (e, id) {    
+    updateFirestoreDoc(boardsDbPath + id, {
+      description: e.detail
     })
   }
 
@@ -68,9 +67,13 @@
       </div>
 
       {#if boardDoc.audioDownloadURL}
+        <!-- 
+          QUICKFIX: scale factor of 0.8 to take into account of the slides so you can see the whole video with the slider
+          TO-DO: add a scroll snap to the bottom of the video 
+        -->
         <UnifiedDoodleVideo
           video={boardDoc}
-          videoWidth={$maxAvailableWidth}
+          videoWidth={$maxAvailableWidth * 0.8}
           showEditDeleteButtons={true}
         />
       {:else if boardDoc.isMultiboard}

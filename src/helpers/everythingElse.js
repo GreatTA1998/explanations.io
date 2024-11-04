@@ -21,8 +21,8 @@ export function  toggleClassDetailsDrawerWidth () {
 }
 
 export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, classID, questionID, commentString, linkToQuestion }) {
-  // board creator
   if (userDoc.uid !== boardDoc.creatorUID) {
+    // email the video creator
     const creatorDoc = await getFirestoreDoc(`/users/${boardDoc.creatorUID}`)
     if (creatorDoc && creatorDoc.email) {
       console.log("sending email to creator =,", creatorDoc.email)
@@ -33,8 +33,14 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
         <a href="${linkToQuestion}">Link here</a>`
       })
     }
-  }
 
+    // also add the user to the list of participants
+    updateFirestoreDoc(`classes/${classID}/blackboards/` + boardDoc.id, {
+      commentParticipantUIDs: arrayUnion(userDoc.uid)
+    })
+  }
+  
+  // email the participants
   if (boardDoc.commentParticipantUIDs) {
     for (const uid of boardDoc.commentParticipantUIDs) {
       const participantDoc = await getFirestoreDoc(`/users/${uid}`)
@@ -49,10 +55,6 @@ export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, c
       })
     }
   }
-
-  updateFirestoreDoc(`classes/${classID}/blackboards/` + boardDoc.id, {
-    commentParticipantUIDs: arrayUnion(userDoc.uid)
-  })
 }
 
 export async function handleNewQuestionNotifications ({ classID, questionID, userDoc, questionTitleInput, linkToQuestion }) {

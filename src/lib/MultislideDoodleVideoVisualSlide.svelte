@@ -72,8 +72,10 @@
     }
   }
 
-  $: if (hasAudioSliderJumped) {
-    syncVisualsToCurrentTime(currentTime)
+  $: if (hasAudioSliderJumped) { // meaning `currentTime` has changed
+    if (recursiveSyncer) clearTimeout(recursiveSyncer)
+    syncRecursively()
+
     dispatch('slider-jump-sync')
   }
 

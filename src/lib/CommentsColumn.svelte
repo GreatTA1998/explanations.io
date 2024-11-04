@@ -59,10 +59,12 @@
     if (!newInputComment) return
 
     const promises = []
-
     const db = getFirestore()
     const batch = writeBatch(db)
-    const commentRef = doc(db, `${videoDoc.path}/comments/${getRandomID()}`)
+
+
+    const newCommentID = getRandomID()
+    const commentRef = doc(db, `${videoDoc.path}/comments/${newCommentID}`)
     batch.set(commentRef, {  
       content: newInputComment,
       isoStringOfDate: new Date().toISOString(),
@@ -76,13 +78,15 @@
     promises.push(
       batch.commit()
     )
+
+    const { params } = $page
     handleNewCommentEmailNotifications({ 
       boardDoc: videoDoc, 
       userDoc: $user, 
-      classID: $page.params.class, // don't know why there is no ID in this case...
-      questionID: $page.params.questionID,
+      classID: params.class, // don't know why there is no ID in this case...
+      questionID: params.questionID,
       commentString: newInputComment,
-      linkToQuestion: `${$page.url.origin}/${classID}/question/${newQuestionID}`
+      linkToQuestion: `${$page.url.origin}/${params.class}/question/${params.questionID}`
     })
     newInputComment = '' 
   }

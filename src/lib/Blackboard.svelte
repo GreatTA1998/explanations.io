@@ -33,7 +33,7 @@
           <List>
             {#if !isOfflineDemo}
               {#if backgroundImageDownloadURL}
-                <Item on:click={resetBackgroundImage}>
+                <Item on:click={() => dispatch('background-reset')}>
                   Remove background
                 </Item>
               {:else}
@@ -43,12 +43,12 @@
               {/if}
             {/if}
 
-            <Item on:SMUI:action={wipeBoard}>
+            <Item on:SMUI:action={() => dispatch('board-wipe')}>
               Wipe board
             </Item>    
 
             {#if !isOfflineDemo}
-              <Item on:SMUI:action={deleteBoard}>
+              <Item on:SMUI:action={() =>  dispatch('board-delete')}>
                 Delete board 
               </Item>
             {/if}
@@ -217,8 +217,8 @@
   }
   
   // resize whenever `ctx` changes (note we hide other variables like `strokesArray` inside the function, so them changing won't trigger this block)
-  $: if (ctx) {
-    resizeFrontCtx(ctx)
+  $: if (ctx && canvasWidth && canvasHeight) {
+    resizeFrontCtx()
   }
 
   // detect backgroundImageDownloadURL
@@ -240,22 +240,10 @@
     canvas.height = canvasHeight
     bgCanvas.width = canvasWidth
     bgCanvas.height = canvasHeight
+    
     if (strokesArray) {
       for (const stroke of strokesArray) {
         drawStroke(stroke, null, ctx, canvas, canvasWidth)
-      }
-    }
-  }
-
-  function onBackOrForward () {
-    if (recordState === 'mid_record') {
-      if (confirm('This will interrupt your current recording, are you sure?')) {
-
-      }
-      else {
-        // luckily, the browser won't go back-and-forth it actually knows to wait for the state to resolve 
-        // and jus tstay in place
-        history.pushState(null, document.title, location.href);
       }
     }
   }
@@ -267,20 +255,6 @@
   function uploadBackground (e) {
     dispatch('background-upload', { imageFile: e.target.files[0] })
   }
-
-  function resetBackgroundImage () {
-    dispatch('background-reset')
-  }
-
-  function wipeBoard () {
-    dispatch('board-wipe')
-  }
-
-  function deleteBoard () {
-    dispatch('board-delete')
-  }
-
-
   /**
    * Reactive statement that triggers each time `strokesArray` changes
    * Ensures `strokesArray => UI`, that is whenever the client mutates the `strokesArray` prop, we update <canvas/> accordingly`. 

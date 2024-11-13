@@ -129,7 +129,7 @@
     <!-- Blackboards section -->
     <div style="display: flex; flex-direction: column; gap: 40px;">
       {#if questionDoc.blackboardIDs}
-        {#each questionDoc.blackboardIDs as boardID}
+        {#each questionDoc.blackboardIDs as boardID (boardID)}
           <GeneralizedBlackboardDisplay 
             {boardID}
             {classID}

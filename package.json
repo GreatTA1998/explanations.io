@@ -30,7 +30,7 @@
     "@smui/tab": "^7.0.0-beta.0",
     "@smui/tab-bar": "^7.0.0-beta.0",
     "@smui/textfield": "^6.0.0-beta.4",
-    "@smui/top-app-bar": "^7.0.0-beta.0",
+    "@smui/top-app-bar": "^7.0.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-vercel": "next",
     "@sveltejs/kit": "next",

@@ -1,5 +1,19 @@
-<div class="drawer-container">
-  <!-- class="mdc-elevation--z{5}" -->
+<TopNavbar>
+  <div style="
+    display: flex; 
+    height: calc(100vh - var(--navbar-height))
+  ">
+    {#key classID}
+      <TheLeftDrawer {classID} {roomID}/>
+
+      <slot>
+
+      </slot>
+    {/key}
+  </div>
+</TopNavbar>
+
+<!-- <div class="drawer-container">
   <Drawer style="background: rgb(251, 251, 250); overflow-y: auto; height: 100%; width: {$drawerWidth}px">
     <Content>
       <TheLeftDrawer 
@@ -16,7 +30,7 @@
       </slot>
     </main>
   </AppContent>
-</div>
+</div> -->
 
 <script>
   import TheLeftDrawer from '$lib/TheLeftDrawer.svelte'
@@ -25,6 +39,7 @@
   import { user, drawerWidth, maxAvailableWidth, maxAvailableHeight } from '/src/store.js'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { onMount } from 'svelte'
+  import TopNavbar from '$lib/TopNavbar.svelte'
 
   export let data;
   let { classID, roomID } = data;

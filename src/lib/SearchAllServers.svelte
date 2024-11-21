@@ -1,40 +1,6 @@
 <div style="width: 100%; padding: 0px 6px; max-width: 1000px; margin: auto; height: fit-content;">
   <div style="display: flex; justify-content: center; width: 100%;">
-    <div class="input-container" style="position: relative; width: 100%;">
-      <span 
-        bind:clientWidth={searchIconWidth}
-        class="material-icons" 
-        style="position: absolute;
-        top: 18px;
-        left: 18px;
-        font-size: 48px;
-        color: #5D0068;
-        "
-      >
-        search
-      </span>
-
-      <input 
-        bind:this={SearchBar}
-        name="search" 
-        maxlength="100" 
-        placeholder="Search all servers" 
-        autocomplete="off" 
-        type="text" 
-        bind:value={searchVal}
-        style="
-          padding-left: 40px;
-          width: 100%; 
-          height: 80px; 
-          font-size: 2.2em; 
-          box-sizing: border-box;
-          border-radius: 8px; 
-          padding: 12px;
-          padding-left: 74px;
-        "
-        on:input={(e) => searchWithinClassNames(e)}
-      >
-    </div>
+    <SearchBar {searchVal} on:input={e => searchVal = e.target.value}/>
   </div>
 
   <div style="margin-bottom: 12px;"></div>
@@ -138,16 +104,13 @@
   import SimpleServerPreviewCardBorderless from '$lib/SimplePreviewCardBorderless.svelte'
   import CompactServerCard from '$lib/CompactServerCard.svelte'
   import PopupNewServer from '$lib/PopupNewServer.svelte'
-  import MySelect from '$lib/MySelect.svelte'
+  import SearchBar from '$lib/SearchBar.svelte'
 
-  let SearchBar
   let categories = ['Competition Math', 'Math', 'Physics', 'All Servers']  // ['Physics', 'All Subjects', 'Computer Science', 'Economics', 'Life Sciences', 'Math', 'Mechanical Engineering', 'Physics']
   let filterTags = ['Unique Subscribers'] // 'Teachers', 'Videos', 'Prepaid learners', 
   // let categoriesCount = [17, 2, 1, 2, 4, 1, 2]
   let currentlySelectedSubject = 'Competition Math'
 
-  let searchIconWidth 
-  
   let allServers = null
   let searchMatchedServers = null
 
@@ -159,14 +122,15 @@
 
   $: finalFilteredServers = sortSubjectServersByTag(currentlySelectedTag, subjectServers)
   $: subjectServers = filterServersBySubject(currentlySelectedSubject, searchMatchedServers)
-
   onMount(async () => {
     allServers = await getFirestoreCollection('/classes')
     searchWithinClassNames()
     console.log('allServers =', allServers)
-    SearchBar.focus()
-    // runScript()
   })
+
+  $: if (allServers) {
+    searchWithinClassNames(searchVal)
+  }
 
   function searchWithinClassNames () {
     const uniqueSet = new Set()
@@ -279,7 +243,6 @@
         })
         return copy4
       default:
-        console.log('default')
         return subjectServers
     }
   }

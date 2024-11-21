@@ -90,7 +90,7 @@
 </script>
 
 {#if questionDoc.id}
-  <LeftDrawerToggleButton/>
+  <!-- <LeftDrawerToggleButton/> -->
 
   <div style="padding: 16px;">
     <Textfield 

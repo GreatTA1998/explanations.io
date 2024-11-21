@@ -16,7 +16,9 @@
 >
   <!-- MINI TOP APP BAR -->
   <!-- class="mdc-elevation--z{4}" -->
-  <div style="padding: 4px; padding-bottom: 6px;">
+
+
+  <!-- <div style="padding: 4px; padding-bottom: 6px;">
     <div style="display: flex; align-items: center; width: 100%;">
       <img 
         on:click={handleLogoClick}
@@ -36,10 +38,10 @@
         </div>
       {/if}
     </div>
-  </div>
+  </div> -->
 
   <!-- REST OF DRAWER CONTENT -->
-  <List style="padding: 0">
+  <List style="padding: 0;">
     <div style="width: 100%; border-top: 1px solid lightgrey;"></div>
     
     <div style="margin-top: 16px;"></div>

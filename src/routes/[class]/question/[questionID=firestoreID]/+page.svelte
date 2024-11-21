@@ -117,11 +117,13 @@
     </div>
 
     {#if questionDoc.attachmentsDownloadURLs} 
-      {#each questionDoc.attachmentsDownloadURLs as attachmentURL, i}
-        <a href={attachmentURL} target="_blank">
-          {questionDoc.attachmentsNames[i]}
-        </a>
-      {/each}
+      <div style="display: flex; column-gap: 8px">
+        {#each questionDoc.attachmentsDownloadURLs as attachmentURL, i}
+          <a href={attachmentURL} target="_blank">
+            {questionDoc.attachmentsNames[i]}
+          </a>
+        {/each}
+      </div>
     {/if}
 
     <div style="width: {$maxAvailableWidth}px; border-bottom: 2px dashed black; margin-top: 16px; margin-bottom: 16px;"></div>

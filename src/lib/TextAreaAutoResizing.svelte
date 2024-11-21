@@ -14,6 +14,11 @@
     width: 100%;
    --nonFocusedPlaceholderOpacity: {nonFocusedPlaceholderOpacity};
    --fontSizeIncludeUnits: {fontSizeIncludeUnits};
+   border: 0px solid lightgrey;
+   border-radius: 8px;
+   padding: 0px;
+   background-color: {backgroundColor};
+   color: {color};
   "
   class:reset-default-styling={resetDefaultStyling}
 />
@@ -26,9 +31,11 @@
   export let readonly = false
   export let nonFocusedPlaceholderOpacity = 0.6
   export let numberOfInitialRowsIfEmpty = 1
-  export let fontSizeIncludeUnits = '1.4rem'
+  export let fontSizeIncludeUnits = '1.3rem'
   export let resetDefaultStyling = false
   export let willTriggerFocus = false
+  export let backgroundColor = 'transparent'
+  export let color = 'black'
 
   $: if (willTriggerFocus) {
     element.focus()

@@ -1,14 +1,14 @@
 <div>
   {#if showSlideChanger}
-    <div style="display: flex; margin-bottom: 12px;">
+    <div style="display: flex; margin-bottom: 4px; align-items: center; width: {canvasWidth}px;">
       <MultislideSlideChanger
         slideIDs={boardDoc.slideIDs}
         {idxOfFocusedSlide}
         on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
       />
 
-      <div style="margin-left: 20px">
-
+      <div style="margin-left: auto; margin-right: 8px; font-size: 1.2rem; font-weight: 500;">
+        {boardDoc.description}
       </div>
     </div>
   {/if}

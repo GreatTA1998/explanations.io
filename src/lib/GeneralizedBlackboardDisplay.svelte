@@ -57,14 +57,14 @@
 <div>
   <RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
     {#if boardDoc}
-      <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
+      <!-- <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
         <TextAreaAutoResizing 
           value={boardDoc.description || ''} 
           on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
           placeholder="Board title / description"
           readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
         />
-      </div>
+      </div> -->
 
       {#if boardDoc.audioDownloadURL}
         <!-- 

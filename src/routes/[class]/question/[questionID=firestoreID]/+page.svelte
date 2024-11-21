@@ -92,29 +92,31 @@
 {#if questionDoc.id}
   <!-- <LeftDrawerToggleButton/> -->
 
-  <div style="padding: 16px;">
-    <Textfield 
+  <div style="padding: 16px; border: 2px solid blue; overflow-y: auto;">
+    <!-- <Textfield 
       disabled={$user.uid !== questionDoc.askerUID}
       value={questionDoc.title} on:input={(e) => updateQuestionTitle(e)}
       class="room-title question" 
       style={`width: ${$maxAvailableWidth}px;`}
     >
-      <HelperText slot="helper" persistent>
-        {#if questionDoc.timestamp}
-          Question asked by {questionDoc.askerName} on {displayMonthDayYYYY(questionDoc.timestamp)}.
-          There are {questionDoc.blackboardIDs.length} blackboards.
-        {/if}
-      </HelperText>
-    </Textfield>
+    </Textfield> -->
 
-    <div style="width: {$maxAvailableWidth}px; margin-top: 14px; margin-bottom: 0px">
-      <TextAreaAutoResizing 
-        value={questionDoc.description} 
-        on:input={(e) => debouncedUpdateQuestionDescription(e)}
-        placeholder=""
-        readonly={$user.uid !== questionDoc.askerUID}
-      />
+    <div class="room-title question" style:width={`${$maxAvailableWidth}px`}>
+      {questionDoc.title}
     </div>
+
+    {#if questionDoc.description}
+      <div style="width: {$maxAvailableWidth}px; margin-top: 14px; margin-bottom: 0px">
+        <TextAreaAutoResizing 
+          value={questionDoc.description} 
+          on:input={(e) => debouncedUpdateQuestionDescription(e)}
+          placeholder=""
+          readonly={$user.uid !== questionDoc.askerUID}
+        />
+      </div>
+    {/if}
+
+    <div style="margin-top: 6px;"></div>
 
     {#if questionDoc.attachmentsDownloadURLs} 
       <div style="display: flex; column-gap: 8px">
@@ -122,11 +124,21 @@
           <a href={attachmentURL} target="_blank">
             {questionDoc.attachmentsNames[i]}
           </a>
+          <img src={questionDoc.attachmentsDownloadURLs[i]} style="width: {0.5 *$maxAvailableWidth}px; height: auto;">
         {/each}
       </div>
     {/if}
 
-    <div style="width: {$maxAvailableWidth}px; border-bottom: 2px dashed black; margin-top: 16px; margin-bottom: 16px;"></div>
+    {#if questionDoc.timestamp}
+      <span style="font-size: 0.875rem;">
+        {displayMonthDayYYYY(questionDoc.timestamp)}
+      </span>
+    {/if}
+
+    <div style="margin-top: 48px; margin-bottom: 48px; font-size: 1.6rem; font-weight: 500;">
+      {questionDoc.blackboardIDs.length} responses
+    </div>
+    <!-- <div style="width: {$maxAvailableWidth}px; border-bottom: 2px dashed black; margin-top: 16px; margin-bottom: 16px;"></div> -->
 
     <!-- Blackboards section -->
     <div style="display: flex; flex-direction: column; gap: 40px;">
@@ -168,6 +180,10 @@
   }
   
   :global(.room-title input) {
+    font-size: 2rem;
+  }
+
+  .room-title {
     font-size: 2rem;
   }
 

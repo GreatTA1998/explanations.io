@@ -1,47 +1,6 @@
-<!-- This component re-renders everytime classID changes: https://github.com/sveltejs/svelte/issues/1469#issuecomment-698955660 -->
-<!-- {#if $user.uid}
-  {#key classID}
-    <RenderlessMyDocUpdater 
-      {classID} 
-      {roomID}
-    />
-  {/key}
-{/if} -->
-<RenderlessDailyVideoConference 
-  {roomID}
-  {willJoinVoiceChat}
-  let:activeSpeakerID={activeSpeakerID}
-  let:toggleMic={toggleMic}
-  let:firestoreIDToDailyID={firestoreIDToDailyID}
->
-  <!-- MINI TOP APP BAR -->
-  <!-- class="mdc-elevation--z{4}" -->
-
-
-  <!-- <div style="padding: 4px; padding-bottom: 6px;">
-    <div style="display: flex; align-items: center; width: 100%;">
-      <img 
-        on:click={handleLogoClick}
-        src="/app-logo-no-bg.png" width="52" height="48" style="filter: brightness(80%); margin-left: 4px; margin-right: 6px; margin-top: 4px; cursor: pointer;"
-      >
-
-      {#if classDoc}
-        <div style="flex-grow: 1">
-            <div style="display: flex; align-items: center; width: 100%;">
-              {#key classDoc}
-                <ClassDropdownMenu 
-                  nameOfClass={classDoc.name}
-                  descriptionOfClass={classDoc.description}
-                />
-              {/key}
-            </div>
-        </div>
-      {/if}
-    </div>
-  </div> -->
 
   <!-- REST OF DRAWER CONTENT -->
-  <List style="padding: 0;">
+  <List style="padding: 0; border: 2px solid red; overflow-y: auto;">
     <div style="width: 100%; border-top: 1px solid lightgrey;"></div>
     
     <div style="margin-top: 16px;"></div>
@@ -134,8 +93,6 @@
       </div>
     </div>
   </div> -->
-</RenderlessDailyVideoConference>
-
 
 <script>
   import ClassDropdownMenu from '$lib/ClassDropdownMenu.svelte'

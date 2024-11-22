@@ -1,6 +1,6 @@
 
   <!-- REST OF DRAWER CONTENT -->
-  <List style="padding: 0; border: 2px solid red; overflow-y: auto;">
+  <List style="padding: 0; overflow-y: auto;">
     <div style="width: 100%; border-top: 1px solid lightgrey;"></div>
     
     <div style="margin-top: 16px;"></div>

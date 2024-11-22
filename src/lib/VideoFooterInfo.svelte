@@ -4,6 +4,10 @@
     style="font-size: var(--fs-300); padding: 6px"
   >
     <div style="display: flex; align-items: center;">
+      <slot>
+
+      </slot>
+
       <span class="material-symbols-outlined video-footer-icon">
         hourglass_bottom
       </span>
@@ -21,9 +25,6 @@
       </div>
     </div>
 
-    <slot>
-
-    </slot>
   </div>
 {/if}
 

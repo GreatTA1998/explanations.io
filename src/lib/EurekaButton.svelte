@@ -1,8 +1,12 @@
 {#if $user.uid}
   <div class="paper-shadow my-round-button">
-    <div on:click={eureka(boardDoc)} style="display: flex; align-items: center; cursor: pointer;">
+    <div on:click={eureka(boardDoc)} style="display: flex; align-items: center; cursor: pointer;
+      font-size: 0.8rem;
+    ">
       <span class="material-symbols-outlined" 
-        style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'grey') : 'grey'}; font-size: 2rem; margin-right: 4px;">
+        style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'black') : 'black'}; 
+        font-size: 1.3rem; margin-right: 4px;"
+      >
         lightbulb
       </span>
 
@@ -51,16 +55,16 @@
 
 <style>
   .paper-shadow {
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 1px solid lightgrey;
+    /* box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   }
 
   .my-round-button {
-    margin-left: 24px; 
     display: flex; 
     justify-content: space-around; 
     align-items: center; 
     min-width: 100px; 
-    border-radius: 12px; 
+    border-radius: 24px; 
 
     padding-left: 8px; 
     padding-right: 12px; 

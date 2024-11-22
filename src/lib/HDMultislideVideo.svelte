@@ -1,15 +1,19 @@
 <div>
   {#if showSlideChanger}
-    <div style="display: flex; margin-bottom: 4px; align-items: center; width: {canvasWidth}px;">
+    <div style="display: flex; align-items: center; width: {canvasWidth}px;">  
+      <slot>
+
+      </slot>
+
       <MultislideSlideChanger
         slideIDs={boardDoc.slideIDs}
         {idxOfFocusedSlide}
         on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
       />
 
-      <div style="margin-left: auto; margin-right: 8px; font-size: 1.2rem; font-weight: 500;">
-        {boardDoc.description}
-      </div>
+      <slot name="after">
+
+      </slot>
     </div>
   {/if}
 

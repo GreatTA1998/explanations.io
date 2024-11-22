@@ -31,11 +31,11 @@
   export let readonly = false
   export let nonFocusedPlaceholderOpacity = 0.6
   export let numberOfInitialRowsIfEmpty = 1
-  export let fontSizeIncludeUnits = '1.3rem'
+  export let fontSizeIncludeUnits = '1.1rem'
   export let resetDefaultStyling = false
   export let willTriggerFocus = false
   export let backgroundColor = 'transparent'
-  export let color = 'black'
+  export let color = 'rgb(60, 60, 60)'
 
   $: if (willTriggerFocus) {
     element.focus()

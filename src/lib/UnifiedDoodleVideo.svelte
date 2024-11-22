@@ -15,6 +15,12 @@
     let:canvasHeight={canvasHeight}
     let:isFullscreen={isFullscreen}
   >
+    <div class="above-video-section" style="margin-bottom: 12px; display: flex; flex-direction: column; row-gap: 12px;">
+      <div style="font-size: 1.4rem; font-weight: 400;">
+        {video.description || ''}
+      </div>
+    </div>
+
     {#if video.isMultiboard}
       <HDMultislideVideo
         {canvasWidth}
@@ -26,7 +32,46 @@
         {showEditDeleteButtons}
         showSlideChanger={!willHideSliderForPreview || isFullscreen}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
-      />
+      >
+         {#if !isFullscreen}
+          <div style="margin-left: 0px;">
+            <div style="min-width: 240px; margin-right: 8px;">
+              <CreatorChannelCard on:click={() => goto(`/user/${uid}`)}
+                firstNameAndKeyInfo="Ben Shimabukuro"
+                collegeAndYear="MIT '24"
+                bio="Top 30 US JMO"
+              />
+            </div>
+          </div>
+        {/if}
+
+        <div slot="after" 
+          style="
+            display: flex; 
+            margin-left: auto; 
+            margin-right: 0px; 
+            align-items: center;
+            column-gap: 8px;
+          "
+        >
+  
+          <VideoFooterInfo {video}/>
+
+          <div
+            on:click={toggleFullscreen} 
+            class="my-round-button" 
+            style="margin-right: 0; margin-left: auto; height: 24px;"
+          >
+            <span class="material-symbols-outlined" style="font-size: 20px;">
+              open_in_full
+            </span>
+
+            Full View
+          </div>
+
+          <EurekaButton boardDoc={video}/>
+        </div>
+      </HDMultislideVideo>
     {:else}
       <ReusableDoodleVideo
         autoFetchStrokes={false}
@@ -38,25 +83,6 @@
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
       />
     {/if}
-
-    {#if !isFullscreen}
-      <div style="width: {canvasWidth}px">
-        <VideoFooterInfo {video}>
-          <EurekaButton boardDoc={video}/>
-
-          <div 
-            on:click={toggleFullscreen} 
-            class="my-round-button" 
-            style="margin-right: 0; margin-left: auto;"
-          >
-            <span class="material-symbols-outlined" style="font-size: 20px;">
-              open_in_full
-            </span>
-            Full View
-          </div>
-        </VideoFooterInfo>
-      </div>
-    {/if}
   </FullscreenModule>
 {/if}
 
@@ -66,6 +92,8 @@
   import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
   import FullscreenModule from '$lib/FullscreenModule.svelte'
   import HDMultislideVideo from '$lib/HDMultislideVideo.svelte'
+  import CreatorChannelCard from '$lib/CreatorChannelCard.svelte'
+
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { increment } from 'firebase/firestore'
 
@@ -97,7 +125,7 @@
     min-width: 0px; 
     min-height: 16px; 
     padding: 4px 8px; 
-    border: 1px solid black;
+    border: 1px solid lightgrey;
     color: black;
     cursor: pointer;
 

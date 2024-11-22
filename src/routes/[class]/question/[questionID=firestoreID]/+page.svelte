@@ -92,7 +92,7 @@
 {#if questionDoc.id}
   <!-- <LeftDrawerToggleButton/> -->
 
-  <div style="padding: 16px; border: 2px solid blue; overflow-y: auto;">
+  <div style="padding: 16px; overflow-y: auto;">
     <!-- <Textfield 
       disabled={$user.uid !== questionDoc.askerUID}
       value={questionDoc.title} on:input={(e) => updateQuestionTitle(e)}
@@ -101,42 +101,65 @@
     >
     </Textfield> -->
 
-    <div class="room-title question" style:width={`${$maxAvailableWidth}px`}>
-      {questionDoc.title}
+    <div class="question-container" style="display: flex; flex-direction: column; row-gap: 12px;">
+      <div class="room-title question" style:width={`${$maxAvailableWidth}px`}>
+        {questionDoc.title}
+      </div>
+
+      {#if questionDoc.description}
+        <div style="width: {$maxAvailableWidth}px; margin-top: 14px; margin-bottom: 0px">
+          <TextAreaAutoResizing 
+            value={questionDoc.description} 
+            on:input={(e) => debouncedUpdateQuestionDescription(e)}
+            placeholder=""
+            readonly={$user.uid !== questionDoc.askerUID}
+          />
+        </div>
+      {/if}
+
+      <!-- <div style="margin-top: 6px;"></div> -->
+
+      {#if questionDoc.attachmentsDownloadURLs} 
+        <div style="display: flex; column-gap: 16px">
+          {#each questionDoc.attachmentsDownloadURLs as attachmentURL, i}
+            {#if questionDoc.attachmentsNames[i].includes('.pdf')}
+              <a href={attachmentURL} target="_blank" style="cursor: pointer;">
+                {questionDoc.attachmentsNames[i]}
+              </a>
+            {:else}
+              <a href={attachmentURL} target="_blank" style="cursor: pointer;">
+                <img src={questionDoc.attachmentsDownloadURLs[i]} style="border-radius: 4px; width: {0.5 * 1/questionDoc.attachmentsNames.length * $maxAvailableWidth}px; height: auto;">
+              </a>
+            {/if}
+          {/each}
+        </div>
+      {/if}
     </div>
 
-    {#if questionDoc.description}
-      <div style="width: {$maxAvailableWidth}px; margin-top: 14px; margin-bottom: 0px">
-        <TextAreaAutoResizing 
-          value={questionDoc.description} 
-          on:input={(e) => debouncedUpdateQuestionDescription(e)}
-          placeholder=""
-          readonly={$user.uid !== questionDoc.askerUID}
-        />
+    <div style="display: flex; align-items: center; column-gap: 12px; margin: 24px 0px;">
+      <div style="border-bottom: 1px solid lightgrey; flex-grow: 3;"></div>
+
+      <div class="question-metadata">
+        {questionDoc.blackboardIDs.length} replies
       </div>
-    {/if}
 
-    <div style="margin-top: 6px;"></div>
+      <!-- <div style="border-bottom: 1px solid lightgrey; flex-grow: 1;"></div> -->
 
-    {#if questionDoc.attachmentsDownloadURLs} 
-      <div style="display: flex; column-gap: 8px">
-        {#each questionDoc.attachmentsDownloadURLs as attachmentURL, i}
-          <a href={attachmentURL} target="_blank">
-            {questionDoc.attachmentsNames[i]}
-          </a>
-          <img src={questionDoc.attachmentsDownloadURLs[i]} style="width: {0.5 *$maxAvailableWidth}px; height: auto;">
-        {/each}
-      </div>
-    {/if}
+      <div style="border-bottom: 1px solid lightgrey; flex-grow: 10;"></div>
+      <!-- 
+        <div class="question-metadata">
+          Asked by {questionDoc.askerName}
+          {#if questionDoc.timestamp}
+            <span class="question-metadata">
+              {displayMonthDayYYYY(questionDoc.timestamp)}
+            </span>
+          {/if}      
+        </div>
 
-    {#if questionDoc.timestamp}
-      <span style="font-size: 0.875rem;">
-        {displayMonthDayYYYY(questionDoc.timestamp)}
-      </span>
-    {/if}
+        <div style="border-bottom: 1px solid lightgrey; flex-grow: 1;"></div>
+       -->
 
-    <div style="margin-top: 48px; margin-bottom: 48px; font-size: 1.6rem; font-weight: 500;">
-      {questionDoc.blackboardIDs.length} responses
+
     </div>
     <!-- <div style="width: {$maxAvailableWidth}px; border-bottom: 2px dashed black; margin-top: 16px; margin-bottom: 16px;"></div> -->
 
@@ -165,6 +188,12 @@
 {/if}
 
 <style>
+  .question-metadata {
+    font-size: 0.875rem; 
+    color: rgb(80, 80, 80); 
+    font-weight: 400;
+  }
+
   .new-blackboard-button {
     display: flex; 
     justify-content: center; 
@@ -186,8 +215,4 @@
   .room-title {
     font-size: 2rem;
   }
-
-  /* :global(.question input) {
-    color: red !important;
-  } */
 </style>

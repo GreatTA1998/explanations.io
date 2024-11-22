@@ -69,7 +69,6 @@
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
-  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import ReusableCreatorInfoCard from '$lib/ReusableCreatorInfoCard.svelte'
 
   export let galleryVideos

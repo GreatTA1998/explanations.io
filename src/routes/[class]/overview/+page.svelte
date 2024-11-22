@@ -134,7 +134,6 @@
   import { getFirestoreDoc, getFirestoreQuery, updateFirestoreDoc, firestoreCollection } from '/src/helpers/crud.js'
   import { query, getFirestore, collection, where, onSnapshot, limit, orderBy } from 'firebase/firestore'
   import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
-  import PresentationalBeaverPreview from '$lib/PresentationalBeaverPreview.svelte'
   import PopupConfirmTeacher from '$lib/PopupConfirmTeacher.svelte'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'

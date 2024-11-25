@@ -74,6 +74,10 @@
     cursor: pointer;
   }
 
+  .q-list-item:hover {
+    background: lightgrey;
+  }
+
   .q-title {
     font-size: 1rem;
   }

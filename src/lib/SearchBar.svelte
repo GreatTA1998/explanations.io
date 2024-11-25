@@ -1,3 +1,24 @@
+<script>
+  import { onMount } from "svelte"
+  import { createEventDispatcher } from 'svelte'
+
+  export let searchVal
+
+  let SearchBar
+  let isFocused = false
+  let dispatch = createEventDispatcher()
+
+  $: {
+    setTimeout(() => {
+      dispatch('focus-change', isFocused)
+    }, 100)
+  } 
+
+  onMount(() => {
+    // SearchBar.focus()
+  })
+</script>
+
 <div class="input-container" style="position: relative; width: 100%;">
   <span 
     class="material-icons my-search-icon"
@@ -5,6 +26,7 @@
     search
   </span>
 
+  <!-- on:input on its own doesn't work -->
   <input 
     bind:this={SearchBar}
     name="search" 
@@ -13,22 +35,12 @@
     autocomplete="off" 
     type="text" 
     value={searchVal}
-    on:input
+    on:input={(e) => dispatch('input', e.target.value)}
+    on:focus={() => isFocused = true}  
+    on:blur={() => isFocused = false}    
     class="my-search-bar"
   >
 </div>
-
-<script>
-  import { onMount } from "svelte"
-
-  export let searchVal
-
-  let SearchBar
-
-  onMount(() => {
-    SearchBar.focus()
-  })
-</script>
 
 <style>
   .my-search-icon {

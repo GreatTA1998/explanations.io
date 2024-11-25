@@ -8,6 +8,7 @@ import {
 } from '/src/helpers/crud.js'
 import { arrayUnion } from 'firebase/firestore'
 import { sendEmail } from '/src/helpers/cloudFunctions.js'
+import { goto } from '$app/navigation'
 
 export const drawerExpandedWidth = 240
 
@@ -165,4 +166,16 @@ export function handleVideoUploadEmailNotifications ({ classID, questionDoc, use
     await Promise.all(promises)
     resolve()
   })
+}
+
+export function handleServerRedirect (serverObj) {
+  if (serverObj.recentQuestionID) {
+    goto(`/${serverObj.id}/question/${serverObj.recentQuestionID}`)
+  } 
+  else if (serverObj.featuredRoomID) {
+    goto(`/${serverObj.id}/${serverObj.featuredRoomID}`)
+  }
+  else {
+    goto(`/${serverObj.id}/overview`)
+  }
 }

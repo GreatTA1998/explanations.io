@@ -169,7 +169,8 @@
       
     promises.push(
       updateFirestoreDoc(`classes/${classID}`, {
-        numOfUnresolvedQuestions: increment(1)
+        numOfUnresolvedQuestions: increment(1),
+        recentQuestionID: newQuestionID
       })
     )
 

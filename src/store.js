@@ -49,3 +49,6 @@ export const hasJoinedVoice = writable(false)
 export const whatIsBeingDragged = writable('')
 
 export const whatIsBeingDraggedID = writable('')
+
+export const classServerDoc = writable({})
+export const recentSearchedServerDoc = writable({})

@@ -1,71 +1,75 @@
-<List style="padding: 0; overflow-y: auto; padding-top: 24px;">
+<div class="drawer-container" style="height: 100%; display: flex; flex-direction: column;">
+  <div style="padding: 0; position: relative;  padding-top: 24px;  flex-grow: 1;">
+    <!-- 
+      because it's `absolute`, this div will retain its original height and NOT expand when it overflows 
+     without the need of an explicit height / max-height property 
+    -->
+    <div style="position: absolute; overflow-y: auto; inset: 0;">
+      <QuestionsSection {classID}>
+        <div style="width: 100%; display: flex; margin-top: 24px;">
+          <div on:click={() => goto(`/${classID}/question`)} 
+            class="new-question-button"
+            class:drawer-item-glow={$page.route.id === '/[class]/question'}
+          >
+            <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px; margin-left: 8px;">
+              add
+            </span>
+            <div style="margin-left: 6px; font-size: 14px; font-weight: 400;">
+              New question
+            </div>
+          </div> 
+        </div>
+      </QuestionsSection>
 
-  <QuestionsSection {classID}>
-    <div style="width: 100%; display: flex;">
-      <div on:click={() => goto(`/${classID}/question`)} 
-        class="new-question-button"
-        class:drawer-item-glow={$page.routeId === '[class]/question'}
-      >
-        <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px; margin-left: 8px;">
+      <div style="margin-top: 36px;"></div>
+
+      <div style="display: flex; align-items: center;">
+        <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 16px;">
+          Library Archive
+        </div>
+        <span on:click={createNewRoom} class="material-icons new-room-button">
           add
         </span>
-        <div style="margin-left: 6px; font-size: 14px; font-weight: 400;">
-          New question
-        </div>
-      </div> 
-    </div>
-  </QuestionsSection>
+      </div>
 
-  <div style="margin-top: 36px;"></div>
+      {#each rootRooms as room, i (room.id)}
+        {#if !room.parentRoomID}
+          <LeftDrawerRecursiveRoom 
+            {room} 
+            {roomID}
+            {classID}
+            orderWithinLevel={i}
+            roomsInThisLevel={rootRooms}
+            parentRoomIDs={['']}
+          />
+        {/if}
+      {/each}
 
-  <div style="display: flex; align-items: center;">
-    <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 16px;">
-      Library Archive
+      <div style="padding: 6px;">
+        <LeftDrawerRecursiveRoomReorderDropzone
+          orderWithinLevel={rootRooms.length}
+          parentRoomIDs={['']}
+          roomsInThisLevel={rootRooms}
+          {classID}
+        />
+      </div>
     </div>
-    <span on:click={createNewRoom} class="material-icons new-room-button">
-      add
-    </span>
   </div>
 
-  <!-- each root rooms -->
-  {#each rootRooms as room, i (room.id)}
-    {#if !room.parentRoomID}
-      <LeftDrawerRecursiveRoom 
-        {room} 
-        {roomID}
-        {classID}
-        orderWithinLevel={i}
-        roomsInThisLevel={rootRooms}
-        parentRoomIDs={['']}
-      />
-    {/if}
-  {/each}
+  <div on:click={() => goto(`/${classID}/overview`)} 
+    class:drawer-item-glow={$page.route.id === '/[class]/overview'}
+    class="pinned-bottom-item"
 
-  <div style="padding: 6px;">
-    <LeftDrawerRecursiveRoomReorderDropzone
-      orderWithinLevel={rootRooms.length}
-      parentRoomIDs={['']}
-      roomsInThisLevel={rootRooms}
-      {classID}
-    />
-  </div>
-
-  <!-- DANGER: absolute positioning will hide the bottom element, you need to shrink the content area for the questions and library archive items  -->
-  <div 
-    class:drawer-item-glow={$page.routeId === '[class]/overview'}
-    on:click={() => goto(`/${classID}/overview`)} 
-    class="action-item"
-    style="position: absolute; bottom: 0px; top: auto; display: flex; align-items: center; padding: 4px 8px;"
   >
     <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; margin-left: 8px; opacity: 0.9">
       cottage
     </span>
 
-    <div style="margin-left: 12px; font-size: 1rem;">
+    <div style="font-size: 1rem;">
       Server Overview
     </div>
   </div>
-</List>
+</div>
 
 <script>
   import QuestionsSection from '$lib/QuestionsSection.svelte'
@@ -130,7 +134,7 @@
 
   async function updateClassMetadata () {
     // keep track of number of members regardless of where they are
-    let copyOfMemberUIDs = [...(classDoc.memberUIDs || [])]
+    let copyOfMemberUIDs = [...(classDoc?.memberUIDs || [])]
     if ($user.uid) {
       copyOfMemberUIDs.push($user.uid)
     }
@@ -220,14 +224,11 @@
     padding: 4px 8px;
   }
 
-  .action-item {
-    border-radius: 4px;
-    margin: 6px;
+  .pinned-bottom-item {
+    flex-basis: 36px; 
     cursor: pointer;
-  }
-
-  .action-item:hover {
-    background: lightgrey;
+    margin-top: auto; display: flex; align-items: center; padding: 8px 8px; column-gap: 12px;
+    border-top: 1px solid lightgrey;
   }
 
   .new-room-button {

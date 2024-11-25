@@ -42,7 +42,6 @@
 
   .left-drawer {
     grid-area: sidebar;
-    overflow-y: auto;
   }
 
   .main-content {

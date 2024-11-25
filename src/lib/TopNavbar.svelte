@@ -1,13 +1,9 @@
 <div class="flexy">
 	<div class="top-app-bar-container flexor">
 		<TopAppBar bind:this={topAppBar} 
-			style="
-				border-bottom: 1px solid lightgrey;
-				box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-			"
+			style="border-bottom: 1px solid lightgrey;"
 		>
-			<!-- 4% padding matches 92% container width -->
-			<Row style="height: var(--navbar-height); background-color: var(--bg-off-white); padding-left: 4%; padding-right: 4%;">
+			<Row style="height: var(--navbar-height); background-color: var(--bg-off-white); padding-left: 2%; padding-right: 2%;">
 				<div style="padding: 6px 12px 8px 0px; box-sizing: border-box;">
 					<img 
 						on:click={() => goto('/')}
@@ -29,7 +25,6 @@
 						{/each}
 					</div>
 				</slot>
-
 
 				<Section align="end" toolbar style="padding-right: 0;">
 						<SearchBar searchVal={''}/>

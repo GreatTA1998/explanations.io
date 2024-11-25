@@ -140,7 +140,7 @@
       <div style="border-bottom: 1px solid lightgrey; flex-grow: 3;"></div>
 
       <div class="question-metadata">
-        {questionDoc.blackboardIDs.length} replies
+        {questionDoc.blackboardIDs?.length} replies
       </div>
 
       <!-- <div style="border-bottom: 1px solid lightgrey; flex-grow: 1;"></div> -->

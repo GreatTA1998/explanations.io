@@ -197,22 +197,18 @@
 <script>
   import '$lib/_FourColor.scss'
   import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '/src/store.js'
-  import { portal, lazyCallable } from '/src/helpers/actions.js'
+  import { lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
-  import { sendTextMessage, sendEmail } from '/src/helpers/cloudFunctions.js'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
   import Blackboard from '$lib/Blackboard.svelte'
   import { onMount, tick, onDestroy } from 'svelte'
-  import Button, { Icon } from '@smui/button'
-  import { goto } from '$app/navigation';
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
   import LinearProgress from '@smui/linear-progress'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import { mixpanelLibrary } from '/src/mixpanel.js'
@@ -231,12 +227,7 @@
     name: '', 
     blackboards: null
   }
-  let incrementKeyToDestroyComponent = 1
-  let isSubscribePopupOpen = false
-  let creatorDoc
 
-  let isMoveVideoPopupOpen = false
-  let isShowingNanoQuestionPopup = false
   let isSignInPopupOpen = false
 
   $: membersDbPath = `classes/${classID}/members/`
@@ -244,7 +235,6 @@
   $: roomsDbPath = `classes/${classID}/rooms/`
   $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
   $: roomID, createRoomListener() // Yes, reactive statements DO trigger on initial assignment
-
   
   $: if (roomID && $user.uid) {
     const userRef = doc(getFirestore(), `users/${$user.uid}`)
@@ -253,14 +243,9 @@
     })
   }
 
-
   onDestroy(() => {
     unsubRoomListener()
   })
-
-  function handleConfirmSubscription (param) {
-    alert('Coming soon!')
-  }
 
   function createAndCopyShareLink (classID, blackboardID) {
     // videoID is defined as classID:blackboardID
@@ -299,37 +284,6 @@
         })
       })
     }
-  }
-
-  async function shopifyVideo (boardDoc) {
-    // PART 1: all the code is for `maxShopGalleryOrder`
-    let tutorDoc 
-    const db = getFirestore()
-    const membersRef = collection(db, membersDbPath)
-    const q = query(membersRef, where('uid', '==', $user.uid)); 
-    const querySnapshot = await getDocs(q) 
-    if (querySnapshot.empty) {
-      alert('Cannot shopify video as non-teacher')
-      return
-    }
-    querySnapshot.forEach((doc) => {
-      tutorDoc = { id: doc.id, path: doc.path, ...doc.data() }
-    })
-
-    const initialNumericalDifference = 3
-    const newVal = (tutorDoc.maxShopGalleryOrder || 3) + initialNumericalDifference
-    updateFirestoreDoc(boardDoc.path, {
-      shopGalleryOrder: newVal
-    })
-    updateFirestoreDoc(tutorDoc.path, {
-      maxShopGalleryOrder: newVal
-    })
-  }
-
-  async function unshopifyVideo (boardDoc) {
-    await updateFirestoreDoc(boardDoc.path, {
-      shopGalleryOrder: deleteField()
-    })
   }
 
   async function createRoomListener () {

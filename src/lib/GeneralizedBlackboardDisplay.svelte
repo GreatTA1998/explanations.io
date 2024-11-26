@@ -3,7 +3,7 @@
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import UnifiedDoodleVideo from '$lib/UnifiedDoodleVideo.svelte'
   import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
-  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '/src/store.js'
+  import { maxAvailableWidth, maxAvailableHeight } from '/src/store.js'
   import { updateDoc } from 'firebase/firestore'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
 

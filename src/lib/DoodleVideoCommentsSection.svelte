@@ -62,7 +62,7 @@
 <script>
 import '$lib/_FourColor.scss'
 import Button, { Icon } from '@smui/button'
-import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs } from '../store.js'
+import { maxAvailableWidth } from '../store.js'
 import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
 import RenderlessFetchComments from '$lib/RenderlessFetchComments.svelte'
 import DoodleVideoComments from '$lib/DoodleVideoComments.svelte'

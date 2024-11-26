@@ -62,28 +62,28 @@
 </div>
 
 <script>
-  import { user } from '../store.js'
-  import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
+  import CodepenInput from '$lib/CodepenInput.svelte'
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+
   import { 
     updateFirestoreDoc, 
     setFirestoreDoc,
     createNewMultiboard
   } from '../helpers/crud.js'
-
-  import { arrayUnion, increment } from "firebase/firestore"
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
+  import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID } from "../helpers/utility.js";
-  import { mixpanelLibrary } from '/src/mixpanel.js'
-  import CodepenInput from '$lib/CodepenInput.svelte'
-  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
-  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+
+  import { user } from '../store.js'
+
+  import { increment, serverTimestamp } from "firebase/firestore"
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
-  import { serverTimestamp } from 'firebase/firestore'
+  import Button from '@smui/button'
 
   export let classID 
 
@@ -135,10 +135,6 @@
     await Promise.all(uploadPromises)
 
     const newQuestionID = getRandomID()
-
-    mixpanelLibrary.track('Question asked', {
-      title: questionTitleInput 
-    })
 
     await handleNewQuestionNotifications({ 
       userDoc: $user, 

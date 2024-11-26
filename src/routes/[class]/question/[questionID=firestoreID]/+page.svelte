@@ -181,13 +181,16 @@
           />
         {/each}
 
-        <div on:click={() => createNewMultiboard({ 
+        <!-- PROBLEM: don't show until the blackboards have rendered, otherwise it causes a layout jump -->
+        <div 
+          on:click={() => createNewMultiboard({ 
             baseDocPath: questionPath,
             boardsPath: `/classes/${classID}/blackboards/`
-          })}
+          })} on:keydown
           class="new-blackboard-button"
-          style="width: {$maxAvailableWidth}px;">
-            RESPOND WITH A BLACKBOARD
+          style="width: {$maxAvailableWidth}px;"
+        >
+          RESPOND WITH A BLACKBOARD
         </div>
       {/if}
     </div>

@@ -92,10 +92,6 @@
   export let backgroundImageDownloadURL = ''
   export let recordState = ''
 
-  // for drag-and-drop purposes
-  export let boardID = ''
-  export let originalIndex = null
-
   // QUICKFIX to enable multislide blackboards to work
   export let currentTimeOverride
 

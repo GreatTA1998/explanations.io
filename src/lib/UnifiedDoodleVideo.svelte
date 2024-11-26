@@ -36,7 +36,7 @@
          {#if !isFullscreen}
           <div style="margin-left: 0px;">
             <div style="min-width: 240px; margin-right: 8px;">
-              <CreatorChannelCard on:click={() => goto(`/user/${uid}`)}
+              <CreatorChannelCard
                 firstNameAndKeyInfo="Ben Shimabukuro"
                 collegeAndYear="MIT '24"
                 bio="Top 30 US JMO"
@@ -58,7 +58,7 @@
           <VideoFooterInfo {video}/>
 
           <div
-            on:click={toggleFullscreen} 
+            on:click={toggleFullscreen} on:keydown
             class="my-round-button" 
             style="margin-right: 0; margin-left: auto; height: 24px;"
           >

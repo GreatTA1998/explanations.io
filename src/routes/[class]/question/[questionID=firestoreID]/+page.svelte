@@ -128,7 +128,14 @@
               </a>
             {:else}
               <a href={attachmentURL} target="_blank" style="cursor: pointer;">
-                <img src={questionDoc.attachmentsDownloadURLs[i]} style="border-radius: 4px; width: {0.5 * 1/questionDoc.attachmentsNames.length * $maxAvailableWidth}px; height: auto;">
+                <img 
+                  src={questionDoc.attachmentsDownloadURLs[i]} 
+                  style="
+                  border-radius: 4px; 
+                  width: {0.5 * 1/questionDoc.attachmentsNames.length * $maxAvailableWidth}px; 
+                  height: auto;"
+                  alt={questionDoc.attachmentsNames[i]}
+                >
               </a>
             {/if}
           {/each}

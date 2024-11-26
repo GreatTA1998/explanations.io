@@ -99,19 +99,12 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
 
-  export let thumbnailWidth
-  export let thumbnailHeight
-
   export let canvasWidth
   export let canvasHeight
 
   export let strokesArray
   export let backgroundImageDownloadURL = ''
   export let recordState = ''
-
-  // for drag-and-drop purposes
-  export let boardID = ''
-  export let originalIndex = null
 
   // QUICKFIX to enable multislide blackboards to work
   export let currentTimeOverride

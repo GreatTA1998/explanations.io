@@ -43,14 +43,10 @@
   "type": "module",
   "dependencies": {
     "@daily-co/daily-js": "^0.26.0",
-    "@fontsource/fira-mono": "^4.5.0",
-    "@lukeed/uuid": "^2.0.0",
     "audio-recorder-polyfill": "^0.4.1",
-    "cookie": "^0.4.1",
     "firebase": "^9.5.0",
     "luxon": "^3.5.0",
     "mixpanel-browser": "^2.47.0",
-    "posthog-js": "^1.142.1",
-    "svelte-css-vars": "^0.0.3"
+    "posthog-js": "^1.142.1"
   }
 }

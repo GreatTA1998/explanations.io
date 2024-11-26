@@ -51,10 +51,6 @@
 </script>
 
 <style lang="scss">
-	strong {
-		color: rgb(30, 30, 30)	
-	}
-
 	.my-tab-container {
 		margin-left: 24px; 
 		margin-right: auto; 

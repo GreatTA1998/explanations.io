@@ -2,7 +2,7 @@
   class:red-alert-border={needsTeachers}
   class="overall-container core-shadow"
   style="position: relative; display: flex; width: 240px; border-radius: {8 * 2}px; padding: 0px; overflow: hidden;" 
-  on:click|stopPropagation={handleServerCardClick}
+  on:click|stopPropagation={handleServerCardClick} on:keydown
 >
   <div style="position: absolute; top: 8px; left: 16px; color: rgb(248, 249, 249); z-index: 1;">
     <div style="color: white; font-weight: 600;">
@@ -121,112 +121,32 @@
 
 
 <style lang="scss">
-  // .red-alert-border {
-  //   outline: 2px solid red;
-  // }
-
   .two-lines-maximum {
     width: 100%;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical; 
     overflow: hidden; 
-  }
-
-  .footer-data-value {
-    font-size: 14px;
-    opacity: 0.8;
-  }
-
-  .footer-data-icon {
-    opacity: 0.9
-  }
-
-  .college-chip {
-    font-size: 12px; 
-    font-weight: 700; 
-    border: 1px solid rgb(40, 14, 82);
-    border-radius: 4px; 
-    background-color: transparent; 
-    color: rgb(40, 14, 82);   
-    display: flex; 
-    align-items: center; 
-    width: fit-content; 
-    justify-content: center; 
-    right: 8px; top: 2px; left: auto; 
-    padding-left: 6px; 
-    padding-right: 6px; 
-    padding-top: 3px; 
-    padding-bottom: 3px;
-    text-transform: uppercase;
-  }
-
-  /* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate
-    We base low, medium and high elevation on this essay.
-  */
-
-  // SEE image
-  // https://www.notion.so/Design-e87b085e3e0c4910b8ef770bb1268dfb?pvs=4#34e8c3917fca4a78b23f869647f452a9
-  .my-low-elevation {
-    box-shadow: 1px 1px 1px 1px;
-  }
-
-  .core-shadow {
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1)
-  }
-
-  .cast-shadow {
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.08);
   }
 
   .high-elevation-cast-shadow {
     box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08)
   }
 
-  .paper-shadow {
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 1px 1px 1px 1px rgba(0, 0, 0, 0.19);
-  }
-
   .server-card {
-    /* Tweek this to change all the children font-sizes */
-    font-size: 0.9em;
-
     border-radius: 32px;
     min-width: 200px;
     width: 100%;
-    /* margin-bottom: 20px; */
-
-    // reset the padding
-    // margin-top: -12px;
-    // margin-bottom: -12px;
+    height: fit-content; 
     
     padding-left: 12px;
     padding-top: 6px;
     padding-right: 12px;
-    /* margin-left: 8%; */
-    /* height: 160px; */
-    height: fit-content; 
+
+     /* Tweek this to change all the children font-sizes */
+     font-size: 0.9em;
   }
-
-  .money-green {
-    color: #3D8C4F;
-    font-weight: 500;
-  }
-
-  /* .teacher-purple {
-    color: #5d0068;
-    font-weight: 500;
-  } */
-
-  /* .video-orange {
-    color: #f78940;
-    font-weight: 500;
-  } */
-
-  /* .question-red {
-    color: red;
-    font-weight: 500;
-  } */
 
   .overall-container:hover {
     outline: 2px solid #F7C686;
@@ -256,18 +176,5 @@
     var(--shadow1),
     var(--shadow2),
     var(--shadow3);
-}
-
-/* .card:hover {
-  --elevation: calc(var(--elevation) + 4)
-} */
-
-/* .card {
-  line-height:200px;
-  text-align:center;
-  background: white;
-  border-radius: 4px;
-  width: 200px;
-  height: 200px;
-} */
+  }
 </style>

@@ -8,6 +8,7 @@
 					<img 
 						on:click={() => goto('/')}
 						src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
+						alt="app logo"
 					>
 	
 				</div>

@@ -85,7 +85,7 @@
       If you're considering teaching or learning on explanations.io, give me a chance to work for you!
     </div>
 
-    <img class="arcane-image" src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/IMG_0227.JPG?alt=media&token=0ace8bae-ea67-4346-a9a2-34b90efd416a">
+    <img class="arcane-image" alt="me-baseball" src="https://firebasestorage.googleapis.com/v0/b/feynman-mvp.appspot.com/o/IMG_0227.JPG?alt=media&token=0ace8bae-ea67-4346-a9a2-34b90efd416a">
   
     <div style="width: 300px;">
       <CreatorChannelCard

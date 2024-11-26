@@ -22,8 +22,6 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
 
-  export let width = 500
-
 	const dispatch = createEventDispatcher()
 
   onMount(() => {

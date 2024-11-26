@@ -65,11 +65,13 @@
 		<img 
 			style="min-width: 332px; width: 60vw; height: auto"
 			src="https://i.imgur.com/TRxyjmU.png"
+			alt="competition landscape"
 		> 
 
 		<img
 			style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
 			src="https://i.imgur.com/B9a5Nfp.png"
+			alt="sheraz's discord message"
 		/>
 	</div>
 

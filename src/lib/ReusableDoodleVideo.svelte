@@ -96,9 +96,6 @@
   export let boardDbPath = '' // 
   export let canvasWidth = maxAvailableWidth
   export let canvasHeight = maxAvailableHeight
-  export let title
-  export let creatorName
-  export let className
 
   export let showEditDeleteButtons = true
 

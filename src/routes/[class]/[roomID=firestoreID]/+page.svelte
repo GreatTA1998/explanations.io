@@ -158,8 +158,6 @@
 
           <div
             style="width: {$maxAvailableWidth}px; height: 80px; box-sizing: border-box"
-            on:dragover={(e) => dragover_handler(e)}
-            on:drop={(e) => drop_handler(e, i+1)}
           >
       
           </div>
@@ -171,7 +169,7 @@
 
     {#if roomDoc.blackboards}
       <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
-     <div on:click={createNewMultiboard}
+     <div on:click={createNewMultiboard} on:keydown
         style="
           display: flex; 
           justify-content: center; 

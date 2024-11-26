@@ -36,18 +36,11 @@
 </TopNavbar>
 
 <script>	
-	import { goto } from '$app/navigation'
-	import { onMount, tick, onDestroy } from 'svelte'
-	import { mixpanelLibrary } from '/src/mixpanel.js'
 	import TopNavbar from '$lib/TopNavbar.svelte'
 	import HomePageForLearner from '$lib/HomePageForLearner.svelte'
 	import HomePageForTeacher from '$lib/HomePageForTeacher.svelte'
 
 	let activeTabName = 'Learn'
-
-	onMount(() => {
-		mixpanelLibrary.track('Home page visited')
-	})
 </script>
 
 <style lang="scss">

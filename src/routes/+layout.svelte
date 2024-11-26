@@ -23,7 +23,6 @@
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { mixpanelLibrary } from '/src/mixpanel.js'
   import posthog from 'posthog-js'
 
   initializeDatabase()
@@ -121,10 +120,6 @@
 
   async function createMirrorUser ({ uid, firstName, lastName, name, phoneNumber, email, userRef }) {
     return new Promise(async (resolve) => {
-      mixpanelLibrary.track('Sign Up', {
-        isPhoneAccount: phoneNumber ? true : false
-      })
-
       const metadataRef = doc(db, 'metadata/78tDSRCiMHGnf8zcXkQt')
       const metadataSnap = await getDoc(metadataRef)
 
@@ -158,9 +153,6 @@
 
   async function listenToUserDocAndHandleForwarding (uid) {
     return new Promise((resolve, reject) => {
-      // https://docs.mixpanel.com/docs/tracking/how-tos/identifying-users
-      mixpanelLibrary.reset()
-      mixpanelLibrary.identify(uid)
       const mirrorUserRef = doc(db, `/users/${uid}`)
 
       unsubUserDocListener = onSnapshot(mirrorUserRef, (snap) => {

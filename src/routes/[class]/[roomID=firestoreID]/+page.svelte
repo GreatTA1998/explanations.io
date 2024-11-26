@@ -211,7 +211,6 @@
   import LinearProgress from '@smui/linear-progress'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import { mixpanelLibrary } from '/src/mixpanel.js'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
   import UnifiedDoodleVideo from '$lib/UnifiedDoodleVideo.svelte'
@@ -582,8 +581,6 @@
       audioRefFullPath: audioRef.fullPath
     })
     updateRecordState(boardID, 'pre_record')
-
-    mixpanelLibrary.track('Video created')
 
     await handleVideoUploadEmailNotifications(classID, roomDoc)
 

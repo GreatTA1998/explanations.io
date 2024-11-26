@@ -1,11 +1,9 @@
-
-<NewGridLayout>
-  <div slot="top-navbar">
-    <TopNavbar></TopNavbar>
+<div class="grid-layout robust-ios-space-filling">
+  <div class="top-navbar">
+    <TopNavbar />
   </div>
 
-  <!-- This is dumb, this <div> shouldn't be here -->
-  <div slot="left-drawer" style="height: 100%;">
+  <div class="left-drawer">
     {#key classID}
       <TheLeftDrawer 
         {classID}
@@ -13,27 +11,27 @@
       />
     {/key}
   </div>
-  
-  <slot slot="main-content">
 
-  </slot>
-</NewGridLayout>
+  <div class="main-content">
+    <slot>
 
-<script>
+    </slot>
+  </div>
+</div>
+
+<script> 
   import TheLeftDrawer from '$lib/TheLeftDrawer.svelte'
   import TopNavbar from '$lib/TopNavbar.svelte'
-  import NewGridLayout from '$lib/NewGridLayout.svelte'
   import { user, drawerWidth, classServerDoc, recentSearchedServerDoc } from '/src/store.js'
-  import { updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { onMount } from 'svelte'
+  import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
   import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
   import '$lib/_Elevation.scss'
-  import { getFirestoreDoc } from '/src/helpers/crud.js';
 
-  export let data;
-  let { classID, roomID } = data;
+  export let data
 
+  let { classID, roomID } = data
   let unsubClassDocListener = null
+
   $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
 
   $: {
@@ -57,7 +55,6 @@
     recentSearchedServerDoc.set(recentServerDoc)
   }
 
-
   function listenToClassDoc (classID) {
     if (unsubClassDocListener) unsubClassDocListener()
     const db = getFirestore()
@@ -68,11 +65,42 @@
 </script>
 
 <style> 
-  * :global(.app-content) {
+  /* COMMENTED OUT NOV 26, SAFELY REMOVE DEC 1 IF NO UNEXPECTED PROBLEMS ARISE */
+  /* * :global(.app-content) {
     flex: auto;
     overflow: auto;
     position: relative;
     flex-grow: 1;
+  } */
+
+  .grid-layout {
+    display: grid;
+    grid-template-rows: 56px 1fr;
+    grid-template-columns: 300px 1fr;
+    grid-template-areas: 'navbar navbar'
+                         'sidebar main';
+    background-color: var(--bg-off-white);
+  }
+
+  .robust-ios-space-filling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .top-navbar {
+    grid-area: navbar;
+  }
+
+  .left-drawer {
+    grid-area: sidebar;
+  }
+
+  .main-content {
+    grid-area: main;
+    overflow-y: auto;
   }
 </style>
 

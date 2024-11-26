@@ -40,7 +40,11 @@
 
 		{#each roomDoc.blackboards as boardID, i (boardID) }
 			<RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
-        {#if boardDoc}
+        {#if !boardDoc}
+          <div style="width: {$maxAvailableWidth}px; height: {3/4 *$maxAvailableWidth}px;">
+          
+          </div>
+        {:else}
           <!-- 
             NOTE: even though the text area is deprecated, reference this code so that 
             we can find a good solution for the creator edit the title easily

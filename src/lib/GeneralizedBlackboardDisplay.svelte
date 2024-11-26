@@ -56,7 +56,11 @@
 
 <div>
   <RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
-    {#if boardDoc}
+    {#if !boardDoc}
+      <div style="width: {$maxAvailableWidth}px; height: {3/4 * $maxAvailableWidth}px;">
+      
+      </div>
+    {:else}
       <!-- <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
         <TextAreaAutoResizing 
           value={boardDoc.description || ''} 
@@ -69,7 +73,6 @@
       {#if boardDoc.audioDownloadURL}
         <!-- 
           QUICKFIX: scale factor of 0.8 to take into account of the slides so you can see the whole video with the slider
-          TO-DO: add a scroll snap to the bottom of the video 
         -->
         <UnifiedDoodleVideo
           video={boardDoc}

@@ -17,12 +17,7 @@
     </div>
   {/if}
 
-  <div style="
-    position: relative; 
-    box-sizing: border-box;
-  "
-  >
-
+  <div style="position: relative; box-sizing: border-box;">
     <div style="position: absolute; top: 8px; left: 8px; z-index: 6; display: flex; align-items: center;">
       <BaseTransparentButton on:click={togglePlaySpeed} style="font-weight: 500;">
         {playbackSpeed}x 

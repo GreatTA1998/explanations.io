@@ -1,14 +1,10 @@
 <script>
-  import { onMount } from 'svelte'
   import { doc, getFirestore, onSnapshot } from 'firebase/firestore'
   import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { maxAvailableWidth, user } from '/src/store.js'
-  import Textfield from '@smui/textfield'
-  import HelperText from '@smui/textfield/helper-text'
-  import { DateTime } from 'luxon'
+  import { maxAvailableWidth, maxAvailableHeight, user } from '/src/store.js'
 
   export let data
 
@@ -21,10 +17,6 @@
   $: questionRef = doc(getFirestore(), questionPath)
   
   $: questionID, createQuestionListener()
-
-  onMount(async () => {
-    
-  })
 
   function createQuestionListener () {
     if (unsub) unsub() // assume it's not async
@@ -82,11 +74,6 @@
     })
     return { promise, cancel }
   }
-
-  function displayMonthDayYYYY (serverTimestamp) {
-    const dt = DateTime.fromMillis(serverTimestamp.toMillis())
-    return dt.toLocaleString({ month: 'short', day: 'numeric', year: 'numeric'})
-  }
 </script>
 
 {#if questionDoc.id}
@@ -116,9 +103,6 @@
           />
         </div>
       {/if}
-
-      <!-- <div style="margin-top: 6px;"></div> -->
-
       {#if questionDoc.attachmentsDownloadURLs} 
         <div style="display: flex; column-gap: 16px">
           {#each questionDoc.attachmentsDownloadURLs as attachmentURL, i}
@@ -131,9 +115,10 @@
                 <img 
                   src={questionDoc.attachmentsDownloadURLs[i]} 
                   style="
-                  border-radius: 4px; 
-                  width: {0.5 * 1/questionDoc.attachmentsNames.length * $maxAvailableWidth}px; 
-                  height: auto;"
+                    border-radius: 4px; 
+                    width: auto; 
+                    height: {0.5 * 1/questionDoc.attachmentsNames.length * $maxAvailableHeight}px;
+                  "
                   alt={questionDoc.attachmentsNames[i]}
                 >
               </a>
@@ -150,25 +135,8 @@
         {questionDoc.blackboardIDs?.length} replies
       </div>
 
-      <!-- <div style="border-bottom: 1px solid lightgrey; flex-grow: 1;"></div> -->
-
       <div style="border-bottom: 1px solid lightgrey; flex-grow: 10;"></div>
-      <!-- 
-        <div class="question-metadata">
-          Asked by {questionDoc.askerName}
-          {#if questionDoc.timestamp}
-            <span class="question-metadata">
-              {displayMonthDayYYYY(questionDoc.timestamp)}
-            </span>
-          {/if}      
-        </div>
-
-        <div style="border-bottom: 1px solid lightgrey; flex-grow: 1;"></div>
-       -->
-
-
     </div>
-    <!-- <div style="width: {$maxAvailableWidth}px; border-bottom: 2px dashed black; margin-top: 16px; margin-bottom: 16px;"></div> -->
 
     <!-- Blackboards section -->
     <div style="display: flex; flex-direction: column; gap: 40px;">

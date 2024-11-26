@@ -17,7 +17,7 @@
   import { initializeDatabase } from '../database.js'
   import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
-  import { hasFetchedUser, idOfServerNewUserWantedToEnter, user, userInfoFromAuthProvider } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider } from '../store.js'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
   import { onMount } from 'svelte'
@@ -49,11 +49,6 @@
   async function reactToUserChange (resultUser) {
     if (resultUser) {
       const { uid } = resultUser 
-
-      if ($idOfServerNewUserWantedToEnter) {
-        console.log('from a previous redirect request')
-        goto(`/${$idOfServerNewUserWantedToEnter}/request-video`)
-      }
 
       // NOTE: the partial hydration will give incorrect UIDs for accounts that need forwarding
       // partially hydrate the user so we can start rendering the page in parallel

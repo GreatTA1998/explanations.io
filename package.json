@@ -34,7 +34,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@daily-co/daily-js": "^0.26.0",
     "audio-recorder-polyfill": "^0.4.1",
     "firebase": "^9.5.0",
     "luxon": "^3.5.0",

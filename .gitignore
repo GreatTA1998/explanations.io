@@ -8,4 +8,3 @@ node_modules
 .vercel
 .vercel_build_output
 .output
-/src/lib/dailyCreds.js

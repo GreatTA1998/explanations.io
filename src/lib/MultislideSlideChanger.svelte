@@ -9,16 +9,14 @@
 			{ i + 1 }
 		</div>
 	{/each}
-</div>
 
-{#if canCreateNewSlide}
-	<div on:click={() => dispatch('slide-create')}
-		class="slide-rectangle" 
-		style="font-size: 1.4rem;"
-	>
-		+
-	</div>
-{/if}
+	{#if canCreateNewSlide}
+		<!-- 2px padding to make it look centered -->
+		<div on:click={() => dispatch('slide-create')} class="slide-rectangle lowlighted-glow" style="font-size: 1.4rem; padding-bottom: 2px;">
+			+
+		</div>
+	{/if}
+</div>
 
 <script>
   export let idxOfFocusedSlide

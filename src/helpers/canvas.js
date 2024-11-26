@@ -2,7 +2,7 @@ import { assumedCanvasWidth, maxAvailableWidth } from '../store.js'
 import { get } from 'svelte/store'
 
 export function computeMaxAvailableDimensionsGeneral (availableWidth, availableHeight) {
-  const aspectRatio = 4.4/3 //
+  const aspectRatio = 4/3
   const leftPadding = 16
   const audioPlayerHeight = 40
   const signUpPageNavbarHeight = 64
@@ -33,6 +33,7 @@ export function computeMaxAvailableDimensions () {
   const appElement = document.getElementById('main-content')
   let availableHeight
   let availableWidth
+
   if (appElement) {
     availableHeight = appElement.clientHeight
     availableWidth = appElement.clientWidth
@@ -42,7 +43,7 @@ export function computeMaxAvailableDimensions () {
     availableWidth = window.innerWidth
   }
 
-  const aspectRatio = 4.4/3 //
+  const aspectRatio = 4/3
   const leftPadding = 16
   const audioPlayerHeight = 40
   const maxBoardWidth = availableWidth - (leftPadding * 2) // right padding

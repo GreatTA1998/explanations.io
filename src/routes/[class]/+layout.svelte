@@ -12,7 +12,8 @@
     {/key}
   </div>
 
-  <div class="main-content">
+  <!-- this element's used to compute the max available dimensions -->
+  <div id="main-content">
     <slot>
 
     </slot>
@@ -98,7 +99,7 @@
     grid-area: sidebar;
   }
 
-  .main-content {
+  #main-content {
     grid-area: main;
     overflow-y: auto;
   }

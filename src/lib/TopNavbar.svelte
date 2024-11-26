@@ -49,6 +49,8 @@
 									{/each}
 								</div>
 							{/if}
+
+							<!-- just use <PopupNewServer/> to for creating new servers -->
 						</div>
 					
 					<!-- THESE will be moved to the splash screen logo "app hub" instead -->

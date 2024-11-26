@@ -2,8 +2,6 @@
 <!-- "color: #5d0068; border: 1px solid #5d0068;" -->
 <!--green:  #028858; -->
 <!-- border: 1px solid hsl(0,0%,0%, 0.80);  -->
-<!-- 
-<CodepenCardShadows/> -->
   <!-- class=card style=--elevation:1 -->
 
   <!-- class:my-low-elevation card -->

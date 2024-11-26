@@ -59,8 +59,6 @@
 		</div>
 	{/if}
 
-	<SearchAllServers/>
-
 	<div style="text-align: center; padding: 48px 0px;">
 		<img 
 			style="min-width: 332px; width: 60vw; height: auto"
@@ -75,8 +73,6 @@
 		/>
 	</div>
 
-
-
 	<FounderSelfIntro/>
 
 	<HistoricalTimeline/>
@@ -87,7 +83,6 @@
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte'
-	import SearchAllServers from '$lib/SearchAllServers.svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
 	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
 

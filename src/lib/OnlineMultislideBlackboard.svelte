@@ -1,4 +1,4 @@
-<div style="display: flex; align-items: end;">
+<div style="display: flex; align-items: end; width: {canvasWidth}px;">
   <div id="multislide-record-button-wrapper-{boardDoc.id}">
  
   </div>
@@ -12,6 +12,13 @@
     on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
     on:slide-create={createNewSlide}
   />
+
+  <div 
+    on:click={() => deleteMultislideBlackboard({ boardDoc, roomDoc })} on:keydown
+    style="margin-left: auto; margin-right: 8px; cursor: pointer;"
+  >
+    Delete button
+  </div>
 </div>
 
 <div style="margin-bottom: 12px;"></div>
@@ -22,7 +29,6 @@
     let:listenToStrokes={listenToStrokes} 
     let:strokesArray={strokesArray}
     let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
-    let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
   >
     <div 
       use:lazyCallable={listenToStrokes} 
@@ -40,7 +46,7 @@
         {canvasHeight}
         currentTimeOverride={currentTime}
         on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-        on:board-wipe={deleteAllStrokesFromDb}
+        on:board-wipe={deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })}
         on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
         on:background-reset={() => resetBackgroundImage(slideID)}
       />
@@ -113,11 +119,21 @@
   import Blackboard from '$lib/Blackboard.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte';
+  import { deleteMultislideBlackboard, deleteStrokesFromSlide } from '/src/helpers/unifiedDeleteAPI.js'
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { user } from '/src/store.js'
-  import { arrayUnion, getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
+  import { 
+    arrayUnion, 
+    arrayRemove, 
+    getFirestore, 
+    query, 
+    getDocs, 
+    collection, 
+    where, 
+    increment, doc, updateDoc 
+  } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'
   import { willPreventPageLeave } from '/src/store'
@@ -126,7 +142,7 @@
   import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
   import { page } from '$app/stores'
-
+  
   export let canvasWidth
   export let canvasHeight
   export let boardDoc // boardDoc.slideIDs
@@ -352,19 +368,12 @@
     })
   }
 
-  function updateRecordState (slideID, newRecordState) {
-    const blackboardRef = doc(getFirestore(), boardPath + slideID)
-    updateDoc(blackboardRef, {
-      recordState: newRecordState
-    })
-  }
-
   function updateBoardRecordState (boardPath, newRecordState) {
     const blackboardRef = doc(getFirestore(), boardPath)
     updateDoc(blackboardRef, {
       recordState: newRecordState
     })
-  }
+  } 
 </script>
 
 <style>

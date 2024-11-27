@@ -1,7 +1,6 @@
 <!-- NOTE, bind:clientWidth will set the element to position relative, which means it'll create a new stacking context and cover other non-relative element,
   which is very subtle
 -->
-
 <div>
   <!-- <div style="padding-left: 4%; padding-right: 4%; padding-top: 36px; height: 240px; background-color: #f7c686;">
 
@@ -135,17 +134,9 @@
   import { query, getFirestore, collection, where, onSnapshot, limit, orderBy } from 'firebase/firestore'
   import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
   import PopupConfirmTeacher from '$lib/PopupConfirmTeacher.svelte'
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import HDBlackboard from '$lib/HDBlackboard.svelte'
-  import NewHDBlackboard from '$lib/NewHDBlackboard.svelte'
-  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
   import { user, assumedCanvasWidth } from '/src/store.js'
-  import { roundedToFixed } from '/src/helpers/utility.js'
-  import PopupCrowdfund from '$lib/PopupCrowdfund.svelte'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import TeacherInformationCard from '$lib/TeacherInformationCard.svelte'
-  import BackwardsCompatibleReusableMultislideVideo from '$lib/BackwardsCompatibleReusableMultislideVideo.svelte'
 
   export let data;
 
@@ -155,26 +146,17 @@
   let classDoc
   let tweenedTeacherCount = 0
   let tweenedPresubsCount = 0
-  let isInitialLoad = true
 
   let unsubLearnersListener
   let unsubTeachersListener = null
 
-  let featuredVideoBleedMargin 
-  let finalAdjustment = 8
-  let featuredItemWidth 
-  let carouselItemPreviewWidth
-  let gapBetweenEachVideo = 36
-
 
   $: if (teacherDocs) {
     animateNumber(teacherDocs.length)
-    // normalizeListHeights()
   }
 
   $: if (learnerDocs) {
     animatePresubscribersCount(learnerDocs.length)
-    // normalizeListHeights()
   }
 
   let mostWatchedExplanations = []

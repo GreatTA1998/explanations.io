@@ -30,7 +30,7 @@
         <!-- $adminUIDs.includes($user.uid) -->
         {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
           <div style="margin-right: 6px;">
-            <BaseTransparentButton on:click={() => revertToBoard(boardDoc)}>
+            <BaseTransparentButton on:click={() => handleVideoDelete(boardDoc)}>
               <span class="material-icons">delete_forever</span>
             </BaseTransparentButton>
           </div>
@@ -59,15 +59,10 @@
           dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
           let:fetchStrokes={fetchStrokes}
           let:strokesArray={strokesArray}
-          let:deleteNonInitialStrokesFromDb={deleteNonInitialStrokesFromDb}
-          let:deleteStrokesWithParam={deleteStrokesWithParam}
-          on:mounted={(e) => deleteFuncs = [...deleteFuncs, e.detail.deleteFunc]}
+          on:mounted={(e) => {
+            slideIDToStrokesArray[slideID] = e.detail.strokesArray
+          }}
         > 
-          <div style="display: none;" id="delete-button-{slideID}"
-            on:click={() => deleteStrokesWithParam({ boardPath, strokesArray })}
-          >
-          </div>
-
           <div 
             use:lazyCallable={fetchStrokes}  
             style="
@@ -126,14 +121,12 @@
   //   - an audio element that plays and dictates the time
   //   - all the doodle visuals will play simultaneously
   //   - finally, just have a spotlight on one
-  import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
+  import { revertToBoard } from '/src/helpers/unifiedDeleteAPI.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { lazyCallable } from '/src/helpers/actions.js'
   import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user, adminUIDs } from '/src/store.js' // note `canvasWidth` was misleading
-  import Button, { Label } from '@smui/button'
   import MultislideDoodleVideoVisualSlide from '$lib/MultislideDoodleVideoVisualSlide.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import { deleteAllStrokesFromDb, deleteNonInitialStrokesFromDb } from '../helpers/properDelete'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '/src/helpers/crud.js'
@@ -158,7 +151,7 @@
   let idxOfFocusedSlide = 0
   let playbackSpeed = 1
 
-  let deleteFuncs = []
+  let slideIDToStrokesArray = {}
 
   let AudioPlayer
   let hasPlaybackStarted = false
@@ -250,60 +243,12 @@
     alert('Share link has been copied, you can now paste it anywhere.')
   }
 
-  async function revertToBoard ({ isPaid, audioRefFullPath, creatorUID }) {
-    if (!confirm('Are you sure you want to delete this video?')) {
+  async function handleVideoDelete (boardDoc) {
+    if (!confirm('Are you sure you want to revert this video to a blackboard?')) {
       return
     }
 
-    const tempPromises = [] 
-
-    for (const deleteFunc of deleteFuncs) {
-      tempPromises.push(deleteFunc())
-    }
-    await Promise.all(tempPromises)
-
-    const promises = []
-    const boardRef = doc(getFirestore(), boardPath)
-    if (audioRefFullPath) {
-      const audioRef = ref(getStorage(), audioRefFullPath)
-      promises.push(
-        deleteObject(audioRef)
-      )
-    }
-    promises.push(
-      updateDoc(boardRef, {
-        creator: deleteField(),
-        creatorUID: deleteField(),
-        creatorPhoneNumber: deleteField(),
-        date: deleteField(),
-        audioDownloadURL: deleteField(),
-        audioRefFullPath: deleteField()
-      })
-    )
-      
-    // update class statistics
-    updateFirestoreDoc(`classes/${classID}`, {
-      numOfVideos: increment(-1)
-    })
-
-    const membersDbPath = `classes/${classID}/members`
-
-    // update helper video statistics
-    const q = query(
-      collection(getFirestore(), membersDbPath),
-      where('uid', '==', creatorUID)
-    )
-    const [helperDoc] = await getFirestoreQuery(q)
-    const updateObj = {
-      numOfVideos: increment(-1)
-    }
-    if (isPaid) {
-      updateObj.numPaidVideos = increment(-1)
-    }
-    // updateFirestoreDoc(membersDbPath + '/' + helperDoc.id, updateObj)
-
-    // promises.push(deleteAllStrokesFromDb())
-    await Promise.all(promises)
+    revertToBoard({ boardDoc, slideIDToStrokesArray})
   }
 </script>
 

@@ -62,11 +62,6 @@
 
               <Button 
                 on:click={async () => { 
-                  await revertVideoToBoard(
-                    boardDoc, 
-                    () => deleteAllStrokesFromDb({ boardPath: boardDoc.path, strokesArray })
-                  )
-                  dispatch('video-deleted')
                 }} 
                 style="background-color: rgb(90 90 90 / 100%); color: white; margin-right: 10px;">
                 Delete
@@ -80,14 +75,13 @@
 {/if}
 
 <script>
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../store.js'
   import HDDoodleVideo from '$lib/HDDoodleVideo.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../store.js'
   import { lazyCallable } from '../helpers/actions.js'
   import Button, { Icon } from '@smui/button'
   import { user, adminUIDs } from '../store.js'
-  import { revertVideoToBoard, updateFirestoreDoc } from '../helpers/crud.js'
-  import { deleteAllStrokesFromDb } from '../helpers/properDelete.js'
+  import { updateFirestoreDoc } from '../helpers/crud.js'
   import { createEventDispatcher } from 'svelte'
   import { getFirestore, increment, collection, query, where, getDocs } from 'firebase/firestore';
 

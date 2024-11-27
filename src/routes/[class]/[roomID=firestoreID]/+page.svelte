@@ -172,8 +172,7 @@
     {/if}
 
     {#if roomDoc.blackboards}
-      <!-- For some reason canvas has a tiny margin-right that is clearly visible but not traceable from the inspector --> 
-     <div on:click={createNewMultiboard} on:keydown
+      <div on:click={createNewMultiboard} on:keydown
         style="
           display: flex; 
           justify-content: center; 
@@ -185,15 +184,15 @@
           width: {$maxAvailableWidth}px;
           opacity 2.0s ease-in;
           opacity: 1;
-          "
-        >
-          {#if hasQuestionMark(roomDoc.name)}
-            Respond to question
-          {:else}
-            NEW BLACKBOARD
-          {/if}
-     </div>
-   {/if}
+        "
+      >
+        {#if hasQuestionMark(roomDoc.name)}
+          Respond to question
+        {:else}
+          NEW BLACKBOARD
+        {/if}
+      </div>
+    {/if}
   </div>
 </div>
 {/if}
@@ -592,68 +591,6 @@
     // only reproducible on my iPad (yet old Explain works for some reason)
     // but this quickfix works well because iPad will correctly reload, whereas computers will display the prompt
     window.location.reload()
-  }
-
-  async function revertToBoard ({ id, audioRefFullPath, isPaid, creatorUID }, deleteAllStrokesFromDb) {
-    if (!confirm('Are you sure you want to delete this video?')) {
-      return
-    }
-
-    const promises = []
-    const boardRef = doc(getFirestore(), boardsDbPath + id)
-    if (audioRefFullPath) {
-      const audioRef = ref(getStorage(), audioRefFullPath)
-      promises.push(
-        deleteObject(audioRef)
-      )
-    }
-    promises.push(
-      updateDoc(boardRef, {
-        creator: deleteField(),
-        creatorPhoneNumber: deleteField(),
-        date: deleteField(),
-        audioDownloadURL: deleteField(),
-        audioRefFullPath: deleteField()
-      })
-    )
-      
-    // update class statistics
-    updateFirestoreDoc(`classes/${classID}`, {
-      numOfVideos: increment(-1)
-    })
-
-    // update helper video statistics
-    const q = query(
-      collection(getFirestore(), membersDbPath),
-      where('uid', '==', creatorUID)
-    )
-    const [helperDoc] = await getFirestoreQuery(q)
-    const updateObj = {
-      numOfVideos: increment(-1)
-    }
-    if (isPaid) {
-      updateObj.numPaidVideos = increment(-1)
-    }
-    updateFirestoreDoc(membersDbPath + helperDoc.id, updateObj)
-
-    promises.push(deleteAllStrokesFromDb())
-    await Promise.all(promises)
-  }
-
-  async function createNewBlackboard () {
-    const newID = getRandomID();  
-    const blackboardRef = doc(getFirestore(), boardsDbPath + newID)
-    // TODO: use batch operation
-    await Promise.all([
-      setDoc(blackboardRef, { 
-        recordState: 'pre_record' 
-      }),
-      updateDoc(roomRef, {
-        blackboards: arrayUnion(newID)
-      })
-    ]);  
-    // await tick()
-    // this.scrollToThisBoard(newID)
   }
 
   // TO-DO: refactor/unify with the existing helper function API in crud.js

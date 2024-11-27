@@ -36,10 +36,11 @@
          {#if !isFullscreen}
           <div style="margin-left: 0px;">
             <div style="min-width: 240px; margin-right: 8px;">
+              <!-- TO-DO: make this dynamic -->
               <CreatorChannelCard
-                firstNameAndKeyInfo="Ben Shimabukuro"
-                collegeAndYear="MIT '24"
-                bio="Top 30 US JMO"
+                firstNameAndKeyInfo={video.creatorName}
+                collegeAndYear="MIT '25"
+                bio="Top 21 USA(J)MO"
               />
             </div>
           </div>

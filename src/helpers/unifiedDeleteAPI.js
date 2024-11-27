@@ -25,6 +25,7 @@ import { deleteObject, getStorage, ref } from 'firebase/storage'
 // 1. Ability to delete an individual multislide blackboard e.g. if it's unused
 // 1. Be careful about deleting questions, because it'd delete the videos too
 // 2. Deleting the question that was used as "mostRecentShowcase" for the server will cause the server to not work properly
+// 4. Ensure that question attachments each have a `storagePath` property
 
 // WARNING:
 // 1. ReusableDoodleVideo i.e. legacy videos can no longer be deleted
@@ -215,7 +216,6 @@ export async function deleteMultislideBlackboard ({ roomDoc, boardDoc }) {
     )
 
     await Promise.all(promises)
-    console.log('resolving deleteMultislideBlackboard')
     resolve()
   })
 }

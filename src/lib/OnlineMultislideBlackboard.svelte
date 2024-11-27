@@ -14,10 +14,14 @@
   />
 
   <div 
-    on:click={() => deleteMultislideBlackboard({ boardDoc, roomDoc })} on:keydown
+    on:click={() => {
+      if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
+        deleteMultislideBlackboard({ boardDoc, roomDoc })
+      }
+    }} on:keydown
     style="margin-left: auto; margin-right: 8px; cursor: pointer;"
   >
-    Delete button
+    Delete multiboard
   </div>
 </div>
 

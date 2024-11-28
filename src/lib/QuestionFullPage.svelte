@@ -3,6 +3,7 @@
   import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { maxAvailableWidth, maxAvailableHeight, user } from '/src/store.js'
 
@@ -17,6 +18,8 @@
 
   $: questionRef = doc(getFirestore(), questionPath)
   $: questionID, createQuestionListener()
+
+  const debouncedUpdateQuestionTitle = createDebouncedFunction(updateQuestionTitle, 1000)
 
   function createQuestionListener () {
     if (unsub) unsub() // assume it's not async
@@ -80,19 +83,15 @@
   <!-- <LeftDrawerToggleButton/> -->
 
   <div style="padding: 16px; overflow-y: auto;">
-    <!-- <Textfield 
-      disabled={$user.uid !== questionDoc.askerUID}
-      value={questionDoc.title} on:input={(e) => updateQuestionTitle(e)}
-      class="room-title question" 
-      style={`width: ${$maxAvailableWidth}px;`}
-    >
-    </Textfield> -->
-
-    <!-- TO-DO: make the title editable -->
     <div class="question-container" style="display: flex; flex-direction: column; row-gap: 12px;">
-      <div class="room-title question" style:width={`${$maxAvailableWidth}px`}>
-        {questionDoc.title}
-      </div>
+      <input 
+        value={questionDoc.title} 
+        on:input={(e) => debouncedUpdateQuestionTitle(e)}
+        readonly={$user.uid !== questionDoc.askerUID}
+        placeholder="Title"
+        style:width={`${$maxAvailableWidth}px`} 
+        class="room-title question" 
+      >
 
       {#if questionDoc.description}
         <div style="width: {$maxAvailableWidth}px; margin-top: 14px; margin-bottom: 0px">
@@ -193,5 +192,18 @@
 
   .room-title {
     font-size: 2rem;
+
+    /* reset input's default styling */
+    border: none;
+    padding: 0px;
+    background: transparent;
+  }
+
+  .room-title:focus {
+    outline: none;
+  }
+
+  .room-title:read-only {
+    cursor: default;
   }
 </style>

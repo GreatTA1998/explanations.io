@@ -4,6 +4,7 @@
 
 <script>
   import '$lib/_FourColor.scss'
+  import { deleteStrokesFromSlide } from '/src/helpers/unifiedDeleteAPI.js'
   import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '/src/store.js'
   import { lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
@@ -16,9 +17,12 @@
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
 
+  export let roomDoc
   export let boardDoc
 
   let isSignInPopupOpen = false
+
+  $: roomRef = doc(getFirestore(), roomDoc.path)
 
   // TODO: rename to reflect sequential nature of operations
   async function callManyFuncs (...funcs) {
@@ -197,14 +201,11 @@
   // A blackboard does not have an audioDownloadURL,
   // otherwise it's a video
   function deleteBoard (boardID, deleteAllStrokesFromDb) {
-    if (roomDoc.blackboards.length === 1) {
-      alert("Can't delete the last blackboard")
-      return
-    }
-
     // 1. delete blackboard reference from parent
+    // NOTE: this is necessary so it works whether it's used by Question or Room
     updateDoc(roomRef, {
-      blackboards: arrayRemove(boardID)
+      blackboards: arrayRemove(boardID),
+      blackboardIDs: arrayRemove(boardID)
     })
     
     // 2. delete strokes
@@ -239,7 +240,11 @@
         on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardDoc.id)}
         on:background-reset={() => resetBackgroundImage(boardDoc.id)}
         on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-        on:board-delete={() => deleteBoard(boardDoc.id, () => {})}
+        on:board-wipe={() => deleteStrokesFromSlide({ strokesArray })}
+        on:board-delete={() => deleteBoard(
+          boardDoc.id, 
+          () => deleteStrokesFromSlide({ strokesArray })
+        )}
         let:currentTime={currentTime} 
         let:startStopwatch={startStopwatch} 
         let:stopStopwatch={stopStopwatch}

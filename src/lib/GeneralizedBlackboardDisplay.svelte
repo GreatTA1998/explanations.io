@@ -60,7 +60,7 @@
           {roomDoc}
         />
       {:else}
-        <LegacySingleSlideBlackboard {boardDoc}/>
+        <LegacySingleSlideBlackboard {boardDoc} {roomDoc}/>
       {/if}
     {/if}
   </RenderlessListenToBoard>

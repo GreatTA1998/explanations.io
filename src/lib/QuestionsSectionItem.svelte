@@ -41,7 +41,15 @@
 
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>      
-            <Item on:SMUI:action={() => deleteQuestion({ questionDoc: question, classID })}>
+            <Item on:SMUI:action={() => {
+              if (question.blackboardIDs.length > 0) {
+                alert('Cannot delete this question until all its blackboards are moved/deleted first')
+                return
+              }
+              if (confirm('Are you sure you want to delete this question?')) {
+                deleteQuestion({ questionDoc: question, classID })
+              }
+            }}>
               Delete question
             </Item>
           </List> 

@@ -15,12 +15,6 @@
     let:canvasHeight={canvasHeight}
     let:isFullscreen={isFullscreen}
   >
-    <div class="above-video-section" style="margin-bottom: 12px; display: flex; flex-direction: column; row-gap: 12px;">
-      <div style="font-size: 1.2rem; font-weight: 400;">
-        {video.description || ''}
-      </div>
-    </div>
-
     {#if video.isMultiboard}
       <HDMultislideVideo
         {canvasWidth}

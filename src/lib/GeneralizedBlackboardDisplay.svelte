@@ -3,9 +3,10 @@
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import UnifiedDoodleVideo from '$lib/UnifiedDoodleVideo.svelte'
   import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
-  import { maxAvailableWidth, maxAvailableHeight } from '/src/store.js'
-  import { updateDoc } from 'firebase/firestore'
+  import LegacySingleSlideBlackboard from '$lib/LegacySingleSlideBlackboard.svelte'
+  import { maxAvailableWidth, maxAvailableHeight, user } from '/src/store.js'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { createDebouncedFunction } from '/src/helpers/debounce.js'
 
   export let classID
   export let boardID
@@ -13,44 +14,13 @@
 
   $: boardsDbPath = `classes/${classID}/blackboards/`
 
-  async function debouncedUpdateBoardDescription ({ detail }, id) {
-    const debouncedVersion = debounce(
-      () => updateBoardDescription({ detail }, id),
-      1000
-    ) 
-    debouncedVersion({ detail }, id)
-  }
+  const debouncedUpdateBoardDescription = createDebouncedFunction(updateBoardDescription, 1000)
 
-  async function updateBoardDescription (e, id) {    
-    updateFirestoreDoc(boardsDbPath + id, {
+  async function updateBoardDescription (e, boardDoc) {    
+    console.log('updating board description')
+    updateFirestoreDoc(boardDoc.path, {
       description: e.detail
     })
-  }
-
-  let t = { promise: null, cancel: _ => void 0 }
-
-  // Snippet from: https://stackoverflow.com/a/68228099/7812829
-  // NOTE: this literally returns a function (you still have to call it)
-  function debounce (task, ms) {
-    return async (...args) => {
-      try {
-        t.cancel()
-        t = deferred(ms)
-        await t.promise
-        await task(...args)
-      }
-      catch (_) { 
-        /* prevent memory leak */ 
-      }
-    }
-  }
-
-  function deferred (ms) {
-    let cancel, promise = new Promise((resolve, reject) => {
-      cancel = reject
-      setTimeout(resolve, ms)
-    })
-    return { promise, cancel }
   }
 </script>
 
@@ -61,14 +31,16 @@
       
       </div>
     {:else}
-      <!-- <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
-        <TextAreaAutoResizing 
-          value={boardDoc.description || ''} 
-          on:input={(e) => debouncedUpdateBoardDescription(e, boardID)}
-          placeholder="Board title / description"
-          readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-        />
-      </div> -->
+      <div style="margin-bottom: 12px; display: flex; flex-direction: column; row-gap: 12px;">
+        <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
+          <TextAreaAutoResizing 
+            value={boardDoc.description || ''} 
+            on:input={(e) => debouncedUpdateBoardDescription(e, boardDoc)}
+            placeholder="Board title / description"
+            readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
+          />
+        </div>
+      </div>
 
       {#if boardDoc.audioDownloadURL}
         <!-- 
@@ -87,6 +59,8 @@
           {classID}
           {roomDoc}
         />
+      {:else}
+        <LegacySingleSlideBlackboard {boardDoc}/>
       {/if}
     {/if}
   </RenderlessListenToBoard>

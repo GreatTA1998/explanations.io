@@ -1,24 +1,18 @@
+<!-- field-sizing: content; is not widely supported in Safari & Firefox, only Chrome & Edge -->
 <textarea 
   {value}
   {placeholder}
   {readonly}
   bind:this={element} 
-  on:input={(e) => {
-    auto_grow(element)
-    dispatch('input', e.target.value)
-  }}
+  on:input={e => handleInput(e)}
   on:focusin
   on:focusout
   rows={numberOfInitialRowsIfEmpty}
   style="
-    width: 100%;
-   --nonFocusedPlaceholderOpacity: {nonFocusedPlaceholderOpacity};
-   --fontSizeIncludeUnits: {fontSizeIncludeUnits};
-   border: 0px solid lightgrey;
-   border-radius: 8px;
-   padding: 0px;
-   background-color: {backgroundColor};
-   color: {color};
+    --nonFocusedPlaceholderOpacity: {nonFocusedPlaceholderOpacity};
+    --fontSizeIncludeUnits: {fontSizeIncludeUnits};
+    background-color: {backgroundColor};
+    color: {color};
   "
   class:reset-default-styling={resetDefaultStyling}
 />
@@ -37,30 +31,57 @@
   export let backgroundColor = 'transparent'
   export let color = 'rgb(60, 60, 60)'
 
+  let element
+  const dispatch = createEventDispatcher()
+
   $: if (willTriggerFocus) {
     element.focus()
     dispatch("manually-focused")
   }
 
-  const dispatch = createEventDispatcher()
-
   onMount(() => {
-    auto_grow(element)
+    auto_grow()
   })
 
-  let element
-  function auto_grow(element) {
-    element.style.height = "auto";
-    element.style.height = (element.scrollHeight)+"px";
+  function handleInput (e) {
+    dispatch('input', e.target.value)
+    auto_grow() // adjust immediately for latency compensation, because `value` gets updated with a debounce delay
+  }
+
+  // assumes element is already mounted
+  function auto_grow () {
+    element.style.height = 'auto'
+
+    // we're leverage CSS's layout calculations to compute the correct height
+    // so we wait till that's completed before setting that height
+    requestAnimationFrame(() => {
+      element.style.height = (element.scrollHeight)+"px"
+    })
   }
 </script>
 
 <style>
   textarea {
-    resize: none;
+    box-sizing: border-box;
+
+    width: 100%;
+    border: 0px solid lightgrey;
+    border-radius: 8px;
+    padding: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+    /* don't let user resize the textarea by dragging the bottom right corner */
+    resize: none; 
     overflow: hidden;
-    min-height: 50px;
+
+    /* removes the default black outline when the textarea is selected */
+    outline: none; 
+
     font-size: var(--fontSizeIncludeUnits);
+
+    /* eventual modern solution, but not supported in Safari & Firefox */
+    /* field-sizing: content; */
   }
 
   textarea::placeholder {

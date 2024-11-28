@@ -122,8 +122,6 @@
   }
   let undoStrokeIdx = null // Optional(int)
 
-  let debouncerTimeout
-
   let DropdownMenu
   let FileUploadButton  
 

@@ -46,28 +46,30 @@
           position: relative;
         "
       >
-        <!-- boardDoc.path doesn't have a trailing slash `/`, unlike boardPath (which was used for legacy reasons) -->
-        <!-- TO-DO: refactor the Blackboard to expose the menu list with slots -->
-        <Blackboard
-          {strokesArray}
-          {canvasWidth}
-          {canvasHeight}
-          currentTimeOverride={currentTime}
-          on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-          on:board-wipe={deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })}
+        {#if strokesArray && theDoc}
+          <!-- boardDoc.path doesn't have a trailing slash `/`, unlike boardPath (which was used for legacy reasons) -->
+          <!-- TO-DO: refactor the Blackboard to expose the menu list with slots -->
+          <Blackboard
+            {strokesArray}
+            {canvasWidth}
+            {canvasHeight}
+            currentTimeOverride={currentTime}
+            on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+            on:board-wipe={deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })}
 
-          backgroundImageDownloadURL={theDoc?.backgroundImageDownloadURL}
-          on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
-          on:background-reset={() => deleteBackgroundImageFromSlide(theDoc)}
-          
-          isDeletable={boardDoc.slideIDs.length > 1}
-          on:board-delete={async () => {
-            if (confirm(`Are you sure you want to delete board ${i+1}? (Other boards won't be affected.)`)) {
-              await deleteSlideFromMultislide({ slideID, multislidePath: boardDoc.path })
-              changeToSlideIdx(idxOfFocusedSlide - 1)
-            }
-          }}
-        />
+            backgroundImageDownloadURL={theDoc.backgroundImageDownloadURL}
+            on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
+            on:background-reset={() => deleteBackgroundImageFromSlide(theDoc)}
+            
+            isDeletable={boardDoc.slideIDs.length > 1}
+            on:board-delete={async () => {
+              if (confirm(`Are you sure you want to delete board ${i+1}? (Other boards won't be affected.)`)) {
+                await deleteSlideFromMultislide({ slideID, multislidePath: boardDoc.path })
+                changeToSlideIdx(idxOfFocusedSlide - 1)
+              }
+            }}
+          />
+        {/if}
       </div>
     </RenderlessListenToStrokes>
   </RenderlessListenToDoc>
@@ -94,19 +96,18 @@
           <!-- user doesn't necessarily start from slide 0, so ensure initial state is correct -->
           <ReusableRoundButton 
             on:click={() => callFuncsInSequence(
-                () => updateBoardRecordState(boardDoc.path, 'mid_record'),
-                startRecording,
-                startStopwatch,
-                () => isRecording = true,
-                () => {
-                  timingOfSlideChanges.push({
-                    toIdx: idxOfFocusedSlide,
-                    timing: 0
-                  })
-                },
-                () => willPreventPageLeave.set(true)
-              )
-            }
+              () => updateBoardRecordState(boardDoc.path, 'mid_record'),
+              startRecording,
+              startStopwatch,
+              () => isRecording = true,
+              () => {
+                timingOfSlideChanges.push({
+                  toIdx: idxOfFocusedSlide,
+                  timing: 0
+                })
+              },
+              () => willPreventPageLeave.set(true)
+            )}
             backgroundColor="rgb(80, 80, 80, 0.9)" textColor="cyan" isBordered
           >
             Record

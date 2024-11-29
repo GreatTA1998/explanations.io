@@ -209,8 +209,8 @@
     }
   }
 
-  $: if (bgCtx && backgroundImageDownloadURL) {
-    updateBackground()
+  $: if (bgCtx) {
+    updateBackground(backgroundImageDownloadURL)
   }
 
   $: normalizedLineWidth = $currentTool.lineWidth * (canvasWidth / $assumedCanvasWidth)
@@ -233,9 +233,12 @@
   }
 
   // detect backgroundImageDownloadURL
+  // note: it's equally important to delete the background if URL no longer exists
   function updateBackground () {
     bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
-    renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+    if (backgroundImageDownloadURL) {
+      renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+    }
   }
 
   function updateCanvasUI () {

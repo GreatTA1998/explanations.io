@@ -27,16 +27,10 @@
 
     {#if commentDocs}
       {#each commentDocs as commentDoc}
-        <div class="copied-from-old-explain">{commentDoc.content}</div>
-
-        <div class="copied-from-old-explain-2" style="display: flex; align-items: center;">
-          {displayDate(commentDoc.isoStringOfDate)} by {commentDoc.creatorName || commentDoc.creatorUID}
-          {#if commentDoc.creatorUID === $user.uid || !commentDoc.creatorUID}
-            <span style="margin-left: 6px; cursor: pointer; font-size: 16px;" on:click={() => deleteComment(commentDoc)} class="material-icons">
-              delete_forever
-            </span>
-          {/if}
-        </div>
+        <CommentsColumnComment 
+          comment={commentDoc} 
+          on:comment-delete={() => deleteComment(commentDoc)}
+        />
       {/each}
     {/if}
   </RenderlessListenToCollection>
@@ -44,6 +38,7 @@
 
 <script>
   import RenderlessListenToCollection from '$lib/RenderlessListenToCollection.svelte'
+  import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID, displayDate } from '/src/helpers/utility.js'
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
@@ -116,18 +111,5 @@
     border-bottom: 2px solid black;
     color: black;
     font-weight: 600;
-  }
-
-  .copied-from-old-explain {
-    font-size: .875rem;
-    font-weight: 400;
-    line-height: 1.375rem;
-    letter-spacing: .0071;
-    margin-top: 1vw;
-  }
-
-  .copied-from-old-explain-2 {
-    color: rgba(0,0,0,.6) !important;
-    font-size: 0.75rem !important;
   }
 </style>

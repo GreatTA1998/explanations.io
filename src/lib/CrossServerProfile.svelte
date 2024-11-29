@@ -45,7 +45,7 @@
               {video.description}
             </div>
 
-            <UnifiedDoodleVideo 
+            <GeneralizedVideoDisplay
               {video} 
               {videoWidth}
             />
@@ -61,7 +61,7 @@
   import { collectionGroup, query, where, getDocs, limit, getFirestore } from "firebase/firestore"
   import { getFirestoreQuery } from '/src/helpers/crud.js'
   import CreatorCircularAvatar from '$lib/CreatorCircularAvatar.svelte'
-  import UnifiedDoodleVideo from '$lib/UnifiedDoodleVideo.svelte'
+  import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import TopNavbar from '$lib/TopNavbar.svelte'
   import { getFirestoreDoc } from '/src/helpers/crud.js'
 

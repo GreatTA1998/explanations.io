@@ -64,7 +64,7 @@
 <script>
   // TO-DO: fix drifting center of rotation
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
+  import ReusableDoodleVideo from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import { getRandomColor, roundedToFixed } from '/src/helpers/utility.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'

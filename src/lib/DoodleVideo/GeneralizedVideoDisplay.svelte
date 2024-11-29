@@ -83,10 +83,10 @@
 
 <script>
   import EurekaButton from '$lib/EurekaButton.svelte'
-  import ReusableDoodleVideo from '$lib/ReusableDoodleVideo.svelte'
+  import ReusableDoodleVideo from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
-  import FullscreenModule from '$lib/FullscreenModule.svelte'
-  import HDMultislideVideo from '$lib/HDMultislideVideo.svelte'
+  import FullscreenModule from '$lib/DoodleVideo/FullscreenModule.svelte'
+  import HDMultislideVideo from '$lib/DoodleVideo/MultiboardHD.svelte'
   import CreatorChannelCard from '$lib/CreatorChannelCard.svelte'
 
   import { updateFirestoreDoc } from '/src/helpers/crud.js'

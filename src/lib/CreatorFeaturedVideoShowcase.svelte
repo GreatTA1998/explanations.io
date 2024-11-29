@@ -13,10 +13,8 @@
     />
   </div>
   
-  <RenderlessListenToBoard dbPath={boardDbPath}
-    let:boardDoc={boardDoc}
-  >	
-    <UnifiedDoodleVideo
+  <RenderlessListenToBoard dbPath={boardDbPath} let:boardDoc={boardDoc}>
+    <GeneralizedVideoDisplay
       video={boardDoc}
       videoWidth={previewWidth}
       willHideSliderForPreview={true}
@@ -27,7 +25,7 @@
 <script>
   import CreatorChannelCard from '$lib/CreatorChannelCard.svelte'
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import UnifiedDoodleVideo from '$lib/UnifiedDoodleVideo.svelte'
+  import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import { goto } from '$app/navigation'
 
   export let originalQuestion = ''

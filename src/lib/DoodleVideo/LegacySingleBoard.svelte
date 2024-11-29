@@ -110,9 +110,9 @@
 </div>
 
 <script>
-  import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
+  import { connectTwoPoints, drawStroke, renderBackground } from '../../helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '../store.js' // note `canvasWidth` was misleading
+  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '../../store.js' // note `canvasWidth` was misleading
   import Button, { Label } from '@smui/button'
 
   /**

@@ -75,13 +75,13 @@
 {/if}
 
 <script>
-  import HDDoodleVideo from '$lib/HDDoodleVideo.svelte'
+  import HDDoodleVideo from '$lib/DoodleVideo/LegacyHDSingleBoard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../store.js'
-  import { lazyCallable } from '../helpers/actions.js'
+  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../../store.js'
+  import { lazyCallable } from '/src/helpers/actions.js'
   import Button, { Icon } from '@smui/button'
-  import { user, adminUIDs } from '../store.js'
-  import { updateFirestoreDoc } from '../helpers/crud.js'
+  import { user, adminUIDs } from '/src/store.js'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { createEventDispatcher } from 'svelte'
   import { getFirestore, increment, collection, query, where, getDocs } from 'firebase/firestore';
 

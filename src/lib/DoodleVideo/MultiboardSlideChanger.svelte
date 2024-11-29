@@ -12,7 +12,7 @@
 
 	{#if canCreateNewSlide}
 		<!-- 2px padding to make it look centered -->
-		<div on:click={() => dispatch('slide-create')} class="slide-rectangle lowlighted-glow" style="font-size: 1.4rem; padding-bottom: 2px;">
+		<div on:click={() => dispatch('slide-create')} on:keydown class="slide-rectangle lowlighted-glow" style="font-size: 1.4rem; padding-bottom: 2px;">
 			+
 		</div>
 	{/if}

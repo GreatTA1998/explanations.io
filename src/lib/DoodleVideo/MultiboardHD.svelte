@@ -3,7 +3,7 @@
     <div style="display: flex; align-items: center; width: {canvasWidth}px;">  
       <slot />
 
-      <MultislideSlideChanger
+      <MultiboardSlideChanger
         slideIDs={boardDoc.slideIDs}
         {idxOfFocusedSlide}
         on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
@@ -127,9 +127,9 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { lazyCallable } from '/src/helpers/actions.js'
   import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user, adminUIDs } from '/src/store.js' // note `canvasWidth` was misleading
-  import MultislideDoodleVideoVisualSlide from '$lib/MultislideDoodleVideoVisualSlide.svelte'
+  import MultislideDoodleVideoVisualSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
+  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
   import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
 

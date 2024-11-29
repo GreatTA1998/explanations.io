@@ -5,7 +5,6 @@
     height: ${canvasHeight}px;
   `}
 >
-  <!-- on:click={togglePlayPause} -->
   <canvas 
     bind:this={FrontCanvas} 
     style={`
@@ -19,7 +18,7 @@
     }
   >
   </canvas>
-  <!-- rgb(46, 49, 49) -->
+
   <canvas 
     bind:this={BackCanvas} 
     style={`
@@ -37,11 +36,9 @@
 </div>
 
 <script>
-  import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
+  import { connectTwoPoints, drawStroke, renderBackground } from '/src/helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '../store.js' // note `canvasWidth` was misleading
-  import Button, { Label } from '@smui/button'
-  import { sequence } from '@sveltejs/kit/hooks';
+  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '/src/store.js' // note `canvasWidth` was misleading
 
   export let strokesArray
   export let currentTime

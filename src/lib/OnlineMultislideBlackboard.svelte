@@ -5,7 +5,7 @@
   
   <div style="margin-left: 20px;"></div>
 
-  <MultislideSlideChanger
+  <MultiboardSlideChanger
     slideIDs={boardDoc.slideIDs}
     {idxOfFocusedSlide}
     canCreateNewSlide
@@ -164,7 +164,7 @@
   import { willPreventPageLeave } from '/src/store'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
-  import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
+  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
   import { page } from '$app/stores'
   

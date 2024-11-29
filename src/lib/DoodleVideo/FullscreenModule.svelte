@@ -24,7 +24,7 @@
 
 <script>
   import { onMount } from 'svelte'
-  import CommentsColumn from '$lib/CommentsColumn.svelte'
+  import CommentsColumn from '$lib/DoodleVideo/CommentsColumn.svelte'
   import EurekaButton from '$lib/EurekaButton.svelte'
 
   export let previewWidth = window.innerWidth * 0.35

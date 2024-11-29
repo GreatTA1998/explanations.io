@@ -1,7 +1,7 @@
 <script>
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
-  import UnifiedDoodleVideo from '$lib/UnifiedDoodleVideo.svelte'
+  import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
   import LegacySingleSlideBlackboard from '$lib/LegacySingleSlideBlackboard.svelte'
   import { maxAvailableWidth, maxAvailableHeight, user } from '/src/store.js'
@@ -46,7 +46,7 @@
         <!-- 
           QUICKFIX: scale factor of 0.8 to take into account of the slides so you can see the whole video with the slider
         -->
-        <UnifiedDoodleVideo
+        <GeneralizedVideoDisplay
           video={boardDoc}
           videoWidth={$maxAvailableWidth * 0.8}
           showEditDeleteButtons={true}

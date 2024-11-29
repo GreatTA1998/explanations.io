@@ -10,6 +10,8 @@
   export let classID
   export let questionID
 
+  const debouncedUpdateQuestionTitle = createDebouncedFunction(updateQuestionTitle, 1000)
+  const debouncedUpdateQuestionDescription = createDebouncedFunction(updateQuestionDescription, 1000)
   let questionDoc = {}
   let unsub = null
 
@@ -18,8 +20,6 @@
 
   $: questionRef = doc(getFirestore(), questionPath)
   $: questionID, createQuestionListener()
-
-  const debouncedUpdateQuestionTitle = createDebouncedFunction(updateQuestionTitle, 1000)
 
   function createQuestionListener () {
     if (unsub) unsub() // assume it's not async
@@ -38,44 +38,10 @@
     })
   }
 
-  async function debouncedUpdateQuestionDescription ({ detail, path }) {
-    const debouncedVersion = debounce(
-      () => updateQuestionDescription({ detail, path }),
-      1000
-    ) 
-    debouncedVersion({ detail })
-  }
-
   async function updateQuestionDescription ({ detail, path }) {
     updateFirestoreDoc(path, {
       description: detail
     })
-  }
-
-  let t = { promise: null, cancel: _ => void 0 }
-
-  // Snippet from: https://stackoverflow.com/a/68228099/7812829
-  // NOTE: this literally returns a function (you still have to call it)
-  function debounce (task, ms) {
-    return async (...args) => {
-      try {
-        t.cancel()
-        t = deferred(ms)
-        await t.promise
-        await task(...args)
-      }
-      catch (_) { 
-        /* prevent memory leak */ 
-      }
-    }
-  }
-
-  function deferred (ms) {
-    let cancel, promise = new Promise((resolve, reject) => {
-      cancel = reject
-      setTimeout(resolve, ms)
-    })
-    return { promise, cancel }
   }
 </script>
 

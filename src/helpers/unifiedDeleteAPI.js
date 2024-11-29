@@ -22,13 +22,7 @@ import { goto } from '$app/navigation'
 import { deleteObject, getStorage, ref } from 'firebase/storage'
 
 // TO-DO:
-// 1. Ability to delete an individual multislide blackboard e.g. if it's unused
-// 1. Be careful about deleting questions, because it'd delete the videos too
-// 2. Deleting the question that was used as "mostRecentShowcase" for the server will cause the server to not work properly
-// 4. Ensure that question attachments each have a `storagePath` property
-
-// WARNING:
-// 1. ReusableDoodleVideo i.e. legacy videos can no longer be deleted
+// 1. Deleting the question that was used as "mostRecentShowcase" for the server will cause the server to not work properly
 
 // every deletion function will also take into account side-effects like updating parent pointers
 // for strokes deletion, use batch delete not recursive delete (faster, even if more inefficient)
@@ -102,7 +96,10 @@ export async function deleteQuestion ({ questionDoc, classID }) {
 
   const classPath = `classes/${classID}`
 
-  // DELETE BLACKBOARDS
+  // DELETE VIDEOS & BLACKBOARDS
+  // Note: this is a dangerous, but a necessary operation for correctness. 
+  // In practice, we don't allow users to delete questions until all its videos have been moved somewhere, so this question will 
+  // never be directly called until it's safe to do so. 
   const promises = []
   for (const boardID of questionDoc.blackboardIDs) {
     const promise = getFirestoreDoc(`${classPath}/blackboards/${boardID}/`)
@@ -110,15 +107,16 @@ export async function deleteQuestion ({ questionDoc, classID }) {
       .catch(error => alert(error))
     promises.push(promise)
   }
-  await Promise.all(promises)
 
-  // note NO double plural here anymore
-  // attachments need a `storagePath` property because it cannot be retrieved from downloadURL
-  if (questionDoc.attachmentStoragePaths) {
-    for (const path of questionDoc.attachmentStoragePaths) {
-      deleteObjectFromStorage(path)
+  // note the double plural here attachment`S`StoragePaths
+  if (questionDoc.attachmentsStoragePaths) {
+    for (const path of questionDoc.attachmentsStoragePaths) {
+      promises.push(
+        deleteObjectFromStorage(path)
+      )
     }
   }
+  await Promise.all(promises)
 
   // finally delete the room doc itself
   await deleteFirestoreDoc(classPath + `/questions/${questionDoc.id}/`)

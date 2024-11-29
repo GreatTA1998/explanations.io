@@ -116,20 +116,25 @@
 
     // UPLOADING ATTACHMENTS
     const uploadPromises = []
+
     const downloadURLs = []
     const fileNames = []
+    const storagePaths = []
 
     for (const attachment of attachments) {
       uploadPromises.push(
-        uploadFileToStorage(attachment).then(({ fileName, fileDownloadURL }) => {
+        uploadFileToStorage(attachment).then(({ fileName, fileDownloadURL, fileStoragePath }) => {
           downloadURLs.push(fileDownloadURL)
           fileNames.push(fileName)
+          storagePaths.push(fileStoragePath)
         })
       )
     }
 
     questionUpdateObj.attachmentsDownloadURLs = downloadURLs
     questionUpdateObj.attachmentsNames = fileNames
+    questionUpdateObj.attachmentsStoragePaths = storagePaths
+
     // END OF UPLOADING ATTACHMENTS
 
     await Promise.all(uploadPromises)
@@ -184,7 +189,10 @@
         getDownloadURL(pdfRef).then((downloadURL) => {
           resolve({
             fileName: pdfOrImageFile.name,
-            fileDownloadURL: downloadURL
+            fileDownloadURL: downloadURL,
+
+            // attachments need a `storagePath` property because it cannot be retrieved from downloadURL
+            fileStoragePath: pdfRef.fullPath 
           })
         })
       })

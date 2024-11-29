@@ -36,7 +36,7 @@
           <TextAreaAutoResizing 
             value={boardDoc.description || ''} 
             on:input={(e) => debouncedUpdateBoardDescription(e, boardDoc)}
-            placeholder="Board title / description"
+            placeholder="Multiboard title"
             readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
           />
         </div>

@@ -31,25 +31,23 @@
         
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>
-            {#if !isOfflineDemo}
-              {#if backgroundImageDownloadURL}
-                <Item on:click={() => dispatch('background-reset')}>
-                  Remove background
-                </Item>
-              {:else}
-                <Item on:click={clickHiddenInput}>
-                  Set background
-                </Item>
-              {/if}
+            {#if backgroundImageDownloadURL}
+              <Item on:click={() => dispatch('background-reset')} style="margin-bottom: 0px;">
+                Remove background
+              </Item>
+            {:else}
+              <Item on:click={clickHiddenInput} style="margin-bottom: 0px;">
+                Set background
+              </Item>
             {/if}
 
-            <Item on:SMUI:action={() => dispatch('board-wipe')}>
+            <Item on:SMUI:action={() => dispatch('board-wipe')} style="margin-bottom: 0px;">
               Wipe board
             </Item>    
-
-            {#if !isOfflineDemo}
-              <Item on:SMUI:action={() =>  dispatch('board-delete')}>
-                Delete board 
+            
+            {#if isDeletable}
+              <Item on:SMUI:action={() =>  dispatch('board-delete')} style="margin-bottom: 0px;">
+                Delete board
               </Item>
             {/if}
           </List> 
@@ -99,7 +97,7 @@
   export let hideToolbar = false
 
   // QUICKFIX
-  export let isOfflineDemo = false
+  export let isDeletable = true
 
   $: if (currentTimeOverride) {
     currentTime = currentTimeOverride
@@ -211,8 +209,8 @@
     }
   }
 
-  $: if (bgCtx) {
-    updateBackground(backgroundImageDownloadURL)
+  $: if (bgCtx && backgroundImageDownloadURL) {
+    updateBackground()
   }
 
   $: normalizedLineWidth = $currentTool.lineWidth * (canvasWidth / $assumedCanvasWidth)

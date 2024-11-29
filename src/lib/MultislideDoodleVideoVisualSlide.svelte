@@ -50,6 +50,8 @@
   export let canvasHeight
   export let hasAudioSliderJumped
 
+  export let backgroundImageDownloadURL
+
   const dispatch = createEventDispatcher()
 
   let FrontCanvas
@@ -91,9 +93,14 @@
     handleResize(canvasWidth, canvasHeight)
   } 
 
+  $: if (backCtx && backgroundImageDownloadURL) {
+    backCtx.clearRect(0, 0, BackCanvas.scrollWidth, BackCanvas.scrollHeight)
+    renderBackground(backgroundImageDownloadURL, FrontCanvas, backCtx)
+  }
+
   onMount(() => {
     frontCtx = FrontCanvas.getContext('2d')
-    backCtx = BackCanvas.getContext('2d)')
+    backCtx = BackCanvas.getContext('2d')
 
     // display full preview before user starts video
     for (const stroke of strokesArray) {

@@ -1,9 +1,7 @@
 <div>
   {#if showSlideChanger}
     <div style="display: flex; align-items: center; width: {canvasWidth}px;">  
-      <slot>
-
-      </slot>
+      <slot />
 
       <MultislideSlideChanger
         slideIDs={boardDoc.slideIDs}
@@ -11,9 +9,7 @@
         on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
       />
 
-      <slot name="after">
-
-      </slot>
+      <slot name="after" />
     </div>
   {/if}
 
@@ -26,7 +22,7 @@
 
     <!-- share, delete button overlay on top -->
     {#if showEditDeleteButtons}
-      <div class="edit-delete-buttons">
+      <div class="edit-delete-buttons" style="width: {canvasWidth}px;">
         <!-- $adminUIDs.includes($user.uid) -->
         {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
           <div style="margin-right: 6px;">
@@ -41,7 +37,7 @@
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
         <span
-          on:click={startAudioPlayer} 
+          on:click={startAudioPlayer} on:keydown
           class="material-icons overlay-center" 
           style="color: rgba(230, 230, 230, 0.8);
           width: {240 * scaleFactor}px; 
@@ -55,37 +51,43 @@
       {/if} 
 
       {#each boardDoc.slideIDs as slideID, i}
-        <RenderlessFetchStrokes
-          dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-          let:fetchStrokes={fetchStrokes}
-          let:strokesArray={strokesArray}
-          on:mounted={(e) => {
-            slideIDToStrokesArray[slideID] = e.detail.strokesArray
-          }}
-        > 
-          <div 
-            use:lazyCallable={fetchStrokes}  
-            style="
-              position: absolute;
-              transform: scale(0.5); transform-origin: top left;
-              display: {idxOfFocusedSlide === i ? '' : 'none'};
-              width: {canvasWidth * 2}px; 
-              height: {canvasHeight * 2};
-            "
+        <RenderlessListenToDoc autoListen
+          docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
+          let:theDoc={slideDoc}
+        >
+          <RenderlessFetchStrokes
+            dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+            let:fetchStrokes={fetchStrokes}
+            let:strokesArray={strokesArray}
+            on:mounted={(e) => {
+              slideIDToStrokesArray[slideID] = e.detail.strokesArray
+            }}
           > 
-            {#if strokesArray}
-              <MultislideDoodleVideoVisualSlide
-                {currentTime}
-                {strokesArray}
-                canvasWidth={canvasWidth * 2}
-                canvasHeight={canvasHeight * 2}
-                {hasPlaybackStarted}
-                {hasAudioSliderJumped}
-                on:slider-jump-sync={() => hasAudioSliderJumped = false}
-              />
-            {/if}
-          </div>
-        </RenderlessFetchStrokes>
+            <div 
+              use:lazyCallable={fetchStrokes}  
+              style="
+                position: absolute;
+                transform: scale(0.5); transform-origin: top left;
+                display: {idxOfFocusedSlide === i ? '' : 'none'};
+                width: {canvasWidth * 2}px; 
+                height: {canvasHeight * 2};
+              "
+            > 
+              {#if strokesArray && slideDoc}
+                <MultislideDoodleVideoVisualSlide
+                  {currentTime}
+                  {strokesArray}
+                  canvasWidth={canvasWidth * 2}
+                  canvasHeight={canvasHeight * 2}
+                  {hasPlaybackStarted}
+                  {hasAudioSliderJumped}
+                  backgroundImageDownloadURL={slideDoc.backgroundImageDownloadURL}
+                  on:slider-jump-sync={() => hasAudioSliderJumped = false}
+                />
+              {/if}
+            </div>
+          </RenderlessFetchStrokes>
+        </RenderlessListenToDoc>
       {/each}
     </div>
 
@@ -127,11 +129,9 @@
   import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user, adminUIDs } from '/src/store.js' // note `canvasWidth` was misleading
   import MultislideDoodleVideoVisualSlide from '$lib/MultislideDoodleVideoVisualSlide.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
-  import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-  import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery } from '/src/helpers/crud.js'
   import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
   import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
+  import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
 
   export let audioDownloadURL
   export let boardDoc
@@ -144,7 +144,6 @@
   export let showEditDeleteButtons
   export let showSlideChanger
 
-  const boardPath = `classes/${classID}/blackboards/${boardDoc.id}`
   const dispatch = createEventDispatcher()
   let intervalID = ''
   let hasAudioSliderJumped = false

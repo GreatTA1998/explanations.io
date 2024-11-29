@@ -219,18 +219,34 @@ export async function deleteMultislideBlackboard ({ roomDoc, boardDoc }) {
 }
 
 // delete the strokes, background image (N/A for now), the affected pointers in its parent, and the slide itself  
-async function deleteSlideFromMultislide ({ slideID, multislidePath }) {
+export async function deleteSlideFromMultislide ({ slideID, multislidePath }) {
   const slidePath = multislidePath + `/slides/${slideID}`
   const strokesArray = await getFirestoreCollection(slidePath + '/strokes')
 
+  const promises = []
+
   // talk about how .then()'s parallelism advantages is mirrored by encapsulating async/await into functions of equal size
-  await deleteStrokesFromSlide({ strokesArray, slidePath})
+  promises.push(
+    deleteStrokesFromSlide({ strokesArray, slidePath})
+  )
+
+  // delete the background image if any 
+  const slideDoc = await getFirestoreDoc(slidePath)
+  if (slideDoc.backgroundImageStoragePath) {
+    promises.push(
+      deleteBackgroundImageFromSlide(slideDoc)
+    )
+  }
 
   // delete the pointer first so the parent doesn't reference a non-existent slide
   // technically doesn't matter but...helps with sanity
-  await updateFirestoreDoc(multislidePath, {
-    slideIDs: arrayRemove(slideID)
-  })
+  promises.push(
+    updateFirestoreDoc(multislidePath, {
+      slideIDs: arrayRemove(slideID)
+    })
+  )
+
+  await Promise.all(promises)
 
   // delete the slide itself
   deleteFirestoreDoc(slidePath)
@@ -267,6 +283,23 @@ export async function deleteStrokesFromSlide ({ strokesArray, preserveInitialStr
 
     await Promise.all(promises)
 
+    resolve()
+  })
+}
+
+export async function deleteBackgroundImageFromSlide (slideDoc) {
+  return new Promise(async (resolve) => {
+    const promises = []
+    promises.push(
+      deleteObjectFromStorage(slideDoc.backgroundImageStoragePath)
+    )
+    promises.push(
+      updateFirestoreDoc(slideDoc.path, {
+        backgroundImageDownloadURL: deleteField(),
+        backgroundImageStoragePath: deleteField()
+      }) 
+    )
+    await Promise.all(promises)
     resolve()
   })
 }

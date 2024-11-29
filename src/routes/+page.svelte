@@ -1,6 +1,6 @@
 <TopNavbar>
 	<div slot="tab-section" class="my-tab-container">
-		<div on:click={() => activeTabName = 'Learn'} 
+		<div on:click={() => activeTabName = 'Learn'} on:keydown
 			class="tab-full-item"
 			class:active-underline-indicator={activeTabName === 'Learn'}
 		>
@@ -13,7 +13,7 @@
 			</div>
 		</div>
 
-		<div on:click={() => activeTabName = 'Teach'} 
+		<div on:click={() => activeTabName = 'Teach'} on:keydown
 			class="tab-full-item"
 			class:active-underline-indicator={activeTabName === 'Teach'}
 		>

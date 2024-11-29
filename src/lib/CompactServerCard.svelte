@@ -17,8 +17,7 @@
   {/if} -->
 
   <div style="width: 100%; z-index: 1; position: absolute; bottom: 8px; color: rgb(248, 249, 249);">
-    <div style="display: flex; align-items: center; justify-content: space-around; font-size: 16px; opacity: 1.0; font-weight: 500;"
-    >
+    <div style="display: flex; align-items: center; justify-content: space-around; font-size: 16px; font-weight: 500;">
       <BaseStatDisplayIcon
         statName=""
         iconName="person"
@@ -39,8 +38,8 @@
       border-radius: 8px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-      opacity: 0.9;
-      "
+      opacity: 0.8;
+    "
     >
       <RenderlessListenToBoard
         dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
@@ -54,7 +53,7 @@
               let:strokesArray={strokesArray}
               autoFetchStrokes={false}
             > 
-              <HDBlackboard
+              <NewHDBlackboard
                 {strokesArray}
                 canvasWidth={highDefinitionWidth * 0.7}
                 canvasHeight={highDefinitionWidth * 3/4 * 0.7}
@@ -71,7 +70,7 @@
               let:strokesArray={strokesArray}
               autoFetchStrokes={false}
             > 
-              <HDBlackboard
+              <NewHDBlackboard
                 {strokesArray}
                 canvasWidth={highDefinitionWidth * 0.7}
                 canvasHeight={highDefinitionWidth * 3/4 * 0.7}
@@ -86,7 +85,7 @@
       </RenderlessListenToBoard>
     </div>
   {:else}
-    <div class="core-shadow" style="opacity: 0.9; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
+    <div class="core-shadow" style="opacity: 0.8; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
 
     </div>
   {/if}
@@ -96,7 +95,7 @@
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import BaseStatDisplayIcon from '$lib/BaseStatDisplayIcon.svelte'
-  import HDBlackboard from '$lib/HDBlackboard.svelte'
+  import NewHDBlackboard from '$lib/NewHDBlackboard.svelte'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { assumedCanvasWidth, assumedCanvasHeight, user } from '/src/store.js'
   import { handleServerRedirect } from '/src/helpers/everythingElse.js'

@@ -93,16 +93,17 @@
         class="room-title question" 
       >
 
-      {#if questionDoc.description}
+      {#if questionDoc.description || questionDoc.askerUID === $user.uid}
         <div style="width: {$maxAvailableWidth}px; margin-top: 14px; margin-bottom: 0px">
           <TextAreaAutoResizing 
             value={questionDoc.description} 
             on:input={(e) => debouncedUpdateQuestionDescription({ detail: e.detail, path: questionDoc.path })}
-            placeholder="" 
+            placeholder="Description..." 
             readonly={$user.uid !== questionDoc.askerUID}
           />
         </div>
       {/if}
+
       {#if questionDoc.attachmentsDownloadURLs} 
         <div style="display: flex; column-gap: 16px">
           {#each questionDoc.attachmentsDownloadURLs as attachmentURL, i}

@@ -1,5 +1,5 @@
 <TopNavbar>
-	<div slot="tab-section" class="my-tab-container">
+	<!-- <div slot="tab-section" class="my-tab-container">
 		<div on:click={() => activeTabName = 'Learn'} on:keydown
 			class="tab-full-item"
 			class:active-underline-indicator={activeTabName === 'Learn'}
@@ -24,7 +24,7 @@
 				Teach
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="webflow-container">
 		{#if activeTabName === 'Learn'}

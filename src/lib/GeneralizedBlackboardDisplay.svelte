@@ -33,12 +33,14 @@
     {:else}
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; row-gap: 12px;">
         <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
-          <TextAreaAutoResizing 
-            value={boardDoc.description || ''} 
-            on:input={(e) => debouncedUpdateBoardDescription(e, boardDoc)}
-            placeholder="Multiboard title"
-            readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
-          />
+          {#if boardDoc.description || boardDoc.creatorUID === $user.uid}
+            <TextAreaAutoResizing 
+              value={boardDoc.description || ''} 
+              on:input={(e) => debouncedUpdateBoardDescription(e, boardDoc)}
+              placeholder="Title..."
+              readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
+            />
+          {/if}
         </div>
       </div>
 

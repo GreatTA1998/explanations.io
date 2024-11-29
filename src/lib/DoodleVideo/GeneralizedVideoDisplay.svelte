@@ -32,6 +32,7 @@
             <div style="min-width: 240px; margin-right: 8px;">
               <!-- TO-DO: make this dynamic -->
               <CreatorChannelCard
+                uid={video.creatorUID}
                 firstNameAndKeyInfo={video.creatorName}
                 collegeAndYear="MIT '25"
                 bio="Top 21 USA(J)MO"

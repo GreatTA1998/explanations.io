@@ -46,15 +46,7 @@
 	{#if videoWidth}
 		<div class="alternative-flexbox">
 			{#each showcasedCreators as creator}
-				<CreatorFeaturedVideoShowcase 
-					originalQuestion={creator.originalQuestion}
-					boardDbPath={creator.boardDbPath}
-					firstNameAndKeyInfo={creator.firstNameAndKeyInfo}
-					collegeAndYear={creator.collegeAndYear}
-					bio={creator.bio}
-					uid={creator.uid}
-					previewWidth={videoWidth}
-				/>
+		
 			{/each}
 		</div>
 	{/if}
@@ -82,7 +74,6 @@
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
-	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
 	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
 

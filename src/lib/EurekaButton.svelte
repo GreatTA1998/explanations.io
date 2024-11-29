@@ -8,9 +8,9 @@
 
       I understand this video
 
-      <!-- <div style="color: black; margin-left: 8px; font-weight: 500;">
+      <div style="color: black; margin-left: 8px; font-weight: 500;">
         {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
-      </div> -->
+      </div>
     </div>
   </div>
 {/if}
@@ -38,13 +38,14 @@
     })
 
     getFirestoreDoc(`/users/${boardDoc.creatorUID}`)
-      .then(creatorDoc => 
+      .then(creatorDoc => {
+        console.log('sending email to =', creatorDoc.email)
         sendEmail({
           toWho: creatorDoc.email,
           subject: `[explanations.io] ${$user.name} understood your video`,
           content: `Just a quick email to let you know ${$user.name} clicked "I understand this video" for your ${boardDoc.description} video.`
         })
-    )
+      })
   }
 </script>
 

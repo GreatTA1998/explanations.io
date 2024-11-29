@@ -26,17 +26,16 @@
 
     <div>
       <PsetPDFUploader
-        on:file-uploaded={(e) => { 
-          pdfOrImageAttachment = e.detail
-        }}
+        on:files-attached={(e) => attachments = [...attachments, ...e.detail]}
       />
-      {#if pdfOrImageAttachment}
+
+      {#each attachments as attachment}
         <div style="margin-top: 12px;">
-          <div style="font-size: 12px; color: gray;">
-            {pdfOrImageAttachment.name}
+          <div style="font-size: 12px; color: #0066cc">
+            {attachment.name}
           </div>
         </div>
-      {/if}
+      {/each}
     </div>
 
     <!-- purple: '#5d0068' -->
@@ -91,9 +90,10 @@
   let isSignInPopupOpen = false
   let questionTitleInput = ''
   let questionDescriptionInput = ''
-  let pdfOrImageAttachment = null
-  let isUploadingQuestion = false
 
+  let attachments = []
+
+  let isUploadingQuestion = false
 
   async function submitQuestion () {
     if (questionTitleInput === '') {
@@ -113,11 +113,26 @@
       blackboardIDs: [],
       isAnswered: false
     }
-    if (pdfOrImageAttachment) {
-      const { fileName, fileDownloadURL } = await uploadFileToStorage(pdfOrImageAttachment)
-      questionUpdateObj.attachmentsDownloadURLs = arrayUnion(fileDownloadURL)
-      questionUpdateObj.attachmentsNames = arrayUnion(fileName)
+
+    // UPLOADING ATTACHMENTS
+    const uploadPromises = []
+    const downloadURLs = []
+    const fileNames = []
+
+    for (const attachment of attachments) {
+      uploadPromises.push(
+        uploadFileToStorage(attachment).then(({ fileName, fileDownloadURL }) => {
+          downloadURLs.push(fileDownloadURL)
+          fileNames.push(fileName)
+        })
+      )
     }
+
+    questionUpdateObj.attachmentsDownloadURLs = downloadURLs
+    questionUpdateObj.attachmentsNames = fileNames
+    // END OF UPLOADING ATTACHMENTS
+
+    await Promise.all(uploadPromises)
 
     const newQuestionID = getRandomID()
 
@@ -139,6 +154,7 @@
     const promises = []
     
     const classPath = `classes/${classID}/`
+
     promises.push(
       setFirestoreDoc(classPath + `questions/${newQuestionID}`, questionUpdateObj)
     )

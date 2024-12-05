@@ -1,5 +1,29 @@
 * {
 	font-family: 'Inter', sans-serif;
+	// TO-DO: revert the question button to its original appearance
+	box-sizing: border-box;
+}
+
+/* Reset button's default styling */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: inherit;
+
+  /* Fix for Safari/iOS */
+	appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Remove the focus ring (though consider keeping it for accessibility) */
+button:focus {
+  outline: none;
 }
 
 // responsive typography based on Kevin Powell

@@ -329,13 +329,9 @@
       startTime: currentTime,
       color: $currentTool.color,
       lineWidth: $currentTool.lineWidth,
-      // // why do we store `maxAvailableWidth` as a property here?
-      // I believe this is un-used (DoodleVideo normalizes width because we do everything relative to an `assumedCanvasWidth`
-      // and scale it up to whatever the actual canvasSize is, but I'll keep it here just in case I'm wrong since it does no harm)
-      // maxAvailableWidth: $maxAvailableWidth, 
       isErasing: $currentTool.type === 'eraser',
       points: [],
-      sessionID: '123' // TODO: initialize in store
+      sessionID: '123' // TODO: use browserTabID in the future
     }
   }
 

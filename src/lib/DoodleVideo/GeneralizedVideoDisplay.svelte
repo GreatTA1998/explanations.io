@@ -4,7 +4,6 @@
     - Re-introduce ability to re-arrange videos
     - Re-introduce ability for nano questions
     - Re-introduce ability to share video as a link
-    - Display the creator card somewhere
 -->
 {#if video}
   <FullscreenModule 

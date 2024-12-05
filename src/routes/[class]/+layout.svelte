@@ -1,4 +1,7 @@
-<div class="grid-layout robust-ios-space-filling">
+<div 
+  class="grid-layout robust-ios-space-filling"
+  style="--drawer-width: {$drawerWidth}px;"
+>
   <div class="top-navbar">
     <TopNavbar />
   </div>
@@ -26,12 +29,28 @@
   import { user, drawerWidth, classServerDoc, recentSearchedServerDoc } from '/src/store.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
   import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
+  import { onMount, onDestroy } from 'svelte'
   import '$lib/_Elevation.scss'
+  import { blackboardWidth, videoPreviewWidth, videoCinemaWidth } from '/src/store.js';
+  import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
 
   export let data
 
   let { classID, roomID } = data
   let unsubClassDocListener = null
+  let resizeObserver = null
+  let MainContent = null
+
+  onMount(() => {
+    MainContent = document.getElementById('main-content')
+
+    resizeObserver = new ResizeObserver(entries => {
+      // we don't debounce this because we don't want to trade-off a laggy drawer resize experience
+      // for a more performant inspector resize experience (which is not how the user uses the app)
+      computeDimensionsForBlackboardsAndVideos()
+    })
+    resizeObserver.observe(MainContent, { box: 'border-box' })
+  })
 
   $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
 
@@ -39,6 +58,29 @@
     listenToClassDoc(classID)
     handleClassDocChange(classID)
     fetchRecentlySearchedClassDoc()
+  }
+
+  function computeDimensionsForBlackboardsAndVideos () {
+    requestAnimationFrame(() => {
+      MainContent = document.getElementById('main-content')
+      blackboardWidth.set(
+        getBlackboardModuleSize({ 
+          containerWidth: MainContent.offsetWidth,
+          containerHeight: MainContent.offsetHeight
+        })
+      )
+      
+      videoPreviewWidth.set(
+        getPreviewVideoWidth({    
+          containerWidth: MainContent.offsetWidth,
+          containerHeight: MainContent.offsetHeight
+        })
+      )
+
+      videoCinemaWidth.set(
+        getCinemaVideoSize()
+      )
+    })
   }
 
   async function handleClassDocChange () {
@@ -59,25 +101,18 @@
   function listenToClassDoc (classID) {
     if (unsubClassDocListener) unsubClassDocListener()
     const db = getFirestore()
-    unsubClassDocListener =onSnapshot(doc(db, `/classes/${classID}`), snapshot => {
+    unsubClassDocListener = onSnapshot(doc(db, `/classes/${classID}`), snapshot => {
       classServerDoc.set(snapshot.data())
     })
   }
 </script>
 
 <style> 
-  /* COMMENTED OUT NOV 26, SAFELY REMOVE DEC 1 IF NO UNEXPECTED PROBLEMS ARISE */
-  /* * :global(.app-content) {
-    flex: auto;
-    overflow: auto;
-    position: relative;
-    flex-grow: 1;
-  } */
 
   .grid-layout {
     display: grid;
     grid-template-rows: 56px 1fr;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: var(--drawer-width) 1fr;
     grid-template-areas: 'navbar navbar'
                          'sidebar main';
     background-color: var(--bg-off-white);

@@ -35,3 +35,10 @@ export const whatIsBeingDraggedID = writable('')
 
 export const classServerDoc = writable({})
 export const recentSearchedServerDoc = writable({})
+
+// dimensions
+export const blackboardWidth = writable(0)
+export const videoPreviewWidth = writable(0)
+export const videoCinemaWidth = writable(0)
+
+export const videoCinemaLayout = writable('')

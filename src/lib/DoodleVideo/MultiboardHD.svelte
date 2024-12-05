@@ -108,8 +108,9 @@
         hasAudioSliderJumped = true
       }}
       controls
-      style={`width: ${canvasWidth}px; height: ${Math.min(90 * scaleFactor, 50)}px;`}
+      style={`width: ${canvasWidth}px; height: 50px`}
     >
+    <!-- ${Math.min(90 * scaleFactor, 50)}px; -->
     </audio>
   </div>
 </div>
@@ -118,11 +119,6 @@
   // we try to let `currentTime` represent `AudioPlayer.currentTime` as closely
   // as possible with reactive statements, so then we can use 
   // a reactive / declarative way to write the rest of this component
-
-  // TO-DO:
-  //   - an audio element that plays and dictates the time
-  //   - all the doodle visuals will play simultaneously
-  //   - finally, just have a spotlight on one
   import { revertToBoard } from '/src/helpers/unifiedDeleteAPI.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { lazyCallable } from '/src/helpers/actions.js'

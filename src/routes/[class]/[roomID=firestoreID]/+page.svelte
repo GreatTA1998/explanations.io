@@ -7,13 +7,13 @@
 	<div>
     <LeftDrawerToggleButton/>
     
-    <div style="padding: 16px;">
+    <div style="padding: {SIDE_PADDING}px;">
 
     <Textfield 
       disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
       value={roomDoc.name} on:input={(e) => updateRoomName(e)}
       class="room-title" 
-      style={`width: ${$maxAvailableWidth}px;`}
+      style={`width: ${$blackboardWidth}px;`}
     >
       <HelperText slot="helper" persistent>
         {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
@@ -72,19 +72,18 @@
 <script>
   import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
   import '$lib/_FourColor.scss'
-  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '/src/store.js'
+  import { browserTabID, user, maxAvailableWidth, blackboardWidth } from '/src/store.js'
   import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
   import { onMount, tick, onDestroy } from 'svelte'
-  import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
-  import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
-
+  import { SIDE_PADDING } from '/src/helpers/dimensions.js'
+  
   export let data
   let { classID, roomID } = data
   $: ({ classID, roomID } = data) // so it stays in sync when `data` changes

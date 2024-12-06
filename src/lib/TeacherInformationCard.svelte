@@ -26,14 +26,6 @@
       {helperDoc.bio || ''}
     </div>
 
-    <div style="margin-top: 16px; margin-bottom; 4px; position: relative; background-color: #e4ebe4; height: 4px; width: 100%; border-radius: 4px;">
-      <div style="position: absolute; background-color: darkgreen; width: {(numJoined / numNeeded) * 100}%; height: 4px; border-radius: 4px;"></div>
-    </div>  
-
-    <li style="font-size: 12px; color: darkgreen; font-weight: 400; margin-top: 4px; margin-right: 0px; margin-left: auto;">
-      {numJoined}/{numNeeded} to start teaching group
-    </li>
-
     <div style="display: flex; justify-content: space-between; margin-top: 16px; align-items: center;">
       <li>
         <b></b>    
@@ -60,7 +52,7 @@
         />
       </li>
 
-      <div on:click={() => goto(`/profile/${classID}/${helperDoc.uid}`)} style="font-size: 14px; border-radius: 8px; outline: 2px solid grey; padding: 4px 8px;">
+      <div on:click={() => goto(`/user/${helperDoc.uid}`)} style="font-size: 14px; border-radius: 8px; outline: 2px solid grey; padding: 4px 8px;">
         View full profile
       </div>
     </div>

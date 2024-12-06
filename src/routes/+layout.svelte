@@ -17,13 +17,12 @@
   import { initializeDatabase } from '../database.js'
   import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
-  import { hasFetchedUser, idOfServerNewUserWantedToEnter, user, userInfoFromAuthProvider } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider } from '../store.js'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { mixpanelLibrary } from '/src/mixpanel.js'
   import posthog from 'posthog-js'
 
   initializeDatabase()
@@ -49,11 +48,6 @@
   async function reactToUserChange (resultUser) {
     if (resultUser) {
       const { uid } = resultUser 
-
-      if ($idOfServerNewUserWantedToEnter) {
-        console.log('from a previous redirect request')
-        goto(`/${$idOfServerNewUserWantedToEnter}/request-video`)
-      }
 
       // NOTE: the partial hydration will give incorrect UIDs for accounts that need forwarding
       // partially hydrate the user so we can start rendering the page in parallel
@@ -126,10 +120,6 @@
 
   async function createMirrorUser ({ uid, firstName, lastName, name, phoneNumber, email, userRef }) {
     return new Promise(async (resolve) => {
-      mixpanelLibrary.track('Sign Up', {
-        isPhoneAccount: phoneNumber ? true : false
-      })
-
       const metadataRef = doc(db, 'metadata/78tDSRCiMHGnf8zcXkQt')
       const metadataSnap = await getDoc(metadataRef)
 
@@ -163,9 +153,6 @@
 
   async function listenToUserDocAndHandleForwarding (uid) {
     return new Promise((resolve, reject) => {
-      // https://docs.mixpanel.com/docs/tracking/how-tos/identifying-users
-      mixpanelLibrary.reset()
-      mixpanelLibrary.identify(uid)
       const mirrorUserRef = doc(db, `/users/${uid}`)
 
       unsubUserDocListener = onSnapshot(mirrorUserRef, (snap) => {

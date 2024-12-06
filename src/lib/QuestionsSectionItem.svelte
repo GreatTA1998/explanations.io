@@ -1,4 +1,5 @@
 <script>
+  import { deleteQuestion } from '/src/helpers/unifiedDeleteAPI.js'
   import { user, adminUIDs } from '/src/store.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -7,7 +8,6 @@
   import Menu from '@smui/menu'
 
   export let question
-  export let deleteQuestion
   export let classID
 
   let DropdownMenu
@@ -21,6 +21,7 @@
 
 <div 
   on:click={() => goto(`/${classID}/question/${question.id}`)} 
+  on:keydown
   class:selected={question.id === $page.params.questionID} 
   class="q-list-item"
 > 
@@ -34,13 +35,21 @@
 
     {#if $page.params.questionID && $user.uid}
       {#if question.askerUID === $user.uid || $adminUIDs.includes($user.uid)}
-        <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+        <span on:click={DropdownMenu.setOpen(true)} on:keydown class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
           more_vert
         </span>
 
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>      
-            <Item on:SMUI:action={() => deleteQuestion(question)}>
+            <Item on:SMUI:action={() => {
+              if (question.blackboardIDs.length > 0) {
+                alert('Cannot delete this question until all its blackboards are moved/deleted first')
+                return
+              }
+              if (confirm('Are you sure you want to delete this question?')) {
+                deleteQuestion({ questionDoc: question, classID })
+              }
+            }}>
               Delete question
             </Item>
           </List> 
@@ -72,6 +81,10 @@
     gap: 4px;
 
     cursor: pointer;
+  }
+
+  .q-list-item:hover {
+    background: lightgrey;
   }
 
   .q-title {

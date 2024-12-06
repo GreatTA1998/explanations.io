@@ -1,71 +1,150 @@
-<div class="drawer-container">
-  <!-- class="mdc-elevation--z{5}" -->
-  <Drawer style="background: rgb(251, 251, 250); overflow-y: auto; height: 100%; width: {$drawerWidth}px">
-    <Content>
+<div 
+  class="grid-layout robust-ios-space-filling"
+  style="--drawer-width: {$drawerWidth}px;"
+>
+  <div class="top-navbar">
+    <TopNavbar />
+  </div>
+
+  <div class="left-drawer">
+    {#key classID}
       <TheLeftDrawer 
         {classID}
         {roomID}
       />
-    </Content>
-  </Drawer>
+    {/key}
+  </div>
 
-  <AppContent class="app-content">
-    <main id="main-content">
-      <slot>
-  
-      </slot>
-    </main>
-  </AppContent>
+  <!-- this element's used to compute the max available dimensions -->
+  <div id="main-content">
+    <slot>
+
+    </slot>
+  </div>
 </div>
 
-<script>
+<script> 
   import TheLeftDrawer from '$lib/TheLeftDrawer.svelte'
-  import '$lib/_Elevation.scss'
-  import Drawer, { AppContent, Content } from '@smui/drawer'
-  import { user, drawerWidth, maxAvailableWidth, maxAvailableHeight } from '/src/store.js'
-  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import TopNavbar from '$lib/TopNavbar.svelte'
+  import { user, drawerWidth, classServerDoc, recentSearchedServerDoc } from '/src/store.js'
+  import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
   import { onMount } from 'svelte'
+  import '$lib/_Elevation.scss'
+  import { blackboardWidth, videoPreviewWidth, videoCinemaWidth } from '/src/store.js';
+  import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize, HEIGHTS } from '/src/helpers/dimensions.js'
 
-  export let data;
-  let { classID, roomID } = data;
-  $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
+  export let data
+
+  let { classID, roomID } = data
+  let unsubClassDocListener = null
+  let resizeObserver = null
+  let MainContent = null
 
   onMount(() => {
+    initializeCSSVariables()
+
+    MainContent = document.getElementById('main-content')
+
+    resizeObserver = new ResizeObserver(entries => {
+      // we don't debounce this because we don't want to trade-off a laggy drawer resize experience
+      // for a more performant inspector resize experience (which is not how the user uses the app)
+      computeDimensionsForBlackboardsAndVideos()
+    })
+    resizeObserver.observe(MainContent, { box: 'border-box' })
+  })
+
+  $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
+
+  $: {
+    listenToClassDoc(classID)
+    handleClassDocChange(classID)
+    fetchRecentlySearchedClassDoc()
+  }
+
+  function initializeCSSVariables () {
+    document.documentElement.style.setProperty('--title-height', `${HEIGHTS.TITLE}px`);
+    document.documentElement.style.setProperty('--board-changer-height', `${HEIGHTS.BOARD_CHANGER}px`);
+    document.documentElement.style.setProperty('--audio-slider-height', `${HEIGHTS.AUDIO_SLIDER}px`);
+  }
+
+  function computeDimensionsForBlackboardsAndVideos () {
+    requestAnimationFrame(() => {
+      MainContent = document.getElementById('main-content')
+      blackboardWidth.set(
+        getBlackboardModuleSize({ 
+          containerWidth: MainContent.offsetWidth,
+          containerHeight: MainContent.offsetHeight
+        })
+      )
+      
+      videoPreviewWidth.set(
+        getPreviewVideoWidth({    
+          containerWidth: MainContent.offsetWidth,
+          containerHeight: MainContent.offsetHeight
+        })
+      )
+
+      videoCinemaWidth.set(
+        getCinemaVideoSize()
+      )
+    })
+  }
+
+  async function handleClassDocChange () {
     if ($user.uid) {
       updateFirestoreDoc(`/users/${$user.uid}`, {
         mostRecentServerID: classID 
       })
-    }
-  })
+    }  
+  }
+
+  async function fetchRecentlySearchedClassDoc () {
+    if (!$user.recentSearchedServerID) return
+
+    const recentServerDoc = await getFirestoreDoc(`/classes/${$user.recentSearchedServerID}`)
+    recentSearchedServerDoc.set(recentServerDoc)
+  }
+
+  function listenToClassDoc (classID) {
+    if (unsubClassDocListener) unsubClassDocListener()
+    const db = getFirestore()
+    unsubClassDocListener = onSnapshot(doc(db, `/classes/${classID}`), snapshot => {
+      classServerDoc.set(snapshot.data())
+    })
+  }
 </script>
 
-<style>
-  /* These classes are only needed because the
-    drawer is in a container on the page. */
-  .drawer-container {
-    height: 100vh;
-    position: relative;
-    display: flex;
-    /* height: 350px;
-    max-width: 600px;
-    border: 1px solid
-      var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.1));
-    overflow: hidden;
-    z-index: 0; */
+<style> 
+
+  .grid-layout {
+    display: grid;
+    grid-template-rows: 56px 1fr;
+    grid-template-columns: var(--drawer-width) 1fr;
+    grid-template-areas: 'navbar navbar'
+                         'sidebar main';
+    background-color: var(--bg-off-white);
   }
- 
-  * :global(.app-content) {
-    flex: auto;
-    overflow: auto;
-    position: relative;
-    flex-grow: 1;
+
+  .robust-ios-space-filling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
- 
+
+  .top-navbar {
+    grid-area: navbar;
+  }
+
+  .left-drawer {
+    grid-area: sidebar;
+  }
+
   #main-content {
-    overflow: auto;
-    padding: 0px; /* was 16px */
-    height: 100%;
-    box-sizing: border-box;
+    grid-area: main;
+    overflow-y: auto;
   }
 </style>
 

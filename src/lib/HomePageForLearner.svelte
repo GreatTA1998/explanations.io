@@ -46,34 +46,24 @@
 	{#if videoWidth}
 		<div class="alternative-flexbox">
 			{#each showcasedCreators as creator}
-				<CreatorFeaturedVideoShowcase 
-					originalQuestion={creator.originalQuestion}
-					boardDbPath={creator.boardDbPath}
-					firstNameAndKeyInfo={creator.firstNameAndKeyInfo}
-					collegeAndYear={creator.collegeAndYear}
-					bio={creator.bio}
-					uid={creator.uid}
-					previewWidth={videoWidth}
-				/>
+		
 			{/each}
 		</div>
 	{/if}
-
-	<SearchAllServers/>
 
 	<div style="text-align: center; padding: 48px 0px;">
 		<img 
 			style="min-width: 332px; width: 60vw; height: auto"
 			src="https://i.imgur.com/TRxyjmU.png"
+			alt="competition landscape"
 		> 
 
 		<img
 			style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
 			src="https://i.imgur.com/B9a5Nfp.png"
+			alt="sheraz's discord message"
 		/>
 	</div>
-
-
 
 	<FounderSelfIntro/>
 
@@ -84,8 +74,6 @@
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
-	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte'
-	import SearchAllServers from '$lib/SearchAllServers.svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
 	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
 

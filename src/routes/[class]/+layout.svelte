@@ -32,7 +32,7 @@
   import { onMount, onDestroy } from 'svelte'
   import '$lib/_Elevation.scss'
   import { blackboardWidth, videoPreviewWidth, videoCinemaWidth } from '/src/store.js';
-  import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
+  import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize, HEIGHTS } from '/src/helpers/dimensions.js'
 
   export let data
 
@@ -42,6 +42,8 @@
   let MainContent = null
 
   onMount(() => {
+    initializeCSSVariables()
+
     MainContent = document.getElementById('main-content')
 
     resizeObserver = new ResizeObserver(entries => {
@@ -58,6 +60,12 @@
     listenToClassDoc(classID)
     handleClassDocChange(classID)
     fetchRecentlySearchedClassDoc()
+  }
+
+  function initializeCSSVariables () {
+    document.documentElement.style.setProperty('--title-height', `${HEIGHTS.TITLE}px`);
+    document.documentElement.style.setProperty('--board-changer-height', `${HEIGHTS.BOARD_CHANGER}px`);
+    document.documentElement.style.setProperty('--audio-slider-height', `${HEIGHTS.AUDIO_SLIDER}px`);
   }
 
   function computeDimensionsForBlackboardsAndVideos () {

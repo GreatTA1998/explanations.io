@@ -15,7 +15,7 @@
     let:isFullscreen={isFullscreen}
   >
     {#if video.isMultiboard}
-      <HDMultislideVideo
+      <MultiboardHD
         {canvasWidth}
         {canvasHeight}
         boardDoc={video}
@@ -66,7 +66,7 @@
 
           <EurekaButton boardDoc={video}/>
         </div>
-      </HDMultislideVideo>
+      </MultiboardHD>
     {:else}
       <ReusableDoodleVideo
         autoFetchStrokes={false}
@@ -86,7 +86,7 @@
   import ReusableDoodleVideo from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
   import FullscreenModule from '$lib/DoodleVideo/FullscreenModule.svelte'
-  import HDMultislideVideo from '$lib/DoodleVideo/MultiboardHD.svelte'
+  import MultiboardHD from '$lib/DoodleVideo/MultiboardHD.svelte'
   import CreatorChannelCard from '$lib/CreatorChannelCard.svelte'
 
   import { updateFirestoreDoc } from '/src/helpers/crud.js'

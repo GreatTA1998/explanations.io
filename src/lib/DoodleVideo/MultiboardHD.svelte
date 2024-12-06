@@ -74,7 +74,7 @@
               "
             > 
               {#if strokesArray && slideDoc}
-                <MultislideDoodleVideoVisualSlide
+                <MultiboardSlide
                   {currentTime}
                   {strokesArray}
                   canvasWidth={canvasWidth * 2}
@@ -122,8 +122,8 @@
   import { revertToBoard } from '/src/helpers/unifiedDeleteAPI.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { lazyCallable } from '/src/helpers/actions.js'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user, adminUIDs } from '/src/store.js' // note `canvasWidth` was misleading
-  import MultislideDoodleVideoVisualSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
+  import { assumedCanvasWidth, user } from '/src/store.js' // note `canvasWidth` was misleading
+  import MultiboardSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'

@@ -9,7 +9,7 @@
     <div slot="title-comment-transcript-section" style="height: 100%;">
       {#if isFullscreen}
         {#if !isDrawerClosed}
-          <div style="flex-basis: 45ch; flex-grow: 1; height: 100%;">
+          <div transition:fly={{ duration: 300 }} style="flex-basis: 45ch; flex-grow: 1; height: 100%;">
             <CommentsColumn videoDoc={boardDoc}>
               <p style="color: black;">
                 {boardDoc.description}
@@ -23,8 +23,11 @@
 
   {#if isFullscreen}
     {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
-      <button class="material-symbols-outlined overlay-toggle-button"on:click={() => isDrawerClosed = !isDrawerClosed}>
-        Toggle
+      <button on:click={() => isDrawerClosed = !isDrawerClosed}
+        class="material-symbols-outlined overlay-toggle-button" 
+        style="transform: {isDrawerClosed ? 'rotateY(180deg)' : 'rotateY(0deg)'}"
+      >  
+        { isDrawerClosed ? 'start' :'keyboard_tab'}
       </button>
     {/if}
 
@@ -36,6 +39,7 @@
 
 <script>
   import { onMount } from 'svelte'
+  import { fly } from 'svelte/transition'
   import { VIDEO_LAYOUT } from '/src/helpers/dimensions.js'
   import { videoCinemaWidth, videoCinemaLayout } from '/src/store.js'
   import CommentsColumn from '$lib/DoodleVideo/CommentsColumn.svelte'
@@ -47,7 +51,6 @@
   let isFullscreen = false
   let canvasWidth = previewWidth
   let canvasHeight = canvasWidth * 3/4
-  let fullscreenWidth = 0
   let isDrawerClosed = false
 
   $: canvasHeight = canvasWidth * 3/4
@@ -57,36 +60,26 @@
     else canvasWidth = previewWidth
   }
 
-  onMount(() => {
-    calculateLayout()
-  })
+  onMount(() => {})
 
   function toggleFullscreen () {
     isFullscreen = !isFullscreen
-  }
-
-  function calculateLayout () {
-    const minCommentsSectionWidth = 320
-    if (0.3 * window.innerWidth > minCommentsSectionWidth) {
-      // 68% instead of 70% to take into account that multislide videos take more space
-      fullscreenWidth = 0.68 * window.innerWidth
-    } else {
-      fullscreenWidth = 1.00 * window.innerWidth
-    }
   }
 </script>
 
 <style>
   .overlay-toggle-button {
-    background-color: red;
     position: absolute; 
-    top: 1vw; 
+    top: calc(var(--board-changer-height) - 12px + 1vw); 
     bottom: auto;
-    right: 4vw;
+    right: 1vw;
     left: auto;
     z-index: 10;   
     font-size: var(--fs-l); 
-    background-color: var(--bg-off-white);
+
+    background-color: hsla(0, 100%, 100%, 0.7); /* used to be var(--bg-off-white); */
+    border-radius: 24px;
+    padding: 4px;
   }
 
   .exit-button {

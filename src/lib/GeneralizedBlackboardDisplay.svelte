@@ -45,7 +45,6 @@
       </div>
 
       {#if boardDoc.audioDownloadURL}
-        <!-- QUICKFIX: scale factor of 0.8 to take into account of the slides so you can see the whole video with the slider -->
         <GeneralizedVideoDisplay
           video={boardDoc}
           videoWidth={$videoPreviewWidth}

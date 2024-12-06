@@ -125,7 +125,7 @@
               boardsPath: `/classes/${classID}/blackboards/`
             })} on:keydown
             class="new-blackboard-button"
-            style="width: {$maxAvailableWidth}px;"
+            style="width: {$blackboardWidth}px;"
           >
             RESPOND WITH A BLACKBOARD
           </div>

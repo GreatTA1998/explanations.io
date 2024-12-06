@@ -31,7 +31,9 @@
         placeholder="New comment..."
       />
       
-      <button on:click={createComment}>SUBMIT</button>
+      <button on:click={createComment}>
+        SUBMIT
+      </button>
 
       {#if commentDocs}
         {#each commentDocs as commentDoc}
@@ -82,14 +84,14 @@
       batch.commit()
     )
 
-    const { params } = $page
+    const { params, url } = $page
     handleNewCommentEmailNotifications({ 
       boardDoc: videoDoc, 
       userDoc: $user, 
       classID: params.class, // don't know why there is no ID in this case...
       questionID: params.questionID,
       commentString: newInputComment,
-      linkToQuestion: `${$page.url.origin}/${params.class}/question/${params.questionID}`
+      linkToQuestion: `${url.origin}/${params.class}/question/${params.questionID}`
     })
     newInputComment = '' 
   }

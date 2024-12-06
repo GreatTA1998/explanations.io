@@ -29,7 +29,7 @@
   import { user, drawerWidth, classServerDoc, recentSearchedServerDoc } from '/src/store.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
   import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount } from 'svelte'
   import '$lib/_Elevation.scss'
   import { blackboardWidth, videoPreviewWidth, videoCinemaWidth } from '/src/store.js';
   import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize, HEIGHTS } from '/src/helpers/dimensions.js'

@@ -7,7 +7,7 @@
     <div style="position: absolute; overflow-y: auto; inset: 0;">
       <QuestionsSection {classID}>
         <div style="width: 100%; display: flex; margin-top: 24px;">
-          <div on:click={() => goto(`/${classID}/question`)} 
+          <button on:click={() => goto(`/${classID}/question`)} 
             class="new-question-button"
             class:drawer-item-glow={$page.route.id === '/[class]/question'}
           >
@@ -17,7 +17,7 @@
             <div style="margin-left: 6px; font-size: 14px; font-weight: 400;">
               New question
             </div>
-          </div> 
+          </button> 
         </div>
       </QuestionsSection>
 
@@ -56,27 +56,28 @@
     </div>
   </div>
 
-  <button on:click={() => goto(`/${classID}/overview`)} 
-    class:drawer-item-glow={$page.route.id === '/[class]/overview'}
-    class="pinned-bottom-item"
-  >
-    <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; margin-left: 8px; opacity: 0.9">
-      cottage
-    </span>
+  <!-- necessary because it's absolutely positioned and will be visible even when the parent width is 0 -->
+  {#if $drawerWidth > 0}
+    <button on:click={() => goto(`/${classID}/overview`)} 
+      class:drawer-item-glow={$page.route.id === '/[class]/overview'}
+      class="pinned-bottom-item"
+    >
+      <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; margin-left: 8px; opacity: 0.9">
+        cottage
+      </span>
 
-    <div style="font-size: 1rem;">
-      Server Overview
-    </div>
-  </button>
+      <div style="font-size: 1rem;">
+        Server Overview
+      </div>
+    </button>
+  {/if}
 </div>
 
 <script>
   import QuestionsSection from '$lib/QuestionsSection.svelte'
   import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
   import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
-
-  import { user } from '/src/store.js'
-  
+  import { user, drawerWidth } from '/src/store.js'
   import { goto } from '$app/navigation'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion} from 'firebase/firestore'
   import { createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
@@ -170,12 +171,12 @@
   .new-question-button {
     display: flex; 
     align-items: center; 
-    width: 50%; 
+    width: 165px;
+    height: 36px;
     border-radius: 24px; 
 
     color: black; 
     background-color: #f1e8f3; 
-    height: 28px;
 
     /* copied from action-item except bigger border-radius */
     margin: 6px;

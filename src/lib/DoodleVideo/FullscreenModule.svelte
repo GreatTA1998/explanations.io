@@ -1,6 +1,14 @@
 <div class:fullscreen-mode={isFullscreen}>
   <DynamicLayout>
-    <div slot="video">
+    <div slot="video" style="width: {canvasWidth}px;">
+      {#if isFullscreen && $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY && !isDrawerOpen}
+        <button on:click={() => isDrawerOpen = true} 
+          class="material-symbols-outlined expand-drawer-floating-button" 
+        >
+          start
+        </button>
+      {/if}
+
       <slot {toggleFullscreen} {canvasWidth} {canvasHeight} {isFullscreen}>
 
       </slot>
@@ -8,33 +16,22 @@
 
     <div slot="title-comment-transcript-section" style="height: 100%;">
       {#if isFullscreen}
-        {#if !isDrawerClosed}
+        {#if isDrawerOpen || $videoCinemaLayout !== VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
           <div transition:fly={{ duration: 300 }} style="flex-basis: 45ch; flex-grow: 1; height: 100%;">
             <CommentsColumn videoDoc={boardDoc}>
-              <p style="color: black;">
-                {boardDoc.description}
-              </p>       
+              {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
+                <button on:click={() => isDrawerOpen = false} class="material-symbols-outlined" style="z-index: 10;">
+                  keyboard_tab
+                </button>
+              {/if}
+
+              <p>{boardDoc.description || ''}</p>       
             </CommentsColumn>
-            </div>
+          </div>
         {/if}
       {/if}
     </div>
   </DynamicLayout>
-
-  {#if isFullscreen}
-    {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
-      <button on:click={() => isDrawerClosed = !isDrawerClosed}
-        class="material-symbols-outlined overlay-toggle-button" 
-        style="transform: {isDrawerClosed ? 'rotateY(180deg)' : 'rotateY(0deg)'}"
-      >  
-        { isDrawerClosed ? 'start' :'keyboard_tab'}
-      </button>
-    {/if}
-
-    <button on:click={toggleFullscreen(boardDoc)} class="exit-button material-symbols-outlined">
-      close
-    </button>
-  {/if}
 </div>
 
 <script>
@@ -51,7 +48,7 @@
   let isFullscreen = false
   let canvasWidth = previewWidth
   let canvasHeight = canvasWidth * 3/4
-  let isDrawerClosed = false
+  let isDrawerOpen = false
 
   $: canvasHeight = canvasWidth * 3/4
 
@@ -68,32 +65,13 @@
 </script>
 
 <style>
-  .overlay-toggle-button {
+  .expand-drawer-floating-button {
+    z-index: 10; 
+    transform: rotateY(180deg); 
     position: absolute; 
-    top: calc(var(--board-changer-height) - 12px + 1vw); 
-    bottom: auto;
-    right: 1vw;
-    left: auto;
-    z-index: 10;   
-    font-size: var(--fs-l); 
-
-    background-color: hsla(0, 100%, 100%, 0.7); /* used to be var(--bg-off-white); */
-    border-radius: 24px;
-    padding: 4px;
-  }
-
-  .exit-button {
-    position: absolute; 
-    top: 1vw; 
-    bottom: auto; 
-    right: 1vw; 
-    left: auto; 
-    cursor: pointer; 
-
-    font-size: var(--fs-l); 
-    z-index: 10;
-    background-color: var(--bg-off-white);
-    border-radius: 24px;
+    top: var(--board-changer-height); 
+    right: 4vw; 
+    color: white;
   }
 
   .fullscreen-mode {

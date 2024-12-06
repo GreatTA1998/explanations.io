@@ -40,28 +40,19 @@
           </div>
         {/if}
 
-        <div slot="after" 
-          style="
-            display: flex; 
-            margin-left: auto; 
-            margin-right: 0px; 
-            align-items: center;
-            column-gap: 8px;
-          "
-        >
-  
+        <div slot="after" class="button-group-flexbox">
           <VideoFooterInfo {video}/>
 
           <div
             on:click={toggleFullscreen} on:keydown
             class="my-round-button" 
-            style="margin-right: 0; margin-left: auto; height: 24px;"
+            style="margin-right: 0; margin-left: auto; height: 32px;"
           >
             <span class="material-symbols-outlined" style="font-size: 20px;">
-              open_in_full
+              {isFullscreen ? 'close_fullscreen' : 'open_in_full'}
             </span>
 
-            Full View
+            {isFullscreen ? 'Exit' : 'Enter'} full view
           </div>
 
           <EurekaButton boardDoc={video}/>
@@ -110,6 +101,14 @@
 </script>
 
 <style>
+  .button-group-flexbox {
+    display: flex; 
+    margin-left: auto; 
+    margin-right: 0px; 
+    align-items: center;
+    column-gap: 8px;
+  }
+
   .my-round-button {
     display: flex; 
     align-items: center; 

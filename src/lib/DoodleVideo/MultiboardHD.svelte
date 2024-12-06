@@ -20,9 +20,11 @@
       </BaseTransparentButton>
     </div>
 
-    <!-- share, delete button overlay on top -->
     {#if showEditDeleteButtons}
-      <div class="edit-delete-buttons" style="width: {canvasWidth}px;">
+      <!-- pointer-events: none; is a quickfix so the invisble row that spans across the video will somehow interfere with the
+        the drawer toggle button's clickability (even if it has higher z-index)
+      -->
+      <div class="edit-delete-buttons" style="width: {canvasWidth}px; pointer-events: none;">
         <!-- $adminUIDs.includes($user.uid) -->
         {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
           <div style="margin-right: 6px;">

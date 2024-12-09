@@ -69,8 +69,8 @@
     z-index: 10; 
     transform: rotateY(180deg); 
     position: absolute; 
-    top: var(--board-changer-height); 
-    right: 4vw; 
+    top: calc(var(--board-changer-height) - 6px); 
+    right: 1.5vw; 
     color: white;
   }
 

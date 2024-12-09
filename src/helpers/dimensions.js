@@ -30,7 +30,7 @@ export function getCinemaVideoSize () {
   })
 
   // determine the layout type
-  if (remainingWidth <= 720) { // anything too small makes the 25% overlay column too narrow
+  if (remainingWidth <= 800) { // anything too small makes the 25% overlay column too narrow
     videoCinemaLayout.set(VIDEO_LAYOUT.MOBILE_VERTICAL)
   } else if (remainingWidth - canvasWidth >= 240) {
     videoCinemaLayout.set(VIDEO_LAYOUT.SIDE_BY_SIDE)

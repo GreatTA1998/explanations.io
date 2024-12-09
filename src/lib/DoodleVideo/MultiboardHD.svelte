@@ -19,22 +19,6 @@
         {playbackSpeed}x 
       </BaseTransparentButton>
     </div>
-
-    {#if showEditDeleteButtons}
-      <!-- pointer-events: none; is a quickfix so the invisble row that spans across the video will somehow interfere with the
-        the drawer toggle button's clickability (even if it has higher z-index)
-      -->
-      <div class="edit-delete-buttons" style="width: {canvasWidth}px; pointer-events: none;">
-        <!-- $adminUIDs.includes($user.uid) -->
-        {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
-          <div style="margin-right: 6px;">
-            <BaseTransparentButton on:click={() => handleVideoDelete(boardDoc)}>
-              <span class="material-icons">delete_forever</span>
-            </BaseTransparentButton>
-          </div>
-        {/if}
-      </div>
-    {/if}
     
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
@@ -131,6 +115,7 @@
   import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
   import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
 
+  export let propToDeleteVideo = false
   export let audioDownloadURL
   export let boardDoc
 
@@ -139,7 +124,6 @@
   export let canvasHeight
 
   export let timingOfSlideChanges
-  export let showEditDeleteButtons
   export let showSlideChanger
 
   const dispatch = createEventDispatcher()
@@ -160,6 +144,10 @@
   let updateViewMinutesTimeoutID
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
+
+  $: if (propToDeleteVideo) {
+    handleVideoDelete(boardDoc)
+  }
 
   // Ensure we change `idxOfFocusedSlide` 
   // NOTE: doesn't need to be optimized yet , there are only about 10-20 slide changes at most
@@ -241,6 +229,8 @@
   }
 
   async function handleVideoDelete (boardDoc) {
+    dispatch('deletion-request-received')
+
     if (!confirm('Are you sure you want to revert this video to a blackboard?')) {
       return
     }

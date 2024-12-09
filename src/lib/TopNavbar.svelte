@@ -137,7 +137,7 @@
 <style>
 	.prepare-to-appear {
 		opacity: 0.2;
-		transition: opacity 0.5s linear;
+		transition: opacity 0.5s ease-in-out;
 	}
 
 	.increase-opacity {

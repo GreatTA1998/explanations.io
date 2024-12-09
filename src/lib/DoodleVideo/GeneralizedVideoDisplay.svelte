@@ -22,7 +22,6 @@
         classID={quickfixClassIDFrom(video)}
         audioDownloadURL={video.audioDownloadURL}
         timingOfSlideChanges={video.timingOfSlideChanges}
-        {showEditDeleteButtons}
         showSlideChanger={!willHideSliderForPreview || isFullscreen}
         propToDeleteVideo={propToDeleteVideo}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}

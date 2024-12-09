@@ -1,12 +1,15 @@
-<div 
-  class="grid-layout robust-ios-space-filling"
-  style="--drawer-width: {$drawerWidth}px;"
->
-  <div class="top-navbar">
-    <TopNavbar />
-  </div>
+<div id="top-navbar">
+  <TopNavbar isHomeScreenVisible={isHomeScreenVisible}/>
+</div>
 
-  <div class="left-drawer">
+{#if isHomeScreenVisible}
+  <div class="splash-section">
+    <ExperimentalSplashScreen />
+  </div>
+{/if}
+
+<div id="server-layout" class="robust-ios-space-filling" style="--drawer-width: {$drawerWidth}px;">
+  <div id="left-drawer">
     {#key classID}
       <TheLeftDrawer 
         {classID}
@@ -15,11 +18,8 @@
     {/key}
   </div>
 
-  <!-- this element's used to compute the max available dimensions -->
   <div id="main-content">
-    <slot>
-
-    </slot>
+    <slot />
   </div>
 </div>
 
@@ -33,6 +33,7 @@
   import '$lib/_Elevation.scss'
   import { blackboardWidth, videoPreviewWidth, videoCinemaWidth } from '/src/store.js';
   import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize, HEIGHTS } from '/src/helpers/dimensions.js'
+  import ExperimentalSplashScreen from '$lib/ExperimentalSplashScreen.svelte'
 
   export let data
 
@@ -40,8 +41,11 @@
   let unsubClassDocListener = null
   let resizeObserver = null
   let MainContent = null
+  let isHomeScreenVisible = true
 
   onMount(() => {
+    window.addEventListener('scroll', handleOnScroll)
+
     initializeCSSVariables()
 
     MainContent = document.getElementById('main-content')
@@ -60,6 +64,18 @@
     listenToClassDoc(classID)
     handleClassDocChange(classID)
     fetchRecentlySearchedClassDoc()
+  }
+
+  function handleOnScroll (e) {
+    const navbarHeight = 56
+    if (window.scrollY >= window.innerHeight - navbarHeight) {
+      isHomeScreenVisible = false
+      const MainContent = document.getElementById('main-content')
+      const ServerLayout = document.getElementById('server-layout')
+      
+      MainContent.style.overflowY = 'auto'
+      ServerLayout.style.marginTop = `${navbarHeight}px`
+    }
   }
 
   function initializeCSSVariables () {
@@ -116,35 +132,31 @@
 </script>
 
 <style> 
+  :root {
+    --navbar-height: 56px;
+  }
 
-  .grid-layout {
+  #server-layout {
     display: grid;
-    grid-template-rows: 56px 1fr;
-    grid-template-columns: var(--drawer-width) 1fr;
-    grid-template-areas: 'navbar navbar'
-                         'sidebar main';
+    grid-template-columns: var(--drawer-width) 1fr; 
+    grid-template-areas: 'sidebar main';
+    height: calc(100vh - var(--navbar-height));
     background-color: var(--bg-off-white);
   }
 
-  .robust-ios-space-filling {
-    position: absolute;
+  #top-navbar {
+    position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: var(--navbar-height);
   }
 
-  .top-navbar {
-    grid-area: navbar;
-  }
-
-  .left-drawer {
+  #left-drawer {
     grid-area: sidebar;
   }
 
   #main-content {
     grid-area: main;
-    overflow-y: auto;
   }
 </style>
 

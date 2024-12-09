@@ -178,9 +178,11 @@
           // QUICKFIX: for some reason user.set() is still not hydrated even after `await listenToUserDocAndHandleForwarding()`, so we just 
           // handle navigation directly here
           // only redirect from the home page '/' path, for specific URLs don't fuck with it
-          if ($page.url.pathname === '/' && $user.mostRecentServerID) {
-            goto(`/${$user.mostRecentServerID}/question`)
-          }
+
+          // COMMENTED OUT FOR TESTING
+          // if ($page.url.pathname === '/' && $user.mostRecentServerID) {
+          //   goto(`/${$user.mostRecentServerID}/question`)
+          // }
           resolve()
         }
       })

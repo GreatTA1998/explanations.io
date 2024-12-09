@@ -1,44 +1,46 @@
-<div class="flexy">
-	<div class="top-app-bar-container flexor">
-		<TopAppBar bind:this={topAppBar} 
+<div style="width: 100%;">
+	<div class="top-app-bar-container">
+		<div bind:this={topAppBar} 
 			style="border-bottom: 1px solid lightgrey;"
 		>
 			<Row style="height: var(--navbar-height); background-color: var(--bg-off-white); padding-left: 2%; padding-right: 2%;">
-				<div style="padding: 6px 12px 8px 0px; box-sizing: border-box;">
-					<img 
-						on:click={() => goto('/')}
-						src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
-						alt="app logo"
+					<div class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible} 
+						style="padding: 6px 12px 8px 0px; box-sizing: border-box; width: {50 + 20}px; height: {46 + 14}px"
 					>
-	
-				</div>
-
-				<slot name="tab-section">
-					<div style="display: flex; column-gap: 24px;">
-						{#each mathServers as mathServer}
-							<div 
-								on:click={() => handleServerRedirect(mathServer)} 
-								class:orange-underline={$page.params.class === mathServer.id} 
-								class="tab-item"
-							>
-								{mathServer.name}
-							</div>
-						{/each}
-
-						{#if $recentSearchedServerDoc.name}
-							<div 
-								on:click={() => handleServerRedirect($recentSearchedServerDoc)} 
-								class:orange-underline={$page.params.class === $recentSearchedServerDoc.id} 
-								class="tab-item"
-							>
-								{$recentSearchedServerDoc.name}
-							</div>
-						{/if}
+						<img 
+							on:click={() => goto('/')} 
+							on:keydown
+							src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
+							alt="app logo"
+						>
 					</div>
-				</slot>
+		
+					<slot name="tab-section">
+						<div style="display: flex; column-gap: 24px;" class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible}>
+							{#each mathServers as mathServer}
+								<button
+									on:click={() => handleServerRedirect(mathServer)} 
+									class:orange-underline={$page.params.class === mathServer.id} 
+									class="tab-item"
+								>
+									{mathServer.name}
+								</button>
+							{/each}
 
-				<Section align="end" toolbar style="padding-right: 0;">
-						<div style="position: relative">
+							{#if $recentSearchedServerDoc.name}
+								<button 
+									on:click={() => handleServerRedirect($recentSearchedServerDoc)} 
+									class:orange-underline={$page.params.class === $recentSearchedServerDoc.id} 
+									class="tab-item"
+								>
+									{$recentSearchedServerDoc.name}
+								</button>
+							{/if}
+						</div>
+					</slot>
+
+					<Section align="end" toolbar style="padding-right: 0;">
+						<div style="position: relative" class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible}>
 						
 							<SearchBar {searchVal} on:focus-change={(e) => isFocused = e.detail} on:input={(e) => searchWithinClassNames(e.detail)}/>
 
@@ -50,53 +52,46 @@
 								</div>
 							{/if}
 
-							<!-- just use <PopupNewServer/> to for creating new servers -->
+							<!-- just re-use <PopupNewServer/> to for creating new servers -->
 						</div>
-					
-					<!-- THESE will be moved to the splash screen logo "app hub" instead -->
-					<!-- <div class="hide-on-mobile">
-						<a href="https://eltonlin.substack.com/archive" target="_blank" 
-							style="margin-left: 8px; text-decoration-color: transparent;"
-						>
-							<Button
-								class="button-shaped-round"
-								style="font-size: 12px; color: black;"
+						
+						<!-- THESE will be moved to the splash screen logo "app hub" instead -->
+						<!-- <div class="hide-on-mobile">
+							<a href="https://eltonlin.substack.com/archive" target="_blank" 
+								style="margin-left: 8px; text-decoration-color: transparent;"
 							>
-								<Label>blog</Label>
-							</Button>
-						</a>
-
-						<a href="https://github.com/greatTA1998/explain" target="_blank" 
-							style="margin-left: 20px; text-decoration-color: transparent;"
-						>
-							<div style="width: 38px; height: 38px; border-radius: 19px; background-color: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
-								<img src="/github-logo-dark-mode-no-bg.png"
-								style="width: 54px; height: 54px;"
+								<Button
+									class="button-shaped-round"
+									style="font-size: 12px; color: black;"
 								>
-							</div>
-						</a>
-					</div>
+									<Label>blog</Label>
+								</Button>
+							</a>
 
-					<div style="margin-right: 18px;"></div>
-
-					<ReusableSignInButton outlined={false} style="color: black;">
-						<div style="color: black; font-size: 12px;">
-							Log in
+							<a href="https://github.com/greatTA1998/explain" target="_blank" 
+								style="margin-left: 20px; text-decoration-color: transparent;"
+							>
+								<div style="width: 38px; height: 38px; border-radius: 19px; background-color: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
+									<img src="/github-logo-dark-mode-no-bg.png"
+									style="width: 54px; height: 54px;"
+									>
+								</div>
+							</a>
 						</div>
-					</ReusableSignInButton>					 -->
-				</Section>
+
+						<div style="margin-right: 18px;"></div>
+
+						<ReusableSignInButton outlined={false} style="color: black;">
+							<div style="color: black; font-size: 12px;">
+								Log in
+							</div>
+						</ReusableSignInButton>					 -->
+					</Section>
+				<!-- {/if} -->
 			</Row>
-		</TopAppBar>
+		</div>
 	</div>
 </div>
-
-<AutoAdjust {topAppBar} style="background-color: var(--bg-off-white);">
-	<div style="">
-		<slot>
-
-		</slot>
-	</div>
-</AutoAdjust>
 
 <script>
 	import SearchBar from '$lib/SearchBar.svelte'
@@ -107,6 +102,8 @@
 	import { page } from '$app/stores'
 	import { classServerDoc, recentSearchedServerDoc } from '/src/store.js'
 	import { handleServerRedirect } from '/src/helpers/everythingElse.js'
+
+	export let isHomeScreenVisible
 
 	let searchVal = ''
   let topAppBar = null
@@ -138,6 +135,15 @@
 </script>
 
 <style>
+	.prepare-to-appear {
+		opacity: 0.2;
+		transition: opacity 0.5s linear;
+	}
+
+	.increase-opacity {
+		opacity: 1;
+	}
+
 	.hide-on-mobile {
 		display: flex;
 	}

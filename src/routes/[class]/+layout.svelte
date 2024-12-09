@@ -3,9 +3,7 @@
 </div>
 
 {#if isHomeScreenVisible}
-  <div class="splash-section">
-    <ExperimentalSplashScreen />
-  </div>
+  <ExperimentalSplashScreen />
 {/if}
 
 <div id="server-layout" class="robust-ios-space-filling" style="--drawer-width: {$drawerWidth}px;">
@@ -72,7 +70,7 @@
       isHomeScreenVisible = false
       const MainContent = document.getElementById('main-content')
       const ServerLayout = document.getElementById('server-layout')
-      
+
       MainContent.style.overflowY = 'auto'
       ServerLayout.style.marginTop = `${navbarHeight}px`
     }
@@ -149,6 +147,7 @@
     top: 0;
     width: 100%;
     height: var(--navbar-height);
+    z-index: 1; /* without this the hero text will overlay on top of the navbar */
   }
 
   #left-drawer {

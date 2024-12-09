@@ -1,4 +1,5 @@
-<div style="display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white); 
+">
 	<p class="header-title" bind:clientWidth={containerWidth}>
 		Youtube style tutoring for math olympiads
 	</p>
@@ -9,8 +10,10 @@
 			$10/week.
 		</div>
 
+		<ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
+
 		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
-			<ReusableRoundButton on:click={redirectToCalMeetingPage}
+			<!-- <ReusableRoundButton on:click={redirectToCalMeetingPage}
 				backgroundColor="#5d0068"
 				textColor="white"
 			>
@@ -21,11 +24,7 @@
 				<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
 					calendar_add_on
 				</span>
-			</ReusableRoundButton>
-
-			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				2 learners joined this month
-			</div>
+			</ReusableRoundButton> -->
 		</div>
 
 		<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
@@ -40,38 +39,35 @@
 			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
 				r/PhysicsStudents
 			</a>
+
+			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
+				2 learners joined this month
+			</div>
 		</div>
 	</div>
 
-	{#if videoWidth}
-		<div class="alternative-flexbox">
-			{#each showcasedCreators as creator}
-		
-			{/each}
+		<div style="text-align: center; padding: 48px 0px;">
+			<img 
+				style="min-width: 332px; width: 30vw; height: auto"
+				src="https://i.imgur.com/TRxyjmU.png"
+				alt="competition landscape"
+			> 
+	
+			<!-- <img
+				style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
+				src="https://i.imgur.com/B9a5Nfp.png"
+				alt="sheraz's discord message"
+			/> -->
 		</div>
-	{/if}
 
-	<div style="text-align: center; padding: 48px 0px;">
-		<img 
-			style="min-width: 332px; width: 60vw; height: auto"
-			src="https://i.imgur.com/TRxyjmU.png"
-			alt="competition landscape"
-		> 
+	<!-- <FounderSelfIntro/> -->
 
-		<img
-			style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
-			src="https://i.imgur.com/B9a5Nfp.png"
-			alt="sheraz's discord message"
-		/>
-	</div>
-
-	<FounderSelfIntro/>
-
-	<HistoricalTimeline/>
+	<!-- <HistoricalTimeline/> -->
 </div>
 
 <script>
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
+	import ImageGallery from '$lib/ImageGallery.svelte'
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'

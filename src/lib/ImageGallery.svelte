@@ -11,46 +11,20 @@
         {#each galleryVideos as galleryVideo}
           <div class="gallery-item" style="border: none;">
             <RenderlessListenToBoard dbPath={galleryVideo.dbPath} let:boardDoc={boardDoc}>
-              <ReusableDoodleVideo
-                {boardDoc}
-                canvasWidth={galleryItemWidth}
-                canvasHeight={galleryItemHeight}
-                showEditDeleteButtons={false}
-                boardDbPath={galleryVideo.dbPath}
-                on:video-start={pauseGalleryRotation}
-                on:video-pause={startGalleryRotation}
-              />
-
-              {#if boardDoc}
-                <div style="padding-top: 6px;">
-                  <!-- the width is doubled for so formatting is not messed up for 2x font size (which then gets scaled down) -->
-                  <!-- <div style="display: flex; width: {2*100}%;">
-                    <ClassServerMyProfilePicture
-                      radiusInPixels={14}
-                      circleBorderColor={getRandomColor()}
-                      on:click={() => goto(`profile/${galleryVideo.classID}/${boardDoc.creatorUID}`)}
-                    />
-                    <div style="margin-left: 4px; font-size: 2rem; transform: scale(0.5); transform-origin: top left;">
-                      <div style="font-weight: 500;">
-                        {galleryVideo.titleForDebugging}
-                      </div>
-                      
-                      <div on:click={() => goto(`profile/${galleryVideo.classID}/${boardDoc.creatorUID}`)}
-                        class="creator-channel-name"   
-                       
-                      >
-                        {galleryVideo.creatorName}
-                      </div>
-                
-                      <div style="display: flex; color: #282828;">
-                        {roundedToFixed(boardDoc.viewMinutes, 0)} minutes viewed,
-                        {galleryVideo.className}
-                      </div>
-                     </div>
-                  </div> -->
-                </div>
-              {/if}
-              
+              <RenderlessFetchStrokes 
+                dbPath={galleryVideo.dbPath}
+                let:fetchStrokes={fetchStrokes}
+                let:strokesArray={strokesArray}
+                autoFetchStrokes={false}
+              > 
+                <NewHDBlackboard
+                  {strokesArray}
+                  canvasWidth={galleryItemWidth}
+                  thumbnailWidth={galleryItemWidth}
+                  thumbnailHeight={galleryItemWidth * 3/4}
+                  on:intersect={fetchStrokes}
+                />
+              </RenderlessFetchStrokes>
             </RenderlessListenToBoard>
           </div>
 
@@ -64,19 +38,16 @@
 <script>
   // TO-DO: fix drifting center of rotation
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import ReusableDoodleVideo from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
-  import { getRandomColor, roundedToFixed } from '/src/helpers/utility.js'
+  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import NewHDBlackboard from '$lib/NewHDBlackboard.svelte'
   import { onMount } from 'svelte'
-  import { goto } from '$app/navigation'
-  import RenderlessFetchServerMemberDoc from '$lib/RenderlessFetchServerMemberDoc.svelte'
-  import ReusableCreatorInfoCard from '$lib/ReusableCreatorInfoCard.svelte'
 
   export let galleryVideos
 
   let scaleFactor
 
   onMount(() => {
-    scaleFactor = window.innerWidth / 1600
+    scaleFactor = window.innerWidth / (1600 * 3) 
   })
 
   const galleryItemWidth =  480 * 0.95 // 4:3 aspect ratio for the board, now take into account audio slider
@@ -185,7 +156,7 @@
   // -moz-animation: rotating 20s linear infinite;
   // -o-animation: rotating 20s linear infinite;
   // -ms-animation: rotating 20s linear infinite;
-  animation: rotating 100s linear infinite;
+  animation: rotating 40s linear infinite;
   // &:hover {
   // animation-play-state:paused;
   // -o-animation-play-state:paused;

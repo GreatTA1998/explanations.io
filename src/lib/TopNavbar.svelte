@@ -41,8 +41,11 @@
 
 					<Section align="end" toolbar style="padding-right: 0;">
 						<div style="position: relative" class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible}>
-						
-							<SearchBar {searchVal} on:focus-change={(e) => isFocused = e.detail} on:input={(e) => searchWithinClassNames(e.detail)}/>
+							<SearchBar 
+								{searchVal} 
+								on:focus-change={(e) => isFocused = e.detail} 
+								on:input={(e) => searchWithinClassNames(e.detail)}
+							/>
 
 							{#if isFocused}
 								<div class="search-results grid-layout">

@@ -33,7 +33,7 @@
     {:else}
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; row-gap: 12px;">
         <div style="width: {boardDoc.audioDownloadURL ? $videoPreviewWidth : $blackboardWidth}px; margin-top: 0px; margin-bottom: 0px">
-          {#if boardDoc.description || boardDoc.creatorUID === $user.uid}
+          {#if !(!boardDoc.description && boardDoc.creatorUID && $user.uid !== boardDoc.creatorUID)}
             <TextAreaAutoResizing 
               value={boardDoc.description || ''} 
               on:input={(e) => debouncedUpdateBoardDescription(e, boardDoc)}

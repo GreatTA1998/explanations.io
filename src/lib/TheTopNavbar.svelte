@@ -7,9 +7,8 @@
 					<div class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible} 
 						style="padding: 6px 12px 8px 0px; box-sizing: border-box; width: {50 + 20}px; height: {46 + 14}px"
 					>
+						<!-- on:click={() => goto('/')}  -->
 						<img 
-							on:click={() => goto('/')} 
-							on:keydown
 							src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
 							alt="app logo"
 						>

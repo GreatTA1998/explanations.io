@@ -1,18 +1,25 @@
 <div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white); 
 ">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube style tutoring for math olympiads
+		Youtube style help for math olympiads
 	</p>
 
 	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
-			Pick your teacher. Ask them questions. Get detailed video explanations until you understand everything.
-			$10/week.
+			Subscribe to a teacher, ask questions about anything, get video explanations until you understand everything.
 		</div>
 
-		<ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
+		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
+			<!-- style="background-color: #5d0068; color: white; border-radius: 24px; padding: 12px 24px; font-size: var(--fs-s); font-weight: 600;" -->
+			<button class="primary-button">
+				Try for $10/week
+			</button>
+			<!-- <CalEmbed/> -->
 
-		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
+				2 learners joined this month
+			</div>
+
 			<!-- <ReusableRoundButton on:click={redirectToCalMeetingPage}
 				backgroundColor="#5d0068"
 				textColor="white"
@@ -39,19 +46,30 @@
 			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
 				r/PhysicsStudents
 			</a>
-
-			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				2 learners joined this month
-			</div>
 		</div>
 	</div>
 
+	<div style="display: flex; align-items: center; column-gap: 36px;">
+		<CountryFlags/>
+
+		<BrandLogos/>
+	</div>
+
+	<!-- <div style="display: flex; gap: 8px; font-size: 24px;">
+		<span title="Chile">&#127464;&#127473;</span>
+    <span title="United States">&#127482;&#127480;</span>
+    <span title="Sweden">&#127480;&#127466;</span>
+	</div> -->
+
+	
+	<ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
+
 		<div style="text-align: center; padding: 48px 0px;">
-			<img 
+			<!-- <img 
 				style="min-width: 332px; width: 30vw; height: auto"
 				src="https://i.imgur.com/TRxyjmU.png"
 				alt="competition landscape"
-			> 
+			>  -->
 	
 			<!-- <img
 				style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
@@ -71,7 +89,10 @@
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
-	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
+	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte'
+	import CalEmbed from '$lib/CalEmbed.svelte'
+	import CountryFlags from '$lib/CountryFlags.svelte'
+	import BrandLogos from '$lib/BrandLogos.svelte'
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated
@@ -226,15 +247,22 @@
 </script>
 
 <style>
-	.alternative-flexbox {
-    display: flex; 
-		justify-content: space-between;
-		flex-wrap: wrap;
-		row-gap: 36px;
+	.primary-button {
+		background: #5d0068;
+		color: white;
+		padding: 8px 16px;
+		border-radius: 24px;
+		border: none;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		width: 160px;
+		font-size: 14px;
+	}
 
-		padding: 48px 6px; 
-		outline: 0px solid red;
-  }
+	.primary-button:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba(93, 0, 104, 0.2);
+	}
 
 	.separator {
 		width: 2px;

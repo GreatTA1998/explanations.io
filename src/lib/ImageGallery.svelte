@@ -20,6 +20,7 @@
                 <NewHDBlackboard
                   {strokesArray}
                   thumbnailWidth={galleryItemWidth}
+                  willDrawOneByOne={true}
                   on:intersect={fetchStrokes}
                 />
               </RenderlessFetchStrokes>
@@ -45,11 +46,11 @@
   let scaleFactor
 
   onMount(() => {
-    scaleFactor = window.innerWidth / (1600 * 3) 
+    scaleFactor = window.innerWidth / (1600 * 1.5) 
   })
 
-  const galleryItemWidth =  480 * 0.95 // 4:3 aspect ratio for the board, now take into account audio slider
-  const galleryItemHeight = 360 * 0.95
+  const galleryItemWidth =  480
+  const galleryItemHeight = 360
 
   function pauseGalleryRotation () {
     // document.getElementById("carousel").style.animationPlayState = "paused";
@@ -167,7 +168,7 @@
     position: absolute; // removing this will create a spiral
     // Ratio of width:height is 3:2
     width: var(--galleryItemWidthIncludesPx);  
-    height: calc(var(--galleryItemHeightIncludesPx) + 28px); // +30 for audio player -4 for visual illusion 
+    height: var(--galleryItemHeightIncludesPx);
 
     // // height: 240px; // 240
     border: 4px solid #000;

@@ -19,9 +19,7 @@
               > 
                 <NewHDBlackboard
                   {strokesArray}
-                  canvasWidth={galleryItemWidth}
                   thumbnailWidth={galleryItemWidth}
-                  thumbnailHeight={galleryItemWidth * 3/4}
                   on:intersect={fetchStrokes}
                 />
               </RenderlessFetchStrokes>

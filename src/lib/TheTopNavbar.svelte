@@ -1,4 +1,4 @@
-<div style="width: 100%;">
+<div id="the-top-navbar">
 	<div class="top-app-bar-container">
 		<div bind:this={topAppBar} 
 			style="border-bottom: 1px solid lightgrey;"
@@ -138,6 +138,14 @@
 </script>
 
 <style>
+	#the-top-navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--navbar-height);
+    z-index: 1; /* without this the hero text will overlay on top of the navbar */
+  }
+
 	.prepare-to-appear {
 		opacity: 0.2;
 		transition: opacity 0.5s ease-in-out;

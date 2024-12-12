@@ -1,12 +1,4 @@
-<div id="top-navbar">
-  <TopNavbar isHomeScreenVisible={isHomeScreenVisible}/>
-</div>
-
-{#if isHomeScreenVisible}
-  <ExperimentalSplashScreen />
-{/if}
-
-<div id="server-layout" class="robust-ios-space-filling" style="--drawer-width: {$drawerWidth}px;">
+<div bind:this={ServerLayout} id="server-layout" class="robust-ios-space-filling" style="--drawer-width: {$drawerWidth}px;">
   <div id="left-drawer">
     {#key classID}
       <TheLeftDrawer 
@@ -23,15 +15,18 @@
 
 <script> 
   import TheLeftDrawer from '$lib/TheLeftDrawer.svelte'
-  import TopNavbar from '$lib/TopNavbar.svelte'
   import { user, drawerWidth, classServerDoc, recentSearchedServerDoc } from '/src/store.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
   import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
   import { onMount } from 'svelte'
   import '$lib/_Elevation.scss'
-  import { blackboardWidth, videoPreviewWidth, videoCinemaWidth } from '/src/store.js';
+  import { 
+    blackboardWidth, 
+    videoPreviewWidth, 
+    videoCinemaWidth,
+    isFullServerMode
+  } from '/src/store.js';
   import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize, HEIGHTS } from '/src/helpers/dimensions.js'
-  import ExperimentalSplashScreen from '$lib/ExperimentalSplashScreen.svelte'
 
   export let data
 
@@ -39,11 +34,21 @@
   let unsubClassDocListener = null
   let resizeObserver = null
   let MainContent = null
-  let isHomeScreenVisible = true
+  let ServerLayout
+
+  $: if ($isFullServerMode && MainContent && ServerLayout) {
+    transformToFullServerPage()
+  }
+
+  $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
+
+  $: {
+    listenToClassDoc(classID)
+    handleClassDocChange(classID)
+    fetchRecentlySearchedClassDoc()
+  }
 
   onMount(() => {
-    window.addEventListener('scroll', handleOnScroll)
-
     initializeCSSVariables()
 
     MainContent = document.getElementById('main-content')
@@ -56,24 +61,10 @@
     resizeObserver.observe(MainContent, { box: 'border-box' })
   })
 
-  $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
-
-  $: {
-    listenToClassDoc(classID)
-    handleClassDocChange(classID)
-    fetchRecentlySearchedClassDoc()
-  }
-
-  function handleOnScroll (e) {
+  function transformToFullServerPage () {
+    MainContent.style.overflowY = 'auto'
     const navbarHeight = 56
-    if (window.scrollY >= window.innerHeight - navbarHeight) {
-      isHomeScreenVisible = false
-      const MainContent = document.getElementById('main-content')
-      const ServerLayout = document.getElementById('server-layout')
-
-      MainContent.style.overflowY = 'auto'
-      ServerLayout.style.marginTop = `${navbarHeight}px`
-    }
+    ServerLayout.style.marginTop = `${navbarHeight}px`
   }
 
   function initializeCSSVariables () {
@@ -140,14 +131,6 @@
     grid-template-areas: 'sidebar main';
     height: calc(100vh - var(--navbar-height));
     background-color: var(--bg-off-white);
-  }
-
-  #top-navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: var(--navbar-height);
-    z-index: 1; /* without this the hero text will overlay on top of the navbar */
   }
 
   #left-drawer {

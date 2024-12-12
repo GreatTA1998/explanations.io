@@ -55,9 +55,7 @@
             > 
               <NewHDBlackboard
                 {strokesArray}
-                canvasWidth={highDefinitionWidth * 0.7}
                 {thumbnailWidth}
-                thumbnailHeight={thumbnailWidth * 3/4}
                 on:intersect={fetchStrokes}
               />
             </RenderlessFetchStrokes>
@@ -70,11 +68,7 @@
             > 
               <NewHDBlackboard
                 {strokesArray}
-                canvasWidth={highDefinitionWidth * 0.7}
-                canvasHeight={highDefinitionWidth * 3/4 * 0.7}
                 {thumbnailWidth}
-                thumbnailHeight={thumbnailWidth * 3/4}
-                hideToolbar={true}
                 on:intersect={fetchStrokes}
               />
             </RenderlessFetchStrokes>

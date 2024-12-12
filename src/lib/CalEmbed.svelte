@@ -36,7 +36,6 @@ Cal("init", "questions-setup-help-with-explanations.io", {origin:"https://cal.co
     background: rgb(224, 224, 224);
     color: rgb(59, 59, 59);
     font-size: 14px;
-    /* border: 1px solid lightgrey; */
   }
   .secondary-button:hover {
       background: rgba(93, 0, 104, 0.05);

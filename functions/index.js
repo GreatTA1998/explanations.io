@@ -25,22 +25,6 @@ exports.sendEmail = functions.https.onCall(async (data, context) => {
   return { success: true, result }
 })
 
-
-exports.sendTextMessage = functions.https.onCall((data, context) => {
-  const client = require('twilio')(process.env.TWILIO_ACCOUNTSID, process.env.TWILIO_AUTHTOKEN)
-  const { content, toWho } = data;
-  console.log('content =', content)
-  console.log("toWho =", toWho)
-  client.messages 
-    .create({        
-        body: content,
-        messagingServiceSid: 'MGe595615f66055b9ee88ac19a9d0ddce5',
-        to: toWho
-      }) 
-    .then(message => console.log('sent to =', toWho)) 
-    .done();
-});
-
 exports.deleteRecursively = functions
   .runWith({ 
     timeoutSeconds: 540, memory: "2GB"

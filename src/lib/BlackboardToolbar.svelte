@@ -142,7 +142,7 @@
 </div>
 
 <script>
-  import { user, currentTool, onlyAllowApplePencil, roomToPeople, browserTabID } from '../store.js'
+  import { user, currentTool, onlyAllowApplePencil } from '../store.js'
   import { getRandomColor } from '/src/helpers/utility.js'
   import Switch from '@smui/switch'
   import { updateDoc, doc, getFirestore, getDoc } from 'firebase/firestore'

@@ -1,73 +1,6 @@
 import { assumedCanvasWidth, maxAvailableWidth } from '../store.js'
 import { get } from 'svelte/store'
 
-export function computeMaxAvailableDimensionsGeneral (availableWidth, availableHeight) {
-  const aspectRatio = 4.4/3 //
-  const leftPadding = 16
-  const audioPlayerHeight = 40
-  const signUpPageNavbarHeight = 64
-  const maxBoardWidth = availableWidth - leftPadding
-  const maxBoardHeight = availableHeight - audioPlayerHeight // - signUpPageNavbarHeight
-
-  // width take precedence, we prefer horizontal displays that utilizes full horizontal space,
-  if ((maxBoardWidth * (1/aspectRatio)) <= maxBoardHeight) {
-    // use up all the width, don't use up all the height
-    return {
-      width: maxBoardWidth,
-      height: maxBoardWidth * (1/aspectRatio)
-    }
-  } 
-
-  else {
-    // use up all the height, don't use up all the width
-    return { 
-      height: maxBoardHeight,
-      width: maxBoardHeight * aspectRatio
-    }
-  }
-}
-
-// will be deprecated since we have the general version above
-export function computeMaxAvailableDimensions () {
-  if (!document) return // to-do: fix later
-  const appElement = document.getElementById('main-content')
-  let availableHeight
-  let availableWidth
-  if (appElement) {
-    availableHeight = appElement.clientHeight
-    availableWidth = appElement.clientWidth
-  }
-  else {
-    availableHeight = window.innerHeight
-    availableWidth = window.innerWidth
-  }
-
-  const aspectRatio = 4.4/3 //
-  const leftPadding = 16
-  const audioPlayerHeight = 40
-  const maxBoardWidth = availableWidth - (leftPadding * 2) // right padding
-  const maxBoardHeight = availableHeight - audioPlayerHeight
-
-  // width take precedence, we prefer horizontal displays that utilizes full horizontal space,
-  if ((maxBoardWidth * (1/aspectRatio)) <= maxBoardHeight) {
-    return {
-      width: maxBoardWidth,
-      height: maxBoardWidth * (1/aspectRatio)
-    }
-  } 
-  // screens that are vertical don't really matter
-  else {
-    return { 
-      height: maxBoardHeight,
-      width: maxBoardHeight * aspectRatio
-    }
-  }
-}
-
-// TO-DO: this means DoodleVideos which are rendered smaller will look bad
-// which components use this draw function?
-
-
 // the last destructured property `canvasWidth` is renamed, AND also has a default value
 export function drawStroke ({ points, color, lineWidth, isErasing }, pointPeriod = null, ctx, canvas, canvasWidth) {
   return new Promise(async resolve => {
@@ -105,23 +38,12 @@ export function connectTwoPoints (points, i, isErasing, ctx, color = "white", li
   const prevY = prevPoint.unitY * canvas.height;
 
   const curPoint = points[i];
-  // console.log('curPoint =', curPoint)
-  // console.log('canvas =', canvas)
   const curX = curPoint.unitX * canvas.width;
   const curY = curPoint.unitY * canvas.height;
 
   ctx.beginPath();
   ctx.moveTo(prevX, prevY);
 
-  
-  /**
-   * Draw a quadratic curve according to: https://github.com/shuding/apple-pencil-safari-api-test/blob/gh-pages/index.js
-   * 
-   * But if I set the control points like this, it's just equivalent to `lineTo()`
-   */
-  // const controlX = (prevX + curX) / 2; 
-  // const controlY = (prevY + curY) / 2;  
-  // ctx.quadraticCurveTo(controlX, controlY, curX, curY);
   ctx.lineTo(curX, curY);
   ctx.stroke();
 }
@@ -149,9 +71,11 @@ export function renderBackground (src, canvas, bgCtx) {
     const image = new Image();
     image.src = src;
     
-    /* avoid the "tainted canvas may not be exported" error
-        https://stackoverflow.com/questions/22710627/tainted-canvases-may-not-be-exported */
-    image.crossOrigin="anonymous";
+    /* 
+      avoid the "tainted canvas may not be exported" error
+      https://stackoverflow.com/questions/22710627/tainted-canvases-may-not-be-exported 
+    */
+    image.crossOrigin = "anonymous";
 
     image.onload = () => { 
       const boardWidth = canvas.scrollWidth 
@@ -160,13 +84,9 @@ export function renderBackground (src, canvas, bgCtx) {
       // correctness argument: because each device's blackboard has the same aspect ratio,
       // height-based scaling will not distort annotations
       if (image.height > image.width) { // weak criteria, but assume it's a vertical PDF page
-        // image.width = boardWidth / 2
-        // image.height = image.width * 1/imageAspectRatio
         image.height = boardHeight 
         image.width = image.height * imageAspectRatio
       } else { 
-        // slide ratio seems to be 3 * 4 
-        // increase size to 100%
         image.width = boardWidth
         image.height = image.width * 1/imageAspectRatio
       }

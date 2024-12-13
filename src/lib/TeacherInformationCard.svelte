@@ -65,7 +65,6 @@
 
   export let helperDoc
   export let currentTeacherUID
-  export let classID
 
   $: numJoined = helperDoc.subscriberUIDs ? helperDoc.subscriberUIDs.length : 0
   $: numNeeded = helperDoc.minGroupSize ? helperDoc.minGroupSize : 1

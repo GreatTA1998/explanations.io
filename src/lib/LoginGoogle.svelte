@@ -3,7 +3,7 @@
   color: rgb(87, 87, 87);
   width: fit-content;
   margin-bottom: 2px;
-  font-size: var(--fs-s);
+  font-size: var(--fs-400);
   padding: 6px 10px;
   border-radius: 24px;
   align-text: center;

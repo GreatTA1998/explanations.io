@@ -43,12 +43,6 @@
 
   let unsubUserDocListener = null 
 
-  $: {
-    if (!$user.uid) {
-      didRenderSplashScreen.set(true)
-    }
-  }
-
   onMount(async () => {
     onAuthStateChanged(auth, reactToUserChange)
     createSessionRecording()
@@ -74,6 +68,8 @@
 
   async function reactToUserChange (resultUser) {
     if (resultUser) {
+      isFullServerMode.set(true)
+
       const { uid } = resultUser 
 
       // NOTE: the partial hydration will give incorrect UIDs for accounts that need forwarding
@@ -107,6 +103,8 @@
     // user not logged in
     else {
       try {
+        didRenderSplashScreen.set(true)
+
         const algebraAndNumberTheoryServer = await getFirestoreDoc(`classes/${'I90n3qyz45VmY0azjbhh'}`)
         handleServerRedirect(algebraAndNumberTheoryServer)
 

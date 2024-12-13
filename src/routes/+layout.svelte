@@ -5,7 +5,7 @@
 {:else}
   <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
 
-  {#if !$user.uid && !$isFullServerMode}
+  {#if $didRenderSplashScreen && !$isFullServerMode}
     <ExperimentalSplashScreen />
   {/if}
 
@@ -29,7 +29,7 @@
   import { getRandomColor } from "/src/helpers/utility.js"
   import { handleServerRedirect } from '/src/helpers/everythingElse.js'
 
-  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen } from '../store.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -43,8 +43,10 @@
 
   let unsubUserDocListener = null 
 
-  $: if ($user.uid) {
-    isFullServerMode.set(true)
+  $: {
+    if (!$user.uid) {
+      didRenderSplashScreen.set(true)
+    }
   }
 
   onMount(async () => {

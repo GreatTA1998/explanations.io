@@ -1,4 +1,5 @@
-<div>
+<!-- Create an independent stacking context -->
+<div style="z-index: 0; position: relative;">
   {#if showSlideChanger}
     <div style="display: flex; align-items: center; width: {canvasWidth}px;">  
       <slot />

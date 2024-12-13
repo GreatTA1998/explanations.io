@@ -89,7 +89,7 @@
   import BaseStatDisplayIcon from '$lib/BaseStatDisplayIcon.svelte'
   import NewHDBlackboard from '$lib/NewHDBlackboard.svelte'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { assumedCanvasWidth, assumedCanvasHeight, user } from '/src/store.js'
+  import { user } from '/src/store.js'
   import { handleServerRedirect } from '/src/helpers/everythingElse.js'
 
   export let serverObj
@@ -98,8 +98,6 @@
   let thumbnailAspectRatio = 1 / 0.7
 
   $: needsTeachers = serverObj.numOfPrepaidLearners > 0 && !serverObj.numOfTeachers
-
-  const highDefinitionWidth = $assumedCanvasWidth
 
   async function handleServerCardClick () {
     handleServerRedirect(serverObj)

@@ -128,8 +128,8 @@
    * Assumes `strokesArray` gets hydrated EXACTLY once
    */
 
-   export let visualHeight
-   export let visualWidth
+  export let visualHeight
+  export let visualWidth
 
   $: canvasWidth = visualWidth * 2
   $: canvasHeight = visualHeight * 2

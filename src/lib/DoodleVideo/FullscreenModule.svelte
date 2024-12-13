@@ -1,31 +1,46 @@
 <div class:fullscreen-mode={isFullscreen}>
-  <slot {toggleFullscreen} {canvasWidth} {canvasHeight} {isFullscreen}>
+  <DynamicLayout>
+    <div slot="video" style="width: {canvasWidth}px;">
+      {#if isFullscreen && $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY && !isDrawerOpen}
+        <button on:click={() => isDrawerOpen = true} 
+          class="material-symbols-outlined expand-drawer-floating-button" 
+        >
+          start
+        </button>
+      {/if}
 
-  </slot>
+      <slot {toggleFullscreen} {canvasWidth} {canvasHeight} {isFullscreen}>
 
-  {#if isFullscreen}
-    <span on:click={toggleFullscreen(boardDoc)} class="exit-button material-symbols-outlined">
-      close
-    </span>
-
-    <div style="flex-basis: 320px; flex-grow: 1; height: fit-content;">
-      <div style="max-width: 60ch; font-size: var(--fs-s); padding: 12px 12px 0px 12px;">
-        {boardDoc.description}
-      </div>
-
-      <div style="width: 70%; margin: 8px 4px;">
-        <EurekaButton {boardDoc}/>
-      </div>
-
-      <CommentsColumn videoDoc={boardDoc}/>
+      </slot>
     </div>
-  {/if}
+
+    <div slot="title-comment-transcript-section" style="height: 100%;">
+      {#if isFullscreen}
+        {#if isDrawerOpen || $videoCinemaLayout !== VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
+          <div transition:fly={{ duration: 300 }} style="flex-basis: 45ch; flex-grow: 1; height: 100%;">
+            <CommentsColumn videoDoc={boardDoc}>
+              {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
+                <button on:click={() => isDrawerOpen = false} class="material-symbols-outlined" style="z-index: 10;">
+                  keyboard_tab
+                </button>
+              {/if}
+
+              <p>{boardDoc.description || ''}</p>       
+            </CommentsColumn>
+          </div>
+        {/if}
+      {/if}
+    </div>
+  </DynamicLayout>
 </div>
 
 <script>
   import { onMount } from 'svelte'
+  import { fly } from 'svelte/transition'
+  import { VIDEO_LAYOUT } from '/src/helpers/dimensions.js'
+  import { videoCinemaWidth, videoCinemaLayout } from '/src/store.js'
   import CommentsColumn from '$lib/DoodleVideo/CommentsColumn.svelte'
-  import EurekaButton from '$lib/EurekaButton.svelte'
+  import DynamicLayout from '$lib/DoodleVideo/DynamicLayout.svelte'
 
   export let previewWidth = window.innerWidth * 0.35
   export let boardDoc
@@ -33,46 +48,30 @@
   let isFullscreen = false
   let canvasWidth = previewWidth
   let canvasHeight = canvasWidth * 3/4
-  let fullscreenWidth = 0
+  let isDrawerOpen = false
 
   $: canvasHeight = canvasWidth * 3/4
 
   $: {
-    if (isFullscreen) canvasWidth = fullscreenWidth
+    if (isFullscreen) canvasWidth = $videoCinemaWidth
     else canvasWidth = previewWidth
   }
 
-  onMount(() => {
-    calculateLayout()
-  })
+  onMount(() => {})
 
   function toggleFullscreen () {
     isFullscreen = !isFullscreen
   }
-
-  function calculateLayout () {
-    const minCommentsSectionWidth = 320
-    if (0.3 * window.innerWidth > minCommentsSectionWidth) {
-      // 68% instead of 70% to take into account that multislide videos take more space
-      fullscreenWidth = 0.68 * window.innerWidth
-    } else {
-      fullscreenWidth = 1.00 * window.innerWidth
-    }
-  }
 </script>
 
 <style>
-  .exit-button {
+  .expand-drawer-floating-button {
+    z-index: 10; 
+    transform: rotateY(180deg); 
     position: absolute; 
-    top: 1vw; 
-    bottom: auto; 
-    right: 1vw; 
-    left: auto; 
-    cursor: pointer; 
-    font-size: var(--fs-l); 
-    z-index: 10;
-    background-color: var(--bg-off-white);
-    border-radius: 24px;
+    top: calc(var(--board-changer-height) - 6px); 
+    right: 1.5vw; 
+    color: white;
   }
 
   .fullscreen-mode {
@@ -86,8 +85,5 @@
 		display: flex;
     flex-wrap: wrap;    
     align-content: start;
-    /* row-gap: 24px; */
-
-    overflow-y: auto;
 	}
 </style>

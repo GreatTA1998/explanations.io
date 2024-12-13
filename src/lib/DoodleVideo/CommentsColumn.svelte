@@ -1,39 +1,50 @@
-<div style="max-width: 60ch; padding: 12px;">
-  <div style="display: flex; margin-bottom: 2vw;">
+<div class="comments-column">
+  <div style="padding: 12px;">
+    <slot/>
+  </div>
+
+  <div style="display: flex; margin-bottom: 2vw; width: 100%; justify-content: space-between;">
+    <!-- Transcript  -->
     <div class="my-tab-item">
-      <div style="font-size: 12px; text-align: start; font-weight: 300; margin-left: 2px;">
-        (coming soon)
-      </div>
-      Transcript 
-    </div>
+      <span class="material-symbols-outlined" style="cursor: not-allowed;">
+        translate
+      </span>
+    </div>      
+    <!-- Comments -->
     <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
-      Comments
+      <span class="material-symbols-outlined" style="cursor: pointer;">
+        forum
+      </span>
     </div>
   </div>
 
-  <RenderlessListenToCollection
-    collectionPath={videoDoc.path + '/comments'}
-    let:listenToCollection={listenToCollection}  
-    let:collectionDocs={commentDocs}
-    autoListen={true}
-  >
-    <TextAreaAutoResizing
-      value={newInputComment} 
-      on:input={(e) => newInputComment = e.detail}
-      placeholder="Follow-up questions..."
-    />
-    
-    <button on:click={createComment}>SUBMIT</button>
+  <div style="padding: 12px;">
+    <RenderlessListenToCollection
+      collectionPath={videoDoc.path + '/comments'}
+      let:listenToCollection={listenToCollection}  
+      let:collectionDocs={commentDocs}
+      autoListen={true}
+    >
+      <TextAreaAutoResizing
+        value={newInputComment} 
+        on:input={(e) => newInputComment = e.detail}
+        placeholder="New comment..."
+      />
+      
+      <button on:click={createComment} class="submit-button">
+        SUBMIT
+      </button>
 
-    {#if commentDocs}
-      {#each commentDocs as commentDoc}
-        <CommentsColumnComment 
-          comment={commentDoc} 
-          on:comment-delete={() => deleteComment(commentDoc)}
-        />
-      {/each}
-    {/if}
-  </RenderlessListenToCollection>
+      {#if commentDocs}
+        {#each commentDocs as commentDoc}
+          <CommentsColumnComment 
+            comment={commentDoc} 
+            on:comment-delete={() => deleteComment(commentDoc)}
+          />
+        {/each}
+      {/if}
+    </RenderlessListenToCollection>  
+  </div>
 </div>
 
 <script>
@@ -73,14 +84,14 @@
       batch.commit()
     )
 
-    const { params } = $page
+    const { params, url } = $page
     handleNewCommentEmailNotifications({ 
       boardDoc: videoDoc, 
       userDoc: $user, 
       classID: params.class, // don't know why there is no ID in this case...
       questionID: params.questionID,
       commentString: newInputComment,
-      linkToQuestion: `${$page.url.origin}/${params.class}/question/${params.questionID}`
+      linkToQuestion: `${url.origin}/${params.class}/question/${params.questionID}`
     })
     newInputComment = '' 
   }
@@ -100,11 +111,26 @@
 </script>
 
 <style>
+  .submit-button {
+    border-radius: 12px; 
+    border: 1px solid lightgrey;
+    padding: 6px 12px;
+    background-color: white;
+  }
+
+  .comments-column {
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0, 100%, 100%, 0.7);
+  }
+
   .my-tab-item {
     font-size: 1.4rem;
     border-bottom: 2px solid rgb(160, 160, 160);
     padding: 1vw;
     color: rgb(160, 160, 160);
+    flex-grow: 1;
+    text-align: center;
   }
 
   .my-active-tab {

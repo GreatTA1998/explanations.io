@@ -1,30 +1,23 @@
-<div style="display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white);">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube style tutoring for math olympiads
+		Youtube style help for math olympiads
 	</p>
 
 	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
-			Pick your teacher. Ask them questions. Get detailed video explanations until you understand everything.
-			$10/week.
+			Subscribe to a teacher, ask questions about anything, get video explanations until you understand everything.
 		</div>
 
-		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
-			<ReusableRoundButton on:click={redirectToCalMeetingPage}
-				backgroundColor="#5d0068"
-				textColor="white"
-			>
-				<div style="font-weight: 600; font-size: var(--fs-s); padding: 12px;">
-					Book Setup Call
-				</div>
-				
-				<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
-					calendar_add_on
-				</span>
-			</ReusableRoundButton>
+		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
+			<!-- style="background-color: #5d0068; color: white; border-radius: 24px; padding: 12px 24px; font-size: var(--fs-s); font-weight: 600;" -->
+			<PopupConfirmLearner let:setIsPopupOpen={setIsPopupOpen}>
+				<button on:click={() => setIsPopupOpen({ newVal: true })} class="primary-button">
+					Try for $10/week
+				</button>
+			</PopupConfirmLearner>
 
 			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				2 learners joined this month
+				6 learners joined this year
 			</div>
 		</div>
 
@@ -40,42 +33,52 @@
 			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
 				r/PhysicsStudents
 			</a>
+
+			<div class="separator"></div>	
+			
+			<CountryFlags/>
+
+			<div class="separator"></div>	
+
+			<BrandLogos/>
 		</div>
 	</div>
 
-	{#if videoWidth}
-		<div class="alternative-flexbox">
-			{#each showcasedCreators as creator}
-		
-			{/each}
-		</div>
-	{/if}
-
-	<div style="text-align: center; padding: 48px 0px;">
-		<img 
-			style="min-width: 332px; width: 60vw; height: auto"
-			src="https://i.imgur.com/TRxyjmU.png"
-			alt="competition landscape"
-		> 
-
-		<img
-			style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
-			src="https://i.imgur.com/B9a5Nfp.png"
-			alt="sheraz's discord message"
-		/>
+	<div style="display: flex; align-items: center; column-gap: 36px;">
+	
 	</div>
+	
+	<RotatingGallery galleryVideos={randomlyChosenExemplarVideos}/>
 
-	<FounderSelfIntro/>
+		<div style="text-align: center; padding: 48px 0px;">
+			<!-- <img 
+				style="min-width: 332px; width: 30vw; height: auto"
+				src="https://i.imgur.com/TRxyjmU.png"
+				alt="competition landscape"
+			>  -->
+	
+			<!-- <img
+				style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
+				src="https://i.imgur.com/B9a5Nfp.png"
+				alt="sheraz's discord message"
+			/> -->
+		</div>
 
-	<HistoricalTimeline/>
+	<!-- <FounderSelfIntro/> -->
+
+	<!-- <HistoricalTimeline/> -->
 </div>
 
 <script>
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
+	import CountryFlags from '$lib/CountryFlags.svelte'
+	import BrandLogos from '$lib/BrandLogos.svelte'
+	import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
+	import RotatingGallery from '$lib/RotatingGallery.svelte'
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
-	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
+	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte'
+	import CalEmbed from '$lib/CalEmbed.svelte'
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated
@@ -230,15 +233,22 @@
 </script>
 
 <style>
-	.alternative-flexbox {
-    display: flex; 
-		justify-content: space-between;
-		flex-wrap: wrap;
-		row-gap: 36px;
+	.primary-button {
+		background: #5d0068;
+		color: white;
+		padding: 12px 20px;
+		border-radius: 24px;
+		border: none;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		width: 180px;
+		font-size: 16px;
+	}
 
-		padding: 48px 6px; 
-		outline: 0px solid red;
-  }
+	.primary-button:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba(93, 0, 104, 0.2);
+	}
 
 	.separator {
 		width: 2px;

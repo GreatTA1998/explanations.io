@@ -38,7 +38,7 @@
 <script>
   import { connectTwoPoints, drawStroke, renderBackground } from '/src/helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user } from '/src/store.js' // note `canvasWidth` was misleading
+  import { assumedCanvasWidth } from '/src/store.js'
 
   export let strokesArray
   export let currentTime

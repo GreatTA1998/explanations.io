@@ -50,6 +50,7 @@
   import { currentTool, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
 
   export let thumbnailWidth
+  export let willDrawOneByOne = false
 
   let canvasWidth = thumbnailWidth * 3.44 // to match <HDBlackboard>'s 0.29 scale down
   let canvasHeight = canvasWidth * 3/4
@@ -96,12 +97,19 @@
   
   // resize on initialization
   $: if (ctx) {
+    onCtxReady()
+  }
+
+  // this is a red flag, it looks like it'll conflict with the
+  // m n updateUI() logic
+  async function onCtxReady () {
     canvas.width = canvasWidth
     canvas.height = canvasHeight
     bgCanvas.width = canvasWidth
     bgCanvas.height = canvasHeight
     if (strokesArray) {
       for (const stroke of strokesArray) {
+        if (willDrawOneByOne) await delay(10)
         drawStroke(stroke, null, ctx, canvas, canvasWidth)
       }
     }
@@ -121,6 +129,10 @@
     bgCtx = bgCanvas.getContext('2d')
   })
 
+  function delay (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   /**
    * Reactive statement that triggers each time `strokesArray` changes
    * Ensures `strokesArray => UI`, that is whenever the client mutates the `strokesArray` prop, we update <canvas/> accordingly`. 
@@ -130,7 +142,7 @@
    * 
    * CRITICAL ASSUMPTION: strokesArray can be pushed singularly and deleted in batch, but can never be modified in place. 
    */
-  function updateUI () {
+  async function updateUI () {
     if (!strokesArray || !ctx) {
       return
     }
@@ -148,6 +160,7 @@
     else if (m < n) {
       if (m === 0) { // blackboard just finished loading i.e. there can be 500 strokes
         for (const stroke of strokesArray) {
+          if (willDrawOneByOne) await delay(10)
           drawStroke(stroke, null, ctx, canvas, canvasWidth)
         }
         localStrokesArray = [...strokesArray]
@@ -157,6 +170,7 @@
       else { // normal update
         for (let i = m; i < n; i++) {
           const newStroke = strokesArray[i]
+          if (willDrawOneByOne) await delay(10)
           drawStroke(
             newStroke, 
             newStroke.startTime !== newStroke.endTime ? getPointDuration(newStroke) : null, // instantly or smoothly,

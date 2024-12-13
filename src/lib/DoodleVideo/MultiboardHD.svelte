@@ -1,4 +1,5 @@
-<div>
+<!-- Create an independent stacking context -->
+<div style="z-index: 0; position: relative;">
   {#if showSlideChanger}
     <div style="display: flex; align-items: center; width: {canvasWidth}px;">  
       <slot />
@@ -19,20 +20,6 @@
         {playbackSpeed}x 
       </BaseTransparentButton>
     </div>
-
-    <!-- share, delete button overlay on top -->
-    {#if showEditDeleteButtons}
-      <div class="edit-delete-buttons" style="width: {canvasWidth}px;">
-        <!-- $adminUIDs.includes($user.uid) -->
-        {#if $user.uid === boardDoc.creatorUID || !boardDoc.creatorUID}
-          <div style="margin-right: 6px;">
-            <BaseTransparentButton on:click={() => handleVideoDelete(boardDoc)}>
-              <span class="material-icons">delete_forever</span>
-            </BaseTransparentButton>
-          </div>
-        {/if}
-      </div>
-    {/if}
     
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
@@ -74,7 +61,7 @@
               "
             > 
               {#if strokesArray && slideDoc}
-                <MultislideDoodleVideoVisualSlide
+                <MultiboardSlide
                   {currentTime}
                   {strokesArray}
                   canvasWidth={canvasWidth * 2}
@@ -108,8 +95,9 @@
         hasAudioSliderJumped = true
       }}
       controls
-      style={`width: ${canvasWidth}px; height: ${Math.min(90 * scaleFactor, 50)}px;`}
+      style={`width: ${canvasWidth}px; height: 50px`}
     >
+    <!-- ${Math.min(90 * scaleFactor, 50)}px; -->
     </audio>
   </div>
 </div>
@@ -118,21 +106,17 @@
   // we try to let `currentTime` represent `AudioPlayer.currentTime` as closely
   // as possible with reactive statements, so then we can use 
   // a reactive / declarative way to write the rest of this component
-
-  // TO-DO:
-  //   - an audio element that plays and dictates the time
-  //   - all the doodle visuals will play simultaneously
-  //   - finally, just have a spotlight on one
   import { revertToBoard } from '/src/helpers/unifiedDeleteAPI.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { lazyCallable } from '/src/helpers/actions.js'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, user, adminUIDs } from '/src/store.js' // note `canvasWidth` was misleading
-  import MultislideDoodleVideoVisualSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
+  import { assumedCanvasWidth, user } from '/src/store.js' // note `canvasWidth` was misleading
+  import MultiboardSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
   import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
 
+  export let propToDeleteVideo = false
   export let audioDownloadURL
   export let boardDoc
 
@@ -141,7 +125,6 @@
   export let canvasHeight
 
   export let timingOfSlideChanges
-  export let showEditDeleteButtons
   export let showSlideChanger
 
   const dispatch = createEventDispatcher()
@@ -162,6 +145,10 @@
   let updateViewMinutesTimeoutID
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
+
+  $: if (propToDeleteVideo) {
+    handleVideoDelete(boardDoc)
+  }
 
   // Ensure we change `idxOfFocusedSlide` 
   // NOTE: doesn't need to be optimized yet , there are only about 10-20 slide changes at most
@@ -243,6 +230,8 @@
   }
 
   async function handleVideoDelete (boardDoc) {
+    dispatch('deletion-request-received')
+
     if (!confirm('Are you sure you want to revert this video to a blackboard?')) {
       return
     }

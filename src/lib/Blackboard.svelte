@@ -1,5 +1,8 @@
 <!-- TO-DO: emit an intersection API event -->
-<div use:lazyCallable={() => dispatch('intersect')} style="position: relative; width: {canvasWidth}px; height: {canvasHeight}px">
+<div 
+  use:lazyCallable={() => dispatch('intersect')} 
+  style="position: relative; z-index: 0; width: {canvasWidth}px; height: {canvasHeight}px"
+>
   <!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
       (to distinguish between unfetched board and empty board) 
   -->
@@ -329,13 +332,9 @@
       startTime: currentTime,
       color: $currentTool.color,
       lineWidth: $currentTool.lineWidth,
-      // // why do we store `maxAvailableWidth` as a property here?
-      // I believe this is un-used (DoodleVideo normalizes width because we do everything relative to an `assumedCanvasWidth`
-      // and scale it up to whatever the actual canvasSize is, but I'll keep it here just in case I'm wrong since it does no harm)
-      // maxAvailableWidth: $maxAvailableWidth, 
       isErasing: $currentTool.type === 'eraser',
       points: [],
-      sessionID: '123' // TODO: initialize in store
+      sessionID: '123' // TODO: use browserTabID in the future
     }
   }
 

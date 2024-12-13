@@ -4,7 +4,7 @@
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
   import LegacySingleSlideBlackboard from '$lib/LegacySingleSlideBlackboard.svelte'
-  import { maxAvailableWidth, maxAvailableHeight, user } from '/src/store.js'
+  import { blackboardWidth, videoPreviewWidth, user } from '/src/store.js'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
 
@@ -17,7 +17,6 @@
   const debouncedUpdateBoardDescription = createDebouncedFunction(updateBoardDescription, 1000)
 
   async function updateBoardDescription (e, boardDoc) {    
-    console.log('updating board description')
     updateFirestoreDoc(boardDoc.path, {
       description: e.detail
     })
@@ -27,13 +26,14 @@
 <div>
   <RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
     {#if !boardDoc}
-      <div style="width: {$maxAvailableWidth}px; height: {3/4 * $maxAvailableWidth}px;">
+      <!-- TODO: we always assume the video dimensions, which causes minor layout shifts for blackboards -->
+      <div style="width: {$videoPreviewWidth}px; height: {3/4 * $videoPreviewWidth}px;">
       
       </div>
     {:else}
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; row-gap: 12px;">
-        <div style="width: {$maxAvailableWidth}px; margin-top: 0px; margin-bottom: 0px">
-          {#if boardDoc.description || boardDoc.creatorUID === $user.uid}
+        <div style="width: {boardDoc.audioDownloadURL ? $videoPreviewWidth : $blackboardWidth}px; margin-top: 0px; margin-bottom: 0px">
+          {#if !(!boardDoc.description && boardDoc.creatorUID && $user.uid !== boardDoc.creatorUID)}
             <TextAreaAutoResizing 
               value={boardDoc.description || ''} 
               on:input={(e) => debouncedUpdateBoardDescription(e, boardDoc)}
@@ -45,19 +45,16 @@
       </div>
 
       {#if boardDoc.audioDownloadURL}
-        <!-- 
-          QUICKFIX: scale factor of 0.8 to take into account of the slides so you can see the whole video with the slider
-        -->
         <GeneralizedVideoDisplay
           video={boardDoc}
-          videoWidth={$maxAvailableWidth * 0.8}
+          videoWidth={$videoPreviewWidth}
           showEditDeleteButtons={true}
         />
       {:else if boardDoc.isMultiboard}
         <OnlineMultislideBlackboard 
           {boardDoc}
-          canvasHeight={$maxAvailableHeight}
-          canvasWidth={$maxAvailableWidth}
+          canvasHeight={$blackboardWidth * 3/4}
+          canvasWidth={$blackboardWidth}
           {classID}
           {roomDoc}
         />

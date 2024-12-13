@@ -5,14 +5,15 @@
 {/if}
 
 {#if !$user.uid}
-  <Button on:click={() => isSignInPopupOpen = true}
+  <LoginGoogle/>
+  <!-- <Button on:click={() => isSignInPopupOpen = true}
     variant="{outlined ? 'outlined' : ''}"
     color={frameworkColor}
   >
     <slot>
       Sign in
     </slot>
-  </Button>
+  </Button> -->
   {:else}
   <Button on:click={logOut} style="color: black; font-size: 12px; font-family: 'Inter'">
     Sign out
@@ -24,6 +25,8 @@
   import Button, { Label } from '@smui/button';
   import { user } from '../store.js'
   import { getAuth, signOut } from 'firebase/auth'
+  import LoginGoogle from '$lib/LoginGoogle.svelte'
+  
 
   let isSignInPopupOpen = false
 

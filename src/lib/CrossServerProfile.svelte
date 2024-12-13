@@ -1,60 +1,58 @@
-<TopNavbar>
-  <div style="padding-top: 2vw;">
-    <div style="padding: 0vw 2vw; display: flex; gap: 12px;">
-      <div style="flex-basis: 48px;">
-        <CreatorCircularAvatar/>
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <div style="font-size: var(--fs-l);">
-          {creatorDoc.name || ''}
-        </div>
-
-        <div style="max-width: 60ch;">
-          {creatorDoc.bio || ''}
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 8px; padding: 12px 0px; flex-wrap: wrap;">
-          {#if teachingServers}
-            <div class="ux-filter-chip" class:highlighted-chip={currentServerID === ''}
-              on:click={() => currentServerID = ''}
-            >
-              All videos
-            </div>  
-
-            {#each teachingServers as server}
-              <div class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
-                on:click={() => currentServerID = server.id}
-              >
-                {server.name}
-              </div>
-            {/each}
-          {/if}
-        </div>
-      </div>
+<div style="margin-top: var(--navbar-height); padding: 2vw;">
+  <div style="padding: 0vw 2vw; display: flex; gap: 12px;">
+    <div style="flex-basis: 48px;">
+      <CreatorCircularAvatar/>
     </div>
 
-    <div style="margin-top: 36px"></div>
-
-    <!-- TO-DO: show individual video watch-time, and comments -->
-    {#if filteredVideos && videoWidth}
-      <div class="alternative-flexbox">
-        {#each filteredVideos as video (video.id)}
-          <div style="align-self: end;">
-            <div class="youtube-video-title limit-to-three-lines" style="width: {videoWidth}px; margin-bottom: 0.2vw;">
-              {video.description}
-            </div>
-
-            <GeneralizedVideoDisplay
-              {video} 
-              {videoWidth}
-            />
-          </div> 
-        {/each}
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <div style="font-size: var(--fs-l);">
+        {creatorDoc.name || ''}
       </div>
-    {/if}
+
+      <div style="max-width: 60ch;">
+        {creatorDoc.bio || ''}
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px; padding: 12px 0px; flex-wrap: wrap;">
+        {#if teachingServers}
+          <button class="ux-filter-chip" class:highlighted-chip={currentServerID === ''}
+            on:click={() => currentServerID = ''}
+          >
+            All videos
+          </button>  
+
+          {#each teachingServers as server}
+            <button class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
+              on:click={() => currentServerID = server.id}
+            >
+              {server.name}
+            </button>
+          {/each}
+        {/if}
+      </div>
+    </div>
   </div>
-</TopNavbar>
+
+  <div style="margin-top: 36px"></div>
+
+  <!-- TO-DO: show individual video watch-time, and comments -->
+  {#if filteredVideos && videoWidth}
+    <div class="alternative-flexbox">
+      {#each filteredVideos as video (video.id)}
+        <div style="align-self: end;">
+          <div class="youtube-video-title limit-to-three-lines" style="width: {videoWidth}px; margin-bottom: 0.2vw;">
+            {video.description}
+          </div>
+
+          <GeneralizedVideoDisplay
+            {video} 
+            {videoWidth}
+          />
+        </div> 
+      {/each}
+    </div>
+  {/if}
+</div>
 
 <script>
   import { onMount } from 'svelte'
@@ -62,7 +60,7 @@
   import { getFirestoreQuery } from '/src/helpers/crud.js'
   import CreatorCircularAvatar from '$lib/CreatorCircularAvatar.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
-  import TopNavbar from '$lib/TopNavbar.svelte'
+  import TopNavbar from '$lib/TheTopNavbar.svelte'
   import { getFirestoreDoc } from '/src/helpers/crud.js'
 
   export let profileUID

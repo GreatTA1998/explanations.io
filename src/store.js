@@ -42,3 +42,6 @@ export const videoPreviewWidth = writable(0)
 export const videoCinemaWidth = writable(0)
 
 export const videoCinemaLayout = writable('')
+
+export const isFullServerMode = writable(false)
+export const didRenderSplashScreen = writable(false)

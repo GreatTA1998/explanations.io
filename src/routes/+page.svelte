@@ -1,44 +1,41 @@
-<TopNavbar>
-	<!-- <div slot="tab-section" class="my-tab-container">
-		<div on:click={() => activeTabName = 'Learn'} on:keydown
-			class="tab-full-item"
-			class:active-underline-indicator={activeTabName === 'Learn'}
-		>
-			
-			<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Learn'}>
-				smart_display
-			</span>
-			<div class="tab-name" class:active-bold={activeTabName === 'Learn'}>
-				Learn
-			</div>
+<!-- 
+<div slot="tab-section" class="my-tab-container">
+	<div on:click={() => activeTabName = 'Learn'} on:keydown
+		class="tab-full-item"
+		class:active-underline-indicator={activeTabName === 'Learn'}
+	>
+		
+		<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Learn'}>
+			smart_display
+		</span>
+		<div class="tab-name" class:active-bold={activeTabName === 'Learn'}>
+			Learn
 		</div>
-
-		<div on:click={() => activeTabName = 'Teach'} on:keydown
-			class="tab-full-item"
-			class:active-underline-indicator={activeTabName === 'Teach'}
-		>
-			<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Teach'}>
-				stylus_note
-			</span>
-			<div class="tab-name" class:active-bold={activeTabName === 'Teach'}>
-				Teach
-			</div>
-		</div>
-	</div> -->
-
-	<div class="webflow-container">
-		{#if activeTabName === 'Learn'}
-			<HomePageForLearner/>
-		{:else}
-			<HomePageForTeacher/>
-		{/if}
 	</div>
-</TopNavbar>
+
+	<div on:click={() => activeTabName = 'Teach'} on:keydown
+		class="tab-full-item"
+		class:active-underline-indicator={activeTabName === 'Teach'}
+	>
+		<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Teach'}>
+			stylus_note
+		</span>
+		<div class="tab-name" class:active-bold={activeTabName === 'Teach'}>
+			Teach
+		</div>
+	</div>
+</div> 
+-->
+
+{#if activeTabName === 'Learn'}
+	<ExperimentalSplashScreen/>
+{:else}
+	<HomePageForTeacher/>
+{/if}
 
 <script>	
-	import TopNavbar from '$lib/TopNavbar.svelte'
-	import HomePageForLearner from '$lib/HomePageForLearner.svelte'
 	import HomePageForTeacher from '$lib/HomePageForTeacher.svelte'
+	import ExperimentalSplashScreen from '$lib/ExperimentalSplashScreen.svelte'
 
 	let activeTabName = 'Learn'
 </script>

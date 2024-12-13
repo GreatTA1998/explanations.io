@@ -1,5 +1,8 @@
 <!-- TO-DO: emit an intersection API event -->
-<div use:lazyCallable={() => dispatch('intersect')} style="position: relative; width: {canvasWidth}px; height: {canvasHeight}px">
+<div 
+  use:lazyCallable={() => dispatch('intersect')} 
+  style="position: relative; z-index: 0; width: {canvasWidth}px; height: {canvasHeight}px"
+>
   <!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
       (to distinguish between unfetched board and empty board) 
   -->

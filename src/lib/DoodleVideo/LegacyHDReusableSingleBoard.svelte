@@ -12,7 +12,7 @@
       style={`width: ${canvasWidth}px; height: ${canvasHeight + Math.min(54, (80 * scaleFactor))}px; position: relative`}
     >
 
-      <HDDoodleVideo 
+      <LegacyHDSingleBoard 
         visualWidth={canvasWidth}
         visualHeight={canvasHeight}
         {strokesArray} 
@@ -69,13 +69,13 @@
             {/if}
           </div>
         {/if}
-      </HDDoodleVideo>
+      </LegacyHDSingleBoard>
     </div>
   </RenderlessFetchStrokes>
 {/if}
 
 <script>
-  import HDDoodleVideo from '$lib/DoodleVideo/LegacyHDSingleBoard.svelte'
+  import LegacyHDSingleBoard from '$lib/DoodleVideo/LegacyHDSingleBoard.svelte'
   import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
   import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../../store.js'
   import { lazyCallable } from '/src/helpers/actions.js'

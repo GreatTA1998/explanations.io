@@ -1,48 +1,60 @@
-<!-- 
-<div slot="tab-section" class="my-tab-container">
-	<div on:click={() => activeTabName = 'Learn'} on:keydown
-		class="tab-full-item"
-		class:active-underline-indicator={activeTabName === 'Learn'}
-	>
-		
-		<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Learn'}>
-			smart_display
-		</span>
-		<div class="tab-name" class:active-bold={activeTabName === 'Learn'}>
-			Learn
+<TopNavbar>
+	<div slot="tab-section" class="my-tab-container">
+		<div on:click={() => activeTabName = 'Learn'} 
+			class="tab-full-item"
+			class:active-underline-indicator={activeTabName === 'Learn'}
+		>
+			
+			<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Learn'}>
+				smart_display
+			</span>
+			<div class="tab-name" class:active-bold={activeTabName === 'Learn'}>
+				Learn
+			</div>
+		</div>
+
+		<div on:click={() => activeTabName = 'Teach'} 
+			class="tab-full-item"
+			class:active-underline-indicator={activeTabName === 'Teach'}
+		>
+			<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Teach'}>
+				stylus_note
+			</span>
+			<div class="tab-name" class:active-bold={activeTabName === 'Teach'}>
+				Teach
+			</div>
 		</div>
 	</div>
 
-	<div on:click={() => activeTabName = 'Teach'} on:keydown
-		class="tab-full-item"
-		class:active-underline-indicator={activeTabName === 'Teach'}
-	>
-		<span class="material-symbols-outlined tab-icon" class:active-tab-icon={activeTabName === 'Teach'}>
-			stylus_note
-		</span>
-		<div class="tab-name" class:active-bold={activeTabName === 'Teach'}>
-			Teach
-		</div>
+	<div class="webflow-container">
+		{#if activeTabName === 'Learn'}
+			<HomePageForLearner/>
+		{:else}
+			<HomePageForTeacher/>
+		{/if}
 	</div>
-</div> 
--->
-
-{#if activeTabName === 'Learn'}
-	<ExperimentalSplashScreen/>
-	<!-- <HomePageForLearner/> -->
-{:else}
-	<HomePageForTeacher/>
-{/if}
+</TopNavbar>
 
 <script>	
+	import { goto } from '$app/navigation'
+	import { onMount, tick, onDestroy } from 'svelte'
+	import { mixpanelLibrary } from '/src/mixpanel.js'
+	import TopNavbar from '$lib/TopNavbar.svelte'
 	import HomePageForLearner from '$lib/HomePageForLearner.svelte'
 	import HomePageForTeacher from '$lib/HomePageForTeacher.svelte'
-	import ExperimentalSplashScreen from '$lib/ExperimentalSplashScreen.svelte'
 
 	let activeTabName = 'Learn'
+
+	onMount(() => {
+		mixpanelLibrary.track('Home page visited')
+	})
 </script>
 
 <style lang="scss">
+	strong {
+		color: rgb(30, 30, 30)	
+	}
+
 	.my-tab-container {
 		margin-left: 24px; 
 		margin-right: auto; 

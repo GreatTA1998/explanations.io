@@ -79,7 +79,7 @@
 
           <Menu bind:this={DropdownMenu} style="width: 300px">
             <List>      
-              <Item on:SMUI:action={() => deleteRoom({ room, classID })}>
+              <Item on:SMUI:action={() => deleteRoom(room)}>
                 Delete room
               </Item>
             </List> 
@@ -123,18 +123,20 @@
 <script>
 import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
 import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
-import { deleteRoom } from '/src/helpers/unifiedDeleteAPI.js'
 import List, { Item, Text } from '@smui/list'
 import Menu from '@smui/menu';
 import { goto } from '$app/navigation'
 import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where, increment } from 'firebase/firestore'
 import { user, willPreventPageLeave, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
+import { deleteObject, getStorage, ref } from 'firebase/storage'
+import { getFunctions, httpsCallable } from "firebase/functions"
 
 import { SUBPAGE_INDENATION_PX, DRAWER_EXPANDED_WIDTH } from '/src/helpers/CONSTANTS';
 import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
 import { onDestroy } from 'svelte'
 import { page } from '$app/stores'
+import { deleteArbitraryBlackboard } from '/src/helpers/crud.js'
 
 export let room
 export let depth = 0
@@ -273,6 +275,70 @@ async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
     blackboards: arrayUnion(boardID)
   })
   await batch.commit()
+}
+
+/**
+ * Properly deletes the room:
+ *   1. Delete audio files, if any boards are recorded 
+ *   2. Delete stroke subcollections
+ *   3. Delete the room doc itself
+ */
+async function deleteRoom (room) {
+  if (!confirm('Are you sure you want to delete this room?')) {
+    return
+  }
+
+  if (room.id === classID) {
+    alert('Cannot delete the first room')
+    return 
+  }
+
+  alert('Initiated a delete, this might take 10 seconds, the UI will update')
+
+  const db = getFirestore()
+
+  const boardDeletePromises = []
+  for (const boardID of room.blackboards) {
+    boardDeletePromises.push(
+      getFirestoreDoc(classPath + `blackboards/${boardID}/`)
+        .then(boardDoc => deleteArbitraryBlackboard({ boardDoc, classID }))
+        .catch(error => console.log(error))
+    )
+  }
+  await Promise.all(boardDeletePromises)
+
+  // MOVE CHILDREN: move all the children OUT of the folder getting deleted
+  // 1. fetch all the sub-rooms
+  // 2. update all the parent pointers
+  const folderPromises = []
+  const roomsRef = collection(db, `classes/${classID}/rooms/`)
+  const q = query(roomsRef, where('parentRoomID', '==', room.id))
+  const subRooms = await getFirestoreQuery(q)
+  for (const subRoom of subRooms) {
+    folderPromises.push(
+      updateFirestoreDoc(subRoom.path, {
+        parentRoomID: room.parentRoomID
+      })
+    )
+  }
+
+  // update grandparent's children count (though if deleted room's children would end up at the top level, 
+  // the grandparent doesn't exist, hence if statement 
+  if (room.parentRoomID) {
+    folderPromises.push(
+      updateFirestoreDoc(`classes/${classID}/rooms/${room.parentRoomID}`, {
+        numOfChildren: increment(subRooms.length)
+      })
+    )
+  }
+
+  await Promise.all(folderPromises)
+
+  // finally delete the room doc itself
+  await deleteDoc(
+    doc(db, classPath + `rooms/${room.id}`)
+  )
+  // note, the [room].svelte page knows how to handle itself when its `roomDoc` no longer exists
 }
 </script>
 

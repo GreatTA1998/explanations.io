@@ -107,11 +107,11 @@
 
 <script>
   import BasePopup from '$lib/BasePopup.svelte'
-  import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '/src/store.js'
   import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreDoc, setFirestoreDoc } from '../helpers/crud.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
+  import { debounce } from '/src/helpers/utility.js'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import UXFormField from '$lib/UXFormField.svelte';
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
@@ -188,7 +188,7 @@
     }
   }
   
-  const debouncedUpdateBio = createDebouncedFunction(
+  const debouncedUpdateBio = debounce(
     updateTeacherBio,
     1000
   ) 
@@ -196,6 +196,30 @@
   async function updateTeacherBio ({ newVal }) {
     updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
       bio: newVal
+    })
+  }
+
+  // TO-DO: should be throttled
+  const debouncedUpdateTeacherVenmo = debounce(
+    updateTeacherVenmo, 
+    500
+  )
+
+  function updateTeacherVenmo ({ newVal }) {
+    updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
+      venmo: newVal
+    })
+  }
+
+  function updateTeacherCashApp (cashApp) {
+    updateFirestoreDoc(`classes/${classID}/members/${memberDoc.uid}`, {
+      cashApp
+    })
+  }
+
+  function updateUserName () {
+    updateFirestoreDoc(`users/${$user.uid}`, {
+      name: inputFieldFirstName + ' ' + inputFieldLastName
     })
   }
 </script>

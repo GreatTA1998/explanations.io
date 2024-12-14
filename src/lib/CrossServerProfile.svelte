@@ -16,18 +16,18 @@
 
         <div style="display: flex; align-items: center; gap: 8px; padding: 12px 0px; flex-wrap: wrap;">
           {#if teachingServers}
-            <button class="ux-filter-chip" class:highlighted-chip={currentServerID === ''}
+            <div class="ux-filter-chip" class:highlighted-chip={currentServerID === ''}
               on:click={() => currentServerID = ''}
             >
               All videos
-            </button>  
+            </div>  
 
             {#each teachingServers as server}
-              <button class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
+              <div class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
                 on:click={() => currentServerID = server.id}
               >
                 {server.name}
-              </button>
+              </div>
             {/each}
           {/if}
         </div>
@@ -45,7 +45,7 @@
               {video.description}
             </div>
 
-            <GeneralizedVideoDisplay
+            <UnifiedDoodleVideo 
               {video} 
               {videoWidth}
             />
@@ -61,8 +61,8 @@
   import { collectionGroup, query, where, getDocs, limit, getFirestore } from "firebase/firestore"
   import { getFirestoreQuery } from '/src/helpers/crud.js'
   import CreatorCircularAvatar from '$lib/CreatorCircularAvatar.svelte'
-  import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
-  import TopNavbar from '$lib/TheTopNavbar.svelte'
+  import UnifiedDoodleVideo from '$lib/UnifiedDoodleVideo.svelte'
+  import TopNavbar from '$lib/TopNavbar.svelte'
   import { getFirestoreDoc } from '/src/helpers/crud.js'
 
   export let profileUID

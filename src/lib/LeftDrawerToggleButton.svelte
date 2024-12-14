@@ -1,17 +1,17 @@
 {#if $drawerWidth === 0}
-  <button on:click={() => drawerWidth.set(DRAWER_EXPANDED_WIDTH)} 
+  <span on:click={() => drawerWidth.set(DRAWER_EXPANDED_WIDTH)} 
     class="material-icons expand-collapse-button" 
     style="font-size: 3rem;"
   >
     start
-  </button>
+  </span>
 {:else}   
-  <button on:click={() => drawerWidth.set(0)} 
+  <span on:click={() => drawerWidth.set(0)} 
     class="material-icons expand-collapse-button" 
     style="font-size: 3rem; transform: rotateY(180deg)"
   >
     keyboard_tab
-  </button>
+  </span>
 {/if}
 
 <script>
@@ -20,22 +20,20 @@
 </script>
 
 <style>
-  /* 
-    sticky positioning creates a poor experience
-    because it overlaps with important control buttons e.g. 2x speed toggle of a video, 
-    depending on the scroll position
-
-    static positioning is flawed but we bias towards not changing things when we're unsure
-  */
   .expand-collapse-button {
     width: fit-content;
     padding: 0px 2px;
     border-radius: 8px;
 
     z-index: 1;
+    /* 
+      position: sticky; 
+      top: 12px; 
+      left: 0px;  
+    */
     margin-top: 12px; 
 
     cursor: pointer;
-    color: rgb(120, 120, 120);
+    color: rgb(100, 100, 100);
   }
 </style>

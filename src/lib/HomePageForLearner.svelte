@@ -1,26 +1,16 @@
-<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white); 
-">
+<div style="display: flex; flex-direction: column; gap: 16px;">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube style help for math olympiads
+		Youtube style tutoring for math olympiads
 	</p>
 
 	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
-			Subscribe to a teacher, ask questions about anything, get video explanations until you understand everything.
+			Pick your teacher. Ask them questions. Get detailed video explanations until you understand everything.
+			$10/week.
 		</div>
 
-		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
-			<!-- style="background-color: #5d0068; color: white; border-radius: 24px; padding: 12px 24px; font-size: var(--fs-s); font-weight: 600;" -->
-			<button class="primary-button">
-				Try for $10/week
-			</button>
-			<!-- <CalEmbed/> -->
-
-			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				2 learners joined this month
-			</div>
-
-			<!-- <ReusableRoundButton on:click={redirectToCalMeetingPage}
+		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+			<ReusableRoundButton on:click={redirectToCalMeetingPage}
 				backgroundColor="#5d0068"
 				textColor="white"
 			>
@@ -31,7 +21,11 @@
 				<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
 					calendar_add_on
 				</span>
-			</ReusableRoundButton> -->
+			</ReusableRoundButton>
+
+			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
+				2 learners joined this month
+			</div>
 		</div>
 
 		<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
@@ -49,50 +43,51 @@
 		</div>
 	</div>
 
-	<div style="display: flex; align-items: center; column-gap: 36px;">
-		<CountryFlags/>
+	{#if videoWidth}
+		<div class="alternative-flexbox">
+			{#each showcasedCreators as creator}
+				<CreatorFeaturedVideoShowcase 
+					originalQuestion={creator.originalQuestion}
+					boardDbPath={creator.boardDbPath}
+					firstNameAndKeyInfo={creator.firstNameAndKeyInfo}
+					collegeAndYear={creator.collegeAndYear}
+					bio={creator.bio}
+					uid={creator.uid}
+					previewWidth={videoWidth}
+				/>
+			{/each}
+		</div>
+	{/if}
 
-		<BrandLogos/>
+	<SearchAllServers/>
+
+	<div style="text-align: center; padding: 48px 0px;">
+		<img 
+			style="min-width: 332px; width: 60vw; height: auto"
+			src="https://i.imgur.com/TRxyjmU.png"
+		> 
+
+		<img
+			style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
+			src="https://i.imgur.com/B9a5Nfp.png"
+		/>
 	</div>
 
-	<!-- <div style="display: flex; gap: 8px; font-size: 24px;">
-		<span title="Chile">&#127464;&#127473;</span>
-    <span title="United States">&#127482;&#127480;</span>
-    <span title="Sweden">&#127480;&#127466;</span>
-	</div> -->
 
-	
-	<ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
 
-		<div style="text-align: center; padding: 48px 0px;">
-			<!-- <img 
-				style="min-width: 332px; width: 30vw; height: auto"
-				src="https://i.imgur.com/TRxyjmU.png"
-				alt="competition landscape"
-			>  -->
-	
-			<!-- <img
-				style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
-				src="https://i.imgur.com/B9a5Nfp.png"
-				alt="sheraz's discord message"
-			/> -->
-		</div>
+	<FounderSelfIntro/>
 
-	<!-- <FounderSelfIntro/> -->
-
-	<!-- <HistoricalTimeline/> -->
+	<HistoricalTimeline/>
 </div>
 
 <script>
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
-	import ImageGallery from '$lib/ImageGallery.svelte'
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
+	import CreatorFeaturedVideoShowcase from '$lib/CreatorFeaturedVideoShowcase.svelte'
+	import SearchAllServers from '$lib/SearchAllServers.svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
-	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte'
-	import CalEmbed from '$lib/CalEmbed.svelte'
-	import CountryFlags from '$lib/CountryFlags.svelte'
-	import BrandLogos from '$lib/BrandLogos.svelte'
+	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte';
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated
@@ -247,22 +242,15 @@
 </script>
 
 <style>
-	.primary-button {
-		background: #5d0068;
-		color: white;
-		padding: 8px 16px;
-		border-radius: 24px;
-		border: none;
-		font-weight: 500;
-		transition: all 0.2s ease;
-		width: 160px;
-		font-size: 14px;
-	}
+	.alternative-flexbox {
+    display: flex; 
+		justify-content: space-between;
+		flex-wrap: wrap;
+		row-gap: 36px;
 
-	.primary-button:hover {
-		transform: translateY(-1px);
-		box-shadow: 0 4px 12px rgba(93, 0, 104, 0.2);
-	}
+		padding: 48px 6px; 
+		outline: 0px solid red;
+  }
 
 	.separator {
 		width: 2px;

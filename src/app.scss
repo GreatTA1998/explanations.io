@@ -1,29 +1,5 @@
 * {
 	font-family: 'Inter', sans-serif;
-	// TO-DO: revert the question button to its original appearance
-	box-sizing: border-box;
-}
-
-/* Reset button's default styling */
-button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  outline: inherit;
-
-  /* Fix for Safari/iOS */
-	appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-/* Remove the focus ring (though consider keeping it for accessibility) */
-button:focus {
-  outline: none;
 }
 
 // responsive typography based on Kevin Powell
@@ -55,17 +31,9 @@ html, body {
   overscroll-behavior-x: none;
 }
 
-
-/* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate
-	We base low, medium and high elevation on this essay.
-*/
-
 // 0.1 is too low
 // 0.25 is too much
 // 0.5 is too much
-
- // SEE image
-  // https://www.notion.so/Design-e87b085e3e0c4910b8ef770bb1268dfb?pvs=4#34e8c3917fca4a78b23f869647f452a9
 .ux-low-elevation  {
 	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
 }

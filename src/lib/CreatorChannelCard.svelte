@@ -1,4 +1,4 @@
-<div on:click={() => goto(`/user/${uid}`)} on:keydown class="my-rounded-card ux-low-elevation">
+<div on:click class="my-rounded-card ux-low-elevation">
   <CreatorCircularAvatar/>
 
   <div style="margin-left: 6px; ">
@@ -17,13 +17,11 @@
 </div>
 
 <script>
-  import CreatorCircularAvatar from '$lib/CreatorCircularAvatar.svelte'
-  import { goto } from '$app/navigation'
-
-  export let uid = ''
   export let firstNameAndKeyInfo = ''
   export let collegeAndYear = ''
   export let bio = ''
+
+  import CreatorCircularAvatar from '$lib/CreatorCircularAvatar.svelte'
 </script>
 
 <style>

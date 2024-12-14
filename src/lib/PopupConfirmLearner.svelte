@@ -198,7 +198,7 @@
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import UXFormTextArea from '$lib/UXFormTextArea.svelte'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
-  import { createDebouncedFunction } from '/src/helpers/debounce.js'
+  import { debounce } from '/src/helpers/utility.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
   import { arrayUnion, increment } from 'firebase/firestore'
 
@@ -228,7 +228,7 @@
 
   let memberDoc = null
 
-  const debouncedUpdateBio = createDebouncedFunction(
+  const debouncedUpdateBio = debounce(
     updateTeacherBio,
     1000
   ) 

@@ -24,6 +24,8 @@
   </div>
 </div>			
 
+<OfflineMultislideRecordingDemo/>
+
 <div class="webflow-section" style="padding-top: 4%;">
   <div style="max-width: 800px; height: fit-content; font-size: 24px; margin-top: 48px; line-height: 1.5; font-weight: 500; color: rgb(95, 95, 94);">
     <div style="">
@@ -127,6 +129,7 @@
 </div>
 
 <script>
+  import OfflineMultislideRecordingDemo from '$lib/OfflineMultislideRecordingDemo.svelte'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import { goto } from '$app/navigation'
 

@@ -4,9 +4,9 @@
 
     </slot>
 
-    <button on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0px; margin-left: auto; color: black; cursor: pointer;">
+    <span on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0px; margin-left: auto; color: black; cursor: pointer;">
       close
-    </button>
+    </span>
   </div>
 
   <slot name="popup-content">
@@ -21,6 +21,8 @@
  
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
+
+  export let width = 500
 
 	const dispatch = createEventDispatcher()
 

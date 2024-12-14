@@ -12,7 +12,7 @@
   align-items: center;
   cursor: pointer;
 "
-  on:click={signInWithGoogle} on:keydown
+  on:click={signInWithGoogle}
 >
   <span class="material-icons" style="margin-right: 6px;">
     mail

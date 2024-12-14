@@ -1,12 +1,16 @@
 <slot 
   {fetchStrokes}  
   {strokesArray} 
+  deleteAllStrokesFromDb={() => deleteAllStrokesFromDb({ boardPath: dbPath, strokesArray })}
+  deleteNonInitialStrokesFromDb={() => deleteNonInitialStrokesFromDb({ boardPath: dbPath, strokesArray })}
+  deleteStrokesWithParam={({ boardPath, strokesArray }) => deleteNonInitialStrokesFromDb({ boardPath, strokesArray})}
 >
 
 </slot>
 
 <script>
 import { query, collection, getFirestore, orderBy, onSnapshot, doc, writeBatch, getDocs } from 'firebase/firestore'
+import { deleteAllStrokesFromDb, deleteNonInitialStrokesFromDb } from '../helpers/properDelete'
 import { onMount, createEventDispatcher } from 'svelte'
 
 export let dbPath
@@ -37,7 +41,7 @@ if (autoFetchStrokes) {
 $: if (isFirstTime && strokesArray && dbPath) {
   isFirstTime = false
   dispatch('mounted', {
-    strokesArray
+    deleteFunc: () => deleteNonInitialStrokesFromDb({ boardPath: dbPath, strokesArray })
   })
 }
 
@@ -46,7 +50,7 @@ async function fetchStrokes () {
   const strokesSnapshot = await getDocs(strokesQuery)
   const temp = []
   for (const doc of strokesSnapshot.docs) {
-    temp.push({ id: doc.id, path: doc.ref.path, ...doc.data() })
+    temp.push({ id: doc.id, ...doc.data() })
   }
   strokesArray = temp
 }

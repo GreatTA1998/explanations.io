@@ -8,6 +8,13 @@ import { viteCommonjs } from "@originjs/vite-plugin-commonjs";
 export default {
   plugins: [sveltekit(), viteCommonjs()],
 
+  // Fixes known issue with v9 Firebase and SvelteKit
+  // https://kit.svelte.dev/faq
+  // https://github.com/benmccann/sveltekit-firebase/blob/9e3097fd859e4f81e4775885ecb584561f098fd3/svelte.config.js#L11
+  ssr: {
+    external: ["whatwg-url", "node-fetch"],
+  },
+
   css: {
     preprocessorOptions: {
       scss: {
@@ -15,6 +22,4 @@ export default {
       },
     },
   },
-
-  logLevel: 'debug'
 };

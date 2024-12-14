@@ -4,6 +4,5 @@
 // to put environment variables in production (Vercel), directly enter it on their website
 // then, the below code will work in both production and local environments
 
-// EXAMPLES
-// export const API_KEY_SECRET = import.meta.env.VITE_DAILY_API_KEY
-// export const MIXPANEL_PROJECT_TOKEN = import.meta.env.VITE_MIXPANEL_PROJECT_TOKEN
+export const API_KEY_SECRET = import.meta.env.VITE_DAILY_API_KEY
+export const MIXPANEL_PROJECT_TOKEN = import.meta.env.VITE_MIXPANEL_PROJECT_TOKEN

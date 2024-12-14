@@ -9,7 +9,8 @@
     background: rgba(120, 120, 120, 0.2); 
     border-radius: 4px; 
     color: white; 
-    margin-top: 0px; 
+    margin-left: 6px; 
+    margin-top:0px; 
     padding: 6px;
     cursor: pointer;
   }

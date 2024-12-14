@@ -3,6 +3,7 @@
   {listenToStrokes} 
   {strokesArray} 
   {handleNewlyDrawnStroke}
+  {deleteAllStrokesFromDb}
 >
 
 </slot>
@@ -114,7 +115,6 @@ function handleNewlyDrawnStroke (stroke) {
 function convertDocToStroke (doc) {
   const strokeObject = {
     id: doc.id,
-    path: doc.ref.path,
     ...doc.data(),
   }
 
@@ -129,5 +129,32 @@ function convertDocToStroke (doc) {
     strokeObject.endTime += 0.5;
   } 
   return strokeObject
+}
+
+async function deleteAllStrokesFromDb () {
+  return new Promise(async (resolve) => {
+    const batchDeleteRequests = [];
+    let currentBatch = writeBatch(db)
+    let currentBatchSize = 0;
+    for (const stroke of strokesArray) {
+      if (currentBatchSize >= 500) {
+        batchDeleteRequests.push(currentBatch.commit());
+        currentBatch = writeBatch(db)
+        currentBatchSize = 0; 
+      } 
+      const ref = doc(db, `${dbPath}/strokes/${stroke.id}`)
+      currentBatch.delete(ref)
+      currentBatchSize += 1;
+    }
+    batchDeleteRequests.push(currentBatch.commit()); 
+    await Promise.all(batchDeleteRequests);
+    
+    // quickfix when deleting a video
+    // the snapshot listener will not notice any "deletions", it just notices
+    // an empty blackboard. Yet it doesn't bind `strokesArray = []` because 
+    // strokesArray is not null
+    strokesArray = [] 
+    resolve()
+  })
 }
 </script>

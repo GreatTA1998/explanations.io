@@ -62,28 +62,28 @@
 </div>
 
 <script>
-  import { user } from '../store.js'
-  import Button from '@smui/button'
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
+  import CodepenInput from '$lib/CodepenInput.svelte'
+  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
+  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+
   import { 
     updateFirestoreDoc, 
     setFirestoreDoc,
     createNewMultiboard
   } from '../helpers/crud.js'
-
-  import { arrayUnion, increment } from "firebase/firestore"
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
+  import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID } from "../helpers/utility.js";
-  import { mixpanelLibrary } from '/src/mixpanel.js'
-  import CodepenInput from '$lib/CodepenInput.svelte'
-  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
-  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+
+  import { user } from '../store.js'
+
+  import { increment, serverTimestamp } from "firebase/firestore"
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
-  import { serverTimestamp } from 'firebase/firestore'
+  import Button from '@smui/button'
 
   export let classID 
 
@@ -116,29 +116,30 @@
 
     // UPLOADING ATTACHMENTS
     const uploadPromises = []
+
     const downloadURLs = []
     const fileNames = []
+    const storagePaths = []
 
     for (const attachment of attachments) {
       uploadPromises.push(
-        uploadFileToStorage(attachment).then(({ fileName, fileDownloadURL }) => {
+        uploadFileToStorage(attachment).then(({ fileName, fileDownloadURL, fileStoragePath }) => {
           downloadURLs.push(fileDownloadURL)
           fileNames.push(fileName)
+          storagePaths.push(fileStoragePath)
         })
       )
     }
 
     questionUpdateObj.attachmentsDownloadURLs = downloadURLs
     questionUpdateObj.attachmentsNames = fileNames
+    questionUpdateObj.attachmentsStoragePaths = storagePaths
+
     // END OF UPLOADING ATTACHMENTS
 
     await Promise.all(uploadPromises)
 
     const newQuestionID = getRandomID()
-
-    mixpanelLibrary.track('Question asked', {
-      title: questionTitleInput 
-    })
 
     await handleNewQuestionNotifications({ 
       userDoc: $user, 
@@ -169,7 +170,8 @@
       
     promises.push(
       updateFirestoreDoc(`classes/${classID}`, {
-        numOfUnresolvedQuestions: increment(1)
+        numOfUnresolvedQuestions: increment(1),
+        recentQuestionID: newQuestionID
       })
     )
 
@@ -187,7 +189,10 @@
         getDownloadURL(pdfRef).then((downloadURL) => {
           resolve({
             fileName: pdfOrImageFile.name,
-            fileDownloadURL: downloadURL
+            fileDownloadURL: downloadURL,
+
+            // attachments need a `storagePath` property because it cannot be retrieved from downloadURL
+            fileStoragePath: pdfRef.fullPath 
           })
         })
       })

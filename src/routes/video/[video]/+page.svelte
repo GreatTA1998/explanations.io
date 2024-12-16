@@ -1,10 +1,8 @@
-<FullVideoDisplay
-  videoPath="/classes/{classID}/blackboards/{blackboardID}"
-/>
+<h1>
+  Not yet implemented
+</h1>
 
 <script>
-  import FullVideoDisplay from '$lib/FullVideoDisplay.svelte'
-
   export let data;
 
   let { videoID } = data;

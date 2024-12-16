@@ -6,5 +6,6 @@ node_modules
 .env
 .env.*
 .vercel
+.vercel_build_output
 .output
-/src/lib/dailyCreds.js
+firebase-debug.log

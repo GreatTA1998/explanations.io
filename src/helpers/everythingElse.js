@@ -8,6 +8,7 @@ import {
 } from '/src/helpers/crud.js'
 import { arrayUnion } from 'firebase/firestore'
 import { sendEmail } from '/src/helpers/cloudFunctions.js'
+import { goto } from '$app/navigation'
 
 export const drawerExpandedWidth = 240
 
@@ -21,32 +22,32 @@ export function  toggleClassDetailsDrawerWidth () {
 }
 
 export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, classID, questionID, commentString, linkToQuestion }) {
+  // handle the new commentor
   if (userDoc.uid !== boardDoc.creatorUID) {
-    // email the video creator
-    const creatorDoc = await getFirestoreDoc(`/users/${boardDoc.creatorUID}`)
-    if (creatorDoc && creatorDoc.email) {
-      console.log("sending email to creator =,", creatorDoc.email)
-      sendEmail({ 
-        toWho: creatorDoc.email,
-        subject: 'New comment on your video [explanations.io]', 
-        content: `<strong>${userDoc.name.split(" ")[0]}</strong> commented on your video: "${commentString}"
-        <a href="${linkToQuestion}">Link here</a>`
-      })
-    }
-
-    // also add the user to the list of participants
     updateFirestoreDoc(`classes/${classID}/blackboards/` + boardDoc.id, {
       commentParticipantUIDs: arrayUnion(userDoc.uid)
     })
+
+    getFirestoreDoc(`/users/${boardDoc.creatorUID}`).then(creatorDoc => {
+      if (creatorDoc?.email) {
+        sendEmail({ 
+          toWho: creatorDoc.email,
+          subject: 'New comment on your video [explanations.io]', 
+          content: `<strong>${userDoc.name.split(" ")[0]}</strong> commented on your video: "${commentString}"
+          <a href="${linkToQuestion}">Link here</a>`
+        })
+      }
+    })
   }
   
-  // email the participants
+  // email other participants
   if (boardDoc.commentParticipantUIDs) {
     for (const uid of boardDoc.commentParticipantUIDs) {
+      if (uid === userDoc.uid) continue
+
       const participantDoc = await getFirestoreDoc(`/users/${uid}`)
-      if (!participantDoc) continue
-      if (!participantDoc.email) continue
-      console.log("sending email to participant =", participantDoc.email)
+      if (!participantDoc?.email) continue
+      
       sendEmail({ 
         toWho: participantDoc.email,
         subject: '[explanations.io] New comment follow-up', 
@@ -165,4 +166,16 @@ export function handleVideoUploadEmailNotifications ({ classID, questionDoc, use
     await Promise.all(promises)
     resolve()
   })
+}
+
+export function handleServerRedirect (serverObj) {
+  if (serverObj.recentQuestionID) {
+    goto(`/${serverObj.id}/question/${serverObj.recentQuestionID}`)
+  } 
+  else if (serverObj.featuredRoomID) {
+    goto(`/${serverObj.id}/${serverObj.featuredRoomID}`)
+  }
+  else {
+    goto(`/${serverObj.id}/overview`)
+  }
 }

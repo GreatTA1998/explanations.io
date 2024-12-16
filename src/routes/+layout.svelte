@@ -3,28 +3,39 @@
     Fetching your info...
   </h4>
 {:else}
-  <slot>
+  <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
 
-  </slot>
+  {#if !$user.uid && !$isFullServerMode}
+    <ExperimentalSplashScreen />
+  {/if}
+
+  <!-- Full Server Page will be injected here -->
+  <slot />
 {/if}
 
 <!-- <RenderlessPreventAccidentalNavigation/> -->
 
 <script>
+  import ExperimentalSplashScreen from '$lib/ExperimentalSplashScreen.svelte'
+  import TheTopNavbar from '$lib/TheTopNavbar.svelte'
   import RenderlessPreventAccidentalNavigation from '$lib/RenderlessPreventAccidentalNavigation.svelte'
-	import "../app.scss";
-  import 'firebase/app'
+
   import { initializeDatabase } from '../database.js'
+  import 'firebase/app'
   import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
-  import { hasFetchedUser, idOfServerNewUserWantedToEnter, user, userInfoFromAuthProvider } from '../store.js'
-  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+
+  import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
+  import { handleServerRedirect } from '/src/helpers/everythingElse.js'
+
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode } from '../store.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { mixpanelLibrary } from '/src/mixpanel.js'
+
   import posthog from 'posthog-js'
+  import "../app.scss"
 
   initializeDatabase()
   const auth = getAuth()
@@ -32,10 +43,23 @@
 
   let unsubUserDocListener = null 
 
+  $: if ($user.uid) {
+    isFullServerMode.set(true)
+  }
+
   onMount(async () => {
     onAuthStateChanged(auth, reactToUserChange)
     createSessionRecording()
+
+    window.addEventListener('scroll', handleOnScroll)
   })
+
+  function handleOnScroll (e) {
+    const navbarHeight = 56
+    if (window.scrollY >= window.innerHeight - navbarHeight) {
+      isFullServerMode.set(true)
+    }
+  }
   
   function createSessionRecording () {
     posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7',
@@ -49,11 +73,6 @@
   async function reactToUserChange (resultUser) {
     if (resultUser) {
       const { uid } = resultUser 
-
-      if ($idOfServerNewUserWantedToEnter) {
-        console.log('from a previous redirect request')
-        goto(`/${$idOfServerNewUserWantedToEnter}/request-video`)
-      }
 
       // NOTE: the partial hydration will give incorrect UIDs for accounts that need forwarding
       // partially hydrate the user so we can start rendering the page in parallel
@@ -86,6 +105,9 @@
     // user not logged in
     else {
       try {
+        const algebraAndNumberTheoryServer = await getFirestoreDoc(`classes/${'I90n3qyz45VmY0azjbhh'}`)
+        handleServerRedirect(algebraAndNumberTheoryServer)
+
         // await signInAnonymously(auth)
       } catch (error) {
         console.error(error)
@@ -126,10 +148,6 @@
 
   async function createMirrorUser ({ uid, firstName, lastName, name, phoneNumber, email, userRef }) {
     return new Promise(async (resolve) => {
-      mixpanelLibrary.track('Sign Up', {
-        isPhoneAccount: phoneNumber ? true : false
-      })
-
       const metadataRef = doc(db, 'metadata/78tDSRCiMHGnf8zcXkQt')
       const metadataSnap = await getDoc(metadataRef)
 
@@ -163,9 +181,6 @@
 
   async function listenToUserDocAndHandleForwarding (uid) {
     return new Promise((resolve, reject) => {
-      // https://docs.mixpanel.com/docs/tracking/how-tos/identifying-users
-      mixpanelLibrary.reset()
-      mixpanelLibrary.identify(uid)
       const mirrorUserRef = doc(db, `/users/${uid}`)
 
       unsubUserDocListener = onSnapshot(mirrorUserRef, (snap) => {
@@ -191,9 +206,12 @@
           // QUICKFIX: for some reason user.set() is still not hydrated even after `await listenToUserDocAndHandleForwarding()`, so we just 
           // handle navigation directly here
           // only redirect from the home page '/' path, for specific URLs don't fuck with it
+
+          // COMMENTED OUT FOR TESTING
           if ($page.url.pathname === '/' && $user.mostRecentServerID) {
             goto(`/${$user.mostRecentServerID}/question`)
           }
+
           resolve()
         }
       })

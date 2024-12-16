@@ -2,18 +2,15 @@ import { getRandomID } from './utility.js'
 import { 
   deleteField, 
   collection, 
-  query, 
-  orderBy, 
-  limit, 
+  query, orderBy, limit, 
   setDoc, getDoc, getDocs, updateDoc, deleteDoc,
   getFirestore, 
-  arrayUnion, arrayRemove, 
+  arrayUnion,
   increment, 
   doc, 
   where 
 } from 'firebase/firestore'
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
-import { deleteRecursively } from '/src/helpers/cloudFunctions.js'
+import { getStorage, ref, deleteObject, } from 'firebase/storage'
 
 // I prefix all Firestore helper functions with `firestore` prefix
 // e.g. `firestoreRef` (written by me) vs `ref` (native to library)
@@ -239,23 +236,4 @@ export async function createNewMultiboard ({ baseDocPath, boardsPath }) {
     ])
     resolve()
   })
-}
-
-export async function deleteArbitraryBlackboard ({ boardDoc, classID }) {
-  if (boardDoc.audioRefFullPath) {
-    try {
-      // we no longer push it onto this promise array - otherwise it'll be resolved OUTSIDE of catch block and interrupt the entire function when audio is empty
-      // subdeleteRequests.push(
-        deleteObject(
-          ref(getStorage(), boardDoc.audioRefFullPath)
-        )
-      // )
-    } catch (error) {
-      console.alert(error)
-    }
-  }
-  await deleteRecursively({
-    path: `/classes/${classID}/blackboards/${boardDoc.id}` 
-  })
-  console.log(`Successfully deleted board with ID ${boardDoc.id}`)
 }

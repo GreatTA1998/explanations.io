@@ -31,25 +31,23 @@
         
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>
-            {#if !isOfflineDemo}
-              {#if backgroundImageDownloadURL}
-                <Item on:click={() => dispatch('background-reset')}>
-                  Remove background
-                </Item>
-              {:else}
-                <Item on:click={clickHiddenInput}>
-                  Set background
-                </Item>
-              {/if}
+            {#if backgroundImageDownloadURL}
+              <Item on:click={() => dispatch('background-reset')} style="margin-bottom: 0px;">
+                Remove background
+              </Item>
+            {:else}
+              <Item on:click={clickHiddenInput} style="margin-bottom: 0px;">
+                Set background
+              </Item>
             {/if}
 
-            <Item on:SMUI:action={() => dispatch('board-wipe')}>
+            <Item on:SMUI:action={() => dispatch('board-wipe')} style="margin-bottom: 0px;">
               Wipe board
             </Item>    
-
-            {#if !isOfflineDemo}
-              <Item on:SMUI:action={() =>  dispatch('board-delete')}>
-                Delete board 
+            
+            {#if isDeletable}
+              <Item on:SMUI:action={() =>  dispatch('board-delete')} style="margin-bottom: 0px;">
+                Delete board
               </Item>
             {/if}
           </List> 
@@ -92,10 +90,6 @@
   export let backgroundImageDownloadURL = ''
   export let recordState = ''
 
-  // for drag-and-drop purposes
-  export let boardID = ''
-  export let originalIndex = null
-
   // QUICKFIX to enable multislide blackboards to work
   export let currentTimeOverride
 
@@ -103,7 +97,7 @@
   export let hideToolbar = false
 
   // QUICKFIX
-  export let isOfflineDemo = false
+  export let isDeletable = true
 
   $: if (currentTimeOverride) {
     currentTime = currentTimeOverride
@@ -125,8 +119,6 @@
     points: [] 
   }
   let undoStrokeIdx = null // Optional(int)
-
-  let debouncerTimeout
 
   let DropdownMenu
   let FileUploadButton  
@@ -241,9 +233,12 @@
   }
 
   // detect backgroundImageDownloadURL
+  // note: it's equally important to delete the background if URL no longer exists
   function updateBackground () {
     bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
-    renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+    if (backgroundImageDownloadURL) {
+      renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
+    }
   }
 
   function updateCanvasUI () {
@@ -334,13 +329,9 @@
       startTime: currentTime,
       color: $currentTool.color,
       lineWidth: $currentTool.lineWidth,
-      // // why do we store `maxAvailableWidth` as a property here?
-      // I believe this is un-used (DoodleVideo normalizes width because we do everything relative to an `assumedCanvasWidth`
-      // and scale it up to whatever the actual canvasSize is, but I'll keep it here just in case I'm wrong since it does no harm)
-      // maxAvailableWidth: $maxAvailableWidth, 
       isErasing: $currentTool.type === 'eraser',
       points: [],
-      sessionID: '123' // TODO: initialize in store
+      sessionID: '123' // TODO: use browserTabID in the future
     }
   }
 

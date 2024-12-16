@@ -1,51 +1,78 @@
-<div style="display: flex; align-items: end;">
+<div style="display: flex; align-items: end; width: {canvasWidth}px;">
   <div id="multislide-record-button-wrapper-{boardDoc.id}">
  
   </div>
   
   <div style="margin-left: 20px;"></div>
 
-  <MultislideSlideChanger
+  <MultiboardSlideChanger
     slideIDs={boardDoc.slideIDs}
     {idxOfFocusedSlide}
     canCreateNewSlide
     on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
     on:slide-create={createNewSlide}
   />
+
+  <div 
+    on:click={() => {
+      if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
+        deleteMultislideBlackboard({ boardDoc, roomDoc })
+      }
+    }} on:keydown
+    style="margin-left: auto; margin-right: 8px; cursor: pointer;"
+  >
+    Delete multiboard
+  </div>
 </div>
 
 <div style="margin-bottom: 12px;"></div>
 
 {#each boardDoc.slideIDs as slideID, i}
-  <RenderlessListenToStrokes 
-    dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-    let:listenToStrokes={listenToStrokes} 
-    let:strokesArray={strokesArray}
-    let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
-    let:deleteAllStrokesFromDb={deleteAllStrokesFromDb}
+  <RenderlessListenToDoc autoListen
+    docPath={`classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
+    let:theDoc={theDoc}
   >
-    <div 
-      use:lazyCallable={listenToStrokes} 
-      style="
-        display: {idxOfFocusedSlide === i ? '' : 'none'};
-        width: {canvasWidth}px; height: {canvasHeight}px; 
-        position: relative;
-      "
+    <RenderlessListenToStrokes 
+      dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+      let:listenToStrokes={listenToStrokes} 
+      let:strokesArray={strokesArray}
+      let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
     >
-      <!-- isOffline is a quickfix for functionalities that don't work such as uploading backgrounds -->
-      <Blackboard
-        isOfflineDemo
-        {strokesArray}
-        {canvasWidth}
-        {canvasHeight}
-        currentTimeOverride={currentTime}
-        on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-        on:board-wipe={deleteAllStrokesFromDb}
-        on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
-        on:background-reset={() => resetBackgroundImage(slideID)}
-      />
-    </div>
-  </RenderlessListenToStrokes>
+      <div 
+        use:lazyCallable={listenToStrokes} 
+        style="
+          display: {idxOfFocusedSlide === i ? '' : 'none'};
+          width: {canvasWidth}px; height: {canvasHeight}px; 
+          position: relative;
+        "
+      >
+        {#if strokesArray && theDoc}
+          <!-- boardDoc.path doesn't have a trailing slash `/`, unlike boardPath (which was used for legacy reasons) -->
+          <!-- TO-DO: refactor the Blackboard to expose the menu list with slots -->
+          <Blackboard
+            {strokesArray}
+            {canvasWidth}
+            {canvasHeight}
+            currentTimeOverride={currentTime}
+            on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+            on:board-wipe={deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })}
+
+            backgroundImageDownloadURL={theDoc.backgroundImageDownloadURL}
+            on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
+            on:background-reset={() => deleteBackgroundImageFromSlide(theDoc)}
+            
+            isDeletable={boardDoc.slideIDs.length > 1}
+            on:board-delete={async () => {
+              if (confirm(`Are you sure you want to delete board ${i+1}? (Other boards won't be affected.)`)) {
+                await deleteSlideFromMultislide({ slideID, multislidePath: boardDoc.path })
+                changeToSlideIdx(idxOfFocusedSlide - 1)
+              }
+            }}
+          />
+        {/if}
+      </div>
+    </RenderlessListenToStrokes>
+  </RenderlessListenToDoc>
 {/each}
 
 <!-- on:record-end={(e) => saveVideo(e.detail.audioBlob)} -->
@@ -57,7 +84,7 @@
   <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
     {#if !isRecording}
       {#if !!!$user.uid}
-        <span on:click={() => isSignInPopupOpen = true} class="my-record-button">
+        <span on:click={() => isSignInPopupOpen = true} class="my-record-button" on:keydown>
           sign in & record
         </span>
 
@@ -69,19 +96,18 @@
           <!-- user doesn't necessarily start from slide 0, so ensure initial state is correct -->
           <ReusableRoundButton 
             on:click={() => callFuncsInSequence(
-                () => updateBoardRecordState(boardDoc.path, 'mid_record'),
-                startRecording,
-                startStopwatch,
-                () => isRecording = true,
-                () => {
-                  timingOfSlideChanges.push({
-                    toIdx: idxOfFocusedSlide,
-                    timing: 0
-                  })
-                },
-                () => willPreventPageLeave.set(true)
-              )
-            }
+              () => updateBoardRecordState(boardDoc.path, 'mid_record'),
+              startRecording,
+              startStopwatch,
+              () => isRecording = true,
+              () => {
+                timingOfSlideChanges.push({
+                  toIdx: idxOfFocusedSlide,
+                  timing: 0
+                })
+              },
+              () => willPreventPageLeave.set(true)
+            )}
             backgroundColor="rgb(80, 80, 80, 0.9)" textColor="cyan" isBordered
           >
             Record
@@ -111,24 +137,38 @@
 <script>
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte';
   import Blackboard from '$lib/Blackboard.svelte'
+  import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte';
+  import { 
+    deleteMultislideBlackboard, 
+    deleteSlideFromMultislide,
+    deleteStrokesFromSlide,
+    deleteBackgroundImageFromSlide
+  } from '/src/helpers/unifiedDeleteAPI.js'
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { user } from '/src/store.js'
-  import { arrayUnion, getFirestore, query, getDocs, collection, where, increment, doc, updateDoc } from 'firebase/firestore'
+  import { 
+    arrayUnion, 
+    arrayRemove, 
+    getFirestore, 
+    query, 
+    getDocs, 
+    collection, 
+    where, 
+    increment, doc, updateDoc,
+  } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'
-  import ReusableButton from '$lib/ReusableButton.svelte'
   import { willPreventPageLeave } from '/src/store'
-  import { mixpanelLibrary } from '/src/mixpanel.js'
   import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
   import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
-  import MultislideSlideChanger from '$lib/MultislideSlideChanger.svelte'
+  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
   import { page } from '$app/stores'
-
+  
   export let canvasWidth
   export let canvasHeight
   export let boardDoc // boardDoc.slideIDs
@@ -340,25 +380,12 @@
       await uploadBytes(imageRef, imageFile)
       const downloadURL = await getDownloadURL(imageRef)
       updateDoc(slideRef, {
-        backgroundImageDownloadURL: downloadURL
+        backgroundImageDownloadURL: downloadURL,
+        backgroundImageStoragePath: imageRef.fullPath // TO-DO: proper deletion boards
       })
     } else {
       alert("Error: only images can be used")
     }
-  }
-
-  function resetBackgroundImage (boardID) {
-    const ref = doc(getFirestore(), boardPath + `slides/${slideID}`)
-    updateDoc(ref, {
-      backgroundImageDownloadURL: deleteField() // Svelte doesn't react to change to empty string, for some reason
-    })
-  }
-
-  function updateRecordState (slideID, newRecordState) {
-    const blackboardRef = doc(getFirestore(), boardPath + slideID)
-    updateDoc(blackboardRef, {
-      recordState: newRecordState
-    })
   }
 
   function updateBoardRecordState (boardPath, newRecordState) {
@@ -366,7 +393,7 @@
     updateDoc(blackboardRef, {
       recordState: newRecordState
     })
-  }
+  } 
 </script>
 
 <style>

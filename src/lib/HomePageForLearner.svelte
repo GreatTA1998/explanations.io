@@ -1,5 +1,4 @@
-<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white); 
-">
+<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white);">
 	<p class="header-title" bind:clientWidth={containerWidth}>
 		Youtube style help for math olympiads
 	</p>
@@ -11,27 +10,15 @@
 
 		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
 			<!-- style="background-color: #5d0068; color: white; border-radius: 24px; padding: 12px 24px; font-size: var(--fs-s); font-weight: 600;" -->
-			<button class="primary-button">
-				Try for $10/week
-			</button>
-			<!-- <CalEmbed/> -->
+			<PopupConfirmLearner let:setIsPopupOpen={setIsPopupOpen}>
+				<button on:click={() => setIsPopupOpen({ newVal: true })} class="primary-button">
+					Try for $10/week
+				</button>
+			</PopupConfirmLearner>
 
 			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				2 learners joined this month
+				6 learners joined this year
 			</div>
-
-			<!-- <ReusableRoundButton on:click={redirectToCalMeetingPage}
-				backgroundColor="#5d0068"
-				textColor="white"
-			>
-				<div style="font-weight: 600; font-size: var(--fs-s); padding: 12px;">
-					Book Setup Call
-				</div>
-				
-				<span style="margin-left: 0px; margin-right: 4px; font-size: var(--fs-l);" class="material-symbols-outlined">
-					calendar_add_on
-				</span>
-			</ReusableRoundButton> -->
 		</div>
 
 		<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
@@ -46,23 +33,22 @@
 			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
 				r/PhysicsStudents
 			</a>
+
+			<div class="separator"></div>	
+			
+			<CountryFlags/>
+
+			<div class="separator"></div>	
+
+			<BrandLogos/>
 		</div>
 	</div>
 
 	<div style="display: flex; align-items: center; column-gap: 36px;">
-		<CountryFlags/>
-
-		<BrandLogos/>
-	</div>
-
-	<!-- <div style="display: flex; gap: 8px; font-size: 24px;">
-		<span title="Chile">&#127464;&#127473;</span>
-    <span title="United States">&#127482;&#127480;</span>
-    <span title="Sweden">&#127480;&#127466;</span>
-	</div> -->
-
 	
-	<ImageGallery galleryVideos={randomlyChosenExemplarVideos}/>
+	</div>
+	
+	<RotatingGallery galleryVideos={randomlyChosenExemplarVideos}/>
 
 		<div style="text-align: center; padding: 48px 0px;">
 			<!-- <img 
@@ -84,15 +70,15 @@
 </div>
 
 <script>
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
-	import ImageGallery from '$lib/ImageGallery.svelte'
+	import CountryFlags from '$lib/CountryFlags.svelte'
+	import BrandLogos from '$lib/BrandLogos.svelte'
+	import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
+	import RotatingGallery from '$lib/RotatingGallery.svelte'
   import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
 	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte'
 	import CalEmbed from '$lib/CalEmbed.svelte'
-	import CountryFlags from '$lib/CountryFlags.svelte'
-	import BrandLogos from '$lib/BrandLogos.svelte'
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated
@@ -250,13 +236,13 @@
 	.primary-button {
 		background: #5d0068;
 		color: white;
-		padding: 8px 16px;
+		padding: 12px 20px;
 		border-radius: 24px;
 		border: none;
 		font-weight: 500;
 		transition: all 0.2s ease;
-		width: 160px;
-		font-size: 14px;
+		width: 180px;
+		font-size: 16px;
 	}
 
 	.primary-button:hover {

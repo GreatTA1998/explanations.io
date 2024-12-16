@@ -29,13 +29,11 @@
 
 {#if activeTabName === 'Learn'}
 	<ExperimentalSplashScreen/>
-	<!-- <HomePageForLearner/> -->
 {:else}
 	<HomePageForTeacher/>
 {/if}
 
 <script>	
-	import HomePageForLearner from '$lib/HomePageForLearner.svelte'
 	import HomePageForTeacher from '$lib/HomePageForTeacher.svelte'
 	import ExperimentalSplashScreen from '$lib/ExperimentalSplashScreen.svelte'
 

@@ -1,23 +1,21 @@
 <div style="
-  background-color: rgb(87, 87, 87);
-  color: white; 
+  border: 2px solid rgb(87, 87, 87);
+  color: rgb(87, 87, 87);
+  width: fit-content;
   margin-bottom: 2px;
-  width: 200px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border-radius: 8px;
+  font-size: var(--fs-400);
+  padding: 6px 10px;
+  border-radius: 24px;
   align-text: center;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  font-weight: 500;
 "
   on:click={signInWithGoogle} on:keydown
 >
-  <span class="material-icons" style="margin-right: 6px;">
-    mail
-  </span>
-  Google
+  SIGN IN WITH GOOGLE
 </div>
 
 <script>

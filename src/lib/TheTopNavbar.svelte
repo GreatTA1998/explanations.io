@@ -4,17 +4,16 @@
 			style="border-bottom: 1px solid lightgrey;"
 		>
 			<Row style="height: var(--navbar-height); background-color: var(--bg-off-white); padding-left: 2%; padding-right: 2%;">
-				<div class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible} 
+				<div
 					style="padding: 6px 12px 8px 0px; box-sizing: border-box; width: {50 + 20}px; height: {46 + 14}px"
 				>
-					<img on:click={() => isPopupOpen = true} on:keydown
-						src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
-						alt="app logo"
-					>
-
-					{#if isPopupOpen}
-						<GlobalAppPopup />
-					{/if}
+          <GlobalAppPopup let:setIsPopupOpen={setIsPopupOpen} >
+						<img on:click={() => setIsPopupOpen(true)} on:keydown
+							class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible} 
+							src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
+							alt="app logo"
+						>
+					</GlobalAppPopup>
 				</div>
 	
 				<slot name="tab-section">
@@ -51,7 +50,7 @@
 
 						{#if isFocused}
 							<div class="search-results grid-layout">
-								{#each searchMatchedServers as matchedServer}
+								{#each searchMatchedServers as matchedServer (matchedServer.id)}
 									<CompactServerCard serverObj={matchedServer}/>
 								{/each}
 							</div>

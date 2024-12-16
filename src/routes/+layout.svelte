@@ -5,7 +5,7 @@
 {:else}
   <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
 
-  {#if !$user.uid && !$isFullServerMode}
+  {#if $didRenderSplashScreen && !$isFullServerMode}
     <ExperimentalSplashScreen />
   {/if}
 
@@ -29,7 +29,7 @@
   import { getRandomColor } from "/src/helpers/utility.js"
   import { handleServerRedirect } from '/src/helpers/everythingElse.js'
 
-  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen } from '../store.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -42,10 +42,6 @@
   const db = getFirestore()
 
   let unsubUserDocListener = null 
-
-  $: if ($user.uid) {
-    isFullServerMode.set(true)
-  }
 
   onMount(async () => {
     onAuthStateChanged(auth, reactToUserChange)
@@ -72,6 +68,8 @@
 
   async function reactToUserChange (resultUser) {
     if (resultUser) {
+      isFullServerMode.set(true)
+
       const { uid } = resultUser 
 
       // NOTE: the partial hydration will give incorrect UIDs for accounts that need forwarding
@@ -105,6 +103,8 @@
     // user not logged in
     else {
       try {
+        didRenderSplashScreen.set(true)
+
         const algebraAndNumberTheoryServer = await getFirestoreDoc(`classes/${'I90n3qyz45VmY0azjbhh'}`)
         handleServerRedirect(algebraAndNumberTheoryServer)
 

@@ -1,68 +1,65 @@
-<TopNavbar>
-  <div style="padding-top: 2vw;">
-    <div style="padding: 0vw 2vw; display: flex; gap: 12px;">
-      <div style="flex-basis: 48px;">
-        <CreatorCircularAvatar/>
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <div style="font-size: var(--fs-l);">
-          {creatorDoc.name || ''}
-        </div>
-
-        <div style="max-width: 60ch;">
-          {creatorDoc.bio || ''}
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 8px; padding: 12px 0px; flex-wrap: wrap;">
-          {#if teachingServers}
-            <button class="ux-filter-chip" class:highlighted-chip={currentServerID === ''}
-              on:click={() => currentServerID = ''}
-            >
-              All videos
-            </button>  
-
-            {#each teachingServers as server}
-              <button class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
-                on:click={() => currentServerID = server.id}
-              >
-                {server.name}
-              </button>
-            {/each}
-          {/if}
-        </div>
-      </div>
+<div style="margin-top: var(--navbar-height); padding: 2vw;">
+  <div style="padding: 0vw 2vw; display: flex; gap: 12px;">
+    <div style="flex-basis: 48px;">
+      <CreatorCircularAvatar/>
     </div>
 
-    <div style="margin-top: 36px"></div>
-
-    <!-- TO-DO: show individual video watch-time, and comments -->
-    {#if filteredVideos && videoWidth}
-      <div class="alternative-flexbox">
-        {#each filteredVideos as video (video.id)}
-          <div style="align-self: end;">
-            <div class="youtube-video-title limit-to-three-lines" style="width: {videoWidth}px; margin-bottom: 0.2vw;">
-              {video.description}
-            </div>
-
-            <GeneralizedVideoDisplay
-              {video} 
-              {videoWidth}
-            />
-          </div> 
-        {/each}
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <div style="font-size: var(--fs-l);">
+        {creatorDoc.name || ''}
       </div>
-    {/if}
+
+      <div style="max-width: 60ch;">
+        {creatorDoc.bio || ''}
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px; padding: 12px 0px; flex-wrap: wrap;">
+        {#if teachingServers}
+          <button class="ux-filter-chip" class:highlighted-chip={currentServerID === ''}
+            on:click={() => currentServerID = ''}
+          >
+            Recent videos
+          </button>  
+
+          {#each teachingServers as server}
+            <button class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
+              on:click={() => currentServerID = server.id}
+            >
+              {server.name}
+            </button>
+          {/each}
+        {/if}
+      </div>
+    </div>
   </div>
-</TopNavbar>
+
+  <div style="margin-top: 36px"></div>
+
+  {#if allVideos&& videoWidth}
+    <div class="alternative-flexbox">
+      {#each allVideos as video (video.id)}
+        <div style="align-self: end;">
+          <div class="youtube-video-title limit-to-three-lines" style="width: {videoWidth}px; margin-bottom: 0.2vw;">
+            {video.description}
+          </div>
+
+          <GeneralizedVideoDisplay
+            {video} 
+            {videoWidth}
+            willDisplayCreatorCard={false}
+          />
+        </div> 
+      {/each}
+    </div>
+  {/if}
+</div>
 
 <script>
   import { onMount } from 'svelte'
-  import { collectionGroup, query, where, getDocs, limit, getFirestore } from "firebase/firestore"
+  import { collection, collectionGroup, query, where, orderBy, getDocs, limit, getFirestore } from "firebase/firestore"
   import { getFirestoreQuery } from '/src/helpers/crud.js'
   import CreatorCircularAvatar from '$lib/CreatorCircularAvatar.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
-  import TopNavbar from '$lib/TheTopNavbar.svelte'
   import { getFirestoreDoc } from '/src/helpers/crud.js'
 
   export let profileUID
@@ -72,35 +69,39 @@
   let videoHeight = 0
   let creatorDoc = {} // AF {} is not a creator
   let teachingServers = null
-  let filteredVideos = null
 
   let currentServerID = ''
 
   onMount(() => {
     calculateVideoSizes()
-    fetchTop10Videos()
-    fetchCreator()
+    fetchCreatorAndServers()
   })
 
-  $: if (teachingServers) {
-    filterDisplayedVideos(currentServerID)
-  }
-
-  function filterDisplayedVideos () {
-    if (currentServerID === '') {
-      filteredVideos = allVideos
+  $: {
+    if (currentServerID) {
+      fetchCreatorVideosFromServer(currentServerID)
     } else {
-      filteredVideos = allVideos.filter(video => {
-        const classID = video.path.split('/')[1]
-        return classID === currentServerID
-      })
+      fetchMostRecentVideos()
     }
   }
 
-  async function fetchCreator () {
+  async function fetchCreatorVideosFromServer (serverID) {
+    allVideos = []
+    const db = getFirestore()
+
+    const q = query(
+      collection(db, 'classes', serverID, 'blackboards'),
+      where('creatorUID', '==', profileUID),
+    )
+
+    const finalResult = await getFirestoreQuery(q)
+    const sorted = finalResult.sort((a, b) => new Date(b.date) - new Date(a.date))
+    allVideos = sorted
+  }
+
+  async function fetchCreatorAndServers () {
     const temp = await getFirestoreDoc(`/users/${profileUID}`)
     creatorDoc = temp
-    console.log('creatorDoc =', creatorDoc)
 
     // fetch servers
     const temp2 = []
@@ -125,12 +126,14 @@
 		return { videoWidth, videoHeight };
 	}
 
-  async function fetchTop10Videos () {
+  async function fetchMostRecentVideos () {
     const db = getFirestore()
 
     const museums = query(
       collectionGroup(db, 'blackboards'), 
-      where('creatorUID', '==', profileUID)
+      where('creatorUID', '==', profileUID),
+      orderBy('date', 'desc'),
+      limit(15)
     )
     
     const finalResult = await getFirestoreQuery(museums)
@@ -144,13 +147,14 @@
     border-radius: 24px;
     font-size: var(--fs-300);
     padding: 6px 12px;
-    background-color: white;
+    background-color: rgb(220, 220, 220);
     color: rgb(49, 44, 70);
   }
 
   .highlighted-chip {
-    color: white;
-    background-color: rgb(49, 44, 70);
+    color: black;
+    font-weight: 600;
+    background-color: #F7C686;
   }
 
   .alternative-flexbox {

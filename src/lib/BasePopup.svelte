@@ -17,7 +17,8 @@
     <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
 
     </div> 
-  </slot></div>
+  </slot>
+</div>
  
 <script>
   import { createEventDispatcher, onMount } from 'svelte'

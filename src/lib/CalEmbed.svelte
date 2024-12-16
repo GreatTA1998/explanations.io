@@ -3,7 +3,7 @@
   data-cal-link="eltonlin1998/questions-setup-help-with-explanations.io"
   data-cal-namespace="questions-setup-help-with-explanations.io"
 >
-  Contact founder
+  Book setup call
 </button>
 
 <!-- Cal element-click embed code begins -->

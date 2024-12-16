@@ -1,7 +1,8 @@
 <!-- Create an independent stacking context -->
 <div style="z-index: 0; position: relative;">
   {#if showSlideChanger}
-    <div style="display: flex; align-items: center; width: {canvasWidth}px;">  
+    <!-- 1px quick-fix so UI doesn't look terrible -->
+    <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px;">  
       <slot />
 
       <MultiboardSlideChanger
@@ -254,19 +255,6 @@
     right: 0;
     bottom: 0;
     margin: auto; 
-  }
-
-  .edit-delete-buttons {
-    margin-left: auto;
-    margin-right: 8px; 
-    display: flex; 
-    align-items: center; 
-    flex-direction: row-reverse;
-    position: absolute; 
-    top: 8px; 
-    bottom: auto;
-    width: 100%;
-    z-index: 5;
   }
 </style>
 

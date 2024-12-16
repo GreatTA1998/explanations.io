@@ -1,31 +1,35 @@
-{#if $user.uid}
-  <div class="paper-shadow my-round-button">
-    <div on:click={eureka(boardDoc)} style="display: flex; align-items: center; cursor: pointer;
-      font-size: 0.8rem;
-    ">
-      <span class="material-symbols-outlined" 
-        style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'black') : 'black'}; 
-        font-size: 1.3rem; margin-right: 4px;"
-      >
-        lightbulb
-      </span>
+<button on:click={eureka(boardDoc)} 
+  class="my-round-button" 
+  class:wide-padding={canvasWidth > TABLET_MIN_WIDTH}
+  disabled={!$user.uid}
+>
+  <span class="material-symbols-outlined" 
+    style="color: {boardDoc.eurekaUIDs ? (boardDoc.eurekaUIDs.includes($user.uid) ? 'orange' : 'black') : 'black'}; 
+    font-size: 1.3rem;"
+  >
+    lightbulb
+  </span>
 
-      I understand this video
+  {#if canvasWidth > TABLET_MIN_WIDTH}
+    <span class="button-text">
+      I understood this video
+    </span>
 
-      <div style="color: black; margin-left: 8px; font-weight: 500;">
-        {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
-      </div>
+    <div style="color: black; font-weight: 500;">
+      {boardDoc.eurekaUIDs ? boardDoc.eurekaUIDs.length : 0}
     </div>
-  </div>
-{/if}
+  {/if}
+</button>
 
 <script>
   import { user } from '/src/store.js'
   import { getFirestoreDoc } from '/src/helpers/crud.js'
   import { updateDoc, arrayUnion, arrayRemove, getFirestore, doc } from 'firebase/firestore'
   import { sendEmail } from '/src/helpers/cloudFunctions.js'
+  import { TABLET_MIN_WIDTH } from '/src/helpers/CONSTANTS.js'
 
   export let boardDoc
+  export let canvasWidth
 
   function eureka (boardDoc) {
     const boardRef = doc(getFirestore(), boardDoc.path) // boardsDbPath + boardDoc.id
@@ -54,21 +58,29 @@
 </script>
 
 <style>
-  .paper-shadow {
-    border: 1px solid lightgrey;
-    /* box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-  }
-
   .my-round-button {
     display: flex; 
     justify-content: space-around; 
     align-items: center; 
-    min-width: 100px; 
+    column-gap: 4px; 
+    
+    width: fit-content;
+    border: 1px solid lightgrey;
     border-radius: 24px; 
 
-    padding-left: 8px; 
-    padding-right: 12px; 
-    padding-top: 4px;
-    padding-bottom: 6px;
+    padding: 5px;
+
+    cursor: pointer; 
+    font-size: 0.8rem;
+  }
+
+  .my-round-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .wide-padding {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 </style>

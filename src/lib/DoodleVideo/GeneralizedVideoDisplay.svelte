@@ -27,7 +27,7 @@
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
         on:deletion-request-received={() => propToDeleteVideo = false}
       >
-         {#if !isFullscreen}
+         {#if willDisplayCreatorCard}
           <div style="margin-left: 0px;">
             <div style="min-width: 240px; margin-right: 8px;">
               <!-- TO-DO: make this dynamic -->
@@ -44,19 +44,12 @@
         <div slot="after" class="button-group-flexbox">
           <VideoFooterInfo {video}/>
 
-          <EurekaButton boardDoc={video}/>
+          <EurekaButton boardDoc={video} {canvasWidth}/>
 
-          <button
-            on:click={toggleFullscreen} 
-            class="my-round-button" 
-            style="margin-right: 0; margin-left: auto; height: 32px;"
-          >
-            <span class="material-symbols-outlined" style="font-size: 20px;">
-              {isFullscreen ? 'close_fullscreen' : 'open_in_full'}
-            </span>
-
-            {isFullscreen ? 'Exit' : 'Enter'} full view
-          </button>
+          <ToggleFullscreenButton on:click={toggleFullscreen}
+            isFullscreen={isFullscreen} 
+            {canvasWidth}
+          />
 
           {#if $user.uid === video.creatorUID || !video.creatorUID}
             <div style="position: relative">
@@ -102,6 +95,7 @@
 {/if}
 
 <script>
+  import ToggleFullscreenButton from '$lib/DoodleVideo/ToggleFullscreenButton.svelte'
   import EurekaButton from '$lib/EurekaButton.svelte'
   import ReusableDoodleVideo from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
@@ -117,6 +111,7 @@
 
   export let video
   export let videoWidth
+  export let willDisplayCreatorCard = true
   export let willHideSliderForPreview = false
   export let showEditDeleteButtons = false
 
@@ -163,22 +158,4 @@
     align-items: center;
     column-gap: 8px;
   }
-
-  .my-round-button {
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 4px;
-
-    border-radius: 24px; 
-    min-width: 0px; 
-    min-height: 16px; 
-    padding: 4px 8px; 
-    border: 1px solid lightgrey;
-    color: black;
-    cursor: pointer;
-
-    font-size: var(--fs-300); 
-    font-weight: 400;
-	}
 </style>

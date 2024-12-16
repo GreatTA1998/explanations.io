@@ -8,74 +8,26 @@
     height: {canvasHeight}px;
   "
   >
-  <!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
-      (to distinguish between unfetched board and empty board) 
-  -->
-  {#if strokesArray && !hideToolbar}
-    <BlackboardToolbar>
-      <span on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
-        undo
-      </span>
-
-      <!-- uses `BlackboardToolbar`'s unnamed slot (the 2 other slots are named) -->
-      <slot {currentTime} {startStopwatch} {stopStopwatch} {setCurrentTime}>
-
-      </slot>
-
-      <div slot="dropdown-menu">
-        {#if recordState === 'pre_record' || currentTime === 0 }
-          <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-top: 3px; margin-right: 10px; color: white; font-size: 2rem;">
-            more_vert
-          </span>
-        {/if}
-      
-        <input
-          bind:this={FileUploadButton}
-          on:change={(e) => uploadBackground(e)}
-          style="display: none" 
-          type="file" 
-          accept="image/gif, image/jpeg, image/png" 
-        >
-        
-        <Menu bind:this={DropdownMenu} style="width: 300px">
-          <List>
-            {#if !isOfflineDemo}
-              {#if backgroundImageDownloadURL}
-                <Item on:click={resetBackgroundImage}>
-                  Remove background
-                </Item>
-              {:else}
-                <Item on:click={clickHiddenInput}>
-                  Set background
-                </Item>
-              {/if}
-            {/if}
-
-            <Item on:SMUI:action={wipeBoard}>
-              Wipe board
-            </Item>    
-
-            {#if !isOfflineDemo}
-              <Item on:SMUI:action={deleteBoard}>
-                Delete board 
-              </Item>
-            {/if}
-          </List> 
-        </Menu>
-      </div>
-    </BlackboardToolbar>
-  {/if}
 
   <!-- Purposely just zoom in on the top-left corner for readability (showing the whole picture at the thumbnail size is completely illegible) -->
   <canvas bind:this={canvas}
     on:touchstart|nonpassive={touchStart}
     on:touchmove|nonpassive={touchMove}
     on:touchend|nonpassive={touchEnd}
-    style={`position: absolute; z-index: 1; margin-top: 0; margin-left: 0; width: ${2.5 * canvasWidth}px; height: ${2.5 * canvasHeight}px;`}
+    style={`
+      position: absolute; 
+      z-index: 1; 
+      margin-top: 0; 
+      margin-left: 0; 
+      width: ${canvasWidth}px; 
+      height: ${canvasHeight}px;`
+    }
   >
   </canvas>
 
-  <!-- rgb(46, 49, 49) -->
+  <!-- hsl(0, 0%, 20%) is the opaque equivalent of hsl(0,0%,0%, 0.80), but the servers looking similar to blackboards look bad
+    In general, opaque textures don't look too good in my opinion.
+  -->
   <canvas bind:this={bgCanvas} 
     style={`
       position: absolute;
@@ -92,48 +44,21 @@
 
 <script>
   import { lazyCallable } from '/src/helpers/actions.js';
-  import List, { Item, Text } from '@smui/list'
-  import Menu from '@smui/menu';
-  import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
+  import { currentTool, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
 
   export let thumbnailWidth
-  export let thumbnailHeight
+  export let willDrawOneByOne = false
 
-  // export let canvasWidth
-  // export let canvasHeight
-  let canvasWidth = $assumedCanvasWidth
-  let canvasHeight = $assumedCanvasWidth * 3/4
+  let canvasWidth = thumbnailWidth * 3.44 // to match <HDBlackboard>'s 0.29 scale down
+  let canvasHeight = canvasWidth * 3/4
 
-
-  let scaleFactor = thumbnailWidth / $assumedCanvasWidth
-
-  console.log('canvasWidth =', canvasWidth)
-  console.log('canvasHeight =', canvasHeight)
+  let scaleFactor = thumbnailWidth / canvasWidth
 
   export let strokesArray
   export let backgroundImageDownloadURL = ''
-  export let recordState = ''
-
-  // for drag-and-drop purposes
-  export let boardID = ''
-  export let originalIndex = null
-
-  // QUICKFIX to enable multislide blackboards to work
-  export let currentTimeOverride
-
-  // QUICKFIX to let servers search page work
-  export let hideToolbar = false
-
-  // QUICKFIX
-  export let isOfflineDemo = false
-
-  $: if (currentTimeOverride) {
-    currentTime = currentTimeOverride
-  }
   
 	const dispatch = createEventDispatcher()
 
@@ -154,72 +79,8 @@
 
   let debouncerTimeout
 
-  let DropdownMenu
-  let FileUploadButton  
-
   // STOPWATCH SECTION
   let currentTime = 0 // assumes it's always rounded to nearest 0.1
-  const tickSize = 100 // milliseconds
-  let startTimestamp = null // number of milliseconds since 1970 00:00:00 UTC
-  let etaOfNextTick = null // would use an Optional in 6.031, `0` doesn't make sense as it makes the AF inconsistent
-  let nextTimeoutID = ''
-
-  function setCurrentTime (newVal) {
-    currentTime = newVal 
-  }
-
-  // rounds to nearest 0.1, see https://stackoverflow.com/a/12698296/7812829
-  function roundedToFixed(input, digits) {
-    var rounded = Math.pow(10, digits);
-    return (Math.round(input * rounded) / rounded).toFixed(digits);
-  }
-
-  // Timer that doesn't slowly drift late and get out of sync with visuals
-  // @see based on https://stackoverflow.com/a/29972322/7812829
-  // how the self-adjusting timer works 
-  //    - setInterval is at best, on time, but usually, late
-  //    - yes, the self-adjusting tick function will always increase time by 1 (even if 1.6 seconds has passed because it's again, late)
-  //    - ...but the 1 vs 1.6 error will be compensated next tick, because tick() will call itself after 0.4 seconds (it but it's constantly catching up) to achieve 2 vs 2
-  //    - if the tick function is super late i.e. 3 seconds passed by, it'll just call itself with setTimeout(0) 2 more times immediately
-  //    - therefore the maximum error is the infimum of the tick size. Get the tick size to be 0.1 second so the maximum error is <0.1
-  function startStopwatch () {
-    startTimestamp = Date.now()
-    etaOfNextTick = startTimestamp + tickSize
-    nextTimeoutID = setTimeout(
-      step, 
-      tickSize
-    )
-  }
-
-  function stopStopwatch () {
-    startTimestamp = null 
-    etaOfNextTick = null
-    currentTime = 0
-    clearTimeout(nextTimeoutID)
-    nextTimeoutID = ''
-  }
-
-  function step () {
-    const delay = Date.now() - etaOfNextTick; // how late was the setTimeout 
-    if (delay > tickSize) {
-      console.log('setTimeout is lagging greatly')
-      // something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile "catch up" run
-    }
-    etaOfNextTick += tickSize
-
-    const millisecondsInSecond = 1000
-    const nearestDecimalPoint = 1
-    currentTime = roundedToFixed(
-      (etaOfNextTick - startTimestamp) / millisecondsInSecond,
-      nearestDecimalPoint
-    )
-
-    nextTimeoutID = setTimeout(
-      step, 
-      Math.max(0, tickSize - delay)
-    )
-  }
-  // END OF STOPWATCH RELATED CODE
 
 
   // REACTIVE STATEMENTS HERE
@@ -236,12 +97,19 @@
   
   // resize on initialization
   $: if (ctx) {
+    onCtxReady()
+  }
+
+  // this is a red flag, it looks like it'll conflict with the
+  // m n updateUI() logic
+  async function onCtxReady () {
     canvas.width = canvasWidth
     canvas.height = canvasHeight
     bgCanvas.width = canvasWidth
     bgCanvas.height = canvasHeight
     if (strokesArray) {
       for (const stroke of strokesArray) {
+        if (willDrawOneByOne) await delay(10)
         drawStroke(stroke, null, ctx, canvas, canvasWidth)
       }
     }
@@ -253,7 +121,7 @@
       renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
   }
 
-  $: normalizedLineWidth = $currentTool.lineWidth * (canvasWidth / $assumedCanvasWidth)
+  $: normalizedLineWidth = $currentTool.lineWidth * (thumbnailWidth / canvasWidth)
 
 
   onMount(() => {
@@ -261,26 +129,9 @@
     bgCtx = bgCanvas.getContext('2d')
   })
 
-  function clickHiddenInput () {
-    FileUploadButton.click()
+  function delay (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
-
-  function uploadBackground (e) {
-    dispatch('background-upload', { imageFile: e.target.files[0] })
-  }
-
-  function resetBackgroundImage () {
-    dispatch('background-reset')
-  }
-
-  function wipeBoard () {
-    dispatch('board-wipe')
-  }
-
-  function deleteBoard () {
-    dispatch('board-delete')
-  }
-
 
   /**
    * Reactive statement that triggers each time `strokesArray` changes
@@ -291,7 +142,7 @@
    * 
    * CRITICAL ASSUMPTION: strokesArray can be pushed singularly and deleted in batch, but can never be modified in place. 
    */
-  function updateUI () {
+  async function updateUI () {
     if (!strokesArray || !ctx) {
       return
     }
@@ -309,6 +160,7 @@
     else if (m < n) {
       if (m === 0) { // blackboard just finished loading i.e. there can be 500 strokes
         for (const stroke of strokesArray) {
+          if (willDrawOneByOne) await delay(10)
           drawStroke(stroke, null, ctx, canvas, canvasWidth)
         }
         localStrokesArray = [...strokesArray]
@@ -318,6 +170,7 @@
       else { // normal update
         for (let i = m; i < n; i++) {
           const newStroke = strokesArray[i]
+          if (willDrawOneByOne) await delay(10)
           drawStroke(
             newStroke, 
             newStroke.startTime !== newStroke.endTime ? getPointDuration(newStroke) : null, // instantly or smoothly,
@@ -498,48 +351,5 @@
 
   function wipeUI () {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-  }
-
-  function dragstart_handler (e, boardID, originalIndex) {
-    whatIsBeingDragged.set('board')
-    e.dataTransfer.setData("text/plain", `boardID:${boardID}`)
-    e.dataTransfer.dropEffect = 'move'
-  }
-
-  function showHintForDragAndDrop () {
-
-  }
-
-  // assumes undoStroke
-  function undoPencilStroke () {
-    if (undoStrokeIdx === null) {
-      return
-    }
-    const stroke = strokesArray[undoStrokeIdx]
-    // undo current stroke
-    const antiStroke = {
-      points: [...stroke.points], // points are normalized
-      startTime: currentTime,
-      isErasing: true,
-      strokeNumber: strokesArray.length + 1,
-      lineWidth: stroke.lineWidth + 2, // TWO extra pixel to guarantee it covers the visible stroke
-    }
-    drawStroke(antiStroke, null, ctx, canvas, canvasWidth)
-    handleEndOfStroke(antiStroke);
-
-    // update pointer to last visible stroke (can be a while if many strokes before were also undone)
-    let eraserDebt = 0
-    for (let i = undoStrokeIdx - 1; i >= 0; i--) {
-      if (!strokesArray[i].isErasing && eraserDebt === 0) {
-        undoStrokeIdx = i 
-        break
-      } 
-      else if (strokesArray[i].isErasing) {
-        eraserDebt += 1 
-      } 
-      else if (!strokesArray[i].isErasing) {
-        eraserDebt -= 1
-      }
-    }
   }
 </script>

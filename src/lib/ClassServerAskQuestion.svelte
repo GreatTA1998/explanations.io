@@ -10,11 +10,13 @@
       value={questionTitleInput}
       on:input={(e) => questionTitleInput = e.target.value}
     />
+
     <span class="underline"></span>
     <!-- style={`width: ${$maxAvailableWidth}px;`} -->
 
     <div style="margin-bottom: 12px;"></div>
 
+    <!-- we don't use the flex-gap layout pattern because it messes with the text area's height -->
     <TextAreaAutoResizing
       value={questionDescriptionInput} 
       on:input={(e) => questionDescriptionInput = e.detail}
@@ -25,6 +27,10 @@
     <div style="margin-bottom: 12px;"></div>
 
     <div>
+      <button on:click={() => isBlackboardOpen = true}>
+        Use blackboard
+      </button>
+
       <PsetPDFUploader
         on:files-attached={(e) => attachments = [...attachments, ...e.detail]}
       />
@@ -38,26 +44,36 @@
       {/each}
     </div>
 
+    {#if isBlackboardOpen}
+      <!-- here we need to create a blackboard doc -->
+      <!-- we'll accept that some garbage will be uncollected  -->
+      <!-- <GeneralizedBlackboardDisplay 
+        {boardID}
+        {classID}
+        roomDoc={questionDoc}
+      /> -->
+    {/if}
+
     <!-- purple: '#5d0068' -->
     <!-- blackboard color: hsl(0,0%,0%, 0.80) -->
-      <div>
-        <div style="margin-top: 24px;"></div>
-        {#if !!!$user.uid}
-          <ReusableSignInButton frameworkColor="secondary"/>
-        {/if}
+    <div>
+      <div style="margin-top: 24px;"></div>
+      {#if !!!$user.uid}
+        <ReusableSignInButton frameworkColor="secondary"/>
+      {/if}
 
-        <div style="margin-top: 24px;"></div>
+      <div style="margin-top: 24px;"></div>
 
-        <Button disabled={!!!$user.uid || isUploadingQuestion} 
-          on:click={submitQuestion} 
-          color="secondary"
-          style="border-radius: 40px; color: white; background-color: {!!!$user.uid ? 'lightgrey' : '#5d0068' }; padding: 0px 24px;"
-        >
-          {isUploadingQuestion ? 'Submitting question...' : 'Post my question to server'}
-        </Button>
+      <Button disabled={!!!$user.uid || isUploadingQuestion} 
+        on:click={submitQuestion} 
+        color="secondary"
+        style="border-radius: 40px; color: white; background-color: {!!!$user.uid ? 'lightgrey' : '#5d0068' }; padding: 0px 24px;"
+      >
+        {isUploadingQuestion ? 'Submitting question...' : 'Post my question to server'}
+      </Button>
 
-        <div style="margin-top: 60px;"></div>
-      </div>
+      <div style="margin-top: 60px;"></div>
+    </div>
   </div>
 </div>
 
@@ -68,6 +84,7 @@
   import CodepenInput from '$lib/CodepenInput.svelte'
   import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+  import GeneralizedBlackboardDisplay from '$lib/DoodleVideo/GeneralizedBlackboardDisplay.svelte'
 
   import { 
     updateFirestoreDoc, 
@@ -75,7 +92,7 @@
     createNewMultiboard
   } from '../helpers/crud.js'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
-  import { getRandomID } from "../helpers/utility.js";
+  import { getRandomID } from "../helpers/utility.js"
 
   import { user } from '../store.js'
 
@@ -87,6 +104,7 @@
 
   export let classID 
 
+  let isBlackboardOpen = false
   let isSignInPopupOpen = false
   let questionTitleInput = ''
   let questionDescriptionInput = ''

@@ -1,11 +1,11 @@
 <div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white);">
 	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube style help for math olympiads
+		Youtube style tutoring for math olympiads
 	</p>
 
 	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 		<div class="header-subtitle">
-			Subscribe to a teacher, ask questions about anything, get video explanations until you understand everything.
+			Pick your teacher, ask lots of questions, get video explanations until you understand everything.
 		</div>
 
 		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 

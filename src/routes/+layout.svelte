@@ -17,7 +17,7 @@
 
 <script>
   import ExperimentalSplashScreen from '$lib/ExperimentalSplashScreen.svelte'
-  import TheTopNavbar from '$lib/TheTopNavbar.svelte'
+  import TheTopNavbar from '$lib/TheTopNavbar/index.svelte'
   import RenderlessPreventAccidentalNavigation from '$lib/RenderlessPreventAccidentalNavigation.svelte'
 
   import { initializeDatabase } from '../database.js'

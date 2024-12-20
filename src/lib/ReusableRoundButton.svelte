@@ -3,7 +3,7 @@
     <slot> </slot>
   </div>
 {:else}
-  <div 
+  <button
     on:click
     class="reusable-round-button glow-on-hover ux-low-elevation"
     style="
@@ -14,7 +14,7 @@
     "
   >
     <slot> </slot>
-  </div> 
+  </button> 
 {/if}
 
 <script>

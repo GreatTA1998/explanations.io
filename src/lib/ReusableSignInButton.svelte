@@ -1,37 +1,16 @@
-{#if isSignInPopupOpen}
-  <PopupSignInWithOptions 
-    on:popup-close={() => isSignInPopupOpen = false}
-  />
-{/if}
-
 {#if !$user.uid}
   <LoginGoogle/>
-  <!-- <Button on:click={() => isSignInPopupOpen = true}
-    variant="{outlined ? 'outlined' : ''}"
-    color={frameworkColor}
-  >
-    <slot>
-      Sign in
-    </slot>
-  </Button> -->
-  {:else}
+{:else}
   <Button on:click={logOut} style="color: black; font-size: 12px; font-family: 'Inter'">
     Sign out
   </Button>
 {/if}
 
 <script>
-  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import Button, { Label } from '@smui/button';
   import { user } from '../store.js'
   import { getAuth, signOut } from 'firebase/auth'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
-  
-
-  let isSignInPopupOpen = false
-
-  export let outlined = true
-  export let frameworkColor
 
 	async function logOut () {
     if ($user.uid) {

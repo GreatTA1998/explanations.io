@@ -1,8 +1,4 @@
 <div>
-  {#if isSignInPopupOpen}
-    <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
-  {/if} 
-
   <LeftDrawerToggleButton/>
 
   <div style="padding: 16px;">
@@ -66,7 +62,6 @@
   import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import CodepenInput from '$lib/CodepenInput.svelte'
-  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
 
   import { 
@@ -87,7 +82,6 @@
 
   export let classID 
 
-  let isSignInPopupOpen = false
   let questionTitleInput = ''
   let questionDescriptionInput = ''
 

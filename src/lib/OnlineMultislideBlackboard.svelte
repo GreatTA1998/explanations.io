@@ -1,10 +1,8 @@
-<div style="display: flex; align-items: end; width: {canvasWidth}px;">
+<div style="display: flex; align-items: end; width: {canvasWidth}px; column-gap: 20px;">
   <div id="multislide-record-button-wrapper-{boardDoc.id}">
- 
+    <!-- Elements portal here -->
   </div>
   
-  <div style="margin-left: 20px;"></div>
-
   <MultiboardSlideChanger
     slideIDs={boardDoc.slideIDs}
     {idxOfFocusedSlide}
@@ -13,16 +11,15 @@
     on:slide-create={createNewSlide}
   />
 
-  <div 
-    on:click={() => {
+  <button on:click={() => {
       if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
         deleteMultislideBlackboard({ boardDoc, roomDoc })
       }
-    }} on:keydown
+    }}
     style="margin-left: auto; margin-right: 8px; cursor: pointer;"
   >
     Delete multiboard
-  </div>
+  </button>
 </div>
 
 <div style="margin-bottom: 12px;"></div>
@@ -75,7 +72,6 @@
   </RenderlessListenToDoc>
 {/each}
 
-<!-- on:record-end={(e) => saveVideo(e.detail.audioBlob)} -->
 <RenderlessAudioRecorder
   let:startRecording={startRecording} 
   let:stopRecording={stopRecording}
@@ -84,45 +80,19 @@
   <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
     {#if !isRecording}
       {#if !!!$user.uid}
-        <span on:click={() => isSignInPopupOpen = true} class="my-record-button" on:keydown>
-          sign in & record
-        </span>
-
-        {#if isSignInPopupOpen}
-          <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
-        {/if}
+        <LoginGoogle style={styles.recordButton}>
+          SIGN IN & RECORD
+        </LoginGoogle>
       {:else}
-        <div style="margin-top: 0px;">
-          <!-- user doesn't necessarily start from slide 0, so ensure initial state is correct -->
-          <ReusableRoundButton 
-            on:click={() => callFuncsInSequence(
-              () => updateBoardRecordState(boardDoc.path, 'mid_record'),
-              startRecording,
-              startStopwatch,
-              () => isRecording = true,
-              () => {
-                timingOfSlideChanges.push({
-                  toIdx: idxOfFocusedSlide,
-                  timing: 0
-                })
-              },
-              () => willPreventPageLeave.set(true)
-            )}
-            backgroundColor="rgb(80, 80, 80, 0.9)" textColor="cyan" isBordered
-          >
-            Record
-          </ReusableRoundButton>
-        </div>
+        <button on:click={() => initializeRecording({ startRecording, idxOfFocusedSlide })}
+          style={styles.recordButton}
+        >
+          Record
+        </button>
       {/if}
     {:else}
-      <!-- () => dispatch('timing-of-slide-changes-ready', { timingOfSlideChanges }) -->
-      <button on:click={() => callFuncsInSequence(
-        stopRecording,
-        stopStopwatch,
-        () => updateBoardRecordState(boardDoc.path, 'post_record')
-      )}
-        style="height: 50px; font-size: 1.1em; border-radius: 25px;"
-        class="offline-record-button"
+      <button on:click={() => terminateRecording({ stopRecording })}
+        style={styles.recordButton}
       >
         {#if boardDoc.recordState === 'post_record'}
           <CircularSpinnerFourColor/>
@@ -135,11 +105,14 @@
 </RenderlessAudioRecorder>
 
 <script>
-  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte';
   import Blackboard from '$lib/Blackboard.svelte'
+  import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
+  import LoginGoogle from '$lib/LoginGoogle.svelte'
+  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
   import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
-  import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte';
+  import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
+
   import { 
     deleteMultislideBlackboard, 
     deleteSlideFromMultislide,
@@ -148,25 +121,18 @@
   } from '/src/helpers/unifiedDeleteAPI.js'
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
-  import { updateFirestoreDoc, setFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
-  import { user } from '/src/store.js'
-  import { 
-    arrayUnion, 
-    arrayRemove, 
-    getFirestore, 
-    query, 
-    getDocs, 
-    collection, 
-    where, 
-    increment, doc, updateDoc,
-  } from 'firebase/firestore'
-  import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte'
-  import { willPreventPageLeave } from '/src/store'
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
-  import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
-  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
+  import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
+  import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
+
+  import { 
+    getFirestore, 
+    query, getDocs, collection, where, 
+    arrayUnion, increment
+  } from 'firebase/firestore'
+  import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+  import { onMount, onDestroy } from 'svelte'
+  import { user, willPreventPageLeave } from '/src/store.js'
   import { page } from '$app/stores'
   
   export let canvasWidth
@@ -175,14 +141,9 @@
   export let classID
   export let roomDoc
 
-  let isSignInPopupOpen = false
-
-  const dispatch = createEventDispatcher()
   const boardPath = `classes/${classID}/blackboards/${boardDoc.id}/`
-
-  let isRecording = false
-
   const db = getFirestore()
+  let isRecording = false
 
   // timer-related variables
   let currentTime = 0
@@ -192,8 +153,8 @@
   let etaOfNextTick = null
   
   let idxOfFocusedSlide = 0 
-
   const timingOfSlideChanges = []
+
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
   // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
   onMount(async () => {
@@ -203,6 +164,36 @@
   onDestroy(() => {
     document.removeEventListener('keydown', keydownHandler)
   })
+
+  async function initializeRecording ({ startRecording }) {
+    try {
+      await startRecording()
+      startStopwatch()
+      timingOfSlideChanges.push({
+        toIdx: idxOfFocusedSlide,
+        timing: 0
+      })
+      isRecording = true
+      willPreventPageLeave.set(true)
+      updateFirestoreDoc(boardDoc.path, {
+        recordState: 'mid_record'
+      })
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  async function terminateRecording ({ stopRecording }) {
+    try {
+      await stopRecording()
+      stopStopwatch()
+      updateFirestoreDoc(boardDoc.path, {
+        recordState: 'post_record'
+      })
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   function keydownHandler (e) {
     switch (e.key) {
@@ -311,17 +302,7 @@
     window.location.reload()
   }
 
-  async function callFuncsInSequence (...funcs) {
-    for (const func of funcs) {
-      try {
-        await func()
-      } catch (error) {
-        alert(error)
-        return
-      }
-    }
-  }
-
+  // TO-DO: encapsulate this into a modular component/JS file etc.
   // Timer that doesn't slowly drift late and get out of sync with visuals
   // @see based on https://stackoverflow.com/a/29972322/7812829
   // how the self-adjusting timer works 
@@ -371,7 +352,6 @@
 
   // FILE UPLOAD RELATED CODE
   async function handleWhatUserUploaded (imageFile, slideID) {
-    const slideRef = doc(getFirestore(), boardPath + `slides/${slideID}`)
     if (!imageFile) return
     if (imageFile.type.split("/")[0] === 'image') {
       // rewrite
@@ -379,45 +359,13 @@
       const imageRef = ref(storage, `images/${getRandomID()}`)
       await uploadBytes(imageRef, imageFile)
       const downloadURL = await getDownloadURL(imageRef)
-      updateDoc(slideRef, {
+
+      updateFirestoreDoc(boardPath + `slides/${slideID}`, {
         backgroundImageDownloadURL: downloadURL,
         backgroundImageStoragePath: imageRef.fullPath // TO-DO: proper deletion boards
       })
     } else {
       alert("Error: only images can be used")
     }
-  }
-
-  function updateBoardRecordState (boardPath, newRecordState) {
-    const blackboardRef = doc(getFirestore(), boardPath)
-    updateDoc(blackboardRef, {
-      recordState: newRecordState
-    })
   } 
 </script>
-
-<style>
-  .my-record-button {
-    font-size: 1.2rem; 
-    color: cyan; 
-    margin-left: 28px; 
-    margin-right: 26px; 
-    font-family: sans-serif; 
-    border: 1px solid cyan; 
-    padding-top: 2px; 
-    padding-bottom: 4px;
-    padding-left: 10px;
-    padding-right: 9px; 
-    box-sizing: border-box;
-    border-radius: 1px;
-    cursor: pointer;
-  }
-
-  .offline-record-button {
-    color: cyan; 
-    background-color: hsl(0,0%,0%, 0.80); 
-    border: 2px solid cyan; 
-    height: 48px; display: flex; align-items: center; padding-left: 16px; padding-right: 16px;
-    font-size: 24px;
-  }
-</style>

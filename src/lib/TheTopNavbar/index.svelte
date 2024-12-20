@@ -12,11 +12,11 @@
 
 		<slot name="tab-section">
 			<div class="prepare-to-appear my-flex-row" class:increase-opacity={!isHomeScreenVisible}>
-				{#if $viewport.isDesktop}
+				{#if $viewport.isDesktop || $viewport.isTablet}
 					{#each mathServers as mathServer, i (mathServer.id)}
 						<Tab server={mathServer} />
 					{/each}
-				{:else if $viewport.isMobile || $viewport.isTablet}
+				{:else if $viewport.isMobile}
 					{#if !$recentSearchedServerDoc.name && mathServers.length > 0}
 						<Tab server={mathServers[0]} />
 					{:else}

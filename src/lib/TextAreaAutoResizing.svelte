@@ -19,6 +19,7 @@
 
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
+  import { blackboardWidth } from '/src/store.js'
 
   export let value = ''
   export let placeholder
@@ -39,6 +40,11 @@
     dispatch("manually-focused")
   }
 
+  $: {
+    auto_grow($blackboardWidth)
+  }
+
+  // NOTE: you need this despite the $ statement above, I don't know exactly why the above doesn't always trigger on initialization though
   onMount(() => {
     auto_grow()
   })
@@ -50,6 +56,8 @@
 
   // assumes element is already mounted
   function auto_grow () {
+    if (!element) return
+
     element.style.height = 'auto'
 
     // we're leverage CSS's layout calculations to compute the correct height

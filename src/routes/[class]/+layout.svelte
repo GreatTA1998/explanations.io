@@ -45,7 +45,7 @@
   $: {
     listenToClassDoc(classID)
     handleClassDocChange(classID)
-    fetchRecentlySearchedClassDoc()
+    fetchRecentlySearchedClassDoc($user)
   }
 
   onMount(() => {
@@ -105,7 +105,7 @@
   }
 
   async function fetchRecentlySearchedClassDoc () {
-    if (!$user.recentSearchedServerID) return
+    if (!$user.recentSearchedServerID) return {}
 
     const recentServerDoc = await getFirestoreDoc(`/classes/${$user.recentSearchedServerID}`)
     recentSearchedServerDoc.set(recentServerDoc)

@@ -19,10 +19,8 @@
   })
 </script>
 
-<div class="input-container" style="position: relative; width: 100%;">
-  <span 
-    class="material-icons my-search-icon"
-  >
+<div style="position: relative;">
+  <span class="material-icons my-search-icon">
     search
   </span>
 
@@ -31,7 +29,7 @@
     bind:this={SearchBar}
     name="search" 
     maxlength="100" 
-    placeholder="Search all servers" 
+    placeholder="Find server..." 
     autocomplete="off" 
     type="text" 
     value={searchVal}
@@ -49,7 +47,6 @@
     left: 18px;
     font-size: 32px;
     color: rgb(100, 100, 100);
-    /* color: #5D0068; */
   }
 
   .my-search-bar {
@@ -57,12 +54,26 @@
     border: none;
 
     padding-left: 40px;
-    width: 300px; 
+    width: 240px; 
     height: 36px; 
     font-size: 1.4em; 
     box-sizing: border-box;
     border-radius: 32px; 
     padding: 12px;
     padding-left: 70px;
+  }
+
+  @media (max-width: 768px) {
+    .my-search-bar {
+      width: 172px;
+      padding-left: 40px;
+      font-size: 1.2rem;
+    }
+
+    .my-search-icon {
+      font-size: 24px; 
+      top: 6px;
+      left: 12px;
+    }
   }
 </style>

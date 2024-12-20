@@ -302,6 +302,7 @@
     window.location.reload()
   }
 
+  // TO-DO: encapsulate this into a modular component/JS file etc.
   // Timer that doesn't slowly drift late and get out of sync with visuals
   // @see based on https://stackoverflow.com/a/29972322/7812829
   // how the self-adjusting timer works 

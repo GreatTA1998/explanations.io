@@ -1,12 +1,8 @@
 <div id="the-top-navbar">
 	<div class="top-app-bar-container">
-		<div bind:this={topAppBar} 
-			style="border-bottom: 1px solid lightgrey;"
-		>
+		<div bind:this={topAppBar} style="border-bottom: 1px solid lightgrey;">
 			<Row style="height: var(--navbar-height); background-color: var(--bg-off-white); padding-left: 2%; padding-right: 2%;">
-				<div
-					style="padding: 6px 12px 8px 0px; box-sizing: border-box; width: {50 + 20}px; height: {46 + 14}px"
-				>
+				<div style="padding: 6px 12px 8px 0px; box-sizing: border-box; width: {50 + 20}px; height: {46 + 14}px">
           <GlobalAppPopup let:setIsPopupOpen={setIsPopupOpen} >
 						<img on:click={() => setIsPopupOpen(true)} on:keydown
 							class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible} 
@@ -17,31 +13,31 @@
 				</div>
 	
 				<slot name="tab-section">
-					<div style="display: flex; column-gap: 24px;" class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible}>
-						{#each mathServers as mathServer}
-							<button
-								on:click={() => handleServerRedirect(mathServer)} 
-								class:orange-underline={$page.params.class === mathServer.id} 
-								class="tab-item"
-							>
-								{mathServer.name}
-							</button>
-						{/each}
-
-						{#if $recentSearchedServerDoc.name}
-							<button 
-								on:click={() => handleServerRedirect($recentSearchedServerDoc)} 
-								class:orange-underline={$page.params.class === $recentSearchedServerDoc.id} 
-								class="tab-item"
-							>
-								{$recentSearchedServerDoc.name}
-							</button>
+					<div class="prepare-to-appear my-flex-row" class:increase-opacity={!isHomeScreenVisible}>
+            {#if $viewport.isDesktop}
+							{#each mathServers as mathServer, i (mathServer.id)}
+								<TheTopNavbarServerTab 
+								  server={mathServer} 
+								/>
+							{/each}
+						{:else if $viewport.isMobile || $viewport.isTablet}
+							{#if !$recentSearchedServerDoc.name && mathServers.length > 0}
+								<TheTopNavbarServerTab server={mathServers[0]} />
+							{:else}
+								<TheTopNavbarServerTab server={$recentSearchedServerDoc} />
+							{/if}
 						{/if}
 					</div>
 				</slot>
 
-				<Section align="end" toolbar style="padding-right: 0;">
-					<div style="position: relative" class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible}>
+				<Section align="end" toolbar style="padding: 0; display: flex; column-gap: 24px;">
+					{#if $viewport.isDesktop}
+						{#if $recentSearchedServerDoc.name && $recentSearchedServerDoc.subjectTag !== 'Competition Math'}
+							<TheTopNavbarServerTab server={$recentSearchedServerDoc} />
+						{/if}
+					{/if}
+
+					<div style="position: relative" class="search-bar-container prepare-to-appear" class:increase-opacity={!isHomeScreenVisible}>
 						<SearchBar 
 							{searchVal} 
 							on:focus-change={(e) => isFocused = e.detail} 
@@ -70,9 +66,9 @@
 	import CompactServerCard from '$lib/CompactServerCard.svelte'
 	import { getFirestoreCollection } from '/src/helpers/crud.js'
   import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar'
-	import { page } from '$app/stores'
-	import { classServerDoc, recentSearchedServerDoc } from '/src/store.js'
-	import { handleServerRedirect } from '/src/helpers/everythingElse.js'
+	import { recentSearchedServerDoc } from '/src/store.js'
+	import { viewport } from '/src/storeFolder/viewport.js'
+	import TheTopNavbarServerTab from '$lib/TheTopNavbarServerTab.svelte'
 
 	export let isHomeScreenVisible
 
@@ -82,7 +78,6 @@
 	let mathServers = []
 	let searchMatchedServers = []
 	let isFocused = false
-	let isPopupOpen = false
 
 	getFirestoreCollection('classes').then(docs => {
 		allServers = docs
@@ -115,6 +110,11 @@
     z-index: 1; /* without this the hero text will overlay on top of the navbar */
   }
 
+	.my-flex-row {
+		display: flex; 
+		column-gap: 24px;
+	}
+
 	.prepare-to-appear {
 		opacity: 0.2;
 		transition: opacity 0.5s ease-in-out;
@@ -122,19 +122,6 @@
 
 	.increase-opacity {
 		opacity: 1;
-	}
-
-	.tab-item {
-		color: black; 
-		height: 100%; 
-		display: flex; 
-		align-items: center;
-		cursor: pointer;
-	}
-
-	.orange-underline {
-		border-bottom: 2px solid orange;
-		/* left drawer server item's lighter orange #f7c686; */
 	}
 
 	.search-results {

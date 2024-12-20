@@ -1,88 +1,69 @@
-<!-- This is a quickfix for routing -->
-{#if isSignInPopupOpen}
-  <PopupSignInWithOptions on:popup-close={() => isSignInPopupOpen = false}/>
-{/if}
-
 {#if roomDoc}
 	<div>
     <LeftDrawerToggleButton/>
     
     <div style="padding: {SIDE_PADDING}px;">
-
-    <Textfield 
-      disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
-      value={roomDoc.name} on:input={(e) => updateRoomName(e)}
-      class="room-title" 
-      style={`width: ${$blackboardWidth}px;`}
-    >
-      <HelperText slot="helper" persistent>
-        {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
-          Question asked by {roomDoc.askerName.split(" ")[0]} on {displayDate(roomDoc.dateAsked)},
-          and has {roomDoc.blackboards.length - 1} responses
-        {:else if roomDoc.blackboards} 
-          This room has {roomDoc.blackboards.length} boards
-        {/if}
-      </HelperText>
-    </Textfield>
-
-    {#if roomDoc.attachmentsDownloadURLs} 
-      {#each roomDoc.attachmentsDownloadURLs as attachmentURL, i}
-        <a href={attachmentURL} target="_blank">
-          {roomDoc.attachmentsNames[i]}
-        </a>
-      {/each}
-    {/if}
-
-    <div style="margin-bottom: 14px;"></div>
-
-    {#if roomDoc.blackboards}
-      {#each roomDoc.blackboards as boardID, i (boardID) }
-        <GeneralizedBlackboardDisplay {boardID} {classID} {roomDoc}/>
-
-        <div style="margin-bottom: 80px;"></div>
-      {/each} 
-    {/if}
-
-    {#if roomDoc.blackboards}
-      <div on:click={createNewMultiboard} on:keydown
-        style="
-          display: flex; 
-          justify-content: center; 
-          align-items: center;
-          background-color: #2e3131; 
-          text-transform: uppercase;
-          color: white;
-          height: 35px;
-          width: {$maxAvailableWidth}px;
-          opacity 2.0s ease-in;
-          opacity: 1;
-        "
+      <Textfield 
+        disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
+        value={roomDoc.name} on:input={(e) => updateRoomName(e)}
+        class="room-title" 
+        style={`width: ${$blackboardWidth}px;`}
       >
-        {#if hasQuestionMark(roomDoc.name)}
-          Respond to question
-        {:else}
-          NEW BLACKBOARD
-        {/if}
-      </div>
-    {/if}
+        <HelperText slot="helper" persistent>
+          {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
+            Question asked by {roomDoc.askerName.split(" ")[0]} on {displayDate(roomDoc.dateAsked)},
+            and has {roomDoc.blackboards.length - 1} responses
+          {:else if roomDoc.blackboards} 
+            This room has {roomDoc.blackboards.length} boards
+          {/if}
+        </HelperText>
+      </Textfield>
+
+      {#if roomDoc.attachmentsDownloadURLs} 
+        {#each roomDoc.attachmentsDownloadURLs as attachmentURL, i}
+          <a href={attachmentURL} target="_blank">
+            {roomDoc.attachmentsNames[i]}
+          </a>
+        {/each}
+      {/if}
+
+      <div style="margin-bottom: 14px;"></div>
+
+      {#if roomDoc.blackboards}
+        {#each roomDoc.blackboards as boardID, i (boardID) }
+          <GeneralizedBlackboardDisplay {boardID} {classID} {roomDoc}/>
+
+          <div style="margin-bottom: 80px;"></div>
+        {/each} 
+
+        <button on:click={createNewMultiboard} style="width: {$blackboardWidth}px;" class="new-blackboard-button">
+          {#if hasQuestionMark(roomDoc.name)}
+            RESPOND TO QUESTION
+          {:else}
+            NEW BLACKBOARD
+          {/if}
+        </button>
+      {/if}
+    </div>
   </div>
-</div>
 {/if}
 
 <script>
-  import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
-  import '$lib/_FourColor.scss'
-  import { browserTabID, user, maxAvailableWidth, blackboardWidth } from '/src/store.js'
-  import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
-  import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
-  import { onMount, tick, onDestroy } from 'svelte'
-  import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
-  import Textfield from '@smui/textfield'
-  import HelperText from '@smui/textfield/helper-text'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import PopupSignInWithOptions from '$lib/PopupSignInWithOptions.svelte'
+  import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
+
+  import { getRandomID, displayDate } from '/src/helpers/utility.js'
+  import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
   import { SIDE_PADDING } from '/src/helpers/dimensions.js'
+
+  import { user, blackboardWidth } from '/src/store.js'
+  import { onDestroy } from 'svelte'
+  import { doc, getFirestore, updateDoc, onSnapshot, setDoc, arrayUnion, increment } from 'firebase/firestore'
+
+  import Textfield from '@smui/textfield'
+  import HelperText from '@smui/textfield/helper-text'
+  import '$lib/_FourColor.scss'
   
   export let data
   let { classID, roomID } = data
@@ -94,9 +75,6 @@
     blackboards: null
   }
 
-  let isSignInPopupOpen = false
-
-  $: membersDbPath = `classes/${classID}/members/`
   $: boardsDbPath = `classes/${classID}/blackboards/`
   $: roomsDbPath = `classes/${classID}/rooms/`
   $: roomRef = doc(getFirestore(), roomsDbPath + roomID)
@@ -128,14 +106,6 @@
       }
     })
   }
-
-  function updateRecordState (boardID, newRecordState) {
-    const blackboardRef = doc(getFirestore(), boardsDbPath + boardID)
-    updateDoc(blackboardRef, {
-      recordState: newRecordState
-    })
-  }
-  //// END of background image logic
 
   let lockQuestionIntervalID = ''
   let lockQuestionCurrentTime = 5
@@ -265,8 +235,19 @@
 </script>
 
 <style>
-:global(.room-title input) {
-  font-size: 2rem;
-}
+  :global(.room-title input) {
+    font-size: 2rem;
+  }
+
+  .new-blackboard-button {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    background-color: #2e3131; 
+    color: white;
+    height: 35px;
+    opacity: 2.0s ease-in;
+    opacity: 1;
+  }
 </style>
 

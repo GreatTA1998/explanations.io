@@ -2,13 +2,12 @@
 <div style="z-index: 0; position: relative;">
   {#if showSlideChanger}
     <!-- 1px quick-fix so UI doesn't look terrible -->
-    <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px;">  
+    <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px; flex-wrap: wrap; row-gap: 2px;">  
       <slot />
 
-      <MultiboardSlideChanger
+      <MultiboardSlideChanger on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
         slideIDs={boardDoc.slideIDs}
         {idxOfFocusedSlide}
-        on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
       />
 
       <slot name="after" />

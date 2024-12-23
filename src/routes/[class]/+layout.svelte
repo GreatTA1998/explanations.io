@@ -15,18 +15,18 @@
 
 <script> 
   import TheLeftDrawer from '$lib/TheLeftDrawer.svelte'
-  import { user, drawerWidth, classServerDoc, recentSearchedServerDoc } from '/src/store.js'
+  import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
-  import { onMount } from 'svelte'
-  import '$lib/_Elevation.scss'
+
   import { 
-    blackboardWidth, 
-    videoPreviewWidth, 
-    videoCinemaWidth,
-    isFullServerMode
-  } from '/src/store.js';
-  import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize, HEIGHTS } from '/src/helpers/dimensions.js'
+    user, drawerWidth, classServerDoc, recentSearchedServerDoc, 
+    blackboardWidth, videoPreviewWidth, videoCinemaWidth, isFullServerMode
+  } from '/src/store.js'
+
+  import { onMount } from 'svelte'
+  import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
+  import '$lib/_Elevation.scss'
+
 
   export let data
 
@@ -49,8 +49,6 @@
   }
 
   onMount(() => {
-    initializeCSSVariables()
-
     MainContent = document.getElementById('main-content')
 
     resizeObserver = new ResizeObserver(entries => {
@@ -65,12 +63,6 @@
     MainContent.style.overflowY = 'auto'
     const navbarHeight = 56
     ServerLayout.style.marginTop = `${navbarHeight}px`
-  }
-
-  function initializeCSSVariables () {
-    document.documentElement.style.setProperty('--title-height', `${HEIGHTS.TITLE}px`);
-    document.documentElement.style.setProperty('--board-changer-height', `${HEIGHTS.BOARD_CHANGER}px`);
-    document.documentElement.style.setProperty('--audio-slider-height', `${HEIGHTS.AUDIO_SLIDER}px`);
   }
 
   function computeDimensionsForBlackboardsAndVideos () {

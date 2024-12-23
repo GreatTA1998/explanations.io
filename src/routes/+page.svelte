@@ -27,11 +27,13 @@
 </div> 
 -->
 
-{#if activeTabName === 'Learn'}
-	<ExperimentalSplashScreen/>
-{:else}
-	<HomePageForTeacher/>
-{/if}
+<div>
+	{#if activeTabName === 'Learn'}
+		<ExperimentalSplashScreen/>
+	{:else}
+		<HomePageForTeacher/>
+	{/if}
+</div>
 
 <script>	
 	import HomePageForTeacher from '$lib/HomePageForTeacher.svelte'

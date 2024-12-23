@@ -1,6 +1,5 @@
 <!-- TO-DO: emit an intersection API event -->
-<div 
-  use:lazyCallable={() => dispatch('intersect')} 
+<div use:lazyCallable={() => dispatch('intersect')} 
   style="position: relative; z-index: 0; width: {canvasWidth}px; height: {canvasHeight}px"
 >
   <!-- This toolbar double duties as an indicator that the blackboard has finished fetching 
@@ -8,24 +7,21 @@
   -->
   {#if strokesArray && !hideToolbar}
     <BlackboardToolbar>
-      <span on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
+      <button on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
         undo
-      </span>
+      </button>
 
       <!-- uses `BlackboardToolbar`'s unnamed slot (the 2 other slots are named) -->
-      <slot {currentTime} {startStopwatch} {stopStopwatch} {setCurrentTime}>
-
-      </slot>
+      <slot {currentTime} {startStopwatch} {stopStopwatch} {setCurrentTime} />
 
       <div slot="dropdown-menu">
         {#if recordState === 'pre_record' || currentTime === 0 }
-          <span on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-top: 3px; margin-right: 10px; color: white; font-size: 2rem;">
+          <button on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-top: 3px; margin-right: 10px; color: white; font-size: 2rem;">
             more_vert
-          </span>
+          </button>
         {/if}
       
-        <input
-          bind:this={FileUploadButton}
+        <input bind:this={FileUploadButton}
           on:change={(e) => uploadBackground(e)}
           style="display: none" 
           type="file" 
@@ -63,9 +59,9 @@
    very well: https://github.com/sveltejs/svelte/issues/2068 -->
 
   <canvas bind:this={canvas}
-    on:touchstart|nonpassive={touchStart}
-    on:touchmove|nonpassive={touchMove}
-    on:touchend|nonpassive={touchEnd}
+    on:touchstart|nonpassive|preventDefault={touchStart}
+    on:touchmove|nonpassive|preventDefault={touchMove}
+    on:touchend|nonpassive|preventDefault={touchEnd}
     class="front-canvas"
   >
   </canvas>
@@ -83,8 +79,8 @@
   import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
   import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
   import { getRandomID } from '../helpers/utility.js'
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { currentTool, maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
+  import { createEventDispatcher } from 'svelte'
+  import { currentTool, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
 
   export let canvasWidth
   export let canvasHeight
@@ -338,11 +334,9 @@
     }
   }
 
-  /**
-   * TO-DO: Make `tool` an explicit parameter 
-   */
+
+  // Consider making `tool` an explicit parameter 
   function handleContactWithBlackboard (e, { isInitialContact }) {
-    e.preventDefault();
     if (isInitialContact) startNewStroke(e);
     const contactPoint = getContactPosition(e); // should make "isHoldingLeftClick" an explicit parameter
     lengthenTheCurrentStroke(e, contactPoint);

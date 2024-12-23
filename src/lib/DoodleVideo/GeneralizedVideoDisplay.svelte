@@ -42,9 +42,9 @@
         {/if}
 
         <div slot="after" class="button-group-flexbox">
-          <VideoFooterInfo {video}/>
+          <VideoFooterInfo {video} />
 
-          <EurekaButton boardDoc={video} {canvasWidth}/>
+          <EurekaButton boardDoc={video} {canvasWidth} />
 
           <ToggleFullscreenButton on:click={toggleFullscreen}
             isFullscreen={isFullscreen} 
@@ -53,8 +53,7 @@
 
           {#if $user.uid === video.creatorUID || !video.creatorUID}
             <div style="position: relative">
-              <button 
-                class="menu-surface-anchor" 
+              <button class="menu-surface-anchor" 
                 on:click={(e) => {
                   e.stopPropagation();
                   DropdownMenu.setOpen(true);
@@ -65,10 +64,7 @@
                 </span>
               </button>
 
-              <Menu 
-                bind:this={DropdownMenu} 
-                style="width: 160px"
-              >
+              <Menu bind:this={DropdownMenu} style="width: 160px">
                 <List>
                   <button on:click={handleDeleteClick} class="menu-list-item">
                     <span class="material-icons">delete_forever</span>

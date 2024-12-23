@@ -52,9 +52,9 @@
 </div>
 
 <script>
-	import Tab from '$lib/TheTopNavbar/Tab.svelte'
+	import Tab from './Tab.svelte'
+	import SearchBar from './SearchBar.svelte'
 	import GlobalAppPopup from '$lib/GlobalAppPopup.svelte'
-	import SearchBar from '$lib/SearchBar.svelte'
 	import CompactServerCard from '$lib/CompactServerCard.svelte'
 	import { getFirestoreCollection } from '/src/helpers/crud.js'
   import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar'

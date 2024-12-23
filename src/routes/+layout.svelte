@@ -1,17 +1,19 @@
-{#if !$hasFetchedUser}
-  <h4 style="margin-left: 16px; opacity: 70%; font-weight: 400">
-    Fetching your info...
-  </h4>
-{:else}
-  <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
+<div>
+  {#if !$hasFetchedUser}
+    <h4 style="margin-left: 16px; opacity: 70%; font-weight: 400">
+      Fetching your info...
+    </h4>
+  {:else}
+    <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
 
-  {#if $didRenderSplashScreen && !$isFullServerMode}
-    <ExperimentalSplashScreen />
+    {#if $didRenderSplashScreen && !$isFullServerMode}
+      <ExperimentalSplashScreen />
+    {/if}
+
+    <!-- Full Server Page will be injected here -->
+    <slot />
   {/if}
-
-  <!-- Full Server Page will be injected here -->
-  <slot />
-{/if}
+</div>
 
 <!-- <RenderlessPreventAccidentalNavigation/> -->
 
@@ -35,6 +37,8 @@
   import { page } from '$app/stores'
 
   import posthog from 'posthog-js'
+
+  import { translateJSConstantsToCSSVariables } from '../helpers/CONSTANTS.js'
   import "../app.scss"
 
   initializeDatabase()
@@ -44,9 +48,12 @@
   let unsubUserDocListener = null 
 
   onMount(async () => {
-    onAuthStateChanged(auth, reactToUserChange)
-    createSessionRecording()
+    translateJSConstantsToCSSVariables()
 
+    onAuthStateChanged(auth, reactToUserChange)
+
+    createSessionRecording()
+    
     window.addEventListener('scroll', handleOnScroll)
   })
 

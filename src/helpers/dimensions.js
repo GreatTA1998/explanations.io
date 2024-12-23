@@ -1,17 +1,11 @@
 import { videoCinemaLayout } from '/src/store.js'
+import { HEIGHTS } from '/src/helpers/CONSTANTS.js'
 
 export const VIDEO_LAYOUT = {
   MOBILE_VERTICAL: 'mobile-vertical',
   SIDE_BY_SIDE: 'side-by-side',
   TRANSPARENT_OVERLAY: 'transparent-overlay'
 }
-
-// TO-DO: ensure these heights are passed throughout the apps as JS in CSS styles
-export const HEIGHTS = Object.freeze({
-  TITLE: 30 + 12, // the board description could be multi-line, but we allocate space for one line, includes bottom margin
-  BOARD_CHANGER: 36 + 16, // includes padding
-  AUDIO_SLIDER: 50, // assume it's constant, don't scale it for this version
-})
 
 export const ASPECT_RATIO = 4/3
 export const SIDE_PADDING = 16

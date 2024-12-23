@@ -10,7 +10,7 @@
 
 <script>
   import { videoCinemaLayout } from '/src/store.js'
-  import { HEIGHTS } from '/src/helpers/dimensions.js'
+  import { HEIGHTS } from '/src/helpers/CONSTANTS.js'
 
   const padding = 16
 </script>

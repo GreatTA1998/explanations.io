@@ -59,9 +59,9 @@
    very well: https://github.com/sveltejs/svelte/issues/2068 -->
 
   <canvas bind:this={canvas}
-    on:touchstart|nonpassive={touchStart}
-    on:touchmove|nonpassive={touchMove}
-    on:touchend|nonpassive={touchEnd}
+    on:touchstart|nonpassive|preventDefault={touchStart}
+    on:touchmove|nonpassive|preventDefault={touchMove}
+    on:touchend|nonpassive|preventDefault={touchEnd}
     class="front-canvas"
   >
   </canvas>
@@ -334,11 +334,9 @@
     }
   }
 
-  /**
-   * TO-DO: Make `tool` an explicit parameter 
-   */
+
+  // Consider making `tool` an explicit parameter 
   function handleContactWithBlackboard (e, { isInitialContact }) {
-    e.preventDefault()
     if (isInitialContact) startNewStroke(e);
     const contactPoint = getContactPosition(e); // should make "isHoldingLeftClick" an explicit parameter
     lengthenTheCurrentStroke(e, contactPoint);

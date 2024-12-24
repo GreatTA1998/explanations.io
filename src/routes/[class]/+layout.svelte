@@ -14,7 +14,7 @@
 </div>
 
 <script> 
-  import TheLeftDrawer from '$lib/TheLeftDrawer.svelte'
+  import TheLeftDrawer from '$lib/TheLeftDrawer/index.svelte'
   import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
 

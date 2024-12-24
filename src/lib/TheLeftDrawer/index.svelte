@@ -34,7 +34,7 @@
 
       {#each rootRooms as room, i (room.id)}
         {#if !room.parentRoomID}
-          <LeftDrawerRecursiveRoom 
+          <RecursiveRoom 
             {room} 
             {roomID}
             {classID}
@@ -46,7 +46,7 @@
       {/each}
 
       <div style="padding: 6px;">
-        <LeftDrawerRecursiveRoomReorderDropzone
+        <RecursiveRoomReorderDropzone
           orderWithinLevel={rootRooms.length}
           parentRoomIDs={['']}
           roomsInThisLevel={rootRooms}
@@ -75,11 +75,11 @@
 
 <script>
   import QuestionsSection from '$lib/QuestionsSection.svelte'
-  import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
-  import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
+  import RecursiveRoom from './RecursiveRoom.svelte'
+  import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
   import { user, drawerWidth } from '/src/store.js'
   import { goto } from '$app/navigation'
-  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion} from 'firebase/firestore'
+  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
   import { createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { page } from '$app/stores'
 

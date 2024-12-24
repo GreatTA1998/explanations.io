@@ -1,5 +1,5 @@
 <div style="padding: 6px;">
-  <LeftDrawerRecursiveRoomReorderDropzone
+  <RecursiveRoomReorderDropzone
     {roomsInThisLevel}
     {orderWithinLevel}
     {parentRoomIDs}
@@ -92,7 +92,7 @@
 {#if subpages && isExpanded}
   <div style="padding-left: {totalIndentation}px">
     {#each subpages as subpage, i (subpage.id)}
-      <LeftDrawerRecursiveRoom 
+      <RecursiveRoom 
         room={subpage}
         {roomID}
         {classID}
@@ -107,7 +107,7 @@
     -->
     {#if subpages.length > 0}
       <div style="padding: 6px;">
-        <LeftDrawerRecursiveRoomReorderDropzone
+        <RecursiveRoomReorderDropzone
           orderWithinLevel={subpages.length}
           parentRoomIDs={[subpages[0].parentRoomID, ...parentRoomIDs]}
           roomsInThisLevel={subpages}
@@ -119,8 +119,8 @@
 {/if}
 
 <script>
-import LeftDrawerRecursiveRoom from '$lib/LeftDrawerRecursiveRoom.svelte'
-import LeftDrawerRecursiveRoomReorderDropzone from '$lib/LeftDrawerRecursiveRoomReorderDropzone.svelte'
+import RecursiveRoom from './RecursiveRoom.svelte'
+import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
 import { deleteRoom } from '/src/helpers/unifiedDeleteAPI.js'
 import List, { Item, Text } from '@smui/list'
 import Menu from '@smui/menu';

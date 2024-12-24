@@ -86,7 +86,7 @@
                     style="
                       border-radius: 4px; 
                       width: auto; 
-                      height: {0.5 * 1/questionDoc.attachmentsNames.length * $blackboardWidth * 3/4}px;
+                      height: {1/questionDoc.attachmentsNames.length * $blackboardWidth * 3/4}px;
                     "
                     alt={questionDoc.attachmentsNames[i]}
                   >

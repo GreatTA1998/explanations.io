@@ -49,12 +49,13 @@
           video={boardDoc}
           videoWidth={$videoPreviewWidth}
           showEditDeleteButtons={true}
+          {classID}
         />
       {:else if boardDoc.isMultiboard}
         <OnlineMultislideBlackboard 
-          {boardDoc}
           canvasHeight={$blackboardWidth * 3/4}
           canvasWidth={$blackboardWidth}
+          {boardDoc}
           {classID}
           {roomDoc}
         />

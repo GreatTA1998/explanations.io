@@ -61,6 +61,7 @@
 
 <script>
   import { goto } from '$app/navigation'
+  import BaseStatDisplayIcon from '$lib/Reusable/BaseStatDisplayIcon.svelte'
 
   export let helperDoc
   export let currentTeacherUID

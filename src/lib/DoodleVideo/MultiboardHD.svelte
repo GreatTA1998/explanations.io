@@ -9,7 +9,7 @@
         slideIDs={boardDoc.slideIDs}
         {idxOfFocusedSlide}
       />
-
+      
       <slot name="after" />
     </div>
   {/if}
@@ -41,16 +41,14 @@
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >
-          <FetchStrokes
-            dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+          <FetchStrokes dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
             let:fetchStrokes={fetchStrokes}
             let:strokesArray={strokesArray}
             on:mounted={(e) => {
               slideIDToStrokesArray[slideID] = e.detail.strokesArray
             }}
           > 
-            <div 
-              use:lazyCallable={fetchStrokes}  
+            <div use:lazyCallable={fetchStrokes}  
               style="
                 position: absolute;
                 transform: scale(0.5); transform-origin: top left;

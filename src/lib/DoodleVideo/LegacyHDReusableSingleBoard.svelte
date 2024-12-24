@@ -11,7 +11,6 @@
     <div use:lazyCallable={fetchStrokes} 
       style={`width: ${canvasWidth}px; height: ${canvasHeight + Math.min(54, (80 * scaleFactor))}px; position: relative`}
     >
-
       <LegacyHDSingleBoard 
         visualWidth={canvasWidth}
         visualHeight={canvasHeight}

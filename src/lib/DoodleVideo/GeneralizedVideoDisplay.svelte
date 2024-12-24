@@ -19,7 +19,7 @@
         {canvasWidth}
         {canvasHeight}
         boardDoc={video}
-        classID={quickfixClassIDFrom(video)}
+        {classID}
         audioDownloadURL={video.audioDownloadURL}
         timingOfSlideChanges={video.timingOfSlideChanges}
         showSlideChanger={!willHideSliderForPreview || isFullscreen}
@@ -77,13 +77,14 @@
         </div>
       </MultiboardHD>
     {:else}
-      <ReusableDoodleVideo
+      <LegacyHDReusableSingleBoard
         autoFetchStrokes={false}
         boardDoc={video}
         {canvasWidth}
         {canvasHeight}
         {showEditDeleteButtons}
         boardDbPath={video.path}
+        {classID}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
       />
     {/if}
@@ -93,7 +94,7 @@
 <script>
   import ToggleFullscreenButton from '$lib/DoodleVideo/ToggleFullscreenButton.svelte'
   import EurekaButton from '$lib/DoodleVideo/EurekaButton.svelte'
-  import ReusableDoodleVideo from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
+  import LegacyHDReusableSingleBoard from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import VideoFooterInfo from './VideoFooterInfo.svelte'
   import FullscreenModule from '$lib/DoodleVideo/FullscreenModule.svelte'
   import MultiboardHD from '$lib/DoodleVideo/MultiboardHD.svelte'
@@ -110,6 +111,7 @@
   export let willDisplayCreatorCard = true
   export let willHideSliderForPreview = false
   export let showEditDeleteButtons = false
+  export let classID
 
   let propToDeleteVideo = false
   let DropdownMenu

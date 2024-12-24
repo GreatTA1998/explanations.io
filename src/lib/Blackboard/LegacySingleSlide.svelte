@@ -3,7 +3,6 @@
 -->
 
 <script>
-  import '$lib/_FourColor.scss'
   import { deleteStrokesFromSlide } from '/src/helpers/unifiedDeleteAPI.js'
   import { blackboardWidth, browserTabID, user, willPreventPageLeave } from '/src/store.js'
   import { lazyCallable } from '/src/helpers/actions.js'

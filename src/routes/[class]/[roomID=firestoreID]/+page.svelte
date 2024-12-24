@@ -31,7 +31,7 @@
 
       {#if roomDoc.blackboards}
         {#each roomDoc.blackboards as boardID, i (boardID) }
-          <GeneralizedBlackboardDisplay {boardID} {classID} {roomDoc}/>
+          <GeneralizedBlackboardVideoDisplay {boardID} {classID} {roomDoc}/>
 
           <div style="margin-bottom: 80px;"></div>
         {/each} 
@@ -50,7 +50,7 @@
 
 <script>
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
+  import GeneralizedBlackboardVideoDisplay from '$lib/GeneralizedBlackboardVideoDisplay.svelte'
 
   import { getRandomID, displayDate } from '/src/helpers/utility.js'
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
@@ -63,7 +63,6 @@
 
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
-  import '$lib/_FourColor.scss'
   
   export let data
   let { classID, roomID } = data

@@ -25,8 +25,6 @@
 
   import { onMount } from 'svelte'
   import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
-  import '$lib/_Elevation.scss'
-
 
   export let data
 

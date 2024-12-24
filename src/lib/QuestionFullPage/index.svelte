@@ -1,6 +1,6 @@
 <script>
   import { doc, getFirestore, onSnapshot } from 'firebase/firestore'
-  import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
+  import GeneralizedBlackboardVideoDisplay from '$lib/GeneralizedBlackboardVideoDisplay.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
@@ -111,7 +111,7 @@
       <div style="display: flex; flex-direction: column; gap: 40px;">
         {#if questionDoc.blackboardIDs}
           {#each questionDoc.blackboardIDs as boardID (boardID)}
-            <GeneralizedBlackboardDisplay 
+            <GeneralizedBlackboardVideoDisplay 
               {boardID}
               {classID}
               roomDoc={questionDoc}

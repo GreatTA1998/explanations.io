@@ -19,11 +19,9 @@
   </div>
 
   <div style="padding: 12px;">
-    <RenderlessListenToCollection
-      collectionPath={videoDoc.path + '/comments'}
+    <ListenToCollection collectionPath={videoDoc.path + '/comments'}
       let:listenToCollection={listenToCollection}  
       let:collectionDocs={commentDocs}
-      autoListen={true}
     >
       <TextAreaAutoResizing
         value={newInputComment} 
@@ -43,12 +41,12 @@
           />
         {/each}
       {/if}
-    </RenderlessListenToCollection>  
+    </ListenToCollection>  
   </div>
 </div>
 
 <script>
-  import RenderlessListenToCollection from '$lib/Renderless/RenderlessListenToCollection.svelte'
+  import ListenToCollection from '$lib/Renderless/ListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID, displayDate } from '/src/helpers/utility.js'

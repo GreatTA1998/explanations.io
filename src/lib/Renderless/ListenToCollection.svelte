@@ -7,7 +7,7 @@
   import { collection, query, where, onSnapshot, getFirestore } from "firebase/firestore"
 
   export let collectionPath
-  export let autoListen = false
+  export let autoListen = true
 
   let collectionDocs = null
   let unsubListener = null

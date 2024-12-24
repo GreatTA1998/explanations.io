@@ -252,7 +252,7 @@ export async function deleteSlideFromMultislide ({ slideID, multislidePath }) {
   deleteFirestoreDoc(slidePath)
 }
 
-// this is from `RenderlessListenToStrokes.svelte`
+// this is from `Renderless/ListenToStrokes.svelte`
 // note legacy blackboards are behave as "slides" too
 export async function deleteStrokesFromSlide ({ strokesArray, preserveInitialStrokes = false }) {
   return new Promise(async (resolve) => {

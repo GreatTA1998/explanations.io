@@ -15,12 +15,9 @@
   {/if}
 </div>
 
-<!-- <RenderlessPreventAccidentalNavigation/> -->
-
 <script>
   import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
   import TheTopNavbar from '$lib/TheTopNavbar/index.svelte'
-  import RenderlessPreventAccidentalNavigation from '$lib/Renderless/RenderlessPreventAccidentalNavigation.svelte'
 
   import { initializeDatabase } from '../database.js'
   import 'firebase/app'

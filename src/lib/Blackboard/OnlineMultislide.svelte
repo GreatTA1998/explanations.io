@@ -27,7 +27,7 @@
   <ListenToDoc docPath={`classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
     let:theDoc={theDoc}
   >
-    <RenderlessListenToStrokes 
+    <ListenToStrokes 
       dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
       let:listenToStrokes={listenToStrokes} 
       let:strokesArray={strokesArray}
@@ -64,7 +64,7 @@
           />
         {/if}
       </div>
-    </RenderlessListenToStrokes>
+    </ListenToStrokes>
   </ListenToDoc>
 {/each}
 
@@ -106,7 +106,7 @@
   import LoginGoogle from '$lib/LoginGoogle.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
-  import RenderlessListenToStrokes from '$lib/Renderless/RenderlessListenToStrokes.svelte'
+  import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
 
   import { 

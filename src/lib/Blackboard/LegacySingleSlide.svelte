@@ -14,7 +14,7 @@
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import LinearProgress from '@smui/linear-progress'
-  import RenderlessListenToStrokes from '$lib/Renderless/RenderlessListenToStrokes.svelte'
+  import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
 
   export let roomDoc
@@ -81,7 +81,7 @@
     // QUICK-FIX for concurrent drawings with no timestamp 
     // TODO: fails for edge case when all starting strokes are consecutively from other person
     function hasValidTimestamp (stroke) {
-      // strokes from other people have an artificial stroke duration of 0.5 added by `RenderlessListenToStrokes`
+      // strokes from other people have an artificial stroke duration of 0.5 added by `Renderless/ListenToStrokes.svelte`
       // and have `currentTime = 0` because they have no access to the recorder's timer
       // NOTE: even if the person recording does preview drawings, both `startTime` and `endTime` would be 0 (instead of 0 and 0.5)
       return stroke.startTime !== 0 && stroke.endTime !== artificialDuration
@@ -218,7 +218,7 @@
   }
 </script>
 
-<RenderlessListenToStrokes dbPath={boardDoc.path}
+<ListenToStrokes dbPath={boardDoc.path}
   let:listenToStrokes={listenToStrokes} 
   let:strokesArray={strokesArray}
   let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
@@ -300,7 +300,7 @@
       </Blackboard>
     {/if}
   </div>
-</RenderlessListenToStrokes>
+</ListenToStrokes>
 
 <style>
   .unclickable {

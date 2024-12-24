@@ -1,6 +1,6 @@
 <button on:click={eureka(boardDoc)} 
   class="my-round-button" 
-  class:wide-padding={canvasWidth > TABLET_MIN_WIDTH}
+  class:wide-padding={canvasWidth > WIDTHS.SMALLEST_TABLET}
   disabled={!$user.uid}
 >
   <span class="material-symbols-outlined" 
@@ -10,7 +10,7 @@
     lightbulb
   </span>
 
-  {#if canvasWidth > TABLET_MIN_WIDTH}
+  {#if canvasWidth > WIDTHS.SMALLEST_TABLET}
     <span class="button-text">
       I understood this video
     </span>
@@ -26,7 +26,7 @@
   import { getFirestoreDoc } from '/src/helpers/crud.js'
   import { updateDoc, arrayUnion, arrayRemove, getFirestore, doc } from 'firebase/firestore'
   import { sendEmail } from '/src/helpers/cloudFunctions.js'
-  import { TABLET_MIN_WIDTH } from '/src/helpers/CONSTANTS.js'
+  import { WIDTHS } from '/src/helpers/CONSTANTS.js'
 
   export let boardDoc
   export let canvasWidth

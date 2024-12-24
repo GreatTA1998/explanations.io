@@ -1,5 +1,5 @@
 {#if $drawerWidth === 0}
-  <button on:click={() => drawerWidth.set(DRAWER_EXPANDED_WIDTH)} 
+  <button on:click={() => drawerWidth.set(WIDTHS.DRAWER_EXPANDED)} 
     class="material-icons expand-collapse-button" 
     style="font-size: 3rem;"
   >
@@ -16,7 +16,7 @@
 
 <script>
   import { drawerWidth } from '../store.js'
-  import { DRAWER_EXPANDED_WIDTH } from '../helpers/CONSTANTS.js'
+  import { WIDTHS } from '../helpers/CONSTANTS.js'
 </script>
 
 <style>

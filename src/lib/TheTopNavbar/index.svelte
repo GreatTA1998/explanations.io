@@ -28,6 +28,7 @@
 
 		<Section align="end" toolbar style="padding: 0; display: flex; column-gap: 24px;">
 			{#if $viewport.isDesktop}
+				<!-- TO-DO: fix this, it remains undefined when it shouldn't -->
 				{#if $recentSearchedServerDoc.name && $recentSearchedServerDoc.subjectTag !== 'Competition Math'}
 					<Tab server={$recentSearchedServerDoc} />
 				{/if}
@@ -52,10 +53,10 @@
 </div>
 
 <script>
+	import CompactServerCard from './CompactServerCard.svelte'
 	import Tab from './Tab.svelte'
 	import SearchBar from './SearchBar.svelte'
 	import GlobalAppPopup from '$lib/GlobalAppPopup.svelte'
-	import CompactServerCard from '$lib/CompactServerCard.svelte'
 	import { getFirestoreCollection } from '/src/helpers/crud.js'
   import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar'
 	import { recentSearchedServerDoc } from '/src/store.js'

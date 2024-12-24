@@ -1,4 +1,4 @@
-<div class="header-flex">
+<div>
   <div style="width: max-content;">
     <p class="header-title" style="margin-bottom: 36px;">
       Explain things you love
@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div class="header-subcopy-wrapper">
+  <div>
     <ReusableRoundButton on:click={redirectToSignUpPage}
       backgroundColor="#5d0068"
       textColor="white"
@@ -24,7 +24,7 @@
   </div>
 </div>			
 
-<div class="webflow-section" style="padding-top: 4%;">
+<div style="padding-top: 4%;">
   <div style="max-width: 800px; height: fit-content; font-size: 24px; margin-top: 48px; line-height: 1.5; font-weight: 500; color: rgb(95, 95, 94);">
     <div style="">
       Grading. Staff meeting. Office Hours. 

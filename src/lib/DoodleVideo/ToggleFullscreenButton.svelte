@@ -1,9 +1,9 @@
-<button on:click class="my-round-button" class:wide-padding={canvasWidth > TABLET_MIN_WIDTH}>
+<button on:click class="my-round-button" class:wide-padding={canvasWidth > WIDTHS.SMALLEST_TABLET}>
   <span class="material-symbols-outlined" style="font-size: 20px;">
     {isFullscreen ? 'close_fullscreen' : 'open_in_full'}
   </span>
 
-  {#if canvasWidth > TABLET_MIN_WIDTH}
+  {#if canvasWidth > WIDTHS.SMALLEST_TABLET}
     <span class="button-text">
       {isFullscreen ? 'Exit' : 'Enter'} full view
     </span>
@@ -11,7 +11,7 @@
 </button>
 
 <script>
-  import { TABLET_MIN_WIDTH } from '/src/helpers/CONSTANTS.js'
+  import { WIDTHS } from '/src/helpers/CONSTANTS.js'
 
   export let isFullscreen
   export let canvasWidth

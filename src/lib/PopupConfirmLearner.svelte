@@ -127,10 +127,9 @@
             </li>
 
             {#if memberDoc}
-              <UXFormTextArea
+              <UXFormTextArea fieldLabel="What kind of explanations are you looking for?"        
                 value={memberDoc.reasonForLearning}
                 on:input={(e) => debouncedUpdateBio({ newVal: e.detail })}
-                fieldLabel="What kind of explanations are you looking for?"
                 placeholder=""
               />
             {/if}
@@ -165,8 +164,7 @@
 
     <div slot="popup-buttons" style="display: flex; justify-content: flex-end">
       {#if activeTabName === 'old'}
-        <ReusableRoundButton 
-          on:click={doSubscriberSignUp}
+        <ReusableRoundButton on:click={doSubscriberSignUp}
           backgroundColor="#5d0068" 
           textColor="white"
           isDisabled={!!!$user.uid || !memberDoc || !chosenTeacherUID || !quickfix || memberDoc.subscribedTeacherUID}
@@ -175,8 +173,7 @@
         </ReusableRoundButton>
 
       {:else if activeTabName === 'new'}
-        <ReusableRoundButton  
-          on:click={doPrepaidLearnerSignUp}
+        <ReusableRoundButton on:click={doPrepaidLearnerSignUp}
           backgroundColor="#5d0068" 
           textColor="white"
           isDisabled={!!!$user.uid || !memberDoc || !quickfix || memberDoc.isLearner}
@@ -315,6 +312,14 @@
 </script>
 
 <style>
+  .active-bold {
+    font-weight: 600;
+  }
+
+  .active-underline-indicator {
+    border-bottom: 2px solid #F7C686;
+  }
+
   .highlighted-chip {
     background-color: black; 
     color: white;
@@ -333,5 +338,4 @@
     margin-top: 6px;
     font-weight: 500;
   }
-
 </style>

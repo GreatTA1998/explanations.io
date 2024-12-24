@@ -1,14 +1,11 @@
 import { videoCinemaLayout } from '/src/store.js'
-import { HEIGHTS } from '/src/helpers/CONSTANTS.js'
+import { HEIGHTS, ASPECT_RATIO, PAGE_PADDING } from '/src/helpers/CONSTANTS.js'
 
 export const VIDEO_LAYOUT = {
   MOBILE_VERTICAL: 'mobile-vertical',
   SIDE_BY_SIDE: 'side-by-side',
   TRANSPARENT_OVERLAY: 'transparent-overlay'
 }
-
-export const ASPECT_RATIO = 4/3
-export const SIDE_PADDING = 16
 
 export function getCinemaVideoSize () {
   // title will be displayed in the comment-transcript section
@@ -39,7 +36,7 @@ export function getPreviewVideoWidth ({ containerWidth, containerHeight }) {
   let remainingWidth = containerWidth
   let remainingHeight = containerHeight
   remainingHeight -= (HEIGHTS.BOARD_CHANGER + HEIGHTS.TITLE + HEIGHTS.AUDIO_SLIDER)
-  remainingWidth -= 2 * SIDE_PADDING
+  remainingWidth -= 2 * PAGE_PADDING
 
   return getCanvasWidth({ 
     availableWidth: remainingWidth, 
@@ -55,7 +52,7 @@ export function getBlackboardModuleSize ({ containerWidth, containerHeight }) {
   let remainingHeight = containerHeight
 
   remainingHeight -= HEIGHTS.BOARD_CHANGER
-  remainingWidth -= 2 * SIDE_PADDING
+  remainingWidth -= 2 * PAGE_PADDING
 
   return getCanvasWidth({ 
     availableWidth: remainingWidth, 

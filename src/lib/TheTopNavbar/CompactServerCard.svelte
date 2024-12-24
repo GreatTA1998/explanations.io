@@ -1,8 +1,6 @@
-<div 
+<button on:click|stopPropagation={handleServerCardClick}
+  class="server-card core-shadow"
   class:red-alert-border={needsTeachers}
-  class="overall-container core-shadow"
-  style="position: relative; display: flex; width: 240px; border-radius: {8 * 2}px; padding: 0px; overflow: hidden;" 
-  on:click|stopPropagation={handleServerCardClick} on:keydown
 >
   <div style="position: absolute; top: 8px; left: 16px; color: rgb(248, 249, 249); z-index: 1;">
     <div style="color: white; font-weight: 600;">
@@ -81,7 +79,7 @@
 
     </div>
   {/if}
-</div>
+</button>
 
 <script>
   import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
@@ -110,6 +108,25 @@
 
 
 <style lang="scss">
+  .server-card {
+    position: relative; 
+    display: flex; 
+    width: 240px; 
+    border-radius: 16px; 
+    padding: 0px; 
+    overflow: hidden;
+  }
+
+  .server-card:hover {
+    outline: 2px solid #F7C686;
+    @extend .high-elevation-cast-shadow;
+  }
+
+  .high-elevation-cast-shadow {
+    box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08)
+  }
+
+  // might come in handy in the future
   .two-lines-maximum {
     width: 100%;
     display: -webkit-box;
@@ -117,53 +134,5 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical; 
     overflow: hidden; 
-  }
-
-  .high-elevation-cast-shadow {
-    box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08)
-  }
-
-  .server-card {
-    border-radius: 32px;
-    min-width: 200px;
-    width: 100%;
-    height: fit-content; 
-    
-    padding-left: 12px;
-    padding-top: 6px;
-    padding-right: 12px;
-
-     /* Tweek this to change all the children font-sizes */
-     font-size: 0.9em;
-  }
-
-  .overall-container:hover {
-    outline: 2px solid #F7C686;
-    @extend .high-elevation-cast-shadow;
-  }
-
-/* From Codepen */
-/* https://codepen.io/mrrain/pen/wvMEbJz */
-.card {
-  --elevation: 0;
-  --epx: calc(var(--elevation) * 1px);
-  
-  /* these 2 shadows serve as a border for  0-1 elevation    */
-  --shadow1: 0 0 1px rgba(0, 0, 0, .1);
-  --shadow2: 0 1px 2px rgba(0, 0, 0, .08);
-  
-  --offset-y: calc(var(--epx) + 1px);
-  --blur: calc(var(--epx) * 2);
-  --spread: calc(var(--epx) * .3);
-  --shadow3: 
-      0 var(--offset-y) 
-      var(--blur) 
-      var(--spread) 
-      rgba(0, 0, 0, 0.2);
-  
-  box-shadow: 
-    var(--shadow1),
-    var(--shadow2),
-    var(--shadow3);
   }
 </style>

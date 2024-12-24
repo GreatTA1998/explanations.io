@@ -1,4 +1,4 @@
-import { assumedCanvasWidth, maxAvailableWidth } from '../store.js'
+import { assumedCanvasWidth } from '../store.js'
 import { get } from 'svelte/store'
 
 // the last destructured property `canvasWidth` is renamed, AND also has a default value
@@ -92,6 +92,6 @@ export function renderBackground (src, canvas, bgCtx) {
       }
       bgCtx.drawImage(image, 0, 0, image.width, image.height); // (0, 0) specifies the top-left corner of the image
       resolve();
-    };
-  });
+    }
+  })
 }

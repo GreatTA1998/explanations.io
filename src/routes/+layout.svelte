@@ -7,7 +7,7 @@
     <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
 
     {#if $didRenderSplashScreen && !$isFullServerMode}
-      <ExperimentalSplashScreen />
+      <HomePageForLearner/>
     {/if}
 
     <!-- Full Server Page will be injected here -->
@@ -18,7 +18,7 @@
 <!-- <RenderlessPreventAccidentalNavigation/> -->
 
 <script>
-  import ExperimentalSplashScreen from '$lib/ExperimentalSplashScreen.svelte'
+  import HomePageForLearner from '$lib/HomePageForLearner.svelte'
   import TheTopNavbar from '$lib/TheTopNavbar/index.svelte'
   import RenderlessPreventAccidentalNavigation from '$lib/RenderlessPreventAccidentalNavigation.svelte'
 

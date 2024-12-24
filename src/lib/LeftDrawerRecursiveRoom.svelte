@@ -6,13 +6,11 @@
     {classID}
   />
 
-  <div
-    class="room-item"
+  <button on:click={() => handleRoomClick(room.id)}
     style="opacity: 90%; border-radius: 5px; cursor: pointer;"
+    class="room-item"
     class:selected={room.id === $page.params.roomID} 
     bind:this={RoomElement}
-    on:click={() => handleRoomClick(room.id)}
-    on:keydown={() => {}}
     on:dragenter={() => { 
       if (!isInvalidSubpageDrop()) {
         RoomElement.style.background = 'rgb(87, 172, 247)' 
@@ -42,20 +40,20 @@
                 {room.numOfChildren}
               </div>
             
-              <span class="material-symbols-outlined"
+              <button class="material-symbols-outlined"
                 on:click|stopPropagation={() => {
                   expandChildrenRooms()
                 }} 
                 style="font-size: 30px;"
               >
                 folder
-              </span>
+              </button>
             </div>
           </div>
         {:else}
-          <span on:click|stopPropagation={() => isExpanded = false} class="material-symbols-outlined" style="margin-right: 8px;">
+          <button on:click|stopPropagation={() => isExpanded = false} class="material-symbols-outlined" style="margin-right: 8px;">
             folder_open
-          </span>
+          </button>
         {/if}
       {:else}
         <span class="material-icons" style="width: 24px">
@@ -66,16 +64,16 @@
       
       <div 
         class="my-truncated-text"
-        style="margin-bottom: 2px; width: {DRAWER_EXPANDED_WIDTH - totalIndentation - 50}px; font-weight: 500;"
+        style="margin-bottom: 2px; width: {WIDTHS.DRAWER_EXPANDED - totalIndentation - 50}px; font-weight: 500;"
       >
         {room.name || '(untitled)'} 
       </div>
 
       {#if $page.params.roomID && $user.uid}
         {#if $adminUIDs.includes($user.uid)}
-          <span on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+          <button on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
             more_vert
-          </span>
+          </button>
 
           <Menu bind:this={DropdownMenu} style="width: 300px">
             <List>      
@@ -87,7 +85,7 @@
         {/if}
       {/if}
     </div>
-  </div>
+  </button>
 </div>
 
 <!-- ROOM SUBPAGES SECTION -->
@@ -128,9 +126,9 @@ import List, { Item, Text } from '@smui/list'
 import Menu from '@smui/menu';
 import { goto } from '$app/navigation'
 import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where, increment } from 'firebase/firestore'
-import { user, willPreventPageLeave, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
+import { user, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
 
-import { SUBPAGE_INDENATION_PX, DRAWER_EXPANDED_WIDTH } from '/src/helpers/CONSTANTS';
+import { SUBPAGE_INDENATION_PX, WIDTHS } from '/src/helpers/CONSTANTS';
 import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
 import { onDestroy } from 'svelte'
@@ -287,9 +285,5 @@ async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
     background-color: #F7C686;
     color: black;
     transition: background 20ms ease-in 0s;
-  }
-
-  .speaking {
-    font-weight: 800;
   }
 </style>

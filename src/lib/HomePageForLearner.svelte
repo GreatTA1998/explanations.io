@@ -1,54 +1,54 @@
-<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white);">
-	<p class="header-title" bind:clientWidth={containerWidth}>
-		Youtube style tutoring for math olympiads
-	</p>
+<div class="splash-screen">
+	<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white);">
+		<p class="header-title" bind:clientWidth={containerWidth}>
+			Youtube style tutoring for math olympiads
+		</p>
 
-	<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
-		<div class="header-subtitle">
-			Pick your teacher, ask lots of questions, get video explanations until you understand everything.
-		</div>
+		<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
+			<div class="header-subtitle">
+				Pick your teacher, ask lots of questions, get video explanations until you understand everything.
+			</div>
 
-		<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
-			<!-- style="background-color: #5d0068; color: white; border-radius: 24px; padding: 12px 24px; font-size: var(--fs-s); font-weight: 600;" -->
-			<PopupConfirmLearner let:setIsPopupOpen={setIsPopupOpen}>
-				<button on:click={() => setIsPopupOpen({ newVal: true })} class="primary-button">
-					Try for $10/week
-				</button>
-			</PopupConfirmLearner>
+			<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
+				<PopupConfirmLearner let:setIsPopupOpen={setIsPopupOpen}>
+					<button on:click={() => setIsPopupOpen({ newVal: true })} class="primary-button">
+						Try for $10/week
+					</button>
+				</PopupConfirmLearner>
 
-			<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-				6 learners joined this year
+				<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
+					6 learners joined this year
+				</div>
+			</div>
+
+			<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
+				#3 front page 
+				<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
+					YC Hacker News
+				</a>
+
+				<div class="separator"></div>
+
+				20 upvotes
+				<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
+					r/PhysicsStudents
+				</a>
+
+				<div class="separator"></div>	
+				
+				<CountryFlags/>
+
+				<div class="separator"></div>	
+
+				<BrandLogos/>
 			</div>
 		</div>
 
-		<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
-			#3 front page 
-			<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
-				YC Hacker News
-			</a>
-
-			<div class="separator"></div>
-
-			20 upvotes
-			<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
-				r/PhysicsStudents
-			</a>
-
-			<div class="separator"></div>	
-			
-			<CountryFlags/>
-
-			<div class="separator"></div>	
-
-			<BrandLogos/>
+		<div style="display: flex; align-items: center; column-gap: 36px;">
+		
 		</div>
-	</div>
-
-	<div style="display: flex; align-items: center; column-gap: 36px;">
-	
-	</div>
-	
-	<RotatingGallery galleryVideos={randomlyChosenExemplarVideos}/>
+		
+		<RotatingGallery galleryVideos={randomlyChosenExemplarVideos}/>
 
 		<div style="text-align: center; padding: 48px 0px;">
 			<!-- <img 
@@ -56,7 +56,7 @@
 				src="https://i.imgur.com/TRxyjmU.png"
 				alt="competition landscape"
 			>  -->
-	
+
 			<!-- <img
 				style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
 				src="https://i.imgur.com/B9a5Nfp.png"
@@ -64,9 +64,10 @@
 			/> -->
 		</div>
 
-	<!-- <FounderSelfIntro/> -->
+		<!-- <FounderSelfIntro/> -->
 
-	<!-- <HistoricalTimeline/> -->
+		<!-- <HistoricalTimeline/> -->
+	</div>
 </div>
 
 <script>
@@ -74,11 +75,9 @@
 	import BrandLogos from '$lib/BrandLogos.svelte'
 	import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
 	import RotatingGallery from '$lib/RotatingGallery.svelte'
-  import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
 	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte'
-	import CalEmbed from '$lib/CalEmbed.svelte'
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated
@@ -88,34 +87,6 @@
 	onMount(() => {
 		calculateVideoSizes()
 	})
-
-	const showcasedCreators = [
-		{
-			originalQuestion: "Q: 2024 AIME I Problem 8",
-			boardDbPath: "classes/SifuBglyIefGej71TvS2/blackboards/A8wmIO4q4g5G7jqZCUAz",
-			firstNameAndKeyInfo: "Ben (subscribed 5 times)",
-			collegeAndYear: "MIT '25",
-			bio: "Top 21 USA(J)MO",
-			uid: "lX5yMlh4abTJycsFyLySoRhUItE3"
-		},
-		{
-			originalQuestion: "Q: Review on change of basis",
-			boardDbPath: "classes/lvzQqyZIV1wjwYnRV9hn/blackboards/cYVtScLxq3AIaC91HUNW",
-			firstNameAndKeyInfo: "Ammar (retired)",
-			collegeAndYear: "MIT '24",
-			bio: "Syria IPhO Captain",
-			uid: "uyZJl2yX6hXkiXemCdoMPrYqRfC3"
-		},
-		{
-			originalQuestion: "Q: Circular separation --> linear ",
-			boardDbPath: "classes/AsUl1VWQ7zzxZsD5epL7/blackboards/JP7ucWZm3TRu9yKodDzW",
-			firstNameAndKeyInfo: "Tony (retired)",
-			collegeAndYear: "MIT '20",
-			bio: "CSAIL PhD",
-			uid: "xHwn0o2nrkW4wUZs7XYVUAvZeWV2"
-		}
-	]
-
 
   // RANDOMLY CHOOSE DEMO VIDEOS
 	const exemplarVideos = [
@@ -226,13 +197,16 @@
 		max = Math.floor(max)
 		return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 	}
-
-	function redirectToCalMeetingPage () {
-		goto('https://cal.com/eltonlin1998/setup-call')
-	}
 </script>
 
 <style>
+	.splash-screen {
+		height: calc(100vh - var(--height-navbar)); 
+    margin-top: var(--height-navbar);
+    padding: 36px;
+    background-color: var(--bg-off-white);
+	}
+
 	.primary-button {
 		background: #5d0068;
 		color: white;
@@ -243,6 +217,7 @@
 		transition: all 0.2s ease;
 		width: 180px;
 		font-size: 16px;
+		text-align: center;
 	}
 
 	.primary-button:hover {

@@ -5,7 +5,7 @@
 <script>
   import '$lib/_FourColor.scss'
   import { deleteStrokesFromSlide } from '/src/helpers/unifiedDeleteAPI.js'
-  import { browserTabID, user, maxAvailableWidth, maxAvailableHeight, willPreventPageLeave, drawerWidth, adminUIDs, whatIsBeingDragged } from '/src/store.js'
+  import { blackboardWidth, browserTabID, user, willPreventPageLeave } from '/src/store.js'
   import { lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
@@ -223,7 +223,7 @@
   let:strokesArray={strokesArray}
   let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
 >
-  <div use:lazyCallable={listenToStrokes} style={`width: ${$maxAvailableWidth}px; height: ${$maxAvailableHeight}px; position: relative`}>
+  <div use:lazyCallable={listenToStrokes} style={`width: ${$blackboardWidth}px; height: ${$blackboardWidth * 3/4}px; position: relative`}>
     {#if boardDoc.recordState === 'post_record'}
       <LinearProgress indeterminate/>
     {:else}
@@ -235,8 +235,8 @@
         backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
         recordState={boardDoc.recordState}
         boardID={boardDoc.id}
-        canvasWidth={$maxAvailableWidth}
-        canvasHeight={$maxAvailableHeight}
+        canvasWidth={$blackboardWidth}
+        canvasHeight={$blackboardWidth * 3/4}
         on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, boardDoc.id)}
         on:background-reset={() => resetBackgroundImage(boardDoc.id)}
         on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}

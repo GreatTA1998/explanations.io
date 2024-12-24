@@ -7,7 +7,6 @@
       on:input={(e) => questionTitleInput = e.target.value}
     />
     <span class="underline"></span>
-    <!-- style={`width: ${$maxAvailableWidth}px;`} -->
 
     <div style="margin-bottom: 12px;"></div>
 

@@ -1,9 +1,5 @@
 <CrossServerProfile {profileUID}/>
 
-<div>
-
-</div>
-
 <script>
   import CrossServerProfile from '$lib/CrossServerProfile.svelte'
 

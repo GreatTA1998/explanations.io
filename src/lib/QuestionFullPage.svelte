@@ -5,8 +5,8 @@
   import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { maxAvailableWidth, maxAvailableHeight, user, blackboardWidth, videoPreviewWidth } from '/src/store.js'
-  import { SIDE_PADDING } from '/src/helpers/dimensions.js'
+  import { user, blackboardWidth } from '/src/store.js'
+  import { PAGE_PADDING } from '/src/helpers/CONSTANTS.js'
 
   export let classID
   export let questionID
@@ -50,7 +50,7 @@
   <div style="position: relative;">
     <LeftDrawerToggleButton/>
 
-    <div style="padding: {SIDE_PADDING}px; overflow-y: auto;">
+    <div style="padding: {PAGE_PADDING}px; overflow-y: auto;">
       <div class="question-container" style="display: flex; flex-direction: column; row-gap: 12px;">
         <input 
           value={questionDoc.title} 
@@ -86,7 +86,7 @@
                     style="
                       border-radius: 4px; 
                       width: auto; 
-                      height: {0.5 * 1/questionDoc.attachmentsNames.length * $maxAvailableHeight}px;
+                      height: {0.5 * 1/questionDoc.attachmentsNames.length * $blackboardWidth * 3/4}px;
                     "
                     alt={questionDoc.attachmentsNames[i]}
                   >

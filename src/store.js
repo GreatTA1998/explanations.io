@@ -1,9 +1,6 @@
 import { writable, readable } from 'svelte/store';
 import { getRandomID } from './helpers/utility.js'
-import { DRAWER_EXPANDED_WIDTH } from './helpers/CONSTANTS.js';
-
-export const maxAvailableWidth = writable(0)
-export const maxAvailableHeight = writable(0)
+import { WIDTHS } from './helpers/CONSTANTS.js';
 
 // to scale the pencil stroke width for smaller/bigger devices
 export const assumedCanvasHeight = writable(900) // 4:3 aspect ratio
@@ -27,8 +24,7 @@ export const willPreventPageLeave = writable(false)
 
 export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2'])
 
-export const drawerWidth = writable(DRAWER_EXPANDED_WIDTH)
-export const classDetailsDrawerWidth = writable(DRAWER_EXPANDED_WIDTH)
+export const drawerWidth = writable(WIDTHS.DRAWER_EXPANDED)
 
 export const whatIsBeingDragged = writable('')
 export const whatIsBeingDraggedID = writable('')

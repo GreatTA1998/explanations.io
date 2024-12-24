@@ -74,7 +74,7 @@
 </div>
 
 <script>
-  import QuestionsSection from '$lib/QuestionsSection.svelte'
+  import QuestionsSection from '$lib/TheLeftDrawer/QuestionsSection.svelte'
   import RecursiveRoom from './RecursiveRoom.svelte'
   import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
   import { user, drawerWidth } from '/src/store.js'

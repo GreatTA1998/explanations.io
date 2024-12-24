@@ -1,5 +1,5 @@
-<div 
-  on:click={() => willTriggerFocus = true}
+<div
+  on:click={() => willTriggerFocus = true} on:keydown
   class="ux-form-field"
   class:grey-border={!isFocused}
   class:blue-border={isFocused}
@@ -33,7 +33,7 @@
   export let placeholder
   export let value = ''
 
-  import TextAreaAutoResizing from "$lib/TextAreaAutoResizing.svelte";
+  import TextAreaAutoResizing from "$lib/Reusable/TextAreaAutoResizing.svelte";
 
   let InputElem
   let willTriggerFocus = false

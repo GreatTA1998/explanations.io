@@ -58,7 +58,7 @@
   import { onMount } from 'svelte'
   import { collection, collectionGroup, query, where, orderBy, getDocs, limit, getFirestore } from "firebase/firestore"
   import { getFirestoreQuery } from '/src/helpers/crud.js'
-  import CreatorCircularAvatar from '$lib/CreatorCircularAvatar.svelte'
+  import CreatorCircularAvatar from '$lib/DoodleVideo/CreatorCircularAvatar.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import { getFirestoreDoc } from '/src/helpers/crud.js'
 

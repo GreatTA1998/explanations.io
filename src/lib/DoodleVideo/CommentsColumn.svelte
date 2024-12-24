@@ -48,13 +48,13 @@
 </div>
 
 <script>
-  import RenderlessListenToCollection from '$lib/RenderlessListenToCollection.svelte'
+  import RenderlessListenToCollection from '$lib/Renderless/RenderlessListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID, displayDate } from '/src/helpers/utility.js'
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
   import { user } from '/src/store.js'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { page } from '$app/stores'
 
   export let videoDoc

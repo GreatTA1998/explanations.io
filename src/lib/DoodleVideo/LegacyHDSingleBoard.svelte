@@ -121,7 +121,7 @@
   import { connectTwoPoints, drawStroke, renderBackground } from '../../helpers/canvas.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { assumedCanvasWidth, user } from '../../store.js' // note `canvasWidth` was misleading
-  import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
+  import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once

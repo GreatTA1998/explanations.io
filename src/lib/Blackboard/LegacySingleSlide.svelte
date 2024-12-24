@@ -9,12 +9,12 @@
   import { lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
-  import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
-  import Blackboard from '$lib/Blackboard.svelte'
+  import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
+  import Blackboard from '$lib/Blackboard/CoreDrawing.svelte'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';
   import LinearProgress from '@smui/linear-progress'
-  import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
+  import RenderlessListenToStrokes from '$lib/Renderless/RenderlessListenToStrokes.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
 
   export let roomDoc

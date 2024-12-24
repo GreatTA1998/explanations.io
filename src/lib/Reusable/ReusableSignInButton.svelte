@@ -7,10 +7,10 @@
 {/if}
 
 <script>
-  import Button, { Label } from '@smui/button';
-  import { user } from '../store.js'
-  import { getAuth, signOut } from 'firebase/auth'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
+  import Button, { Label } from '@smui/button';
+  import { user } from '/src/store.js'
+  import { getAuth, signOut } from 'firebase/auth'
 
 	async function logOut () {
     if ($user.uid) {

@@ -1,7 +1,7 @@
 <CrossServerProfile {profileUID}/>
 
 <script>
-  import CrossServerProfile from '$lib/CrossServerProfile.svelte'
+  import CrossServerProfile from '$lib/CrossServerProfile/index.svelte'
 
   export let data;
 

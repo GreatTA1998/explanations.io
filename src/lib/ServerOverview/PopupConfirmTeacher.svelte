@@ -110,7 +110,7 @@
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '/src/store.js'
-  import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreDoc, setFirestoreDoc } from '../helpers/crud.js'
+  import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreDoc, setFirestoreDoc } from '../../helpers/crud.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
   import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
   import UXFormField from '$lib/UXFormField.svelte';

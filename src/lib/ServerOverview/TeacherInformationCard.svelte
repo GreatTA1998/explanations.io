@@ -1,5 +1,5 @@
 <div style={$$props.style}>
-  <div on:click
+  <button on:click
     style="
       padding: 12px;
       align-items: center;
@@ -52,11 +52,11 @@
         />
       </li>
 
-      <div on:click={() => goto(`/user/${helperDoc.uid}`)} style="font-size: 14px; border-radius: 8px; outline: 2px solid grey; padding: 4px 8px;">
+      <button on:click={() => goto(`/user/${helperDoc.uid}`)} style="font-size: 14px; border-radius: 8px; outline: 2px solid grey; padding: 4px 8px;">
         View full profile
-      </div>
+      </button>
     </div>
-  </div>
+  </button>
 </div>
 
 <script>

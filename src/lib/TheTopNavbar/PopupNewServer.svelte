@@ -61,12 +61,12 @@
 {/if}
 
 <script>
-  import BasePopup from '$lib/BasePopup.svelte'
+  import BasePopup from '$lib/Reusable/BasePopup.svelte'
+  import UXFormField from '$lib/Reusable/UXFormField.svelte'
+  import ReusableRoundButton from '$lib/Reusable/ReusableRoundButton.svelte'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { updateFirestoreDoc, setFirestoreDoc } from '../helpers/crud.js'
-  import { getRandomID } from '../helpers/utility.js'
-  import UXFormField from '$lib/UXFormField.svelte'
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
+  import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
+  import { getRandomID } from '/src/helpers/utility.js'
 
   let serverFullName = '' 
   let serverGoalDescription = ''

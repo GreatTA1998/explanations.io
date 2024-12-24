@@ -6,7 +6,7 @@
       (to distinguish between unfetched board and empty board) 
   -->
   {#if strokesArray && !hideToolbar}
-    <BlackboardToolbar>
+    <CoreDrawingToolbar>
       <button on:click={undoPencilStroke} class="material-icons" style="margin-left: 6px; font-size: 2rem; color: white;">
         undo
       </button>
@@ -52,12 +52,11 @@
           </List> 
         </Menu>
       </div>
-    </BlackboardToolbar>
+    </CoreDrawingToolbar>
   {/if}
   
   <!-- explicitly set `passive: false`, Rich Harris describes the problem 
    very well: https://github.com/sveltejs/svelte/issues/2068 -->
-
   <canvas bind:this={canvas}
     on:touchstart|nonpassive|preventDefault={touchStart}
     on:touchmove|nonpassive|preventDefault={touchMove}
@@ -76,11 +75,11 @@
   import { lazyCallable } from '/src/helpers/actions.js';
   import List, { Item, Text } from '@smui/list'
   import Menu from '@smui/menu';
-  import BlackboardToolbar from '$lib/BlackboardToolbar.svelte'
-  import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
-  import { getRandomID } from '../helpers/utility.js'
+  import CoreDrawingToolbar from '$lib/Blackboard/CoreDrawingToolbar.svelte'
+  import { connectTwoPoints, drawStroke, renderBackground } from '../../helpers/canvas.js'
+  import { getRandomID } from '../../helpers/utility.js'
   import { createEventDispatcher } from 'svelte'
-  import { currentTool, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
+  import { currentTool, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../../store.js'
 
   export let canvasWidth
   export let canvasHeight

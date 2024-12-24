@@ -3,7 +3,7 @@
 -->
 <!-- TO-DO: write explanation about this -->
 {#if boardDoc}
-  <RenderlessFetchStrokes dbPath={boardDbPath}
+  <FetchStrokes dbPath={boardDbPath}
     let:fetchStrokes={fetchStrokes}
     {autoFetchStrokes}
     let:strokesArray={strokesArray}
@@ -65,12 +65,12 @@
         {/if}
       </LegacyHDSingleBoard>
     </div>
-  </RenderlessFetchStrokes>
+  </FetchStrokes>
 {/if}
 
 <script>
   import LegacyHDSingleBoard from '$lib/DoodleVideo/LegacyHDSingleBoard.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import { videoPreviewWidth, assumedCanvasWidth } from '../../store.js'
   import { lazyCallable } from '/src/helpers/actions.js'
   import Button, { Icon } from '@smui/button'

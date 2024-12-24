@@ -100,7 +100,7 @@
 
 <script>
   import { goto } from '$app/navigation';
-  import CreatorChannelCard from '$lib/CreatorChannelCard.svelte'
+  import CreatorChannelCard from '$lib/DoodleVideo/CreatorChannelCard.svelte'
 </script>
 
 <style>

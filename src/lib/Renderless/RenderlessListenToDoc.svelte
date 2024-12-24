@@ -7,7 +7,7 @@
   import { doc, onSnapshot, getFirestore } from "firebase/firestore"
 
   export let docPath
-  export let autoListen = false
+  export let autoListen = true
 
   let theDoc = null
   let unsubListener = null
@@ -21,8 +21,7 @@
   })
 
   function listenToDoc() {
-    const db = getFirestore()
-    const ref = doc(db, docPath)
+    const ref = doc(getFirestore(), docPath)
 
     unsubListener = onSnapshot(ref, (snap) => {
       if (snap.exists()) {

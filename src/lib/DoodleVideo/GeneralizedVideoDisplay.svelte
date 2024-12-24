@@ -92,12 +92,12 @@
 
 <script>
   import ToggleFullscreenButton from '$lib/DoodleVideo/ToggleFullscreenButton.svelte'
-  import EurekaButton from '$lib/EurekaButton.svelte'
+  import EurekaButton from '$lib/DoodleVideo/EurekaButton.svelte'
   import ReusableDoodleVideo from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
-  import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
+  import VideoFooterInfo from './VideoFooterInfo.svelte'
   import FullscreenModule from '$lib/DoodleVideo/FullscreenModule.svelte'
   import MultiboardHD from '$lib/DoodleVideo/MultiboardHD.svelte'
-  import CreatorChannelCard from '$lib/CreatorChannelCard.svelte'
+  import CreatorChannelCard from '$lib/DoodleVideo/CreatorChannelCard.svelte'
   import Menu from '@smui/menu'
   import List from '@smui/list'
 

@@ -17,7 +17,7 @@
 </div>
 
 <script>
-  import CreatorCircularAvatar from '$lib/CreatorCircularAvatar.svelte'
+  import CreatorCircularAvatar from '$lib/DoodleVideo/CreatorCircularAvatar.svelte'
   import { goto } from '$app/navigation'
 
   export let uid = ''

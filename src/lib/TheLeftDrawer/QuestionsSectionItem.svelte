@@ -19,6 +19,16 @@
     if ($viewport.isMobile) drawerWidth.set(0)
   }
 
+  function handleDeleteAttempt () {
+    if (question.blackboardIDs.length > 0) {
+      alert('Cannot delete this question until all its blackboards are moved/deleted first')
+      return
+    }
+    if (confirm('Are you sure you want to delete this question?')) {
+      deleteQuestion({ questionDoc: question, classID })
+    }
+  }
+
   function getDaysAgo (serverTimestamp) {
     return DateTime.fromMillis(
       serverTimestamp.toMillis()
@@ -30,33 +40,25 @@
   class:selected={question.id === $page.params.questionID} 
   class="q-list-item"
 > 
-  <div class="q-title my-truncated-text" class:red-urgent-text={!question.isAnswered}> 
-    {question.title}
-  </div>
-
-  {#if $page.params.questionID && $user.uid}
+  <div style="display: flex; width: 100%;">
+    <div class="q-title my-truncated-text" class:red-urgent-text={!question.isAnswered}> 
+      {question.title}
+    </div>
+  
     {#if question.askerUID === $user.uid || $adminUIDs.includes($user.uid)}
       <span on:click={DropdownMenu.setOpen(true)} on:keydown class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
         more_vert
       </span>
-
+  
       <Menu bind:this={DropdownMenu} style="width: 300px">
         <List>      
-          <Item on:SMUI:action={() => {
-            if (question.blackboardIDs.length > 0) {
-              alert('Cannot delete this question until all its blackboards are moved/deleted first')
-              return
-            }
-            if (confirm('Are you sure you want to delete this question?')) {
-              deleteQuestion({ questionDoc: question, classID })
-            }
-          }}>
+          <Item on:SMUI:action={handleDeleteAttempt}>
             Delete question
           </Item>
         </List> 
       </Menu>
     {/if}
-  {/if}
+  </div>
 
   <!-- <div class="q-description">
     {question.description}
@@ -92,7 +94,8 @@
     font-size: 1rem;
 
     /* define an explicit width to enable text truncation */
-    width: 100%; 
+    /* width: 100%;  */
+    flex-grow: 1;
   }
 
   .q-description {

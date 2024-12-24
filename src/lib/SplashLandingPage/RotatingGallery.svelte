@@ -10,21 +10,19 @@
       <div id="carousel">
         {#each galleryVideos as galleryVideo}
           <div class="gallery-item" style="border: none;">
-            <RenderlessListenToBoard dbPath={galleryVideo.dbPath} let:boardDoc={boardDoc}>
-              <RenderlessFetchStrokes 
-                dbPath={galleryVideo.dbPath}
-                let:fetchStrokes={fetchStrokes}
-                let:strokesArray={strokesArray}
-                autoFetchStrokes={false}
-              > 
-                <NewHDBlackboard
-                  {strokesArray}
-                  thumbnailWidth={galleryItemWidth}
-                  willDrawOneByOne={true}
-                  on:intersect={fetchStrokes}
-                />
-              </RenderlessFetchStrokes>
-            </RenderlessListenToBoard>
+            <FetchStrokes 
+              dbPath={galleryVideo.dbPath}
+              let:fetchStrokes={fetchStrokes}
+              let:strokesArray={strokesArray}
+              autoFetchStrokes={false}
+            > 
+              <NewHDBlackboard
+                {strokesArray}
+                thumbnailWidth={galleryItemWidth}
+                willDrawOneByOne={true}
+                on:intersect={fetchStrokes}
+              />
+            </FetchStrokes>
           </div>
 
           <div class="unselectable gallery-item"></div>
@@ -36,9 +34,8 @@
 
 <script>
   // TO-DO: fix drifting center of rotation
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import NewHDBlackboard from '$lib/NewHDBlackboard.svelte'
+  import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
+  import NewHDBlackboard from '$lib/Blackboard/NewHD.svelte'
   import { onMount } from 'svelte'
 
   export let galleryVideos

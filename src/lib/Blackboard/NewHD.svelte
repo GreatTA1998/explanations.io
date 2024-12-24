@@ -44,10 +44,10 @@
 
 <script>
   import { lazyCallable } from '/src/helpers/actions.js';
-  import { connectTwoPoints, drawStroke, renderBackground } from '../helpers/canvas.js'
-  import { getRandomID } from '../helpers/utility.js'
+  import { connectTwoPoints, drawStroke, renderBackground } from '../../helpers/canvas.js'
+  import { getRandomID } from '../../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { currentTool, onlyAllowApplePencil, whatIsBeingDragged } from '../store.js'
+  import { currentTool, onlyAllowApplePencil, whatIsBeingDragged } from '../../store.js'
 
   export let thumbnailWidth
   export let willDrawOneByOne = false

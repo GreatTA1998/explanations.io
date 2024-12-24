@@ -1,7 +1,7 @@
 <script>
-  import BasePopup from '$lib/BasePopup.svelte'
-  import CalEmbed from '$lib/CalEmbed.svelte'
-  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+  import BasePopup from '$lib/Reusable/BasePopup.svelte'
+  import CalEmbed from './CalEmbed.svelte'
+  import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
   import { user } from '/src/store.js'
   import { getAuth, signOut } from 'firebase/auth'
 

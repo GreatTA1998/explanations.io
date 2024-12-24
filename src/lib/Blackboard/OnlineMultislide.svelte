@@ -3,12 +3,11 @@
     <!-- Elements portal here -->
   </div>
   
-  <MultiboardSlideChanger
+  <MultiboardSlideChanger on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
+    on:slide-create={createNewSlide}
     slideIDs={boardDoc.slideIDs}
     {idxOfFocusedSlide}
     canCreateNewSlide
-    on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
-    on:slide-create={createNewSlide}
   />
 
   <button on:click={() => {
@@ -35,8 +34,7 @@
       let:strokesArray={strokesArray}
       let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
     >
-      <div 
-        use:lazyCallable={listenToStrokes} 
+      <div use:lazyCallable={listenToStrokes} 
         style="
           display: {idxOfFocusedSlide === i ? '' : 'none'};
           width: {canvasWidth}px; height: {canvasHeight}px; 
@@ -45,8 +43,7 @@
       >
         {#if strokesArray && theDoc}
           <!-- boardDoc.path doesn't have a trailing slash `/`, unlike boardPath (which was used for legacy reasons) -->
-          <!-- TO-DO: refactor the Blackboard to expose the menu list with slots -->
-          <Blackboard
+          <CoreDrawing
             {strokesArray}
             {canvasWidth}
             {canvasHeight}
@@ -105,13 +102,13 @@
 </RenderlessAudioRecorder>
 
 <script>
-  import Blackboard from '$lib/Blackboard.svelte'
-  import CircularSpinnerFourColor from '$lib/CircularSpinnerFourColor.svelte'
+  import CoreDrawing from './CoreDrawing.svelte'
+  import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
-  import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
-  import RenderlessListenToStrokes from '$lib/RenderlessListenToStrokes.svelte'
-  import RenderlessAudioRecorder from '$lib/RenderlessAudioRecorder.svelte'
+  import RenderlessListenToDoc from '$lib/Renderless/RenderlessListenToDoc.svelte'
+  import RenderlessListenToStrokes from '$lib/Renderless/RenderlessListenToStrokes.svelte'
+  import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
 
   import { 
     deleteMultislideBlackboard, 

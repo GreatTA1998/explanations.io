@@ -186,14 +186,14 @@
 {/if}
 
 <script>  
-  import BasePopup from '$lib/BasePopup.svelte'
+  import BasePopup from '$lib/Reusable/BasePopup.svelte'
   import Button from '@smui/button'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher } from 'svelte'
   import { user } from '../store.js'
-  import { getFirestoreDoc, setFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
-  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
-  import UXFormTextArea from '$lib/UXFormTextArea.svelte'
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
+  import { getFirestoreDoc, setFirestoreDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
+  import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
+  import UXFormTextArea from '$lib/Reusable/UXFormTextArea.svelte'
+  import ReusableRoundButton from '$lib/Reusable/ReusableRoundButton.svelte';
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
   import { arrayUnion, increment } from 'firebase/firestore'

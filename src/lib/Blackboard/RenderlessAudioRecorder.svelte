@@ -3,9 +3,9 @@
 </slot>
 
 <script>
-  import { baseMicStream } from '../store.js'
-  import { initializeMicStream } from '../helpers/microphone.js'
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte'
+  import { baseMicStream } from '../../store.js'
+  import { initializeMicStream } from '../../helpers/microphone.js'
+  import { createEventDispatcher, onMount } from 'svelte'
   import { browser } from '$app/environment'
   // import AudioRecorder from 'audio-recorder-polyfill'
   // import mpegEncoder from "audio-recorder-polyfill/mpeg-encoder";

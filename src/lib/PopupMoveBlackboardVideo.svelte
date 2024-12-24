@@ -1,3 +1,4 @@
+<!-- NOTE: this is necessary. Ben deleted his videos in order to achieve the effect of moving the videos -->
 <BasePopup on:popup-close>
   <h2 slot="title" style="font-family: sans-serif;">
     Rearrange videos

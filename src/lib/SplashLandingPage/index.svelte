@@ -69,8 +69,8 @@
 <script>
 	import BrandLogos from './BrandLogos.svelte'
 	import CountryFlags from './CountryFlags.svelte'
+	import RotatingGallery from './RotatingGallery.svelte'
 	import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
-	import RotatingGallery from '$lib/RotatingGallery.svelte'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from './FounderSelfIntro.svelte'
 	import HistoricalTimeline from './HistoricalTimeline.svelte'

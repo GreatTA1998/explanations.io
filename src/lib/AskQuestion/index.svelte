@@ -20,7 +20,7 @@
     <div style="margin-bottom: 12px;"></div>
 
     <div>
-      <PsetPDFUploader
+      <FileUploader
         on:files-attached={(e) => attachments = [...attachments, ...e.detail]}
       />
 
@@ -57,21 +57,21 @@
 </div>
 
 <script>
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
-  import PsetPDFUploader from '$lib/PsetPDFUploader.svelte'
+  import FileUploader from './FileUploader.svelte'
+  import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import CodepenInput from '$lib/CodepenInput.svelte'
-  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
+  import CodepenInput from './CodepenInput.svelte'
+  import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
 
   import { 
     updateFirestoreDoc, 
     setFirestoreDoc,
     createNewMultiboard
-  } from '../helpers/crud.js'
+  } from '/src/helpers/crud.js'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
-  import { getRandomID } from "../helpers/utility.js";
+  import { getRandomID } from "/src//helpers/utility.js";
 
-  import { user } from '../store.js'
+  import { user } from '/src/store.js'
 
   import { increment, serverTimestamp } from "firebase/firestore"
   import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"

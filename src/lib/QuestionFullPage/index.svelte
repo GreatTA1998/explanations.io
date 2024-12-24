@@ -2,7 +2,7 @@
   import { doc, getFirestore, onSnapshot } from 'firebase/firestore'
   import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user, blackboardWidth } from '/src/store.js'

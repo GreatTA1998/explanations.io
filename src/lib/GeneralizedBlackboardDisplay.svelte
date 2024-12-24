@@ -1,9 +1,9 @@
 <script>
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import RenderlessListenToDoc from '$lib/Renderless/RenderlessListenToDoc.svelte'
+  import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
-  import OnlineMultislideBlackboard from '$lib/OnlineMultislideBlackboard.svelte'
-  import LegacySingleSlideBlackboard from '$lib/LegacySingleSlideBlackboard.svelte'
+  import OnlineMultislideBlackboard from '$lib/Blackboard/OnlineMultislide.svelte'
+  import LegacySingleSlideBlackboard from '$lib/Blackboard/LegacySingleSlide.svelte'
   import { blackboardWidth, videoPreviewWidth, user } from '/src/store.js'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
@@ -24,9 +24,9 @@
 </script>
 
 <div>
-  <RenderlessListenToBoard dbPath={boardsDbPath + boardID} let:boardDoc={boardDoc}>
+  <RenderlessListenToDoc docPath={boardsDbPath + boardID} let:theDoc={boardDoc}>
     {#if !boardDoc}
-      <!-- TODO: we always assume the video dimensions, which causes minor layout shifts for blackboards -->
+        <!-- NOTE: we always assume the video dimensions, which causes a minor layout shift -->
       <div style="width: {$videoPreviewWidth}px; height: {3/4 * $videoPreviewWidth}px;">
       
       </div>
@@ -62,5 +62,5 @@
         <LegacySingleSlideBlackboard {boardDoc} {roomDoc}/>
       {/if}
     {/if}
-  </RenderlessListenToBoard>
+  </RenderlessListenToDoc>
 </div>

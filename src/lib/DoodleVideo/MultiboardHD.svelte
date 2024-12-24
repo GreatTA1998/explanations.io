@@ -42,7 +42,7 @@
           docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >
-          <RenderlessFetchStrokes
+          <FetchStrokes
             dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
             let:fetchStrokes={fetchStrokes}
             let:strokesArray={strokesArray}
@@ -73,7 +73,7 @@
                 />
               {/if}
             </div>
-          </RenderlessFetchStrokes>
+          </FetchStrokes>
         </RenderlessListenToDoc>
       {/each}
     </div>
@@ -111,10 +111,10 @@
   import { lazyCallable } from '/src/helpers/actions.js'
   import { assumedCanvasWidth, user } from '/src/store.js' // note `canvasWidth` was misleading
   import MultiboardSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
-  import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
-  import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
+  import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
+  import RenderlessListenToDoc from '$lib/Renderless/RenderlessListenToDoc.svelte'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL

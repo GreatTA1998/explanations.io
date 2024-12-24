@@ -39,40 +39,38 @@
       opacity: 0.8;
     "
     >
-      <RenderlessListenToBoard
-        dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
-        let:boardDoc={boardDoc}
+      <RenderlessListenToDoc 
+        docPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`} 
+        let:theDoc={boardDoc}
       >
         {#if boardDoc}
           {#if boardDoc.isMultiboard}
-            <RenderlessFetchStrokes 
+            <FetchStrokes autoFetchStrokes={false}
               dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}/slides/${boardDoc.slideIDs[0]}`}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
-              autoFetchStrokes={false}
             > 
               <NewHDBlackboard
                 {strokesArray}
                 {thumbnailWidth}
                 on:intersect={fetchStrokes}
               />
-            </RenderlessFetchStrokes>
+            </FetchStrokes>
           {:else}
-            <RenderlessFetchStrokes 
+            <FetchStrokes autoFetchStrokes={false}
               dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
-              autoFetchStrokes={false}
             > 
               <NewHDBlackboard
                 {strokesArray}
                 {thumbnailWidth}
                 on:intersect={fetchStrokes}
               />
-            </RenderlessFetchStrokes>
+            </FetchStrokes>
           {/if}
         {/if}
-      </RenderlessListenToBoard>
+      </RenderlessListenToDoc>
     </div>
   {:else}
     <div class="core-shadow" style="opacity: 0.8; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
@@ -82,10 +80,10 @@
 </button>
 
 <script>
-  import RenderlessListenToBoard from '$lib/RenderlessListenToBoard.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import BaseStatDisplayIcon from '$lib/BaseStatDisplayIcon.svelte'
-  import NewHDBlackboard from '$lib/NewHDBlackboard.svelte'
+  import RenderlessListenToDoc from '$lib/Renderless/RenderlessListenToDoc.svelte'
+  import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
+  import BaseStatDisplayIcon from '$lib/Reusable/BaseStatDisplayIcon.svelte'
+  import NewHDBlackboard from '$lib/Blackboard/NewHD.svelte'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user } from '/src/store.js'
   import { handleServerRedirect } from '/src/helpers/everythingElse.js'

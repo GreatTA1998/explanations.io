@@ -38,8 +38,7 @@
       {/if} 
 
       {#each boardDoc.slideIDs as slideID, i}
-        <RenderlessListenToDoc autoListen
-          docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
+        <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >
           <FetchStrokes
@@ -74,7 +73,7 @@
               {/if}
             </div>
           </FetchStrokes>
-        </RenderlessListenToDoc>
+        </ListenToDoc>
       {/each}
     </div>
 
@@ -114,7 +113,7 @@
   import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
-  import RenderlessListenToDoc from '$lib/Renderless/RenderlessListenToDoc.svelte'
+  import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL

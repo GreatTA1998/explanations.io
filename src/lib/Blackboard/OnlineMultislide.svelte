@@ -24,8 +24,7 @@
 <div style="margin-bottom: 12px;"></div>
 
 {#each boardDoc.slideIDs as slideID, i}
-  <RenderlessListenToDoc autoListen
-    docPath={`classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
+  <ListenToDoc docPath={`classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
     let:theDoc={theDoc}
   >
     <RenderlessListenToStrokes 
@@ -66,7 +65,7 @@
         {/if}
       </div>
     </RenderlessListenToStrokes>
-  </RenderlessListenToDoc>
+  </ListenToDoc>
 {/each}
 
 <RenderlessAudioRecorder
@@ -106,7 +105,7 @@
   import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
-  import RenderlessListenToDoc from '$lib/Renderless/RenderlessListenToDoc.svelte'
+  import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import RenderlessListenToStrokes from '$lib/Renderless/RenderlessListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
 

@@ -1,5 +1,5 @@
 <script>
-  import RenderlessListenToDoc from '$lib/Renderless/RenderlessListenToDoc.svelte'
+  import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import OnlineMultislideBlackboard from '$lib/Blackboard/OnlineMultislide.svelte'
@@ -24,7 +24,7 @@
 </script>
 
 <div>
-  <RenderlessListenToDoc docPath={boardsDbPath + boardID} let:theDoc={boardDoc}>
+  <ListenToDoc docPath={boardsDbPath + boardID} let:theDoc={boardDoc}>
     {#if !boardDoc}
         <!-- NOTE: we always assume the video dimensions, which causes a minor layout shift -->
       <div style="width: {$videoPreviewWidth}px; height: {3/4 * $videoPreviewWidth}px;">
@@ -62,5 +62,5 @@
         <LegacySingleSlideBlackboard {boardDoc} {roomDoc}/>
       {/if}
     {/if}
-  </RenderlessListenToDoc>
+  </ListenToDoc>
 </div>

@@ -39,8 +39,7 @@
       opacity: 0.8;
     "
     >
-      <RenderlessListenToDoc 
-        docPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`} 
+      <ListenToDoc docPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`} 
         let:theDoc={boardDoc}
       >
         {#if boardDoc}
@@ -70,7 +69,7 @@
             </FetchStrokes>
           {/if}
         {/if}
-      </RenderlessListenToDoc>
+      </ListenToDoc>
     </div>
   {:else}
     <div class="core-shadow" style="opacity: 0.8; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
@@ -80,7 +79,7 @@
 </button>
 
 <script>
-  import RenderlessListenToDoc from '$lib/Renderless/RenderlessListenToDoc.svelte'
+  import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import BaseStatDisplayIcon from '$lib/Reusable/BaseStatDisplayIcon.svelte'
   import NewHDBlackboard from '$lib/Blackboard/NewHD.svelte'

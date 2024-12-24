@@ -106,15 +106,15 @@
 {/if}
 
 <script>
-  import BasePopup from '$lib/BasePopup.svelte'
+  import BasePopup from '$lib/Reusable/BasePopup.svelte'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user } from '/src/store.js'
   import { updateFirestoreDoc, createFirestoreQuery, getFirestoreQuery, getFirestoreDoc, setFirestoreDoc } from '../../helpers/crud.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
-  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
-  import UXFormField from '$lib/UXFormField.svelte';
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
+  import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
+  import UXFormField from '$lib/Reusable/UXFormField.svelte'
+  import ReusableRoundButton from '$lib/Reusable/ReusableRoundButton.svelte'
 
   export let classID
     

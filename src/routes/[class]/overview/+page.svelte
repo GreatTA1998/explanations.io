@@ -135,7 +135,7 @@
   import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
   import PopupConfirmTeacher from '$lib/ServerOverview/PopupConfirmTeacher.svelte'
   import { user, assumedCanvasWidth } from '/src/store.js'
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
+  import ReusableRoundButton from '$lib/Reusable/ReusableRoundButton.svelte'
   import TeacherInformationCard from '$lib/ServerOverview/TeacherInformationCard.svelte'
 
   export let data;

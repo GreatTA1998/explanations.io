@@ -42,12 +42,10 @@
 </BasePopup>
 
 <script>
-  import BasePopup from '$lib/BasePopup.svelte'
+  import BasePopup from '$lib/Reusable/BasePopup.svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import { user, whatIsBeingDragged } from '../store.js'
   import { getFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
-  import Button from '@smui/button'
-  import { collection, query, where, getDocs } from "firebase/firestore";
 
   export let blackboardIDs
   export let classID

@@ -76,8 +76,8 @@
 	import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
 	import RotatingGallery from '$lib/RotatingGallery.svelte'
 	import { onMount } from 'svelte'
-	import FounderSelfIntro from '$lib/FounderSelfIntro.svelte'
-	import HistoricalTimeline from '$lib/HistoricalTimeline.svelte'
+	import FounderSelfIntro from './FounderSelfIntro.svelte'
+	import HistoricalTimeline from './HistoricalTimeline.svelte'
 
 	let videoWidth = 0
 	let videoHeight = 0 // AF(0) means not yet calculated

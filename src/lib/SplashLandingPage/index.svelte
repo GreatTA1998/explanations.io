@@ -44,10 +44,6 @@
 			</div>
 		</div>
 
-		<div style="display: flex; align-items: center; column-gap: 36px;">
-		
-		</div>
-		
 		<RotatingGallery galleryVideos={randomlyChosenExemplarVideos}/>
 
 		<div style="text-align: center; padding: 48px 0px;">
@@ -71,8 +67,8 @@
 </div>
 
 <script>
-	import CountryFlags from '$lib/CountryFlags.svelte'
-	import BrandLogos from '$lib/BrandLogos.svelte'
+	import BrandLogos from './BrandLogos.svelte'
+	import CountryFlags from './CountryFlags.svelte'
 	import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
 	import RotatingGallery from '$lib/RotatingGallery.svelte'
 	import { onMount } from 'svelte'

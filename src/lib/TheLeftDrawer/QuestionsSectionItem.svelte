@@ -77,14 +77,14 @@
 <style>
   .q-list-item {
     width: 100%;
-    padding: 6px 8px; 
+    padding: 8px 8px; 
 
     padding-right: 4px; /* because the truncation "..." on the right doesn't need as much padding as real letters on the left */
 
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    row-gap: 2px;
+    row-gap: 4px;
 
     cursor: pointer;
   }

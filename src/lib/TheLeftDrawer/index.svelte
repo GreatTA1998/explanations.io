@@ -21,10 +21,10 @@
         </div>
       </QuestionsSection>
 
-      <div style="margin-top: 36px;"></div>
+      <div style="margin-top: 48px;"></div>
 
       <div style="display: flex; align-items: center;">
-        <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 16px;">
+        <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 12px;">
           Library Archive
         </div>
         <button on:click={createNewRoom} class="material-icons new-room-button">

@@ -1,4 +1,4 @@
-<div style="padding: 6px;">
+<div style="padding: 0px 4px;">
   <RecursiveRoomReorderDropzone
     {roomsInThisLevel}
     {orderWithinLevel}
@@ -7,90 +7,67 @@
   />
 
   <button on:click={() => handleRoomClick(room.id)}
-    style="opacity: 90%; border-radius: 5px; cursor: pointer;"
-    class="room-item"
-    class:selected={room.id === $page.params.roomID} 
     bind:this={RoomElement}
-    on:dragenter={() => { 
-      if (!isInvalidSubpageDrop()) {
-        RoomElement.style.background = 'rgb(87, 172, 247)' 
-      }
-    }}
-    on:dragleave={(e) => { 
-      if (e.currentTarget.contains(e.relatedTarget)) {
-        return;
-      }
-      RoomElement.style.background = '' 
-    }}
-    on:drop={(e) => handleSomethingDropped(e, room.id)}
+    class="room-item" class:selected={room.id === $page.params.roomID} 
 
     draggable="true"
     on:dragstart={(e) => dragstart_handler(e, room.id)}
     on:dragover={(e) => dragover_handler(e)}
+
+    on:dragenter={highlightRoom}
+    on:dragleave={(e) => unhighlightRoom(e)}
+    on:drop={(e) => handleSomethingDropped(e, room.id)}
   >
-    <!-- ROOM NAME SECTION -->
-    <!-- `padding-right` is more than left because the icon has itself a padding of around 2 px to its own edge -->
-    <div style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; padding-top: 6px; padding-bottom: 6px;">
-      {#if room.numOfChildren}
-        {#if !isExpanded}
-          <div style="width: 40px; display: flex; justify-content: center; align-items: center; margin-right: 8px;">
-            <!-- CSS question: why doesn't this relative div take the height of its children? It also doesn't respond to "height: fit-content" -->
-            <div style="position: relative; height: 30px">
-              <div style="display: flex; justify-content: center; align-items: center; margin-bottom: -16px; font-size: 12px; position: absolute; left: 18px; right: auto; top: 0px; font-weight: 500; background-color: grey; border-radius: 20px; width: 16px; height: 16px; color: white;">
-                {room.numOfChildren}
-              </div>
-            
-              <button class="material-symbols-outlined"
-                on:click|stopPropagation={() => {
-                  expandChildrenRooms()
-                }} 
-                style="font-size: 30px;"
-              >
-                folder
-              </button>
-            </div>
+    {#if room.numOfChildren}
+      {#if !isExpanded}
+        <!-- without `height: 24px` the div will be slightly larger than necessary, IDK why though -->
+        <div style="position: relative; height: 24px;">
+          <div class="badge-number">
+            {room.numOfChildren}
           </div>
-        {:else}
-          <button on:click|stopPropagation={() => isExpanded = false} class="material-symbols-outlined" style="margin-right: 8px;">
-            folder_open
+        
+          <button on:click|stopPropagation={expandChildrenRooms} 
+            class="material-symbols-outlined library-item-icon"
+          >
+            folder
           </button>
-        {/if}
+        </div>
       {:else}
-        <span class="material-icons" style="width: 24px">
-          <!-- Invisible div to keep the indentation consistent even if 
-          the room has no sub-rooms -->
-        </span>
+        <button on:click|stopPropagation={() => isExpanded = false} 
+          class="material-symbols-outlined library-item-icon"
+        >
+          folder_open
+        </button>
       {/if}
-      
-      <div 
-        class="my-truncated-text"
-        style="margin-bottom: 2px; width: {WIDTHS.DRAWER_EXPANDED - totalIndentation - 50}px; font-weight: 500;"
-      >
-        {room.name || '(untitled)'} 
-      </div>
-
-      {#if $page.params.roomID && $user.uid}
-        {#if $adminUIDs.includes($user.uid)}
-          <button on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
-            more_vert
-          </button>
-
-          <Menu bind:this={DropdownMenu} style="width: 300px">
-            <List>      
-              <Item on:SMUI:action={() => deleteRoom({ room, classID })}>
-                Delete room
-              </Item>
-            </List> 
-          </Menu>
-        {/if}
-      {/if}
+    {:else}
+      <div class="separator"></div>
+    {/if}
+    
+    <div class="room-title my-truncated-text">
+      {room.name || '(untitled)'} 
     </div>
+
+    {#if $page.params.roomID && $user.uid}
+      {#if $adminUIDs.includes($user.uid)}
+        <button on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+          more_vert
+        </button>
+
+        <Menu bind:this={DropdownMenu} style="width: 300px">
+          <List>      
+            <Item on:SMUI:action={() => deleteRoom({ room, classID })}>
+              Delete room
+            </Item>
+          </List> 
+        </Menu>
+      {/if}
+    {/if}
   </button>
 </div>
 
 <!-- ROOM SUBPAGES SECTION -->
 {#if subpages && isExpanded}
-  <div style="padding-left: {totalIndentation}px">
+  <div style="padding-left: 12px">
     {#each subpages as subpage, i (subpage.id)}
       <RecursiveRoom 
         room={subpage}
@@ -102,6 +79,7 @@
         parentRoomIDs={[subpage.parentRoomID, ...parentRoomIDs]}
       />
     {/each}
+
     <!-- `parentRoomIDs` is used to prevent a parent becoming a child of its children
       For the last parentRoom it doesn't matter
     -->
@@ -128,7 +106,6 @@ import { goto } from '$app/navigation'
 import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where, increment } from 'firebase/firestore'
 import { user, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
 
-import { SUBPAGE_INDENATION_PX, WIDTHS } from '/src/helpers/CONSTANTS';
 import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
 import { onDestroy } from 'svelte'
@@ -151,11 +128,22 @@ let unsubListener
 
 const classPath = `classes/${classID}/`
 
-$: totalIndentation = SUBPAGE_INDENATION_PX * (depth + 1)
-
 onDestroy(() => {
   if (unsubListener) unsubListener()
 })
+
+function highlightRoom () {
+  if (!isInvalidSubpageDrop()) {
+    RoomElement.style.background = 'rgb(87, 172, 247)' 
+  }
+}
+
+function unhighlightRoom (e) {
+  if (e.currentTarget.contains(e.relatedTarget)) {
+    return
+  }
+  RoomElement.style.background = ''
+}
 
 function isInvalidSubpageDrop () {
   return parentRoomIDs.includes($whatIsBeingDraggedID) || $whatIsBeingDraggedID === room.id 
@@ -275,6 +263,40 @@ async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
 </script>
 
 <style>
+  .badge-number {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 10px; 
+    position: absolute; 
+    left: 16px; 
+    right: auto; 
+    top: 0px; 
+    font-weight: 500; 
+    background-color: rgb(80, 80, 80); 
+    border-radius: 20px; 
+    width: 14px; 
+    height: 14px; 
+    color: white;
+  }
+
+  .library-item-icon {
+    color: rgb(78, 78, 78); 
+    font-size: 28px;
+    font-weight: 300;
+  }
+
+  .room-title {
+    font-size: var(--fs-400);
+    font-weight: 400;
+    color: black;
+  }
+
+  .room-item {
+    display: flex; width: 100%; align-items: center; column-gap: 8px; padding: 6px 8px; padding-right: 0px;
+    border-radius: 5px;
+  }
+
   .room-item:hover {
     background: lightgrey;
   }
@@ -285,5 +307,17 @@ async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
     background-color: #F7C686;
     color: black;
     transition: background 20ms ease-in 0s;
+  }
+
+  .separator {
+		width: 2px;
+		height: 2px;
+		background-color: #606060;
+		border-radius: 50%;
+		margin: 4px 12px;
+    margin-right: 4px;
+
+    /* prevents it from getting squished when the text overflows */
+    min-width: 2px;
   }
 </style>

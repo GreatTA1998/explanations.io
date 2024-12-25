@@ -42,18 +42,16 @@
   </slot>
 
   <div class="q-list-container">
-    <div style="margin-top: 0px;">
-      {#if allQuestions}
-        {#each allQuestions as question (question.id)}
-          <QuestionsSectionItem {question} {classID}/>
-        {/each}
-      {/if}
-    </div>
+    {#if allQuestions}
+      {#each allQuestions as question (question.id)}
+        <QuestionsSectionItem {question} {classID}/>
+      {/each}
+    {/if}
   </div>
 </div>
 
 <style>
   .q-list-container {
-    padding: 4px 8px;
+    padding: 4px 6px;
   }
 </style>

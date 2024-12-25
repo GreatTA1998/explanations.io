@@ -1,6 +1,5 @@
 // NOTE: these are not currently injected into equivalent CSS variables
 export const PAGE_PADDING = 16
-export const SUBPAGE_INDENATION_PX = 12
 export const ASPECT_RATIO = 4/3
 
 export const WIDTHS = Object.freeze({

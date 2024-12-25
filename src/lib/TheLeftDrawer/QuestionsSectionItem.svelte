@@ -77,11 +77,14 @@
 <style>
   .q-list-item {
     width: 100%;
-    padding: 8px; 
+    padding: 6px 8px; 
+
+    padding-right: 4px; /* because the truncation "..." on the right doesn't need as much padding as real letters on the left */
+
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    row-gap: 2px;
 
     cursor: pointer;
   }
@@ -91,7 +94,9 @@
   }
 
   .q-title {
-    font-size: 1rem;
+    font-size: var(--fs-400);
+    font-weight: 400;
+    color: black;
 
     /* define an explicit width to enable text truncation */
     /* width: 100%;  */
@@ -99,14 +104,14 @@
   }
 
   .q-description {
-    font-size: 0.875rem;
+    font-size: var(--fs-300);
     color: rgb(120, 120, 120);
     line-height: 1.2;
   }
 
   /* Copied from Firebase's section header */
   .q-asker {
-    font-size: 12px;
+    font-size: var(--fs-300);
     line-height: 16px;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.6);
@@ -115,6 +120,7 @@
   .selected {
     background-color: #F7C686;
     transition: background 20ms ease-in 0s;
+    color: black;
   }
 
   .red-urgent-text {

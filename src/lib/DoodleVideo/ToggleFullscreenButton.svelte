@@ -1,13 +1,14 @@
-<button on:click class="my-round-button" class:wide-padding={canvasWidth > WIDTHS.SMALLEST_TABLET}>
+<!-- class:wide-padding={canvasWidth > WIDTHS.SMALLEST_TABLET} -->
+<button on:click class="my-round-button">
   <span class="material-symbols-outlined" style="font-size: 20px;">
     {isFullscreen ? 'close_fullscreen' : 'open_in_full'}
   </span>
-
+<!-- 
   {#if canvasWidth > WIDTHS.SMALLEST_TABLET}
     <span class="button-text">
-      {isFullscreen ? 'Exit' : 'Enter'} full view
+      {isFullscreen ? 'Exit' : 'Enter'} fullscreen
     </span>
-  {/if}
+  {/if} -->
 </button>
 
 <script>

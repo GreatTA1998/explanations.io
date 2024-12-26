@@ -23,18 +23,18 @@
     
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
-        <span
-          on:click={startAudioPlayer} on:keydown
+        <button on:click={startAudioPlayer}
           class="material-icons overlay-center" 
-          style="color: rgba(230, 230, 230, 0.8);
-          width: {240 * scaleFactor}px; 
-          height: {240 * scaleFactor}px; 
-          z-index: 5;
-          font-size: {15 * scaleFactor}rem;
-          cursor: pointer;"
+          style="
+            color: rgba(230, 230, 230, 0.8);
+            width: {240 * scaleFactor}px; 
+            height: {240 * scaleFactor}px; 
+            z-index: 5;
+            font-size: {15 * scaleFactor}rem;
+          "
         >
           play_circle
-        </span>
+        </button>
       {/if} 
 
       {#each boardDoc.slideIDs as slideID, i}
@@ -51,10 +51,11 @@
             <div use:lazyCallable={fetchStrokes}  
               style="
                 position: absolute;
-                transform: scale(0.5); transform-origin: top left;
+                transform: scale(0.5); 
+                transform-origin: top left;
                 display: {idxOfFocusedSlide === i ? '' : 'none'};
                 width: {canvasWidth * 2}px; 
-                height: {canvasHeight * 2};
+                height: {canvasHeight * 2}px;
               "
             > 
               {#if strokesArray && slideDoc}

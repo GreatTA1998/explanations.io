@@ -109,17 +109,17 @@
 </script>
 
 <style>
+  .comments-column {
+    width: 100%;
+    background-color: hsla(0, 100%, 100%, 0.6);
+    border-radius: 2px;
+  }
+
   .submit-button {
     border-radius: 12px; 
     border: 1px solid lightgrey;
     padding: 6px 12px;
     background-color: white;
-  }
-
-  .comments-column {
-    width: 100%;
-    height: 100%;
-    background-color: hsla(0, 100%, 100%, 0.7);
   }
 
   .my-tab-item {

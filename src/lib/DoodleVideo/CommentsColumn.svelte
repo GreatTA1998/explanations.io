@@ -111,7 +111,7 @@
 <style>
   .comments-column {
     width: 100%;
-    background-color: hsla(0, 100%, 100%, 0.6);
+    background-color: hsla(0, 100%, 100%, 0.5);
     border-radius: 2px;
   }
 

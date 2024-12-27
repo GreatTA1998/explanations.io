@@ -11,6 +11,7 @@
   style="
     --nonFocusedPlaceholderOpacity: {nonFocusedPlaceholderOpacity};
     --fontSizeIncludeUnits: {fontSizeIncludeUnits};
+    --placeholderColor: {placeholderColor};
     background-color: {backgroundColor};
     color: {color};
   "
@@ -24,6 +25,8 @@
   export let value = ''
   export let placeholder
   export let readonly = false
+
+  // NOTE: consider renaming to `placeholderOpacity`
   export let nonFocusedPlaceholderOpacity = 0.6
   export let numberOfInitialRowsIfEmpty = 1
   export let fontSizeIncludeUnits = '1.1rem'
@@ -31,6 +34,7 @@
   export let willTriggerFocus = false
   export let backgroundColor = 'transparent'
   export let color = 'rgb(60, 60, 60)'
+  export let placeholderColor = 'rgb(160, 160, 160)'
 
   let element
   const dispatch = createEventDispatcher()
@@ -93,11 +97,12 @@
   }
 
   textarea::placeholder {
+    color: var(--placeholderColor);
     opacity: var(--nonFocusedPlaceholderOpacity);
   }
 
   textarea:focus::placeholder{
-    opacity: 0.6;
+    opacity: var(--nonFocusedPlaceholderOpacity);
   }
 
   .reset-default-styling {

@@ -5,23 +5,24 @@
 
   <div style="display: flex; margin-bottom: 2vw; width: 100%; justify-content: space-between;">
     <!-- Transcript  -->
-    <div class="my-tab-item">
+    <!-- <div class="my-tab-item">
       <span class="material-symbols-outlined" style="cursor: not-allowed;">
         translate
       </span>
       <p style="font-size: 12px;">
         (transcript coming soon)
       </p>
-    </div>      
+    </div>       -->
+
     <!-- Comments -->
-    <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
+    <!-- <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
       <span class="material-symbols-outlined" style="cursor: pointer;">
         forum
       </span>
       <p style="font-size: 12px;">
         Comments
       </p>
-    </div>
+    </div> -->
   </div>
 
   <div style="padding: 12px; display: flex; flex-direction: column; row-gap: 12px;">
@@ -33,6 +34,8 @@
         value={newInputComment} 
         on:input={(e) => newInputComment = e.detail}
         placeholder="New comment..."
+        placeholderColor="rgb(60, 60, 60)"
+        nonFocusedPlaceholderOpacity={1}
       />
       
       <button on:click={createComment} class="submit-button">
@@ -117,7 +120,7 @@
 <style>
   .comments-column {
     width: 100%;
-    background-color: hsla(0, 100%, 100%, 0.5);
+    background-color: hsla(0, 100%, 100%, 0.4);
     border-radius: 2px;
   }
 
@@ -125,8 +128,9 @@
     border-radius: 24px; 
     border: 1px solid lightgrey;
     padding: 6px 12px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.6); 
     width: fit-content;
+    font-size: var(--fs-300);
   }
 
   .my-tab-item {

@@ -1,4 +1,3 @@
-import { videoCinemaLayout } from '/src/store.js'
 import { HEIGHTS, ASPECT_RATIO, PAGE_PADDING } from '/src/helpers/CONSTANTS.js'
 
 export const VIDEO_LAYOUT = {
@@ -19,15 +18,6 @@ export function getCinemaVideoSize () {
     availableWidth: remainingWidth, 
     availableHeight: remainingHeight 
   })
-
-  // determine the layout type
-  if (remainingWidth <= 800) { // anything too small makes the 25% overlay column too narrow
-    videoCinemaLayout.set(VIDEO_LAYOUT.MOBILE_VERTICAL)
-  } else if (remainingWidth - canvasWidth >= 240 + 120) { // + 120 because now we use this for PREVIEW videos too
-    videoCinemaLayout.set(VIDEO_LAYOUT.SIDE_BY_SIDE)
-  } else {
-    videoCinemaLayout.set(VIDEO_LAYOUT.TRANSPARENT_OVERLAY)
-  } 
 
   return canvasWidth
 }

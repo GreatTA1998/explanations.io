@@ -1,8 +1,7 @@
-<!-- 
- NOTE: we don't use position relative because we want the fullscreen mode 
-  container to be the true parent. 
--->
-<div class={$videoCinemaLayout}>
+<div class={$videoCinemaLayout} 
+  style="width: 100%; position: relative;"
+  use:trackWidth={exactWidth => availableWidth = exactWidth}
+>
   <slot name="video" />
 
   {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
@@ -22,17 +21,32 @@
 
 <script>
   import { VIDEO_LAYOUT } from '/src/helpers/dimensions.js'
-  import { videoCinemaLayout } from '/src/store.js'
+  import { videoCinemaLayout, videoPreviewWidth } from '/src/store.js'
+  import { trackWidth } from '/src/helpers/actions.js'
 
   let isDrawerOpen = true
+  let availableWidth
+
+  $: determineLayout(availableWidth)
+
+  function determineLayout () {
+    const { SIDE_BY_SIDE, TRANSPARENT_OVERLAY, MOBILE_VERTICAL } = VIDEO_LAYOUT
+    const drawerWidth = 200
+    const remainingWidth = availableWidth - $videoPreviewWidth
+
+    if (drawerWidth <= remainingWidth) videoCinemaLayout.set(SIDE_BY_SIDE)
+    else if ((drawerWidth - remainingWidth) <= ($videoPreviewWidth / 3)) videoCinemaLayout.set(TRANSPARENT_OVERLAY)
+    else videoCinemaLayout.set(MOBILE_VERTICAL)
+  }
 
   const commentsSectionStyle = {
+    // used to be width: 25%
     [VIDEO_LAYOUT.TRANSPARENT_OVERLAY]: `
       position: absolute;
       top: 38px;
       right: 0; 
       left: auto;
-      width: 25%; 
+      width: 200px; 
     `,
     [VIDEO_LAYOUT.SIDE_BY_SIDE]: `
       flex-basis: 0; 

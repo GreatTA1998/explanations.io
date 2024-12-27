@@ -74,7 +74,7 @@
 
     width: 100%;
     border: 0px solid lightgrey;
-    border-radius: 8px;
+    border-radius: 0px;
     padding: 0px;
     padding-top: 0px;
     padding-bottom: 0px;

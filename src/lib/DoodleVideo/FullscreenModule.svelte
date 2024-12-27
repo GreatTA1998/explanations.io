@@ -30,7 +30,9 @@
       {/if}
 
       <CommentsColumn videoDoc={boardDoc}>
-        <p>{boardDoc.description || ''}</p>       
+        {#if isFullscreen}
+          <p>{boardDoc.description || ''}</p>       
+        {/if}
       </CommentsColumn>
     </div>
   </DynamicLayout>

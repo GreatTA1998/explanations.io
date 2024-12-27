@@ -9,16 +9,22 @@
       <span class="material-symbols-outlined" style="cursor: not-allowed;">
         translate
       </span>
+      <p style="font-size: 12px;">
+        (transcript coming soon)
+      </p>
     </div>      
     <!-- Comments -->
     <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
       <span class="material-symbols-outlined" style="cursor: pointer;">
         forum
       </span>
+      <p style="font-size: 12px;">
+        Comments
+      </p>
     </div>
   </div>
 
-  <div style="padding: 12px;">
+  <div style="padding: 12px; display: flex; flex-direction: column; row-gap: 12px;">
     <ListenToCollection collectionPath={videoDoc.path + '/comments'}
       let:listenToCollection={listenToCollection}  
       let:collectionDocs={commentDocs}
@@ -116,19 +122,22 @@
   }
 
   .submit-button {
-    border-radius: 12px; 
+    border-radius: 24px; 
     border: 1px solid lightgrey;
     padding: 6px 12px;
     background-color: white;
+    width: fit-content;
   }
 
   .my-tab-item {
     font-size: 1.4rem;
     border-bottom: 2px solid rgb(160, 160, 160);
-    padding: 1vw;
+    padding: 0.5vw;
     color: rgb(160, 160, 160);
     flex-grow: 1;
     text-align: center;
+    display: flex;
+    align-items: center;
   }
 
   .my-active-tab {

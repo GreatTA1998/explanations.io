@@ -44,21 +44,23 @@
 			</div>
 		</div>
 
-		<RotatingGallery galleryVideos={randomlyChosenExemplarVideos}/>
+		<div style="margin-top: 8vw;">
+			<RotatingGallery galleryVideos={randomlyChosenExemplarVideos}/>
+		</div>
 
-		<div style="text-align: center; padding: 48px 0px;">
-			<!-- <img 
+		<!-- <div style="text-align: center; padding: 48px 0px;">
+			<img 
 				style="min-width: 332px; width: 30vw; height: auto"
 				src="https://i.imgur.com/TRxyjmU.png"
 				alt="competition landscape"
-			>  -->
+			> 
 
-			<!-- <img
+			<img
 				style="margin-top: 6px;min-width: 332px; width: 50vw; height: auto"
 				src="https://i.imgur.com/B9a5Nfp.png"
 				alt="sheraz's discord message"
-			/> -->
-		</div>
+			/>
+		</div> -->
 
 		<!-- <FounderSelfIntro/> -->
 
@@ -199,7 +201,7 @@
 	.splash-screen {
 		height: calc(100vh - var(--height-navbar)); 
     margin-top: var(--height-navbar);
-    padding: 36px;
+    padding: 4vw 6vw;
     background-color: var(--bg-off-white);
 	}
 

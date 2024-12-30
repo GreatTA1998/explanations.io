@@ -1,36 +1,38 @@
 <!-- Copied from https://codepen.io/RustamAbraham/pen/BWzVxo -->
-<!--  style="border: 2px solid red;" -->
-<div style="
-  display: flex; justify-content: center; align-items: end;
-  --galleryItemHeightIncludesPx: {galleryItemHeight}px;
-  --galleryItemWidthIncludesPx: {galleryItemWidth}px;
-">
-  {#if scaleFactor}
-    <div class="container" style="transform: scale({scaleFactor})">
-      <div id="carousel">
-        {#each galleryVideos as galleryVideo}
-          <div class="gallery-item" style="border: none;">
-            <FetchStrokes 
-              dbPath={galleryVideo.dbPath}
-              let:fetchStrokes={fetchStrokes}
-              let:strokesArray={strokesArray}
-              autoFetchStrokes={false}
-            > 
-              <NewHDBlackboard
-                {strokesArray}
-                thumbnailWidth={galleryItemWidth}
-                willDrawOneByOne={true}
-                on:intersect={fetchStrokes}
-              />
-            </FetchStrokes>
-          </div>
+{#if scaleFactor}
+  <div class="container" style="
+    margin: 0 auto;
+    transform: scale({scaleFactor});
+    transform-origin: top center;
+    --galleryItemHeightIncludesPx: {galleryItemHeight}px;
+    --galleryItemWidthIncludesPx: {galleryItemWidth}px;
+    width: 360px;
+    height: 240px; 
+    perspective: 3200px;
+  ">
+    <div id="carousel">
+      {#each galleryVideos as galleryVideo}
+        <div class="gallery-item" style="border: none;">
+          <FetchStrokes 
+            dbPath={galleryVideo.dbPath}
+            let:fetchStrokes={fetchStrokes}
+            let:strokesArray={strokesArray}
+            autoFetchStrokes={false}
+          > 
+            <NewHDBlackboard
+              {strokesArray}
+              thumbnailWidth={galleryItemWidth}
+              willDrawOneByOne={true}
+              on:intersect={fetchStrokes}
+            />
+          </FetchStrokes>
+        </div>
 
-          <div class="unselectable gallery-item"></div>
-        {/each}
-      </div>
+        <div class="gallery-item unselectable"></div>
+      {/each}
     </div>
-  {/if}
-</div>
+  </div>
+{/if}
 
 <script>
   // TO-DO: fix drifting center of rotation
@@ -40,54 +42,18 @@
 
   export let galleryVideos
 
-  let scaleFactor
-
-  onMount(() => {
-    scaleFactor = window.innerWidth / (1600 * 1.5) 
-  })
-
   const galleryItemWidth =  480
   const galleryItemHeight = 360
 
-  function pauseGalleryRotation () {
-    // document.getElementById("carousel").style.animationPlayState = "paused";
-  }
-  
-  function startGalleryRotation () {
-    // document.getElementById("carousel").style.animationPlayState = "running";
-  }
+  let scaleFactor
+
+  onMount(() => {
+    scaleFactor = window.innerWidth / (1600) 
+  })
 </script>
 
 
 <style lang="scss">
-  .creator-channel-name {
-    color: #282828;
-  }
-
-  .creator-channel-name:hover {
-    cursor: pointer;
-    color: purple;
-    text-decoration: underline;
-  }
-
-  .youtube-title-font {
-    // font-family: "Roboto","Arial",sans-serif;
-    // font-size: 1.2rem; // 1.6
-    // line-height: 1.3rem; // 2.2
-    // font-weight: 500;
-    // overflow: hidden;
-    // display: block;
-    // max-height: 4.4rem;
-    // -webkit-line-clamp: 2;
-    // display: box;
-    // display: -webkit-box;
-    // -webkit-box-orient: vertical;
-    // text-overflow: ellipsis;
-    // white-space: normal;
-  }
-
-
-
 @mixin transform($deg) {
   // RADIUS of rotation
   transform: rotateY($deg) translateZ(660px);  // rotateY($deg) //660px
@@ -115,23 +81,6 @@
     @include transform-origin;
     @include transform_(360deg); // originally is 360 degrees, which is like anti-clockwise or the opposite
   }
-}
-
-// Container does not rotate
-.container {  
-  // conatiner does not rotate, its size does not have to match its gallery item children, 
-  // but it cannot be too small or too big or it affects the geometry for some reason
-  width: 360px; // was w h 210 and 140, then 360, 240
-  height: 240px; 
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  transform: translate(-60%,-50%);
-
-  // TOO HIGH: everything looks too flat
-  // TOO LOW: the front videos look way too big, the back too small
-  perspective: 3200px; // was 1100
-  // border: 2px solid red;
 }
 
 #carousel {

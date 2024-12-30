@@ -14,7 +14,8 @@
     <div slot="popup-content">    
       {#if activeTabName === 'old'}
         <div style="font-size: 14px; color: rgb(100, 100, 100); margin-top: 10px; line-height: 1.5;">
-          Ask your teacher questions directly, join other committed learners, and browse the pool of explanations you build up together. 
+          Ask your teacher questions directly - all questions are answered, and replied within 48 hours usually. 
+          Join other committed learners, and browse the pool of explanations you build up together. 
           Unsure about something? Feel free to <a target="_blank" href="https://cal.com/eltonlin1998/setup-call"> book a setup call</a> instead.
         </div>
       {:else}

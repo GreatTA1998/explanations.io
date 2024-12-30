@@ -25,7 +25,6 @@ Cal("init", "questions-setup-help-with-explanations.io", {origin:"https://cal.co
   /*  style="border-radius: 100px; background: #000; color: #fff; padding: 8px 12px; font-size: 14px;" */
   .secondary-button {
     background: transparent;
-    color: #5d0068;
     padding: 8px 16px;
     border-radius: 24px;
     /* border: 1px solid #5d0068; */
@@ -33,8 +32,8 @@ Cal("init", "questions-setup-help-with-explanations.io", {origin:"https://cal.co
     font-weight: 500;
     transition: all 0.2s ease;
     width: 160px;
-    background: rgb(224, 224, 224);
-    color: rgb(59, 59, 59);
+    background: #5d0068;
+    color: white;
     font-size: 14px;
   }
   .secondary-button:hover {

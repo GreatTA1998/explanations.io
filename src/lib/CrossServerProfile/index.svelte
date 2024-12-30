@@ -31,6 +31,10 @@
         {/if}
       </div>
     </div>
+    
+    <ReusableSubscribeButton>
+      Subscribe & ask questions for $10/week
+    </ReusableSubscribeButton>
   </div>
 
   <div style="margin-top: 36px"></div>
@@ -60,6 +64,7 @@
   import { getFirestoreQuery } from '/src/helpers/crud.js'
   import CreatorCircularAvatar from '$lib/DoodleVideo/CreatorCircularAvatar.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
+  import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
   import { getFirestoreDoc } from '/src/helpers/crud.js'
 
   export let profileUID

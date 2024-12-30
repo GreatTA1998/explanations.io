@@ -33,26 +33,27 @@
       {/each}
     </div>
 
+    <div style="margin-top: 12px;"></div>
+
     <!-- purple: '#5d0068' -->
     <!-- blackboard color: hsl(0,0%,0%, 0.80) -->
-      <div>
-        <div style="margin-top: 24px;"></div>
-        {#if !!!$user.uid}
-          <ReusableSignInButton frameworkColor="secondary"/>
-        {/if}
+    <div style="display: flex; flex-direction: column; gap: 12px; width: fit-content;">
+      {#if !!!$user.uid}
+        <ReusableSubscribeButton style="display: flex; align-items: center; gap: 6px;">
+          <span class="material-symbols-outlined">person_raised_hand</span>
+          Ask questions for $10/week
+        </ReusableSubscribeButton>
+      {/if}
 
-        <div style="margin-top: 24px;"></div>
 
-        <Button disabled={!!!$user.uid || isUploadingQuestion} 
-          on:click={submitQuestion} 
-          color="secondary"
-          style="border-radius: 40px; color: white; background-color: {!!!$user.uid ? 'lightgrey' : '#5d0068' }; padding: 0px 24px;"
-        >
-          {isUploadingQuestion ? 'Submitting question...' : 'Post my question to server'}
-        </Button>
-
-        <div style="margin-top: 60px;"></div>
-      </div>
+      <Button on:click={submitQuestion}  
+        disabled={!!!$user.uid || isUploadingQuestion} 
+        color="secondary"
+        style="border-radius: 40px; color: white; background-color: {!!!$user.uid ? 'lightgrey' : '#5d0068' }; padding: 0px 24px;"
+      >
+        {isUploadingQuestion ? 'Submitting question...' : 'Post my question to server'}
+      </Button>
+    </div>
   </div>
 </div>
 
@@ -61,7 +62,7 @@
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import CodepenInput from './CodepenInput.svelte'
-  import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
+  import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
 
   import { 
     updateFirestoreDoc, 

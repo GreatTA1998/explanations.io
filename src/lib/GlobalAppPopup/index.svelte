@@ -25,8 +25,6 @@
 
 {#if isPopupOpen}
   <BasePopup on:popup-close={() => setIsPopupOpen(false)} style="width: 80%; min-width: 360px; min-height: 360px; height: fit-content; padding: 24px;">
-    <div slot="title"></div>
-
     <div slot="popup-content" style="padding: 24px; display: flex; flex-direction: column; gap: 24px; align-items: center;">
       {#if $user.uid}
         <button on:click={() => handleSignout()}>

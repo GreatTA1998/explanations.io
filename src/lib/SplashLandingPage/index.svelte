@@ -10,11 +10,7 @@
 			</div>
 
 			<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
-				<PopupConfirmLearner let:setIsPopupOpen={setIsPopupOpen}>
-					<button on:click={() => setIsPopupOpen({ newVal: true })} class="primary-button">
-						Try for $10/week
-					</button>
-				</PopupConfirmLearner>
+				<ReusableSubscribeButton/>
 
 				<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
 					6 learners joined this year
@@ -72,7 +68,7 @@
 	import BrandLogos from './BrandLogos.svelte'
 	import CountryFlags from './CountryFlags.svelte'
 	import RotatingGallery from './RotatingGallery.svelte'
-	import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
+	import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from './FounderSelfIntro.svelte'
 	import HistoricalTimeline from './HistoricalTimeline.svelte'
@@ -203,23 +199,6 @@
     margin-top: var(--height-navbar);
     padding: 4vw 6vw;
     background-color: var(--bg-off-white);
-	}
-
-	.primary-button {
-		background: #5d0068;
-		color: white;
-		padding: 12px 20px;
-		border-radius: 24px;
-		border: none;
-		font-weight: 500;
-		transition: all 0.2s ease;
-		width: 180px;
-		font-size: 16px;
-	}
-
-	.primary-button:hover {
-		transform: translateY(-1px);
-		box-shadow: 0 4px 12px rgba(93, 0, 104, 0.2);
 	}
 
 	.separator {

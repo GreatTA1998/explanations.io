@@ -10,20 +10,20 @@
       </div>
 
       <div style="max-width: 60ch;">
-        {creatorDoc.bio || ''}
+        <TextAreaAutoResizing value={creatorDoc.bio}/>
       </div>
 
       <div style="display: flex; align-items: center; gap: 8px; padding: 12px 0px; flex-wrap: wrap;">
         {#if teachingServers}
-          <button class="ux-filter-chip" class:highlighted-chip={currentServerID === ''}
-            on:click={() => currentServerID = ''}
+          <button on:click={() => currentServerID = ''} 
+            class="ux-filter-chip" class:highlighted-chip={currentServerID === ''}
           >
             Recent videos
           </button>  
 
           {#each teachingServers as server}
-            <button class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
-              on:click={() => currentServerID = server.id}
+            <button on:click={() => currentServerID = server.id} 
+              class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
             >
               {server.name}
             </button>
@@ -39,7 +39,7 @@
 
   <div style="margin-top: 36px"></div>
 
-  {#if allVideos&& videoWidth}
+  {#if allVideos && videoWidth}
     <div class="alternative-flexbox">
       {#each allVideos as video (video.id)}
         <div style="align-self: end;">
@@ -50,6 +50,7 @@
           <GeneralizedVideoDisplay
             {video} 
             {videoWidth}
+            classID={quickfixClassIDFrom(video)}
             willDisplayCreatorCard={false}
           />
         </div> 
@@ -65,6 +66,7 @@
   import CreatorCircularAvatar from '$lib/DoodleVideo/CreatorCircularAvatar.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
+  import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { getFirestoreDoc } from '/src/helpers/crud.js'
 
   export let profileUID
@@ -88,6 +90,11 @@
     } else {
       fetchMostRecentVideos()
     }
+  }
+
+  function quickfixClassIDFrom (video) {
+    const classID = video.path.split('/')[1]
+    return classID
   }
 
   async function fetchCreatorVideosFromServer (serverID) {

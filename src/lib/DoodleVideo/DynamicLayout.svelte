@@ -27,7 +27,7 @@
   let isDrawerOpen = true
   let availableWidth
 
-  $: determineLayout(availableWidth)
+  $: determineLayout(availableWidth, $videoPreviewWidth)
 
   function determineLayout () {
     const { SIDE_BY_SIDE, TRANSPARENT_OVERLAY, MOBILE_VERTICAL } = VIDEO_LAYOUT

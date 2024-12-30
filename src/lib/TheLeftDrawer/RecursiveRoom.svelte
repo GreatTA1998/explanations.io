@@ -293,8 +293,16 @@ async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
   }
 
   .room-item {
-    display: flex; width: 100%; align-items: center; column-gap: 8px; padding: 6px 8px; padding-right: 0px;
+    display: flex; 
+    width: 100%; 
+    align-items: center; 
+    column-gap: 8px; 
+    padding: 6px 8px; 
+    padding-right: 0px;
     border-radius: 5px;
+
+    /* override button's default centering */
+    text-align: left;
   }
 
   .room-item:hover {

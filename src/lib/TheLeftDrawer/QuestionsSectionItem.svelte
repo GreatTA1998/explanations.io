@@ -85,8 +85,8 @@
     display: flex;
     flex-direction: column;
     row-gap: 4px;
-
-    cursor: pointer;
+    
+    text-align: left; 
   }
 
   .q-list-item:hover {

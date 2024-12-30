@@ -215,7 +215,6 @@
 		transition: all 0.2s ease;
 		width: 180px;
 		font-size: 16px;
-		text-align: center;
 	}
 
 	.primary-button:hover {

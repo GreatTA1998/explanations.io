@@ -64,9 +64,9 @@
         </div>
       </a>
 
-      <p>+1 503 250 3868</p>
+      <span>+1 503 250 3868</span>
 
-      <p>elton@explanations.io</p>
+      <span style="marign: 0;">elton@explanations.io</span>
     </div>
   </BasePopup>
 {/if}

@@ -9,7 +9,7 @@
         slideIDs={boardDoc.slideIDs}
         {idxOfFocusedSlide}
       />
-
+      
       <slot name="after" />
     </div>
   {/if}
@@ -23,41 +23,39 @@
     
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
-        <span
-          on:click={startAudioPlayer} on:keydown
+        <button on:click={startAudioPlayer}
           class="material-icons overlay-center" 
-          style="color: rgba(230, 230, 230, 0.8);
-          width: {240 * scaleFactor}px; 
-          height: {240 * scaleFactor}px; 
-          z-index: 5;
-          font-size: {15 * scaleFactor}rem;
-          cursor: pointer;"
+          style="
+            color: rgba(230, 230, 230, 0.8);
+            width: {240 * scaleFactor}px; 
+            height: {240 * scaleFactor}px; 
+            z-index: 5;
+            font-size: {15 * scaleFactor}rem;
+          "
         >
           play_circle
-        </span>
+        </button>
       {/if} 
 
       {#each boardDoc.slideIDs as slideID, i}
-        <RenderlessListenToDoc autoListen
-          docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
+        <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >
-          <RenderlessFetchStrokes
-            dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+          <FetchStrokes dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
             let:fetchStrokes={fetchStrokes}
             let:strokesArray={strokesArray}
             on:mounted={(e) => {
               slideIDToStrokesArray[slideID] = e.detail.strokesArray
             }}
           > 
-            <div 
-              use:lazyCallable={fetchStrokes}  
+            <div use:lazyCallable={fetchStrokes}  
               style="
                 position: absolute;
-                transform: scale(0.5); transform-origin: top left;
+                transform: scale(0.5); 
+                transform-origin: top left;
                 display: {idxOfFocusedSlide === i ? '' : 'none'};
                 width: {canvasWidth * 2}px; 
-                height: {canvasHeight * 2};
+                height: {canvasHeight * 2}px;
               "
             > 
               {#if strokesArray && slideDoc}
@@ -73,8 +71,8 @@
                 />
               {/if}
             </div>
-          </RenderlessFetchStrokes>
-        </RenderlessListenToDoc>
+          </FetchStrokes>
+        </ListenToDoc>
       {/each}
     </div>
 
@@ -111,10 +109,10 @@
   import { lazyCallable } from '/src/helpers/actions.js'
   import { assumedCanvasWidth, user } from '/src/store.js' // note `canvasWidth` was misleading
   import MultiboardSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
+  import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
-  import BaseTransparentButton from '$lib/BaseTransparentButton.svelte'
-  import RenderlessListenToDoc from '$lib/RenderlessListenToDoc.svelte'
+  import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
+  import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL

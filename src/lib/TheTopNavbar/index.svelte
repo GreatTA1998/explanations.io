@@ -1,12 +1,14 @@
 <div id="the-top-navbar">
 	<Row style="height: var(--navbar-height); background-color: var(--bg-off-white); border-bottom: 1px solid lightgrey; padding-left: 2%; padding-right: 2%;">
 		<div style="padding: 6px 12px 8px 0px; box-sizing: border-box; width: {50 + 20}px; height: {46 + 14}px">
-			<GlobalAppPopup let:setIsPopupOpen={setIsPopupOpen} >
-				<img on:click={() => setIsPopupOpen(true)} on:keydown
-					class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible} 
-					src="/app-logo-no-bg.png" width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
-					alt="app logo"
-				>
+			<GlobalAppPopup let:setIsPopupOpen={setIsPopupOpen}>
+				<button on:click={() => setIsPopupOpen(true)}>
+					<img src="/app-logo-no-bg.png"
+						class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible} 
+						width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
+						alt="app logo"
+					>
+				</button>
 			</GlobalAppPopup>
 		</div>
 
@@ -28,6 +30,7 @@
 
 		<Section align="end" toolbar style="padding: 0; display: flex; column-gap: 24px;">
 			{#if $viewport.isDesktop}
+				<!-- TO-DO: fix this, it remains undefined when it shouldn't -->
 				{#if $recentSearchedServerDoc.name && $recentSearchedServerDoc.subjectTag !== 'Competition Math'}
 					<Tab server={$recentSearchedServerDoc} />
 				{/if}
@@ -38,13 +41,15 @@
 					on:focus-change={(e) => isFocused = e.detail} 
 					on:input={(e) => searchWithinClassNames(e.detail)}
 				/>
-				{#if isFocused}
-					<div class="search-results grid-layout">
-						{#each searchMatchedServers as matchedServer (matchedServer.id)}
-							<CompactServerCard serverObj={matchedServer}/>
-						{/each}
-					</div>
-				{/if}
+					{#if isFocused}
+						<div class="search-results grid-layout">
+							{#each searchMatchedServers as matchedServer (matchedServer.id)}
+								<CompactServerCard serverObj={matchedServer}/>
+							{/each}
+
+							<PopupNewServer />
+						</div>
+					{/if}
 				<!-- just re-use <PopupNewServer/> to for creating new servers -->
 			</div>
 		</Section>
@@ -52,10 +57,11 @@
 </div>
 
 <script>
+	import CompactServerCard from './CompactServerCard.svelte'
 	import Tab from './Tab.svelte'
 	import SearchBar from './SearchBar.svelte'
-	import GlobalAppPopup from '$lib/GlobalAppPopup.svelte'
-	import CompactServerCard from '$lib/CompactServerCard.svelte'
+	import PopupNewServer from './PopupNewServer.svelte'
+	import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
 	import { getFirestoreCollection } from '/src/helpers/crud.js'
   import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar'
 	import { recentSearchedServerDoc } from '/src/store.js'

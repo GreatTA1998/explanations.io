@@ -8,13 +8,13 @@
     {/key}
   </div>
 
-  <div id="main-content">
+  <div id="main-content" bind:this={MainContent}>
     <slot />
   </div>
 </div>
 
 <script> 
-  import TheLeftDrawer from '$lib/TheLeftDrawer.svelte'
+  import TheLeftDrawer from '$lib/TheLeftDrawer/index.svelte'
   import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
 
@@ -25,8 +25,6 @@
 
   import { onMount } from 'svelte'
   import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
-  import '$lib/_Elevation.scss'
-
 
   export let data
 
@@ -48,9 +46,8 @@
     fetchRecentlySearchedClassDoc($user)
   }
 
-  onMount(() => {
-    MainContent = document.getElementById('main-content')
 
+  onMount(() => {
     resizeObserver = new ResizeObserver(entries => {
       // we don't debounce this because we don't want to trade-off a laggy drawer resize experience
       // for a more performant inspector resize experience (which is not how the user uses the app)
@@ -67,21 +64,18 @@
 
   function computeDimensionsForBlackboardsAndVideos () {
     requestAnimationFrame(() => {
-      MainContent = document.getElementById('main-content')
       blackboardWidth.set(
         getBlackboardModuleSize({ 
           containerWidth: MainContent.offsetWidth,
           containerHeight: MainContent.offsetHeight
         })
       )
-      
       videoPreviewWidth.set(
         getPreviewVideoWidth({    
           containerWidth: MainContent.offsetWidth,
           containerHeight: MainContent.offsetHeight
         })
       )
-
       videoCinemaWidth.set(
         getCinemaVideoSize()
       )

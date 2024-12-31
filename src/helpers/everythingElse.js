@@ -1,5 +1,3 @@
-import { classDetailsDrawerWidth } from "../store.js"
-import { get } from 'svelte/store'
 import { 
   getFirestoreDoc, 
   updateFirestoreDoc, 
@@ -11,15 +9,6 @@ import { sendEmail } from '/src/helpers/cloudFunctions.js'
 import { goto } from '$app/navigation'
 
 export const drawerExpandedWidth = 240
-
-export function  toggleClassDetailsDrawerWidth () {
-  if (get(classDetailsDrawerWidth) === drawerExpandedWidth) {
-    classDetailsDrawerWidth.set(0)
-  }
-  else if (get(classDetailsDrawerWidth) === 0) {
-    classDetailsDrawerWidth.set(drawerExpandedWidth)
-  }
-}
 
 export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, classID, questionID, commentString, linkToQuestion }) {
   // handle the new commentor

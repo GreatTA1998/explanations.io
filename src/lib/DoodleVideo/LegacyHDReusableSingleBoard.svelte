@@ -3,7 +3,7 @@
 -->
 <!-- TO-DO: write explanation about this -->
 {#if boardDoc}
-  <RenderlessFetchStrokes dbPath={boardDbPath}
+  <FetchStrokes dbPath={boardDbPath}
     let:fetchStrokes={fetchStrokes}
     {autoFetchStrokes}
     let:strokesArray={strokesArray}
@@ -11,7 +11,6 @@
     <div use:lazyCallable={fetchStrokes} 
       style={`width: ${canvasWidth}px; height: ${canvasHeight + Math.min(54, (80 * scaleFactor))}px; position: relative`}
     >
-
       <LegacyHDSingleBoard 
         visualWidth={canvasWidth}
         visualHeight={canvasHeight}
@@ -27,12 +26,6 @@
       > 
 
         {#if showEditDeleteButtons}
-          <!-- <div style="
-            margin-left: {canvasWidth - 240 - 164}px; 
-            display: flex; 
-            align-items: center; 
-            flex-direction: row-reverse"
-          > -->
           <div style="display: flex; align-items: center">
             {#if $user.uid === boardDoc.creatorUID}
               {#if !boardDoc.isPaid} 
@@ -71,13 +64,13 @@
         {/if}
       </LegacyHDSingleBoard>
     </div>
-  </RenderlessFetchStrokes>
+  </FetchStrokes>
 {/if}
 
 <script>
   import LegacyHDSingleBoard from '$lib/DoodleVideo/LegacyHDSingleBoard.svelte'
-  import RenderlessFetchStrokes from '$lib/RenderlessFetchStrokes.svelte'
-  import { maxAvailableWidth, maxAvailableHeight, assumedCanvasWidth } from '../../store.js'
+  import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
+  import { videoPreviewWidth, assumedCanvasWidth } from '../../store.js'
   import { lazyCallable } from '/src/helpers/actions.js'
   import Button, { Icon } from '@smui/button'
   import { user, adminUIDs } from '/src/store.js'
@@ -88,8 +81,8 @@
   export let autoFetchStrokes = true
   export let boardDoc
   export let boardDbPath = '' // 
-  export let canvasWidth = maxAvailableWidth
-  export let canvasHeight = maxAvailableHeight
+  export let canvasWidth = $videoPreviewWidth
+  export let canvasHeight = $videoPreviewWidth * 3/4
 
   export let showEditDeleteButtons = true
 

@@ -44,6 +44,6 @@
 
 	.orange-underline {
 		border-bottom: 2px solid orange;
-		/* left drawer server item's lighter orange #f7c686; */
+		/* lighter orange #f7c686 could be a good alternative */
 	}
 </style>

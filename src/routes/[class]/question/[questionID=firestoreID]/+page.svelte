@@ -1,5 +1,5 @@
 <script>
-  import QuestionFullPage from '$lib/QuestionFullPage.svelte'
+  import QuestionFullPage from '$lib/QuestionFullPage/index.svelte'
 
   export let data
   

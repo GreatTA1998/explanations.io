@@ -1,3 +1,4 @@
+<!-- I really like the idea of nano-questions, which is why I'm keeping it around to remind myself. -->
 <BasePopup on:popup-close>
   <h2 slot="title" style="font-family: sans-serif;">
     Nano-question
@@ -51,11 +52,11 @@
 </BasePopup>
 
 <script>
-  import BasePopup from '$lib/BasePopup.svelte'
+  import BasePopup from '$lib/Reusable/BasePopup.svelte'
   import Button from '@smui/button'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { createEventDispatcher } from 'svelte'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { roundedToFixed, debounce } from '../helpers/utility.js'
 
   export let isOriginalVideoCreator 

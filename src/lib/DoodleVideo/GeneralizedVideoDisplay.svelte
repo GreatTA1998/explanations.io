@@ -15,11 +15,10 @@
     let:isFullscreen={isFullscreen}
   >
     {#if video.isMultiboard}
-      <MultiboardHD
+      <MultiboardHD boardDoc={video}
         {canvasWidth}
         {canvasHeight}
-        boardDoc={video}
-        classID={quickfixClassIDFrom(video)}
+        {classID}
         audioDownloadURL={video.audioDownloadURL}
         timingOfSlideChanges={video.timingOfSlideChanges}
         showSlideChanger={!willHideSliderForPreview || isFullscreen}
@@ -27,17 +26,15 @@
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
         on:deletion-request-received={() => propToDeleteVideo = false}
       >
-         {#if willDisplayCreatorCard}
-          <div style="margin-left: 0px;">
-            <div style="min-width: 240px; margin-right: 8px;">
-              <!-- TO-DO: make this dynamic -->
-              <CreatorChannelCard
-                uid={video.creatorUID}
-                firstNameAndKeyInfo={video.creatorName}
-                collegeAndYear="MIT '25"
-                bio="Top 21 USA(J)MO"
-              />
-            </div>
+        {#if willDisplayCreatorCard}
+          <div style="min-width: 240px; margin-right: 8px;">
+            <!-- TO-DO: make this dynamic -->
+            <CreatorChannelCard
+              uid={video.creatorUID}
+              firstNameAndKeyInfo={video.creatorName}
+              collegeAndYear="MIT '25"
+              bio="Top 21 USA(J)MO"
+            />
           </div>
         {/if}
 
@@ -52,38 +49,21 @@
           />
 
           {#if $user.uid === video.creatorUID || !video.creatorUID}
-            <div style="position: relative">
-              <button class="menu-surface-anchor" 
-                on:click={(e) => {
-                  e.stopPropagation();
-                  DropdownMenu.setOpen(true);
-                }}
-              >
-                <span class="material-symbols-outlined" style="font-size: 20px;">
-                  more_vert
-                </span>
-              </button>
-
-              <Menu bind:this={DropdownMenu} style="width: 160px">
-                <List>
-                  <button on:click={handleDeleteClick} class="menu-list-item">
-                    <span class="material-icons">delete_forever</span>
-                    Delete video
-                  </button>
-                </List>
-              </Menu>
-            </div>
+            <VideoDropdownMenu 
+              on:delete-video={() => propToDeleteVideo = true} 
+            />
           {/if}
         </div>
       </MultiboardHD>
     {:else}
-      <ReusableDoodleVideo
+      <LegacyHDReusableSingleBoard
         autoFetchStrokes={false}
         boardDoc={video}
         {canvasWidth}
         {canvasHeight}
         {showEditDeleteButtons}
         boardDbPath={video.path}
+        {classID}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
       />
     {/if}
@@ -91,15 +71,14 @@
 {/if}
 
 <script>
+  import VideoDropdownMenu from '$lib/DoodleVideo/VideoDropdownMenu.svelte'
   import ToggleFullscreenButton from '$lib/DoodleVideo/ToggleFullscreenButton.svelte'
-  import EurekaButton from '$lib/EurekaButton.svelte'
-  import ReusableDoodleVideo from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
-  import VideoFooterInfo from '$lib/VideoFooterInfo.svelte'
+  import EurekaButton from '$lib/DoodleVideo/EurekaButton.svelte'
+  import LegacyHDReusableSingleBoard from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
+  import VideoFooterInfo from './VideoFooterInfo.svelte'
   import FullscreenModule from '$lib/DoodleVideo/FullscreenModule.svelte'
   import MultiboardHD from '$lib/DoodleVideo/MultiboardHD.svelte'
-  import CreatorChannelCard from '$lib/CreatorChannelCard.svelte'
-  import Menu from '@smui/menu'
-  import List from '@smui/list'
+  import CreatorChannelCard from '$lib/DoodleVideo/CreatorChannelCard.svelte'
 
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { increment } from 'firebase/firestore'
@@ -110,19 +89,9 @@
   export let willDisplayCreatorCard = true
   export let willHideSliderForPreview = false
   export let showEditDeleteButtons = false
+  export let classID
 
   let propToDeleteVideo = false
-  let DropdownMenu
-
-  function handleDeleteClick () {
-    propToDeleteVideo = true
-    DropdownMenu.setOpen(false)
-  }
-
-  function quickfixClassIDFrom (video) {
-    const classID = video.path.split('/')[1]
-    return classID
-  }
 
   function incrementViewMinutes (playbackSpeed) {
     updateFirestoreDoc(video.path, {
@@ -132,21 +101,6 @@
 </script>
 
 <style>
-  .menu-list-item {
-    padding: 4px 16px; 
-    border-radius: 4px; 
-    height: 48px;
-    width: 100%;
-
-    display: flex; 
-    align-items: center;
-    column-gap: 6px;
-  }
-
-  .menu-list-item:hover {
-    background-color: rgb(241, 241, 241);
-  }
-
   .button-group-flexbox {
     display: flex; 
     margin-left: auto; 

@@ -5,30 +5,37 @@
 
   <div style="display: flex; margin-bottom: 2vw; width: 100%; justify-content: space-between;">
     <!-- Transcript  -->
-    <div class="my-tab-item">
+    <!-- <div class="my-tab-item">
       <span class="material-symbols-outlined" style="cursor: not-allowed;">
         translate
       </span>
-    </div>      
+      <p style="font-size: 12px;">
+        (transcript coming soon)
+      </p>
+    </div>       -->
+
     <!-- Comments -->
-    <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
+    <!-- <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
       <span class="material-symbols-outlined" style="cursor: pointer;">
         forum
       </span>
-    </div>
+      <p style="font-size: 12px;">
+        Comments
+      </p>
+    </div> -->
   </div>
 
-  <div style="padding: 12px;">
-    <RenderlessListenToCollection
-      collectionPath={videoDoc.path + '/comments'}
+  <div style="padding: 12px; display: flex; flex-direction: column; row-gap: 12px;">
+    <ListenToCollection collectionPath={videoDoc.path + '/comments'}
       let:listenToCollection={listenToCollection}  
       let:collectionDocs={commentDocs}
-      autoListen={true}
     >
       <TextAreaAutoResizing
         value={newInputComment} 
         on:input={(e) => newInputComment = e.detail}
         placeholder="New comment..."
+        placeholderColor="rgb(60, 60, 60)"
+        nonFocusedPlaceholderOpacity={1}
       />
       
       <button on:click={createComment} class="submit-button">
@@ -43,18 +50,18 @@
           />
         {/each}
       {/if}
-    </RenderlessListenToCollection>  
+    </ListenToCollection>  
   </div>
 </div>
 
 <script>
-  import RenderlessListenToCollection from '$lib/RenderlessListenToCollection.svelte'
+  import ListenToCollection from '$lib/Renderless/ListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID, displayDate } from '/src/helpers/utility.js'
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
   import { user } from '/src/store.js'
-  import TextAreaAutoResizing from '$lib/TextAreaAutoResizing.svelte'
+  import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { page } from '$app/stores'
 
   export let videoDoc
@@ -111,26 +118,30 @@
 </script>
 
 <style>
-  .submit-button {
-    border-radius: 12px; 
-    border: 1px solid lightgrey;
-    padding: 6px 12px;
-    background-color: white;
-  }
-
   .comments-column {
     width: 100%;
-    height: 100%;
-    background-color: hsla(0, 100%, 100%, 0.7);
+    background-color: hsla(0, 100%, 100%, 0.4);
+    border-radius: 2px;
+  }
+
+  .submit-button {
+    border-radius: 24px; 
+    border: 1px solid lightgrey;
+    padding: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.6); 
+    width: fit-content;
+    font-size: var(--fs-300);
   }
 
   .my-tab-item {
     font-size: 1.4rem;
     border-bottom: 2px solid rgb(160, 160, 160);
-    padding: 1vw;
+    padding: 0.5vw;
     color: rgb(160, 160, 160);
     flex-grow: 1;
     text-align: center;
+    display: flex;
+    align-items: center;
   }
 
   .my-active-tab {

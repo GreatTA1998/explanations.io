@@ -2,7 +2,7 @@
 	<div>
     <LeftDrawerToggleButton/>
     
-    <div style="padding: {SIDE_PADDING}px;">
+    <div style="padding: {PAGE_PADDING}px;">
       <Textfield 
         disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
         value={roomDoc.name} on:input={(e) => updateRoomName(e)}
@@ -31,7 +31,7 @@
 
       {#if roomDoc.blackboards}
         {#each roomDoc.blackboards as boardID, i (boardID) }
-          <GeneralizedBlackboardDisplay {boardID} {classID} {roomDoc}/>
+          <GeneralizedBlackboardVideoDisplay {boardID} {classID} {roomDoc}/>
 
           <div style="margin-bottom: 80px;"></div>
         {/each} 
@@ -50,12 +50,12 @@
 
 <script>
   import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
-  import GeneralizedBlackboardDisplay from '$lib/GeneralizedBlackboardDisplay.svelte'
+  import GeneralizedBlackboardVideoDisplay from '$lib/GeneralizedBlackboardVideoDisplay.svelte'
 
   import { getRandomID, displayDate } from '/src/helpers/utility.js'
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
-  import { SIDE_PADDING } from '/src/helpers/dimensions.js'
+  import { PAGE_PADDING } from '/src/helpers/CONSTANTS.js'
 
   import { user, blackboardWidth } from '/src/store.js'
   import { onDestroy } from 'svelte'
@@ -63,7 +63,6 @@
 
   import Textfield from '@smui/textfield'
   import HelperText from '@smui/textfield/helper-text'
-  import '$lib/_FourColor.scss'
   
   export let data
   let { classID, roomID } = data

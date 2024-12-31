@@ -1,7 +1,13 @@
 * {
 	font-family: 'Inter', sans-serif;
-	// TO-DO: revert the question button to its original appearance
 	box-sizing: border-box;
+}
+
+/* prevent accidental going back page */
+/* https://stackoverflow.com/questions/30636930/disable-web-page-navigation-on-swipeback-and-forward?rq=1 */
+html, body {
+  overscroll-behavior-x: none;
+	margin: 0;
 }
 
 /* Reset button's default styling */
@@ -14,7 +20,7 @@ button {
   color: inherit;
   cursor: pointer;
   outline: inherit;
-	text-align: left;
+	text-align: center;
 
   /* Fix for Safari/iOS */
 	appearance: none;
@@ -23,9 +29,9 @@ button {
 }
 
 /* Remove the focus ring (though consider keeping it for accessibility) */
-button:focus {
-  outline: none;
-}
+// button:focus {
+//   outline: none;
+// }
 
 // responsive typography based on Kevin Powell
 :root {
@@ -46,27 +52,14 @@ button:focus {
 
 	--is-400: 36px;
 
-	--navbar-height: 56px;
   --bg-off-white: #f8f9f9;
 }
 
-/* prevent accidental going back page */
-/* https://stackoverflow.com/questions/30636930/disable-web-page-navigation-on-swipeback-and-forward?rq=1 */
-html, body {
-  overscroll-behavior-x: none;
-}
-
-
-/* https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate
-	We base low, medium and high elevation on this essay.
+/* 
+	We base low, medium and high elevation on UX movement's guideline. 0.1 is too low, 0.25 is too much.
+	SEE essay: https://uxmovement.substack.com/p/how-to-use-surface-elevation-to-elevate
+	SEE image: https://www.notion.so/Design-e87b085e3e0c4910b8ef770bb1268dfb?pvs=4#34e8c3917fca4a78b23f869647f452a9
 */
-
-// 0.1 is too low
-// 0.25 is too much
-// 0.5 is too much
-
- // SEE image
-  // https://www.notion.so/Design-e87b085e3e0c4910b8ef770bb1268dfb?pvs=4#34e8c3917fca4a78b23f869647f452a9
 .ux-low-elevation  {
 	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
 }
@@ -110,12 +103,6 @@ html, body {
 	}
 }
 
-// tab component css 
-.active-underline-indicator {
-	border-bottom: 2px solid #F7C686;
-}
-// end of tab component css
-
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing  */
 audio::-internal-media-controls-download-button {
 	display:none;
@@ -125,54 +112,6 @@ audio::-webkit-media-controls-enclosure {
 }
 audio::-webkit-media-controls-panel {
 	width: calc(100% + 33px);
-}  
-
-.webflow-container {
-	width: 92%; 
-	margin-right: auto;
-	margin-left: auto; 
-
-	// additional properties
-	margin-top: 24px;
-
-	background-color: transparent;
-	box-sizing: border-box;
-}
-
-.webflow-paragraph-1 {
-	font-size: 1.8rem;	
-}
-
-@media screen and (max-width: 991px) {
-	.webflow-paragraph-1 {
-		font-size: 1.1rem;
-	}
-}
-
-.header-flex {
-	display: flex;
-	-webkit-box-pack: justify;
-	-ms-flex-pack: justify;
-	flex-wrap: wrap;
-}
-
-@media screen and (max-width: 991px) {
-	.header-subcopy {
-			max-width: 55vw;
-			font-size: 1.3rem;
-		}
-	}
-	
-.header-subcopy {
-	max-width: 20vw;
-	margin-top: 0;
-	margin-bottom: 0.4em;
-	font-size: 1.2rem;
-	line-height: 1.5;
-}
-
-body {
-  margin: 0;
 }
 
 // COPYING NOTION'S SCROLLBAR
@@ -189,11 +128,6 @@ body {
 	background: #EDECE9;
 }
 
-.webflow-section {
-	padding-top: 8%; 
-	padding-bottom: 8%;
-}
-
 /* used from https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow  */
 /* NOTE: you MUST set a width explicitly */
 .my-truncated-text {
@@ -202,54 +136,7 @@ body {
   overflow: hidden;
 }
 
-// HOME PAGE STYLES (copied entirely from /+page.svelte)
-.active-bold {
-	font-weight: 600;
-}
-	
-.active-underline-indicator {
-	border-bottom: 2px solid #F7C686;
-}
-
-.webflow-h1 {
-	font-size: 4rem;
-}
-
-@media screen and (max-width: 767px) {
-	.webflow-h1 {
-		font-size: 3rem;
-	}	
-}
-
-@media screen and (max-width: 479px) {
-	.webflow-h1 {
-		font-size: 2.6rem;
-	}
-}
-
-
-.image-gallery-container {
-	margin-top: 6%; 
-	margin-bottom: 20%; // was 24%
-	// margin-left: 2%;
-}
-
-@media screen and (max-width: 991px) {
-	.image-gallery-container {
-		margin-top: 0% !important;
-		margin-bottom: 8% !important;
-	}
-}
-
-.webflow-section {
-	padding-top: 8%; 
-	padding-bottom: 8%;
-}
-
-/////////
 //// FONT SECTION HERE
-/// /////
-
 .header-title {
 	// Warp uses `white-space: pre-line;` pre-wrap is also an option but didn't achieve anything
 	text-wrap: balance;
@@ -279,144 +166,6 @@ body {
 	max-width: 55ch; // 50-60 characters
 }
 
-.call-to-action-button {
-	height: 4.2vw; 
-	margin-top: 0.8vw; 
-	margin-bottom: 0.8vw;
-}
-
-@media only screen and (max-width: 991px) {
-	.call-to-action-button {
-		height: 60px;
-		margin-top: 16px;
-		margin-bottom: 2rem;
-	}	
-}
-
-.webflow-intro-type {
-	font-size: 2.4rem; // used to be 5 rem
-	// line-height: 1.125; // used to be 1.25 but you know what happened last time
-	font-weight: 500;
-	// letter-spacing: -.02em;
-	max-width: 100%;
-}
-
-@media screen and (max-width: 991px) {
-	.webflow-intro-type {
-		font-size: 2.6rem;
-	}
-}
-
-@media screen and (max-width: 479px) {
-	.webflow-intro-type {
-		font-size: 1.6rem;
-	}
-}
-
-.header-flex {
-	display: flex;
-	// margin-top: 2%;
-	// margin-bottom: 40px;
-	-webkit-box-pack: justify;
-	-ms-flex-pack: justify;
-	/* -webkit-justify-content: space-between;
-	// justify-content: space-between; */
-	justify-content: space-between;
-	align-items: center;
-
-	flex-wrap: wrap;
-
-
-	// additional properties: 
-	// margin-top: 60px;
-}
-
-@media screen and (max-width: 767px) {
-	.header-flex {
-		margin-top: 0px;
-	}
-}
-
-@media screen and (max-width: 479px) {
-	.header-flex {
-		margin-bottom: 0px;
-	}
-}
-
-.header-subcopy {
-	max-width: 20vw;
-	margin-top: 0;
-	margin-bottom: 0.4em;
-	font-size: 1.2rem;
-	line-height: 1.5;
-}
-
-@media screen and (max-width: 991px) {
-	.header-subcopy {
-		max-width: 55vw;
-		font-size: 1.3rem;
-	}
-}
-
-@media screen and (max-width: 479px) {
-	.header-subcopy {
-		max-width: 90vw;
-		font-size: 1rem;
-	}
-}
-
-.header-subcopy-wrapper {
-	// margin-left: 5vw;
-	max-width: 280px; 
-
-	// additional attributes
-	display: flex; 
-	flex-direction: column;
-	// justify-content: flex-end; 
-	// align-items: flex-start;
-
-	-webkit-flex-direction: column; 
-	-webkit-align-items: flex-start;
-
-		margin-top: 32px; margin-left: 0px; border: 0px solid orange;
-}
-
-
-@media screen and (max-width: 991px) {
-	.header-subcopy-wrapper {
-		max-width: 700px;
-		margin-top: 30px;
-		margin-left: 0;
-		font-size: 1.2rem;
-	}
-	
-}
-
-@media screen and (max-width: 767px) {
-	.header-subcopy-wrapper {
-		margin-top: 48px;
-	}
-}
-
-:global(.room-title input) {
-	font-size: 2rem;
-}
-
-:global(.question input) {
-	color: rgb(19, 145, 230) !important
-}
-
-.content {
-margin: 0 auto;
-/* min-width: 750px; 
-max-width: 750px; */
-text-align: left;
-}
-
-li {
-margin-bottom: 2px;
-}
-
 :global(#smui-app),
 :global(body),
 :global(html) {
@@ -424,25 +173,4 @@ margin-bottom: 2px;
 	height: auto !important;
 	width: auto !important;
 	position: static !important;
-}
-
-
-.flexy {
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.flexor {
-	display: inline-flex;
-	flex-direction: column;
-}
-
-.card-container {
-	margin-top: 0px;
-	width: 100%;
-}
-
-
-li {
-	margin-bottom: 24px;
 }

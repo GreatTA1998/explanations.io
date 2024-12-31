@@ -1,33 +1,28 @@
 <div class="comments-column">
-  <div style="padding: 12px;">
-    <slot/>
-  </div>
+  <slot/>
 
-  <div style="display: flex; margin-bottom: 2vw; width: 100%; justify-content: space-between;">
-    <!-- Transcript  -->
-    <!-- <div class="my-tab-item">
+  <!-- <div style="display: flex; margin-bottom: 2vw; width: 100%; justify-content: space-between;">
+    <div class="my-tab-item">
       <span class="material-symbols-outlined" style="cursor: not-allowed;">
         translate
       </span>
       <p style="font-size: 12px;">
         (transcript coming soon)
       </p>
-    </div>       -->
+    </div>      
 
-    <!-- Comments -->
-    <!-- <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
+    <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
       <span class="material-symbols-outlined" style="cursor: pointer;">
         forum
       </span>
       <p style="font-size: 12px;">
         Comments
       </p>
-    </div> -->
-  </div>
+    </div>
+  </div> -->
 
   <div style="padding: 12px; display: flex; flex-direction: column; row-gap: 12px;">
     <ListenToCollection collectionPath={videoDoc.path + '/comments'}
-      let:listenToCollection={listenToCollection}  
       let:collectionDocs={commentDocs}
     >
       <TextAreaAutoResizing
@@ -35,7 +30,7 @@
         on:input={(e) => newInputComment = e.detail}
         placeholder="New comment..."
         placeholderColor="rgb(60, 60, 60)"
-        nonFocusedPlaceholderOpacity={1}
+        nonFocusedPlaceholderOpacity={0.5}
       />
       
       <button on:click={createComment} class="submit-button">

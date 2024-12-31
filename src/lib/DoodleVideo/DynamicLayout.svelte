@@ -6,7 +6,14 @@
 
   {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
     {#if !isDrawerOpen}
-      <button on:click={() => isDrawerOpen = true} class="expand-drawer-floating-button material-symbols-outlined">
+      <button on:click={toggleDrawer} class="expand-drawer-floating-button material-symbols-outlined">
+        start
+      </button>
+    {:else}
+      <button on:click={toggleDrawer} 
+        class="hide-drawer-button material-symbols-outlined" 
+        style="position: absolute; top: 48px; right: 208px; color: rgba(255, 255, 255, 0.7);"
+      >
         start
       </button>
     {/if}
@@ -53,7 +60,10 @@
       flex-grow: 1;
       max-width: 54ch;
     `,
-    [VIDEO_LAYOUT.MOBILE_VERTICAL]: ``
+    [VIDEO_LAYOUT.MOBILE_VERTICAL]: `
+      max-height: 140px;
+      overflow-y: auto;
+    `
   }
 
   function toggleDrawer () {

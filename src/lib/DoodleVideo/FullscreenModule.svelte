@@ -18,17 +18,8 @@
     <div slot="comments-section" 
       class:hidden={!isFullscreen} 
       let:commentsSectionStyle={commentsSectionStyle}
-      let:toggleDrawer={toggleDrawer}
       style={commentsSectionStyle}
     >
-      {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
-        <button on:click={toggleDrawer}
-          class="hide-drawer-button material-symbols-outlined"
-        >
-          start
-        </button>
-      {/if}
-
       <CommentsColumn videoDoc={boardDoc}>
         {#if isFullscreen}
           <p>{boardDoc.description || ''}</p>       
@@ -40,8 +31,7 @@
 
 <script>
   import { onMount } from 'svelte'
-  import { videoCinemaWidth, videoCinemaLayout } from '/src/store.js'
-  import { VIDEO_LAYOUT } from '/src/helpers/dimensions.js'
+  import { videoCinemaWidth } from '/src/store.js'
   import CommentsColumn from '$lib/DoodleVideo/CommentsColumn.svelte'
   import DynamicLayout from '$lib/DoodleVideo/DynamicLayout.svelte'
 
@@ -66,14 +56,6 @@
 </script>
 
 <style>
-  .hide-drawer-button {
-    z-index: 10; 
-    position: absolute; 
-    top: 12px; 
-    left: 6px;
-    color: rgb(100, 100, 100);
-  }
-
   .hidden {
     display: none;
   }

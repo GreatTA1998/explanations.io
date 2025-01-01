@@ -133,10 +133,10 @@
   import { getFirestoreDoc, getFirestoreQuery, updateFirestoreDoc, firestoreCollection } from '/src/helpers/crud.js'
   import { query, getFirestore, collection, where, onSnapshot, limit, orderBy } from 'firebase/firestore'
   import PopupConfirmLearner from '$lib/PopupConfirmLearner.svelte'
-  import PopupConfirmTeacher from '$lib/PopupConfirmTeacher.svelte'
+  import PopupConfirmTeacher from '$lib/ServerOverview/PopupConfirmTeacher.svelte'
   import { user, assumedCanvasWidth } from '/src/store.js'
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte'
-  import TeacherInformationCard from '$lib/TeacherInformationCard.svelte'
+  import ReusableRoundButton from '$lib/Reusable/ReusableRoundButton.svelte'
+  import TeacherInformationCard from '$lib/ServerOverview/TeacherInformationCard.svelte'
 
   export let data;
 

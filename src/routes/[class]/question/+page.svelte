@@ -1,7 +1,7 @@
 <ClassServerAskQuestion {classID}/>
 
 <script>
-  import ClassServerAskQuestion from '$lib/ClassServerAskQuestion.svelte'
+  import ClassServerAskQuestion from '$lib/AskQuestion/index.svelte'
 
   export let data;
   

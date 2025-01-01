@@ -1,9 +1,6 @@
 import { writable, readable } from 'svelte/store';
 import { getRandomID } from './helpers/utility.js'
-import { DRAWER_EXPANDED_WIDTH } from './helpers/CONSTANTS.js';
-
-export const maxAvailableWidth = writable(0)
-export const maxAvailableHeight = writable(0)
+import { WIDTHS } from './helpers/CONSTANTS.js';
 
 // to scale the pencil stroke width for smaller/bigger devices
 export const assumedCanvasHeight = writable(900) // 4:3 aspect ratio
@@ -25,10 +22,9 @@ export const recordState = writable('pre_record') // mid_record and post_record
 export const baseMicStream = writable(null)
 export const willPreventPageLeave = writable(false)
 
-export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2'])
+export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2', 'p3tOuo1fkUYTgDhNnpjfCh403ZH3']) // for some reason I have 2 accounts with eltonlin1998@gmail.com
 
-export const drawerWidth = writable(DRAWER_EXPANDED_WIDTH)
-export const classDetailsDrawerWidth = writable(DRAWER_EXPANDED_WIDTH)
+export const drawerWidth = writable(WIDTHS.DRAWER_EXPANDED)
 
 export const whatIsBeingDragged = writable('')
 export const whatIsBeingDraggedID = writable('')

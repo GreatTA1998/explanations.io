@@ -14,7 +14,8 @@
     <div slot="popup-content">    
       {#if activeTabName === 'old'}
         <div style="font-size: 14px; color: rgb(100, 100, 100); margin-top: 10px; line-height: 1.5;">
-          Ask your teacher questions directly, join other committed learners, and browse the pool of explanations you build up together. 
+          Ask your teacher questions directly - all questions are answered, and replied within 48 hours usually. 
+          Join other committed learners, and browse the pool of explanations you build up together. 
           Unsure about something? Feel free to <a target="_blank" href="https://cal.com/eltonlin1998/setup-call"> book a setup call</a> instead.
         </div>
       {:else}
@@ -127,10 +128,9 @@
             </li>
 
             {#if memberDoc}
-              <UXFormTextArea
+              <UXFormTextArea fieldLabel="What kind of explanations are you looking for?"        
                 value={memberDoc.reasonForLearning}
                 on:input={(e) => debouncedUpdateBio({ newVal: e.detail })}
-                fieldLabel="What kind of explanations are you looking for?"
                 placeholder=""
               />
             {/if}
@@ -165,8 +165,7 @@
 
     <div slot="popup-buttons" style="display: flex; justify-content: flex-end">
       {#if activeTabName === 'old'}
-        <ReusableRoundButton 
-          on:click={doSubscriberSignUp}
+        <ReusableRoundButton on:click={doSubscriberSignUp}
           backgroundColor="#5d0068" 
           textColor="white"
           isDisabled={!!!$user.uid || !memberDoc || !chosenTeacherUID || !quickfix || memberDoc.subscribedTeacherUID}
@@ -175,8 +174,7 @@
         </ReusableRoundButton>
 
       {:else if activeTabName === 'new'}
-        <ReusableRoundButton  
-          on:click={doPrepaidLearnerSignUp}
+        <ReusableRoundButton on:click={doPrepaidLearnerSignUp}
           backgroundColor="#5d0068" 
           textColor="white"
           isDisabled={!!!$user.uid || !memberDoc || !quickfix || memberDoc.isLearner}
@@ -189,14 +187,14 @@
 {/if}
 
 <script>  
-  import BasePopup from '$lib/BasePopup.svelte'
+  import BasePopup from '$lib/Reusable/BasePopup.svelte'
   import Button from '@smui/button'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher } from 'svelte'
   import { user } from '../store.js'
-  import { getFirestoreDoc, setFirestoreDoc, updateFirestoreDoc } from '../helpers/crud.js'
-  import ReusableSignInButton from '$lib/ReusableSignInButton.svelte'
-  import UXFormTextArea from '$lib/UXFormTextArea.svelte'
-  import ReusableRoundButton from '$lib/ReusableRoundButton.svelte';
+  import { getFirestoreDoc, setFirestoreDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
+  import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
+  import UXFormTextArea from '$lib/Reusable/UXFormTextArea.svelte'
+  import ReusableRoundButton from '$lib/Reusable/ReusableRoundButton.svelte';
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { getMemberDocSchema } from '/src/helpers/schema.js'
   import { arrayUnion, increment } from 'firebase/firestore'
@@ -315,6 +313,14 @@
 </script>
 
 <style>
+  .active-bold {
+    font-weight: 600;
+  }
+
+  .active-underline-indicator {
+    border-bottom: 2px solid #F7C686;
+  }
+
   .highlighted-chip {
     background-color: black; 
     color: white;
@@ -333,5 +339,4 @@
     margin-top: 6px;
     font-weight: 500;
   }
-
 </style>

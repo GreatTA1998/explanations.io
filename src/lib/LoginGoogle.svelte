@@ -1,22 +1,8 @@
-<div style="
-  border: 2px solid rgb(87, 87, 87);
-  color: rgb(87, 87, 87);
-  width: fit-content;
-  margin-bottom: 2px;
-  font-size: var(--fs-400);
-  padding: 6px 10px;
-  border-radius: 24px;
-  align-text: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  font-weight: 500;
-"
-  on:click={signInWithGoogle} on:keydown
->
-  SIGN IN WITH GOOGLE
-</div>
+<button on:click={signInWithGoogle} class="my-button" {...$$restProps}>
+  <slot>
+    SIGN IN
+  </slot>
+</button>
 
 <script>
   import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
@@ -61,3 +47,18 @@
     }
   }
 </script>
+
+<style>
+  .my-button {
+    width: fit-content;
+    border: 1px solid rgb(87, 87, 87);
+    padding: 6px 10px;
+    border-radius: 24px;
+
+    font-size: var(--fs-300);
+    font-weight: 400;
+    color: rgb(87, 87, 87);
+
+    text-align: center;
+  }
+</style>

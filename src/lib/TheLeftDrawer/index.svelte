@@ -1,4 +1,4 @@
-<div class="drawer-container" style="height: 100%; display: flex; flex-direction: column;">
+<div class="drawer-container" style="height: 100%; display: flex; flex-direction: column; box-shadow: 4px 0 6px -2px rgba(0, 0, 0, 0.1);" >
   <div style="padding: 0; position: relative; padding-top: 24px; flex-grow: 1;">
     <!-- 
       IMPORTANT TRICK: because it's `absolute`, this div will retain its original height and NOT expand when it overflows 

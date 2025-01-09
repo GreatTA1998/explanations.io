@@ -2,7 +2,14 @@
 	<Row style="height: var(--navbar-height); background-color: var(--bg-off-white); border-bottom: 1px solid lightgrey; padding-left: 2%; padding-right: 2%;">
 		<div style="padding: 6px 12px 8px 0px; box-sizing: border-box; width: {50 + 20}px; height: {46 + 14}px">
 			<GlobalAppPopup let:setIsPopupOpen={setIsPopupOpen}>
-				<button on:click={() => setIsPopupOpen(true)}>
+				<!-- () => setIsPopupOpen(true)} -->
+				<button on:click={() => {
+					if ($user.uid) {
+						setIsPopupOpen(true)
+					} else {
+						isFullServerMode.set(false)
+					}
+				}}>
 					<img src="/app-logo-no-bg.png"
 						class="prepare-to-appear" class:increase-opacity={!isHomeScreenVisible} 
 						width="50" height="46" style="filter: brightness(80%); margin-right: 6px; cursor: pointer;"
@@ -64,7 +71,7 @@
 	import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
 	import { getFirestoreCollection } from '/src/helpers/crud.js'
   import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar'
-	import { recentSearchedServerDoc } from '/src/store.js'
+	import { user, recentSearchedServerDoc, isFullServerMode } from '/src/store.js'
 	import { viewport } from '/src/storeFolder/viewport.js'
 
 	export let isHomeScreenVisible
@@ -112,7 +119,7 @@
 	}
 
 	.prepare-to-appear {
-		opacity: 0.2;
+		opacity: 0;
 		transition: opacity 0.5s ease-in-out;
 	}
 

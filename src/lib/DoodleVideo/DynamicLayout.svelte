@@ -63,7 +63,9 @@
     [VIDEO_LAYOUT.MOBILE_VERTICAL]: `
       max-height: 140px;
       overflow-y: auto;
+      max-width: 38ch; 
     `
+    // max-width: 38ch; is just chosen to quickly satisfy the desktop profile page
   }
 
   function toggleDrawer () {

@@ -1,12 +1,12 @@
 <div class="drawer-container" style="height: 100%; display: flex; flex-direction: column;">
-  <div style="padding: 0; position: relative;  padding-top: 24px;  flex-grow: 1;">
+  <div style="padding: 0; position: relative; padding-top: 24px; flex-grow: 1;">
     <!-- 
       IMPORTANT TRICK: because it's `absolute`, this div will retain its original height and NOT expand when it overflows 
       without the need of an explicit height / max-height property 
     -->
     <div style="position: absolute; overflow-y: auto; inset: 0;">
       <QuestionsSection {classID}>
-        <div style="width: 100%; display: flex; margin-top: 24px;">
+        <div style="width: 100%; display: flex; margin-top: 24px; align-items: center;">
           <button on:click={() => goto(`/${classID}/question`)} 
             class="new-question-button"
             class:drawer-item-glow={$page.route.id === '/[class]/question'}
@@ -18,6 +18,12 @@
               New question
             </div>
           </button> 
+
+          {#if $drawerWidth > 0}
+            <div style="margin-left: auto;">
+              <LeftDrawerToggleButton />
+            </div>
+          {/if}
         </div>
       </QuestionsSection>
 
@@ -74,6 +80,7 @@
 </div>
 
 <script>
+  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import QuestionsSection from '$lib/TheLeftDrawer/QuestionsSection.svelte'
   import RecursiveRoom from './RecursiveRoom.svelte'
   import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'

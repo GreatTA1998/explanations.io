@@ -6,11 +6,12 @@
     start
   </button>
 {:else}   
+  <!-- transform: rotateY(180deg) -->
   <button on:click={() => drawerWidth.set(0)} 
     class="material-icons expand-collapse-button" 
-    style="font-size: 3rem; transform: rotateY(180deg)"
+    style="font-size: 2rem;"
   >
-    keyboard_tab
+    keyboard_double_arrow_left
   </button>
 {/if}
 
@@ -33,9 +34,8 @@
     border-radius: 8px;
 
     z-index: 1;
-    margin-top: 12px; 
 
     cursor: pointer;
-    color: rgb(120, 120, 120);
+    color: rgb(100, 100, 100);
   }
 </style>

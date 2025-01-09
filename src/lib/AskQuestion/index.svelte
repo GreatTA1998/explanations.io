@@ -1,6 +1,4 @@
 <div>
-  <LeftDrawerToggleButton/>
-
   <div style="padding: 16px;">
     <CodepenInput
       value={questionTitleInput}

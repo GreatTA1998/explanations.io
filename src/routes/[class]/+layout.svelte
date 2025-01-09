@@ -9,6 +9,15 @@
   </div>
 
   <div id="main-content" bind:this={MainContent}>
+    {#if $drawerWidth === 0}
+      <button on:click={() => drawerWidth.set(WIDTHS.DRAWER_EXPANDED)} 
+        class="material-icons expand-collapse-button" 
+        style="color: rgb(100, 100, 100); font-size: 2rem; position: absolute; top: 2px; left: 2px; z-index: 100; border: 1px solid lightgrey; border-radius: 24px;"
+      >
+        keyboard_double_arrow_right
+      </button>
+    {/if}
+
     <slot />
   </div>
 </div>
@@ -17,6 +26,7 @@
   import TheLeftDrawer from '$lib/TheLeftDrawer/index.svelte'
   import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { WIDTHS } from '/src/helpers/CONSTANTS.js'
 
   import { 
     user, drawerWidth, classServerDoc, recentSearchedServerDoc, 
@@ -125,6 +135,7 @@
 
   #main-content {
     grid-area: main;
+    position: relative;
   }
 </style>
 

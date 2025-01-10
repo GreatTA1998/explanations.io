@@ -52,16 +52,6 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
-
-
-		<!-- Event snippet for 網頁瀏覽 conversion page -->
-		<script>
-			gtag('event', 'conversion', {
-					'send_to': 'AW-11531985995/F5CQCOrR3oIaEMvI8Poq',
-					'value': 1.0,
-					'currency': 'JPY'
-			});
-		</script>
 	</head>
 	<body>
 		<div style="display: contents">
@@ -77,5 +67,12 @@
 		gtag('js', new Date());
 
 		gtag('config', 'AW-11531985995');
+
+		// <!-- Event snippet for 網頁瀏覽 conversion page -->
+		gtag('event', 'conversion', {
+				'send_to': 'AW-11531985995/F5CQCOrR3oIaEMvI8Poq',
+				'value': 1.0,
+				'currency': 'JPY'
+		});
 	</script>
 </html>

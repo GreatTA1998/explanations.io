@@ -21,22 +21,7 @@
       </BaseTransparentButton>
     </div>
     
-    <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
-      {#if !hasPlaybackStarted}
-        <button on:click={startAudioPlayer}
-          class="material-icons overlay-center" 
-          style="
-            color: rgba(230, 230, 230, 0.8);
-            width: {240 * scaleFactor}px; 
-            height: {240 * scaleFactor}px; 
-            z-index: 5;
-            font-size: {15 * scaleFactor}rem;
-          "
-        >
-          play_circle
-        </button>
-      {/if} 
-
+    <div on:click={togglePlayPause} style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#each boardDoc.slideIDs as slideID, i}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
@@ -85,9 +70,7 @@
         isPlaying = true;
         startTimer();
       }}
-      on:pause={() => {
-        isPlaying = false;
-      }}
+      on:pause={() => isPlaying = false}
       on:seeking={() => {
         currentTime = AudioPlayer.currentTime;
         hasAudioSliderJumped = true
@@ -148,21 +131,27 @@
     handleVideoDelete(boardDoc)
   }
 
-  // Ensure we change `idxOfFocusedSlide` 
+  $: if (currentTime > 0) {
+    syncSlideIdxToTime()
+  }
+
+  function togglePlayPause () {
+    if (isPlaying) AudioPlayer.pause()
+    else if (AudioPlayer) AudioPlayer.play() // let the on:play event handle the rest, so the user can play from the video or the audio player
+  }
+  
   // NOTE: doesn't need to be optimized yet , there are only about 10-20 slide changes at most
-  $: {
-    if (currentTime > 0) {
-      let temp = 0
-      for (const change of timingOfSlideChanges) {
-        if (change.timing < currentTime) {
-          temp = change.toIdx
-        }
-        else if (change.timing > currentTime) {
-          break
-        }
+  function syncSlideIdxToTime () {
+    let temp = 0
+    for (const change of timingOfSlideChanges) {
+      if (change.timing < currentTime) {
+        temp = change.toIdx
       }
-      idxOfFocusedSlide = temp
+      else if (change.timing > currentTime) {
+        break
+      }
     }
+    idxOfFocusedSlide = temp
   }
 
   $: if (AudioPlayer) {
@@ -205,12 +194,6 @@
     }
   }
 
-  function startAudioPlayer () {
-    if (AudioPlayer) {
-      AudioPlayer.play()
-    }
-  }
-
   function startTimer () {
     intervalID = setInterval(
       () => { 
@@ -241,17 +224,6 @@
 <style>
   audio::-webkit-media-controls-enclosure {
     border-radius: 0;
-  }
-
-  .overlay-center {
-    position: absolute; 
-    width: 20px; 
-    height: 20px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto; 
   }
 </style>
 

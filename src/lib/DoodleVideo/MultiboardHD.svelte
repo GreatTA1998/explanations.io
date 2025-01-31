@@ -21,7 +21,7 @@
       </BaseTransparentButton>
     </div>
     
-    <div on:click={togglePlayPause} style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
+    <div on:click={togglePlayPause} on:keydown={togglePlayPause} style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#each boardDoc.slideIDs as slideID, i}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}

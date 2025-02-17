@@ -12,6 +12,7 @@ import { onDestroy, tick } from 'svelte'
 import { query, collection, getFirestore, orderBy, onSnapshot, doc, setDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
 
 export let dbPath
+export let autoListen = false
 
 /**
  * REMINDERS FOR FUTURE SELF: 
@@ -28,6 +29,10 @@ let unsubStrokesListener
 const db = getFirestore()
 const strokesRef = collection(db, `${dbPath}/strokes`)
 const strokesQuery = query(strokesRef, orderBy('timestamp'))
+
+if (autoListen) {
+  listenToStrokes()
+}
 
 onDestroy(() => {
   if (unsubStrokesListener) {

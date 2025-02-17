@@ -5,30 +5,12 @@
 <script>
   import { baseMicStream } from '../../store.js'
   import { initializeMicStream } from '../../helpers/microphone.js'
-  import { createEventDispatcher, onMount } from 'svelte'
-  import { browser } from '$app/environment'
-  // import AudioRecorder from 'audio-recorder-polyfill'
-  // import mpegEncoder from "audio-recorder-polyfill/mpeg-encoder";
-  // AudioRecorder.encoder = mpegEncoder;
-  // AudioRecorder.prototype.mimeType = "audio/mpeg"; // mpeg is equivalent to mp3
-  let AudioRecorder
+  import { createEventDispatcher } from 'svelte'
   const dispatch = createEventDispatcher()
   let recorder =  null
 
-  // technically this is overkill: see https://kit.svelte.dev/faq
-  onMount(async () => {
-    if (browser && window) {
-      // https://stackoverflow.com/a/58859327
-      // otherwise `window` is undefined
-      AudioRecorder = await import("audio-recorder-polyfill")
-      window.MediaRecorder = AudioRecorder.default
-    }
-  })
-
   /**
    * MediaStreamTrack API https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop
-   * 
-   * 
    */
   function startRecording () {
     return new Promise(async (resolve, reject) => {
@@ -43,7 +25,11 @@
       const micStreamCopy = $baseMicStream.clone() // new copies I assume will have active tracks, even if the base is deactivated
 
       // this doesn't throw exceptions, no need for try-catch
-      recorder = new MediaRecorder(micStreamCopy); 
+      // Chrome/Firefox defaults to WebM/Opus
+      // Safari defaults to AAC/MP4
+      recorder = new MediaRecorder(micStreamCopy, {
+        mimeType: 'audio/webm;codecs=opus'
+      })
 
       checkAudioTrack(recorder.stream)
     

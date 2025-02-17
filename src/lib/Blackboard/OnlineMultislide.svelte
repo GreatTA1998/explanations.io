@@ -29,11 +29,11 @@
   >
     <ListenToStrokes 
       dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-      let:listenToStrokes={listenToStrokes} 
+      autoListen
       let:strokesArray={strokesArray}
       let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
     >
-      <div use:lazyCallable={listenToStrokes} 
+      <div 
         style="
           display: {idxOfFocusedSlide === i ? '' : 'none'};
           width: {canvasWidth}px; height: {canvasHeight}px; 
@@ -61,6 +61,7 @@
                 changeToSlideIdx(idxOfFocusedSlide - 1)
               }
             }}
+            on:canvas-stream-ready={(e) => canvasMediaStreams = [...canvasMediaStreams, e.detail]}
           />
         {/if}
       </div>
@@ -98,6 +99,16 @@
       </button>
     {/if}
   </div>
+
+  <div>
+    <span>Combined recording</span>
+    <video 
+      controls bind:this={vid}
+      class="debug-video" 
+      style="width: 300px; height: 200px;"
+    >
+    </video>
+  </div>
 </RenderlessAudioRecorder>
 
 <script>
@@ -128,7 +139,7 @@
   } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
   import { onMount, onDestroy } from 'svelte'
-  import { user, willPreventPageLeave } from '/src/store.js'
+  import { user, willPreventPageLeave, baseMicStream } from '/src/store.js'
   import { page } from '$app/stores'
   
   export let canvasWidth
@@ -151,6 +162,8 @@
   let idxOfFocusedSlide = 0 
   const timingOfSlideChanges = []
 
+  let canvasMediaStreams = []
+
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
   // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
   onMount(async () => {
@@ -164,6 +177,7 @@
   async function initializeRecording ({ startRecording }) {
     try {
       await startRecording()
+      recordVisualAndAudioToWebM()
       startStopwatch()
       timingOfSlideChanges.push({
         toIdx: idxOfFocusedSlide,
@@ -179,9 +193,82 @@
     }
   }
 
+
+  let vid, videoRecorder, videoTrack, combinedStream
+  let outputCanvas, ctx
+  const chunks = []
+
+  //https://stackoverflow.com/a/57915174/7812829
+  function switchCanvasStream (newSlideIdx) {
+    if (videoTrack && combinedStream) {
+      combinedStream.removeTrack(videoTrack)
+      videoTrack = canvasMediaStreams[newSlideIdx].getVideoTracks()[0]
+      combinedStream.addTrack(videoTrack)
+    }
+  }
+
+  function recordVisualAndAudioToWebM () {
+    // Create master canvas for composition
+    outputCanvas = document.createElement('canvas')
+    outputCanvas.width = canvasWidth
+    outputCanvas.height = canvasHeight
+
+    const outputStream = outputCanvas.captureStream(10)
+
+    ctx = outputCanvas.getContext('2d')
+
+    const [audioTrack] = $baseMicStream.getAudioTracks()
+    videoTrack = canvasMediaStreams[0].getVideoTracks()[0]
+    // videoTrack = outputStream.getVideoTracks()[0]
+
+    // Ensure video track has proper constraints
+    videoTrack.applyConstraints({
+      width: canvasWidth,
+      height: canvasHeight,
+      frameRate: 10
+    }).catch(e => console.error('Constraint error:', e));
+
+    // COMBINED STREAM
+    combinedStream = new MediaStream([videoTrack, audioTrack])
+
+    videoRecorder = new MediaRecorder(combinedStream, {
+      mimeType: 'video/webm;codecs=vp8,opus',
+
+      // these settings are necessary, otherwise the recorder will still be audio-only
+      videoBitsPerSecond: 500000, // 0.5 Mbps is "low quality"
+      audioBitsPerSecond: 128000 // 128 kbps
+    })
+   
+    videoRecorder.addEventListener('dataavailable', e => e.data.size && chunks.push(e.data))
+    videoRecorder.addEventListener('stop', exportStream)
+    videoRecorder.addEventListener('error', (e) => {console.error('MediaRecorder error:', e);});
+
+    videoRecorder.start(100) // 100 ms
+
+    function exportStream () {
+      if (chunks.length) {
+        var blob = new Blob(chunks, { 
+          type: 'video/webm;codecs=vp8,opus'// chunks[0].type 
+        })    
+        var vidURL = URL.createObjectURL(blob)
+
+        vid.src = vidURL
+        vid.addEventListener('loadedmetadata', () => {
+          console.log('Video metadata loaded:', {
+            duration: vid.duration,
+            videoWidth: vid.videoWidth,
+            videoHeight: vid.videoHeight
+          });
+        });
+        vid.addEventListener('error', () => { console.log('Video error:', vid.error); })
+      }
+    }
+  }
+
   async function terminateRecording ({ stopRecording }) {
     try {
       await stopRecording()
+      videoRecorder.stop()
       stopStopwatch()
       updateFirestoreDoc(boardDoc.path, {
         recordState: 'post_record'
@@ -224,9 +311,16 @@
         timing: currentTime
       })
     }
+
+    if (isRecording) {
+      switchCanvasStream(newSlideIdx)
+    }
   }
 
   async function saveVideo (audioBlob) {
+    // TO-DO: REMOVE THIS WHEN YOU'RE READY
+    return
+
     // JOB #1: upload the audio blob
     let downloadURL 
     const storage = getStorage()
@@ -295,7 +389,8 @@
 
     willPreventPageLeave.set(false) // technically does nothing because we defensively reload, but it's still here for correctness
 
-    window.location.reload()
+    // NOTE: removed now so that we can test the webm4 export feature
+    // window.location.reload()
   }
 
   // TO-DO: encapsulate this into a modular component/JS file etc.

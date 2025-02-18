@@ -2,6 +2,7 @@
   <WebmRecorder bind:this={webmRecorder}
     canvasWidth={canvasWidth}
     canvasHeight={canvasHeight}
+    on:video-ready={e => webmBlob = e.detail.blob}
   />
 
   <Stopwatch bind:this={stopwatch}
@@ -91,7 +92,7 @@
   <AudioRecorder
     let:startRecording={startRecording} 
     let:stopRecording={stopRecording}
-    on:record-end={(e) => saveVideo(e.detail.audioBlob)}
+    on:record-end={e => audioBlob = e.detail.audioBlob}
   >
     <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
       {#if !isRecording}
@@ -126,11 +127,12 @@
   import Stopwatch from './Stopwatch.svelte'
   import AudioRecorder from './AudioRecorder.svelte'
   import WebmRecorder from './WebmRecorder.svelte'
+
   import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
-  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
+  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
 
   import { 
     deleteMultislideBlackboard, 
@@ -161,7 +163,6 @@
   export let classID
   export let roomDoc
 
-  const db = getFirestore()
   let isRecording = false
   let isBoardVisible = false
 
@@ -175,6 +176,15 @@
   let canvasMediaStreams = []
   let masterCanvas, masterCtx
   let webmRecorder
+  
+  let webmBlob
+  let audioBlob
+
+  const db = getFirestore()
+
+  $: if (webmBlob && audioBlob) {
+    uploadVideo({ webmBlob, audioBlob })
+  }
 
   onMount(async () => {
     document.addEventListener('keydown', keydownHandler)
@@ -256,17 +266,46 @@
     }
   }
 
-  async function saveVideo (audioBlob) {
-    // TO-DO: REMOVE THIS WHEN YOU'RE READY
-    return
+  async function handleWhatUserUploaded (imageFile, slideID) {
+    if (!imageFile) return
+    if (imageFile.type.split("/")[0] === 'image') {
+      const storage = getStorage()
+      const imageRef = ref(storage, `images/${getRandomID()}`)
+      await uploadBytes(imageRef, imageFile)
+      const downloadURL = await getDownloadURL(imageRef)
+
+      updateFirestoreDoc(boardDoc.path + `/slides/${slideID}`, {
+        backgroundImageDownloadURL: downloadURL,
+        backgroundImageStoragePath: imageRef.fullPath // TO-DO: proper deletion boards
+      })
+    } else {
+      alert("Error: only images can be used")
+    }
+  } 
+
+  async function uploadVideo ({ audioBlob, webmBlob }) {
+    const storage = getStorage()
+    
+    // upload webm video
+    let webmDownloadURL
+    const options = {   
+      contentType: 'video/webm',
+      customMetadata: {
+        extension: '.webm'
+      }
+    }
+    const webmRef = ref(storage, `webmVideos/${getRandomID()}`)
+    const webmUploadJob = uploadBytes(webmRef, webmBlob, options).then(async () => {
+      webmDownloadURL = await getDownloadURL(webmRef)
+      return webmDownloadURL
+    })
 
     // JOB #1: upload the audio blob
-    let downloadURL 
-    const storage = getStorage()
+    let audioDownloadURL 
     const audioRef = ref(storage, `audio/${getRandomID()}`)
     const audioUploadJob = uploadBytes(audioRef, audioBlob).then(async () => {
-      downloadURL = await getDownloadURL(audioRef)
-      return downloadURL
+      audioDownloadURL = await getDownloadURL(audioRef)
+      return audioDownloadURL
     })
 
     // JOB #2: update metadata of dependent firestore docs (note "tutor" is a legacy name)
@@ -277,12 +316,12 @@
     )
     const otherDocsMetadataUpdateJob = getDocs(q).then(snap => {
       if (!snap.empty) {
-      snap.docs.forEach(doc => {
-        tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
-      })
-      updateFirestoreDoc(`classes/${classID}/members/${tutorDoc.id}`, {
-        numOfVideos: increment(1)
-      })
+        snap.docs.forEach(doc => {
+          tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
+        })
+        updateFirestoreDoc(`classes/${classID}/members/${tutorDoc.id}`, {
+          numOfVideos: increment(1)
+        })
       }
       updateFirestoreDoc(`classes/${classID}`, {
         numOfVideos: increment(1)
@@ -290,6 +329,7 @@
     })
 
     await Promise.all([
+      webmUploadJob,
       audioUploadJob,
       otherDocsMetadataUpdateJob
     ])
@@ -300,8 +340,10 @@
       creatorName: $user.name || '',
       creatorPhoneNumber: $user.phoneNumber || '',
       date: new Date().toISOString(),
-      audioDownloadURL: downloadURL,
+      audioDownloadURL,
+      webmDownloadURL,
       audioRefFullPath: audioRef.fullPath,
+      webmRefFullPath: webmRef.fullPath,
       timingOfSlideChanges,
       isPaid: false
     })
@@ -331,23 +373,4 @@
     // NOTE: removed now so that we can test the webm4 export feature
     // window.location.reload()
   }
-
-  // FILE UPLOAD RELATED CODE
-  async function handleWhatUserUploaded (imageFile, slideID) {
-    if (!imageFile) return
-    if (imageFile.type.split("/")[0] === 'image') {
-      // rewrite
-      const storage = getStorage()
-      const imageRef = ref(storage, `images/${getRandomID()}`)
-      await uploadBytes(imageRef, imageFile)
-      const downloadURL = await getDownloadURL(imageRef)
-
-      updateFirestoreDoc(boardDoc.path + `/slides/${slideID}`, {
-        backgroundImageDownloadURL: downloadURL,
-        backgroundImageStoragePath: imageRef.fullPath // TO-DO: proper deletion boards
-      })
-    } else {
-      alert("Error: only images can be used")
-    }
-  } 
 </script>

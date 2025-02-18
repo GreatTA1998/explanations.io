@@ -145,6 +145,12 @@ export async function revertToBoard ({ boardDoc, slideIDToStrokesArray }) {
     deleteObjectFromStorage(boardDoc.audioRefFullPath)
   )
 
+  if (boardDoc.webmDownloadURL) {
+    promises.push(
+      deleteObjectFromStorage(boardDoc.webmRefFullPath)
+    )
+  }
+
   promises.push(
     updateFirestoreDoc(boardDoc.path, {
       creator: deleteField(),

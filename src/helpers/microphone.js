@@ -3,7 +3,13 @@ import { baseMicStream } from '../store.js'
 export function initializeMicStream () {
   return new Promise(async resolve => {
     try {
-      const micStream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const micStream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          channelCount: 1,  // Mono instead of stereo
+          sampleRate: 22050,  // Half of CD quality (44.1kHz)
+          sampleSize: 16
+        } 
+      })
       baseMicStream.set(micStream)
       resolve()
     } catch (error) {

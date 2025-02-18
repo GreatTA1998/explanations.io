@@ -1,19 +1,21 @@
 <script>
   import { baseMicStream } from '../../store.js'
-  import { onMount, onDestroy } from 'svelte'
-  
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
+
   export let previewVideo
   export let canvasWidth
   export let canvasHeight
   export let fps = 10
-  export let videoBitrate = 500000  // 0.5 Mbps
-  export let audioBitrate = 128000  // 128 kbps
-  
+  export let videoBitrate = 32_000  // 0.5 Mbps is low quality for a video
+  export let audioBitrate = 16_000  
+  // 32 kbps: radio quality
+  // 128-320 kbps:  (for mp3 music)
   let outputCanvas
   let ctx
   let videoRecorder
   let combinedStream
   let chunks = []
+  const dispatch = createEventDispatcher()
 
   onMount(() => {
     outputCanvas.width = canvasWidth
@@ -44,7 +46,7 @@
 
     combinedStream = new MediaStream([videoTrack, audioTrack])
     videoRecorder = new MediaRecorder(combinedStream, {
-      mimeType: 'video/webm;codecs=vp8,opus',
+      // mimeType: chrome defaults to 'video/webm' or video/webm;codecs=vp8,opus, Safari will fallback to different codecs
       videoBitsPerSecond: videoBitrate,
       audioBitsPerSecond: audioBitrate
     })
@@ -70,23 +72,27 @@
   function createPreview() {
     if (chunks.length) {
       const blob = new Blob(chunks, { 
-        type: 'video/webm;codecs=vp8,opus'
+        type: 'video/webm'
       })    
+      // codecs=vp8,opus
+
+      console.log("webm blob.size =", blob.size)
+      dispatch('video-ready', { blob })
+
       const vidURL = URL.createObjectURL(blob)
       
       if (previewVideo) {
         previewVideo.src = vidURL
+        previewVideo.load() // attempt to get more metadata upfront
         previewVideo.addEventListener('loadedmetadata', () => {
-          // console.log('Video metadata loaded:', {
-          //   duration: previewVideo.duration,
-          //   videoWidth: previewVideo.videoWidth,
-          //   videoHeight: previewVideo.videoHeight
-          // })
+          console.log('Metadata loaded')
+          console.log('Video duration:', previewVideo.duration)
+          console.log('Video ready state:', previewVideo.readyState)
+          console.log('Video size:', blob.size)
         })
-        previewVideo.addEventListener('error', () => {
-          console.log('Video error:', previewVideo.error)
-        })
+        previewVideo.addEventListener('error', () => console.log('Video error:', previewVideo.error))
       }
+      dispatch('video-ready', { blob })
     }
   }
   
@@ -102,17 +108,16 @@
   }
 </script>
 
-<span>Master output canvas</span>
 <canvas
-  style="outline: 2px solid red;"
+  style="display: none;;"
   bind:this={outputCanvas}
 >
 </canvas>
 
-<span>Combined recording</span>
-<video 
-  controls bind:this={previewVideo}
+<!--
+<video bind:this={previewVideo}
+  controls 
   class="debug-video" 
   style="width: 300px; height: 200px;"
 >
-</video>
+</video> -->

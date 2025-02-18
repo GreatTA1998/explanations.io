@@ -1,5 +1,7 @@
 <!-- Create an independent stacking context -->
-<div style="z-index: 0; position: relative;">
+<div style="z-index: 0; position: relative;" 
+  use:lazyCallable={() => isElementVisible = true }
+>
   {#if showSlideChanger}
     <!-- 1px quick-fix so UI doesn't look terrible -->
     <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px; flex-wrap: wrap; row-gap: 2px;">  
@@ -27,13 +29,13 @@
           let:theDoc={slideDoc}
         >
           <FetchStrokes dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-            let:fetchStrokes={fetchStrokes}
+            autoFetchStrokes={isElementVisible}
             let:strokesArray={strokesArray}
             on:mounted={(e) => {
               slideIDToStrokesArray[slideID] = e.detail.strokesArray
             }}
           > 
-            <div use:lazyCallable={fetchStrokes}  
+            <div
               style="
                 position: absolute;
                 transform: scale(0.5); 
@@ -124,6 +126,7 @@
   let isPlaying = false
 
   let updateViewMinutesTimeoutID
+  let isElementVisible = false
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
 
@@ -217,7 +220,7 @@
       return
     }
 
-    revertToBoard({ boardDoc, slideIDToStrokesArray})
+    revertToBoard({ boardDoc, slideIDToStrokesArray })
   }
 </script>
 

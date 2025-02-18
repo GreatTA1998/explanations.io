@@ -98,6 +98,7 @@
   export let isDeletable = true
 
   onMount(() => {
+    dispatch('canvas-slide-ready', canvas)
     dispatch('canvas-stream-ready', canvas.captureStream(10))
   })
 

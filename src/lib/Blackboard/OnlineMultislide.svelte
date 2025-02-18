@@ -47,7 +47,12 @@
             {canvasWidth}
             {canvasHeight}
             currentTimeOverride={currentTime}
-            on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
+            on:stroke-drawn={(e) => {
+              handleNewlyDrawnStroke(e.detail.newStroke)
+              if (idxOfFocusedSlide === i) {
+                drawStroke(e.detail.newStroke, null, ctx, OutputCanvas, canvasWidth)
+              }
+            }}
             on:board-wipe={deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })}
 
             backgroundImageDownloadURL={theDoc.backgroundImageDownloadURL}
@@ -61,6 +66,7 @@
                 changeToSlideIdx(idxOfFocusedSlide - 1)
               }
             }}
+            on:canvas-slide-ready={(e) => canvasSlides = [...canvasSlides, e.detail]}
             on:canvas-stream-ready={(e) => canvasMediaStreams = [...canvasMediaStreams, e.detail]}
           />
         {/if}
@@ -101,6 +107,12 @@
   </div>
 
   <div>
+    <span>Master output canvas</span>
+    <canvas
+      bind:this={OutputCanvas}
+    >
+    </canvas>
+
     <span>Combined recording</span>
     <video 
       controls bind:this={vid}
@@ -141,6 +153,7 @@
   import { onMount, onDestroy } from 'svelte'
   import { user, willPreventPageLeave, baseMicStream } from '/src/store.js'
   import { page } from '$app/stores'
+  import { drawStroke } from '/src/helpers/canvas.js'
   
   export let canvasWidth
   export let canvasHeight
@@ -162,6 +175,7 @@
   let idxOfFocusedSlide = 0 
   const timingOfSlideChanges = []
 
+  let canvasSlides = []
   let canvasMediaStreams = []
 
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
@@ -193,33 +207,41 @@
     }
   }
 
-
-  let vid, videoRecorder, videoTrack, combinedStream
-  let outputCanvas, ctx
+  // NOTE: ctx is only defined when you start recording
+  let vid, videoRecorder, videoTrack, combinedStream, OutputCanvas, ctx
   const chunks = []
 
   //https://stackoverflow.com/a/57915174/7812829
   function switchCanvasStream (newSlideIdx) {
-    if (videoTrack && combinedStream) {
-      combinedStream.removeTrack(videoTrack)
-      videoTrack = canvasMediaStreams[newSlideIdx].getVideoTracks()[0]
-      combinedStream.addTrack(videoTrack)
-    }
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+    ctx.drawImage(canvasSlides[newSlideIdx], 0, 0, canvasWidth, canvasHeight)
+
+
+    // [GAVE UP]: Claude says it won't work
+    // const newStream = canvasMediaStreams[newSlideIdx]
+    // videoTrack.applyConstraints({
+    //   advanced: [{ source: canvasSlides[newSlideIdx] }]
+    // })
+
+
+    // [FAILED]: track approach
+    // if (videoTrack && combinedStream) {
+    //   combinedStream.removeTrack(videoTrack)
+    //   videoTrack = canvasMediaStreams[newSlideIdx].getVideoTracks()[0]
+    //   combinedStream.addTrack(videoTrack)
+    // }
   }
 
   function recordVisualAndAudioToWebM () {
-    // Create master canvas for composition
-    outputCanvas = document.createElement('canvas')
-    outputCanvas.width = canvasWidth
-    outputCanvas.height = canvasHeight
-
-    const outputStream = outputCanvas.captureStream(10)
-
-    ctx = outputCanvas.getContext('2d')
-
+    // note: assumes blackboard is mounted
+    OutputCanvas.width = canvasWidth
+    OutputCanvas.height= canvasHeight
+    ctx = OutputCanvas.getContext('2d')
+    
     const [audioTrack] = $baseMicStream.getAudioTracks()
-    videoTrack = canvasMediaStreams[0].getVideoTracks()[0]
-    // videoTrack = outputStream.getVideoTracks()[0]
+
+    // videoTrack = canvasMediaStreams[0].getVideoTracks()[0]
+    videoTrack = OutputCanvas.captureStream(10).getVideoTracks()[0]
 
     // Ensure video track has proper constraints
     videoTrack.applyConstraints({

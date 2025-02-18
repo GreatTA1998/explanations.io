@@ -3,7 +3,7 @@
 </slot>
 
 <script>
-  import { onMount, onDestroy } from 'svelte'
+  import { onDestroy } from 'svelte'
   import { doc, onSnapshot, getFirestore } from "firebase/firestore"
 
   export let docPath
@@ -12,15 +12,15 @@
   let theDoc = null
   let unsubListener = null
 
-  onMount(() => {
-    if (autoListen) listenToDoc()
-  })
+  $: if (autoListen) {
+    listenToDoc()
+  }
 
   onDestroy(() => {
     if (unsubListener) unsubListener()
   })
 
-  function listenToDoc() {
+  function listenToDoc () {
     const ref = doc(getFirestore(), docPath)
 
     unsubListener = onSnapshot(ref, (snap) => {

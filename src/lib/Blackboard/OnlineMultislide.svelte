@@ -1,51 +1,49 @@
-<div style="display: flex; align-items: end; width: {canvasWidth}px; column-gap: 20px;">
-  <div id="multislide-record-button-wrapper-{boardDoc.id}">
-    <!-- Elements portal here -->
+<div use:lazyCallable={() => isBoardVisible = true}>
+  <div style="display: flex; align-items: end; width: {canvasWidth}px; column-gap: 20px;">
+    <div id="multislide-record-button-wrapper-{boardDoc.id}">
+      <!-- Elements portal here -->
+    </div>
+    
+    <MultiboardSlideChanger 
+      on:click={(e) => { 
+        changeToSlideIdx(e.detail.newIdx)
+        masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
+        masterCtx.drawImage(canvasSlides[e.detail.newIdx], 0, 0, canvasWidth, canvasHeight)
+      }}
+      on:slide-create={createNewSlide}
+      slideIDs={boardDoc.slideIDs}
+      {idxOfFocusedSlide}
+      canCreateNewSlide
+    />
+
+    <button on:click={() => {
+        if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
+          deleteMultislideBlackboard({ boardDoc, roomDoc })
+        }
+      }}
+      style="margin-left: auto; margin-right: 8px; cursor: pointer;"
+    >
+      Delete multiboard
+    </button>
   </div>
-  
-  <MultiboardSlideChanger 
-    on:click={(e) => { 
-      changeToSlideIdx(e.detail.newIdx)
-      masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
-      masterCtx.drawImage(canvasSlides[e.detail.newIdx], 0, 0, canvasWidth, canvasHeight)
-    }}
-    on:slide-create={createNewSlide}
-    slideIDs={boardDoc.slideIDs}
-    {idxOfFocusedSlide}
-    canCreateNewSlide
-  />
 
-  <button on:click={() => {
-      if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
-        deleteMultislideBlackboard({ boardDoc, roomDoc })
-      }
-    }}
-    style="margin-left: auto; margin-right: 8px; cursor: pointer;"
-  >
-    Delete multiboard
-  </button>
-</div>
+  <div style="margin-bottom: 12px;"></div>
 
-<div style="margin-bottom: 12px;"></div>
-
-{#each boardDoc.slideIDs as slideID, i}
-  <ListenToDoc docPath={`classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
-    let:theDoc={theDoc}
-  >
+  {#each boardDoc.slideIDs as slideID, i}
     <ListenToStrokes 
       dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-      autoListen
+      autoListen={isBoardVisible}
       let:strokesArray={strokesArray}
       let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
     >
-      <div 
+      <div
         style="
           display: {idxOfFocusedSlide === i ? '' : 'none'};
           width: {canvasWidth}px; height: {canvasHeight}px; 
           position: relative;
         "
       >
-        {#if strokesArray && theDoc}
+        {#if strokesArray && boardDoc}
           <!-- boardDoc.path doesn't have a trailing slash `/`, unlike boardPath (which was used for legacy reasons) -->
           <CoreDrawing
             {strokesArray}
@@ -64,9 +62,9 @@
                 masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
               }
             }}
-            backgroundImageDownloadURL={theDoc.backgroundImageDownloadURL}
+            backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
             on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
-            on:background-reset={() => deleteBackgroundImageFromSlide(theDoc)}
+            on:background-reset={() => deleteBackgroundImageFromSlide(boardDoc)}
             
             isDeletable={boardDoc.slideIDs.length > 1}
             on:board-delete={async () => {
@@ -81,45 +79,45 @@
         {/if}
       </div>
     </ListenToStrokes>
-  </ListenToDoc>
-{/each}
+  {/each}
 
-<RenderlessAudioRecorder
-  let:startRecording={startRecording} 
-  let:stopRecording={stopRecording}
-  on:record-end={(e) => saveVideo(e.detail.audioBlob)}
->
-  <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
-    {#if !isRecording}
-      {#if !!!$user.uid}
-        <LoginGoogle style={styles.recordButton}>
-          SIGN IN & RECORD
-        </LoginGoogle>
+  <RenderlessAudioRecorder
+    let:startRecording={startRecording} 
+    let:stopRecording={stopRecording}
+    on:record-end={(e) => saveVideo(e.detail.audioBlob)}
+  >
+    <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
+      {#if !isRecording}
+        {#if !!!$user.uid}
+          <LoginGoogle style={styles.recordButton}>
+            SIGN IN & RECORD
+          </LoginGoogle>
+        {:else}
+          <button on:click={() => initializeRecording({ startRecording, idxOfFocusedSlide })}
+            style={styles.recordButton}
+          >
+            Record
+          </button>
+        {/if}
       {:else}
-        <button on:click={() => initializeRecording({ startRecording, idxOfFocusedSlide })}
+        <button on:click={() => terminateRecording({ stopRecording })}
           style={styles.recordButton}
         >
-          Record
+          {#if boardDoc.recordState === 'post_record'}
+            <CircularSpinnerFourColor/>
+          {:else} 
+            Finish
+          {/if}
         </button>
       {/if}
-    {:else}
-      <button on:click={() => terminateRecording({ stopRecording })}
-        style={styles.recordButton}
-      >
-        {#if boardDoc.recordState === 'post_record'}
-          <CircularSpinnerFourColor/>
-        {:else} 
-          Finish
-        {/if}
-      </button>
-    {/if}
-  </div>
+    </div>
 
-  <WebmRecorder bind:this={webmRecorder}
-    canvasWidth={canvasWidth}
-    canvasHeight={canvasHeight}
-  />
-</RenderlessAudioRecorder>
+    <WebmRecorder bind:this={webmRecorder}
+      canvasWidth={canvasWidth}
+      canvasHeight={canvasHeight}
+    />
+  </RenderlessAudioRecorder>
+</div>
 
 <script>
   import CoreDrawing from './CoreDrawing.svelte'
@@ -127,7 +125,6 @@
   import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
-  import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
 
@@ -154,15 +151,16 @@
   import { page } from '$app/stores'
   import { drawStroke } from '/src/helpers/canvas.js'
   
+  export let boardDoc
   export let canvasWidth
   export let canvasHeight
-  export let boardDoc // boardDoc.slideIDs
   export let classID
   export let roomDoc
 
   const boardPath = `classes/${classID}/blackboards/${boardDoc.id}/`
   const db = getFirestore()
   let isRecording = false
+  let isBoardVisible = false
 
   // timer-related variables
   let currentTime = 0
@@ -179,8 +177,6 @@
   let masterCanvas, masterCtx
   let webmRecorder
 
-  // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
-  // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
   onMount(async () => {
     document.addEventListener('keydown', keydownHandler)
 

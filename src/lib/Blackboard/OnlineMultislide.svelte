@@ -3,7 +3,12 @@
     <!-- Elements portal here -->
   </div>
   
-  <MultiboardSlideChanger on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
+  <MultiboardSlideChanger 
+    on:click={(e) => { 
+      changeToSlideIdx(e.detail.newIdx)
+      masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
+      masterCtx.drawImage(canvasSlides[e.detail.newIdx], 0, 0, canvasWidth, canvasHeight)
+    }}
     on:slide-create={createNewSlide}
     slideIDs={boardDoc.slideIDs}
     {idxOfFocusedSlide}
@@ -50,11 +55,15 @@
             on:stroke-drawn={(e) => {
               handleNewlyDrawnStroke(e.detail.newStroke)
               if (idxOfFocusedSlide === i) {
-                drawStroke(e.detail.newStroke, null, ctx, OutputCanvas, canvasWidth)
+                drawStroke(e.detail.newStroke, null, masterCtx, masterCanvas, canvasWidth)
               }
             }}
-            on:board-wipe={deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })}
-
+            on:board-wipe={() => {
+              deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })
+              if (idxOfFocusedSlide === i) {
+                masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
+              }
+            }}
             backgroundImageDownloadURL={theDoc.backgroundImageDownloadURL}
             on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
             on:background-reset={() => deleteBackgroundImageFromSlide(theDoc)}
@@ -106,25 +115,15 @@
     {/if}
   </div>
 
-  <div>
-    <span>Master output canvas</span>
-    <canvas
-      bind:this={OutputCanvas}
-    >
-    </canvas>
-
-    <span>Combined recording</span>
-    <video 
-      controls bind:this={vid}
-      class="debug-video" 
-      style="width: 300px; height: 200px;"
-    >
-    </video>
-  </div>
+  <WebmRecorder bind:this={webmRecorder}
+    canvasWidth={canvasWidth}
+    canvasHeight={canvasHeight}
+  />
 </RenderlessAudioRecorder>
 
 <script>
   import CoreDrawing from './CoreDrawing.svelte'
+  import WebmRecorder from './WebmRecorder.svelte'
   import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
@@ -151,7 +150,7 @@
   } from 'firebase/firestore'
   import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
   import { onMount, onDestroy } from 'svelte'
-  import { user, willPreventPageLeave, baseMicStream } from '/src/store.js'
+  import { user, willPreventPageLeave } from '/src/store.js'
   import { page } from '$app/stores'
   import { drawStroke } from '/src/helpers/canvas.js'
   
@@ -177,11 +176,16 @@
 
   let canvasSlides = []
   let canvasMediaStreams = []
+  let masterCanvas, masterCtx
+  let webmRecorder
 
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
   // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
   onMount(async () => {
     document.addEventListener('keydown', keydownHandler)
+
+    masterCanvas = webmRecorder.getCanvas()
+    masterCtx = webmRecorder.getCtx()
   })
 
   onDestroy(() => {
@@ -191,8 +195,9 @@
   async function initializeRecording ({ startRecording }) {
     try {
       await startRecording()
-      recordVisualAndAudioToWebM()
+      webmRecorder.startRecording()
       startStopwatch()
+
       timingOfSlideChanges.push({
         toIdx: idxOfFocusedSlide,
         timing: 0
@@ -207,91 +212,12 @@
     }
   }
 
-  // NOTE: ctx is only defined when you start recording
-  let vid, videoRecorder, videoTrack, combinedStream, OutputCanvas, ctx
-  const chunks = []
-
-  //https://stackoverflow.com/a/57915174/7812829
-  function switchCanvasStream (newSlideIdx) {
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-    ctx.drawImage(canvasSlides[newSlideIdx], 0, 0, canvasWidth, canvasHeight)
-
-
-    // [GAVE UP]: Claude says it won't work
-    // const newStream = canvasMediaStreams[newSlideIdx]
-    // videoTrack.applyConstraints({
-    //   advanced: [{ source: canvasSlides[newSlideIdx] }]
-    // })
-
-
-    // [FAILED]: track approach
-    // if (videoTrack && combinedStream) {
-    //   combinedStream.removeTrack(videoTrack)
-    //   videoTrack = canvasMediaStreams[newSlideIdx].getVideoTracks()[0]
-    //   combinedStream.addTrack(videoTrack)
-    // }
-  }
-
-  function recordVisualAndAudioToWebM () {
-    // note: assumes blackboard is mounted
-    OutputCanvas.width = canvasWidth
-    OutputCanvas.height= canvasHeight
-    ctx = OutputCanvas.getContext('2d')
-    
-    const [audioTrack] = $baseMicStream.getAudioTracks()
-
-    // videoTrack = canvasMediaStreams[0].getVideoTracks()[0]
-    videoTrack = OutputCanvas.captureStream(10).getVideoTracks()[0]
-
-    // Ensure video track has proper constraints
-    videoTrack.applyConstraints({
-      width: canvasWidth,
-      height: canvasHeight,
-      frameRate: 10
-    }).catch(e => console.error('Constraint error:', e));
-
-    // COMBINED STREAM
-    combinedStream = new MediaStream([videoTrack, audioTrack])
-
-    videoRecorder = new MediaRecorder(combinedStream, {
-      mimeType: 'video/webm;codecs=vp8,opus',
-
-      // these settings are necessary, otherwise the recorder will still be audio-only
-      videoBitsPerSecond: 500000, // 0.5 Mbps is "low quality"
-      audioBitsPerSecond: 128000 // 128 kbps
-    })
-   
-    videoRecorder.addEventListener('dataavailable', e => e.data.size && chunks.push(e.data))
-    videoRecorder.addEventListener('stop', exportStream)
-    videoRecorder.addEventListener('error', (e) => {console.error('MediaRecorder error:', e);});
-
-    videoRecorder.start(100) // 100 ms
-
-    function exportStream () {
-      if (chunks.length) {
-        var blob = new Blob(chunks, { 
-          type: 'video/webm;codecs=vp8,opus'// chunks[0].type 
-        })    
-        var vidURL = URL.createObjectURL(blob)
-
-        vid.src = vidURL
-        vid.addEventListener('loadedmetadata', () => {
-          console.log('Video metadata loaded:', {
-            duration: vid.duration,
-            videoWidth: vid.videoWidth,
-            videoHeight: vid.videoHeight
-          });
-        });
-        vid.addEventListener('error', () => { console.log('Video error:', vid.error); })
-      }
-    }
-  }
-
   async function terminateRecording ({ stopRecording }) {
     try {
       await stopRecording()
-      videoRecorder.stop()
+      webmRecorder.stopRecording()
       stopStopwatch()
+      
       updateFirestoreDoc(boardDoc.path, {
         recordState: 'post_record'
       })
@@ -332,10 +258,6 @@
         toIdx: idxOfFocusedSlide,
         timing: currentTime
       })
-    }
-
-    if (isRecording) {
-      switchCanvasStream(newSlideIdx)
     }
   }
 

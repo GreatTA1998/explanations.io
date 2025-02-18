@@ -1,7 +1,7 @@
 <div use:lazyCallable={() => isBoardVisible = true}>
   <div style="display: flex; align-items: end; width: {canvasWidth}px; column-gap: 20px;">
     <div id="multislide-record-button-wrapper-{boardDoc.id}">
-      <!-- Elements portal here -->
+      <!-- portal -->
     </div>
     
     <MultiboardSlideChanger 
@@ -30,23 +30,21 @@
   <div style="margin-bottom: 12px;"></div>
 
   {#each boardDoc.slideIDs as slideID, i}
-    <ListenToStrokes 
-      dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-      autoListen={isBoardVisible}
-      let:strokesArray={strokesArray}
-      let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
-    >
-      <div
-        style="
-          display: {idxOfFocusedSlide === i ? '' : 'none'};
-          width: {canvasWidth}px; height: {canvasHeight}px; 
-          position: relative;
-        "
+    <ListenToDoc docPath={`${boardDoc.path}/slides/${slideID}`} autoListen={isBoardVisible} let:theDoc={slideDoc}>
+      <ListenToStrokes 
+        dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+        autoListen={isBoardVisible}
+        let:strokesArray={strokesArray}
+        let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
       >
-        {#if strokesArray && boardDoc}
-          <!-- boardDoc.path doesn't have a trailing slash `/`, unlike boardPath (which was used for legacy reasons) -->
-          <CoreDrawing
-            {strokesArray}
+        <div
+          style="
+            display: {idxOfFocusedSlide === i ? '' : 'none'};
+            width: {canvasWidth}px; height: {canvasHeight}px; 
+            position: relative;
+          "
+        >
+          <CoreDrawing {strokesArray}
             {canvasWidth}
             {canvasHeight}
             currentTimeOverride={currentTime}
@@ -57,14 +55,14 @@
               }
             }}
             on:board-wipe={() => {
-              deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })
+              deleteStrokesFromSlide({ strokesArray, slidePath: slideDoc.path })
               if (idxOfFocusedSlide === i) {
                 masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
               }
             }}
-            backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
+            backgroundImageDownloadURL={slideDoc?.backgroundImageDownloadURL}
             on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
-            on:background-reset={() => deleteBackgroundImageFromSlide(boardDoc)}
+            on:background-reset={() => deleteBackgroundImageFromSlide(slideDoc)}
             
             isDeletable={boardDoc.slideIDs.length > 1}
             on:board-delete={async () => {
@@ -76,9 +74,9 @@
             on:canvas-slide-ready={(e) => canvasSlides = [...canvasSlides, e.detail]}
             on:canvas-stream-ready={(e) => canvasMediaStreams = [...canvasMediaStreams, e.detail]}
           />
-        {/if}
-      </div>
-    </ListenToStrokes>
+        </div>
+      </ListenToStrokes>
+    </ListenToDoc>
   {/each}
 
   <RenderlessAudioRecorder
@@ -127,6 +125,7 @@
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
+  import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
 
   import { 
     deleteMultislideBlackboard, 
@@ -157,7 +156,6 @@
   export let classID
   export let roomDoc
 
-  const boardPath = `classes/${classID}/blackboards/${boardDoc.id}/`
   const db = getFirestore()
   let isRecording = false
   let isBoardVisible = false
@@ -236,10 +234,10 @@
     const newSlideID = getRandomID()
     
     await Promise.all([
-      setFirestoreDoc(`${boardPath}slides/${newSlideID}/`, {
+      setFirestoreDoc(`${boardDoc.path}/slides/${newSlideID}/`, {
         // empty doc matters because it can then be updated with background images etc.
       }),
-      updateFirestoreDoc(boardPath, {
+      updateFirestoreDoc(boardDoc.path, {
         slideIDs: arrayUnion(newSlideID)
       })
     ])
@@ -296,7 +294,7 @@
     ])
 
     // FINALLY: update metadata of the multislide blackboard doc itself
-    updateFirestoreDoc(boardPath, {
+    updateFirestoreDoc(boardDoc.path, {
       creatorUID: $user.uid || '',
       creatorName: $user.name || '',
       creatorPhoneNumber: $user.phoneNumber || '',
@@ -391,7 +389,7 @@
       await uploadBytes(imageRef, imageFile)
       const downloadURL = await getDownloadURL(imageRef)
 
-      updateFirestoreDoc(boardPath + `slides/${slideID}`, {
+      updateFirestoreDoc(boardDoc.path + `/slides/${slideID}`, {
         backgroundImageDownloadURL: downloadURL,
         backgroundImageStoragePath: imageRef.fullPath // TO-DO: proper deletion boards
       })

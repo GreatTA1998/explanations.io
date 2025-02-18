@@ -84,14 +84,14 @@
   }
   
   export function cleanup() {
-    if (videoRecorder?.state !== 'inactive') {
-      videoRecorder.stop()
-    }
-    if (combinedStream) {
-      combinedStream.getTracks().forEach(track => track.stop())
-    }
-    chunks = []
-    URL.revokeObjectURL(previewVideo?.src)
+    // if (videoRecorder?.state !== 'inactive') {
+    //   videoRecorder.stop()
+    // }
+    // if (combinedStream) {
+    //   combinedStream.getTracks().forEach(track => track.stop())
+    // }
+    // chunks = []
+    // URL.revokeObjectURL(previewVideo?.src)
   }
 </script>
 

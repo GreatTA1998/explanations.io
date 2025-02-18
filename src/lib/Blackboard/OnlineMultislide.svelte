@@ -1,4 +1,13 @@
 <div use:lazyCallable={() => isBoardVisible = true}>
+  <WebmRecorder bind:this={webmRecorder}
+    canvasWidth={canvasWidth}
+    canvasHeight={canvasHeight}
+  />
+
+  <Stopwatch bind:this={stopwatch}
+    on:tick={(e) => currentTime = e.detail.currentTime} 
+  />
+  
   <div style="display: flex; align-items: end; width: {canvasWidth}px; column-gap: 20px;">
     <div id="multislide-record-button-wrapper-{boardDoc.id}">
       <!-- portal -->
@@ -79,7 +88,7 @@
     </ListenToDoc>
   {/each}
 
-  <RenderlessAudioRecorder
+  <AudioRecorder
     let:startRecording={startRecording} 
     let:stopRecording={stopRecording}
     on:record-end={(e) => saveVideo(e.detail.audioBlob)}
@@ -109,23 +118,19 @@
         </button>
       {/if}
     </div>
-
-    <WebmRecorder bind:this={webmRecorder}
-      canvasWidth={canvasWidth}
-      canvasHeight={canvasHeight}
-    />
-  </RenderlessAudioRecorder>
+  </AudioRecorder>
 </div>
 
 <script>
   import CoreDrawing from './CoreDrawing.svelte'
+  import Stopwatch from './Stopwatch.svelte'
+  import AudioRecorder from './AudioRecorder.svelte'
   import WebmRecorder from './WebmRecorder.svelte'
   import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
-  import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
-  import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
+  import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
 
   import { 
     deleteMultislideBlackboard, 
@@ -134,7 +139,7 @@
     deleteBackgroundImageFromSlide
   } from '/src/helpers/unifiedDeleteAPI.js'
   import { portal, lazyCallable } from '/src/helpers/actions.js'
-  import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
+  import { getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
@@ -160,12 +165,8 @@
   let isRecording = false
   let isBoardVisible = false
 
-  // timer-related variables
+  let stopwatch
   let currentTime = 0
-  const tickSize = 100 // milliseconds
-  let startTimestamp = null
-  let nextTimeoutID = null
-  let etaOfNextTick = null
   
   let idxOfFocusedSlide = 0 
   const timingOfSlideChanges = []
@@ -189,8 +190,8 @@
   async function initializeRecording ({ startRecording }) {
     try {
       await startRecording()
-      webmRecorder.startRecording()
-      startStopwatch()
+      webmRecorder.start()
+      stopwatch.start()
 
       timingOfSlideChanges.push({
         toIdx: idxOfFocusedSlide,
@@ -209,8 +210,8 @@
   async function terminateRecording ({ stopRecording }) {
     try {
       await stopRecording()
-      webmRecorder.stopRecording()
-      stopStopwatch()
+      webmRecorder.stop()
+      stopwatch.stop()
       
       updateFirestoreDoc(boardDoc.path, {
         recordState: 'post_record'
@@ -330,54 +331,6 @@
     // NOTE: removed now so that we can test the webm4 export feature
     // window.location.reload()
   }
-
-  // TO-DO: encapsulate this into a modular component/JS file etc.
-  // Timer that doesn't slowly drift late and get out of sync with visuals
-  // @see based on https://stackoverflow.com/a/29972322/7812829
-  // how the self-adjusting timer works 
-  //    - setInterval is at best, on time, but usually, late
-  //    - yes, the self-adjusting tick function will always increase time by 1 (even if 1.6 seconds has passed because it's again, late)
-  //    - ...but the 1 vs 1.6 error will be compensated next tick, because tick() will call itself after 0.4 seconds (it but it's constantly catching up) to achieve 2 vs 2
-  //    - if the tick function is super late i.e. 3 seconds passed by, it'll just call itself with setTimeout(0) 2 more times immediately
-  //    - therefore the maximum error is the infimum of the tick size. Get the tick size to be 0.1 second so the maximum error is <0.1
-  function startStopwatch () {
-    startTimestamp = Date.now()
-    etaOfNextTick = startTimestamp + tickSize
-    nextTimeoutID = setTimeout(
-      step, 
-      tickSize
-    )
-  }
-
-  function step () {
-    const delay = Date.now() - etaOfNextTick; // how late was the setTimeout 
-    if (delay > tickSize) {
-      console.log('setTimeout is lagging greatly')
-      // something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile "catch up" run
-    }
-    etaOfNextTick += tickSize
-
-    const millisecondsInSecond = 1000
-    const nearestDecimalPoint = 1
-    currentTime = Number(roundedToFixed(
-      (etaOfNextTick - startTimestamp) / millisecondsInSecond,
-      nearestDecimalPoint
-    ))
-
-    nextTimeoutID = setTimeout(
-      step, 
-      Math.max(0, tickSize - delay)
-    )
-  }
-
-  function stopStopwatch () {
-    startTimestamp = null 
-    etaOfNextTick = null
-    currentTime = 0
-    clearTimeout(nextTimeoutID)
-    nextTimeoutID = ''
-  }
-  // END OF TIMER-RELATED CODE
 
   // FILE UPLOAD RELATED CODE
   async function handleWhatUserUploaded (imageFile, slideID) {

@@ -27,7 +27,7 @@
 
   export function getCtx () { return ctx }
   
-  export function startRecording() {
+  export function start () {
     initialize()
     videoRecorder?.start(100)
   }
@@ -54,8 +54,15 @@
     videoRecorder.addEventListener('error', (e) => console.error('MediaRecorder error:', e))
   }
   
-  export function stopRecording() {
+  export async function stop () {
     if (videoRecorder?.state !== 'inactive') {
+      // attempts to fix a strange issue that I still don't understand the mechanism of '
+      // clues
+      //   - if you press `finish recording` right after the last stroke, the video will have the missing stroke for the last remaining durations
+      //   - the stroke appears if you force the slider to the end. It just never appears during natural playback
+      //   - might need to await the `dataavailable` callback too
+      await videoRecorder.requestData()
+
       videoRecorder.stop()
     }
   }
@@ -83,7 +90,7 @@
     }
   }
   
-  export function cleanup() {
+  export function cleanup () {
     // if (videoRecorder?.state !== 'inactive') {
     //   videoRecorder.stop()
     // }

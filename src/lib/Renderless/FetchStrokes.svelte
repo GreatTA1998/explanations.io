@@ -29,7 +29,7 @@ let isFirstTime = true
 
 const dispatch = createEventDispatcher()
 
-if (autoFetchStrokes) {
+$: if (autoFetchStrokes) {
   fetchStrokes()
 }
 

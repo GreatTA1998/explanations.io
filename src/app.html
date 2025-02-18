@@ -58,4 +58,21 @@
 			%sveltekit.body%
 		</div>
 	</body>
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11531985995"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'AW-11531985995');
+
+		// <!-- Event snippet for 網頁瀏覽 conversion page -->
+		gtag('event', 'conversion', {
+				'send_to': 'AW-11531985995/F5CQCOrR3oIaEMvI8Poq',
+				'value': 1.0,
+				'currency': 'JPY'
+		});
+	</script>
 </html>

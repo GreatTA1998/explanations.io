@@ -7,29 +7,20 @@
   import { initializeMicStream } from '../../helpers/microphone.js'
   import { createEventDispatcher, onMount } from 'svelte'
   import { browser } from '$app/environment'
-  // import AudioRecorder from 'audio-recorder-polyfill'
-  // import mpegEncoder from "audio-recorder-polyfill/mpeg-encoder";
-  // AudioRecorder.encoder = mpegEncoder;
-  // AudioRecorder.prototype.mimeType = "audio/mpeg"; // mpeg is equivalent to mp3
-  let AudioRecorder
+
   const dispatch = createEventDispatcher()
+  let AudioRecorder
   let recorder =  null
 
-  // technically this is overkill: see https://kit.svelte.dev/faq
   onMount(async () => {
     if (browser && window) {
-      // https://stackoverflow.com/a/58859327
-      // otherwise `window` is undefined
-      AudioRecorder = await import("audio-recorder-polyfill")
-      window.MediaRecorder = AudioRecorder.default
+      // https://github.com/ai/audio-recorder-polyfill
+      const module = await import("audio-recorder-polyfill")
+      AudioRecorder = module.default
     }
   })
 
-  /**
-   * MediaStreamTrack API https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop
-   * 
-   * 
-   */
+  // MediaStreamTrack API https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop
   function startRecording () {
     return new Promise(async (resolve, reject) => {
       if (!$baseMicStream) {
@@ -43,7 +34,7 @@
       const micStreamCopy = $baseMicStream.clone() // new copies I assume will have active tracks, even if the base is deactivated
 
       // this doesn't throw exceptions, no need for try-catch
-      recorder = new MediaRecorder(micStreamCopy); 
+      recorder = new AudioRecorder(micStreamCopy) // bitrate is not supported for audio-recorder-polyfill
 
       checkAudioTrack(recorder.stream)
     
@@ -51,7 +42,16 @@
       // without specifying a timeslice, it will only fire at the end
       recorder.addEventListener("dataavailable", e => {
         const audioBlob = e.data
-        dispatch('record-end', { audioBlob })
+        console.log('audioBlob.type =', audioBlob.type)
+        console.log('audioBlob.size =', audioBlob.size)
+        console.log('audioBlob.duration =', audioBlob.duration)
+        const blobWithMetadata = new Blob([audioBlob], {
+          type: audioBlob.type,
+          duration: 60,
+          lastModified: Date.now()
+        })
+        console.log('blobWithMetadata =', blobWithMetadata)
+        dispatch('record-end', { audioBlob: blobWithMetadata })
       })
 
       recorder.start()
@@ -104,5 +104,22 @@
       const string = errorMessages.join(', ')
       alert(`WARNING, audio recording will likely fail: ${string}`)
     }
+  }
+
+  // Chrome/Firefox defaults to WebM/Opus
+  // Safari defaults to AAC/MP4
+  function checkMimeTypeSupport (mediaRecorder) {
+    const types = [
+      'audio/wav',
+      'audio/webm',
+      'audio/webm;codecs=opus',
+      'audio/ogg',
+      'audio/mp3',
+      'audio/aac'
+    ];
+    
+    types.forEach(type => {
+      console.log(`${type} supported:`, mediaRecorder.isTypeSupported(type));
+    });
   }
 </script>

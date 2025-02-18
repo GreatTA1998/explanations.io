@@ -1,7 +1,5 @@
 {#if roomDoc}
 	<div>
-    <LeftDrawerToggleButton/>
-    
     <div style="padding: {PAGE_PADDING}px;">
       <Textfield 
         disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}

@@ -48,8 +48,6 @@
 
 {#if questionDoc.id}
   <div style="position: relative;">
-    <LeftDrawerToggleButton/>
-
     <div style="padding: {PAGE_PADDING}px; overflow-y: auto;">
       <div class="question-container" style="display: flex; flex-direction: column; row-gap: 12px;">
         <input 

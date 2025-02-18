@@ -1,58 +1,78 @@
-<div style="display: flex; align-items: end; width: {canvasWidth}px; column-gap: 20px;">
-  <div id="multislide-record-button-wrapper-{boardDoc.id}">
-    <!-- Elements portal here -->
-  </div>
-  
-  <MultiboardSlideChanger on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
-    on:slide-create={createNewSlide}
-    slideIDs={boardDoc.slideIDs}
-    {idxOfFocusedSlide}
-    canCreateNewSlide
+<div use:lazyCallable={() => isBoardVisible = true}>
+  <WebmRecorder bind:this={webmRecorder}
+    canvasWidth={canvasWidth}
+    canvasHeight={canvasHeight}
+    on:video-ready={e => webmBlob = e.detail.blob}
   />
 
-  <button on:click={() => {
-      if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
-        deleteMultislideBlackboard({ boardDoc, roomDoc })
-      }
-    }}
-    style="margin-left: auto; margin-right: 8px; cursor: pointer;"
-  >
-    Delete multiboard
-  </button>
-</div>
+  <Stopwatch bind:this={stopwatch}
+    on:tick={(e) => currentTime = e.detail.currentTime} 
+  />
+  
+  <div style="display: flex; align-items: end; width: {canvasWidth}px; column-gap: 20px;">
+    <div id="multislide-record-button-wrapper-{boardDoc.id}">
+      <!-- portal -->
+    </div>
+    
+    <MultiboardSlideChanger 
+      on:click={(e) => { 
+        changeToSlideIdx(e.detail.newIdx)
+        masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
+        masterCtx.drawImage(canvasSlides[e.detail.newIdx], 0, 0, canvasWidth, canvasHeight)
+      }}
+      on:slide-create={createNewSlide}
+      slideIDs={boardDoc.slideIDs}
+      {idxOfFocusedSlide}
+      canCreateNewSlide
+    />
 
-<div style="margin-bottom: 12px;"></div>
-
-{#each boardDoc.slideIDs as slideID, i}
-  <ListenToDoc docPath={`classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
-    let:theDoc={theDoc}
-  >
-    <ListenToStrokes 
-      dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-      let:listenToStrokes={listenToStrokes} 
-      let:strokesArray={strokesArray}
-      let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
+    <button on:click={() => {
+        if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
+          deleteMultislideBlackboard({ boardDoc, roomDoc })
+        }
+      }}
+      style="margin-left: auto; margin-right: 8px; cursor: pointer;"
     >
-      <div use:lazyCallable={listenToStrokes} 
-        style="
-          display: {idxOfFocusedSlide === i ? '' : 'none'};
-          width: {canvasWidth}px; height: {canvasHeight}px; 
-          position: relative;
-        "
+      Delete multiboard
+    </button>
+  </div>
+
+  <div style="margin-bottom: 12px;"></div>
+
+  {#each boardDoc.slideIDs as slideID, i}
+    <ListenToDoc docPath={`${boardDoc.path}/slides/${slideID}`} autoListen={isBoardVisible} let:theDoc={slideDoc}>
+      <ListenToStrokes 
+        dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+        autoListen={isBoardVisible}
+        let:strokesArray={strokesArray}
+        let:handleNewlyDrawnStroke={handleNewlyDrawnStroke}
       >
-        {#if strokesArray && theDoc}
-          <!-- boardDoc.path doesn't have a trailing slash `/`, unlike boardPath (which was used for legacy reasons) -->
-          <CoreDrawing
-            {strokesArray}
+        <div
+          style="
+            display: {idxOfFocusedSlide === i ? '' : 'none'};
+            width: {canvasWidth}px; height: {canvasHeight}px; 
+            position: relative;
+          "
+        >
+          <CoreDrawing {strokesArray}
             {canvasWidth}
             {canvasHeight}
             currentTimeOverride={currentTime}
-            on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-            on:board-wipe={deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })}
-
-            backgroundImageDownloadURL={theDoc.backgroundImageDownloadURL}
+            on:stroke-drawn={(e) => {
+              handleNewlyDrawnStroke(e.detail.newStroke)
+              if (idxOfFocusedSlide === i) {
+                drawStroke(e.detail.newStroke, null, masterCtx, masterCanvas, canvasWidth)
+              }
+            }}
+            on:board-wipe={() => {
+              deleteStrokesFromSlide({ strokesArray, slidePath: slideDoc.path })
+              if (idxOfFocusedSlide === i) {
+                masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
+              }
+            }}
+            backgroundImageDownloadURL={slideDoc?.backgroundImageDownloadURL}
             on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
-            on:background-reset={() => deleteBackgroundImageFromSlide(theDoc)}
+            on:background-reset={() => deleteBackgroundImageFromSlide(slideDoc)}
             
             isDeletable={boardDoc.slideIDs.length > 1}
             on:board-delete={async () => {
@@ -61,53 +81,58 @@
                 changeToSlideIdx(idxOfFocusedSlide - 1)
               }
             }}
+            on:canvas-slide-ready={(e) => canvasSlides = [...canvasSlides, e.detail]}
+            on:canvas-stream-ready={(e) => canvasMediaStreams = [...canvasMediaStreams, e.detail]}
           />
-        {/if}
-      </div>
-    </ListenToStrokes>
-  </ListenToDoc>
-{/each}
+        </div>
+      </ListenToStrokes>
+    </ListenToDoc>
+  {/each}
 
-<RenderlessAudioRecorder
-  let:startRecording={startRecording} 
-  let:stopRecording={stopRecording}
-  on:record-end={(e) => saveVideo(e.detail.audioBlob)}
->
-  <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
-    {#if !isRecording}
-      {#if !!!$user.uid}
-        <LoginGoogle style={styles.recordButton}>
-          SIGN IN & RECORD
-        </LoginGoogle>
+  <AudioRecorder
+    let:startRecording={startRecording} 
+    let:stopRecording={stopRecording}
+    on:record-end={e => audioBlob = e.detail.audioBlob}
+  >
+    <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
+      {#if !isRecording}
+        {#if !!!$user.uid}
+          <LoginGoogle style={styles.recordButton}>
+            SIGN IN & RECORD
+          </LoginGoogle>
+        {:else}
+          <button on:click={() => initializeRecording({ startRecording, idxOfFocusedSlide })}
+            style={styles.recordButton}
+          >
+            Record
+          </button>
+        {/if}
       {:else}
-        <button on:click={() => initializeRecording({ startRecording, idxOfFocusedSlide })}
+        <button on:click={() => terminateRecording({ stopRecording })}
           style={styles.recordButton}
         >
-          Record
+          {#if boardDoc.recordState === 'post_record'}
+            <CircularSpinnerFourColor/>
+          {:else} 
+            Finish
+          {/if}
         </button>
       {/if}
-    {:else}
-      <button on:click={() => terminateRecording({ stopRecording })}
-        style={styles.recordButton}
-      >
-        {#if boardDoc.recordState === 'post_record'}
-          <CircularSpinnerFourColor/>
-        {:else} 
-          Finish
-        {/if}
-      </button>
-    {/if}
-  </div>
-</RenderlessAudioRecorder>
+    </div>
+  </AudioRecorder>
+</div>
 
 <script>
   import CoreDrawing from './CoreDrawing.svelte'
+  import Stopwatch from './Stopwatch.svelte'
+  import AudioRecorder from './AudioRecorder.svelte'
+  import WebmRecorder from './WebmRecorder.svelte'
+
   import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
-  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
-  import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
+  import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
 
   import { 
     deleteMultislideBlackboard, 
@@ -116,7 +141,7 @@
     deleteBackgroundImageFromSlide
   } from '/src/helpers/unifiedDeleteAPI.js'
   import { portal, lazyCallable } from '/src/helpers/actions.js'
-  import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
+  import { getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
@@ -130,31 +155,42 @@
   import { onMount, onDestroy } from 'svelte'
   import { user, willPreventPageLeave } from '/src/store.js'
   import { page } from '$app/stores'
+  import { drawStroke } from '/src/helpers/canvas.js'
   
+  export let boardDoc
   export let canvasWidth
   export let canvasHeight
-  export let boardDoc // boardDoc.slideIDs
   export let classID
   export let roomDoc
 
-  const boardPath = `classes/${classID}/blackboards/${boardDoc.id}/`
-  const db = getFirestore()
   let isRecording = false
+  let isBoardVisible = false
 
-  // timer-related variables
+  let stopwatch
   let currentTime = 0
-  const tickSize = 100 // milliseconds
-  let startTimestamp = null
-  let nextTimeoutID = null
-  let etaOfNextTick = null
   
   let idxOfFocusedSlide = 0 
   const timingOfSlideChanges = []
 
-  // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
-  // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
+  let canvasSlides = []
+  let canvasMediaStreams = []
+  let masterCanvas, masterCtx
+  let webmRecorder
+  
+  let webmBlob
+  let audioBlob
+
+  const db = getFirestore()
+
+  $: if (webmBlob && audioBlob) {
+    uploadVideo({ webmBlob, audioBlob })
+  }
+
   onMount(async () => {
     document.addEventListener('keydown', keydownHandler)
+
+    masterCanvas = webmRecorder.getCanvas()
+    masterCtx = webmRecorder.getCtx()
   })
 
   onDestroy(() => {
@@ -164,7 +200,9 @@
   async function initializeRecording ({ startRecording }) {
     try {
       await startRecording()
-      startStopwatch()
+      webmRecorder.start()
+      stopwatch.start()
+
       timingOfSlideChanges.push({
         toIdx: idxOfFocusedSlide,
         timing: 0
@@ -182,7 +220,9 @@
   async function terminateRecording ({ stopRecording }) {
     try {
       await stopRecording()
-      stopStopwatch()
+      webmRecorder.stop()
+      stopwatch.stop()
+      
       updateFirestoreDoc(boardDoc.path, {
         recordState: 'post_record'
       })
@@ -205,10 +245,10 @@
     const newSlideID = getRandomID()
     
     await Promise.all([
-      setFirestoreDoc(`${boardPath}slides/${newSlideID}/`, {
+      setFirestoreDoc(`${boardDoc.path}/slides/${newSlideID}/`, {
         // empty doc matters because it can then be updated with background images etc.
       }),
-      updateFirestoreDoc(boardPath, {
+      updateFirestoreDoc(boardDoc.path, {
         slideIDs: arrayUnion(newSlideID)
       })
     ])
@@ -226,14 +266,46 @@
     }
   }
 
-  async function saveVideo (audioBlob) {
-    // JOB #1: upload the audio blob
-    let downloadURL 
+  async function handleWhatUserUploaded (imageFile, slideID) {
+    if (!imageFile) return
+    if (imageFile.type.split("/")[0] === 'image') {
+      const storage = getStorage()
+      const imageRef = ref(storage, `images/${getRandomID()}`)
+      await uploadBytes(imageRef, imageFile)
+      const downloadURL = await getDownloadURL(imageRef)
+
+      updateFirestoreDoc(boardDoc.path + `/slides/${slideID}`, {
+        backgroundImageDownloadURL: downloadURL,
+        backgroundImageStoragePath: imageRef.fullPath // TO-DO: proper deletion boards
+      })
+    } else {
+      alert("Error: only images can be used")
+    }
+  } 
+
+  async function uploadVideo ({ audioBlob, webmBlob }) {
     const storage = getStorage()
+    
+    // upload webm video
+    let webmDownloadURL
+    const options = {   
+      contentType: 'video/webm',
+      customMetadata: {
+        extension: '.webm'
+      }
+    }
+    const webmRef = ref(storage, `webmVideos/${getRandomID()}`)
+    const webmUploadJob = uploadBytes(webmRef, webmBlob, options).then(async () => {
+      webmDownloadURL = await getDownloadURL(webmRef)
+      return webmDownloadURL
+    })
+
+    // JOB #1: upload the audio blob
+    let audioDownloadURL 
     const audioRef = ref(storage, `audio/${getRandomID()}`)
     const audioUploadJob = uploadBytes(audioRef, audioBlob).then(async () => {
-      downloadURL = await getDownloadURL(audioRef)
-      return downloadURL
+      audioDownloadURL = await getDownloadURL(audioRef)
+      return audioDownloadURL
     })
 
     // JOB #2: update metadata of dependent firestore docs (note "tutor" is a legacy name)
@@ -244,12 +316,12 @@
     )
     const otherDocsMetadataUpdateJob = getDocs(q).then(snap => {
       if (!snap.empty) {
-      snap.docs.forEach(doc => {
-        tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
-      })
-      updateFirestoreDoc(`classes/${classID}/members/${tutorDoc.id}`, {
-        numOfVideos: increment(1)
-      })
+        snap.docs.forEach(doc => {
+          tutorDoc = { id: doc.id, path: doc.ref.path, ...doc.data() }
+        })
+        updateFirestoreDoc(`classes/${classID}/members/${tutorDoc.id}`, {
+          numOfVideos: increment(1)
+        })
       }
       updateFirestoreDoc(`classes/${classID}`, {
         numOfVideos: increment(1)
@@ -257,18 +329,21 @@
     })
 
     await Promise.all([
+      webmUploadJob,
       audioUploadJob,
       otherDocsMetadataUpdateJob
     ])
 
     // FINALLY: update metadata of the multislide blackboard doc itself
-    updateFirestoreDoc(boardPath, {
+    updateFirestoreDoc(boardDoc.path, {
       creatorUID: $user.uid || '',
       creatorName: $user.name || '',
       creatorPhoneNumber: $user.phoneNumber || '',
       date: new Date().toISOString(),
-      audioDownloadURL: downloadURL,
+      audioDownloadURL,
+      webmDownloadURL,
       audioRefFullPath: audioRef.fullPath,
+      webmRefFullPath: webmRef.fullPath,
       timingOfSlideChanges,
       isPaid: false
     })
@@ -295,73 +370,7 @@
 
     willPreventPageLeave.set(false) // technically does nothing because we defensively reload, but it's still here for correctness
 
-    window.location.reload()
+    // NOTE: removed now so that we can test the webm4 export feature
+    // window.location.reload()
   }
-
-  // TO-DO: encapsulate this into a modular component/JS file etc.
-  // Timer that doesn't slowly drift late and get out of sync with visuals
-  // @see based on https://stackoverflow.com/a/29972322/7812829
-  // how the self-adjusting timer works 
-  //    - setInterval is at best, on time, but usually, late
-  //    - yes, the self-adjusting tick function will always increase time by 1 (even if 1.6 seconds has passed because it's again, late)
-  //    - ...but the 1 vs 1.6 error will be compensated next tick, because tick() will call itself after 0.4 seconds (it but it's constantly catching up) to achieve 2 vs 2
-  //    - if the tick function is super late i.e. 3 seconds passed by, it'll just call itself with setTimeout(0) 2 more times immediately
-  //    - therefore the maximum error is the infimum of the tick size. Get the tick size to be 0.1 second so the maximum error is <0.1
-  function startStopwatch () {
-    startTimestamp = Date.now()
-    etaOfNextTick = startTimestamp + tickSize
-    nextTimeoutID = setTimeout(
-      step, 
-      tickSize
-    )
-  }
-
-  function step () {
-    const delay = Date.now() - etaOfNextTick; // how late was the setTimeout 
-    if (delay > tickSize) {
-      console.log('setTimeout is lagging greatly')
-      // something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile "catch up" run
-    }
-    etaOfNextTick += tickSize
-
-    const millisecondsInSecond = 1000
-    const nearestDecimalPoint = 1
-    currentTime = Number(roundedToFixed(
-      (etaOfNextTick - startTimestamp) / millisecondsInSecond,
-      nearestDecimalPoint
-    ))
-
-    nextTimeoutID = setTimeout(
-      step, 
-      Math.max(0, tickSize - delay)
-    )
-  }
-
-  function stopStopwatch () {
-    startTimestamp = null 
-    etaOfNextTick = null
-    currentTime = 0
-    clearTimeout(nextTimeoutID)
-    nextTimeoutID = ''
-  }
-  // END OF TIMER-RELATED CODE
-
-  // FILE UPLOAD RELATED CODE
-  async function handleWhatUserUploaded (imageFile, slideID) {
-    if (!imageFile) return
-    if (imageFile.type.split("/")[0] === 'image') {
-      // rewrite
-      const storage = getStorage()
-      const imageRef = ref(storage, `images/${getRandomID()}`)
-      await uploadBytes(imageRef, imageFile)
-      const downloadURL = await getDownloadURL(imageRef)
-
-      updateFirestoreDoc(boardPath + `slides/${slideID}`, {
-        backgroundImageDownloadURL: downloadURL,
-        backgroundImageStoragePath: imageRef.fullPath // TO-DO: proper deletion boards
-      })
-    } else {
-      alert("Error: only images can be used")
-    }
-  } 
 </script>

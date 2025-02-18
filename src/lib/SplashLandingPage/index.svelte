@@ -6,27 +6,30 @@
 
 		<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 			<div class="header-subtitle">
-				Pick your teacher, ask lots of questions, get video explanations until you understand everything.
+				Pick your teacher, ask long unresolved questions, get proper explanations once and for all. 
+				<span style="color: #666666;">(Scroll down to explore directly)</span>
 			</div>
 
 			<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
 				<ReusableSubscribeButton/>
 
-				<div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
+				<!-- <div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
 					6 learners joined this year
-				</div>
+				</div> -->
 			</div>
 
 			<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
 				#3 front page 
-				<a href="https://news.ycombinator.com/item?id=39836630" target="_blank" style="color: #FF6600;">
+				<!-- style="color: #FF6600;" -->
+				<a href="https://news.ycombinator.com/item?id=39836630" target="_blank">
 					YC Hacker News
 				</a>
 
 				<div class="separator"></div>
 
 				20 upvotes
-				<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank" style="color: #FF6600;">
+				<!-- style="color: #FF6600;" -->
+				<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
 					r/PhysicsStudents
 				</a>
 
@@ -40,7 +43,7 @@
 			</div>
 		</div>
 
-		<div style="margin-top: 8vw;">
+		<div style="margin-top: 6vw;">
 			<RotatingGallery galleryVideos={randomlyChosenExemplarVideos}/>
 		</div>
 
@@ -195,9 +198,8 @@
 
 <style>
 	.splash-screen {
-		height: calc(100vh - var(--height-navbar)); 
-    margin-top: var(--height-navbar);
-    padding: 4vw 6vw;
+		height: 100vh;
+    padding: 6vw 6vw;
     background-color: var(--bg-off-white);
 	}
 

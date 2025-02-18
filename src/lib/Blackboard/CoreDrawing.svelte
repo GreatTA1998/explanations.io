@@ -72,14 +72,14 @@
 </div>
 
 <script>
-  import { lazyCallable } from '/src/helpers/actions.js';
-  import List, { Item, Text } from '@smui/list'
-  import Menu from '@smui/menu';
   import CoreDrawingToolbar from '$lib/Blackboard/CoreDrawingToolbar.svelte'
+  import { lazyCallable } from '/src/helpers/actions.js';
   import { connectTwoPoints, drawStroke, renderBackground } from '../../helpers/canvas.js'
   import { getRandomID } from '../../helpers/utility.js'
-  import { createEventDispatcher } from 'svelte'
   import { currentTool, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../../store.js'
+  import { createEventDispatcher, onMount } from 'svelte'
+  import List, { Item, Text } from '@smui/list'
+  import Menu from '@smui/menu';
 
   export let canvasWidth
   export let canvasHeight
@@ -96,6 +96,11 @@
 
   // QUICKFIX
   export let isDeletable = true
+
+  onMount(() => {
+    dispatch('canvas-slide-ready', canvas)
+    dispatch('canvas-stream-ready', canvas.captureStream(10))
+  })
 
   $: if (currentTimeOverride) {
     currentTime = currentTimeOverride
@@ -213,7 +218,7 @@
 
   $: normalizedLineWidth = $currentTool.lineWidth * (canvasWidth / $assumedCanvasWidth)
 
-  // NOTE: setting canvas.width will change  CSS width as well. But the opposite isn't true.
+  // NOTE: setting canvas.width will change CSS width as well. But the opposite isn't true.
   // read more in the specs
   function setCanvasDimensions ({ w, h }) {
     canvas.width = w

@@ -1,4 +1,25 @@
 <div style="margin-top: var(--height-navbar); padding: 2vw;">
+  <button on:click={backToServers}>
+    <span class="material-symbols-outlined">
+      arrow_back
+    </span>
+  </button>
+
+  <!-- NOTE: this if statement is necessary or else the resizing algorithm won't work -->
+  {#if creatorDoc.bio}
+    <TextAreaAutoResizing
+      value={creatorDoc.bio} 
+      on:input={(e) => debouncedUpdateBio(e.detail)}
+      placeholder="Details"
+      numberOfInitialRowsIfEmpty={1}
+      readonly={!$user.uid || $user.uid !== creatorDoc.uid}
+    />
+  {/if}
+
+  <span style="font-size: var(--fs-300);">
+    {feedbackText}
+  </span>
+
   <div style="padding: 0vw 2vw; display: flex; gap: 12px;">
     <div style="flex-basis: 48px;">
       <CreatorCircularAvatar/>
@@ -7,10 +28,6 @@
     <div style="display: flex; flex-direction: column; gap: 4px;">
       <div style="font-size: var(--fs-l);">
         {creatorDoc.name || ''}
-      </div>
-
-      <div style="max-width: 60ch;">
-        <TextAreaAutoResizing value={creatorDoc.bio}/>
       </div>
 
       <div style="display: flex; align-items: center; gap: 8px; padding: 12px 0px; flex-wrap: wrap;">
@@ -61,13 +78,15 @@
 
 <script>
   import { onMount } from 'svelte'
+  import { user } from '/src/store.js'
   import { collection, collectionGroup, query, where, orderBy, getDocs, limit, getFirestore } from "firebase/firestore"
-  import { getFirestoreQuery } from '/src/helpers/crud.js'
   import CreatorCircularAvatar from '$lib/DoodleVideo/CreatorCircularAvatar.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
-  import { getFirestoreDoc } from '/src/helpers/crud.js'
+  import { createDebouncedFunction } from '/src/helpers/debounce.js'
+  import { getFirestoreQuery, getFirestoreDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { goto } from '$app/navigation'
 
   export let profileUID
 
@@ -76,6 +95,7 @@
   let videoHeight = 0
   let creatorDoc = {} // AF {} is not a creator
   let teachingServers = null
+  let feedbackText = ''
 
   let currentServerID = ''
 
@@ -90,6 +110,25 @@
     } else {
       fetchMostRecentVideos()
     }
+  }
+
+  async function backToServers () {
+    if (window.history.length > 1) {
+      window.history.back()
+    } else {
+      // though we don't expect visitors to directly visit a creator page
+      goto('/')
+    }
+  }
+
+  const debouncedUpdateBio = createDebouncedFunction(updateBio, 1000)
+
+  function updateBio (newVal) {
+    updateFirestoreDoc(`/users/${profileUID}`, { 
+      bio: newVal 
+    })
+    feedbackText = 'Bio successfully saved.'
+    setTimeout(() => feedbackText = '', 3000)
   }
 
   function quickfixClassIDFrom (video) {

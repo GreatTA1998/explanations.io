@@ -49,8 +49,9 @@
           />
 
           {#if $user.uid === video.creatorUID || !video.creatorUID}
-            <VideoDropdownMenu 
+            <VideoDropdownMenu {video}
               on:delete-video={() => propToDeleteVideo = true} 
+              on:export-video={downloadVideo}
             />
           {/if}
         </div>
@@ -97,6 +98,30 @@
     updateFirestoreDoc(video.path, {
       viewMinutes: increment(0.1 * playbackSpeed)
     })
+  }
+
+  async function downloadVideo () {
+    try {
+      // Fetch the video file as a blob
+      const response = await fetch(video.webmDownloadURL);
+      const blob = await response.blob();
+      
+      // Create object URL from blob
+      const url = window.URL.createObjectURL(blob);
+      
+      // Create download link
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${video.title || 'video'}.webm`;
+      document.body.appendChild(link);
+      link.click();
+      
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Download failed:', error);
+    }
   }
 </script>
 

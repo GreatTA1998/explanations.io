@@ -4,7 +4,9 @@
       Fetching your info...
     </h4>
   {:else}
-    <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
+    {#if $isFullServerMode}
+      <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
+    {/if}
 
     {#if $didRenderSplashScreen && !$isFullServerMode}
       <SplashLandingPage />
@@ -55,8 +57,8 @@
   })
 
   function handleOnScroll (e) {
-    const navbarHeight = 56
-    if (window.scrollY >= window.innerHeight - navbarHeight) {
+    const scrollTriggerBuffer = 120
+    if (window.scrollY >= window.innerHeight - scrollTriggerBuffer) {
       isFullServerMode.set(true)
     }
   }

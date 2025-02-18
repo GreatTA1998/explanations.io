@@ -5,16 +5,17 @@
   <slot name="video" />
 
   {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
-    {#if !isDrawerOpen}
-      <button on:click={toggleDrawer} class="expand-drawer-floating-button material-symbols-outlined">
-        start
-      </button>
-    {:else}
+    {#if isDrawerOpen}
       <button on:click={toggleDrawer} 
         class="hide-drawer-button material-symbols-outlined" 
-        style="position: absolute; top: 48px; right: 208px; color: rgba(255, 255, 255, 0.7);"
+        style="position: absolute; top: 48px; right: 200px; color: rgba(255, 255, 255, 0.7);"
       >
-        start
+        keyboard_double_arrow_right
+      </button>
+    {:else}
+      <!--  for future display:{video.numOfComments || 0} -->
+      <button on:click={toggleDrawer} class="expand-drawer-floating-button material-symbols-outlined">
+        forum
       </button>
     {/if}
   {/if}
@@ -63,7 +64,9 @@
     [VIDEO_LAYOUT.MOBILE_VERTICAL]: `
       max-height: 140px;
       overflow-y: auto;
+      max-width: 38ch; 
     `
+    // max-width: 38ch; is just chosen to quickly satisfy the desktop profile page
   }
 
   function toggleDrawer () {
@@ -81,15 +84,18 @@
     flex-direction: column;
   }
 
+  .reflect-y-axis {
+    transform: rotateY(180deg);
+  }
+
   .expand-drawer-floating-button {
     border: 2px solid rgb(122, 122, 122);
     border-radius: 24px;
     padding: 4px;
-    right: 12px;
-    z-index: 10; 
-    transform: rotateY(180deg); 
-    position: absolute; 
     top: 48px; 
-    color: rgb(156, 156, 156);
+    right: 10px;
+    z-index: 10; 
+    position: absolute; 
+    color: rgb(122, 122, 122);
   }
 </style>

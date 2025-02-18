@@ -8,7 +8,7 @@
   import { lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
-  import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
+  import RenderlessAudioRecorder from '$lib/Blackboard/AudioRecorder.svelte'
   import Blackboard from '$lib/Blackboard/CoreDrawing.svelte'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
   import { doc, getFirestore, updateDoc, deleteField, onSnapshot, setDoc, arrayUnion, collection, query, where, getDocs, deleteDoc, arrayRemove, increment, writeBatch, getDoc } from 'firebase/firestore';

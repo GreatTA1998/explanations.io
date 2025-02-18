@@ -1,5 +1,7 @@
 <!-- Create an independent stacking context -->
-<div style="z-index: 0; position: relative;">
+<div style="z-index: 0; position: relative;" 
+  use:lazyCallable={() => isElementVisible = true }
+>
   {#if showSlideChanger}
     <!-- 1px quick-fix so UI doesn't look terrible -->
     <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px; flex-wrap: wrap; row-gap: 2px;">  
@@ -21,34 +23,19 @@
       </BaseTransparentButton>
     </div>
     
-    <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
-      {#if !hasPlaybackStarted}
-        <button on:click={startAudioPlayer}
-          class="material-icons overlay-center" 
-          style="
-            color: rgba(230, 230, 230, 0.8);
-            width: {240 * scaleFactor}px; 
-            height: {240 * scaleFactor}px; 
-            z-index: 5;
-            font-size: {15 * scaleFactor}rem;
-          "
-        >
-          play_circle
-        </button>
-      {/if} 
-
+    <div on:click={togglePlayPause} on:keydown={togglePlayPause} style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#each boardDoc.slideIDs as slideID, i}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >
           <FetchStrokes dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-            let:fetchStrokes={fetchStrokes}
+            autoFetchStrokes={isElementVisible}
             let:strokesArray={strokesArray}
             on:mounted={(e) => {
               slideIDToStrokesArray[slideID] = e.detail.strokesArray
             }}
           > 
-            <div use:lazyCallable={fetchStrokes}  
+            <div
               style="
                 position: absolute;
                 transform: scale(0.5); 
@@ -85,9 +72,7 @@
         isPlaying = true;
         startTimer();
       }}
-      on:pause={() => {
-        isPlaying = false;
-      }}
+      on:pause={() => isPlaying = false}
       on:seeking={() => {
         currentTime = AudioPlayer.currentTime;
         hasAudioSliderJumped = true
@@ -141,6 +126,7 @@
   let isPlaying = false
 
   let updateViewMinutesTimeoutID
+  let isElementVisible = false
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
 
@@ -148,21 +134,27 @@
     handleVideoDelete(boardDoc)
   }
 
-  // Ensure we change `idxOfFocusedSlide` 
+  $: if (currentTime > 0) {
+    syncSlideIdxToTime()
+  }
+
+  function togglePlayPause () {
+    if (isPlaying) AudioPlayer.pause()
+    else if (AudioPlayer) AudioPlayer.play() // let the on:play event handle the rest, so the user can play from the video or the audio player
+  }
+  
   // NOTE: doesn't need to be optimized yet , there are only about 10-20 slide changes at most
-  $: {
-    if (currentTime > 0) {
-      let temp = 0
-      for (const change of timingOfSlideChanges) {
-        if (change.timing < currentTime) {
-          temp = change.toIdx
-        }
-        else if (change.timing > currentTime) {
-          break
-        }
+  function syncSlideIdxToTime () {
+    let temp = 0
+    for (const change of timingOfSlideChanges) {
+      if (change.timing < currentTime) {
+        temp = change.toIdx
       }
-      idxOfFocusedSlide = temp
+      else if (change.timing > currentTime) {
+        break
+      }
     }
+    idxOfFocusedSlide = temp
   }
 
   $: if (AudioPlayer) {
@@ -205,12 +197,6 @@
     }
   }
 
-  function startAudioPlayer () {
-    if (AudioPlayer) {
-      AudioPlayer.play()
-    }
-  }
-
   function startTimer () {
     intervalID = setInterval(
       () => { 
@@ -234,24 +220,13 @@
       return
     }
 
-    revertToBoard({ boardDoc, slideIDToStrokesArray})
+    revertToBoard({ boardDoc, slideIDToStrokesArray })
   }
 </script>
 
 <style>
   audio::-webkit-media-controls-enclosure {
     border-radius: 0;
-  }
-
-  .overlay-center {
-    position: absolute; 
-    width: 20px; 
-    height: 20px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto; 
   }
 </style>
 

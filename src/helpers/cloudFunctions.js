@@ -27,3 +27,17 @@ export function deleteRecursively ({ path }) {
     resolve()
   })
 }
+
+export function uploadToYoutube({ videoUrl, title, description, tags = [], creatorName = 'Anonymous' }) {
+  const functions = getFunctions()
+  const uploadToYoutube = httpsCallable(functions, 'uploadToYoutube')
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await uploadToYoutube({ videoUrl, title, description, tags, creatorName })
+      resolve(result.data)
+    } catch (error) {
+      console.error('Error uploading to YouTube:', error)
+      reject(error)
+    }
+  })
+}

@@ -1,5 +1,6 @@
 rules_version = '2';
 
+// DO NOT REMOVE, THIS IS ESSENTIAL UNLIKE OTHER FIRESTORE RULES
 // Craft rules based on data in your Firestore database
 // allow write: if firestore.get(
 //    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;

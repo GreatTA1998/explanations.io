@@ -2,10 +2,14 @@
   import Menu from '@smui/menu'
   import List from '@smui/list'
   import { createEventDispatcher } from 'svelte'
+  import { uploadToYoutube } from '../../helpers/cloudFunctions'
 
   export let video
+  export let creatorName = 'Anonymous'
   
   let DropdownMenu
+  let isUploading = false
+  let uploadProgress = ''
 
   const dispatch = createEventDispatcher()
 
@@ -17,6 +21,40 @@
   function handleExportVideoClick () {
     dispatch('export-video')
     DropdownMenu.setOpen(false)
+  }
+
+  async function handleUploadToYoutubeClick() {
+    if (!video?.webmDownloadURL) return
+    
+    isUploading = true
+    uploadProgress = 'Preparing upload...'
+    DropdownMenu.setOpen(false)
+    
+    try {
+      uploadProgress = 'Uploading to YouTube...'
+      const result = await uploadToYoutube({
+        videoUrl: video.webmDownloadURL,
+        title: video.title || 'Explanations.io Video',
+        description: 'Video created on Explanations.io',
+        creatorName: creatorName
+      })
+      
+      // Notify user of successful upload
+      uploadProgress = ''
+      alert(`Video successfully uploaded to YouTube!\n\nYou can view it at: ${result.youtubeUrl}`)
+      
+      // Optionally, you could dispatch an event to notify parent components
+      dispatch('youtube-upload-success', { 
+        youtubeUrl: result.youtubeUrl,
+        videoId: result.videoId
+      })
+    } catch (error) {
+      console.error('Failed to upload to YouTube:', error)
+      alert('Failed to upload to YouTube. Please try again later.')
+    } finally {
+      isUploading = false
+      uploadProgress = ''
+    }
   }
 </script>
 
@@ -35,6 +73,15 @@
             <span class="material-icons">download</span>
             Export video
           </a>
+        </button>
+        
+        <button on:click={handleUploadToYoutubeClick} class="menu-list-item" disabled={isUploading}>
+          <span class="material-icons">upload</span>
+          {#if isUploading}
+            {uploadProgress || 'Uploading...'}
+          {:else}
+            Upload to YouTube
+          {/if}
         </button>
       {/if}
       

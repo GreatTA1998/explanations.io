@@ -8,7 +8,10 @@
 </ReusableRoundButton>
 
 {#if isPopupOpen}
-  <BasePopup on:popup-close={() => isPopupOpen = false} style="min-width: 340px; width: 60%; max-width: 620px; padding: 24px;">
+  <BasePopup on:popup-close={() => {
+    isPopupOpen = false;
+    dispatch('popup-close');
+  }} style="min-width: 340px; width: 60%; max-width: 620px; padding: 24px;">
     <div slot="title" style="margin: 0; font-size: 28px; font-weight: 600;">
       New server
     </div> 
@@ -21,35 +24,28 @@
               <UXFormField
                 value={serverFullName}
                 on:input={(e) => serverFullName = e.target.value}
-                fieldLabel="Full server name (for a college-class, include code-names too)"    
-                placeholder="Intro to Algorithms (abc-123)"   
+                fieldLabel="Server name"    
+                placeholder=""   
               />
             </div>
           </div>
                      
-          <div style="flex: 1; margin-bottom: 24px;">
+
+
+          <!-- What's the goal of this server, how will it help its members -->
+          <div style="flex: 1">
             <UXFormField
-              value={serverSyllabusVersion}
-              on:input={(e) => serverSyllabusVersion = e.target.value}
-              fieldLabel="(OPTIONAL) Is it college-specific? If so which?"
-              placeholder="Cross-college"
+              value={serverGoalDescription}
+              on:input={(e) => serverGoalDescription = e.target.value}
+              fieldLabel="(OPTIONAL) Server description"
+              placeholder=""
             />
           </div>
-
-        <!-- What's the goal of this server, how will it help its members -->
-        <div style="flex: 1">
-          <UXFormField
-            value={serverGoalDescription}
-            on:input={(e) => serverGoalDescription = e.target.value}
-            fieldLabel="(OPTIONAL) Server description"
-            placeholder=""
-          />
         </div>
       </div>
-    </div>
 
       <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 24px;">
-        <ReusableRoundButton on:click={createNewClassServer} backgroundColor="#5d0068" textColor="white" isDisabled={!serverFullName || !serverGoalDescription}>
+        <ReusableRoundButton on:click={createNewClassServer} backgroundColor="#5d0068" textColor="white" isDisabled={!serverFullName}>
           <span class="material-symbols-outlined" style="margin-right: 6px;">
             add
           </span>
@@ -68,13 +64,22 @@
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomID } from '/src/helpers/utility.js'
 
+  // Accept an external isOpen prop with default value of undefined
+  export let isOpen = undefined;
+
   let serverFullName = '' 
   let serverGoalDescription = ''
   let serverSyllabusVersion = ''
 
   const dispatch = createEventDispatcher()
 
-  let isPopupOpen = false
+  // Internal state for when component controls its own visibility
+  let isPopupOpen = false;
+  
+  // Make isPopupOpen reactive to isOpen when provided
+  $: if (isOpen !== undefined) {
+    isPopupOpen = isOpen;
+  }
 
   // ASSUMES NAME & DESCRIPTION ARE NOT EMPTY STRINGS (BECAUSE THE SUBMIT BUTTON IS DISABLED OTHERWISE)
   async function createNewClassServer () {
@@ -102,5 +107,6 @@
       })
     ])
     window.location.reload()
+    dispatch('popup-close')
   }
 </script>

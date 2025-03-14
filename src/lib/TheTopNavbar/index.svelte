@@ -49,13 +49,23 @@
 							<CompactServerCard serverObj={matchedServer}/>
 						{/each}
 
-						<PopupNewServer />
+						<button class="new-server-button" on:click|stopPropagation={() => isPopupNewServerOpen = true}>
+							<span class="material-symbols-outlined" style="margin-right: 6px;">add</span>
+							<span>Create new server</span>
+						</button>
 					</div>
 				{/if}
-			<!-- just re-use <PopupNewServer/> to for creating new servers -->
 		</div>
 	</Section>
 </div>
+
+{#if isPopupNewServerOpen}
+	<div class="popup-overlay" on:click|self={() => isPopupNewServerOpen = false} on:keydown>
+		<div class="popup-container" on:click|stopPropagation on:keydown>
+			<PopupNewServer isOpen={isPopupNewServerOpen} on:popup-close={() => isPopupNewServerOpen = false} />
+		</div>
+	</div>
+{/if}
 
 <script>
 	import CompactServerCard from './CompactServerCard.svelte'
@@ -75,6 +85,7 @@
 	let mathServers = []
 	let searchMatchedServers = []
 	let isFocused = false
+	let isPopupNewServerOpen = false
 
 	getFirestoreCollection('classes').then(docs => {
 		allServers = docs
@@ -146,5 +157,38 @@
 		display: grid;
 		grid-template-columns: repeat(2,auto);
 		gap: 8px;
+	}
+	
+	.new-server-button {
+		display: flex;
+		align-items: center;
+		padding: 8px 12px;
+		background-color: #f5f5f5;
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
+		font-weight: 500;
+		color: purple;
+	}
+	
+	.popup-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 2000;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.popup-container {
+		background-color: white;
+		border-radius: 16px;
+		max-width: 90%;
+		max-height: 90%;
+		overflow: auto;
 	}
 </style>

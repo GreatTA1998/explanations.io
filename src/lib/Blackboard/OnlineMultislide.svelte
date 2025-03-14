@@ -26,15 +26,17 @@
       canCreateNewSlide
     />
 
-    <button on:click={() => {
-        if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
-          deleteMultislideBlackboard({ boardDoc, roomDoc })
-        }
-      }}
-      style="margin-left: auto; margin-right: 8px; cursor: pointer;"
-    >
-      Delete multiboard
-    </button>
+    <div style="margin-left: auto; display: flex; align-items: center;">
+      <MultiboardDropdownMenu 
+        {boardDoc} 
+        {roomDoc} 
+        on:delete-multiboard={() => {
+          if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
+            deleteMultislideBlackboard({ boardDoc, roomDoc })
+          }
+        }}
+      />
+    </div>
   </div>
 
   <div style="margin-bottom: 12px;"></div>
@@ -133,6 +135,7 @@
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
+  import MultiboardDropdownMenu from './MultiboardDropdownMenu.svelte'
 
   import { 
     deleteMultislideBlackboard, 

@@ -1,13 +1,12 @@
 <div class="splash-screen">
 	<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white);">
 		<p class="header-title" bind:clientWidth={containerWidth}>
-			Youtube style tutoring for math olympiads
+			Youtube style help for math & engineering
 		</p>
 
 		<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 			<div class="header-subtitle">
-				Pick your teacher, ask long unresolved questions, get proper explanations once and for all. 
-				<span style="color: #666666;">(Scroll down to explore directly)</span>
+				Subscribe to anyone, get <b>proper</b> explanations once and for all. 
 			</div>
 
 			<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
@@ -37,9 +36,8 @@
 				
 				<CountryFlags/>
 
-				<div class="separator"></div>	
-
-				<BrandLogos/>
+				<!-- <div class="separator"></div>	 -->
+				<!-- <BrandLogos/> -->
 			</div>
 		</div>
 

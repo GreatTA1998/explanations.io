@@ -5,6 +5,7 @@
 - **Prabhakar Kafle**: Specialized in crucial UI for the 2020 prototype
 - **Winston Fee**: Contributed to various parts for the 2020 prototype
 - **Lujing Cen**: Developed a rendering algorithm where strokes can be drawn partially as you slide across the video
+- **Jing Lin**: Introduced me to builders
 
 ## Tech stack
 This web app uses Svelte, Svelte Material UI (SMUI) and Firebase

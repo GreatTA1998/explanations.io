@@ -61,7 +61,11 @@
     on:touchstart|nonpassive|preventDefault={touchStart}
     on:touchmove|nonpassive|preventDefault={touchMove}
     on:touchend|nonpassive|preventDefault={touchEnd}
+    on:mousedown={mouseDown}
+    on:mousemove={mouseMove}
     class="front-canvas"
+    class:eraser-cursor={$currentTool.type === 'eraser'}
+    class:pencil-cursor={$currentTool.type !== 'eraser'}
   >
   </canvas>
 
@@ -70,6 +74,9 @@
   >
   </canvas>
 </div>
+
+<!-- bound to window so releasing outside the canvas still ends the stroke -->
+<svelte:window on:mouseup={mouseUp} />
 
 <script>
   import CoreDrawingToolbar from '$lib/Blackboard/CoreDrawingToolbar.svelte'
@@ -321,6 +328,22 @@
     isInMiddleOfStroke = false
   }
 
+  function mouseDown (e) {
+    if (e.button !== 0) return // only left click
+    handleContactWithBlackboard(e, { isInitialContact: true })
+  }
+
+  function mouseMove (e) {
+    if (!isInMiddleOfStroke) return
+    handleContactWithBlackboard(e, { isInitialContact: false })
+  }
+
+  function mouseUp (e) {
+    if (!isInMiddleOfStroke) return
+    handleEndOfStroke(currentStroke)
+    isInMiddleOfStroke = false
+  }
+
   function startNewStroke (e) {
     isInMiddleOfStroke = true;
     prevPoint = { // TODO: use an optional
@@ -376,9 +399,10 @@
 
   function getContactPosition (e) {
     const { left, top } = canvas.getBoundingClientRect();
+    const pointerEvent = e.touches ? e.touches[0] : e // touch vs mouse event
     return {
-      x: e.touches[0].pageX - left - window.scrollX,
-      y: e.touches[0].pageY - top - window.scrollY
+      x: pointerEvent.pageX - left - window.scrollX,
+      y: pointerEvent.pageY - top - window.scrollY
     }
   }
 
@@ -387,12 +411,6 @@
       unitX: x / canvas.width,
       unitY: y / canvas.height
     }
-  }
-
-  function dragstart_handler (e, boardID, originalIndex) {
-    whatIsBeingDragged.set('board')
-    e.dataTransfer.setData("text/plain", `boardID:${boardID}`)
-    e.dataTransfer.dropEffect = 'move'
   }
 
   // assumes undoStroke
@@ -442,5 +460,12 @@
     left: 0;
     display: block;
     background-color: hsl(0,0%,0%, 0.80); 
+  }
+
+  .pencil-cursor {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path fill='white' stroke='black' stroke-width='1' d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/></svg>") 2 22, crosshair;
+  }
+  .eraser-cursor {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24'><path fill='white' stroke='black' stroke-width='1' d='M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l10.6-10.6c.79-.78 2.05-.78 2.83 0z'/></svg>") 14 14, crosshair;
   }
 </style>

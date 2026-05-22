@@ -44,7 +44,7 @@
 
 <script>
   import { lazyCallable } from '/src/helpers/actions.js';
-  import { connectTwoPoints, drawStroke, renderBackground } from '../../helpers/canvas.js'
+  import { applyInputStreamline, drawStroke, redrawStrokes, renderBackground } from '../../helpers/canvas.js'
   import { getRandomID } from '../../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { currentTool, onlyAllowApplePencil, whatIsBeingDragged } from '../../store.js'
@@ -68,10 +68,7 @@
   let bgCanvas
   let localStrokesArray = []
   let isInMiddleOfStroke = false
-  let prevPoint = {
-    x: -1, 
-    y: -1
-  }
+  let streamlinerPoint = null
   let currentStroke = { 
     points: [] 
   }
@@ -120,9 +117,6 @@
       bgCtx.clearRect(0, 0, bgCanvas.scrollWidth, bgCanvas.scrollHeight)
       renderBackground(backgroundImageDownloadURL, canvas, bgCtx)
   }
-
-  $: normalizedLineWidth = $currentTool.lineWidth * (thumbnailWidth / canvasWidth)
-
 
   onMount(() => {
     ctx = canvas.getContext('2d')
@@ -272,10 +266,7 @@
 
   function startNewStroke (e) {
     isInMiddleOfStroke = true;
-    prevPoint = { // TODO: use an optional
-      x: -1, 
-      y: -1 
-    }
+    streamlinerPoint = null
     currentStroke = {
       strokeNumber: strokesArray.length + 1,
       startTime: currentTime,
@@ -298,24 +289,12 @@
   }
 
   function lengthenTheCurrentStroke (e, contactPoint) {
-    // update state
-    currentStroke.points.push({ 
-      unitX: parseFloat(contactPoint.x / canvas.width).toFixed(4),
-      unitY: parseFloat(contactPoint.y / canvas.height).toFixed(4)
+    streamlinerPoint = applyInputStreamline(streamlinerPoint, contactPoint)
+    currentStroke.points.push({
+      unitX: parseFloat(streamlinerPoint.x / canvas.width).toFixed(4),
+      unitY: parseFloat(streamlinerPoint.y / canvas.height).toFixed(4)
     })
-    // update UI
-    if (prevPoint.x !== -1 && prevPoint.y !== -1) {
-      connectTwoPoints(
-        [normalizePoint(prevPoint), normalizePoint(contactPoint)], // `points`: note that the points have to be normalized for now before refactors
-        1, // `i`: note that setting i = 1 is a quick-fix (will refactor $_connectTwoPoints() in the future)
-        $currentTool.type === 'eraser',
-        ctx,
-        $currentTool.color,
-        normalizedLineWidth,
-        canvas
-      )
-    }
-    prevPoint = contactPoint;
+    redrawStrokes(localStrokesArray, ctx, canvas, canvasWidth, currentStroke)
   }
 
   function handleEndOfStroke (newStroke) {
@@ -330,13 +309,6 @@
     return {
       x: e.touches[0].pageX - left - window.scrollX,
       y: e.touches[0].pageY - top - window.scrollY
-    }
-  }
-
-  function normalizePoint ({ x, y }) {
-    return {
-      unitX: x / canvas.width,
-      unitY: y / canvas.height
     }
   }
 

@@ -36,6 +36,7 @@
     "audio-recorder-polyfill": "^0.4.1",
     "firebase": "11.0.2",
     "luxon": "^3.5.0",
+    "perfect-freehand": "^1.2.3",
     "posthog-js": "^1.142.1"
   }
 }

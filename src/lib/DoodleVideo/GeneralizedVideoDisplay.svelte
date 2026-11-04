@@ -50,6 +50,8 @@
 
           {#if $user.uid === video.creatorUID || !video.creatorUID}
             <VideoDropdownMenu {video}
+              {classID}
+              creatorName={video.creatorName || 'Anonymous'}
               on:delete-video={() => propToDeleteVideo = true} 
               on:export-video={downloadVideo}
             />
@@ -112,7 +114,8 @@
       // Create download link
       const link = document.createElement('a');
       link.href = url;
-      link.download = `${video.title || 'video'}.webm`;
+      const extension = video.videoFileExtension || 'webm'
+      link.download = `${video.title || video.description || 'video'}.${extension}`;
       document.body.appendChild(link);
       link.click();
       

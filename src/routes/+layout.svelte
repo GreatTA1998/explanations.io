@@ -8,31 +8,24 @@
       <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
     {/if}
 
-    {#if $didRenderSplashScreen && !$isFullServerMode}
-      <SplashLandingPage />
-    {/if}
-
     <!-- Full Server Page will be injected here -->
     <slot />
   {/if}
 </div>
 
 <script>
-  import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
   import TheTopNavbar from '$lib/TheTopNavbar/index.svelte'
 
   import { initializeDatabase } from '../database.js'
   import 'firebase/app'
-  import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
+  import { getAuth, onAuthStateChanged } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
 
-  import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
-  import { handleServerRedirect } from '/src/helpers/everythingElse.js'
 
-  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode } from '../store.js'
   import { onMount } from 'svelte'
-  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
   import posthog from 'posthog-js'
@@ -52,17 +45,8 @@
     onAuthStateChanged(auth, reactToUserChange)
 
     createSessionRecording()
-    
-    window.addEventListener('scroll', handleOnScroll)
   })
 
-  function handleOnScroll (e) {
-    const scrollTriggerBuffer = 120
-    if (window.scrollY >= window.innerHeight - scrollTriggerBuffer) {
-      isFullServerMode.set(true)
-    }
-  }
-  
   function createSessionRecording () {
     posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7',
       {
@@ -107,18 +91,10 @@
     } 
 
     // user not logged in
-    else {
-      try {
-        didRenderSplashScreen.set(true)
-
-        const algebraAndNumberTheoryServer = await getFirestoreDoc(`classes/${'I90n3qyz45VmY0azjbhh'}`)
-        handleServerRedirect(algebraAndNumberTheoryServer)
-
-        // await signInAnonymously(auth)
-      } catch (error) {
-        console.error(error)
-        alert("Error code & message, see console for details =", error.code + ' ' + error.message)
-      }
+    else if ($page.url.pathname !== '/') {
+      // A shared server or room URL is the destination. Show that page
+      // instead of a homepage splash or another server.
+      isFullServerMode.set(true)
     }
     
     hasFetchedUser.set(true) 
@@ -207,15 +183,6 @@
               id: snap.id, 
               ...userDoc
             })
-          }
-
-          // QUICKFIX: for some reason user.set() is still not hydrated even after `await listenToUserDocAndHandleForwarding()`, so we just 
-          // handle navigation directly here
-          // only redirect from the home page '/' path, for specific URLs don't fuck with it
-
-          // COMMENTED OUT FOR TESTING
-          if ($page.url.pathname === '/' && $user.mostRecentServerID) {
-            goto(`/${$user.mostRecentServerID}/question`)
           }
 
           resolve()

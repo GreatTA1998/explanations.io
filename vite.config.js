@@ -1,3 +1,4 @@
+import { createRequire } from "module";
 import { buildSync } from "esbuild";
 import fs from "fs";
 import path from "path";
@@ -9,23 +10,59 @@ import { viteCommonjs } from "@originjs/vite-plugin-commonjs";
 // Below is Vite's config, see https://www.reddit.com/r/sveltejs/comments/nzi934/comment/h1ppot2/?utm_source=share&utm_medium=web2x&context=3
 // vite: {
 
+const configDir = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(path.join(configDir, "package.json"));
+
 // onnxruntime-web is UMD. The dev CommonJS plugin cannot parse the minified
-// bundle, and a format-only transform still leaves require() in the browser.
-// Bundle it to ESM once and alias the package at that file.
-const ortBundle = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "node_modules/.vite/ort-web-browser.mjs"
-);
-fs.mkdirSync(path.dirname(ortBundle), { recursive: true });
-buildSync({
-  absWorkingDir: path.dirname(fileURLToPath(import.meta.url)),
-  entryPoints: ["node_modules/onnxruntime-web/dist/ort-web.min.js"],
-  bundle: true,
-  format: "esm",
-  platform: "browser",
-  outfile: ortBundle,
-  logLevel: "silent",
-});
+// bundle, so turn the installed file into ESM and alias the package at it.
+// Resolve it as a module (it may be nested), and do not fail config load when
+// it is not installed yet — that used to abort `vite dev` before the app started.
+function resolveOrtEntry() {
+  const resolvers = [require];
+  try {
+    resolvers.unshift(createRequire(require.resolve("@xenova/transformers/package.json")));
+  } catch {
+    // Transformers itself is not installed.
+  }
+  for (const resolveFrom of resolvers) {
+    try {
+      return resolveFrom.resolve("onnxruntime-web/dist/ort-web.min.js");
+    } catch {
+      // Try the next location. The package may be hoisted or nested.
+    }
+  }
+  return null;
+}
+
+function onnxRuntimeWebBundle() {
+  const entry = resolveOrtEntry();
+  if (!entry) {
+    console.warn(
+      "onnxruntime-web is not installed, so new-video transcription is unavailable until npm install."
+    );
+    return null;
+  }
+
+  const outfile = path.resolve(configDir, "node_modules/.vite/ort-web-browser.mjs");
+  fs.mkdirSync(path.dirname(outfile), { recursive: true });
+  try {
+    buildSync({
+      absWorkingDir: configDir,
+      entryPoints: [entry],
+      bundle: true,
+      format: "esm",
+      platform: "browser",
+      outfile,
+      logLevel: "silent",
+    });
+  } catch (err) {
+    console.warn("Could not prepare onnxruntime-web for the browser.", err);
+    return null;
+  }
+  return outfile;
+}
+
+const ortBundle = onnxRuntimeWebBundle();
 
 export default {
   plugins: [
@@ -38,9 +75,7 @@ export default {
   ],
 
   resolve: {
-    alias: {
-      "onnxruntime-web": ortBundle,
-    },
+    alias: ortBundle ? { "onnxruntime-web": ortBundle } : {},
   },
 
   css: {

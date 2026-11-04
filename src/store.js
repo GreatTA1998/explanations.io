@@ -12,7 +12,7 @@ export const userInfoFromAuthProvider = writable({})
 
 export const currentTool = writable({
     type: 'pencil',
-    color: 'hsla(0, 0, 100%, 0)',
+    color: 'white',
     lineWidth: 3
 })
 export const onlyAllowApplePencil = writable(true)

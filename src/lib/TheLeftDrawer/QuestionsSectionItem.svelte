@@ -1,12 +1,12 @@
 <script>
   import { deleteQuestion } from '/src/helpers/unifiedDeleteAPI.js'
-  import { viewport } from '/src/storeFolder/viewport.js'
-  import { user, adminUIDs, drawerWidth } from '/src/store.js'
+  import { user, adminUIDs } from '/src/store.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { DateTime } from 'luxon'
   import List, { Item, Text } from '@smui/list'
   import Menu from '@smui/menu'
+  import { lightDismiss } from '/src/helpers/lightDismiss.js'
 
   export let question
   export let classID
@@ -15,8 +15,6 @@
 
   function handleQuestionClick() {
     goto(`/${classID}/question/${question.id}`)
-
-    if ($viewport.isMobile) drawerWidth.set(0)
   }
 
   function handleDeleteAttempt () {
@@ -46,17 +44,19 @@
     </div>
   
     {#if question.askerUID === $user.uid || $adminUIDs.includes($user.uid)}
-      <span on:click={DropdownMenu.setOpen(true)} on:keydown class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
-        more_vert
+      <span style="display: contents;" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
+        <span on:click={DropdownMenu.setOpen(true)} on:keydown class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+          more_vert
+        </span>
+
+        <Menu bind:this={DropdownMenu} style="width: 300px">
+          <List>      
+            <Item on:SMUI:action={handleDeleteAttempt}>
+              Delete question
+            </Item>
+          </List> 
+        </Menu>
       </span>
-  
-      <Menu bind:this={DropdownMenu} style="width: 300px">
-        <List>      
-          <Item on:SMUI:action={handleDeleteAttempt}>
-            Delete question
-          </Item>
-        </List> 
-      </Menu>
     {/if}
   </div>
 

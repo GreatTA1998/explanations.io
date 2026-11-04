@@ -1,36 +1,32 @@
-<div bind:this={ServerLayout} id="server-layout" class="robust-ios-space-filling" style="--drawer-width: {$drawerWidth}px;">
-  <div id="left-drawer">
-    {#key classID}
-      <TheLeftDrawer 
-        {classID}
-        {roomID}
-      />
-    {/key}
-  </div>
+<div bind:this={ServerLayout} id="server-layout" class="robust-ios-space-filling" style="--drawer-width: {$sidebarFullscreen ? 0 : $drawerWidth}px;">
+  {#if !$sidebarFullscreen}
+    <div id="left-drawer">
+      <NavSideDrawer />
+      <div class="room-drawer">
+        {#key classID}
+          <TheLeftDrawer 
+            {classID}
+            {roomID}
+          />
+        {/key}
+      </div>
+    </div>
+  {/if}
 
-  <div id="main-content" bind:this={MainContent}>
-    {#if $drawerWidth === 0}
-      <button on:click={() => drawerWidth.set(WIDTHS.DRAWER_EXPANDED)} 
-        class="material-icons expand-collapse-button" 
-        style="color: rgb(100, 100, 100); font-size: 2rem; position: fixed; top: var(--navbar-height)px; left: 0; z-index: 10;"
-      >
-        keyboard_double_arrow_right
-      </button>
-    {/if}
-
+  <div id="main-content" class:sidebar-fullscreen={$sidebarFullscreen} bind:this={MainContent}>
     <slot />
   </div>
 </div>
 
 <script> 
   import TheLeftDrawer from '$lib/TheLeftDrawer/index.svelte'
+  import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
   import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { WIDTHS } from '/src/helpers/CONSTANTS.js'
 
   import { 
     user, drawerWidth, classServerDoc, recentSearchedServerDoc, 
-    blackboardWidth, videoPreviewWidth, videoCinemaWidth, isFullServerMode
+    blackboardWidth, videoPreviewWidth, videoCinemaWidth, isFullServerMode, sidebarFullscreen
   } from '/src/store.js'
 
   import { onMount } from 'svelte'
@@ -68,8 +64,7 @@
 
   function transformToFullServerPage () {
     MainContent.style.overflowY = 'auto'
-    const navbarHeight = 56
-    ServerLayout.style.marginTop = `${navbarHeight}px`
+    ServerLayout.style.marginTop = '0px'
   }
 
   function computeDimensionsForBlackboardsAndVideos () {
@@ -118,24 +113,43 @@
 
 <style> 
   :root {
-    --navbar-height: 56px;
+    --navbar-height: 0px;
   }
 
   #server-layout {
     display: grid;
     grid-template-columns: var(--drawer-width) 1fr; 
     grid-template-areas: 'sidebar main';
-    height: calc(100vh - var(--navbar-height));
+    height: 100vh;
     background-color: var(--bg-off-white);
   }
 
   #left-drawer {
     grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    background-color: var(--bg-off-white);
+    box-shadow: 4px 0 6px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .room-drawer {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
   }
 
   #main-content {
     grid-area: main;
     position: relative;
+    min-width: 0;
+  }
+
+  #main-content.sidebar-fullscreen {
+    padding-top: 72px;
   }
 </style>
 

@@ -21,7 +21,10 @@
 
   <!-- {#if Object.keys($user).length > 0} -->
     {#if open}
-      <div class="popup-window">
+      <div
+        class="popup-window"
+        use:lightDismiss={{ close: () => { open = false }, always: true, ignore: '.color-pencil-button' }}
+      >
         <!-- generate random colors -->
         <div style="display: flex; flex-wrap: wrap">
           {#each randomPaletteColors as color}
@@ -60,6 +63,7 @@
       {#if i < pencilColors.length - 1}
         <div on:click={() => selectPencil({ i, color, lineWidth: pencilWidths[i] })} 
           class="color-pencil-button"
+          class:narrow-hide={i > 0}
           class:pencil-selected={$currentTool.color === color}
         >
           <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -101,7 +105,7 @@
       {:else}
         {#if $user.uid}
           <span on:click={handleDiceClick(color, i)} 
-            class="material-icons" 
+            class="material-icons narrow-hide" 
             class:highlighted-background={$currentTool.color === color}
             style="font-size: 2.1rem; margin-left: 5px; color: {color}; border-radius: 4px; padding: 2px"
           >
@@ -116,7 +120,7 @@
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 32 })}
       class:eraser-selected={$currentTool.type === 'eraser' && $currentTool.lineWidth === 32}
       width="60" height="54"
-      style="margin-left: 30px; margin-right: 10px;"
+      class="large-eraser"
       src="https://i.imgur.com/Klln1yP.png"
       alt="large-eraser"
     >
@@ -126,7 +130,7 @@
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 5 })}
       class:eraser-selected={$currentTool.type === 'eraser' && $currentTool.lineWidth === 5}
       width="30" height="27"
-      style="margin-right: 16px;"
+      class="small-eraser narrow-hide"
       src="https://i.imgur.com/Klln1yP.png"
       alt="small-eraser"
     >
@@ -149,6 +153,7 @@
   import Button from '@smui/button'
   import Slider from '@smui/slider'
   import { onMount } from 'svelte';
+  import { lightDismiss } from '/src/helpers/lightDismiss.js'
   
   let pencilColors = []
   let pencilWidths = [] 
@@ -193,6 +198,7 @@
     } 
     else {
       currentTool.set({ type: 'pencil', color, lineWidth })
+      open = false
     }
   }
 
@@ -261,6 +267,15 @@
     border-radius: 4px;
   }
 
+  .large-eraser {
+    margin-left: 30px;
+    margin-right: 10px;
+  }
+
+  .small-eraser {
+    margin-right: 16px;
+  }
+
   .color-pencil-button {
     margin: 0 4px; 
     width: 30px; 
@@ -270,6 +285,36 @@
     display: flex; 
     justify-content: center;
     padding-left: 4px;
+  }
+
+  /* Phones: one pen, one eraser, undo, and the menu. No second row and no sideways scroll. */
+  @media (max-width: 767px) {
+    .blackboard-toolbar {
+      left: 0;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      flex-wrap: nowrap;
+      overflow: visible;
+      border-radius: 0;
+      padding-right: 4px;
+    }
+
+    .narrow-hide {
+      display: none;
+    }
+
+    .color-pencil-button {
+      margin: 0 2px;
+    }
+
+    .large-eraser {
+      width: 44px;
+      height: 40px;
+      margin-left: 8px;
+      margin-right: 4px;
+    }
   }
 
   .highlighted-outline {
@@ -309,5 +354,19 @@
     top: 0;
     bottom: 0;
     margin: auto;
+  }
+
+  @media (max-width: 767px) {
+    .popup-window {
+      width: min(480px, calc(100vw - 16px));
+      height: auto;
+      max-height: calc(100vh - 24px);
+      overflow: auto;
+      top: 50%;
+      left: 50%;
+      right: auto;
+      bottom: auto;
+      transform: translate(-50%, -50%);
+    }
   }
 </style>

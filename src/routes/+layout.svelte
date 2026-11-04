@@ -1,15 +1,24 @@
+<svelte:window on:keydown={handleFullscreenKey} />
+
 <div>
   {#if !$hasFetchedUser}
     <h4 style="margin-left: 16px; opacity: 70%; font-weight: 400">
       Fetching your info...
     </h4>
   {:else}
-    {#if $isFullServerMode}
-      <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
+    {#if $isFullServerMode && !$page.params.class && !$sidebarFullscreen}
+      <NavSideDrawer floating />
     {/if}
 
-    {#if $didRenderSplashScreen && !$isFullServerMode}
-      <SplashLandingPage />
+    {#if $sidebarFullscreen}
+      <button
+        type="button"
+        class="exit-fullscreen-toggle"
+        aria-label="Exit fullscreen"
+        on:click={() => sidebarFullscreen.set(false)}
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">close_fullscreen</span>
+      </button>
     {/if}
 
     <!-- Full Server Page will be injected here -->
@@ -18,21 +27,18 @@
 </div>
 
 <script>
-  import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
-  import TheTopNavbar from '$lib/TheTopNavbar/index.svelte'
+  import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
 
   import { initializeDatabase } from '../database.js'
   import 'firebase/app'
-  import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
+  import { getAuth, onAuthStateChanged } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
 
-  import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
-  import { handleServerRedirect } from '/src/helpers/everythingElse.js'
 
-  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, sidebarFullscreen } from '../store.js'
   import { onMount } from 'svelte'
-  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
   import posthog from 'posthog-js'
@@ -52,17 +58,14 @@
     onAuthStateChanged(auth, reactToUserChange)
 
     createSessionRecording()
-    
-    window.addEventListener('scroll', handleOnScroll)
   })
 
-  function handleOnScroll (e) {
-    const scrollTriggerBuffer = 120
-    if (window.scrollY >= window.innerHeight - scrollTriggerBuffer) {
-      isFullServerMode.set(true)
+  function handleFullscreenKey (event) {
+    if (event.key === 'Escape' && $sidebarFullscreen) {
+      sidebarFullscreen.set(false)
     }
   }
-  
+
   function createSessionRecording () {
     posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7',
       {
@@ -107,18 +110,10 @@
     } 
 
     // user not logged in
-    else {
-      try {
-        didRenderSplashScreen.set(true)
-
-        const algebraAndNumberTheoryServer = await getFirestoreDoc(`classes/${'I90n3qyz45VmY0azjbhh'}`)
-        handleServerRedirect(algebraAndNumberTheoryServer)
-
-        // await signInAnonymously(auth)
-      } catch (error) {
-        console.error(error)
-        alert("Error code & message, see console for details =", error.code + ' ' + error.message)
-      }
+    else if ($page.url.pathname !== '/') {
+      // A shared server or room URL is the destination. Show that page
+      // instead of a homepage splash or another server.
+      isFullServerMode.set(true)
     }
     
     hasFetchedUser.set(true) 
@@ -209,19 +204,36 @@
             })
           }
 
-          // QUICKFIX: for some reason user.set() is still not hydrated even after `await listenToUserDocAndHandleForwarding()`, so we just 
-          // handle navigation directly here
-          // only redirect from the home page '/' path, for specific URLs don't fuck with it
-
-          // COMMENTED OUT FOR TESTING
-          if ($page.url.pathname === '/' && $user.mostRecentServerID) {
-            goto(`/${$user.mostRecentServerID}/question`)
-          }
-
           resolve()
         }
       })
     })
   }
 </script>
+
+<style>
+  .exit-fullscreen-toggle {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 24px;
+    border: 1px solid lightgrey;
+    background: white;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  }
+
+  .exit-fullscreen-toggle .material-symbols-outlined {
+    font-size: 24px;
+  }
+</style>
 

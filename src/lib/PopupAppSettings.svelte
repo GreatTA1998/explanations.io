@@ -22,10 +22,6 @@
   </div> -->
   <!-- <input bind:value={newlyTypedDisplayName}> -->
   <div style="display: flex; margin-left: 4px; margin-bottom: 0px; margin-top: auto">
-    <button on:click={() => goto('/')}>
-      Go to home page
-    </button>
-
     <button on:click={logOut} style="margin-right: 16px; margin-left: auto">
       Logout
     </button>
@@ -37,7 +33,6 @@
   import { createEventDispatcher } from 'svelte'
   import { signOut, getAuth } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore'
-  import { goto } from '$app/navigation'
   import { user } from '../store.js'
 
 	const dispatch = createEventDispatcher()
@@ -62,7 +57,6 @@
       const auth = getAuth()
       await signOut(auth)
     }
-    goto('/')
   }
 </script>
 

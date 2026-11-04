@@ -2,7 +2,12 @@
   <WebmRecorder bind:this={webmRecorder}
     canvasWidth={canvasWidth}
     canvasHeight={canvasHeight}
-    on:video-ready={e => webmBlob = e.detail.blob}
+    on:video-ready={(e) => {
+      recordedMimeType = e.detail.mimeType
+      recordedExtension = e.detail.fileExtension
+      recordedWidelyPlayable = e.detail.widelyPlayable
+      webmBlob = e.detail.blob
+    }}
   />
 
   <Stopwatch bind:this={stopwatch}
@@ -15,11 +20,7 @@
     </div>
     
     <MultiboardSlideChanger 
-      on:click={(e) => { 
-        changeToSlideIdx(e.detail.newIdx)
-        masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
-        masterCtx.drawImage(canvasSlides[e.detail.newIdx], 0, 0, canvasWidth, canvasHeight)
-      }}
+      on:click={(e) => changeToSlideIdx(e.detail.newIdx)}
       on:slide-create={createNewSlide}
       slideIDs={boardDoc.slideIDs}
       {idxOfFocusedSlide}
@@ -41,7 +42,7 @@
 
   <div style="margin-bottom: 12px;"></div>
 
-  {#each boardDoc.slideIDs as slideID, i}
+  {#each boardDoc.slideIDs as slideID, i (slideID)}
     <ListenToDoc docPath={`${boardDoc.path}/slides/${slideID}`} autoListen={isBoardVisible} let:theDoc={slideDoc}>
       <ListenToStrokes 
         dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
@@ -77,13 +78,16 @@
             on:background-reset={() => deleteBackgroundImageFromSlide(slideDoc)}
             
             isDeletable={boardDoc.slideIDs.length > 1}
+            on:save-animation={() => saveBoardAsAnimation({ boardDoc, userDoc: $user })}
             on:board-delete={async () => {
               if (confirm(`Are you sure you want to delete board ${i+1}? (Other boards won't be affected.)`)) {
                 await deleteSlideFromMultislide({ slideID, multislidePath: boardDoc.path })
                 changeToSlideIdx(idxOfFocusedSlide - 1)
               }
             }}
-            on:canvas-slide-ready={(e) => canvasSlides = [...canvasSlides, e.detail]}
+            on:canvas-slide-ready={(e) => {
+              canvasBySlideID = { ...canvasBySlideID, [slideID]: e.detail }
+            }}
             on:canvas-stream-ready={(e) => canvasMediaStreams = [...canvasMediaStreams, e.detail]}
           />
         </div>
@@ -146,8 +150,10 @@
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
+  import { saveBoardAsAnimation } from '/src/helpers/doodleAnimation.js'
   import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
+  import { startTranscriptForNewVideo } from '/src/helpers/transcript.js'
 
   import { 
     getFirestore, 
@@ -175,13 +181,16 @@
   let idxOfFocusedSlide = 0 
   const timingOfSlideChanges = []
 
-  let canvasSlides = []
+  let canvasBySlideID = {}
   let canvasMediaStreams = []
   let masterCanvas, masterCtx
   let webmRecorder
   
   let webmBlob
   let audioBlob
+  let recordedMimeType = ''
+  let recordedExtension = 'webm'
+  let recordedWidelyPlayable = false
 
   const db = getFirestore()
 
@@ -203,6 +212,7 @@
   async function initializeRecording ({ startRecording }) {
     try {
       await startRecording()
+      copySlideToMaster(idxOfFocusedSlide)
       webmRecorder.start()
       stopwatch.start()
 
@@ -221,20 +231,28 @@
   }
 
   async function terminateRecording ({ stopRecording }) {
+    // Stop the canvas recorder before the mic. Stopping the mic track first
+    // ends the MediaRecorder immediately, so the last canvas frame never lands.
     try {
-      await stopRecording()
-      webmRecorder.stop()
-      stopwatch.stop()
-      
-      updateFirestoreDoc(boardDoc.path, {
-        recordState: 'post_record'
-      })
+      await webmRecorder.stop()
     } catch (error) {
       alert(error)
     }
+    try {
+      await stopRecording()
+    } catch (error) {
+      alert(error)
+    }
+    stopwatch.stop()
+    updateFirestoreDoc(boardDoc.path, {
+      recordState: 'post_record'
+    })
   }
 
   function keydownHandler (e) {
+    const tag = e.target && e.target.tagName
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return
+
     switch (e.key) {
       case "ArrowLeft":
         changeToSlideIdx(Math.max(0, idxOfFocusedSlide - 1))
@@ -260,12 +278,25 @@
   }
 
   function changeToSlideIdx (newSlideIdx) {
-    idxOfFocusedSlide = newSlideIdx 
+    if (newSlideIdx < 0 || newSlideIdx >= boardDoc.slideIDs.length) return
+    if (newSlideIdx === idxOfFocusedSlide) return
+    idxOfFocusedSlide = newSlideIdx
+    copySlideToMaster(newSlideIdx)
     if (currentTime > 0) {
       timingOfSlideChanges.push({
         toIdx: idxOfFocusedSlide,
         timing: currentTime
       })
+    }
+  }
+
+  function copySlideToMaster (slideIdx) {
+    if (!masterCtx || !masterCanvas) return
+    const slideID = boardDoc.slideIDs[slideIdx]
+    const slideCanvas = slideID ? canvasBySlideID[slideID] : null
+    masterCtx.clearRect(0, 0, masterCanvas.width, masterCanvas.height)
+    if (slideCanvas) {
+      masterCtx.drawImage(slideCanvas, 0, 0, masterCanvas.width, masterCanvas.height)
     }
   }
 
@@ -289,12 +320,14 @@
   async function uploadVideo ({ audioBlob, webmBlob }) {
     const storage = getStorage()
     
-    // upload webm video
+    // upload the canvas recording (H.264 MP4 when the browser can encode it, otherwise WebM)
     let webmDownloadURL
-    const options = {   
-      contentType: 'video/webm',
+    const contentType = recordedMimeType || webmBlob.type || 'video/webm'
+    const extension = recordedExtension || (contentType.includes('mp4') ? 'mp4' : 'webm')
+    const options = {
+      contentType,
       customMetadata: {
-        extension: '.webm'
+        extension: `.${extension}`
       }
     }
     const webmRef = ref(storage, `webmVideos/${getRandomID()}`)
@@ -338,17 +371,27 @@
     ])
 
     // FINALLY: update metadata of the multislide blackboard doc itself
-    updateFirestoreDoc(boardDoc.path, {
+    await updateFirestoreDoc(boardDoc.path, {
       creatorUID: $user.uid || '',
       creatorName: $user.name || '',
       creatorPhoneNumber: $user.phoneNumber || '',
       date: new Date().toISOString(),
       audioDownloadURL,
       webmDownloadURL,
+      videoContentType: contentType,
+      videoFileExtension: extension,
+      videoWidelyPlayable: recordedWidelyPlayable,
       audioRefFullPath: audioRef.fullPath,
       webmRefFullPath: webmRef.fullPath,
       timingOfSlideChanges,
       isPaid: false
+    })
+
+    await startTranscriptForNewVideo({
+      path: boardDoc.path,
+      audioDownloadURL,
+      audioRefFullPath: audioRef.fullPath,
+      audioBlob
     })
 
     // set the question to be resolved

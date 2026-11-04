@@ -26,6 +26,9 @@ export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2', 'p3tOuo1fkUYT
 
 export const drawerWidth = writable(WIDTHS.DRAWER_EXPANDED)
 
+// Hides the whole sidebar (nav cluster and room list) until the floating exit control is pressed.
+export const sidebarFullscreen = writable(false)
+
 export const whatIsBeingDragged = writable('')
 export const whatIsBeingDraggedID = writable('')
 
@@ -40,4 +43,3 @@ export const videoCinemaWidth = writable(0)
 export const videoCinemaLayout = writable('')
 
 export const isFullServerMode = writable(false)
-export const didRenderSplashScreen = writable(false)

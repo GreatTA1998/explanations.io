@@ -1,11 +1,11 @@
 {#if roomDoc}
-	<div>
-    <div style="padding: {PAGE_PADDING}px;">
+	<div class="room-page">
+    <div class="room-inset">
       <Textfield 
         disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
         value={roomDoc.name} on:input={(e) => updateRoomName(e)}
         class="room-title" 
-        style={`width: ${$blackboardWidth}px;`}
+        style="width: 100%;"
       >
         <HelperText slot="helper" persistent>
           {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
@@ -25,37 +25,36 @@
         {/each}
       {/if}
 
-      <div style="margin-bottom: 14px;"></div>
-
-      {#if roomDoc.blackboards}
-        {#each roomDoc.blackboards as boardID, i (boardID) }
-          <GeneralizedBlackboardVideoDisplay {boardID} {classID} {roomDoc}/>
-
-          <div style="margin-bottom: 80px;"></div>
-        {/each} 
-
-        <button on:click={createNewMultiboard} style="width: {$blackboardWidth}px;" class="new-blackboard-button">
-          {#if hasQuestionMark(roomDoc.name)}
-            RESPOND TO QUESTION
-          {:else}
-            NEW BLACKBOARD
-          {/if}
-        </button>
-      {/if}
     </div>
+
+    <div style="margin-bottom: 14px;"></div>
+
+    {#if roomDoc.blackboards}
+      {#each roomDoc.blackboards as boardID, i (boardID) }
+        <GeneralizedBlackboardVideoDisplay {boardID} {classID} {roomDoc}/>
+
+        <div style="margin-bottom: 80px;"></div>
+      {/each}
+
+      <button on:click={createNewMultiboard} style="width: 100%;" class="new-blackboard-button">
+        {#if hasQuestionMark(roomDoc.name)}
+          RESPOND TO QUESTION
+        {:else}
+          NEW BLACKBOARD
+        {/if}
+      </button>
+    {/if}
   </div>
 {/if}
 
 <script>
-  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import GeneralizedBlackboardVideoDisplay from '$lib/GeneralizedBlackboardVideoDisplay.svelte'
 
   import { getRandomID, displayDate } from '/src/helpers/utility.js'
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
-  import { PAGE_PADDING } from '/src/helpers/CONSTANTS.js'
 
-  import { user, blackboardWidth } from '/src/store.js'
+  import { user } from '/src/store.js'
   import { onDestroy } from 'svelte'
   import { doc, getFirestore, updateDoc, onSnapshot, setDoc, arrayUnion, increment } from 'firebase/firestore'
 
@@ -232,6 +231,22 @@
 </script>
 
 <style>
+  .room-page {
+    padding: 16px;
+  }
+
+  @media (max-width: 767px) {
+    .room-page {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .room-inset {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
   :global(.room-title input) {
     font-size: 2rem;
   }

@@ -6,11 +6,11 @@
       Fetching your info...
     </h4>
   {:else}
-    {#if $isFullServerMode && !$page.params.class && !$sidebarFullscreen}
+    {#if $isFullServerMode && !$page.params.class && $page.url.pathname !== '/' && !$sidebarFullscreen}
       <NavSideDrawer floating />
     {/if}
 
-    {#if $sidebarFullscreen}
+    {#if $sidebarFullscreen && $page.url.pathname !== '/'}
       <button
         type="button"
         class="exit-fullscreen-toggle"

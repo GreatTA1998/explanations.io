@@ -1,6 +1,6 @@
 <div class="transcript-panel">
   {#if segments.length === 0}
-    <p class="transcript-status">No transcript yet.</p>
+    <p class="transcript-status">{problem || 'No transcript yet.'}</p>
   {:else}
     <div class="transcript-list" use:trackList>
       {#each segments as segment (`${segment.start}-${segment.end}-${segment.text}`)}
@@ -22,7 +22,12 @@
 
 <script>
   import { onMount } from 'svelte'
-  import { formatTranscriptTime, readCachedTranscript } from '/src/helpers/transcript.js'
+  import {
+    formatTranscriptTime,
+    readCachedTranscript,
+    readTranscriptProblem,
+    transcriptProblems
+  } from '/src/helpers/transcript.js'
   import { playbackPathOf, seekPlayback, subscribePlayback } from '/src/helpers/playbackBridge.js'
 
   export let videoDoc
@@ -34,6 +39,7 @@
 
   $: path = playbackPathOf(videoDoc)
   $: segments = readCachedTranscript(videoDoc) || []
+  $: problem = readTranscriptProblem(videoDoc, $transcriptProblems)
   $: activeSegment = findActiveSegment(segments, time)
   $: scrollActiveLine(activeSegment)
 

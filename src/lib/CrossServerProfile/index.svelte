@@ -86,8 +86,6 @@
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { getFirestoreQuery, getFirestoreDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { goto } from '$app/navigation'
-
   export let profileUID
 
   let allVideos = null
@@ -115,9 +113,6 @@
   async function backToServers () {
     if (window.history.length > 1) {
       window.history.back()
-    } else {
-      // though we don't expect visitors to directly visit a creator page
-      goto('/')
     }
   }
 

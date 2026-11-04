@@ -8,6 +8,7 @@
   import { lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID, displayDate, roundedToFixed } from '/src/helpers/utility.js'
   import { getFirestoreDoc, updateFirestoreDoc, getFirestoreQuery, setFirestoreDoc } from '/src/helpers/crud.js'
+  import { saveBoardAsAnimation } from '/src/helpers/doodleAnimation.js'
   import RenderlessAudioRecorder from '$lib/Blackboard/AudioRecorder.svelte'
   import Blackboard from '$lib/Blackboard/CoreDrawing.svelte'
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, } from 'firebase/storage'
@@ -240,6 +241,7 @@
         on:background-reset={() => resetBackgroundImage(boardDoc.id)}
         on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
         on:board-wipe={() => deleteStrokesFromSlide({ strokesArray })}
+        on:save-animation={() => saveBoardAsAnimation({ boardDoc, userDoc: $user })}
         on:board-delete={() => deleteBoard(
           boardDoc.id, 
           () => deleteStrokesFromSlide({ strokesArray })

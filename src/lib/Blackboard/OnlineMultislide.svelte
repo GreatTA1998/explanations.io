@@ -77,6 +77,7 @@
             on:background-reset={() => deleteBackgroundImageFromSlide(slideDoc)}
             
             isDeletable={boardDoc.slideIDs.length > 1}
+            on:save-animation={() => saveBoardAsAnimation({ boardDoc, userDoc: $user })}
             on:board-delete={async () => {
               if (confirm(`Are you sure you want to delete board ${i+1}? (Other boards won't be affected.)`)) {
                 await deleteSlideFromMultislide({ slideID, multislidePath: boardDoc.path })
@@ -146,6 +147,7 @@
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
+  import { saveBoardAsAnimation } from '/src/helpers/doodleAnimation.js'
   import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
 

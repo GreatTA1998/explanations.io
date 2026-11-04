@@ -10,6 +10,7 @@
 // file exists. Opening an older video only reads a finished transcript.
 
 import { browser } from '$app/environment'
+import { writable } from 'svelte/store'
 import { updateFirestoreDoc } from './crud.js'
 
 const MODEL_ID = 'Xenova/whisper-tiny'
@@ -19,6 +20,7 @@ const WINDOW_SECONDS = 30
 const started = new Set()
 let enginePromise = null
 let transcriptionQueue = Promise.resolve()
+export const transcriptProblems = writable({})
 
 const NON_SPEECH = new Set([
   '[blank_audio]',
@@ -46,6 +48,23 @@ export function formatTranscriptTime(seconds) {
 
 function audioKeyOf(videoDoc) {
   return videoDoc?.audioRefFullPath || videoDoc?.audioDownloadURL || ''
+}
+
+export function readTranscriptProblem(videoDoc, problems) {
+  if (!videoDoc || !problems) return ''
+  return problems[audioKeyOf(videoDoc)] || ''
+}
+
+function rememberProblem(video, message) {
+  const key = audioKeyOf(video)
+  if (!key) return
+  transcriptProblems.update((current) => ({ ...current, [key]: message }))
+}
+
+function plainTranscriptError(err) {
+  const text = err instanceof Error ? err.message : ''
+  if (text.startsWith('Could not ')) return text
+  return 'Could not transcribe this recording.'
 }
 
 export function readCachedTranscript(videoDoc) {
@@ -80,7 +99,9 @@ export function startTranscriptForNewVideo(video) {
       await persistTranscript(video, audioKey, segments)
     } catch (err) {
       started.delete(audioKey)
-      console.error('Could not transcribe the new recording.', err)
+      const message = plainTranscriptError(err)
+      rememberProblem(video, message)
+      console.error(message)
     }
   })
 }

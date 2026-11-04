@@ -64,8 +64,35 @@ function onnxRuntimeWebBundle() {
 
 const ortBundle = onnxRuntimeWebBundle();
 
+// A missing package is a transform error, which Vite paints over the room.
+// Point the import at a local module that throws a normal Error instead.
+function transformersOrPlainFailure() {
+  const fallback = path.resolve(configDir, "src/helpers/transformersUnavailable.js");
+  let warned = false;
+  return {
+    name: "transformers-or-plain-failure",
+    enforce: "pre",
+    resolveId(source) {
+      if (source !== "@xenova/transformers") return null;
+      try {
+        require.resolve("@xenova/transformers");
+        return null;
+      } catch {
+        if (!warned) {
+          warned = true;
+          console.warn(
+            "Could not load speech transcription. @xenova/transformers is not installed."
+          );
+        }
+        return fallback;
+      }
+    },
+  };
+}
+
 export default {
   plugins: [
+    transformersOrPlainFailure(),
     sveltekit(),
     // The dev CommonJS transform corrupts onnxruntime-web's minified bundle
     // ("Unterminated string literal"), so Whisper never loads in the browser.

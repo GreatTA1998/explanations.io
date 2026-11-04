@@ -14,10 +14,10 @@
       <button
         type="button"
         class="exit-fullscreen-toggle"
+        aria-label="Exit fullscreen"
         on:click={() => sidebarFullscreen.set(false)}
       >
         <span class="material-symbols-outlined" aria-hidden="true">close_fullscreen</span>
-        Exit fullscreen
       </button>
     {/if}
 
@@ -252,9 +252,10 @@
     z-index: 40;
     display: flex;
     align-items: center;
-    gap: 8px;
-    min-height: 48px;
-    padding: 8px 16px;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
     border-radius: 24px;
     border: 1px solid lightgrey;
     background: white;

@@ -1,17 +1,7 @@
 <div class="transcript-panel">
-  {#if status === 'empty'}
-    <p class="transcript-status">This video has no audio to transcribe.</p>
+  {#if segments.length === 0}
+    <p class="transcript-status">No transcript yet.</p>
   {:else}
-    {#if status === 'error'}
-      <p class="transcript-status" role="alert">{error}</p>
-    {:else if detail && status !== 'ready'}
-      <p class="transcript-status">{detail}</p>
-    {/if}
-
-    {#if status === 'ready' && segments.length === 0}
-      <p class="transcript-status">No speech was detected in this recording.</p>
-    {/if}
-
     <div class="transcript-list" use:trackList>
       {#each segments as segment (`${segment.start}-${segment.end}-${segment.text}`)}
         <button
@@ -32,38 +22,25 @@
 
 <script>
   import { onMount } from 'svelte'
-  import { formatTranscriptTime, watchTranscript } from '/src/helpers/transcript.js'
+  import { formatTranscriptTime, readCachedTranscript } from '/src/helpers/transcript.js'
   import { playbackPathOf, seekPlayback, subscribePlayback } from '/src/helpers/playbackBridge.js'
 
   export let videoDoc
 
-  let status = 'starting'
-  let segments = []
-  let detail = ''
-  let error = ''
   let time = 0
   let listEl = null
   let scrolledSegment = null
   const lineNodes = {}
 
   $: path = playbackPathOf(videoDoc)
+  $: segments = readCachedTranscript(videoDoc) || []
   $: activeSegment = findActiveSegment(segments, time)
-  $: scrollActiveLine(activeSegment, segments)
+  $: scrollActiveLine(activeSegment)
 
   onMount(() => {
-    const stopWatch = watchTranscript(videoDoc, (snapshot) => {
-      status = snapshot.status
-      segments = snapshot.segments
-      detail = snapshot.detail
-      error = snapshot.error
-    })
-    const stopClock = subscribePlayback(path, (snapshot) => {
+    return subscribePlayback(path, (snapshot) => {
       time = snapshot.time
     })
-    return () => {
-      stopWatch()
-      stopClock()
-    }
   })
 
   function findActiveSegment(lines, playbackTime) {

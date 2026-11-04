@@ -15,7 +15,11 @@ import { updateFirestoreDoc } from './crud.js'
 
 const MODEL_ID = 'Xenova/whisper-tiny'
 const TRANSCRIPT_VERSION = 2
-const WINDOW_SECONDS = 30
+const WINDOW_SECONDS = 15
+// whisper-tiny often never emits an end token once the recording goes quiet.
+// Without a cap, that generation loop never returns and the tab stays empty.
+const MAX_NEW_TOKENS = 128
+const TRANSCRIBING = 'Transcribing this recording…'
 
 const started = new Set()
 let enginePromise = null
@@ -51,8 +55,12 @@ function audioKeyOf(videoDoc) {
 }
 
 export function readTranscriptProblem(videoDoc, problems) {
-  if (!videoDoc || !problems) return ''
-  return problems[audioKeyOf(videoDoc)] || ''
+  const live = (problems && problems[audioKeyOf(videoDoc)]) || ''
+  if (live) return live
+  const saved = videoDoc?.transcript
+  if (!saved || saved.v !== TRANSCRIPT_VERSION || saved.complete === true) return ''
+  if (saved.audioKey && saved.audioKey !== audioKeyOf(videoDoc)) return ''
+  return saved.error || ''
 }
 
 function rememberProblem(video, message) {
@@ -61,9 +69,26 @@ function rememberProblem(video, message) {
   transcriptProblems.update((current) => ({ ...current, [key]: message }))
 }
 
+function forgetProblem(video) {
+  const key = audioKeyOf(video)
+  if (!key) return
+  transcriptProblems.update((current) => {
+    if (!current[key]) return current
+    const next = { ...current }
+    delete next[key]
+    return next
+  })
+}
+
 function plainTranscriptError(err) {
   const text = err instanceof Error ? err.message : ''
-  if (text.startsWith('Could not ')) return text
+  const first = text.split('\n')[0].trim()
+  if (
+    first.startsWith('Could not ')
+    || first.startsWith('This ')
+    || first.startsWith('Only ')
+  ) return first
+  if (/transformers|onnx|wasm|whisper/i.test(first)) return 'Could not load speech transcription.'
   return 'Could not transcribe this recording.'
 }
 
@@ -93,17 +118,42 @@ export function startTranscriptForNewVideo(video) {
   if (started.has(audioKey)) return Promise.resolve()
   started.add(audioKey)
 
+  rememberProblem(video, TRANSCRIBING)
+
   return enqueue(async () => {
     try {
       const segments = await produceTranscriptSegments(video)
+      if (!segments.length) {
+        await persistTranscriptProblem(video, audioKey, 'No speech was found in this recording.')
+        return
+      }
       await persistTranscript(video, audioKey, segments)
+      forgetProblem(video)
     } catch (err) {
       started.delete(audioKey)
       const message = plainTranscriptError(err)
-      rememberProblem(video, message)
       console.error(message)
+      await persistTranscriptProblem(video, audioKey, message)
     }
   })
+}
+
+async function persistTranscriptProblem(videoDoc, audioKey, message) {
+  rememberProblem(videoDoc, message)
+  if (!videoDoc?.path) return
+  try {
+    await updateFirestoreDoc(videoDoc.path, {
+      transcript: {
+        v: TRANSCRIPT_VERSION,
+        complete: false,
+        error: message,
+        audioKey,
+        createdAt: new Date().toISOString()
+      }
+    })
+  } catch (err) {
+    console.error(message, err)
+  }
 }
 
 async function persistTranscript(videoDoc, audioKey, segments) {
@@ -138,10 +188,13 @@ async function transcribeWithBrowserWhisper(video) {
   for (let offset = 0; offset < samples.length; offset += windowSamples) {
     const end = Math.min(samples.length, offset + windowSamples)
     const slice = samples.slice(offset, end)
+    if (peakOf(slice) < 0.02) continue
     await yieldToUi()
     const output = await transcriber(slice, {
       return_timestamps: true,
-      task: 'transcribe'
+      task: 'transcribe',
+      language: 'english',
+      max_new_tokens: MAX_NEW_TOKENS
     })
     segments.push(...segmentsFromOutput(output, offset / 16000, slice.length / 16000))
   }
@@ -160,6 +213,16 @@ function loadWhisper() {
     enginePromise = import('./whisperEngine.js').then((engine) => engine.loadWhisperPipeline())
   }
   return enginePromise
+}
+
+function peakOf(samples) {
+  let peak = 0
+  const step = Math.max(1, Math.floor(samples.length / 4000))
+  for (let i = 0; i < samples.length; i += step) {
+    const value = Math.abs(samples[i])
+    if (value > peak) peak = value
+  }
+  return peak
 }
 
 function yieldToUi() {

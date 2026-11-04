@@ -4,8 +4,6 @@
     canvasHeight={canvasHeight}
     on:video-ready={(e) => {
       recordedMimeType = e.detail.mimeType
-      recordedExtension = e.detail.fileExtension
-      recordedWidelyPlayable = e.detail.widelyPlayable
       webmBlob = e.detail.blob
     }}
   />
@@ -106,7 +104,7 @@
             SIGN IN & RECORD
           </LoginGoogle>
         {:else}
-          <button on:click={() => initializeRecording({ startRecording, idxOfFocusedSlide })}
+          <button on:click={() => initializeRecording({ startRecording, stopRecording })}
             style={styles.recordButton}
           >
             Record
@@ -162,6 +160,7 @@
   import { user, willPreventPageLeave } from '/src/store.js'
   import { page } from '$app/stores'
   import { drawStroke } from '/src/helpers/canvas.js'
+  import { h264Mp4MimeType, isH264Mp4Mime, H264_RECORDING_UNSUPPORTED } from '/src/helpers/recordingMime.js'
   
   export let boardDoc
   export let canvasWidth
@@ -186,8 +185,6 @@
   let webmBlob
   let audioBlob
   let recordedMimeType = ''
-  let recordedExtension = 'webm'
-  let recordedWidelyPlayable = false
 
   const db = getFirestore()
 
@@ -206,9 +203,19 @@
     document.removeEventListener('keydown', keydownHandler)
   })
 
-  async function initializeRecording ({ startRecording }) {
+  async function initializeRecording ({ startRecording, stopRecording }) {
+    const mimeType = typeof MediaRecorder === 'undefined'
+      ? ''
+      : h264Mp4MimeType(type => MediaRecorder.isTypeSupported(type))
+    if (!mimeType) {
+      alert(H264_RECORDING_UNSUPPORTED)
+      return
+    }
+
+    let micStarted = false
     try {
       await startRecording()
+      micStarted = true
       copySlideToMaster(idxOfFocusedSlide)
       webmRecorder.start()
       stopwatch.start()
@@ -223,7 +230,10 @@
         recordState: 'mid_record'
       })
     } catch (error) {
-      alert(error)
+      if (micStarted) {
+        try { stopRecording() } catch (stopError) { console.error(stopError) }
+      }
+      alert(error && error.message ? error.message : error)
     }
   }
 
@@ -315,16 +325,19 @@
   } 
 
   async function uploadVideo ({ audioBlob, webmBlob }) {
+    if (!isH264Mp4Mime(recordedMimeType)) {
+      alert(H264_RECORDING_UNSUPPORTED)
+      return
+    }
+
     const storage = getStorage()
     
-    // upload the canvas recording (H.264 MP4 when the browser can encode it, otherwise WebM)
     let webmDownloadURL
-    const contentType = recordedMimeType || webmBlob.type || 'video/webm'
-    const extension = recordedExtension || (contentType.includes('mp4') ? 'mp4' : 'webm')
+    const contentType = recordedMimeType
     const options = {
       contentType,
       customMetadata: {
-        extension: `.${extension}`
+        extension: '.mp4'
       }
     }
     const webmRef = ref(storage, `webmVideos/${getRandomID()}`)
@@ -376,8 +389,7 @@
       audioDownloadURL,
       webmDownloadURL,
       videoContentType: contentType,
-      videoFileExtension: extension,
-      videoWidelyPlayable: recordedWidelyPlayable,
+      videoFileExtension: 'mp4',
       audioRefFullPath: audioRef.fullPath,
       webmRefFullPath: webmRef.fullPath,
       timingOfSlideChanges,

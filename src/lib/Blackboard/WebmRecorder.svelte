@@ -1,7 +1,7 @@
 <script>
   import { baseMicStream } from '../../store.js'
   import { onDestroy, createEventDispatcher } from 'svelte'
-  import { chooseRecordingFormat, formatFromRecorder } from '../../helpers/recordingMime.js'
+  import { h264Mp4MimeType, isH264Mp4Mime, H264_RECORDING_UNSUPPORTED } from '../../helpers/recordingMime.js'
 
   export let previewVideo
   export let canvasWidth
@@ -17,7 +17,7 @@
   let combinedStream
   let clonedAudioTrack = null
   let chunks = []
-  let recordedFormat = chooseRecordingFormat(() => false)
+  let recordedMimeType = ''
   const dispatch = createEventDispatcher()
 
   $: if (outputCanvas && canvasWidth && canvasHeight) {
@@ -38,11 +38,25 @@
   }
 
   export function start () {
-    initialize()
-    videoRecorder?.start(100)
+    const mimeType = h264Mp4MimeType(browserSupports)
+    if (!mimeType) {
+      throw new Error(H264_RECORDING_UNSUPPORTED)
+    }
+    try {
+      initialize(mimeType)
+    } catch (error) {
+      discardRecording()
+      if (error && error.message === 'Microphone is not ready') throw error
+      throw new Error(H264_RECORDING_UNSUPPORTED)
+    }
+    videoRecorder.start(100)
   }
 
-  function initialize () {
+  function browserSupports (type) {
+    return typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported(type)
+  }
+
+  function initialize (mimeType) {
     const sourceTrack = $baseMicStream && $baseMicStream.getAudioTracks()[0]
     if (!sourceTrack) {
       throw new Error('Microphone is not ready')
@@ -51,13 +65,9 @@
     stopClonedAudio()
     clonedAudioTrack = sourceTrack.clone()
     chunks = []
+    recordedMimeType = ''
 
-    const supports = typeof MediaRecorder !== 'undefined'
-      ? (type) => MediaRecorder.isTypeSupported(type)
-      : () => false
-    const requested = chooseRecordingFormat(supports)
     const videoTrack = outputCanvas.captureStream(fps).getVideoTracks()[0]
-
     videoTrack.applyConstraints({
       width: canvasWidth,
       height: canvasHeight,
@@ -65,23 +75,20 @@
     }).catch(e => console.error('Constraint error:', e))
 
     combinedStream = new MediaStream([videoTrack, clonedAudioTrack])
-    const recorderOptions = {
+    videoRecorder = new MediaRecorder(combinedStream, {
+      mimeType,
       videoBitsPerSecond: videoBitrate,
       audioBitsPerSecond: audioBitrate
-    }
-    if (requested.mimeType) recorderOptions.mimeType = requested.mimeType
+    })
 
-    try {
-      videoRecorder = new MediaRecorder(combinedStream, recorderOptions)
-    } catch (error) {
-      console.error('MediaRecorder rejected', requested.mimeType, error)
-      videoRecorder = new MediaRecorder(combinedStream, {
-        videoBitsPerSecond: videoBitrate,
-        audioBitsPerSecond: audioBitrate
-      })
+    const actual = videoRecorder.mimeType || mimeType
+    if (!isH264Mp4Mime(actual) && !isH264Mp4Mime(mimeType)) {
+      throw new Error(H264_RECORDING_UNSUPPORTED)
     }
-
-    recordedFormat = formatFromRecorder(requested, videoRecorder)
+    if (/vp8|vp9|vp09|av01|webm/i.test(actual)) {
+      throw new Error(H264_RECORDING_UNSUPPORTED)
+    }
+    recordedMimeType = mimeType
 
     videoRecorder.addEventListener('dataavailable', e => e.data.size && chunks.push(e.data))
     videoRecorder.addEventListener('stop', createPreview)
@@ -131,26 +138,32 @@
   }
 
   function createPreview () {
-    if (!chunks.length) return
+    if (!chunks.length || !isH264Mp4Mime(recordedMimeType)) {
+      chunks = []
+      return
+    }
 
-    const blob = new Blob(chunks, {
-      type: recordedFormat.mimeType || 'video/webm'
-    })
+    const blob = new Blob(chunks, { type: 'video/mp4' })
     chunks = []
-
-    console.log('recorded blob', recordedFormat, blob.size)
     dispatch('video-ready', {
       blob,
-      mimeType: recordedFormat.mimeType || blob.type,
-      fileExtension: recordedFormat.fileExtension,
-      widelyPlayable: recordedFormat.widelyPlayable
+      mimeType: recordedMimeType
     })
 
     if (previewVideo) {
-      const vidURL = URL.createObjectURL(blob)
-      previewVideo.src = vidURL
+      previewVideo.src = URL.createObjectURL(blob)
       previewVideo.load()
     }
+  }
+
+  function discardRecording () {
+    chunks = []
+    recordedMimeType = ''
+    if (videoRecorder && videoRecorder.state !== 'inactive') {
+      try { videoRecorder.stop() } catch (err) { console.error(err) }
+    }
+    videoRecorder = null
+    cleanup()
   }
 
   function stopClonedAudio () {

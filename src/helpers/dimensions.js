@@ -1,4 +1,4 @@
-import { HEIGHTS, ASPECT_RATIO, PAGE_PADDING } from '/src/helpers/CONSTANTS.js'
+import { HEIGHTS, ASPECT_RATIO, PAGE_PADDING, WIDTHS } from '/src/helpers/CONSTANTS.js'
 
 export const VIDEO_LAYOUT = {
   MOBILE_VERTICAL: 'mobile-vertical',
@@ -42,7 +42,9 @@ export function getBlackboardModuleSize ({ containerWidth, containerHeight }) {
   let remainingHeight = containerHeight
 
   remainingHeight -= HEIGHTS.BOARD_CHANGER
-  remainingWidth -= 2 * PAGE_PADDING
+  // A phone board is edge to edge, like a video player. Wider screens keep the page inset.
+  const smallScreen = typeof window !== 'undefined' && window.innerWidth < WIDTHS.SMALLEST_TABLET
+  if (!smallScreen) remainingWidth -= 2 * PAGE_PADDING
 
   return getCanvasWidth({ 
     availableWidth: remainingWidth, 

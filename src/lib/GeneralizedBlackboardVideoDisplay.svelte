@@ -33,8 +33,7 @@
       
       </div>
     {:else}
-      <div style="margin-bottom: 12px; display: flex; flex-direction: column; row-gap: 12px;">
-        <div style="width: {boardDoc.audioDownloadURL ? $videoPreviewWidth : $blackboardWidth}px; margin-top: 0px; margin-bottom: 0px">
+      <div class="board-heading" style="width: {boardDoc.audioDownloadURL ? $videoPreviewWidth : $blackboardWidth}px;">
           {#if !(!boardDoc.description && boardDoc.creatorUID && $user.uid !== boardDoc.creatorUID)}
             <TextAreaAutoResizing 
               value={boardDoc.description || ''} 
@@ -43,7 +42,6 @@
               readonly={boardDoc.audioDownloadURL && $user.uid !== boardDoc.creatorUID}
             />
           {/if}
-        </div>
       </div>
 
       {#if boardDoc.audioDownloadURL}
@@ -74,3 +72,18 @@
     {/if}
   </ListenToDoc>
 </div>
+
+<style>
+  .board-heading {
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    max-width: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .board-heading {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+</style>

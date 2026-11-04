@@ -5,7 +5,6 @@
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user, blackboardWidth } from '/src/store.js'
-  import { PAGE_PADDING } from '/src/helpers/CONSTANTS.js'
 
   export let classID
   export let questionID
@@ -46,20 +45,19 @@
 </script>
 
 {#if questionDoc.id}
-  <div style="position: relative;">
-    <div style="padding: {PAGE_PADDING}px; overflow-y: auto;">
-      <div class="question-container" style="display: flex; flex-direction: column; row-gap: 12px;">
+  <div class="question-page">
+      <div class="question-inset question-container" style="display: flex; flex-direction: column; row-gap: 12px;">
         <input 
           value={questionDoc.title} 
           on:input={(e) => debouncedUpdateQuestionTitle(e)}
           readonly={$user.uid !== questionDoc.askerUID}
           placeholder="Title"
-          style="width: {$blackboardWidth}px;"
+          style="width: 100%;"
           class="room-title question" 
         >
 
         {#if questionDoc.description || questionDoc.askerUID === $user.uid}
-          <div style="width: {$blackboardWidth}px; margin-top: 14px; margin-bottom: 0px">
+          <div style="width: 100%; margin-top: 14px; margin-bottom: 0px">
             <TextAreaAutoResizing 
               value={questionDoc.description} 
               on:input={(e) => debouncedUpdateQuestionDescription({ detail: e.detail, path: questionDoc.path })}
@@ -93,7 +91,7 @@
         {/if}
       </div>
 
-      <div style="display: flex; align-items: center; column-gap: 12px; margin: 24px 0px;">
+      <div class="question-inset" style="display: flex; align-items: center; column-gap: 12px; margin: 24px 0px;">
         <div style="border-bottom: 1px solid lightgrey; flex-grow: 3;"></div>
 
         <div class="question-metadata">
@@ -115,23 +113,42 @@
           {/each}
 
           <!-- PROBLEM: don't show until the blackboards have rendered, otherwise it causes a layout jump -->
-          <div 
-            on:click={() => createNewMultiboard({ 
-              baseDocPath: questionPath,
-              boardsPath: `/classes/${classID}/blackboards/`
-            })} on:keydown
-            class="new-blackboard-button"
-            style="width: {$blackboardWidth}px;"
-          >
-            RESPOND WITH A BLACKBOARD
+          <div class="question-inset">
+            <div 
+              on:click={() => createNewMultiboard({ 
+                baseDocPath: questionPath,
+                boardsPath: `/classes/${classID}/blackboards/`
+              })} on:keydown
+              class="new-blackboard-button"
+              style="width: 100%;"
+            >
+              RESPOND WITH A BLACKBOARD
+            </div>
           </div>
         {/if}
       </div>
-    </div>
   </div>
 {/if}
 
 <style>
+  .question-page {
+    position: relative;
+    padding: 16px;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 767px) {
+    .question-page {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .question-inset {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
   .question-metadata {
     font-size: 0.875rem; 
     color: rgb(80, 80, 80); 

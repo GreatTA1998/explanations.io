@@ -116,7 +116,7 @@
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 32 })}
       class:eraser-selected={$currentTool.type === 'eraser' && $currentTool.lineWidth === 32}
       width="60" height="54"
-      style="margin-left: 30px; margin-right: 10px;"
+      class="large-eraser"
       src="https://i.imgur.com/Klln1yP.png"
       alt="large-eraser"
     >
@@ -126,7 +126,7 @@
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 5 })}
       class:eraser-selected={$currentTool.type === 'eraser' && $currentTool.lineWidth === 5}
       width="30" height="27"
-      style="margin-right: 16px;"
+      class="small-eraser"
       src="https://i.imgur.com/Klln1yP.png"
       alt="small-eraser"
     >
@@ -261,6 +261,15 @@
     border-radius: 4px;
   }
 
+  .large-eraser {
+    margin-left: 30px;
+    margin-right: 10px;
+  }
+
+  .small-eraser {
+    margin-right: 16px;
+  }
+
   .color-pencil-button {
     margin: 0 4px; 
     width: 30px; 
@@ -270,6 +279,52 @@
     display: flex; 
     justify-content: center;
     padding-left: 4px;
+  }
+
+  /* One row, full width of the board. Extra tools scroll instead of leaving the canvas. */
+  @media (max-width: 767px) {
+    .blackboard-toolbar {
+      left: 0;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-radius: 0;
+      padding-right: 8px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .blackboard-toolbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .blackboard-toolbar :global(button),
+    .blackboard-toolbar :global(img),
+    .blackboard-toolbar :global(.material-icons) {
+      flex: 0 0 auto;
+    }
+
+    .blackboard-toolbar > div {
+      flex: 0 0 auto;
+    }
+
+    .color-pencil-button {
+      flex: 0 0 auto;
+      margin: 0 2px;
+    }
+
+    .large-eraser {
+      margin-left: 10px;
+      margin-right: 6px;
+    }
+
+    .small-eraser {
+      margin-right: 8px;
+    }
   }
 
   .highlighted-outline {

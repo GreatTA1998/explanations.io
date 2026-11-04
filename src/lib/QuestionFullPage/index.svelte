@@ -1,7 +1,6 @@
 <script>
   import { doc, getFirestore, onSnapshot } from 'firebase/firestore'
   import GeneralizedBlackboardVideoDisplay from '$lib/GeneralizedBlackboardVideoDisplay.svelte'
-  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'

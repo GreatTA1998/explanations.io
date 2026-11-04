@@ -1,16 +1,10 @@
-<div class="drawer-container" style="height: 100%; display: flex; flex-direction: column; box-shadow: 4px 0 6px -2px rgba(0, 0, 0, 0.1);" >
-  <div style="padding: 0; position: relative; padding-top: 24px; flex-grow: 1;">
+<div class="drawer-container" style="height: 100%; display: flex; flex-direction: column;">
+  <div style="padding: 0; position: relative; flex-grow: 1;">
     <!-- 
       IMPORTANT TRICK: because it's `absolute`, this div will retain its original height and NOT expand when it overflows 
       without the need of an explicit height / max-height property 
     -->
     <div style="position: absolute; overflow-y: auto; inset: 0;">
-      {#if $drawerWidth > 0}
-        <div class="collapse-row">
-          <LeftDrawerToggleButton />
-        </div>
-      {/if}
-
       <QuestionsSection {classID} />
 
       <div style="margin-top: 48px;"></div>
@@ -50,11 +44,10 @@
 </div>
 
 <script>
-  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import QuestionsSection from '$lib/TheLeftDrawer/QuestionsSection.svelte'
   import RecursiveRoom from './RecursiveRoom.svelte'
   import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
-  import { user, drawerWidth } from '/src/store.js'
+  import { user } from '/src/store.js'
   import { goto } from '$app/navigation'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
   import { createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
@@ -144,12 +137,6 @@
 </script>
 
 <style>
-  .collapse-row {
-    display: flex;
-    justify-content: flex-end;
-    margin: 4px 8px 0;
-  }
-
   .new-room-button {
     cursor: pointer;
     color: grey; 

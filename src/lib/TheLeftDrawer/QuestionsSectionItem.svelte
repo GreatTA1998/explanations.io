@@ -1,7 +1,6 @@
 <script>
   import { deleteQuestion } from '/src/helpers/unifiedDeleteAPI.js'
-  import { viewport } from '/src/storeFolder/viewport.js'
-  import { user, adminUIDs, drawerWidth } from '/src/store.js'
+  import { user, adminUIDs } from '/src/store.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { DateTime } from 'luxon'
@@ -15,8 +14,6 @@
 
   function handleQuestionClick() {
     goto(`/${classID}/question/${question.id}`)
-
-    if ($viewport.isMobile) drawerWidth.set(0)
   }
 
   function handleDeleteAttempt () {

@@ -53,22 +53,16 @@
         </div>
 
         <div class="server-list">
-          {#if searchVal.trim()}
-            {#each searchMatchedServers as matchedServer (matchedServer.id)}
-              <CompactServerCard serverObj={matchedServer} />
-            {/each}
-          {:else}
-            {#each listedServers as server (server.id)}
-              <button
-                type="button"
-                class="server-link"
-                class:current={$page.params.class === server.id}
-                on:click={() => chooseServer(server)}
-              >
-                {server.name}
-              </button>
-            {/each}
-          {/if}
+          {#each visibleServers as server (server.id)}
+            <button
+              type="button"
+              class="server-link"
+              class:current={$page.params.class === server.id}
+              on:click={() => chooseServer(server)}
+            >
+              {server.name}
+            </button>
+          {/each}
 
           <button type="button" class="create-server" on:click={openCreateServer}>
             Create new server
@@ -94,14 +88,12 @@
 <PopupNewServer bind:this={newServerPopup} showTrigger={false} />
 
 <script>
-  import CompactServerCard from '$lib/TheTopNavbar/CompactServerCard.svelte'
   import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
   import { getFirestoreCollection, createRoomDoc } from '/src/helpers/crud.js'
   import { handleServerRedirect } from '/src/helpers/everythingElse.js'
   import { user, classServerDoc, recentSearchedServerDoc, isFullServerMode, sidebarFullscreen } from '/src/store.js'
-  import { viewport } from '/src/storeFolder/viewport.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
 
@@ -110,20 +102,28 @@
   let menuOpen = false
   let searchVal = ''
   let allServers = []
-  let mathServers = []
-  let searchMatchedServers = []
   let creating = false
   let newServerPopup
   let clusterEl
 
-  $: listedServers = serversForBar($viewport, mathServers, $recentSearchedServerDoc)
+  $: visibleServers = serversMatching(allServers, searchVal)
   $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
 
   getFirestoreCollection('classes').then(docs => {
     allServers = docs
-    mathServers = docs.filter(doc => doc.subjectTag === 'Competition Math')
-    searchMatchedServers = allServers.sort((a, b) => a.featuredBlackboardID ? -1 : b.featuredBlackboardID ? 1 : 0)
   })
+
+  function serversMatching (servers, query) {
+    const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean)
+    const list = servers.filter(server => server?.id)
+    const filtered = terms.length === 0
+      ? list
+      : list.filter(server => {
+          const name = (server.name || '').toLowerCase()
+          return terms.some(term => name.includes(term))
+        })
+    return filtered.slice().sort((a, b) => (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' }))
+  }
 
   function nameForCurrentServer (classId, servers, classDoc, recent) {
     const match = servers.find(server => server.id === classId)
@@ -131,22 +131,6 @@
     if (classId && classDoc?.name) return classDoc.name
     if (recent?.name) return recent.name
     return 'Find server'
-  }
-
-  function serversForBar (currentViewport, competitionServers, recent) {
-    const list = []
-    if (currentViewport.isDesktop || currentViewport.isTablet) {
-      list.push(...competitionServers)
-    } else if (currentViewport.isMobile) {
-      if (!recent?.name && competitionServers.length > 0) list.push(competitionServers[0])
-      else if (recent?.id) list.push(recent)
-    }
-
-    if (currentViewport.isDesktop && recent?.name && recent.subjectTag !== 'Competition Math' && recent.id) {
-      if (!list.some(server => server.id === recent.id)) list.push(recent)
-    }
-
-    return list.filter(server => server?.id)
   }
 
   function toggleServerMenu () {
@@ -172,19 +156,6 @@
 
   function onSearchInput (value) {
     searchVal = value
-    searchWithinClassNames(value)
-  }
-
-  function searchWithinClassNames (searchQuery) {
-    const matches = []
-    for (const searchTerm of searchQuery.split(' ')) {
-      for (const server of allServers) {
-        if (!server.name) continue
-        if (server.name.toLowerCase().indexOf(searchTerm.toLowerCase()) === -1) continue
-        if (!matches.includes(server)) matches.push(server)
-      }
-    }
-    searchMatchedServers = matches
   }
 
   function chooseServer (server) {
@@ -218,8 +189,7 @@
   .nav-cluster {
     position: relative;
     z-index: 5;
-    width: calc(100% - 16px);
-    margin: 8px 8px 0;
+    width: 100%;
   }
 
   .floating {
@@ -228,15 +198,18 @@
     left: 8px;
     z-index: 30;
     width: 280px;
-    margin: 0;
   }
 
   .nav-panel {
     position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .floating .nav-panel {
     background-color: var(--bg-off-white);
     border-radius: 12px;
-    box-shadow: 0 3px 5px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
     border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 3px 5px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
   }
 
   .server-row {
@@ -320,12 +293,6 @@
     padding: 8px;
   }
 
-  .server-list :global(.server-card) {
-    margin-bottom: 8px;
-    flex-shrink: 0;
-    height: auto;
-  }
-
   .server-link,
   .create-server {
     display: block;
@@ -353,7 +320,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 8px;
+    padding: 8px 12px 4px;
   }
 
   .new-pill {

@@ -14,15 +14,6 @@
   {/if}
 
   <div id="main-content" class:sidebar-fullscreen={$sidebarFullscreen} bind:this={MainContent}>
-    {#if !$sidebarFullscreen && $drawerWidth === 0}
-      <button on:click={() => drawerWidth.set(WIDTHS.DRAWER_EXPANDED)} 
-        class="material-icons expand-collapse-button" 
-        style="color: rgb(100, 100, 100); font-size: 2rem; position: fixed; top: 8px; left: 0; z-index: 10;"
-      >
-        keyboard_double_arrow_right
-      </button>
-    {/if}
-
     <slot />
   </div>
 </div>
@@ -32,7 +23,6 @@
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
   import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { WIDTHS } from '/src/helpers/CONSTANTS.js'
 
   import { 
     user, drawerWidth, classServerDoc, recentSearchedServerDoc, 
@@ -140,12 +130,16 @@
     flex-direction: column;
     min-height: 0;
     height: 100%;
-    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    background-color: var(--bg-off-white);
+    box-shadow: 4px 0 6px -2px rgba(0, 0, 0, 0.1);
   }
 
   .room-drawer {
     flex: 1;
     min-height: 0;
+    overflow: hidden;
   }
 
   #main-content {

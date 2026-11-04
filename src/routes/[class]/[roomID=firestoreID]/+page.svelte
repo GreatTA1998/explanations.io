@@ -47,7 +47,6 @@
 {/if}
 
 <script>
-  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import GeneralizedBlackboardVideoDisplay from '$lib/GeneralizedBlackboardVideoDisplay.svelte'
 
   import { getRandomID, displayDate } from '/src/helpers/utility.js'

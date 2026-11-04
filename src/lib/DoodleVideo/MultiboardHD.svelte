@@ -23,8 +23,8 @@
       </BaseTransparentButton>
     </div>
     
-    <div on:click={togglePlayPause} on:keydown={togglePlayPause} style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
-      {#each boardDoc.slideIDs as slideID, i}
+    <div role="button" tabindex="0" on:click={togglePlayPause} on:keydown={togglePlayPause} style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
+      {#each boardDoc.slideIDs as slideID, i (slideID)}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >
@@ -66,17 +66,16 @@
     <!-- <audio> can't grow beyond 50px, it just introduces unexpected spacing -->
     <audio
       src={audioDownloadURL}
-      bind:this={AudioPlayer}
+      use:captureAudioPlayer
       on:play={() => {
         hasPlaybackStarted = true;
         isPlaying = true;
         startTimer();
       }}
       on:pause={() => isPlaying = false}
-      on:seeking={() => {
-        currentTime = AudioPlayer.currentTime;
-        hasAudioSliderJumped = true
-      }}
+      on:seeking={handleSeeking}
+      on:timeupdate={publishClock}
+      on:loadedmetadata={handleLoadedMetadata}
       controls
       style={`width: ${canvasWidth}px; height: 50px`}
     >
@@ -98,6 +97,7 @@
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
+  import { playbackPathOf, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
@@ -127,6 +127,8 @@
 
   let updateViewMinutesTimeoutID
   let isElementVisible = false
+  let queuedSeek = null
+  let unregisterPlayback = () => {}
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
 
@@ -182,12 +184,51 @@
       )
     } 
     updateViewMinutes()
+    unregisterPlayback = registerPlayback(playbackPathOf(boardDoc), {
+      seek: seekTo
+    })
   })
 
   onDestroy(() => {
+    unregisterPlayback()
     if (intervalID) clearInterval(intervalID)
     if (updateViewMinutesTimeoutID) clearTimeout(updateViewMinutesTimeoutID)
-  }) 
+  })
+
+  function captureAudioPlayer(node) {
+    AudioPlayer = node
+  }
+
+  function publishClock() {
+    if (!AudioPlayer) return
+    publishPlayback(
+      playbackPathOf(boardDoc),
+      AudioPlayer.currentTime || 0,
+      AudioPlayer.duration || 0
+    )
+  }
+
+  function handleSeeking() {
+    currentTime = AudioPlayer.currentTime
+    hasAudioSliderJumped = true
+    publishClock()
+  }
+
+  function handleLoadedMetadata() {
+    applyQueuedSeek()
+    publishClock()
+  }
+
+  function seekTo(time) {
+    queuedSeek = time
+    applyQueuedSeek()
+  }
+
+  function applyQueuedSeek() {
+    if (!AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
+    AudioPlayer.currentTime = queuedSeek
+    queuedSeek = null
+  } 
 
   function togglePlaySpeed () {
     if (AudioPlayer.playbackRate === 2) {
@@ -201,7 +242,8 @@
     intervalID = setInterval(
       () => { 
         if (AudioPlayer) {
-          currentTime = AudioPlayer.currentTime 
+          currentTime = AudioPlayer.currentTime
+          publishClock()
         }
       }, // note this is a floating point calculation 
       ONE_HUNDRED_MILLISECS

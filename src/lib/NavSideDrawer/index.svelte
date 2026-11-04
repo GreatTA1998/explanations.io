@@ -54,14 +54,7 @@
 
         <div class="server-list">
           {#each visibleServers as server (server.id)}
-            <button
-              type="button"
-              class="server-link"
-              class:current={$page.params.class === server.id}
-              on:click={() => chooseServer(server)}
-            >
-              {server.name}
-            </button>
+            <CompactServerCard serverObj={server} />
           {/each}
 
           <button type="button" class="create-server" on:click={openCreateServer}>
@@ -88,11 +81,11 @@
 <PopupNewServer bind:this={newServerPopup} showTrigger={false} />
 
 <script>
+  import CompactServerCard from '$lib/TheTopNavbar/CompactServerCard.svelte'
   import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
   import { getFirestoreCollection, createRoomDoc } from '/src/helpers/crud.js'
-  import { handleServerRedirect } from '/src/helpers/everythingElse.js'
   import { user, classServerDoc, recentSearchedServerDoc, isFullServerMode, sidebarFullscreen } from '/src/store.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
@@ -156,11 +149,6 @@
 
   function onSearchInput (value) {
     searchVal = value
-  }
-
-  function chooseServer (server) {
-    handleServerRedirect(server)
-    queueMicrotask(closeServerMenu)
   }
 
   function openCreateServer () {
@@ -287,31 +275,25 @@
   }
 
   .server-list {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     max-height: 50vh;
     overflow-y: auto;
     padding: 8px;
   }
 
-  .server-link,
+  .server-list :global(.server-card) {
+    flex-shrink: 0;
+    height: auto;
+  }
+
   .create-server {
     display: block;
     width: 100%;
     text-align: left;
     padding: 8px 10px;
-    margin-bottom: 4px;
     border-radius: 8px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: black;
-  }
-
-  .server-link.current {
-    border-bottom: 2px solid orange;
-  }
-
-  .create-server {
     color: #5d0068;
     font-weight: 500;
   }

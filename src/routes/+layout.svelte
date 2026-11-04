@@ -1,11 +1,24 @@
+<svelte:window on:keydown={handleFullscreenKey} />
+
 <div>
   {#if !$hasFetchedUser}
     <h4 style="margin-left: 16px; opacity: 70%; font-weight: 400">
       Fetching your info...
     </h4>
   {:else}
-    {#if $isFullServerMode}
-      <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
+    {#if $isFullServerMode && !$page.params.class && !$sidebarFullscreen}
+      <NavSideDrawer floating />
+    {/if}
+
+    {#if $sidebarFullscreen}
+      <button
+        type="button"
+        class="exit-fullscreen-toggle"
+        aria-label="Exit fullscreen"
+        on:click={() => sidebarFullscreen.set(false)}
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">close_fullscreen</span>
+      </button>
     {/if}
 
     {#if $didRenderSplashScreen && !$isFullServerMode}
@@ -19,7 +32,7 @@
 
 <script>
   import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
-  import TheTopNavbar from '$lib/TheTopNavbar/index.svelte'
+  import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
 
   import { initializeDatabase } from '../database.js'
   import 'firebase/app'
@@ -30,7 +43,7 @@
   import { getRandomColor } from "/src/helpers/utility.js"
   import { handleServerRedirect } from '/src/helpers/everythingElse.js'
 
-  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen, sidebarFullscreen } from '../store.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -55,6 +68,12 @@
     
     window.addEventListener('scroll', handleOnScroll)
   })
+
+  function handleFullscreenKey (event) {
+    if (event.key === 'Escape' && $sidebarFullscreen) {
+      sidebarFullscreen.set(false)
+    }
+  }
 
   function handleOnScroll (e) {
     const scrollTriggerBuffer = 120
@@ -224,4 +243,30 @@
     })
   }
 </script>
+
+<style>
+  .exit-fullscreen-toggle {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 24px;
+    border: 1px solid lightgrey;
+    background: white;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  }
+
+  .exit-fullscreen-toggle .material-symbols-outlined {
+    font-size: 24px;
+  }
+</style>
 

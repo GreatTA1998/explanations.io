@@ -1,11 +1,13 @@
-<ReusableRoundButton on:click={() => isPopupOpen = true} backgroundColor="" textColor="purple">
-  <span class="material-symbols-outlined" style="margin-right: 6px;">
-    add
-  </span>
-  <div style="font-weight: 500;">
-    Create new server
-  </div>
-</ReusableRoundButton>
+{#if showTrigger}
+  <ReusableRoundButton on:click={() => isPopupOpen = true} backgroundColor="" textColor="purple">
+    <span class="material-symbols-outlined" style="margin-right: 6px;">
+      add
+    </span>
+    <div style="font-weight: 500;">
+      Create new server
+    </div>
+  </ReusableRoundButton>
+{/if}
 
 {#if isPopupOpen}
   <BasePopup on:popup-close={() => {
@@ -73,12 +75,18 @@
 
   const dispatch = createEventDispatcher()
 
+  export let showTrigger = true
+
   // Internal state for when component controls its own visibility
   let isPopupOpen = false;
-  
+
   // Make isPopupOpen reactive to isOpen when provided
   $: if (isOpen !== undefined) {
     isPopupOpen = isOpen;
+  }
+
+  export function openPopup () {
+    isPopupOpen = true
   }
 
   // ASSUMES NAME & DESCRIPTION ARE NOT EMPTY STRINGS (BECAUSE THE SUBMIT BUTTON IS DISABLED OTHERWISE)

@@ -30,6 +30,7 @@
     name="search" 
     maxlength="100" 
     placeholder="Find server..." 
+    aria-label="Find server"
     autocomplete="off" 
     type="text" 
     value={searchVal}

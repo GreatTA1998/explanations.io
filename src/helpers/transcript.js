@@ -136,17 +136,7 @@ async function downloadAudio(url) {
 
 function loadWhisper() {
   if (!enginePromise) {
-    enginePromise = (async () => {
-      const { pipeline, env } = await import('@xenova/transformers')
-      env.allowLocalModels = false
-      env.useBrowserCache = true
-      if (env.backends?.onnx?.wasm) {
-        env.backends.onnx.wasm.numThreads = 1
-      }
-      return pipeline('automatic-speech-recognition', MODEL_ID, {
-        quantized: true
-      })
-    })()
+    enginePromise = import('./whisperEngine.js').then((engine) => engine.loadWhisperPipeline())
   }
   return enginePromise
 }

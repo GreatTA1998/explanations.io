@@ -129,12 +129,29 @@ export function deleteFromStorage ({ path }) {
   )
 }
 
+// Root rooms render in ascending classServerOrder. A new room takes half the
+// current top value, the same slot as a drag onto the first row, so it stays
+// positive and sorts first. A non-positive top steps further down.
+async function orderForNewRootRoom (classPath) {
+  const rooms = await getFirestoreCollection(classPath + 'rooms')
+  let topOrder = null
+  for (const room of rooms) {
+    if (room.parentRoomID !== '') continue
+    if (typeof room.classServerOrder !== 'number') continue
+    if (topOrder === null || room.classServerOrder < topOrder) topOrder = room.classServerOrder
+  }
+  if (topOrder === null) return 1.5
+  if (topOrder > 0) return topOrder / 2
+  return topOrder - 3
+}
+
 // returns the ID of the new room created
 export function createRoomDoc (classPath) {
   return new Promise(async resolve => {
-    const classDoc = await getFirestoreDoc(classPath)
+    await getFirestoreDoc(classPath)
 
     const newDocID = getRandomID()
+    const classServerOrder = await orderForNewRootRoom(classPath)
 
     const db = getFirestore()
     const roomRef = doc(db, classPath + `rooms/${newDocID}`)
@@ -144,7 +161,7 @@ export function createRoomDoc (classPath) {
         name: '',
         blackboards: [newDocID],
         date: new Date().toISOString(),
-        classServerOrder: classDoc.maxClassServerOrder + 3 || 3,
+        classServerOrder,
         parentRoomID: ''
         // rooms have an order property, look at v3's drag and drop source code
       }),
@@ -155,9 +172,6 @@ export function createRoomDoc (classPath) {
       }),
       setFirestoreDoc(classPath + `blackboards/${newDocID}/slides/${newDocID}`, {
         // empty doc matters because it can then be updated with background images etc.
-      }),
-      updateFirestoreDoc(classPath, {
-        maxClassServerOrder: classDoc.maxClassServerOrder + 3
       })
     ])
     resolve(newDocID)

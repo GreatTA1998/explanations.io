@@ -34,7 +34,11 @@ export function lightDismiss (node, options) {
     const element = targetElement(event)
     if (!element) return
     if (node.contains(element)) return
-    if (ignore && element.closest(ignore)) return
+    if (typeof ignore === 'function') {
+      if (ignore(element)) return
+    } else if (ignore && element.closest(ignore)) {
+      return
+    }
     close()
     // The dismiss tap should not also start a stroke.
     if (element.closest('canvas')) {

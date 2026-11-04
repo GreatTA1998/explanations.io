@@ -44,8 +44,8 @@
     </div>
   
     {#if question.askerUID === $user.uid || $adminUIDs.includes($user.uid)}
-      <span style="display: contents;" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
-        <span on:click={DropdownMenu.setOpen(true)} on:keydown class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+      <span style="position: relative; margin-left: auto;" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
+        <span on:click={DropdownMenu.setOpen(true)} on:keydown class="material-icons" style="margin-right: 0px; color: white; font-size: 1.5rem;">
           more_vert
         </span>
 

@@ -1,4 +1,4 @@
-<div class="blackboard-toolbar">
+<div class="blackboard-toolbar" bind:this={toolbarRoot}>
   <div on:click|stopPropagation|preventDefault={func}
     style="margin-right: 10px; text-align: center"
   >
@@ -23,7 +23,7 @@
     {#if open}
       <div
         class="popup-window"
-        use:lightDismiss={{ close: () => { open = false }, always: true, ignore: '.color-pencil-button' }}
+        use:lightDismiss={{ close: () => { open = false }, always: true, ignore: isOwnPencil }}
       >
         <!-- generate random colors -->
         <div style="display: flex; flex-wrap: wrap">
@@ -163,6 +163,12 @@
   let newlySelectedWidth = 0 // AF(0) means no width
 
   let open = false
+  let toolbarRoot
+
+  function isOwnPencil (element) {
+    const pencil = element.closest('.color-pencil-button')
+    return !!(toolbarRoot && pencil && toolbarRoot.contains(pencil))
+  }
 
   let randomPaletteColors = ['black', 'white', 'red', 'blue']
 

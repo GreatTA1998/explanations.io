@@ -47,22 +47,6 @@
       </div>
     </div>
   </div>
-
-  <!-- necessary because it's absolutely positioned and will be visible even when the parent width is 0 -->
-  {#if $drawerWidth > 0}
-    <button on:click={() => goto(`/${classID}/overview`)} 
-      class:drawer-item-glow={$page.route.id === '/[class]/overview'}
-      class="pinned-bottom-item"
-    >
-      <span class="material-symbols-outlined" style="font-size: 1.7rem; margin-top: 2px; margin-left: 8px; opacity: 0.9">
-        cottage
-      </span>
-
-      <div style="font-size: 1rem;">
-        Server Overview
-      </div>
-    </button>
-  {/if}
 </div>
 
 <script>
@@ -74,7 +58,6 @@
   import { goto } from '$app/navigation'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
   import { createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { page } from '$app/stores'
 
   export let classID
   export let roomID
@@ -167,12 +150,6 @@
     margin: 4px 8px 0;
   }
 
-  .pinned-bottom-item {
-    flex-basis: 36px; 
-    margin-top: auto; display: flex; align-items: center; padding: 8px 8px; column-gap: 12px;
-    border-top: 1px solid lightgrey;
-  }
-
   .new-room-button {
     cursor: pointer;
     color: grey; 
@@ -185,16 +162,5 @@
 
   .new-room-button:hover {
     background-color: rgb(233, 233, 233);
-  }
-
-  .drawer-item-glow {
-    background: #f7c686;
-
-    /* so it doesn't get overriden by hover stles */
-    color: black !important;
-    font-weight: 600 !important;
-    /* app purple: #5d0068 */
-    /* new orange: #f7c37e */
-    /* background: #e2dddd !important;  */
   }
 </style>

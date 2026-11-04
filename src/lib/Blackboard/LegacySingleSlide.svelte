@@ -15,6 +15,7 @@
   import LinearProgress from '@smui/linear-progress'
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
+  import { startTranscriptForNewVideo } from '/src/helpers/transcript.js'
 
   export let roomDoc
   export let boardDoc
@@ -156,6 +157,12 @@
       date: new Date().toISOString(),
       audioDownloadURL: downloadURL,
       audioRefFullPath: audioRef.fullPath
+    })
+    await startTranscriptForNewVideo({
+      path: boardDoc.path,
+      audioDownloadURL: downloadURL,
+      audioRefFullPath: audioRef.fullPath,
+      audioBlob
     })
     updateRecordState(boardID, 'pre_record')
 

@@ -41,7 +41,7 @@
 
   <div style="margin-bottom: 12px;"></div>
 
-  {#each boardDoc.slideIDs as slideID, i}
+  {#each boardDoc.slideIDs as slideID, i (slideID)}
     <ListenToDoc docPath={`${boardDoc.path}/slides/${slideID}`} autoListen={isBoardVisible} let:theDoc={slideDoc}>
       <ListenToStrokes 
         dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
@@ -148,6 +148,7 @@
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
+  import { startTranscriptForNewVideo } from '/src/helpers/transcript.js'
 
   import { 
     getFirestore, 
@@ -338,7 +339,7 @@
     ])
 
     // FINALLY: update metadata of the multislide blackboard doc itself
-    updateFirestoreDoc(boardDoc.path, {
+    await updateFirestoreDoc(boardDoc.path, {
       creatorUID: $user.uid || '',
       creatorName: $user.name || '',
       creatorPhoneNumber: $user.phoneNumber || '',
@@ -349,6 +350,13 @@
       webmRefFullPath: webmRef.fullPath,
       timingOfSlideChanges,
       isPaid: false
+    })
+
+    await startTranscriptForNewVideo({
+      path: boardDoc.path,
+      audioDownloadURL,
+      audioRefFullPath: audioRef.fullPath,
+      audioBlob
     })
 
     // set the question to be resolved

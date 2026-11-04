@@ -1,10 +1,13 @@
 // Timed transcript lines for a video: { start, end, text } in seconds.
 //
-// produceTranscriptSegments() is the seam. It turns a video's audio into those
-// lines. This repo has no speech-to-text API key, so the default engine runs
-// Whisper in the browser (Xenova/whisper-tiny) and caches the finished lines
-// on the video document as `transcript`. Replace produceTranscriptSegments()
-// to call another provider.
+// produceTranscriptSegments() is the seam. It turns a new recording's audio
+// into those lines. This repo has no speech-to-text API key, so the default
+// engine runs Whisper in the browser (Xenova/whisper-tiny) and writes the
+// finished lines on the video document as `transcript`. Replace
+// produceTranscriptSegments() to call another provider.
+//
+// Transcription starts when a video is recorded or uploaded, after the audio
+// file exists. Opening an older video only reads a finished transcript.
 
 import { browser } from '$app/environment'
 import { updateFirestoreDoc } from './crud.js'
@@ -13,8 +16,7 @@ const MODEL_ID = 'Xenova/whisper-tiny'
 const TRANSCRIPT_VERSION = 2
 const WINDOW_SECONDS = 30
 
-const memory = new Map()
-const jobs = new Map()
+const started = new Set()
 let enginePromise = null
 let transcriptionQueue = Promise.resolve()
 
@@ -54,139 +56,67 @@ export function readCachedTranscript(videoDoc) {
   return saved.segments
 }
 
-function emit(job, patch) {
-  Object.assign(job, patch)
-  const snapshot = {
-    status: job.status,
-    segments: job.segments || [],
-    detail: job.detail || '',
-    error: job.error || ''
-  }
-  for (const listener of job.listeners) listener(snapshot)
-}
-
 function enqueue(work) {
   const run = transcriptionQueue.then(work, work)
   transcriptionQueue = run.then(() => {}, () => {})
   return run
 }
 
-export function watchTranscript(videoDoc, listener) {
-  if (!browser) {
-    listener({ status: 'starting', segments: [], detail: '', error: '' })
-    return () => {}
-  }
+// Call this only after a new recording's audio file is in storage.
+export function startTranscriptForNewVideo(video) {
+  if (!browser) return Promise.resolve()
+  const audioDownloadURL = video?.audioDownloadURL
+  const path = video?.path
+  if (!audioDownloadURL || !path) return Promise.resolve()
+  if (readCachedTranscript(video) != null) return Promise.resolve()
 
-  if (!videoDoc?.audioDownloadURL) {
-    listener({ status: 'empty', segments: [], detail: '', error: '' })
-    return () => {}
-  }
+  const audioKey = audioKeyOf(video)
+  if (started.has(audioKey)) return Promise.resolve()
+  started.add(audioKey)
 
-  const key = audioKeyOf(videoDoc)
-  const cached = readCachedTranscript(videoDoc) ?? (memory.has(key) ? memory.get(key) : null)
-  if (cached) {
-    listener({ status: 'ready', segments: cached, detail: '', error: '' })
-    return () => {}
-  }
-
-  let job = jobs.get(key)
-  if (!job) {
-    job = {
-      listeners: new Set(),
-      segments: [],
-      status: 'starting',
-      detail: '',
-      error: ''
+  return enqueue(async () => {
+    try {
+      const segments = await produceTranscriptSegments(video)
+      await persistTranscript(video, audioKey, segments)
+    } catch (err) {
+      started.delete(audioKey)
+      console.error('Could not transcribe the new recording.', err)
     }
-    jobs.set(key, job)
-    job.promise = enqueue(async () => {
-      try {
-        const segments = await produceTranscriptSegments(videoDoc, (patch) => emit(job, patch))
-        memory.set(key, segments)
-        await persistTranscript(videoDoc, key, segments)
-        emit(job, { status: 'ready', segments, detail: '', error: '' })
-      } catch (err) {
-        console.error(err)
-        emit(job, {
-          status: 'error',
-          error: err?.message || 'Could not transcribe this recording.'
-        })
-      } finally {
-        jobs.delete(key)
-      }
-    })
-  }
-
-  job.listeners.add(listener)
-  listener({
-    status: job.status,
-    segments: job.segments,
-    detail: job.detail,
-    error: job.error
   })
-  return () => job.listeners.delete(listener)
 }
 
 async function persistTranscript(videoDoc, audioKey, segments) {
   if (!videoDoc?.path) return
-  try {
-    await updateFirestoreDoc(videoDoc.path, {
-      transcript: {
-        v: TRANSCRIPT_VERSION,
-        complete: true,
-        engine: 'browser-whisper',
-        model: MODEL_ID,
-        audioKey,
-        segments,
-        createdAt: new Date().toISOString()
-      }
-    })
-  } catch (err) {
-    console.error('Could not cache the transcript on the video.', err)
-  }
+  await updateFirestoreDoc(videoDoc.path, {
+    transcript: {
+      v: TRANSCRIPT_VERSION,
+      complete: true,
+      engine: 'browser-whisper',
+      model: MODEL_ID,
+      audioKey,
+      segments,
+      createdAt: new Date().toISOString()
+    }
+  })
 }
 
 // Seam: replace this function to call a hosted speech-to-text API.
-async function produceTranscriptSegments(videoDoc, report) {
-  return transcribeWithBrowserWhisper(videoDoc, report)
+async function produceTranscriptSegments(video) {
+  return transcribeWithBrowserWhisper(video)
 }
 
-async function transcribeWithBrowserWhisper(videoDoc, report) {
-  report({
-    status: 'loading-model',
-    detail: 'Loading the speech model…',
-    segments: [],
-    error: ''
-  })
-  loadWhisper.onProgress = (message) => {
-    report({ status: 'loading-model', detail: message })
-  }
-
-  let transcriber
-  try {
-    transcriber = await loadWhisper()
-  } catch (err) {
-    console.error(err)
-    throw new Error('Could not load the speech model. Check your connection and try again.')
-  }
-
-  report({ status: 'transcribing', detail: 'Reading the recording…' })
-  const response = await fetch(videoDoc.audioDownloadURL)
-  if (!response.ok) throw new Error('Could not download the video audio.')
-
-  const samples = decodeWavTo16kMono(await response.arrayBuffer())
-  const totalSeconds = samples.length / 16000
+async function transcribeWithBrowserWhisper(video) {
+  const transcriber = await loadWhisper()
+  const bytes = video.audioBlob
+    ? await video.audioBlob.arrayBuffer()
+    : await downloadAudio(video.audioDownloadURL)
+  const samples = decodeWavTo16kMono(bytes)
   const windowSamples = WINDOW_SECONDS * 16000
   const segments = []
 
   for (let offset = 0; offset < samples.length; offset += windowSamples) {
     const end = Math.min(samples.length, offset + windowSamples)
     const slice = samples.slice(offset, end)
-    report({
-      status: 'transcribing',
-      detail: `Transcribing ${formatTranscriptTime(offset / 16000)} / ${formatTranscriptTime(totalSeconds)}`,
-      segments: segments.slice()
-    })
     await yieldToUi()
     const output = await transcriber(slice, {
       return_timestamps: true,
@@ -195,12 +125,13 @@ async function transcribeWithBrowserWhisper(videoDoc, report) {
     segments.push(...segmentsFromOutput(output, offset / 16000, slice.length / 16000))
   }
 
-  report({
-    status: 'transcribing',
-    detail: `Transcribing ${formatTranscriptTime(totalSeconds)} / ${formatTranscriptTime(totalSeconds)}`,
-    segments: segments.slice()
-  })
   return segments
+}
+
+async function downloadAudio(url) {
+  const response = await fetch(url)
+  if (!response.ok) throw new Error('Could not download the new recording.')
+  return response.arrayBuffer()
 }
 
 function loadWhisper() {
@@ -213,26 +144,11 @@ function loadWhisper() {
         env.backends.onnx.wasm.numThreads = 1
       }
       return pipeline('automatic-speech-recognition', MODEL_ID, {
-        quantized: true,
-        progress_callback: (progress) => {
-          const message = progressMessage(progress)
-          if (message && loadWhisper.onProgress) loadWhisper.onProgress(message)
-        }
+        quantized: true
       })
     })()
   }
   return enginePromise
-}
-
-function progressMessage(progress) {
-  if (!progress) return ''
-  if (progress.status === 'progress' && progress.progress != null) {
-    return `Downloading the speech model… ${Math.round(progress.progress)}%`
-  }
-  if (progress.status === 'initiate' || progress.status === 'download') {
-    return 'Downloading the speech model…'
-  }
-  return ''
 }
 
 function yieldToUi() {

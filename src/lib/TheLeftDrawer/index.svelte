@@ -5,27 +5,13 @@
       without the need of an explicit height / max-height property 
     -->
     <div style="position: absolute; overflow-y: auto; inset: 0;">
-      <QuestionsSection {classID}>
-        <div style="width: 100%; display: flex; margin-top: 24px; align-items: center;">
-          <button on:click={() => goto(`/${classID}/question`)} 
-            class="new-question-button"
-            class:drawer-item-glow={$page.route.id === '/[class]/question'}
-          >
-            <span class="material-symbols-outlined" style="font-size: 1.6rem; margin-top: 2px; margin-left: 8px;">
-              add
-            </span>
-            <div style="margin-left: 6px; font-size: 14px; font-weight: 400;">
-              New question
-            </div>
-          </button> 
-
-          {#if $drawerWidth > 0}
-            <div style="margin-left: auto;">
-              <LeftDrawerToggleButton />
-            </div>
-          {/if}
+      {#if $drawerWidth > 0}
+        <div class="collapse-row">
+          <LeftDrawerToggleButton />
         </div>
-      </QuestionsSection>
+      {/if}
+
+      <QuestionsSection {classID} />
 
       <div style="margin-top: 48px;"></div>
 
@@ -175,20 +161,10 @@
 </script>
 
 <style>
-  .new-question-button {
-    display: flex; 
-    align-items: center; 
-    width: 165px;
-    height: 36px;
-    border-radius: 24px; 
-
-    color: black; 
-    background-color: #f1e8f3; 
-
-    /* copied from action-item except bigger border-radius */
-    margin: 6px;
-    cursor: pointer;
-    padding: 4px 8px;
+  .collapse-row {
+    display: flex;
+    justify-content: flex-end;
+    margin: 4px 8px 0;
   }
 
   .pinned-bottom-item {

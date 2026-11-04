@@ -60,6 +60,7 @@
       {#if i < pencilColors.length - 1}
         <div on:click={() => selectPencil({ i, color, lineWidth: pencilWidths[i] })} 
           class="color-pencil-button"
+          class:narrow-hide={i > 0}
           class:pencil-selected={$currentTool.color === color}
         >
           <svg preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -101,7 +102,7 @@
       {:else}
         {#if $user.uid}
           <span on:click={handleDiceClick(color, i)} 
-            class="material-icons" 
+            class="material-icons narrow-hide" 
             class:highlighted-background={$currentTool.color === color}
             style="font-size: 2.1rem; margin-left: 5px; color: {color}; border-radius: 4px; padding: 2px"
           >
@@ -126,7 +127,7 @@
       on:click={() => currentTool.set({ type: 'eraser', color: '', lineWidth: 5 })}
       class:eraser-selected={$currentTool.type === 'eraser' && $currentTool.lineWidth === 5}
       width="30" height="27"
-      class="small-eraser"
+      class="small-eraser narrow-hide"
       src="https://i.imgur.com/Klln1yP.png"
       alt="small-eraser"
     >
@@ -281,7 +282,7 @@
     padding-left: 4px;
   }
 
-  /* One row, full width of the board. Extra tools scroll instead of leaving the canvas. */
+  /* Phones: one pen, one eraser, undo, and the menu. No second row and no sideways scroll. */
   @media (max-width: 767px) {
     .blackboard-toolbar {
       left: 0;
@@ -290,40 +291,24 @@
       min-width: 0;
       box-sizing: border-box;
       flex-wrap: nowrap;
-      overflow-x: auto;
-      overflow-y: hidden;
+      overflow: visible;
       border-radius: 0;
-      padding-right: 8px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      padding-right: 4px;
     }
 
-    .blackboard-toolbar::-webkit-scrollbar {
+    .narrow-hide {
       display: none;
     }
 
-    .blackboard-toolbar :global(button),
-    .blackboard-toolbar :global(img),
-    .blackboard-toolbar :global(.material-icons) {
-      flex: 0 0 auto;
-    }
-
-    .blackboard-toolbar > div {
-      flex: 0 0 auto;
-    }
-
     .color-pencil-button {
-      flex: 0 0 auto;
       margin: 0 2px;
     }
 
     .large-eraser {
-      margin-left: 10px;
-      margin-right: 6px;
-    }
-
-    .small-eraser {
-      margin-right: 8px;
+      width: 44px;
+      height: 40px;
+      margin-left: 8px;
+      margin-right: 4px;
     }
   }
 

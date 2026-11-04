@@ -113,17 +113,15 @@
           {/each}
 
           <!-- PROBLEM: don't show until the blackboards have rendered, otherwise it causes a layout jump -->
-          <div class="question-inset">
-            <div 
-              on:click={() => createNewMultiboard({ 
-                baseDocPath: questionPath,
-                boardsPath: `/classes/${classID}/blackboards/`
-              })} on:keydown
-              class="new-blackboard-button"
-              style="width: 100%;"
-            >
-              RESPOND WITH A BLACKBOARD
-            </div>
+          <div 
+            on:click={() => createNewMultiboard({ 
+              baseDocPath: questionPath,
+              boardsPath: `/classes/${classID}/blackboards/`
+            })} on:keydown
+            class="new-blackboard-button"
+            style="width: 100%;"
+          >
+            RESPOND WITH A BLACKBOARD
           </div>
         {/if}
       </div>

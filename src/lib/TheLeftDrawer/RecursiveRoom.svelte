@@ -49,17 +49,19 @@
 
     {#if $page.params.roomID && $user.uid}
       {#if $adminUIDs.includes($user.uid)}
-        <button on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
-          more_vert
-        </button>
+        <span style="display: contents;" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
+          <button on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
+            more_vert
+          </button>
 
-        <Menu bind:this={DropdownMenu} style="width: 300px">
-          <List>      
-            <Item on:SMUI:action={() => deleteRoom({ room, classID })}>
-              Delete room
-            </Item>
-          </List> 
-        </Menu>
+          <Menu bind:this={DropdownMenu} style="width: 300px">
+            <List>      
+              <Item on:SMUI:action={() => deleteRoom({ room, classID })}>
+                Delete room
+              </Item>
+            </List> 
+          </Menu>
+        </span>
       {/if}
     {/if}
   </button>
@@ -102,6 +104,7 @@ import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
 import { deleteRoom } from '/src/helpers/unifiedDeleteAPI.js'
 import List, { Item, Text } from '@smui/list'
 import Menu from '@smui/menu';
+import { lightDismiss } from '/src/helpers/lightDismiss.js'
 import { goto } from '$app/navigation'
 import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where, increment } from 'firebase/firestore'
 import { user, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'

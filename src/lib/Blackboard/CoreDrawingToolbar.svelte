@@ -21,7 +21,10 @@
 
   <!-- {#if Object.keys($user).length > 0} -->
     {#if open}
-      <div class="popup-window">
+      <div
+        class="popup-window"
+        use:lightDismiss={{ close: () => { open = false }, always: true, ignore: '.color-pencil-button' }}
+      >
         <!-- generate random colors -->
         <div style="display: flex; flex-wrap: wrap">
           {#each randomPaletteColors as color}
@@ -150,6 +153,7 @@
   import Button from '@smui/button'
   import Slider from '@smui/slider'
   import { onMount } from 'svelte';
+  import { lightDismiss } from '/src/helpers/lightDismiss.js'
   
   let pencilColors = []
   let pencilWidths = [] 
@@ -194,6 +198,7 @@
     } 
     else {
       currentTool.set({ type: 'pencil', color, lineWidth })
+      open = false
     }
   }
 
@@ -349,5 +354,19 @@
     top: 0;
     bottom: 0;
     margin: auto;
+  }
+
+  @media (max-width: 767px) {
+    .popup-window {
+      width: min(480px, calc(100vw - 16px));
+      height: auto;
+      max-height: calc(100vh - 24px);
+      overflow: auto;
+      top: 50%;
+      left: 50%;
+      right: auto;
+      bottom: auto;
+      transform: translate(-50%, -50%);
+    }
   }
 </style>

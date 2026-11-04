@@ -2,6 +2,7 @@
   import Menu from '@smui/menu'
   import List from '@smui/list'
   import { createEventDispatcher } from 'svelte'
+  import { lightDismiss } from '/src/helpers/lightDismiss.js'
   import { uploadToYoutube } from '../../helpers/cloudFunctions'
   import { isWidelyPlayableVideo } from '../../helpers/recordingMime.js'
 
@@ -154,7 +155,7 @@
   }
 </script>
 
-<div style="position: relative">
+<div style="position: relative" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
   <button type="button" on:click|stopPropagation={() => DropdownMenu.setOpen(true)} class="menu-surface-anchor">
     <span class="material-symbols-outlined" style="font-size: 20px;">
       more_vert

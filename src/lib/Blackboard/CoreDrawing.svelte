@@ -14,7 +14,7 @@
       <!-- uses `BlackboardToolbar`'s unnamed slot (the 2 other slots are named) -->
       <slot {currentTime} {startStopwatch} {stopStopwatch} {setCurrentTime} />
 
-      <div slot="dropdown-menu">
+      <div slot="dropdown-menu" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
         {#if recordState === 'pre_record' || currentTime === 0 }
           <button on:click={() => DropdownMenu.setOpen(true)} class="material-icons" style="margin-top: 3px; margin-right: 10px; color: white; font-size: 2rem;">
             more_vert
@@ -92,6 +92,7 @@
 
 <script>
   import CoreDrawingToolbar from '$lib/Blackboard/CoreDrawingToolbar.svelte'
+  import { lightDismiss } from '/src/helpers/lightDismiss.js'
   import { lazyCallable } from '/src/helpers/actions.js';
   import { applyInputStreamline, drawStroke, redrawStrokes, renderBackground } from '../../helpers/canvas.js'
   import { getRandomID } from '../../helpers/utility.js'

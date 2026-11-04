@@ -36,15 +36,13 @@
         <div style="margin-bottom: 80px;"></div>
       {/each}
 
-      <div class="room-inset">
-        <button on:click={createNewMultiboard} style="width: 100%;" class="new-blackboard-button">
-          {#if hasQuestionMark(roomDoc.name)}
-            RESPOND TO QUESTION
-          {:else}
-            NEW BLACKBOARD
-          {/if}
-        </button>
-      </div>
+      <button on:click={createNewMultiboard} style="width: 100%;" class="new-blackboard-button">
+        {#if hasQuestionMark(roomDoc.name)}
+          RESPOND TO QUESTION
+        {:else}
+          NEW BLACKBOARD
+        {/if}
+      </button>
     {/if}
   </div>
 {/if}

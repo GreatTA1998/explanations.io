@@ -2,6 +2,7 @@
   import Menu from '@smui/menu'
   import List from '@smui/list'
   import { createEventDispatcher } from 'svelte'
+  import { lightDismiss } from '/src/helpers/lightDismiss.js'
 
   export let boardDoc
   export let roomDoc
@@ -15,7 +16,7 @@
   }
 </script>
 
-<div style="position: relative">
+<div style="position: relative" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
   <button on:click|stopPropagation={() => DropdownMenu.setOpen(true)} class="menu-surface-anchor">
     <span class="material-symbols-outlined" style="font-size: 20px;">
       more_vert

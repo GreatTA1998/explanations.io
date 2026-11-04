@@ -1,27 +1,32 @@
 <div class="comments-column">
   <slot/>
 
-  <!-- <div style="display: flex; margin-bottom: 2vw; width: 100%; justify-content: space-between;">
-    <div class="my-tab-item">
-      <span class="material-symbols-outlined" style="cursor: not-allowed;">
-        translate
-      </span>
-      <p style="font-size: 12px;">
-        (transcript coming soon)
-      </p>
-    </div>      
+  <div class="panel-tabs" role="tablist" aria-label="Comments and transcript">
+    <button
+      type="button"
+      role="tab"
+      class="my-tab-item"
+      class:my-active-tab={activeTab === 'comments'}
+      aria-selected={activeTab === 'comments'}
+      on:click={() => activeTab = 'comments'}
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">forum</span>
+      Comments
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="my-tab-item"
+      class:my-active-tab={activeTab === 'transcript'}
+      aria-selected={activeTab === 'transcript'}
+      on:click={() => activeTab = 'transcript'}
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">subtitles</span>
+      Transcript
+    </button>
+  </div>
 
-    <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
-      <span class="material-symbols-outlined" style="cursor: pointer;">
-        forum
-      </span>
-      <p style="font-size: 12px;">
-        Comments
-      </p>
-    </div>
-  </div> -->
-
-  <div style="padding: 12px; display: flex; flex-direction: column; row-gap: 12px;">
+  <div class="panel-body" class:panel-hidden={activeTab !== 'comments'}>
     <ListenToCollection collectionPath={videoDoc.path + '/comments'}
       let:collectionDocs={commentDocs}
     >
@@ -38,7 +43,7 @@
       </button>
 
       {#if commentDocs}
-        {#each commentDocs as commentDoc}
+        {#each commentDocs as commentDoc (commentDoc.id)}
           <CommentsColumnComment 
             comment={commentDoc} 
             on:comment-delete={() => deleteComment(commentDoc)}
@@ -47,13 +52,18 @@
       {/if}
     </ListenToCollection>  
   </div>
+
+  {#if activeTab === 'transcript'}
+    <TranscriptPanel {videoDoc} />
+  {/if}
 </div>
 
 <script>
   import ListenToCollection from '$lib/Renderless/ListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
+  import TranscriptPanel from '$lib/DoodleVideo/TranscriptPanel.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
-  import { getRandomID, displayDate } from '/src/helpers/utility.js'
+  import { getRandomID } from '/src/helpers/utility.js'
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
   import { user } from '/src/store.js'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
@@ -62,6 +72,7 @@
   export let videoDoc
 
   let newInputComment = ''
+  let activeTab = 'comments'
   
   function createComment () {
     if (!newInputComment) return
@@ -128,15 +139,37 @@
     font-size: var(--fs-300);
   }
 
+  .panel-tabs {
+    display: flex;
+    width: 100%;
+  }
+
+  .panel-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+  }
+
+  .panel-hidden {
+    display: none;
+  }
+
   .my-tab-item {
-    font-size: 1.4rem;
+    font-size: 0.8125rem;
     border-bottom: 2px solid rgb(160, 160, 160);
-    padding: 0.5vw;
+    padding: 8px 4px;
     color: rgb(160, 160, 160);
     flex-grow: 1;
     text-align: center;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .my-tab-item .material-symbols-outlined {
+    font-size: 18px;
   }
 
   .my-active-tab {

@@ -72,7 +72,7 @@
   <!-- WHEN THE SCALING GETS TOO MUCH, NOW IT'S THE SCALING DOWN THAT WILL CAUSE ERRORS E.G. SCALE (0.1) will produce lots of gaps-->
   <div style="position: relative; transform: scale(0.5); transform-origin: top left;">
     <canvas 
-      bind:this={canvas} 
+      use:captureCanvas
       on:click={togglePlayPause}
       style={`
         position: absolute; 
@@ -89,7 +89,7 @@
 
     <!-- the non-100% opacity makes the pencil colors very visible -->
     <canvas 
-      bind:this={bgCanvas} 
+      use:captureBackgroundCanvas 
       style={`
         position: absolute;
         z-index: 0;
@@ -107,8 +107,10 @@
   <div>
     <audio 
       on:play={initSyncing} 
-      on:seeking={syncStrokesToAudio}
-      bind:this={AudioPlayer} 
+      on:seeking={handleSeeking}
+      on:timeupdate={publishClock}
+      on:loadedmetadata={handleLoadedMetadata}
+      use:captureAudioPlayer
       src={audioDownloadURL} 
       controls={!isLocked}
       style={`width: ${visualWidth}px; height: ${90 * scaleFactor}px; position: absolute; bottom: 0; top: auto;`}>
@@ -122,6 +124,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { assumedCanvasWidth, user } from '../../store.js' // note `canvasWidth` was misleading
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
+  import { publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once
@@ -142,6 +145,7 @@
   export let isPaid = false
   export let creatorUID
   export let classID
+  export let playbackPath = ''
 
   let hasPlayedOnce = false
   let isPlaying = false
@@ -156,6 +160,8 @@
   let recursiveSyncer
   let playbackSpeed = 1
   let updateViewMinutesTimeoutID
+  let queuedSeek = null
+  let unregisterPlayback = () => {}
 
   $: hasSubscribedToCreator = $user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)
   $: isLocked = isPaid && ($user.uid !== creatorUID)
@@ -217,12 +223,54 @@
       )
     } 
     updateViewMinutes()
+    unregisterPlayback = registerPlayback(playbackPath, {
+      seek: seekTo
+    })
   })
 
   onDestroy(() => {
+    unregisterPlayback()
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
     if (updateViewMinutesTimeoutID) clearTimeout(updateViewMinutesTimeoutID)
   })
+
+  function captureCanvas(node) {
+    canvas = node
+  }
+
+  function captureBackgroundCanvas(node) {
+    bgCanvas = node
+  }
+
+  function captureAudioPlayer(node) {
+    AudioPlayer = node
+  }
+
+  function publishClock() {
+    if (!AudioPlayer || !playbackPath) return
+    publishPlayback(playbackPath, AudioPlayer.currentTime || 0, AudioPlayer.duration || 0)
+  }
+
+  function handleSeeking() {
+    if (allFrames) syncStrokesToAudio()
+    publishClock()
+  }
+
+  function handleLoadedMetadata() {
+    applyQueuedSeek()
+    publishClock()
+  }
+
+  function seekTo(time) {
+    queuedSeek = time
+    applyQueuedSeek()
+  }
+
+  function applyQueuedSeek() {
+    if (!AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
+    AudioPlayer.currentTime = queuedSeek
+    queuedSeek = null
+  }
 
   function togglePlaySpeed () {
     if (AudioPlayer.playbackRate === 2) {

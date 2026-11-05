@@ -81,8 +81,9 @@
   >
   </canvas>
 
-  <canvas bind:this={bgCanvas} 
+  <canvas bind:this={bgCanvas}
     class="background-canvas"
+    style="background-color: {BLACKBOARD_PAINT};"
   >
   </canvas>
 </div>
@@ -94,7 +95,7 @@
   import CoreDrawingToolbar from '$lib/Blackboard/CoreDrawingToolbar.svelte'
   import { lightDismiss } from '/src/helpers/lightDismiss.js'
   import { lazyCallable } from '/src/helpers/actions.js';
-  import { applyInputStreamline, drawStroke, redrawStrokes, renderBackground } from '../../helpers/canvas.js'
+  import { applyInputStreamline, BLACKBOARD_PAINT, drawStroke, redrawStrokes, renderBackground } from '../../helpers/canvas.js'
   import { getRandomID } from '../../helpers/utility.js'
   import { currentTool, onlyAllowApplePencil, whatIsBeingDragged } from '../../store.js'
   import { createEventDispatcher, onMount } from 'svelte'
@@ -447,7 +448,6 @@
     top: 0;
     left: 0;
     display: block;
-    background-color: hsl(0,0%,0%, 0.80); 
   }
 
   .pencil-cursor {

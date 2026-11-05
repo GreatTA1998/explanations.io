@@ -32,7 +32,7 @@
   let ready = false
 
   function measure () {
-    const containerWidth = window.innerWidth
+    const containerWidth = window.innerWidth - 2 * PAGE_PADDING
     const containerHeight = window.innerHeight - TOP_CLEARANCE - PAGE_PADDING
     blackboardWidth.set(getBlackboardModuleSize({ containerWidth, containerHeight }))
     videoPreviewWidth.set(getPreviewVideoWidth({ containerWidth, containerHeight }))

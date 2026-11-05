@@ -53,14 +53,16 @@ export function subscribePlayback(path, listener) {
   }
 }
 
-export function publishPlayback(path, time, duration) {
+export function publishPlayback(path, time, duration, reason) {
   if (!path || !Number.isFinite(time)) return
   const entry = ensure(path)
   const nextDuration = Number.isFinite(duration) ? duration : entry.duration
-  if (entry.time === time && entry.duration === nextDuration) return
+  const nextReason = reason === 'seek' ? 'seek' : 'tick'
+  if (entry.time === time && entry.duration === nextDuration && entry.reason === nextReason) return
   entry.time = time
   entry.duration = nextDuration
-  const snapshot = { time, duration: nextDuration }
+  entry.reason = nextReason
+  const snapshot = { time, duration: nextDuration, reason: nextReason }
   for (const listener of entry.listeners) listener(snapshot)
 }
 

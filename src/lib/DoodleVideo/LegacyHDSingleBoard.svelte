@@ -108,7 +108,7 @@
     <audio 
       on:play={initSyncing} 
       on:seeking={handleSeeking}
-      on:timeupdate={publishClock}
+      on:timeupdate={() => publishClock()}
       on:loadedmetadata={handleLoadedMetadata}
       use:captureAudioPlayer
       src={audioDownloadURL} 
@@ -246,14 +246,19 @@
     AudioPlayer = node
   }
 
-  function publishClock() {
+  function publishClock(reason) {
     if (!AudioPlayer || !playbackPath) return
-    publishPlayback(playbackPath, AudioPlayer.currentTime || 0, AudioPlayer.duration || 0)
+    publishPlayback(
+      playbackPath,
+      AudioPlayer.currentTime || 0,
+      AudioPlayer.duration || 0,
+      reason === 'seek' ? 'seek' : 'tick'
+    )
   }
 
   function handleSeeking() {
     if (allFrames) syncStrokesToAudio()
-    publishClock()
+    publishClock('seek')
   }
 
   function handleLoadedMetadata() {

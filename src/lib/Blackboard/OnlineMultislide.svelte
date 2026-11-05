@@ -64,13 +64,13 @@
             on:stroke-drawn={(e) => {
               handleNewlyDrawnStroke(e.detail.newStroke)
               if (idxOfFocusedSlide === i) {
-                drawStroke(e.detail.newStroke, null, masterCtx, masterCanvas, canvasWidth)
+                copySlideToMaster(i)
               }
             }}
             on:board-wipe={() => {
               deleteStrokesFromSlide({ strokesArray, slidePath: slideDoc.path })
               if (idxOfFocusedSlide === i) {
-                masterCtx.clearRect(0, 0, canvasWidth, canvasHeight)
+                clearMaster()
               }
             }}
             backgroundImageDownloadURL={slideDoc?.backgroundImageDownloadURL}
@@ -164,7 +164,7 @@
   import { onMount, onDestroy } from 'svelte'
   import { user, willPreventPageLeave } from '/src/store.js'
   import { page } from '$app/stores'
-  import { drawStroke } from '/src/helpers/canvas.js'
+  import { fillRecordedBoardBackground } from '/src/helpers/canvas.js'
   
   export let boardDoc
   export let canvasWidth
@@ -290,11 +290,18 @@
     }
   }
 
+  function clearMaster () {
+    if (!masterCtx || !masterCanvas) return
+    fillRecordedBoardBackground(masterCtx, masterCanvas.width, masterCanvas.height)
+  }
+
   function copySlideToMaster (slideIdx) {
     if (!masterCtx || !masterCanvas) return
     const slideID = boardDoc.slideIDs[slideIdx]
     const slideCanvas = slideID ? canvasBySlideID[slideID] : null
-    masterCtx.clearRect(0, 0, masterCanvas.width, masterCanvas.height)
+    // Strokes live on a transparent canvas. Fill the board color first so
+    // transparent pixels (and eraser holes) stay the live background.
+    fillRecordedBoardBackground(masterCtx, masterCanvas.width, masterCanvas.height)
     if (slideCanvas) {
       masterCtx.drawImage(slideCanvas, 0, 0, masterCanvas.width, masterCanvas.height)
     }

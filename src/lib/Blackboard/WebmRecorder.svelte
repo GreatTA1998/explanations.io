@@ -2,6 +2,7 @@
   import { baseMicStream } from '../../store.js'
   import { onDestroy, createEventDispatcher } from 'svelte'
   import { chooseRecordingFormat, formatFromRecorder } from '../../helpers/recordingMime.js'
+  import { fillRecordedBoardBackground } from '../../helpers/canvas.js'
 
   export let previewVideo
   export let canvasWidth
@@ -35,6 +36,8 @@
     outputCanvas.width = w
     outputCanvas.height = h
     ctx = outputCanvas.getContext('2d')
+    // Resizing clears the bitmap to transparent, which a video encodes as black.
+    fillRecordedBoardBackground(ctx, w, h)
   }
 
   export function start () {

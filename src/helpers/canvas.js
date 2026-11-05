@@ -152,6 +152,26 @@ export function setStrokeProperties (color, lineWidth, isEraserStroke, ctx) {
   ctx.lineCap = "round";
 }
 
+// The on-screen board paints this on .background-canvas (CoreDrawing). It is
+// 80% black, not opaque black. hsl(0, 0%, 20%) is a different color.
+export const BLACKBOARD_PAINT = 'hsl(0,0%,0%, 0.80)'
+
+// That paint sits on #server-layout, which is --bg-off-white. A video frame
+// has no alpha, so a transparent canvas is encoded as pure black.
+export const BLACKBOARD_BACKDROP = '#f8f9f9'
+
+export function fillRecordedBoardBackground (ctx, width, height) {
+  if (!ctx || width < 1 || height < 1) return
+  ctx.save()
+  ctx.globalAlpha = 1
+  ctx.globalCompositeOperation = 'source-over'
+  ctx.fillStyle = BLACKBOARD_BACKDROP
+  ctx.fillRect(0, 0, width, height)
+  ctx.fillStyle = BLACKBOARD_PAINT
+  ctx.fillRect(0, 0, width, height)
+  ctx.restore()
+}
+
 export function renderBackground (src, canvas, bgCtx) {
   return new Promise(resolve => {
     if (!src) resolve();

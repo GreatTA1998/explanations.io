@@ -72,7 +72,14 @@
   export let videoDoc
 
   let newInputComment = ''
-  let activeTab = 'comments'
+  let activeTab = 'transcript'
+  let openedVideo = ''
+
+  // Opening a video shows the transcript. Comments stay one tab away.
+  $: if ((videoDoc?.path || '') !== openedVideo) {
+    openedVideo = videoDoc?.path || ''
+    activeTab = 'transcript'
+  }
   
   function createComment () {
     if (!newInputComment) return

@@ -71,9 +71,9 @@
       New
     </button>
 
-    <button type="button" class="fullscreen-button" on:click={() => sidebarFullscreen.set(true)}>
-      <span class="material-symbols-outlined" aria-hidden="true">open_in_full</span>
-      <span>Fullscreen</span>
+    <button type="button" class="hide-drawer-button" aria-label="Hide drawer" on:click={() => sidebarFullscreen.set(true)}>
+      <span class="material-symbols-outlined" aria-hidden="true">left_panel_close</span>
+      <span>Hide drawer</span>
     </button>
   </div>
 </div>
@@ -316,7 +316,7 @@
     font-size: 1.4rem;
   }
 
-  .fullscreen-button {
+  .hide-drawer-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -330,9 +330,10 @@
     color: black;
     font-size: 14px;
     font-weight: 500;
+    white-space: nowrap;
   }
 
-  .fullscreen-button .material-symbols-outlined {
+  .hide-drawer-button .material-symbols-outlined {
     font-size: 22px;
   }
 </style>

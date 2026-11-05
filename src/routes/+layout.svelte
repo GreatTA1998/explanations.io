@@ -1,4 +1,4 @@
-<svelte:window on:keydown={handleFullscreenKey} />
+<svelte:window on:keydown={restoreDrawerOnEscape} />
 
 <div>
   {#if !$hasFetchedUser}
@@ -13,11 +13,12 @@
     {#if $sidebarFullscreen && $page.url.pathname !== '/'}
       <button
         type="button"
-        class="exit-fullscreen-toggle"
-        aria-label="Exit fullscreen"
+        class="show-drawer-toggle"
+        aria-label="Show the drawer"
+        title="Show the drawer"
         on:click={() => sidebarFullscreen.set(false)}
       >
-        <span class="material-symbols-outlined" aria-hidden="true">close_fullscreen</span>
+        <span class="material-symbols-outlined" aria-hidden="true">left_panel_open</span>
       </button>
     {/if}
 
@@ -60,7 +61,7 @@
     createSessionRecording()
   })
 
-  function handleFullscreenKey (event) {
+  function restoreDrawerOnEscape (event) {
     if (event.key === 'Escape' && $sidebarFullscreen) {
       sidebarFullscreen.set(false)
     }
@@ -212,7 +213,7 @@
 </script>
 
 <style>
-  .exit-fullscreen-toggle {
+  .show-drawer-toggle {
     position: fixed;
     top: 12px;
     left: 12px;
@@ -232,7 +233,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
   }
 
-  .exit-fullscreen-toggle .material-symbols-outlined {
+  .show-drawer-toggle .material-symbols-outlined {
     font-size: 24px;
   }
 </style>

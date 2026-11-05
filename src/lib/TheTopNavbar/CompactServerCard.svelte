@@ -36,7 +36,6 @@
       border-radius: 8px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-      opacity: 0.8;
     "
     >
       <ListenToDoc docPath={`/classes/${serverObj.id}/blackboards/${blackboardID}`} 
@@ -79,7 +78,7 @@
       style="min-width: {thumbnailWidth}px; width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px;"
     />
   {:else}
-    <div class="core-shadow" style="opacity: 0.8; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
+    <div class="core-shadow" style="background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
 
     </div>
   {/if}
@@ -122,6 +121,7 @@
     border-radius: 16px; 
     padding: 0px; 
     overflow: hidden;
+    background-color: hsl(0, 0%, 0%, 0.8);
   }
 
   .server-thumb {
@@ -130,7 +130,6 @@
     border-radius: 8px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    opacity: 0.8;
   }
 
   .server-card:hover {

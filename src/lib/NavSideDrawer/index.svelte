@@ -20,17 +20,40 @@
           >
         </button>
 
-        <button
-          type="button"
-          class="server-name"
-          aria-haspopup="true"
-          aria-expanded={menuOpen}
-          aria-controls="server-switch-menu"
-          title={currentServerName}
-          on:click={toggleServerMenu}
-        >
-          {currentServerName}
-        </button>
+        <div class="server-anchor">
+          <button
+            type="button"
+            class="server-name"
+            aria-haspopup="true"
+            aria-expanded={menuOpen}
+            aria-controls="server-switch-menu"
+            title={currentServerName}
+            on:click={toggleServerMenu}
+          >
+            {currentServerName}
+          </button>
+
+          {#if menuOpen}
+            <div class="server-menu" id="server-switch-menu" style="width: {menuWidth}px;">
+              <div class="search-slot">
+                <SearchBar
+                  {searchVal}
+                  on:input={(e) => onSearchInput(e.detail)}
+                />
+              </div>
+
+              <div class="server-list" style="--menu-columns: {columnCount};">
+                {#each visibleServers as server (server.id)}
+                  <CompactServerCard serverObj={server} />
+                {/each}
+
+                <button type="button" class="create-server" on:click={openCreateServer}>
+                  Create new server
+                </button>
+              </div>
+            </div>
+          {/if}
+        </div>
 
         <button
           type="button"
@@ -42,27 +65,6 @@
         </button>
       </div>
     </GlobalAppPopup>
-
-    {#if menuOpen}
-      <div class="server-menu" id="server-switch-menu" style="width: {menuWidth}px;">
-        <div class="search-slot">
-          <SearchBar
-            {searchVal}
-            on:input={(e) => onSearchInput(e.detail)}
-          />
-        </div>
-
-        <div class="server-list" style="--menu-columns: {columnCount};">
-          {#each visibleServers as server (server.id)}
-            <CompactServerCard serverObj={server} />
-          {/each}
-
-          <button type="button" class="create-server" on:click={openCreateServer}>
-            Create new server
-          </button>
-        </div>
-      </div>
-    {/if}
   </section>
 
   <div class="action-row">
@@ -86,11 +88,11 @@
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
   import { getFirestoreCollection, createRoomDoc } from '/src/helpers/crud.js'
-  import { user, classServerDoc, recentSearchedServerDoc, isFullServerMode, sidebarFullscreen, drawerWidth } from '/src/store.js'
+  import { user, classServerDoc, recentSearchedServerDoc, isFullServerMode, sidebarFullscreen } from '/src/store.js'
   import { viewport } from '/src/storeFolder/viewport.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
-  import { CARD_WIDTH, CARD_GAP, serversForMenu, menuColumnCount } from './serverMenu.js'
+  import { CARD_WIDTH, CARD_GAP, serversForMenu, menuColumnCount, serverNameLeft } from './serverMenu.js'
 
   export let floating = false
 
@@ -102,7 +104,7 @@
   let clusterEl
 
   $: visibleServers = serversForMenu(allServers, searchVal)
-  $: menuOffset = floating ? 296 : $drawerWidth + 8
+  $: menuOffset = serverNameLeft(floating)
   $: columnCount = menuColumnCount($viewport.width, visibleServers.length + 1, menuOffset)
   $: menuWidth = columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP
   $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
@@ -212,8 +214,15 @@
     filter: brightness(80%);
   }
 
-  .server-name {
+  .server-anchor {
+    position: relative;
     flex: 1;
+    min-width: 0;
+  }
+
+  .server-name {
+    display: block;
+    width: 100%;
     min-width: 0;
     text-align: left;
     padding: 6px 4px 3px;
@@ -241,9 +250,8 @@
   .server-menu {
     position: absolute;
     top: calc(100% + 4px);
-    left: calc(100% + 8px);
-    z-index: 20;
-    max-width: calc(100vw - 32px);
+    left: 0;
+    z-index: 30;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -251,10 +259,11 @@
 
   .search-slot {
     padding: 0;
+    background: transparent;
   }
 
   .search-slot :global(.my-search-bar) {
-    width: 100%;
+    width: 240px;
     height: 36px;
     font-size: 1rem;
     padding-left: 34px;
@@ -274,6 +283,7 @@
     max-height: 70vh;
     overflow-y: auto;
     padding: 8px 0 4px;
+    background: transparent;
   }
 
   .server-list :global(.server-card) {

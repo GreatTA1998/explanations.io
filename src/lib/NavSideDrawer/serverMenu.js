@@ -10,6 +10,14 @@ const FEATURED_VIDEO_FIELDS = ['featuredVideoID', 'featuredVideo']
 export const CARD_WIDTH = 240
 export const CARD_GAP = 8
 
+// The menu hangs from the server-name control, so its left edge is that
+// control's left edge. Docked drawer is flush with the viewport. The floating
+// cluster is 8px in. The control then follows the row padding, the logo, and
+// the gap before the name. Column count uses this so the grid stays on screen.
+export function serverNameLeft (floating = false) {
+  return (floating ? 8 : 0) + 8 + 36 + 4
+}
+
 const FIRESTORE_ID = /^[A-Za-z0-9]{20}$/
 
 function isPresent (value) {

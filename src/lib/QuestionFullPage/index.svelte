@@ -131,20 +131,16 @@
 <style>
   .question-page {
     position: relative;
-    padding: 16px;
+    padding: 16px 0;
     overflow-y: auto;
   }
 
-  @media (max-width: 767px) {
-    .question-page {
-      padding-left: 0;
-      padding-right: 0;
-    }
+  .question-inset {
+    padding: 0 16px;
+  }
 
-    .question-inset {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
+  .question-page :global(.board-heading) {
+    padding: 0 16px;
   }
 
   .question-metadata {

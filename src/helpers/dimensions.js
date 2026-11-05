@@ -1,4 +1,4 @@
-import { HEIGHTS, ASPECT_RATIO, PAGE_PADDING, WIDTHS } from '/src/helpers/CONSTANTS.js'
+import { HEIGHTS, ASPECT_RATIO } from '/src/helpers/CONSTANTS.js'
 
 export const VIDEO_LAYOUT = {
   MOBILE_VERTICAL: 'mobile-vertical',
@@ -22,33 +22,18 @@ export function getCinemaVideoSize () {
   return canvasWidth
 }
 
+// Canvas fills the width it is given. Title rows keep their own inset.
 export function getPreviewVideoWidth ({ containerWidth, containerHeight }) {
-  let remainingWidth = containerWidth
-  let remainingHeight = containerHeight
-  remainingHeight -= (HEIGHTS.BOARD_CHANGER + HEIGHTS.TITLE + HEIGHTS.AUDIO_SLIDER)
-  remainingWidth -= 2 * PAGE_PADDING
-
-  return getCanvasWidth({ 
-    availableWidth: remainingWidth, 
-    availableHeight: remainingHeight 
+  return getCanvasWidth({
+    availableWidth: containerWidth,
+    availableHeight: containerHeight - (HEIGHTS.BOARD_CHANGER + HEIGHTS.TITLE + HEIGHTS.AUDIO_SLIDER)
   })
-  // it'll naturally react to drawer expand/collapse via `containerWidth`
 }
 
 export function getBlackboardModuleSize ({ containerWidth, containerHeight }) {
-  // needs to fit board changer + blackboard (respecting drawer width)
-  // respects the drawer width (and achieves fullscreen by closing the drawer. The advantage is 
-  let remainingWidth = containerWidth
-  let remainingHeight = containerHeight
-
-  remainingHeight -= HEIGHTS.BOARD_CHANGER
-  // A phone board is edge to edge, like a video player. Wider screens keep the page inset.
-  const smallScreen = typeof window !== 'undefined' && window.innerWidth < WIDTHS.SMALLEST_TABLET
-  if (!smallScreen) remainingWidth -= 2 * PAGE_PADDING
-
-  return getCanvasWidth({ 
-    availableWidth: remainingWidth, 
-    availableHeight: remainingHeight 
+  return getCanvasWidth({
+    availableWidth: containerWidth,
+    availableHeight: containerHeight - HEIGHTS.BOARD_CHANGER
   })
 }
 

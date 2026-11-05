@@ -79,11 +79,4 @@
     margin-bottom: 12px;
     max-width: 100%;
   }
-
-  @media (max-width: 767px) {
-    .board-heading {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-  }
 </style>

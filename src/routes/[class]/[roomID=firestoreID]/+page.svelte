@@ -232,19 +232,15 @@
 
 <style>
   .room-page {
-    padding: 16px;
+    padding: 16px 0;
   }
 
-  @media (max-width: 767px) {
-    .room-page {
-      padding-left: 0;
-      padding-right: 0;
-    }
+  .room-inset {
+    padding: 0 16px;
+  }
 
-    .room-inset {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
+  .room-page :global(.board-heading) {
+    padding: 0 16px;
   }
 
   :global(.room-title input) {

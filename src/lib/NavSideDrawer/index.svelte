@@ -44,7 +44,7 @@
     </GlobalAppPopup>
 
     {#if menuOpen}
-      <div class="server-menu" id="server-switch-menu">
+      <div class="server-menu" id="server-switch-menu" style="width: {menuWidth}px;">
         <div class="search-slot">
           <SearchBar
             {searchVal}
@@ -52,7 +52,7 @@
           />
         </div>
 
-        <div class="server-list">
+        <div class="server-list" style="--menu-columns: {columnCount};">
           {#each visibleServers as server (server.id)}
             <CompactServerCard serverObj={server} />
           {/each}
@@ -86,9 +86,11 @@
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
   import { getFirestoreCollection, createRoomDoc } from '/src/helpers/crud.js'
-  import { user, classServerDoc, recentSearchedServerDoc, isFullServerMode, sidebarFullscreen } from '/src/store.js'
+  import { user, classServerDoc, recentSearchedServerDoc, isFullServerMode, sidebarFullscreen, drawerWidth } from '/src/store.js'
+  import { viewport } from '/src/storeFolder/viewport.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
+  import { CARD_WIDTH, CARD_GAP, serversForMenu, menuColumnCount } from './serverMenu.js'
 
   export let floating = false
 
@@ -99,24 +101,15 @@
   let newServerPopup
   let clusterEl
 
-  $: visibleServers = serversMatching(allServers, searchVal)
+  $: visibleServers = serversForMenu(allServers, searchVal)
+  $: menuOffset = floating ? 296 : $drawerWidth + 8
+  $: columnCount = menuColumnCount($viewport.width, visibleServers.length + 1, menuOffset)
+  $: menuWidth = columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP
   $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
 
   getFirestoreCollection('classes').then(docs => {
     allServers = docs
   })
-
-  function serversMatching (servers, query) {
-    const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean)
-    const list = servers.filter(server => server?.id)
-    const filtered = terms.length === 0
-      ? list
-      : list.filter(server => {
-          const name = (server.name || '').toLowerCase()
-          return terms.some(term => name.includes(term))
-        })
-    return filtered.slice().sort((a, b) => (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' }))
-  }
 
   function nameForCurrentServer (classId, servers, classDoc, recent) {
     const match = servers.find(server => server.id === classId)
@@ -223,15 +216,15 @@
     flex: 1;
     min-width: 0;
     text-align: left;
-    padding: 6px 4px;
+    padding: 6px 4px 3px;
     color: black;
     font-size: 15px;
     font-weight: 600;
     line-height: 1.3;
-    text-decoration: underline;
-    text-decoration-color: orange;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 3px;
+    white-space: normal;
+    /* text-decoration draws a separate line on each wrapped line */
+    text-decoration: none;
+    border-bottom: 2px solid orange;
   }
 
   .menu-button {
@@ -248,17 +241,16 @@
   .server-menu {
     position: absolute;
     top: calc(100% + 4px);
-    left: 0;
-    right: 0;
+    left: calc(100% + 8px);
     z-index: 20;
-    background-color: white;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+    max-width: calc(100vw - 32px);
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   .search-slot {
-    padding: 8px 8px 0;
+    padding: 0;
   }
 
   .search-slot :global(.my-search-bar) {
@@ -266,6 +258,7 @@
     height: 36px;
     font-size: 1rem;
     padding-left: 34px;
+    background: white;
   }
 
   .search-slot :global(.my-search-icon) {
@@ -275,25 +268,27 @@
   }
 
   .server-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(var(--menu-columns), 240px);
     gap: 8px;
-    max-height: 50vh;
+    max-height: 70vh;
     overflow-y: auto;
-    padding: 8px;
+    padding: 8px 0 4px;
   }
 
   .server-list :global(.server-card) {
-    flex-shrink: 0;
     height: auto;
   }
 
   .create-server {
-    display: block;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    width: 240px;
+    min-height: 44px;
     text-align: left;
-    padding: 8px 10px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.88);
     color: #5d0068;
     font-weight: 500;
   }

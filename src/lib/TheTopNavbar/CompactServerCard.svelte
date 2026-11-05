@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  {#if serverObj.featuredBlackboardID}
+  {#if blackboardID}
     <div style="
       margin-right: -12px; 
       margin-top: -12px; 
@@ -39,13 +39,13 @@
       opacity: 0.8;
     "
     >
-      <ListenToDoc docPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`} 
+      <ListenToDoc docPath={`/classes/${serverObj.id}/blackboards/${blackboardID}`} 
         let:theDoc={boardDoc}
       >
         {#if boardDoc}
           {#if boardDoc.isMultiboard}
             <FetchStrokes autoFetchStrokes={false}
-              dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}/slides/${boardDoc.slideIDs[0]}`}
+              dbPath={`/classes/${serverObj.id}/blackboards/${blackboardID}/slides/${boardDoc.slideIDs[0]}`}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
             > 
@@ -57,7 +57,7 @@
             </FetchStrokes>
           {:else}
             <FetchStrokes autoFetchStrokes={false}
-              dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
+              dbPath={`/classes/${serverObj.id}/blackboards/${blackboardID}`}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
             > 
@@ -71,6 +71,13 @@
         {/if}
       </ListenToDoc>
     </div>
+  {:else if thumbnailSrc}
+    <img
+      class="server-thumb"
+      alt=""
+      src={thumbnailSrc}
+      style="min-width: {thumbnailWidth}px; width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px;"
+    />
   {:else}
     <div class="core-shadow" style="opacity: 0.8; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
 
@@ -86,10 +93,13 @@
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user } from '/src/store.js'
   import { handleServerRedirect } from '/src/helpers/everythingElse.js'
+  import { CARD_WIDTH, previewBlackboardID, thumbnailImageURL } from '$lib/NavSideDrawer/serverMenu.js'
 
   export let serverObj
 
-  let thumbnailWidth = 240
+  let thumbnailWidth = CARD_WIDTH
+  $: blackboardID = previewBlackboardID(serverObj)
+  $: thumbnailSrc = blackboardID ? '' : thumbnailImageURL(serverObj)
   let thumbnailAspectRatio = 1 / 0.7
 
   $: needsTeachers = serverObj.numOfPrepaidLearners > 0 && !serverObj.numOfTeachers
@@ -114,22 +124,17 @@
     overflow: hidden;
   }
 
+  .server-thumb {
+    display: block;
+    object-fit: cover;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    opacity: 0.8;
+  }
+
   .server-card:hover {
     outline: 2px solid #F7C686;
-    @extend .high-elevation-cast-shadow;
-  }
-
-  .high-elevation-cast-shadow {
-    box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08)
-  }
-
-  // might come in handy in the future
-  .two-lines-maximum {
-    width: 100%;
-    display: -webkit-box;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical; 
-    overflow: hidden; 
+    box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08);
   }
 </style>

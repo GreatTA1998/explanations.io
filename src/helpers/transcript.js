@@ -199,6 +199,7 @@ async function transcribeWithBrowserWhisper(video) {
     segments.push(...segmentsFromOutput(output, offset / 16000, slice.length / 16000))
   }
 
+  segments.sort((a, b) => a.start - b.start || a.end - b.end)
   return segments
 }
 
@@ -230,6 +231,7 @@ function yieldToUi() {
 }
 
 function segmentsFromOutput(output, baseSeconds, windowSeconds) {
+  const windowEnd = round2(baseSeconds + windowSeconds)
   const chunks = output?.chunks
   if (Array.isArray(chunks) && chunks.length) {
     const parsed = []
@@ -237,14 +239,20 @@ function segmentsFromOutput(output, baseSeconds, windowSeconds) {
       const text = cleanTranscriptText(chunk.text)
       if (!isSpokenText(text)) continue
       const stamp = Array.isArray(chunk.timestamp) ? chunk.timestamp : [0, null]
-      const start = round2(baseSeconds + (typeof stamp[0] === 'number' ? stamp[0] : 0))
-      const end = typeof stamp[1] === 'number' ? round2(baseSeconds + stamp[1]) : null
+      let start = round2(baseSeconds + (typeof stamp[0] === 'number' ? stamp[0] : 0))
+      let end = typeof stamp[1] === 'number' ? round2(baseSeconds + stamp[1]) : null
+      // whisper-tiny's timestamps sit on a 30s grid. A stamp in the padded
+      // half of a shorter slice overlaps the next slice, and the row highlight
+      // then matches two cues at once.
+      if (start >= windowEnd) continue
+      if (start < baseSeconds) start = round2(baseSeconds)
       parsed.push({ start, end, text })
     }
     for (let i = 0; i < parsed.length; i += 1) {
       if (parsed[i].end == null) {
-        parsed[i].end = parsed[i + 1]?.start ?? round2(baseSeconds + windowSeconds)
+        parsed[i].end = parsed[i + 1]?.start ?? windowEnd
       }
+      if (parsed[i].end > windowEnd) parsed[i].end = windowEnd
       if (parsed[i].end < parsed[i].start) parsed[i].end = parsed[i].start
     }
     return parsed

@@ -74,7 +74,7 @@
       }}
       on:pause={() => isPlaying = false}
       on:seeking={handleSeeking}
-      on:timeupdate={publishClock}
+      on:timeupdate={() => publishClock()}
       on:loadedmetadata={handleLoadedMetadata}
       controls
       style={`width: ${canvasWidth}px; height: 50px`}
@@ -199,19 +199,20 @@
     AudioPlayer = node
   }
 
-  function publishClock() {
+  function publishClock(reason) {
     if (!AudioPlayer) return
     publishPlayback(
       playbackPathOf(boardDoc),
       AudioPlayer.currentTime || 0,
-      AudioPlayer.duration || 0
+      AudioPlayer.duration || 0,
+      reason === 'seek' ? 'seek' : 'tick'
     )
   }
 
   function handleSeeking() {
     currentTime = AudioPlayer.currentTime
     hasAudioSliderJumped = true
-    publishClock()
+    publishClock('seek')
   }
 
   function handleLoadedMetadata() {

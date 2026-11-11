@@ -18,7 +18,7 @@
         title="Show the drawer"
         on:click={() => sidebarFullscreen.set(false)}
       >
-        <span class="material-symbols-outlined" aria-hidden="true">left_panel_open</span>
+        <HandDrawnDrawerArrow pointing="right" />
       </button>
     {/if}
 
@@ -29,6 +29,7 @@
 
 <script>
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
+  import HandDrawnDrawerArrow from '$lib/NavSideDrawer/HandDrawnDrawerArrow.svelte'
 
   import { initializeDatabase } from '../database.js'
   import 'firebase/app'
@@ -233,8 +234,5 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
   }
 
-  .show-drawer-toggle .material-symbols-outlined {
-    font-size: 24px;
-  }
 </style>
 

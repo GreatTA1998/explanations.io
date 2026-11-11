@@ -139,7 +139,7 @@
     </button>
 
     <button type="button" class="hide-drawer-button" aria-label="Hide drawer" on:click={() => sidebarFullscreen.set(true)}>
-      <span class="material-symbols-outlined" aria-hidden="true">left_panel_close</span>
+      <HandDrawnDrawerArrow pointing="left" />
       <span>Hide drawer</span>
     </button>
   </div>
@@ -148,6 +148,7 @@
 <PopupNewServer bind:this={newServerPopup} showTrigger={false} />
 
 <script>
+  import HandDrawnDrawerArrow from './HandDrawnDrawerArrow.svelte'
   import CompactServerCard from '$lib/TheTopNavbar/CompactServerCard.svelte'
   import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
@@ -520,7 +521,4 @@
     white-space: nowrap;
   }
 
-  .hide-drawer-button .material-symbols-outlined {
-    font-size: 22px;
-  }
 </style>

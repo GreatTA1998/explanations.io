@@ -23,7 +23,16 @@
       </BaseTransparentButton>
     </div>
     
-    <div role="button" tabindex="0" on:click={togglePlayPause} on:keydown={togglePlayPause} style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
+    <div
+      role="button"
+      tabindex="0"
+      data-playback-path={playbackPathOf(boardDoc)}
+      on:click={togglePlayPause}
+      on:keydown={onPlaybackKeydown}
+      on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
+      on:pointerdown={() => claimPlayback(playbackPathOf(boardDoc))}
+      style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;"
+    >
       {#each boardDoc.slideIDs as slideID, i (slideID)}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
@@ -66,6 +75,8 @@
     <!-- <audio> can't grow beyond 50px, it just introduces unexpected spacing -->
     <audio
       src={audioDownloadURL}
+      data-playback-path={playbackPathOf(boardDoc)}
+      on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
       use:captureAudioPlayer
       on:play={() => {
         hasPlaybackStarted = true;
@@ -97,7 +108,7 @@
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
-  import { playbackPathOf, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playbackPathOf, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
@@ -144,6 +155,12 @@
     if (isPlaying) AudioPlayer.pause()
     else if (AudioPlayer) AudioPlayer.play() // let the on:play event handle the rest, so the user can play from the video or the audio player
   }
+
+  function onPlaybackKeydown (event) {
+    // Space is handled once, for the current video, and must not scroll the page.
+    if (event.key === ' ' || event.code === 'Space') return
+    togglePlayPause()
+  }
   
   // NOTE: doesn't need to be optimized yet , there are only about 10-20 slide changes at most
   function syncSlideIdxToTime () {
@@ -185,7 +202,8 @@
     } 
     updateViewMinutes()
     unregisterPlayback = registerPlayback(playbackPathOf(boardDoc), {
-      seek: seekTo
+      seek: seekTo,
+      toggle: togglePlayPause
     })
   })
 

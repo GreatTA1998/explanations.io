@@ -1,18 +1,7 @@
 <div class="comments-column">
   <slot/>
 
-  <div class="panel-tabs" role="tablist" aria-label="Comments and transcript">
-    <button
-      type="button"
-      role="tab"
-      class="my-tab-item"
-      class:my-active-tab={activeTab === 'comments'}
-      aria-selected={activeTab === 'comments'}
-      on:click={() => activeTab = 'comments'}
-    >
-      <span class="material-symbols-outlined" aria-hidden="true">forum</span>
-      Comments
-    </button>
+  <div class="panel-tabs" role="tablist" aria-label="Transcript and comments">
     <button
       type="button"
       role="tab"
@@ -23,6 +12,17 @@
     >
       <span class="material-symbols-outlined" aria-hidden="true">subtitles</span>
       Transcript
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="my-tab-item"
+      class:my-active-tab={activeTab === 'comments'}
+      aria-selected={activeTab === 'comments'}
+      on:click={() => activeTab = 'comments'}
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">forum</span>
+      Comments
     </button>
   </div>
 

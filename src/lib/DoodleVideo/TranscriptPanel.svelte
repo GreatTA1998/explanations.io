@@ -1,8 +1,15 @@
-<div class="transcript-panel">
+<div
+  class="transcript-panel"
+  role="region"
+  aria-label="Transcript"
+  data-transcript-path={path}
+  on:focusin={() => claimPlayback(path)}
+  on:pointerdown={pressPanel}
+>
   {#if paragraphs.length === 0}
     <p class="transcript-status">{problem || 'No transcript yet.'}</p>
   {:else}
-    <div class="transcript-doc" class:is-sliding={sliding} use:trackDoc>
+    <div class="transcript-doc" use:trackDoc>
       {#each paragraphs as paragraph (paragraph.id)}
         <p class="transcript-paragraph">
           {#each paragraph.words as word (word.id)}
@@ -15,6 +22,9 @@
               use:rememberWord={word}
               on:click={(event) => placeCursor(word, event)}
               on:keydown={(event) => onWordKeydown(word, event)}
+              on:pointerenter={(event) => hoverWord(word, event)}
+              on:pointermove={(event) => hoverWord(word, event)}
+              on:pointerleave={() => leaveWord(word)}
             >{word.text}</button>
           {/each}
         </p>
@@ -35,16 +45,15 @@
     progressInWord,
     wordAtTime
   } from '/src/helpers/transcriptDocument.js'
-  import { playbackPathOf, seekPlayback, subscribePlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playbackPathOf, seekPlayback, subscribePlayback } from '/src/helpers/playbackBridge.js'
 
   export let videoDoc
 
   let time = 0
-  let sliding = false
   let docEl = null
   let revealedId = null
-  let slideOrigin = null
-  let boxes = null
+  let hoveredWordId = null
+  let pointerHold = 0
   let scrubFrame = 0
   let scrubAt = null
   const wordNodes = {}
@@ -68,8 +77,8 @@
     playback.stop = subscribePlayback(nextPath, (snapshot) => {
       const next = snapshot.time
       if (!Number.isFinite(next)) return
-      // While the marker is being dragged, the pointer owns the playhead.
-      if (sliding) {
+      // While the pointer is choosing a word, the pointer owns the playhead.
+      if (hoveredWordId != null) {
         playback.shown = time
         pending = null
         return
@@ -95,10 +104,10 @@
 
   function trackDoc(node) {
     docEl = node
-    node.addEventListener('pointerdown', onPointerDown)
+    node.addEventListener('pointerdown', clearTextSelection)
     return {
       destroy() {
-        node.removeEventListener('pointerdown', onPointerDown)
+        node.removeEventListener('pointerdown', clearTextSelection)
         if (docEl === node) docEl = null
       }
     }
@@ -116,10 +125,10 @@
   function revealCurrent(word) {
     if (!word || word.id === revealedId) return
     revealedId = word.id
-    // Scrolling under an active drag moves the paragraph away from the pointer.
-    if (sliding || typeof requestAnimationFrame !== 'function') return
+    // Scrolling under the pointer moves the paragraph away from it.
+    if (hoveredWordId != null || typeof requestAnimationFrame !== 'function') return
     requestAnimationFrame(() => {
-      if (sliding) return
+      if (hoveredWordId != null) return
       const node = wordNodes[word.id]
       if (!node || !docEl) return
       const docRect = docEl.getBoundingClientRect()
@@ -141,11 +150,15 @@
     seekPlayback(path, at)
   }
 
-  function placeCursor(word, event) {
+  function timeInWord(word, event) {
     const rect = event.currentTarget.getBoundingClientRect()
     const ratio = rect.width > 0 ? (event.clientX - rect.left) / rect.width : 0
-    const clamped = Math.min(1, Math.max(0, ratio))
-    placeAt(word.start + (word.end - word.start) * clamped)
+    const clamped = ratio < 0 ? 0 : ratio > 1 ? 1 : ratio
+    return word.start + (word.end - word.start) * clamped
+  }
+
+  function placeCursor(word, event) {
+    placeAt(timeInWord(word, event))
   }
 
   // The audio slider seeks by assigning currentTime while the thumb moves.
@@ -185,127 +198,38 @@
     seekPlayback(path, next)
   }
 
-  function measureWords() {
-    const list = []
-    for (let i = 0; i < words.length; i += 1) {
-      const word = words[i]
-      const node = wordNodes[word.id]
-      if (!node) continue
-      const rect = node.getBoundingClientRect()
-      if (rect.width === 0 && rect.height === 0) continue
-      list.push({
-        start: word.start,
-        end: word.end,
-        left: rect.left,
-        right: rect.right,
-        top: rect.top,
-        bottom: rect.bottom,
-        width: rect.width
-      })
-    }
-    return list
+  // Hover seeks even when the transcript is not focused. The playhead follows
+  // the pointer across the word, the same way the audio slider follows its thumb.
+  function hoverWord(word, event) {
+    if (event.pointerType === 'touch' || event.buttons !== 0) return
+    hoveredWordId = word.id
+    scrubTo(timeInWord(word, event))
+    // The pointer owns the playhead while it is moving. Once it rests, playback
+    // time can move the caret again instead of leaving it stuck on that word.
+    clearTimeout(pointerHold)
+    pointerHold = setTimeout(() => {
+      if (hoveredWordId === word.id) hoveredWordId = null
+    }, 160)
   }
 
-  // Nearest word to the pointer, then the fraction across that word.
-  function timeAtPoint(clientX, clientY) {
-    const list = boxes && boxes.length ? boxes : measureWords()
-    let best = null
-    let bestScore = Infinity
-    for (let i = 0; i < list.length; i += 1) {
-      const box = list[i]
-      const dx = clientX < box.left ? box.left - clientX : clientX > box.right ? clientX - box.right : 0
-      const dy = clientY < box.top ? box.top - clientY : clientY > box.bottom ? clientY - box.bottom : 0
-      const score = dx + dy * 8
-      if (score >= bestScore) continue
-      bestScore = score
-      const ratio = box.width > 0 ? (clientX - box.left) / box.width : 0
-      const clamped = ratio < 0 ? 0 : ratio > 1 ? 1 : ratio
-      best = box.start + (box.end - box.start) * clamped
-    }
-    return best
+  function leaveWord(word) {
+    if (hoveredWordId !== word.id) return
+    hoveredWordId = null
+    clearTimeout(pointerHold)
+    flushScrub()
   }
 
-  function grabbedPlayhead(event) {
-    if (!currentWord) return false
-    const node = wordNodes[currentWord.id]
-    return !!node && (event.target === node || node.contains(event.target))
+  function pressPanel() {
+    claimPlayback(path)
+    if (hoveredWordId == null) return
+    hoveredWordId = null
+    clearTimeout(pointerHold)
+    flushScrub()
   }
 
   function clearTextSelection() {
     const selection = window.getSelection && window.getSelection()
     if (selection && selection.rangeCount) selection.removeAllRanges()
-  }
-
-  function onPointerDown(event) {
-    if (event.button !== 0 || slideOrigin) return
-    clearTextSelection()
-    boxes = measureWords()
-    if (timeAtPoint(event.clientX, event.clientY) == null) {
-      boxes = null
-      return
-    }
-    slideOrigin = {
-      x: event.clientX,
-      y: event.clientY,
-      pointerId: event.pointerId,
-      playhead: grabbedPlayhead(event)
-    }
-    window.addEventListener('pointermove', onPointerMove, { passive: false })
-    window.addEventListener('pointerup', onPointerUp)
-    window.addEventListener('pointercancel', onPointerUp)
-  }
-
-  // Dragging the playhead seeks in any direction, like the audio slider.
-  // A vertical touch on the rest of the paragraph still scrolls.
-  function onPointerMove(event) {
-    if (!slideOrigin) return
-    const dx = event.clientX - slideOrigin.x
-    const dy = event.clientY - slideOrigin.y
-    if (!sliding) {
-      if (dx * dx + dy * dy < 16) {
-        clearTextSelection()
-        return
-      }
-      const verticalTouch = event.pointerType === 'touch'
-        && !slideOrigin.playhead
-        && Math.abs(dy) > Math.abs(dx)
-      if (verticalTouch) {
-        onPointerUp()
-        return
-      }
-      sliding = true
-      if (docEl && docEl.setPointerCapture) {
-        try { docEl.setPointerCapture(slideOrigin.pointerId) } catch (err) { /* pointer already released */ }
-      }
-    }
-    if (event.cancelable) event.preventDefault()
-    clearTextSelection()
-    const at = timeAtPoint(event.clientX, event.clientY)
-    if (at == null) return
-    scrubTo(at)
-  }
-
-  function onPointerUp() {
-    const didDrag = sliding
-    const pointerId = slideOrigin && slideOrigin.pointerId
-    if (didDrag) flushScrub()
-    slideOrigin = null
-    sliding = false
-    boxes = null
-    if (docEl && pointerId != null && docEl.hasPointerCapture && docEl.hasPointerCapture(pointerId)) {
-      try { docEl.releasePointerCapture(pointerId) } catch (err) { /* already released */ }
-    }
-    window.removeEventListener('pointermove', onPointerMove)
-    window.removeEventListener('pointerup', onPointerUp)
-    window.removeEventListener('pointercancel', onPointerUp)
-    if (!didDrag) return
-    // pointerup is followed by a click on the word where the drag began.
-    const swallow = (event) => {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-    window.addEventListener('click', swallow, true)
-    setTimeout(() => window.removeEventListener('click', swallow, true), 0)
   }
 
   function onWordKeydown(word, event) {
@@ -322,7 +246,8 @@
 
   onDestroy(() => {
     playback.stop()
-    onPointerUp()
+    cancelScrub()
+    clearTimeout(pointerHold)
   })
 </script>
 
@@ -384,26 +309,21 @@
     text-underline-offset: 2px;
   }
 
-  .transcript-doc.is-sliding,
-  .transcript-doc.is-sliding .transcript-word {
-    cursor: grabbing;
-  }
-
   .transcript-word.is-current {
-    --caret: #F69637;
+    /* Selected room in the Library archive. */
+    --caret: #F7C686;
     position: relative;
     z-index: 1;
-    touch-action: none;
   }
 
   .transcript-word.is-current::before {
     content: '';
     position: absolute;
     z-index: 1;
-    top: 0.08em;
-    bottom: 0.02em;
+    top: 0.05em;
+    bottom: 0;
     left: calc(var(--p) * 100%);
-    width: 0.42em;
+    width: 0.4em;
     transform: translateX(-50%);
     pointer-events: none;
     background:

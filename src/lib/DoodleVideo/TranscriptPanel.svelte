@@ -44,6 +44,9 @@
   let docEl = null
   let revealedId = null
   let slideOrigin = null
+  let boxes = null
+  let scrubFrame = 0
+  let scrubAt = null
   const wordNodes = {}
   const playback = { stop: () => {}, shown: null }
 
@@ -132,6 +135,7 @@
   }
 
   function placeAt(at) {
+    cancelScrub()
     time = at
     playback.shown = at
     seekPlayback(path, at)
@@ -144,59 +148,143 @@
     placeAt(word.start + (word.end - word.start) * clamped)
   }
 
-  // Nearest word to the pointer, then the fraction across that word.
-  function timeAtPoint(clientX, clientY) {
-    let best = null
-    let bestScore = Infinity
+  // The audio slider seeks by assigning currentTime while the thumb moves.
+  // Several assignments in one turn collapse into a single seek at the last
+  // time, so the drawing jumps once. One assignment per frame stays visible.
+  function scrubTo(at) {
+    time = at
+    playback.shown = at
+    if (scrubFrame) {
+      scrubAt = at
+      return
+    }
+    seekPlayback(path, at)
+    const sent = at
+    scrubAt = at
+    scrubFrame = requestAnimationFrame(() => {
+      scrubFrame = 0
+      const next = scrubAt
+      scrubAt = null
+      if (next == null || next === sent) return
+      seekPlayback(path, next)
+    })
+  }
+
+  function cancelScrub() {
+    if (!scrubFrame) return
+    cancelAnimationFrame(scrubFrame)
+    scrubFrame = 0
+    scrubAt = null
+  }
+
+  function flushScrub() {
+    if (!scrubFrame) return
+    const next = scrubAt
+    cancelScrub()
+    if (next == null) return
+    seekPlayback(path, next)
+  }
+
+  function measureWords() {
+    const list = []
     for (let i = 0; i < words.length; i += 1) {
       const word = words[i]
       const node = wordNodes[word.id]
       if (!node) continue
       const rect = node.getBoundingClientRect()
       if (rect.width === 0 && rect.height === 0) continue
-      const dx = clientX < rect.left ? rect.left - clientX : clientX > rect.right ? clientX - rect.right : 0
-      const dy = clientY < rect.top ? rect.top - clientY : clientY > rect.bottom ? clientY - rect.bottom : 0
+      list.push({
+        start: word.start,
+        end: word.end,
+        left: rect.left,
+        right: rect.right,
+        top: rect.top,
+        bottom: rect.bottom,
+        width: rect.width
+      })
+    }
+    return list
+  }
+
+  // Nearest word to the pointer, then the fraction across that word.
+  function timeAtPoint(clientX, clientY) {
+    const list = boxes && boxes.length ? boxes : measureWords()
+    let best = null
+    let bestScore = Infinity
+    for (let i = 0; i < list.length; i += 1) {
+      const box = list[i]
+      const dx = clientX < box.left ? box.left - clientX : clientX > box.right ? clientX - box.right : 0
+      const dy = clientY < box.top ? box.top - clientY : clientY > box.bottom ? clientY - box.bottom : 0
       const score = dx + dy * 8
       if (score >= bestScore) continue
       bestScore = score
-      const ratio = rect.width > 0 ? (clientX - rect.left) / rect.width : 0
+      const ratio = box.width > 0 ? (clientX - box.left) / box.width : 0
       const clamped = ratio < 0 ? 0 : ratio > 1 ? 1 : ratio
-      best = word.start + (word.end - word.start) * clamped
+      best = box.start + (box.end - box.start) * clamped
     }
     return best
   }
 
+  function grabbedPlayhead(event) {
+    if (!currentWord) return false
+    const node = wordNodes[currentWord.id]
+    return !!node && (event.target === node || node.contains(event.target))
+  }
+
   function onPointerDown(event) {
     if (event.button !== 0 || slideOrigin) return
-    if (timeAtPoint(event.clientX, event.clientY) == null) return
-    slideOrigin = { x: event.clientX, y: event.clientY }
-    window.addEventListener('pointermove', onPointerMove)
+    boxes = measureWords()
+    if (timeAtPoint(event.clientX, event.clientY) == null) {
+      boxes = null
+      return
+    }
+    slideOrigin = {
+      x: event.clientX,
+      y: event.clientY,
+      pointerId: event.pointerId,
+      playhead: grabbedPlayhead(event)
+    }
+    window.addEventListener('pointermove', onPointerMove, { passive: false })
     window.addEventListener('pointerup', onPointerUp)
     window.addEventListener('pointercancel', onPointerUp)
   }
 
-  // A small horizontal slide scrubs the paragraph. A vertical move stays a scroll.
+  // Dragging the playhead seeks in any direction, like the audio slider.
+  // A vertical touch on the rest of the paragraph still scrolls.
   function onPointerMove(event) {
     if (!slideOrigin) return
     const dx = event.clientX - slideOrigin.x
     const dy = event.clientY - slideOrigin.y
     if (!sliding) {
       if (dx * dx + dy * dy < 16) return
-      if (Math.abs(dy) > Math.abs(dx)) {
+      const verticalTouch = event.pointerType === 'touch'
+        && !slideOrigin.playhead
+        && Math.abs(dy) > Math.abs(dx)
+      if (verticalTouch) {
         onPointerUp()
         return
       }
       sliding = true
+      if (docEl && docEl.setPointerCapture) {
+        try { docEl.setPointerCapture(slideOrigin.pointerId) } catch (err) { /* pointer already released */ }
+      }
     }
+    if (event.cancelable) event.preventDefault()
     const at = timeAtPoint(event.clientX, event.clientY)
     if (at == null) return
-    placeAt(at)
+    scrubTo(at)
   }
 
   function onPointerUp() {
     const didDrag = sliding
+    const pointerId = slideOrigin && slideOrigin.pointerId
+    if (didDrag) flushScrub()
     slideOrigin = null
     sliding = false
+    boxes = null
+    if (docEl && pointerId != null && docEl.hasPointerCapture && docEl.hasPointerCapture(pointerId)) {
+      try { docEl.releasePointerCapture(pointerId) } catch (err) { /* already released */ }
+    }
     window.removeEventListener('pointermove', onPointerMove)
     window.removeEventListener('pointerup', onPointerUp)
     window.removeEventListener('pointercancel', onPointerUp)
@@ -292,25 +380,22 @@
   .transcript-word.is-current {
     position: relative;
     z-index: 1;
+    touch-action: none;
   }
 
   .transcript-word.is-current::before {
     content: '';
     position: absolute;
     z-index: 1;
-    top: -0.55em;
-    bottom: -0.12em;
+    top: 0.08em;
+    bottom: 0.02em;
     left: calc(var(--p) * 100%);
-    width: 18px;
+    width: 2px;
     transform: translateX(-50%);
-    cursor: ew-resize;
-    background-image:
-      linear-gradient(#007dcf, #007dcf),
-      linear-gradient(#fff, #fff),
-      radial-gradient(circle at center, #007dcf 5px, #fff 5px 6.5px, transparent 7.5px);
-    background-size: 4px calc(100% - 8px), 6px calc(100% - 8px), 16px 16px;
-    background-position: center bottom, center bottom, center top;
-    background-repeat: no-repeat;
+    border-radius: 1px;
+    background: #007dcf;
+    box-shadow: 0 0 0 1px #fff;
+    pointer-events: none;
   }
 
   .transcript-word:hover {

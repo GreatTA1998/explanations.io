@@ -1,13 +1,17 @@
 <div class="popup-window" style={$$props.style}>
-  <div style="display: flex; align-items: center;">
-    <slot name="title">
+  {#if showClose || $$slots.title}
+    <div style="display: flex; align-items: center;">
+      <slot name="title">
 
-    </slot>
+      </slot>
 
-    <button on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0px; margin-left: auto; color: black; cursor: pointer;">
-      close
-    </button>
-  </div>
+      {#if showClose}
+        <button on:click={() => dispatch('popup-close')} class="material-icons" style="margin-right: 0px; margin-left: auto; color: black; cursor: pointer;">
+          close
+        </button>
+      {/if}
+    </div>
+  {/if}
 
   <slot name="popup-content">
 
@@ -22,6 +26,9 @@
  
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
+
+  // Other dialogs keep the corner control. The account popup opts out.
+  export let showClose = true
 
 	const dispatch = createEventDispatcher()
 

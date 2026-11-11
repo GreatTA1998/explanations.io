@@ -55,14 +55,79 @@
           {/if}
         </div>
 
-        <button
-          type="button"
-          class="menu-button"
-          aria-label="Open menu"
-          on:click={() => setIsPopupOpen(true)}
+        <AnchoredPopover
+          bind:this={actionsPopover}
+          positionArea="block-end span-inline-start"
+          on:toggle={onActionsToggle}
+          let:close
         >
-          <span class="material-icons" aria-hidden="true">more_vert</span>
-        </button>
+          <button
+            slot="activator"
+            let:popoverId
+            let:anchorName
+            type="button"
+            class="menu-button"
+            aria-label="Open menu"
+            aria-haspopup="menu"
+            aria-expanded={actionsOpen}
+            aria-controls={popoverId || undefined}
+            popovertarget={popoverId || undefined}
+            style={anchorName ? `anchor-name: ${anchorName}` : undefined}
+          >
+            <span class="material-icons" aria-hidden="true">more_vert</span>
+          </button>
+
+          <div class="server-actions" role="menu" use:dismissOnClick={close}>
+            {#if $user.uid}
+              <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>
+                Log out
+              </button>
+            {:else}
+              <div class="menu-row sign-in">
+                <ReusableSignInButton />
+              </div>
+            {/if}
+
+            <div class="menu-embed">
+              <CalEmbed />
+            </div>
+
+            <a
+              class="menu-row hide-on-mobile"
+              role="menuitem"
+              href="https://eltonlin.substack.com/archive"
+              target="_blank"
+              rel="noreferrer"
+            >
+              SUBSTACK BLOG
+            </a>
+
+            <a
+              class="menu-row"
+              role="menuitem"
+              href="https://github.com/greatTA1998/explain"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img src="/github-logo-dark-mode-no-bg.png" width="24" height="24" alt="Github">
+              GitHub
+            </a>
+
+            <span class="menu-note">+1 503 250 3868</span>
+            <span class="menu-note">elton@explanations.io</span>
+
+            <button
+              type="button"
+              class="menu-row visibility-row"
+              role="menuitem"
+              disabled={!canChangeVisibility || savingVisibility}
+              title={canChangeVisibility ? undefined : 'Only the person who created this server can change this'}
+              on:click={setServerVisibility}
+            >
+              {visibilityLabel}
+            </button>
+          </div>
+        </AnchoredPopover>
       </div>
     </GlobalAppPopup>
   </section>
@@ -87,23 +152,45 @@
   import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
-  import { getFirestoreCollection, createRoomDoc } from '/src/helpers/crud.js'
+  import AnchoredPopover from '$lib/Reusable/AnchoredPopover.svelte'
+  import CalEmbed from '$lib/GlobalAppPopup/CalEmbed.svelte'
+  import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
+  import { getFirestoreCollection, createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user, classServerDoc, recentSearchedServerDoc, isFullServerMode, sidebarFullscreen } from '/src/store.js'
   import { viewport } from '/src/storeFolder/viewport.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
-  import { CARD_WIDTH, CARD_GAP, serversForMenu, menuColumnCount, serverNameLeft } from './serverMenu.js'
+  import { getAuth, signOut } from 'firebase/auth'
+  import { CARD_WIDTH, CARD_GAP, serversForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, visibilityActionLabel } from './serverMenu.js'
 
   export let floating = false
 
+  function dismissOnClick (node, closeMenu) {
+    const onClick = () => closeMenu?.()
+    node.addEventListener('click', onClick)
+    return {
+      update (next) {
+        closeMenu = next
+      },
+      destroy () {
+        node.removeEventListener('click', onClick)
+      }
+    }
+  }
+
   let menuOpen = false
+  let actionsOpen = false
+  let actionsPopover
+  let savingVisibility = false
   let searchVal = ''
   let allServers = []
   let creating = false
   let newServerPopup
   let clusterEl
 
-  $: visibleServers = serversForMenu(allServers, searchVal)
+  $: visibleServers = serversForMenu(allServers, searchVal, $user.uid)
+  $: visibilityLabel = visibilityActionLabel($classServerDoc)
+  $: canChangeVisibility = !!$page.params.class && viewerIsServerCreator($classServerDoc, $user.uid)
   $: menuOffset = serverNameLeft(floating)
   $: columnCount = menuColumnCount($viewport.width, visibleServers.length + 1, menuOffset)
   $: menuWidth = columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP
@@ -122,6 +209,7 @@
   }
 
   function toggleServerMenu () {
+    actionsPopover?.close()
     menuOpen = !menuOpen
     if (!menuOpen) searchVal = ''
   }
@@ -140,6 +228,36 @@
 
   function onWindowKey (event) {
     if (event.key === 'Escape' && menuOpen) closeServerMenu()
+  }
+
+  function onActionsToggle (event) {
+    actionsOpen = event.newState === 'open'
+    if (actionsOpen) closeServerMenu()
+  }
+
+  function handleSignout () {
+    const auth = getAuth()
+    signOut(auth).then(() => {
+      window.location.reload()
+    })
+  }
+
+  async function setServerVisibility () {
+    const classID = $page.params.class
+    if (savingVisibility || !classID || !viewerIsServerCreator($classServerDoc, $user.uid)) return
+    const nextPublic = !serverIsPublic($classServerDoc)
+    savingVisibility = true
+    try {
+      await updateFirestoreDoc(`classes/${classID}`, { isPublic: nextPublic })
+      classServerDoc.update(doc => ({ ...(doc || {}), isPublic: nextPublic }))
+      allServers = allServers.map(server => (
+        server.id === classID
+          ? { ...server, isPublic: nextPublic, creatorUID: server.creatorUID || $classServerDoc.creatorUID || '' }
+          : server
+      ))
+    } finally {
+      savingVisibility = false
+    }
   }
 
   function onSearchInput (value) {
@@ -245,6 +363,65 @@
     flex: 0 0 auto;
     border-radius: 8px;
     color: rgb(80, 80, 80);
+  }
+
+  .server-actions {
+    display: flex;
+    flex-direction: column;
+    min-width: 232px;
+    text-align: left;
+  }
+
+  .menu-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 36px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    text-align: left;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .menu-row:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .menu-row:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .visibility-row {
+    margin-top: 4px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0 0 8px 8px;
+  }
+
+  .menu-note {
+    padding: 4px 10px;
+    text-align: left;
+    font-size: 13px;
+    color: rgb(80, 80, 80);
+  }
+
+  .menu-embed {
+    display: flex;
+    padding: 4px 6px;
+  }
+
+  .hide-on-mobile {
+    display: flex;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .hide-on-mobile {
+      display: none;
+    }
   }
 
   .server-menu {

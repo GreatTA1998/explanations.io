@@ -65,6 +65,7 @@
   import { createEventDispatcher, onMount } from 'svelte'
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomID } from '/src/helpers/utility.js'
+  import { user } from '/src/store.js'
 
   // Accept an external isOpen prop with default value of undefined
   export let isOpen = undefined;
@@ -98,6 +99,8 @@
         description: serverGoalDescription,
         syllabusVersion: serverSyllabusVersion,
         isYoutubeClass: true,
+        isPublic: true,
+        creatorUID: ($user && $user.uid) || '',
         numOfMembers: 0, // has a phoneNumber
         numOfHelpers: 0, // sign up as helper
         numOfQuestions: 0, 

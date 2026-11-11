@@ -6,9 +6,9 @@
 
 {#if pointing === 'right'}
   <svg
-    viewBox="-8 -8 222 150"
-    width="33"
-    height="22"
+    viewBox="-8 -8 206 122"
+    width="30"
+    height="18"
     fill="none"
     stroke="currentColor"
     stroke-width="12"
@@ -17,16 +17,16 @@
     aria-hidden="true"
     focusable="false"
   >
-    <path d="M25 4 C21 34 12 72 5 102" />
-    <path d="M16 47 C55 56 105 67 150 79" />
-    <path d="M150 28 C162 46 180 70 200 92" />
-    <path d="M200 93 C186 106 168 118 144 127" />
+    <path d="M0 6 C2 37 1 76 0 106" />
+    <path d="M0 50 C40 50 91 49 138 50" />
+    <path d="M126 0 C142 15 165 34 189 51" />
+    <path d="M190 52 C179 68 164 84 143 98" />
   </svg>
 {:else}
   <svg
-    viewBox="-8 -8 198 152"
-    width="29"
-    height="22"
+    viewBox="-8 -8 196 146"
+    width="28"
+    height="21"
     fill="none"
     stroke="currentColor"
     stroke-width="12"
@@ -35,10 +35,10 @@
     aria-hidden="true"
     focusable="false"
   >
-    <path d="M76 5 Q42 20 5 41" />
-    <path d="M5 41 Q32 78 63 117" />
-    <path d="M24 44 C72 56 122 74 168 91" />
-    <path d="M178 20 C178 58 175 96 164 132" />
+    <path d="M57 18 Q29 43 1 74" />
+    <path d="M1 74 Q38 101 79 128" />
+    <path d="M20 71 C69 68 122 69 171 71" />
+    <path d="M172 0 C177 38 179 76 172 113" />
   </svg>
 {/if}
 

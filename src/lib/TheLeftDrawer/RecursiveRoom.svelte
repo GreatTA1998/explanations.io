@@ -47,24 +47,40 @@
       {room.name || '(untitled)'} 
     </div>
 
-    {#if $page.params.roomID && $user.uid}
-      {#if $adminUIDs.includes($user.uid)}
-        <span style="display: contents;" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
-          <button on:click={DropdownMenu.setOpen(true)} class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
-            more_vert
-          </button>
-
-          <Menu bind:this={DropdownMenu} style="width: 300px">
-            <List>      
-              <Item on:SMUI:action={() => deleteRoom({ room, classID })}>
-                Delete room
-              </Item>
-            </List> 
-          </Menu>
-        </span>
-      {/if}
+    {#if showRoomMenu}
+      <button
+        type="button"
+        class="material-icons"
+        style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;"
+        style:anchor-name={roomAnchor}
+        popovertarget={roomMenuId}
+        on:click|stopPropagation={() => {}}
+      >
+        more_vert
+      </button>
     {/if}
   </button>
+
+  {#if showRoomMenu}
+    <div
+      popover="auto"
+      id={roomMenuId}
+      class="room-actions mdc-menu"
+      style="width: 300px;"
+      style:position-anchor={roomAnchor}
+      style:position-area="block-end span-inline-end"
+      style:position-try-fallbacks="flip-block, flip-inline, flip-inline flip-block"
+    >
+      <List>
+        <Item on:SMUI:action={() => {
+          document.getElementById(roomMenuId)?.hidePopover()
+          deleteRoom({ room, classID })
+        }}>
+          Delete room
+        </Item>
+      </List>
+    </div>
+  {/if}
 </div>
 
 <!-- ROOM SUBPAGES SECTION -->
@@ -103,8 +119,6 @@ import RecursiveRoom from './RecursiveRoom.svelte'
 import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
 import { deleteRoom } from '/src/helpers/unifiedDeleteAPI.js'
 import List, { Item, Text } from '@smui/list'
-import Menu from '@smui/menu';
-import { lightDismiss } from '/src/helpers/lightDismiss.js'
 import { goto } from '$app/navigation'
 import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, setDoc, query, getDocs, updateDoc, deleteDoc, writeBatch, arrayRemove, arrayUnion, where, increment } from 'firebase/firestore'
 import { user, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
@@ -123,11 +137,14 @@ export let parentRoomIDs
 export let roomID
 export let classID
 
-let DropdownMenu
 let subpages = null
 let RoomElement
 let isExpanded = false
 let unsubListener
+
+$: showRoomMenu = $page.params.roomID && $user.uid && $adminUIDs.includes($user.uid)
+$: roomMenuId = `room-menu-${room.id}`
+$: roomAnchor = `--room-${room.id}`
 
 const classPath = `classes/${classID}/`
 
@@ -318,6 +335,19 @@ async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
     background-color: #F7C686;
     color: black;
     transition: background 20ms ease-in 0s;
+  }
+
+  /* Same surface as the old menu. Insets are reset so the popover anchors instead of centering. */
+  .room-actions {
+    position: fixed;
+    margin: 0;
+    inset: auto;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
   }
 
   .separator {

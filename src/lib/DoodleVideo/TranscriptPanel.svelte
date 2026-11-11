@@ -231,8 +231,14 @@
     return !!node && (event.target === node || node.contains(event.target))
   }
 
+  function clearTextSelection() {
+    const selection = window.getSelection && window.getSelection()
+    if (selection && selection.rangeCount) selection.removeAllRanges()
+  }
+
   function onPointerDown(event) {
     if (event.button !== 0 || slideOrigin) return
+    clearTextSelection()
     boxes = measureWords()
     if (timeAtPoint(event.clientX, event.clientY) == null) {
       boxes = null
@@ -256,7 +262,10 @@
     const dx = event.clientX - slideOrigin.x
     const dy = event.clientY - slideOrigin.y
     if (!sliding) {
-      if (dx * dx + dy * dy < 16) return
+      if (dx * dx + dy * dy < 16) {
+        clearTextSelection()
+        return
+      }
       const verticalTouch = event.pointerType === 'touch'
         && !slideOrigin.playhead
         && Math.abs(dy) > Math.abs(dx)
@@ -270,6 +279,7 @@
       }
     }
     if (event.cancelable) event.preventDefault()
+    clearTextSelection()
     const at = timeAtPoint(event.clientX, event.clientY)
     if (at == null) return
     scrubTo(at)
@@ -337,6 +347,8 @@
     padding: 8px 10px 16px;
     text-align: left;
     touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .transcript-paragraph {
@@ -358,7 +370,7 @@
     line-height: inherit;
     letter-spacing: inherit;
     text-align: inherit;
-    cursor: text;
+    cursor: default;
     border-radius: 1px;
   }
 
@@ -378,6 +390,7 @@
   }
 
   .transcript-word.is-current {
+    --caret: #F69637;
     position: relative;
     z-index: 1;
     touch-action: none;
@@ -390,12 +403,13 @@
     top: 0.08em;
     bottom: 0.02em;
     left: calc(var(--p) * 100%);
-    width: 2px;
+    width: 0.42em;
     transform: translateX(-50%);
-    border-radius: 1px;
-    background: #007dcf;
-    box-shadow: 0 0 0 1px #fff;
     pointer-events: none;
+    background:
+      linear-gradient(var(--caret), var(--caret)) center / 1px 100% no-repeat,
+      linear-gradient(var(--caret), var(--caret)) center top / 100% 1px no-repeat,
+      linear-gradient(var(--caret), var(--caret)) center bottom / 100% 1px no-repeat;
   }
 
   .transcript-word:hover {

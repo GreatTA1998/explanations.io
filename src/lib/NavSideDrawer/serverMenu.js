@@ -57,8 +57,30 @@ export function thumbnailImageURL (server) {
   return ''
 }
 
-export function serversForMenu (servers, query) {
-  const list = (servers || []).filter(server => server && server.id)
+// Missing isPublic matches every server document that predates the flag:
+// they are already listed, so they stay public. false is the private state.
+export function serverIsPublic (server) {
+  return server?.isPublic !== false
+}
+
+export function viewerIsServerCreator (server, uid) {
+  return !!uid && !!server?.creatorUID && server.creatorUID === uid
+}
+
+export function visibilityActionLabel (server) {
+  return serverIsPublic(server) ? 'Make private' : 'Make public'
+}
+
+// Private servers leave the public directory. The creator still sees theirs.
+// A direct URL is unchanged; this is not an access-control check.
+export function serverVisibleInMenu (server, viewerUID = '') {
+  if (!server?.id) return false
+  if (serverIsPublic(server)) return true
+  return viewerIsServerCreator(server, viewerUID)
+}
+
+export function serversForMenu (servers, query, viewerUID = '') {
+  const list = (servers || []).filter(server => serverVisibleInMenu(server, viewerUID))
   const terms = String(query || '').trim().toLowerCase().split(/\s+/).filter(Boolean)
   const filtered = terms.length === 0
     ? list.filter(hasDesignatedPreview)

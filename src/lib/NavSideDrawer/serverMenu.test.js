@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { hasDesignatedPreview, previewBlackboardID, serversForMenu, menuColumnCount, serverNameLeft } from './serverMenu.js'
+import { hasDesignatedPreview, previewBlackboardID, serversForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, visibilityActionLabel, serverVisibleInMenu } from './serverMenu.js'
 
 const featured = { id: 'a', name: 'Algebra and Number Theory', featuredBlackboardID: 'bbbbbbbbbbbbbbbbbbbb' }
 const video = { id: 'b', name: 'Featured video server', featuredVideoID: 'vvvvvvvvvvvvvvvvvvvv' }
@@ -39,4 +39,38 @@ test('the menu starts at the server-name control, not past the drawer', () => {
   assert.equal(serverNameLeft(false), 48)
   assert.equal(serverNameLeft(true), 56)
   assert.equal(menuColumnCount(1280, 8, serverNameLeft(false)), 4)
+})
+
+const secret = {
+  id: 's',
+  name: 'Secret seminar',
+  isPublic: false,
+  creatorUID: 'creator',
+  featuredBlackboardID: 'ssssssssssssssssssss'
+}
+
+test('a server with no visibility field stays public', () => {
+  assert.equal(serverIsPublic({}), true)
+  assert.equal(serverIsPublic({ isPublic: true }), true)
+  assert.equal(serverIsPublic({ isPublic: false }), false)
+  assert.equal(visibilityActionLabel({}), 'Make private')
+  assert.equal(visibilityActionLabel(secret), 'Make public')
+})
+
+test('only the creator can change visibility, and only they see a private server in the menu', () => {
+  assert.equal(viewerIsServerCreator(secret, 'creator'), true)
+  assert.equal(viewerIsServerCreator(secret, 'someone-else'), false)
+  assert.equal(viewerIsServerCreator({ name: 'Algebra' }, 'creator'), false)
+  assert.equal(serverVisibleInMenu(secret, 'someone-else'), false)
+  assert.equal(serverVisibleInMenu(secret, 'creator'), true)
+  assert.equal(serverVisibleInMenu(featured, ''), true)
+
+  const hidden = serversForMenu([secret, featured, plain], '', 'someone-else')
+  assert.deepEqual(hidden.map(server => server.id), ['a'])
+
+  const creatorView = serversForMenu([secret, plain], 'secret', 'creator')
+  assert.deepEqual(creatorView.map(server => server.id), ['s'])
+
+  const strangerSearch = serversForMenu([secret, plain], 'secret', 'someone-else')
+  assert.deepEqual(strangerSearch.map(server => server.id), [])
 })

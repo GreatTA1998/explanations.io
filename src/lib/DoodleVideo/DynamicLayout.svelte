@@ -14,6 +14,7 @@
 
     <slot name="comments-section"
       commentsSectionStyle="display: {isDrawerOpen ? 'block' : 'none'}; {panelStyle}"
+      overBoard={!sideBySide}
     />
   </div>
 </div>
@@ -28,7 +29,7 @@
   export let isDrawerOpen = false
 
   const PANEL_WIDTH = 200
-  // Clears the one-line title row. The audio bar stays usable below the panel.
+  // Clears the one-line title row. The on-board controls stay usable below the panel.
   const HEADER_CLEARANCE = 38
 
   let availableWidth = 0

@@ -6,40 +6,18 @@ export const VIDEO_LAYOUT = {
   TRANSPARENT_OVERLAY: 'transparent-overlay'
 }
 
-export function getCinemaVideoSize () {
-  // title will be displayed in the comment-transcript section
-  // maximum space utilization for the video, no drawer, but has an audio slider and the board changer
-  let remainingWidth = window.innerWidth
-  let remainingHeight = window.innerHeight
-
-  remainingHeight -= (HEIGHTS.BOARD_CHANGER + HEIGHTS.AUDIO_SLIDER)
-
-  const canvasWidth = getCanvasWidth({ 
-    availableWidth: remainingWidth, 
-    availableHeight: remainingHeight 
-  })
-
-  return canvasWidth
-}
-
-// Canvas fills the width it is given. Title rows keep their own inset.
-export function getPreviewVideoWidth ({ containerWidth, containerHeight }) {
-  return getCanvasWidth({
-    availableWidth: containerWidth,
-    availableHeight: containerHeight - (HEIGHTS.BOARD_CHANGER + HEIGHTS.TITLE + HEIGHTS.AUDIO_SLIDER)
-  })
-}
-
-export function getBlackboardModuleSize ({ containerWidth, containerHeight }) {
-  return getCanvasWidth({
+// Live boards and playback share this size. Controls sit on the canvas, so a
+// video is not given a shorter board to leave a strip for the player.
+export function getBoardWidth ({ containerWidth, containerHeight }) {
+  return fitCanvas({
     availableWidth: containerWidth,
     availableHeight: containerHeight - HEIGHTS.BOARD_CHANGER
   })
 }
 
-function getCanvasWidth ({ availableWidth, availableHeight }) { 
-  if (availableWidth/ASPECT_RATIO <= availableHeight) {
+function fitCanvas ({ availableWidth, availableHeight }) {
+  if (availableWidth / ASPECT_RATIO <= availableHeight) {
     return availableWidth
-  } 
-  else return availableHeight * ASPECT_RATIO
+  }
+  return availableHeight * ASPECT_RATIO
 }

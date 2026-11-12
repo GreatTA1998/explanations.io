@@ -1,4 +1,4 @@
-<div class="comments-column">
+<div class="comments-column" class:over-board={overBoard}>
   <slot/>
 
   <div class="panel-tabs" role="tablist" aria-label="Transcript and comments">
@@ -34,7 +34,8 @@
         value={newInputComment} 
         on:input={(e) => newInputComment = e.detail}
         placeholder="New comment..."
-        placeholderColor="rgb(60, 60, 60)"
+        placeholderColor={overBoard ? 'rgba(255, 255, 255, 0.6)' : 'rgb(60, 60, 60)'}
+        color={overBoard ? '#fff' : 'rgb(60, 60, 60)'}
         nonFocusedPlaceholderOpacity={0.5}
       />
       
@@ -70,6 +71,7 @@
   import { page } from '$app/stores'
 
   export let videoDoc
+  export let overBoard = false
 
   let newInputComment = ''
   let activeTab = 'transcript'
@@ -137,6 +139,15 @@
     border-radius: 2px;
   }
 
+  .comments-column.over-board {
+    background: rgba(255, 255, 255, 0.04);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 0;
+    color: #fff;
+  }
+
   .submit-button {
     border-radius: 24px; 
     border: 1px solid lightgrey;
@@ -183,5 +194,27 @@
     border-bottom: 2px solid black;
     color: black;
     font-weight: 600;
+  }
+
+  .over-board .my-tab-item,
+  .over-board .my-active-tab {
+    border-bottom: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 400;
+  }
+
+  .over-board .my-active-tab {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .over-board .submit-button {
+    color: #fff;
+    background: transparent;
+    border: 0;
+  }
+
+  .over-board :global(.copied-from-old-explain-2) {
+    color: rgba(255, 255, 255, 0.72) !important;
   }
 </style>

@@ -289,13 +289,14 @@
     flex-direction: column;
     min-height: 0;
     padding: 4px 2px 8px;
+    color: inherit;
   }
 
   .transcript-status {
     margin: 8px;
     font-size: 0.8125rem;
     line-height: 1.4;
-    color: rgba(0, 0, 0, 0.7);
+    color: inherit;
   }
 
   .transcript-doc {
@@ -312,7 +313,7 @@
     margin: 0 0 0.85em;
     font-size: 0.875rem;
     line-height: 1.55;
-    color: rgba(0, 0, 0, 0.88);
+    color: inherit;
   }
 
   .transcript-word {

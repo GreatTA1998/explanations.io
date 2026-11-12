@@ -14,7 +14,9 @@ export const HEIGHTS = Object.freeze({
   NAVBAR: 56,
   TITLE: 30 + 12, // the board description could be multi-line, but we allocate space for one line, includes bottom margin
   BOARD_CHANGER: 36 + 16, // includes padding
-  AUDIO_SLIDER: 50, // assume it's constant, don't scale it for this version
+  // Clearance so the transcript stays above the on-board controls.
+  // The canvas itself is not shortened to reveal a player.
+  AUDIO_SLIDER: 50,
 })
 
 export function translateJSConstantsToCSSVariables () {

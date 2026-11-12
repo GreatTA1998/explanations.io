@@ -5,9 +5,10 @@
 
     <div slot="comments-section"
       let:commentsSectionStyle={commentsSectionStyle}
+      let:overBoard
       style={commentsSectionStyle}
     >
-      <CommentsColumn videoDoc={boardDoc} />
+      <CommentsColumn videoDoc={boardDoc} {overBoard} />
     </div>
   </DynamicLayout>
 </div>

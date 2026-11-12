@@ -21,7 +21,7 @@
 <script> 
   import TheLeftDrawer from '$lib/TheLeftDrawer/index.svelte'
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
-  import { getBlackboardModuleSize, getPreviewVideoWidth, getCinemaVideoSize } from '/src/helpers/dimensions.js'
+  import { getBoardWidth } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
 
   import { 
@@ -69,21 +69,16 @@
 
   function computeDimensionsForBlackboardsAndVideos () {
     requestAnimationFrame(() => {
-      blackboardWidth.set(
-        getBlackboardModuleSize({ 
-          containerWidth: MainContent.offsetWidth,
-          containerHeight: MainContent.offsetHeight
-        })
-      )
-      videoPreviewWidth.set(
-        getPreviewVideoWidth({    
-          containerWidth: MainContent.offsetWidth,
-          containerHeight: MainContent.offsetHeight
-        })
-      )
-      videoCinemaWidth.set(
-        getCinemaVideoSize()
-      )
+      const boardWidth = getBoardWidth({
+        containerWidth: MainContent.offsetWidth,
+        containerHeight: MainContent.offsetHeight
+      })
+      blackboardWidth.set(boardWidth)
+      videoPreviewWidth.set(boardWidth)
+      videoCinemaWidth.set(getBoardWidth({
+        containerWidth: window.innerWidth,
+        containerHeight: window.innerHeight
+      }))
     })
   }
 

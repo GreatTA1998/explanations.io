@@ -72,9 +72,40 @@
       {/each}
     </div>
 
-    <!-- <audio> can't grow beyond 50px, it just introduces unexpected spacing -->
+    <div class="playback-bar">
+      <button
+        type="button"
+        class="play"
+        aria-label={isPlaying ? 'Pause' : 'Play'}
+        on:click={onPlayClick}
+      >
+        {#if isPlaying}
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zm5 0h3v10H7z" /></svg>
+        {:else}
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.2v9.6L10.2 6z" /></svg>
+        {/if}
+      </button>
+      <span class="time">{formatTime(currentTime)} / {formatTime(duration)}</span>
+      <div class="seek-track">
+        <div class="seek-fill" style="width: {seekRatio * 100}%"></div>
+        <input
+          class="seek"
+          type="range"
+          min="0"
+          max={duration || 0}
+          step="0.01"
+          value={currentTime}
+          aria-label="Seek"
+          on:pointerdown={claimThis}
+          on:input={onSeek}
+        />
+      </div>
+    </div>
+
     <audio
+      class="playback-source"
       src={audioDownloadURL}
+      aria-hidden="true"
       data-playback-path={playbackPathOf(boardDoc)}
       on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
       use:captureAudioPlayer
@@ -91,11 +122,7 @@
       on:seeking={handleSeeking}
       on:timeupdate={() => publishClock()}
       on:loadedmetadata={handleLoadedMetadata}
-      controls
-      style={`width: ${canvasWidth}px; height: 50px`}
-    >
-    <!-- ${Math.min(90 * scaleFactor, 50)}px; -->
-    </audio>
+    ></audio>
   </div>
 </div>
 
@@ -137,6 +164,7 @@
   let hasPlaybackStarted = false
 
   let currentTime = 0
+  let duration = 0
   const ONE_HUNDRED_MILLISECS = 100
   let isPlaying = false
 
@@ -153,6 +181,34 @@
 
   $: if (currentTime > 0) {
     syncSlideIdxToTime()
+  }
+
+  $: seekRatio = duration > 0 ? Math.min(1, Math.max(0, currentTime / duration)) : 0
+
+  function formatTime (seconds) {
+    const safe = Number.isFinite(seconds) && seconds > 0 ? seconds : 0
+    const whole = Math.floor(safe)
+    const minutes = Math.floor(whole / 60)
+    const secs = whole % 60
+    return `${minutes}:${String(secs).padStart(2, '0')}`
+  }
+
+  function claimThis () {
+    claimPlayback(playbackPathOf(boardDoc))
+  }
+
+  function onPlayClick (event) {
+    event.stopPropagation()
+    claimThis()
+    togglePlayPause()
+  }
+
+  function onSeek (event) {
+    const next = Number(event.currentTarget.value)
+    if (!AudioPlayer || !Number.isFinite(next)) return
+    claimThis()
+    currentTime = next
+    AudioPlayer.currentTime = next
   }
 
   function togglePlayPause () {
@@ -224,6 +280,7 @@
 
   function publishClock(reason) {
     if (!AudioPlayer) return
+    if (Number.isFinite(AudioPlayer.duration)) duration = AudioPlayer.duration
     publishPlayback(
       playbackPathOf(boardDoc),
       AudioPlayer.currentTime || 0,
@@ -296,8 +353,116 @@
 </script>
 
 <style>
-  audio::-webkit-media-controls-enclosure {
-    border-radius: 0;
+  .playback-source {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .playback-bar {
+    position: absolute;
+    z-index: 6;
+    left: 8px;
+    right: 8px;
+    bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    color: #fff;
+    pointer-events: none;
+  }
+
+  .playback-bar > * {
+    pointer-events: auto;
+  }
+
+  .play {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 auto;
+    color: #fff;
+  }
+
+  .play svg {
+    display: block;
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+  }
+
+  .time {
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .seek-track {
+    position: relative;
+    flex: 1 1 auto;
+    height: 16px;
+  }
+
+  .seek-track::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .seek-fill {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 2px;
+    transform: translateY(-50%);
+    background: #fff;
+    pointer-events: none;
+  }
+
+  .seek-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    transform: translate(50%, -50%);
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .seek {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    appearance: none;
+  }
+
+  .seek:focus {
+    outline: none;
+  }
+
+  .seek-track:focus-within {
+    outline: 1px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
   }
 </style>
 

@@ -279,10 +279,14 @@
       alert('You can unlock this video by subscribing to the creator!')
       return false
     }
+    // playAudioFrom keeps this word in place. A queued copy is written back
+    // by a later canplay, after playback or the audio slider has moved on.
+    queuedSeek = null
     return playAudioFrom(AudioPlayer, time, startAudioPlayer)
   }
 
   function handleSeeking() {
+    if (!applyingSeek) queuedSeek = null
     if (allFrames) syncStrokesToAudio()
     publishClock('seek')
   }

@@ -133,6 +133,8 @@ export function playAudioFrom(audio, time, start) {
   let tries = 0
   let timer = 0
   let correcting = false
+  let armedPlay = false
+  let landed = false
 
   const at = () => Number(audio.currentTime) || 0
   const arrived = () => !aimed || Math.abs(at() - target) <= 0.35
@@ -160,17 +162,33 @@ export function playAudioFrom(audio, time, start) {
   const correct = (event) => {
     if (playHolds.get(audio) !== detach || correcting) return
     if (arrived()) {
-      if (event) detach()
+      landed = true
+      // play() can still drop a seek that landed before it. Audio that is
+      // already playing never emits playing, so release now or the next
+      // timeupdate (half a second of media at 2x) writes the word back.
+      if (event || !armedPlay) detach()
+      return
+    }
+    // The word already stuck and playback moved on. A drop to the start is
+    // still this click's seek and has to be repaired.
+    if (landed && at() >= 0.5) {
+      detach()
       return
     }
     if (audio.seeking || tries >= 6) return
+    const progress = !!(event && event.type === 'progress')
     // After the first repair, only a playhead still sitting at the start
     // belongs to this click. A scrub to somewhere else must stand.
-    if (event && tries > 0 && at() >= 0.5) return
+    // Progress repeats while the file downloads, before a seek is possible,
+    // and must not spend those repairs.
+    if (event && at() >= 0.5 && (tries > 0 || progress)) return
     correcting = true
-    tries += 1
+    if (!progress) tries += 1
     assign()
     correcting = false
+    if (!arrived()) return
+    landed = true
+    if (!armedPlay) detach()
   }
 
   if (aimed) assign()
@@ -182,6 +200,7 @@ export function playAudioFrom(audio, time, start) {
   if (timer && typeof timer.unref === 'function') timer.unref()
 
   if (audio.paused) {
+    armedPlay = true
     const run = typeof start === 'function' ? start : () => audio.play()
     let pending
     try {

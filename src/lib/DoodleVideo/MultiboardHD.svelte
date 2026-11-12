@@ -210,7 +210,11 @@
     if (!AudioPlayer || !Number.isFinite(next)) return
     claimThis()
     currentTime = next
+    // The slider replaces a clicked word so a later canplay does not seek back to it.
+    queuedSeek = next
     AudioPlayer.currentTime = next
+    const now = AudioPlayer.currentTime || 0
+    if (AudioPlayer.seeking || Math.abs(now - next) < 0.3) queuedSeek = null
   }
 
   function togglePlayPause () {
@@ -293,10 +297,14 @@
   }
 
   function playVideo(time) {
+    // playAudioFrom keeps this word in place. A queued copy is written back
+    // by a later canplay, after playback or the slider has moved on.
+    queuedSeek = null
     return playAudioFrom(AudioPlayer, time)
   }
 
   function handleSeeking() {
+    if (!applyingSeek) queuedSeek = null
     currentTime = AudioPlayer.currentTime
     hasAudioSliderJumped = true
     publishClock('seek')

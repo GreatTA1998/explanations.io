@@ -221,6 +221,47 @@ test('a play event that resets to 0 is moved to the word, and a later scrub stay
   assert.equal(audio.currentTime, 3)
 })
 
+test('playback that runs past a landed word is left where it moved', () => {
+  const audio = mockAudio()
+  audio.paused = false
+  playAudioFrom(audio, 5)
+  assert.ok(Math.abs(audio.currentTime - 5) < 0.01)
+  audio.currentTime = 5.5
+  audio.emit('timeupdate')
+  assert.equal(audio.currentTime, 5.5)
+})
+
+test('a timeupdate after play starts does not rewind a word that already landed', () => {
+  const audio = mockAudio()
+  audio.play = function () {
+    this.paused = false
+    return Promise.resolve()
+  }
+  playAudioFrom(audio, 5)
+  audio.currentTime = 5.5
+  audio.emit('timeupdate')
+  assert.equal(audio.currentTime, 5.5)
+})
+
+test('progress while the file downloads does not give up on the word', () => {
+  const audio = mockAudio()
+  let seekable = false
+  let time = 0
+  Object.defineProperty(audio, 'currentTime', {
+    configurable: true,
+    get() { return time },
+    set(value) {
+      if (seekable) time = value
+    }
+  })
+  playAudioFrom(audio, 9)
+  for (let i = 0; i < 8; i += 1) audio.emit('progress')
+  assert.equal(audio.currentTime, 0)
+  seekable = true
+  audio.emit('loadedmetadata')
+  assert.ok(Math.abs(audio.currentTime - 9) < 0.01)
+})
+
 test('a custom start runs, and its start at 0 is put on the word', () => {
   const audio = mockAudio()
   let started = 0

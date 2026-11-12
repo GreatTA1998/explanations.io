@@ -199,6 +199,25 @@ test('a wav larger than one upload is split without inventing word times', async
   ])
 })
 
+test('webm and mp4 speech is sent with its own type, not as wav', async () => {
+  const webm = new Uint8Array([0x1a, 0x45, 0xdf, 0xa3, 9, 8, 7, 6])
+  const mp4 = new Uint8Array([
+    0x00, 0x00, 0x00, 0x18,
+    0x66, 0x74, 0x79, 0x70,
+    0x6d, 0x70, 0x34, 0x32
+  ])
+
+  const webmPost = await postStoredAudio(webm, 'audio/webm;codecs=opus')
+  assert.equal(webmPost.name, 'audio.webm')
+  assert.equal(webmPost.type, 'audio/webm;codecs=opus')
+  assert.equal(webmPost.type.includes('wav'), false)
+
+  const mp4Post = await postStoredAudio(mp4, 'audio/mp4')
+  assert.equal(mp4Post.name, 'audio.mp4')
+  assert.equal(mp4Post.type, 'audio/mp4')
+  assert.equal(mp4Post.type.includes('wav'), false)
+})
+
 test('only this project’s stored audio can be fetched', () => {
   assert.equal(isAllowedAudioUrl(AUDIO_URL), true)
   assert.equal(isAllowedAudioUrl('https://example.com/audio.wav'), false)
@@ -209,6 +228,39 @@ test('only this project’s stored audio can be fetched', () => {
   assert.equal(isBoardPath('users/abc'), false)
   assert.equal(isBoardPath('classes/../blackboards'), false)
 })
+
+async function postStoredAudio(bytes, contentType) {
+  let posted = null
+  const fetchImpl = async (url, init) => {
+    if (String(url).includes('api.openai.com')) {
+      const form = init.body
+      let sawTimestamps = false
+      let file = null
+      for (const [key, value] of form.entries()) {
+        if (key === 'file') file = value
+        if (key.startsWith('timestamp_granularities')) sawTimestamps = true
+      }
+      if (sawTimestamps) return new Response('unsupported verbose_json', { status: 400 })
+      posted = { name: file.name, type: file.type }
+      return new Response(JSON.stringify({ text: 'spoken' }), { status: 200 })
+    }
+    return new Response(bytes, {
+      status: 200,
+      headers: {
+        'content-type': contentType,
+        'content-length': String(bytes.byteLength)
+      }
+    })
+  }
+  const result = await transcribeStoredAudio({
+    url: AUDIO_URL,
+    apiKey: 'test-key',
+    fetchImpl
+  })
+  assert.equal(result.error, '')
+  assert.equal(result.segments[0].text, 'spoken')
+  return posted
+}
 
 async function runRemote(seconds) {
   const data = new Uint8Array(8000 * seconds)

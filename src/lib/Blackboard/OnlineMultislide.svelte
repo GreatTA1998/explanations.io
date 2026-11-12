@@ -98,7 +98,10 @@
   <AudioRecorder
     let:startRecording={startRecording} 
     let:stopRecording={stopRecording}
-    on:record-end={e => audioBlob = e.detail.audioBlob}
+    on:record-end={(e) => {
+      audioMimeType = e.detail.mimeType || (e.detail.audioBlob && e.detail.audioBlob.type) || ''
+      audioBlob = e.detail.audioBlob
+    }}
   >
     <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
       {#if !isRecording}
@@ -149,6 +152,7 @@
   } from '/src/helpers/unifiedDeleteAPI.js'
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { getRandomID } from "/src/helpers/utility.js"
+  import { speechStoragePath, speechUploadMetadata } from '/src/helpers/speechMime.js'
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { saveBoardAsAnimation } from '/src/helpers/doodleAnimation.js'
   import { styles } from '/src/helpers/styles.js'
@@ -188,6 +192,7 @@
   
   let webmBlob
   let audioBlob
+  let audioMimeType = ''
   let recordedMimeType = ''
   let recordedExtension = 'webm'
   let recordedWidelyPlayable = false
@@ -343,10 +348,11 @@
       return webmDownloadURL
     })
 
-    // JOB #1: upload the audio blob
-    let audioDownloadURL 
-    const audioRef = ref(storage, `audio/${getRandomID()}`)
-    const audioUploadJob = uploadBytes(audioRef, audioBlob).then(async () => {
+    // JOB #1: upload the speech blob with the container MediaRecorder actually wrote
+    let audioDownloadURL
+    const audioType = audioMimeType || audioBlob.type || ''
+    const audioRef = ref(storage, speechStoragePath(getRandomID(), audioType))
+    const audioUploadJob = uploadBytes(audioRef, audioBlob, speechUploadMetadata(audioType)).then(async () => {
       audioDownloadURL = await getDownloadURL(audioRef)
       return audioDownloadURL
     })
@@ -384,6 +390,7 @@
       creatorPhoneNumber: $user.phoneNumber || '',
       date: new Date().toISOString(),
       audioDownloadURL,
+      audioContentType: audioType,
       webmDownloadURL,
       videoContentType: contentType,
       videoFileExtension: extension,

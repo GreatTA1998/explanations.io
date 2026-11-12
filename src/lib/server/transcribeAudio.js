@@ -5,6 +5,12 @@
 // than word timestamps. We still ask for word and segment times. If the model
 // refuses that request, or answers with text only, we store the text and the
 // real slice bounds. We do not invent word times.
+//
+// New speech is WebM (Opus) or MP4 (AAC). Those files are sent as themselves.
+// WAV is only the container already stored for older recordings; PCM WAV can
+// be split under the upload limit. Nothing is transcoded.
+
+import { transcriptionFile } from '../../helpers/speechMime.js'
 
 export const MODEL_ID = 'gpt-4o-transcribe'
 export const MAX_DURATION_SECONDS = 30 * 60
@@ -360,14 +366,16 @@ export async function transcribeStoredAudio({
   if (wholeSize > maxUploadBytes) {
     return { segments: [], error: MESSAGES.unsplittable }
   }
-  const whole = totalBytes == null || prefix.complete
-    ? prefix.bytes
-    : (await fetchByteRange(url, 0, wholeSize - 1, fetchImpl, maxUploadBytes)).bytes
+  const wholeResult = totalBytes == null || prefix.complete
+    ? prefix
+    : await fetchByteRange(url, 0, wholeSize - 1, fetchImpl, maxUploadBytes)
+  const whole = wholeResult.bytes
+  const described = transcriptionFile(whole, wholeResult.contentType || prefix.contentType)
   let timestamps = true
   let result = await requestTranscription({
     bytes: whole,
-    mimeType: sniffMime(whole),
-    filename: sniffName(whole),
+    mimeType: described.mimeType,
+    filename: described.filename,
     apiKey,
     timestamps,
     fetchImpl
@@ -375,8 +383,8 @@ export async function transcribeStoredAudio({
   if (result.unsupportedTimestamps) {
     result = await requestTranscription({
       bytes: whole,
-      mimeType: sniffMime(whole),
-      filename: sniffName(whole),
+      mimeType: described.mimeType,
+      filename: described.filename,
       apiKey,
       timestamps: false,
       fetchImpl
@@ -412,6 +420,7 @@ async function fetchByteRange(url, start, end, fetchImpl, cap) {
   return {
     bytes: read.bytes,
     totalBytes,
+    contentType: response.headers.get('content-type') || '',
     complete: read.complete && (response.status === 206 || start === 0),
     truncated: read.truncated,
     status: response.status
@@ -500,17 +509,6 @@ function cleanText(text) {
 
 function round3(value) {
   return Math.round(value * 1000) / 1000
-}
-
-function sniffMime(bytes) {
-  if (bytes.byteLength >= 4 && fourCc(new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength), 0) === 'RIFF') {
-    return 'audio/wav'
-  }
-  return 'application/octet-stream'
-}
-
-function sniffName(bytes) {
-  return sniffMime(bytes) === 'audio/wav' ? 'audio.wav' : 'audio.bin'
 }
 
 function fourCc(view, offset) {

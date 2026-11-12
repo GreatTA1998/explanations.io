@@ -117,6 +117,7 @@
       on:seeking={handleSeeking}
       on:timeupdate={() => publishClock()}
       on:loadedmetadata={handleLoadedMetadata}
+      on:canplay={applyQueuedSeek}
       use:captureAudioPlayer
       src={audioDownloadURL} 
       controls={!isLocked}
@@ -131,7 +132,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { assumedCanvasWidth, user } from '../../store.js' // note `canvasWidth` was misleading
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
-  import { claimPlayback, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playAudioFrom, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once
@@ -168,6 +169,7 @@
   let playbackSpeed = 1
   let updateViewMinutesTimeoutID
   let queuedSeek = null
+  let applyingSeek = false
   let unregisterPlayback = () => {}
 
   $: hasSubscribedToCreator = $user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)
@@ -272,12 +274,12 @@
     )
   }
 
-  function playVideo() {
+  function playVideo(time) {
     if (isLocked) {
       alert('You can unlock this video by subscribing to the creator!')
-      return
+      return false
     }
-    if (AudioPlayer && AudioPlayer.paused) startAudioPlayer()
+    return playAudioFrom(AudioPlayer, time, startAudioPlayer)
   }
 
   function handleSeeking() {
@@ -296,9 +298,15 @@
   }
 
   function applyQueuedSeek() {
-    if (!AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
-    AudioPlayer.currentTime = queuedSeek
-    queuedSeek = null
+    if (applyingSeek || !AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
+    const target = queuedSeek
+    applyingSeek = true
+    AudioPlayer.currentTime = target
+    applyingSeek = false
+    // An ignored assignment leaves the playhead at 0. Keep the target so a
+    // later canplay can try again instead of starting from the beginning.
+    const now = AudioPlayer.currentTime || 0
+    if (AudioPlayer.seeking || Math.abs(now - target) < 0.3) queuedSeek = null
   }
 
   function togglePlaySpeed () {
@@ -355,8 +363,9 @@
   }
 
   function startAudioPlayer () {
-    AudioPlayer.play()
+    const pending = AudioPlayer.play()
     dispatch('video-start')
+    return pending
   }
 
   function getStartTime ({ strokeIndex, pointIndex }) {

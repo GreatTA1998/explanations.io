@@ -4,6 +4,7 @@ import {
   chooseSpacePath,
   claimPlayback,
   hoverSeeksPlayback,
+  playAudioFrom,
   playPlayback,
   publishPlayback,
   registerPlayback,
@@ -145,16 +146,91 @@ test('hover seeks a paused video and stays still while it plays or while draggin
 test('play starts the registered player and does not toggle it', () => {
   let played = 0
   let toggled = 0
+  let playedAt = null
   const stop = registerPlayback('video-play', {
     seek() {},
     toggle() { toggled += 1 },
-    play() { played += 1 }
+    play(time) {
+      played += 1
+      playedAt = time
+    }
   })
-  assert.equal(playPlayback('video-play'), true)
+  assert.equal(playPlayback('video-play', 12.5), true)
   assert.equal(played, 1)
+  assert.equal(playedAt, 12.5)
   assert.equal(toggled, 0)
   stop()
   assert.equal(playPlayback('video-play'), false)
+})
+
+test('a player that refuses to play does not count as started', () => {
+  const stop = registerPlayback('video-locked', {
+    seek() {},
+    play() { return false }
+  })
+  assert.equal(playPlayback('video-locked', 4), false)
+  stop()
+})
+
+function mockAudio() {
+  const listeners = new Map()
+  return {
+    currentTime: 0,
+    paused: true,
+    seeking: false,
+    addEventListener(type, fn) {
+      const list = listeners.get(type) || []
+      list.push(fn)
+      listeners.set(type, list)
+    },
+    removeEventListener(type, fn) {
+      const list = listeners.get(type) || []
+      listeners.set(type, list.filter((item) => item !== fn))
+    },
+    emit(type) {
+      for (const fn of [...(listeners.get(type) || [])]) fn({ type })
+    },
+    play() {
+      this.currentTime = 0
+      this.paused = false
+      return Promise.resolve()
+    }
+  }
+}
+
+test('play from a word puts the playhead back when playback begins at 0', () => {
+  const audio = mockAudio()
+  assert.equal(playAudioFrom(audio, 6.25), true)
+  assert.ok(Math.abs(audio.currentTime - 6.25) < 0.01)
+  assert.equal(audio.paused, false)
+})
+
+test('a play event that resets to 0 is moved to the word, and a later scrub stays', async () => {
+  const audio = mockAudio()
+  audio.play = function () {
+    this.paused = false
+    return Promise.resolve()
+  }
+  playAudioFrom(audio, 8)
+  audio.currentTime = 0
+  audio.seeking = false
+  audio.emit('playing')
+  assert.ok(Math.abs(audio.currentTime - 8) < 0.01)
+  audio.currentTime = 3
+  audio.emit('timeupdate')
+  assert.equal(audio.currentTime, 3)
+})
+
+test('a custom start runs, and its start at 0 is put on the word', () => {
+  const audio = mockAudio()
+  let started = 0
+  playAudioFrom(audio, 4.2, () => {
+    started += 1
+    audio.currentTime = 0
+    audio.paused = false
+  })
+  assert.equal(started, 1)
+  assert.ok(Math.abs(audio.currentTime - 4.2) < 0.01)
 })
 
 test('playback reports whether the video is playing', () => {

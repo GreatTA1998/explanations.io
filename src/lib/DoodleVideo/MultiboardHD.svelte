@@ -122,6 +122,7 @@
       on:seeking={handleSeeking}
       on:timeupdate={() => publishClock()}
       on:loadedmetadata={handleLoadedMetadata}
+      on:canplay={applyQueuedSeek}
     ></audio>
   </div>
 </div>
@@ -139,7 +140,7 @@
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
-  import { claimPlayback, playbackPathOf, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playAudioFrom, playbackPathOf, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
@@ -171,6 +172,7 @@
   let updateViewMinutesTimeoutID
   let isElementVisible = false
   let queuedSeek = null
+  let applyingSeek = false
   let unregisterPlayback = () => {}
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
@@ -290,8 +292,8 @@
     )
   }
 
-  function playVideo() {
-    if (AudioPlayer && AudioPlayer.paused) AudioPlayer.play()
+  function playVideo(time) {
+    return playAudioFrom(AudioPlayer, time)
   }
 
   function handleSeeking() {
@@ -311,9 +313,15 @@
   }
 
   function applyQueuedSeek() {
-    if (!AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
-    AudioPlayer.currentTime = queuedSeek
-    queuedSeek = null
+    if (applyingSeek || !AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
+    const target = queuedSeek
+    applyingSeek = true
+    AudioPlayer.currentTime = target
+    applyingSeek = false
+    // An ignored assignment leaves the playhead at 0. Keep the target so a
+    // later canplay can try again instead of starting from the beginning.
+    const now = AudioPlayer.currentTime || 0
+    if (AudioPlayer.seeking || Math.abs(now - target) < 0.3) queuedSeek = null
   } 
 
   function togglePlaySpeed () {

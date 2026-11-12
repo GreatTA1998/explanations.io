@@ -103,17 +103,96 @@ export function seekPlayback(path, time) {
   return true
 }
 
-export function playPlayback(path) {
+export function playPlayback(path, time) {
   if (!path) return false
   const entry = players.get(path)
   if (!entry || entry.apis.size === 0) return false
   let started = false
   for (const api of entry.apis) {
     if (typeof api.play !== 'function') continue
-    api.play()
+    if (api.play(time) === false) continue
     started = true
   }
   return started
+}
+
+const playHolds = new WeakMap()
+
+// The transcript seeks to a word and plays in the same click. play() can still
+// begin at 0: the element ignores currentTime until it can seek, or it drops
+// the seek when playback starts. Keep putting the playhead on that word until
+// it arrives, and only repair a playhead that is still at the start so a
+// later scrub is left alone.
+export function playAudioFrom(audio, time, start) {
+  if (!audio) return false
+  const previous = playHolds.get(audio)
+  if (previous) previous()
+
+  const target = Number(time)
+  const aimed = Number.isFinite(target)
+  let tries = 0
+  let timer = 0
+  let correcting = false
+
+  const at = () => Number(audio.currentTime) || 0
+  const arrived = () => !aimed || Math.abs(at() - target) <= 0.35
+
+  const detach = () => {
+    audio.removeEventListener('seeked', correct)
+    audio.removeEventListener('playing', correct)
+    audio.removeEventListener('timeupdate', correct)
+    audio.removeEventListener('progress', correct)
+    audio.removeEventListener('loadeddata', correct)
+    audio.removeEventListener('loadedmetadata', correct)
+    if (timer) clearTimeout(timer)
+    if (playHolds.get(audio) === detach) playHolds.delete(audio)
+  }
+
+  const assign = () => {
+    try {
+      audio.currentTime = target
+    } catch (err) {
+      return false
+    }
+    return true
+  }
+
+  const correct = (event) => {
+    if (playHolds.get(audio) !== detach || correcting) return
+    if (arrived()) {
+      if (event) detach()
+      return
+    }
+    if (audio.seeking || tries >= 6) return
+    // After the first repair, only a playhead still sitting at the start
+    // belongs to this click. A scrub to somewhere else must stand.
+    if (event && tries > 0 && at() >= 0.5) return
+    correcting = true
+    tries += 1
+    assign()
+    correcting = false
+  }
+
+  if (aimed) assign()
+  for (const name of ['seeked', 'playing', 'timeupdate', 'progress', 'loadeddata', 'loadedmetadata']) {
+    audio.addEventListener(name, correct)
+  }
+  playHolds.set(audio, detach)
+  timer = setTimeout(detach, 4000)
+  if (timer && typeof timer.unref === 'function') timer.unref()
+
+  if (audio.paused) {
+    const run = typeof start === 'function' ? start : () => audio.play()
+    let pending
+    try {
+      pending = run()
+    } catch (err) {
+      pending = undefined
+    }
+    if (pending && typeof pending.catch === 'function') pending.catch(() => {})
+  }
+  correct()
+  return true
 }
 
 // Hover moves a paused video. A playing video keeps its playhead, and a held

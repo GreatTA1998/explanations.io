@@ -100,6 +100,10 @@
       }
       const next = snapshot.time
       if (!Number.isFinite(next)) return
+      // The element can publish 0 while a seek to the pressed word is still
+      // pending. Accepting that sample scrolls back to the first word, and a
+      // hover there seeks playback to the start.
+      if (playFromPointer && snapshot.playing !== true && next + 0.35 < time) return
       // While the pointer is choosing a word, the pointer owns the playhead.
       if (hoveredWordId != null) {
         playback.shown = time
@@ -182,9 +186,10 @@
 
   // A press plays from the timestamp under the pointer on that word.
   function pressWord(word, event) {
+    const at = timeInWord(word, event)
     playFromPointer = true
-    placeAt(timeInWord(word, event))
-    playPlayback(path)
+    placeAt(at)
+    if (!playPlayback(path, at)) playFromPointer = false
   }
 
   // The audio slider seeks by assigning currentTime while the thumb moves.
@@ -244,10 +249,16 @@
   }
 
   function leaveWord(word) {
-    if (!playing) playFromPointer = false
     if (hoveredWordId !== word.id) return
     hoveredWordId = null
     clearTimeout(pointerHold)
+    // play() reports itself on a later task. Clearing the press here lets the
+    // word now under the pointer seek, and playback starts there instead of
+    // on the pressed word.
+    if (playFromPointer) {
+      cancelScrub()
+      return
+    }
     flushScrub()
   }
 

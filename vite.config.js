@@ -16,5 +16,5 @@ export default {
     },
   },
 
-  logLevel: 'debug'
+  logLevel: 'info'
 };

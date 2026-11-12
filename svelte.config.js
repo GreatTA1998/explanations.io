@@ -4,8 +4,10 @@ import preprocess from "svelte-preprocess";
 import vercel from "@sveltejs/adapter-vercel";
 
 // This adapter version publishes one serverless function and does not read
-// route config. Transcription of a 30 minute recording runs there after save.
-const TRANSCRIPTION_MAX_DURATION = 300;
+// route config, so the cap has to be written here. Hobby plans allow at most
+// 60 seconds. A 30 minute recording was why this used to be 300, which Vercel
+// rejects on that plan.
+const TRANSCRIPTION_MAX_DURATION = 60;
 
 function vercelAdapter() {
   const adapter = vercel();

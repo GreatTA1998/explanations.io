@@ -11,7 +11,7 @@ import {
 } from '$lib/server/transcribeAudio.js'
 
 export const config = {
-  maxDuration: 300,
+  maxDuration: 60,
   split: true
 }
 

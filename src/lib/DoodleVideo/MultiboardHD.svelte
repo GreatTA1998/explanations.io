@@ -82,8 +82,12 @@
         hasPlaybackStarted = true;
         isPlaying = true;
         startTimer();
+        publishClock();
       }}
-      on:pause={() => isPlaying = false}
+      on:pause={() => {
+        isPlaying = false;
+        publishClock();
+      }}
       on:seeking={handleSeeking}
       on:timeupdate={() => publishClock()}
       on:loadedmetadata={handleLoadedMetadata}
@@ -203,6 +207,7 @@
     updateViewMinutes()
     unregisterPlayback = registerPlayback(playbackPathOf(boardDoc), {
       seek: seekTo,
+      play: playVideo,
       toggle: togglePlayPause
     })
   })
@@ -223,8 +228,13 @@
       playbackPathOf(boardDoc),
       AudioPlayer.currentTime || 0,
       AudioPlayer.duration || 0,
-      reason === 'seek' ? 'seek' : 'tick'
+      reason === 'seek' ? 'seek' : 'tick',
+      !AudioPlayer.paused
     )
+  }
+
+  function playVideo() {
+    if (AudioPlayer && AudioPlayer.paused) AudioPlayer.play()
   }
 
   function handleSeeking() {

@@ -1,7 +1,8 @@
 // Connects the visible video's <audio> element to the transcript panel.
-// Players register a seek and a play/pause toggle. The transcript publishes the
-// current time and asks for a seek. Keyed by video path so a page with several
-// videos only moves the one beside the transcript. Space uses that same player.
+// Players register a seek, a play, and a play/pause toggle. The transcript
+// publishes the current time and whether playback is running, and asks for a
+// seek or a play. Keyed by video path so a page with several videos only moves
+// the one beside the transcript. Space uses that same player.
 
 const players = new Map()
 let claimedPath = ''
@@ -15,7 +16,8 @@ function ensure(path) {
       apis: new Set(),
       listeners: new Set(),
       time: null,
-      duration: 0
+      duration: 0,
+      playing: false
     }
     players.set(path, entry)
   }
@@ -60,7 +62,12 @@ export function subscribePlayback(path, listener) {
   const entry = ensure(path)
   entry.listeners.add(listener)
   if (entry.time != null) {
-    listener({ time: entry.time, duration: entry.duration })
+    listener({
+      time: entry.time,
+      duration: entry.duration,
+      reason: entry.reason,
+      playing: entry.playing === true
+    })
   }
   return () => {
     entry.listeners.delete(listener)
@@ -68,16 +75,23 @@ export function subscribePlayback(path, listener) {
   }
 }
 
-export function publishPlayback(path, time, duration, reason) {
+export function publishPlayback(path, time, duration, reason, playing) {
   if (!path || !Number.isFinite(time)) return
   const entry = ensure(path)
   const nextDuration = Number.isFinite(duration) ? duration : entry.duration
   const nextReason = reason === 'seek' ? 'seek' : 'tick'
-  if (entry.time === time && entry.duration === nextDuration && entry.reason === nextReason) return
+  const nextPlaying = typeof playing === 'boolean' ? playing : entry.playing === true
+  if (
+    entry.time === time
+    && entry.duration === nextDuration
+    && entry.reason === nextReason
+    && entry.playing === nextPlaying
+  ) return
   entry.time = time
   entry.duration = nextDuration
   entry.reason = nextReason
-  const snapshot = { time, duration: nextDuration, reason: nextReason }
+  entry.playing = nextPlaying
+  const snapshot = { time, duration: nextDuration, reason: nextReason, playing: nextPlaying }
   for (const listener of entry.listeners) listener(snapshot)
 }
 
@@ -87,6 +101,27 @@ export function seekPlayback(path, time) {
   if (!entry || entry.apis.size === 0) return false
   for (const api of entry.apis) api.seek(time)
   return true
+}
+
+export function playPlayback(path) {
+  if (!path) return false
+  const entry = players.get(path)
+  if (!entry || entry.apis.size === 0) return false
+  let started = false
+  for (const api of entry.apis) {
+    if (typeof api.play !== 'function') continue
+    api.play()
+    started = true
+  }
+  return started
+}
+
+// Hover moves a paused video. A playing video keeps its playhead, and a held
+// button does not drag the caret.
+export function hoverSeeksPlayback({ pointerType, buttons, playing }) {
+  if (pointerType === 'touch') return false
+  if (buttons) return false
+  return playing !== true
 }
 
 export function togglePlayback(path) {

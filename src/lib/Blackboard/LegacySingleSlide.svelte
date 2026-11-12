@@ -17,6 +17,7 @@
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
   import { startTranscriptForNewVideo } from '/src/helpers/transcript.js'
+  import { speechStoragePath, speechUploadMetadata } from '/src/helpers/speechMime.js'
 
   export let roomDoc
   export let boardDoc
@@ -76,7 +77,7 @@
   }
   //// END of background image logic
 
-  async function uploadVideo (audioBlob, strokesArray, boardID) {
+  async function uploadVideo (audioBlob, strokesArray, boardID, recording = {}) {
     const db = getFirestore()
 
     // QUICK-FIX for concurrent drawings with no timestamp 
@@ -144,10 +145,11 @@
     classDocUpdateObj.numOfVideos = increment(1) 
     updateFirestoreDoc(`classes/${classID}`, classDocUpdateObj)
 
-    // upload the audio file
+    // upload the speech file with the container MediaRecorder actually wrote
     const storage = getStorage()
-    const audioRef = ref(storage, `audio/${getRandomID()}`)
-    await uploadBytes(audioRef, audioBlob)
+    const audioType = recording.mimeType || audioBlob.type || ''
+    const audioRef = ref(storage, speechStoragePath(getRandomID(), audioType))
+    await uploadBytes(audioRef, audioBlob, speechUploadMetadata(audioType))
     const downloadURL = await getDownloadURL(audioRef)
 
     const blackboardRef = doc(getFirestore(), boardDoc.path)
@@ -157,6 +159,7 @@
       creatorPhoneNumber: $user.phoneNumber || '',
       date: new Date().toISOString(),
       audioDownloadURL: downloadURL,
+      audioContentType: audioType,
       audioRefFullPath: audioRef.fullPath
     })
     await startTranscriptForNewVideo({
@@ -260,7 +263,7 @@
         <RenderlessAudioRecorder
           let:startRecording={startRecording} 
           let:stopRecording={stopRecording}
-          on:record-end={(e) => uploadVideo(e.detail.audioBlob, strokesArray, boardDoc.id)}
+          on:record-end={(e) => uploadVideo(e.detail.audioBlob, strokesArray, boardDoc.id, e.detail)}
         >
         <!-- 
           if an recording is active (rather than an interrupted session that isn't actually recording,

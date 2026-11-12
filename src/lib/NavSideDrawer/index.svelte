@@ -349,8 +349,9 @@
     font-size: 15px;
     font-weight: 600;
     line-height: 1.3;
-    white-space: normal;
-    /* text-decoration draws a separate line on each wrapped line */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     text-decoration: none;
     border-bottom: 2px solid orange;
   }

@@ -96,6 +96,8 @@
           step="0.01"
           value={currentTime}
           aria-label="Seek"
+          data-playback-path={playbackPathOf(boardDoc)}
+          on:focusin={claimThis}
           on:pointerdown={claimThis}
           on:input={onSeek}
         />

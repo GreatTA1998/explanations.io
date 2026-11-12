@@ -181,10 +181,13 @@
   }
 
   // A press plays from the timestamp under the pointer on that word.
+  // play() fires on a later task, so the click keeps the playhead until
+  // playback reports that it is running. Leaving the word in that gap must
+  // not hand the time back to hover.
   function pressWord(word, event) {
-    playFromPointer = true
+    playFromPointer = !playing
     placeAt(timeInWord(word, event))
-    playPlayback(path)
+    if (!playPlayback(path)) playFromPointer = false
   }
 
   // The audio slider seeks by assigning currentTime while the thumb moves.
@@ -244,7 +247,6 @@
   }
 
   function leaveWord(word) {
-    if (!playing) playFromPointer = false
     if (hoveredWordId !== word.id) return
     hoveredWordId = null
     clearTimeout(pointerHold)

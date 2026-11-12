@@ -9,10 +9,10 @@
   <FullscreenModule 
     boardDoc={video} 
     previewWidth={videoWidth}
-    let:toggleFullscreen={toggleFullscreen}
+    let:toggleComments={toggleComments}
+    let:commentsOpen={commentsOpen}
     let:canvasWidth={canvasWidth}
     let:canvasHeight={canvasHeight}
-    let:isFullscreen={isFullscreen}
   >
     {#if video.isMultiboard}
       <MultiboardHD boardDoc={video}
@@ -21,7 +21,7 @@
         {classID}
         audioDownloadURL={video.audioDownloadURL}
         timingOfSlideChanges={video.timingOfSlideChanges}
-        showSlideChanger={!willHideSliderForPreview || isFullscreen}
+        showSlideChanger={!willHideSliderForPreview}
         propToDeleteVideo={propToDeleteVideo}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
         on:deletion-request-received={() => propToDeleteVideo = false}
@@ -43,10 +43,7 @@
 
           <EurekaButton boardDoc={video} {canvasWidth} />
 
-          <ToggleFullscreenButton on:click={toggleFullscreen}
-            isFullscreen={isFullscreen} 
-            {canvasWidth}
-          />
+          <CommentsPanelButton on:click={toggleComments} open={commentsOpen} />
 
           {#if $user.uid === video.creatorUID || !video.creatorUID}
             <VideoDropdownMenu {video}
@@ -75,7 +72,7 @@
 
 <script>
   import VideoDropdownMenu from '$lib/DoodleVideo/VideoDropdownMenu.svelte'
-  import ToggleFullscreenButton from '$lib/DoodleVideo/ToggleFullscreenButton.svelte'
+  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import EurekaButton from '$lib/DoodleVideo/EurekaButton.svelte'
   import LegacyHDReusableSingleBoard from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import VideoFooterInfo from './VideoFooterInfo.svelte'

@@ -28,7 +28,8 @@
   export let isDrawerOpen = false
 
   const PANEL_WIDTH = 200
-  // Clears the one-line title row. The audio bar stays usable below the panel.
+  // Fallback until the slide-changer row publishes its height. That row wraps,
+  // so a fixed offset covers the comments toggle on the next line.
   const HEADER_CLEARANCE = 38
 
   let availableWidth = 0
@@ -40,7 +41,7 @@
     ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 54ch;`
     : `
       position: absolute;
-      top: ${HEADER_CLEARANCE}px;
+      top: var(--player-header-height, ${HEADER_CLEARANCE}px);
       right: 0;
       bottom: ${HEIGHTS.AUDIO_SLIDER}px;
       width: ${PANEL_WIDTH}px;

@@ -4,7 +4,10 @@
 >
   {#if showSlideChanger}
     <!-- 1px quick-fix so UI doesn't look terrible -->
-    <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px; flex-wrap: wrap; row-gap: 2px;">  
+    <div
+      use:syncHeaderClearance
+      style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px; flex-wrap: wrap; row-gap: 2px;"
+    >
       <slot />
 
       <MultiboardSlideChanger on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
@@ -220,6 +223,32 @@
 
   function captureAudioPlayer(node) {
     AudioPlayer = node
+  }
+
+  // The comments panel is a sibling of this player and would cover a wrapped
+  // header. Publish the row's bottom so the panel starts below the toggle.
+  // The variable lives on `.measure` because Svelte rewrites `.frame`'s style.
+  function syncHeaderClearance (node) {
+    const frame = node.closest('.frame')
+    const measure = node.closest('.measure')
+    if (!frame || !measure) return
+
+    const apply = () => {
+      const frameTop = frame.getBoundingClientRect().top + frame.clientTop
+      const clearance = Math.ceil(node.getBoundingClientRect().bottom - frameTop)
+      if (clearance > 0) measure.style.setProperty('--player-header-height', clearance + 'px')
+    }
+
+    apply()
+    const observer = new ResizeObserver(apply)
+    observer.observe(node)
+
+    return {
+      destroy () {
+        observer.disconnect()
+        measure.style.removeProperty('--player-header-height')
+      }
+    }
   }
 
   function publishClock(reason) {

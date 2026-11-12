@@ -20,7 +20,7 @@
               style={currentWord && word.id === currentWord.id ? `--p:${progress}` : undefined}
               tabindex={wordTabIndex(word)}
               use:rememberWord={word}
-              on:click={(event) => placeCursor(word, event)}
+              on:click={(event) => pressWord(word, event)}
               on:keydown={(event) => onWordKeydown(word, event)}
               on:pointerenter={(event) => hoverWord(word, event)}
               on:pointermove={(event) => hoverWord(word, event)}
@@ -45,11 +45,20 @@
     progressInWord,
     wordAtTime
   } from '/src/helpers/transcriptDocument.js'
-  import { claimPlayback, playbackPathOf, seekPlayback, subscribePlayback } from '/src/helpers/playbackBridge.js'
+  import {
+    claimPlayback,
+    hoverSeeksPlayback,
+    playbackPathOf,
+    playPlayback,
+    seekPlayback,
+    subscribePlayback
+  } from '/src/helpers/playbackBridge.js'
 
   export let videoDoc
 
   let time = 0
+  let playing = false
+  let playFromPointer = false
   let docEl = null
   let revealedId = null
   let hoveredWordId = null
@@ -73,8 +82,22 @@
   function followPlayback(nextPath) {
     playback.stop()
     playback.shown = null
+    playing = false
+    playFromPointer = false
     let pending = null
     playback.stop = subscribePlayback(nextPath, (snapshot) => {
+      if (snapshot.playing === true) {
+        playing = true
+        playFromPointer = false
+        // Playback owns the caret again, including while the pointer rests.
+        if (hoveredWordId != null) {
+          hoveredWordId = null
+          clearTimeout(pointerHold)
+          cancelScrub()
+        }
+      } else if (snapshot.playing === false) {
+        playing = false
+      }
       const next = snapshot.time
       if (!Number.isFinite(next)) return
       // While the pointer is choosing a word, the pointer owns the playhead.
@@ -157,8 +180,11 @@
     return word.start + (word.end - word.start) * clamped
   }
 
-  function placeCursor(word, event) {
+  // A press plays from the timestamp under the pointer on that word.
+  function pressWord(word, event) {
+    playFromPointer = true
     placeAt(timeInWord(word, event))
+    playPlayback(path)
   }
 
   // The audio slider seeks by assigning currentTime while the thumb moves.
@@ -198,10 +224,15 @@
     seekPlayback(path, next)
   }
 
-  // Hover seeks even when the transcript is not focused. The playhead follows
-  // the pointer across the word, the same way the audio slider follows its thumb.
+  // Hover seeks a paused video even when the transcript is not focused.
+  // While the video is playing, the pointer leaves the playhead alone.
   function hoverWord(word, event) {
-    if (event.pointerType === 'touch' || event.buttons !== 0) return
+    if (playFromPointer) return
+    if (!hoverSeeksPlayback({
+      pointerType: event.pointerType,
+      buttons: event.buttons,
+      playing
+    })) return
     hoveredWordId = word.id
     scrubTo(timeInWord(word, event))
     // The pointer owns the playhead while it is moving. Once it rests, playback
@@ -213,6 +244,7 @@
   }
 
   function leaveWord(word) {
+    if (!playing) playFromPointer = false
     if (hoveredWordId !== word.id) return
     hoveredWordId = null
     clearTimeout(pointerHold)

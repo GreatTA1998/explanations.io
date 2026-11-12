@@ -108,7 +108,10 @@
 
   <div>
     <audio 
-      on:play={initSyncing} 
+      on:play={() => {
+        initSyncing()
+        publishClock()
+      }} 
       on:focusin={() => claimPlayback(playbackPath)}
       data-playback-path={playbackPath}
       on:seeking={handleSeeking}
@@ -207,8 +210,14 @@
     bgCtx = bgCanvas.getContext('2d')
 
     AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
-    AudioPlayer.onended = (e) => isPlaying = false 
-    AudioPlayer.onpause = (e) => isPlaying = false
+    AudioPlayer.onended = () => {
+      isPlaying = false
+      publishClock()
+    }
+    AudioPlayer.onpause = () => {
+      isPlaying = false
+      publishClock()
+    }
 
     // after 6 seconds, if the video is still playing:
     //   we tell parent to increment `viewMinutes` by 0.1,
@@ -229,6 +238,7 @@
     updateViewMinutes()
     unregisterPlayback = registerPlayback(playbackPath, {
       seek: seekTo,
+      play: playVideo,
       toggle: togglePlayPause
     })
   })
@@ -257,8 +267,17 @@
       playbackPath,
       AudioPlayer.currentTime || 0,
       AudioPlayer.duration || 0,
-      reason === 'seek' ? 'seek' : 'tick'
+      reason === 'seek' ? 'seek' : 'tick',
+      !AudioPlayer.paused
     )
+  }
+
+  function playVideo() {
+    if (isLocked) {
+      alert('You can unlock this video by subscribing to the creator!')
+      return
+    }
+    if (AudioPlayer && AudioPlayer.paused) startAudioPlayer()
   }
 
   function handleSeeking() {

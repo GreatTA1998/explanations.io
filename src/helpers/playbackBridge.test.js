@@ -1,6 +1,15 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { chooseSpacePath, claimPlayback, registerPlayback, spaceTargetPath } from './playbackBridge.js'
+import {
+  chooseSpacePath,
+  claimPlayback,
+  hoverSeeksPlayback,
+  playPlayback,
+  publishPlayback,
+  registerPlayback,
+  spaceTargetPath,
+  subscribePlayback
+} from './playbackBridge.js'
 
 const registered = new Set(['video-a', 'video-b'])
 
@@ -122,6 +131,54 @@ test('a focused transcript word toggles its player and a text field does not', (
   const field = el('TEXTAREA')
   assert.equal(spaceTargetPath({ key: ' ', target: field }), '')
   assert.equal(spaceTargetPath({ key: ' ', code: 'Space', target: inside(el('INPUT'), panel), repeat: false }), '')
+  stop()
+})
+
+test('hover seeks a paused video and stays still while it plays or while dragging', () => {
+  assert.equal(hoverSeeksPlayback({ pointerType: 'mouse', buttons: 0, playing: false }), true)
+  assert.equal(hoverSeeksPlayback({ pointerType: 'mouse', buttons: 0, playing: true }), false)
+  assert.equal(hoverSeeksPlayback({ pointerType: 'mouse', buttons: 1, playing: false }), false)
+  assert.equal(hoverSeeksPlayback({ pointerType: 'pen', buttons: 0, playing: false }), true)
+  assert.equal(hoverSeeksPlayback({ pointerType: 'touch', buttons: 0, playing: false }), false)
+})
+
+test('play starts the registered player and does not toggle it', () => {
+  let played = 0
+  let toggled = 0
+  const stop = registerPlayback('video-play', {
+    seek() {},
+    toggle() { toggled += 1 },
+    play() { played += 1 }
+  })
+  assert.equal(playPlayback('video-play'), true)
+  assert.equal(played, 1)
+  assert.equal(toggled, 0)
+  stop()
+  assert.equal(playPlayback('video-play'), false)
+})
+
+test('playback reports whether the video is playing', () => {
+  const seen = []
+  const stop = subscribePlayback('video-state', (snapshot) => {
+    seen.push([snapshot.time, snapshot.playing, snapshot.reason])
+  })
+  publishPlayback('video-state', 1, 4, 'tick', false)
+  publishPlayback('video-state', 1, 4, 'tick', false)
+  publishPlayback('video-state', 1.2, 4, 'tick', true)
+  assert.deepEqual(seen, [
+    [1, false, 'tick'],
+    [1.2, true, 'tick']
+  ])
+  stop()
+})
+
+test('a listener hears a video that is already playing', () => {
+  publishPlayback('video-live', 2, 9, 'seek', true)
+  const seen = []
+  const stop = subscribePlayback('video-live', (snapshot) => {
+    seen.push([snapshot.time, snapshot.playing, snapshot.reason])
+  })
+  assert.deepEqual(seen, [[2, true, 'seek']])
   stop()
 })
 

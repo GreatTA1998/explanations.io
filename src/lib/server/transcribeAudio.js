@@ -9,6 +9,11 @@
 // New speech is WebM (Opus) or MP4 (AAC). Those files are sent as themselves.
 // WAV is only the container already stored for older recordings; PCM WAV can
 // be split under the upload limit. Nothing is transcoded.
+//
+// Duration comes from the container. WebM uses Info/Duration when it is there,
+// and MP4 uses the movie header. A fragmented recording stores 0 in that
+// header, so the whole file's clusters or fragments supply the span. A
+// text-only transcript keeps that span, and anything past 30 minutes is refused.
 
 import { transcriptionFile } from '../../helpers/speechMime.js'
 
@@ -137,6 +142,23 @@ export function wavDurationSeconds(wav, totalBytes) {
     available = Math.min(available, Math.max(0, totalBytes - wav.dataOffset))
   }
   return available / wav.byteRate
+}
+
+// `complete` is true only when `bytes` is the entire object. Header duration
+// is valid from a prefix. Cluster and fragment times are not: a prefix would
+// report a recording as shorter than it is.
+export function containerDurationSeconds(bytes, complete = false) {
+  try {
+    if (!bytes || bytes.byteLength < 12) return null
+    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
+    if (bytes[0] === 0x1a && bytes[1] === 0x45 && bytes[2] === 0xdf && bytes[3] === 0xa3) {
+      return webmDurationSeconds(bytes, complete)
+    }
+    if (fourCc(view, 4) === 'ftyp') return mp4DurationSeconds(view, complete)
+    return null
+  } catch {
+    return null
+  }
 }
 
 export function planSlices(dataSize, blockAlign, maxUploadBytes = MAX_UPLOAD_BYTES) {
@@ -324,7 +346,10 @@ export async function transcribeStoredAudio({
   const prefix = await fetchByteRange(url, 0, 65535, fetchImpl, maxReasonableBytes)
   const wav = parseWavInfo(prefix.bytes)
   const totalBytes = prefix.totalBytes
-  const durationSeconds = wavDurationSeconds(wav, totalBytes)
+  let durationSeconds = wavDurationSeconds(wav, totalBytes)
+  if (durationSeconds == null) {
+    durationSeconds = containerDurationSeconds(prefix.bytes, hasAllBytes(prefix))
+  }
   const sizeForDecision = durationSeconds == null
     ? await unknownSize(url, prefix, fetchImpl, maxReasonableBytes)
     : totalBytes
@@ -370,6 +395,12 @@ export async function transcribeStoredAudio({
     ? prefix
     : await fetchByteRange(url, 0, wholeSize - 1, fetchImpl, maxUploadBytes)
   const whole = wholeResult.bytes
+  if (!hasAllBytes(prefix)) {
+    const parsed = containerDurationSeconds(whole, hasAllBytes(wholeResult))
+    if (parsed != null) durationSeconds = parsed
+    const again = decideTranscription(durationSeconds, whole.byteLength)
+    if (!again.transcribe) return { segments: [], error: MESSAGES[again.code] }
+  }
   const described = transcriptionFile(whole, wholeResult.contentType || prefix.contentType)
   let timestamps = true
   let result = await requestTranscription({
@@ -522,4 +553,385 @@ function fourCc(view, offset) {
 
 function writeFourCc(view, offset, text) {
   for (let i = 0; i < 4; i += 1) view.setUint8(offset + i, text.charCodeAt(i))
+}
+
+function hasAllBytes(part) {
+  if (!part || part.truncated || !part.bytes) return false
+  if (part.totalBytes != null) return part.bytes.byteLength >= part.totalBytes
+  return part.complete === true
+}
+
+const EBML_SEGMENT = 0x18538067
+const EBML_INFO = 0x1549A966
+const EBML_CLUSTER = 0x1F43B675
+const EBML_BLOCK_GROUP = 0xA0
+const EBML_TIMECODE_SCALE = 0x2AD7B1
+const EBML_DURATION = 0x4489
+const EBML_TIMECODE = 0xE7
+const EBML_SIMPLE_BLOCK = 0xA3
+const EBML_BLOCK = 0xA1
+const EBML_BLOCK_DURATION = 0x9B
+
+function webmDurationSeconds(bytes, complete) {
+  const state = {
+    scale: 1000000,
+    duration: null,
+    clusterTs: 0,
+    maxTs: 0,
+    sawCluster: false,
+    lastBlock: null
+  }
+  walkEbml(bytes, 0, bytes.length, isTopLevelEbml, 0, state)
+  const scale = state.scale > 0 ? state.scale : 1000000
+  if (state.duration != null && Number.isFinite(state.duration) && state.duration > 0) {
+    return finiteSeconds((state.duration * scale) / 1e9)
+  }
+  if (complete && state.sawCluster && state.maxTs > 0) return finiteSeconds((state.maxTs * scale) / 1e9)
+  return null
+}
+
+function walkEbml(bytes, start, end, accept, parent, state) {
+  let offset = start
+  while (offset + 2 <= end) {
+    const id = readEbmlVint(bytes, offset, true)
+    if (!id) return offset
+    if (accept && !accept(id.value)) return offset
+    const size = readEbmlVint(bytes, offset + id.width, false)
+    if (!size) return offset
+    const dataStart = offset + id.width + size.width
+    if (dataStart > end) return offset
+    const descend = ebmlChildren(id.value)
+    if (size.unknown) {
+      if (!descend) return offset
+      offset = walkEbml(bytes, dataStart, end, descend, id.value, state)
+      continue
+    }
+    if (size.value > end - dataStart) {
+      if (descend) walkEbml(bytes, dataStart, end, descend, id.value, state)
+      return end
+    }
+    const dataEnd = dataStart + size.value
+    if (descend) walkEbml(bytes, dataStart, dataEnd, descend, id.value, state)
+    else readEbmlLeaf(bytes, id.value, dataStart, dataEnd, parent, state)
+    offset = dataEnd
+  }
+  return offset
+}
+
+function readEbmlLeaf(bytes, id, start, end, parent, state) {
+  if (parent === EBML_INFO && id === EBML_TIMECODE_SCALE) {
+    const scale = readEbmlUint(bytes, start, end)
+    if (scale != null && scale > 0) state.scale = scale
+    return
+  }
+  if (parent === EBML_INFO && id === EBML_DURATION) {
+    state.duration = readEbmlFloat(bytes, start, end)
+    return
+  }
+  if (parent === EBML_CLUSTER && id === EBML_TIMECODE) {
+    const ts = readEbmlUint(bytes, start, end)
+    if (ts == null) return
+    state.clusterTs = ts
+    state.sawCluster = true
+    if (ts > state.maxTs) state.maxTs = ts
+    return
+  }
+  if (
+    (parent === EBML_CLUSTER && id === EBML_SIMPLE_BLOCK)
+    || (parent === EBML_BLOCK_GROUP && id === EBML_BLOCK)
+  ) {
+    const at = readBlockTimestamp(bytes, start, end, state.clusterTs)
+    if (at == null) return
+    state.sawCluster = true
+    state.lastBlock = at
+    if (at > state.maxTs) state.maxTs = at
+    return
+  }
+  if (parent === EBML_BLOCK_GROUP && id === EBML_BLOCK_DURATION && state.lastBlock != null) {
+    const extra = readEbmlUint(bytes, start, end)
+    if (extra == null) return
+    const at = state.lastBlock + extra
+    if (at > state.maxTs) state.maxTs = at
+  }
+}
+
+function ebmlChildren(id) {
+  if (id === EBML_SEGMENT) return isSegmentChild
+  if (id === EBML_INFO) return isInfoChild
+  if (id === EBML_CLUSTER) return isClusterChild
+  if (id === EBML_BLOCK_GROUP) return isBlockGroupChild
+  return null
+}
+
+function isTopLevelEbml(id) {
+  return id === 0x1A45DFA3 || id === EBML_SEGMENT || id === 0xEC || id === 0xBF
+}
+
+function isSegmentChild(id) {
+  return id === 0x114D9B74
+    || id === EBML_INFO
+    || id === EBML_CLUSTER
+    || id === 0x1654AE6B
+    || id === 0x1C53BB6B
+    || id === 0x1043A770
+    || id === 0x1254C367
+    || id === 0x1941A469
+    || id === 0xEC
+    || id === 0xBF
+}
+
+function isInfoChild(id) {
+  return !isSegmentChild(id) && id !== EBML_SEGMENT && id !== 0x1A45DFA3
+}
+
+function isClusterChild(id) {
+  return id === EBML_TIMECODE
+    || id === 0xA7
+    || id === 0xAB
+    || id === EBML_SIMPLE_BLOCK
+    || id === EBML_BLOCK_GROUP
+    || id === 0x5854
+    || id === 0xEC
+    || id === 0xBF
+}
+
+function isBlockGroupChild(id) {
+  return id === EBML_BLOCK || id === EBML_BLOCK_DURATION || id === 0xFB || id === 0xEC || id === 0xBF
+}
+
+function readEbmlVint(bytes, offset, keepMarker) {
+  if (offset < 0 || offset >= bytes.length) return null
+  const first = bytes[offset]
+  if (first === 0) return null
+  let width = 1
+  let marker = 0x80
+  while (width <= 8 && (first & marker) === 0) {
+    width += 1
+    marker >>= 1
+  }
+  if (width > 8 || offset + width > bytes.length) return null
+  let value = keepMarker ? first : (first & (marker - 1))
+  for (let i = 1; i < width; i += 1) value = value * 256 + bytes[offset + i]
+  return { value, width, unknown: !keepMarker && unknownSizeBits(bytes, offset, width) }
+}
+
+function unknownSizeBits(bytes, offset, width) {
+  const marker = 1 << (8 - width)
+  if ((bytes[offset] & (marker - 1)) !== marker - 1) return false
+  for (let i = 1; i < width; i += 1) {
+    if (bytes[offset + i] !== 0xFF) return false
+  }
+  return true
+}
+
+function readEbmlUint(bytes, start, end) {
+  const len = end - start
+  if (len < 1 || len > 8) return null
+  let value = 0
+  for (let i = start; i < end; i += 1) value = value * 256 + bytes[i]
+  return value
+}
+
+function readEbmlFloat(bytes, start, end) {
+  const len = end - start
+  if (len !== 4 && len !== 8) return null
+  const view = new DataView(bytes.buffer, bytes.byteOffset + start, len)
+  const value = len === 4 ? view.getFloat32(0) : view.getFloat64(0)
+  return Number.isFinite(value) ? value : null
+}
+
+function readBlockTimestamp(bytes, start, end, clusterTs) {
+  const track = readEbmlVint(bytes, start, false)
+  if (!track) return null
+  const timeAt = start + track.width
+  if (timeAt + 2 > end) return null
+  const view = new DataView(bytes.buffer, bytes.byteOffset + timeAt, 2)
+  return clusterTs + view.getInt16(0)
+}
+
+const MP4_CONTAINERS = new Set(['moov', 'trak', 'mdia', 'minf', 'stbl', 'edts', 'mvex', 'moof', 'traf', 'udta'])
+
+function mp4DurationSeconds(view, complete) {
+  const state = {
+    movieScale: 0,
+    movieDuration: 0,
+    mediaScale: 0,
+    mediaDuration: 0,
+    mehd: 0,
+    trexDuration: 0,
+    defaultDuration: 0,
+    base: 0,
+    cursor: 0,
+    sawTfdt: false,
+    trunSeenInTraf: false,
+    fragmentEnd: 0,
+    sawFragment: false
+  }
+  walkMp4(view, 0, view.byteLength, state)
+  if (state.movieDuration > 0 && state.movieScale > 0) return finiteSeconds(state.movieDuration / state.movieScale)
+  if (state.mehd > 0 && state.movieScale > 0) return finiteSeconds(state.mehd / state.movieScale)
+  if (complete && state.sawFragment && state.mediaScale > 0 && state.fragmentEnd > 0) {
+    return finiteSeconds(state.fragmentEnd / state.mediaScale)
+  }
+  if (state.mediaDuration > 0 && state.mediaScale > 0 && !state.sawFragment) {
+    return finiteSeconds(state.mediaDuration / state.mediaScale)
+  }
+  return null
+}
+
+function walkMp4(view, start, end, state) {
+  let offset = start
+  while (offset + 8 <= end) {
+    let size = view.getUint32(offset)
+    const type = fourCc(view, offset + 4)
+    let header = 8
+    if (size === 1) {
+      if (offset + 16 > end) return
+      const large = view.getBigUint64(offset + 8)
+      if (large > BigInt(Number.MAX_SAFE_INTEGER)) return
+      size = Number(large)
+      header = 16
+    } else if (size === 0) {
+      size = end - offset
+    }
+    if (size < header) return
+    const boxEnd = offset + size
+    if (boxEnd > end) {
+      if (MP4_CONTAINERS.has(type)) walkMp4(view, offset + header, end, state)
+      return
+    }
+    const payload = offset + header
+    if (type === 'mvhd') readMvhd(view, payload, boxEnd, state)
+    else if (type === 'mdhd') readMdhd(view, payload, boxEnd, state)
+    else if (type === 'mehd') readMehd(view, payload, boxEnd, state)
+    else if (type === 'trex') readTrex(view, payload, boxEnd, state)
+    else if (type === 'tfhd') readTfhd(view, payload, boxEnd, state)
+    else if (type === 'tfdt') readTfdt(view, payload, boxEnd, state)
+    else if (type === 'trun') readTrun(view, payload, boxEnd, state)
+    else if (type === 'traf') walkTraf(view, payload, boxEnd, state)
+    else if (MP4_CONTAINERS.has(type)) walkMp4(view, payload, boxEnd, state)
+    offset = boxEnd
+  }
+}
+
+function walkTraf(view, start, end, state) {
+  const savedDefault = state.defaultDuration
+  state.defaultDuration = state.trexDuration
+  state.base = 0
+  state.cursor = 0
+  state.sawTfdt = false
+  state.trunSeenInTraf = false
+  walkMp4(view, start, end, state)
+  state.defaultDuration = savedDefault
+}
+
+function readMvhd(view, payload, boxEnd, state) {
+  const times = readMediaTimes(view, payload, boxEnd)
+  if (!times || times.scale < 1) return
+  state.movieScale = times.scale
+  if (times.duration > 0) state.movieDuration = times.duration
+}
+
+function readMdhd(view, payload, boxEnd, state) {
+  const times = readMediaTimes(view, payload, boxEnd)
+  if (!times || times.scale < 1) return
+  state.mediaScale = times.scale
+  if (times.duration > 0) state.mediaDuration = times.duration
+}
+
+function readMediaTimes(view, payload, boxEnd) {
+  if (payload >= boxEnd) return null
+  const version = view.getUint8(payload)
+  if (version === 0) {
+    if (payload + 20 > boxEnd) return null
+    return { scale: view.getUint32(payload + 12), duration: view.getUint32(payload + 16) }
+  }
+  if (version === 1) {
+    if (payload + 32 > boxEnd) return null
+    const duration = view.getBigUint64(payload + 24)
+    if (duration > BigInt(Number.MAX_SAFE_INTEGER)) return null
+    return { scale: view.getUint32(payload + 20), duration: Number(duration) }
+  }
+  return null
+}
+
+function readMehd(view, payload, boxEnd, state) {
+  if (payload + 8 > boxEnd) return
+  const version = view.getUint8(payload)
+  if (version === 0) {
+    state.mehd = view.getUint32(payload + 4)
+    return
+  }
+  if (version === 1 && payload + 12 <= boxEnd) {
+    const value = view.getBigUint64(payload + 4)
+    if (value <= BigInt(Number.MAX_SAFE_INTEGER)) state.mehd = Number(value)
+  }
+}
+
+function readTrex(view, payload, boxEnd, state) {
+  if (payload + 16 > boxEnd) return
+  state.trexDuration = view.getUint32(payload + 12)
+}
+
+function readTfhd(view, payload, boxEnd, state) {
+  if (payload + 8 > boxEnd) return
+  const flags = view.getUint32(payload) & 0xFFFFFF
+  let cursor = payload + 8
+  if (flags & 0x1) cursor += 8
+  if (flags & 0x2) cursor += 4
+  if ((flags & 0x8) && cursor + 4 <= boxEnd) state.defaultDuration = view.getUint32(cursor)
+}
+
+function readTfdt(view, payload, boxEnd, state) {
+  if (payload + 8 > boxEnd) return
+  const version = view.getUint8(payload)
+  let base = null
+  if (version === 0) base = view.getUint32(payload + 4)
+  else if (version === 1 && payload + 12 <= boxEnd) {
+    const value = view.getBigUint64(payload + 4)
+    if (value > BigInt(Number.MAX_SAFE_INTEGER)) return
+    base = Number(value)
+  }
+  if (base == null) return
+  state.base = base
+  state.cursor = base
+  state.sawTfdt = true
+}
+
+function readTrun(view, payload, boxEnd, state) {
+  if (payload + 8 > boxEnd) return
+  const flags = view.getUint32(payload) & 0xFFFFFF
+  let cursor = payload + 4
+  const sampleCount = view.getUint32(cursor)
+  cursor += 4
+  if (flags & 0x1) cursor += 4
+  if (flags & 0x4) cursor += 4
+  const hasDuration = (flags & 0x100) !== 0
+  const hasSize = (flags & 0x200) !== 0
+  const hasFlags = (flags & 0x400) !== 0
+  const hasCto = (flags & 0x800) !== 0
+  let total = 0
+  if (!hasDuration) {
+    total = state.defaultDuration * sampleCount
+  } else {
+    const step = 4 + (hasSize ? 4 : 0) + (hasFlags ? 4 : 0) + (hasCto ? 4 : 0)
+    const count = Math.min(sampleCount, Math.max(0, Math.floor((boxEnd - cursor) / step)))
+    for (let i = 0; i < count; i += 1) {
+      total += view.getUint32(cursor)
+      cursor += step
+    }
+  }
+  if (!Number.isFinite(total) || total < 0) return
+  if (!state.trunSeenInTraf) {
+    if (!state.sawTfdt) state.cursor = state.base
+    state.trunSeenInTraf = true
+  }
+  state.cursor += total
+  if (state.cursor > state.fragmentEnd) state.fragmentEnd = state.cursor
+  state.sawFragment = true
+}
+
+function finiteSeconds(value) {
+  if (!Number.isFinite(value) || value <= 0) return null
+  return value
 }

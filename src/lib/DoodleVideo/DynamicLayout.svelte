@@ -1,101 +1,69 @@
-<div class={$videoCinemaLayout} 
-  style="width: 100%; position: relative;"
+<div
+  class="measure"
   use:trackWidth={exactWidth => availableWidth = exactWidth}
 >
-  <slot name="video" />
+  <!--
+    The frame matches the video unless the panel fits in the margin.
+    Overlay is positioned on this frame, so its right edge is the video edge.
+    A full-column frame would pin the panel to the page edge and straddle both.
+  -->
+  <div class="frame" class:side-by-side={sideBySide} style="width: {frameWidth};">
+    <div class="stage" style="width: {videoWidth ? videoWidth + 'px' : 'auto'};">
+      <slot name="video" />
+    </div>
 
-  {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
-    {#if isDrawerOpen}
-      <button on:click={toggleDrawer} 
-        class="hide-drawer-button material-symbols-outlined" 
-        style="position: absolute; top: 48px; right: 200px; color: rgba(255, 255, 255, 0.7);"
-      >
-        keyboard_double_arrow_right
-      </button>
-    {:else}
-      <!--  for future display:{video.numOfComments || 0} -->
-      <button on:click={toggleDrawer} class="expand-drawer-floating-button material-symbols-outlined">
-        forum
-      </button>
-    {/if}
-  {/if}
-
-  <!-- no parent, so that the client can decide whether to render the comments section without any unwanted parent divs -->
-  <slot name="comments-section" 
-    toggleDrawer={toggleDrawer}
-    commentsSectionStyle="display: {isDrawerOpen ? 'block' : 'none'}; {commentsSectionStyle[$videoCinemaLayout]}"
-  />
+    <slot name="comments-section"
+      commentsSectionStyle="display: {isDrawerOpen ? 'block' : 'none'}; {panelStyle}"
+    />
+  </div>
 </div>
 
 <script>
-  import { VIDEO_LAYOUT } from '/src/helpers/dimensions.js'
-  import { videoCinemaLayout, videoPreviewWidth } from '/src/store.js'
+  import { HEIGHTS } from '/src/helpers/CONSTANTS.js'
   import { trackWidth } from '/src/helpers/actions.js'
 
-  let isDrawerOpen = true
-  let availableWidth
+  // Rendered canvas width. The column is often wider, because the 4:3 board
+  // is height-limited and the spare width is the white margin.
+  export let videoWidth = 0
+  export let isDrawerOpen = false
 
-  $: determineLayout(availableWidth, $videoPreviewWidth)
+  const PANEL_WIDTH = 200
+  // Clears the one-line title row. The audio bar stays usable below the panel.
+  const HEADER_CLEARANCE = 38
 
-  function determineLayout () {
-    const { SIDE_BY_SIDE, TRANSPARENT_OVERLAY, MOBILE_VERTICAL } = VIDEO_LAYOUT
-    const drawerWidth = 200
-    const remainingWidth = availableWidth - $videoPreviewWidth
+  let availableWidth = 0
 
-    if (drawerWidth <= remainingWidth) videoCinemaLayout.set(SIDE_BY_SIDE)
-    else if ((drawerWidth - remainingWidth) <= ($videoPreviewWidth / 3)) videoCinemaLayout.set(TRANSPARENT_OVERLAY)
-    else videoCinemaLayout.set(MOBILE_VERTICAL)
-  }
-
-  const commentsSectionStyle = {
-    // used to be width: 25%
-    [VIDEO_LAYOUT.TRANSPARENT_OVERLAY]: `
+  $: margin = availableWidth - videoWidth
+  $: sideBySide = videoWidth > 0 && margin >= PANEL_WIDTH
+  $: frameWidth = sideBySide || !videoWidth ? '100%' : `${videoWidth}px`
+  $: panelStyle = sideBySide
+    ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 54ch;`
+    : `
       position: absolute;
-      top: 38px;
-      right: 0; 
-      left: auto;
-      width: 200px; 
-    `,
-    [VIDEO_LAYOUT.SIDE_BY_SIDE]: `
-      flex-basis: 0; 
-      flex-grow: 1;
-      max-width: 54ch;
-    `,
-    [VIDEO_LAYOUT.MOBILE_VERTICAL]: `
-      max-height: 140px;
+      top: ${HEADER_CLEARANCE}px;
+      right: 0;
+      bottom: ${HEIGHTS.AUDIO_SLIDER}px;
+      width: ${PANEL_WIDTH}px;
       overflow-y: auto;
-      max-width: 38ch; 
+      z-index: 5;
     `
-    // max-width: 38ch; is just chosen to quickly satisfy the desktop profile page
-  }
-
-  function toggleDrawer () {
-    isDrawerOpen = !isDrawerOpen
-  }
 </script>
 
 <style>
-  :global(.side-by-side) {
+  .measure {
+    width: 100%;
+  }
+
+  .frame {
+    position: relative;
+  }
+
+  .side-by-side {
     display: flex;
+    align-items: flex-start;
   }
 
-  :global(.mobile-vertical) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .reflect-y-axis {
-    transform: rotateY(180deg);
-  }
-
-  .expand-drawer-floating-button {
-    border: 2px solid rgb(122, 122, 122);
-    border-radius: 24px;
-    padding: 4px;
-    top: 48px; 
-    right: 10px;
-    z-index: 10; 
-    position: absolute; 
-    color: rgb(122, 122, 122);
+  .stage {
+    flex: 0 0 auto;
   }
 </style>

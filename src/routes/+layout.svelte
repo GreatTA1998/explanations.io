@@ -22,6 +22,10 @@
       </button>
     {/if}
 
+    {#if $didRenderSplashScreen && !$isFullServerMode}
+      <SplashLandingPage />
+    {/if}
+
     <!-- Full Server Page will be injected here -->
     <slot />
   {/if}
@@ -30,17 +34,26 @@
 <script>
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
   import HandDrawnDrawerArrow from '$lib/NavSideDrawer/HandDrawnDrawerArrow.svelte'
+  import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
 
   import { initializeDatabase } from '../database.js'
   import 'firebase/app'
   import { getAuth, onAuthStateChanged } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
 
-  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
+  import {
+    DEFAULT_HOMEPAGE_SERVER_ID,
+    homepageServerPath,
+    loadErrorAlert,
+    loggedInRootDestination,
+    loggedOutEntry
+  } from '/src/helpers/visitorEntry.js'
 
-  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, sidebarFullscreen } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen, sidebarFullscreen } from '../store.js'
   import { onMount } from 'svelte'
+  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
   import posthog from 'posthog-js'
@@ -52,7 +65,8 @@
   const auth = getAuth()
   const db = getFirestore()
 
-  let unsubUserDocListener = null 
+  let unsubUserDocListener = null
+  let rootEntryToken = 0
 
   onMount(async () => {
     translateJSConstantsToCSSVariables()
@@ -60,7 +74,16 @@
     onAuthStateChanged(auth, reactToUserChange)
 
     createSessionRecording()
+
+    window.addEventListener('scroll', handleOnScroll)
   })
+
+  function handleOnScroll () {
+    const scrollTriggerBuffer = 120
+    if (window.scrollY >= window.innerHeight - scrollTriggerBuffer) {
+      isFullServerMode.set(true)
+    }
+  }
 
   function restoreDrawerOnEscape (event) {
     if (event.key === 'Escape' && $sidebarFullscreen) {
@@ -112,13 +135,51 @@
     } 
 
     // user not logged in
-    else if ($page.url.pathname !== '/') {
+    else if (loggedOutEntry($page.url.pathname) === 'homepage') {
+      didRenderSplashScreen.set(true)
+      isFullServerMode.set(false)
+    }
+    else if (!$didRenderSplashScreen) {
       // A shared server or room URL is the destination. Show that page
       // instead of a homepage splash or another server.
       isFullServerMode.set(true)
     }
     
     hasFetchedUser.set(true) 
+  }
+
+  // Auth runs once. Back, and any later client visit to /, has to open the
+  // homepage again. Direct links never enter this branch.
+  $: if ($hasFetchedUser && $page.url.pathname === '/') {
+    openRootPage($user && $user.uid, $user && $user.mostRecentServerID)
+  }
+
+  function openRootPage (uid, mostRecentServerID) {
+    if ($page.url.pathname !== '/') return
+    const token = ++rootEntryToken
+    if (uid) {
+      const destination = loggedInRootDestination('/', mostRecentServerID)
+      if (destination) goto(destination, { replaceState: true })
+      return
+    }
+    openLoggedOutHomepage(token)
+  }
+
+  async function openLoggedOutHomepage (token) {
+    didRenderSplashScreen.set(true)
+    isFullServerMode.set(false)
+    let server = null
+    try {
+      server = await getFirestoreDoc(`classes/${DEFAULT_HOMEPAGE_SERVER_ID}`)
+    } catch (error) {
+      console.error(error)
+      if (token !== rootEntryToken) return
+      alert(loadErrorAlert(error))
+    }
+    if (token !== rootEntryToken || $page.url.pathname !== '/') return
+    const path = homepageServerPath(server)
+    // The splash is already on screen. Keep whatever the visitor has scrolled.
+    if (path) await goto(path, { replaceState: true, noScroll: true })
   }
 
   function migrateOldUserSchemaToNew (mirrorUserDoc) {

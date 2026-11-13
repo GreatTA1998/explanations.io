@@ -43,8 +43,13 @@
 
   import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
-  import { handleServerRedirect } from '/src/helpers/everythingElse.js'
-  import { loggedInRootDestination, loggedOutEntry } from '/src/helpers/visitorEntry.js'
+  import {
+    DEFAULT_HOMEPAGE_SERVER_ID,
+    homepageServerPath,
+    loadErrorAlert,
+    loggedInRootDestination,
+    loggedOutEntry
+  } from '/src/helpers/visitorEntry.js'
 
   import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen, sidebarFullscreen } from '../store.js'
   import { onMount } from 'svelte'
@@ -60,7 +65,8 @@
   const auth = getAuth()
   const db = getFirestore()
 
-  let unsubUserDocListener = null 
+  let unsubUserDocListener = null
+  let rootEntryToken = 0
 
   onMount(async () => {
     translateJSConstantsToCSSVariables()
@@ -130,15 +136,8 @@
 
     // user not logged in
     else if (loggedOutEntry($page.url.pathname) === 'homepage') {
-      try {
-        didRenderSplashScreen.set(true)
-
-        const algebraAndNumberTheoryServer = await getFirestoreDoc(`classes/${'I90n3qyz45VmY0azjbhh'}`)
-        handleServerRedirect(algebraAndNumberTheoryServer)
-      } catch (error) {
-        console.error(error)
-        alert("Error code & message, see console for details =", error.code + ' ' + error.message)
-      }
+      didRenderSplashScreen.set(true)
+      isFullServerMode.set(false)
     }
     else if (!$didRenderSplashScreen) {
       // A shared server or room URL is the destination. Show that page
@@ -147,6 +146,39 @@
     }
     
     hasFetchedUser.set(true) 
+  }
+
+  // Auth runs once. Back, and any later client visit to /, has to open the
+  // homepage again. Direct links never enter this branch.
+  $: if ($hasFetchedUser && $page.url.pathname === '/') {
+    openRootPage($user && $user.uid, $user && $user.mostRecentServerID)
+  }
+
+  function openRootPage (uid, mostRecentServerID) {
+    if ($page.url.pathname !== '/') return
+    const token = ++rootEntryToken
+    if (uid) {
+      const destination = loggedInRootDestination('/', mostRecentServerID)
+      if (destination) goto(destination, { replaceState: true })
+      return
+    }
+    openLoggedOutHomepage(token)
+  }
+
+  async function openLoggedOutHomepage (token) {
+    didRenderSplashScreen.set(true)
+    isFullServerMode.set(false)
+    let server = null
+    try {
+      server = await getFirestoreDoc(`classes/${DEFAULT_HOMEPAGE_SERVER_ID}`)
+    } catch (error) {
+      console.error(error)
+      if (token !== rootEntryToken) return
+      alert(loadErrorAlert(error))
+    }
+    if (token !== rootEntryToken || $page.url.pathname !== '/') return
+    const path = homepageServerPath(server)
+    if (path) await goto(path, { replaceState: true })
   }
 
   function migrateOldUserSchemaToNew (mirrorUserDoc) {
@@ -233,10 +265,6 @@
               ...userDoc
             })
           }
-
-          // only leave the root URL; a direct link stays on its target
-          const homeDestination = loggedInRootDestination($page.url.pathname, $user.mostRecentServerID)
-          if (homeDestination) goto(homeDestination)
 
           resolve()
         }

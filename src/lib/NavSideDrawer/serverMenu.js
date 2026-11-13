@@ -25,8 +25,12 @@ function isPresent (value) {
   return value != null && value !== false
 }
 
+export function isFirestoreID (value) {
+  return typeof value === 'string' && FIRESTORE_ID.test(value)
+}
+
 function firestoreID (value) {
-  return typeof value === 'string' && FIRESTORE_ID.test(value) ? value : ''
+  return isFirestoreID(value) ? value : ''
 }
 
 export function hasDesignatedPreview (server) {

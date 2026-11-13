@@ -178,7 +178,8 @@
     }
     if (token !== rootEntryToken || $page.url.pathname !== '/') return
     const path = homepageServerPath(server)
-    if (path) await goto(path, { replaceState: true })
+    // The splash is already on screen. Keep whatever the visitor has scrolled.
+    if (path) await goto(path, { replaceState: true, noScroll: true })
   }
 
   function migrateOldUserSchemaToNew (mirrorUserDoc) {

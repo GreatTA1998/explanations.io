@@ -22,6 +22,10 @@
       </button>
     {/if}
 
+    {#if $didRenderSplashScreen && !$isFullServerMode}
+      <SplashLandingPage />
+    {/if}
+
     <!-- Full Server Page will be injected here -->
     <slot />
   {/if}
@@ -30,17 +34,21 @@
 <script>
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
   import HandDrawnDrawerArrow from '$lib/NavSideDrawer/HandDrawnDrawerArrow.svelte'
+  import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
 
   import { initializeDatabase } from '../database.js'
   import 'firebase/app'
   import { getAuth, onAuthStateChanged } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
 
-  import { updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
+  import { handleServerRedirect } from '/src/helpers/everythingElse.js'
+  import { loggedInRootDestination, loggedOutEntry } from '/src/helpers/visitorEntry.js'
 
-  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, sidebarFullscreen } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen, sidebarFullscreen } from '../store.js'
   import { onMount } from 'svelte'
+  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
   import posthog from 'posthog-js'
@@ -60,7 +68,16 @@
     onAuthStateChanged(auth, reactToUserChange)
 
     createSessionRecording()
+
+    window.addEventListener('scroll', handleOnScroll)
   })
+
+  function handleOnScroll () {
+    const scrollTriggerBuffer = 120
+    if (window.scrollY >= window.innerHeight - scrollTriggerBuffer) {
+      isFullServerMode.set(true)
+    }
+  }
 
   function restoreDrawerOnEscape (event) {
     if (event.key === 'Escape' && $sidebarFullscreen) {
@@ -112,7 +129,18 @@
     } 
 
     // user not logged in
-    else if ($page.url.pathname !== '/') {
+    else if (loggedOutEntry($page.url.pathname) === 'homepage') {
+      try {
+        didRenderSplashScreen.set(true)
+
+        const algebraAndNumberTheoryServer = await getFirestoreDoc(`classes/${'I90n3qyz45VmY0azjbhh'}`)
+        handleServerRedirect(algebraAndNumberTheoryServer)
+      } catch (error) {
+        console.error(error)
+        alert("Error code & message, see console for details =", error.code + ' ' + error.message)
+      }
+    }
+    else if (!$didRenderSplashScreen) {
       // A shared server or room URL is the destination. Show that page
       // instead of a homepage splash or another server.
       isFullServerMode.set(true)
@@ -205,6 +233,10 @@
               ...userDoc
             })
           }
+
+          // only leave the root URL; a direct link stays on its target
+          const homeDestination = loggedInRootDestination($page.url.pathname, $user.mostRecentServerID)
+          if (homeDestination) goto(homeDestination)
 
           resolve()
         }

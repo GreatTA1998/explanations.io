@@ -1,18 +1,21 @@
 <div class="splash-screen">
 	<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white);">
 		<p class="header-title" bind:clientWidth={containerWidth}>
-			Youtube style help for math & engineering
+			explain ideas clearly
 		</p>
 
 		<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 			<div class="header-subtitle">
-				Subscribe to anyone, get <b>proper</b> explanations once and for all. 
+				Draw and talk on realtime blackboards.<br>
+				Save and export them as animations or videos.
 			</div>
 
 			<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
-				<button type="button" class="open-server" on:click={openDefaultServer} disabled={openingServer}>
-					Open a server
-				</button>
+				<ReusableSubscribeButton/>
+
+				<!-- <div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
+					6 learners joined this year
+				</div> -->
 			</div>
 
 			<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
@@ -22,20 +25,9 @@
 					YC Hacker News
 				</a>
 
-				<div class="separator"></div>
-
-				20 upvotes
-				<!-- style="color: #FF6600;" -->
-				<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
-					r/PhysicsStudents
-				</a>
-
 				<div class="separator"></div>	
 				
 				<CountryFlags/>
-
-				<!-- <div class="separator"></div>	 -->
-				<!-- <BrandLogos/> -->
 			</div>
 		</div>
 
@@ -64,14 +56,10 @@
 </div>
 
 <script>
-	import BrandLogos from './BrandLogos.svelte'
 	import CountryFlags from './CountryFlags.svelte'
 	import RotatingGallery from './RotatingGallery.svelte'
+	import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
 	import { onMount } from 'svelte'
-	import { goto } from '$app/navigation'
-	import { getFirestoreDoc } from '/src/helpers/crud.js'
-	import { handleServerRedirect } from '/src/helpers/everythingElse.js'
-	import { isFullServerMode } from '/src/store.js'
 	import FounderSelfIntro from './FounderSelfIntro.svelte'
 	import HistoricalTimeline from './HistoricalTimeline.svelte'
 
@@ -79,10 +67,6 @@
 	let videoHeight = 0 // AF(0) means not yet calculated
 
 	let containerWidth
-	let openingServer = false
-
-	// Algebra and Number Theory, the public server the splash used to open.
-	const DEFAULT_SERVER_ID = 'I90n3qyz45VmY0azjbhh'
 
 	onMount(() => {
 		calculateVideoSizes()
@@ -192,21 +176,6 @@
 		return { videoWidth, videoHeight };
 	}
 
-	async function openDefaultServer () {
-		if (openingServer) return
-		openingServer = true
-		isFullServerMode.set(true)
-		try {
-			const server = await getFirestoreDoc(`classes/${DEFAULT_SERVER_ID}`)
-			handleServerRedirect(server)
-		} catch (error) {
-			console.error(error)
-			await goto(`/${DEFAULT_SERVER_ID}/overview`)
-		} finally {
-			openingServer = false
-		}
-	}
-
 	function getRandomIntInclusive({ min, max }) {
 		min = Math.ceil(min)
 		max = Math.floor(max)
@@ -219,32 +188,6 @@
 		height: 100vh;
     padding: 6vw 6vw;
     background-color: var(--bg-off-white);
-	}
-
-	.open-server {
-		background: #5d0068;
-		color: white;
-		padding: 12px 24px;
-		border-radius: 24px;
-		border: none;
-		font-weight: 500;
-		font-size: 16px;
-		width: fit-content;
-		height: 44px;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-
-	.open-server:hover {
-		transform: translateY(-1px);
-		box-shadow: 0 4px 12px rgba(93, 0, 104, 0.2);
-	}
-
-	.open-server:disabled {
-		opacity: 0.7;
-		cursor: default;
-		transform: none;
-		box-shadow: none;
 	}
 
 	.separator {

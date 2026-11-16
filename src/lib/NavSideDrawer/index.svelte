@@ -534,7 +534,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 12px 8px;
+    padding: 6px 12px;
   }
 
   .name-filter {

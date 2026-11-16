@@ -43,8 +43,10 @@
   import {
     buildTranscriptDocument,
     progressInWord,
+    transcriptNeedsSpeechAlignment,
     wordAtTime
   } from '/src/helpers/transcriptDocument.js'
+  import { loadSpeechIntervals } from '/src/helpers/speechTimeline.js'
   import {
     claimPlayback,
     hoverSeeksPlayback,
@@ -66,21 +68,44 @@
   let pointerHold = 0
   let scrubFrame = 0
   let scrubAt = null
+  // null = linear/real times; [] or intervals after speech alignment loads
+  let speechIntervals = null
+  let speechLoadKey = ''
   const wordNodes = {}
   const playback = { stop: () => {}, shown: null }
 
   $: path = playbackPathOf(videoDoc)
   $: segments = readCachedTranscript(videoDoc) || []
   $: problem = readTranscriptProblem(videoDoc, $transcriptProblems)
+  $: audioUrl = videoDoc && videoDoc.audioDownloadURL
+  $: syncSpeechIntervals(path, segments, audioUrl)
   // Pass the audio duration so a text-only cue saved as 0–0 still maps onto
   // the recording. Seek-bar and playback currentTime then pick the right word.
-  $: documentModel = buildTranscriptDocument(segments, duration)
+  // speechIntervals stays null until load finishes (linear stretch meanwhile).
+  $: documentModel = buildTranscriptDocument(segments, duration, speechIntervals)
   $: words = documentModel.words
   $: paragraphs = documentModel.paragraphs
   $: currentWord = wordAtTime(words, time)
   $: progress = progressInWord(currentWord, time)
   $: revealCurrent(currentWord)
   $: followPlayback(path)
+
+  function syncSpeechIntervals(nextPath, nextSegments, nextAudioUrl) {
+    if (!transcriptNeedsSpeechAlignment(nextSegments) || !nextAudioUrl) {
+      speechLoadKey = ''
+      speechIntervals = null
+      return
+    }
+    const key = nextPath + '\n' + nextAudioUrl
+    if (speechLoadKey === key) return
+    speechLoadKey = key
+    // Linear stretch until speech-active intervals arrive.
+    speechIntervals = null
+    loadSpeechIntervals(nextAudioUrl).then((intervals) => {
+      if (speechLoadKey !== key) return
+      speechIntervals = intervals
+    })
+  }
 
   function followPlayback(nextPath) {
     playback.stop()

@@ -362,7 +362,7 @@ async function moveVideoIntoAnotherRoom ({ droppedRoomID, boardID }) {
   }
 
   /* legacy grey: #e2dddd */
-  .selected {
+  .room-item.selected {
     font-weight: 700;
     background-color: #F7C686;
     color: black;

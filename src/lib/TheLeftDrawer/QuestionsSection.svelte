@@ -1,53 +1,43 @@
 <script>
   import QuestionsSectionItem from '$lib/TheLeftDrawer/QuestionsSectionItem.svelte'
   import { onMount } from 'svelte'
-  import { collection, getFirestore, onSnapshot, query, orderBy, increment} from 'firebase/firestore'
+  import { collection, getFirestore, onSnapshot, query, orderBy } from 'firebase/firestore'
+  import { drawerNameQuery } from '/src/store.js'
+  import { fuzzyFilter } from '/src/helpers/fuzzyName.js'
 
   export let classID
 
   let unsub = null
   let allQuestions = null
 
+  $: shown = fuzzyFilter(allQuestions || [], $drawerNameQuery, q => q.title)
+
   onMount(() => {
     listenToQuestions()
+    return () => unsub?.()
   })
-    
+
   function listenToQuestions () {
-    const questionsRef = collection(
-      getFirestore(),
-      `/classes/${classID}/questions`
-    )
     const questionsQuery = query(
-      questionsRef,
+      collection(getFirestore(), `/classes/${classID}/questions`),
       orderBy('timestamp', 'desc')
     )
-
-    unsub = onSnapshot(questionsQuery, async (snapshot) => { // onSnapshot does NOT return a promise
+    unsub = onSnapshot(questionsQuery, (snapshot) => {
       const docs = []
-      snapshot.forEach(doc => { 
-        docs.push({ 
-          id: doc.id, 
-          path: doc.ref.path, 
-          ...doc.data()  
-        })
+      snapshot.forEach(docSnap => {
+        docs.push({ id: docSnap.id, path: docSnap.ref.path, ...docSnap.data() })
       })
       allQuestions = docs
     })
   }
 </script>
 
-<div class="q-section-container">
-  <slot>
-
-  </slot>
-
-  <div class="q-list-container">
-    {#if allQuestions}
-      {#each allQuestions as question (question.id)}
-        <QuestionsSectionItem {question} {classID}/>
-      {/each}
-    {/if}
-  </div>
+<div class="q-list-container">
+  {#if allQuestions}
+    {#each shown as question (question.id)}
+      <QuestionsSectionItem {question} {classID}/>
+    {/each}
+  {/if}
 </div>
 
 <style>

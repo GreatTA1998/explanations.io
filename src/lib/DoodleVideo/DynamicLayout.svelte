@@ -28,7 +28,7 @@
   export let videoWidth = 0
   export let isDrawerOpen = false
 
-  const PANEL_WIDTH = 200
+  const PANEL_WIDTH = 320
   // Clears the one-line title row. The on-board controls stay usable below the panel.
   const HEADER_CLEARANCE = 38
 
@@ -38,7 +38,7 @@
   $: sideBySide = videoWidth > 0 && margin >= PANEL_WIDTH
   $: frameWidth = sideBySide || !videoWidth ? '100%' : `${videoWidth}px`
   $: panelStyle = sideBySide
-    ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 54ch;`
+    ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 72ch;`
     : `
       position: absolute;
       top: ${HEADER_CLEARANCE}px;

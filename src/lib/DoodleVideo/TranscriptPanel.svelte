@@ -57,6 +57,7 @@
   export let videoDoc
 
   let time = 0
+  let duration = 0
   let playing = false
   let playFromPointer = false
   let docEl = null
@@ -71,7 +72,9 @@
   $: path = playbackPathOf(videoDoc)
   $: segments = readCachedTranscript(videoDoc) || []
   $: problem = readTranscriptProblem(videoDoc, $transcriptProblems)
-  $: documentModel = buildTranscriptDocument(segments)
+  // Pass the audio duration so a text-only cue saved as 0–0 still maps onto
+  // the recording. Seek-bar and playback currentTime then pick the right word.
+  $: documentModel = buildTranscriptDocument(segments, duration)
   $: words = documentModel.words
   $: paragraphs = documentModel.paragraphs
   $: currentWord = wordAtTime(words, time)
@@ -84,8 +87,12 @@
     playback.shown = null
     playing = false
     playFromPointer = false
+    duration = 0
     let pending = null
     playback.stop = subscribePlayback(nextPath, (snapshot) => {
+      if (Number.isFinite(snapshot.duration) && snapshot.duration > 0) {
+        duration = snapshot.duration
+      }
       if (snapshot.playing === true) {
         playing = true
         playFromPointer = false
@@ -113,6 +120,7 @@
       // A seek (scrub, or a click in this transcript) may jump backward.
       // A single backward tick may not: this recording's clock was published
       // twice and a bad sample pulled the row highlight back to an earlier cue.
+      // Seek-bar drags publish reason "seek" so the orange caret tracks them.
       if (snapshot.reason === 'seek' || playback.shown == null || next + 0.35 >= playback.shown) {
         playback.shown = next
         pending = null

@@ -265,11 +265,12 @@
   $: visibilityLabel = visibilityActionLabel($classServerDoc)
   $: canChangeVisibility = !!$page.params.class && viewerIsServerCreator($classServerDoc, $user.uid)
   $: menuOffset = serverNameLeft(floating)
-  $: columnCount = menuColumnCount($viewport.width, previewServers.length + 1, menuOffset)
-  $: menuWidth = Math.max(
-    columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP,
-    listServers.length ? CARD_WIDTH : 0
+  $: columnCount = menuColumnCount(
+    $viewport.width,
+    Math.max(previewServers.length + 1, listServers.length),
+    menuOffset
   )
+  $: menuWidth = columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP
   $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
   $: if (menuOpen) placeMenu($viewport.width, menuWidth)
 
@@ -702,12 +703,10 @@
   }
 
   .server-name-list {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 240px);
+    gap: 4px 8px;
     margin-top: 8px;
-    width: 100%;
-    max-width: 100%;
   }
 
   .server-list-row {
@@ -719,7 +718,7 @@
     text-align: left;
     background: rgba(255, 255, 255, 0.92);
     color: black;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     overflow: hidden;
     white-space: nowrap;

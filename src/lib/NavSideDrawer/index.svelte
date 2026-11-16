@@ -128,16 +128,6 @@
           </div>
         {/if}
       </div>
-
-      <button
-        type="button"
-        class="hide-drawer-button"
-        aria-label="Hide drawer"
-        title="Hide drawer"
-        on:click={() => sidebarFullscreen.set(true)}
-      >
-        <HandDrawnDrawerArrow pointing="left" />
-      </button>
     </div>
 
     {#if !floating}
@@ -200,6 +190,16 @@
             </p>
           </div>
         </AnchoredPopover>
+
+        <button
+          type="button"
+          class="hide-drawer-button"
+          aria-label="Hide drawer"
+          title="Hide drawer"
+          on:click={() => sidebarFullscreen.set(true)}
+        >
+          <HandDrawnDrawerArrow pointing="left" />
+        </button>
       </nav>
 
       <div class="rooms-actions">
@@ -491,22 +491,6 @@
     border-bottom: 2px solid black;
   }
 
-  .hide-drawer-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    flex: 0 0 auto;
-    padding: 0;
-    border-radius: 8px;
-    color: rgb(80, 80, 80);
-  }
-
-  .hide-drawer-button:hover {
-    background: rgba(0, 0, 0, 0.06);
-  }
-
   .sub-nav {
     display: flex;
     align-items: stretch;
@@ -529,7 +513,8 @@
     text-transform: lowercase;
   }
 
-  .sub-nav .settings-button {
+  .sub-nav .settings-button,
+  .sub-nav .hide-drawer-button {
     flex: 0 0 auto;
     align-self: center;
   }
@@ -581,18 +566,21 @@
     font-size: 1.4rem;
   }
 
-  .settings-button {
+  .settings-button,
+  .hide-drawer-button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
     margin-left: 4px;
+    padding: 0;
     border-radius: 8px;
     color: rgb(80, 80, 80);
   }
 
-  .settings-button:hover {
+  .settings-button:hover,
+  .hide-drawer-button:hover {
     background: rgba(0, 0, 0, 0.06);
   }
 

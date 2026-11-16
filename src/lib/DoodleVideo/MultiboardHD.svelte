@@ -380,6 +380,10 @@
     align-items: center;
     gap: 8px;
     height: 32px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.14);
     color: #fff;
     pointer-events: none;
   }

@@ -179,7 +179,8 @@
 
   .comments-column.over-board {
     border-radius: 0;
-    height: 100%;
+    /* Fill the overlay when content is short; grow with it when it scrolls. */
+    min-height: 100%;
   }
 
   .submit-button {

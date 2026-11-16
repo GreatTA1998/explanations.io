@@ -674,14 +674,12 @@
     /* Fixed: absolute inside the drawer clipped the grid and ate card hits. */
     position: fixed;
     z-index: 40;
-    background: transparent;
-    border: none;
-    box-shadow: none;
+    /* Opaque plate: no glass wash over board / transcript / room list. */
+    background: var(--bg-off-white);
   }
 
   .search-slot {
     padding: 0;
-    background: transparent;
   }
 
   .search-slot :global(.my-search-bar) {
@@ -702,7 +700,6 @@
     max-height: 70vh;
     overflow: auto;
     padding: 8px 0 4px;
-    background: transparent;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }

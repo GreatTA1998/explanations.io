@@ -143,6 +143,8 @@
   #main-content {
     grid-area: main;
     position: relative;
+    /* Trap board overlays (transcript z-index) below #left-drawer / server menu. */
+    z-index: 0;
     min-width: 0;
   }
 

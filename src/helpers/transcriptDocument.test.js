@@ -4,6 +4,7 @@ import {
   buildTranscriptDocument,
   progressInWord,
   stretchSegments,
+  transcriptNeedsSpeechAlignment,
   wordAtTime,
   wordsFromSegments
 } from './transcriptDocument.js'
@@ -146,4 +147,44 @@ test('zero-span word timestamps are ignored so the cue can be stretched', () => 
   assert.ok(words[0].start < words[1].start)
   assert.ok(words[2].end > 20)
   assert.equal(wordAtTime(words, 1).text, 'alpha')
+})
+
+test('stretched cues ask for speech alignment when word times are missing', () => {
+  assert.equal(transcriptNeedsSpeechAlignment([{ start: 0, end: 0, text: 'alpha bravo.' }]), true)
+  assert.equal(transcriptNeedsSpeechAlignment([{
+    start: 0,
+    end: 4,
+    text: 'alpha bravo',
+    words: [
+      { word: 'alpha', start: 0.1, end: 0.4 },
+      { word: 'bravo', start: 0.5, end: 1 }
+    ]
+  }]), false)
+})
+
+test('speech intervals keep the caret from running ahead during drawing pauses', () => {
+  // Pause-heavy blackboard shape: silence early, speech later. Linear
+  // wall-clock stretch parks too many words in the silent half (the ~17 word
+  // lead on "What really is a type?"); speech-aligned placement does not.
+  const text = Array.from({ length: 40 }, (_, index) => (
+    index === 39 ? 'end.' : 'word'
+  )).join(' ')
+  const duration = 40
+  const intervals = [
+    { start: 2, end: 8 },
+    { start: 20, end: 36 }
+  ]
+  const linear = wordsFromSegments([{ start: 0, end: 0, text }], duration)
+  const aligned = wordsFromSegments([{ start: 0, end: 0, text }], duration, intervals)
+
+  assert.ok(wordAtTime(linear, 24).id - wordAtTime(aligned, 24).id >= 4)
+
+  const midPause = wordAtTime(aligned, 12)
+  assert.equal(midPause.id, wordAtTime(aligned, 7.9).id)
+  assert.ok(midPause.end <= 8 + 1e-9)
+
+  const duringSpeech = wordAtTime(aligned, 24)
+  assert.ok(duringSpeech.start >= 20 - 1e-9)
+  assert.ok(duringSpeech.start <= 24 && 24 <= duringSpeech.end + 1e-9)
+  assert.ok(duringSpeech.id > midPause.id)
 })

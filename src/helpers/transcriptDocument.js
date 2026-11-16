@@ -1,16 +1,25 @@
 // Turns saved { start, end, text } cues into a paragraph document.
-// A cue's end includes the pause after the phrase. Stretching every word
-// out to that end keeps the caret on an earlier word while the phrase is
-// spoken. Each sentence is given its share of the cue, the words keep a
-// natural length, and a short remainder stays after the sentence.
-// A cue from one slice can overlap the next one; those overlaps are closed
-// so one playhead time lands on one word.
 //
-// gpt-4o-transcribe often returns text without times. The server stores the
-// recording span when it can read it. Older or failed spans land as
-// start === end (often 0). The audio element's duration then stretches those
-// cues so the caret and seek follow currentTime instead of sticking on the
-// last word.
+// Stored times (when the model returns them) are authoritative: a word's
+// start is when that token begins in the recording, and a cue's end may
+// include a short pause after the phrase. Derived times are used only when
+// those are missing.
+//
+// For a text-only cue, wall-clock duration alone is the wrong span: blackboard
+// recordings pause while the instructor draws, so stretching words across
+// [0, duration] puts the caret ahead of speech. When speech-active intervals
+// are available, derived words tile speech time and map back to currentTime;
+// pauses hold the caret. Without intervals, words still fill the recording
+// span (and never pack at a "natural" reading rate inside that invented span).
+//
+// Real cues still keep a short per-sentence remainder when the leftover is
+// only a brief pause. A cue from one slice can overlap the next; those
+// overlaps are closed so one playhead time lands on one word.
+
+import {
+  speechSpanSeconds,
+  wallClockFromSpeechTime
+} from './speechTimeline.js'
 
 const PARAGRAPH_GAP = 0.8
 // About 150 words a minute. A one-letter word still gets a short audible length.
@@ -24,18 +33,26 @@ const SENTENCE_END = /[.!?]["')\]]*$/
 // A cue shorter than this cannot place the playhead on different words.
 const MIN_TIMED_SPAN = 0.05
 
-export function buildTranscriptDocument(segments, durationSeconds = null) {
-  const words = wordsFromSegments(segments, durationSeconds)
+export function buildTranscriptDocument(segments, durationSeconds = null, speechIntervals = null) {
+  const words = wordsFromSegments(segments, durationSeconds, speechIntervals)
   return { words, paragraphs: paragraphsFromWords(words) }
 }
 
-export function wordsFromSegments(segments, durationSeconds = null) {
+export function wordsFromSegments(segments, durationSeconds = null, speechIntervals = null) {
   const words = []
+  const speechSpan = speechSpanSeconds(speechIntervals)
   for (const segment of stretchSegments(segments, durationSeconds)) {
     const parts = segment.text.split(/\s+/).filter(Boolean)
     if (!parts.length) continue
-    const span = Math.max(0, segment.end - segment.start)
-    const timed = matchingWordTimes(segment, parts) || spreadWords(parts, segment.start, span)
+    const matched = matchingWordTimes(segment, parts)
+    let timed = matched
+    if (!timed && segment.stretched && speechSpan > MIN_TIMED_SPAN) {
+      timed = spreadWordsAlongSpeech(parts, speechIntervals, speechSpan)
+    }
+    if (!timed) {
+      const span = Math.max(0, segment.end - segment.start)
+      timed = spreadWords(parts, segment.start, span, segment.stretched === true)
+    }
     for (const word of timed) {
       words.push({
         id: words.length,
@@ -46,6 +63,45 @@ export function wordsFromSegments(segments, durationSeconds = null) {
     }
   }
   return words
+}
+
+function spreadWordsAlongSpeech(parts, intervals, speechSpan) {
+  const spoken = spreadWords(parts, 0, speechSpan, true)
+  return spoken.map((word) => {
+    const start = wallClockFromSpeechTime(word.start, intervals)
+    let end = wallClockFromSpeechTime(word.end, intervals)
+    // A word whose speech range crosses a silence island would otherwise
+    // stretch across the drawing pause. Keep it inside the island it starts
+    // in so the caret freezes on that word until speech resumes.
+    const spokenDuration = Math.max(0, word.end - word.start)
+    if (end - start > spokenDuration + 1e-3) {
+      end = Math.max(start, endOfSpeechIsland(start, intervals))
+    }
+    return { text: word.text, start, end: Math.max(start, end) }
+  })
+}
+
+function endOfSpeechIsland(time, intervals) {
+  for (const interval of intervals) {
+    const start = Number(interval.start)
+    const end = Number(interval.end)
+    if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) continue
+    if (time >= start && time <= end + 1e-9) return end
+  }
+  return time
+}
+
+export function transcriptNeedsSpeechAlignment(segments) {
+  const repaired = repairSegments(segments)
+  if (!repaired.length) return false
+  const minStart = repaired.reduce((lowest, segment) => Math.min(lowest, segment.start), Infinity)
+  const maxEnd = repaired.reduce((highest, segment) => Math.max(highest, segment.end), 0)
+  if (maxEnd - minStart > MIN_TIMED_SPAN) return false
+  return repaired.some((segment) => {
+    const parts = segment.text.split(/\s+/).filter(Boolean)
+    if (!parts.length) return false
+    return !matchingWordTimes(segment, parts)
+  })
 }
 
 // When saved cues have no usable span, map them onto the recording length so
@@ -69,7 +125,8 @@ export function stretchSegments(segments, durationSeconds = null) {
       start: 0,
       end: target,
       text: repaired[0].text,
-      words: usableStoredWords(repaired[0].words, 0, target)
+      words: usableStoredWords(repaired[0].words, 0, target),
+      stretched: true
     }]
   }
 
@@ -85,7 +142,8 @@ export function stretchSegments(segments, durationSeconds = null) {
       start,
       end,
       text: segment.text,
-      words: usableStoredWords(segment.words, start, end)
+      words: usableStoredWords(segment.words, start, end),
+      stretched: true
     }
   })
 }
@@ -147,10 +205,10 @@ function sentenceGroups(parts) {
 }
 
 // Each sentence gets a window proportional to how long it takes to say.
-// Inside that window the words keep their length when the leftover is only
-// a short pause. A window that is shorter than the reading, or much longer,
-// is filled so a whole recording is not packed against the front.
-function spreadWords(parts, start, span) {
+// Inside a real cue, words keep their length when the leftover is only a
+// short pause. Stretched cues (and windows much longer than the reading)
+// always fill so speech is not packed against the front of each window.
+function spreadWords(parts, start, span, fillAll = false) {
   const groups = sentenceGroups(parts)
   const weights = groups.map((group) => group.reduce((sum, text) => sum + wordSeconds(text), 0))
   const total = weights.reduce((sum, weight) => sum + weight, 0) || 1
@@ -158,17 +216,19 @@ function spreadWords(parts, start, span) {
   const timed = []
   for (let index = 0; index < groups.length; index += 1) {
     const window = span * (weights[index] / total)
-    timed.push(...placeSentence(groups[index], windowStart, window))
+    timed.push(...placeSentence(groups[index], windowStart, window, fillAll))
     windowStart += window
   }
   return timed
 }
 
-function placeSentence(words, windowStart, window) {
+function placeSentence(words, windowStart, window, fillAll = false) {
   const weights = words.map(wordSeconds)
   const natural = weights.reduce((sum, weight) => sum + weight, 0)
   const spare = window - natural
-  const fill = !(spare > 0 && spare <= MAX_TAIL_SECONDS)
+  // Stretched timelines invent the span; every word must tile it. Real cues
+  // may keep a short tail when the model included a brief pause in `end`.
+  const fill = fillAll || !(spare > 0 && spare <= MAX_TAIL_SECONDS)
   const scale = fill && natural > 0 ? window / natural : 1
   let cursor = windowStart
   const placed = words.map((text, index) => {

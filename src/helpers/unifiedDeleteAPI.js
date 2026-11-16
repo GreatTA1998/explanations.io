@@ -40,7 +40,7 @@ export { destinationAfterRoomDelete }
  *   5. Navigate away from the deleted room (never to /overview)
  */
 export async function deleteRoom ({ room, classID }) {
-  if (!confirm('Are you sure you want to delete this room?')) {
+  if (!confirm(`Are you sure you want to delete the room "${room.name || '(untitled)'}"?`)) {
     return
   }
 

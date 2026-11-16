@@ -5,6 +5,7 @@
   aria-expanded={open}
   aria-label={open ? 'Hide transcript and comments' : 'Show transcript and comments'}
 >
+  <!-- TODO(icon): leave as-is until Elton picks among (a) panel chevron in/out, (b) speech-bubble +/- , (c) drawer handle / grab bar -->
   <span class="material-symbols-outlined" style="font-size: 20px;">
     {open ? 'keyboard_double_arrow_right' : 'forum'}
   </span>

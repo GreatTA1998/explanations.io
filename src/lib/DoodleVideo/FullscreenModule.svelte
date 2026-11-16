@@ -20,7 +20,8 @@
   export let previewWidth = window.innerWidth * 0.35
   export let boardDoc
 
-  let commentsOpen = false
+  // Transcript/comments drawer starts open; the toggle still hides it.
+  let commentsOpen = true
 
   $: canvasWidth = previewWidth
   $: canvasHeight = canvasWidth * 3/4

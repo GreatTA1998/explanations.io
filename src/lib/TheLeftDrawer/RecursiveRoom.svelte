@@ -145,8 +145,6 @@ let RoomElement
 let isExpanded = false
 let unsubListener
 let scrolledForRoomId = null
-/** Only auto-expand once per active room so snapshots do not re-force open. */
-let expandedForActiveId = null
 
 $: showRoomMenu = $page.params.roomID && $user.uid && $adminUIDs.includes($user.uid)
 $: roomMenuId = `room-menu-${room.id}`
@@ -162,10 +160,11 @@ onDestroy(() => {
   if (unsubListener) unsubListener()
 })
 
+// `room` stays inside the function so a snapshot's new room object is not a
+// dependency. `sameIdSet` keeps the ancestor Set stable, so a collapse sticks
+// until the active room or the ancestor set actually changes.
 function ensureExpandedForActivePath (activeId, ancestors) {
   if (!activeId || !ancestors?.has(room.id)) return
-  if (expandedForActiveId === activeId) return
-  expandedForActiveId = activeId
   expandChildrenRooms()
 }
 

@@ -2,7 +2,7 @@
 
 <div class="nav-cluster" class:floating>
   <section class="nav-panel" aria-label="Server navigation">
-    <div class="server-row">
+    <div class="server-row" class:elevation={rowElevation}>
       <AnchoredPopover
         bind:this={actionsPopover}
         positionArea="block-end span-inline-end"
@@ -171,6 +171,10 @@
               <span>Private</span>
               <span class="switch-track" class:on={isPrivate} aria-hidden="true"><span class="switch-thumb"></span></span>
             </button>
+            <button type="button" class="privacy-toggle" role="switch" aria-checked={rowElevation} aria-label="Soft server-row crease" on:click|stopPropagation={toggleRowElevation}>
+              <span>Soft crease</span>
+              <span class="switch-track" class:on={rowElevation} aria-hidden="true"><span class="switch-thumb"></span></span>
+            </button>
           </div>
         </AnchoredPopover>
 
@@ -220,10 +224,18 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
+  import { onMount } from 'svelte'
   import { CARD_WIDTH, CARD_GAP, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
 
   export let floating = false
+  const ROW_ELEVATION_KEY = 'server-row-elevation'
+  let rowElevation = false
+  onMount(() => { try { rowElevation = localStorage.getItem(ROW_ELEVATION_KEY) === '1' } catch (_) {} })
+  function toggleRowElevation () {
+    rowElevation = !rowElevation
+    try { localStorage.setItem(ROW_ELEVATION_KEY, rowElevation ? '1' : '0') } catch (_) {}
+  }
 
   function dismissOnClick (node, closeMenu) {
     const onClick = () => closeMenu?.()
@@ -424,6 +436,11 @@
     gap: 4px;
     padding: 8px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .server-row.elevation {
+    border-bottom-color: transparent;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
   }
 
   .logo-button {

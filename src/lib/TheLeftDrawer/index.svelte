@@ -5,41 +5,32 @@
       without the need of an explicit height / max-height property 
     -->
     <div style="position: absolute; overflow-y: auto; inset: 0;">
-      <QuestionsSection {classID} />
+      {#if $drawerNavTab === 'forum'}
+        <QuestionsSection {classID} />
+      {:else}
+        {#each rootRooms as room, i (room.id)}
+          {#if !room.parentRoomID}
+            <RecursiveRoom 
+              {room} 
+              {roomID}
+              {classID}
+              {ancestorRoomIds}
+              orderWithinLevel={i}
+              roomsInThisLevel={rootRooms}
+              parentRoomIDs={['']}
+            />
+          {/if}
+        {/each}
 
-      <div style="margin-top: 48px;"></div>
-
-      <div style="display: flex; align-items: center;">
-        <div style="text-transform: uppercase; font-weight: 500; color: rgb(120, 120, 120); margin-left: 12px;">
-          Library Archive
-        </div>
-        <button on:click={createNewRoom} class="material-icons new-room-button">
-          add
-        </button>
-      </div>
-
-      {#each rootRooms as room, i (room.id)}
-        {#if !room.parentRoomID}
-          <RecursiveRoom 
-            {room} 
-            {roomID}
-            {classID}
-            {ancestorRoomIds}
-            orderWithinLevel={i}
-            roomsInThisLevel={rootRooms}
+        <div style="padding: 6px;">
+          <RecursiveRoomReorderDropzone
+            orderWithinLevel={rootRooms.length}
             parentRoomIDs={['']}
+            roomsInThisLevel={rootRooms}
+            {classID}
           />
-        {/if}
-      {/each}
-
-      <div style="padding: 6px;">
-        <RecursiveRoomReorderDropzone
-          orderWithinLevel={rootRooms.length}
-          parentRoomIDs={['']}
-          roomsInThisLevel={rootRooms}
-          {classID}
-        />
-      </div>
+        </div>
+      {/if}
     </div>
   </div>
 </div>
@@ -49,10 +40,9 @@
   import RecursiveRoom from './RecursiveRoom.svelte'
   import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
   import { ancestorIdsForRoom, sameIdSet } from './roomAncestors.js'
-  import { user } from '/src/store.js'
-  import { goto } from '$app/navigation'
+  import { user, drawerNavTab } from '/src/store.js'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
-  import { createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
+  import { updateFirestoreDoc } from '/src/helpers/crud.js'
 
   export let classID
   export let roomID
@@ -61,9 +51,16 @@
   const classPath = `classes/${classID}/`
   let unsubFuncs = []
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
+  let lastClassID = ''
 
   $: if (classID) {
     initializeEverything()
+  }
+
+  // Rooms is the default peer tab whenever the server changes.
+  $: if (classID && classID !== lastClassID) {
+    lastClassID = classID
+    drawerNavTab.set('rooms')
   }
 
   async function initializeEverything () {
@@ -114,11 +111,6 @@
     })
   }
 
-  async function createNewRoom () {
-    const newRoomID = await createRoomDoc(classPath)
-    goto(`/${classID}/${newRoomID}`)
-  }
-
   function fetchRooms () {
     const roomsRef = collection(
       getFirestore(),
@@ -145,19 +137,3 @@
     )
   }
 </script>
-
-<style>
-  .new-room-button {
-    cursor: pointer;
-    color: grey; 
-    margin-left: auto; 
-    margin-right: 12px; 
-    font-size: 1.2rem;
-    width: 24px; 
-    height: 24px;
-  }
-
-  .new-room-button:hover {
-    background-color: rgb(233, 233, 233);
-  }
-</style>

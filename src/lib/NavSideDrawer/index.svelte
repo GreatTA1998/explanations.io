@@ -2,147 +2,193 @@
 
 <div class="nav-cluster" class:floating bind:this={clusterEl}>
   <section class="nav-panel" aria-label="Server navigation">
-    <GlobalAppPopup let:setIsPopupOpen={setIsPopupOpen}>
-      <div class="server-row">
+    <div class="server-row">
+      <AnchoredPopover
+        bind:this={actionsPopover}
+        positionArea="block-end span-inline-end"
+        on:toggle={onActionsToggle}
+        let:close
+      >
         <button
+          slot="activator"
+          let:popoverId
+          let:anchorName
           type="button"
           class="logo-button"
-          on:click={() => {
-            if ($user.uid) setIsPopupOpen(true)
-            else isFullServerMode.set(false)
-          }}
+          aria-label="Open app menu"
+          aria-haspopup="menu"
+          aria-expanded={actionsOpen}
+          aria-controls={popoverId || undefined}
+          popovertarget={popoverId || undefined}
+          style={anchorName ? `anchor-name: ${anchorName}` : undefined}
         >
           <img
             src="/app-logo-no-bg.png"
             width="36"
             height="33"
-            alt="app logo"
+            alt=""
           >
         </button>
 
-        <div class="server-anchor">
-          <button
-            type="button"
-            class="server-name"
-            aria-haspopup="true"
-            aria-expanded={menuOpen}
-            aria-controls="server-switch-menu"
-            title={currentServerName}
-            on:click={toggleServerMenu}
-          >
-            {currentServerName}
-          </button>
-
-          {#if menuOpen}
-            <div class="server-menu" id="server-switch-menu" style="width: {menuWidth}px;">
-              <div class="search-slot">
-                <SearchBar
-                  {searchVal}
-                  on:input={(e) => onSearchInput(e.detail)}
-                />
-              </div>
-
-              <div class="server-list" style="--menu-columns: {columnCount};">
-                {#each visibleServers as server (server.id)}
-                  <CompactServerCard serverObj={server} />
-                {/each}
-
-                <button type="button" class="create-server" on:click={openCreateServer}>
-                  Create new server
-                </button>
-              </div>
+        <div class="server-actions" role="menu" use:dismissOnClick={close}>
+          {#if $user.uid}
+            <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>
+              Log out
+            </button>
+          {:else}
+            <div class="menu-row sign-in">
+              <ReusableSignInButton />
             </div>
           {/if}
-        </div>
 
-        <AnchoredPopover
-          bind:this={actionsPopover}
-          positionArea="block-end span-inline-start"
-          on:toggle={onActionsToggle}
-          let:close
-        >
-          <button
-            slot="activator"
-            let:popoverId
-            let:anchorName
-            type="button"
-            class="menu-button"
-            aria-label="Open menu"
-            aria-haspopup="menu"
-            aria-expanded={actionsOpen}
-            aria-controls={popoverId || undefined}
-            popovertarget={popoverId || undefined}
-            style={anchorName ? `anchor-name: ${anchorName}` : undefined}
+          <div class="menu-embed">
+            <CalEmbed />
+          </div>
+
+          <a
+            class="menu-row hide-on-mobile"
+            role="menuitem"
+            href="https://eltonlin.substack.com/archive"
+            target="_blank"
+            rel="noreferrer"
           >
-            <span class="material-icons" aria-hidden="true">more_vert</span>
+            SUBSTACK BLOG
+          </a>
+
+          <a
+            class="menu-row"
+            role="menuitem"
+            href="https://github.com/greatTA1998/explain"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src="/github-logo-dark-mode-no-bg.png" width="24" height="24" alt="Github">
+            GitHub
+          </a>
+
+          <span class="menu-note">+1 503 250 3868</span>
+          <span class="menu-note">elton@explanations.io</span>
+
+          <button
+            type="button"
+            class="menu-row visibility-row"
+            role="menuitem"
+            disabled={!canChangeVisibility || savingVisibility}
+            title={canChangeVisibility ? undefined : 'Only the person who created this server can change this'}
+            on:click={setServerVisibility}
+          >
+            {visibilityLabel}
           </button>
+        </div>
+      </AnchoredPopover>
 
-          <div class="server-actions" role="menu" use:dismissOnClick={close}>
-            {#if $user.uid}
-              <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>
-                Log out
-              </button>
-            {:else}
-              <div class="menu-row sign-in">
-                <ReusableSignInButton />
-              </div>
-            {/if}
+      <div class="server-anchor">
+        <button
+          type="button"
+          class="server-name"
+          aria-haspopup="true"
+          aria-expanded={menuOpen}
+          aria-controls="server-switch-menu"
+          title={currentServerName}
+          on:click={toggleServerMenu}
+        >
+          {currentServerName}
+        </button>
 
-            <div class="menu-embed">
-              <CalEmbed />
+        {#if menuOpen}
+          <div class="server-menu" id="server-switch-menu" style="width: {menuWidth}px;">
+            <div class="search-slot">
+              <SearchBar
+                {searchVal}
+                on:input={(e) => onSearchInput(e.detail)}
+              />
             </div>
 
-            <a
-              class="menu-row hide-on-mobile"
-              role="menuitem"
-              href="https://eltonlin.substack.com/archive"
-              target="_blank"
-              rel="noreferrer"
-            >
-              SUBSTACK BLOG
-            </a>
+            <div class="server-list" style="--menu-columns: {columnCount};">
+              {#each visibleServers as server (server.id)}
+                <CompactServerCard serverObj={server} />
+              {/each}
 
-            <a
-              class="menu-row"
-              role="menuitem"
-              href="https://github.com/greatTA1998/explain"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img src="/github-logo-dark-mode-no-bg.png" width="24" height="24" alt="Github">
-              GitHub
-            </a>
-
-            <span class="menu-note">+1 503 250 3868</span>
-            <span class="menu-note">elton@explanations.io</span>
-
-            <button
-              type="button"
-              class="menu-row visibility-row"
-              role="menuitem"
-              disabled={!canChangeVisibility || savingVisibility}
-              title={canChangeVisibility ? undefined : 'Only the person who created this server can change this'}
-              on:click={setServerVisibility}
-            >
-              {visibilityLabel}
-            </button>
+              <button type="button" class="create-server" on:click={openCreateServer}>
+                Create new server
+              </button>
+            </div>
           </div>
-        </AnchoredPopover>
+        {/if}
       </div>
-    </GlobalAppPopup>
+
+      <button
+        type="button"
+        class="hide-drawer-button"
+        aria-label="Hide drawer"
+        title="Hide drawer"
+        on:click={() => sidebarFullscreen.set(true)}
+      >
+        <HandDrawnDrawerArrow pointing="left" />
+      </button>
+    </div>
+
+    {#if !floating}
+      <nav class="sub-nav" aria-label="Server sections">
+        <button
+          type="button"
+          class="sub-nav-tab"
+          class:active={$drawerNavTab === 'rooms'}
+          aria-current={$drawerNavTab === 'rooms' ? 'page' : undefined}
+          on:click={() => drawerNavTab.set('rooms')}
+        >
+          rooms
+        </button>
+        <button
+          type="button"
+          class="sub-nav-tab"
+          class:active={$drawerNavTab === 'forum'}
+          aria-current={$drawerNavTab === 'forum' ? 'page' : undefined}
+          on:click={() => drawerNavTab.set('forum')}
+        >
+          forum
+        </button>
+      </nav>
+
+      {#if $drawerNavTab === 'rooms'}
+        <div class="rooms-actions">
+          <button type="button" class="new-pill" on:click={createNew} disabled={creating}>
+            <span class="material-symbols-outlined" aria-hidden="true">add</span>
+            new
+          </button>
+
+          <AnchoredPopover
+            bind:this={settingsPopover}
+            positionArea="block-end span-inline-end"
+            on:toggle={onSettingsToggle}
+            let:close={closeSettings}
+          >
+            <button
+              slot="activator"
+              let:popoverId
+              let:anchorName
+              type="button"
+              class="settings-button"
+              aria-label="Open settings"
+              aria-haspopup="menu"
+              aria-expanded={settingsOpen}
+              aria-controls={popoverId || undefined}
+              popovertarget={popoverId || undefined}
+              style={anchorName ? `anchor-name: ${anchorName}` : undefined}
+            >
+              <span class="material-icons" aria-hidden="true">settings</span>
+            </button>
+
+            <div class="settings-menu" role="menu" use:dismissOnClick={closeSettings}>
+              <p class="settings-copy">
+                Problems? Call/text 503 250 3868, reload the page, or force restart Safari.
+              </p>
+            </div>
+          </AnchoredPopover>
+        </div>
+      {/if}
+    {/if}
   </section>
-
-  <div class="action-row">
-    <button type="button" class="new-pill" on:click={createNew} disabled={creating}>
-      <span class="material-symbols-outlined" aria-hidden="true">add</span>
-      New
-    </button>
-
-    <button type="button" class="hide-drawer-button" aria-label="Hide drawer" on:click={() => sidebarFullscreen.set(true)}>
-      <HandDrawnDrawerArrow pointing="left" />
-      <span>Hide drawer</span>
-    </button>
-  </div>
 </div>
 
 <PopupNewServer bind:this={newServerPopup} showTrigger={false} />
@@ -152,12 +198,11 @@
   import CompactServerCard from '$lib/TheTopNavbar/CompactServerCard.svelte'
   import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
-  import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
   import AnchoredPopover from '$lib/Reusable/AnchoredPopover.svelte'
   import CalEmbed from '$lib/GlobalAppPopup/CalEmbed.svelte'
   import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
   import { getFirestoreCollection, createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { user, classServerDoc, recentSearchedServerDoc, isFullServerMode, sidebarFullscreen } from '/src/store.js'
+  import { user, classServerDoc, recentSearchedServerDoc, sidebarFullscreen, drawerNavTab } from '/src/store.js'
   import { viewport } from '/src/storeFolder/viewport.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
@@ -181,7 +226,9 @@
 
   let menuOpen = false
   let actionsOpen = false
+  let settingsOpen = false
   let actionsPopover
+  let settingsPopover
   let savingVisibility = false
   let searchVal = ''
   let allServers = []
@@ -211,6 +258,7 @@
 
   function toggleServerMenu () {
     actionsPopover?.close()
+    settingsPopover?.close()
     menuOpen = !menuOpen
     if (!menuOpen) searchVal = ''
   }
@@ -233,7 +281,18 @@
 
   function onActionsToggle (event) {
     actionsOpen = event.newState === 'open'
-    if (actionsOpen) closeServerMenu()
+    if (actionsOpen) {
+      closeServerMenu()
+      settingsPopover?.close()
+    }
+  }
+
+  function onSettingsToggle (event) {
+    settingsOpen = event.newState === 'open'
+    if (settingsOpen) {
+      closeServerMenu()
+      actionsPopover?.close()
+    }
   }
 
   function handleSignout () {
@@ -324,8 +383,16 @@
   .logo-button {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
     padding: 0;
+    border-radius: 8px;
+  }
+
+  .logo-button:hover {
+    background: rgba(0, 0, 0, 0.06);
   }
 
   .logo-button img {
@@ -356,15 +423,102 @@
     border-bottom: 2px solid orange;
   }
 
-  .menu-button {
+  .hide-drawer-button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 36px;
     height: 36px;
     flex: 0 0 auto;
+    padding: 0;
     border-radius: 8px;
     color: rgb(80, 80, 80);
+  }
+
+  .hide-drawer-button:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .sub-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 12px 4px;
+  }
+
+  .sub-nav-tab {
+    padding: 6px 10px;
+    border-radius: 8px;
+    color: rgb(100, 100, 100);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: lowercase;
+  }
+
+  .sub-nav-tab:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: black;
+  }
+
+  .sub-nav-tab.active {
+    color: black;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .rooms-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px 8px;
+  }
+
+  .new-pill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 40px;
+    padding: 4px 16px;
+    border-radius: 24px;
+    background-color: #f1e8f3;
+    color: black;
+    font-size: 14px;
+  }
+
+  .new-pill .material-symbols-outlined {
+    font-size: 1.4rem;
+  }
+
+  .settings-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    color: rgb(80, 80, 80);
+  }
+
+  .settings-button:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .settings-button .material-icons {
+    font-size: 22px;
+  }
+
+  .settings-menu {
+    min-width: 220px;
+    max-width: 280px;
+    padding: 8px 10px;
+  }
+
+  .settings-copy {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgb(60, 60, 60);
   }
 
   .server-actions {
@@ -481,45 +635,4 @@
     color: #5d0068;
     font-weight: 500;
   }
-
-  .action-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px 4px;
-  }
-
-  .new-pill {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    height: 44px;
-    padding: 4px 16px;
-    border-radius: 24px;
-    background-color: #f1e8f3;
-    color: black;
-    font-size: 14px;
-  }
-
-  .new-pill .material-symbols-outlined {
-    font-size: 1.4rem;
-  }
-
-  .hide-drawer-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    height: 44px;
-    min-width: 44px;
-    padding: 4px 12px;
-    border-radius: 24px;
-    border: 1px solid lightgrey;
-    background-color: white;
-    color: black;
-    font-size: 14px;
-    font-weight: 500;
-    white-space: nowrap;
-  }
-
 </style>

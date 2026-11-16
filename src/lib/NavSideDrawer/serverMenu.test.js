@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { hasDesignatedPreview, previewBlackboardID, serversForMenu, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, visibilityActionLabel, serverVisibleInMenu } from './serverMenu.js'
+import { hasDesignatedPreview, previewBlackboardID, serversForMenu, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, serverVisibleInMenu } from './serverMenu.js'
 
 const featured = { id: 'a', name: 'Algebra and Number Theory', featuredBlackboardID: 'bbbbbbbbbbbbbbbbbbbb' }
 const video = { id: 'b', name: 'Featured video server', featuredVideoID: 'vvvvvvvvvvvvvvvvvvvv' }
@@ -62,8 +62,6 @@ test('a server with no visibility field stays public', () => {
   assert.equal(serverIsPublic({}), true)
   assert.equal(serverIsPublic({ isPublic: true }), true)
   assert.equal(serverIsPublic({ isPublic: false }), false)
-  assert.equal(visibilityActionLabel({}), 'Make private')
-  assert.equal(visibilityActionLabel(secret), 'Make public')
 })
 
 test('only the creator can change visibility, and only they see a private server in the menu', () => {

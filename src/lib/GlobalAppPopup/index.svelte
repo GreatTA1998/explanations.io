@@ -77,10 +77,6 @@
           >
         </div>
       </a>
-
-      <span>+1 503 250 3868</span>
-
-      <span style="marign: 0;">elton@explanations.io</span>
     </div>
   </BasePopup>
   </div>

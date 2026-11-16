@@ -150,43 +150,41 @@
         </button>
       </nav>
 
-      {#if $drawerNavTab === 'rooms'}
-        <div class="rooms-actions">
-          <button type="button" class="new-pill" on:click={createNew} disabled={creating}>
-            <span class="material-symbols-outlined" aria-hidden="true">add</span>
-            new
+      <div class="rooms-actions">
+        <button type="button" class="new-pill" on:click={createNew} disabled={creating}>
+          <span class="material-symbols-outlined" aria-hidden="true">add</span>
+          {$drawerNavTab === 'forum' ? 'new question' : 'new room'}
+        </button>
+
+        <AnchoredPopover
+          bind:this={settingsPopover}
+          positionArea="block-end span-inline-end"
+          on:toggle={onSettingsToggle}
+          let:close={closeSettings}
+        >
+          <button
+            slot="activator"
+            let:popoverId
+            let:anchorName
+            type="button"
+            class="settings-button"
+            aria-label="Open settings"
+            aria-haspopup="menu"
+            aria-expanded={settingsOpen}
+            aria-controls={popoverId || undefined}
+            popovertarget={popoverId || undefined}
+            style={anchorName ? `anchor-name: ${anchorName}` : undefined}
+          >
+            <span class="material-icons" aria-hidden="true">settings</span>
           </button>
 
-          <AnchoredPopover
-            bind:this={settingsPopover}
-            positionArea="block-end span-inline-end"
-            on:toggle={onSettingsToggle}
-            let:close={closeSettings}
-          >
-            <button
-              slot="activator"
-              let:popoverId
-              let:anchorName
-              type="button"
-              class="settings-button"
-              aria-label="Open settings"
-              aria-haspopup="menu"
-              aria-expanded={settingsOpen}
-              aria-controls={popoverId || undefined}
-              popovertarget={popoverId || undefined}
-              style={anchorName ? `anchor-name: ${anchorName}` : undefined}
-            >
-              <span class="material-icons" aria-hidden="true">settings</span>
-            </button>
-
-            <div class="settings-menu" role="menu" use:dismissOnClick={closeSettings}>
-              <p class="settings-copy">
-                Problems? Call/text 503 250 3868, reload the page, or force restart Safari.
-              </p>
-            </div>
-          </AnchoredPopover>
-        </div>
-      {/if}
+          <div class="settings-menu" role="menu" use:dismissOnClick={closeSettings}>
+            <p class="settings-copy">
+              Problems? Call/text 503 250 3868, reload the page, or force restart Safari.
+            </p>
+          </div>
+        </AnchoredPopover>
+      </div>
     {/if}
   </section>
 </div>
@@ -336,6 +334,11 @@
       return
     }
 
+    if ($drawerNavTab === 'forum') {
+      await goto('/' + classID + '/question')
+      return
+    }
+
     creating = true
     try {
       const newRoomID = await createRoomDoc(`classes/${classID}/`)
@@ -420,7 +423,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-decoration: none;
-    border-bottom: 2px solid orange;
+    border-bottom: 2px solid black;
   }
 
   .hide-drawer-button {
@@ -441,30 +444,35 @@
 
   .sub-nav {
     display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 0 12px 4px;
+    align-items: stretch;
+    gap: 0;
+    margin: 0 8px;
+    padding: 0;
+    border-bottom: 2px solid rgb(180, 180, 180);
   }
 
   .sub-nav-tab {
-    padding: 6px 10px;
-    border-radius: 8px;
+    flex: 1;
+    padding: 10px 12px 8px;
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
     color: rgb(100, 100, 100);
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
+    line-height: 1.2;
     text-transform: lowercase;
   }
 
   .sub-nav-tab:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.04);
     color: black;
   }
 
   .sub-nav-tab.active {
     color: black;
     font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    border-bottom-color: orange;
   }
 
   .rooms-actions {

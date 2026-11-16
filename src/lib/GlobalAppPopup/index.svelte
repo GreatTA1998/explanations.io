@@ -5,7 +5,6 @@
 
 <script>
   import BasePopup from '$lib/Reusable/BasePopup.svelte'
-  import CalEmbed from './CalEmbed.svelte'
   import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
   import { user } from '/src/store.js'
   import { getAuth, signOut } from 'firebase/auth'
@@ -68,22 +67,6 @@
         <ReusableSignInButton outlined={false}/>
       {/if}
 
-      <CalEmbed />
-
-      <!-- Blog, Github, etc. -->
-      <div class="hide-on-mobile">
-        <a href="https://eltonlin.substack.com/archive" target="_blank" 
-          style="margin-left: 8px;"
-        >
-          <button
-            class="button-shaped-round"
-            style="font-size: 14px;"
-          >
-            SUBSTACK BLOG
-          </button>
-        </a>
-      </div>
-
       <a href="https://github.com/greatTA1998/explain" target="_blank" 
         style="text-decoration-color: transparent;"
       >
@@ -113,14 +96,4 @@
     bottom: 0;
     background-color: transparent;
   }
-
-  .hide-on-mobile {
-		display: flex;
-	}
-
-	@media only screen and (max-width: 767px) {
-		.hide-on-mobile {
-			display: none;
-		}
-	}
 </style>

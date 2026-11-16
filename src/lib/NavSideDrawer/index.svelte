@@ -41,20 +41,6 @@
             </div>
           {/if}
 
-          <div class="menu-embed">
-            <CalEmbed />
-          </div>
-
-          <a
-            class="menu-row hide-on-mobile"
-            role="menuitem"
-            href="https://eltonlin.substack.com/archive"
-            target="_blank"
-            rel="noreferrer"
-          >
-            SUBSTACK BLOG
-          </a>
-
           <a
             class="menu-row"
             role="menuitem"
@@ -230,7 +216,6 @@
   import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import AnchoredPopover from '$lib/Reusable/AnchoredPopover.svelte'
-  import CalEmbed from '$lib/GlobalAppPopup/CalEmbed.svelte'
   import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
   import { getFirestoreCollection, createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user, classServerDoc, recentSearchedServerDoc, sidebarFullscreen, drawerNavTab, drawerNameQuery } from '/src/store.js'
@@ -632,21 +617,6 @@
     text-align: left;
     font-size: 13px;
     color: rgb(80, 80, 80);
-  }
-
-  .menu-embed {
-    display: flex;
-    padding: 4px 6px;
-  }
-
-  .hide-on-mobile {
-    display: flex;
-  }
-
-  @media only screen and (max-width: 767px) {
-    .hide-on-mobile {
-      display: none;
-    }
   }
 
   .server-menu-scrim { position: fixed; inset: 0; z-index: 39; margin: 0; padding: 0; border: 0; border-radius: 0; background: rgba(0, 0, 0, 0.28); }

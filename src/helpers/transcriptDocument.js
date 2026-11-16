@@ -41,13 +41,19 @@ export function buildTranscriptDocument(segments, durationSeconds = null, speech
 export function wordsFromSegments(segments, durationSeconds = null, speechIntervals = null) {
   const words = []
   const speechSpan = speechSpanSeconds(speechIntervals)
-  for (const segment of stretchSegments(segments, durationSeconds)) {
+  const stretched = stretchSegments(segments, durationSeconds)
+  // Stretched cues partition [0, wallTotal]; each segment keeps that same
+  // fraction of speech time so multi-cue text does not all map onto [0, speechSpan].
+  const wallTotal = stretched.reduce((highest, segment) => Math.max(highest, segment.end), 0)
+  for (const segment of stretched) {
     const parts = segment.text.split(/\s+/).filter(Boolean)
     if (!parts.length) continue
     const matched = matchingWordTimes(segment, parts)
     let timed = matched
-    if (!timed && segment.stretched && speechSpan > MIN_TIMED_SPAN) {
-      timed = spreadWordsAlongSpeech(parts, speechIntervals, speechSpan)
+    if (!timed && segment.stretched && speechSpan > MIN_TIMED_SPAN && wallTotal > 0) {
+      const speechStart = speechSpan * (segment.start / wallTotal)
+      const speechEnd = speechSpan * (segment.end / wallTotal)
+      timed = spreadWordsAlongSpeech(parts, speechIntervals, speechStart, speechEnd)
     }
     if (!timed) {
       const span = Math.max(0, segment.end - segment.start)
@@ -65,8 +71,8 @@ export function wordsFromSegments(segments, durationSeconds = null, speechInterv
   return words
 }
 
-function spreadWordsAlongSpeech(parts, intervals, speechSpan) {
-  const spoken = spreadWords(parts, 0, speechSpan, true)
+function spreadWordsAlongSpeech(parts, intervals, speechStart, speechEnd) {
+  const spoken = spreadWords(parts, speechStart, Math.max(0, speechEnd - speechStart), true)
   return spoken.map((word) => {
     const start = wallClockFromSpeechTime(word.start, intervals)
     let end = wallClockFromSpeechTime(word.end, intervals)

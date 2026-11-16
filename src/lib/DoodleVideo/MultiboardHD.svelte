@@ -373,17 +373,16 @@
   .playback-bar {
     position: absolute;
     z-index: 6;
-    left: 8px;
-    right: 8px;
-    bottom: 6px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     gap: 8px;
     height: 32px;
     padding: 0 6px;
     box-sizing: border-box;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
     color: #fff;
     pointer-events: none;
   }

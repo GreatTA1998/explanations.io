@@ -1,4 +1,4 @@
-<div class="comments-column" class:over-board={overBoard}>
+<div class="comments-column" class:over-board={overBoard} class:glass-surface={overBoard}>
   <slot/>
 
   <div class="panel-tabs" role="tablist" aria-label="Transcript and comments">
@@ -135,15 +135,15 @@
 <style>
   .comments-column {
     width: 100%;
-    background-color: hsla(0, 100%, 100%, 0.4);
     border-radius: 2px;
   }
 
+  /* Opaque side panel; frosted overlay uses shared .glass-surface instead */
+  .comments-column:not(.over-board) {
+    background-color: hsla(0, 100%, 100%, 0.4);
+  }
+
   .comments-column.over-board {
-    background: rgba(255, 255, 255, 0.04);
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 0;
     color: #fff;
   }

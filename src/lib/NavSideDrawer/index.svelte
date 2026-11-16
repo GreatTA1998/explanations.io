@@ -82,7 +82,8 @@
           title={currentServerName}
           on:click={toggleServerMenu}
         >
-          {currentServerName}
+          <span class="server-name-label">{currentServerName}</span>
+          <span class="material-icons server-name-caret" aria-hidden="true">expand_more</span>
         </button>
 
         {#if menuOpen}
@@ -475,21 +476,20 @@
   }
 
   .server-name {
-    display: block;
+    display: flex; align-items: center;
     width: 100%;
     min-width: 0;
     text-align: left;
-    padding: 6px 4px 3px;
-    color: black;
+    padding: 6px 4px;
+    color: rgb(45, 45, 45);
     font-size: 24px;
     font-weight: 600;
-    line-height: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    line-height: 1.2;
     text-decoration: none;
-    border-bottom: 2px solid rgb(180, 180, 180);
   }
+
+  .server-name-label { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .server-name-caret { flex: 0 0 auto; font-size: 22px; line-height: 1; }
 
   .sub-nav {
     display: flex;

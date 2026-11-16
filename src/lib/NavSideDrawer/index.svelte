@@ -549,7 +549,7 @@
     background: rgba(0, 0, 0, 0.045);
   }
 
-  .name-filter .material-icons { flex: 0 0 auto; font-size: 18px; color: rgb(120, 120, 120); }
+  .name-filter .material-icons { flex: 0 0 auto; font-size: 1.4rem; color: rgb(120, 120, 120); }
 
   .name-filter input {
     flex: 1; min-width: 0; border: 0; outline: none;

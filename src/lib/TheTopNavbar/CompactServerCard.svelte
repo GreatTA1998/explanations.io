@@ -86,7 +86,7 @@
     flex: 0 0 240px;
     border-radius: 16px; 
     padding: 0px; 
-    overflow: hidden;
+    overflow: hidden; text-align: left;
     /* Live board: translucent paint over --bg-off-white (readable before thumb loads). */
     background-color: var(--bg-off-white, #f8f9f9);
   }

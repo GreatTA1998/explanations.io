@@ -138,7 +138,7 @@
     border-radius: 2px;
   }
 
-  /* Opaque side panel; frosted overlay uses shared .glass-surface instead */
+  /* Side panel fill; over-board overlay uses shared .glass-surface scrim */
   .comments-column:not(.over-board) {
     background-color: hsla(0, 100%, 100%, 0.4);
   }

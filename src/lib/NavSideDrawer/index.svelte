@@ -68,17 +68,6 @@
 
           <span class="menu-note">+1 503 250 3868</span>
           <span class="menu-note">elton@explanations.io</span>
-
-          <button
-            type="button"
-            class="menu-row visibility-row"
-            role="menuitem"
-            disabled={!canChangeVisibility || savingVisibility}
-            title={canChangeVisibility ? undefined : 'Only the person who created this server can change this'}
-            on:click={setServerVisibility}
-          >
-            {visibilityLabel}
-          </button>
         </div>
       </AnchoredPopover>
 
@@ -171,13 +160,6 @@
         >
           forum
         </button>
-      </nav>
-
-      <div class="rooms-actions">
-        <button type="button" class="new-pill" on:click={createNew} disabled={creating}>
-          <span class="material-symbols-outlined" aria-hidden="true">add</span>
-          {$drawerNavTab === 'forum' ? 'new question' : 'new room'}
-        </button>
 
         <AnchoredPopover
           bind:this={settingsPopover}
@@ -202,11 +184,29 @@
           </button>
 
           <div class="settings-menu" role="menu" use:dismissOnClick={closeSettings}>
+            {#if canChangeVisibility}
+              <button
+                type="button"
+                class="menu-row"
+                role="menuitem"
+                disabled={savingVisibility}
+                on:click={setServerVisibility}
+              >
+                {visibilityLabel}
+              </button>
+            {/if}
             <p class="settings-copy">
               Problems? Call/text 503 250 3868, reload the page, or force restart Safari.
             </p>
           </div>
         </AnchoredPopover>
+      </nav>
+
+      <div class="rooms-actions">
+        <button type="button" class="new-pill" on:click={createNew} disabled={creating}>
+          <span class="material-symbols-outlined" aria-hidden="true">add</span>
+          {$drawerNavTab === 'forum' ? 'new question' : 'new room'}
+        </button>
       </div>
     {/if}
   </section>
@@ -518,6 +518,11 @@
     text-transform: lowercase;
   }
 
+  .sub-nav .settings-button {
+    flex: 0 0 auto;
+    align-self: center;
+  }
+
   .sub-nav-tab:hover {
     background: rgba(0, 0, 0, 0.04);
     color: black;
@@ -556,9 +561,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
+    width: 32px;
+    height: 32px;
+    margin-left: 4px;
+    border-radius: 8px;
     color: rgb(80, 80, 80);
   }
 
@@ -567,7 +573,7 @@
   }
 
   .settings-button .material-icons {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .settings-menu {
@@ -581,6 +587,10 @@
     font-size: 13px;
     line-height: 1.4;
     color: rgb(60, 60, 60);
+  }
+
+  .settings-menu .menu-row + .settings-copy {
+    margin-top: 6px;
   }
 
   .server-actions {
@@ -612,12 +622,6 @@
   .menu-row:disabled {
     opacity: 0.45;
     cursor: not-allowed;
-  }
-
-  .visibility-row {
-    margin-top: 4px;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 0 0 8px 8px;
   }
 
   .menu-note {

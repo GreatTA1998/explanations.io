@@ -24,6 +24,7 @@
             {room} 
             {roomID}
             {classID}
+            {ancestorRoomIds}
             orderWithinLevel={i}
             roomsInThisLevel={rootRooms}
             parentRoomIDs={['']}
@@ -47,6 +48,7 @@
   import QuestionsSection from '$lib/TheLeftDrawer/QuestionsSection.svelte'
   import RecursiveRoom from './RecursiveRoom.svelte'
   import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
+  import { ancestorIdsForRoom, sameIdSet } from './roomAncestors.js'
   import { user } from '/src/store.js'
   import { goto } from '$app/navigation'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
@@ -72,6 +74,14 @@
   }
 
   $: rootRooms = rooms.filter(room => room.parentRoomID === '')
+  // Keep Set identity stable across Firestore snapshots with the same ancestry.
+  let ancestorRoomIds = new Set()
+  $: {
+    const nextAncestors = ancestorIdsForRoom(rooms, roomID)
+    if (!sameIdSet(ancestorRoomIds, nextAncestors)) {
+      ancestorRoomIds = nextAncestors
+    }
+  }
 
   async function updateClassMetadata () {
     // keep track of number of members regardless of where they are

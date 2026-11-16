@@ -91,6 +91,7 @@
         room={subpage}
         {roomID}
         {classID}
+        {ancestorRoomIds}
         depth={depth + 1}
         orderWithinLevel={i}
         roomsInThisLevel={subpages}
@@ -125,7 +126,7 @@ import { user, adminUIDs, whatIsBeingDraggedID } from '/src/store.js'
 
 import { getFirestoreQuery, updateFirestoreDoc, getFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
 import { whatIsBeingDragged } from '/src/store'
-import { onDestroy } from 'svelte'
+import { onDestroy, tick } from 'svelte'
 import { page } from '$app/stores'
 
 export let room
@@ -136,21 +137,49 @@ export let parentRoomIDs
 
 export let roomID
 export let classID
+/** @type {Set<string>} parent room ids that must stay open for the active deep link */
+export let ancestorRoomIds = new Set()
 
 let subpages = null
 let RoomElement
 let isExpanded = false
 let unsubListener
+let scrolledForRoomId = null
+/** Only auto-expand once per active room so snapshots do not re-force open. */
+let expandedForActiveId = null
 
 $: showRoomMenu = $page.params.roomID && $user.uid && $adminUIDs.includes($user.uid)
 $: roomMenuId = `room-menu-${room.id}`
 $: roomAnchor = `--room-${room.id}`
+$: activeRoomId = $page.params.roomID
+$: ensureExpandedForActivePath(activeRoomId, ancestorRoomIds)
+$: if (RoomElement && room.id === activeRoomId) scrollActiveRoomIntoView(activeRoomId)
+$: if (room.id !== activeRoomId && scrolledForRoomId === room.id) scrolledForRoomId = null
 
 const classPath = `classes/${classID}/`
 
 onDestroy(() => {
   if (unsubListener) unsubListener()
 })
+
+function ensureExpandedForActivePath (activeId, ancestors) {
+  if (!activeId || !ancestors?.has(room.id)) return
+  if (expandedForActiveId === activeId) return
+  expandedForActiveId = activeId
+  expandChildrenRooms()
+}
+
+async function scrollActiveRoomIntoView (id) {
+  if (!id || scrolledForRoomId === id) return
+  scrolledForRoomId = id
+  await tick()
+  // Nested folders may still be laying out after expand; wait two frames.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      RoomElement?.scrollIntoView({ block: 'center', inline: 'nearest' })
+    })
+  })
+}
 
 function highlightRoom () {
   if (!isInvalidSubpageDrop()) {
@@ -171,6 +200,9 @@ function isInvalidSubpageDrop () {
 
 // inspired by Notion subpages
 async function fetchSubpages () {
+  // Guard before the first snapshot sets `subpages`, so reactive retries cannot leak listeners.
+  if (unsubListener) return
+
   const roomsPath = classPath + 'rooms'
   const roomsRef = collection(getFirestore(), roomsPath)
 
@@ -191,7 +223,7 @@ async function fetchSubpages () {
 }
 
 function expandChildrenRooms () {
-  if (!subpages) {
+  if (!subpages && !unsubListener) {
     fetchSubpages()
   }
   isExpanded = true

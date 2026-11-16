@@ -10,14 +10,6 @@
 				Save and export them as animations or videos.
 			</div>
 
-			<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
-				<ReusableSubscribeButton/>
-
-				<!-- <div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-					6 learners joined this year
-				</div> -->
-			</div>
-
 			<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
 				#3 front page 
 				<!-- style="color: #FF6600;" -->
@@ -58,7 +50,6 @@
 <script>
 	import CountryFlags from './CountryFlags.svelte'
 	import RotatingGallery from './RotatingGallery.svelte'
-	import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from './FounderSelfIntro.svelte'
 	import HistoricalTimeline from './HistoricalTimeline.svelte'

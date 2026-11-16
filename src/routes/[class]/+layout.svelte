@@ -71,7 +71,8 @@
     requestAnimationFrame(() => {
       const boardWidth = getBoardWidth({
         containerWidth: MainContent.offsetWidth,
-        containerHeight: MainContent.offsetHeight
+        containerHeight: MainContent.offsetHeight,
+        pageInset: !$sidebarFullscreen
       })
       blackboardWidth.set(boardWidth)
       videoPreviewWidth.set(boardWidth)
@@ -149,4 +150,3 @@
     padding-top: 72px;
   }
 </style>
-

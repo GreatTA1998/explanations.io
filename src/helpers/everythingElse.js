@@ -9,8 +9,6 @@ import { sendEmail } from '/src/helpers/cloudFunctions.js'
 import { goto } from '$app/navigation'
 import { homepageServerPath } from '/src/helpers/visitorEntry.js'
 
-export const drawerExpandedWidth = 240
-
 export async function handleNewCommentEmailNotifications ({ boardDoc, userDoc, classID, questionID, commentString, linkToQuestion }) {
   // handle the new commentor
   if (userDoc.uid !== boardDoc.creatorUID) {

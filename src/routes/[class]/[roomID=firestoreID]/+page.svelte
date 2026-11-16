@@ -1,5 +1,5 @@
 {#if roomDoc}
-	<div class="room-page">
+	<div class="room-page" class:drawer-hidden={$sidebarFullscreen}>
     <div class="room-inset">
       <Textfield 
         disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
@@ -54,7 +54,7 @@
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
 
-  import { user, blackboardWidth } from '/src/store.js'
+  import { user, blackboardWidth, sidebarFullscreen } from '/src/store.js'
   import { onDestroy } from 'svelte'
   import { doc, getFirestore, updateDoc, onSnapshot, setDoc, arrayUnion, increment } from 'firebase/firestore'
 
@@ -225,6 +225,8 @@
   .room-page {
     padding: 16px;
   }
+
+  .room-page.drawer-hidden { padding: 16px 0; display: flex; flex-direction: column; align-items: center; }
 
   :global(.room-title input) {
     font-size: 2rem;

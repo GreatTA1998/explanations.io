@@ -149,7 +149,7 @@
             type="button"
             class="settings-button"
             aria-label="Open settings"
-            aria-haspopup="menu"
+            aria-haspopup="true"
             aria-expanded={settingsOpen}
             aria-controls={popoverId || undefined}
             popovertarget={popoverId || undefined}
@@ -158,10 +158,10 @@
             <span class="material-icons" aria-hidden="true">settings</span>
           </button>
 
-          <div class="settings-menu" role="menu" use:dismissOnClick={closeSettings}>
+          <div class="settings-menu" use:dismissOnClick={closeSettings}>
             <button
               type="button"
-              class="menu-row privacy-toggle"
+              class="privacy-toggle"
               role="switch"
               aria-checked={isPrivate}
               aria-label="Private server"
@@ -566,9 +566,8 @@
     padding: 6px 8px;
   }
 
-  .privacy-toggle {
-    justify-content: space-between;
-  }
+  .privacy-toggle { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 36px; padding: 8px 10px; border-radius: 8px; text-align: left; color: black; font-size: 14px; font-weight: 500; }
+  .privacy-toggle:disabled { opacity: 0.45; cursor: not-allowed; }
 
   .switch-track {
     position: relative;

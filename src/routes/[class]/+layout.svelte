@@ -26,7 +26,8 @@
 
   import { 
     user, drawerWidth, classServerDoc, recentSearchedServerDoc, 
-    blackboardWidth, videoPreviewWidth, videoCinemaWidth, isFullServerMode, sidebarFullscreen
+    blackboardWidth, videoPreviewWidth, videoCinemaWidth, isFullServerMode, sidebarFullscreen,
+    drawerNavTab
   } from '/src/store.js'
 
   import { onMount } from 'svelte'
@@ -35,6 +36,7 @@
   export let data
 
   let { classID, roomID } = data
+  let lastClassID = ''
   let unsubClassDocListener = null
   let resizeObserver = null
   let MainContent = null
@@ -45,6 +47,13 @@
   }
 
   $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
+
+  // The drawer unmounts on hide, so this guard has to live on the layout that stays mounted.
+  // Rooms is the default peer tab whenever the server changes.
+  $: if (classID && classID !== lastClassID) {
+    lastClassID = classID
+    drawerNavTab.set('rooms')
+  }
 
   $: {
     listenToClassDoc(classID)

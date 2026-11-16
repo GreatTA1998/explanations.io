@@ -1,6 +1,6 @@
 <script>
   import QuestionsSectionItem from '$lib/TheLeftDrawer/QuestionsSectionItem.svelte'
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { collection, getFirestore, onSnapshot, query, orderBy, increment} from 'firebase/firestore'
 
   export let classID
@@ -10,6 +10,10 @@
 
   onMount(() => {
     listenToQuestions()
+  })
+
+  onDestroy(() => {
+    if (unsub) unsub()
   })
     
   function listenToQuestions () {

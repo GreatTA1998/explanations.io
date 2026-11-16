@@ -51,16 +51,9 @@
   const classPath = `classes/${classID}/`
   let unsubFuncs = []
   let rooms = [] // AF([]) means not fetched rooms, there's no point in a server with empty rooms, there will be a lobby 
-  let lastClassID = ''
 
   $: if (classID) {
     initializeEverything()
-  }
-
-  // Rooms is the default peer tab whenever the server changes.
-  $: if (classID && classID !== lastClassID) {
-    lastClassID = classID
-    drawerNavTab.set('rooms')
   }
 
   async function initializeEverything () {

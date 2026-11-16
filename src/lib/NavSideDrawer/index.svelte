@@ -481,9 +481,9 @@
     text-align: left;
     padding: 6px 4px 3px;
     color: black;
-    font-size: 15px;
+    font-size: 44px;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 1;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

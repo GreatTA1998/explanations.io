@@ -24,6 +24,7 @@
             {room} 
             {roomID}
             {classID}
+            {ancestorRoomIds}
             orderWithinLevel={i}
             roomsInThisLevel={rootRooms}
             parentRoomIDs={['']}
@@ -47,6 +48,7 @@
   import QuestionsSection from '$lib/TheLeftDrawer/QuestionsSection.svelte'
   import RecursiveRoom from './RecursiveRoom.svelte'
   import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
+  import { ancestorIdsForRoom } from './roomAncestors.js'
   import { user } from '/src/store.js'
   import { goto } from '$app/navigation'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
@@ -72,6 +74,8 @@
   }
 
   $: rootRooms = rooms.filter(room => room.parentRoomID === '')
+  // Expand nested parents so a deep-linked / active room can mount and scroll into view.
+  $: ancestorRoomIds = ancestorIdsForRoom(rooms, roomID)
 
   async function updateClassMetadata () {
     // keep track of number of members regardless of where they are

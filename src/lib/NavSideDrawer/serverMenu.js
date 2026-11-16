@@ -1,8 +1,7 @@
-// The server switcher used to live in TheTopNavbar. With an empty search it
-// led with servers that have a featured blackboard, because that id is the
-// holographic thumbnail. A later pass listed every server. Empty search is
-// that older set again: a designated thumbnail or a featured video. Typing
-// still matches the full collection.
+// The server switcher used to live in TheTopNavbar. Empty search once hid
+// servers without a designated thumbnail or featured video; that made many
+// joinable servers unreachable. The menu now lists every joinable server:
+// preview tiles when a thumbnail exists, otherwise a name row.
 
 const THUMBNAIL_FIELDS = ['featuredBlackboardID', 'thumbnailURL', 'serverThumbnail', 'thumbnail']
 const FEATURED_VIDEO_FIELDS = ['featuredVideoID', 'featuredVideo']
@@ -87,7 +86,7 @@ export function serversForMenu (servers, query, viewerUID = '') {
   const list = (servers || []).filter(server => serverVisibleInMenu(server, viewerUID))
   const terms = String(query || '').trim().toLowerCase().split(/\s+/).filter(Boolean)
   const filtered = terms.length === 0
-    ? list.filter(hasDesignatedPreview)
+    ? list
     : list.filter(server => {
       const name = (server.name || '').toLowerCase()
       return terms.some(term => name.includes(term))
@@ -98,6 +97,19 @@ export function serversForMenu (servers, query, viewerUID = '') {
     if (featuredFirst !== 0) return featuredFirst
     return (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' })
   })
+}
+
+// Preview tiles stay in the holographic grid. Servers with no thumbnail /
+// featured preview become name rows so they stay reachable without empty boards.
+export function partitionServersForMenu (servers, query, viewerUID = '') {
+  const shown = serversForMenu(servers, query, viewerUID)
+  const previewServers = []
+  const listServers = []
+  for (const server of shown) {
+    if (hasDesignatedPreview(server)) previewServers.push(server)
+    else listServers.push(server)
+  }
+  return { previewServers, listServers }
 }
 
 export function menuColumnCount (viewportWidth, itemCount, leftOffset = 0) {

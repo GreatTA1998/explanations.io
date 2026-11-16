@@ -6,6 +6,7 @@
     position: relative; 
     width: {canvasWidth}px; 
     height: {canvasHeight}px;
+    background-color: var(--bg-off-white, #f8f9f9);
   "
   >
 
@@ -25,9 +26,7 @@
   >
   </canvas>
 
-  <!-- hsl(0, 0%, 20%) is the opaque equivalent of hsl(0,0%,0%, 0.80), but the servers looking similar to blackboards look bad
-    In general, opaque textures don't look too good in my opinion.
-  -->
+  <!-- Same stack as CoreDrawing: translucent paint over off-white (parent sets the backdrop). -->
   <canvas bind:this={bgCanvas} 
     style={`
       position: absolute;
@@ -35,7 +34,9 @@
       left: 0;
       z-index: 0;
       display: block;
-      background-color: hsl(0,0%,0%, 0.80); width: ${canvasWidth}px; height: ${canvasHeight}px;
+      background-color: ${BLACKBOARD_PAINT};
+      width: ${canvasWidth}px;
+      height: ${canvasHeight}px;
     `}
   >
 
@@ -44,7 +45,7 @@
 
 <script>
   import { lazyCallable } from '/src/helpers/actions.js';
-  import { applyInputStreamline, drawStroke, redrawStrokes, renderBackground } from '../../helpers/canvas.js'
+  import { applyInputStreamline, BLACKBOARD_PAINT, drawStroke, redrawStrokes, renderBackground } from '../../helpers/canvas.js'
   import { getRandomID } from '../../helpers/utility.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { currentTool, onlyAllowApplePencil, whatIsBeingDragged } from '../../store.js'

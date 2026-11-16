@@ -86,6 +86,7 @@
         <button
           type="button"
           class="server-name"
+          bind:this={serverNameEl}
           aria-haspopup="true"
           aria-expanded={menuOpen}
           aria-controls="server-switch-menu"
@@ -96,7 +97,11 @@
         </button>
 
         {#if menuOpen}
-          <div class="server-menu" id="server-switch-menu" style="width: {menuWidth}px;">
+          <div
+            class="server-menu"
+            id="server-switch-menu"
+            style="top: {menuTop}px; left: {menuLeft}px; width: {menuWidth}px;"
+          >
             <div class="search-slot">
               <SearchBar
                 {searchVal}
@@ -104,14 +109,32 @@
               />
             </div>
 
-            <div class="server-list" style="--menu-columns: {columnCount};">
-              {#each visibleServers as server (server.id)}
-                <CompactServerCard serverObj={server} />
-              {/each}
+            <div class="server-list">
+              <div class="server-grid" style="--menu-columns: {columnCount};">
+                {#each previewServers as server (server.id)}
+                  <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
+                {/each}
 
-              <button type="button" class="create-server" on:click={openCreateServer}>
-                Create new server
-              </button>
+                <button type="button" class="create-server" on:click={openCreateServer}>
+                  Create new server
+                </button>
+              </div>
+
+              {#if listServers.length}
+                <div class="server-name-list" role="list">
+                  {#each listServers as server (server.id)}
+                    <div role="listitem">
+                      <button
+                        type="button"
+                        class="server-list-row server-pick"
+                        on:click|stopPropagation={() => pickServer(server)}
+                      >
+                        {server.name || 'Untitled server'}
+                      </button>
+                    </div>
+                  {/each}
+                </div>
+              {/if}
             </div>
           </div>
         {/if}
@@ -205,7 +228,8 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
-  import { CARD_WIDTH, CARD_GAP, serversForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, visibilityActionLabel } from './serverMenu.js'
+  import { CARD_WIDTH, CARD_GAP, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, visibilityActionLabel } from './serverMenu.js'
+  import { homepageServerPath } from '/src/helpers/visitorEntry.js'
 
   export let floating = false
 
@@ -233,14 +257,21 @@
   let creating = false
   let newServerPopup
   let clusterEl
+  let serverNameEl
+  let menuTop = 0
+  let menuLeft = 0
 
-  $: visibleServers = serversForMenu(allServers, searchVal, $user.uid)
+  $: ({ previewServers, listServers } = partitionServersForMenu(allServers, searchVal, $user.uid))
   $: visibilityLabel = visibilityActionLabel($classServerDoc)
   $: canChangeVisibility = !!$page.params.class && viewerIsServerCreator($classServerDoc, $user.uid)
   $: menuOffset = serverNameLeft(floating)
-  $: columnCount = menuColumnCount($viewport.width, visibleServers.length + 1, menuOffset)
-  $: menuWidth = columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP
+  $: columnCount = menuColumnCount($viewport.width, previewServers.length + 1, menuOffset)
+  $: menuWidth = Math.max(
+    columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP,
+    listServers.length ? CARD_WIDTH : 0
+  )
   $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
+  $: if (menuOpen) placeMenu($viewport.width, menuWidth)
 
   getFirestoreCollection('classes').then(docs => {
     allServers = docs
@@ -254,11 +285,22 @@
     return 'Find server'
   }
 
+  function placeMenu () {
+    if (!serverNameEl || typeof serverNameEl.getBoundingClientRect !== 'function') return
+    const rect = serverNameEl.getBoundingClientRect()
+    menuTop = rect.bottom + 4
+    menuLeft = rect.left
+  }
+
   function toggleServerMenu () {
     actionsPopover?.close()
     settingsPopover?.close()
     menuOpen = !menuOpen
-    if (!menuOpen) searchVal = ''
+    if (menuOpen) {
+      requestAnimationFrame(placeMenu)
+    } else {
+      searchVal = ''
+    }
   }
 
   function closeServerMenu () {
@@ -268,9 +310,21 @@
 
   function onWindowClick (event) {
     if (!menuOpen || !clusterEl) return
-    const pickedCard = event.target.closest('.server-card')
-    const outside = !clusterEl.contains(event.target)
-    if (pickedCard || outside) queueMicrotask(closeServerMenu)
+    // Picks navigate themselves and close after goto. Closing here in capture
+    // unmounted the card before navigation settled and aborted the redirect.
+    if (event.target.closest('.server-card, .server-pick, .create-server, #server-switch-menu')) return
+    if (!clusterEl.contains(event.target)) closeServerMenu()
+  }
+
+  async function pickServer (server) {
+    const path = homepageServerPath(server)
+    if ($user.uid) {
+      updateFirestoreDoc(`/users/${$user.uid}`, {
+        recentSearchedServerID: server.id
+      })
+    }
+    if (path) await goto(path)
+    closeServerMenu()
   }
 
   function onWindowKey (event) {
@@ -589,10 +643,9 @@
   }
 
   .server-menu {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    z-index: 30;
+    /* Fixed: absolute inside the drawer clipped the grid and ate card hits. */
+    position: fixed;
+    z-index: 40;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -618,17 +671,59 @@
   }
 
   .server-list {
+    max-height: 70vh;
+    overflow: auto;
+    padding: 8px 0 4px;
+    background: transparent;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .server-list::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .server-grid {
     display: grid;
     grid-template-columns: repeat(var(--menu-columns), 240px);
     gap: 8px;
-    max-height: 70vh;
-    overflow-y: auto;
-    padding: 8px 0 4px;
-    background: transparent;
+    width: max-content;
+    min-width: 100%;
   }
 
-  .server-list :global(.server-card) {
+  .server-grid :global(.server-card) {
     height: auto;
+  }
+
+  .server-name-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .server-list-row {
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.92);
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .server-list-row:hover {
+    background: rgba(255, 255, 255, 1);
   }
 
   .create-server {

@@ -7,6 +7,7 @@ import {
 import { arrayUnion } from 'firebase/firestore'
 import { sendEmail } from '/src/helpers/cloudFunctions.js'
 import { goto } from '$app/navigation'
+import { homepageServerPath } from '/src/helpers/visitorEntry.js'
 
 export const drawerExpandedWidth = 240
 
@@ -157,14 +158,9 @@ export function handleVideoUploadEmailNotifications ({ classID, questionDoc, use
   })
 }
 
+// Same destination rules as the homepage hop: only append featured
+// question/room ids when they are real Firestore ids, otherwise overview.
 export function handleServerRedirect (serverObj) {
-  if (serverObj.recentQuestionID) {
-    goto(`/${serverObj.id}/question/${serverObj.recentQuestionID}`)
-  } 
-  else if (serverObj.featuredRoomID) {
-    goto(`/${serverObj.id}/${serverObj.featuredRoomID}`)
-  }
-  else {
-    goto(`/${serverObj.id}/overview`)
-  }
+  const path = homepageServerPath(serverObj)
+  if (path) goto(path)
 }

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { hasDesignatedPreview, previewBlackboardID, serversForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, visibilityActionLabel, serverVisibleInMenu } from './serverMenu.js'
+import { hasDesignatedPreview, previewBlackboardID, serversForMenu, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, visibilityActionLabel, serverVisibleInMenu } from './serverMenu.js'
 
 const featured = { id: 'a', name: 'Algebra and Number Theory', featuredBlackboardID: 'bbbbbbbbbbbbbbbbbbbb' }
 const video = { id: 'b', name: 'Featured video server', featuredVideoID: 'vvvvvvvvvvvvvvvvvvvv' }
@@ -8,10 +8,19 @@ const thumb = { id: 'c', name: 'Thumbnail server', thumbnailURL: 'https://exampl
 const plain = { id: 'd', name: '18.01A PSET Lounge' }
 const otherPlain = { id: 'e', name: '5.12 TR1' }
 
-test('empty search keeps thumbnails and featured videos, and drops the rest', () => {
+test('empty search lists every joinable server, featured previews first', () => {
   const shown = serversForMenu([plain, video, otherPlain, featured, thumb], '')
-  assert.deepEqual(shown.map(server => server.id), ['a', 'b', 'c'])
+  assert.deepEqual(shown.map(server => server.id), ['a', 'b', 'c', 'd', 'e'])
   assert.equal(hasDesignatedPreview(plain), false)
+})
+
+test('servers without a thumbnail become list rows, not empty boards', () => {
+  const { previewServers, listServers } = partitionServersForMenu(
+    [plain, video, otherPlain, featured, thumb],
+    ''
+  )
+  assert.deepEqual(previewServers.map(server => server.id), ['a', 'b', 'c'])
+  assert.deepEqual(listServers.map(server => server.id), ['d', 'e'])
 })
 
 test('search still returns every name match, featured previews first', () => {
@@ -66,7 +75,7 @@ test('only the creator can change visibility, and only they see a private server
   assert.equal(serverVisibleInMenu(featured, ''), true)
 
   const hidden = serversForMenu([secret, featured, plain], '', 'someone-else')
-  assert.deepEqual(hidden.map(server => server.id), ['a'])
+  assert.deepEqual(hidden.map(server => server.id), ['a', 'd'])
 
   const creatorView = serversForMenu([secret, plain], 'secret', 'creator')
   assert.deepEqual(creatorView.map(server => server.id), ['s'])

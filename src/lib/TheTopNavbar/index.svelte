@@ -46,7 +46,7 @@
 				{#if isFocused}
 					<div class="search-results grid-layout">
 						{#each searchMatchedServers as matchedServer (matchedServer.id)}
-							<CompactServerCard serverObj={matchedServer}/>
+							<CompactServerCard serverObj={matchedServer} on:pick={(e) => pickServer(e.detail)}/>
 						{/each}
 
 						<button class="new-server-button" on:click|stopPropagation={() => isPopupNewServerOpen = true}>
@@ -73,10 +73,11 @@
 	import SearchBar from './SearchBar.svelte'
 	import PopupNewServer from './PopupNewServer.svelte'
 	import GlobalAppPopup from '$lib/GlobalAppPopup/index.svelte'
-	import { getFirestoreCollection } from '/src/helpers/crud.js'
+	import { getFirestoreCollection, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { Section } from '@smui/top-app-bar'
 	import { user, recentSearchedServerDoc, isFullServerMode } from '/src/store.js'
 	import { viewport } from '/src/storeFolder/viewport.js'
+	import { handleServerRedirect } from '/src/helpers/everythingElse.js'
 
 	export let isHomeScreenVisible
 
@@ -107,6 +108,15 @@
     searchMatchedServers = [...uniqueSet]
     return [...uniqueSet]
   }
+
+	function pickServer (server) {
+		handleServerRedirect(server)
+		if ($user.uid) {
+			updateFirestoreDoc(`/users/${$user.uid}`, {
+				recentSearchedServerID: server.id
+			})
+		}
+	}
 </script>
 
 <style>

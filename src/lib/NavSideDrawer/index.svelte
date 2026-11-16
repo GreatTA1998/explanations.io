@@ -542,7 +542,7 @@
     gap: 2px;
     min-width: 0;
     height: 36px;
-    padding: 0 8px 0 6px; border-radius: 18px; background: rgba(0, 0, 0, 0.03);
+    padding: 0 8px 0 6px; border-radius: 18px; background: rgba(0, 0, 0, 0.045);
   }
 
   .name-filter .material-icons { flex: 0 0 auto; font-size: 1.4rem; color: rgb(120, 120, 120); }
@@ -671,7 +671,7 @@
     height: 36px;
     font-size: 1rem;
     padding-left: 34px;
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(0, 0, 0, 0.045);
   }
 
   .search-slot :global(.my-search-icon) {

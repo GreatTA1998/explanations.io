@@ -18,3 +18,13 @@ export function ancestorIdsForRoom (rooms, roomId) {
 
   return ancestors
 }
+
+/** True when both sets contain the same string ids (order-independent). */
+export function sameIdSet (a, b) {
+  if (a === b) return true
+  if (!a || !b || a.size !== b.size) return false
+  for (const id of a) {
+    if (!b.has(id)) return false
+  }
+  return true
+}

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { ancestorIdsForRoom } from './roomAncestors.js'
+import { ancestorIdsForRoom, sameIdSet } from './roomAncestors.js'
 
 test('root room has no ancestors', () => {
   const rooms = [
@@ -34,4 +34,11 @@ test('cycles do not hang', () => {
   assert.ok(ids.has('b'))
   assert.ok(ids.has('a'))
   assert.equal(ids.size, 2)
+})
+
+test('sameIdSet ignores object identity and order', () => {
+  assert.equal(sameIdSet(new Set(['a', 'b']), new Set(['b', 'a'])), true)
+  assert.equal(sameIdSet(new Set(['a']), new Set(['a', 'b'])), false)
+  const one = new Set(['x'])
+  assert.equal(sameIdSet(one, one), true)
 })

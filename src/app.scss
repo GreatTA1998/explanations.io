@@ -84,14 +84,13 @@ button {
 }
 
 /*
-	Transparent / frosted glass chrome.
-	Contrast comes from fill + optional blur only — never borders, outlines,
-	or outline-like box-shadows. Reuse this class for future glass surfaces.
+	Twitch-style translucent scrim (transcript/comments overlay, etc.).
+	Dark semi-transparent fill for text contrast; no backdrop blur so board
+	ink stays sharp. Contrast from fill opacity only — never borders, outlines,
+	or outline-like box-shadows.
 */
 .glass-surface {
-	background: rgba(255, 255, 255, 0.04);
-	-webkit-backdrop-filter: blur(2px);
-	backdrop-filter: blur(2px);
+	background: rgba(0, 0, 0, 0.45);
 	border: 0;
 	outline: none;
 	box-shadow: none;

@@ -207,7 +207,6 @@
           <span class="material-icons" aria-hidden="true">search</span>
           <input
             type="search"
-            placeholder="Filter…"
             aria-label="Filter by name"
             autocomplete="off"
             maxlength="80"

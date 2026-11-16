@@ -182,25 +182,16 @@
   async function createNewMultiboard () {
     const newID = getRandomID();  
 
-    const idOfSlide2 = getRandomID() 
-    const idOfSlide3 = getRandomID()
-
     const blackboardRef = doc(getFirestore(), boardsDbPath + newID)
     // TODO: use batch operation
     await Promise.all([
       setDoc(blackboardRef, { 
         recordState: 'pre_record',
-        slideIDs: [newID, idOfSlide2, idOfSlide3],
+        slideIDs: [newID],
         isMultiboard: true
       }),
       setFirestoreDoc(boardsDbPath + newID + `/slides/${newID}`, {
         // empty doc matters because it can then be updated with background images etc.
-      }),
-      setFirestoreDoc(boardsDbPath + newID + `/slides/${idOfSlide2}`, {
-        // empty doc matters because it can then be updated with background images etc.
-      }),
-      setFirestoreDoc(boardsDbPath + newID + `/slides/${idOfSlide3}`, {
-
       }),
       updateDoc(roomRef, {
         blackboards: arrayUnion(newID)

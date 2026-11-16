@@ -179,7 +179,8 @@
 
   .comments-column.over-board {
     border-radius: 0;
-    height: 100%;
+    /* Fill the overlay; grow with long transcript so the scrim scrolls with it. */
+    min-height: 100%;
   }
 
   .submit-button {

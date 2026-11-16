@@ -5,7 +5,7 @@
         disabled={hasQuestionMark(roomDoc.name) && roomDoc.askerUID && $user.uid !== roomDoc.askerUID && $user.uid !== 'xC05mXTCFIRxLnyxfKnxY7oNBPi2'}
         value={roomDoc.name} on:input={(e) => updateRoomName(e)}
         class="room-title" 
-        style="width: 100%;"
+        style={`width: ${$blackboardWidth}px;`}
       >
         <HelperText slot="helper" persistent>
           {#if roomDoc.askerName && roomDoc.askerUID && roomDoc.date} 
@@ -36,7 +36,7 @@
         <div style="margin-bottom: 80px;"></div>
       {/each}
 
-      <button on:click={createNewMultiboard} style="width: 100%;" class="new-blackboard-button">
+      <button on:click={createNewMultiboard} style="width: {$blackboardWidth}px;" class="new-blackboard-button">
         {#if hasQuestionMark(roomDoc.name)}
           RESPOND TO QUESTION
         {:else}
@@ -54,7 +54,7 @@
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { handleNewQuestionNotifications } from '/src/helpers/everythingElse.js'
 
-  import { user } from '/src/store.js'
+  import { user, blackboardWidth } from '/src/store.js'
   import { onDestroy } from 'svelte'
   import { doc, getFirestore, updateDoc, onSnapshot, setDoc, arrayUnion, increment } from 'firebase/firestore'
 
@@ -232,15 +232,7 @@
 
 <style>
   .room-page {
-    padding: 16px 0;
-  }
-
-  .room-inset {
-    padding: 0 16px;
-  }
-
-  .room-page :global(.board-heading) {
-    padding: 0 16px;
+    padding: 16px;
   }
 
   :global(.room-title input) {

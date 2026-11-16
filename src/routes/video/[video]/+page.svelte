@@ -32,14 +32,17 @@
   let ready = false
 
   function measure () {
-    const containerWidth = window.innerWidth - 2 * PAGE_PADDING
+    // getBoardWidth applies PAGE_PADDING when pageInset is true (default),
+    // matching the padded page wrapper above.
+    const containerWidth = window.innerWidth
     const containerHeight = window.innerHeight - TOP_CLEARANCE - PAGE_PADDING
     const boardWidth = getBoardWidth({ containerWidth, containerHeight })
     blackboardWidth.set(boardWidth)
     videoPreviewWidth.set(boardWidth)
     videoCinemaWidth.set(getBoardWidth({
       containerWidth: window.innerWidth,
-      containerHeight: window.innerHeight
+      containerHeight: window.innerHeight,
+      pageInset: false
     }))
   }
 

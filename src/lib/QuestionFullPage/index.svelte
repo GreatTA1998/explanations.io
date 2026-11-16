@@ -52,12 +52,12 @@
           on:input={(e) => debouncedUpdateQuestionTitle(e)}
           readonly={$user.uid !== questionDoc.askerUID}
           placeholder="Title"
-          style="width: 100%;"
+          style="width: {$blackboardWidth}px;"
           class="room-title question" 
         >
 
         {#if questionDoc.description || questionDoc.askerUID === $user.uid}
-          <div style="width: 100%; margin-top: 14px; margin-bottom: 0px">
+          <div style="width: {$blackboardWidth}px; margin-top: 14px; margin-bottom: 0px">
             <TextAreaAutoResizing 
               value={questionDoc.description} 
               on:input={(e) => debouncedUpdateQuestionDescription({ detail: e.detail, path: questionDoc.path })}
@@ -119,7 +119,7 @@
               boardsPath: `/classes/${classID}/blackboards/`
             })} on:keydown
             class="new-blackboard-button"
-            style="width: 100%;"
+            style="width: {$blackboardWidth}px;"
           >
             RESPOND WITH A BLACKBOARD
           </div>
@@ -131,16 +131,8 @@
 <style>
   .question-page {
     position: relative;
-    padding: 16px 0;
+    padding: 16px;
     overflow-y: auto;
-  }
-
-  .question-inset {
-    padding: 0 16px;
-  }
-
-  .question-page :global(.board-heading) {
-    padding: 0 16px;
   }
 
   .question-metadata {

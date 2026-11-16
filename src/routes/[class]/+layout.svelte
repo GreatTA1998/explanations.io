@@ -77,7 +77,8 @@
       videoPreviewWidth.set(boardWidth)
       videoCinemaWidth.set(getBoardWidth({
         containerWidth: window.innerWidth,
-        containerHeight: window.innerHeight
+        containerHeight: window.innerHeight,
+        pageInset: false
       }))
     })
   }

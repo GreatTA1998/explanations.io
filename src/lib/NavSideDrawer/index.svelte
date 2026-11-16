@@ -175,17 +175,15 @@
           </button>
 
           <div class="settings-menu" role="menu" use:dismissOnClick={closeSettings}>
-            {#if canChangeVisibility}
-              <button
-                type="button"
-                class="menu-row"
-                role="menuitem"
-                disabled={savingVisibility}
-                on:click={setServerVisibility}
-              >
-                {visibilityLabel}
-              </button>
-            {/if}
+            <button
+              type="button"
+              class="menu-row"
+              role="menuitem"
+              disabled={savingVisibility}
+              on:click={setServerVisibility}
+            >
+              {visibilityLabel}
+            </button>
             <p class="settings-copy">
               Problems? Call/text 503 250 3868, reload the page, or force restart Safari.
             </p>
@@ -239,7 +237,7 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
-  import { CARD_WIDTH, CARD_GAP, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, visibilityActionLabel } from './serverMenu.js'
+  import { CARD_WIDTH, CARD_GAP, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, visibilityActionLabel } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
 
   export let floating = false
@@ -274,7 +272,6 @@
 
   $: ({ previewServers, listServers } = partitionServersForMenu(allServers, searchVal, $user.uid))
   $: visibilityLabel = visibilityActionLabel($classServerDoc)
-  $: canChangeVisibility = !!$page.params.class && viewerIsServerCreator($classServerDoc, $user.uid)
   $: menuOffset = serverNameLeft(floating)
   $: columnCount = menuColumnCount(
     $viewport.width,
@@ -368,7 +365,7 @@
 
   async function setServerVisibility () {
     const classID = $page.params.class
-    if (savingVisibility || !classID || !viewerIsServerCreator($classServerDoc, $user.uid)) return
+    if (savingVisibility || !classID) return
     const nextPublic = !serverIsPublic($classServerDoc)
     savingVisibility = true
     try {

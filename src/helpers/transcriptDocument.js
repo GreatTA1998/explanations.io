@@ -5,9 +5,14 @@
 // natural length, and a short remainder stays after the sentence.
 // A cue from one slice can overlap the next one; those overlaps are closed
 // so one playhead time lands on one word.
+//
+// gpt-4o-transcribe often returns text without times. The server stores the
+// recording span when it can read it. Older or failed spans land as
+// start === end (often 0). The audio element's duration then stretches those
+// cues so the caret and seek follow currentTime instead of sticking on the
+// last word.
 
 const PARAGRAPH_GAP = 0.8
-const SENTENCE_GAP = 0.35
 // About 150 words a minute. A one-letter word still gets a short audible length.
 const SECONDS_PER_CHAR = 0.086
 const MIN_WORD_SECONDS = 0.22
@@ -16,15 +21,17 @@ const MIN_WORD_SECONDS = 0.22
 // Only a short tail is the pause that was pulling the caret back.
 const MAX_TAIL_SECONDS = 1.2
 const SENTENCE_END = /[.!?]["')\]]*$/
+// A cue shorter than this cannot place the playhead on different words.
+const MIN_TIMED_SPAN = 0.05
 
-export function buildTranscriptDocument(segments) {
-  const words = wordsFromSegments(segments)
+export function buildTranscriptDocument(segments, durationSeconds = null) {
+  const words = wordsFromSegments(segments, durationSeconds)
   return { words, paragraphs: paragraphsFromWords(words) }
 }
 
-export function wordsFromSegments(segments) {
+export function wordsFromSegments(segments, durationSeconds = null) {
   const words = []
-  for (const segment of repairSegments(segments)) {
+  for (const segment of stretchSegments(segments, durationSeconds)) {
     const parts = segment.text.split(/\s+/).filter(Boolean)
     if (!parts.length) continue
     const span = Math.max(0, segment.end - segment.start)
@@ -41,6 +48,69 @@ export function wordsFromSegments(segments) {
   return words
 }
 
+// When saved cues have no usable span, map them onto the recording length so
+// currentTime (playback or seek bar) can pick a word other than the last one.
+export function stretchSegments(segments, durationSeconds = null) {
+  const repaired = repairSegments(segments)
+  if (!repaired.length) return repaired
+
+  const minStart = repaired.reduce((lowest, segment) => Math.min(lowest, segment.start), Infinity)
+  const maxEnd = repaired.reduce((highest, segment) => Math.max(highest, segment.end), 0)
+  const span = maxEnd - minStart
+  if (span > MIN_TIMED_SPAN) return repaired
+
+  const duration = Number(durationSeconds)
+  const target = duration > MIN_TIMED_SPAN
+    ? duration
+    : Math.max(MIN_TIMED_SPAN, naturalSeconds(repaired.map((segment) => segment.text).join(' ')))
+
+  if (repaired.length === 1) {
+    return [{
+      start: 0,
+      end: target,
+      text: repaired[0].text,
+      words: usableStoredWords(repaired[0].words, 0, target)
+    }]
+  }
+
+  const weights = repaired.map((segment) => Math.max(MIN_WORD_SECONDS, naturalSeconds(segment.text)))
+  const total = weights.reduce((sum, weight) => sum + weight, 0) || 1
+  let cursor = 0
+  return repaired.map((segment, index) => {
+    const width = target * (weights[index] / total)
+    const start = cursor
+    const end = index === repaired.length - 1 ? target : cursor + width
+    cursor = end
+    return {
+      start,
+      end,
+      text: segment.text,
+      words: usableStoredWords(segment.words, start, end)
+    }
+  })
+}
+
+function naturalSeconds(text) {
+  return String(text || '').split(/\s+/).filter(Boolean).reduce((sum, part) => sum + wordSeconds(part), 0)
+}
+
+function usableStoredWords(words, segmentStart, segmentEnd) {
+  if (!Array.isArray(words) || !words.length) return undefined
+  let minStart = Infinity
+  let maxEnd = -Infinity
+  for (const word of words) {
+    const start = Number(word && word.start)
+    const end = Number(word && word.end)
+    if (!Number.isFinite(start) || !Number.isFinite(end)) return undefined
+    minStart = Math.min(minStart, start)
+    maxEnd = Math.max(maxEnd, end)
+  }
+  if (!(maxEnd - minStart > MIN_TIMED_SPAN)) return undefined
+  // Drop word times that do not overlap the stretched cue.
+  if (maxEnd < segmentStart || minStart > segmentEnd) return undefined
+  return words
+}
+
 function matchingWordTimes(segment, parts) {
   const raw = segment.words
   if (!Array.isArray(raw) || raw.length !== parts.length) return null
@@ -53,6 +123,7 @@ function matchingWordTimes(segment, parts) {
     if (spoken !== parts[index] || !Number.isFinite(start) || !Number.isFinite(end)) return null
     timed.push({ text: parts[index], start, end: Math.max(start, end) })
   }
+  if (!(timed[timed.length - 1].end - timed[0].start > MIN_TIMED_SPAN)) return null
   return timed
 }
 
@@ -146,7 +217,9 @@ export function paragraphsFromWords(words) {
     const previous = current && current.words[current.words.length - 1]
     const gap = previous ? word.start - previous.end : 0
     const sentenceEnded = previous && SENTENCE_END.test(previous.text)
-    const newParagraph = !current || gap >= PARAGRAPH_GAP || (sentenceEnded && gap >= SENTENCE_GAP)
+    // Sentence endings break a paragraph even when words were stretched to
+    // fill a cue (gap ≈ 0). Long silences still start a paragraph mid-thought.
+    const newParagraph = !current || gap >= PARAGRAPH_GAP || sentenceEnded
     if (newParagraph) {
       current = { id: paragraphs.length, words: [] }
       paragraphs.push(current)

@@ -3,6 +3,7 @@ import test from 'node:test'
 import {
   buildTranscriptDocument,
   progressInWord,
+  stretchSegments,
   wordAtTime,
   wordsFromSegments
 } from './transcriptDocument.js'
@@ -112,4 +113,37 @@ test('the caret rests at the end of a word once that word is finished', () => {
   assert.ok(progressInWord(word, 1.2) > 0 && progressInWord(word, 1.2) < 1)
   assert.equal(progressInWord(word, 1.4), 1)
   assert.equal(wordAtTime([{ id: 0, text: 'alpha', ...word }, { id: 1, text: 'bravo', start: 2, end: 2.4 }], 1.7).text, 'alpha')
+})
+
+test('a zero-span cue stretched to the recording no longer sticks the caret on the last word', () => {
+  const text = 'Here is a square. Here is a triangle.'
+  const collapsed = [{ start: 0, end: 0, text }]
+  assert.equal(stretchSegments(collapsed, 35)[0].end, 35)
+
+  const stuck = wordsFromSegments(collapsed)
+  assert.equal(wordAtTime(stuck, 7).text, 'triangle.')
+
+  const words = wordsFromSegments(collapsed, 35)
+  assert.ok(words.at(-1).end > 30)
+  assert.notEqual(wordAtTime(words, 7).text, 'triangle.')
+  assert.equal(wordAtTime(words, 7).text, wordAtTime(words, 7.01).text)
+  assert.ok(wordAtTime(words, 7).id < words.length - 1)
+  assert.equal(wordAtTime(words, 34).text, 'triangle.')
+  assert.ok(buildTranscriptDocument(collapsed, 35).paragraphs.length >= 2)
+})
+
+test('zero-span word timestamps are ignored so the cue can be stretched', () => {
+  const words = wordsFromSegments([{
+    start: 0,
+    end: 0,
+    text: 'alpha bravo charlie',
+    words: [
+      { word: 'alpha', start: 0, end: 0 },
+      { word: 'bravo', start: 0, end: 0 },
+      { word: 'charlie', start: 0, end: 0 }
+    ]
+  }], 30)
+  assert.ok(words[0].start < words[1].start)
+  assert.ok(words[2].end > 20)
+  assert.equal(wordAtTime(words, 1).text, 'alpha')
 })

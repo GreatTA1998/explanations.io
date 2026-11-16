@@ -481,14 +481,14 @@
     text-align: left;
     padding: 6px 4px 3px;
     color: black;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
     line-height: 1;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     text-decoration: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid rgb(180, 180, 180);
   }
 
   .sub-nav {

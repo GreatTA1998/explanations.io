@@ -179,6 +179,7 @@
 
   .comments-column.over-board {
     border-radius: 0;
+    height: 100%;
   }
 
   .submit-button {

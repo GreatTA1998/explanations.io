@@ -20,8 +20,9 @@
   export let previewWidth = window.innerWidth * 0.35
   export let boardDoc
 
-  // Transcript/comments drawer starts open; the toggle still hides it.
-  let commentsOpen = true
+  // Multiboard has the hide/show control, so open by default there.
+  // Legacy single-board has no CommentsPanelButton — keep closed.
+  let commentsOpen = Boolean(boardDoc && boardDoc.isMultiboard)
 
   $: canvasWidth = previewWidth
   $: canvasHeight = canvasWidth * 3/4

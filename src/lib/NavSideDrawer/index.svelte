@@ -1,6 +1,6 @@
 <svelte:window on:click|capture={onWindowClick} on:keydown={onWindowKey} />
 
-<div class="nav-cluster" class:floating bind:this={clusterEl}>
+<div class="nav-cluster" class:floating>
   <section class="nav-panel" aria-label="Server navigation">
     <div class="server-row">
       <AnchoredPopover
@@ -87,6 +87,7 @@
         </button>
 
         {#if menuOpen}
+          <button type="button" class="server-menu-scrim" aria-label="Dismiss server menu" on:click={closeServerMenu}></button>
           <div
             class="server-menu"
             id="server-switch-menu"
@@ -267,7 +268,6 @@
   let allServers = []
   let creating = false
   let newServerPopup
-  let clusterEl
   let serverNameEl
   let menuTop = 0
   let menuLeft = 0
@@ -321,11 +321,9 @@
   }
 
   function onWindowClick (event) {
-    if (!menuOpen || !clusterEl) return
-    // Picks navigate themselves and close after goto. Closing here in capture
-    // unmounted the card before navigation settled and aborted the redirect.
-    if (event.target.closest('.server-card, .server-pick, .create-server, #server-switch-menu')) return
-    if (!clusterEl.contains(event.target)) closeServerMenu()
+    // Skip picks (capture-close aborted goto) and the name toggle.
+    if (!menuOpen || event.target.closest('.server-card, .server-pick, .create-server, #server-switch-menu, .server-name')) return
+    closeServerMenu()
   }
 
   async function pickServer (server) {
@@ -489,7 +487,7 @@
   }
 
   .server-name-label { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .server-name-caret { flex: 0 0 auto; width: 0; height: 0; margin-left: 4px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor; }
+  .server-name-caret { flex: 0 0 auto; width: 0; height: 0; margin-left: 8px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor; }
 
   .sub-nav {
     display: flex;
@@ -653,6 +651,8 @@
       display: none;
     }
   }
+
+  .server-menu-scrim { position: fixed; inset: 0; z-index: 39; margin: 0; padding: 0; border: 0; border-radius: 0; background: rgba(0, 0, 0, 0.28); }
 
   .server-menu {
     /* Fixed: absolute inside the drawer clipped the grid and ate card hits. */

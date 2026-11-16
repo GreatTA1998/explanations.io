@@ -481,7 +481,7 @@
     text-align: left;
     padding: 6px 4px 3px;
     color: black;
-    font-size: 44px;
+    font-size: 28px;
     font-weight: 600;
     line-height: 1;
     overflow: hidden;

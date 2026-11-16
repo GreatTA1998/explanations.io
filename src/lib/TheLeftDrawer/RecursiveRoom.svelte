@@ -145,12 +145,25 @@ let RoomElement
 let isExpanded = false
 let unsubListener
 let scrolledForRoomId = null
+// Active room this folder was auto-opened for. Snapshot updates replace the Set and room object.
+let expandedForActiveRoomId = null
 
 $: showRoomMenu = $page.params.roomID && $user.uid && $adminUIDs.includes($user.uid)
 $: roomMenuId = `room-menu-${room.id}`
 $: roomAnchor = `--room-${room.id}`
 $: activeRoomId = $page.params.roomID
-$: if (ancestorRoomIds.has(room.id)) expandChildrenRooms()
+// Re-run on every new Set/room identity, but open only once per active room.
+$: {
+  const isAncestor = ancestorRoomIds.has(room.id)
+  if (isAncestor) {
+    if (expandedForActiveRoomId !== roomID) {
+      expandedForActiveRoomId = roomID
+      expandChildrenRooms()
+    }
+  } else if (expandedForActiveRoomId) {
+    expandedForActiveRoomId = null
+  }
+}
 $: if (RoomElement && room.id === activeRoomId) scrollActiveRoomIntoView(activeRoomId)
 $: if (room.id !== activeRoomId && scrolledForRoomId === room.id) scrolledForRoomId = null
 
@@ -191,6 +204,9 @@ function isInvalidSubpageDrop () {
 
 // inspired by Notion subpages
 async function fetchSubpages () {
+  // A second call before the first snapshot sets `subpages` would drop this handle.
+  if (unsubListener) return
+
   const roomsPath = classPath + 'rooms'
   const roomsRef = collection(getFirestore(), roomsPath)
 

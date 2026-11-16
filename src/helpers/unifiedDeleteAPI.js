@@ -7,7 +7,8 @@ import {
   deleteField, 
   increment, 
   query,
-  where
+  where,
+  orderBy
 }  from 'firebase/firestore'
 
 import { 
@@ -67,6 +68,22 @@ export async function deleteRoom ({ room, classID }) {
   // 2. update all the parent pointers
   const folderPromises = []
   const roomsRef = collection(db, `classes/${classID}/rooms/`)
+
+  // Sibling order matches the left drawer: same parent, classServerOrder asc.
+  // Resolve redirect before re-parenting/deleting so order stays stable.
+  const siblingsQuery = query(
+    roomsRef,
+    where('parentRoomID', '==', room.parentRoomID || ''),
+    orderBy('classServerOrder', 'asc')
+  )
+  const siblings = await getFirestoreQuery(siblingsQuery)
+  const deleteDestination = destinationAfterRoomDelete({
+    classID,
+    parentRoomID: room.parentRoomID,
+    roomId: room.id,
+    siblingIdsInOrder: siblings.map(sibling => sibling.id)
+  })
+
   const q = query(roomsRef, where('parentRoomID', '==', room.id))
   const subRooms = await getFirestoreQuery(q)
   for (const subRoom of subRooms) {
@@ -93,7 +110,7 @@ export async function deleteRoom ({ room, classID }) {
   await deleteFirestoreDoc(classPath + `/rooms/${room.id}`)
   // note, the [room].svelte page knows how to handle itself when its `roomDoc` no longer exists
 
-  goto(destinationAfterRoomDelete({ classID, parentRoomID: room.parentRoomID }))
+  goto(deleteDestination)
 }
 
 // not allowed to delete the videos if it has videos

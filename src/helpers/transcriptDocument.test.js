@@ -188,3 +188,28 @@ test('speech intervals keep the caret from running ahead during drawing pauses',
   assert.ok(duringSpeech.start <= 24 && 24 <= duringSpeech.end + 1e-9)
   assert.ok(duringSpeech.id > midPause.id)
 })
+
+test('multiple zero-span cues each take a share of speech time', () => {
+  const duration = 40
+  const intervals = [
+    { start: 2, end: 8 },
+    { start: 20, end: 36 }
+  ]
+  const words = wordsFromSegments([
+    { start: 0, end: 0, text: 'alpha bravo charlie delta.' },
+    { start: 0, end: 0, text: 'echo foxtrot golf hotel.' }
+  ], duration, intervals)
+
+  const alpha = words.find((word) => word.text === 'alpha')
+  const echo = words.find((word) => word.text === 'echo')
+  assert.ok(echo.start > alpha.start)
+  for (let index = 1; index < words.length; index += 1) {
+    assert.ok(words[index].start >= words[index - 1].start - 1e-9)
+  }
+  for (const word of words) {
+    if (!(word.end > word.start)) continue
+    const sample = word.start + (word.end - word.start) * 0.5
+    assert.equal(wordAtTime(words, sample).id, word.id)
+  }
+  assert.equal(wordAtTime(words, echo.start + 0.05).text, 'echo')
+})

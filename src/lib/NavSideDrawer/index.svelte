@@ -51,9 +51,6 @@
             <img src="/github-logo-dark-mode-no-bg.png" width="24" height="24" alt="Github">
             GitHub
           </a>
-
-          <span class="menu-note">+1 503 250 3868</span>
-          <span class="menu-note">elton@explanations.io</span>
         </div>
       </AnchoredPopover>
 
@@ -164,16 +161,16 @@
           <div class="settings-menu" role="menu" use:dismissOnClick={closeSettings}>
             <button
               type="button"
-              class="menu-row"
-              role="menuitem"
+              class="menu-row privacy-toggle"
+              role="switch"
+              aria-checked={isPrivate}
+              aria-label="Private server"
               disabled={savingVisibility}
-              on:click={setServerVisibility}
+              on:click|stopPropagation={setServerVisibility}
             >
-              {visibilityLabel}
+              <span>Private</span>
+              <span class="switch-track" class:on={isPrivate} aria-hidden="true"><span class="switch-thumb"></span></span>
             </button>
-            <p class="settings-copy">
-              Problems? Call/text 503 250 3868, reload the page, or force restart Safari.
-            </p>
           </div>
         </AnchoredPopover>
 
@@ -223,7 +220,7 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
-  import { CARD_WIDTH, CARD_GAP, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, visibilityActionLabel } from './serverMenu.js'
+  import { CARD_WIDTH, CARD_GAP, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
 
   export let floating = false
@@ -256,7 +253,7 @@
   let menuLeft = 0
 
   $: ({ previewServers, listServers } = partitionServersForMenu(allServers, searchVal, $user.uid))
-  $: visibilityLabel = visibilityActionLabel($classServerDoc)
+  $: isPrivate = !serverIsPublic($classServerDoc)
   $: menuOffset = serverNameLeft(floating)
   $: columnCount = menuColumnCount(
     $viewport.width,
@@ -565,21 +562,37 @@
   }
 
   .settings-menu {
-    min-width: 220px;
-    max-width: 280px;
-    padding: 8px 10px;
+    min-width: 180px;
+    padding: 6px 8px;
   }
 
-  .settings-copy {
-    margin: 0;
-    font-size: 13px;
-    line-height: 1.4;
-    color: rgb(60, 60, 60);
+  .privacy-toggle {
+    justify-content: space-between;
   }
 
-  .settings-menu .menu-row + .settings-copy {
-    margin-top: 6px;
+  .switch-track {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.22);
+    transition: background 0.15s ease;
   }
+
+  .switch-track.on { background: #f69637; }
+
+  .switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.15s ease;
+  }
+
+  .switch-track.on .switch-thumb { transform: translateX(16px); }
 
   .server-actions {
     display: flex;
@@ -610,13 +623,6 @@
   .menu-row:disabled {
     opacity: 0.45;
     cursor: not-allowed;
-  }
-
-  .menu-note {
-    padding: 4px 10px;
-    text-align: left;
-    font-size: 13px;
-    color: rgb(80, 80, 80);
   }
 
   .server-menu-scrim { position: fixed; inset: 0; z-index: 39; margin: 0; padding: 0; border: 0; border-radius: 0; background: rgba(0, 0, 0, 0.28); }

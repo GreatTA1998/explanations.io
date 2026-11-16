@@ -70,10 +70,6 @@ export function viewerIsServerCreator (server, uid) {
   return !!uid && !!server?.creatorUID && server.creatorUID === uid
 }
 
-export function visibilityActionLabel (server) {
-  return serverIsPublic(server) ? 'Make private' : 'Make public'
-}
-
 // Private servers leave the public directory. The creator still sees theirs.
 // A direct URL is unchanged; this is not an access-control check.
 export function serverVisibleInMenu (server, viewerUID = '') {

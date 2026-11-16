@@ -45,14 +45,13 @@
     margin-left: auto;
 
     border: 0;
-    border-radius: 24px;
-    background: rgba(0, 0, 0, 0.45);
-    color: rgba(255, 255, 255, 0.92);
+    background: transparent;
+    color: black;
     cursor: pointer;
   }
 
   .my-round-button:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline: 2px solid rgba(0, 0, 0, 0.55);
     outline-offset: 2px;
   }
 

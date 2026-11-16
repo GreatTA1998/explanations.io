@@ -481,10 +481,10 @@
     min-width: 0;
     text-align: left;
     padding: 6px 4px;
-    color: black;
+    color: rgb(45, 45, 45);
     font-size: 24px;
     font-weight: 600;
-    line-height: 1;
+    line-height: 1.2;
     text-decoration: none;
   }
 

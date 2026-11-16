@@ -83,7 +83,7 @@
           on:click={toggleServerMenu}
         >
           <span class="server-name-label">{currentServerName}</span>
-          <span class="material-icons server-name-caret" aria-hidden="true">expand_more</span>
+          <span class="server-name-caret" aria-hidden="true"></span>
         </button>
 
         {#if menuOpen}
@@ -489,7 +489,7 @@
   }
 
   .server-name-label { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .server-name-caret { flex: 0 0 auto; font-size: 22px; line-height: 1; }
+  .server-name-caret { flex: 0 0 auto; width: 0; height: 0; margin-left: 4px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor; }
 
   .sub-nav {
     display: flex;

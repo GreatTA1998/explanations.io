@@ -44,7 +44,8 @@
     margin-right: 0;
     margin-left: auto;
 
-    border: 0;
+    border: 1px solid lightgrey;
+    border-radius: 24px;
     background: transparent;
     color: black;
     cursor: pointer;

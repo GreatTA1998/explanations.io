@@ -497,15 +497,13 @@
     gap: 0;
     margin: 0 8px;
     padding: 0;
-    border-bottom: 2px solid rgb(180, 180, 180);
   }
 
   .sub-nav-tab {
     flex: 1;
     padding: 10px 12px 8px;
     border-radius: 0;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
+    border-bottom: 2px solid rgb(180, 180, 180);
     color: rgb(100, 100, 100);
     font-size: 18px;
     font-weight: 500;

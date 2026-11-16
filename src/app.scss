@@ -85,7 +85,7 @@ button {
 
 /* Overlay looks 1–4 (?look= / localStorage / in-panel cycle). No blur; fill only. */
 .glass-surface {
-	--panel-bg: rgba(0, 0, 0, 0.45);
+	--panel-bg: rgba(0, 0, 0, 0.28);
 	--panel-fg: #fff;
 	--panel-fg-muted: rgba(255, 255, 255, 0.72);
 	background: var(--panel-bg);

@@ -31,6 +31,8 @@ export const sidebarFullscreen = writable(false)
 
 // Left-drawer peer nav under the server bar: rooms (default) | forum.
 export const drawerNavTab = writable('rooms')
+// Client-only name filter for the rooms / forum lists (no network).
+export const drawerNameQuery = writable('')
 
 export const whatIsBeingDragged = writable('')
 export const whatIsBeingDraggedID = writable('')

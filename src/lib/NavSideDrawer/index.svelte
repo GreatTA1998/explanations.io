@@ -203,6 +203,17 @@
       </nav>
 
       <div class="rooms-actions">
+        <label class="name-filter">
+          <span class="material-icons" aria-hidden="true">search</span>
+          <input
+            type="search"
+            placeholder="Filter…"
+            aria-label="Filter by name"
+            autocomplete="off"
+            maxlength="80"
+            bind:value={$drawerNameQuery}
+          >
+        </label>
         <button type="button" class="new-pill" on:click={createNew} disabled={creating}>
           <span class="material-symbols-outlined" aria-hidden="true">add</span>
           {$drawerNavTab === 'forum' ? 'new question' : 'new room'}
@@ -223,7 +234,7 @@
   import CalEmbed from '$lib/GlobalAppPopup/CalEmbed.svelte'
   import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
   import { getFirestoreCollection, createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { user, classServerDoc, recentSearchedServerDoc, sidebarFullscreen, drawerNavTab } from '/src/store.js'
+  import { user, classServerDoc, recentSearchedServerDoc, sidebarFullscreen, drawerNavTab, drawerNameQuery } from '/src/store.js'
   import { viewport } from '/src/storeFolder/viewport.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
@@ -538,20 +549,33 @@
   .rooms-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     padding: 4px 12px 8px;
   }
 
-  .new-pill {
+  .name-filter {
     display: flex;
+    flex: 1;
     align-items: center;
-    gap: 4px;
-    height: 40px;
-    padding: 4px 16px;
-    border-radius: 24px;
-    background-color: #f1e8f3;
-    color: black;
-    font-size: 14px;
+    gap: 2px;
+    min-width: 0;
+    height: 36px;
+    padding: 0 8px 0 6px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.045);
+  }
+
+  .name-filter .material-icons { flex: 0 0 auto; font-size: 18px; color: rgb(120, 120, 120); }
+
+  .name-filter input {
+    flex: 1; min-width: 0; border: 0; outline: none;
+    background: transparent; color: black; font-size: 13px;
+  }
+
+  .new-pill {
+    display: flex; flex: 0 0 auto; align-items: center; gap: 4px;
+    height: 36px; padding: 4px 12px; border-radius: 24px;
+    background-color: #f1e8f3; color: black; font-size: 13px; white-space: nowrap;
   }
 
   .new-pill .material-symbols-outlined {

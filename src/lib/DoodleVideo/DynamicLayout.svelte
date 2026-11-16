@@ -6,8 +6,15 @@
     The frame matches the video unless the panel fits in the margin.
     Overlay is positioned on this frame, so its right edge is the video edge.
     A full-column frame would pin the panel to the page edge and straddle both.
+    top tracks .board-surface so the panel kisses the blackboard, not the
+    slide-changer / comments-toggle row above it.
   -->
-  <div class="frame" class:side-by-side={sideBySide} style="width: {frameWidth};">
+  <div
+    class="frame"
+    class:side-by-side={sideBySide}
+    style="width: {frameWidth};"
+    use:trackBoardInset
+  >
     <div class="stage" style="width: {videoWidth ? videoWidth + 'px' : 'auto'};">
       <slot name="video" />
     </div>
@@ -31,6 +38,8 @@
   const PANEL_WIDTH = 320
 
   let availableWidth = 0
+  // Distance from frame top to .board-surface (slide-changer row height).
+  let boardInset = 0
 
   $: margin = availableWidth - videoWidth
   $: sideBySide = videoWidth > 0 && margin >= PANEL_WIDTH
@@ -39,13 +48,54 @@
     ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 72ch;`
     : `
       position: absolute;
-      top: 0;
+      top: ${boardInset}px;
       right: 0;
       bottom: ${HEIGHTS.AUDIO_SLIDER}px;
       width: ${PANEL_WIDTH}px;
       overflow-y: auto;
       z-index: 5;
     `
+
+  // Remeasure when layout inputs change (drawer / width / side-by-side).
+  $: if (isDrawerOpen || videoWidth || sideBySide) queueMeasure()
+
+  let frameNode = null
+  let measureQueued = false
+
+  function queueMeasure () {
+    if (!frameNode || measureQueued) return
+    measureQueued = true
+    requestAnimationFrame(() => {
+      measureQueued = false
+      measureBoardInset(frameNode)
+    })
+  }
+
+  function measureBoardInset (node) {
+    if (!node) return
+    const board = node.querySelector('.board-surface')
+    const next = board
+      ? Math.max(0, Math.round(board.getBoundingClientRect().top - node.getBoundingClientRect().top))
+      : 0
+    if (next !== boardInset) boardInset = next
+  }
+
+  function trackBoardInset (node) {
+    frameNode = node
+    measureBoardInset(node)
+    const ro = new ResizeObserver(() => measureBoardInset(node))
+    ro.observe(node)
+    const t1 = setTimeout(() => measureBoardInset(node), 50)
+    const t2 = setTimeout(() => measureBoardInset(node), 300)
+    return {
+      destroy () {
+        frameNode = null
+        ro.disconnect()
+        clearTimeout(t1)
+        clearTimeout(t2)
+      }
+    }
+  }
 </script>
 
 <style>

@@ -29,6 +29,9 @@ export const drawerWidth = writable(WIDTHS.DRAWER_EXPANDED)
 // Hides the whole sidebar (nav cluster and room list) until the floating exit control is pressed.
 export const sidebarFullscreen = writable(false)
 
+// Left-drawer peer nav under the server bar: rooms (default) | forum.
+export const drawerNavTab = writable('rooms')
+
 export const whatIsBeingDragged = writable('')
 export const whatIsBeingDraggedID = writable('')
 

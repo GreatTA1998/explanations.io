@@ -272,7 +272,7 @@
     Math.max(previewServers.length + 1, listServers.length),
     menuOffset
   )
-  $: menuWidth = columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP
+  $: menuWidth = columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP + 24
   $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
   $: if (menuOpen) placeMenu($viewport.width, menuWidth)
 
@@ -647,10 +647,8 @@
     z-index: 40;
     /* Opaque plate: no glass wash over board / transcript / room list. */
     background: var(--bg-off-white);
-  }
-
-  .search-slot {
-    padding: 0;
+    padding: 12px;
+    border-radius: 12px;
   }
 
   .search-slot :global(.my-search-bar) {
@@ -670,7 +668,7 @@
   .server-list {
     max-height: 70vh;
     overflow: auto;
-    padding: 8px 0 4px;
+    padding: 8px 0 0;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }

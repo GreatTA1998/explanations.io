@@ -337,16 +337,16 @@
   }
 
   .transcript-status {
-    margin: 8px;
-    font-size: 0.8125rem;
-    line-height: 1.4;
+    margin: 8px 12px;
+    font-size: 1rem;
+    line-height: 1.65;
     color: inherit;
   }
 
   .transcript-doc {
     overflow-y: auto;
     max-height: calc(100vh - 180px);
-    padding: 8px 10px 16px;
+    padding: 10px 14px 20px;
     text-align: left;
     touch-action: pan-y;
     -webkit-user-select: none;
@@ -354,9 +354,10 @@
   }
 
   .transcript-paragraph {
-    margin: 0 0 0.85em;
-    font-size: 0.875rem;
-    line-height: 1.55;
+    margin: 0 0 1em;
+    max-width: 38rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
     color: inherit;
   }
 

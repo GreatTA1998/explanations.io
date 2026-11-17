@@ -74,8 +74,9 @@
           <button type="button" class="server-menu-scrim" aria-label="Dismiss server menu" on:click={closeServerMenu}></button>
           <div
             class="server-menu"
+            class:full-width={menuFullWidth}
             id="server-switch-menu"
-            style="top: {menuTop}px; left: {menuLeft}px; width: {menuWidth}px;"
+            style="top: {menuTop}px; left: {menuLeft}px; width: {menuWidth}px; --menu-top: {menuTop}px;"
           >
             <div class="search-slot">
               <SearchBar
@@ -226,7 +227,7 @@
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
   import { onMount } from 'svelte'
-  import { CARD_WIDTH, CARD_GAP, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic } from './serverMenu.js'
+  import { partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, menuPlateLayout } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
 
   export let floating = false
@@ -273,9 +274,9 @@
     Math.max(previewServers.length + 1, listServers.length),
     menuOffset
   )
-  $: menuWidth = columnCount * CARD_WIDTH + Math.max(columnCount - 1, 0) * CARD_GAP + 24
+  $: ({ width: menuWidth, fullWidth: menuFullWidth } = menuPlateLayout($viewport.width, columnCount, menuOffset))
   $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
-  $: if (menuOpen) placeMenu($viewport.width, menuWidth)
+  $: if (menuOpen) placeMenu($viewport.width, columnCount)
 
   getFirestoreCollection('classes').then(docs => {
     allServers = docs
@@ -293,7 +294,7 @@
     if (!serverNameEl || typeof serverNameEl.getBoundingClientRect !== 'function') return
     const rect = serverNameEl.getBoundingClientRect()
     menuTop = rect.bottom + 4
-    menuLeft = rect.left
+    menuLeft = menuPlateLayout($viewport.width, columnCount, rect.left).left
   }
 
   function toggleServerMenu () {
@@ -731,4 +732,10 @@
     color: #5d0068;
     font-weight: 500;
   }
+
+  .server-menu.full-width .search-slot :global(.my-search-bar),
+  .server-menu.full-width .create-server { width: 100%; }
+  .server-menu.full-width .server-list { max-height: calc(100vh - var(--menu-top, 72px) - 16px); }
+  .server-menu.full-width .server-grid,
+  .server-menu.full-width .server-name-list { grid-template-columns: 1fr; width: 100%; }
 </style>

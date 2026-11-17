@@ -31,6 +31,7 @@
         </button>
 
         <div class="server-actions" role="menu" use:dismissOnClick={close}>
+          <a class="menu-row" role="menuitem" href="/">Home</a>
           {#if $user.uid}
             <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>
               Log out

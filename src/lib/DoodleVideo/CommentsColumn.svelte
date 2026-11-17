@@ -3,8 +3,8 @@
   class:over-board={overBoard}
   class:glass-surface={overBoard}
   data-look={overBoard ? look : undefined}
-  style={overBoard && look === 2
-    ? `--look2-hue:${look2Hue};--look2-opacity:${look2Opacity}`
+  style={overBoard
+    ? `--look-hue:${lookTunes[look].h};--look-opacity:${lookTunes[look].a}`
     : undefined}
 >
   <slot/>
@@ -33,10 +33,6 @@
       Comments
     </button>
     {#if overBoard}
-      {#if look === 2}
-        <label class="look2-tune">H <input type="range" min="0" max="360" bind:value={look2Hue} on:input={persistLook2} aria-label="Look 2 hue" /></label>
-        <label class="look2-tune">A <input type="range" min="0" max="1" step="0.01" bind:value={look2Opacity} on:input={persistLook2} aria-label="Look 2 opacity" /></label>
-      {/if}
       <button
         type="button"
         class="look-cycle"
@@ -46,6 +42,13 @@
       >{look}</button>
     {/if}
   </div>
+
+  {#if overBoard}
+    <div class="look-tune-row">
+      <label>H <input type="range" min="0" max="360" bind:value={lookTunes[look].h} on:input={persistLookTune} aria-label="Overlay hue" /></label>
+      <label>A <input type="range" min="0" max="1" step="0.01" bind:value={lookTunes[look].a} on:input={persistLookTune} aria-label="Overlay opacity" /></label>
+    </div>
+  {/if}
 
   <div class="panel-body" class:panel-hidden={activeTab !== 'comments'}>
     <ListenToCollection collectionPath={videoDoc.path + '/comments'}
@@ -96,14 +99,18 @@
   export let overBoard = false
 
   const LOOK_KEY = 'transcriptOverlayLook'
-  const LOOK2_KEY = 'transcriptLook2'
+  const LOOK_TUNE_KEYS = { 1: 'transcriptLook1', 2: 'transcriptLook2', 3: 'transcriptLook3' }
+  const LOOK_DEFAULTS = { 1: { h: 0, a: 0.18 }, 2: { h: 0, a: 0.62 }, 3: { h: 46, a: 0.66 } }
 
   let newInputComment = ''
   let activeTab = 'transcript'
   let openedVideo = ''
   let look = 1
-  let look2Hue = 0
-  let look2Opacity = 0.62
+  let lookTunes = {
+    1: { ...LOOK_DEFAULTS[1] },
+    2: { ...LOOK_DEFAULTS[2] },
+    3: { ...LOOK_DEFAULTS[3] }
+  }
 
   // Opening a video shows the transcript. Comments stay one tab away.
   $: if ((videoDoc?.path || '') !== openedVideo) {
@@ -119,11 +126,13 @@
       || (location.hash.match(/look=([1-3])/) || [])[1]
     const n = Number(q || localStorage.getItem(LOOK_KEY))
     if (n >= 1 && n <= 3) look = n
-    try {
-      const t = JSON.parse(localStorage.getItem(LOOK2_KEY) || 'null')
-      if (t && t.h >= 0 && t.h <= 360) look2Hue = +t.h
-      if (t && t.a >= 0 && t.a <= 1) look2Opacity = +t.a
-    } catch (_) {}
+    for (const i of [1, 2, 3]) {
+      try {
+        const t = JSON.parse(localStorage.getItem(LOOK_TUNE_KEYS[i]) || 'null')
+        if (t && t.h >= 0 && t.h <= 360) lookTunes[i].h = +t.h
+        if (t && t.a >= 0 && t.a <= 1) lookTunes[i].a = +t.a
+      } catch (_) {}
+    }
   })
 
   function cycleLook () {
@@ -131,8 +140,9 @@
     try { localStorage.setItem(LOOK_KEY, String(look)) } catch (_) {}
   }
 
-  function persistLook2 () {
-    try { localStorage.setItem(LOOK2_KEY, JSON.stringify({ h: +look2Hue, a: +look2Opacity })) } catch (_) {}
+  function persistLookTune () {
+    const t = lookTunes[look]
+    try { localStorage.setItem(LOOK_TUNE_KEYS[look], JSON.stringify({ h: +t.h, a: +t.a })) } catch (_) {}
   }
   
   function createComment () {
@@ -272,11 +282,18 @@
     color: var(--panel-fg);
   }
 
-  .look2-tune {
-    flex: 0 0 auto; align-self: center; display: inline-flex; align-items: center; gap: 3px;
-    margin-right: 2px; font-size: 0.6rem; color: var(--panel-fg-muted); opacity: 0.85;
+  .look-tune-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 6px;
+    font-size: 0.6rem;
+    color: var(--panel-fg-muted);
+    opacity: 0.85;
   }
-  .look2-tune input { width: 4.5rem; height: 1rem; margin: 0; accent-color: var(--panel-fg); }
+  .look-tune-row label { display: inline-flex; align-items: center; gap: 3px; }
+  .look-tune-row input { width: 4.5rem; height: 1rem; margin: 0; accent-color: var(--panel-fg); }
 
   .over-board .my-tab-item,
   .over-board .my-active-tab {

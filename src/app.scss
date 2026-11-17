@@ -95,8 +95,10 @@ button {
 	outline: none;
 	box-shadow: none;
 }
-.glass-surface[data-look="2"] { /* B: light translucent */
-	--panel-bg: rgba(255, 255, 255, 0.62);
+.glass-surface[data-look="2"] { /* B: light translucent; H/A sliders set --look2-* */
+	--look2-hue: 0;
+	--look2-opacity: 0.62;
+	--panel-bg: hsla(var(--look2-hue), 28%, 94%, var(--look2-opacity));
 	--panel-fg: #1c1c1c;
 	--panel-fg-muted: rgba(0, 0, 0, 0.55);
 }

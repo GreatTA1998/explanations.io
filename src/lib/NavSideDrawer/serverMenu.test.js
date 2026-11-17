@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { hasDesignatedPreview, previewBlackboardID, serversForMenu, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, serverVisibleInMenu } from './serverMenu.js'
+import { hasDesignatedPreview, previewBlackboardID, serversForMenu, partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, viewerIsServerCreator, serverVisibleInMenu, menuPlateLayout } from './serverMenu.js'
 
 const featured = { id: 'a', name: 'Algebra and Number Theory', featuredBlackboardID: 'bbbbbbbbbbbbbbbbbbbb' }
 const video = { id: 'b', name: 'Featured video server', featuredVideoID: 'vvvvvvvvvvvvvvvvvvvv' }
@@ -42,12 +42,11 @@ test('the grid uses the viewport, and does not open empty columns', () => {
   assert.equal(menuColumnCount(1280, 8, 300), 3)
   assert.equal(menuColumnCount(1280, 2), 2)
   assert.equal(menuColumnCount(390, 6), 1)
-})
-
-test('the menu starts at the server-name control, not past the drawer', () => {
   assert.equal(serverNameLeft(false), 48)
   assert.equal(serverNameLeft(true), 56)
   assert.equal(menuColumnCount(1280, 8, serverNameLeft(false)), 4)
+  assert.deepEqual(menuPlateLayout(390, 1, 48), { fullWidth: true, width: 366, left: 12 })
+  assert.deepEqual(menuPlateLayout(1280, 4, 48), { fullWidth: false, width: 1008, left: 48 })
 })
 
 const secret = {

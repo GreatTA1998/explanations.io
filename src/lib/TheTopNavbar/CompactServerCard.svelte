@@ -43,14 +43,9 @@
       </ListenToDoc>
     </div>
   {:else if thumbnailSrc}
-    <img
-      class="server-thumb"
-      alt=""
-      src={thumbnailSrc}
-      style="min-width: {thumbnailWidth}px; width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px;"
-    />
+    <img class="server-thumb" alt="" src={thumbnailSrc} />
   {:else}
-    <div class="preview-fallback" style="min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px;"></div>
+    <div class="preview-fallback"></div>
   {/if}
 </button>
 
@@ -68,7 +63,6 @@
   let thumbnailWidth = CARD_WIDTH
   $: blackboardID = previewBlackboardID(serverObj)
   $: thumbnailSrc = blackboardID ? '' : thumbnailImageURL(serverObj)
-  let thumbnailAspectRatio = 1 / 0.7
 
   $: needsTeachers = serverObj.numOfPrepaidLearners > 0 && !serverObj.numOfTeachers
 
@@ -80,14 +74,14 @@
 
 <style lang="scss">
   .server-card {
-    position: relative; 
-    display: flex; 
-    width: 240px; 
-    flex: 0 0 240px;
-    border-radius: 16px; 
-    padding: 0px; 
-    overflow: hidden; text-align: left;
-    /* Live board: translucent paint over --bg-off-white (readable before thumb loads). */
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex: 1 1 auto;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    text-align: left;
     background-color: var(--bg-off-white, #f8f9f9);
   }
 
@@ -118,17 +112,12 @@
   .preview-frame {
     position: relative;
     z-index: 0;
-    margin-right: -12px;
-    margin-top: -12px;
-    margin-bottom: -12px;
-    min-width: 240px;
-    max-width: 240px;
-    /* thumbnailAspectRatio is 1/0.7 → height = width * 0.7 */
-    height: calc(240px * 0.7);
+    margin: -12px -12px -12px 0;
+    width: 100%;
+    aspect-ratio: 10 / 7;
+    height: auto;
     overflow: hidden;
-    border-radius: 8px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-radius: 0 8px 8px 0;
     background: transparent;
     pointer-events: none;
   }
@@ -136,10 +125,10 @@
   .preview-fallback {
     position: relative;
     z-index: 0;
-    margin-right: -12px;
-    margin-top: -12px;
-    margin-bottom: -12px;
+    margin: -12px -12px -12px 0;
     box-sizing: border-box;
+    width: 100%;
+    aspect-ratio: 10 / 7;
     border-top-right-radius: 24px;
     border-bottom-right-radius: 24px;
     background-color: hsl(0, 0%, 0%, 0.80);
@@ -150,10 +139,11 @@
     position: relative;
     z-index: 0;
     display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 10 / 7;
     object-fit: cover;
-    border-radius: 8px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-radius: 0 8px 8px 0;
     pointer-events: none;
   }
 

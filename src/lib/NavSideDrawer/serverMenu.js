@@ -1,18 +1,9 @@
-// The server switcher used to live in TheTopNavbar. Empty search once hid
-// servers without a designated thumbnail or featured video; that made many
-// joinable servers unreachable. The menu now lists every joinable server:
-// preview tiles when a thumbnail exists, otherwise a name row.
-
 const THUMBNAIL_FIELDS = ['featuredBlackboardID', 'thumbnailURL', 'serverThumbnail', 'thumbnail']
 const FEATURED_VIDEO_FIELDS = ['featuredVideoID', 'featuredVideo']
 
 export const CARD_WIDTH = 240
 export const CARD_GAP = 8
 
-// The menu hangs from the server-name control, so its left edge is that
-// control's left edge. Docked drawer is flush with the viewport. The floating
-// cluster is 8px in. The control then follows the row padding, the logo, and
-// the gap before the name. Column count uses this so the grid stays on screen.
 export function serverNameLeft (floating = false) {
   return (floating ? 8 : 0) + 8 + 36 + 4
 }
@@ -60,8 +51,7 @@ export function thumbnailImageURL (server) {
   return ''
 }
 
-// Missing isPublic matches every server document that predates the flag:
-// they are already listed, so they stay public. false is the private state.
+// Missing isPublic → public (legacy docs). false is private.
 export function serverIsPublic (server) {
   return server?.isPublic !== false
 }
@@ -70,8 +60,7 @@ export function viewerIsServerCreator (server, uid) {
   return !!uid && !!server?.creatorUID && server.creatorUID === uid
 }
 
-// Private servers leave the public directory. The creator still sees theirs.
-// A direct URL is unchanged; this is not an access-control check.
+// Directory visibility only — not access control for direct URLs.
 export function serverVisibleInMenu (server, viewerUID = '') {
   if (!server?.id) return false
   if (serverIsPublic(server)) return true
@@ -95,8 +84,6 @@ export function serversForMenu (servers, query, viewerUID = '') {
   })
 }
 
-// Preview tiles stay in the holographic grid. Servers with no thumbnail /
-// featured preview become name rows so they stay reachable without empty boards.
 export function partitionServersForMenu (servers, query, viewerUID = '') {
   const shown = serversForMenu(servers, query, viewerUID)
   const previewServers = []
@@ -114,4 +101,15 @@ export function menuColumnCount (viewportWidth, itemCount, leftOffset = 0) {
   const available = Math.max(CARD_WIDTH, (viewportWidth || 0) - leftOffset - 48)
   const fit = Math.max(1, Math.floor((available + CARD_GAP) / (CARD_WIDTH + CARD_GAP)))
   return Math.min(fit, count)
+}
+
+export function menuPlateLayout (viewportWidth, columnCount, anchorLeft = 0) {
+  const vw = Math.max(viewportWidth || 0, 0)
+  const cols = Math.max(columnCount || 1, 1)
+  const natural = cols * CARD_WIDTH + Math.max(cols - 1, 0) * CARD_GAP + 24
+  if (menuColumnCount(vw, 2, 0) < 2) {
+    return { fullWidth: true, width: Math.max(CARD_WIDTH + 24, vw - 24), left: 12 }
+  }
+  const maxLeft = Math.max(12, vw - 12 - natural)
+  return { fullWidth: false, width: natural, left: Math.min(Math.max(anchorLeft, 12), maxLeft) }
 }

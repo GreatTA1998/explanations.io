@@ -16,7 +16,7 @@
 
   export let pointing = 'right'
   export let floating = false
-  export let edge = 'left' // floating anchor: left drawer vs right transcript
+  export let edge = 'left'
   export let open = false
   export let label = ''
 </script>
@@ -26,11 +26,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    flex: none;
     width: 32px;
     height: 32px;
-    min-width: 32px;
-    min-height: 32px;
     margin-left: 4px;
     padding: 0;
     border-radius: 8px;

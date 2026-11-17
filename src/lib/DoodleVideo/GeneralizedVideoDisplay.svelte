@@ -44,10 +44,10 @@
 
           <EurekaButton boardDoc={video} {canvasWidth} />
 
-          {#if commentsOpen}
+          {#if commentsOpen && sideBySide}
             <DrawerEdgeToggle
               open
-              pointing={sideBySide ? 'left' : 'right'}
+              pointing="left"
               label="Hide transcript and comments"
               on:click={toggleComments}
             />

@@ -19,7 +19,11 @@
       let:overBoard
       style={commentsSectionStyle}
     >
-      <CommentsColumn videoDoc={boardDoc} {overBoard} />
+      <CommentsColumn
+        videoDoc={boardDoc}
+        {overBoard}
+        onHide={boardDoc?.isMultiboard ? toggleComments : undefined}
+      />
     </div>
   </DynamicLayout>
 

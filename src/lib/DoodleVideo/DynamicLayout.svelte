@@ -34,7 +34,6 @@
   // is height-limited and the spare width is the white margin.
   export let videoWidth = 0
   export let isDrawerOpen = false
-  // Mirrored out so the transcript toggle can flip its arrow with layout mode.
   export let sideBySide = false
 
   const PANEL_WIDTH = 320

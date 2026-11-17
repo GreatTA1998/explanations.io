@@ -10,6 +10,14 @@
   <slot/>
 
   <div class="panel-tabs" role="tablist" aria-label="Transcript and comments">
+    {#if overBoard && onHide}
+      <DrawerEdgeToggle
+        open
+        pointing="right"
+        label="Hide transcript and comments"
+        on:click={onHide}
+      />
+    {/if}
     <button
       type="button"
       role="tab"
@@ -88,6 +96,7 @@
   import ListenToCollection from '$lib/Renderless/ListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
   import TranscriptPanel from '$lib/DoodleVideo/TranscriptPanel.svelte'
+  import DrawerEdgeToggle from '$lib/NavSideDrawer/DrawerEdgeToggle.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID } from '/src/helpers/utility.js'
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
@@ -97,6 +106,7 @@
 
   export let videoDoc
   export let overBoard = false
+  export let onHide = undefined
 
   const LOOK_KEY = 'transcriptOverlayLook'
   const LOOK_TUNE_KEYS = { 1: 'transcriptLook1', 2: 'transcriptLook2', 3: 'transcriptLook3' }
@@ -225,6 +235,16 @@
     display: flex;
     width: 100%;
     align-items: stretch;
+  }
+
+  .panel-tabs > :global(.edge-toggle-inline) {
+    align-self: center;
+    margin: 0 0 0 4px;
+    color: var(--panel-fg);
+  }
+
+  .panel-tabs > :global(.edge-toggle-inline:hover) {
+    background: rgba(255, 255, 255, 0.12);
   }
 
   .panel-body {

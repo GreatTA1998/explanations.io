@@ -33,8 +33,8 @@
       <button
         type="button"
         class="look-cycle"
-        title="Overlay look {look}/4 (click to cycle)"
-        aria-label="Cycle overlay look, currently {look} of 4"
+        title="Overlay look {look}/3 (click to cycle)"
+        aria-label="Cycle overlay look, currently {look} of 3"
         on:click={cycleLook}
       >{look}</button>
     {/if}
@@ -101,18 +101,18 @@
     activeTab = 'transcript'
   }
 
-  // Looks 2–3: dark ink; 1 & 4: light ink.
+  // Looks 2–3: dark ink; 1: light ink.
   $: lightInk = !overBoard || look === 2 || look === 3
 
   onMount(() => {
     const q = new URLSearchParams(location.search).get('look')
-      || (location.hash.match(/look=([1-4])/) || [])[1]
+      || (location.hash.match(/look=([1-3])/) || [])[1]
     const n = Number(q || localStorage.getItem(LOOK_KEY))
-    if (n >= 1 && n <= 4) look = n
+    if (n >= 1 && n <= 3) look = n
   })
 
   function cycleLook () {
-    look = look % 4 + 1
+    look = look % 3 + 1
     try { localStorage.setItem(LOOK_KEY, String(look)) } catch (_) {}
   }
   

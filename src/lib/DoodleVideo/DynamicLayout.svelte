@@ -53,6 +53,8 @@
       bottom: ${HEIGHTS.AUDIO_SLIDER}px;
       width: ${PANEL_WIDTH}px;
       overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
       z-index: 5;
     `
 

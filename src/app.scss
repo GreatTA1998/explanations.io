@@ -137,19 +137,11 @@ audio::-webkit-media-controls-panel {
 	width: calc(100% + 33px);
 }
 
-// COPYING NOTION'S SCROLLBAR
-::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #D3D1CB;
-}
-
-::-webkit-scrollbar-track {
-	background: #EDECE9;
-}
+/* Overlay scrollbars: thin + transparent track (no reserved Notion gutter). */
+:root { scrollbar-width: thin; scrollbar-color: rgba(128, 128, 128, 0.5) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.45); }
+::-webkit-scrollbar-track { background: transparent; }
 
 /* used from https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow  */
 /* NOTE: you MUST set a width explicitly */

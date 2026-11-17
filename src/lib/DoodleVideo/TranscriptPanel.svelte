@@ -351,6 +351,9 @@
     touch-action: pan-y;
     -webkit-user-select: none;
     user-select: none;
+    /* Overlay: no scrollbar-gutter (stable reserves width). */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
   }
 
   .transcript-paragraph {

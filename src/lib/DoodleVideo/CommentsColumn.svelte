@@ -3,6 +3,9 @@
   class:over-board={overBoard}
   class:glass-surface={overBoard}
   data-look={overBoard ? look : undefined}
+  style={overBoard && look === 2
+    ? `--look2-hue:${look2Hue};--look2-opacity:${look2Opacity}`
+    : undefined}
 >
   <slot/>
 
@@ -30,6 +33,10 @@
       Comments
     </button>
     {#if overBoard}
+      {#if look === 2}
+        <label class="look2-tune">H <input type="range" min="0" max="360" bind:value={look2Hue} on:input={persistLook2} aria-label="Look 2 hue" /></label>
+        <label class="look2-tune">A <input type="range" min="0" max="1" step="0.01" bind:value={look2Opacity} on:input={persistLook2} aria-label="Look 2 opacity" /></label>
+      {/if}
       <button
         type="button"
         class="look-cycle"
@@ -89,11 +96,14 @@
   export let overBoard = false
 
   const LOOK_KEY = 'transcriptOverlayLook'
+  const LOOK2_KEY = 'transcriptLook2'
 
   let newInputComment = ''
   let activeTab = 'transcript'
   let openedVideo = ''
   let look = 1
+  let look2Hue = 0
+  let look2Opacity = 0.62
 
   // Opening a video shows the transcript. Comments stay one tab away.
   $: if ((videoDoc?.path || '') !== openedVideo) {
@@ -109,11 +119,20 @@
       || (location.hash.match(/look=([1-3])/) || [])[1]
     const n = Number(q || localStorage.getItem(LOOK_KEY))
     if (n >= 1 && n <= 3) look = n
+    try {
+      const t = JSON.parse(localStorage.getItem(LOOK2_KEY) || 'null')
+      if (t && t.h >= 0 && t.h <= 360) look2Hue = +t.h
+      if (t && t.a >= 0 && t.a <= 1) look2Opacity = +t.a
+    } catch (_) {}
   })
 
   function cycleLook () {
     look = look % 3 + 1
     try { localStorage.setItem(LOOK_KEY, String(look)) } catch (_) {}
+  }
+
+  function persistLook2 () {
+    try { localStorage.setItem(LOOK2_KEY, JSON.stringify({ h: +look2Hue, a: +look2Opacity })) } catch (_) {}
   }
   
   function createComment () {
@@ -252,6 +271,12 @@
     opacity: 1;
     color: var(--panel-fg);
   }
+
+  .look2-tune {
+    flex: 0 0 auto; align-self: center; display: inline-flex; align-items: center; gap: 3px;
+    margin-right: 2px; font-size: 0.6rem; color: var(--panel-fg-muted); opacity: 0.85;
+  }
+  .look2-tune input { width: 4.5rem; height: 1rem; margin: 0; accent-color: var(--panel-fg); }
 
   .over-board .my-tab-item,
   .over-board .my-active-tab {

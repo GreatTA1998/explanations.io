@@ -1,6 +1,6 @@
 // Speech-active intervals for text-only transcripts.
 //
-// gpt-4o-transcribe often returns text without word times. Stretching that
+// Text-only ASR (no word times) needs a stretch onto audio duration. That
 // text across the full audio duration treats drawing pauses as speech, so the
 // caret runs ahead early in a pause-heavy recording. Mapping derived words
 // onto speech-active regions keeps currentTime and the caret in the same

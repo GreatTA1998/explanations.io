@@ -136,7 +136,7 @@ test('word timestamps are requested, then omitted when the model rejects them', 
     fetchImpl
   })
   assert.equal(second.json.text, 'from the model')
-  assert.equal(calls[0].model, 'gpt-4o-transcribe')
+  assert.equal(calls[0].model, 'whisper-1')
   assert.deepEqual(calls[0]['timestamp_granularities[]'], ['word', 'segment'])
   assert.equal(calls[0].response_format, 'verbose_json')
   assert.equal(calls[1].response_format, 'json')

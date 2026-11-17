@@ -41,18 +41,19 @@ test('stored word times are kept when they match the text', () => {
   const words = wordsFromSegments([{
     start: 0,
     end: 10,
-    text: 'alpha bravo',
+    text: 'alpha. bravo,',
     words: [
       { word: ' alpha ', start: 1, end: 1.2 },
       { word: 'bravo', start: 1.3, end: 1.8 }
     ]
   }])
-  assert.equal(words[0].text, 'alpha')
+  assert.equal(words[0].text, 'alpha.')
   assert.equal(words[0].start, 1)
   assert.equal(words[0].end, 1.2)
+  assert.equal(words[1].text, 'bravo,')
   assert.equal(words[1].start, 1.3)
   assert.equal(words[1].end, 1.8)
-  assert.equal(wordAtTime(words, 1.5).text, 'bravo')
+  assert.equal(wordAtTime(words, 1.5).text, 'bravo,')
 })
 
 test('word times that do not match the text are not used', () => {

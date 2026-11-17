@@ -1,10 +1,10 @@
 // Server-side transcription for a new recording.
 //
 // The browser never sees OPENAI_API_KEY. It sends the stored audio URL here.
-// gpt-4o-transcribe accepts a file up to 25 MB and, today, returns text rather
-// than word timestamps. We still ask for word and segment times. If the model
-// refuses that request, or answers with text only, we store the text and the
-// real slice bounds. We do not invent word times.
+// whisper-1 accepts a file up to 25 MB and returns word times via verbose_json.
+// We ask for word and segment times. If the model refuses that request, or
+// answers with text only, we store the text and the real slice bounds. We do
+// not invent word times.
 //
 // New speech is WebM (Opus) or MP4 (AAC). Those files are sent as themselves.
 // WAV is only the container already stored for older recordings; PCM WAV can
@@ -17,7 +17,7 @@
 
 import { transcriptionFile } from '../../helpers/speechMime.js'
 
-export const MODEL_ID = 'gpt-4o-transcribe'
+export const MODEL_ID = 'whisper-1'
 export const MAX_DURATION_SECONDS = 30 * 60
 
 // 16-bit stereo PCM at 48 kHz. A larger file cannot be 30 minutes or less of

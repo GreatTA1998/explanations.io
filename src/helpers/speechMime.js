@@ -56,7 +56,7 @@ export function speechUploadMetadata (mimeType) {
   return metadata
 }
 
-// What gpt-4o-transcribe should receive. The bytes win when they identify a
+// What whisper-1 should receive. The bytes win when they identify a
 // container, so a WebM or MP4 file is never relabeled as WAV. The stored
 // content type is kept when it names that same container.
 export function transcriptionFile (bytes, contentType) {

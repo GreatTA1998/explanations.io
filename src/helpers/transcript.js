@@ -11,7 +11,7 @@ import { writable } from 'svelte/store'
 import { getAuth } from 'firebase/auth'
 import { updateFirestoreDoc } from './crud.js'
 
-const MODEL_ID = 'gpt-4o-transcribe'
+const MODEL_ID = 'whisper-1'
 const TRANSCRIPT_VERSION = 2
 const TRANSCRIBING = 'Transcribing this recording…'
 

@@ -110,7 +110,8 @@ export function partitionServersForMenu (servers, query, viewerUID = '') {
 
 export function menuColumnCount (viewportWidth, itemCount, leftOffset = 0) {
   const count = Math.max(itemCount || 0, 1)
-  const available = Math.max(CARD_WIDTH, (viewportWidth || 0) - leftOffset - 24)
+  // 48 = 24px viewport margin + 12px menu pad on each side
+  const available = Math.max(CARD_WIDTH, (viewportWidth || 0) - leftOffset - 48)
   const fit = Math.max(1, Math.floor((available + CARD_GAP) / (CARD_WIDTH + CARD_GAP)))
   return Math.min(fit, count)
 }

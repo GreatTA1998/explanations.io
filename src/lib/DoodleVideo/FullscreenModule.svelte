@@ -14,6 +14,19 @@
     >
     </slot>
 
+    <div slot="board-float">
+      {#if boardDoc && boardDoc.isMultiboard}
+        <DrawerEdgeToggle
+          floating
+          edge="right"
+          open={false}
+          pointing={sideBySide ? 'right' : 'left'}
+          label="Show transcript and comments"
+          on:click={toggleComments}
+        />
+      {/if}
+    </div>
+
     <div slot="comments-section"
       let:commentsSectionStyle={commentsSectionStyle}
       let:overBoard
@@ -26,17 +39,6 @@
       />
     </div>
   </DynamicLayout>
-
-  {#if !commentsOpen && boardDoc && boardDoc.isMultiboard}
-    <DrawerEdgeToggle
-      floating
-      edge="right"
-      open={false}
-      pointing={sideBySide ? 'right' : 'left'}
-      label="Show transcript and comments"
-      on:click={toggleComments}
-    />
-  {/if}
 </div>
 
 <script>

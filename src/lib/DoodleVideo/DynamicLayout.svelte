@@ -17,6 +17,11 @@
   >
     <div class="stage" style="width: {videoWidth ? videoWidth + 'px' : 'auto'};">
       <slot name="video" {sideBySide} />
+      {#if !isDrawerOpen}
+        <div class="board-float" style="top: {boardInset + 12}px;">
+          <slot name="board-float" />
+        </div>
+      {/if}
     </div>
 
     <slot name="comments-section"
@@ -116,6 +121,14 @@
   }
 
   .stage {
+    position: relative;
     flex: 0 0 auto;
+  }
+
+  /* Top-right of .board-surface (boardInset skips slide-changer chrome). */
+  .board-float {
+    position: absolute;
+    right: 12px;
+    z-index: 40;
   }
 </style>

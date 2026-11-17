@@ -2,7 +2,7 @@
   type="button"
   class:edge-toggle-inline={!floating}
   class:edge-toggle-floating={floating}
-  class:edge-toggle-right={floating && edge === 'right'}
+  class:edge-toggle-fixed-left={floating && edge === 'left'}
   aria-expanded={open}
   aria-label={label}
   title={label}
@@ -16,6 +16,7 @@
 
   export let pointing = 'right'
   export let floating = false
+  // left = fixed viewport (drawer). right = parent anchors to blackboard.
   export let edge = 'left'
   export let open = false
   export let label = ''
@@ -41,9 +42,6 @@
   }
 
   .edge-toggle-floating {
-    position: fixed;
-    top: 12px;
-    left: 12px;
     z-index: 40;
     display: flex;
     align-items: center;
@@ -59,9 +57,9 @@
     cursor: pointer;
   }
 
-  .edge-toggle-right {
-    left: auto;
-    right: 12px;
-    position: absolute;
+  .edge-toggle-fixed-left {
+    position: fixed;
+    top: 12px;
+    left: 12px;
   }
 </style>

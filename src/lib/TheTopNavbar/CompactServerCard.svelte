@@ -76,8 +76,8 @@
   .server-card {
     position: relative;
     display: flex;
-    width: 100%;
-    flex: 1 1 auto;
+    width: 240px;
+    flex: 0 0 auto;
     border-radius: 16px;
     padding: 0;
     overflow: hidden;

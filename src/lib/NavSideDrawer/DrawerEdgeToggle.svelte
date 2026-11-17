@@ -3,6 +3,10 @@
   class:edge-toggle-inline={!floating}
   class:edge-toggle-floating={floating}
   class:edge-toggle-fixed-left={floating && edge === 'left'}
+  class:edge-toggle-wash={wash}
+  class:glass-surface={wash}
+  data-look={wash ? look : undefined}
+  style={wash ? `--look-hue:${lookHue};--look-opacity:${lookOpacity}` : undefined}
   aria-expanded={open}
   aria-label={label}
   title={label}
@@ -20,6 +24,11 @@
   export let edge = 'left'
   export let open = false
   export let label = ''
+  // Match transcript overlay wash (glass-surface look vars).
+  export let wash = false
+  export let look = 1
+  export let lookHue = 0
+  export let lookOpacity = 0.5
 </script>
 
 <style>
@@ -50,11 +59,14 @@
     height: 48px;
     padding: 0;
     border-radius: 24px;
+    cursor: pointer;
+  }
+
+  .edge-toggle-floating:not(.edge-toggle-wash) {
     border: 1px solid lightgrey;
     background: white;
     color: black;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-    cursor: pointer;
   }
 
   .edge-toggle-fixed-left {

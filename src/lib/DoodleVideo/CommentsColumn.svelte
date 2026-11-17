@@ -97,6 +97,12 @@
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
   import TranscriptPanel from '$lib/DoodleVideo/TranscriptPanel.svelte'
   import DrawerEdgeToggle from '$lib/NavSideDrawer/DrawerEdgeToggle.svelte'
+  import {
+    OVERLAY_LOOK_DEFAULTS,
+    OVERLAY_LOOK_KEY,
+    OVERLAY_LOOK_TUNE_KEYS,
+    readOverlayLook
+  } from '/src/helpers/overlayLook.js'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID } from '/src/helpers/utility.js'
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
@@ -108,18 +114,14 @@
   export let overBoard = false
   export let onHide = undefined
 
-  const LOOK_KEY = 'transcriptOverlayLook'
-  const LOOK_TUNE_KEYS = { 1: 'transcriptLook1', 2: 'transcriptLook2', 3: 'transcriptLook3' }
-  const LOOK_DEFAULTS = { 1: { h: 0, a: 0.5 }, 2: { h: 0, a: 0.62 }, 3: { h: 46, a: 0.66 } }
-
   let newInputComment = ''
   let activeTab = 'transcript'
   let openedVideo = ''
   let look = 1
   let lookTunes = {
-    1: { ...LOOK_DEFAULTS[1] },
-    2: { ...LOOK_DEFAULTS[2] },
-    3: { ...LOOK_DEFAULTS[3] }
+    1: { ...OVERLAY_LOOK_DEFAULTS[1] },
+    2: { ...OVERLAY_LOOK_DEFAULTS[2] },
+    3: { ...OVERLAY_LOOK_DEFAULTS[3] }
   }
 
   // Opening a video shows the transcript. Comments stay one tab away.
@@ -134,11 +136,12 @@
   onMount(() => {
     const q = new URLSearchParams(location.search).get('look')
       || (location.hash.match(/look=([1-3])/) || [])[1]
-    const n = Number(q || localStorage.getItem(LOOK_KEY))
+    const saved = readOverlayLook()
+    const n = Number(q || saved.look)
     if (n >= 1 && n <= 3) look = n
     for (const i of [1, 2, 3]) {
       try {
-        const t = JSON.parse(localStorage.getItem(LOOK_TUNE_KEYS[i]) || 'null')
+        const t = JSON.parse(localStorage.getItem(OVERLAY_LOOK_TUNE_KEYS[i]) || 'null')
         if (t && t.h >= 0 && t.h <= 360) lookTunes[i].h = +t.h
         if (t && t.a >= 0 && t.a <= 1) lookTunes[i].a = +t.a
       } catch (_) {}
@@ -147,12 +150,14 @@
 
   function cycleLook () {
     look = look % 3 + 1
-    try { localStorage.setItem(LOOK_KEY, String(look)) } catch (_) {}
+    try { localStorage.setItem(OVERLAY_LOOK_KEY, String(look)) } catch (_) {}
   }
 
   function persistLookTune () {
     const t = lookTunes[look]
-    try { localStorage.setItem(LOOK_TUNE_KEYS[look], JSON.stringify({ h: +t.h, a: +t.a })) } catch (_) {}
+    try {
+      localStorage.setItem(OVERLAY_LOOK_TUNE_KEYS[look], JSON.stringify({ h: +t.h, a: +t.a }))
+    } catch (_) {}
   }
   
   function createComment () {

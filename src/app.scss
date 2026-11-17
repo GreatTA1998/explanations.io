@@ -86,7 +86,7 @@ button {
 /* Overlay looks 1–3 (?look= / localStorage / in-panel cycle). Twitch scrim: fill only, no blur. */
 .glass-surface {
 	/* A: lightened neutral dark; H/A sliders set --look-hue / --look-opacity */
-	--panel-bg: hsla(var(--look-hue, 0), 8%, 11%, var(--look-opacity, 0.18));
+	--panel-bg: hsla(var(--look-hue, 0), 8%, 11%, var(--look-opacity, 0.5));
 	--panel-fg: #fff;
 	--panel-fg-muted: rgba(255, 255, 255, 0.72);
 	background: var(--panel-bg);

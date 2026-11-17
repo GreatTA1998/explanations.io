@@ -100,7 +100,7 @@
 
   const LOOK_KEY = 'transcriptOverlayLook'
   const LOOK_TUNE_KEYS = { 1: 'transcriptLook1', 2: 'transcriptLook2', 3: 'transcriptLook3' }
-  const LOOK_DEFAULTS = { 1: { h: 0, a: 0.18 }, 2: { h: 0, a: 0.62 }, 3: { h: 46, a: 0.66 } }
+  const LOOK_DEFAULTS = { 1: { h: 0, a: 0.5 }, 2: { h: 0, a: 0.62 }, 3: { h: 46, a: 0.66 } }
 
   let newInputComment = ''
   let activeTab = 'transcript'

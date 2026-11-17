@@ -13,6 +13,7 @@
     let:commentsOpen={commentsOpen}
     let:canvasWidth={canvasWidth}
     let:canvasHeight={canvasHeight}
+    let:sideBySide={sideBySide}
   >
     {#if video.isMultiboard}
       <MultiboardHD boardDoc={video}
@@ -43,7 +44,14 @@
 
           <EurekaButton boardDoc={video} {canvasWidth} />
 
-          <CommentsPanelButton on:click={toggleComments} open={commentsOpen} />
+          {#if commentsOpen}
+            <DrawerEdgeToggle
+              open
+              pointing={sideBySide ? 'left' : 'right'}
+              label="Hide transcript and comments"
+              on:click={toggleComments}
+            />
+          {/if}
 
           {#if $user.uid === video.creatorUID || !video.creatorUID}
             <VideoDropdownMenu {video}
@@ -72,7 +80,7 @@
 
 <script>
   import VideoDropdownMenu from '$lib/DoodleVideo/VideoDropdownMenu.svelte'
-  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
+  import DrawerEdgeToggle from '$lib/NavSideDrawer/DrawerEdgeToggle.svelte'
   import EurekaButton from '$lib/DoodleVideo/EurekaButton.svelte'
   import LegacyHDReusableSingleBoard from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import VideoFooterInfo from './VideoFooterInfo.svelte'

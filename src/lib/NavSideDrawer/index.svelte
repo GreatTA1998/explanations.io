@@ -175,15 +175,12 @@
           </div>
         </AnchoredPopover>
 
-        <button
-          type="button"
-          class="hide-drawer-button"
-          aria-label="Hide drawer"
-          title="Hide drawer"
+        <DrawerEdgeToggle
+          open
+          pointing="left"
+          label="Hide drawer"
           on:click={() => sidebarFullscreen.set(true)}
-        >
-          <HandDrawnDrawerArrow pointing="left" />
-        </button>
+        />
       </nav>
 
       <div class="rooms-actions">
@@ -209,7 +206,7 @@
 <PopupNewServer bind:this={newServerPopup} showTrigger={false} />
 
 <script>
-  import HandDrawnDrawerArrow from './HandDrawnDrawerArrow.svelte'
+  import DrawerEdgeToggle from './DrawerEdgeToggle.svelte'
   import CompactServerCard from '$lib/TheTopNavbar/CompactServerCard.svelte'
   import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
@@ -490,7 +487,7 @@
   }
 
   .sub-nav .settings-button,
-  .sub-nav .hide-drawer-button {
+  .sub-nav :global(.edge-toggle-inline) {
     flex: 0 0 auto;
     align-self: center;
   }
@@ -540,8 +537,7 @@
     font-size: 1.4rem;
   }
 
-  .settings-button,
-  .hide-drawer-button {
+  .settings-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -553,8 +549,7 @@
     color: rgb(80, 80, 80);
   }
 
-  .settings-button:hover,
-  .hide-drawer-button:hover {
+  .settings-button:hover {
     background: rgba(0, 0, 0, 0.06);
   }
 

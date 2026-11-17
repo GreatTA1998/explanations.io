@@ -11,15 +11,13 @@
     {/if}
 
     {#if $sidebarFullscreen && $page.url.pathname !== '/'}
-      <button
-        type="button"
-        class="show-drawer-toggle"
-        aria-label="Show the drawer"
-        title="Show the drawer"
+      <DrawerEdgeToggle
+        floating
+        open={false}
+        pointing="right"
+        label="Show the drawer"
         on:click={() => sidebarFullscreen.set(false)}
-      >
-        <HandDrawnDrawerArrow pointing="right" />
-      </button>
+      />
     {/if}
 
     {#if $didRenderSplashScreen && !$isFullServerMode}
@@ -33,7 +31,7 @@
 
 <script>
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
-  import HandDrawnDrawerArrow from '$lib/NavSideDrawer/HandDrawnDrawerArrow.svelte'
+  import DrawerEdgeToggle from '$lib/NavSideDrawer/DrawerEdgeToggle.svelte'
   import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
 
   import { initializeDatabase } from '../database.js'
@@ -274,26 +272,4 @@
   }
 </script>
 
-<style>
-  .show-drawer-toggle {
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    border-radius: 24px;
-    border: 1px solid lightgrey;
-    background: white;
-    color: black;
-    font-size: 16px;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-  }
-
-</style>
 

@@ -184,11 +184,15 @@ function matchingWordTimes(segment, parts) {
     const spoken = String(word && (word.word || word.text) || '').trim()
     const start = Number(word && word.start)
     const end = Number(word && word.end)
-    if (spoken !== parts[index] || !Number.isFinite(start) || !Number.isFinite(end)) return null
+    if (tokenCore(spoken) !== tokenCore(parts[index]) || !Number.isFinite(start) || !Number.isFinite(end)) return null
     timed.push({ text: parts[index], start, end: Math.max(start, end) })
   }
   if (!(timed[timed.length - 1].end - timed[0].start > MIN_TIMED_SPAN)) return null
   return timed
+}
+
+function tokenCore(text) {
+  return String(text || '').trim().replace(/^[^A-Za-z0-9']+|[^A-Za-z0-9']+$/g, '')
 }
 
 function wordSeconds(text) {

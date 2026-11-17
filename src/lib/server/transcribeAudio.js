@@ -218,7 +218,7 @@ export function segmentsFromTranscription(body, offsetSeconds = 0, sliceSeconds 
       const own = collectWords(raw)
       const words = own.length
         ? own
-        : localWords.filter((word) => word.start >= start && word.start < end + 0.0005)
+        : localWords.filter((word) => word.start >= start && word.start < end)
       return [{ start, end, text, words }]
     })
   } else if (localWords.length) {

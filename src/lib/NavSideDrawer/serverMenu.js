@@ -95,19 +95,22 @@ export function partitionServersForMenu (servers, query, viewerUID = '') {
   return { previewServers, listServers }
 }
 
-export function menuColumnCount (viewportWidth, itemCount, leftOffset = 0) {
+export function menuColumnCount (viewportWidth, itemCount, leftOffset = 0, split = false) {
   const count = Math.max(itemCount || 0, 1)
   // 48 = 24px viewport margin + 12px menu pad on each side
   const available = Math.max(CARD_WIDTH, (viewportWidth || 0) - leftOffset - 48)
-  const fit = Math.max(1, Math.floor((available + CARD_GAP) / (CARD_WIDTH + CARD_GAP)))
+  const section = split ? Math.max(CARD_WIDTH, Math.floor((available - CARD_GAP) / 2)) : available
+  const fit = Math.max(1, Math.floor((section + CARD_GAP) / (CARD_WIDTH + CARD_GAP)))
   return Math.min(fit, count)
 }
 
-export function menuPlateLayout (viewportWidth, columnCount, anchorLeft = 0) {
+export function menuPlateLayout (viewportWidth, columnCount, anchorLeft = 0, split = false) {
   const vw = Math.max(viewportWidth || 0, 0)
   const cols = Math.max(columnCount || 1, 1)
-  const natural = cols * CARD_WIDTH + Math.max(cols - 1, 0) * CARD_GAP + 24
-  if (menuColumnCount(vw, 2, 0) < 2) {
+  const section = cols * CARD_WIDTH + Math.max(cols - 1, 0) * CARD_GAP
+  const natural = (split ? 2 * section + CARD_GAP : section) + 24
+  // Narrow viewports: full-bleed plate; CSS still keeps thumbs | names side-by-side.
+  if (menuColumnCount(vw, 2, 0) < 2 || (split && natural > vw - 24)) {
     return { fullWidth: true, width: Math.max(CARD_WIDTH + 24, vw - 24), left: 12 }
   }
   const maxLeft = Math.max(12, vw - 12 - natural)

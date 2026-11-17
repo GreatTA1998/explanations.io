@@ -37,7 +37,7 @@ test('a featured video id is the preview when the server has no thumbnail board'
   assert.equal(previewBlackboardID(plain), '')
 })
 
-test('the grid uses the viewport, and does not open empty columns', () => {
+test('the plate sizes from the viewport; split halves share width', () => {
   assert.equal(menuColumnCount(1280, 8), 5)
   assert.equal(menuColumnCount(1280, 8, 300), 3)
   assert.equal(menuColumnCount(1280, 2), 2)
@@ -45,8 +45,11 @@ test('the grid uses the viewport, and does not open empty columns', () => {
   assert.equal(serverNameLeft(false), 48)
   assert.equal(serverNameLeft(true), 56)
   assert.equal(menuColumnCount(1280, 8, serverNameLeft(false)), 4)
+  assert.equal(menuColumnCount(1280, 8, 0, true), 2)
   assert.deepEqual(menuPlateLayout(390, 1, 48), { fullWidth: true, width: 366, left: 12 })
   assert.deepEqual(menuPlateLayout(1280, 4, 48), { fullWidth: false, width: 1008, left: 48 })
+  assert.deepEqual(menuPlateLayout(1280, 2, 48, true), { fullWidth: false, width: 1008, left: 48 })
+  assert.equal(menuPlateLayout(800, 2, 48, true).fullWidth, true)
 })
 
 const secret = {

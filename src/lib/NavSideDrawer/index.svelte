@@ -85,8 +85,8 @@
               />
             </div>
 
-            <div class="server-list">
-              <div class="server-grid" style="--menu-columns: {columnCount};">
+            <div class="server-list" class:split={menuSplit}>
+              <div class="server-grid">
                 {#each previewServers as server (server.id)}
                   <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
                 {/each}
@@ -99,15 +99,14 @@
               {#if listServers.length}
                 <div class="server-name-list" role="list">
                   {#each listServers as server (server.id)}
-                    <div role="listitem">
-                      <button
-                        type="button"
-                        class="server-list-row server-pick"
-                        on:click|stopPropagation={() => pickServer(server)}
-                      >
-                        {server.name || 'Untitled server'}
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      role="listitem"
+                      class="server-list-row server-pick"
+                      on:click|stopPropagation={() => pickServer(server)}
+                    >
+                      {server.name || 'Untitled server'}
+                    </button>
                   {/each}
                 </div>
               {/if}
@@ -255,16 +254,18 @@
   let menuLeft = 0
 
   $: ({ previewServers, listServers } = partitionServersForMenu(allServers, searchVal, $user.uid))
+  $: menuSplit = listServers.length > 0
   $: isPrivate = !serverIsPublic($classServerDoc)
   $: menuOffset = serverNameLeft(floating)
   $: columnCount = menuColumnCount(
     $viewport.width,
-    Math.max(previewServers.length + 1, listServers.length),
-    menuOffset
+    previewServers.length + 1,
+    menuOffset,
+    menuSplit
   )
-  $: ({ width: menuWidth, fullWidth: menuFullWidth } = menuPlateLayout($viewport.width, columnCount, menuOffset))
+  $: ({ width: menuWidth, fullWidth: menuFullWidth } = menuPlateLayout($viewport.width, columnCount, menuOffset, menuSplit))
   $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
-  $: if (menuOpen) placeMenu($viewport.width, columnCount)
+  $: if (menuOpen) placeMenu($viewport.width, columnCount, menuSplit)
 
   getFirestoreCollection('classes').then(docs => {
     allServers = docs
@@ -282,7 +283,7 @@
     if (!serverNameEl || typeof serverNameEl.getBoundingClientRect !== 'function') return
     const rect = serverNameEl.getBoundingClientRect()
     menuTop = rect.bottom + 4
-    menuLeft = menuPlateLayout($viewport.width, columnCount, rect.left).left
+    menuLeft = menuPlateLayout($viewport.width, columnCount, rect.left, menuSplit).left
   }
 
   function toggleServerMenu () {
@@ -658,6 +659,13 @@
     -ms-overflow-style: none;
   }
 
+  .server-list.split {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
   .server-list::-webkit-scrollbar {
     display: none;
     width: 0;
@@ -665,27 +673,29 @@
   }
 
   .server-grid {
-    display: grid;
-    grid-template-columns: repeat(var(--menu-columns), 240px);
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
-    width: max-content;
-    min-width: 100%;
   }
 
-  .server-grid :global(.server-card) {
-    height: auto;
+  .server-list.split .server-grid,
+  .server-list.split .server-name-list {
+    flex: 1 1 50%;
+    min-width: 0;
+    width: auto;
   }
 
   .server-name-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 240px);
+    display: flex;
+    flex-wrap: wrap;
     gap: 4px 8px;
-    margin-top: 8px;
+    align-content: flex-start;
   }
 
   .server-list-row {
     display: block;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     min-height: 40px;
     padding: 10px 12px;
     border-radius: 10px;
@@ -716,9 +726,7 @@
     font-weight: 500;
   }
 
-  .server-menu.full-width .search-slot :global(.my-search-bar),
-  .server-menu.full-width .create-server { width: 100%; }
+  .server-menu.full-width .search-slot :global(.my-search-bar) { width: 100%; }
+  .server-menu.full-width .server-list:not(.split) .create-server { width: 100%; }
   .server-menu.full-width .server-list { max-height: calc(100vh - var(--menu-top, 72px) - 16px); }
-  .server-menu.full-width .server-grid,
-  .server-menu.full-width .server-name-list { grid-template-columns: 1fr; width: 100%; }
 </style>

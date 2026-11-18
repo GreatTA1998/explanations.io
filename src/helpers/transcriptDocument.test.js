@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildTranscriptDocument, sentenceBounds, wordAtTime, wordsFromSegments } from './transcriptDocument.js'
+import { buildTranscriptDocument, sentenceAtTime, sentenceBounds, wordAtTime, wordsFromSegments } from './transcriptDocument.js'
 
 test('pause≥2s paragraphs; keep matching word times + punctuation; ignore mismatches', () => {
   const { paragraphs } = buildTranscriptDocument([
@@ -45,4 +45,17 @@ test('pause≥2s paragraphs; keep matching word times + punctuation; ignore mism
   const sw = wordsFromSegments([{ start: 0, end: 3, text: 'Hello there. Next one? Done!' }])
   assert.deepEqual([sentenceBounds(sw, sw[1]), sentenceBounds(sw, sw[2]), sentenceBounds(sw, sw[4])],
     [{ from: 0, to: 1 }, { from: 2, to: 3 }, { from: 4, to: 4 }])
+
+  // Timed sentence end with a long gap before the next sentence starts.
+  const gap = [
+    { id: 0, text: 'Hello', start: 0, end: 0.4 },
+    { id: 1, text: 'there.', start: 0.4, end: 0.9 },
+    { id: 2, text: 'Next', start: 2.5, end: 2.8 },
+    { id: 3, text: 'one?', start: 2.8, end: 3.2 }
+  ]
+  assert.deepEqual(sentenceAtTime(gap, 0.5), { from: 0, to: 1 })
+  assert.deepEqual(sentenceAtTime(gap, 0.9), { from: 2, to: 3 }) // at last-word end → next sentence
+  assert.deepEqual(sentenceAtTime(gap, 1.5), { from: 2, to: 3 }) // silence after end still next
+  assert.deepEqual(sentenceAtTime(gap, 2.6), { from: 2, to: 3 })
+  assert.equal(wordAtTime(gap, 1.5).text, 'there.') // click/caret sticky unchanged in gap
 })

@@ -47,7 +47,7 @@
 <script>
   import { onDestroy } from 'svelte'
   import { readCachedTranscript, readTranscriptProblem, transcriptProblems } from '/src/helpers/transcript.js'
-  import { buildTranscriptDocument, progressInWord, sentenceBounds, wordAtTime } from '/src/helpers/transcriptDocument.js'
+  import { buildTranscriptDocument, progressInWord, sentenceAtTime, wordAtTime } from '/src/helpers/transcriptDocument.js'
   import {
     claimPlayback, hoverSeeksPlayback, playbackAudio, playbackPathOf, playPlayback, seekPlayback
   } from '/src/helpers/playbackClock.js'
@@ -142,7 +142,7 @@
   $: words = documentModel.words
   $: paragraphs = documentModel.paragraphs
   $: currentWord = wordAtTime(words, time)
-  $: sentence = sentenceBounds(words, currentWord)
+  $: sentence = sentenceAtTime(words, time)
   $: progress = progressInWord(currentWord, time)
   $: revealCurrent(currentWord)
   $: { path; restartClock() }

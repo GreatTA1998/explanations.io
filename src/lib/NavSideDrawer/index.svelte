@@ -166,7 +166,7 @@
               role="switch"
               aria-checked={isPrivate}
               aria-label="Private server"
-              disabled={savingVisibility}
+              disabled={savingVisibility || !canTogglePrivacy}
               on:click|stopPropagation={setServerVisibility}
             >
               <span>Private</span>
@@ -221,7 +221,7 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
-  import { partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, menuPlateLayout } from './serverMenu.js'
+  import { partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, menuPlateLayout, viewerCanTogglePrivacy } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
 
   export let floating = false
@@ -256,6 +256,7 @@
   $: ({ previewServers, listServers } = partitionServersForMenu(allServers, searchVal, $user.uid))
   $: menuSplit = listServers.length > 0
   $: isPrivate = !serverIsPublic($classServerDoc)
+  $: canTogglePrivacy = viewerCanTogglePrivacy($classServerDoc, $user.uid)
   $: menuOffset = serverNameLeft(floating)
   $: columnCount = menuColumnCount(
     $viewport.width,
@@ -348,7 +349,7 @@
 
   async function setServerVisibility () {
     const classID = $page.params.class
-    if (savingVisibility || !classID) return
+    if (savingVisibility || !classID || !canTogglePrivacy) return
     const nextPublic = !serverIsPublic($classServerDoc)
     savingVisibility = true
     try {

@@ -1,9 +1,22 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
+  buildTranscriptDocument,
   wordAtTime,
   wordsFromSegments
 } from './transcriptDocument.js'
+
+test('continuous cues stay one paragraph; only long pauses break', () => {
+  const { paragraphs } = buildTranscriptDocument([
+    { start: 0, end: 1.2, text: 'The key challenge,' },
+    { start: 1.3, end: 2.8, text: "let's talk about TypeScript." },
+    { start: 2.9, end: 4.2, text: 'So, what is exactly a type?' },
+    { start: 7.0, end: 8.5, text: 'Later after a pause.' }
+  ])
+  assert.equal(paragraphs.length, 2)
+  assert.equal(paragraphs[0].words.map((w) => w.text).join(' '),
+    "The key challenge, let's talk about TypeScript. So, what is exactly a type?")
+})
 
 test('stored word times are kept when they match the text', () => {
   const words = wordsFromSegments([{

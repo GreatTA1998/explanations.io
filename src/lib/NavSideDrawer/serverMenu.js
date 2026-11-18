@@ -59,6 +59,14 @@ export function viewerIsServerCreator (server, uid) {
   return !!uid && !!server?.creatorUID && server.creatorUID === uid
 }
 
+/** Prefs: Private toggle for all members (not creator-only); still requires sign-in. */
+export function viewerCanTogglePrivacy (server, uid) {
+  if (!uid || !server) return false
+  if (viewerIsServerCreator(server, uid)) return true
+  const members = server.memberUIDs
+  return Array.isArray(members) && members.includes(uid)
+}
+
 export function serverVisibleInMenu (server, viewerUID = '') {
   if (!server?.id) return false
   if (serverIsPublic(server)) return true

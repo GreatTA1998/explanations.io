@@ -16,15 +16,20 @@ export const config = {
 const FIREBASE_PROJECT = 'feynman-mvp'
 const FIREBASE_API_KEY = 'AIzaSyB7XsbhYEd_4DQigc_hfnmdpcwlvzugPOw'
 const TRANSCRIPT_VERSION = 2
+const RATE_WINDOW_MS = 60_000
+const RATE_MAX = 6
+const rateHits = new Map()
 
 export async function POST({ request }) {
   const apiKey = readApiKey()
   if (!apiKey) return json(200, { skipped: true })
 
   const token = bearerToken(request)
-  if (!token || !(await firebaseUserId(token))) {
+  const uid = token ? await firebaseUserId(token) : ''
+  if (!token || !uid) {
     return json(401, { error: MESSAGES.failed })
   }
+  if (!rateOk(uid)) return json(429, { error: MESSAGES.failed })
 
   let payload
   try {
@@ -44,6 +49,11 @@ export async function POST({ request }) {
     return json(400, { error: MESSAGES.unreadable })
   }
 
+  const board = await readBoard(path, token)
+  if (!boardOwnsAudio(board, uid, audioDownloadURL, audioKey)) {
+    return json(403, { error: MESSAGES.failed })
+  }
+
   try {
     const result = await transcribeStoredAudio({ url: audioDownloadURL, apiKey })
     const saved = await persistTranscript({ path, audioKey, token, result })
@@ -59,6 +69,44 @@ export async function POST({ request }) {
       result: { error: message, segments: [] }
     })
     return json(200, { error: message, saved })
+  }
+}
+
+function rateOk (uid) {
+  const now = Date.now()
+  const prior = (rateHits.get(uid) || []).filter((t) => now - t < RATE_WINDOW_MS)
+  if (prior.length >= RATE_MAX) {
+    rateHits.set(uid, prior)
+    return false
+  }
+  prior.push(now)
+  rateHits.set(uid, prior)
+  return true
+}
+
+function boardOwnsAudio (board, uid, audioDownloadURL, audioKey) {
+  if (!board || board.creatorUID !== uid) return false
+  return board.audioDownloadURL === audioDownloadURL
+    || board.audioRefFullPath === audioKey
+    || board.audioDownloadURL === audioKey
+}
+
+async function readBoard (path, token, fetchImpl = fetch) {
+  const encoded = path.split('/').map((part) => encodeURIComponent(part)).join('/')
+  const endpoint = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/${encoded}?key=${FIREBASE_API_KEY}`
+  try {
+    const response = await fetchImpl(endpoint, {
+      headers: { authorization: `Bearer ${token}` }
+    })
+    if (!response.ok) return null
+    const fields = (await response.json())?.fields || {}
+    return {
+      creatorUID: fields.creatorUID?.stringValue || '',
+      audioDownloadURL: fields.audioDownloadURL?.stringValue || '',
+      audioRefFullPath: fields.audioRefFullPath?.stringValue || ''
+    }
+  } catch {
+    return null
   }
 }
 

@@ -8,7 +8,7 @@
 >
   {#if paragraphs.length}
     <!-- TEMP look scaffold — delete with STYLES/bands block -->
-    <button type="button" class="look-cycle" title="TEMP · Alt+L style · Alt+Shift+L sentence/row" on:click|stopPropagation={cycleLook}>{lookLabel}</button>
+    <button type="button" class="look-cycle" title="TEMP · Alt+L cycles sent/row×styles · Alt+Shift+L flips scope" on:click|stopPropagation={cycleLook}>{lookLabel}</button>
   {/if}
   {#if paragraphs.length === 0}
     <p class="transcript-status">{problem || 'No transcript yet.'}</p>
@@ -59,14 +59,18 @@
   let pointerHold = 0, scrubFrame = 0, scrubAt = null, shown = null, pending = null, clockFrame = 0
   const wordNodes = {}
 
-  // TEMP look scaffold (Alt+L style · Alt+Shift+L scope) — delete after pick
+  // TEMP look scaffold (Alt+L cycles all · Alt+Shift+L flips sent/row) — delete after pick
   const STYLES = ['underline', 'wash', 'rail', 'dim'], SCOPES = ['sentence', 'row']
   let look = 0, scope = 0, bands = [], bandFrame = 0, rowMap = null
   $: styleName = STYLES[look]
   $: scopeName = SCOPES[scope]
   $: lookLabel = `${scopeName === 'row' ? 'row' : 'sent'}·${styleName}`
-  $: { playing; sentence; currentWord; look; scope; time; scheduleBands() }
-  function cycleLook (e) { if (e?.shiftKey) scope = 1 - scope; else look = (look + 1) % STYLES.length }
+  $: { playing; sentence; currentWord; progress; look; scope; time; scheduleBands() }
+  function cycleLook (e) {
+    if (e?.shiftKey) { scope = 1 - scope; return }
+    look += 1
+    if (look >= STYLES.length) { look = 0; scope = 1 - scope }
+  }
   function onLookKey (e) {
     if (!e.altKey || e.metaKey || e.ctrlKey || (e.key !== 'l' && e.key !== 'L')) return
     e.preventDefault(); cycleLook(e)
@@ -76,23 +80,34 @@
     if (bandFrame) cancelAnimationFrame(bandFrame)
     bandFrame = requestAnimationFrame(() => { bandFrame = 0; paintBands() })
   }
+  /** Exactly one layout line box for the active word (never a multi-line union). */
+  function wordLineRect (node, p = 0) {
+    const rects = [...node.getClientRects()].filter((r) => r.width > 0 && r.height > 0)
+    if (!rects.length) return node.getBoundingClientRect()
+    if (rects.length === 1) return rects[0]
+    const union = node.getBoundingClientRect(), x = union.left + union.width * (p < 0 ? 0 : p > 1 ? 1 : p)
+    return rects.find((r) => x >= r.left - 0.5 && x <= r.right + 0.5) || rects[0]
+  }
   function paintBands () {
     if (!playing || !currentWord || !docEl) { bands = []; rowMap = null; return }
     const box = docEl.getBoundingClientRect(), ox = box.left - docEl.scrollLeft, oy = box.top - docEl.scrollTop
-    if (scopeName === 'row') {
+    // Row = one visual line for the active word only — never sentenceBounds / multi-line spans.
+    if (scope === 1) {
       const node = wordNodes[currentWord.id]
       if (!node) { bands = []; rowMap = null; return }
-      const p = node.closest('.transcript-paragraph'), wr = node.getBoundingClientRect()
-      const pr = p ? p.getBoundingClientRect() : box, mid = wr.top + wr.height / 2, map = {}
+      const p = node.closest('.transcript-paragraph'), lr = wordLineRect(node, progress)
+      const pr = p ? p.getBoundingClientRect() : box, mid = lr.top + lr.height / 2, slop = Math.max(2, lr.height * 0.35), map = {}
       for (const id of Object.keys(wordNodes)) {
         const el = wordNodes[id]
         if (!el || (p && !p.contains(el))) continue
-        const r = el.getBoundingClientRect()
-        if (Math.abs(r.top + r.height / 2 - mid) < wr.height * 0.45) map[id] = true
+        const r = wordLineRect(el, 0)
+        if (Math.abs(r.top + r.height / 2 - mid) <= slop) map[id] = true
       }
       rowMap = map
-      const band = { top: wr.top - oy, left: pr.left - ox, width: pr.width, height: wr.height }
-      bands = styleName === 'rail' ? [{ top: band.top, left: band.left - 8, width: 2, height: band.height }] : [band]
+      const top = lr.top - oy, left = pr.left - ox, height = lr.height, width = pr.width
+      bands = styleName === 'rail'
+        ? [{ top, left: left - 8, width: 2, height }]
+        : [{ top, left, width, height }]
       return
     }
     rowMap = null
@@ -312,6 +327,8 @@
   .look-cycle { align-self: flex-end; margin: 0 10px 2px; padding: 0; border: 0; background: none; font: inherit; font-size: 0.7rem; color: rgba(160,160,160,.9); cursor: pointer; }
   .look-hl { position: absolute; inset: 0; pointer-events: none; z-index: 0; --caret: #F7C686; }
   .look-hl i { position: absolute; left: 0; top: 0; display: block; box-sizing: border-box; }
+  /* Row mode: never paint more than one line band (Audible-style). */
+  .transcript-doc[data-scope='row'] .look-hl i:nth-child(n + 2) { display: none; }
   .transcript-doc[data-look='underline'] .look-hl i,
   .transcript-doc[data-look='dim'] .look-hl i { background: linear-gradient(var(--caret), var(--caret)) 0 100% / 100% 2px no-repeat; }
   .transcript-doc[data-look='wash'] .look-hl i { background: color-mix(in srgb, var(--caret) 34%, transparent); border-radius: 3px; }

@@ -2,7 +2,7 @@
   class="comments-column"
   class:over-board={overBoard}
   class:glass-surface={overBoard}
-  data-look={overBoard ? look : undefined}
+  data-look={overBoard ? '1' : undefined}
   >
   <slot/>
 
@@ -23,15 +23,6 @@
       aria-selected={activeTab === 'comments'}
       on:click={() => activeTab = 'comments'}
     >Comments</button>
-    {#if overBoard}
-      <button
-        type="button"
-        class="look-cycle"
-        title="Overlay look {look}/3 (click to cycle)"
-        aria-label="Cycle overlay look, currently {look} of 3"
-        on:click={cycleLook}
-      >{look}</button>
-    {/if}
   </div>
 
   <div class="panel-body" class:panel-hidden={activeTab !== 'comments'}>
@@ -68,7 +59,6 @@
 </div>
 
 <script>
-  import { onMount } from 'svelte'
   import ListenToCollection from '$lib/Renderless/ListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
   import TranscriptPanel from '$lib/DoodleVideo/TranscriptPanel.svelte'
@@ -82,32 +72,16 @@
   export let videoDoc
   export let overBoard = false
 
-  const LOOK_KEY = 'transcriptOverlayLook'
-
   let newInputComment = ''
   let activeTab = 'transcript'
   let openedVideo = ''
-  let look = 1
   $: if ((videoDoc?.path || '') !== openedVideo) {
     openedVideo = videoDoc?.path || ''
     activeTab = 'transcript'
   }
 
-  $: lightInk = !overBoard || look === 2 || look === 3
+  $: lightInk = !overBoard
 
-  onMount(() => {
-    const q = new URLSearchParams(location.search).get('look')
-      || (location.hash.match(/look=([1-3])/) || [])[1]
-    const n = Number(q || localStorage.getItem(LOOK_KEY))
-    if (n >= 1 && n <= 3) look = n
-  })
-
-  function cycleLook () {
-    look = look % 3 + 1
-    try { localStorage.setItem(LOOK_KEY, String(look)) } catch (_) {}
-  }
-
-  
   function createComment () {
     if (!newInputComment) return
 
@@ -215,26 +189,6 @@
 
   .panel-hidden {
     display: none;
-  }
-
-  .look-cycle {
-    flex: 0 0 auto;
-    margin-left: auto;
-    min-width: 1.25rem;
-    height: 1.25rem;
-    padding: 0 4px;
-    font-size: 0.65rem;
-    line-height: 1;
-    color: var(--panel-fg-muted);
-    background: transparent;
-    border: 0;
-    opacity: 0.7;
-    cursor: pointer;
-  }
-
-  .look-cycle:hover {
-    opacity: 1;
-    color: var(--panel-fg);
   }
 
   .over-board .switch-btn {

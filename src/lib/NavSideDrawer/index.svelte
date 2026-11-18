@@ -79,10 +79,15 @@
             style="top: {menuTop}px; left: {menuLeft}px; width: {menuWidth}px; --menu-top: {menuTop}px;"
           >
             <div class="search-slot">
-              <SearchBar
-                {searchVal}
-                on:input={(e) => onSearchInput(e.detail)}
-              />
+              <span class="material-icons search-icon" aria-hidden="true">search</span>
+              <input
+                type="search"
+                name="search"
+                maxlength="100"
+                aria-label="Find server"
+                autocomplete="off"
+                bind:value={searchVal}
+              >
             </div>
 
             <div class="server-list" class:split={menuSplit}>
@@ -239,7 +244,6 @@
   import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
   import { ancestorIdsForRoom, sameIdSet } from './roomAncestors.js'
   import CompactServerCard from '$lib/TheTopNavbar/CompactServerCard.svelte'
-  import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import AnchoredPopover from '$lib/Reusable/AnchoredPopover.svelte'
   import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
@@ -423,10 +427,6 @@
     }
   }
 
-  function onSearchInput (value) {
-    searchVal = value
-  }
-
   function openCreateServer () {
     newServerPopup?.openPopup()
   }
@@ -472,35 +472,11 @@
 </script>
 
 <style>
-  .nav-cluster {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-  }
-
-  .floating {
-    position: fixed;
-    top: 8px;
-    left: 8px;
-    z-index: 30;
-    width: 280px;
-    height: auto;
-  }
-
-  .nav-panel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 0;
-  }
-
+  .nav-cluster { position: relative; z-index: 5; width: 100%; height: 100%; min-height: 0; }
+  .floating { position: fixed; top: 8px; left: 8px; z-index: 30; width: 280px; height: auto; }
+  .nav-panel { position: relative; display: flex; flex-direction: column; height: 100%; min-height: 0; }
   .floating .nav-panel {
-    height: auto;
-    background-color: var(--bg-off-white);
-    border-radius: 12px;
+    height: auto; background-color: var(--bg-off-white); border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 3px 5px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
   }
@@ -514,313 +490,129 @@
   .room-hit.selected { font-weight: 700; background-color: #F7C686; }
 
   .server-row, .sub-nav, .rooms-actions { flex-shrink: 0; }
-
   .server-row {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 8px;
+    display: flex; align-items: center; gap: 4px; padding: 8px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
 
-  .logo-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    border-radius: 8px;
+  .logo-button, .settings-button, .hide-drawer-button {
+    display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 8px;
   }
-
-  .logo-button:hover {
+  .logo-button { flex: 0 0 auto; width: 36px; height: 36px; }
+  .logo-button:hover, .settings-button:hover, .hide-drawer-button:hover, .menu-row:hover {
     background: rgba(0, 0, 0, 0.06);
   }
+  .logo-button img { display: block; filter: brightness(80%); }
 
-  .logo-button img {
-    display: block;
-    filter: brightness(80%);
-  }
-
-  .server-anchor {
-    position: relative;
-    flex: 1;
-    min-width: 0;
-  }
-
+  .server-anchor { position: relative; flex: 1; min-width: 0; }
   .server-name {
-    display: flex; align-items: center;
-    width: 100%;
-    min-width: 0;
-    text-align: left;
-    padding: 6px 4px;
-    color: rgb(45, 45, 45);
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.2;
-    text-decoration: none;
+    display: flex; align-items: center; width: 100%; min-width: 0; text-align: left;
+    padding: 6px 4px; color: rgb(45, 45, 45); font-size: 24px; font-weight: 600;
+    line-height: 1.2; text-decoration: none;
   }
-
   .server-name-label { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .server-name-caret { flex: 0 0 auto; width: 0; height: 0; margin-left: 8px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor; }
-
-  .sub-nav {
-    display: flex;
-    margin: 0 8px;
-    padding: 0;
+  .server-name-caret {
+    flex: 0 0 auto; width: 0; height: 0; margin-left: 8px;
+    border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor;
   }
 
+  .sub-nav { display: flex; margin: 0 8px; padding: 0; }
   .sub-nav-tab {
-    flex: 1;
-    padding: 10px 12px 8px;
-    border-radius: 0;
-    border-bottom: 2px solid rgb(180, 180, 180);
-    color: rgb(100, 100, 100);
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.2;
-    text-transform: lowercase;
+    flex: 1; padding: 10px 12px 8px; border-radius: 0;
+    border-bottom: 2px solid rgb(180, 180, 180); color: rgb(100, 100, 100);
+    font-size: 18px; font-weight: 500; line-height: 1.2; text-transform: lowercase;
   }
+  .sub-nav .settings-button, .sub-nav .hide-drawer-button { flex: 0 0 auto; align-self: center; }
+  .sub-nav-tab:hover { background: rgba(0, 0, 0, 0.04); color: black; }
+  .sub-nav-tab.active { color: black; font-weight: 600; border-bottom-color: orange; }
 
-  .sub-nav .settings-button,
-  .sub-nav .hide-drawer-button {
-    flex: 0 0 auto;
-    align-self: center;
+  .rooms-actions { display: flex; align-items: center; gap: 6px; padding: 6px 12px 8px; }
+  .name-filter, .search-slot {
+    display: flex; align-items: center; min-width: 0;
+    height: 36px; border-radius: 18px; background: rgba(0, 0, 0, 0.045);
   }
-
-  .sub-nav-tab:hover {
-    background: rgba(0, 0, 0, 0.04);
-    color: black;
+  .name-filter { flex: 1; gap: 2px; padding: 0 8px 0 6px; }
+  .name-filter .material-icons, .search-slot .search-icon {
+    flex: 0 0 auto; color: rgb(120, 120, 120);
   }
-
-  .sub-nav-tab.active {
-    color: black;
-    font-weight: 600;
-    border-bottom-color: orange;
+  .name-filter .material-icons { font-size: 1.4rem; }
+  .name-filter input, .search-slot input {
+    flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: black;
   }
+  .name-filter input { font-size: 13px; }
 
-  .rooms-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px 8px;
-  }
-
-  .name-filter {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    gap: 2px;
-    min-width: 0;
-    height: 36px;
-    padding: 0 8px 0 6px; border-radius: 18px; background: rgba(0, 0, 0, 0.045);
-  }
-
-  .name-filter .material-icons { flex: 0 0 auto; font-size: 1.4rem; color: rgb(120, 120, 120); }
-
-  .name-filter input {
-    flex: 1; min-width: 0; border: 0; outline: none;
-    background: transparent; color: black; font-size: 13px;
-  }
+  .search-slot { position: relative; width: 240px; padding: 0 8px 0 6px; gap: 2px; }
+  .search-slot .search-icon { font-size: 22px; }
+  .search-slot input { font-size: 1rem; }
 
   .new-pill {
     display: flex; flex: 0 0 auto; align-items: center; gap: 4px;
     height: 36px; padding: 4px 12px; border-radius: 24px;
     background-color: #f1e8f3; color: black; font-size: 13px; white-space: nowrap;
   }
+  .new-pill .material-symbols-outlined { font-size: 1.4rem; }
 
-  .new-pill .material-symbols-outlined {
-    font-size: 1.4rem;
+  .settings-button, .hide-drawer-button {
+    width: 32px; height: 32px; margin-left: 4px; color: rgb(80, 80, 80);
   }
+  .settings-button .material-icons { font-size: 20px; }
+  .settings-menu { min-width: 180px; padding: 6px 8px; }
 
-  .settings-button,
-  .hide-drawer-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    margin-left: 4px;
-    padding: 0;
-    border-radius: 8px;
-    color: rgb(80, 80, 80);
+  .privacy-toggle, .menu-row {
+    display: flex; align-items: center; width: 100%; min-height: 36px;
+    padding: 8px 10px; border-radius: 8px; text-align: left; color: black;
+    font-size: 14px; font-weight: 500;
   }
-
-  .settings-button:hover,
-  .hide-drawer-button:hover {
-    background: rgba(0, 0, 0, 0.06);
-  }
-
-  .settings-button .material-icons {
-    font-size: 20px;
-  }
-
-  .settings-menu {
-    min-width: 180px;
-    padding: 6px 8px;
-  }
-
-  .privacy-toggle { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 36px; padding: 8px 10px; border-radius: 8px; text-align: left; color: black; font-size: 14px; font-weight: 500; }
+  .privacy-toggle { justify-content: space-between; gap: 8px; }
   .privacy-toggle:disabled { opacity: 0.45; cursor: not-allowed; }
+  .menu-row { gap: 8px; text-decoration: none; }
 
   .switch-track {
-    position: relative;
-    width: 36px;
-    height: 20px;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.22);
-    transition: background 0.15s ease;
+    position: relative; width: 36px; height: 20px; border-radius: 999px;
+    background: rgba(0, 0, 0, 0.22); transition: background 0.15s ease;
   }
-
   .switch-track.on { background: #f69637; }
-
   .switch-thumb {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: white;
-    transition: transform 0.15s ease;
+    position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+    border-radius: 50%; background: white; transition: transform 0.15s ease;
   }
-
   .switch-track.on .switch-thumb { transform: translateX(16px); }
 
-  .server-actions {
-    display: flex;
-    flex-direction: column;
-    min-width: 232px;
-    text-align: left;
+  .server-actions { display: flex; flex-direction: column; min-width: 232px; text-align: left; }
+  .server-menu-scrim {
+    position: fixed; inset: 0; z-index: 39; margin: 0; padding: 0; border: 0;
+    border-radius: 0; background: rgba(0, 0, 0, 0.28);
   }
-
-  .menu-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    min-height: 36px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    text-align: left;
-    text-decoration: none;
-    color: black;
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  .menu-row:hover:not(:disabled) {
-    background: rgba(0, 0, 0, 0.06);
-  }
-
-  .menu-row:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
-
-  .server-menu-scrim { position: fixed; inset: 0; z-index: 39; margin: 0; padding: 0; border: 0; border-radius: 0; background: rgba(0, 0, 0, 0.28); }
-
   .server-menu {
-    
-    position: fixed;
-    z-index: 40;
-    
-    background: var(--bg-off-white);
-    padding: 12px;
-    border-radius: 12px;
-  }
-
-  .search-slot :global(.my-search-bar) {
-    width: 240px;
-    height: 36px;
-    font-size: 1rem;
-    padding-left: 34px;
-    background: rgba(0, 0, 0, 0.045);
-  }
-
-  .search-slot :global(.my-search-icon) {
-    font-size: 22px;
-    top: 6px;
-    left: 8px;
+    position: fixed; z-index: 40; background: var(--bg-off-white);
+    padding: 12px; border-radius: 12px;
   }
 
   .server-list {
-    max-height: 70vh;
-    overflow: auto;
-    padding: 8px 0 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    max-height: 70vh; overflow: auto; padding: 8px 0 0;
+    scrollbar-width: none; -ms-overflow-style: none;
   }
-
-  .server-list.split {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    align-items: flex-start;
+  .server-list.split { display: flex; flex-direction: row; gap: 8px; align-items: flex-start; }
+  .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .server-list.split .server-grid, .server-list.split .server-name-list {
+    flex: 1 1 50%; min-width: 0; width: auto;
   }
-
-  .server-list::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-  }
-
-  .server-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .server-list.split .server-grid,
-  .server-list.split .server-name-list {
-    flex: 1 1 50%;
-    min-width: 0;
-    width: auto;
-  }
-
-  .server-name-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 8px;
-    align-content: flex-start;
-  }
-
+  .server-name-list { display: flex; flex-wrap: wrap; gap: 4px 8px; align-content: flex-start; }
   .server-list-row {
-    display: block;
-    width: auto;
-    max-width: 100%;
-    min-height: 40px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    text-align: left;
-    background: rgba(255, 255, 255, 0.92);
-    color: black;
-    font-size: 16px;
-    font-weight: 500;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    display: block; width: auto; max-width: 100%; min-height: 40px; padding: 10px 12px;
+    border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92);
+    color: black; font-size: 16px; font-weight: 500;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
   }
-
-  .server-list-row:hover {
-    background: rgba(255, 255, 255, 1);
-  }
-
+  .server-list-row:hover { background: rgba(255, 255, 255, 1); }
   .create-server {
-    display: flex;
-    align-items: center;
-    width: 240px;
-    min-height: 44px;
-    text-align: left;
-    padding: 8px 12px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.88);
-    color: #5d0068;
-    font-weight: 500;
+    display: flex; align-items: center; width: 240px; min-height: 44px; text-align: left;
+    padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.88);
+    color: #5d0068; font-weight: 500;
   }
 
-  .server-menu.full-width .search-slot :global(.my-search-bar) { width: 100%; }
+  .server-menu.full-width .search-slot,
   .server-menu.full-width .server-list:not(.split) .create-server { width: 100%; }
   .server-menu.full-width .server-list { max-height: calc(100vh - var(--menu-top, 72px) - 16px); }
 </style>

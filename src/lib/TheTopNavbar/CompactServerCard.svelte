@@ -1,6 +1,5 @@
 <button on:click|stopPropagation={handleServerCardClick}
   class="server-card core-shadow"
-  class:red-alert-border={needsTeachers}
 >
   <div class="server-name-overlay">
     <div class="server-name-text">
@@ -63,8 +62,6 @@
   let thumbnailWidth = CARD_WIDTH
   $: blackboardID = previewBlackboardID(serverObj)
   $: thumbnailSrc = blackboardID ? '' : thumbnailImageURL(serverObj)
-
-  $: needsTeachers = serverObj.numOfPrepaidLearners > 0 && !serverObj.numOfTeachers
 
   function handleServerCardClick () {
     dispatch('pick', serverObj)

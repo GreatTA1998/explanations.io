@@ -1,4 +1,3 @@
-
 import { browser } from '$app/environment'
 import { writable } from 'svelte/store'
 import { getAuth } from 'firebase/auth'
@@ -9,27 +8,14 @@ const TRANSCRIPT_VERSION = 2
 const TRANSCRIBING = 'Transcribing this recording…'
 
 const started = new Set()
-let transcriptionQueue = Promise.resolve()
+let queue = Promise.resolve()
 export const transcriptProblems = writable({})
 
-export function formatTranscriptTime(seconds) {
-  const safe = Number.isFinite(seconds) ? Math.max(0, seconds) : 0
-  const whole = Math.floor(safe)
-  const remain = whole % 60
-  const minutes = Math.floor(whole / 60)
-  if (minutes >= 60) {
-    const hours = Math.floor(minutes / 60)
-    const mins = minutes % 60
-    return `${hours}:${String(mins).padStart(2, '0')}:${String(remain).padStart(2, '0')}`
-  }
-  return `${minutes}:${String(remain).padStart(2, '0')}`
-}
-
-function audioKeyOf(videoDoc) {
+function audioKeyOf (videoDoc) {
   return videoDoc?.audioRefFullPath || videoDoc?.audioDownloadURL || ''
 }
 
-export function readTranscriptProblem(videoDoc, problems) {
+export function readTranscriptProblem (videoDoc, problems) {
   const live = (problems && problems[audioKeyOf(videoDoc)]) || ''
   if (live) return live
   const saved = videoDoc?.transcript
@@ -38,133 +24,104 @@ export function readTranscriptProblem(videoDoc, problems) {
   return saved.error || ''
 }
 
-function rememberProblem(video, message) {
+function setProblem (video, message) {
   const key = audioKeyOf(video)
   if (!key) return
-  transcriptProblems.update((current) => ({ ...current, [key]: message }))
+  transcriptProblems.update((current) => (
+    message ? { ...current, [key]: message } : (() => {
+      if (!current[key]) return current
+      const next = { ...current }
+      delete next[key]
+      return next
+    })()
+  ))
 }
 
-function forgetProblem(video) {
-  const key = audioKeyOf(video)
-  if (!key) return
-  transcriptProblems.update((current) => {
-    if (!current[key]) return current
-    const next = { ...current }
-    delete next[key]
-    return next
-  })
-}
-
-function plainTranscriptError(err) {
-  const text = err instanceof Error ? err.message : ''
-  const first = text.split('\n')[0].trim()
-  if (
-    first.startsWith('Could not ')
-    || first.startsWith('This ')
-    || first.startsWith('Only ')
-  ) return first
+function plainError (err) {
+  const first = (err instanceof Error ? err.message : '').split('\n')[0].trim()
+  if (first.startsWith('Could not ') || first.startsWith('This ') || first.startsWith('Only ')) return first
   return 'Could not transcribe this recording.'
 }
 
-export function readCachedTranscript(videoDoc) {
+export function readCachedTranscript (videoDoc) {
   const saved = videoDoc?.transcript
   if (!saved || saved.v !== TRANSCRIPT_VERSION || saved.complete !== true) return null
   if (saved.audioKey !== audioKeyOf(videoDoc)) return null
-  if (!Array.isArray(saved.segments)) return null
-  return saved.segments
+  return Array.isArray(saved.segments) ? saved.segments : null
 }
 
-function enqueue(work) {
-  const run = transcriptionQueue.then(work, work)
-  transcriptionQueue = run.then(() => {}, () => {})
-  return run
-}
-
-export function startTranscriptForNewVideo(video) {
+export function startTranscriptForNewVideo (video) {
   if (!browser) return Promise.resolve()
-  const audioDownloadURL = video?.audioDownloadURL
-  const path = video?.path
-  if (!audioDownloadURL || !path) return Promise.resolve()
+  if (!video?.audioDownloadURL || !video?.path) return Promise.resolve()
   if (readCachedTranscript(video) != null) return Promise.resolve()
-
   const audioKey = audioKeyOf(video)
   if (started.has(audioKey)) return Promise.resolve()
   started.add(audioKey)
-
-  rememberProblem(video, TRANSCRIBING)
-  void enqueue(() => runServerTranscript(video, audioKey))
+  setProblem(video, TRANSCRIBING)
+  const run = queue.then(() => runServerTranscript(video, audioKey), () => runServerTranscript(video, audioKey))
+  queue = run.then(() => {}, () => {})
   return Promise.resolve()
 }
 
-async function runServerTranscript(video, audioKey) {
-  const token = currentAccessToken()
-  if (!token) {
+async function runServerTranscript (video, audioKey) {
+  let token = ''
+  try { token = getAuth().currentUser?.stsTokenManager?.accessToken || '' } catch (_) {}
+  if (typeof token !== 'string' || !token) {
     started.delete(audioKey)
-    await persistTranscriptProblem(video, audioKey, 'Could not transcribe this recording.')
+    await persistProblem(video, audioKey, 'Could not transcribe this recording.')
     return
   }
-  const headers = { 'content-type': 'application/json', authorization: `Bearer ${token}` }
-  const responsePromise = fetch('/api/transcribe', {
-    method: 'POST',
-    keepalive: true,
-    headers,
-    body: JSON.stringify({
-      audioDownloadURL: video.audioDownloadURL,
-      path: video.path,
-      audioKey
-    })
-  })
   try {
-    const response = await responsePromise
+    const response = await fetch('/api/transcribe', {
+      method: 'POST',
+      keepalive: true,
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        audioDownloadURL: video.audioDownloadURL,
+        path: video.path,
+        audioKey
+      })
+    })
     const body = await response.json().catch(() => ({}))
     if (response.status === 401) {
       started.delete(audioKey)
-      await persistTranscriptProblem(video, audioKey, 'Could not transcribe this recording.')
+      await persistProblem(video, audioKey, 'Could not transcribe this recording.')
       return
     }
     if (body.skipped) {
-      forgetProblem(video)
+      setProblem(video, '')
       return
     }
     if (typeof body.error === 'string' && body.error) {
-      if (body.saved) rememberProblem(video, body.error)
-      else await persistTranscriptProblem(video, audioKey, body.error)
+      if (body.saved) setProblem(video, body.error)
+      else await persistProblem(video, audioKey, body.error)
       return
     }
     const segments = storedSegments(body.segments)
     if (!segments.length) {
       const message = 'No speech was found in this recording.'
-      if (body.saved) forgetProblem(video)
-      else await persistTranscriptProblem(video, audioKey, message)
+      if (body.saved) setProblem(video, '')
+      else await persistProblem(video, audioKey, message)
       return
     }
     try {
-      await persistTranscript(video, audioKey, segments)
+      await persistOk(video, audioKey, segments)
     } catch (err) {
       if (body.saved) {
-        forgetProblem(video)
+        setProblem(video, '')
         return
       }
       throw err
     }
   } catch (err) {
     started.delete(audioKey)
-    const message = plainTranscriptError(err)
+    const message = plainError(err)
     console.error(message)
-    await persistTranscriptProblem(video, audioKey, message)
+    await persistProblem(video, audioKey, message)
   }
 }
 
-function currentAccessToken() {
-  try {
-    const token = getAuth().currentUser?.stsTokenManager?.accessToken
-    return typeof token === 'string' ? token : ''
-  } catch {
-    return ''
-  }
-}
-
-function storedSegments(segments) {
+function storedSegments (segments) {
   if (!Array.isArray(segments)) return []
   return segments.flatMap((segment) => {
     const start = Number(segment?.start)
@@ -178,7 +135,7 @@ function storedSegments(segments) {
   })
 }
 
-function storedWords(words) {
+function storedWords (words) {
   if (!Array.isArray(words)) return []
   return words.flatMap((word) => {
     const spoken = typeof word?.word === 'string' ? word.word.trim() : ''
@@ -189,8 +146,8 @@ function storedWords(words) {
   })
 }
 
-async function persistTranscriptProblem(videoDoc, audioKey, message) {
-  rememberProblem(videoDoc, message)
+async function persistProblem (videoDoc, audioKey, message) {
+  setProblem(videoDoc, message)
   if (!videoDoc?.path) return
   try {
     await updateFirestoreDoc(videoDoc.path, {
@@ -207,7 +164,7 @@ async function persistTranscriptProblem(videoDoc, audioKey, message) {
   }
 }
 
-async function persistTranscript(videoDoc, audioKey, segments) {
+async function persistOk (videoDoc, audioKey, segments) {
   if (!videoDoc?.path) return
   await updateFirestoreDoc(videoDoc.path, {
     transcript: {
@@ -220,5 +177,5 @@ async function persistTranscript(videoDoc, audioKey, segments) {
       createdAt: new Date().toISOString()
     }
   })
-  forgetProblem(videoDoc)
+  setProblem(videoDoc, '')
 }

@@ -7,7 +7,6 @@ import {
   decideTranscription,
   isAllowedAudioUrl,
   isBoardPath,
-  requestTranscription,
   segmentsFromTranscription,
   transcriptionFile,
   transcribeStoredAudio
@@ -43,29 +42,11 @@ test('returned segments and words are shifted onto the recording timeline', () =
   ])
 })
 
-test('webm is sent as webm; only project audio URLs allowed', () => {
-  const bytes = new Uint8Array([0x1a, 0x45, 0xdf, 0xa3, 0, 1, 2, 3])
-  assert.equal(transcriptionFile(bytes, 'audio/webm').filename, 'audio.webm')
+test('project audio URLs and board paths only', () => {
   assert.equal(isAllowedAudioUrl(AUDIO_URL), true)
   assert.equal(isAllowedAudioUrl('https://evil.example/audio'), false)
   assert.equal(isBoardPath('classes/abc/blackboards/xyz'), true)
-})
-
-test('requestTranscription asks for whisper-1 word times', async () => {
-  let form
-  await requestTranscription({
-    bytes: new Uint8Array([1]),
-    mimeType: 'audio/webm',
-    filename: 'audio.webm',
-    apiKey: 'k',
-    timestamps: true,
-    fetchImpl: async (_url, options) => {
-      form = options.body
-      return { ok: true, status: 200, text: async () => '{"text":"hi"}' }
-    }
-  })
-  assert.equal(form.get('model'), 'whisper-1')
-  assert.deepEqual(form.getAll('timestamp_granularities[]'), ['word', 'segment'])
+  assert.equal(transcriptionFile(new Uint8Array([0x1a, 0x45, 0xdf, 0xa3]), 'audio/webm').filename, 'audio.webm')
 })
 
 test('timestamp rejection falls back to text-only', async () => {

@@ -1,4 +1,3 @@
-
 import { env } from '$env/dynamic/private'
 import {
   MESSAGES,
@@ -8,10 +7,7 @@ import {
   transcribeStoredAudio
 } from '$lib/server/transcribeAudio.js'
 
-export const config = {
-  maxDuration: 60,
-  split: true
-}
+export const config = { maxDuration: 60, split: true }
 
 const FIREBASE_PROJECT = 'feynman-mvp'
 const FIREBASE_API_KEY = 'AIzaSyB7XsbhYEd_4DQigc_hfnmdpcwlvzugPOw'
@@ -20,23 +16,19 @@ const RATE_WINDOW_MS = 60_000
 const RATE_MAX = 6
 const rateHits = new Map()
 
-export async function POST({ request }) {
+export async function POST ({ request }) {
   const apiKey = readApiKey()
   if (!apiKey) return json(200, { skipped: true })
 
   const token = bearerToken(request)
   const uid = token ? await firebaseUserId(token) : ''
-  if (!token || !uid) {
-    return json(401, { error: MESSAGES.failed })
-  }
+  if (!token || !uid) return json(401, { error: MESSAGES.failed })
   if (!rateOk(uid)) return json(429, { error: MESSAGES.failed })
 
   let payload
   try {
     const declared = Number(request.headers.get('content-length') || 0)
-    if (Number.isFinite(declared) && declared > 100_000) {
-      return json(413, { error: MESSAGES.failed })
-    }
+    if (Number.isFinite(declared) && declared > 100_000) return json(413, { error: MESSAGES.failed })
     payload = await request.json()
   } catch {
     return json(400, { error: MESSAGES.unreadable })
@@ -88,9 +80,7 @@ async function readBoard (path, token, fetchImpl = fetch) {
   const encoded = path.split('/').map((part) => encodeURIComponent(part)).join('/')
   const endpoint = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/${encoded}?key=${FIREBASE_API_KEY}`
   try {
-    const response = await fetchImpl(endpoint, {
-      headers: { authorization: `Bearer ${token}` }
-    })
+    const response = await fetchImpl(endpoint, { headers: { authorization: `Bearer ${token}` } })
     if (!response.ok) return null
     const fields = (await response.json())?.fields || {}
     return {
@@ -102,12 +92,12 @@ async function readBoard (path, token, fetchImpl = fetch) {
   }
 }
 
-function readApiKey() {
+function readApiKey () {
   const value = env?.OPENAI_API_KEY ?? process.env.OPENAI_API_KEY ?? ''
   return typeof value === 'string' ? value.trim() : ''
 }
 
-function usableAudioKey(audioKey, audioDownloadURL) {
+function usableAudioKey (audioKey, audioDownloadURL) {
   if (typeof audioKey === 'string' && audioKey.trim() && audioKey.length <= 2000 && !/[\r\n]/.test(audioKey)) {
     return audioKey
   }
@@ -115,13 +105,13 @@ function usableAudioKey(audioKey, audioDownloadURL) {
   return ''
 }
 
-function bearerToken(request) {
+function bearerToken (request) {
   const header = request.headers.get('authorization') || ''
   const match = header.match(/^Bearer ([A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+)$/)
   return match ? match[1] : ''
 }
 
-async function firebaseUserId(token, fetchImpl = fetch) {
+async function firebaseUserId (token, fetchImpl = fetch) {
   try {
     const response = await fetchImpl(
       `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_API_KEY}`,
@@ -135,16 +125,10 @@ async function firebaseUserId(token, fetchImpl = fetch) {
   }
 }
 
-function transcriptBody(audioKey, result) {
+function transcriptBody (audioKey, result) {
   const createdAt = new Date().toISOString()
   if (result.error) {
-    return {
-      v: TRANSCRIPT_VERSION,
-      complete: false,
-      error: result.error,
-      audioKey,
-      createdAt
-    }
+    return { v: TRANSCRIPT_VERSION, complete: false, error: result.error, audioKey, createdAt }
   }
   return {
     v: TRANSCRIPT_VERSION,
@@ -157,23 +141,15 @@ function transcriptBody(audioKey, result) {
   }
 }
 
-async function persistTranscript({ path, audioKey, token, result }) {
+async function persistTranscript ({ path, audioKey, token, result }) {
   if (!token || !isBoardPath(path)) return false
-  const transcript = transcriptBody(audioKey, result)
   const encoded = path.split('/').map((part) => encodeURIComponent(part)).join('/')
   const endpoint = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/${encoded}?updateMask.fieldPaths=transcript&key=${FIREBASE_API_KEY}`
   try {
     const response = await fetch(endpoint, {
       method: 'PATCH',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        fields: {
-          transcript: firestoreValue(transcript)
-        }
-      })
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+      body: JSON.stringify({ fields: { transcript: firestoreValue(transcriptBody(audioKey, result)) } })
     })
     return response.ok
   } catch {
@@ -181,29 +157,25 @@ async function persistTranscript({ path, audioKey, token, result }) {
   }
 }
 
-function firestoreValue(value) {
+function firestoreValue (value) {
   if (value === null) return { nullValue: null }
   if (typeof value === 'boolean') return { booleanValue: value }
   if (typeof value === 'number') {
-    if (Number.isInteger(value)) return { integerValue: String(value) }
-    return { doubleValue: value }
+    return Number.isInteger(value) ? { integerValue: String(value) } : { doubleValue: value }
   }
   if (typeof value === 'string') return { stringValue: value }
-  if (Array.isArray(value)) {
-    return { arrayValue: { values: value.map((entry) => firestoreValue(entry)) } }
-  }
+  if (Array.isArray(value)) return { arrayValue: { values: value.map((entry) => firestoreValue(entry)) } }
   if (typeof value === 'object') {
     const fields = {}
     for (const [key, entry] of Object.entries(value)) {
-      if (entry === undefined) continue
-      fields[key] = firestoreValue(entry)
+      if (entry !== undefined) fields[key] = firestoreValue(entry)
     }
     return { mapValue: { fields } }
   }
   return { nullValue: null }
 }
 
-function json(status, body) {
+function json (status, body) {
   return new Response(JSON.stringify(body), {
     status,
     headers: { 'content-type': 'application/json' }

@@ -26,7 +26,12 @@
           play_circle
         </button>
       {/if}
-      {#each boardDoc.slideIDs as slideID, i}
+      {#if onToggleComments && !commentsOpen}
+        <div class="transcript-reopen">
+          <CommentsPanelButton open={false} on:click={onToggleComments} />
+        </div>
+      {/if}
+      {#each boardDoc.slideIDs as slideID, i (slideID)}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >
@@ -77,8 +82,8 @@
       />
       <span class="time">{formatTime(duration)}</span>
       <button type="button" class="speed-btn" on:click={togglePlaySpeed}>{playbackSpeed}x</button>
-      {#if onToggleComments}
-        <CommentsPanelButton open={commentsOpen} on:click={onToggleComments} />
+      {#if onToggleComments && commentsOpen}
+        <CommentsPanelButton open={true} on:click={onToggleComments} />
       {/if}
     </div>
     <audio
@@ -88,11 +93,18 @@
       aria-hidden="true"
       data-playback-path={playbackPathOf(boardDoc)}
       on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
-      on:play={() => { hasPlaybackStarted = true; isPlaying = true; startTimer(); publishClock(); }}
-      on:pause={() => { isPlaying = false; publishClock(); }}
-      on:seeking={() => { currentTime = AudioPlayer.currentTime; hasAudioSliderJumped = true; publishClock('seek') }}
-      on:timeupdate={() => publishClock()}
-      on:loadedmetadata={() => { applyQueuedSeek(); publishClock() }}
+      on:play={() => { hasPlaybackStarted = true; isPlaying = true; startTimer() }}
+      on:pause={() => { isPlaying = false }}
+      on:seeking={() => { currentTime = AudioPlayer.currentTime; hasAudioSliderJumped = true }}
+      on:timeupdate={() => {
+        if (!AudioPlayer) return
+        currentTime = AudioPlayer.currentTime || 0
+        if (Number.isFinite(AudioPlayer.duration)) duration = AudioPlayer.duration
+      }}
+      on:loadedmetadata={() => {
+        if (AudioPlayer && Number.isFinite(AudioPlayer.duration)) duration = AudioPlayer.duration
+        applyQueuedSeek()
+      }}
     ></audio>
   </div>
 </div>
@@ -107,7 +119,7 @@
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
-  import { claimPlayback, playAudioFrom, playbackPathOf, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
@@ -172,7 +184,10 @@
     }
     updateViewMinutes()
     unregisterPlayback = registerPlayback(playbackPathOf(boardDoc), {
-      seek: seekTo, play: playVideo, toggle: togglePlayPause
+      get audio () { return AudioPlayer },
+      seek: seekTo,
+      play: playVideo,
+      toggle: togglePlayPause
     })
   })
 
@@ -202,20 +217,6 @@
     currentTime = next
     hasAudioSliderJumped = true
     AudioPlayer.currentTime = next
-    publishClock('seek')
-  }
-
-  function publishClock (reason) {
-    if (!AudioPlayer) return
-    currentTime = AudioPlayer.currentTime || 0
-    if (Number.isFinite(AudioPlayer.duration)) duration = AudioPlayer.duration
-    publishPlayback(
-      playbackPathOf(boardDoc),
-      currentTime,
-      AudioPlayer.duration || 0,
-      reason === 'seek' ? 'seek' : 'tick',
-      !AudioPlayer.paused
-    )
   }
 
   function playVideo (time) { return playAudioFrom(AudioPlayer, time) }
@@ -250,7 +251,7 @@
     intervalID = setInterval(() => {
       if (AudioPlayer) {
         currentTime = AudioPlayer.currentTime
-        publishClock()
+        if (Number.isFinite(AudioPlayer.duration)) duration = AudioPlayer.duration
       }
     }, ONE_HUNDRED_MILLISECS)
   }
@@ -268,6 +269,25 @@
 
 <style>
   .clock { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
+  .transcript-reopen {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 7;
+    pointer-events: auto;
+  }
+  .transcript-reopen :global(.my-round-button) {
+    margin: 0;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 24px;
+    background: rgba(0, 0, 0, 0.55);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  }
   .playbar {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; height: 50px;
     display: flex; align-items: center; gap: 6px; padding: 0 8px; box-sizing: border-box;

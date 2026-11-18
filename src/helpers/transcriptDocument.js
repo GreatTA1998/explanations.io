@@ -1,4 +1,3 @@
-
 const PARAGRAPH_GAP = 2
 const SECONDS_PER_CHAR = 0.086
 const MIN_WORD_SECONDS = 0.22
@@ -6,15 +5,14 @@ const MAX_TAIL_SECONDS = 1.2
 const SENTENCE_END = /[.!?]["')\]]*$/
 const MIN_TIMED_SPAN = 0.05
 
-export function buildTranscriptDocument(segments, durationSeconds = null) {
+export function buildTranscriptDocument (segments, durationSeconds = null) {
   const words = wordsFromSegments(segments, durationSeconds)
   return { words, paragraphs: paragraphsFromWords(words) }
 }
 
-export function wordsFromSegments(segments, durationSeconds = null) {
+export function wordsFromSegments (segments, durationSeconds = null) {
   const words = []
-  const stretched = stretchSegments(segments, durationSeconds)
-  for (const segment of stretched) {
+  for (const segment of stretchSegments(segments, durationSeconds)) {
     const parts = segment.text.split(/\s+/).filter(Boolean)
     if (!parts.length) continue
     const timed = matchingWordTimes(segment, parts) || spreadWords(
@@ -35,7 +33,7 @@ export function wordsFromSegments(segments, durationSeconds = null) {
   return words
 }
 
-export function stretchSegments(segments, durationSeconds = null) {
+export function stretchSegments (segments, durationSeconds = null) {
   const repaired = repairSegments(segments)
   if (!repaired.length) return repaired
 
@@ -77,11 +75,11 @@ export function stretchSegments(segments, durationSeconds = null) {
   })
 }
 
-function naturalSeconds(text) {
+function naturalSeconds (text) {
   return String(text || '').split(/\s+/).filter(Boolean).reduce((sum, part) => sum + wordSeconds(part), 0)
 }
 
-function usableStoredWords(words, segmentStart, segmentEnd) {
+function usableStoredWords (words, segmentStart, segmentEnd) {
   if (!Array.isArray(words) || !words.length) return undefined
   let minStart = Infinity
   let maxEnd = -Infinity
@@ -97,13 +95,13 @@ function usableStoredWords(words, segmentStart, segmentEnd) {
   return words
 }
 
-function matchingWordTimes(segment, parts) {
+function matchingWordTimes (segment, parts) {
   const raw = segment.words
   if (!Array.isArray(raw) || raw.length !== parts.length) return null
   const timed = []
   for (let index = 0; index < parts.length; index += 1) {
     const word = raw[index]
-    const spoken = String(word && (word.word || word.text) || '').trim()
+    const spoken = String((word && (word.word || word.text)) || '').trim()
     const start = Number(word && word.start)
     const end = Number(word && word.end)
     if (tokenCore(spoken) !== tokenCore(parts[index]) || !Number.isFinite(start) || !Number.isFinite(end)) return null
@@ -113,16 +111,16 @@ function matchingWordTimes(segment, parts) {
   return timed
 }
 
-function tokenCore(text) {
+function tokenCore (text) {
   return String(text || '').trim().replace(/^[^A-Za-z0-9']+|[^A-Za-z0-9']+$/g, '')
 }
 
-function wordSeconds(text) {
+function wordSeconds (text) {
   const chars = Math.max(1, String(text).replace(/\s/g, '').length)
   return Math.max(MIN_WORD_SECONDS, chars * SECONDS_PER_CHAR)
 }
 
-function sentenceGroups(parts) {
+function spreadWords (parts, start, span, fillAll = false) {
   const groups = []
   let current = []
   for (const text of parts) {
@@ -133,41 +131,34 @@ function sentenceGroups(parts) {
     }
   }
   if (current.length) groups.push(current)
-  return groups
-}
 
-function spreadWords(parts, start, span, fillAll = false) {
-  const groups = sentenceGroups(parts)
   const weights = groups.map((group) => group.reduce((sum, text) => sum + wordSeconds(text), 0))
   const total = weights.reduce((sum, weight) => sum + weight, 0) || 1
   let windowStart = start
   const timed = []
   for (let index = 0; index < groups.length; index += 1) {
     const window = span * (weights[index] / total)
-    timed.push(...placeSentence(groups[index], windowStart, window, fillAll))
+    const words = groups[index]
+    const wordWeights = words.map(wordSeconds)
+    const natural = wordWeights.reduce((sum, weight) => sum + weight, 0)
+    const spare = window - natural
+    const fill = fillAll || !(spare > 0 && spare <= MAX_TAIL_SECONDS)
+    const scale = fill && natural > 0 ? window / natural : 1
+    let cursor = windowStart
+    const placed = words.map((text, wordIndex) => {
+      const width = wordWeights[wordIndex] * scale
+      const word = { text, start: cursor, end: cursor + width }
+      cursor += width
+      return word
+    })
+    if (fill && placed.length) placed[placed.length - 1].end = windowStart + window
+    timed.push(...placed)
     windowStart += window
   }
   return timed
 }
 
-function placeSentence(words, windowStart, window, fillAll = false) {
-  const weights = words.map(wordSeconds)
-  const natural = weights.reduce((sum, weight) => sum + weight, 0)
-  const spare = window - natural
-  const fill = fillAll || !(spare > 0 && spare <= MAX_TAIL_SECONDS)
-  const scale = fill && natural > 0 ? window / natural : 1
-  let cursor = windowStart
-  const placed = words.map((text, index) => {
-    const width = weights[index] * scale
-    const word = { text, start: cursor, end: cursor + width }
-    cursor += width
-    return word
-  })
-  if (fill && placed.length) placed[placed.length - 1].end = windowStart + window
-  return placed
-}
-
-export function repairSegments(segments) {
+export function repairSegments (segments) {
   if (!Array.isArray(segments)) return []
   const sorted = []
   for (const segment of segments) {
@@ -176,8 +167,7 @@ export function repairSegments(segments) {
     if (!text || !Number.isFinite(segment.start)) continue
     const start = segment.start
     const end = Number.isFinite(segment.end) ? Math.max(segment.end, start) : start
-    const words = Array.isArray(segment.words) ? segment.words : undefined
-    sorted.push({ start, end, text, words })
+    sorted.push({ start, end, text, words: Array.isArray(segment.words) ? segment.words : undefined })
   }
   sorted.sort((a, b) => a.start - b.start || a.end - b.end)
 
@@ -196,7 +186,7 @@ export function repairSegments(segments) {
   return repaired.filter((segment) => segment.text)
 }
 
-export function paragraphsFromWords(words) {
+export function paragraphsFromWords (words) {
   const paragraphs = []
   let current = null
   for (const word of words) {
@@ -211,9 +201,8 @@ export function paragraphsFromWords(words) {
   return paragraphs
 }
 
-export function wordAtTime(words, time) {
-  if (!words.length || !Number.isFinite(time)) return null
-  if (time < words[0].start) return null
+export function wordAtTime (words, time) {
+  if (!words.length || !Number.isFinite(time) || time < words[0].start) return null
   let lo = 0
   let hi = words.length - 1
   let found = 0
@@ -229,12 +218,10 @@ export function wordAtTime(words, time) {
   return words[found]
 }
 
-export function progressInWord(word, time) {
+export function progressInWord (word, time) {
   if (!word) return 0
   const span = word.end - word.start
   if (!(span > 0)) return time >= word.end ? 1 : 0
   const ratio = (time - word.start) / span
-  if (ratio <= 0) return 0
-  if (ratio >= 1) return 1
-  return ratio
+  return ratio <= 0 ? 0 : ratio >= 1 ? 1 : ratio
 }

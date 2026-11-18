@@ -18,7 +18,7 @@
               class="transcript-word"
               class:is-current={currentWord && word.id === currentWord.id}
               style={currentWord && word.id === currentWord.id ? `--p:${progress}` : undefined}
-              tabindex={wordTabIndex(word)}
+              tabindex={!currentWord ? (word.id === 0 ? 0 : -1) : (word.id === currentWord.id ? 0 : -1)}
               use:rememberWord={word}
               on:click={(event) => pressWord(word, event)}
               on:keydown={(event) => onWordKeydown(word, event)}
@@ -48,10 +48,10 @@
   import {
     claimPlayback,
     hoverSeeksPlayback,
+    playbackAudio,
     playbackPathOf,
     playPlayback,
-    seekPlayback,
-    subscribePlayback
+    seekPlayback
   } from '/src/helpers/playbackBridge.js'
 
   export let videoDoc
@@ -66,8 +66,10 @@
   let pointerHold = 0
   let scrubFrame = 0
   let scrubAt = null
+  let shown = null
+  let pending = null
+  let clockFrame = 0
   const wordNodes = {}
-  const playback = { stop: () => {}, shown: null }
 
   $: path = playbackPathOf(videoDoc)
   $: segments = readCachedTranscript(videoDoc) || []
@@ -78,75 +80,90 @@
   $: currentWord = wordAtTime(words, time)
   $: progress = progressInWord(currentWord, time)
   $: revealCurrent(currentWord)
-  $: followPlayback(path)
+  $: {
+    path
+    restartClock()
+  }
 
-  function followPlayback(nextPath) {
-    playback.stop()
-    playback.shown = null
+  function restartClock () {
+    stopClock()
+    shown = null
+    pending = null
     playing = false
     playFromPointer = false
     duration = 0
-    let pending = null
-    playback.stop = subscribePlayback(nextPath, (snapshot) => {
-      if (Number.isFinite(snapshot.duration) && snapshot.duration > 0) {
-        duration = snapshot.duration
-      }
-      if (snapshot.playing === true) {
-        playing = true
-        playFromPointer = false
-        if (hoveredWordId != null) {
-          hoveredWordId = null
-          clearTimeout(pointerHold)
-          cancelScrub()
+    const tick = () => {
+      const audio = playbackAudio(path)
+      if (audio) {
+        if (Number.isFinite(audio.duration) && audio.duration > 0) duration = audio.duration
+        const nextPlaying = !audio.paused
+        if (nextPlaying) {
+          playing = true
+          playFromPointer = false
+          if (hoveredWordId != null) {
+            hoveredWordId = null
+            clearTimeout(pointerHold)
+            cancelScrub()
+          }
+        } else {
+          playing = false
         }
-      } else if (snapshot.playing === false) {
-        playing = false
+        acceptTime(audio.currentTime || 0, audio.seeking ? 'seek' : 'tick')
       }
-      const next = snapshot.time
-      if (!Number.isFinite(next)) return
-      if (playFromPointer && snapshot.playing !== true && next + 0.35 < time) return
-      if (hoveredWordId != null) {
-        playback.shown = time
-        pending = null
-        return
-      }
-      if (snapshot.reason === 'seek' || playback.shown == null || next + 0.35 >= playback.shown) {
-        playback.shown = next
-        pending = null
-        time = playback.shown
-        return
-      }
-      if (pending != null && Math.abs(pending - next) < 0.5) {
-        playback.shown = next
-        pending = null
-        time = playback.shown
-        return
-      }
-      pending = next
-    })
+      clockFrame = requestAnimationFrame(tick)
+    }
+    clockFrame = requestAnimationFrame(tick)
   }
 
-  function trackDoc(node) {
+  function stopClock () {
+    if (clockFrame) cancelAnimationFrame(clockFrame)
+    clockFrame = 0
+  }
+
+  function acceptTime (next, reason) {
+    if (!Number.isFinite(next)) return
+    if (playFromPointer && reason !== 'seek' && !playing && next + 0.35 < time) return
+    if (hoveredWordId != null) {
+      shown = time
+      pending = null
+      return
+    }
+    if (reason === 'seek' || shown == null || next + 0.35 >= shown) {
+      shown = next
+      pending = null
+      time = shown
+      return
+    }
+    if (pending != null && Math.abs(pending - next) < 0.5) {
+      shown = next
+      pending = null
+      time = shown
+      return
+    }
+    pending = next
+  }
+
+  function trackDoc (node) {
     docEl = node
     node.addEventListener('pointerdown', clearTextSelection)
     return {
-      destroy() {
+      destroy () {
         node.removeEventListener('pointerdown', clearTextSelection)
         if (docEl === node) docEl = null
       }
     }
   }
 
-  function rememberWord(node, word) {
+  function rememberWord (node, word) {
     wordNodes[word.id] = node
     return {
-      destroy() {
+      destroy () {
         if (wordNodes[word.id] === node) delete wordNodes[word.id]
       }
     }
   }
 
-  function revealCurrent(word) {
+  function revealCurrent (word) {
     if (!word || word.id === revealedId) return
     revealedId = word.id
     if (hoveredWordId != null || typeof requestAnimationFrame !== 'function') return
@@ -161,35 +178,30 @@
     })
   }
 
-  function wordTabIndex(word) {
-    if (!currentWord) return word.id === 0 ? 0 : -1
-    return word.id === currentWord.id ? 0 : -1
-  }
-
-  function placeAt(at) {
+  function placeAt (at) {
     cancelScrub()
     time = at
-    playback.shown = at
+    shown = at
     seekPlayback(path, at)
   }
 
-  function timeInWord(word, event) {
+  function timeInWord (word, event) {
     const rect = event.currentTarget.getBoundingClientRect()
     const ratio = rect.width > 0 ? (event.clientX - rect.left) / rect.width : 0
     const clamped = ratio < 0 ? 0 : ratio > 1 ? 1 : ratio
     return word.start + (word.end - word.start) * clamped
   }
 
-  function pressWord(word, event) {
+  function pressWord (word, event) {
     const at = timeInWord(word, event)
     playFromPointer = true
     placeAt(at)
     if (!playPlayback(path, at)) playFromPointer = false
   }
 
-  function scrubTo(at) {
+  function scrubTo (at) {
     time = at
-    playback.shown = at
+    shown = at
     if (scrubFrame) {
       scrubAt = at
       return
@@ -206,28 +218,23 @@
     })
   }
 
-  function cancelScrub() {
+  function cancelScrub () {
     if (!scrubFrame) return
     cancelAnimationFrame(scrubFrame)
     scrubFrame = 0
     scrubAt = null
   }
 
-  function flushScrub() {
+  function flushScrub () {
     if (!scrubFrame) return
     const next = scrubAt
     cancelScrub()
-    if (next == null) return
-    seekPlayback(path, next)
+    if (next != null) seekPlayback(path, next)
   }
 
-  function hoverWord(word, event) {
+  function hoverWord (word, event) {
     if (playFromPointer) return
-    if (!hoverSeeksPlayback({
-      pointerType: event.pointerType,
-      buttons: event.buttons,
-      playing
-    })) return
+    if (!hoverSeeksPlayback({ pointerType: event.pointerType, buttons: event.buttons, playing })) return
     hoveredWordId = word.id
     scrubTo(timeInWord(word, event))
     clearTimeout(pointerHold)
@@ -236,18 +243,15 @@
     }, 160)
   }
 
-  function leaveWord(word) {
+  function leaveWord (word) {
     if (hoveredWordId !== word.id) return
     hoveredWordId = null
     clearTimeout(pointerHold)
-    if (playFromPointer) {
-      cancelScrub()
-      return
-    }
-    flushScrub()
+    if (playFromPointer) cancelScrub()
+    else flushScrub()
   }
 
-  function pressPanel() {
+  function pressPanel () {
     claimPlayback(path)
     if (hoveredWordId == null) return
     hoveredWordId = null
@@ -255,12 +259,12 @@
     flushScrub()
   }
 
-  function clearTextSelection() {
+  function clearTextSelection () {
     const selection = window.getSelection && window.getSelection()
     if (selection && selection.rangeCount) selection.removeAllRanges()
   }
 
-  function onWordKeydown(word, event) {
+  function onWordKeydown (word, event) {
     let index = word.id
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown') index += 1
     else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') index -= 1
@@ -273,7 +277,7 @@
   }
 
   onDestroy(() => {
-    playback.stop()
+    stopClock()
     cancelScrub()
     clearTimeout(pointerHold)
   })
@@ -281,80 +285,34 @@
 
 <style>
   .transcript-panel {
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    padding: 4px 2px 8px;
-    color: inherit;
+    display: flex; flex-direction: column; min-height: 0; padding: 4px 2px 8px; color: inherit;
   }
-
-  .transcript-status {
-    margin: 8px 12px;
-    font-size: 1rem;
-    line-height: 1.65;
-    color: inherit;
-  }
-
+  .transcript-status { margin: 8px 12px; font-size: 1rem; line-height: 1.65; color: inherit; }
   .transcript-doc {
-    overflow-y: auto;
-    padding: 10px 14px 20px;
-    text-align: left;
-    touch-action: pan-y;
-    -webkit-user-select: none;
-    user-select: none;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
+    overflow-y: auto; padding: 10px 14px 20px; text-align: left; touch-action: pan-y;
+    -webkit-user-select: none; user-select: none;
+    scrollbar-width: thin; scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
   }
-
   .transcript-paragraph {
-    margin: 0 0 1em;
-    max-width: 38rem;
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    color: inherit;
+    margin: 0 0 1em; max-width: 38rem; font-size: 1.0625rem; line-height: 1.7; color: inherit;
   }
-
   .transcript-word {
-    display: inline;
-    appearance: none;
-    margin: 0 0.28em 0 0;
-    padding: 0;
-    border: 0;
-    background: none;
-    font: inherit;
-    color: inherit;
-    line-height: inherit;
-    letter-spacing: inherit;
-    text-align: inherit;
-    cursor: default;
-    border-radius: 1px;
+    display: inline; appearance: none; margin: 0 0.28em 0 0; padding: 0; border: 0; background: none;
+    font: inherit; color: inherit; line-height: inherit; letter-spacing: inherit; text-align: inherit;
+    cursor: default; border-radius: 1px;
   }
-
   .transcript-word:focus { outline: none; }
-
-  .transcript-word.is-current {
-    --caret: #F7C686;
-    position: relative;
-    z-index: 1;
-  }
-
+  .transcript-word.is-current { --caret: #F7C686; position: relative; z-index: 1; }
   .transcript-word.is-current::before {
-    content: '';
-    position: absolute;
-    inset: 0.05em auto 0 calc(var(--p) * 100%);
-    width: 0.4em;
-    transform: translateX(-50%);
-    pointer-events: none;
+    content: ''; position: absolute; inset: 0.05em auto 0 calc(var(--p) * 100%);
+    width: 0.4em; transform: translateX(-50%); pointer-events: none;
     background:
       linear-gradient(var(--caret), var(--caret)) center / 1px 100% no-repeat,
       linear-gradient(var(--caret), var(--caret)) center top / 100% 1px no-repeat,
       linear-gradient(var(--caret), var(--caret)) center bottom / 100% 1px no-repeat;
   }
-
   .transcript-word:hover,
   .transcript-word:focus-visible {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
+    text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px;
   }
 </style>

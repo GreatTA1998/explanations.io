@@ -3,68 +3,33 @@
 <div class="nav-cluster" class:floating>
   <section class="nav-panel" aria-label="Server navigation">
     <div class="server-row">
-      <AnchoredPopover
-        bind:this={actionsPopover}
-        positionArea="block-end span-inline-end"
-        on:toggle={onActionsToggle}
-        let:close
-      >
+      <AnchoredPopover bind:this={actionsPopover} positionArea="block-end span-inline-end" on:toggle={onActionsToggle} let:close>
         <button
-          slot="activator"
-          let:popoverId
-          let:anchorName
-          type="button"
-          class="logo-button"
-          aria-label="Open app menu"
-          aria-haspopup="menu"
-          aria-expanded={actionsOpen}
-          aria-controls={popoverId || undefined}
-          popovertarget={popoverId || undefined}
+          slot="activator" let:popoverId let:anchorName type="button" class="logo-button"
+          aria-label="Open app menu" aria-haspopup="menu" aria-expanded={actionsOpen}
+          aria-controls={popoverId || undefined} popovertarget={popoverId || undefined}
           style={anchorName ? `anchor-name: ${anchorName}` : undefined}
         >
-          <img
-            src="/app-logo-no-bg.png"
-            width="36"
-            height="33"
-            alt=""
-          >
+          <img src="/app-logo-no-bg.png" width="36" height="33" alt="">
         </button>
-
         <div class="server-actions" role="menu" use:dismissOnClick={close}>
           <a class="menu-row" role="menuitem" href="/">Home</a>
           {#if $user.uid}
-            <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>
-              Log out
-            </button>
+            <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>Log out</button>
           {:else}
-            <div class="menu-row sign-in">
-              <ReusableSignInButton />
-            </div>
+            <div class="menu-row sign-in"><ReusableSignInButton /></div>
           {/if}
-
-          <a
-            class="menu-row"
-            role="menuitem"
-            href="https://github.com/greatTA1998/explain"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src="/github-logo-dark-mode-no-bg.png" width="24" height="24" alt="Github">
-            GitHub
+          <a class="menu-row" role="menuitem" href="https://github.com/greatTA1998/explain" target="_blank" rel="noreferrer">
+            <img src="/github-logo-dark-mode-no-bg.png" width="24" height="24" alt="Github"> GitHub
           </a>
         </div>
       </AnchoredPopover>
 
       <div class="server-anchor">
         <button
-          type="button"
-          class="server-name"
-          bind:this={serverNameEl}
-          aria-haspopup="true"
-          aria-expanded={menuOpen}
-          aria-controls="server-switch-menu"
-          title={currentServerName}
-          on:click={toggleServerMenu}
+          type="button" class="server-name" bind:this={serverNameEl}
+          aria-haspopup="true" aria-expanded={menuOpen} aria-controls="server-switch-menu"
+          title={currentServerName} on:click={toggleServerMenu}
         >
           <span class="server-name-label">{currentServerName}</span>
           <span class="server-name-caret" aria-hidden="true"></span>
@@ -73,43 +38,24 @@
         {#if menuOpen}
           <button type="button" class="server-menu-scrim" aria-label="Dismiss server menu" on:click={closeServerMenu}></button>
           <div
-            class="server-menu"
-            class:full-width={menuFullWidth}
-            id="server-switch-menu"
+            class="server-menu" class:full-width={menuFullWidth} id="server-switch-menu"
             style="top: {menuTop}px; left: {menuLeft}px; width: {menuWidth}px; --menu-top: {menuTop}px;"
           >
             <div class="search-slot">
               <span class="material-icons search-icon" aria-hidden="true">search</span>
-              <input
-                type="search"
-                name="search"
-                maxlength="100"
-                aria-label="Find server"
-                autocomplete="off"
-                bind:value={searchVal}
-              >
+              <input type="search" name="search" maxlength="100" aria-label="Find server" autocomplete="off" bind:value={searchVal}>
             </div>
-
             <div class="server-list" class:split={menuSplit}>
               <div class="server-grid">
                 {#each previewServers as server (server.id)}
                   <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
                 {/each}
-
-                <button type="button" class="create-server" on:click={openCreateServer}>
-                  Create new server
-                </button>
+                <button type="button" class="create-server" on:click={openCreateServer}>Create new server</button>
               </div>
-
               {#if listServers.length}
                 <div class="server-name-list" role="list">
                   {#each listServers as server (server.id)}
-                    <button
-                      type="button"
-                      role="listitem"
-                      class="server-list-row server-pick"
-                      on:click|stopPropagation={() => pickServer(server)}
-                    >
+                    <button type="button" role="listitem" class="server-list-row server-pick" on:click|stopPropagation={() => pickServer(server)}>
                       {server.name || 'Untitled server'}
                     </button>
                   {/each}
@@ -122,57 +68,27 @@
     </div>
 
     {#if !floating}
-      <SubNavTabs
-        tabs={drawerTabs}
-        value={$drawerNavTab}
-        ariaLabel="Server sections"
-        on:change={(e) => drawerNavTab.set(e.detail)}
-      >
-        <AnchoredPopover
-          bind:this={settingsPopover}
-          positionArea="block-end span-inline-end"
-          on:toggle={onSettingsToggle}
-          let:close={closeSettings}
-        >
+      <SubNavTabs tabs={drawerTabs} value={$drawerNavTab} ariaLabel="Server sections" on:change={(e) => drawerNavTab.set(e.detail)}>
+        <AnchoredPopover bind:this={settingsPopover} positionArea="block-end span-inline-end" on:toggle={onSettingsToggle} let:close={closeSettings}>
           <button
-            slot="activator"
-            let:popoverId
-            let:anchorName
-            type="button"
-            class="settings-button"
-            aria-label="Open settings"
-            aria-haspopup="true"
-            aria-expanded={settingsOpen}
-            aria-controls={popoverId || undefined}
-            popovertarget={popoverId || undefined}
+            slot="activator" let:popoverId let:anchorName type="button" class="settings-button"
+            aria-label="Open settings" aria-haspopup="true" aria-expanded={settingsOpen}
+            aria-controls={popoverId || undefined} popovertarget={popoverId || undefined}
             style={anchorName ? `anchor-name: ${anchorName}` : undefined}
           >
             <span class="material-icons" aria-hidden="true">settings</span>
           </button>
-
           <div class="settings-menu" use:dismissOnClick={closeSettings}>
             <button
-              type="button"
-              class="privacy-toggle"
-              role="switch"
-              aria-checked={isPrivate}
-              aria-label="Private server"
-              disabled={savingVisibility || !canTogglePrivacy}
-              on:click|stopPropagation={setServerVisibility}
+              type="button" class="privacy-toggle" role="switch" aria-checked={isPrivate} aria-label="Private server"
+              disabled={savingVisibility || !canTogglePrivacy} on:click|stopPropagation={setServerVisibility}
             >
               <span>Private</span>
               <span class="switch-track" class:on={isPrivate} aria-hidden="true"><span class="switch-thumb"></span></span>
             </button>
           </div>
         </AnchoredPopover>
-
-        <button
-          type="button"
-          class="hide-drawer-button"
-          aria-label="Hide drawer"
-          title="Hide drawer"
-          on:click={() => sidebarFullscreen.set(true)}
-        >
+        <button type="button" class="hide-drawer-button" aria-label="Hide drawer" title="Hide drawer" on:click={() => sidebarFullscreen.set(true)}>
           <HandDrawnDrawerArrow pointing="left" />
         </button>
       </SubNavTabs>
@@ -180,13 +96,7 @@
       <div class="rooms-actions">
         <label class="name-filter">
           <span class="material-icons" aria-hidden="true">search</span>
-          <input
-            type="search"
-            aria-label="Filter by name"
-            autocomplete="off"
-            maxlength="80"
-            bind:value={$drawerNameQuery}
-          >
+          <input type="search" aria-label="Filter by name" autocomplete="off" maxlength="80" bind:value={$drawerNameQuery}>
         </label>
         <button type="button" class="new-pill" on:click={createNew} disabled={creating}>
           <span class="material-symbols-outlined" aria-hidden="true">add</span>
@@ -195,7 +105,6 @@
       </div>
 
       <div class="room-drawer">
-        <!-- absolute: keeps intrinsic height so overflow scrolls without max-height -->
         <div style="position: absolute; overflow-y: auto; inset: 0;">
           {#if $drawerNavTab === 'forum'}
             <QuestionsSection {classID} />
@@ -246,44 +155,20 @@
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
   import { onDestroy } from 'svelte'
 
-  const drawerTabs = [
-    { id: 'rooms', label: 'rooms' },
-    { id: 'forum', label: 'forum' }
-  ]
-
+  const drawerTabs = [{ id: 'rooms', label: 'rooms' }, { id: 'forum', label: 'forum' }]
   export let floating = false
 
   function dismissOnClick (node, closeMenu) {
     const onClick = () => closeMenu?.()
     node.addEventListener('click', onClick)
-    return {
-      update (next) {
-        closeMenu = next
-      },
-      destroy () {
-        node.removeEventListener('click', onClick)
-      }
-    }
+    return { update (next) { closeMenu = next }, destroy () { node.removeEventListener('click', onClick) } }
   }
 
-  let menuOpen = false
-  let actionsOpen = false
-  let settingsOpen = false
-  let actionsPopover
-  let settingsPopover
-  let savingVisibility = false
-  let searchVal = ''
-  let allServers = []
-  let creating = false
-  let newServerPopup
-  let serverNameEl
-  let menuTop = 0
-  let menuLeft = 0
-
-  let classDoc = null
-  let unsubFuncs = []
-  let rooms = []
-  let lastClassID = ''
+  let menuOpen = false, actionsOpen = false, settingsOpen = false
+  let actionsPopover, settingsPopover, savingVisibility = false, searchVal = ''
+  let allServers = [], creating = false, newServerPopup, serverNameEl
+  let menuTop = 0, menuLeft = 0
+  let classDoc = null, unsubFuncs = [], rooms = [], lastClassID = ''
   let ancestorRoomIds = new Set()
 
   $: classID = $page.params.class
@@ -293,112 +178,70 @@
   $: isPrivate = !serverIsPublic($classServerDoc)
   $: canTogglePrivacy = viewerCanTogglePrivacy($classServerDoc, $user.uid)
   $: menuOffset = serverNameLeft(floating)
-  $: columnCount = menuColumnCount(
-    $viewport.width,
-    previewServers.length + 1,
-    menuOffset,
-    menuSplit
-  )
+  $: columnCount = menuColumnCount($viewport.width, previewServers.length + 1, menuOffset, menuSplit)
   $: ({ width: menuWidth, fullWidth: menuFullWidth } = menuPlateLayout($viewport.width, columnCount, menuOffset, menuSplit))
   $: currentServerName = nameForCurrentServer(classID, allServers, $classServerDoc, $recentSearchedServerDoc)
   $: if (menuOpen) placeMenu($viewport.width, columnCount, menuSplit)
-
   $: if (!floating && classID) initializeRooms()
   $: if (!floating && classID && classID !== lastClassID) {
-    lastClassID = classID
-    drawerNavTab.set('rooms')
-    drawerNameQuery.set('')
+    lastClassID = classID; drawerNavTab.set('rooms'); drawerNameQuery.set('')
   }
-
   $: nameQ = $drawerNameQuery.trim()
   $: roomHits = nameQ ? fuzzyFilter(rooms, nameQ, r => r.name) : []
   $: rootRooms = rooms.filter(room => room.parentRoomID === '')
   $: {
     const nextAncestors = ancestorIdsForRoom(rooms, roomID)
-    if (!sameIdSet(ancestorRoomIds, nextAncestors)) {
-      ancestorRoomIds = nextAncestors
-    }
+    if (!sameIdSet(ancestorRoomIds, nextAncestors)) ancestorRoomIds = nextAncestors
   }
 
-  getFirestoreCollection('classes').then(docs => {
-    allServers = docs
-  })
-
+  getFirestoreCollection('classes').then(docs => { allServers = docs })
   onDestroy(unsubDbListeners)
 
   function nameForCurrentServer (classId, servers, classDoc, recent) {
-    const match = servers.find(server => server.id === classId)
-    if (match?.name) return match.name
-    if (classId && classDoc?.name) return classDoc.name
-    if (recent?.name) return recent.name
-    return 'Find server'
+    return servers.find(s => s.id === classId)?.name || (classId && classDoc?.name) || recent?.name || 'Find server'
   }
 
   function placeMenu () {
-    if (!serverNameEl || typeof serverNameEl.getBoundingClientRect !== 'function') return
+    if (!serverNameEl?.getBoundingClientRect) return
     const rect = serverNameEl.getBoundingClientRect()
     menuTop = rect.bottom + 4
     menuLeft = menuPlateLayout($viewport.width, columnCount, rect.left, menuSplit).left
   }
 
-  function toggleServerMenu () {
-    actionsPopover?.close()
-    settingsPopover?.close()
-    menuOpen = !menuOpen
-    if (menuOpen) {
-      requestAnimationFrame(placeMenu)
-    } else {
-      searchVal = ''
-    }
-  }
+  function closeServerMenu () { menuOpen = false; searchVal = '' }
 
-  function closeServerMenu () {
-    menuOpen = false
-    searchVal = ''
+  function toggleServerMenu () {
+    actionsPopover?.close(); settingsPopover?.close()
+    menuOpen = !menuOpen
+    if (menuOpen) requestAnimationFrame(placeMenu)
+    else searchVal = ''
   }
 
   function onWindowClick (event) {
-    // Skip picks (capture-close aborted goto) and the name toggle.
     if (!menuOpen || event.target.closest('.server-card, .server-pick, .create-server, #server-switch-menu, .server-name')) return
     closeServerMenu()
   }
 
   async function pickServer (server) {
     const path = homepageServerPath(server)
-    if ($user.uid) {
-      updateFirestoreDoc(`/users/${$user.uid}`, {
-        recentSearchedServerID: server.id
-      })
-    }
+    if ($user.uid) updateFirestoreDoc(`/users/${$user.uid}`, { recentSearchedServerID: server.id })
     if (path) await goto(path)
     closeServerMenu()
   }
 
-  function onWindowKey (event) {
-    if (event.key === 'Escape' && menuOpen) closeServerMenu()
+  function onWindowKey (event) { if (event.key === 'Escape' && menuOpen) closeServerMenu() }
+
+  function popoverOpened (event, setOpen, closeOther) {
+    const open = event.newState === 'open'
+    setOpen(open)
+    if (open) { closeServerMenu(); closeOther?.close() }
   }
 
-  function onActionsToggle (event) {
-    actionsOpen = event.newState === 'open'
-    if (actionsOpen) {
-      closeServerMenu()
-      settingsPopover?.close()
-    }
-  }
-
-  function onSettingsToggle (event) {
-    settingsOpen = event.newState === 'open'
-    if (settingsOpen) {
-      closeServerMenu()
-      actionsPopover?.close()
-    }
-  }
+  function onActionsToggle (e) { popoverOpened(e, v => { actionsOpen = v }, settingsPopover) }
+  function onSettingsToggle (e) { popoverOpened(e, v => { settingsOpen = v }, actionsPopover) }
 
   function handleSignout () {
-    const auth = getAuth()
-    signOut(auth).then(() => {
-      window.location.reload()
-    })
+    signOut(getAuth()).then(() => { window.location.reload() })
   }
 
   async function setServerVisibility () {
@@ -409,39 +252,23 @@
     try {
       await updateFirestoreDoc(`classes/${classID}`, { isPublic: nextPublic })
       classServerDoc.update(doc => ({ ...(doc || {}), isPublic: nextPublic }))
-      allServers = allServers.map(server => (
-        server.id === classID
-          ? { ...server, isPublic: nextPublic, creatorUID: server.creatorUID || $classServerDoc.creatorUID || '' }
-          : server
-      ))
-    } finally {
-      savingVisibility = false
-    }
+      allServers = allServers.map(server => server.id === classID
+        ? { ...server, isPublic: nextPublic, creatorUID: server.creatorUID || $classServerDoc.creatorUID || '' }
+        : server)
+    } finally { savingVisibility = false }
   }
 
-  function openCreateServer () {
-    newServerPopup?.openPopup()
-  }
+  function openCreateServer () { newServerPopup?.openPopup() }
 
   async function createNew () {
     if (creating) return
-    if (!classID) {
-      newServerPopup?.openPopup()
-      return
-    }
-
-    if ($drawerNavTab === 'forum') {
-      await goto('/' + classID + '/question')
-      return
-    }
-
+    if (!classID) { newServerPopup?.openPopup(); return }
+    if ($drawerNavTab === 'forum') { await goto('/' + classID + '/question'); return }
     creating = true
     try {
       const newRoomID = await createRoomDoc(`classes/${classID}/`)
       await goto('/' + classID + '/' + newRoomID)
-    } finally {
-      creating = false
-    }
+    } finally { creating = false }
   }
 
   async function initializeRooms () {
@@ -451,150 +278,67 @@
     await updateFirestoreDoc(`classes/${classID}/`, { memberUIDs, numOfMembers: memberUIDs.length })
     unsubFuncs.push(onSnapshot(
       query(collection(getFirestore(), `classes/${classID}/rooms`), orderBy('classServerOrder', 'asc')),
-      (snapshot) => {
-        rooms = snapshot.docs.map(d => ({ id: d.id, path: d.ref.path, ...d.data() }))
-      }
+      (snapshot) => { rooms = snapshot.docs.map(d => ({ id: d.id, path: d.ref.path, ...d.data() })) }
     ))
   }
 
-  function unsubDbListeners () {
-    for (const unsubFunc of unsubFuncs) unsubFunc()
-    unsubFuncs = []
-  }
+  function unsubDbListeners () { for (const u of unsubFuncs) u(); unsubFuncs = [] }
 </script>
 
 <style>
   .nav-cluster { position: relative; z-index: 5; width: 100%; height: 100%; min-height: 0; }
   .floating { position: fixed; top: 8px; left: 8px; z-index: 30; width: 280px; height: auto; }
   .nav-panel { position: relative; display: flex; flex-direction: column; height: 100%; min-height: 0; }
-  .floating .nav-panel {
-    height: auto; background-color: var(--bg-off-white); border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 3px 5px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
-  }
-
+  .floating .nav-panel { height: auto; background-color: var(--bg-off-white); border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 3px 5px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06); }
   .room-drawer { position: relative; flex: 1; min-height: 0; overflow: hidden; }
-  .room-hit {
-    display: block; width: 100%; padding: 8px 12px; border-radius: 5px;
-    text-align: left; font-size: var(--fs-400); color: black;
-  }
+  .room-hit { display: block; width: 100%; padding: 8px 12px; border-radius: 5px; text-align: left; font-size: var(--fs-400); color: black; }
   .room-hit:hover { background: lightgrey; }
   .room-hit.selected { font-weight: 700; background-color: #F7C686; }
-
   .server-row, .rooms-actions { flex-shrink: 0; }
-  .server-row {
-    display: flex; align-items: center; gap: 4px; padding: 8px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  }
-
-  .logo-button, .settings-button, .hide-drawer-button {
-    display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 8px;
-  }
+  .server-row { display: flex; align-items: center; gap: 4px; padding: 8px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+  .logo-button, .settings-button, .hide-drawer-button { display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 8px; }
   .logo-button { flex: 0 0 auto; width: 36px; height: 36px; }
-  .logo-button:hover, .settings-button:hover, .hide-drawer-button:hover, .menu-row:hover {
-    background: rgba(0, 0, 0, 0.06);
-  }
+  .logo-button:hover, .settings-button:hover, .hide-drawer-button:hover, .menu-row:hover { background: rgba(0, 0, 0, 0.06); }
   .logo-button img { display: block; filter: brightness(80%); }
-
   .server-anchor { position: relative; flex: 1; min-width: 0; }
-  .server-name {
-    display: flex; align-items: center; width: 100%; min-width: 0; text-align: left;
-    padding: 6px 4px; color: rgb(45, 45, 45); font-size: 24px; font-weight: 600;
-    line-height: 1.2; text-decoration: none;
-  }
+  .server-name { display: flex; align-items: center; width: 100%; min-width: 0; text-align: left; padding: 6px 4px; color: rgb(45, 45, 45); font-size: 24px; font-weight: 600; line-height: 1.2; text-decoration: none; }
   .server-name-label { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .server-name-caret {
-    flex: 0 0 auto; width: 0; height: 0; margin-left: 8px;
-    border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor;
-  }
-
+  .server-name-caret { flex: 0 0 auto; width: 0; height: 0; margin-left: 8px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor; }
   .rooms-actions { display: flex; align-items: center; gap: 6px; padding: 6px 12px 8px; }
-  .name-filter, .search-slot {
-    display: flex; align-items: center; min-width: 0;
-    height: 36px; border-radius: 18px; background: rgba(0, 0, 0, 0.045);
-  }
-  .name-filter { flex: 1; gap: 2px; padding: 0 8px 0 6px; }
-  .name-filter .material-icons, .search-slot .search-icon {
-    flex: 0 0 auto; color: rgb(120, 120, 120);
-  }
+  .name-filter, .search-slot { display: flex; align-items: center; min-width: 0; height: 36px; border-radius: 18px; background: rgba(0, 0, 0, 0.045); gap: 2px; padding: 0 8px 0 6px; }
+  .name-filter { flex: 1; }
+  .name-filter .material-icons, .search-slot .search-icon { flex: 0 0 auto; color: rgb(120, 120, 120); }
   .name-filter .material-icons { font-size: 1.4rem; }
-  .name-filter input, .search-slot input {
-    flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: black;
-  }
+  .name-filter input, .search-slot input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: black; }
   .name-filter input { font-size: 13px; }
-
-  .search-slot { position: relative; width: 240px; padding: 0 8px 0 6px; gap: 2px; }
+  .search-slot { position: relative; width: 240px; }
   .search-slot .search-icon { font-size: 22px; }
   .search-slot input { font-size: 1rem; }
-
-  .new-pill {
-    display: flex; flex: 0 0 auto; align-items: center; gap: 4px;
-    height: 36px; padding: 4px 12px; border-radius: 24px;
-    background-color: #f1e8f3; color: black; font-size: 13px; white-space: nowrap;
-  }
+  .new-pill { display: flex; flex: 0 0 auto; align-items: center; gap: 4px; height: 36px; padding: 4px 12px; border-radius: 24px; background-color: #f1e8f3; color: black; font-size: 13px; white-space: nowrap; }
   .new-pill .material-symbols-outlined { font-size: 1.4rem; }
-
-  .settings-button, .hide-drawer-button {
-    width: 32px; height: 32px; margin-left: 4px; color: rgb(80, 80, 80);
-  }
+  .settings-button, .hide-drawer-button { width: 32px; height: 32px; margin-left: 4px; color: rgb(80, 80, 80); }
   .settings-button .material-icons { font-size: 20px; }
   .settings-menu { min-width: 180px; padding: 6px 8px; }
-
-  .privacy-toggle, .menu-row {
-    display: flex; align-items: center; width: 100%; min-height: 36px;
-    padding: 8px 10px; border-radius: 8px; text-align: left; color: black;
-    font-size: 14px; font-weight: 500;
-  }
+  .privacy-toggle, .menu-row { display: flex; align-items: center; width: 100%; min-height: 36px; padding: 8px 10px; border-radius: 8px; text-align: left; color: black; font-size: 14px; font-weight: 500; }
   .privacy-toggle { justify-content: space-between; gap: 8px; }
   .privacy-toggle:disabled { opacity: 0.45; cursor: not-allowed; }
   .menu-row { gap: 8px; text-decoration: none; }
-
-  .switch-track {
-    position: relative; width: 36px; height: 20px; border-radius: 999px;
-    background: rgba(0, 0, 0, 0.22); transition: background 0.15s ease;
-  }
+  .switch-track { position: relative; width: 36px; height: 20px; border-radius: 999px; background: rgba(0, 0, 0, 0.22); transition: background 0.15s ease; }
   .switch-track.on { background: #f69637; }
-  .switch-thumb {
-    position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
-    border-radius: 50%; background: white; transition: transform 0.15s ease;
-  }
+  .switch-thumb { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: white; transition: transform 0.15s ease; }
   .switch-track.on .switch-thumb { transform: translateX(16px); }
-
   .server-actions { display: flex; flex-direction: column; min-width: 232px; text-align: left; }
-  .server-menu-scrim {
-    position: fixed; inset: 0; z-index: 39; margin: 0; padding: 0; border: 0;
-    border-radius: 0; background: rgba(0, 0, 0, 0.28);
-  }
-  .server-menu {
-    position: fixed; z-index: 40; background: var(--bg-off-white);
-    padding: 12px; border-radius: 12px;
-  }
-
-  .server-list {
-    max-height: 70vh; overflow: auto; padding: 8px 0 0;
-    scrollbar-width: none; -ms-overflow-style: none;
-  }
+  .server-menu-scrim { position: fixed; inset: 0; z-index: 39; margin: 0; padding: 0; border: 0; border-radius: 0; background: rgba(0, 0, 0, 0.28); }
+  .server-menu { position: fixed; z-index: 40; background: var(--bg-off-white); padding: 12px; border-radius: 12px; }
+  .server-list { max-height: 70vh; overflow: auto; padding: 8px 0 0; scrollbar-width: none; -ms-overflow-style: none; }
   .server-list.split { display: flex; flex-direction: row; gap: 8px; align-items: flex-start; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .server-list.split .server-grid, .server-list.split .server-name-list {
-    flex: 1 1 50%; min-width: 0; width: auto;
-  }
+  .server-list.split .server-grid, .server-list.split .server-name-list { flex: 1 1 50%; min-width: 0; width: auto; }
   .server-name-list { display: flex; flex-wrap: wrap; gap: 4px 8px; align-content: flex-start; }
-  .server-list-row {
-    display: block; width: auto; max-width: 100%; min-height: 40px; padding: 10px 12px;
-    border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92);
-    color: black; font-size: 16px; font-weight: 500;
-    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
-  }
+  .server-list-row { display: block; width: auto; max-width: 100%; min-height: 40px; padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92); color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
   .server-list-row:hover { background: rgba(255, 255, 255, 1); }
-  .create-server {
-    display: flex; align-items: center; width: 240px; min-height: 44px; text-align: left;
-    padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.88);
-    color: #5d0068; font-weight: 500;
-  }
-
-  .server-menu.full-width .search-slot,
-  .server-menu.full-width .server-list:not(.split) .create-server { width: 100%; }
+  .create-server { display: flex; align-items: center; width: 240px; min-height: 44px; text-align: left; padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.88); color: #5d0068; font-weight: 500; }
+  .server-menu.full-width .search-slot, .server-menu.full-width .server-list:not(.split) .create-server { width: 100%; }
   .server-menu.full-width .server-list { max-height: calc(100vh - var(--menu-top, 72px) - 16px); }
 </style>

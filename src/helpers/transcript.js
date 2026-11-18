@@ -18,8 +18,7 @@ export function readTranscriptProblem (videoDoc, problems) {
 
 export function readCachedTranscript (videoDoc) {
   const s = videoDoc?.transcript
-  if (!s || s.v !== V || s.complete !== true || s.audioKey !== keyOf(videoDoc)) return null
-  return Array.isArray(s.segments) ? s.segments : null
+  return s?.v === V && s.complete === true && s.audioKey === keyOf(videoDoc) && Array.isArray(s.segments) ? s.segments : null
 }
 
 function setProblem (video, message) {
@@ -34,8 +33,7 @@ export function startTranscriptForNewVideo (video) {
   const audioKey = keyOf(video)
   if (started.has(audioKey)) return Promise.resolve()
   started.add(audioKey); setProblem(video, TRANSCRIBING)
-  const run = queue.then(() => kick(video, audioKey), () => kick(video, audioKey))
-  queue = run.then(() => {}, () => {})
+  queue = (queue.then(() => kick(video, audioKey), () => kick(video, audioKey))).then(() => {}, () => {})
   return Promise.resolve()
 }
 

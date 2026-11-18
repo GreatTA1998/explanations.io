@@ -11,20 +11,15 @@ export const MESSAGES = {
   unreadable: 'Could not read this recording.', unsplittable: 'This recording is not a WAV file and is too large to send for transcription.',
   failed: 'Could not transcribe this recording.', empty: 'No speech was found in this recording.'
 }
-export class SafeTranscriptError extends Error {
-  constructor (message) { super(message); this.name = 'SafeTranscriptError' }
-}
+export class SafeTranscriptError extends Error { constructor (message) { super(message); this.name = 'SafeTranscriptError' } }
 export function decideTranscription (durationSeconds, sizeBytes) {
-  if (durationSeconds != null && Number.isFinite(durationSeconds)) {
-    return durationSeconds > MAX_DURATION_SECONDS ? { transcribe: false, code: 'tooLong' } : { transcribe: true }
-  }
+  if (durationSeconds != null && Number.isFinite(durationSeconds)) return durationSeconds > MAX_DURATION_SECONDS ? { transcribe: false, code: 'tooLong' } : { transcribe: true }
   if (sizeBytes == null || !Number.isFinite(sizeBytes)) return { transcribe: false, code: 'unknown' }
   return sizeBytes > MAX_REASONABLE_BYTES ? { transcribe: false, code: 'tooLarge' } : { transcribe: true }
 }
 export function isBoardPath (path) {
   if (typeof path !== 'string' || path.length > 400) return false
-  const parts = path.split('/')
-  return parts.length >= 2 && parts.length <= 12 && parts[0] === 'classes' && parts.every((p) => /^[A-Za-z0-9_-]{1,128}$/.test(p))
+  const parts = path.split('/'); return parts.length >= 2 && parts.length <= 12 && parts[0] === 'classes' && parts.every((p) => /^[A-Za-z0-9_-]{1,128}$/.test(p))
 }
 export function isAllowedAudioUrl (raw) {
   let url
@@ -51,13 +46,11 @@ export function parseWavInfo (bytes) {
     } else if (id === 'data') { dataOffset = chunk; dataSize = size; break }
     offset = chunk + size + (size % 2)
   }
-  return dataOffset < 0 || !sampleRate || !blockAlign ? null
-    : { audioFormat, channels, sampleRate, byteRate, blockAlign, bitsPerSample, dataOffset, dataSize }
+  return dataOffset < 0 || !sampleRate || !blockAlign ? null : { audioFormat, channels, sampleRate, byteRate, blockAlign, bitsPerSample, dataOffset, dataSize }
 }
 export function wavDurationSeconds (wav, totalBytes) {
   if (!wav || !(wav.byteRate > 0)) return null
-  const dataSize = (totalBytes != null && Number.isFinite(totalBytes))
-    ? Math.min(wav.dataSize, Math.max(0, totalBytes - wav.dataOffset)) : wav.dataSize
+  const dataSize = (totalBytes != null && Number.isFinite(totalBytes)) ? Math.min(wav.dataSize, Math.max(0, totalBytes - wav.dataOffset)) : wav.dataSize
   return dataSize / wav.byteRate
 }
 export function planSlices (dataSize, blockAlign, maxUploadBytes = MAX_UPLOAD_BYTES) {
@@ -73,17 +66,13 @@ export function buildPcmWav (data, { sampleRate, channels, bitsPerSample }) {
   const blockAlign = channels * (bitsPerSample / 8), byteRate = sampleRate * blockAlign, dataSize = data.byteLength
   const wav = new Uint8Array(44 + dataSize), view = new DataView(wav.buffer)
   writeCc(view, 0, 'RIFF'); view.setUint32(4, 36 + dataSize, true); writeCc(view, 8, 'WAVE'); writeCc(view, 12, 'fmt ')
-  view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, channels, true)
-  view.setUint32(24, sampleRate, true); view.setUint32(28, byteRate, true); view.setUint16(32, blockAlign, true)
-  view.setUint16(34, bitsPerSample, true); writeCc(view, 36, 'data'); view.setUint32(40, dataSize, true); wav.set(data, 44)
+  view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, channels, true); view.setUint32(24, sampleRate, true)
+  view.setUint32(28, byteRate, true); view.setUint16(32, blockAlign, true); view.setUint16(34, bitsPerSample, true); writeCc(view, 36, 'data'); view.setUint32(40, dataSize, true); wav.set(data, 44)
   return wav
 }
 export function transcriptionFile (bytes, contentType) {
-  const c = sniff(bytes) || mimeKind(contentType)
-  if (c === 'wav') return { mimeType: 'audio/wav', filename: 'audio.wav' }
-  if (c === 'webm') return { mimeType: 'audio/webm', filename: 'audio.webm' }
-  if (c === 'mp4') return { mimeType: 'audio/mp4', filename: 'audio.mp4' }
-  return { mimeType: 'application/octet-stream', filename: 'audio.bin' }
+  const k = sniff(bytes) || mimeKind(contentType), m = { wav: ['audio/wav', 'audio.wav'], webm: ['audio/webm', 'audio.webm'], mp4: ['audio/mp4', 'audio.mp4'] }[k]
+  return m ? { mimeType: m[0], filename: m[1] } : { mimeType: 'application/octet-stream', filename: 'audio.bin' }
 }
 export function segmentsFromTranscription (body, offsetSeconds = 0, sliceSeconds = null) {
   const offset = Number.isFinite(Number(offsetSeconds)) ? Number(offsetSeconds) : 0
@@ -114,26 +103,16 @@ export function segmentsFromTranscription (body, offsetSeconds = 0, sliceSeconds
 export async function requestTranscription ({ bytes, mimeType, filename, apiKey, timestamps, fetchImpl = fetch }) {
   const form = new FormData()
   form.append('file', new Blob([bytes], { type: mimeType }), filename); form.append('model', MODEL_ID)
-  if (timestamps) {
-    form.append('response_format', 'verbose_json')
-    form.append('timestamp_granularities[]', 'word'); form.append('timestamp_granularities[]', 'segment')
-  } else form.append('response_format', 'json')
-  const response = await fetchImpl('https://api.openai.com/v1/audio/transcriptions', {
-    method: 'POST', headers: { Authorization: `Bearer ${apiKey}` }, body: form
-  })
+  if (timestamps) { form.append('response_format', 'verbose_json'); form.append('timestamp_granularities[]', 'word'); form.append('timestamp_granularities[]', 'segment') }
+  else form.append('response_format', 'json')
+  const response = await fetchImpl('https://api.openai.com/v1/audio/transcriptions', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}` }, body: form })
   const raw = await response.text()
   if (response.status === 400 && timestamps && /timestamp|verbose_json|response_format|unsupported/i.test(raw)) return { unsupportedTimestamps: true, json: null }
   if (!response.ok) { console.error('OpenAI transcription failed', response.status); throw new SafeTranscriptError(MESSAGES.failed) }
-  try { return { unsupportedTimestamps: false, json: raw ? JSON.parse(raw) : {} } }
-  catch { throw new SafeTranscriptError(MESSAGES.failed) }
+  try { return { unsupportedTimestamps: false, json: raw ? JSON.parse(raw) : {} } } catch { throw new SafeTranscriptError(MESSAGES.failed) }
 }
-async function whisper (args) {
-  const result = await requestTranscription({ ...args, timestamps: true })
-  return result.unsupportedTimestamps ? requestTranscription({ ...args, timestamps: false }) : result
-}
-export async function transcribeStoredAudio ({
-  url, apiKey, fetchImpl = fetch, maxUploadBytes = MAX_UPLOAD_BYTES, maxReasonableBytes = MAX_REASONABLE_BYTES
-}) {
+async function whisper (args) { const r = await requestTranscription({ ...args, timestamps: true }); return r.unsupportedTimestamps ? requestTranscription({ ...args, timestamps: false }) : r }
+export async function transcribeStoredAudio ({ url, apiKey, fetchImpl = fetch, maxUploadBytes = MAX_UPLOAD_BYTES, maxReasonableBytes = MAX_REASONABLE_BYTES }) {
   if (!isAllowedAudioUrl(url)) throw new SafeTranscriptError(MESSAGES.unreadable)
   const prefix = await fetchRange(url, 0, 65535, fetchImpl, maxReasonableBytes)
   const wav = parseWavInfo(prefix.bytes), totalBytes = prefix.totalBytes
@@ -168,31 +147,21 @@ export async function transcribeStoredAudio ({
 async function unknownSize (url, prefix, fetchImpl, max) {
   if (prefix.totalBytes != null) return prefix.totalBytes
   if (prefix.complete) return prefix.bytes.byteLength
-  const more = await fetchRange(url, 0, max, fetchImpl, max + 1)
-  return more.truncated ? max + 1 : (more.totalBytes ?? more.bytes.byteLength)
+  const more = await fetchRange(url, 0, max, fetchImpl, max + 1); return more.truncated ? max + 1 : (more.totalBytes ?? more.bytes.byteLength)
 }
 async function fetchRange (url, start, end, fetchImpl, cap) {
   const response = await fetchImpl(url, { redirect: 'manual', headers: { Range: `bytes=${start}-${end}` } })
   if ((response.status >= 300 && response.status < 400) || (!response.ok && response.status !== 206)) throw new SafeTranscriptError(MESSAGES.unreadable)
-  const totalBytes = totalFrom(response, start)
-  const read = await readUpTo(response, Math.max(1, Math.min(cap, end - start + 1)))
-  return { bytes: read.bytes, totalBytes, contentType: response.headers.get('content-type') || '',
-    complete: read.complete && (response.status === 206 || start === 0), truncated: read.truncated, status: response.status }
-}
-function totalFrom (response, start) {
   const match = (response.headers.get('content-range') || '').match(/\/(\d+)\s*$/)
-  if (match) return Number(match[1])
-  if (response.status === 200 && start === 0) {
-    const length = Number(response.headers.get('content-length'))
-    return Number.isFinite(length) ? length : null
-  }
-  return null
+  let totalBytes = match ? Number(match[1]) : null
+  if (totalBytes == null && response.status === 200 && start === 0) { const n = Number(response.headers.get('content-length')); totalBytes = Number.isFinite(n) ? n : null }
+  const read = await readUpTo(response, Math.max(1, Math.min(cap, end - start + 1)))
+  return { bytes: read.bytes, totalBytes, contentType: response.headers.get('content-type') || '', complete: read.complete && (response.status === 206 || start === 0), truncated: read.truncated, status: response.status }
 }
 async function readUpTo (response, limit) {
   if (!response.body || typeof response.body.getReader !== 'function') {
     const buffer = new Uint8Array(await response.arrayBuffer())
-    return buffer.byteLength > limit ? { bytes: buffer.subarray(0, limit), complete: false, truncated: true }
-      : { bytes: buffer, complete: true, truncated: false }
+    return buffer.byteLength > limit ? { bytes: buffer.subarray(0, limit), complete: false, truncated: true } : { bytes: buffer, complete: true, truncated: false }
   }
   const reader = response.body.getReader(), chunks = []
   let size = 0, truncated = false
@@ -201,10 +170,7 @@ async function readUpTo (response, limit) {
     if (done) break
     if (!value?.byteLength) continue
     const room = limit - size
-    if (value.byteLength > room) {
-      chunks.push(value.subarray(0, room)); size += room; truncated = true
-      try { await reader.cancel() } catch {}; break
-    }
+    if (value.byteLength > room) { chunks.push(value.subarray(0, room)); size += room; truncated = true; try { await reader.cancel() } catch {}; break }
     chunks.push(value); size += value.byteLength
   }
   const bytes = new Uint8Array(size); let offset = 0
@@ -220,9 +186,7 @@ function wordsOf (source) {
 }
 function clean (text) { return String(text || '').replace(/\s+/g, ' ').trim() }
 function r3 (v) { return Math.round(v * 1000) / 1000 }
-function cc (view, o) {
-  return String.fromCharCode(view.getUint8(o), view.getUint8(o + 1), view.getUint8(o + 2), view.getUint8(o + 3))
-}
+function cc (view, o) { return String.fromCharCode(view.getUint8(o), view.getUint8(o + 1), view.getUint8(o + 2), view.getUint8(o + 3)) }
 function writeCc (view, o, text) { for (let i = 0; i < 4; i += 1) view.setUint8(o + i, text.charCodeAt(i)) }
 function sniff (bytes) {
   if (!bytes || bytes.byteLength < 4) return ''
@@ -233,7 +197,5 @@ function sniff (bytes) {
 }
 function mimeKind (contentType) {
   const base = String(contentType || '').split(';')[0].trim().toLowerCase()
-  if (/^audio\/(wav|wave|x-wav)$/.test(base)) return 'wav'
-  if (/^(audio|video)\/webm$/.test(base)) return 'webm'
-  return /^audio\/(mp4|m4a|x-m4a)$|^video\/mp4$/.test(base) ? 'mp4' : ''
+  return /^audio\/(wav|wave|x-wav)$/.test(base) ? 'wav' : /^(audio|video)\/webm$/.test(base) ? 'webm' : /^audio\/(mp4|m4a|x-m4a)$|^video\/mp4$/.test(base) ? 'mp4' : ''
 }

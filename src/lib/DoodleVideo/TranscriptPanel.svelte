@@ -297,7 +297,6 @@
 
   .transcript-doc {
     overflow-y: auto;
-    max-height: min(42vh, calc(100vh - 180px));
     padding: 10px 14px 20px;
     text-align: left;
     touch-action: pan-y;

@@ -6,29 +6,23 @@
   >
   <slot/>
 
-  <div class="panel-tabs" role="tablist" aria-label="Transcript and comments">
+  <div class="panel-switch" role="tablist" aria-label="Transcript and comments">
     <button
       type="button"
       role="tab"
-      class="my-tab-item"
-      class:my-active-tab={activeTab === 'transcript'}
+      class="switch-btn"
+      class:active={activeTab === 'transcript'}
       aria-selected={activeTab === 'transcript'}
       on:click={() => activeTab = 'transcript'}
-    >
-      <span class="material-symbols-outlined" aria-hidden="true">subtitles</span>
-      Transcript
-    </button>
+    >Transcript</button>
     <button
       type="button"
       role="tab"
-      class="my-tab-item"
-      class:my-active-tab={activeTab === 'comments'}
+      class="switch-btn"
+      class:active={activeTab === 'comments'}
       aria-selected={activeTab === 'comments'}
       on:click={() => activeTab = 'comments'}
-    >
-      <span class="material-symbols-outlined" aria-hidden="true">forum</span>
-      Comments
-    </button>
+    >Comments</button>
     {#if overBoard}
       <button
         type="button"
@@ -37,9 +31,6 @@
         aria-label="Cycle overlay look, currently {look} of 3"
         on:click={cycleLook}
       >{look}</button>
-    {/if}
-    {#if onHide}
-      <CommentsPanelButton open={true} on:click={onHide} />
     {/if}
   </div>
 
@@ -80,7 +71,6 @@
   import { onMount } from 'svelte'
   import ListenToCollection from '$lib/Renderless/ListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
-  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import TranscriptPanel from '$lib/DoodleVideo/TranscriptPanel.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID } from '/src/helpers/utility.js'
@@ -91,7 +81,6 @@
 
   export let videoDoc
   export let overBoard = false
-  export let onHide = undefined
 
   const LOOK_KEY = 'transcriptOverlayLook'
 
@@ -196,10 +185,25 @@
     font-size: var(--fs-300);
   }
 
-  .panel-tabs {
+  .panel-switch {
     display: flex;
-    width: 100%;
-    align-items: stretch;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 6px;
+  }
+
+  .switch-btn {
+    border: 0;
+    background: transparent;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    color: rgb(120, 120, 120);
+    cursor: pointer;
+  }
+
+  .switch-btn.active {
+    color: black;
+    font-weight: 600;
   }
 
   .panel-body {
@@ -213,33 +217,9 @@
     display: none;
   }
 
-  .my-tab-item {
-    font-size: 0.8125rem;
-    border-bottom: 2px solid rgb(160, 160, 160);
-    padding: 8px 4px;
-    color: rgb(160, 160, 160);
-    flex-grow: 1;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .my-tab-item .material-symbols-outlined {
-    font-size: 18px;
-  }
-
-  .my-active-tab {
-    border-bottom: 2px solid black;
-    color: black;
-    font-weight: 600;
-  }
-
   .look-cycle {
     flex: 0 0 auto;
-    align-self: center;
-    margin: 0 6px 0 0;
+    margin-left: auto;
     min-width: 1.25rem;
     height: 1.25rem;
     padding: 0 4px;
@@ -257,14 +237,12 @@
     color: var(--panel-fg);
   }
 
-  .over-board .my-tab-item,
-  .over-board .my-active-tab {
-    border-bottom: 0;
+  .over-board .switch-btn {
     color: var(--panel-fg-muted);
     font-weight: 400;
   }
 
-  .over-board .my-active-tab {
+  .over-board .switch-btn.active {
     color: var(--panel-fg);
     font-weight: 600;
   }

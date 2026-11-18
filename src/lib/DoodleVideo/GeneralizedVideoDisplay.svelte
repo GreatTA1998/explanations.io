@@ -16,6 +16,8 @@
         timingOfSlideChanges={video.timingOfSlideChanges}
         showSlideChanger={!willHideSliderForPreview}
         propToDeleteVideo={propToDeleteVideo}
+        commentsOpen={commentsOpen}
+        onToggleComments={toggleComments}
         on:six-seconds-elapsed={(e) => incrementViewMinutes(e.detail.playbackSpeed)}
         on:deletion-request-received={() => propToDeleteVideo = false}
       >

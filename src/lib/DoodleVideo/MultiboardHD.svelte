@@ -17,11 +17,6 @@
     on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
     on:pointerdown={() => claimPlayback(playbackPathOf(boardDoc))}
   >
-    <div style="position: absolute; top: 8px; left: 8px; z-index: 6; display: flex; align-items: center;">
-      <BaseTransparentButton on:click={togglePlaySpeed} style="font-weight: 500;">
-        {playbackSpeed}x 
-      </BaseTransparentButton>
-    </div>
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
         <button on:click={startAudioPlayer}
@@ -59,19 +54,25 @@
         </ListenToDoc>
       {/each}
     </div>
-    <audio
-      src={audioDownloadURL}
-      bind:this={AudioPlayer}
-      data-playback-path={playbackPathOf(boardDoc)}
-      on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
-      on:play={() => { hasPlaybackStarted = true; isPlaying = true; startTimer(); publishClock(); }}
-      on:pause={() => { isPlaying = false; publishClock(); }}
-      on:seeking={() => { currentTime = AudioPlayer.currentTime; hasAudioSliderJumped = true; publishClock('seek') }}
-      on:timeupdate={() => publishClock()}
-      on:loadedmetadata={() => { applyQueuedSeek(); publishClock() }}
-      controls
-      style={`width: ${canvasWidth}px; height: 50px; position: absolute; left: 0; bottom: 0; z-index: 6;`}
-    ></audio>
+    <div class="playbar" style="width: {canvasWidth}px;">
+      <audio
+        src={audioDownloadURL}
+        bind:this={AudioPlayer}
+        data-playback-path={playbackPathOf(boardDoc)}
+        on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
+        on:play={() => { hasPlaybackStarted = true; isPlaying = true; startTimer(); publishClock(); }}
+        on:pause={() => { isPlaying = false; publishClock(); }}
+        on:seeking={() => { currentTime = AudioPlayer.currentTime; hasAudioSliderJumped = true; publishClock('seek') }}
+        on:timeupdate={() => publishClock()}
+        on:loadedmetadata={() => { applyQueuedSeek(); publishClock() }}
+        controls
+        disableRemotePlayback
+      ></audio>
+      <button type="button" class="speed-btn" on:click={togglePlaySpeed}>{playbackSpeed}x</button>
+      {#if onToggleComments}
+        <CommentsPanelButton open={commentsOpen} on:click={onToggleComments} />
+      {/if}
+    </div>
   </div>
 </div>
 
@@ -83,7 +84,7 @@
   import MultiboardSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
   import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
-  import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
+  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import { claimPlayback, playAudioFrom, playbackPathOf, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
 
@@ -97,6 +98,8 @@
 
   export let timingOfSlideChanges
   export let showSlideChanger
+  export let commentsOpen = false
+  export let onToggleComments = undefined
 
   const dispatch = createEventDispatcher()
   let intervalID = ''
@@ -229,8 +232,57 @@
 </script>
 
 <style>
-  audio::-webkit-media-controls-enclosure {
-    border-radius: 0;
+  .playbar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    box-sizing: border-box;
+    padding-right: 6px;
+    background: #2b2b2b;
+  }
+
+  .playbar audio {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+  }
+
+  audio::-webkit-media-controls-enclosure { border-radius: 0; }
+  audio::-webkit-media-controls-panel { background-color: #2b2b2b; }
+  audio::-webkit-media-controls-remote-playback-button { display: none !important; }
+
+  .speed-btn {
+    flex-shrink: 0;
+    height: 28px;
+    min-width: 2rem;
+    padding: 0 6px;
+    border: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .playbar :global(.my-round-button) {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    margin-left: 0;
+    border-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.9);
+    background: transparent;
+  }
+
+  .playbar :global(.my-round-button .icon) {
+    width: 16px;
+    height: 16px;
   }
 
   .overlay-center {

@@ -4,20 +4,20 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { DateTime } from 'luxon'
-  import List, { Item, Text } from '@smui/list'
-  import Menu from '@smui/menu'
-  import { lightDismiss } from '/src/helpers/lightDismiss.js'
+  import { getRandomID } from '/src/helpers/utility.js'
 
   export let question
   export let classID
 
-  let DropdownMenu
+  const menuId = `q-menu-${getRandomID()}`
+  const menuAnchor = `--q-anchor-${getRandomID()}`
 
   function handleQuestionClick() {
     goto(`/${classID}/question/${question.id}`)
   }
 
   function handleDeleteAttempt () {
+    document.getElementById(menuId)?.hidePopover()
     if (question.blackboardIDs.length > 0) {
       alert('Cannot delete this question until all its blackboards are moved/deleted first')
       return
@@ -28,43 +28,40 @@
   }
 
   function getDaysAgo (serverTimestamp) {
-    return DateTime.fromMillis(
-      serverTimestamp.toMillis()
-    ).toRelative()
+    return DateTime.fromMillis(serverTimestamp.toMillis()).toRelative()
   }
 </script>
 
-<button on:click={handleQuestionClick} 
-  class:selected={question.id === $page.params.questionID} 
+<button on:click={handleQuestionClick}
+  class:selected={question.id === $page.params.questionID}
   class="q-list-item"
-> 
+>
   <div style="display: flex; width: 100%;">
-    <div class="q-title my-truncated-text" class:red-urgent-text={!question.isAnswered}> 
+    <div class="q-title my-truncated-text" class:red-urgent-text={!question.isAnswered}>
       {question.title}
     </div>
-  
-    {#if question.askerUID === $user.uid || $adminUIDs.includes($user.uid)}
-      <span style="display: contents;" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
-        <span on:click={DropdownMenu.setOpen(true)} on:keydown class="material-icons" style="margin-right: 0px; margin-left: auto; color: white; font-size: 1.5rem;">
-          more_vert
-        </span>
 
-        <Menu bind:this={DropdownMenu} style="width: 300px">
-          <List>      
-            <Item on:SMUI:action={handleDeleteAttempt}>
-              Delete question
-            </Item>
-          </List> 
-        </Menu>
-      </span>
+    {#if question.askerUID === $user.uid || $adminUIDs.includes($user.uid)}
+      <button
+        type="button"
+        class="material-icons more"
+        style:anchor-name={menuAnchor}
+        popovertarget={menuId}
+        on:click|stopPropagation={() => {}}
+      >more_vert</button>
+      <div
+        popover="auto"
+        id={menuId}
+        class="q-menu"
+        style:position-anchor={menuAnchor}
+        style:position-area="block-end span-inline-end"
+        style:position-try-fallbacks="flip-block, flip-inline, flip-inline flip-block"
+      >
+        <button type="button" class="q-menu-row" on:click|stopPropagation={handleDeleteAttempt}>Delete question</button>
+      </div>
     {/if}
   </div>
 
-  <!-- <div class="q-description">
-    {question.description}
-  </div> -->
-
-  <!-- `serverTimestamp` sometimes needs a few seconds to hydrate after the doc is created -->
   {#if question.timestamp}
     <div class="q-asker">
       {question.askerName} asked {getDaysAgo(question.timestamp)}
@@ -76,54 +73,23 @@
 
 <style>
   .q-list-item {
-    width: 100%;
-    padding: 8px 8px; 
-
-    padding-right: 4px; /* because the truncation "..." on the right doesn't need as much padding as real letters on the left */
-
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    row-gap: 4px;
-    
-    text-align: left; 
+    width: 100%; padding: 8px 8px; padding-right: 4px; border-radius: 5px;
+    display: flex; flex-direction: column; row-gap: 4px; text-align: left;
   }
-
-  .q-list-item:hover {
-    background: lightgrey;
+  .q-list-item:hover { background: lightgrey; }
+  .q-title { font-size: var(--fs-400); font-weight: 400; color: black; flex-grow: 1; }
+  .q-asker { font-size: var(--fs-300); line-height: 16px; font-weight: 400; color: rgba(0, 0, 0, 0.6); }
+  .selected { background-color: #F7C686; transition: background 20ms ease-in 0s; color: black; }
+  .red-urgent-text { color: red; }
+  .more { margin-right: 0; margin-left: auto; color: white; font-size: 1.5rem; padding: 0; }
+  .q-menu {
+    margin: 0; inset: auto; margin-block-start: 4px; width: 300px; padding: 6px; border: none; border-radius: 12px;
+    background: white; box-shadow: 0 4px 8px rgba(0,0,0,.2), 0 6px 20px rgba(0,0,0,.19);
   }
-
-  .q-title {
-    font-size: var(--fs-400);
-    font-weight: 400;
-    color: black;
-
-    /* define an explicit width to enable text truncation */
-    /* width: 100%;  */
-    flex-grow: 1;
+  .q-menu:not(:popover-open) { display: none; }
+  .q-menu-row {
+    display: block; width: 100%; min-height: 40px; padding: 10px 12px; border-radius: 8px;
+    text-align: left; color: black; font-size: 14px;
   }
-
-  .q-description {
-    font-size: var(--fs-300);
-    color: rgb(120, 120, 120);
-    line-height: 1.2;
-  }
-
-  /* Copied from Firebase's section header */
-  .q-asker {
-    font-size: var(--fs-300);
-    line-height: 16px;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.6);
-  }
-
-  .selected {
-    background-color: #F7C686;
-    transition: background 20ms ease-in 0s;
-    color: black;
-  }
-
-  .red-urgent-text {
-    color: red;
-  }
+  .q-menu-row:hover { background: rgba(0, 0, 0, 0.06); }
 </style>

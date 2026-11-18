@@ -25,13 +25,8 @@ export const willPreventPageLeave = writable(false)
 export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2', 'p3tOuo1fkUYTgDhNnpjfCh403ZH3']) // for some reason I have 2 accounts with eltonlin1998@gmail.com
 
 export const drawerWidth = writable(WIDTHS.DRAWER_EXPANDED)
-
-// Hides the whole sidebar (nav cluster and room list) until the floating exit control is pressed.
 export const sidebarFullscreen = writable(false)
-
-// Left-drawer peer nav under the server bar: rooms (default) | forum.
 export const drawerNavTab = writable('rooms')
-// Client-only name filter for the rooms / forum lists (no network).
 export const drawerNameQuery = writable('')
 
 export const whatIsBeingDragged = writable('')
@@ -44,8 +39,6 @@ export const recentSearchedServerDoc = writable({})
 export const blackboardWidth = writable(0)
 export const videoPreviewWidth = writable(0)
 export const videoCinemaWidth = writable(0)
-
-export const videoCinemaLayout = writable('')
 
 export const isFullServerMode = writable(false)
 export const didRenderSplashScreen = writable(false)

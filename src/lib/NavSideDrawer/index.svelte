@@ -1,95 +1,97 @@
-<svelte:window on:click|capture={onWindowClick} on:keydown={onWindowKey} />
-
 <div class="nav-cluster" class:floating>
   <section class="nav-panel" aria-label="Server navigation">
     <div class="server-row">
-      <AnchoredPopover bind:this={actionsPopover} positionArea="block-end span-inline-end" on:toggle={onActionsToggle} let:close>
-        <button
-          slot="activator" let:popoverId let:anchorName type="button" class="logo-button"
-          aria-label="Open app menu" aria-haspopup="menu" aria-expanded={actionsOpen}
-          aria-controls={popoverId || undefined} popovertarget={popoverId || undefined}
-          style={anchorName ? `anchor-name: ${anchorName}` : undefined}
-        >
-          <img src="/app-logo-no-bg.png" width="36" height="33" alt="">
-        </button>
-        <div class="server-actions" role="menu" use:dismissOnClick={close}>
+      <button
+        type="button" class="logo-button" aria-label="Open app menu" aria-haspopup="menu"
+        style:anchor-name={logoAnchor} popovertarget={logoMenuId}
+      >
+        <img src="/app-logo-no-bg.png" width="36" height="33" alt="">
+      </button>
+      <div popover="auto" id={logoMenuId} class="anchored-menu" style:position-anchor={logoAnchor}
+        style:position-area="block-end span-inline-end" style:position-try-fallbacks="flip-block, flip-inline, flip-inline flip-block"
+        on:toggle={(e) => { if (e.newState === 'open') closeServerMenu() }}
+      >
+        <div class="server-actions" role="menu" on:click={hideLogoMenu}>
           <a class="menu-row" role="menuitem" href="/">Home</a>
           {#if $user.uid}
             <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>Log out</button>
           {:else}
-            <div class="menu-row sign-in"><ReusableSignInButton /></div>
+            <div class="menu-row"><ReusableSignInButton /></div>
           {/if}
           <a class="menu-row" role="menuitem" href="https://github.com/greatTA1998/explain" target="_blank" rel="noreferrer">
             <img src="/github-logo-dark-mode-no-bg.png" width="24" height="24" alt="Github"> GitHub
           </a>
         </div>
-      </AnchoredPopover>
+      </div>
 
       <div class="server-anchor">
         <button
-          type="button" class="server-name" bind:this={serverNameEl}
-          aria-haspopup="true" aria-expanded={menuOpen} aria-controls="server-switch-menu"
-          title={currentServerName} on:click={toggleServerMenu}
+          type="button" class="server-name"
+          style:anchor-name={serverAnchor} popovertarget={serverMenuId}
+          aria-haspopup="true" title={currentServerName}
+          on:click={closeOtherMenus}
         >
           <span class="server-name-label">{currentServerName}</span>
           <span class="server-name-caret" aria-hidden="true"></span>
         </button>
 
-        {#if menuOpen}
-          <button type="button" class="server-menu-scrim" aria-label="Dismiss server menu" on:click={closeServerMenu}></button>
-          <div
-            class="server-menu" class:full-width={menuFullWidth} id="server-switch-menu"
-            style="top: {menuTop}px; left: {menuLeft}px; width: {menuWidth}px; --menu-top: {menuTop}px;"
-          >
-            <div class="search-slot">
-              <span class="material-icons search-icon" aria-hidden="true">search</span>
-              <input type="search" name="search" maxlength="100" aria-label="Find server" autocomplete="off" bind:value={searchVal}>
-            </div>
-            <div class="server-list" class:split={menuSplit}>
-              <div class="server-grid">
-                {#each previewServers as server (server.id)}
-                  <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
-                {/each}
-                <button type="button" class="create-server" on:click={openCreateServer}>Create new server</button>
-              </div>
-              {#if listServers.length}
-                <div class="server-name-list" role="list">
-                  {#each listServers as server (server.id)}
-                    <button type="button" role="listitem" class="server-list-row server-pick" on:click|stopPropagation={() => pickServer(server)}>
-                      {server.name || 'Untitled server'}
-                    </button>
-                  {/each}
-                </div>
-              {/if}
-            </div>
+        <div
+          popover="auto" id={serverMenuId} class="server-menu" class:split={menuSplit}
+          style:position-anchor={serverAnchor}
+          style:position-area="block-end span-inline-start"
+          style:position-try-fallbacks="flip-inline, flip-block, flip-inline flip-block"
+          on:toggle={(e) => { if (e.newState !== 'open') searchVal = '' }}
+        >
+          <div class="search-slot">
+            <span class="material-icons search-icon" aria-hidden="true">search</span>
+            <input type="search" name="search" maxlength="100" aria-label="Find server" autocomplete="off" bind:value={searchVal}>
           </div>
-        {/if}
+          <div class="server-list" class:split={menuSplit}>
+            <div class="server-grid">
+              {#each previewServers as server (server.id)}
+                <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
+              {/each}
+              <button type="button" class="create-server" on:click={openCreateServer}>Create new server</button>
+            </div>
+            {#if listServers.length}
+              <div class="server-name-list" role="list">
+                {#each listServers as server (server.id)}
+                  <button type="button" role="listitem" class="server-list-row" on:click={() => pickServer(server)}>
+                    {server.name || 'Untitled server'}
+                  </button>
+                {/each}
+              </div>
+            {/if}
+          </div>
+        </div>
       </div>
     </div>
 
     {#if !floating}
       <SubNavTabs tabs={drawerTabs} value={$drawerNavTab} ariaLabel="Server sections" on:change={(e) => drawerNavTab.set(e.detail)}>
-        <AnchoredPopover bind:this={settingsPopover} positionArea="block-end span-inline-end" on:toggle={onSettingsToggle} let:close={closeSettings}>
+        <button
+          type="button" class="settings-button" aria-label="Open settings" aria-haspopup="true"
+          style:anchor-name={settingsAnchor} popovertarget={settingsMenuId}
+          on:click={closeServerMenu}
+        >
+          <span class="material-icons" aria-hidden="true">settings</span>
+        </button>
+        <div
+          popover="auto" id={settingsMenuId} class="anchored-menu settings-menu"
+          style:position-anchor={settingsAnchor}
+          style:position-area="block-end span-inline-end"
+          style:position-try-fallbacks="flip-block, flip-inline, flip-inline flip-block"
+        >
           <button
-            slot="activator" let:popoverId let:anchorName type="button" class="settings-button"
-            aria-label="Open settings" aria-haspopup="true" aria-expanded={settingsOpen}
-            aria-controls={popoverId || undefined} popovertarget={popoverId || undefined}
-            style={anchorName ? `anchor-name: ${anchorName}` : undefined}
+            type="button" class="privacy-toggle" role="switch" aria-checked={isPrivate} aria-label="Private server"
+            disabled={savingVisibility || !canTogglePrivacy} on:click|stopPropagation={setServerVisibility}
           >
-            <span class="material-icons" aria-hidden="true">settings</span>
+            <span>Private</span>
+            <span class="switch-track" class:on={isPrivate} aria-hidden="true"><span class="switch-thumb"></span></span>
           </button>
-          <div class="settings-menu" use:dismissOnClick={closeSettings}>
-            <button
-              type="button" class="privacy-toggle" role="switch" aria-checked={isPrivate} aria-label="Private server"
-              disabled={savingVisibility || !canTogglePrivacy} on:click|stopPropagation={setServerVisibility}
-            >
-              <span>Private</span>
-              <span class="switch-track" class:on={isPrivate} aria-hidden="true"><span class="switch-thumb"></span></span>
-            </button>
-          </div>
-        </AnchoredPopover>
+        </div>
         <button type="button" class="hide-drawer-button" aria-label="Hide drawer" title="Hide drawer" on:click={() => sidebarFullscreen.set(true)}>
-          <HandDrawnDrawerArrow pointing="left" />
+          <span class="hand-arrow left" aria-hidden="true"></span>
         </button>
       </SubNavTabs>
 
@@ -133,41 +135,38 @@
 <PopupNewServer bind:this={newServerPopup} showTrigger={false} />
 
 <script>
-  import HandDrawnDrawerArrow from './HandDrawnDrawerArrow.svelte'
   import QuestionsSection from './QuestionsSection.svelte'
   import RecursiveRoom from './RecursiveRoom.svelte'
   import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
-  import { ancestorIdsForRoom, sameIdSet } from './roomAncestors.js'
   import CompactServerCard from '$lib/TheTopNavbar/CompactServerCard.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
-  import AnchoredPopover from '$lib/Reusable/AnchoredPopover.svelte'
   import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
   import SubNavTabs from '$lib/Reusable/SubNavTabs.svelte'
   import { fuzzyFilter } from '/src/helpers/fuzzyName.js'
   import { getFirestoreCollection, createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user, classServerDoc, recentSearchedServerDoc, sidebarFullscreen, drawerNavTab, drawerNameQuery } from '/src/store.js'
-  import { viewport } from '/src/storeFolder/viewport.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
-  import { partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, menuPlateLayout, viewerCanTogglePrivacy } from './serverMenu.js'
+  import { partitionServersForMenu, serverIsPublic, viewerCanTogglePrivacy } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
+  import { getRandomID } from '/src/helpers/utility.js'
   import { onDestroy } from 'svelte'
 
   const drawerTabs = [{ id: 'rooms', label: 'rooms' }, { id: 'forum', label: 'forum' }]
+  const uid = getRandomID()
+  const logoMenuId = `logo-menu-${uid}`
+  const serverMenuId = `server-menu-${uid}`
+  const settingsMenuId = `settings-menu-${uid}`
+  const logoAnchor = `--logo-${uid}`
+  const serverAnchor = `--server-${uid}`
+  const settingsAnchor = `--settings-${uid}`
+
   export let floating = false
 
-  function dismissOnClick (node, closeMenu) {
-    const onClick = () => closeMenu?.()
-    node.addEventListener('click', onClick)
-    return { update (next) { closeMenu = next }, destroy () { node.removeEventListener('click', onClick) } }
-  }
-
-  let menuOpen = false, actionsOpen = false, settingsOpen = false
-  let actionsPopover, settingsPopover, savingVisibility = false, searchVal = ''
-  let allServers = [], creating = false, newServerPopup, serverNameEl
-  let menuTop = 0, menuLeft = 0
+  let savingVisibility = false, searchVal = ''
+  let allServers = [], creating = false, newServerPopup
   let classDoc = null, unsubFuncs = [], rooms = [], lastClassID = ''
   let ancestorRoomIds = new Set()
 
@@ -177,11 +176,7 @@
   $: menuSplit = listServers.length > 0
   $: isPrivate = !serverIsPublic($classServerDoc)
   $: canTogglePrivacy = viewerCanTogglePrivacy($classServerDoc, $user.uid)
-  $: menuOffset = serverNameLeft(floating)
-  $: columnCount = menuColumnCount($viewport.width, previewServers.length + 1, menuOffset, menuSplit)
-  $: ({ width: menuWidth, fullWidth: menuFullWidth } = menuPlateLayout($viewport.width, columnCount, menuOffset, menuSplit))
   $: currentServerName = nameForCurrentServer(classID, allServers, $classServerDoc, $recentSearchedServerDoc)
-  $: if (menuOpen) placeMenu($viewport.width, columnCount, menuSplit)
   $: if (!floating && classID) initializeRooms()
   $: if (!floating && classID && classID !== lastClassID) {
     lastClassID = classID; drawerNavTab.set('rooms'); drawerNameQuery.set('')
@@ -197,30 +192,38 @@
   getFirestoreCollection('classes').then(docs => { allServers = docs })
   onDestroy(unsubDbListeners)
 
+  function ancestorIdsForRoom (roomList, roomId) {
+    const ancestors = new Set()
+    if (!roomId || !roomList?.length) return ancestors
+    const byId = new Map(roomList.map(room => [room.id, room]))
+    let current = byId.get(roomId)
+    while (current?.parentRoomID) {
+      if (ancestors.has(current.parentRoomID)) break
+      ancestors.add(current.parentRoomID)
+      current = byId.get(current.parentRoomID)
+    }
+    return ancestors
+  }
+
+  function sameIdSet (a, b) {
+    if (a === b) return true
+    if (!a || !b || a.size !== b.size) return false
+    for (const id of a) if (!b.has(id)) return false
+    return true
+  }
+
   function nameForCurrentServer (classId, servers, classDoc, recent) {
     return servers.find(s => s.id === classId)?.name || (classId && classDoc?.name) || recent?.name || 'Find server'
   }
 
-  function placeMenu () {
-    if (!serverNameEl?.getBoundingClientRect) return
-    const rect = serverNameEl.getBoundingClientRect()
-    menuTop = rect.bottom + 4
-    menuLeft = menuPlateLayout($viewport.width, columnCount, rect.left, menuSplit).left
+  function hidePopover (id) {
+    const el = typeof document !== 'undefined' ? document.getElementById(id) : null
+    if (el?.matches?.(':popover-open')) el.hidePopover()
   }
 
-  function closeServerMenu () { menuOpen = false; searchVal = '' }
-
-  function toggleServerMenu () {
-    actionsPopover?.close(); settingsPopover?.close()
-    menuOpen = !menuOpen
-    if (menuOpen) requestAnimationFrame(placeMenu)
-    else searchVal = ''
-  }
-
-  function onWindowClick (event) {
-    if (!menuOpen || event.target.closest('.server-card, .server-pick, .create-server, #server-switch-menu, .server-name')) return
-    closeServerMenu()
-  }
+  function closeServerMenu () { hidePopover(serverMenuId); searchVal = '' }
+  function hideLogoMenu () { hidePopover(logoMenuId) }
+  function closeOtherMenus () { hidePopover(logoMenuId); hidePopover(settingsMenuId) }
 
   async function pickServer (server) {
     const path = homepageServerPath(server)
@@ -228,17 +231,6 @@
     if (path) await goto(path)
     closeServerMenu()
   }
-
-  function onWindowKey (event) { if (event.key === 'Escape' && menuOpen) closeServerMenu() }
-
-  function popoverOpened (event, setOpen, closeOther) {
-    const open = event.newState === 'open'
-    setOpen(open)
-    if (open) { closeServerMenu(); closeOther?.close() }
-  }
-
-  function onActionsToggle (e) { popoverOpened(e, v => { actionsOpen = v }, settingsPopover) }
-  function onSettingsToggle (e) { popoverOpened(e, v => { settingsOpen = v }, actionsPopover) }
 
   function handleSignout () {
     signOut(getAuth()).then(() => { window.location.reload() })
@@ -258,7 +250,7 @@
     } finally { savingVisibility = false }
   }
 
-  function openCreateServer () { newServerPopup?.openPopup() }
+  function openCreateServer () { closeServerMenu(); newServerPopup?.openPopup() }
 
   async function createNew () {
     if (creating) return
@@ -311,13 +303,18 @@
   .name-filter .material-icons { font-size: 1.4rem; }
   .name-filter input, .search-slot input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: black; }
   .name-filter input { font-size: 13px; }
-  .search-slot { position: relative; width: 240px; }
+  .search-slot { width: min(240px, 100%); }
   .search-slot .search-icon { font-size: 22px; }
   .search-slot input { font-size: 1rem; }
   .new-pill { display: flex; flex: 0 0 auto; align-items: center; gap: 4px; height: 36px; padding: 4px 12px; border-radius: 24px; background-color: #f1e8f3; color: black; font-size: 13px; white-space: nowrap; }
   .new-pill .material-symbols-outlined { font-size: 1.4rem; }
   .settings-button, .hide-drawer-button { width: 32px; height: 32px; margin-left: 4px; color: rgb(80, 80, 80); }
   .settings-button .material-icons { font-size: 20px; }
+  .anchored-menu {
+    margin: 0; inset: auto; margin-block-start: 4px; padding: 6px; border: none; border-radius: 12px; background: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .anchored-menu:not(:popover-open) { display: none; }
   .settings-menu { min-width: 180px; padding: 6px 8px; }
   .privacy-toggle, .menu-row { display: flex; align-items: center; width: 100%; min-height: 36px; padding: 8px 10px; border-radius: 8px; text-align: left; color: black; font-size: 14px; font-weight: 500; }
   .privacy-toggle { justify-content: space-between; gap: 8px; }
@@ -328,8 +325,13 @@
   .switch-thumb { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: white; transition: transform 0.15s ease; }
   .switch-track.on .switch-thumb { transform: translateX(16px); }
   .server-actions { display: flex; flex-direction: column; min-width: 232px; text-align: left; }
-  .server-menu-scrim { position: fixed; inset: 0; z-index: 39; margin: 0; padding: 0; border: 0; border-radius: 0; background: rgba(0, 0, 0, 0.28); }
-  .server-menu { position: fixed; z-index: 40; background: var(--bg-off-white); padding: 12px; border-radius: 12px; }
+  .server-menu {
+    margin: 0; inset: auto; margin-block-start: 4px; z-index: 40; width: min(calc(100vw - 24px), max-content);
+    max-width: calc(100vw - 24px); background: var(--bg-off-white); padding: 12px; border: none; border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .server-menu:not(:popover-open) { display: none; }
+  .server-menu::backdrop { background: rgba(0, 0, 0, 0.28); }
   .server-list { max-height: 70vh; overflow: auto; padding: 8px 0 0; scrollbar-width: none; -ms-overflow-style: none; }
   .server-list.split { display: flex; flex-direction: row; gap: 8px; align-items: flex-start; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
@@ -338,7 +340,5 @@
   .server-name-list { display: flex; flex-wrap: wrap; gap: 4px 8px; align-content: flex-start; }
   .server-list-row { display: block; width: auto; max-width: 100%; min-height: 40px; padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92); color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
   .server-list-row:hover { background: rgba(255, 255, 255, 1); }
-  .create-server { display: flex; align-items: center; width: 240px; min-height: 44px; text-align: left; padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.88); color: #5d0068; font-weight: 500; }
-  .server-menu.full-width .search-slot, .server-menu.full-width .server-list:not(.split) .create-server { width: 100%; }
-  .server-menu.full-width .server-list { max-height: calc(100vh - var(--menu-top, 72px) - 16px); }
+  .create-server { display: flex; align-items: center; width: 240px; max-width: 100%; min-height: 44px; text-align: left; padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.88); color: #5d0068; font-weight: 500; }
 </style>

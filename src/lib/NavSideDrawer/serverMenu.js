@@ -3,11 +3,6 @@ const FEATURED_VIDEO_FIELDS = ['featuredVideoID', 'featuredVideo']
 const FIRESTORE_ID = /^[A-Za-z0-9]{20}$/
 
 export const CARD_WIDTH = 240
-export const CARD_GAP = 8
-
-export function serverNameLeft (floating = false) {
-  return (floating ? 8 : 0) + 8 + 36 + 4
-}
 
 const present = (v) => typeof v === 'string' ? v.trim().length > 0 : v != null && v !== false
 export const isFirestoreID = (v) => typeof v === 'string' && FIRESTORE_ID.test(v)
@@ -72,21 +67,4 @@ export function partitionServersForMenu (servers, query, viewerUID = '') {
     (hasDesignatedPreview(server) ? previewServers : listServers).push(server)
   }
   return { previewServers, listServers }
-}
-
-export function menuColumnCount (viewportWidth, itemCount, leftOffset = 0, split = false) {
-  const available = Math.max(CARD_WIDTH, (viewportWidth || 0) - leftOffset - 48)
-  const section = split ? Math.max(CARD_WIDTH, Math.floor((available - CARD_GAP) / 2)) : available
-  return Math.min(Math.max(1, Math.floor((section + CARD_GAP) / (CARD_WIDTH + CARD_GAP))), Math.max(itemCount || 0, 1))
-}
-
-export function menuPlateLayout (viewportWidth, columnCount, anchorLeft = 0, split = false) {
-  const vw = Math.max(viewportWidth || 0, 0)
-  const cols = Math.max(columnCount || 1, 1)
-  const section = cols * CARD_WIDTH + Math.max(cols - 1, 0) * CARD_GAP
-  const natural = (split ? 2 * section + CARD_GAP : section) + 24
-  if (menuColumnCount(vw, 2, 0) < 2 || (split && natural > vw - 24)) {
-    return { fullWidth: true, width: Math.max(CARD_WIDTH + 24, vw - 24), left: 12 }
-  }
-  return { fullWidth: false, width: natural, left: Math.min(Math.max(anchorLeft, 12), Math.max(12, vw - 12 - natural)) }
 }

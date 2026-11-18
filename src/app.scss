@@ -83,7 +83,7 @@ button {
 	box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08)
 }
 
-/* Overlay look 1 (Twitch scrim: fill only, no blur). H/A sliders set --look-hue / --look-opacity. */
+/* Overlay look 1 (Twitch scrim: fill only, no blur). Default opacity ~0.5. */
 .glass-surface {
 	--panel-bg: hsla(var(--look-hue, 0), 8%, 11%, var(--look-opacity, 0.5));
 	--panel-fg: #fff;
@@ -178,3 +178,12 @@ audio::-webkit-media-controls-panel {
 	width: auto !important;
 	position: static !important;
 }
+.hand-arrow {
+	display: block;
+	width: 10px;
+	height: 10px;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: rotate(-45deg);
+}
+.hand-arrow.left { transform: rotate(135deg); }

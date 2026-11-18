@@ -27,9 +27,3 @@ export function homepageServerPath (server) {
   }
   return `/${serverID}/overview`
 }
-
-export function loadErrorAlert (error) {
-  const code = error && error.code ? String(error.code) : ''
-  const message = error && error.message ? String(error.message) : ''
-  return `Error code & message, see console for details = ${[code, message].filter(Boolean).join(' ')}`
-}

@@ -3,8 +3,8 @@
     <slot slot="video" {toggleComments} {commentsOpen} {canvasWidth} {canvasHeight}>
     </slot>
 
-    <div slot="comments-section" let:overBoard>
-      <CommentsColumn videoDoc={boardDoc} {overBoard} />
+    <div slot="comments-section">
+      <CommentsColumn videoDoc={boardDoc} />
     </div>
   </DynamicLayout>
 </div>
@@ -28,7 +28,5 @@
 </script>
 
 <style>
-  .player {
-    position: relative;
-  }
+  .player { position: relative; }
 </style>

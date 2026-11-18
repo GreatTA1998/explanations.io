@@ -113,7 +113,6 @@
     flex: 0 0 auto;
   }
 
-  /* Top-right of .board-surface (boardInset skips slide-changer chrome). */
   .board-float {
     position: absolute;
     right: 12px;

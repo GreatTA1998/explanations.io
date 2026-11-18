@@ -72,8 +72,6 @@
   $: path = playbackPathOf(videoDoc)
   $: segments = readCachedTranscript(videoDoc) || []
   $: problem = readTranscriptProblem(videoDoc, $transcriptProblems)
-  // Pass the audio duration so a text-only cue saved as 0–0 still maps onto
-  // the recording. Seek-bar and playback currentTime then pick the right word.
   $: documentModel = buildTranscriptDocument(segments, duration)
   $: words = documentModel.words
   $: paragraphs = documentModel.paragraphs
@@ -96,7 +94,6 @@
       if (snapshot.playing === true) {
         playing = true
         playFromPointer = false
-        // Playback owns the caret again, including while the pointer rests.
         if (hoveredWordId != null) {
           hoveredWordId = null
           clearTimeout(pointerHold)
@@ -107,20 +104,12 @@
       }
       const next = snapshot.time
       if (!Number.isFinite(next)) return
-      // The element can publish 0 while a seek to the pressed word is still
-      // pending. Accepting that sample scrolls back to the first word, and a
-      // hover there seeks playback to the start.
       if (playFromPointer && snapshot.playing !== true && next + 0.35 < time) return
-      // While the pointer is choosing a word, the pointer owns the playhead.
       if (hoveredWordId != null) {
         playback.shown = time
         pending = null
         return
       }
-      // A seek (scrub, or a click in this transcript) may jump backward.
-      // A single backward tick may not: this recording's clock was published
-      // twice and a bad sample pulled the row highlight back to an earlier cue.
-      // Seek-bar drags publish reason "seek" so the orange caret tracks them.
       if (snapshot.reason === 'seek' || playback.shown == null || next + 0.35 >= playback.shown) {
         playback.shown = next
         pending = null
@@ -160,7 +149,6 @@
   function revealCurrent(word) {
     if (!word || word.id === revealedId) return
     revealedId = word.id
-    // Scrolling under the pointer moves the paragraph away from it.
     if (hoveredWordId != null || typeof requestAnimationFrame !== 'function') return
     requestAnimationFrame(() => {
       if (hoveredWordId != null) return
@@ -200,9 +188,6 @@
     if (!playPlayback(path, at)) playFromPointer = false
   }
 
-  // The audio slider seeks by assigning currentTime while the thumb moves.
-  // Several assignments in one turn collapse into a single seek at the last
-  // time, so the drawing jumps once. One assignment per frame stays visible.
   function scrubTo(at) {
     time = at
     playback.shown = at
@@ -237,8 +222,6 @@
     seekPlayback(path, next)
   }
 
-  // Hover seeks a paused video even when the transcript is not focused.
-  // While the video is playing, the pointer leaves the playhead alone.
   function hoverWord(word, event) {
     if (playFromPointer) return
     if (!hoverSeeksPlayback({
@@ -248,8 +231,6 @@
     })) return
     hoveredWordId = word.id
     scrubTo(timeInWord(word, event))
-    // The pointer owns the playhead while it is moving. Once it rests, playback
-    // time can move the caret again instead of leaving it stuck on that word.
     clearTimeout(pointerHold)
     pointerHold = setTimeout(() => {
       if (hoveredWordId === word.id) hoveredWordId = null
@@ -260,9 +241,6 @@
     if (hoveredWordId !== word.id) return
     hoveredWordId = null
     clearTimeout(pointerHold)
-    // play() reports itself on a later task. Clearing the press here lets the
-    // word now under the pointer seek, and playback starts there instead of
-    // on the pressed word.
     if (playFromPointer) {
       cancelScrub()
       return

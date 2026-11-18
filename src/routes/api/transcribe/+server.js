@@ -50,8 +50,6 @@ export async function POST({ request }) {
   }
 
   const board = await readBoard(path, token)
-  // Whisper fetches audioDownloadURL — require exact match to the board's stored URL
-  // so a creator cannot pair their path/audioKey with another board's Storage URL.
   if (!board || board.creatorUID !== uid || board.audioDownloadURL !== audioDownloadURL) {
     return json(403, { error: MESSAGES.failed })
   }

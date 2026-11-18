@@ -78,49 +78,35 @@
     onAuthStateChanged(auth, reactToUserChange)
     createSessionRecording()
     window.addEventListener('scroll', handleOnScroll)
-    document.addEventListener('wheel', onChromeDelta, { passive: true, capture: true })
-    document.addEventListener('touchstart', onChromeTouchStart, { passive: true, capture: true })
-    document.addEventListener('touchmove', onChromeTouchMove, { passive: true, capture: true })
+    const opts = { passive: true, capture: true }
+    const onWheel = (e) => applyChromeDelta(e.deltaY || 0)
+    const onTouchStart = (e) => { touchY = e.touches[0]?.clientY ?? null }
+    const onTouchMove = (e) => {
+      const y = e.touches[0]?.clientY
+      if (touchY == null || y == null) return
+      applyChromeDelta(touchY - y)
+      touchY = y
+    }
+    document.addEventListener('wheel', onWheel, opts)
+    document.addEventListener('touchstart', onTouchStart, opts)
+    document.addEventListener('touchmove', onTouchMove, opts)
     return () => {
-      document.removeEventListener('wheel', onChromeDelta, true)
-      document.removeEventListener('touchstart', onChromeTouchStart, true)
-      document.removeEventListener('touchmove', onChromeTouchMove, true)
+      document.removeEventListener('wheel', onWheel, true)
+      document.removeEventListener('touchstart', onTouchStart, true)
+      document.removeEventListener('touchmove', onTouchMove, true)
     }
   })
 
-  function handleOnScroll () {
-    if (window.scrollY >= window.innerHeight - 120) isFullServerMode.set(true)
-  }
-
+  const handleOnScroll = () => { if (window.scrollY >= window.innerHeight - 120) isFullServerMode.set(true) }
   function applyChromeDelta (dy) {
     if (!$sidebarFullscreen) return
     if (dy > 8) drawerChromeHidden = true
     else if (dy < -8) drawerChromeHidden = false
   }
-
-  function onChromeDelta (event) { applyChromeDelta(event.deltaY || 0) }
-  function onChromeTouchStart (event) { touchY = event.touches[0]?.clientY ?? null }
-  function onChromeTouchMove (event) {
-    const y = event.touches[0]?.clientY
-    if (touchY == null || y == null) return
-    applyChromeDelta(touchY - y)
-    touchY = y
-  }
-
-  function restoreDrawerOnEscape (event) {
-    if (event.key === 'Escape' && $sidebarFullscreen) {
-      sidebarFullscreen.set(false)
-    }
-  }
-
-  function createSessionRecording () {
-    posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7',
-      {
-        api_host: 'https://us.i.posthog.com',
-        person_profiles: 'always' // or 'always' to create profiles for anonymous users as well
-      }
-    )
-  }
+  const restoreDrawerOnEscape = (e) => { if (e.key === 'Escape' && $sidebarFullscreen) sidebarFullscreen.set(false) }
+  const createSessionRecording = () => posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7', {
+    api_host: 'https://us.i.posthog.com', person_profiles: 'always'
+  })
 
   async function reactToUserChange (resultUser) {
     if (resultUser) {
@@ -297,29 +283,12 @@
 
 <style>
   .show-drawer-toggle {
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    border-radius: 24px;
-    border: 1px solid lightgrey;
-    background: white;
-    color: black;
-    font-size: 16px;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    position: fixed; top: 12px; left: 12px; z-index: 40;
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; padding: 0; border-radius: 24px;
+    border: 1px solid lightgrey; background: white; color: black;
+    font-size: 16px; font-weight: 500; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
     transition: opacity 0.2s ease, transform 0.2s ease;
   }
-
-  .show-drawer-toggle.chrome-hidden {
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-  }
+  .show-drawer-toggle.chrome-hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
 </style>

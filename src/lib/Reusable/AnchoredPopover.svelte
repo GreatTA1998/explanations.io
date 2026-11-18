@@ -16,22 +16,14 @@
   import { getRandomID } from '/src/helpers/utility.js'
 
   export let positionArea = 'block-end span-inline-end'
-
-  let popoverEl
-  let popoverId = ''
+  let popoverEl, popoverId = ''
 
   function rememberPopover (node) {
     popoverEl = node
-    return {
-      destroy () {
-        popoverEl = null
-      }
-    }
+    return { destroy () { popoverEl = null } }
   }
 
-  onMount(() => {
-    popoverId = `popover-${getRandomID()}`
-  })
+  onMount(() => { popoverId = `popover-${getRandomID()}` })
 
   $: anchorName = popoverId ? `--anchor-${popoverId}` : ''
   $: anchorStyle = anchorName
@@ -46,22 +38,11 @@
 
 <style>
   .anchored-popover {
-    background: white;
-    border: none;
-    border-radius: 12px;
-    padding: 6px;
+    background: white; border: none; border-radius: 12px; padding: 6px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
-
-  .anchored-popover:not(:popover-open) {
-    display: none;
-  }
-
+  .anchored-popover:not(:popover-open) { display: none; }
   @supports (position-area: block-end) {
-    .anchored-popover {
-      margin: 0;
-      inset: auto;
-      margin-block-start: 4px;
-    }
+    .anchored-popover { margin: 0; inset: auto; margin-block-start: 4px; }
   }
 </style>

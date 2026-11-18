@@ -1,58 +1,37 @@
 
 export function lightDismiss (node, options) {
   let current = options
-
-  function settings () {
-    if (typeof current === 'function') return { close: current }
-    return current || {}
-  }
-
-  function menuSurface () {
-    if (node.classList.contains('mdc-menu-surface')) return node
-    return node.querySelector('.mdc-menu-surface')
-  }
-
-  function isOpen () {
+  const settings = () => typeof current === 'function' ? { close: current } : (current || {})
+  const menuSurface = () => node.classList.contains('mdc-menu-surface')
+    ? node
+    : node.querySelector('.mdc-menu-surface')
+  const isOpen = () => {
     const { always } = settings()
     if (always) return true
     const surface = menuSurface()
     return !!surface && surface.classList.contains('mdc-menu-surface--open')
   }
-
-  function targetElement (event) {
+  const targetElement = (event) => {
     const target = event.target
-    if (target instanceof Element) return target
-    return target && target.parentElement
+    return target instanceof Element ? target : target && target.parentElement
   }
-
   function onPointer (event) {
     const { close, ignore } = settings()
     if (!close || !isOpen()) return
     const element = targetElement(event)
-    if (!element) return
-    if (node.contains(element)) return
-    if (ignore && element.closest(ignore)) return
+    if (!element || node.contains(element) || (ignore && element.closest(ignore))) return
     close()
-    if (element.closest('canvas')) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
+    if (element.closest('canvas')) { event.preventDefault(); event.stopPropagation() }
   }
-
   function onKey (event) {
     const { close } = settings()
-    if (event.key !== 'Escape' || !close || !isOpen()) return
-    close()
+    if (event.key === 'Escape' && close && isOpen()) close()
   }
-
   const types = ['pointerdown', 'mousedown', 'touchstart']
   for (const type of types) document.addEventListener(type, onPointer, true)
   document.addEventListener('keydown', onKey)
-
   return {
-    update (next) {
-      current = next
-    },
+    update (next) { current = next },
     destroy () {
       for (const type of types) document.removeEventListener(type, onPointer, true)
       document.removeEventListener('keydown', onKey)

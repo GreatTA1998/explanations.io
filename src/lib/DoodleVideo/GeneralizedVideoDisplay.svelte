@@ -2,6 +2,7 @@
   <FullscreenModule 
     boardDoc={video} 
     previewWidth={videoWidth}
+    {forceCommentsClosed}
     let:toggleComments={toggleComments}
     let:commentsOpen={commentsOpen}
     let:canvasWidth={canvasWidth}
@@ -79,6 +80,7 @@
   export let willHideSliderForPreview = false
   export let showEditDeleteButtons = false
   export let classID
+  export let forceCommentsClosed = false
 
   let propToDeleteVideo = false
 

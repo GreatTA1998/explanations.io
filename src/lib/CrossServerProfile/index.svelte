@@ -21,7 +21,7 @@
             Recent videos
           </button>  
 
-          {#each teachingServers as server}
+          {#each teachingServers as server (server.id)}
             <button on:click={() => currentServerID = server.id} 
               class="ux-filter-chip" class:highlighted-chip={currentServerID === server.id}
             >
@@ -39,20 +39,23 @@
 
   <div style="margin-top: 36px"></div>
 
-  {#if allVideos && videoWidth}
-    <div class="alternative-flexbox">
+  {#if allVideos}
+    <div class="video-grid" bind:clientWidth={gridWidth}>
       {#each allVideos as video (video.id)}
-        <div style="align-self: end;">
-          <div class="youtube-video-title limit-to-three-lines" style="width: {videoWidth}px; margin-bottom: 0.2vw;">
+        <div>
+          <div class="youtube-video-title limit-to-three-lines">
             {video.description}
           </div>
 
-          <GeneralizedVideoDisplay
-            {video} 
-            {videoWidth}
-            classID={quickfixClassIDFrom(video)}
-            willDisplayCreatorCard={false}
-          />
+          {#if videoWidth}
+            <GeneralizedVideoDisplay
+              {video} 
+              {videoWidth}
+              forceCommentsClosed={true}
+              classID={quickGetClassIDFrom(video)}
+              willDisplayCreatorCard={false}
+            />
+          {/if}
         </div> 
       {/each}
     </div>
@@ -61,7 +64,7 @@
 
 <script>
   import { onMount } from 'svelte'
-  import { collection, collectionGroup, query, where, orderBy, getDocs, limit, getFirestore } from "firebase/firestore"
+  import { collection, collectionGroup, query, where, orderBy, limit, getFirestore } from "firebase/firestore"
   import { getFirestoreQuery } from '/src/helpers/crud.js'
   import CreatorCircularAvatar from '$lib/DoodleVideo/CreatorCircularAvatar.svelte'
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
@@ -71,28 +74,31 @@
 
   export let profileUID
 
+  const GRID_MIN = 336
+  const GRID_GAP = 48
+
   let allVideos = null
-  let videoWidth = 0
-  let videoHeight = 0
+  let gridWidth = 0
   let creatorDoc = {} // AF {} is not a creator
   let teachingServers = null
-
   let currentServerID = ''
 
-  onMount(() => {
-    calculateVideoSizes()
-    fetchCreatorAndServers()
-  })
+  onMount(fetchCreatorAndServers)
+
+  $: videoWidth = columnWidth(gridWidth)
 
   $: {
-    if (currentServerID) {
-      fetchCreatorVideosFromServer(currentServerID)
-    } else {
-      fetchMostRecentVideos()
-    }
+    if (currentServerID) fetchCreatorVideosFromServer(currentServerID)
+    else fetchMostRecentVideos()
   }
 
-  function quickfixClassIDFrom (video) {
+  function columnWidth (w) {
+    if (!w) return 0
+    const cols = Math.max(1, Math.floor((w + GRID_GAP) / (GRID_MIN + GRID_GAP)))
+    return Math.floor((w - GRID_GAP * (cols - 1)) / cols)
+  }
+
+  function quickGetClassIDFrom (video) {
     const classID = video.path.split('/')[1]
     return classID
   }
@@ -123,20 +129,6 @@
     }
     teachingServers = temp2
   }
-
-  function calculateVideoSizes() {
-    const containerWidth = 0.9 * window.innerWidth
-
-		const videoAspectRatio = 16 / 9;
-
-		// 320px is the minimum width needed for video title and description to stay on one-line
-		// actually the min. width is different, because it depends on the font-size
-		const minWidth = 320 + 0.04 * containerWidth
-		videoWidth = minWidth
-		videoHeight = Math.floor(videoWidth / videoAspectRatio);
-
-		return { videoWidth, videoHeight };
-	}
 
   async function fetchMostRecentVideos () {
     const db = getFirestore()
@@ -169,23 +161,22 @@
     background-color: #F7C686;
   }
 
-  .alternative-flexbox {
-    display: flex; 
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-
-    row-gap: 48px; 
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(336px, 1fr));
+    gap: 48px;
   }
 
   .youtube-video-title {
     font-weight: 600; 
     font-size: var(--fs-xs);
+    width: 100%;
+    margin-bottom: 0.2vw;
   }
 
   /* https://stackoverflow.com/questions/33058004/applying-an-ellipsis-to-multiline-text */
   .limit-to-three-lines {
     display: -webkit-box;
-    /* max-width: 200px; */
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;

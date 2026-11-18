@@ -1,83 +1,61 @@
 <div
   class="measure"
-  use:trackWidth={exactWidth => availableWidth = exactWidth}
+  class:open={isDrawerOpen}
+  class:ready={videoWidth > 0}
+  style="--video-w: {videoWidth || 0}px; --panel-w: {PANEL_WIDTH}px; --board-inset: {boardInset}px; --audio-h: {HEIGHTS.AUDIO_SLIDER}px;"
+  use:observeChrome={{ isDrawerOpen, videoWidth }}
 >
-  <div
-    class="frame"
-    class:side-by-side={sideBySide}
-    class:stack-below={stackBelow}
-    style="width: {frameWidth};"
-    use:trackBoardInset
-  >
+  <div class="frame">
     <div class="stage" style="width: {videoWidth ? videoWidth + 'px' : 'auto'};">
       <slot name="video" />
     </div>
-
-    <slot name="comments-section"
-      commentsSectionStyle="display: {isDrawerOpen ? 'block' : 'none'}; {panelStyle}"
-      overBoard={overlay}
-    />
+    <div class="panel">
+      <slot name="comments-section" overBoard={overBoard} />
+    </div>
   </div>
 </div>
 
 <script>
   import { HEIGHTS } from '/src/helpers/CONSTANTS.js'
-  import { trackWidth } from '/src/helpers/actions.js'
-  import { viewport } from '/src/storeFolder/viewport.js'
 
   export let videoWidth = 0
   export let isDrawerOpen = false
 
   const PANEL_WIDTH = 320
 
-  let availableWidth = 0
   let boardInset = 0
-  // Beta three-way: side-by-side | shortfall≤⅓ video → overlay | else stack below.
-  $: margin = availableWidth - videoWidth
-  $: sideBySide = videoWidth > 0 && margin >= PANEL_WIDTH
-  $: overlay = videoWidth > 0 && !sideBySide && (PANEL_WIDTH - margin) <= videoWidth / 3
-  $: stackBelow = videoWidth > 0 && !sideBySide && !overlay
-  $: frameWidth = sideBySide || stackBelow || !videoWidth ? '100%' : `${videoWidth}px`
-  // 42vh cap only for mobile stack-below — never side-by-side/overlay/desktop.
-  $: panelStyle = sideBySide
-    ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 72ch;`
-    : overlay
-    ? `position:absolute;top:${boardInset}px;right:0;bottom:${HEIGHTS.AUDIO_SLIDER}px;width:${PANEL_WIDTH}px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(128,128,128,0.5) transparent;z-index:5;`
-    : `width: 100%; overflow-y: auto;${$viewport.isMobile ? ' max-height: 42vh;' : ''}`
+  let overBoard = false
 
-  $: if (isDrawerOpen || videoWidth || sideBySide || stackBelow) queueMeasure()
-
-  let frameNode = null
-  let measureQueued = false
-
-  function queueMeasure () {
-    if (!frameNode || measureQueued) return
-    measureQueued = true
-    requestAnimationFrame(() => {
-      measureQueued = false
-      measureBoardInset(frameNode)
-    })
-  }
-
-  function measureBoardInset (node) {
-    if (!node) return
+  function measureChrome (node) {
+    const frame = node.querySelector('.frame')
     const board = node.querySelector('.board-surface')
-    const next = board
-      ? Math.max(0, Math.round(board.getBoundingClientRect().top - node.getBoundingClientRect().top))
+    const nextInset = board && frame
+      ? Math.max(0, Math.round(board.getBoundingClientRect().top - frame.getBoundingClientRect().top))
       : 0
-    if (next !== boardInset) boardInset = next
+    if (nextInset !== boardInset) boardInset = nextInset
+
+    const w = node.clientWidth
+    const vw = videoWidth
+    let nextOver = false
+    if (vw > 0 && isDrawerOpen) {
+      const sideBySide = w >= vw + PANEL_WIDTH
+      nextOver = !sideBySide && w >= PANEL_WIDTH + (2 / 3) * vw
+    }
+    if (nextOver !== overBoard) overBoard = nextOver
   }
 
-  function trackBoardInset (node) {
-    frameNode = node
-    measureBoardInset(node)
-    const ro = new ResizeObserver(() => measureBoardInset(node))
+  function observeChrome (node) {
+    measureChrome(node)
+    // Read-only: boardInset (absolute top) + overBoard flag — never writes widths.
+    const ro = new ResizeObserver(() => {
+      requestAnimationFrame(() => measureChrome(node))
+    })
     ro.observe(node)
-    const t1 = setTimeout(() => measureBoardInset(node), 50)
-    const t2 = setTimeout(() => measureBoardInset(node), 300)
+    const t1 = setTimeout(() => measureChrome(node), 50)
+    const t2 = setTimeout(() => measureChrome(node), 300)
     return {
+      update () { measureChrome(node) },
       destroy () {
-        frameNode = null
         ro.disconnect()
         clearTimeout(t1)
         clearTimeout(t2)
@@ -91,18 +69,17 @@
     width: 100%;
   }
 
+  /* Container only when layout modes matter — CQ selectors target descendants. */
+  .measure.open.ready {
+    container-type: inline-size;
+    container-name: doodle-layout;
+  }
+
   .frame {
     position: relative;
-  }
-
-  .side-by-side {
-    display: flex;
-    align-items: flex-start;
-  }
-
-  .stack-below {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 
   .stage {
@@ -110,4 +87,64 @@
     flex: 0 0 auto;
   }
 
+  .panel {
+    display: none;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .measure.open .panel {
+    display: block;
+  }
+
+  @media (max-width: 767px) {
+    .measure.open .panel {
+      max-height: 42vh;
+    }
+  }
+
+  /* Overlay: shortfall ≤ ⅓ video, not full side-by-side. */
+  @container doodle-layout (min-width: calc(var(--panel-w) + 2 * var(--video-w) / 3)) {
+    .frame {
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .panel {
+      position: absolute;
+      top: var(--board-inset);
+      right: 0;
+      bottom: var(--audio-h);
+      width: var(--panel-w);
+      max-height: none;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
+      z-index: 5;
+    }
+  }
+
+  /* Side-by-side: container fits video + panel. */
+  @container doodle-layout (min-width: calc(var(--video-w) + var(--panel-w))) {
+    .frame {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .panel {
+      position: static;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      flex: 1 1 0;
+      min-width: var(--panel-w);
+      max-width: 72ch;
+      width: auto;
+      max-height: none;
+      z-index: auto;
+      overflow-y: auto;
+    }
+  }
 </style>

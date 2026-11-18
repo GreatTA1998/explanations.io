@@ -1,10 +1,3 @@
-<!--
-  Generic anchored popover. Same mechanism as actions.life:
-  popover="auto" (outside click and Escape, no close button), popovertarget
-  on the activator, and CSS anchor positioning (position-anchor, position-area,
-  position-try-fallbacks). Without anchor positioning the popover still opens
-  and dismisses; it just stays in the browser's default centered placement.
--->
 <slot name="activator" {popoverId} {anchorName} {close}></slot>
 
 <div

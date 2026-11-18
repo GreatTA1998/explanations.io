@@ -1,15 +1,11 @@
-
 <div style="z-index: 0; position: relative;">
   {#if showSlideChanger}
-    
-    <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px; flex-wrap: wrap; row-gap: 2px;">  
+    <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px; flex-wrap: wrap; row-gap: 2px;">
       <slot />
-
       <MultiboardSlideChanger on:click={(e) => idxOfFocusedSlide = e.detail.newIdx}
         slideIDs={boardDoc.slideIDs}
         {idxOfFocusedSlide}
       />
-      
       <slot name="after" />
     </div>
   {/if}
@@ -26,23 +22,15 @@
         {playbackSpeed}x 
       </BaseTransparentButton>
     </div>
-    
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
         <button on:click={startAudioPlayer}
-          class="material-icons overlay-center" 
-          style="
-            color: rgba(230, 230, 230, 0.8);
-            width: {240 * scaleFactor}px; 
-            height: {240 * scaleFactor}px; 
-            z-index: 5;
-            font-size: {15 * scaleFactor}rem;
-          "
+          class="material-icons overlay-center"
+          style="color: rgba(230, 230, 230, 0.8); width: {240 * scaleFactor}px; height: {240 * scaleFactor}px; z-index: 5; font-size: {15 * scaleFactor}rem;"
         >
           play_circle
         </button>
-      {/if} 
-
+      {/if}
       {#each boardDoc.slideIDs as slideID, i}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
@@ -81,38 +69,19 @@
         </ListenToDoc>
       {/each}
     </div>
-
-    
     <audio
       src={audioDownloadURL}
       bind:this={AudioPlayer}
       data-playback-path={playbackPathOf(boardDoc)}
       on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
-      on:play={() => {
-        hasPlaybackStarted = true;
-        isPlaying = true;
-        startTimer();
-        publishClock();
-      }}
-      on:pause={() => {
-        isPlaying = false;
-        publishClock();
-      }}
-      on:seeking={() => {
-        currentTime = AudioPlayer.currentTime;
-        hasAudioSliderJumped = true
-        publishClock('seek')
-      }}
+      on:play={() => { hasPlaybackStarted = true; isPlaying = true; startTimer(); publishClock(); }}
+      on:pause={() => { isPlaying = false; publishClock(); }}
+      on:seeking={() => { currentTime = AudioPlayer.currentTime; hasAudioSliderJumped = true; publishClock('seek') }}
       on:timeupdate={() => publishClock()}
-      on:loadedmetadata={() => {
-        applyQueuedSeek()
-        publishClock()
-      }}
+      on:loadedmetadata={() => { applyQueuedSeek(); publishClock() }}
       controls
       style={`width: ${canvasWidth}px; height: 50px; position: absolute; left: 0; bottom: 0; z-index: 6;`}
-    >
-    
-    </audio>
+    ></audio>
   </div>
 </div>
 

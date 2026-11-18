@@ -331,15 +331,7 @@
     border-radius: 1px;
   }
 
-  .transcript-word:focus {
-    outline: none;
-  }
-
-  .transcript-word:focus-visible {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-  }
+  .transcript-word:focus { outline: none; }
 
   .transcript-word.is-current {
     --caret: #F7C686;
@@ -350,10 +342,7 @@
   .transcript-word.is-current::before {
     content: '';
     position: absolute;
-    z-index: 1;
-    top: 0.05em;
-    bottom: 0;
-    left: calc(var(--p) * 100%);
+    inset: 0.05em auto 0 calc(var(--p) * 100%);
     width: 0.4em;
     transform: translateX(-50%);
     pointer-events: none;
@@ -363,7 +352,8 @@
       linear-gradient(var(--caret), var(--caret)) center bottom / 100% 1px no-repeat;
   }
 
-  .transcript-word:hover {
+  .transcript-word:hover,
+  .transcript-word:focus-visible {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;

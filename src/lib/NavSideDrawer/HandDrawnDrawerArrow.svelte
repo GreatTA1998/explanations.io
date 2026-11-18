@@ -1,5 +1,4 @@
 <script>
-  // "right" opens the drawer; "left" hides it.
   export let pointing = 'right'
 </script>
 
@@ -14,7 +13,5 @@
     border-bottom: 2px solid currentColor;
     transform: rotate(-45deg);
   }
-  .arrow.left {
-    transform: rotate(135deg);
-  }
+  .arrow.left { transform: rotate(135deg); }
 </style>

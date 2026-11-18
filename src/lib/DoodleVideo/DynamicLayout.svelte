@@ -2,10 +2,10 @@
   class="measure"
   use:trackWidth={exactWidth => availableWidth = exactWidth}
 >
-  
   <div
     class="frame"
     class:side-by-side={sideBySide}
+    class:stack-below={stackBelow}
     style="width: {frameWidth};"
     use:trackBoardInset
   >
@@ -15,7 +15,7 @@
 
     <slot name="comments-section"
       commentsSectionStyle="display: {isDrawerOpen ? 'block' : 'none'}; {panelStyle}"
-      overBoard={!sideBySide}
+      overBoard={overlay}
     />
   </div>
 </div>
@@ -24,36 +24,26 @@
   import { HEIGHTS } from '/src/helpers/CONSTANTS.js'
   import { trackWidth } from '/src/helpers/actions.js'
 
-  // Rendered canvas width. The column is often wider, because the 4:3 board
-  // is height-limited and the spare width is the white margin.
   export let videoWidth = 0
   export let isDrawerOpen = false
 
   const PANEL_WIDTH = 320
 
   let availableWidth = 0
-  // Distance from frame top to .board-surface (slide-changer row height).
   let boardInset = 0
-
+  // Beta three-way: side-by-side | shortfall≤⅓ video → overlay | else stack below.
   $: margin = availableWidth - videoWidth
   $: sideBySide = videoWidth > 0 && margin >= PANEL_WIDTH
-  $: frameWidth = sideBySide || !videoWidth ? '100%' : `${videoWidth}px`
+  $: overlay = videoWidth > 0 && !sideBySide && (PANEL_WIDTH - margin) <= videoWidth / 3
+  $: stackBelow = videoWidth > 0 && !sideBySide && !overlay
+  $: frameWidth = sideBySide || stackBelow || !videoWidth ? '100%' : `${videoWidth}px`
   $: panelStyle = sideBySide
     ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 72ch;`
-    : `
-      position: absolute;
-      top: ${boardInset}px;
-      right: 0;
-      bottom: ${HEIGHTS.AUDIO_SLIDER}px;
-      width: ${PANEL_WIDTH}px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
-      z-index: 5;
-    `
+    : overlay
+    ? `position:absolute;top:${boardInset}px;right:0;bottom:${HEIGHTS.AUDIO_SLIDER}px;width:${PANEL_WIDTH}px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(128,128,128,0.5) transparent;z-index:5;`
+    : `width: 100%;`
 
-  // Remeasure when layout inputs change (drawer / width / side-by-side).
-  $: if (isDrawerOpen || videoWidth || sideBySide) queueMeasure()
+  $: if (isDrawerOpen || videoWidth || sideBySide || stackBelow) queueMeasure()
 
   let frameNode = null
   let measureQueued = false
@@ -106,6 +96,11 @@
   .side-by-side {
     display: flex;
     align-items: flex-start;
+  }
+
+  .stack-below {
+    display: flex;
+    flex-direction: column;
   }
 
   .stage {

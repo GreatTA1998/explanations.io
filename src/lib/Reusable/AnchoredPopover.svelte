@@ -22,11 +22,9 @@
   import { onMount } from 'svelte'
   import { getRandomID } from '/src/helpers/utility.js'
 
-  // actions.life's default: below the trigger, spanning toward the inline end.
   export let positionArea = 'block-end span-inline-end'
 
   let popoverEl
-  // Filled in onMount so server and client render the same empty id.
   let popoverId = ''
 
   function rememberPopover (node) {

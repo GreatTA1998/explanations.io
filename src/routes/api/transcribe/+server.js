@@ -21,6 +21,11 @@ export async function POST({ request }) {
   const apiKey = readApiKey()
   if (!apiKey) return json(200, { skipped: true })
 
+  const token = bearerToken(request)
+  if (!token || !(await firebaseUserId(token))) {
+    return json(401, { error: MESSAGES.failed })
+  }
+
   let payload
   try {
     const declared = Number(request.headers.get('content-length') || 0)
@@ -35,18 +40,13 @@ export async function POST({ request }) {
   const audioDownloadURL = payload?.audioDownloadURL
   const path = payload?.path
   const audioKey = usableAudioKey(payload?.audioKey, audioDownloadURL)
-  if (!audioKey || typeof audioDownloadURL !== 'string') {
+  if (!audioKey || typeof audioDownloadURL !== 'string' || !isBoardPath(path)) {
     return json(400, { error: MESSAGES.unreadable })
   }
 
   try {
     const result = await transcribeStoredAudio({ url: audioDownloadURL, apiKey })
-    const saved = await persistTranscript({
-      path,
-      audioKey,
-      token: bearerToken(request),
-      result
-    })
+    const saved = await persistTranscript({ path, audioKey, token, result })
     if (result.error) return json(200, { error: result.error, saved })
     return json(200, { segments: result.segments, saved })
   } catch (err) {
@@ -55,7 +55,7 @@ export async function POST({ request }) {
     const saved = await persistTranscript({
       path,
       audioKey,
-      token: bearerToken(request),
+      token,
       result: { error: message, segments: [] }
     })
     return json(200, { error: message, saved })
@@ -81,6 +81,20 @@ function bearerToken(request) {
   return match ? match[1] : ''
 }
 
+async function firebaseUserId(token, fetchImpl = fetch) {
+  try {
+    const response = await fetchImpl(
+      `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_API_KEY}`,
+      { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ idToken: token }) }
+    )
+    if (!response.ok) return ''
+    const uid = (await response.json())?.users?.[0]?.localId
+    return typeof uid === 'string' && uid.length <= 128 ? uid : ''
+  } catch {
+    return ''
+  }
+}
+
 function transcriptBody(audioKey, result) {
   const createdAt = new Date().toISOString()
   if (result.error) {
@@ -104,7 +118,7 @@ function transcriptBody(audioKey, result) {
 }
 
 async function persistTranscript({ path, audioKey, token, result }) {
-  if (!isBoardPath(path)) return false
+  if (!token || !isBoardPath(path)) return false
   const transcript = transcriptBody(audioKey, result)
   const encoded = path.split('/').map((part) => encodeURIComponent(part)).join('/')
   const endpoint = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/${encoded}?updateMask.fieldPaths=transcript&key=${FIREBASE_API_KEY}`
@@ -113,7 +127,7 @@ async function persistTranscript({ path, audioKey, token, result }) {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        ...(token ? { authorization: `Bearer ${token}` } : {})
+        authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
         fields: {

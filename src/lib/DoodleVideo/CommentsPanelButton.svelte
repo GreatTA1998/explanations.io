@@ -23,18 +23,15 @@
     </svg>
   {/if}
 </button>
-
 <script>
   export let open = false
 </script>
-
 <style>
   .my-round-button {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-
     box-sizing: border-box;
     width: 32px;
     height: 32px;
@@ -43,19 +40,16 @@
     padding: 0;
     margin-right: 0;
     margin-left: auto;
-
     border: 1px solid lightgrey;
     border-radius: 24px;
     background: transparent;
     color: black;
     cursor: pointer;
   }
-
   .my-round-button:focus-visible {
     outline: 2px solid rgba(0, 0, 0, 0.55);
     outline-offset: 2px;
   }
-
   .icon {
     display: block;
     width: 20px;
@@ -67,7 +61,6 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-
   .glyph {
     stroke-width: 2;
   }

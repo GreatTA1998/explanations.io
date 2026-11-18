@@ -97,9 +97,13 @@ export function startTranscriptForNewVideo(video) {
 }
 
 async function runServerTranscript(video, audioKey) {
-  const headers = { 'content-type': 'application/json' }
   const token = currentAccessToken()
-  if (token) headers.authorization = `Bearer ${token}`
+  if (!token) {
+    started.delete(audioKey)
+    await persistTranscriptProblem(video, audioKey, 'Could not transcribe this recording.')
+    return
+  }
+  const headers = { 'content-type': 'application/json', authorization: `Bearer ${token}` }
   const responsePromise = fetch('/api/transcribe', {
     method: 'POST',
     keepalive: true,
@@ -113,6 +117,11 @@ async function runServerTranscript(video, audioKey) {
   try {
     const response = await responsePromise
     const body = await response.json().catch(() => ({}))
+    if (response.status === 401) {
+      started.delete(audioKey)
+      await persistTranscriptProblem(video, audioKey, 'Could not transcribe this recording.')
+      return
+    }
     if (body.skipped) {
       forgetProblem(video)
       return

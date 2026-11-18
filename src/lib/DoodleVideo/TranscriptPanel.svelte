@@ -6,10 +6,19 @@
   on:focusin={() => claimPlayback(path)}
   on:pointerdown={pressPanel}
 >
+  {#if paragraphs.length}
+    <!-- TEMP sentence-look scaffold — delete with LOOKS/bands block -->
+    <button type="button" class="look-cycle" title="TEMP sentence look · Alt+L" on:click|stopPropagation={cycleLook}>{lookName}</button>
+  {/if}
   {#if paragraphs.length === 0}
     <p class="transcript-status">{problem || 'No transcript yet.'}</p>
   {:else}
-    <div class="transcript-doc" use:trackDoc>
+    <div class="transcript-doc" class:is-playing={playing} data-look={lookName} use:trackDoc>
+      {#if playing && bands.length}
+        <div class="sentence-hl" aria-hidden="true">
+          {#each bands as b, i (i)}<i style="transform:translate({b.left}px,{b.top}px);width:{b.width}px;height:{b.height}px"></i>{/each}
+        </div>
+      {/if}
       {#each paragraphs as paragraph (paragraph.id)}
         <p class="transcript-paragraph">
           {#each paragraph.words as word (word.id)}
@@ -48,6 +57,46 @@
   let docEl = null, revealedId = null, hoveredWordId = null
   let pointerHold = 0, scrubFrame = 0, scrubAt = null, shown = null, pending = null, clockFrame = 0
   const wordNodes = {}
+
+  // TEMP sentence-look scaffold (Alt+L / badge) — delete after pick
+  const LOOKS = ['underline', 'wash', 'rail', 'dim']
+  let look = 0, bands = [], bandFrame = 0
+  $: lookName = LOOKS[look]
+  $: { playing; sentence; look; time; scheduleBands() }
+  function cycleLook () { look = (look + 1) % LOOKS.length }
+  function onLookKey (e) {
+    if (e.altKey && !e.metaKey && !e.ctrlKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); cycleLook() }
+  }
+  function scheduleBands () {
+    if (typeof requestAnimationFrame !== 'function') return
+    if (bandFrame) cancelAnimationFrame(bandFrame)
+    bandFrame = requestAnimationFrame(() => { bandFrame = 0; paintBands() })
+  }
+  function paintBands () {
+    if (!playing || !sentence || !docEl) { bands = []; return }
+    const a = wordNodes[sentence.from], b = wordNodes[sentence.to]
+    if (!a || !b) { bands = []; return }
+    const range = document.createRange(); range.setStartBefore(a); range.setEndAfter(b)
+    const box = docEl.getBoundingClientRect(), ox = box.left - docEl.scrollLeft, oy = box.top - docEl.scrollTop
+    const merged = mergeRows([...range.getClientRects()].filter((r) => r.width > 1 && r.height > 1)
+      .map((r) => ({ top: r.top - oy, left: r.left - ox, width: r.width, height: r.height })))
+    if (lookName !== 'rail' || !merged.length) { bands = merged; return }
+    const top = Math.min(...merged.map((m) => m.top)), bottom = Math.max(...merged.map((m) => m.top + m.height))
+    bands = [{ top, left: Math.min(...merged.map((m) => m.left)) - 8, width: 2, height: bottom - top }]
+  }
+  function mergeRows (rects) {
+    const rows = []
+    for (const r of rects) {
+      const row = rows.find((x) => Math.abs(x.top + x.height / 2 - (r.top + r.height / 2)) < r.height * 0.45)
+      if (!row) { rows.push({ ...r }); continue }
+      const right = Math.max(row.left + row.width, r.left + r.width), bottom = Math.max(row.top + row.height, r.top + r.height)
+      row.left = Math.min(row.left, r.left); row.width = right - row.left
+      row.top = Math.min(row.top, r.top); row.height = bottom - row.top
+    }
+    return rows
+  }
+  if (typeof window !== 'undefined') { window.addEventListener('keydown', onLookKey); window.addEventListener('resize', scheduleBands) }
+  // end TEMP
 
   $: path = playbackPathOf(videoDoc)
   $: segments = readCachedTranscript(videoDoc) || []
@@ -94,7 +143,14 @@
   function trackDoc (node) {
     docEl = node
     node.addEventListener('pointerdown', clearTextSelection)
-    return { destroy () { node.removeEventListener('pointerdown', clearTextSelection); if (docEl === node) docEl = null } }
+    node.addEventListener('scroll', scheduleBands, { passive: true })
+    return {
+      destroy () {
+        node.removeEventListener('pointerdown', clearTextSelection)
+        node.removeEventListener('scroll', scheduleBands)
+        if (docEl === node) docEl = null
+      }
+    }
   }
 
   function rememberWord (node, word) {
@@ -113,6 +169,7 @@
       const docRect = docEl.getBoundingClientRect(), wordRect = node.getBoundingClientRect()
       if (wordRect.top < docRect.top) docEl.scrollTop -= docRect.top - wordRect.top
       else if (wordRect.bottom > docRect.bottom) docEl.scrollTop += wordRect.bottom - docRect.bottom
+      scheduleBands()
     })
   }
 
@@ -190,14 +247,21 @@
     placeAt(next.start)
   }
 
-  onDestroy(() => { stopClock(); cancelScrub(); clearTimeout(pointerHold) })
+  onDestroy(() => {
+    stopClock(); cancelScrub(); clearTimeout(pointerHold)
+    if (bandFrame) cancelAnimationFrame(bandFrame)
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('keydown', onLookKey)
+      window.removeEventListener('resize', scheduleBands)
+    }
+  })
 </script>
 
 <style>
   .transcript-panel { display: flex; flex-direction: column; min-height: 0; padding: 4px 2px 8px; color: inherit; }
   .transcript-status { margin: 8px 12px; font-size: 1rem; line-height: 1.65; color: inherit; }
   .transcript-doc {
-    overflow-y: auto; padding: 10px 14px 20px; text-align: left; touch-action: pan-y;
+    position: relative; overflow-y: auto; padding: 10px 14px 20px; text-align: left; touch-action: pan-y;
     -webkit-user-select: none; user-select: none;
     scrollbar-width: thin; scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
   }
@@ -205,7 +269,7 @@
   .transcript-word {
     display: inline; appearance: none; margin: 0 0.28em 0 0; padding: 0; border: 0; background: none;
     font: inherit; color: inherit; line-height: inherit; letter-spacing: inherit; text-align: inherit;
-    cursor: default; border-radius: 1px;
+    cursor: default; border-radius: 1px; position: relative; z-index: 1;
   }
   .transcript-word:focus { outline: none; }
   .transcript-word.is-current { --caret: #F7C686; position: relative; z-index: 1; }
@@ -217,8 +281,19 @@
       linear-gradient(var(--caret), var(--caret)) center top / 100% 1px no-repeat,
       linear-gradient(var(--caret), var(--caret)) center bottom / 100% 1px no-repeat;
   }
-  .transcript-word.in-sentence { --caret: #F7C686; border-radius: 2px; background: color-mix(in srgb, var(--caret) 38%, transparent); }
   .transcript-word.in-sentence.is-current::before { display: none; }
   .transcript-word:hover,
   .transcript-word:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+  /* TEMP look styles — delete with scaffold */
+  .look-cycle { align-self: flex-end; margin: 0 10px 2px; padding: 0; border: 0; background: none; font: inherit; font-size: 0.7rem; color: rgba(160,160,160,.9); cursor: pointer; }
+  .sentence-hl { position: absolute; inset: 0; pointer-events: none; z-index: 0; --caret: #F7C686; }
+  .sentence-hl i { position: absolute; left: 0; top: 0; display: block; box-sizing: border-box; }
+  .transcript-doc[data-look='underline'] .sentence-hl i,
+  .transcript-doc[data-look='dim'] .sentence-hl i { background: linear-gradient(var(--caret), var(--caret)) 0 100% / 100% 2px no-repeat; }
+  .transcript-doc[data-look='wash'] .sentence-hl i { background: color-mix(in srgb, var(--caret) 34%, transparent); border-radius: 3px; }
+  .transcript-doc[data-look='rail'] .sentence-hl i { background: var(--caret); border-radius: 1px; }
+  .transcript-doc[data-look='rail'].is-playing .in-sentence { color: color-mix(in srgb, #F7C686 48%, currentColor); }
+  .transcript-doc[data-look='dim'].is-playing .transcript-word { opacity: 0.4; }
+  .transcript-doc[data-look='dim'].is-playing .in-sentence { opacity: 1; }
 </style>

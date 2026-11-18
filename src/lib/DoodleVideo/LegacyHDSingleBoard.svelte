@@ -122,7 +122,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { assumedCanvasWidth, user } from '../../store.js' // note `canvasWidth` was misleading
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
-  import { claimPlayback, playAudioFrom, registerPlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playAudioFrom, registerPlayback } from '/src/helpers/playbackClock.js'
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once

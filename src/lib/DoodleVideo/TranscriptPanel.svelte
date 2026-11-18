@@ -52,7 +52,7 @@
     playbackPathOf,
     playPlayback,
     seekPlayback
-  } from '/src/helpers/playbackBridge.js'
+  } from '/src/helpers/playbackClock.js'
 
   export let videoDoc
 

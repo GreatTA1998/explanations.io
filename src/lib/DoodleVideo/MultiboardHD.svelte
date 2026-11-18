@@ -119,7 +119,7 @@
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
-  import { claimPlayback, playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackClock.js'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL

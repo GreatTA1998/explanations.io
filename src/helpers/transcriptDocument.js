@@ -139,6 +139,14 @@ export function wordAtTime (words, time) {
   return words[found]
 }
 
+export function sentenceBounds (words, word) {
+  if (!word || !words.length) return null
+  let from = word.id, to = word.id
+  while (from > 0 && !SENTENCE_END.test(words[from - 1].text)) from -= 1
+  while (to < words.length - 1 && !SENTENCE_END.test(words[to].text)) to += 1
+  return { from, to }
+}
+
 export function progressInWord (word, time) {
   if (!word) return 0
   const span = word.end - word.start

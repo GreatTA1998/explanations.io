@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildTranscriptDocument, wordAtTime, wordsFromSegments } from './transcriptDocument.js'
+import { buildTranscriptDocument, sentenceBounds, wordAtTime, wordsFromSegments } from './transcriptDocument.js'
 
 test('pause≥2s paragraphs; keep matching word times + punctuation; ignore mismatches', () => {
   const { paragraphs } = buildTranscriptDocument([
@@ -41,4 +41,8 @@ test('pause≥2s paragraphs; keep matching word times + punctuation; ignore mism
   assert.equal(mismatch.map((w) => w.text).join(' '), 'alpha bravo')
   assert.ok(mismatch[0].end <= mismatch[1].start)
   assert.ok(mismatch[0].start >= 5 && mismatch[1].end <= 7)
+
+  const sw = wordsFromSegments([{ start: 0, end: 3, text: 'Hello there. Next one? Done!' }])
+  assert.deepEqual([sentenceBounds(sw, sw[1]), sentenceBounds(sw, sw[2]), sentenceBounds(sw, sw[4])],
+    [{ from: 0, to: 1 }, { from: 2, to: 3 }, { from: 4, to: 4 }])
 })

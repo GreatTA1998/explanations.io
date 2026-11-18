@@ -17,7 +17,8 @@
               type="button"
               class="transcript-word"
               class:is-current={currentWord && word.id === currentWord.id}
-              style={currentWord && word.id === currentWord.id ? `--p:${progress}` : undefined}
+              class:in-sentence={playing && sentence && word.id >= sentence.from && word.id <= sentence.to}
+              style={!playing && currentWord && word.id === currentWord.id ? `--p:${progress}` : undefined}
               tabindex={!currentWord ? (word.id === 0 ? 0 : -1) : (word.id === currentWord.id ? 0 : -1)}
               use:rememberWord={word}
               on:click={(event) => pressWord(word, event)}
@@ -36,7 +37,7 @@
 <script>
   import { onDestroy } from 'svelte'
   import { readCachedTranscript, readTranscriptProblem, transcriptProblems } from '/src/helpers/transcript.js'
-  import { buildTranscriptDocument, progressInWord, wordAtTime } from '/src/helpers/transcriptDocument.js'
+  import { buildTranscriptDocument, progressInWord, sentenceBounds, wordAtTime } from '/src/helpers/transcriptDocument.js'
   import {
     claimPlayback, hoverSeeksPlayback, playbackAudio, playbackPathOf, playPlayback, seekPlayback
   } from '/src/helpers/playbackClock.js'
@@ -55,6 +56,7 @@
   $: words = documentModel.words
   $: paragraphs = documentModel.paragraphs
   $: currentWord = wordAtTime(words, time)
+  $: sentence = sentenceBounds(words, currentWord)
   $: progress = progressInWord(currentWord, time)
   $: revealCurrent(currentWord)
   $: { path; restartClock() }
@@ -215,6 +217,8 @@
       linear-gradient(var(--caret), var(--caret)) center top / 100% 1px no-repeat,
       linear-gradient(var(--caret), var(--caret)) center bottom / 100% 1px no-repeat;
   }
+  .transcript-word.in-sentence { --caret: #F7C686; border-radius: 2px; background: color-mix(in srgb, var(--caret) 38%, transparent); }
+  .transcript-word.in-sentence.is-current::before { display: none; }
   .transcript-word:hover,
   .transcript-word:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
 </style>

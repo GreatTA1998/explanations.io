@@ -122,26 +122,12 @@
     </div>
 
     {#if !floating}
-      <nav class="sub-nav" aria-label="Server sections">
-        <button
-          type="button"
-          class="sub-nav-tab"
-          class:active={$drawerNavTab === 'rooms'}
-          aria-current={$drawerNavTab === 'rooms' ? 'page' : undefined}
-          on:click={() => drawerNavTab.set('rooms')}
-        >
-          rooms
-        </button>
-        <button
-          type="button"
-          class="sub-nav-tab"
-          class:active={$drawerNavTab === 'forum'}
-          aria-current={$drawerNavTab === 'forum' ? 'page' : undefined}
-          on:click={() => drawerNavTab.set('forum')}
-        >
-          forum
-        </button>
-
+      <SubNavTabs
+        tabs={drawerTabs}
+        value={$drawerNavTab}
+        ariaLabel="Server sections"
+        on:change={(e) => drawerNavTab.set(e.detail)}
+      >
         <AnchoredPopover
           bind:this={settingsPopover}
           positionArea="block-end span-inline-end"
@@ -189,7 +175,7 @@
         >
           <HandDrawnDrawerArrow pointing="left" />
         </button>
-      </nav>
+      </SubNavTabs>
 
       <div class="rooms-actions">
         <label class="name-filter">
@@ -247,6 +233,7 @@
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import AnchoredPopover from '$lib/Reusable/AnchoredPopover.svelte'
   import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
+  import SubNavTabs from '$lib/Reusable/SubNavTabs.svelte'
   import { fuzzyFilter } from '/src/helpers/fuzzyName.js'
   import { getFirestoreCollection, createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user, classServerDoc, recentSearchedServerDoc, sidebarFullscreen, drawerNavTab, drawerNameQuery } from '/src/store.js'
@@ -258,6 +245,11 @@
   import { partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, menuPlateLayout, viewerCanTogglePrivacy } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
   import { onDestroy } from 'svelte'
+
+  const drawerTabs = [
+    { id: 'rooms', label: 'rooms' },
+    { id: 'forum', label: 'forum' }
+  ]
 
   export let floating = false
 
@@ -489,7 +481,7 @@
   .room-hit:hover { background: lightgrey; }
   .room-hit.selected { font-weight: 700; background-color: #F7C686; }
 
-  .server-row, .sub-nav, .rooms-actions { flex-shrink: 0; }
+  .server-row, .rooms-actions { flex-shrink: 0; }
   .server-row {
     display: flex; align-items: center; gap: 4px; padding: 8px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
@@ -515,16 +507,6 @@
     flex: 0 0 auto; width: 0; height: 0; margin-left: 8px;
     border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor;
   }
-
-  .sub-nav { display: flex; margin: 0 8px; padding: 0; }
-  .sub-nav-tab {
-    flex: 1; padding: 10px 12px 8px; border-radius: 0;
-    border-bottom: 2px solid rgb(180, 180, 180); color: rgb(100, 100, 100);
-    font-size: 18px; font-weight: 500; line-height: 1.2; text-transform: lowercase;
-  }
-  .sub-nav .settings-button, .sub-nav .hide-drawer-button { flex: 0 0 auto; align-self: center; }
-  .sub-nav-tab:hover { background: rgba(0, 0, 0, 0.04); color: black; }
-  .sub-nav-tab.active { color: black; font-weight: 600; border-bottom-color: orange; }
 
   .rooms-actions { display: flex; align-items: center; gap: 6px; padding: 6px 12px 8px; }
   .name-filter, .search-slot {

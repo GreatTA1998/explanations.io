@@ -6,24 +6,13 @@
   >
   <slot/>
 
-  <div class="panel-switch" role="tablist" aria-label="Transcript and comments">
-    <button
-      type="button"
-      role="tab"
-      class="switch-btn"
-      class:active={activeTab === 'transcript'}
-      aria-selected={activeTab === 'transcript'}
-      on:click={() => activeTab = 'transcript'}
-    >Transcript</button>
-    <button
-      type="button"
-      role="tab"
-      class="switch-btn"
-      class:active={activeTab === 'comments'}
-      aria-selected={activeTab === 'comments'}
-      on:click={() => activeTab = 'comments'}
-    >Comments</button>
-  </div>
+  <SubNavTabs
+    tabs={panelTabs}
+    bind:value={activeTab}
+    ariaLabel="Transcript and comments"
+    tabbed={true}
+    onDark={overBoard}
+  />
 
   <div class="panel-body" class:panel-hidden={activeTab !== 'comments'}>
     <ListenToCollection collectionPath={videoDoc.path + '/comments'}
@@ -67,10 +56,16 @@
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
   import { user } from '/src/store.js'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
+  import SubNavTabs from '$lib/Reusable/SubNavTabs.svelte'
   import { page } from '$app/stores'
 
   export let videoDoc
   export let overBoard = false
+
+  const panelTabs = [
+    { id: 'transcript', label: 'transcript' },
+    { id: 'comments', label: 'comments' }
+  ]
 
   let newInputComment = ''
   let activeTab = 'transcript'
@@ -141,16 +136,8 @@
     border-radius: 24px; border: 1px solid lightgrey; padding: 6px 12px;
     background-color: rgba(255, 255, 255, 0.6); width: fit-content; font-size: var(--fs-300);
   }
-  .panel-switch { display: flex; align-items: center; gap: 2px; padding: 4px 6px; }
-  .switch-btn {
-    border: 0; background: transparent; padding: 2px 6px; font-size: 0.7rem;
-    color: rgb(120, 120, 120); cursor: pointer;
-  }
-  .switch-btn.active { color: black; font-weight: 600; }
   .panel-body { padding: 12px; display: flex; flex-direction: column; row-gap: 12px; }
   .panel-hidden { display: none; }
-  .over-board .switch-btn { color: var(--panel-fg-muted); font-weight: 400; }
-  .over-board .switch-btn.active { color: var(--panel-fg); font-weight: 600; }
   .over-board .submit-button { color: var(--panel-fg); background: transparent; border: 0; }
   .over-board :global(.copied-from-old-explain-2) { color: var(--panel-fg-muted) !important; }
 </style>

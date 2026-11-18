@@ -1,6 +1,5 @@
 <nav
   class="sub-nav"
-  class:on-dark={onDark}
   role={tabbed ? 'tablist' : undefined}
   aria-label={ariaLabel || undefined}
 >
@@ -20,7 +19,7 @@
 
 <script>
   import { createEventDispatcher } from 'svelte'
-  export let tabs = [], value = '', ariaLabel = '', onDark = false, tabbed = false
+  export let tabs = [], value = '', ariaLabel = '', tabbed = false
   const dispatch = createEventDispatcher()
   function pick (id) {
     if (id === value) return
@@ -40,7 +39,4 @@
   .sub-nav-tab.active { color: black; font-weight: 600; border-bottom-color: orange; }
   .sub-nav > :global(.settings-button),
   .sub-nav > :global(.hide-drawer-button) { flex: 0 0 auto; align-self: center; }
-  .on-dark .sub-nav-tab { color: var(--panel-fg-muted, rgb(160, 160, 160)); border-bottom-color: rgba(180, 180, 180, 0.45); }
-  .on-dark .sub-nav-tab:hover { background: rgba(255, 255, 255, 0.06); color: var(--panel-fg, #fff); }
-  .on-dark .sub-nav-tab.active { color: var(--panel-fg, #fff); border-bottom-color: orange; }
 </style>

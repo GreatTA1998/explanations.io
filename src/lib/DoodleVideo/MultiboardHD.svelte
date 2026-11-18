@@ -13,9 +13,6 @@
   <div
     class="board-surface"
     style="position: relative; box-sizing: border-box;"
-    data-playback-path={playbackPathOf(boardDoc)}
-    on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
-    on:pointerdown={() => claimPlayback(playbackPathOf(boardDoc))}
   >
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
@@ -28,7 +25,9 @@
       {/if}
       {#if onToggleComments && !commentsOpen}
         <div class="transcript-reopen">
-          <CommentsPanelButton open={false} on:click={onToggleComments} />
+          <button type="button" class="panel-toggle" aria-expanded="false" aria-label="Show transcript and comments" on:click={onToggleComments}>
+            <span class="hand-arrow" aria-hidden="true"></span>
+          </button>
         </div>
       {/if}
       {#each boardDoc.slideIDs as slideID, i (slideID)}
@@ -77,19 +76,18 @@
         value={currentTime}
         style="--p:{seekRatio}"
         aria-label="Seek"
-        on:pointerdown={claimThis}
         on:input={onSeek}
       />
       <span class="time">{formatTime(duration)}</span>
       <button type="button" class="speed-btn" on:click={togglePlaySpeed}>{playbackSpeed}x</button>
       {#if onToggleComments && commentsOpen}
-        <CommentsPanelButton open={true} on:click={onToggleComments} />
+        <button type="button" class="panel-toggle" aria-expanded="true" aria-label="Hide transcript and comments" on:click={onToggleComments}>
+          <span class="hand-arrow left" aria-hidden="true"></span>
+        </button>
       {/if}
     </div>
     <audio
       class="clock" src={audioDownloadURL} bind:this={AudioPlayer} aria-hidden="true"
-      data-playback-path={playbackPathOf(boardDoc)}
-      on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
       on:play={() => { hasPlaybackStarted = true; isPlaying = true; startTimer() }}
       on:pause={() => { isPlaying = false }}
       on:seeking={() => { currentTime = AudioPlayer.currentTime; hasAudioSliderJumped = true }}
@@ -114,9 +112,8 @@
   import MultiboardSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
   import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
-  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
-  import { claimPlayback, playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackClock.js'
+  import { playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackClock.js'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
@@ -176,12 +173,11 @@
     return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
   }
 
-  const claimThis = () => claimPlayback(playbackPathOf(boardDoc))
-  function onPlayClick (event) { event.stopPropagation(); claimThis(); togglePlayPause() }
+  function onPlayClick (event) { event.stopPropagation(); togglePlayPause() }
   function onSeek (event) {
     const next = Number(event.currentTarget.value)
     if (!AudioPlayer || !Number.isFinite(next)) return
-    claimThis(); currentTime = next; hasAudioSliderJumped = true; AudioPlayer.currentTime = next
+    currentTime = next; hasAudioSliderJumped = true; AudioPlayer.currentTime = next
   }
   const playVideo = (time) => playAudioFrom(AudioPlayer, time)
   const togglePlayPause = () => { isPlaying ? AudioPlayer.pause() : AudioPlayer?.play() }
@@ -194,7 +190,7 @@
     if (AudioPlayer.seeking || Math.abs(now - target) < 0.3) queuedSeek = null
   }
   const togglePlaySpeed = () => { AudioPlayer.playbackRate = AudioPlayer.playbackRate === 2 ? 1 : 2 }
-  const startAudioPlayer = () => { claimThis(); AudioPlayer?.play() }
+  const startAudioPlayer = () => { AudioPlayer?.play() }
   function startTimer () {
     intervalID = setInterval(() => {
       if (!AudioPlayer) return
@@ -212,10 +208,16 @@
 <style>
   .clock { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
   .transcript-reopen { position: absolute; top: 12px; right: 12px; z-index: 7; pointer-events: auto; }
-  .transcript-reopen :global(.my-round-button) {
-    margin: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 24px;
-    background: rgba(0, 0, 0, 0.55); border-color: rgba(255, 255, 255, 0.35);
-    color: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  .panel-toggle {
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    box-sizing: border-box; width: 28px; height: 28px; min-width: 28px; min-height: 28px;
+    padding: 0; margin: 0; border: 1px solid rgba(255,255,255,.35); border-radius: 24px;
+    background: transparent; color: rgba(255,255,255,.9); cursor: pointer;
+  }
+  .transcript-reopen .panel-toggle {
+    width: 48px; height: 48px; min-width: 48px; min-height: 48px;
+    background: rgba(0, 0, 0, 0.55); color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
   }
   .playbar {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; height: 50px;
@@ -245,10 +247,6 @@
   .speed-btn {
     flex: 0 0 auto; height: 28px; min-width: 2rem; padding: 0 4px; border: 0;
     background: transparent; color: rgba(255,255,255,.9); font-size: 0.75rem; font-weight: 500; cursor: pointer;
-  }
-  .playbar :global(.my-round-button) {
-    width: 28px; height: 28px; min-width: 28px; min-height: 28px; margin-left: 0;
-    border-color: rgba(255,255,255,.35); color: rgba(255,255,255,.9); background: transparent;
   }
   .overlay-center { position: absolute; width: 20px; height: 20px; inset: 0; margin: auto; }
 </style>

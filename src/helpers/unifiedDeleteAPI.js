@@ -21,10 +21,26 @@ import {
 
 import { goto } from '$app/navigation'
 import { deleteObject, getStorage, ref } from 'firebase/storage'
-import { destinationAfterRoomDelete } from '/src/helpers/roomDeleteNav.js'
-import { shouldDeleteBoardLevelStrokes } from '/src/helpers/boardDeletePath.js'
+export function shouldDeleteBoardLevelStrokes (boardDoc) {
+  return !boardDoc?.isMultiboard
+    || !Array.isArray(boardDoc.slideIDs)
+    || boardDoc.slideIDs.length === 0
+}
 
-export { destinationAfterRoomDelete, shouldDeleteBoardLevelStrokes }
+function adjacentSiblingId ({ roomId, siblingIdsInOrder = [] }) {
+  const index = siblingIdsInOrder.indexOf(roomId)
+  if (index === -1) return null
+  if (index + 1 < siblingIdsInOrder.length) return siblingIdsInOrder[index + 1]
+  if (index - 1 >= 0) return siblingIdsInOrder[index - 1]
+  return null
+}
+
+export function destinationAfterRoomDelete ({ classID, parentRoomID, roomId, siblingIdsInOrder = [] }) {
+  const siblingId = adjacentSiblingId({ roomId, siblingIdsInOrder })
+  if (siblingId) return `/${classID}/${siblingId}`
+  if (parentRoomID) return `/${classID}/${parentRoomID}`
+  return `/${classID}/question`
+}
 
 /** Delete room boards/media, re-parent children, then the room doc; navigate away. */
 export async function deleteRoom ({ room, classID }) {

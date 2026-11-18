@@ -68,8 +68,6 @@
     <canvas 
       use:captureCanvas
       on:click={togglePlayPause}
-      on:pointerdown={() => claimPlayback(playbackPath)}
-      data-playback-path={playbackPath}
       style={`
         position: absolute; 
         z-index: 1; 
@@ -103,8 +101,6 @@
   <div>
     <audio 
       on:play={initSyncing}
-      on:focusin={() => claimPlayback(playbackPath)}
-      data-playback-path={playbackPath}
       on:seeking={handleSeeking}
       on:loadedmetadata={handleLoadedMetadata}
       on:canplay={applyQueuedSeek}
@@ -122,7 +118,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { assumedCanvasWidth, user } from '../../store.js' // note `canvasWidth` was misleading
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
-  import { claimPlayback, playAudioFrom, registerPlayback } from '/src/helpers/playbackClock.js'
+  import { playAudioFrom, registerPlayback } from '/src/helpers/playbackClock.js'
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once

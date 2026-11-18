@@ -14,12 +14,11 @@
       <button
         type="button"
         class="show-drawer-toggle"
-        class:chrome-hidden={drawerChromeHidden}
         aria-label="Show the drawer"
         title="Show the drawer"
         on:click={() => sidebarFullscreen.set(false)}
       >
-        <HandDrawnDrawerArrow pointing="right" />
+        <span class="hand-arrow" aria-hidden="true"></span>
       </button>
     {/if}
 
@@ -34,7 +33,6 @@
 
 <script>
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
-  import HandDrawnDrawerArrow from '$lib/NavSideDrawer/HandDrawnDrawerArrow.svelte'
   import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
 
   import { initializeDatabase } from '../database.js'
@@ -47,7 +45,6 @@
   import {
     DEFAULT_HOMEPAGE_SERVER_ID,
     homepageServerPath,
-    loadErrorAlert,
     loggedInRootDestination,
     loggedOutEntry
   } from '/src/helpers/visitorEntry.js'
@@ -68,41 +65,15 @@
 
   let unsubUserDocListener = null
   let rootEntryToken = 0
-  let drawerChromeHidden = false
-  let touchY = null
-
-  $: if ($sidebarFullscreen) drawerChromeHidden = false
 
   onMount(async () => {
     translateJSConstantsToCSSVariables()
     onAuthStateChanged(auth, reactToUserChange)
     createSessionRecording()
     window.addEventListener('scroll', handleOnScroll)
-    const opts = { passive: true, capture: true }
-    const onWheel = (e) => applyChromeDelta(e.deltaY || 0)
-    const onTouchStart = (e) => { touchY = e.touches[0]?.clientY ?? null }
-    const onTouchMove = (e) => {
-      const y = e.touches[0]?.clientY
-      if (touchY == null || y == null) return
-      applyChromeDelta(touchY - y)
-      touchY = y
-    }
-    document.addEventListener('wheel', onWheel, opts)
-    document.addEventListener('touchstart', onTouchStart, opts)
-    document.addEventListener('touchmove', onTouchMove, opts)
-    return () => {
-      document.removeEventListener('wheel', onWheel, true)
-      document.removeEventListener('touchstart', onTouchStart, true)
-      document.removeEventListener('touchmove', onTouchMove, true)
-    }
   })
 
   const handleOnScroll = () => { if (window.scrollY >= window.innerHeight - 120) isFullServerMode.set(true) }
-  function applyChromeDelta (dy) {
-    if (!$sidebarFullscreen) return
-    if (dy > 8) drawerChromeHidden = true
-    else if (dy < -8) drawerChromeHidden = false
-  }
   const restoreDrawerOnEscape = (e) => { if (e.key === 'Escape' && $sidebarFullscreen) sidebarFullscreen.set(false) }
   const createSessionRecording = () => posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7', {
     api_host: 'https://us.i.posthog.com', person_profiles: 'always'
@@ -181,7 +152,7 @@
     } catch (error) {
       console.error(error)
       if (token !== rootEntryToken) return
-      alert(loadErrorAlert(error))
+      alert(`Error code & message, see console for details = ${[error?.code, error?.message].filter(Boolean).join(' ')}`)
     }
     if (token !== rootEntryToken || $page.url.pathname !== '/') return
     const path = homepageServerPath(server)
@@ -288,7 +259,5 @@
     width: 48px; height: 48px; padding: 0; border-radius: 24px;
     border: 1px solid lightgrey; background: white; color: black;
     font-size: 16px; font-weight: 500; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-    transition: opacity 0.2s ease, transform 0.2s ease;
   }
-  .show-drawer-toggle.chrome-hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
 </style>

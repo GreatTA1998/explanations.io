@@ -1,7 +1,7 @@
 <div style="margin-top: var(--height-navbar); padding: 2vw;">
   <div style="padding: 0vw 2vw; display: flex; gap: 12px;">
     <div style="flex-basis: 48px;">
-      <CreatorCircularAvatar/>
+      <CreatorCircularAvatar seed={profileUID} color={creatorDoc.beaverProfilePicColor || ''} />
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 4px;">

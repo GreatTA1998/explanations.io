@@ -53,7 +53,7 @@
   } from '/src/helpers/visitorEntry.js'
 
   import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen, sidebarFullscreen } from '../store.js'
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
@@ -69,8 +69,7 @@
   let unsubUserDocListener = null
   let rootEntryToken = 0
   let drawerChromeHidden = false
-  let chromeY = 0
-  let chromeNode = null
+  let touchY = null
 
   $: if ($sidebarFullscreen) drawerChromeHidden = false
 
@@ -79,25 +78,33 @@
     onAuthStateChanged(auth, reactToUserChange)
     createSessionRecording()
     window.addEventListener('scroll', handleOnScroll)
-    document.addEventListener('scroll', onDrawerChromeScroll, true)
+    document.addEventListener('wheel', onChromeDelta, { passive: true, capture: true })
+    document.addEventListener('touchstart', onChromeTouchStart, { passive: true, capture: true })
+    document.addEventListener('touchmove', onChromeTouchMove, { passive: true, capture: true })
+    return () => {
+      document.removeEventListener('wheel', onChromeDelta, true)
+      document.removeEventListener('touchstart', onChromeTouchStart, true)
+      document.removeEventListener('touchmove', onChromeTouchMove, true)
+    }
   })
-
-  onDestroy(() => document.removeEventListener('scroll', onDrawerChromeScroll, true))
 
   function handleOnScroll () {
     if (window.scrollY >= window.innerHeight - 120) isFullServerMode.set(true)
   }
 
-  function onDrawerChromeScroll (event) {
+  function applyChromeDelta (dy) {
     if (!$sidebarFullscreen) return
-    const node = event.target === document ? document.documentElement : event.target
-    if (!node || typeof node.scrollTop !== 'number') return
-    const y = (node === document.documentElement || node === document.body) ? window.scrollY : node.scrollTop
-    if (node !== chromeNode) { chromeNode = node; chromeY = y; return }
-    const dy = y - chromeY
-    chromeY = y
     if (dy > 8) drawerChromeHidden = true
     else if (dy < -8) drawerChromeHidden = false
+  }
+
+  function onChromeDelta (event) { applyChromeDelta(event.deltaY || 0) }
+  function onChromeTouchStart (event) { touchY = event.touches[0]?.clientY ?? null }
+  function onChromeTouchMove (event) {
+    const y = event.touches[0]?.clientY
+    if (touchY == null || y == null) return
+    applyChromeDelta(touchY - y)
+    touchY = y
   }
 
   function restoreDrawerOnEscape (event) {

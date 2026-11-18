@@ -89,17 +89,14 @@
   
     <div style="width: 300px;">
       <CreatorChannelCard
-        on:click={() => goto(`/user/xC05mXTCFIRxLnyxfKnxY7oNBPi2`)}
+        uid="xC05mXTCFIRxLnyxfKnxY7oNBPi2"
         firstNameAndKeyInfo="Elton Lin"
-        collegeAndYear="Founder"
-        bio="elton@explanations.io"
       />
     </div>
   </div>
 </div>
 
 <script>
-  import { goto } from '$app/navigation';
   import CreatorChannelCard from '$lib/DoodleVideo/CreatorChannelCard.svelte'
 </script>
 

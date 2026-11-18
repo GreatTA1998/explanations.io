@@ -1,34 +1,34 @@
-<div bind:this={ServerLayout} id="server-layout" class="robust-ios-space-filling" style="--drawer-width: {$sidebarFullscreen ? 0 : $drawerWidth}px;">
+<div
+  bind:this={ServerLayout}
+  id="server-layout"
+  class="robust-ios-space-filling"
+  class:overlay-drawer={overlayDrawer}
+  style="--drawer-width: {$sidebarFullscreen || overlayDrawer ? 0 : $drawerWidth}px;"
+>
   {#if !$sidebarFullscreen}
+    {#if overlayDrawer}
+      <button type="button" class="drawer-backdrop" aria-label="Dismiss drawer" on:click={() => sidebarFullscreen.set(true)}></button>
+    {/if}
     <div id="left-drawer">
       <NavSideDrawer />
       <div class="room-drawer">
-        {#key classID}
-          <TheLeftDrawer 
-            {classID}
-            {roomID}
-          />
-        {/key}
+        {#key classID}<TheLeftDrawer {classID} {roomID} />{/key}
       </div>
     </div>
   {/if}
-
-  <div id="main-content" class:sidebar-fullscreen={$sidebarFullscreen} bind:this={MainContent}>
-    <slot />
-  </div>
+  <div id="main-content" class:sidebar-fullscreen={$sidebarFullscreen} bind:this={MainContent}><slot /></div>
 </div>
 
-<script> 
+<script>
   import TheLeftDrawer from '$lib/TheLeftDrawer/index.svelte'
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
   import { getBoardWidth } from '/src/helpers/dimensions.js'
-  import { getFirestoreDoc,updateFirestoreDoc } from '/src/helpers/crud.js'
-
-  import { 
-    user, drawerWidth, classServerDoc, recentSearchedServerDoc, 
+  import { getFirestoreDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
+  import {
+    user, drawerWidth, classServerDoc, recentSearchedServerDoc,
     blackboardWidth, videoPreviewWidth, videoCinemaWidth, isFullServerMode, sidebarFullscreen
   } from '/src/store.js'
-
+  import { viewport } from '/src/storeFolder/viewport.js'
   import { onMount } from 'svelte'
   import { doc, onSnapshot, getFirestore } from 'firebase/firestore'
 
@@ -40,12 +40,9 @@
   let MainContent = null
   let ServerLayout
 
-  $: if ($isFullServerMode && MainContent && ServerLayout) {
-    transformToFullServerPage()
-  }
-
-  $: ({ classID, roomID } = data); // this line triggers whenever `data` changes  
-
+  $: overlayDrawer = !$sidebarFullscreen && $viewport.width > 0 && $viewport.width < 768
+  $: if ($isFullServerMode && MainContent && ServerLayout) transformToFullServerPage()
+  $: ({ classID, roomID } = data)
   $: {
     listenToClassDoc(classID)
     handleClassDocChange(classID)
@@ -53,11 +50,7 @@
   }
 
   onMount(() => {
-    resizeObserver = new ResizeObserver(entries => {
-      // we don't debounce this because we don't want to trade-off a laggy drawer resize experience
-      // for a more performant inspector resize experience (which is not how the user uses the app)
-      computeDimensionsForBlackboardsAndVideos()
-    })
+    resizeObserver = new ResizeObserver(() => computeDimensionsForBlackboardsAndVideos())
     resizeObserver.observe(MainContent, { box: 'border-box' })
   })
 
@@ -84,69 +77,43 @@
 
   async function handleClassDocChange () {
     if ($user.uid) {
-      updateFirestoreDoc(`/users/${$user.uid}`, {
-        mostRecentServerID: classID 
-      })
-    }  
+      updateFirestoreDoc(`/users/${$user.uid}`, { mostRecentServerID: classID })
+    }
   }
 
   async function fetchRecentlySearchedClassDoc () {
     if (!$user.recentSearchedServerID) return {}
-
-    const recentServerDoc = await getFirestoreDoc(`/classes/${$user.recentSearchedServerID}`)
-    recentSearchedServerDoc.set(recentServerDoc)
+    recentSearchedServerDoc.set(await getFirestoreDoc(`/classes/${$user.recentSearchedServerID}`))
   }
 
   function listenToClassDoc (classID) {
     if (unsubClassDocListener) unsubClassDocListener()
-    const db = getFirestore()
-    unsubClassDocListener = onSnapshot(doc(db, `/classes/${classID}`), snapshot => {
+    unsubClassDocListener = onSnapshot(doc(getFirestore(), `/classes/${classID}`), snapshot => {
       classServerDoc.set(snapshot.data())
     })
   }
 </script>
 
-<style> 
-  :root {
-    --navbar-height: 0px;
-  }
+<style>
+  :root { --navbar-height: 0px; }
 
   #server-layout {
     display: grid;
-    grid-template-columns: var(--drawer-width) 1fr; 
+    grid-template-columns: var(--drawer-width) 1fr;
     grid-template-areas: 'sidebar main';
     height: 100vh;
     background-color: var(--bg-off-white);
   }
 
+  #server-layout.overlay-drawer { grid-template-columns: 1fr; grid-template-areas: 'main'; }
+  .drawer-backdrop { position: fixed; inset: 0; z-index: 35; border: 0; padding: 0; margin: 0; background: rgba(0,0,0,.4); cursor: pointer; }
   #left-drawer {
-    grid-area: sidebar;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    height: 100%;
-    position: relative;
-    z-index: 2;
-    overflow: visible;
-    background-color: var(--bg-off-white);
+    grid-area: sidebar; display: flex; flex-direction: column; min-height: 0; height: 100%;
+    position: relative; z-index: 2; overflow: visible; background-color: var(--bg-off-white);
     box-shadow: 4px 0 6px -2px rgba(0, 0, 0, 0.1);
   }
-
-  .room-drawer {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  #main-content {
-    grid-area: main;
-    position: relative;
-    /* Trap board overlays (transcript z-index) below #left-drawer / server menu. */
-    z-index: 0;
-    min-width: 0;
-  }
-
-  #main-content.sidebar-fullscreen {
-    padding-top: 72px;
-  }
+  .overlay-drawer #left-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 86vw); z-index: 40; }
+  .room-drawer { flex: 1; min-height: 0; overflow: hidden; }
+  #main-content { grid-area: main; position: relative; z-index: 0; min-width: 0; }
+  #main-content.sidebar-fullscreen { padding-top: 72px; }
 </style>

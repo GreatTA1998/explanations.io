@@ -1,10 +1,3 @@
-<!-- 
-  TO-DO:
-    - Re-introduce ability to toggle videos as free vs paid
-    - Re-introduce ability to re-arrange videos
-    - Re-introduce ability for nano questions
-    - Re-introduce ability to share video as a link
--->
 {#if video}
   <FullscreenModule 
     boardDoc={video} 
@@ -27,13 +20,10 @@
         on:deletion-request-received={() => propToDeleteVideo = false}
       >
         {#if willDisplayCreatorCard}
-          <div style="min-width: 240px; margin-right: 8px;">
-            <!-- TO-DO: make this dynamic -->
+          <div style="min-width: 160px; margin-right: 8px;">
             <CreatorChannelCard
               uid={video.creatorUID}
-              firstNameAndKeyInfo={video.creatorName}
-              collegeAndYear="MIT '25"
-              bio="Top 21 USA(J)MO"
+              firstNameAndKeyInfo={video.creatorName || ''}
             />
           </div>
         {/if}

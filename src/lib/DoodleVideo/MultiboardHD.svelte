@@ -87,10 +87,7 @@
       {/if}
     </div>
     <audio
-      class="clock"
-      src={audioDownloadURL}
-      bind:this={AudioPlayer}
-      aria-hidden="true"
+      class="clock" src={audioDownloadURL} bind:this={AudioPlayer} aria-hidden="true"
       data-playback-path={playbackPathOf(boardDoc)}
       on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
       on:play={() => { hasPlaybackStarted = true; isPlaying = true; startTimer() }}
@@ -113,54 +110,35 @@
   import { revertToBoard } from '/src/helpers/unifiedDeleteAPI.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { lazyCallable } from '/src/helpers/actions.js'
-  import { assumedCanvasWidth, user } from '/src/store.js' // note `canvasWidth` was misleading
+  import { assumedCanvasWidth } from '/src/store.js'
   import MultiboardSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
   import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
-  import { claimPlayback, playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackClock.js'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
   export let boardDoc
-
   export let classID
   export let canvasWidth
   export let canvasHeight
-
   export let timingOfSlideChanges
   export let showSlideChanger
   export let commentsOpen = false
   export let onToggleComments = undefined
 
   const dispatch = createEventDispatcher()
-  let intervalID = ''
-  let hasAudioSliderJumped = false
-  let idxOfFocusedSlide = 0
-  let playbackSpeed = 1
-
-  let slideIDToStrokesArray = {}
-
-  let AudioPlayer
-  let hasPlaybackStarted = false
-
-  let currentTime = 0
-  let duration = 0
   const ONE_HUNDRED_MILLISECS = 100
-  let isPlaying = false
-
-  let updateViewMinutesTimeoutID
-  let queuedSeek = null
-  let applyingSeek = false
+  let intervalID = '', hasAudioSliderJumped = false, idxOfFocusedSlide = 0, playbackSpeed = 1
+  let slideIDToStrokesArray = {}, AudioPlayer, hasPlaybackStarted = false
+  let currentTime = 0, duration = 0, isPlaying = false
+  let updateViewMinutesTimeoutID, queuedSeek = null, applyingSeek = false
   let unregisterPlayback = () => {}
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
-
-  $: if (propToDeleteVideo) {
-    handleVideoDelete(boardDoc)
-  }
-
+  $: if (propToDeleteVideo) handleVideoDelete(boardDoc)
   $: if (currentTime > 0) {
     let temp = 0
     for (const change of timingOfSlideChanges) {
@@ -169,25 +147,21 @@
     }
     idxOfFocusedSlide = temp
   }
-
   $: if (AudioPlayer) playbackSpeed = AudioPlayer.playbackRate
   $: seekRatio = duration > 0 ? Math.min(1, Math.max(0, currentTime / duration)) : 0
 
   onMount(() => {
     AudioPlayer.playbackRate = playbackSpeed
-    const sixSeconds = 6000
-    function updateViewMinutes () {
+    const tick = () => {
       updateViewMinutesTimeoutID = setTimeout(() => {
         if (isPlaying) dispatch('six-seconds-elapsed', { playbackSpeed })
-        updateViewMinutes()
-      }, sixSeconds)
+        tick()
+      }, 6000)
     }
-    updateViewMinutes()
+    tick()
     unregisterPlayback = registerPlayback(playbackPathOf(boardDoc), {
       get audio () { return AudioPlayer },
-      seek: seekTo,
-      play: playVideo,
-      toggle: togglePlayPause
+      seek: seekTo, play: playVideo, toggle: togglePlayPause
     })
   })
 
@@ -202,91 +176,46 @@
     return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
   }
 
-  function claimThis () { claimPlayback(playbackPathOf(boardDoc)) }
-
-  function onPlayClick (event) {
-    event.stopPropagation()
-    claimThis()
-    togglePlayPause()
-  }
-
+  const claimThis = () => claimPlayback(playbackPathOf(boardDoc))
+  function onPlayClick (event) { event.stopPropagation(); claimThis(); togglePlayPause() }
   function onSeek (event) {
     const next = Number(event.currentTarget.value)
     if (!AudioPlayer || !Number.isFinite(next)) return
-    claimThis()
-    currentTime = next
-    hasAudioSliderJumped = true
-    AudioPlayer.currentTime = next
+    claimThis(); currentTime = next; hasAudioSliderJumped = true; AudioPlayer.currentTime = next
   }
-
-  function playVideo (time) { return playAudioFrom(AudioPlayer, time) }
-
-  function togglePlayPause () {
-    if (isPlaying) AudioPlayer.pause()
-    else if (AudioPlayer) AudioPlayer.play()
-  }
-
-  function seekTo (time) { queuedSeek = time; applyQueuedSeek() }
-
+  const playVideo = (time) => playAudioFrom(AudioPlayer, time)
+  const togglePlayPause = () => { isPlaying ? AudioPlayer.pause() : AudioPlayer?.play() }
+  const seekTo = (time) => { queuedSeek = time; applyQueuedSeek() }
   function applyQueuedSeek () {
     if (applyingSeek || !AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
     const target = queuedSeek
-    applyingSeek = true
-    AudioPlayer.currentTime = target
-    applyingSeek = false
+    applyingSeek = true; AudioPlayer.currentTime = target; applyingSeek = false
     const now = AudioPlayer.currentTime || 0
     if (AudioPlayer.seeking || Math.abs(now - target) < 0.3) queuedSeek = null
   }
-
-  function togglePlaySpeed () {
-    AudioPlayer.playbackRate = AudioPlayer.playbackRate === 2 ? 1 : 2
-  }
-
-  function startAudioPlayer () {
-    claimThis()
-    if (AudioPlayer) AudioPlayer.play()
-  }
-
+  const togglePlaySpeed = () => { AudioPlayer.playbackRate = AudioPlayer.playbackRate === 2 ? 1 : 2 }
+  const startAudioPlayer = () => { claimThis(); AudioPlayer?.play() }
   function startTimer () {
     intervalID = setInterval(() => {
-      if (AudioPlayer) {
-        currentTime = AudioPlayer.currentTime
-        if (Number.isFinite(AudioPlayer.duration)) duration = AudioPlayer.duration
-      }
+      if (!AudioPlayer) return
+      currentTime = AudioPlayer.currentTime
+      if (Number.isFinite(AudioPlayer.duration)) duration = AudioPlayer.duration
     }, ONE_HUNDRED_MILLISECS)
   }
-
   async function handleVideoDelete (boardDoc) {
     dispatch('deletion-request-received')
-
-    if (!confirm('Are you sure you want to revert this video to a blackboard?')) {
-      return
-    }
-
-    revertToBoard({ boardDoc, slideIDToStrokesArray})
+    if (!confirm('Are you sure you want to revert this video to a blackboard?')) return
+    revertToBoard({ boardDoc, slideIDToStrokesArray })
   }
 </script>
 
 <style>
   .clock { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
-  .transcript-reopen {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 7;
-    pointer-events: auto;
-  }
+  .transcript-reopen { position: absolute; top: 12px; right: 12px; z-index: 7; pointer-events: auto; }
   .transcript-reopen :global(.my-round-button) {
-    margin: 0;
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    min-height: 48px;
-    border-radius: 24px;
-    background: rgba(0, 0, 0, 0.55);
-    border-color: rgba(255, 255, 255, 0.35);
-    color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    margin: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 24px;
+    background: rgba(0, 0, 0, 0.55); border-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
   }
   .playbar {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; height: 50px;
@@ -300,8 +229,8 @@
   .play svg { display: block; width: 12px; height: 12px; fill: currentColor; }
   .time { flex: 0 0 auto; font-size: 0.7rem; font-variant-numeric: tabular-nums; opacity: 0.9; }
   .seek {
-    appearance: none; -webkit-appearance: none; flex: 1 1 auto; min-width: 0; height: 16px; margin: 0;
-    cursor: pointer; background:
+    appearance: none; -webkit-appearance: none; flex: 1 1 auto; min-width: 0; height: 16px; margin: 0; cursor: pointer;
+    background:
       linear-gradient(#fff, #fff) left center / calc(var(--p, 0) * 100%) 2px no-repeat,
       linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.35)) center / 100% 2px no-repeat;
   }
@@ -321,8 +250,5 @@
     width: 28px; height: 28px; min-width: 28px; min-height: 28px; margin-left: 0;
     border-color: rgba(255,255,255,.35); color: rgba(255,255,255,.9); background: transparent;
   }
-  .playbar :global(.my-round-button .icon) { width: 16px; height: 16px; }
-  .overlay-center {
-    position: absolute; width: 20px; height: 20px; top: 0; left: 0; right: 0; bottom: 0; margin: auto;
-  }
+  .overlay-center { position: absolute; width: 20px; height: 20px; inset: 0; margin: auto; }
 </style>

@@ -1,27 +1,23 @@
 import { env } from '$env/dynamic/private'
 import {
-  MESSAGES,
-  MODEL_ID,
-  SafeTranscriptError,
-  isBoardPath,
-  transcribeStoredAudio
+  MESSAGES, MODEL_ID, SafeTranscriptError, isBoardPath, transcribeStoredAudio
 } from '$lib/server/transcribeAudio.js'
 
 export const config = { maxDuration: 60, split: true }
 
-const FIREBASE_PROJECT = 'feynman-mvp'
-const FIREBASE_API_KEY = 'AIzaSyB7XsbhYEd_4DQigc_hfnmdpcwlvzugPOw'
-const TRANSCRIPT_VERSION = 2
-const RATE_WINDOW_MS = 60_000
-const RATE_MAX = 6
+const PROJECT = 'feynman-mvp'
+const API_KEY = 'AIzaSyB7XsbhYEd_4DQigc_hfnmdpcwlvzugPOw'
+const VERSION = 2, RATE_WINDOW_MS = 60_000, RATE_MAX = 6
 const rateHits = new Map()
+const fsUrl = (path, extra = '') =>
+  `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/${path.split('/').map(encodeURIComponent).join('/')}?${extra}key=${API_KEY}`
 
 export async function POST ({ request }) {
-  const apiKey = readApiKey()
+  const apiKey = String(env?.OPENAI_API_KEY ?? process.env.OPENAI_API_KEY ?? '').trim()
   if (!apiKey) return json(200, { skipped: true })
 
-  const token = bearerToken(request)
-  const uid = token ? await firebaseUserId(token) : ''
+  const token = bearer(request)
+  const uid = token ? await firebaseUid(token) : ''
   if (!token || !uid) return json(401, { error: MESSAGES.failed })
   if (!rateOk(uid)) return json(429, { error: MESSAGES.failed })
 
@@ -30,13 +26,10 @@ export async function POST ({ request }) {
     const declared = Number(request.headers.get('content-length') || 0)
     if (Number.isFinite(declared) && declared > 100_000) return json(413, { error: MESSAGES.failed })
     payload = await request.json()
-  } catch {
-    return json(400, { error: MESSAGES.unreadable })
-  }
+  } catch { return json(400, { error: MESSAGES.unreadable }) }
 
-  const audioDownloadURL = payload?.audioDownloadURL
-  const path = payload?.path
-  const audioKey = usableAudioKey(payload?.audioKey, audioDownloadURL)
+  const audioDownloadURL = payload?.audioDownloadURL, path = payload?.path
+  const audioKey = usableKey(payload?.audioKey, audioDownloadURL)
   if (!audioKey || typeof audioDownloadURL !== 'string' || !isBoardPath(path)) {
     return json(400, { error: MESSAGES.unreadable })
   }
@@ -48,136 +41,80 @@ export async function POST ({ request }) {
 
   try {
     const result = await transcribeStoredAudio({ url: audioDownloadURL, apiKey })
-    const saved = await persistTranscript({ path, audioKey, token, result })
-    if (result.error) return json(200, { error: result.error, saved })
-    return json(200, { segments: result.segments, saved })
+    const saved = await persist(path, audioKey, token, result)
+    return json(200, result.error ? { error: result.error, saved } : { segments: result.segments, saved })
   } catch (err) {
     const message = err instanceof SafeTranscriptError ? err.message : MESSAGES.failed
     if (!(err instanceof SafeTranscriptError)) console.error('transcription failed')
-    const saved = await persistTranscript({
-      path,
-      audioKey,
-      token,
-      result: { error: message, segments: [] }
-    })
-    return json(200, { error: message, saved })
+    return json(200, { error: message, saved: await persist(path, audioKey, token, { error: message, segments: [] }) })
   }
 }
 
 function rateOk (uid) {
-  const now = Date.now()
-  const prior = (rateHits.get(uid) || []).filter((t) => now - t < RATE_WINDOW_MS)
-  if (prior.length >= RATE_MAX) {
-    rateHits.set(uid, prior)
-    return false
-  }
-  prior.push(now)
-  rateHits.set(uid, prior)
-  return true
+  const now = Date.now(), prior = (rateHits.get(uid) || []).filter((t) => now - t < RATE_WINDOW_MS)
+  if (prior.length >= RATE_MAX) { rateHits.set(uid, prior); return false }
+  prior.push(now); rateHits.set(uid, prior); return true
 }
 
-async function readBoard (path, token, fetchImpl = fetch) {
-  const encoded = path.split('/').map((part) => encodeURIComponent(part)).join('/')
-  const endpoint = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/${encoded}?key=${FIREBASE_API_KEY}`
+async function readBoard (path, token) {
   try {
-    const response = await fetchImpl(endpoint, { headers: { authorization: `Bearer ${token}` } })
+    const response = await fetch(fsUrl(path), { headers: { authorization: `Bearer ${token}` } })
     if (!response.ok) return null
-    const fields = (await response.json())?.fields || {}
-    return {
-      creatorUID: fields.creatorUID?.stringValue || '',
-      audioDownloadURL: fields.audioDownloadURL?.stringValue || ''
-    }
-  } catch {
-    return null
-  }
+    const f = (await response.json())?.fields || {}
+    return { creatorUID: f.creatorUID?.stringValue || '', audioDownloadURL: f.audioDownloadURL?.stringValue || '' }
+  } catch { return null }
 }
 
-function readApiKey () {
-  const value = env?.OPENAI_API_KEY ?? process.env.OPENAI_API_KEY ?? ''
-  return typeof value === 'string' ? value.trim() : ''
+function usableKey (audioKey, audioDownloadURL) {
+  if (typeof audioKey === 'string' && audioKey.trim() && audioKey.length <= 2000 && !/[\r\n]/.test(audioKey)) return audioKey
+  return typeof audioDownloadURL === 'string' && audioDownloadURL.length <= 2000 ? audioDownloadURL : ''
 }
 
-function usableAudioKey (audioKey, audioDownloadURL) {
-  if (typeof audioKey === 'string' && audioKey.trim() && audioKey.length <= 2000 && !/[\r\n]/.test(audioKey)) {
-    return audioKey
-  }
-  if (typeof audioDownloadURL === 'string' && audioDownloadURL.length <= 2000) return audioDownloadURL
-  return ''
+function bearer (request) {
+  const m = (request.headers.get('authorization') || '').match(/^Bearer ([A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+)$/)
+  return m ? m[1] : ''
 }
 
-function bearerToken (request) {
-  const header = request.headers.get('authorization') || ''
-  const match = header.match(/^Bearer ([A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+)$/)
-  return match ? match[1] : ''
-}
-
-async function firebaseUserId (token, fetchImpl = fetch) {
+async function firebaseUid (token) {
   try {
-    const response = await fetchImpl(
-      `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_API_KEY}`,
-      { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ idToken: token }) }
-    )
+    const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${API_KEY}`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ idToken: token })
+    })
     if (!response.ok) return ''
     const uid = (await response.json())?.users?.[0]?.localId
     return typeof uid === 'string' && uid.length <= 128 ? uid : ''
-  } catch {
-    return ''
-  }
+  } catch { return '' }
 }
 
-function transcriptBody (audioKey, result) {
-  const createdAt = new Date().toISOString()
-  if (result.error) {
-    return { v: TRANSCRIPT_VERSION, complete: false, error: result.error, audioKey, createdAt }
-  }
-  return {
-    v: TRANSCRIPT_VERSION,
-    complete: true,
-    engine: 'openai',
-    model: MODEL_ID,
-    audioKey,
-    segments: result.segments,
-    createdAt
-  }
-}
-
-async function persistTranscript ({ path, audioKey, token, result }) {
+async function persist (path, audioKey, token, result) {
   if (!token || !isBoardPath(path)) return false
-  const encoded = path.split('/').map((part) => encodeURIComponent(part)).join('/')
-  const endpoint = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/${encoded}?updateMask.fieldPaths=transcript&key=${FIREBASE_API_KEY}`
+  const createdAt = new Date().toISOString()
+  const body = result.error
+    ? { v: VERSION, complete: false, error: result.error, audioKey, createdAt }
+    : { v: VERSION, complete: true, engine: 'openai', model: MODEL_ID, audioKey, segments: result.segments, createdAt }
   try {
-    const response = await fetch(endpoint, {
-      method: 'PATCH',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
-      body: JSON.stringify({ fields: { transcript: firestoreValue(transcriptBody(audioKey, result)) } })
+    const response = await fetch(fsUrl(path, 'updateMask.fieldPaths=transcript&'), {
+      method: 'PATCH', headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+      body: JSON.stringify({ fields: { transcript: fsVal(body) } })
     })
     return response.ok
-  } catch {
-    return false
-  }
+  } catch { return false }
 }
 
-function firestoreValue (value) {
+function fsVal (value) {
   if (value === null) return { nullValue: null }
   if (typeof value === 'boolean') return { booleanValue: value }
-  if (typeof value === 'number') {
-    return Number.isInteger(value) ? { integerValue: String(value) } : { doubleValue: value }
-  }
+  if (typeof value === 'number') return Number.isInteger(value) ? { integerValue: String(value) } : { doubleValue: value }
   if (typeof value === 'string') return { stringValue: value }
-  if (Array.isArray(value)) return { arrayValue: { values: value.map((entry) => firestoreValue(entry)) } }
+  if (Array.isArray(value)) return { arrayValue: { values: value.map(fsVal) } }
   if (typeof value === 'object') {
     const fields = {}
-    for (const [key, entry] of Object.entries(value)) {
-      if (entry !== undefined) fields[key] = firestoreValue(entry)
-    }
+    for (const [k, v] of Object.entries(value)) if (v !== undefined) fields[k] = fsVal(v)
     return { mapValue: { fields } }
   }
   return { nullValue: null }
 }
 
 function json (status, body) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'content-type': 'application/json' }
-  })
+  return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 }

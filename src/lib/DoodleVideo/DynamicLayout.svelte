@@ -11,6 +11,11 @@
   >
     <div class="stage" style="width: {videoWidth ? videoWidth + 'px' : 'auto'};">
       <slot name="video" />
+      {#if !isDrawerOpen}
+        <div class="board-float" style="top: {boardInset + 12}px;">
+          <slot name="board-float" />
+        </div>
+      {/if}
     </div>
 
     <slot name="comments-section"
@@ -41,7 +46,7 @@
     ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 72ch;`
     : overlay
     ? `position:absolute;top:${boardInset}px;right:0;bottom:${HEIGHTS.AUDIO_SLIDER}px;width:${PANEL_WIDTH}px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(128,128,128,0.5) transparent;z-index:5;`
-    : `width: 100%;`
+    : `width: 100%; max-height: 42vh; overflow-y: auto;`
 
   $: if (isDrawerOpen || videoWidth || sideBySide || stackBelow) queueMeasure()
 
@@ -104,6 +109,18 @@
   }
 
   .stage {
+    position: relative;
     flex: 0 0 auto;
+  }
+
+  /* Top-right of .board-surface (boardInset skips slide-changer chrome). */
+  .board-float {
+    position: absolute;
+    right: 12px;
+    z-index: 40;
+  }
+
+  .board-float :global(.my-round-button) {
+    background: rgba(255, 255, 255, 0.88);
   }
 </style>

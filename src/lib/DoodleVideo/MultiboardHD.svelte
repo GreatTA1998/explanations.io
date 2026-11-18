@@ -15,6 +15,7 @@
   {/if}
 
   <div
+    class="board-surface"
     style="position: relative; box-sizing: border-box;"
     data-playback-path={playbackPathOf(boardDoc)}
     on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
@@ -108,7 +109,7 @@
         publishClock()
       }}
       controls
-      style={`width: ${canvasWidth}px; height: 50px`}
+      style={`width: ${canvasWidth}px; height: 50px; position: absolute; left: 0; bottom: 0; z-index: 6;`}
     >
     
     </audio>

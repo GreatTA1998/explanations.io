@@ -38,6 +38,9 @@
         on:click={cycleLook}
       >{look}</button>
     {/if}
+    {#if onHide}
+      <CommentsPanelButton open={true} on:click={onHide} />
+    {/if}
   </div>
 
   <div class="panel-body" class:panel-hidden={activeTab !== 'comments'}>
@@ -77,6 +80,7 @@
   import { onMount } from 'svelte'
   import ListenToCollection from '$lib/Renderless/ListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
+  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import TranscriptPanel from '$lib/DoodleVideo/TranscriptPanel.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
   import { getRandomID } from '/src/helpers/utility.js'
@@ -87,6 +91,7 @@
 
   export let videoDoc
   export let overBoard = false
+  export let onHide = undefined
 
   const LOOK_KEY = 'transcriptOverlayLook'
 
@@ -169,6 +174,9 @@
   .comments-column {
     position: relative;
     width: 100%;
+    max-height: inherit;
+    min-height: 0;
+    overflow: auto;
     border-radius: 2px;
   }
 

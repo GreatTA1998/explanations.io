@@ -43,8 +43,6 @@
 
           <EurekaButton boardDoc={video} {canvasWidth} />
 
-          <CommentsPanelButton on:click={toggleComments} open={commentsOpen} />
-
           {#if $user.uid === video.creatorUID || !video.creatorUID}
             <VideoDropdownMenu {video}
               {classID}
@@ -72,7 +70,6 @@
 
 <script>
   import VideoDropdownMenu from '$lib/DoodleVideo/VideoDropdownMenu.svelte'
-  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
   import EurekaButton from '$lib/DoodleVideo/EurekaButton.svelte'
   import LegacyHDReusableSingleBoard from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import VideoFooterInfo from './VideoFooterInfo.svelte'

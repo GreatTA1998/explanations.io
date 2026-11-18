@@ -10,7 +10,7 @@
       <slot name="video" />
     </div>
     <div class="panel">
-      <slot name="comments-section" commentsSectionStyle="" overBoard={overBoard} />
+      <slot name="comments-section" overBoard={overBoard} />
     </div>
   </div>
 </div>
@@ -44,16 +44,17 @@
     if (nextOver !== overBoard) overBoard = nextOver
   }
 
-  function observeChrome (node, _params) {
+  function observeChrome (node) {
     measureChrome(node)
-    const ro = new ResizeObserver(() => measureChrome(node))
+    // Read-only: boardInset (absolute top) + overBoard flag — never writes widths.
+    const ro = new ResizeObserver(() => {
+      requestAnimationFrame(() => measureChrome(node))
+    })
     ro.observe(node)
     const t1 = setTimeout(() => measureChrome(node), 50)
     const t2 = setTimeout(() => measureChrome(node), 300)
     return {
-      update () {
-        measureChrome(node)
-      },
+      update () { measureChrome(node) },
       destroy () {
         ro.disconnect()
         clearTimeout(t1)
@@ -66,6 +67,10 @@
 <style>
   .measure {
     width: 100%;
+  }
+
+  /* Container only when layout modes matter — CQ selectors target descendants. */
+  .measure.open.ready {
     container-type: inline-size;
     container-name: doodle-layout;
   }
@@ -98,14 +103,14 @@
     }
   }
 
-  /* Overlay: enough room that shortfall ≤ ⅓ video, but not full side-by-side. */
+  /* Overlay: shortfall ≤ ⅓ video, not full side-by-side. */
   @container doodle-layout (min-width: calc(var(--panel-w) + 2 * var(--video-w) / 3)) {
-    .measure.ready.open .frame {
+    .frame {
       width: fit-content;
       max-width: 100%;
     }
 
-    .measure.ready.open .panel {
+    .panel {
       position: absolute;
       top: var(--board-inset);
       right: 0;
@@ -121,14 +126,14 @@
 
   /* Side-by-side: container fits video + panel. */
   @container doodle-layout (min-width: calc(var(--video-w) + var(--panel-w))) {
-    .measure.ready.open .frame {
+    .frame {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
       width: 100%;
     }
 
-    .measure.ready.open .panel {
+    .panel {
       position: static;
       top: auto;
       right: auto;

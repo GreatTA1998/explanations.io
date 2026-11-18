@@ -81,24 +81,18 @@
   let gridWidth = 0
   let creatorDoc = {} // AF {} is not a creator
   let teachingServers = null
-
   let currentServerID = ''
 
-  onMount(() => {
-    fetchCreatorAndServers()
-  })
+  onMount(fetchCreatorAndServers)
 
-  $: videoWidth = deriveVideoWidth(gridWidth)
+  $: videoWidth = columnWidth(gridWidth)
 
   $: {
-    if (currentServerID) {
-      fetchCreatorVideosFromServer(currentServerID)
-    } else {
-      fetchMostRecentVideos()
-    }
+    if (currentServerID) fetchCreatorVideosFromServer(currentServerID)
+    else fetchMostRecentVideos()
   }
 
-  function deriveVideoWidth (w) {
+  function columnWidth (w) {
     if (!w) return 0
     const cols = Math.max(1, Math.floor((w + GRID_GAP) / (GRID_MIN + GRID_GAP)))
     return Math.floor((w - GRID_GAP * (cols - 1)) / cols)
@@ -171,12 +165,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(336px, 1fr));
     gap: 48px;
-  }
-
-  @media (max-width: 767px) {
-    .video-grid {
-      gap: 24px;
-    }
   }
 
   .youtube-video-title {

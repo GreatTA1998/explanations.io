@@ -7,15 +7,15 @@
   on:pointerdown={pressPanel}
 >
   {#if paragraphs.length}
-    <!-- TEMP sentence-look scaffold — delete with LOOKS/bands block -->
-    <button type="button" class="look-cycle" title="TEMP sentence look · Alt+L" on:click|stopPropagation={cycleLook}>{lookName}</button>
+    <!-- TEMP look scaffold — delete with STYLES/bands block -->
+    <button type="button" class="look-cycle" title="TEMP · Alt+L style · Alt+Shift+L sentence/row" on:click|stopPropagation={cycleLook}>{lookLabel}</button>
   {/if}
   {#if paragraphs.length === 0}
     <p class="transcript-status">{problem || 'No transcript yet.'}</p>
   {:else}
-    <div class="transcript-doc" class:is-playing={playing} data-look={lookName} use:trackDoc>
+    <div class="transcript-doc" class:is-playing={playing} data-look={styleName} data-scope={scopeName} use:trackDoc>
       {#if playing && bands.length}
-        <div class="sentence-hl" aria-hidden="true">
+        <div class="look-hl" aria-hidden="true">
           {#each bands as b, i (i)}<i style="transform:translate({b.left}px,{b.top}px);width:{b.width}px;height:{b.height}px"></i>{/each}
         </div>
       {/if}
@@ -26,7 +26,8 @@
               type="button"
               class="transcript-word"
               class:is-current={currentWord && word.id === currentWord.id}
-              class:in-sentence={playing && sentence && word.id >= sentence.from && word.id <= sentence.to}
+              class:in-sentence={playing && scopeName === 'sentence' && sentence && word.id >= sentence.from && word.id <= sentence.to}
+              class:in-row={playing && scopeName === 'row' && rowMap && rowMap[word.id]}
               style={!playing && currentWord && word.id === currentWord.id ? `--p:${progress}` : undefined}
               tabindex={!currentWord ? (word.id === 0 ? 0 : -1) : (word.id === currentWord.id ? 0 : -1)}
               use:rememberWord={word}
@@ -58,14 +59,17 @@
   let pointerHold = 0, scrubFrame = 0, scrubAt = null, shown = null, pending = null, clockFrame = 0
   const wordNodes = {}
 
-  // TEMP sentence-look scaffold (Alt+L / badge) — delete after pick
-  const LOOKS = ['underline', 'wash', 'rail', 'dim']
-  let look = 0, bands = [], bandFrame = 0
-  $: lookName = LOOKS[look]
-  $: { playing; sentence; look; time; scheduleBands() }
-  function cycleLook () { look = (look + 1) % LOOKS.length }
+  // TEMP look scaffold (Alt+L style · Alt+Shift+L scope) — delete after pick
+  const STYLES = ['underline', 'wash', 'rail', 'dim'], SCOPES = ['sentence', 'row']
+  let look = 0, scope = 0, bands = [], bandFrame = 0, rowMap = null
+  $: styleName = STYLES[look]
+  $: scopeName = SCOPES[scope]
+  $: lookLabel = `${scopeName === 'row' ? 'row' : 'sent'}·${styleName}`
+  $: { playing; sentence; currentWord; look; scope; time; scheduleBands() }
+  function cycleLook (e) { if (e?.shiftKey) scope = 1 - scope; else look = (look + 1) % STYLES.length }
   function onLookKey (e) {
-    if (e.altKey && !e.metaKey && !e.ctrlKey && (e.key === 'l' || e.key === 'L')) { e.preventDefault(); cycleLook() }
+    if (!e.altKey || e.metaKey || e.ctrlKey || (e.key !== 'l' && e.key !== 'L')) return
+    e.preventDefault(); cycleLook(e)
   }
   function scheduleBands () {
     if (typeof requestAnimationFrame !== 'function') return
@@ -73,14 +77,32 @@
     bandFrame = requestAnimationFrame(() => { bandFrame = 0; paintBands() })
   }
   function paintBands () {
-    if (!playing || !sentence || !docEl) { bands = []; return }
+    if (!playing || !currentWord || !docEl) { bands = []; rowMap = null; return }
+    const box = docEl.getBoundingClientRect(), ox = box.left - docEl.scrollLeft, oy = box.top - docEl.scrollTop
+    if (scopeName === 'row') {
+      const node = wordNodes[currentWord.id]
+      if (!node) { bands = []; rowMap = null; return }
+      const p = node.closest('.transcript-paragraph'), wr = node.getBoundingClientRect()
+      const pr = p ? p.getBoundingClientRect() : box, mid = wr.top + wr.height / 2, map = {}
+      for (const id of Object.keys(wordNodes)) {
+        const el = wordNodes[id]
+        if (!el || (p && !p.contains(el))) continue
+        const r = el.getBoundingClientRect()
+        if (Math.abs(r.top + r.height / 2 - mid) < wr.height * 0.45) map[id] = true
+      }
+      rowMap = map
+      const band = { top: wr.top - oy, left: pr.left - ox, width: pr.width, height: wr.height }
+      bands = styleName === 'rail' ? [{ top: band.top, left: band.left - 8, width: 2, height: band.height }] : [band]
+      return
+    }
+    rowMap = null
+    if (!sentence) { bands = []; return }
     const a = wordNodes[sentence.from], b = wordNodes[sentence.to]
     if (!a || !b) { bands = []; return }
     const range = document.createRange(); range.setStartBefore(a); range.setEndAfter(b)
-    const box = docEl.getBoundingClientRect(), ox = box.left - docEl.scrollLeft, oy = box.top - docEl.scrollTop
     const merged = mergeRows([...range.getClientRects()].filter((r) => r.width > 1 && r.height > 1)
       .map((r) => ({ top: r.top - oy, left: r.left - ox, width: r.width, height: r.height })))
-    if (lookName !== 'rail' || !merged.length) { bands = merged; return }
+    if (styleName !== 'rail' || !merged.length) { bands = merged; return }
     const top = Math.min(...merged.map((m) => m.top)), bottom = Math.max(...merged.map((m) => m.top + m.height))
     bands = [{ top, left: Math.min(...merged.map((m) => m.left)) - 8, width: 2, height: bottom - top }]
   }
@@ -281,19 +303,22 @@
       linear-gradient(var(--caret), var(--caret)) center top / 100% 1px no-repeat,
       linear-gradient(var(--caret), var(--caret)) center bottom / 100% 1px no-repeat;
   }
-  .transcript-word.in-sentence.is-current::before { display: none; }
+  .transcript-word.in-sentence.is-current::before,
+  .transcript-word.in-row.is-current::before { display: none; }
   .transcript-word:hover,
   .transcript-word:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
 
   /* TEMP look styles — delete with scaffold */
   .look-cycle { align-self: flex-end; margin: 0 10px 2px; padding: 0; border: 0; background: none; font: inherit; font-size: 0.7rem; color: rgba(160,160,160,.9); cursor: pointer; }
-  .sentence-hl { position: absolute; inset: 0; pointer-events: none; z-index: 0; --caret: #F7C686; }
-  .sentence-hl i { position: absolute; left: 0; top: 0; display: block; box-sizing: border-box; }
-  .transcript-doc[data-look='underline'] .sentence-hl i,
-  .transcript-doc[data-look='dim'] .sentence-hl i { background: linear-gradient(var(--caret), var(--caret)) 0 100% / 100% 2px no-repeat; }
-  .transcript-doc[data-look='wash'] .sentence-hl i { background: color-mix(in srgb, var(--caret) 34%, transparent); border-radius: 3px; }
-  .transcript-doc[data-look='rail'] .sentence-hl i { background: var(--caret); border-radius: 1px; }
-  .transcript-doc[data-look='rail'].is-playing .in-sentence { color: color-mix(in srgb, #F7C686 48%, currentColor); }
+  .look-hl { position: absolute; inset: 0; pointer-events: none; z-index: 0; --caret: #F7C686; }
+  .look-hl i { position: absolute; left: 0; top: 0; display: block; box-sizing: border-box; }
+  .transcript-doc[data-look='underline'] .look-hl i,
+  .transcript-doc[data-look='dim'] .look-hl i { background: linear-gradient(var(--caret), var(--caret)) 0 100% / 100% 2px no-repeat; }
+  .transcript-doc[data-look='wash'] .look-hl i { background: color-mix(in srgb, var(--caret) 34%, transparent); border-radius: 3px; }
+  .transcript-doc[data-look='rail'] .look-hl i { background: var(--caret); border-radius: 1px; }
+  .transcript-doc[data-look='rail'].is-playing .in-sentence,
+  .transcript-doc[data-look='rail'].is-playing .in-row { color: color-mix(in srgb, #F7C686 48%, currentColor); }
   .transcript-doc[data-look='dim'].is-playing .transcript-word { opacity: 0.4; }
-  .transcript-doc[data-look='dim'].is-playing .in-sentence { opacity: 1; }
+  .transcript-doc[data-look='dim'].is-playing .in-sentence,
+  .transcript-doc[data-look='dim'].is-playing .in-row { opacity: 1; }
 </style>

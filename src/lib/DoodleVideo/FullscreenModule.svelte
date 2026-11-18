@@ -3,11 +3,7 @@
     <slot slot="video" {toggleComments} {commentsOpen} {canvasWidth} {canvasHeight}>
     </slot>
 
-    <div slot="comments-section"
-      let:commentsSectionStyle={commentsSectionStyle}
-      let:overBoard
-      style={commentsSectionStyle}
-    >
+    <div slot="comments-section" let:overBoard>
       <CommentsColumn videoDoc={boardDoc} {overBoard} />
     </div>
   </DynamicLayout>
@@ -19,8 +15,9 @@
 
   export let previewWidth = window.innerWidth * 0.35
   export let boardDoc
+  export let forceCommentsClosed = false
 
-  let commentsOpen = Boolean(boardDoc && boardDoc.isMultiboard)
+  let commentsOpen = forceCommentsClosed ? false : Boolean(boardDoc && boardDoc.isMultiboard)
 
   $: canvasWidth = previewWidth
   $: canvasHeight = canvasWidth * 3/4

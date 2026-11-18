@@ -30,14 +30,10 @@ export async function POST ({ request }) {
 
   const audioDownloadURL = payload?.audioDownloadURL, path = payload?.path
   const audioKey = usableKey(payload?.audioKey, audioDownloadURL)
-  if (!audioKey || typeof audioDownloadURL !== 'string' || !isBoardPath(path)) {
-    return json(400, { error: MESSAGES.unreadable })
-  }
+  if (!audioKey || typeof audioDownloadURL !== 'string' || !isBoardPath(path)) return json(400, { error: MESSAGES.unreadable })
 
   const board = await readBoard(path, token)
-  if (!board || board.creatorUID !== uid || board.audioDownloadURL !== audioDownloadURL) {
-    return json(403, { error: MESSAGES.failed })
-  }
+  if (!board || board.creatorUID !== uid || board.audioDownloadURL !== audioDownloadURL) return json(403, { error: MESSAGES.failed })
 
   try {
     const result = await transcribeStoredAudio({ url: audioDownloadURL, apiKey })

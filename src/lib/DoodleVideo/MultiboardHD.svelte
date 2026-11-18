@@ -42,24 +42,14 @@
               slideIDToStrokesArray[slideID] = e.detail.strokesArray
             }}
           > 
-            <div use:lazyCallable={fetchStrokes}  
-              style="
-                position: absolute;
-                transform: scale(0.5); 
-                transform-origin: top left;
-                display: {idxOfFocusedSlide === i ? '' : 'none'};
-                width: {canvasWidth * 2}px; 
-                height: {canvasHeight * 2}px;
-              "
-            > 
+            <div use:lazyCallable={fetchStrokes}
+              style="position: absolute; transform: scale(0.5); transform-origin: top left; display: {idxOfFocusedSlide === i ? '' : 'none'}; width: {canvasWidth * 2}px; height: {canvasHeight * 2}px;"
+            >
               {#if strokesArray && slideDoc}
                 <MultiboardSlide
-                  {currentTime}
-                  {strokesArray}
-                  canvasWidth={canvasWidth * 2}
-                  canvasHeight={canvasHeight * 2}
-                  {hasPlaybackStarted}
-                  {hasAudioSliderJumped}
+                  {currentTime} {strokesArray}
+                  canvasWidth={canvasWidth * 2} canvasHeight={canvasHeight * 2}
+                  {hasPlaybackStarted} {hasAudioSliderJumped}
                   backgroundImageDownloadURL={slideDoc.backgroundImageDownloadURL}
                   on:slider-jump-sync={() => hasAudioSliderJumped = false}
                 />
@@ -86,9 +76,6 @@
 </div>
 
 <script>
-  // we try to let `currentTime` represent `AudioPlayer.currentTime` as closely
-  // as possible with reactive statements, so then we can use 
-  // a reactive / declarative way to write the rest of this component
   import { revertToBoard } from '/src/helpers/unifiedDeleteAPI.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { lazyCallable } from '/src/helpers/actions.js'
@@ -138,47 +125,29 @@
     handleVideoDelete(boardDoc)
   }
 
-  // Ensure we change `idxOfFocusedSlide` 
-  $: {
-    if (currentTime > 0) {
-      let temp = 0
-      for (const change of timingOfSlideChanges) {
-        if (change.timing < currentTime) {
-          temp = change.toIdx
-        }
-        else if (change.timing > currentTime) {
-          break
-        }
-      }
-      idxOfFocusedSlide = temp
+  $: if (currentTime > 0) {
+    let temp = 0
+    for (const change of timingOfSlideChanges) {
+      if (change.timing < currentTime) temp = change.toIdx
+      else if (change.timing > currentTime) break
     }
+    idxOfFocusedSlide = temp
   }
 
-  $: if (AudioPlayer) {
-    playbackSpeed = AudioPlayer.playbackRate
-  }
+  $: if (AudioPlayer) playbackSpeed = AudioPlayer.playbackRate
 
   onMount(() => {
-    AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
-    //   we tell parent to increment `viewMinutes` by 0.1,
-    //   we do another 6 seconds timeout (via recursion)
+    AudioPlayer.playbackRate = playbackSpeed
     const sixSeconds = 6000
     function updateViewMinutes () {
-      updateViewMinutesTimeoutID = setTimeout(
-        () => {
-          if (isPlaying) {
-            dispatch('six-seconds-elapsed', { playbackSpeed })
-          }
-          updateViewMinutes()
-        },
-        sixSeconds
-      )
-    } 
+      updateViewMinutesTimeoutID = setTimeout(() => {
+        if (isPlaying) dispatch('six-seconds-elapsed', { playbackSpeed })
+        updateViewMinutes()
+      }, sixSeconds)
+    }
     updateViewMinutes()
     unregisterPlayback = registerPlayback(playbackPathOf(boardDoc), {
-      seek: seekTo,
-      play: playVideo,
-      toggle: togglePlayPause
+      seek: seekTo, play: playVideo, toggle: togglePlayPause
     })
   })
 
@@ -240,15 +209,12 @@
   }
 
   function startTimer () {
-    intervalID = setInterval(
-      () => { 
-        if (AudioPlayer) {
-          currentTime = AudioPlayer.currentTime 
-          publishClock()
-        }
-      }, // note this is a floating point calculation 
-      ONE_HUNDRED_MILLISECS
-    )
+    intervalID = setInterval(() => {
+      if (AudioPlayer) {
+        currentTime = AudioPlayer.currentTime
+        publishClock()
+      }
+    }, ONE_HUNDRED_MILLISECS)
   }
 
   async function handleVideoDelete (boardDoc) {

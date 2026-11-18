@@ -14,6 +14,7 @@
       <button
         type="button"
         class="show-drawer-toggle"
+        class:chrome-hidden={drawerChromeHidden}
         aria-label="Show the drawer"
         title="Show the drawer"
         on:click={() => sidebarFullscreen.set(false)}
@@ -52,7 +53,7 @@
   } from '/src/helpers/visitorEntry.js'
 
   import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen, sidebarFullscreen } from '../store.js'
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
@@ -67,22 +68,36 @@
 
   let unsubUserDocListener = null
   let rootEntryToken = 0
+  let drawerChromeHidden = false
+  let chromeY = 0
+  let chromeNode = null
+
+  $: if ($sidebarFullscreen) drawerChromeHidden = false
 
   onMount(async () => {
     translateJSConstantsToCSSVariables()
-
     onAuthStateChanged(auth, reactToUserChange)
-
     createSessionRecording()
-
     window.addEventListener('scroll', handleOnScroll)
+    document.addEventListener('scroll', onDrawerChromeScroll, true)
   })
 
+  onDestroy(() => document.removeEventListener('scroll', onDrawerChromeScroll, true))
+
   function handleOnScroll () {
-    const scrollTriggerBuffer = 120
-    if (window.scrollY >= window.innerHeight - scrollTriggerBuffer) {
-      isFullServerMode.set(true)
-    }
+    if (window.scrollY >= window.innerHeight - 120) isFullServerMode.set(true)
+  }
+
+  function onDrawerChromeScroll (event) {
+    if (!$sidebarFullscreen) return
+    const node = event.target === document ? document.documentElement : event.target
+    if (!node || typeof node.scrollTop !== 'number') return
+    const y = (node === document.documentElement || node === document.body) ? window.scrollY : node.scrollTop
+    if (node !== chromeNode) { chromeNode = node; chromeY = y; return }
+    const dy = y - chromeY
+    chromeY = y
+    if (dy > 8) drawerChromeHidden = true
+    else if (dy < -8) drawerChromeHidden = false
   }
 
   function restoreDrawerOnEscape (event) {
@@ -292,6 +307,12 @@
     font-size: 16px;
     font-weight: 500;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
+  .show-drawer-toggle.chrome-hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
 </style>

@@ -180,7 +180,6 @@
     return word.start + (word.end - word.start) * clamped
   }
 
-  // A press plays from the timestamp under the pointer on that word.
   function pressWord(word, event) {
     const at = timeInWord(word, event)
     playFromPointer = true
@@ -304,7 +303,6 @@
     touch-action: pan-y;
     -webkit-user-select: none;
     user-select: none;
-    
     scrollbar-width: thin;
     scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
   }
@@ -344,7 +342,6 @@
   }
 
   .transcript-word.is-current {
-    
     --caret: #F7C686;
     position: relative;
     z-index: 1;

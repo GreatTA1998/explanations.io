@@ -99,13 +99,11 @@
   let activeTab = 'transcript'
   let openedVideo = ''
   let look = 1
-  // Opening a video shows the transcript. Comments stay one tab away.
   $: if ((videoDoc?.path || '') !== openedVideo) {
     openedVideo = videoDoc?.path || ''
     activeTab = 'transcript'
   }
 
-  // Looks 2–3: dark ink; 1: light ink.
   $: lightInk = !overBoard || look === 2 || look === 3
 
   onMount(() => {
@@ -180,14 +178,12 @@
     border-radius: 2px;
   }
 
-  
   .comments-column:not(.over-board) {
     background-color: hsla(0, 100%, 100%, 0.4);
   }
 
   .comments-column.over-board {
     border-radius: 0;
-    
     min-height: 100%;
   }
 
@@ -260,9 +256,6 @@
     opacity: 1;
     color: var(--panel-fg);
   }
-
-  .look-tune-row label { display: inline-flex; align-items: center; gap: 3px; }
-  .look-tune-row input { width: 4.5rem; height: 1rem; margin: 0; accent-color: var(--panel-fg); }
 
   .over-board .my-tab-item,
   .over-board .my-active-tab {

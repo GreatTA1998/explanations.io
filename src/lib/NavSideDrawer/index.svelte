@@ -202,6 +202,30 @@
           {$drawerNavTab === 'forum' ? 'new question' : 'new room'}
         </button>
       </div>
+
+      <div class="room-drawer">
+        <!-- absolute: keeps intrinsic height so overflow scrolls without max-height -->
+        <div style="position: absolute; overflow-y: auto; inset: 0;">
+          {#if $drawerNavTab === 'forum'}
+            <QuestionsSection {classID} />
+          {:else if nameQ}
+            {#each roomHits as room (room.id)}
+              <button type="button" class="room-hit" class:selected={room.id === roomID} on:click={() => goto(`/${classID}/${room.id}`)}>
+                {room.name || '(untitled)'}
+              </button>
+            {/each}
+          {:else}
+            {#each rootRooms as room, i (room.id)}
+              {#if !room.parentRoomID}
+                <RecursiveRoom {room} {roomID} {classID} {ancestorRoomIds} orderWithinLevel={i} roomsInThisLevel={rootRooms} parentRoomIDs={['']} />
+              {/if}
+            {/each}
+            <div style="padding: 6px;">
+              <RecursiveRoomReorderDropzone orderWithinLevel={rootRooms.length} parentRoomIDs={['']} roomsInThisLevel={rootRooms} {classID} />
+            </div>
+          {/if}
+        </div>
+      </div>
     {/if}
   </section>
 </div>
@@ -210,19 +234,26 @@
 
 <script>
   import HandDrawnDrawerArrow from './HandDrawnDrawerArrow.svelte'
+  import QuestionsSection from './QuestionsSection.svelte'
+  import RecursiveRoom from './RecursiveRoom.svelte'
+  import RecursiveRoomReorderDropzone from './RecursiveRoomReorderDropzone.svelte'
+  import { ancestorIdsForRoom, sameIdSet } from './roomAncestors.js'
   import CompactServerCard from '$lib/TheTopNavbar/CompactServerCard.svelte'
   import SearchBar from '$lib/TheTopNavbar/SearchBar.svelte'
   import PopupNewServer from '$lib/TheTopNavbar/PopupNewServer.svelte'
   import AnchoredPopover from '$lib/Reusable/AnchoredPopover.svelte'
   import ReusableSignInButton from '$lib/Reusable/ReusableSignInButton.svelte'
+  import { fuzzyFilter } from '/src/helpers/fuzzyName.js'
   import { getFirestoreCollection, createRoomDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user, classServerDoc, recentSearchedServerDoc, sidebarFullscreen, drawerNavTab, drawerNameQuery } from '/src/store.js'
   import { viewport } from '/src/storeFolder/viewport.js'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
+  import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
   import { partitionServersForMenu, menuColumnCount, serverNameLeft, serverIsPublic, menuPlateLayout, viewerCanTogglePrivacy } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
+  import { onDestroy } from 'svelte'
 
   export let floating = false
 
@@ -253,6 +284,14 @@
   let menuTop = 0
   let menuLeft = 0
 
+  let classDoc = null
+  let unsubFuncs = []
+  let rooms = []
+  let lastClassID = ''
+  let ancestorRoomIds = new Set()
+
+  $: classID = $page.params.class
+  $: roomID = $page.params.roomID
   $: ({ previewServers, listServers } = partitionServersForMenu(allServers, searchVal, $user.uid))
   $: menuSplit = listServers.length > 0
   $: isPrivate = !serverIsPublic($classServerDoc)
@@ -265,12 +304,31 @@
     menuSplit
   )
   $: ({ width: menuWidth, fullWidth: menuFullWidth } = menuPlateLayout($viewport.width, columnCount, menuOffset, menuSplit))
-  $: currentServerName = nameForCurrentServer($page.params.class, allServers, $classServerDoc, $recentSearchedServerDoc)
+  $: currentServerName = nameForCurrentServer(classID, allServers, $classServerDoc, $recentSearchedServerDoc)
   $: if (menuOpen) placeMenu($viewport.width, columnCount, menuSplit)
+
+  $: if (!floating && classID) initializeRooms()
+  $: if (!floating && classID && classID !== lastClassID) {
+    lastClassID = classID
+    drawerNavTab.set('rooms')
+    drawerNameQuery.set('')
+  }
+
+  $: nameQ = $drawerNameQuery.trim()
+  $: roomHits = nameQ ? fuzzyFilter(rooms, nameQ, r => r.name) : []
+  $: rootRooms = rooms.filter(room => room.parentRoomID === '')
+  $: {
+    const nextAncestors = ancestorIdsForRoom(rooms, roomID)
+    if (!sameIdSet(ancestorRoomIds, nextAncestors)) {
+      ancestorRoomIds = nextAncestors
+    }
+  }
 
   getFirestoreCollection('classes').then(docs => {
     allServers = docs
   })
+
+  onDestroy(unsubDbListeners)
 
   function nameForCurrentServer (classId, servers, classDoc, recent) {
     const match = servers.find(server => server.id === classId)
@@ -375,7 +433,6 @@
 
   async function createNew () {
     if (creating) return
-    const classID = $page.params.class
     if (!classID) {
       newServerPopup?.openPopup()
       return
@@ -394,6 +451,24 @@
       creating = false
     }
   }
+
+  async function initializeRooms () {
+    unsubDbListeners()
+    classDoc = (await getDoc(doc(getFirestore(), `classes/${classID}`))).data()
+    const memberUIDs = [...new Set([...(classDoc?.memberUIDs || []), ...($user.uid ? [$user.uid] : [])])]
+    await updateFirestoreDoc(`classes/${classID}/`, { memberUIDs, numOfMembers: memberUIDs.length })
+    unsubFuncs.push(onSnapshot(
+      query(collection(getFirestore(), `classes/${classID}/rooms`), orderBy('classServerOrder', 'asc')),
+      (snapshot) => {
+        rooms = snapshot.docs.map(d => ({ id: d.id, path: d.ref.path, ...d.data() }))
+      }
+    ))
+  }
+
+  function unsubDbListeners () {
+    for (const unsubFunc of unsubFuncs) unsubFunc()
+    unsubFuncs = []
+  }
 </script>
 
 <style>
@@ -401,6 +476,8 @@
     position: relative;
     z-index: 5;
     width: 100%;
+    height: 100%;
+    min-height: 0;
   }
 
   .floating {
@@ -409,18 +486,34 @@
     left: 8px;
     z-index: 30;
     width: 280px;
+    height: auto;
   }
 
   .nav-panel {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
   }
 
   .floating .nav-panel {
+    height: auto;
     background-color: var(--bg-off-white);
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 3px 5px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
   }
+
+  .room-drawer { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+  .room-hit {
+    display: block; width: 100%; padding: 8px 12px; border-radius: 5px;
+    text-align: left; font-size: var(--fs-400); color: black;
+  }
+  .room-hit:hover { background: lightgrey; }
+  .room-hit.selected { font-weight: 700; background-color: #F7C686; }
+
+  .server-row, .sub-nav, .rooms-actions { flex-shrink: 0; }
 
   .server-row {
     display: flex;
@@ -511,7 +604,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 12px 32px;
+    padding: 6px 12px 8px;
   }
 
   .name-filter {

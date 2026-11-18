@@ -1,5 +1,5 @@
 <script>
-  import QuestionsSectionItem from '$lib/TheLeftDrawer/QuestionsSectionItem.svelte'
+  import QuestionsSectionItem from './QuestionsSectionItem.svelte'
   import { onMount } from 'svelte'
   import { collection, getFirestore, onSnapshot, query, orderBy } from 'firebase/firestore'
   import { drawerNameQuery } from '/src/store.js'

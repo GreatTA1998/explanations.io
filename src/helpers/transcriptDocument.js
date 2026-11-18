@@ -1,5 +1,5 @@
 
-const PARAGRAPH_GAP = 0.8
+const PARAGRAPH_GAP = 2
 const SECONDS_PER_CHAR = 0.086
 const MIN_WORD_SECONDS = 0.22
 const MAX_TAIL_SECONDS = 1.2
@@ -202,9 +202,7 @@ export function paragraphsFromWords(words) {
   for (const word of words) {
     const previous = current && current.words[current.words.length - 1]
     const gap = previous ? word.start - previous.end : 0
-    const sentenceEnded = previous && SENTENCE_END.test(previous.text)
-    const newParagraph = !current || gap >= PARAGRAPH_GAP || sentenceEnded
-    if (newParagraph) {
+    if (!current || gap >= PARAGRAPH_GAP) {
       current = { id: paragraphs.length, words: [] }
       paragraphs.push(current)
     }

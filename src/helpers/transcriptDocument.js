@@ -147,6 +147,16 @@ export function sentenceBounds (words, word) {
   return { from, to }
 }
 
+/** Sentence at time; past word.end (when end>start) attributes to the next word. */
+export function sentenceAtTime (words, time) {
+  if (!words.length || !Number.isFinite(time) || time < words[0].start) return null
+  let word = wordAtTime(words, time)
+  if (!word) return null
+  const next = words[word.id + 1]
+  if (next && word.end > word.start && time >= word.end) word = next
+  return sentenceBounds(words, word)
+}
+
 export function progressInWord (word, time) {
   if (!word) return 0
   const span = word.end - word.start

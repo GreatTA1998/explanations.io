@@ -1,46 +1,31 @@
-
 const players = new Map()
 let claimedPath = ''
 let listening = false
 let swallowKeyup = false
 
-function ensure(path) {
+function ensure (path) {
   let entry = players.get(path)
   if (!entry) {
-    entry = {
-      apis: new Set(),
-      listeners: new Set(),
-      time: null,
-      duration: 0,
-      playing: false
-    }
+    entry = { apis: new Set() }
     players.set(path, entry)
   }
   return entry
 }
 
-function release(path, entry) {
-  if (entry.apis.size === 0 && entry.listeners.size === 0) {
-    players.delete(path)
-  }
+function release (path, entry) {
+  if (!entry.apis.size) players.delete(path)
 }
 
-export function playbackPathOf(video) {
-  if (!video) return ''
-  return video.path || video.id || ''
+export function playbackPathOf (video) {
+  return video ? (video.path || video.id || '') : ''
 }
 
-export function claimPlayback(path) {
+export function claimPlayback (path) {
   if (path) claimedPath = path
 }
 
-function currentPlaybackPath() {
-  if (claimedPath && players.has(claimedPath)) return claimedPath
-  if (players.size === 1) return players.keys().next().value
-  return ''
-}
-
-export function registerPlayback(path, api) {
+/** Register seek/play/toggle (+ optional audio element) for a board path. */
+export function registerPlayback (path, api) {
   if (!path || !api) return () => {}
   const entry = ensure(path)
   entry.apis.add(api)
@@ -52,68 +37,50 @@ export function registerPlayback(path, api) {
   }
 }
 
-export function subscribePlayback(path, listener) {
-  if (!path || !listener) return () => {}
-  const entry = ensure(path)
-  entry.listeners.add(listener)
-  if (entry.time != null) {
-    listener({
-      time: entry.time,
-      duration: entry.duration,
-      reason: entry.reason,
-      playing: entry.playing === true
-    })
-  }
-  return () => {
-    entry.listeners.delete(listener)
-    release(path, entry)
-  }
-}
-
-export function publishPlayback(path, time, duration, reason, playing) {
-  if (!path || !Number.isFinite(time)) return
-  const entry = ensure(path)
-  const nextDuration = Number.isFinite(duration) ? duration : entry.duration
-  const nextReason = reason === 'seek' ? 'seek' : 'tick'
-  const nextPlaying = typeof playing === 'boolean' ? playing : entry.playing === true
-  if (
-    entry.time === time
-    && entry.duration === nextDuration
-    && entry.reason === nextReason
-    && entry.playing === nextPlaying
-  ) return
-  entry.time = time
-  entry.duration = nextDuration
-  entry.reason = nextReason
-  entry.playing = nextPlaying
-  const snapshot = { time, duration: nextDuration, reason: nextReason, playing: nextPlaying }
-  for (const listener of entry.listeners) listener(snapshot)
-}
-
-export function seekPlayback(path, time) {
-  if (!path || !Number.isFinite(time)) return false
+function firstApi (path) {
   const entry = players.get(path)
-  if (!entry || entry.apis.size === 0) return false
-  for (const api of entry.apis) api.seek(time)
-  return true
+  if (!entry) return null
+  for (const api of entry.apis) return api
+  return null
 }
 
-export function playPlayback(path, time) {
-  if (!path) return false
+/** Live audio element for a path, if the player registered one. */
+export function playbackAudio (path) {
+  const api = firstApi(path)
+  return api && api.audio ? api.audio : null
+}
+
+function callApis (path, method, arg) {
   const entry = players.get(path)
-  if (!entry || entry.apis.size === 0) return false
-  let started = false
+  if (!entry || !entry.apis.size) return false
+  let ok = false
   for (const api of entry.apis) {
-    if (typeof api.play !== 'function') continue
-    if (api.play(time) === false) continue
-    started = true
+    if (typeof api[method] !== 'function') continue
+    if (api[method](arg) === false) continue
+    ok = true
   }
-  return started
+  return ok
+}
+
+export function seekPlayback (path, time) {
+  return Number.isFinite(time) && callApis(path, 'seek', time)
+}
+
+export function playPlayback (path, time) {
+  return callApis(path, 'play', time)
+}
+
+export function togglePlayback (path) {
+  return callApis(path, 'toggle')
+}
+
+export function hoverSeeksPlayback ({ pointerType, buttons, playing }) {
+  return pointerType !== 'touch' && !buttons && playing !== true
 }
 
 const playHolds = new WeakMap()
 
-export function playAudioFrom(audio, time, start) {
+export function playAudioFrom (audio, time, start) {
   if (!audio) return false
   const previous = playHolds.get(audio)
   if (previous) previous()
@@ -123,28 +90,15 @@ export function playAudioFrom(audio, time, start) {
   let tries = 0
   let timer = 0
   let correcting = false
-
   const at = () => Number(audio.currentTime) || 0
   const arrived = () => !aimed || Math.abs(at() - target) <= 0.35
 
   const detach = () => {
-    audio.removeEventListener('seeked', correct)
-    audio.removeEventListener('playing', correct)
-    audio.removeEventListener('timeupdate', correct)
-    audio.removeEventListener('progress', correct)
-    audio.removeEventListener('loadeddata', correct)
-    audio.removeEventListener('loadedmetadata', correct)
+    for (const name of ['seeked', 'playing', 'timeupdate', 'progress', 'loadeddata', 'loadedmetadata']) {
+      audio.removeEventListener(name, correct)
+    }
     if (timer) clearTimeout(timer)
     if (playHolds.get(audio) === detach) playHolds.delete(audio)
-  }
-
-  const assign = () => {
-    try {
-      audio.currentTime = target
-    } catch (err) {
-      return false
-    }
-    return true
   }
 
   const correct = (event) => {
@@ -157,11 +111,13 @@ export function playAudioFrom(audio, time, start) {
     if (event && tries > 0 && at() >= 0.5) return
     correcting = true
     tries += 1
-    assign()
+    try { audio.currentTime = target } catch (_) {}
     correcting = false
   }
 
-  if (aimed) assign()
+  if (aimed) {
+    try { audio.currentTime = target } catch (_) {}
+  }
   for (const name of ['seeked', 'playing', 'timeupdate', 'progress', 'loadeddata', 'loadedmetadata']) {
     audio.addEventListener(name, correct)
   }
@@ -171,100 +127,57 @@ export function playAudioFrom(audio, time, start) {
 
   if (audio.paused) {
     const run = typeof start === 'function' ? start : () => audio.play()
-    let pending
     try {
-      pending = run()
-    } catch (err) {
-      pending = undefined
-    }
-    if (pending && typeof pending.catch === 'function') pending.catch(() => {})
+      const pending = run()
+      if (pending && typeof pending.catch === 'function') pending.catch(() => {})
+    } catch (_) {}
   }
   correct()
   return true
 }
 
-export function hoverSeeksPlayback({ pointerType, buttons, playing }) {
-  if (pointerType === 'touch') return false
-  if (buttons) return false
-  return playing !== true
-}
+const NON_TEXT = new Set(['button', 'submit', 'reset', 'checkbox', 'radio', 'file', 'range', 'color', 'image', 'hidden'])
 
-export function togglePlayback(path) {
-  if (!path) return false
-  const entry = players.get(path)
-  if (!entry || entry.apis.size === 0) return false
-  let toggled = false
-  for (const api of entry.apis) {
-    if (typeof api.toggle !== 'function') continue
-    api.toggle()
-    toggled = true
-  }
-  return toggled
-}
-
-const NON_TEXT_INPUTS = new Set([
-  'button', 'submit', 'reset', 'checkbox', 'radio', 'file', 'range', 'color', 'image', 'hidden'
-])
-
-function isTypingTarget(node) {
+function isTyping (node) {
   if (!node || node.nodeType !== 1) return false
   if (node.isContentEditable) return true
   const field = typeof node.closest === 'function' ? node.closest('textarea, input') : null
   if (!field) return false
   if (field.tagName === 'TEXTAREA') return true
-  const type = (field.getAttribute('type') || 'text').toLowerCase()
-  return !NON_TEXT_INPUTS.has(type)
+  return !NON_TEXT.has((field.getAttribute('type') || 'text').toLowerCase())
 }
 
-function usesSpace(node) {
-  if (!node || node.nodeType !== 1 || typeof node.closest !== 'function') return false
-  return !!node.closest([
-    'button',
-    '[role="button"]',
-    'summary',
-    'select',
-    'audio',
-    'video',
-    'input[type="button"]',
-    'input[type="submit"]',
-    'input[type="reset"]',
-    'input[type="checkbox"]',
-    'input[type="radio"]'
-  ].join(','))
+function usesSpace (node) {
+  return !!(node && typeof node.closest === 'function' && node.closest(
+    'button,[role="button"],summary,select,audio,video,input[type="button"],input[type="submit"],input[type="reset"],input[type="checkbox"],input[type="radio"]'
+  ))
 }
 
-function closestPath(node, name) {
+function attrPath (node, name) {
   if (!node || typeof node.closest !== 'function') return ''
   const owner = node.closest('[' + name + ']')
-  if (!owner || typeof owner.getAttribute !== 'function') return ''
-  return owner.getAttribute(name) || ''
+  return owner && typeof owner.getAttribute === 'function' ? (owner.getAttribute(name) || '') : ''
 }
 
-export function chooseSpacePath({ typing, transcriptPath, playbackPath, usesSpace: controlUsesSpace, registered, activePath }) {
-  const known = registered || new Set()
-  if (typing) return ''
-  if (transcriptPath && known.has(transcriptPath)) return transcriptPath
-  if (playbackPath && known.has(playbackPath)) return playbackPath
-  if (controlUsesSpace) return ''
-  return activePath && known.has(activePath) ? activePath : ''
-}
-
-export function spaceTargetPath(event) {
+function spacePath (event) {
   if (!event || event.repeat) return ''
   if (event.key !== ' ' && event.code !== 'Space') return ''
   if (event.altKey || event.ctrlKey || event.metaKey) return ''
   const target = event.target
-  return chooseSpacePath({
-    typing: isTypingTarget(target),
-    transcriptPath: closestPath(target, 'data-transcript-path'),
-    playbackPath: closestPath(target, 'data-playback-path'),
-    usesSpace: usesSpace(target),
-    registered: new Set(players.keys()),
-    activePath: currentPlaybackPath()
-  })
+  if (isTyping(target)) return ''
+  const known = new Set(players.keys())
+  const transcriptPath = attrPath(target, 'data-transcript-path')
+  if (transcriptPath && known.has(transcriptPath)) return transcriptPath
+  const playbackPath = attrPath(target, 'data-playback-path')
+  if (playbackPath && known.has(playbackPath)) return playbackPath
+  if (usesSpace(target)) return ''
+  const active = claimedPath && players.has(claimedPath)
+    ? claimedPath
+    : (players.size === 1 ? players.keys().next().value : '')
+  return active && known.has(active) ? active : ''
 }
 
-function onSpaceKey(event) {
+function onSpaceKey (event) {
   if (event.type === 'keyup') {
     if (!swallowKeyup) return
     swallowKeyup = false
@@ -278,21 +191,21 @@ function onSpaceKey(event) {
     event.stopPropagation()
     return
   }
-  const path = spaceTargetPath(event)
+  const path = spacePath(event)
   if (!path || !togglePlayback(path)) return
   swallowKeyup = true
   event.preventDefault()
   event.stopPropagation()
 }
 
-function ensureKeyListener() {
+function ensureKeyListener () {
   if (listening || typeof document === 'undefined') return
   document.addEventListener('keydown', onSpaceKey, true)
   document.addEventListener('keyup', onSpaceKey, true)
   listening = true
 }
 
-function releaseKeyListener() {
+function releaseKeyListener () {
   if (!listening || players.size > 0 || typeof document === 'undefined') return
   document.removeEventListener('keydown', onSpaceKey, true)
   document.removeEventListener('keyup', onSpaceKey, true)

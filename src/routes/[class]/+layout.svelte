@@ -115,5 +115,4 @@
   .overlay-drawer #left-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 86vw); z-index: 40; }
   .room-drawer { flex: 1; min-height: 0; overflow: hidden; }
   #main-content { grid-area: main; position: relative; z-index: 0; min-width: 0; }
-  #main-content.sidebar-fullscreen { padding-top: 72px; }
 </style>

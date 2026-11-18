@@ -20,7 +20,8 @@
     
 
     {#if !isPaid}
-      <span on:click={startAudioPlayer} 
+      <span
+        on:click={startAudioPlayer}
         class="material-icons overlay-center" 
         style="
         color: rgba(230, 230, 230, 0.8);
@@ -34,7 +35,8 @@
         play_circle
       </span>
     {:else if isPaid && (($user.uid === creatorUID) || hasSubscribedToCreator)}
-      <span on:click={startAudioPlayer} 
+      <span
+        on:click={startAudioPlayer}
         class="material-icons overlay-center" 
         style="color: purple; background-color: white; border-radius: 50%;  
         width: {156 * scaleFactor}px; 
@@ -100,14 +102,10 @@
 
   <div>
     <audio 
-      on:play={() => {
-        initSyncing()
-        publishClock()
-      }} 
+      on:play={initSyncing}
       on:focusin={() => claimPlayback(playbackPath)}
       data-playback-path={playbackPath}
       on:seeking={handleSeeking}
-      on:timeupdate={() => publishClock()}
       on:loadedmetadata={handleLoadedMetadata}
       on:canplay={applyQueuedSeek}
       use:captureAudioPlayer
@@ -124,7 +122,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { assumedCanvasWidth, user } from '../../store.js' // note `canvasWidth` was misleading
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
-  import { claimPlayback, playAudioFrom, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
+  import { claimPlayback, playAudioFrom, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once
@@ -203,14 +201,8 @@
     bgCtx = bgCanvas.getContext('2d')
 
     AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
-    AudioPlayer.onended = () => {
-      isPlaying = false
-      publishClock()
-    }
-    AudioPlayer.onpause = () => {
-      isPlaying = false
-      publishClock()
-    }
+    AudioPlayer.onended = () => { isPlaying = false }
+    AudioPlayer.onpause = () => { isPlaying = false }
 
     //   we tell parent to increment `viewMinutes` by 0.1,
     //   we do another 6 seconds timeout (via recursion)
@@ -228,6 +220,7 @@
     } 
     updateViewMinutes()
     unregisterPlayback = registerPlayback(playbackPath, {
+      get audio () { return AudioPlayer },
       seek: seekTo,
       play: playVideo,
       toggle: togglePlayPause
@@ -252,17 +245,6 @@
     AudioPlayer = node
   }
 
-  function publishClock(reason) {
-    if (!AudioPlayer || !playbackPath) return
-    publishPlayback(
-      playbackPath,
-      AudioPlayer.currentTime || 0,
-      AudioPlayer.duration || 0,
-      reason === 'seek' ? 'seek' : 'tick',
-      !AudioPlayer.paused
-    )
-  }
-
   function playVideo(time) {
     if (isLocked) {
       alert('You can unlock this video by subscribing to the creator!')
@@ -273,12 +255,10 @@
 
   function handleSeeking() {
     if (allFrames) syncStrokesToAudio()
-    publishClock('seek')
   }
 
   function handleLoadedMetadata() {
     applyQueuedSeek()
-    publishClock()
   }
 
   function seekTo(time) {

@@ -1,4 +1,3 @@
-
 export const MODEL_ID = 'whisper-1'
 export const MAX_DURATION_SECONDS = 30 * 60
 export const REASONABLE_BYTES_PER_SECOND = 48000 * 2 * 2
@@ -17,54 +16,46 @@ export const MESSAGES = {
 }
 
 export class SafeTranscriptError extends Error {
-  constructor(message) {
+  constructor (message) {
     super(message)
     this.name = 'SafeTranscriptError'
   }
 }
 
-export function decideTranscription(durationSeconds, sizeBytes) {
+export function decideTranscription (durationSeconds, sizeBytes) {
   if (durationSeconds != null && Number.isFinite(durationSeconds)) {
-    if (durationSeconds > MAX_DURATION_SECONDS) return { transcribe: false, code: 'tooLong' }
-    return { transcribe: true }
+    return durationSeconds > MAX_DURATION_SECONDS
+      ? { transcribe: false, code: 'tooLong' }
+      : { transcribe: true }
   }
   if (sizeBytes == null || !Number.isFinite(sizeBytes)) return { transcribe: false, code: 'unknown' }
   if (sizeBytes > MAX_REASONABLE_BYTES) return { transcribe: false, code: 'tooLarge' }
   return { transcribe: true }
 }
 
-export function isBoardPath(path) {
+export function isBoardPath (path) {
   if (typeof path !== 'string' || path.length > 400) return false
   const parts = path.split('/')
-  if (parts.length < 2 || parts.length > 12) return false
-  if (parts[0] !== 'classes') return false
+  if (parts.length < 2 || parts.length > 12 || parts[0] !== 'classes') return false
   return parts.every((part) => /^[A-Za-z0-9_-]{1,128}$/.test(part))
 }
 
-export function isAllowedAudioUrl(raw) {
+export function isAllowedAudioUrl (raw) {
   let url
-  try {
-    url = new URL(raw)
-  } catch {
-    return false
-  }
-  if (url.protocol !== 'https:') return false
-  if (url.username || url.password) return false
+  try { url = new URL(raw) } catch { return false }
+  if (url.protocol !== 'https:' || url.username || url.password) return false
   if (url.hostname !== 'firebasestorage.googleapis.com') return false
   const prefix = `/v0/b/${STORAGE_BUCKET}/o/`
   if (!url.pathname.startsWith(prefix)) return false
   let objectPath = ''
-  try {
-    objectPath = decodeURIComponent(url.pathname.slice(prefix.length))
-  } catch {
-    return false
-  }
-  if (!objectPath.startsWith('audio/')) return false
-  if (objectPath.includes('..') || objectPath.includes('\\') || objectPath.includes('\0')) return false
-  return true
+  try { objectPath = decodeURIComponent(url.pathname.slice(prefix.length)) } catch { return false }
+  return objectPath.startsWith('audio/')
+    && !objectPath.includes('..')
+    && !objectPath.includes('\\')
+    && !objectPath.includes('\0')
 }
 
-export function parseWavInfo(bytes) {
+export function parseWavInfo (bytes) {
   if (!bytes || bytes.byteLength < 44) return null
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
   if (fourCc(view, 0) !== 'RIFF' || fourCc(view, 8) !== 'WAVE') return null
@@ -82,10 +73,7 @@ export function parseWavInfo(bytes) {
     const size = view.getUint32(offset + 4, true)
     const chunk = offset + 8
     if (chunk + size > view.byteLength) {
-      if (id === 'data') {
-        dataOffset = chunk
-        dataSize = size
-      }
+      if (id === 'data') { dataOffset = chunk; dataSize = size }
       break
     }
     if (id === 'fmt ' && size >= 16) {
@@ -106,7 +94,7 @@ export function parseWavInfo(bytes) {
   return { audioFormat, channels, sampleRate, byteRate, blockAlign, bitsPerSample, dataOffset, dataSize }
 }
 
-export function wavDurationSeconds(wav, totalBytes) {
+export function wavDurationSeconds (wav, totalBytes) {
   if (!wav || !(wav.byteRate > 0)) return null
   let dataSize = wav.dataSize
   if (totalBytes != null && Number.isFinite(totalBytes)) {
@@ -115,7 +103,7 @@ export function wavDurationSeconds(wav, totalBytes) {
   return dataSize / wav.byteRate
 }
 
-export function planSlices(dataSize, blockAlign, maxUploadBytes = MAX_UPLOAD_BYTES) {
+export function planSlices (dataSize, blockAlign, maxUploadBytes = MAX_UPLOAD_BYTES) {
   const header = 44
   const maxPcm = Math.max(blockAlign, (maxUploadBytes - header) - ((maxUploadBytes - header) % blockAlign))
   const slices = []
@@ -128,7 +116,7 @@ export function planSlices(dataSize, blockAlign, maxUploadBytes = MAX_UPLOAD_BYT
   return slices
 }
 
-export function buildPcmWav(data, { sampleRate, channels, bitsPerSample }) {
+export function buildPcmWav (data, { sampleRate, channels, bitsPerSample }) {
   const blockAlign = channels * (bitsPerSample / 8)
   const byteRate = sampleRate * blockAlign
   const dataSize = data.byteLength
@@ -151,17 +139,15 @@ export function buildPcmWav(data, { sampleRate, channels, bitsPerSample }) {
   return wav
 }
 
-export function transcriptionFile(bytes, contentType) {
-  const sniffed = sniffContainer(bytes)
-  const fromHeader = containerFromMime(contentType)
-  const container = sniffed || fromHeader
+export function transcriptionFile (bytes, contentType) {
+  const container = sniffContainer(bytes) || containerFromMime(contentType)
   if (container === 'wav') return { mimeType: 'audio/wav', filename: 'audio.wav' }
   if (container === 'webm') return { mimeType: 'audio/webm', filename: 'audio.webm' }
   if (container === 'mp4') return { mimeType: 'audio/mp4', filename: 'audio.mp4' }
   return { mimeType: 'application/octet-stream', filename: 'audio.bin' }
 }
 
-export function segmentsFromTranscription(body, offsetSeconds = 0, sliceSeconds = null) {
+export function segmentsFromTranscription (body, offsetSeconds = 0, sliceSeconds = null) {
   const offset = Number.isFinite(Number(offsetSeconds)) ? Number(offsetSeconds) : 0
   const localWords = collectWords(body)
   const rawSegments = Array.isArray(body?.segments) ? body.segments : []
@@ -195,8 +181,7 @@ export function segmentsFromTranscription(body, offsetSeconds = 0, sliceSeconds 
     const text = cleanText(body?.text)
     if (text) {
       const slice = Number(sliceSeconds)
-      const end = Number.isFinite(slice) ? Math.max(0, slice) : 0
-      segments = [{ start: 0, end, text, words: [] }]
+      segments = [{ start: 0, end: Number.isFinite(slice) ? Math.max(0, slice) : 0, text, words: [] }]
     }
   }
 
@@ -218,13 +203,8 @@ export function segmentsFromTranscription(body, offsetSeconds = 0, sliceSeconds 
   })
 }
 
-export async function requestTranscription({
-  bytes,
-  mimeType,
-  filename,
-  apiKey,
-  timestamps,
-  fetchImpl = fetch
+export async function requestTranscription ({
+  bytes, mimeType, filename, apiKey, timestamps, fetchImpl = fetch
 }) {
   const form = new FormData()
   form.append('file', new Blob([bytes], { type: mimeType }), filename)
@@ -257,7 +237,15 @@ export async function requestTranscription({
   }
 }
 
-export async function transcribeStoredAudio({
+async function whisper (args) {
+  let result = await requestTranscription({ ...args, timestamps: true })
+  if (result.unsupportedTimestamps) {
+    result = await requestTranscription({ ...args, timestamps: false })
+  }
+  return result
+}
+
+export async function transcribeStoredAudio ({
   url,
   apiKey,
   fetchImpl = fetch,
@@ -269,14 +257,12 @@ export async function transcribeStoredAudio({
   const prefix = await fetchByteRange(url, 0, 65535, fetchImpl, maxReasonableBytes)
   const wav = parseWavInfo(prefix.bytes)
   const totalBytes = prefix.totalBytes
-  let durationSeconds = wavDurationSeconds(wav, totalBytes)
+  const durationSeconds = wavDurationSeconds(wav, totalBytes)
   const sizeForDecision = durationSeconds == null
     ? await unknownSize(url, prefix, fetchImpl, maxReasonableBytes)
     : totalBytes
   const decision = decideTranscription(durationSeconds, sizeForDecision ?? totalBytes ?? prefix.bytes.byteLength)
-  if (!decision.transcribe) {
-    return { segments: [], error: MESSAGES[decision.code] }
-  }
+  if (!decision.transcribe) return { segments: [], error: MESSAGES[decision.code] }
 
   if (wav && wav.audioFormat === 1 && wav.bitsPerSample >= 8 && wav.bitsPerSample % 8 === 0) {
     let available = wav.dataSize
@@ -286,90 +272,50 @@ export async function transcribeStoredAudio({
     const slices = planSlices(available, wav.blockAlign, maxUploadBytes)
     if (!slices.length) return { segments: [], error: MESSAGES.empty }
     const segments = []
-    let timestamps = true
     for (const slice of slices) {
       const fileStart = wav.dataOffset + slice.start
       const part = await fetchByteRange(url, fileStart, fileStart + slice.length - 1, fetchImpl, slice.length + 64)
-      const pcm = sliceBytes(part, fileStart, slice.length)
+      const pcm = part.bytes.byteLength >= slice.length
+        ? part.bytes.subarray(0, slice.length)
+        : (() => { throw new SafeTranscriptError(MESSAGES.unreadable) })()
       const bytes = buildPcmWav(pcm, wav)
-      let result = await requestTranscription({
-        bytes,
-        mimeType: 'audio/wav',
-        filename: 'audio.wav',
-        apiKey,
-        timestamps,
-        fetchImpl
-      })
-      if (result.unsupportedTimestamps) {
-        timestamps = false
-        result = await requestTranscription({
-          bytes,
-          mimeType: 'audio/wav',
-          filename: 'audio.wav',
-          apiKey,
-          timestamps: false,
-          fetchImpl
-        })
-      }
-      const offset = slice.start / wav.byteRate
-      const seconds = slice.length / wav.byteRate
-      segments.push(...segmentsFromTranscription(result.json, offset, seconds))
+      const result = await whisper({ bytes, mimeType: 'audio/wav', filename: 'audio.wav', apiKey, fetchImpl })
+      segments.push(...segmentsFromTranscription(result.json, slice.start / wav.byteRate, slice.length / wav.byteRate))
     }
-    if (!segments.length) return { segments: [], error: MESSAGES.empty }
-    return { segments, error: '' }
+    return segments.length ? { segments, error: '' } : { segments: [], error: MESSAGES.empty }
   }
 
   const wholeSize = totalBytes ?? prefix.bytes.byteLength
-  if (wholeSize > maxUploadBytes) {
-    return { segments: [], error: MESSAGES.unsplittable }
-  }
+  if (wholeSize > maxUploadBytes) return { segments: [], error: MESSAGES.unsplittable }
   const wholeResult = totalBytes == null || prefix.complete
     ? prefix
     : await fetchByteRange(url, 0, wholeSize - 1, fetchImpl, maxUploadBytes)
-  const whole = wholeResult.bytes
-  const described = transcriptionFile(whole, wholeResult.contentType || prefix.contentType)
-  let result = await requestTranscription({
-    bytes: whole,
+  const described = transcriptionFile(wholeResult.bytes, wholeResult.contentType || prefix.contentType)
+  const result = await whisper({
+    bytes: wholeResult.bytes,
     mimeType: described.mimeType,
     filename: described.filename,
     apiKey,
-    timestamps: true,
     fetchImpl
   })
-  if (result.unsupportedTimestamps) {
-    result = await requestTranscription({
-      bytes: whole,
-      mimeType: described.mimeType,
-      filename: described.filename,
-      apiKey,
-      timestamps: false,
-      fetchImpl
-    })
-  }
   const segments = segmentsFromTranscription(result.json, 0, durationSeconds)
-  if (!segments.length) return { segments: [], error: MESSAGES.empty }
-  return { segments, error: '' }
+  return segments.length ? { segments, error: '' } : { segments: [], error: MESSAGES.empty }
 }
 
-async function unknownSize(url, prefix, fetchImpl, maxReasonableBytes) {
+async function unknownSize (url, prefix, fetchImpl, maxReasonableBytes) {
   if (prefix.totalBytes != null) return prefix.totalBytes
   if (prefix.complete) return prefix.bytes.byteLength
   const more = await fetchByteRange(url, 0, maxReasonableBytes, fetchImpl, maxReasonableBytes + 1)
-  if (more.truncated) return maxReasonableBytes + 1
-  return more.totalBytes ?? more.bytes.byteLength
+  return more.truncated ? maxReasonableBytes + 1 : (more.totalBytes ?? more.bytes.byteLength)
 }
 
-async function fetchByteRange(url, start, end, fetchImpl, cap) {
+async function fetchByteRange (url, start, end, fetchImpl, cap) {
   const response = await fetchImpl(url, {
     redirect: 'manual',
     headers: { Range: `bytes=${start}-${end}` }
   })
-  if (response.status >= 300 && response.status < 400) {
-    throw new SafeTranscriptError(MESSAGES.unreadable)
-  }
-  if (!response.ok && response.status !== 206) {
-    throw new SafeTranscriptError(MESSAGES.unreadable)
-  }
+  if (response.status >= 300 && response.status < 400) throw new SafeTranscriptError(MESSAGES.unreadable)
+  if (!response.ok && response.status !== 206) throw new SafeTranscriptError(MESSAGES.unreadable)
   const totalBytes = totalFrom(response, start)
   const limit = Math.max(1, Math.min(cap, end - start + 1))
   const read = await readUpTo(response, limit)
@@ -383,12 +329,7 @@ async function fetchByteRange(url, start, end, fetchImpl, cap) {
   }
 }
 
-function sliceBytes(part, fileStart, length) {
-  if (part.bytes.byteLength >= length) return part.bytes.subarray(0, length)
-  throw new SafeTranscriptError(MESSAGES.unreadable)
-}
-
-function totalFrom(response, start) {
+function totalFrom (response, start) {
   const range = response.headers.get('content-range')
   if (range) {
     const match = range.match(/\/(\d+)\s*$/)
@@ -401,13 +342,12 @@ function totalFrom(response, start) {
   return null
 }
 
-async function readUpTo(response, limit) {
+async function readUpTo (response, limit) {
   if (!response.body || typeof response.body.getReader !== 'function') {
     const buffer = new Uint8Array(await response.arrayBuffer())
-    if (buffer.byteLength > limit) {
-      return { bytes: buffer.subarray(0, limit), complete: false, truncated: true }
-    }
-    return { bytes: buffer, complete: true, truncated: false }
+    return buffer.byteLength > limit
+      ? { bytes: buffer.subarray(0, limit), complete: false, truncated: true }
+      : { bytes: buffer, complete: true, truncated: false }
   }
   const reader = response.body.getReader()
   const chunks = []
@@ -422,7 +362,7 @@ async function readUpTo(response, limit) {
       chunks.push(value.subarray(0, room))
       size += room
       truncated = true
-      try { await reader.cancel() } catch {  }
+      try { await reader.cancel() } catch { }
       break
     }
     chunks.push(value)
@@ -437,7 +377,7 @@ async function readUpTo(response, limit) {
   return { bytes, complete: !truncated, truncated }
 }
 
-function collectWords(source) {
+function collectWords (source) {
   if (!Array.isArray(source?.words)) return []
   return source.words.flatMap((word) => {
     const spoken = typeof word?.word === 'string' ? word.word.trim() : ''
@@ -448,15 +388,15 @@ function collectWords(source) {
   })
 }
 
-function cleanText(text) {
+function cleanText (text) {
   return String(text || '').replace(/\s+/g, ' ').trim()
 }
 
-function round3(value) {
+function round3 (value) {
   return Math.round(value * 1000) / 1000
 }
 
-function fourCc(view, offset) {
+function fourCc (view, offset) {
   return String.fromCharCode(
     view.getUint8(offset),
     view.getUint8(offset + 1),
@@ -465,11 +405,11 @@ function fourCc(view, offset) {
   )
 }
 
-function writeFourCc(view, offset, text) {
+function writeFourCc (view, offset, text) {
   for (let i = 0; i < 4; i += 1) view.setUint8(offset + i, text.charCodeAt(i))
 }
 
-function sniffContainer(bytes) {
+function sniffContainer (bytes) {
   if (!bytes || bytes.byteLength < 4) return ''
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
   if (bytes.byteLength >= 12 && fourCc(view, 0) === 'RIFF' && fourCc(view, 8) === 'WAVE') return 'wav'
@@ -478,7 +418,7 @@ function sniffContainer(bytes) {
   return ''
 }
 
-function containerFromMime(contentType) {
+function containerFromMime (contentType) {
   const base = String(contentType || '').split(';')[0].trim().toLowerCase()
   if (base === 'audio/wav' || base === 'audio/wave' || base === 'audio/x-wav') return 'wav'
   if (base === 'audio/webm' || base === 'video/webm') return 'webm'

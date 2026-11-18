@@ -12,6 +12,8 @@
 
   <div
     class="board-surface"
+    role="region"
+    aria-label="Board"
     style="position: relative; box-sizing: border-box;"
     data-playback-path={playbackPathOf(boardDoc)}
     on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
@@ -26,7 +28,7 @@
           play_circle
         </button>
       {/if}
-      {#each boardDoc.slideIDs as slideID, i}
+      {#each boardDoc.slideIDs as slideID, i (slideID)}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >

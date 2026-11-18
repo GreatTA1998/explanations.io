@@ -20,7 +20,11 @@
     
 
     {#if !isPaid}
-      <span on:click={startAudioPlayer} 
+      <span
+        role="button"
+        tabindex="0"
+        on:click={startAudioPlayer}
+        on:keydown
         class="material-icons overlay-center" 
         style="
         color: rgba(230, 230, 230, 0.8);
@@ -34,7 +38,11 @@
         play_circle
       </span>
     {:else if isPaid && (($user.uid === creatorUID) || hasSubscribedToCreator)}
-      <span on:click={startAudioPlayer} 
+      <span
+        role="button"
+        tabindex="0"
+        on:click={startAudioPlayer}
+        on:keydown
         class="material-icons overlay-center" 
         style="color: purple; background-color: white; border-radius: 50%;  
         width: {156 * scaleFactor}px; 
@@ -46,7 +54,10 @@
       </span>
     {:else}
       <span
+        role="button"
+        tabindex="0"
         on:click={ () => alert('You can unlock this video by subscribing to the creator!')}
+        on:keydown
         class="material-icons overlay-center" 
         style="color: purple; background-color: white; border-radius: 50%;  
         width: {156 * scaleFactor}px; 

@@ -50,7 +50,9 @@ export async function POST({ request }) {
   }
 
   const board = await readBoard(path, token)
-  if (!boardOwnsAudio(board, uid, audioDownloadURL, audioKey)) {
+  // Whisper fetches audioDownloadURL — require exact match to the board's stored URL
+  // so a creator cannot pair their path/audioKey with another board's Storage URL.
+  if (!board || board.creatorUID !== uid || board.audioDownloadURL !== audioDownloadURL) {
     return json(403, { error: MESSAGES.failed })
   }
 
@@ -84,13 +86,6 @@ function rateOk (uid) {
   return true
 }
 
-function boardOwnsAudio (board, uid, audioDownloadURL, audioKey) {
-  if (!board || board.creatorUID !== uid) return false
-  return board.audioDownloadURL === audioDownloadURL
-    || board.audioRefFullPath === audioKey
-    || board.audioDownloadURL === audioKey
-}
-
 async function readBoard (path, token, fetchImpl = fetch) {
   const encoded = path.split('/').map((part) => encodeURIComponent(part)).join('/')
   const endpoint = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/${encoded}?key=${FIREBASE_API_KEY}`
@@ -102,8 +97,7 @@ async function readBoard (path, token, fetchImpl = fetch) {
     const fields = (await response.json())?.fields || {}
     return {
       creatorUID: fields.creatorUID?.stringValue || '',
-      audioDownloadURL: fields.audioDownloadURL?.stringValue || '',
-      audioRefFullPath: fields.audioRefFullPath?.stringValue || ''
+      audioDownloadURL: fields.audioDownloadURL?.stringValue || ''
     }
   } catch {
     return null

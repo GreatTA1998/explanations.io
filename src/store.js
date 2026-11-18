@@ -12,7 +12,7 @@ export const userInfoFromAuthProvider = writable({})
 
 export const currentTool = writable({
     type: 'pencil',
-    color: 'hsla(0, 0, 100%, 0)',
+    color: 'white',
     lineWidth: 3
 })
 export const onlyAllowApplePencil = writable(true)
@@ -25,6 +25,14 @@ export const willPreventPageLeave = writable(false)
 export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2', 'p3tOuo1fkUYTgDhNnpjfCh403ZH3']) // for some reason I have 2 accounts with eltonlin1998@gmail.com
 
 export const drawerWidth = writable(WIDTHS.DRAWER_EXPANDED)
+
+// Hides the whole sidebar (nav cluster and room list) until the floating exit control is pressed.
+export const sidebarFullscreen = writable(false)
+
+// Left-drawer peer nav under the server bar: rooms (default) | forum.
+export const drawerNavTab = writable('rooms')
+// Client-only name filter for the rooms / forum lists (no network).
+export const drawerNameQuery = writable('')
 
 export const whatIsBeingDragged = writable('')
 export const whatIsBeingDraggedID = writable('')

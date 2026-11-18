@@ -1,34 +1,57 @@
+<svelte:window on:keydown={restoreDrawerOnEscape} />
+
 <div>
   {#if !$hasFetchedUser}
     <h4 style="margin-left: 16px; opacity: 70%; font-weight: 400">
       Fetching your info...
     </h4>
   {:else}
-    <TheTopNavbar isHomeScreenVisible={!$isFullServerMode}/>
+    {#if $isFullServerMode && !$page.params.class && $page.url.pathname !== '/' && !$sidebarFullscreen}
+      <NavSideDrawer floating />
+    {/if}
+
+    {#if $sidebarFullscreen && $page.url.pathname !== '/'}
+      <button
+        type="button"
+        class="show-drawer-toggle"
+        aria-label="Show the drawer"
+        title="Show the drawer"
+        on:click={() => sidebarFullscreen.set(false)}
+      >
+        <HandDrawnDrawerArrow pointing="right" />
+      </button>
+    {/if}
 
     {#if $didRenderSplashScreen && !$isFullServerMode}
       <SplashLandingPage />
     {/if}
 
-    <!-- Full Server Page will be injected here -->
+    
     <slot />
   {/if}
 </div>
 
 <script>
+  import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
+  import HandDrawnDrawerArrow from '$lib/NavSideDrawer/HandDrawnDrawerArrow.svelte'
   import SplashLandingPage from '$lib/SplashLandingPage/index.svelte'
-  import TheTopNavbar from '$lib/TheTopNavbar/index.svelte'
 
   import { initializeDatabase } from '../database.js'
   import 'firebase/app'
-  import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
+  import { getAuth, onAuthStateChanged } from 'firebase/auth'
   import { getFirestore, doc, deleteDoc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'firebase/firestore'
 
   import { updateFirestoreDoc, getFirestoreDoc } from '/src/helpers/crud.js'
   import { getRandomColor } from "/src/helpers/utility.js"
-  import { handleServerRedirect } from '/src/helpers/everythingElse.js'
+  import {
+    DEFAULT_HOMEPAGE_SERVER_ID,
+    homepageServerPath,
+    loadErrorAlert,
+    loggedInRootDestination,
+    loggedOutEntry
+  } from '/src/helpers/visitorEntry.js'
 
-  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen } from '../store.js'
+  import { hasFetchedUser, user, userInfoFromAuthProvider, isFullServerMode, didRenderSplashScreen, sidebarFullscreen } from '../store.js'
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -42,7 +65,8 @@
   const auth = getAuth()
   const db = getFirestore()
 
-  let unsubUserDocListener = null 
+  let unsubUserDocListener = null
+  let rootEntryToken = 0
 
   onMount(async () => {
     translateJSConstantsToCSSVariables()
@@ -50,17 +74,23 @@
     onAuthStateChanged(auth, reactToUserChange)
 
     createSessionRecording()
-    
+
     window.addEventListener('scroll', handleOnScroll)
   })
 
-  function handleOnScroll (e) {
-    const navbarHeight = 56
-    if (window.scrollY >= window.innerHeight - navbarHeight) {
+  function handleOnScroll () {
+    const scrollTriggerBuffer = 120
+    if (window.scrollY >= window.innerHeight - scrollTriggerBuffer) {
       isFullServerMode.set(true)
     }
   }
-  
+
+  function restoreDrawerOnEscape (event) {
+    if (event.key === 'Escape' && $sidebarFullscreen) {
+      sidebarFullscreen.set(false)
+    }
+  }
+
   function createSessionRecording () {
     posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7',
       {
@@ -76,7 +106,6 @@
 
       const { uid } = resultUser 
 
-      // NOTE: the partial hydration will give incorrect UIDs for accounts that need forwarding
       // partially hydrate the user so we can start rendering the page in parallel
       user.set({ 
         // email: resultUser.email || '', // email information is unavailable because Touchstone has some encoding for the properties
@@ -105,21 +134,51 @@
     } 
 
     // user not logged in
-    else {
-      try {
-        didRenderSplashScreen.set(true)
-
-        const algebraAndNumberTheoryServer = await getFirestoreDoc(`classes/${'I90n3qyz45VmY0azjbhh'}`)
-        handleServerRedirect(algebraAndNumberTheoryServer)
-
-        // await signInAnonymously(auth)
-      } catch (error) {
-        console.error(error)
-        alert("Error code & message, see console for details =", error.code + ' ' + error.message)
-      }
+    else if (loggedOutEntry($page.url.pathname) === 'homepage') {
+      didRenderSplashScreen.set(true)
+      isFullServerMode.set(false)
+    }
+    else if (!$didRenderSplashScreen) {
+      // A shared server or room URL is the destination. Show that page
+      // instead of a homepage splash or another server.
+      isFullServerMode.set(true)
     }
     
     hasFetchedUser.set(true) 
+  }
+
+  // Auth runs once. Back, and any later client visit to /, has to open the
+  // homepage again. Direct links never enter this branch.
+  $: if ($hasFetchedUser && $page.url.pathname === '/') {
+    openRootPage($user && $user.uid, $user && $user.mostRecentServerID)
+  }
+
+  function openRootPage (uid, mostRecentServerID) {
+    if ($page.url.pathname !== '/') return
+    const token = ++rootEntryToken
+    if (uid) {
+      const destination = loggedInRootDestination('/', mostRecentServerID)
+      if (destination) goto(destination, { replaceState: true })
+      return
+    }
+    openLoggedOutHomepage(token)
+  }
+
+  async function openLoggedOutHomepage (token) {
+    didRenderSplashScreen.set(true)
+    isFullServerMode.set(false)
+    let server = null
+    try {
+      server = await getFirestoreDoc(`classes/${DEFAULT_HOMEPAGE_SERVER_ID}`)
+    } catch (error) {
+      console.error(error)
+      if (token !== rootEntryToken) return
+      alert(loadErrorAlert(error))
+    }
+    if (token !== rootEntryToken || $page.url.pathname !== '/') return
+    const path = homepageServerPath(server)
+    // The splash is already on screen. Keep whatever the visitor has scrolled.
+    if (path) await goto(path, { replaceState: true, noScroll: true })
   }
 
   function migrateOldUserSchemaToNew (mirrorUserDoc) {
@@ -207,15 +266,6 @@
             })
           }
 
-          // QUICKFIX: for some reason user.set() is still not hydrated even after `await listenToUserDocAndHandleForwarding()`, so we just 
-          // handle navigation directly here
-          // only redirect from the home page '/' path, for specific URLs don't fuck with it
-
-          // COMMENTED OUT FOR TESTING
-          if ($page.url.pathname === '/' && $user.mostRecentServerID) {
-            goto(`/${$user.mostRecentServerID}/question`)
-          }
-
           resolve()
         }
       })
@@ -223,3 +273,25 @@
   }
 </script>
 
+<style>
+  .show-drawer-toggle {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 24px;
+    border: 1px solid lightgrey;
+    background: white;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  }
+
+</style>

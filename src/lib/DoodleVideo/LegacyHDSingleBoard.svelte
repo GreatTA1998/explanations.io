@@ -1,13 +1,8 @@
-<!-- Key techniques
-  Render in larger size, then scale down, rather than just render in current size
-  https://stackoverflow.com/questions/26176557/text-blurry-after-3d-transform
 
-  `transform-origin: top left` to preserve the formatting
--->
 
 <div>
 
-  <!-- The delete button is added here -->
+  
   <div style="z-index: 3; justify-content: space-between; width: 100%; position: absolute; left: 0; right: auto; top: 0; bottom: auto; display: flex; padding-top: 8px; padding-bottom: 4px;">
     <slot name="twoTimesSpeedButtonSlot">
       <BaseTransparentButton on:click={togglePlaySpeed}>
@@ -20,9 +15,9 @@
     </slot>
   </div>
 
-  <!-- The play button double-duties as an indication that the video has finished fetching -->
+  
   {#if !recursiveSyncer && isPlaying === false && strokesArray}
-    <!-- font-size: {60 * (canvasWidth / assumedCanvasWidth)}rem; -->
+    
 
     {#if !isPaid}
       <span on:click={startAudioPlayer} 
@@ -64,16 +59,15 @@
     {/if}
   {/if}
 
-  <!-- 
-    For reasons I don't understand, I need `position: absolute` 
-    otherwise pencil strokes are submerged by back canvas 
-  -->
+  
 
-  <!-- WHEN THE SCALING GETS TOO MUCH, NOW IT'S THE SCALING DOWN THAT WILL CAUSE ERRORS E.G. SCALE (0.1) will produce lots of gaps-->
+  
   <div style="position: relative; transform: scale(0.5); transform-origin: top left;">
     <canvas 
-      bind:this={canvas} 
+      use:captureCanvas
       on:click={togglePlayPause}
+      on:pointerdown={() => claimPlayback(playbackPath)}
+      data-playback-path={playbackPath}
       style={`
         position: absolute; 
         z-index: 1; 
@@ -85,11 +79,11 @@
       }
     >
     </canvas>
-    <!-- rgb(46, 49, 49) -->
+    
 
-    <!-- the non-100% opacity makes the pencil colors very visible -->
+    
     <canvas 
-      bind:this={bgCanvas} 
+      use:captureBackgroundCanvas 
       style={`
         position: absolute;
         z-index: 0;
@@ -106,9 +100,17 @@
 
   <div>
     <audio 
-      on:play={initSyncing} 
-      on:seeking={syncStrokesToAudio}
-      bind:this={AudioPlayer} 
+      on:play={() => {
+        initSyncing()
+        publishClock()
+      }} 
+      on:focusin={() => claimPlayback(playbackPath)}
+      data-playback-path={playbackPath}
+      on:seeking={handleSeeking}
+      on:timeupdate={() => publishClock()}
+      on:loadedmetadata={handleLoadedMetadata}
+      on:canplay={applyQueuedSeek}
+      use:captureAudioPlayer
       src={audioDownloadURL} 
       controls={!isLocked}
       style={`width: ${visualWidth}px; height: ${90 * scaleFactor}px; position: absolute; bottom: 0; top: auto;`}>
@@ -122,6 +124,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { assumedCanvasWidth, user } from '../../store.js' // note `canvasWidth` was misleading
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
+  import { claimPlayback, playAudioFrom, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   /**
    * Assumes `strokesArray` gets hydrated EXACTLY once
@@ -142,6 +145,7 @@
   export let isPaid = false
   export let creatorUID
   export let classID
+  export let playbackPath = ''
 
   let hasPlayedOnce = false
   let isPlaying = false
@@ -156,6 +160,9 @@
   let recursiveSyncer
   let playbackSpeed = 1
   let updateViewMinutesTimeoutID
+  let queuedSeek = null
+  let applyingSeek = false
+  let unregisterPlayback = () => {}
 
   $: hasSubscribedToCreator = $user.idsOfSubscribedClasses && $user.idsOfSubscribedClasses.includes(classID)
   $: isLocked = isPaid && ($user.uid !== creatorUID)
@@ -189,7 +196,6 @@
 
   $: if (AudioPlayer) {
     playbackSpeed = AudioPlayer.playbackRate
-    // I know...AudioPlayer is not reactive because of bind:this, will refactor in future
   }
 
   onMount(() => {
@@ -197,13 +203,17 @@
     bgCtx = bgCanvas.getContext('2d')
 
     AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
-    AudioPlayer.onended = (e) => isPlaying = false 
-    AudioPlayer.onpause = (e) => isPlaying = false
+    AudioPlayer.onended = () => {
+      isPlaying = false
+      publishClock()
+    }
+    AudioPlayer.onpause = () => {
+      isPlaying = false
+      publishClock()
+    }
 
-    // after 6 seconds, if the video is still playing:
     //   we tell parent to increment `viewMinutes` by 0.1,
     //   we do another 6 seconds timeout (via recursion)
-    // BASE CASE: nothing will be updated nor called after the countdown if the video is no longer playing
     const sixSeconds = 6000
     function updateViewMinutes () {
       updateViewMinutesTimeoutID = setTimeout(
@@ -217,12 +227,76 @@
       )
     } 
     updateViewMinutes()
+    unregisterPlayback = registerPlayback(playbackPath, {
+      seek: seekTo,
+      play: playVideo,
+      toggle: togglePlayPause
+    })
   })
 
   onDestroy(() => {
+    unregisterPlayback()
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
     if (updateViewMinutesTimeoutID) clearTimeout(updateViewMinutesTimeoutID)
   })
+
+  function captureCanvas(node) {
+    canvas = node
+  }
+
+  function captureBackgroundCanvas(node) {
+    bgCanvas = node
+  }
+
+  function captureAudioPlayer(node) {
+    AudioPlayer = node
+  }
+
+  function publishClock(reason) {
+    if (!AudioPlayer || !playbackPath) return
+    publishPlayback(
+      playbackPath,
+      AudioPlayer.currentTime || 0,
+      AudioPlayer.duration || 0,
+      reason === 'seek' ? 'seek' : 'tick',
+      !AudioPlayer.paused
+    )
+  }
+
+  function playVideo(time) {
+    if (isLocked) {
+      alert('You can unlock this video by subscribing to the creator!')
+      return false
+    }
+    return playAudioFrom(AudioPlayer, time, startAudioPlayer)
+  }
+
+  function handleSeeking() {
+    if (allFrames) syncStrokesToAudio()
+    publishClock('seek')
+  }
+
+  function handleLoadedMetadata() {
+    applyQueuedSeek()
+    publishClock()
+  }
+
+  function seekTo(time) {
+    queuedSeek = time
+    applyQueuedSeek()
+  }
+
+  function applyQueuedSeek() {
+    if (applyingSeek || !AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
+    const target = queuedSeek
+    applyingSeek = true
+    AudioPlayer.currentTime = target
+    applyingSeek = false
+    // An ignored assignment leaves the playhead at 0. Keep the target so a
+    // later canplay can try again instead of starting from the beginning.
+    const now = AudioPlayer.currentTime || 0
+    if (AudioPlayer.seeking || Math.abs(now - target) < 0.3) queuedSeek = null
+  }
 
   function togglePlaySpeed () {
     if (AudioPlayer.playbackRate === 2) {
@@ -278,8 +352,9 @@
   }
 
   function startAudioPlayer () {
-    AudioPlayer.play()
+    const pending = AudioPlayer.play()
     dispatch('video-start')
+    return pending
   }
 
   function getStartTime ({ strokeIndex, pointIndex }) {
@@ -292,7 +367,6 @@
     return strokePeriod / stroke.points.length;
   }
 
-  // NOTE: initSyncing() is called EVERY time you press play (e.g. after a pause) - the video playback works as expected but not for the reasons you think
   function initSyncing () {
     isPlaying = true
 
@@ -316,7 +390,6 @@
   function syncStrokesToAudio () {
     if (!AudioPlayer) return
     const nextFrame = allFrames[nextFrameIdx];
-    // !nextFrame: nextFrame is undefined after a video finishes
     // ahead of video now (maybe because we slid back the audio player): nextFrame.startTime > AudioPlayer.currentTime 
     if (!nextFrame || nextFrame.startTime > AudioPlayer.currentTime) { 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -351,7 +424,6 @@
     )
   }
 
-  // TO-DO: rename to "handleResize"
   function rerenderStrokes () {
     return new Promise(async (resolve) => {
       if (recursiveSyncer) {

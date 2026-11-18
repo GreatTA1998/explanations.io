@@ -6,53 +6,20 @@ export const VIDEO_LAYOUT = {
   TRANSPARENT_OVERLAY: 'transparent-overlay'
 }
 
-export function getCinemaVideoSize () {
-  // title will be displayed in the comment-transcript section
-  // maximum space utilization for the video, no drawer, but has an audio slider and the board changer
-  let remainingWidth = window.innerWidth
-  let remainingHeight = window.innerHeight
-
-  remainingHeight -= (HEIGHTS.BOARD_CHANGER + HEIGHTS.AUDIO_SLIDER)
-
-  const canvasWidth = getCanvasWidth({ 
-    availableWidth: remainingWidth, 
-    availableHeight: remainingHeight 
-  })
-
-  return canvasWidth
-}
-
-export function getPreviewVideoWidth ({ containerWidth, containerHeight }) {
-  let remainingWidth = containerWidth
-  let remainingHeight = containerHeight
-  remainingHeight -= (HEIGHTS.BOARD_CHANGER + HEIGHTS.TITLE + HEIGHTS.AUDIO_SLIDER)
-  remainingWidth -= 2 * PAGE_PADDING
-
-  return getCanvasWidth({ 
-    availableWidth: remainingWidth, 
-    availableHeight: remainingHeight 
-  })
-  // it'll naturally react to drawer expand/collapse via `containerWidth`
-}
-
-export function getBlackboardModuleSize ({ containerWidth, containerHeight }) {
-  // needs to fit board changer + blackboard (respecting drawer width)
-  // respects the drawer width (and achieves fullscreen by closing the drawer. The advantage is 
-  let remainingWidth = containerWidth
-  let remainingHeight = containerHeight
-
-  remainingHeight -= HEIGHTS.BOARD_CHANGER
-  remainingWidth -= 2 * PAGE_PADDING
-
-  return getCanvasWidth({ 
-    availableWidth: remainingWidth, 
-    availableHeight: remainingHeight 
+// Live boards and playback share this size. Controls sit on the canvas, so a
+// video is not given a shorter board to leave a strip for the player.
+// pageInset matches beta/main: leave PAGE_PADDING on each side of the main column.
+// Cinema / fullscreen passes pageInset: false so the board can fill the window.
+export function getBoardWidth ({ containerWidth, containerHeight, pageInset = true }) {
+  return fitCanvas({
+    availableWidth: pageInset ? containerWidth - 2 * PAGE_PADDING : containerWidth,
+    availableHeight: containerHeight - HEIGHTS.BOARD_CHANGER
   })
 }
 
-function getCanvasWidth ({ availableWidth, availableHeight }) { 
-  if (availableWidth/ASPECT_RATIO <= availableHeight) {
+function fitCanvas ({ availableWidth, availableHeight }) {
+  if (availableWidth / ASPECT_RATIO <= availableHeight) {
     return availableWidth
-  } 
-  else return availableHeight * ASPECT_RATIO
+  }
+  return availableHeight * ASPECT_RATIO
 }

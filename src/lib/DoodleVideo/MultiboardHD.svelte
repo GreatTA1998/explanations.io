@@ -1,7 +1,7 @@
-<!-- Create an independent stacking context -->
+
 <div style="z-index: 0; position: relative;">
   {#if showSlideChanger}
-    <!-- 1px quick-fix so UI doesn't look terrible -->
+    
     <div style="margin-bottom: 1px; display: flex; align-items: center; width: {canvasWidth}px; flex-wrap: wrap; row-gap: 2px;">  
       <slot />
 
@@ -14,7 +14,12 @@
     </div>
   {/if}
 
-  <div style="position: relative; box-sizing: border-box;">
+  <div
+    style="position: relative; box-sizing: border-box;"
+    data-playback-path={playbackPathOf(boardDoc)}
+    on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
+    on:pointerdown={() => claimPlayback(playbackPathOf(boardDoc))}
+  >
     <div style="position: absolute; top: 8px; left: 8px; z-index: 6; display: flex; align-items: center;">
       <BaseTransparentButton on:click={togglePlaySpeed} style="font-weight: 500;">
         {playbackSpeed}x 
@@ -76,26 +81,36 @@
       {/each}
     </div>
 
-    <!-- <audio> can't grow beyond 50px, it just introduces unexpected spacing -->
+    
     <audio
       src={audioDownloadURL}
       bind:this={AudioPlayer}
+      data-playback-path={playbackPathOf(boardDoc)}
+      on:focusin={() => claimPlayback(playbackPathOf(boardDoc))}
       on:play={() => {
         hasPlaybackStarted = true;
         isPlaying = true;
         startTimer();
+        publishClock();
       }}
       on:pause={() => {
         isPlaying = false;
+        publishClock();
       }}
       on:seeking={() => {
         currentTime = AudioPlayer.currentTime;
         hasAudioSliderJumped = true
+        publishClock('seek')
+      }}
+      on:timeupdate={() => publishClock()}
+      on:loadedmetadata={() => {
+        applyQueuedSeek()
+        publishClock()
       }}
       controls
       style={`width: ${canvasWidth}px; height: 50px`}
     >
-    <!-- ${Math.min(90 * scaleFactor, 50)}px; -->
+    
     </audio>
   </div>
 </div>
@@ -113,6 +128,7 @@
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import BaseTransparentButton from '$lib/Reusable/BaseTransparentButton.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
+  import { claimPlayback, playAudioFrom, playbackPathOf, publishPlayback, registerPlayback } from '/src/helpers/playbackBridge.js'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
@@ -137,10 +153,14 @@
   let hasPlaybackStarted = false
 
   let currentTime = 0
+  let duration = 0
   const ONE_HUNDRED_MILLISECS = 100
   let isPlaying = false
 
   let updateViewMinutesTimeoutID
+  let queuedSeek = null
+  let applyingSeek = false
+  let unregisterPlayback = () => {}
 
   $: scaleFactor = canvasWidth / $assumedCanvasWidth
 
@@ -149,7 +169,6 @@
   }
 
   // Ensure we change `idxOfFocusedSlide` 
-  // NOTE: doesn't need to be optimized yet , there are only about 10-20 slide changes at most
   $: {
     if (currentTime > 0) {
       let temp = 0
@@ -167,16 +186,12 @@
 
   $: if (AudioPlayer) {
     playbackSpeed = AudioPlayer.playbackRate
-    // I know...AudioPlayer is not reactive because of bind:this, will refactor in future
   }
 
   onMount(() => {
     AudioPlayer.playbackRate = playbackSpeed // for some reason changing `AudioPlayer.defaultPlaybackRate` doesn't do anything
-    // HANDLE INCREMENTING VIEW MINUTES
-    // after 6 seconds, if the video is still playing:
     //   we tell parent to increment `viewMinutes` by 0.1,
     //   we do another 6 seconds timeout (via recursion)
-    // BASE CASE: nothing will be updated nor called after the countdown if the video is no longer playing
     const sixSeconds = 6000
     function updateViewMinutes () {
       updateViewMinutesTimeoutID = setTimeout(
@@ -190,12 +205,54 @@
       )
     } 
     updateViewMinutes()
+    unregisterPlayback = registerPlayback(playbackPathOf(boardDoc), {
+      seek: seekTo,
+      play: playVideo,
+      toggle: togglePlayPause
+    })
   })
 
   onDestroy(() => {
+    unregisterPlayback()
     if (intervalID) clearInterval(intervalID)
     if (updateViewMinutesTimeoutID) clearTimeout(updateViewMinutesTimeoutID)
-  }) 
+  })
+
+  function publishClock (reason) {
+    if (!AudioPlayer) return
+    if (Number.isFinite(AudioPlayer.duration)) duration = AudioPlayer.duration
+    publishPlayback(
+      playbackPathOf(boardDoc),
+      AudioPlayer.currentTime || 0,
+      AudioPlayer.duration || 0,
+      reason === 'seek' ? 'seek' : 'tick',
+      !AudioPlayer.paused
+    )
+  }
+
+  function playVideo (time) {
+    return playAudioFrom(AudioPlayer, time)
+  }
+
+  function togglePlayPause () {
+    if (isPlaying) AudioPlayer.pause()
+    else if (AudioPlayer) AudioPlayer.play()
+  }
+
+  function seekTo (time) {
+    queuedSeek = time
+    applyQueuedSeek()
+  }
+
+  function applyQueuedSeek () {
+    if (applyingSeek || !AudioPlayer || queuedSeek == null || AudioPlayer.readyState < 1) return
+    const target = queuedSeek
+    applyingSeek = true
+    AudioPlayer.currentTime = target
+    applyingSeek = false
+    const now = AudioPlayer.currentTime || 0
+    if (AudioPlayer.seeking || Math.abs(now - target) < 0.3) queuedSeek = null
+  }
 
   function togglePlaySpeed () {
     if (AudioPlayer.playbackRate === 2) {
@@ -206,6 +263,7 @@
   }
 
   function startAudioPlayer () {
+    claimPlayback(playbackPathOf(boardDoc))
     if (AudioPlayer) {
       AudioPlayer.play()
     }
@@ -216,15 +274,11 @@
       () => { 
         if (AudioPlayer) {
           currentTime = AudioPlayer.currentTime 
+          publishClock()
         }
       }, // note this is a floating point calculation 
       ONE_HUNDRED_MILLISECS
     )
-  }
-  function createAndCopyShareLink () {
-    const shareLink = window.location.href
-    navigator.clipboard.writeText(shareLink)
-    alert('Share link has been copied, you can now paste it anywhere.')
   }
 
   async function handleVideoDelete (boardDoc) {
@@ -254,5 +308,3 @@
     margin: auto; 
   }
 </style>
-
-

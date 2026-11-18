@@ -1,27 +1,46 @@
-<div class="comments-column">
+<div
+  class="comments-column"
+  class:over-board={overBoard}
+  class:glass-surface={overBoard}
+  data-look={overBoard ? look : undefined}
+  >
   <slot/>
 
-  <!-- <div style="display: flex; margin-bottom: 2vw; width: 100%; justify-content: space-between;">
-    <div class="my-tab-item">
-      <span class="material-symbols-outlined" style="cursor: not-allowed;">
-        translate
-      </span>
-      <p style="font-size: 12px;">
-        (transcript coming soon)
-      </p>
-    </div>      
+  <div class="panel-tabs" role="tablist" aria-label="Transcript and comments">
+    <button
+      type="button"
+      role="tab"
+      class="my-tab-item"
+      class:my-active-tab={activeTab === 'transcript'}
+      aria-selected={activeTab === 'transcript'}
+      on:click={() => activeTab = 'transcript'}
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">subtitles</span>
+      Transcript
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="my-tab-item"
+      class:my-active-tab={activeTab === 'comments'}
+      aria-selected={activeTab === 'comments'}
+      on:click={() => activeTab = 'comments'}
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">forum</span>
+      Comments
+    </button>
+    {#if overBoard}
+      <button
+        type="button"
+        class="look-cycle"
+        title="Overlay look {look}/3 (click to cycle)"
+        aria-label="Cycle overlay look, currently {look} of 3"
+        on:click={cycleLook}
+      >{look}</button>
+    {/if}
+  </div>
 
-    <div class="my-tab-item"class:my-active-tab={true}  style="margin-bottom: 0; margin-top: auto;" >
-      <span class="material-symbols-outlined" style="cursor: pointer;">
-        forum
-      </span>
-      <p style="font-size: 12px;">
-        Comments
-      </p>
-    </div>
-  </div> -->
-
-  <div style="padding: 12px; display: flex; flex-direction: column; row-gap: 12px;">
+  <div class="panel-body" class:panel-hidden={activeTab !== 'comments'}>
     <ListenToCollection collectionPath={videoDoc.path + '/comments'}
       let:collectionDocs={commentDocs}
     >
@@ -29,7 +48,8 @@
         value={newInputComment} 
         on:input={(e) => newInputComment = e.detail}
         placeholder="New comment..."
-        placeholderColor="rgb(60, 60, 60)"
+        placeholderColor={lightInk ? 'rgb(60, 60, 60)' : 'rgba(255, 255, 255, 0.6)'}
+        color={lightInk ? 'rgb(60, 60, 60)' : '#fff'}
         nonFocusedPlaceholderOpacity={0.5}
       />
       
@@ -38,7 +58,7 @@
       </button>
 
       {#if commentDocs}
-        {#each commentDocs as commentDoc}
+        {#each commentDocs as commentDoc (commentDoc.id)}
           <CommentsColumnComment 
             comment={commentDoc} 
             on:comment-delete={() => deleteComment(commentDoc)}
@@ -47,21 +67,54 @@
       {/if}
     </ListenToCollection>  
   </div>
+
+  {#if activeTab === 'transcript'}
+    <TranscriptPanel {videoDoc} />
+  {/if}
 </div>
 
 <script>
+  import { onMount } from 'svelte'
   import ListenToCollection from '$lib/Renderless/ListenToCollection.svelte'
   import CommentsColumnComment from '$lib/DoodleVideo/CommentsColumnComment.svelte'
+  import TranscriptPanel from '$lib/DoodleVideo/TranscriptPanel.svelte'
   import { handleNewCommentEmailNotifications } from '/src/helpers/everythingElse.js'
-  import { getRandomID, displayDate } from '/src/helpers/utility.js'
+  import { getRandomID } from '/src/helpers/utility.js'
   import { getFirestore, writeBatch, doc, increment } from 'firebase/firestore'
   import { user } from '/src/store.js'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { page } from '$app/stores'
 
   export let videoDoc
+  export let overBoard = false
+
+  const LOOK_KEY = 'transcriptOverlayLook'
 
   let newInputComment = ''
+  let activeTab = 'transcript'
+  let openedVideo = ''
+  let look = 1
+  // Opening a video shows the transcript. Comments stay one tab away.
+  $: if ((videoDoc?.path || '') !== openedVideo) {
+    openedVideo = videoDoc?.path || ''
+    activeTab = 'transcript'
+  }
+
+  // Looks 2–3: dark ink; 1: light ink.
+  $: lightInk = !overBoard || look === 2 || look === 3
+
+  onMount(() => {
+    const q = new URLSearchParams(location.search).get('look')
+      || (location.hash.match(/look=([1-3])/) || [])[1]
+    const n = Number(q || localStorage.getItem(LOOK_KEY))
+    if (n >= 1 && n <= 3) look = n
+  })
+
+  function cycleLook () {
+    look = look % 3 + 1
+    try { localStorage.setItem(LOOK_KEY, String(look)) } catch (_) {}
+  }
+
   
   function createComment () {
     if (!newInputComment) return
@@ -114,9 +167,20 @@
 
 <style>
   .comments-column {
+    position: relative;
     width: 100%;
-    background-color: hsla(0, 100%, 100%, 0.4);
     border-radius: 2px;
+  }
+
+  
+  .comments-column:not(.over-board) {
+    background-color: hsla(0, 100%, 100%, 0.4);
+  }
+
+  .comments-column.over-board {
+    border-radius: 0;
+    
+    min-height: 100%;
   }
 
   .submit-button {
@@ -128,20 +192,89 @@
     font-size: var(--fs-300);
   }
 
+  .panel-tabs {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .panel-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+  }
+
+  .panel-hidden {
+    display: none;
+  }
+
   .my-tab-item {
-    font-size: 1.4rem;
+    font-size: 0.8125rem;
     border-bottom: 2px solid rgb(160, 160, 160);
-    padding: 0.5vw;
+    padding: 8px 4px;
     color: rgb(160, 160, 160);
     flex-grow: 1;
     text-align: center;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .my-tab-item .material-symbols-outlined {
+    font-size: 18px;
   }
 
   .my-active-tab {
     border-bottom: 2px solid black;
     color: black;
     font-weight: 600;
+  }
+
+  .look-cycle {
+    flex: 0 0 auto;
+    align-self: center;
+    margin: 0 6px 0 0;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 4px;
+    font-size: 0.65rem;
+    line-height: 1;
+    color: var(--panel-fg-muted);
+    background: transparent;
+    border: 0;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .look-cycle:hover {
+    opacity: 1;
+    color: var(--panel-fg);
+  }
+
+  .look-tune-row label { display: inline-flex; align-items: center; gap: 3px; }
+  .look-tune-row input { width: 4.5rem; height: 1rem; margin: 0; accent-color: var(--panel-fg); }
+
+  .over-board .my-tab-item,
+  .over-board .my-active-tab {
+    border-bottom: 0;
+    color: var(--panel-fg-muted);
+    font-weight: 400;
+  }
+
+  .over-board .my-active-tab {
+    color: var(--panel-fg);
+    font-weight: 600;
+  }
+
+  .over-board .submit-button {
+    color: var(--panel-fg);
+    background: transparent;
+    border: 0;
+  }
+
+  .over-board :global(.copied-from-old-explain-2) {
+    color: var(--panel-fg-muted) !important;
   }
 </style>

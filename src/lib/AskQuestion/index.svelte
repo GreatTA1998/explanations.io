@@ -1,6 +1,4 @@
 <div>
-  <LeftDrawerToggleButton/>
-
   <div style="padding: 16px;">
     <CodepenInput
       value={questionTitleInput}
@@ -60,7 +58,6 @@
 <script>
   import FileUploader from './FileUploader.svelte'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
-  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import CodepenInput from './CodepenInput.svelte'
   import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
 

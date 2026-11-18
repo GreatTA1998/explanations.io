@@ -1,95 +1,114 @@
-<div class={$videoCinemaLayout} 
-  style="width: 100%; position: relative;"
+<div
+  class="measure"
   use:trackWidth={exactWidth => availableWidth = exactWidth}
 >
-  <slot name="video" />
+  
+  <div
+    class="frame"
+    class:side-by-side={sideBySide}
+    style="width: {frameWidth};"
+    use:trackBoardInset
+  >
+    <div class="stage" style="width: {videoWidth ? videoWidth + 'px' : 'auto'};">
+      <slot name="video" />
+    </div>
 
-  {#if $videoCinemaLayout === VIDEO_LAYOUT.TRANSPARENT_OVERLAY}
-    {#if !isDrawerOpen}
-      <button on:click={toggleDrawer} class="expand-drawer-floating-button material-symbols-outlined">
-        start
-      </button>
-    {:else}
-      <button on:click={toggleDrawer} 
-        class="hide-drawer-button material-symbols-outlined" 
-        style="position: absolute; top: 48px; right: 208px; color: rgba(255, 255, 255, 0.7);"
-      >
-        start
-      </button>
-    {/if}
-  {/if}
-
-  <!-- no parent, so that the client can decide whether to render the comments section without any unwanted parent divs -->
-  <slot name="comments-section" 
-    toggleDrawer={toggleDrawer}
-    commentsSectionStyle="display: {isDrawerOpen ? 'block' : 'none'}; {commentsSectionStyle[$videoCinemaLayout]}"
-  />
+    <slot name="comments-section"
+      commentsSectionStyle="display: {isDrawerOpen ? 'block' : 'none'}; {panelStyle}"
+      overBoard={!sideBySide}
+    />
+  </div>
 </div>
 
 <script>
-  import { VIDEO_LAYOUT } from '/src/helpers/dimensions.js'
-  import { videoCinemaLayout, videoPreviewWidth } from '/src/store.js'
+  import { HEIGHTS } from '/src/helpers/CONSTANTS.js'
   import { trackWidth } from '/src/helpers/actions.js'
 
-  let isDrawerOpen = true
-  let availableWidth
+  // Rendered canvas width. The column is often wider, because the 4:3 board
+  // is height-limited and the spare width is the white margin.
+  export let videoWidth = 0
+  export let isDrawerOpen = false
 
-  $: determineLayout(availableWidth, $videoPreviewWidth)
+  const PANEL_WIDTH = 320
 
-  function determineLayout () {
-    const { SIDE_BY_SIDE, TRANSPARENT_OVERLAY, MOBILE_VERTICAL } = VIDEO_LAYOUT
-    const drawerWidth = 200
-    const remainingWidth = availableWidth - $videoPreviewWidth
+  let availableWidth = 0
+  // Distance from frame top to .board-surface (slide-changer row height).
+  let boardInset = 0
 
-    if (drawerWidth <= remainingWidth) videoCinemaLayout.set(SIDE_BY_SIDE)
-    else if ((drawerWidth - remainingWidth) <= ($videoPreviewWidth / 3)) videoCinemaLayout.set(TRANSPARENT_OVERLAY)
-    else videoCinemaLayout.set(MOBILE_VERTICAL)
-  }
-
-  const commentsSectionStyle = {
-    // used to be width: 25%
-    [VIDEO_LAYOUT.TRANSPARENT_OVERLAY]: `
+  $: margin = availableWidth - videoWidth
+  $: sideBySide = videoWidth > 0 && margin >= PANEL_WIDTH
+  $: frameWidth = sideBySide || !videoWidth ? '100%' : `${videoWidth}px`
+  $: panelStyle = sideBySide
+    ? `flex: 1 1 0; min-width: ${PANEL_WIDTH}px; max-width: 72ch;`
+    : `
       position: absolute;
-      top: 38px;
-      right: 0; 
-      left: auto;
-      width: 200px; 
-    `,
-    [VIDEO_LAYOUT.SIDE_BY_SIDE]: `
-      flex-basis: 0; 
-      flex-grow: 1;
-      max-width: 54ch;
-    `,
-    [VIDEO_LAYOUT.MOBILE_VERTICAL]: `
-      max-height: 140px;
+      top: ${boardInset}px;
+      right: 0;
+      bottom: ${HEIGHTS.AUDIO_SLIDER}px;
+      width: ${PANEL_WIDTH}px;
       overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
+      z-index: 5;
     `
+
+  // Remeasure when layout inputs change (drawer / width / side-by-side).
+  $: if (isDrawerOpen || videoWidth || sideBySide) queueMeasure()
+
+  let frameNode = null
+  let measureQueued = false
+
+  function queueMeasure () {
+    if (!frameNode || measureQueued) return
+    measureQueued = true
+    requestAnimationFrame(() => {
+      measureQueued = false
+      measureBoardInset(frameNode)
+    })
   }
 
-  function toggleDrawer () {
-    isDrawerOpen = !isDrawerOpen
+  function measureBoardInset (node) {
+    if (!node) return
+    const board = node.querySelector('.board-surface')
+    const next = board
+      ? Math.max(0, Math.round(board.getBoundingClientRect().top - node.getBoundingClientRect().top))
+      : 0
+    if (next !== boardInset) boardInset = next
+  }
+
+  function trackBoardInset (node) {
+    frameNode = node
+    measureBoardInset(node)
+    const ro = new ResizeObserver(() => measureBoardInset(node))
+    ro.observe(node)
+    const t1 = setTimeout(() => measureBoardInset(node), 50)
+    const t2 = setTimeout(() => measureBoardInset(node), 300)
+    return {
+      destroy () {
+        frameNode = null
+        ro.disconnect()
+        clearTimeout(t1)
+        clearTimeout(t2)
+      }
+    }
   }
 </script>
 
 <style>
-  :global(.side-by-side) {
-    display: flex;
+  .measure {
+    width: 100%;
   }
 
-  :global(.mobile-vertical) {
-    display: flex;
-    flex-direction: column;
+  .frame {
+    position: relative;
   }
 
-  .expand-drawer-floating-button {
-    border: 2px solid rgb(122, 122, 122);
-    border-radius: 24px;
-    padding: 4px;
-    right: 12px;
-    z-index: 10; 
-    transform: rotateY(180deg); 
-    position: absolute; 
-    top: 48px; 
-    color: rgb(156, 156, 156);
+  .side-by-side {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .stage {
+    flex: 0 0 auto;
   }
 </style>

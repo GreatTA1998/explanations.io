@@ -2,50 +2,21 @@
   class="server-card core-shadow"
   class:red-alert-border={needsTeachers}
 >
-  <div style="position: absolute; top: 8px; left: 16px; color: rgb(248, 249, 249); z-index: 1;">
-    <div style="color: white; font-weight: 600;">
+  <div class="server-name-overlay">
+    <div class="server-name-text">
       {serverObj.name}
     </div>
   </div>
 
-  <!-- {#if needsTeachers}
-    <div style="background-color: red; color: white; position: absolute; top: 36px; left: 16px; padding: 4px 8px; border-radius: 4px; font-size: 14px;">
-      Needs teachers
-    </div>
-  {/if} -->
-
-  <div style="width: 100%; z-index: 1; position: absolute; bottom: 8px; color: rgb(248, 249, 249);">
-    <div style="display: flex; align-items: center; justify-content: space-around; font-size: 16px; font-weight: 500;">
-      <BaseStatDisplayIcon
-        statName=""
-        iconName="person"
-        statValue={serverObj.numOfSubscribers || 0}
-      />
-    </div>
-  </div>
-
-  {#if serverObj.featuredBlackboardID}
-    <div style="
-      margin-right: -12px; 
-      margin-top: -12px; 
-      margin-bottom: -12px; 
-      min-width: {thumbnailWidth}px; 
-      max-width: {thumbnailWidth}px; 
-      height: {thumbnailWidth * 1/thumbnailAspectRatio}px; 
-      overflow: hidden;
-      border-radius: 8px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      opacity: 0.8;
-    "
-    >
-      <ListenToDoc docPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`} 
+  {#if blackboardID}
+    <div class="preview-frame">
+      <ListenToDoc docPath={`/classes/${serverObj.id}/blackboards/${blackboardID}`} 
         let:theDoc={boardDoc}
       >
         {#if boardDoc}
           {#if boardDoc.isMultiboard}
             <FetchStrokes autoFetchStrokes={false}
-              dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}/slides/${boardDoc.slideIDs[0]}`}
+              dbPath={`/classes/${serverObj.id}/blackboards/${blackboardID}/slides/${boardDoc.slideIDs[0]}`}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
             > 
@@ -57,7 +28,7 @@
             </FetchStrokes>
           {:else}
             <FetchStrokes autoFetchStrokes={false}
-              dbPath={`/classes/${serverObj.id}/blackboards/${serverObj.featuredBlackboardID}`}
+              dbPath={`/classes/${serverObj.id}/blackboards/${blackboardID}`}
               let:fetchStrokes={fetchStrokes}
               let:strokesArray={strokesArray}
             > 
@@ -71,65 +42,113 @@
         {/if}
       </ListenToDoc>
     </div>
+  {:else if thumbnailSrc}
+    <img class="server-thumb" alt="" src={thumbnailSrc} />
   {:else}
-    <div class="core-shadow" style="opacity: 0.8; background-color: hsl(0,0%,0%, 0.80); margin-right: -12px; margin-top: -12px; margin-bottom: -12px; box-sizing: border-box; border: 1px dashed #000; min-width: {thumbnailWidth}px; height: {thumbnailWidth * 1/thumbnailAspectRatio}px; border-top-right-radius: {8*3}px; border-bottom-right-radius: {8*3}px;">
-
-    </div>
+    <div class="preview-fallback"></div>
   {/if}
 </button>
 
 <script>
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
-  import BaseStatDisplayIcon from '$lib/Reusable/BaseStatDisplayIcon.svelte'
   import NewHDBlackboard from '$lib/Blackboard/NewHD.svelte'
-  import { updateFirestoreDoc } from '/src/helpers/crud.js'
-  import { user } from '/src/store.js'
-  import { handleServerRedirect } from '/src/helpers/everythingElse.js'
+  import { createEventDispatcher } from 'svelte'
+  import { CARD_WIDTH, previewBlackboardID, thumbnailImageURL } from '$lib/NavSideDrawer/serverMenu.js'
 
   export let serverObj
 
-  let thumbnailWidth = 240
-  let thumbnailAspectRatio = 1 / 0.7
+  const dispatch = createEventDispatcher()
+
+  let thumbnailWidth = CARD_WIDTH
+  $: blackboardID = previewBlackboardID(serverObj)
+  $: thumbnailSrc = blackboardID ? '' : thumbnailImageURL(serverObj)
 
   $: needsTeachers = serverObj.numOfPrepaidLearners > 0 && !serverObj.numOfTeachers
 
-  async function handleServerCardClick () {
-    handleServerRedirect(serverObj)
-
-    updateFirestoreDoc(`/users/${$user.uid}`, {
-      recentSearchedServerID: serverObj.id
-    })
+  function handleServerCardClick () {
+    dispatch('pick', serverObj)
   }
 </script>
 
 
 <style lang="scss">
   .server-card {
-    position: relative; 
-    display: flex; 
-    width: 240px; 
-    border-radius: 16px; 
-    padding: 0px; 
+    position: relative;
+    display: flex;
+    width: 240px;
+    flex: 0 0 auto;
+    border-radius: 16px;
+    padding: 0;
     overflow: hidden;
+    text-align: left;
+    background-color: var(--bg-off-white, #f8f9f9);
+  }
+
+  .server-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: hsl(0, 0%, 0%, 0.80);
+    pointer-events: none;
+  }
+
+  .server-name-overlay {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    right: 16px;
+    color: rgb(248, 249, 249);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .server-name-text {
+    color: white;
+    font-weight: 600;
+  }
+
+  .preview-frame {
+    position: relative;
+    z-index: 0;
+    margin: -12px -12px -12px 0;
+    width: 100%;
+    aspect-ratio: 10 / 7;
+    height: auto;
+    overflow: hidden;
+    border-radius: 0 8px 8px 0;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  .preview-fallback {
+    position: relative;
+    z-index: 0;
+    margin: -12px -12px -12px 0;
+    box-sizing: border-box;
+    width: 100%;
+    aspect-ratio: 10 / 7;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    background-color: hsl(0, 0%, 0%, 0.80);
+    pointer-events: none;
+  }
+
+  .server-thumb {
+    position: relative;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 10 / 7;
+    object-fit: cover;
+    border-radius: 0 8px 8px 0;
+    pointer-events: none;
   }
 
   .server-card:hover {
     outline: 2px solid #F7C686;
-    @extend .high-elevation-cast-shadow;
-  }
-
-  .high-elevation-cast-shadow {
-    box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08)
-  }
-
-  // might come in handy in the future
-  .two-lines-maximum {
-    width: 100%;
-    display: -webkit-box;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical; 
-    overflow: hidden; 
+    box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08);
   }
 </style>

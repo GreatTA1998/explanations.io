@@ -120,6 +120,7 @@
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
   import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
+  import { startTranscriptForNewVideo } from '/src/helpers/transcript.js'
 
   import { 
     getFirestore, 
@@ -271,6 +272,12 @@
       audioRefFullPath: audioRef.fullPath,
       timingOfSlideChanges,
       isPaid: false
+    })
+
+    await startTranscriptForNewVideo({
+      path: boardDoc.path,
+      audioDownloadURL: downloadURL,
+      audioRefFullPath: audioRef.fullPath
     })
 
     // set the question to be resolved

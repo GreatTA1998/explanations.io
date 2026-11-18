@@ -16,8 +16,8 @@
         value={newInputComment}
         on:input={(e) => newInputComment = e.detail}
         placeholder="New comment..."
-        placeholderColor="rgb(60, 60, 60)"
-        color="rgb(60, 60, 60)"
+        placeholderColor="var(--comment-placeholder, rgb(60, 60, 60))"
+        color="var(--comment-ink, rgb(60, 60, 60))"
         nonFocusedPlaceholderOpacity={0.5}
       />
 

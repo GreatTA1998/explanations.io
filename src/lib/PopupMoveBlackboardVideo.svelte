@@ -74,7 +74,7 @@
   // TO-DO: this is a copy-paste, do DRY 
   function dragstart_handler (e, { boardID, idx }) {
     // the interface has to be consistent with moving pages
-    // into subpages, see `LeftDrawerRecursiveRoom.svelte`
+    // into subpages, see `NavSideDrawer/RecursiveRoom.svelte`
     whatIsBeingDragged.set('board')
     e.dataTransfer.setData("text/plain", `boardID:${boardID}]draggedIdx:${idx}`)
     e.dataTransfer.dropEffect = 'move'

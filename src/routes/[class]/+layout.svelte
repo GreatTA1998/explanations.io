@@ -10,17 +10,13 @@
       <button type="button" class="drawer-backdrop" aria-label="Dismiss drawer" on:click={() => sidebarFullscreen.set(true)}></button>
     {/if}
     <div id="left-drawer">
-      <NavSideDrawer />
-      <div class="room-drawer">
-        {#key classID}<TheLeftDrawer {classID} {roomID} />{/key}
-      </div>
+      {#key classID}<NavSideDrawer />{/key}
     </div>
   {/if}
   <div id="main-content" class:sidebar-fullscreen={$sidebarFullscreen} bind:this={MainContent}><slot /></div>
 </div>
 
 <script>
-  import TheLeftDrawer from '$lib/TheLeftDrawer/index.svelte'
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
   import { getBoardWidth } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
@@ -34,7 +30,7 @@
 
   export let data
 
-  let { classID, roomID } = data
+  let { classID } = data
   let unsubClassDocListener = null
   let resizeObserver = null
   let MainContent = null
@@ -42,7 +38,7 @@
 
   $: overlayDrawer = !$sidebarFullscreen && $viewport.width > 0 && $viewport.width < 768
   $: if ($isFullServerMode && MainContent && ServerLayout) transformToFullServerPage()
-  $: ({ classID, roomID } = data)
+  $: ({ classID } = data)
   $: {
     listenToClassDoc(classID)
     handleClassDocChange(classID)
@@ -113,6 +109,5 @@
     box-shadow: 4px 0 6px -2px rgba(0, 0, 0, 0.1);
   }
   .overlay-drawer #left-drawer { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 86vw); z-index: 40; }
-  .room-drawer { flex: 1; min-height: 0; overflow: hidden; }
   #main-content { grid-area: main; position: relative; z-index: 0; min-width: 0; }
 </style>

@@ -12,6 +12,7 @@
 
     draggable="true"
     on:dragstart={(e) => dragstart_handler(e, room.id)}
+    on:dragend={dragend_handler}
     on:dragover={(e) => dragover_handler(e)}
 
     on:dragenter={highlightRoom}
@@ -145,6 +146,8 @@ let unsubListener
 let scrolledForRoomId = null
 /** Only auto-expand once per active room so snapshots do not re-force open. */
 let expandedForActiveId = null
+/** Suppress the post-drag click that would navigate away on iPad. */
+let skipClickAfterDrag = false
 
 $: showRoomMenu = $page.params.roomID && $user.uid && $adminUIDs.includes($user.uid)
 $: roomMenuId = `room-menu-${room.id}`
@@ -220,7 +223,11 @@ function expandChildrenRooms () {
   isExpanded = true
 }
 
-function handleRoomClick (roomID) { 
+function handleRoomClick (roomID) {
+  if (skipClickAfterDrag) {
+    skipClickAfterDrag = false
+    return
+  }
   if (!isExpanded) expandChildrenRooms()
   else isExpanded = false
   
@@ -228,20 +235,36 @@ function handleRoomClick (roomID) {
 }
 
 function dragstart_handler (e, roomID) {
+  skipClickAfterDrag = true
   whatIsBeingDragged.set('room')
   whatIsBeingDraggedID.set(roomID)
-  e.dataTransfer.setData("text/plain", `roomID:${roomID}`)
+  e.dataTransfer.effectAllowed = 'move'
+  // Custom type first; plain text kept for desktop drop parsing but is not a URL.
+  e.dataTransfer.setData('application/x-blackboard-room', roomID)
+  e.dataTransfer.setData('text/plain', `roomID:${roomID}`)
+}
+
+function dragend_handler () {
+  whatIsBeingDragged.set('')
+  whatIsBeingDraggedID.set('')
+  // iPad fires a click after dragend; keep the guard briefly past that click.
+  setTimeout(() => { skipClickAfterDrag = false }, 50)
 }
 
 function dragover_handler (e) {
   e.preventDefault()
+  e.dataTransfer.dropEffect = 'move'
 }
 
 function handleSomethingDropped (e, droppedRoomID) {
+  // Critical on iPad Safari: without this, dropping text/plain navigates/redirects.
+  e.preventDefault()
+  e.stopPropagation()
   if (isInvalidSubpageDrop()) return
-  RoomElement.style.background = '' 
+  RoomElement.style.background = ''
 
-  const data = e.dataTransfer.getData('text/plain')
+  const custom = e.dataTransfer.getData('application/x-blackboard-room')
+  const data = custom ? `roomID:${custom}` : e.dataTransfer.getData('text/plain')
   const keyValuePairs = data.split(']')
 
   const [key1, value1] = keyValuePairs[0].split(':')

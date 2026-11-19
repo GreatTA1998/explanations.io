@@ -13,10 +13,15 @@
   <div
     class="board-surface"
     style="position: relative; box-sizing: border-box;"
+    role="button"
+    tabindex="0"
+    aria-label={isPlaying ? 'Pause video' : 'Play video'}
+    on:click={onSurfaceClick}
+    on:keydown={onSurfaceKeydown}
   >
     <div style="position: relative; height: {canvasHeight}px; width: {canvasWidth}px;">
       {#if !hasPlaybackStarted}
-        <button on:click={startAudioPlayer}
+        <button on:click|stopPropagation={startAudioPlayer}
           class="material-icons overlay-center"
           style="color: rgba(230, 230, 230, 0.8); width: {240 * scaleFactor}px; height: {240 * scaleFactor}px; z-index: 5; font-size: {15 * scaleFactor}rem;"
         >
@@ -166,6 +171,19 @@
   }
 
   function onPlayClick (event) { event.stopPropagation(); togglePlayPause() }
+  function onSurfaceClick (event) {
+    if (event.target?.closest?.('.playbar')) return
+    if (!hasPlaybackStarted) {
+      startAudioPlayer()
+      return
+    }
+    togglePlayPause()
+  }
+  function onSurfaceKeydown (event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    event.preventDefault()
+    onSurfaceClick()
+  }
   function onSeek (event) {
     const next = Number(event.currentTarget.value)
     if (!AudioPlayer || !Number.isFinite(next)) return

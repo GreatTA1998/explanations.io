@@ -30,13 +30,18 @@
 
   function dragover_handler (e) {
     e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
   }
 
   async function onReorderDrop (e) {
+    // Critical on iPad Safari: without this, dropping text/plain navigates/redirects.
+    e.preventDefault()
+    e.stopPropagation()
     if (isInvalidReorderDrop()) return
     ReorderDropzone.style.background = ''
 
-    const data = e.dataTransfer.getData('text/plain')
+    const custom = e.dataTransfer.getData('application/x-blackboard-room')
+    const data = custom ? `roomID:${custom}` : e.dataTransfer.getData('text/plain')
     const keyValuePairs = data.split(']')
     const [key1, value1] = keyValuePairs[0].split(':')
     const draggedRoomID = value1

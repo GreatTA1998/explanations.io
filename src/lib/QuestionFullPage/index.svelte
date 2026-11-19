@@ -1,12 +1,10 @@
 <script>
   import { doc, getFirestore, onSnapshot } from 'firebase/firestore'
   import GeneralizedBlackboardVideoDisplay from '$lib/GeneralizedBlackboardVideoDisplay.svelte'
-  import LeftDrawerToggleButton from '$lib/LeftDrawerToggleButton.svelte'
   import TextAreaAutoResizing from '$lib/Reusable/TextAreaAutoResizing.svelte'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
   import { createNewMultiboard, updateFirestoreDoc } from '/src/helpers/crud.js'
   import { user, blackboardWidth } from '/src/store.js'
-  import { PAGE_PADDING } from '/src/helpers/CONSTANTS.js'
 
   export let classID
   export let questionID
@@ -47,9 +45,8 @@
 </script>
 
 {#if questionDoc.id}
-  <div style="position: relative;">
-    <div style="padding: {PAGE_PADDING}px; overflow-y: auto;">
-      <div class="question-container" style="display: flex; flex-direction: column; row-gap: 12px;">
+  <div class="question-page">
+      <div class="question-inset question-container" style="display: flex; flex-direction: column; row-gap: 12px;">
         <input 
           value={questionDoc.title} 
           on:input={(e) => debouncedUpdateQuestionTitle(e)}
@@ -94,7 +91,7 @@
         {/if}
       </div>
 
-      <div style="display: flex; align-items: center; column-gap: 12px; margin: 24px 0px;">
+      <div class="question-inset" style="display: flex; align-items: center; column-gap: 12px; margin: 24px 0px;">
         <div style="border-bottom: 1px solid lightgrey; flex-grow: 3;"></div>
 
         <div class="question-metadata">
@@ -128,11 +125,16 @@
           </div>
         {/if}
       </div>
-    </div>
   </div>
 {/if}
 
 <style>
+  .question-page {
+    position: relative;
+    padding: 16px;
+    overflow-y: auto;
+  }
+
   .question-metadata {
     font-size: 0.875rem; 
     color: rgb(80, 80, 80); 

@@ -16,6 +16,7 @@
         visualHeight={canvasHeight}
         {strokesArray} 
         audioDownloadURL={boardDoc.audioDownloadURL}
+        playbackPath={boardDoc.path || boardDoc.id || ''}
         backgroundImageDownloadURL={boardDoc.backgroundImageDownloadURL}
         isPaid={!!boardDoc.isPaid}
         creatorUID={boardDoc.creatorUID}

@@ -83,6 +83,18 @@ button {
 	box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08)
 }
 
+/* Overlay look 1 (Twitch scrim: fill only, no blur). Default opacity ~0.5. */
+.glass-surface {
+	--panel-bg: hsla(var(--look-hue, 0), 8%, 11%, var(--look-opacity, 0.5));
+	--panel-fg: #fff;
+	--panel-fg-muted: rgba(255, 255, 255, 0.72);
+	background: var(--panel-bg);
+	color: var(--panel-fg);
+	border: 0;
+	outline: none;
+	box-shadow: none;
+}
+
 .mdc-tab-indicator__content--underline {
 	border-top-width: 4px !important;
 	border-color: #f09c17 !important;
@@ -114,19 +126,11 @@ audio::-webkit-media-controls-panel {
 	width: calc(100% + 33px);
 }
 
-// COPYING NOTION'S SCROLLBAR
-::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #D3D1CB;
-}
-
-::-webkit-scrollbar-track {
-	background: #EDECE9;
-}
+/* Overlay scrollbars: thin + transparent track (no reserved Notion gutter). */
+:root { scrollbar-width: thin; scrollbar-color: rgba(128, 128, 128, 0.5) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.45); }
+::-webkit-scrollbar-track { background: transparent; }
 
 /* used from https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow  */
 /* NOTE: you MUST set a width explicitly */
@@ -174,3 +178,12 @@ audio::-webkit-media-controls-panel {
 	width: auto !important;
 	position: static !important;
 }
+.hand-arrow {
+	display: block;
+	width: 10px;
+	height: 10px;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: rotate(-45deg);
+}
+.hand-arrow.left { transform: rotate(135deg); }

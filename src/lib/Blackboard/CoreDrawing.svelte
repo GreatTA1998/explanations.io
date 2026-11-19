@@ -30,6 +30,10 @@
         
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>
+            <Item on:SMUI:action={() => dispatch('save-animation')} style="margin-bottom: 0px;">
+              Save animation
+            </Item>
+
             {#if backgroundImageDownloadURL}
               <Item on:click={() => dispatch('background-reset')} style="margin-bottom: 0px;">
                 Remove background
@@ -78,7 +82,7 @@
   import CoreDrawingToolbar from '$lib/Blackboard/CoreDrawingToolbar.svelte'
   import { connectTwoPoints, drawStroke, renderBackground } from '../../helpers/canvas.js'
   import { getRandomID } from '../../helpers/utility.js'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   import { currentTool, assumedCanvasWidth, onlyAllowApplePencil, whatIsBeingDragged } from '../../store.js'
 
   export let canvasWidth
@@ -107,6 +111,10 @@
   let bgCtx
   let canvas
   let bgCanvas
+
+  onMount(() => {
+    dispatch('canvas-slide-ready', canvas)
+  })
   let localStrokesArray = []
   let isInMiddleOfStroke = false
   let prevPoint = {

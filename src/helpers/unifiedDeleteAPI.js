@@ -7,7 +7,8 @@ import {
   deleteField, 
   increment, 
   query,
-  where
+  where,
+  orderBy
 }  from 'firebase/firestore'
 
 import { 
@@ -20,86 +21,96 @@ import {
 
 import { goto } from '$app/navigation'
 import { deleteObject, getStorage, ref } from 'firebase/storage'
+export function shouldDeleteBoardLevelStrokes (boardDoc) {
+  return !boardDoc?.isMultiboard
+    || !Array.isArray(boardDoc.slideIDs)
+    || boardDoc.slideIDs.length === 0
+}
 
-// TO-DO:
-// 1. Deleting the question that was used as "mostRecentShowcase" for the server will cause the server to not work properly
+function adjacentSiblingId ({ roomId, siblingIdsInOrder = [] }) {
+  const index = siblingIdsInOrder.indexOf(roomId)
+  if (index === -1) return null
+  if (index + 1 < siblingIdsInOrder.length) return siblingIdsInOrder[index + 1]
+  if (index - 1 >= 0) return siblingIdsInOrder[index - 1]
+  return null
+}
 
-// every deletion function will also take into account side-effects like updating parent pointers
-// for strokes deletion, use batch delete not recursive delete (faster, even if more inefficient)
+export function destinationAfterRoomDelete ({ classID, parentRoomID, roomId, siblingIdsInOrder = [] }) {
+  const siblingId = adjacentSiblingId({ roomId, siblingIdsInOrder })
+  if (siblingId) return `/${classID}/${siblingId}`
+  if (parentRoomID) return `/${classID}/${parentRoomID}`
+  return `/${classID}/question`
+}
 
-/**
- * Properly deletes the room:
- *   1. Delete audio files, if any boards are recorded 
- *   2. Delete stroke subcollections
- *   3. Delete the room doc itself
- */
+/** Delete room boards/media, re-parent children, then the room doc; navigate away. */
 export async function deleteRoom ({ room, classID }) {
-  if (!confirm('Are you sure you want to delete this room?')) {
+  if (!confirm(`Are you sure you want to delete the room "${room.name || '(untitled)'}"?`)) {
     return
   }
-
-  alert('Initiated a delete, this might take 10 seconds, the UI will update')
 
   const classPath = `classes/${classID}`
   const db = getFirestore()
 
   const boardPromises = []
-  for (const boardID of room.blackboards) {
+  for (const boardID of room.blackboards || []) {
     const promise = getFirestoreDoc(`${classPath}/blackboards/${boardID}/`)
       .then(boardDoc => deleteArbitraryMultiboard({ boardDoc, roomDoc: room }))
       .catch(error => alert(error))
     boardPromises.push(promise)
   }
+
+  if (room.attachmentsStoragePaths) {
+    for (const path of room.attachmentsStoragePaths) {
+      boardPromises.push(deleteObjectFromStorage(path))
+    }
+  }
   await Promise.all(boardPromises)
 
-  // MOVE CHILDREN: move all the children OUT of the folder getting deleted
-  // 1. fetch all the sub-rooms
-  // 2. update all the parent pointers
   const folderPromises = []
   const roomsRef = collection(db, `classes/${classID}/rooms/`)
+
+  const siblingsQuery = query(
+    roomsRef,
+    where('parentRoomID', '==', room.parentRoomID || ''),
+    orderBy('classServerOrder', 'asc')
+  )
+  const siblings = await getFirestoreQuery(siblingsQuery)
+  const deleteDestination = destinationAfterRoomDelete({
+    classID,
+    parentRoomID: room.parentRoomID,
+    roomId: room.id,
+    siblingIdsInOrder: siblings.map(sibling => sibling.id)
+  })
+
   const q = query(roomsRef, where('parentRoomID', '==', room.id))
   const subRooms = await getFirestoreQuery(q)
   for (const subRoom of subRooms) {
     folderPromises.push(
       updateFirestoreDoc(subRoom.path, {
-        parentRoomID: room.parentRoomID
+        parentRoomID: room.parentRoomID || ''
       })
     )
   }
 
-  // update grandparent's children count (though if deleted room's children would end up at the top level, 
-  // the grandparent doesn't exist, hence if statement 
   if (room.parentRoomID) {
     folderPromises.push(
       updateFirestoreDoc(`classes/${classID}/rooms/${room.parentRoomID}`, {
-        numOfChildren: increment(subRooms.length)
+        numOfChildren: increment(subRooms.length - 1)
       })
     )
   }
 
   await Promise.all(folderPromises)
-
-  // finally delete the room doc itself
   await deleteFirestoreDoc(classPath + `/rooms/${room.id}`)
-  // note, the [room].svelte page knows how to handle itself when its `roomDoc` no longer exists
-
-  goto(`/${classID}/overview`)
+  goto(deleteDestination)
 }
 
-// not allowed to delete the videos if it has videos
-// TO-DO: also delete attachments in the future
-// assumes all the blackboards in question uses the modern "multiboard" 
 export async function deleteQuestion ({ questionDoc, classID }) {
   if (!confirm('Are you sure you want to delete this question? This might take 10 seconds before the UI updates.')) {
     return
   }
 
   const classPath = `classes/${classID}`
-
-  // DELETE VIDEOS & BLACKBOARDS
-  // Note: this is a dangerous, but a necessary operation for correctness. 
-  // In practice, we don't allow users to delete questions until all its videos have been moved somewhere, so this question will 
-  // never be directly called until it's safe to do so. 
   const promises = []
   for (const boardID of questionDoc.blackboardIDs) {
     const promise = getFirestoreDoc(`${classPath}/blackboards/${boardID}/`)
@@ -108,7 +119,6 @@ export async function deleteQuestion ({ questionDoc, classID }) {
     promises.push(promise)
   }
 
-  // note the double plural here attachment`S`StoragePaths
   if (questionDoc.attachmentsStoragePaths) {
     for (const path of questionDoc.attachmentsStoragePaths) {
       promises.push(
@@ -117,34 +127,26 @@ export async function deleteQuestion ({ questionDoc, classID }) {
     }
   }
   await Promise.all(promises)
-
-  // finally delete the room doc itself
   await deleteFirestoreDoc(classPath + `/questions/${questionDoc.id}/`)
-
   goto(`/${classID}/question`)
 }
 
 function deleteObjectFromStorage (path) {
-  // if you want to use try-catch, you can't push it into a promise array
-  try {
-    deleteObject(
-      ref(getStorage(), path)
-    )
-  } catch (error) {
+  return deleteObject(ref(getStorage(), path)).catch(error => {
     alert(error)
-  }
+  })
 }
 
-// assumes it's a video
 export async function revertToBoard ({ boardDoc, slideIDToStrokesArray }) {
-  // this should preserve the strokes like it used to do when it was single slide
-  // blackboards
   const promises = []
-  
   promises.push(
     deleteObjectFromStorage(boardDoc.audioRefFullPath)
   )
-
+  if (boardDoc.webmDownloadURL) {
+    promises.push(
+      deleteObjectFromStorage(boardDoc.webmRefFullPath)
+    )
+  }
   promises.push(
     updateFirestoreDoc(boardDoc.path, {
       creator: deleteField(),
@@ -153,7 +155,6 @@ export async function revertToBoard ({ boardDoc, slideIDToStrokesArray }) {
       audioRefFullPath: deleteField()
     })
   )
-
   for (const slideID of boardDoc.slideIDs) {
     promises.push(
       deleteStrokesFromSlide({ 
@@ -166,13 +167,17 @@ export async function revertToBoard ({ boardDoc, slideIDToStrokesArray }) {
   console.log('done reverting to board, all 3 operations finished')
 }
 
-// deletes the board regardless of whether it's a video or not
 function deleteArbitraryMultiboard ({ roomDoc, boardDoc }) {
   return new Promise(async (resolve) => {
     const promises = []
     if (boardDoc.audioRefFullPath) {
       promises.push(
         deleteObjectFromStorage(boardDoc.audioRefFullPath)
+      )
+    }
+    if (boardDoc.webmRefFullPath) {
+      promises.push(
+        deleteObjectFromStorage(boardDoc.webmRefFullPath)
       )
     }
     promises.push(
@@ -183,77 +188,63 @@ function deleteArbitraryMultiboard ({ roomDoc, boardDoc }) {
   })
 }
 
-// this was the implementation from OnlineMultislideBlackboard.svelte
-// only use it for non-video blackboards
 export async function deleteMultislideBlackboard ({ roomDoc, boardDoc }) {  
   return new Promise(async (resolve) => {
     const promises = []
-    for (const slideID of boardDoc.slideIDs) {
-      promises.push(
-        deleteSlideFromMultislide({ 
-          slideID,
-          multislidePath: boardDoc.path 
-        })
-      )
+    if (shouldDeleteBoardLevelStrokes(boardDoc)) {
+      const strokesArray = await getFirestoreCollection(`${boardDoc.path}/strokes`)
+      promises.push(deleteStrokesFromSlide({ strokesArray }))
+      if (boardDoc.backgroundImageStoragePath) {
+        promises.push(deleteObjectFromStorage(boardDoc.backgroundImageStoragePath))
+      }
+    } else {
+      for (const slideID of boardDoc.slideIDs) {
+        promises.push(
+          deleteSlideFromMultislide({ 
+            slideID,
+            multislidePath: boardDoc.path 
+          })
+        )
+      }
     }
     await Promise.all(promises)
 
-    // delete the references from its parent first, so it doesn't reference a non-existent doc
-    //// delete the pointer from its parent doc (called `roomDoc` for legacy reasons, for now)
-    //// TO-DO: unify the APIs of rooms and questions
-
     promises.push(
       updateFirestoreDoc(roomDoc.path, {
-        blackboards: arrayRemove(boardDoc.id), // used by rooms
-        blackboardIDs: arrayRemove(boardDoc.id) // used by questions
+        blackboards: arrayRemove(boardDoc.id),
+        blackboardIDs: arrayRemove(boardDoc.id)
       })
     )
-
     promises.push(
       deleteFirestoreDoc(boardDoc.path)
     )
-
     await Promise.all(promises)
     resolve()
   })
 }
 
-// delete the strokes, background image (N/A for now), the affected pointers in its parent, and the slide itself  
 export async function deleteSlideFromMultislide ({ slideID, multislidePath }) {
   const slidePath = multislidePath + `/slides/${slideID}`
   const strokesArray = await getFirestoreCollection(slidePath + '/strokes')
-
   const promises = []
-
-  // talk about how .then()'s parallelism advantages is mirrored by encapsulating async/await into functions of equal size
   promises.push(
     deleteStrokesFromSlide({ strokesArray, slidePath})
   )
-
-  // delete the background image if any 
   const slideDoc = await getFirestoreDoc(slidePath)
   if (slideDoc.backgroundImageStoragePath) {
     promises.push(
       deleteBackgroundImageFromSlide(slideDoc)
     )
   }
-
-  // delete the pointer first so the parent doesn't reference a non-existent slide
-  // technically doesn't matter but...helps with sanity
   promises.push(
     updateFirestoreDoc(multislidePath, {
       slideIDs: arrayRemove(slideID)
     })
   )
-
   await Promise.all(promises)
-
-  // delete the slide itself
-  deleteFirestoreDoc(slidePath)
+  await deleteFirestoreDoc(slidePath)
 }
 
-// this is from `Renderless/ListenToStrokes.svelte`
-// note legacy blackboards are behave as "slides" too
 export async function deleteStrokesFromSlide ({ strokesArray, preserveInitialStrokes = false }) {
   return new Promise(async (resolve) => {
     const db = getFirestore() 

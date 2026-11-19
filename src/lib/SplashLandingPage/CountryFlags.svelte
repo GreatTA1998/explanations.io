@@ -2,6 +2,7 @@
   <div title="Chile" class="flag chile"></div>
   <div title="United States" class="flag usa"></div>
   <div title="Sweden" class="flag sweden"></div>
+  <div title="Singapore" class="flag singapore"></div>
 </div>
 
 <style>
@@ -70,5 +71,40 @@
     height: 100%;
     width: 20%;
     left: 30%;
+  }
+
+  /* Singapore - red over white, with a crescent and five stars */
+  .singapore {
+    background: linear-gradient(
+      to bottom,
+      #ef3340 50%,
+      white 50%
+    );
+  }
+  .singapore::before {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ef3340;
+    box-shadow: 2px 0 0 0 white;
+  }
+  .singapore::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 12px;
+    width: 1px;
+    height: 1px;
+    border-radius: 50%;
+    background: white;
+    box-shadow:
+      3px 1px 0 0 white,
+      1px 3px 0 0 white,
+      4px 3px 0 0 white,
+      2px 5px 0 0 white;
   }
 </style>

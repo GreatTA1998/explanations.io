@@ -12,7 +12,7 @@ export const userInfoFromAuthProvider = writable({})
 
 export const currentTool = writable({
     type: 'pencil',
-    color: 'hsla(0, 0, 100%, 0)',
+    color: 'white',
     lineWidth: 3
 })
 export const onlyAllowApplePencil = writable(true)
@@ -25,6 +25,9 @@ export const willPreventPageLeave = writable(false)
 export const adminUIDs = readable(['xC05mXTCFIRxLnyxfKnxY7oNBPi2', 'p3tOuo1fkUYTgDhNnpjfCh403ZH3']) // for some reason I have 2 accounts with eltonlin1998@gmail.com
 
 export const drawerWidth = writable(WIDTHS.DRAWER_EXPANDED)
+export const sidebarFullscreen = writable(false)
+export const drawerNavTab = writable('rooms')
+export const drawerNameQuery = writable('')
 
 export const whatIsBeingDragged = writable('')
 export const whatIsBeingDraggedID = writable('')
@@ -36,8 +39,6 @@ export const recentSearchedServerDoc = writable({})
 export const blackboardWidth = writable(0)
 export const videoPreviewWidth = writable(0)
 export const videoCinemaWidth = writable(0)
-
-export const videoCinemaLayout = writable('')
 
 export const isFullServerMode = writable(false)
 export const didRenderSplashScreen = writable(false)

@@ -57,38 +57,32 @@
   let backCtx
 
   let recursiveSyncer
-  let sequenceOfDots = [] 
-  let nextDotIdx
-
+  let sequenceOfDots = []
+  let nextDotIdx = 0
+  let playbackSyncArmed = false
   let playbackSpeed = 1
 
-  // when video starts playing, erase the full video preview
-  // the `syncer` will naturally take over the visual state
-  $: if (hasPlaybackStarted) {
-    if (FrontCanvas) {
-      frontCtx.clearRect(0, 0, canvasWidth, canvasHeight)
-      syncRecursively()
-    }
+  // Arm stroke sync once when playback begins. Clearing inside a reactive that
+  // also calls syncRecursively() re-runs on every currentTime tick (Svelte
+  // tracks that read), wiping the bitmap while incremental sync skips past
+  // strokes — blank board while audio plays (standalone /video "crash").
+  $: if (hasPlaybackStarted && frontCtx && FrontCanvas && !playbackSyncArmed) {
+    playbackSyncArmed = true
+    if (recursiveSyncer) clearTimeout(recursiveSyncer)
+    frontCtx.clearRect(0, 0, FrontCanvas.width, FrontCanvas.height)
+    nextDotIdx = 0
+    queueMicrotask(() => syncRecursively())
   }
 
-  $: if (hasAudioSliderJumped) { // meaning `currentTime` has changed
+  $: if (hasAudioSliderJumped) {
     if (recursiveSyncer) clearTimeout(recursiveSyncer)
-    syncRecursively()
-
+    queueMicrotask(() => syncRecursively())
     dispatch('slider-jump-sync')
   }
 
-  // syncing happens everytime `currentTime` changes, which is updated every 0.1 seconds. 
-  // note we no longer have the efficient "sleep til next timing" recursion
-  // OPTION 1: we do it reactively to every currentTime change
-  // OPTION 2 (if OPTION 1 doesn't work): we just run the continuous recursion once (and it will keep recursing)
-  // $: if (FrontCanvas && BackCanvas && hasPlaybackStarted) {
-  //   syncVisualsToCurrentTime(currentTime)
-  // }
-
   $: if (FrontCanvas && BackCanvas) {
     handleResize(canvasWidth, canvasHeight)
-  } 
+  }
 
   $: if (backCtx && backgroundImageDownloadURL) {
     backCtx.clearRect(0, 0, BackCanvas.scrollWidth, BackCanvas.scrollHeight)
@@ -99,12 +93,10 @@
     frontCtx = FrontCanvas.getContext('2d')
     backCtx = BackCanvas.getContext('2d')
 
-    // display full preview before user starts video
     for (const stroke of strokesArray) {
       drawStroke(stroke, null, frontCtx, FrontCanvas, canvasWidth)
     }
 
-    // one-time preparation
     computeSequenceOfDotsToTraceAsTimeProgresses()
   })
 
@@ -113,19 +105,13 @@
   })
 
   function syncRecursively () {
-    // if (!AudioPlayer) return
     syncVisualsToCurrentTime(currentTime)
-    // syncStrokesToAudio()
-    if (nextDotIdx < sequenceOfDots.length) {
-      // calculate sleep duration
-      const nextFrame = sequenceOfDots[nextDotIdx]
-      let timeTilNextStroke = 1000 * (nextFrame.startTime - currentTime)
-      timeTilNextStroke = timeTilNextStroke / playbackSpeed
-      // quickfix: sometimes the timeTilNextStroke is ridiculously long
-      // probably due to calculation error in `nextFrame.startTime`
-      timeTilNextStroke = Math.min(timeTilNextStroke, 2000)
-      recursiveSyncer = setTimeout(syncRecursively, timeTilNextStroke) // use recursion instead of `setInterval` to prevent overlapping calls
-    }
+    if (nextDotIdx >= sequenceOfDots.length) return
+    const nextFrame = sequenceOfDots[nextDotIdx]
+    let timeTilNextStroke = 1000 * (nextFrame.startTime - currentTime) / playbackSpeed
+    // Cap sleep so a bad startTime cannot stall the syncer for minutes.
+    timeTilNextStroke = Math.min(Math.max(0, timeTilNextStroke), 2000)
+    recursiveSyncer = setTimeout(syncRecursively, timeTilNextStroke)
   }
 
   // TO-DO: video explanation
@@ -193,37 +179,28 @@
     )
   }
 
-  function handleResize (canvasWidth, canvasHeight) {
-    FrontCanvas.width = canvasWidth
-    FrontCanvas.height = canvasHeight
-    BackCanvas.width = canvasWidth
-    BackCanvas.height = canvasHeight
-
+  function handleResize (nextWidth, nextHeight) {
+    if (!FrontCanvas || !BackCanvas) return
+    FrontCanvas.width = nextWidth
+    FrontCanvas.height = nextHeight
+    BackCanvas.width = nextWidth
+    BackCanvas.height = nextHeight
+    if (!frontCtx) return
     restoreVisualBoardState()
   }
 
   function restoreVisualBoardState () {
-    return new Promise(async (resolve) => {
-      if (recursiveSyncer) {
-        // video was playing: resume to previous progress
-        nextDotIdx = 0
-
-        syncVisualsToCurrentTime(currentTime)
-        // syncStrokesToAudio()
-      }
-      // else if (hasPlayedOnce) {
-      //   traceThroughDotsUntilCurrentTime()
-      // } 
-      else {
-        for (const stroke of strokesArray) {
-          drawStroke(stroke, null, frontCtx, FrontCanvas, canvasWidth)
-        }
-      }
-      resolve();
-    })
+    if (!frontCtx || !FrontCanvas) return
+    if (playbackSyncArmed || recursiveSyncer) {
+      nextDotIdx = 0
+      syncVisualsToCurrentTime(currentTime)
+      return
+    }
+    for (const stroke of strokesArray || []) {
+      drawStroke(stroke, null, frontCtx, FrontCanvas, canvasWidth)
+    }
   }
 
-  
   function getStartTime ({ strokeIndex, pointIndex }) {
     const stroke = strokesArray[strokeIndex];
     return stroke.startTime + (pointIndex - 1) * getPointDuration(stroke);

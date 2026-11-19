@@ -1,21 +1,13 @@
 <div class="splash-screen">
 	<div style="display: flex; flex-direction: column; gap: 16px; background-color: var(--bg-off-white);">
 		<p class="header-title" bind:clientWidth={containerWidth}>
-			Youtube style tutoring for math olympiads
+			explain ideas clearly
 		</p>
 
 		<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
 			<div class="header-subtitle">
-				Pick your teacher, ask long unresolved questions, get proper explanations once and for all. 
-				<span style="color: #666666;">(Scroll down to explore directly)</span>
-			</div>
-
-			<div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"> 
-				<ReusableSubscribeButton/>
-
-				<!-- <div style="font-size: var(--fs-xs); color: #5d0068; font-weight: 600;">
-					6 learners joined this year
-				</div> -->
+				Draw and talk on realtime blackboards.<br>
+				Save and export them as animations or videos.
 			</div>
 
 			<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; font-size: var(--fs-xs);">
@@ -25,21 +17,9 @@
 					YC Hacker News
 				</a>
 
-				<div class="separator"></div>
-
-				20 upvotes
-				<!-- style="color: #FF6600;" -->
-				<a href="https://www.reddit.com/r/PhysicsStudents/comments/1b2t5u6/i_started_a_program_where_mit_grads_do_physics/" target="_blank">
-					r/PhysicsStudents
-				</a>
-
 				<div class="separator"></div>	
 				
 				<CountryFlags/>
-
-				<div class="separator"></div>	
-
-				<BrandLogos/>
 			</div>
 		</div>
 
@@ -68,10 +48,8 @@
 </div>
 
 <script>
-	import BrandLogos from './BrandLogos.svelte'
 	import CountryFlags from './CountryFlags.svelte'
 	import RotatingGallery from './RotatingGallery.svelte'
-	import ReusableSubscribeButton from '$lib/Reusable/ReusableSubscribeButton.svelte'
 	import { onMount } from 'svelte'
 	import FounderSelfIntro from './FounderSelfIntro.svelte'
 	import HistoricalTimeline from './HistoricalTimeline.svelte'

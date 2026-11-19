@@ -13,15 +13,12 @@ export function loggedInRootDestination (pathname, mostRecentServerID) {
     ? mostRecentServerID
     : DEFAULT_HOMEPAGE_SERVER_ID
   if (!isFirestoreID(serverID)) return null
-  return `/${serverID}/question`
+  return `/${serverID}`
 }
 
 export function homepageServerPath (server) {
   const serverID = isFirestoreID(server?.id) ? server.id : DEFAULT_HOMEPAGE_SERVER_ID
   if (!isFirestoreID(serverID)) return null
-  if (isFirestoreID(server?.id) && isFirestoreID(server.recentQuestionID)) {
-    return `/${serverID}/question/${server.recentQuestionID}`
-  }
   if (isFirestoreID(server?.id) && isFirestoreID(server.featuredRoomID)) {
     return `/${serverID}/${server.featuredRoomID}`
   }

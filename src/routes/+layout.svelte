@@ -70,32 +70,48 @@
   let rootEntryToken = 0
   let showDrawerExpand = true
   let lastScrollY = 0
+  let scrollNode = null
+
+  // Re-show expand and lock baseline to #main-content when the drawer hides.
+  $: if ($sidebarFullscreen) syncExpandChrome()
 
   onMount(async () => {
     translateJSConstantsToCSSVariables()
     onAuthStateChanged(auth, reactToUserChange)
     createSessionRecording()
-    lastScrollY = window.scrollY || 0
     // Capture: server pages scroll #main-content, not window (scroll does not bubble).
     document.addEventListener('scroll', handleOnScroll, { passive: true, capture: true })
     return () => document.removeEventListener('scroll', handleOnScroll, { capture: true })
   })
 
-  function scrollYFromEvent (e) {
+  function syncExpandChrome () {
+    showDrawerExpand = true
+    if (typeof document === 'undefined') return
+    const main = document.getElementById('main-content')
+    scrollNode = main || document.documentElement
+    lastScrollY = main ? (main.scrollTop || 0) : (window.scrollY || 0)
+  }
+
+  function scrollSource (e) {
     const t = e?.target
-    if (t instanceof Element) {
-      if (t.id === 'main-content') return t.scrollTop || 0
-      // Ignore nested scrollers (room list, Find-server menu, transcript).
-      if (t !== document.documentElement && t !== document.body) return null
+    if (t instanceof Element && t.id === 'main-content') {
+      return { node: t, y: t.scrollTop || 0 }
     }
-    return window.scrollY || 0
+    // Document / window scroll (homepage splash). Ignore nested panels.
+    if (t === document || t === document.documentElement || t === document.body) {
+      return { node: document.documentElement, y: window.scrollY || 0 }
+    }
+    return null
   }
 
   const handleOnScroll = (e) => {
-    const y = scrollYFromEvent(e)
-    if (y == null) return
+    const src = scrollSource(e)
+    if (!src) return
+    const { node, y } = src
     if (y >= window.innerHeight - 120) isFullServerMode.set(true)
     // Floating drawer-expand: hide on scroll down, show on scroll up (out of flow).
+    if (!$sidebarFullscreen) return
+    if (node !== scrollNode) { scrollNode = node; lastScrollY = y; return }
     const delta = y - lastScrollY
     if (Math.abs(delta) > 4) {
       showDrawerExpand = delta < 0 || y < 24

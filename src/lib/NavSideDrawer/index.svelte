@@ -137,7 +137,7 @@
       </div>
 
       <div class="room-drawer">
-        <div style="position: absolute; overflow-y: auto; inset: 0;">
+        <div class="room-scroller">
           {#if $drawerNavTab === 'forum'}
             <QuestionsSection {classID} />
           {:else if nameQ}
@@ -149,7 +149,7 @@
           {:else}
             {#each rootRooms as room, i (room.id)}
               {#if !room.parentRoomID}
-                <RecursiveRoom {room} {roomID} {classID} {ancestorRoomIds} orderWithinLevel={i} roomsInThisLevel={rootRooms} parentRoomIDs={['']} />
+                <RecursiveRoom {room} {roomID} {classID} {ancestorRoomIds} allRooms={rooms} orderWithinLevel={i} roomsInThisLevel={rootRooms} parentRoomIDs={['']} />
               {/if}
             {/each}
             <div style="padding: 6px;">
@@ -202,6 +202,7 @@
   let savingVisibility = false, searchVal = '', menuView = 'list'
   let allServers = [], creating = false, newServerPopup
   let classDoc = null, unsubFuncs = [], rooms = [], lastClassID = ''
+  let roomsListenToken = 0
   let ancestorRoomIds = new Set()
   /** Locked at open so iPad keyboard cannot crush the menu via vh resize. */
   let serverMenuMaxH = 'min(70vh, 36rem)'
@@ -222,7 +223,7 @@
   $: isPrivate = !serverIsPublic($classServerDoc)
   $: canTogglePrivacy = viewerCanTogglePrivacy($classServerDoc, $user.uid)
   $: currentServerName = nameForCurrentServer(classID, allServers, $classServerDoc, $recentSearchedServerDoc)
-  $: if (!floating && classID) initializeRooms()
+  $: if (!floating && classID) initializeRooms(classID)
   $: if (!floating && classID && classID !== lastClassID) {
     lastClassID = classID; drawerNavTab.set('rooms'); drawerNameQuery.set('')
   }
@@ -343,15 +344,24 @@
     } finally { creating = false }
   }
 
-  async function initializeRooms () {
+  async function initializeRooms (cid) {
+    if (!cid) return
+    const token = ++roomsListenToken
     unsubDbListeners()
-    classDoc = (await getDoc(doc(getFirestore(), `classes/${classID}`))).data()
-    const memberUIDs = [...new Set([...(classDoc?.memberUIDs || []), ...($user.uid ? [$user.uid] : [])])]
-    await updateFirestoreDoc(`classes/${classID}/`, { memberUIDs, numOfMembers: memberUIDs.length })
+    // Listen first so nested deep-links get rooms even if membership write fails/hangs.
     unsubFuncs.push(onSnapshot(
-      query(collection(getFirestore(), `classes/${classID}/rooms`), orderBy('classServerOrder', 'asc')),
-      (snapshot) => { rooms = snapshot.docs.map(d => ({ id: d.id, path: d.ref.path, ...d.data() })) }
+      query(collection(getFirestore(), `classes/${cid}/rooms`), orderBy('classServerOrder', 'asc')),
+      (snapshot) => {
+        if (token !== roomsListenToken) return
+        rooms = snapshot.docs.map(d => ({ id: d.id, path: d.ref.path, ...d.data() }))
+      }
     ))
+    try {
+      classDoc = (await getDoc(doc(getFirestore(), `classes/${cid}`))).data()
+      if (token !== roomsListenToken || !$user.uid) return
+      const memberUIDs = [...new Set([...(classDoc?.memberUIDs || []), $user.uid])]
+      await updateFirestoreDoc(`classes/${cid}/`, { memberUIDs, numOfMembers: memberUIDs.length })
+    } catch (e) { console.error(e) }
   }
 
   function unsubDbListeners () { for (const u of unsubFuncs) u(); unsubFuncs = [] }
@@ -376,6 +386,7 @@
   .floating .menu-row { color: rgba(255, 255, 255, 0.92); }
   .floating .server-name-caret { border-top-color: rgba(255, 255, 255, 0.85); }
   .room-drawer { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+  .room-scroller { position: absolute; overflow-y: auto; inset: 0; }
   .room-hit { display: block; width: 100%; padding: 8px 12px; border-radius: 5px; text-align: left; font-size: var(--fs-400); color: black; }
   .room-hit:hover { background: lightgrey; }
   .room-hit.selected { font-weight: 700; background-color: #F7C686; }

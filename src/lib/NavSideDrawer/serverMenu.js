@@ -55,10 +55,9 @@ export function serversForMenu (servers, query, viewerUID = '') {
   const filtered = terms.length
     ? list.filter((s) => terms.some((t) => (s.name || '').toLowerCase().includes(t)))
     : list
-  return filtered.slice().sort((a, b) => {
-    const featured = Number(hasDesignatedPreview(b)) - Number(hasDesignatedPreview(a))
-    return featured || (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' })
-  })
+  return filtered.slice().sort((a, b) =>
+    (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' })
+  )
 }
 
 export function partitionServersForMenu (servers, query, viewerUID = '') {

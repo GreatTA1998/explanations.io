@@ -11,7 +11,7 @@
         style:position-area="block-end span-inline-end" style:position-try-fallbacks="flip-block, flip-inline, flip-inline flip-block"
         on:toggle={(e) => { if (e.newState === 'open') closeServerMenu() }}
       >
-        <div class="server-actions" role="menu" on:click={hideLogoMenu}>
+        <div class="server-actions" role="menu" tabindex="-1" on:click={hideLogoMenu} on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') hideLogoMenu() }}>
           <a class="menu-row" role="menuitem" href="/">Home</a>
           {#if $user.uid}
             <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>Log out</button>
@@ -36,7 +36,7 @@
         </button>
 
         <div
-          popover="auto" id={serverMenuId} class="server-menu" class:split={menuSplit}
+          popover="auto" id={serverMenuId} class="server-menu"
           style:position-anchor={serverAnchor}
           style:position-area="block-end span-inline-start"
           style:position-try-fallbacks="flip-inline, flip-block, flip-inline flip-block"
@@ -46,20 +46,29 @@
             <span class="material-icons search-icon" aria-hidden="true">search</span>
             <input type="search" name="search" maxlength="100" aria-label="Find server" autocomplete="off" bind:value={searchVal}>
           </div>
-          <div class="server-list" class:split={menuSplit}>
-            <div class="server-grid">
-              {#each previewServers as server (server.id)}
-                <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
-              {/each}
-              <button type="button" class="create-server" on:click={openCreateServer}>Create new server</button>
-            </div>
-            {#if listServers.length}
-              <div class="server-name-list" role="list">
-                {#each listServers as server (server.id)}
-                  <button type="button" role="listitem" class="server-list-row" on:click={() => pickServer(server)}>
+          <SubNavTabs
+            tabs={menuViewTabs}
+            value={menuView}
+            tabbed
+            ariaLabel="Server menu view"
+            on:change={(e) => { menuView = e.detail }}
+          />
+          <div class="server-list">
+            {#if menuView === 'thumbnails'}
+              <div class="server-grid">
+                {#each menuServers as server (server.id)}
+                  <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
+                {/each}
+                <button type="button" class="create-server" on:click={openCreateServer}>Create new server</button>
+              </div>
+            {:else}
+              <div class="server-name-list">
+                {#each menuServers as server (server.id)}
+                  <button type="button" class="server-list-row" on:click={() => pickServer(server)}>
                     {server.name || 'Untitled server'}
                   </button>
                 {/each}
+                <button type="button" class="server-list-row create-server-row" on:click={openCreateServer}>Create new server</button>
               </div>
             {/if}
           </div>
@@ -149,12 +158,13 @@
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
-  import { partitionServersForMenu, serverIsPublic, viewerCanTogglePrivacy } from './serverMenu.js'
+  import { serversForMenu, serverIsPublic, viewerCanTogglePrivacy } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
   import { getRandomID } from '/src/helpers/utility.js'
   import { onDestroy } from 'svelte'
 
   const drawerTabs = [{ id: 'rooms', label: 'rooms' }, { id: 'forum', label: 'forum' }]
+  const menuViewTabs = [{ id: 'list', label: 'list' }, { id: 'thumbnails', label: 'thumbnails' }]
   const uid = getRandomID()
   const logoMenuId = `logo-menu-${uid}`
   const serverMenuId = `server-menu-${uid}`
@@ -165,15 +175,14 @@
 
   export let floating = false
 
-  let savingVisibility = false, searchVal = ''
+  let savingVisibility = false, searchVal = '', menuView = 'list'
   let allServers = [], creating = false, newServerPopup
   let classDoc = null, unsubFuncs = [], rooms = [], lastClassID = ''
   let ancestorRoomIds = new Set()
 
   $: classID = $page.params.class
   $: roomID = $page.params.roomID
-  $: ({ previewServers, listServers } = partitionServersForMenu(allServers, searchVal, $user.uid))
-  $: menuSplit = listServers.length > 0
+  $: menuServers = serversForMenu(allServers, searchVal, $user.uid)
   $: isPrivate = !serverIsPublic($classServerDoc)
   $: canTogglePrivacy = viewerCanTogglePrivacy($classServerDoc, $user.uid)
   $: currentServerName = nameForCurrentServer(classID, allServers, $classServerDoc, $recentSearchedServerDoc)
@@ -332,13 +341,13 @@
   }
   .server-menu:not(:popover-open) { display: none; }
   .server-menu::backdrop { background: rgba(0, 0, 0, 0.28); }
+  .server-menu :global(.sub-nav) { margin: 8px 0 0; }
   .server-list { max-height: 70vh; overflow: auto; padding: 8px 0 0; scrollbar-width: none; -ms-overflow-style: none; }
-  .server-list.split { display: flex; flex-direction: row; gap: 8px; align-items: flex-start; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .server-list.split .server-grid, .server-list.split .server-name-list { flex: 1 1 50%; min-width: 0; width: auto; }
-  .server-name-list { display: flex; flex-wrap: wrap; gap: 4px 8px; align-content: flex-start; }
-  .server-list-row { display: block; width: auto; max-width: 100%; min-height: 40px; padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92); color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .server-name-list { display: flex; flex-direction: column; gap: 4px; align-content: flex-start; }
+  .server-list-row { display: block; width: 100%; max-width: 100%; min-height: 40px; padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92); color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
   .server-list-row:hover { background: rgba(255, 255, 255, 1); }
+  .create-server-row { color: #5d0068; }
   .create-server { display: flex; align-items: center; width: 240px; max-width: 100%; min-height: 44px; text-align: left; padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.88); color: #5d0068; font-weight: 500; }
 </style>

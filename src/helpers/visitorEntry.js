@@ -25,5 +25,5 @@ export function homepageServerPath (server) {
   if (isFirestoreID(server?.id) && isFirestoreID(server.featuredRoomID)) {
     return `/${serverID}/${server.featuredRoomID}`
   }
-  return `/${serverID}/overview`
+  return `/${serverID}`
 }

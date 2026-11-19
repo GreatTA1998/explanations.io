@@ -165,6 +165,6 @@ export function handleServerRedirect (serverObj) {
     goto(`/${serverObj.id}/${serverObj.featuredRoomID}`)
   }
   else {
-    goto(`/${serverObj.id}/overview`)
+    goto(`/${serverObj.id}`)
   }
 }

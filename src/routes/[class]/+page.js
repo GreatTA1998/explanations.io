@@ -1,7 +1,4 @@
-import { redirect } from '@sveltejs/kit'
-
-// Bare /[class] matched the layout but had no page → 404 hang.
-// Same fallback as homepageServerPath when no featured room/question.
+// Bare /[class] = no room selected. Main content stays empty (drawer still shows).
 export function load ({ params }) {
-  throw redirect(307, `/${params.class}/overview`)
+  return { classID: params.class }
 }

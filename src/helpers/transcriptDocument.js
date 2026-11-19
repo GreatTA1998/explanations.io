@@ -1,5 +1,7 @@
-const PARAGRAPH_GAP = 2, SECONDS_PER_CHAR = 0.086, MIN_WORD_SECONDS = 0.22
-const MAX_TAIL_SECONDS = 1.2, SENTENCE_END = /[.!?]["')\]]*$/, MIN_TIMED_SPAN = 0.05
+const PARAGRAPH_GAP = 2, SENTENCE_GAP = 0.55, SECONDS_PER_CHAR = 0.086, MIN_WORD_SECONDS = 0.22
+const MAX_TAIL_SECONDS = 1.2, MIN_TIMED_SPAN = 0.05
+// Unicode terminals; segment ends + pauses also close units (CJK often lacks punct).
+const SENTENCE_END = /[.!?…。！？]["'"')\]]*$/u
 
 export function buildTranscriptDocument (segments, durationSeconds = null) {
   const words = wordsFromSegments(segments, durationSeconds)
@@ -13,7 +15,10 @@ export function wordsFromSegments (segments, durationSeconds = null) {
     if (!parts.length) continue
     const timed = matchingWordTimes(segment, parts)
       || spreadWords(parts, segment.start, Math.max(0, segment.end - segment.start), segment.stretched === true)
-    for (const w of timed) words.push({ id: words.length, text: w.text, start: w.start, end: w.end < w.start ? w.start : w.end })
+    for (let i = 0; i < timed.length; i += 1) {
+      const w = timed[i]
+      words.push({ id: words.length, text: w.text, start: w.start, end: w.end < w.start ? w.start : w.end, breakAfter: i === timed.length - 1 })
+    }
   }
   return words
 }
@@ -139,15 +144,19 @@ export function wordAtTime (words, time) {
   return words[found]
 }
 
+function unitEnd (words, i) {
+  const w = words[i], n = words[i + 1]
+  return !!(w.breakAfter || SENTENCE_END.test(w.text) || (n && n.start - w.end >= SENTENCE_GAP))
+}
+
 export function sentenceBounds (words, word) {
   if (!word || !words.length) return null
   let from = word.id, to = word.id
-  while (from > 0 && !SENTENCE_END.test(words[from - 1].text)) from -= 1
-  while (to < words.length - 1 && !SENTENCE_END.test(words[to].text)) to += 1
+  while (from > 0 && !unitEnd(words, from - 1)) from -= 1
+  while (to < words.length - 1 && !unitEnd(words, to)) to += 1
   return { from, to }
 }
 
-/** Sentence at time; past word.end (when end>start) attributes to the next word. */
 export function sentenceAtTime (words, time) {
   if (!words.length || !Number.isFinite(time) || time < words[0].start) return null
   let word = wordAtTime(words, time)

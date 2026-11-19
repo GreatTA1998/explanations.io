@@ -16,6 +16,7 @@
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
   import { startTranscriptForNewVideo } from '/src/helpers/transcript.js'
+  import { saveBoardAsAnimation } from '/src/helpers/doodleAnimation.js'
 
   export let roomDoc
   export let boardDoc
@@ -246,6 +247,7 @@
         on:background-reset={() => resetBackgroundImage(boardDoc.id)}
         on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
         on:board-wipe={() => deleteStrokesFromSlide({ strokesArray })}
+        on:save-animation={() => saveBoardAsAnimation({ boardDoc, userDoc: $user })}
         on:board-delete={() => deleteBoard(
           boardDoc.id, 
           () => deleteStrokesFromSlide({ strokesArray })

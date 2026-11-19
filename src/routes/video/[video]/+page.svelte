@@ -1,6 +1,18 @@
 <div style="padding: {PAGE_PADDING}px; padding-top: {TOP_CLEARANCE}px;">
   {#if ready && classID && blackboardID}
     {#key classID + ':' + blackboardID}
+      <!--
+        Same in-room player path: GeneralizedBlackboardVideoDisplay →
+        GeneralizedVideoDisplay → MultiboardHD (+ FetchStrokes autoFetch,
+        playbackClock, MultiboardSlide playbackSyncArmed).
+
+        WHY a thin wrapper used to diverge: `/video` sits outside `[class]`
+        layout, so board width stayed 0 (IntersectionObserver never fired /
+        strokes never fetched) and an older MultiboardSlide reactive cleared
+        the canvas on every currentTime tick. Measuring into the shared
+        width stores + the shared MultiboardHD tree keeps standalone identical
+        to in-room playback.
+      -->
       <GeneralizedBlackboardVideoDisplay
         {classID}
         boardID={blackboardID}
@@ -20,20 +32,15 @@
   export let data
 
   let { videoID } = data
-  $: ({ videoID } = data) // so it stays in sync when `data` changes
+  $: ({ videoID } = data)
   $: classID = videoID ? videoID.split(':')[0] : ''
   $: blackboardID = videoID ? videoID.split(':')[1] : ''
 
-  // The class layout is what normally measures the player. This route is outside
-  // that layout, and a 0-width canvas never intersects, so strokes never load.
-  // The root layout also floats a server menu over this page. Leave room for it
-  // so the board fits in the window.
+  // Match [class] layout measurement into the same stores MultiboardHD reads.
   const TOP_CLEARANCE = 136
   let ready = false
 
   function measure () {
-    // getBoardWidth applies PAGE_PADDING when pageInset is true (default),
-    // matching the padded page wrapper above.
     const containerWidth = window.innerWidth
     const containerHeight = window.innerHeight - TOP_CLEARANCE - PAGE_PADDING
     const boardWidth = getBoardWidth({ containerWidth, containerHeight })

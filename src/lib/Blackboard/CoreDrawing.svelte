@@ -30,6 +30,10 @@
         
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>
+            <Item on:SMUI:action={() => dispatch('save-animation')} style="margin-bottom: 0px;">
+              Save animation
+            </Item>
+
             {#if backgroundImageDownloadURL}
               <Item on:click={() => dispatch('background-reset')} style="margin-bottom: 0px;">
                 Remove background

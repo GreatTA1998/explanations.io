@@ -21,15 +21,17 @@
     canCreateNewSlide
   />
 
-  <button on:click={() => {
-      if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
-        deleteMultislideBlackboard({ boardDoc, roomDoc })
-      }
-    }}
-    style="margin-left: auto; margin-right: 8px; cursor: pointer;"
-  >
-    Delete multiboard
-  </button>
+  <div style="margin-left: auto; display: flex; align-items: center;">
+    <MultiboardDropdownMenu
+      {boardDoc}
+      {roomDoc}
+      on:delete-multiboard={() => {
+        if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
+          deleteMultislideBlackboard({ boardDoc, roomDoc })
+        }
+      }}
+    />
+  </div>
 </div>
 
 <div style="margin-bottom: 12px;"></div>
@@ -72,6 +74,7 @@
             on:background-reset={() => deleteBackgroundImageFromSlide(theDoc)}
             
             isDeletable={boardDoc.slideIDs.length > 1}
+            on:save-animation={() => saveBoardAsAnimation({ boardDoc, userDoc: $user })}
             on:board-delete={async () => {
               if (confirm(`Are you sure you want to delete board ${i+1}? (Other boards won't be affected.)`)) {
                 await deleteSlideFromMultislide({ slideID, multislidePath: boardDoc.path })
@@ -125,6 +128,7 @@
   import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
+  import MultiboardDropdownMenu from './MultiboardDropdownMenu.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
@@ -139,6 +143,7 @@
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
+  import { saveBoardAsAnimation } from '/src/helpers/doodleAnimation.js'
   import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
   import { startTranscriptForNewVideo } from '/src/helpers/transcript.js'

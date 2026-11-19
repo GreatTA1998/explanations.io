@@ -56,3 +56,17 @@ export function formatFromRecorder (requested, recorder) {
 
   return { mimeType: actual, fileExtension, widelyPlayable }
 }
+
+export function isWidelyPlayableVideo (video) {
+  if (!video) return false
+  if (video.videoWidelyPlayable === true) return true
+  if (video.videoWidelyPlayable === false) return false
+
+  const type = String(video.videoContentType || '').toLowerCase()
+  if (!type.includes('mp4')) return false
+  if (/vp8|vp9|vp09|av01|hev1|hvc1/.test(type)) return false
+  const h264 = type.includes('avc1') || type.includes('h264')
+  const aac = type.includes('mp4a') || type.includes('aac')
+  return h264 && aac
+}
+

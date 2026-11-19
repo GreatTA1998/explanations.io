@@ -290,7 +290,20 @@
   .nav-cluster { position: relative; z-index: 5; width: 100%; height: 100%; min-height: 0; }
   .floating { position: fixed; top: 8px; left: 8px; z-index: 30; width: 280px; height: auto; }
   .nav-panel { position: relative; display: flex; flex-direction: column; height: 100%; min-height: 0; }
-  .floating .nav-panel { height: auto; background-color: var(--bg-off-white); border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 3px 5px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06); }
+  /* Floating cluster: translucent fill, no blur, out of flow (fixed). */
+  .floating .nav-panel {
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: hsla(0, 8%, 11%, 0.5);
+    color: #fff;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .floating .server-name,
+  .floating .menu-row { color: rgba(255, 255, 255, 0.92); }
+  .floating .server-name-caret { border-top-color: rgba(255, 255, 255, 0.85); }
   .room-drawer { position: relative; flex: 1; min-height: 0; overflow: hidden; }
   .room-hit { display: block; width: 100%; padding: 8px 12px; border-radius: 5px; text-align: left; font-size: var(--fs-400); color: black; }
   .room-hit:hover { background: lightgrey; }

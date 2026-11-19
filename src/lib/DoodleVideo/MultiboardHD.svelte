@@ -75,15 +75,7 @@
       <span class="time">{formatTime(duration)}</span>
       <button type="button" class="speed-btn" on:click={togglePlaySpeed}>{playbackSpeed}x</button>
       {#if onToggleComments}
-        <button
-          type="button"
-          class="panel-toggle"
-          aria-expanded={commentsOpen}
-          aria-label={commentsOpen ? 'Hide transcript and comments' : 'Show transcript and comments'}
-          on:click={onToggleComments}
-        >
-          <span class="hand-arrow" class:left={commentsOpen} aria-hidden="true"></span>
-        </button>
+        <CommentsPanelButton open={commentsOpen} on:click={onToggleComments} />
       {/if}
     </div>
     <audio
@@ -113,6 +105,7 @@
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import { playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackClock.js'
+  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
@@ -206,12 +199,6 @@
 
 <style>
   .clock { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
-  .panel-toggle {
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    box-sizing: border-box; width: 28px; height: 28px; min-width: 28px; min-height: 28px;
-    padding: 0; margin: 0; border: 1px solid rgba(255,255,255,.35); border-radius: 24px;
-    background: transparent; color: rgba(255,255,255,.9); cursor: pointer;
-  }
   .playbar {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; height: 50px;
     display: flex; align-items: center; gap: 6px; padding: 0 8px; box-sizing: border-box;

@@ -152,10 +152,6 @@ export function createRoomDoc (classPath) {
 
     const newDocID = getRandomID()
     const classServerOrder = await orderForNewRootRoom(classPath)
-        
-    const idOfSlide2 = getRandomID() 
-    const idOfSlide3 = getRandomID()
-
 
     const db = getFirestore()
     const roomRef = doc(db, classPath + `rooms/${newDocID}`)
@@ -171,17 +167,11 @@ export function createRoomDoc (classPath) {
       }),
       setDoc(blackboardRef, {
         recordState: 'pre_record',
-        slideIDs: [newDocID, idOfSlide2, idOfSlide3],
+        slideIDs: [newDocID],
         isMultiboard: true
       }),
       setFirestoreDoc(classPath + `blackboards/${newDocID}/slides/${newDocID}`, {
         // empty doc matters because it can then be updated with background images etc.
-      }),
-      setFirestoreDoc(classPath + `blackboards/${newDocID}/slides/${idOfSlide2}`, {
-        // empty doc matters because it can then be updated with background images etc.
-      }),
-      setFirestoreDoc(classPath + `blackboards/${newDocID}/slides/${idOfSlide3}`, {
-
       })
     ])
     resolve(newDocID)

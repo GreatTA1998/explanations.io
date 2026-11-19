@@ -4,6 +4,8 @@
   import GeneralizedVideoDisplay from '$lib/DoodleVideo/GeneralizedVideoDisplay.svelte'
   import OnlineMultislideBlackboard from '$lib/Blackboard/OnlineMultislide.svelte'
   import LegacySingleSlideBlackboard from '$lib/Blackboard/LegacySingleSlide.svelte'
+  import DoodleAnimationBoard from '$lib/DoodleAnimationBoard.svelte'
+  import { isDoodleAnimation } from '/src/helpers/doodleAnimation.js'
   import { blackboardWidth, videoPreviewWidth, user } from '/src/store.js'
   import { updateFirestoreDoc } from '/src/helpers/crud.js'
   import { createDebouncedFunction } from '/src/helpers/debounce.js'
@@ -50,6 +52,13 @@
           videoWidth={$videoPreviewWidth}
           showEditDeleteButtons={true}
           {classID}
+        />
+      {:else if isDoodleAnimation(boardDoc)}
+        <DoodleAnimationBoard
+          {boardDoc}
+          {classID}
+          canvasWidth={$blackboardWidth}
+          canvasHeight={$blackboardWidth * 3/4}
         />
       {:else if boardDoc.isMultiboard}
         <OnlineMultislideBlackboard 

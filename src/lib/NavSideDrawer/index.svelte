@@ -36,15 +36,17 @@
         </button>
 
         <div
+          bind:this={serverMenuEl}
           popover="auto" id={serverMenuId} class="server-menu"
           style:position-anchor={serverAnchor}
           style:position-area="block-end span-inline-start"
           style:position-try-fallbacks="flip-inline, flip-block, flip-inline flip-block"
-          on:toggle={(e) => { if (e.newState !== 'open') searchVal = '' }}
+          style:--server-menu-max-h={serverMenuMaxH}
+          on:toggle={onServerMenuToggle}
         >
           <div class="search-slot">
             <span class="material-icons search-icon" aria-hidden="true">search</span>
-            <input type="search" name="search" maxlength="100" aria-label="Find server" autocomplete="off" bind:value={searchVal}>
+            <input type="search" name="search" maxlength="100" aria-label="Find server" placeholder="search servers" autocomplete="off" bind:value={searchVal}>
           </div>
           <SubNavTabs
             tabs={menuViewTabs}
@@ -184,7 +186,7 @@
   } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
   import { getRandomID } from '/src/helpers/utility.js'
-  import { onDestroy } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
 
   const drawerTabs = [{ id: 'rooms', label: 'rooms' }, { id: 'forum', label: 'forum' }]
   const menuViewTabs = [{ id: 'list', label: 'list' }, { id: 'thumbnails', label: 'thumbnails' }]
@@ -202,6 +204,10 @@
   let allServers = [], creating = false, newServerPopup
   let classDoc = null, unsubFuncs = [], rooms = [], lastClassID = ''
   let ancestorRoomIds = new Set()
+  let serverMenuEl = null
+  /** Locked at open so iPad keyboard cannot crush the menu via vh resize. */
+  let serverMenuMaxH = 'min(70vh, 36rem)'
+  let serverMenuOpen = false
 
   $: classID = $page.params.class
   $: roomID = $page.params.roomID
@@ -231,7 +237,35 @@
   }
 
   getFirestoreCollection('classes').then(docs => { allServers = docs })
+  onMount(() => {
+    const vv = window.visualViewport
+    if (!vv) return
+    // Ignore keyboard-driven visualViewport shrink while the menu is open.
+    const onVvResize = () => {
+      if (serverMenuOpen) return
+      serverMenuMaxH = lockedMenuMaxHeight()
+    }
+    vv.addEventListener('resize', onVvResize)
+    return () => vv.removeEventListener('resize', onVvResize)
+  })
   onDestroy(unsubDbListeners)
+
+  function lockedMenuMaxHeight () {
+    const vv = window.visualViewport
+    const h = Math.round(vv?.height || window.innerHeight || 0)
+    // Keep a usable floor even if something reports a tiny viewport.
+    return `${Math.max(280, Math.min(h - 24, Math.round(h * 0.7)))}px`
+  }
+
+  function onServerMenuToggle (e) {
+    if (e.newState === 'open') {
+      serverMenuOpen = true
+      serverMenuMaxH = lockedMenuMaxHeight()
+      return
+    }
+    serverMenuOpen = false
+    searchVal = ''
+  }
 
   function ancestorIdsForRoom (roomList, roomId) {
     const ancestors = new Set()
@@ -388,13 +422,19 @@
   .server-actions { display: flex; flex-direction: column; min-width: 232px; text-align: left; }
   .server-menu {
     margin: 0; inset: auto; margin-block-start: 4px; z-index: 40; width: min(calc(100vw - 24px), 42rem);
-    max-width: calc(100vw - 24px); background: var(--bg-off-white); padding: 12px; border: none; border-radius: 12px;
+    max-width: calc(100vw - 24px); max-height: var(--server-menu-max-h, min(70vh, 36rem));
+    display: flex; flex-direction: column; overflow: hidden;
+    background: var(--bg-off-white); padding: 12px; border: none; border-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .server-menu:not(:popover-open) { display: none; }
   .server-menu::backdrop { background: rgba(0, 0, 0, 0.28); }
-  .server-menu :global(.sub-nav) { margin: 8px 0 0; }
-  .server-list { max-height: 70vh; overflow: auto; padding: 8px 0 0; scrollbar-width: none; -ms-overflow-style: none; }
+  .server-menu :global(.sub-nav) { margin: 8px 0 0; flex: 0 0 auto; }
+  .search-slot { flex: 0 0 auto; }
+  .server-list {
+    flex: 1 1 auto; min-height: 0; max-height: none; overflow: auto; padding: 8px 0 0;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
   .recent-block { padding: 0 0 8px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 4px; }
   .recent-label {
     padding: 2px 16px 6px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
@@ -404,14 +444,15 @@
   .recent-list { padding-bottom: 2px; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  /* Column-major fill so A–Z reads top-to-bottom, then next column. */
   .server-name-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-    gap: 4px;
-    align-content: start;
+    display: block;
+    columns: 11rem auto;
+    column-gap: 4px;
   }
   .server-list-row {
     display: block; width: 100%; min-width: 0; min-height: 40px;
+    margin: 0 0 4px; break-inside: avoid; -webkit-column-break-inside: avoid;
     padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92);
     color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
   }

@@ -10,12 +10,15 @@
       <NavSideDrawer floating />
     {/if}
 
-    {#if $sidebarFullscreen && $page.url.pathname !== '/' && showDrawerExpand}
+    {#if $sidebarFullscreen && $page.url.pathname !== '/'}
       <button
         type="button"
         class="show-drawer-toggle"
+        class:is-hidden={!showDrawerExpand}
         aria-label="Show the drawer"
         title="Show the drawer"
+        aria-hidden={!showDrawerExpand}
+        tabindex={showDrawerExpand ? 0 : -1}
         on:click={() => sidebarFullscreen.set(false)}
       >
         <span class="hand-arrow" aria-hidden="true"></span>
@@ -73,13 +76,26 @@
     onAuthStateChanged(auth, reactToUserChange)
     createSessionRecording()
     lastScrollY = window.scrollY || 0
-    window.addEventListener('scroll', handleOnScroll, { passive: true })
+    // Capture: server pages scroll #main-content, not window (scroll does not bubble).
+    document.addEventListener('scroll', handleOnScroll, { passive: true, capture: true })
+    return () => document.removeEventListener('scroll', handleOnScroll, { capture: true })
   })
 
-  const handleOnScroll = () => {
-    if (window.scrollY >= window.innerHeight - 120) isFullServerMode.set(true)
+  function scrollYFromEvent (e) {
+    const t = e?.target
+    if (t instanceof Element) {
+      if (t.id === 'main-content') return t.scrollTop || 0
+      // Ignore nested scrollers (room list, Find-server menu, transcript).
+      if (t !== document.documentElement && t !== document.body) return null
+    }
+    return window.scrollY || 0
+  }
+
+  const handleOnScroll = (e) => {
+    const y = scrollYFromEvent(e)
+    if (y == null) return
+    if (y >= window.innerHeight - 120) isFullServerMode.set(true)
     // Floating drawer-expand: hide on scroll down, show on scroll up (out of flow).
-    const y = window.scrollY || 0
     const delta = y - lastScrollY
     if (Math.abs(delta) > 4) {
       showDrawerExpand = delta < 0 || y < 24
@@ -269,12 +285,17 @@
     position: fixed; top: 12px; left: 12px; z-index: 40;
     display: flex; align-items: center; justify-content: center;
     width: 48px; height: 48px; padding: 0; border-radius: 24px;
-    /* Translucent fill, no blur — out of document flow. */
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    background: hsla(0, 8%, 11%, 0.5);
-    color: rgba(255, 255, 255, 0.92);
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    /* Match in-drawer hide control: solid white + grey chevron. */
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    color: rgb(80, 80, 80);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .show-drawer-toggle:hover { background: #f3f3f3; }
+  .show-drawer-toggle.is-hidden {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
   }
 </style>

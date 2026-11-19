@@ -14,7 +14,10 @@ const fsUrl = (path, extra = '') =>
 
 export async function POST ({ request }) {
   const apiKey = String(env?.OPENAI_API_KEY ?? process.env.OPENAI_API_KEY ?? '').trim()
-  if (!apiKey) return json(200, { skipped: true })
+  if (!apiKey) {
+    console.error('transcription skipped: OPENAI_API_KEY is not set')
+    return json(200, { skipped: true, error: MESSAGES.unconfigured })
+  }
 
   const token = bearer(request)
   const uid = token ? await firebaseUid(token) : ''

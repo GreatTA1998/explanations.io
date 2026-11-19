@@ -52,3 +52,25 @@ export function serversForMenu (servers, query, viewerUID = '') {
     (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' })
   )
 }
+
+const RECENT_SERVER_CAP = 8
+
+/** Most-recent-first unique Firestore IDs for the Find-server menu. */
+export function pushRecentVisitedServerID (existing, serverID, cap = RECENT_SERVER_CAP) {
+  const id = firestoreID(serverID)
+  if (!id) return Array.isArray(existing) ? existing.filter(isFirestoreID).slice(0, cap) : []
+  const rest = (Array.isArray(existing) ? existing : []).filter((x) => isFirestoreID(x) && x !== id)
+  return [id, ...rest].slice(0, cap)
+}
+
+/** Resolve recent IDs against loaded servers (preserve visit order). */
+export function recentServersForMenu (servers, recentIDs, viewerUID = '') {
+  if (!Array.isArray(recentIDs) || !recentIDs.length) return []
+  const byId = new Map((servers || []).map((s) => [s.id, s]))
+  const out = []
+  for (const id of recentIDs) {
+    const server = byId.get(id)
+    if (server && serverVisibleInMenu(server, viewerUID)) out.push(server)
+  }
+  return out
+}

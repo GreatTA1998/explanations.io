@@ -14,9 +14,10 @@ export const HEIGHTS = Object.freeze({
   NAVBAR: 56,
   TITLE: 30 + 12, // the board description could be multi-line, but we allocate space for one line, includes bottom margin
   BOARD_CHANGER: 36 + 16, // includes padding
-  // Clearance so the transcript stays above the on-board controls.
+  // Must match MultiboardHD .playback-bar height so the over-board
+  // transcript/comments overlay meets the audio scrubber (no light gap).
   // The canvas itself is not shortened to reveal a player.
-  AUDIO_SLIDER: 50,
+  AUDIO_SLIDER: 32,
 })
 
 export function translateJSConstantsToCSSVariables () {

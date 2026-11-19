@@ -335,7 +335,7 @@
   .switch-track.on .switch-thumb { transform: translateX(16px); }
   .server-actions { display: flex; flex-direction: column; min-width: 232px; text-align: left; }
   .server-menu {
-    margin: 0; inset: auto; margin-block-start: 4px; z-index: 40; width: min(calc(100vw - 24px), max-content);
+    margin: 0; inset: auto; margin-block-start: 4px; z-index: 40; width: min(calc(100vw - 24px), 42rem);
     max-width: calc(100vw - 24px); background: var(--bg-off-white); padding: 12px; border: none; border-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
@@ -345,8 +345,12 @@
   .server-list { max-height: 70vh; overflow: auto; padding: 8px 0 0; scrollbar-width: none; -ms-overflow-style: none; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .server-name-list { display: flex; flex-direction: column; gap: 4px; align-content: flex-start; }
-  .server-list-row { display: block; width: 100%; max-width: 100%; min-height: 40px; padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92); color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .server-name-list { display: flex; flex-wrap: wrap; gap: 4px; align-content: flex-start; align-items: stretch; }
+  .server-list-row {
+    display: block; flex: 0 1 auto; width: max-content; max-width: 100%; min-width: 0; min-height: 40px;
+    padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92);
+    color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
   .server-list-row:hover { background: rgba(255, 255, 255, 1); }
   .create-server-row { color: #5d0068; }
   .create-server { display: flex; align-items: center; width: 240px; max-width: 100%; min-height: 44px; text-align: left; padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.88); color: #5d0068; font-weight: 500; }

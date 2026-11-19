@@ -1,16 +1,9 @@
-const THUMBNAIL_FIELDS = ['featuredBlackboardID', 'thumbnailURL', 'serverThumbnail', 'thumbnail']
-const FEATURED_VIDEO_FIELDS = ['featuredVideoID', 'featuredVideo']
 const FIRESTORE_ID = /^[A-Za-z0-9]{20}$/
 
 export const CARD_WIDTH = 240
 
-const present = (v) => typeof v === 'string' ? v.trim().length > 0 : v != null && v !== false
 export const isFirestoreID = (v) => typeof v === 'string' && FIRESTORE_ID.test(v)
 const firestoreID = (v) => isFirestoreID(v) ? v : ''
-
-export function hasDesignatedPreview (server) {
-  return !!server && [...THUMBNAIL_FIELDS, ...FEATURED_VIDEO_FIELDS].some((f) => present(server[f]))
-}
 
 export function previewBlackboardID (server) {
   if (!server) return ''

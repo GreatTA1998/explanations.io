@@ -67,7 +67,6 @@ export function setStrokeProperties (color, lineWidth, isEraserStroke, ctx) {
 // Live boards use CSS `hsl(0,0%,0%, 0.80)` over --bg-off-white. Video frames
 // have no alpha, so flatten that stack into the opaque equivalent once.
 export const BLACKBOARD_PAINT = 'hsl(0, 0%, 20%)'
-export const BLACKBOARD_BACKDROP = '#f8f9f9'
 
 export function fillRecordedBoardBackground (ctx, width, height) {
   if (!ctx || width < 1 || height < 1) return

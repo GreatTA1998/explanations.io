@@ -395,6 +395,13 @@
   .server-menu::backdrop { background: rgba(0, 0, 0, 0.28); }
   .server-menu :global(.sub-nav) { margin: 8px 0 0; }
   .server-list { max-height: 70vh; overflow: auto; padding: 8px 0 0; scrollbar-width: none; -ms-overflow-style: none; }
+  .recent-block { padding: 0 0 8px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 4px; }
+  .recent-label {
+    padding: 2px 16px 6px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; color: rgb(120, 120, 120);
+  }
+  .recent-grid { padding-bottom: 4px; }
+  .recent-list { padding-bottom: 2px; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
   .server-name-list {

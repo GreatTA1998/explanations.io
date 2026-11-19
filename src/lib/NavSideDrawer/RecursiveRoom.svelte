@@ -27,7 +27,7 @@
           <div class="badge-number">
             {room.numOfChildren}
           </div>
-          <button on:click|stopPropagation={expandChildrenRooms}
+          <button on:click|stopPropagation={() => expandChildrenRooms()}
             class="material-symbols-outlined library-item-icon"
           >
             folder
@@ -92,6 +92,7 @@
         {roomID}
         {classID}
         {ancestorRoomIds}
+        {allRooms}
         depth={depth + 1}
         orderWithinLevel={i}
         roomsInThisLevel={subpages}
@@ -134,6 +135,8 @@ export let roomID
 export let classID
 /** @type {Set<string>} parent room ids that must stay open for the active deep link */
 export let ancestorRoomIds = new Set()
+/** Flat class rooms — seed children on deep-link expand before the subpage listener lands. */
+export let allRooms = []
 
 let subpages = null
 let RoomElement
@@ -149,7 +152,7 @@ $: showRoomMenu = $page.params.roomID && $user.uid && $adminUIDs.includes($user.
 $: roomMenuId = `room-menu-${room.id}`
 $: roomAnchor = `--room-${room.id}`
 $: activeRoomId = $page.params.roomID
-$: ensureExpandedForActivePath(activeRoomId, ancestorRoomIds)
+$: ensureExpandedForActivePath(activeRoomId, ancestorRoomIds, allRooms)
 $: if (RoomElement && room.id === activeRoomId) scrollActiveRoomIntoView(activeRoomId)
 $: if (room.id !== activeRoomId && scrolledForRoomId === room.id) scrolledForRoomId = null
 
@@ -174,11 +177,20 @@ function touchDragCtx () {
 onMount(() => { html5Drag = !window.matchMedia('(pointer: coarse)').matches })
 onDestroy(() => { if (unsubListener) unsubListener() })
 
-function ensureExpandedForActivePath (activeId, ancestors) {
+function childrenFromAllRooms (list) {
+  if (!list?.length) return null
+  return list
+    .filter(r => r.parentRoomID === room.id)
+    .slice()
+    .sort((a, b) => (a.classServerOrder || 0) - (b.classServerOrder || 0))
+}
+
+function ensureExpandedForActivePath (activeId, ancestors, list) {
   if (!activeId || !ancestors?.has(room.id)) return
-  if (expandedForActiveId === activeId) return
+  // Retry when a prior expand left us open with no children (listener race).
+  if (expandedForActiveId === activeId && isExpanded && (subpages || unsubListener)) return
   expandedForActiveId = activeId
-  expandChildrenRooms()
+  expandChildrenRooms(list)
 }
 
 async function scrollActiveRoomIntoView (id) {
@@ -187,7 +199,14 @@ async function scrollActiveRoomIntoView (id) {
   await tick()
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      RoomElement?.scrollIntoView({ block: 'center', inline: 'nearest' })
+      const el = RoomElement
+      if (!el) return
+      // Only scroll the room list — scrollIntoView can drag outer #main-content.
+      const scroller = el.closest('.room-scroller')
+      if (!scroller || scroller.clientHeight < 1) return
+      const er = el.getBoundingClientRect()
+      const sr = scroller.getBoundingClientRect()
+      scroller.scrollTop += er.top + er.height / 2 - (sr.top + sr.height / 2)
     })
   })
 }
@@ -218,8 +237,12 @@ async function fetchSubpages () {
   })
 }
 
-function expandChildrenRooms () {
-  if (!subpages && !unsubListener) fetchSubpages()
+function expandChildrenRooms (list = allRooms) {
+  if (!subpages) {
+    const seeded = childrenFromAllRooms(list)
+    if (seeded) subpages = seeded
+  }
+  if (!unsubListener) fetchSubpages()
   isExpanded = true
 }
 

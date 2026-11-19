@@ -59,12 +59,12 @@
     </CoreDrawingToolbar>
   {/if}
   
-  <!-- explicitly set `passive: false`, Rich Harris describes the problem 
-   very well: https://github.com/sveltejs/svelte/issues/2068 -->
+  <!-- nonpassive so we can preventDefault only while drawing (finger scroll must pass).
+   https://github.com/sveltejs/svelte/issues/2068 -->
   <canvas bind:this={canvas}
-    on:touchstart|nonpassive|preventDefault={touchStart}
-    on:touchmove|nonpassive|preventDefault={touchMove}
-    on:touchend|nonpassive|preventDefault={touchEnd}
+    on:touchstart|nonpassive={touchStart}
+    on:touchmove|nonpassive={touchMove}
+    on:touchend|nonpassive={touchEnd}
     on:mousedown={mouseDown}
     on:mousemove={mouseMove}
     class="front-canvas"
@@ -283,51 +283,32 @@
     }
   }
 
+  function shouldDrawTouch (touch) {
+    if (!touch) return false
+    return !$onlyAllowApplePencil || touch.touchType === 'stylus'
+  }
+
   function touchStart (e) {
-    if (e.touches.length > 1) { // only 1 finger allowed
-      return
-    }
-    const isApplePencil = e.touches[0].touchType === "stylus"
-    if ($onlyAllowApplePencil && !isApplePencil)   {
-      console.log('error: cannot use finger during Apple Pencil mode')
-      return;
-    }
+    if (e.touches.length > 1) return
+    if (!shouldDrawTouch(e.touches[0])) return // finger scroll when pencil-only
+    e.preventDefault()
     handleContactWithBlackboard(e, { isInitialContact: true })
   }
 
   function touchMove (e) {
-    if (!isInMiddleOfStroke) {
-      return; // concurrent touches
-    }
-    if (e.touches.length > 1) {
-      console.log("touchmove ignored: only 1 finger allowed")
-      return
-    }
-    const isApplePencil = e.touches[0].touchType === "stylus"
-    if ($onlyAllowApplePencil && !isApplePencil)   {
-      console.log('error: cannot use finger during Apple Pencil mode')
-      return
-    }
+    if (!isInMiddleOfStroke) return
+    if (e.touches.length > 1) return
+    if (!shouldDrawTouch(e.touches[0])) return
+    e.preventDefault()
     handleContactWithBlackboard(e, { isInitialContact: false })
   }
 
   function touchEnd (e) {
-    // case 1: active finished first, but other finger remained
-    if (!isInMiddleOfStroke) {
-      return
-    }
-    // case 2: other finger finished first, active finger is still on screen
-    if (e.touches.length > 0) {
-      return
-    }
-    // normal check for Apple Pencil (note changedTouches)
-    const isApplePencil = e.changedTouches[0].touchType === "stylus"
-    if ($onlyAllowApplePencil && !isApplePencil)   {
-      console.log('error: cannot use finger during Apple Pencil mode')
-      return;
-    }
+    if (!isInMiddleOfStroke) return
+    if (e.touches.length > 0) return
+    if (!shouldDrawTouch(e.changedTouches[0])) return
+    e.preventDefault()
     handleEndOfStroke(currentStroke)
-
     isInMiddleOfStroke = false
   }
 

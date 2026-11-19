@@ -147,20 +147,16 @@
     color: var(--panel-fg-muted) !important;
   }
 
-  /* Side-by-side when container fits video + panel. */
+  /* Side-by-side: panel height tracks stage; scroll inside. */
   .measure.layout-side .frame {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: auto minmax(var(--panel-w), min(72ch, 1fr));
     width: 100%;
   }
 
   .measure.layout-side .panel {
-    flex: 1 1 0;
-    min-width: var(--panel-w);
-    max-width: 72ch;
-    width: auto;
-    max-height: none;
     overflow-y: auto;
+    height: 0;
+    min-height: 100%;
   }
 </style>

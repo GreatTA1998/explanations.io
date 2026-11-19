@@ -59,11 +59,3 @@ export function serversForMenu (servers, query, viewerUID = '') {
     (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' })
   )
 }
-
-export function partitionServersForMenu (servers, query, viewerUID = '') {
-  const previewServers = [], listServers = []
-  for (const server of serversForMenu(servers, query, viewerUID)) {
-    (hasDesignatedPreview(server) ? previewServers : listServers).push(server)
-  }
-  return { previewServers, listServers }
-}

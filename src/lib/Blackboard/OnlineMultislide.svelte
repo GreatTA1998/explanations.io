@@ -347,7 +347,7 @@
     ])
 
     // FINALLY: update metadata of the multislide blackboard doc itself
-    updateFirestoreDoc(boardPath, {
+    await updateFirestoreDoc(boardDoc.path, {
       creatorUID: $user.uid || '',
       creatorName: $user.name || '',
       creatorPhoneNumber: $user.phoneNumber || '',

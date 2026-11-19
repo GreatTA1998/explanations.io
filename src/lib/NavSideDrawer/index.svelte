@@ -432,7 +432,6 @@
     text-transform: uppercase; color: rgb(120, 120, 120);
   }
   .recent-grid { padding-bottom: 4px; }
-  /* Single column — shared .server-name-list columns would shuffle chips sideways. */
   .recent-list { columns: 1; padding-bottom: 2px; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }

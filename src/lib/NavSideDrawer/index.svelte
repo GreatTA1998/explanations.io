@@ -300,14 +300,7 @@
 
   async function pickServer (server) {
     const path = homepageServerPath(server)
-    if ($user.uid && server?.id) {
-      const recentVisitedServerIDs = pushRecentVisitedServerID($user.recentVisitedServerIDs, server.id)
-      updateFirestoreDoc(`/users/${$user.uid}`, {
-        recentSearchedServerID: server.id,
-        mostRecentServerID: server.id,
-        recentVisitedServerIDs
-      })
-    }
+    if ($user.uid && server?.id) updateFirestoreDoc(`/users/${$user.uid}`, { recentSearchedServerID: server.id })
     if (path) await goto(path)
     closeServerMenu()
   }
@@ -439,7 +432,7 @@
     text-transform: uppercase; color: rgb(120, 120, 120);
   }
   .recent-grid { padding-bottom: 4px; }
-  .recent-list { padding-bottom: 2px; }
+  .recent-list { columns: 1; padding-bottom: 2px; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
   /* Column-major fill so A–Z reads top-to-bottom, then next column. */

@@ -54,6 +54,26 @@
             on:change={(e) => { menuView = e.detail }}
           />
           <div class="server-list">
+            {#if $user.uid && recentMenuServers.length && !searchVal.trim()}
+              <div class="recent-block" aria-label="Recently visited servers">
+                <div class="recent-label">Recently visited</div>
+                {#if menuView === 'thumbnails'}
+                  <div class="server-grid recent-grid">
+                    {#each recentMenuServers as server (server.id)}
+                      <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
+                    {/each}
+                  </div>
+                {:else}
+                  <div class="server-name-list recent-list">
+                    {#each recentMenuServers as server (server.id)}
+                      <button type="button" class="server-list-row" on:click={() => pickServer(server)}>
+                        {server.name || 'Untitled server'}
+                      </button>
+                    {/each}
+                  </div>
+                {/if}
+              </div>
+            {/if}
             {#if menuView === 'thumbnails'}
               <div class="server-grid">
                 {#each menuServers as server (server.id)}
@@ -158,7 +178,10 @@
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
-  import { serversForMenu, serverIsPublic, viewerCanTogglePrivacy } from './serverMenu.js'
+  import {
+    serversForMenu, recentServersForMenu, pushRecentVisitedServerID,
+    serverIsPublic, viewerCanTogglePrivacy
+  } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
   import { getRandomID } from '/src/helpers/utility.js'
   import { onDestroy } from 'svelte'
@@ -183,6 +206,15 @@
   $: classID = $page.params.class
   $: roomID = $page.params.roomID
   $: menuServers = serversForMenu(allServers, searchVal, $user.uid)
+  $: recentVisitedIDs = Array.isArray($user.recentVisitedServerIDs)
+    ? $user.recentVisitedServerIDs
+    : pushRecentVisitedServerID(
+      [$user.mostRecentServerID, $user.recentSearchedServerID].filter(Boolean),
+      ''
+    )
+  $: recentMenuServers = $user.uid
+    ? recentServersForMenu(allServers, recentVisitedIDs, $user.uid)
+    : []
   $: isPrivate = !serverIsPublic($classServerDoc)
   $: canTogglePrivacy = viewerCanTogglePrivacy($classServerDoc, $user.uid)
   $: currentServerName = nameForCurrentServer(classID, allServers, $classServerDoc, $recentSearchedServerDoc)
@@ -236,7 +268,14 @@
 
   async function pickServer (server) {
     const path = homepageServerPath(server)
-    if ($user.uid) updateFirestoreDoc(`/users/${$user.uid}`, { recentSearchedServerID: server.id })
+    if ($user.uid && server?.id) {
+      const recentVisitedServerIDs = pushRecentVisitedServerID($user.recentVisitedServerIDs, server.id)
+      updateFirestoreDoc(`/users/${$user.uid}`, {
+        recentSearchedServerID: server.id,
+        mostRecentServerID: server.id,
+        recentVisitedServerIDs
+      })
+    }
     if (path) await goto(path)
     closeServerMenu()
   }

@@ -36,7 +36,6 @@
         </button>
 
         <div
-          bind:this={serverMenuEl}
           popover="auto" id={serverMenuId} class="server-menu"
           style:position-anchor={serverAnchor}
           style:position-area="block-end span-inline-start"
@@ -204,7 +203,6 @@
   let allServers = [], creating = false, newServerPopup
   let classDoc = null, unsubFuncs = [], rooms = [], lastClassID = ''
   let ancestorRoomIds = new Set()
-  let serverMenuEl = null
   /** Locked at open so iPad keyboard cannot crush the menu via vh resize. */
   let serverMenuMaxH = 'min(70vh, 36rem)'
   let serverMenuOpen = false
@@ -451,9 +449,9 @@
     column-gap: 4px;
   }
   .server-list-row {
-    display: block; width: 100%; min-width: 0; min-height: 40px;
+    display: block; box-sizing: border-box; width: 100%; min-width: 0; height: 40px; line-height: 40px;
     margin: 0 0 4px; break-inside: avoid; -webkit-column-break-inside: avoid;
-    padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92);
+    padding: 0 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92);
     color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
   }
   .server-list-row:hover { background: rgba(255, 255, 255, 1); }

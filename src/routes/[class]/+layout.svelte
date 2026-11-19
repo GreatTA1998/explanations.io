@@ -36,11 +36,9 @@
 
   $: if ($isFullServerMode && MainContent && ServerLayout) transformToFullServerPage()
   $: ({ classID } = data)
-  $: {
-    listenToClassDoc(classID)
-    handleClassDocChange(classID)
-    fetchRecentlySearchedClassDoc($user)
-  }
+  $: listenToClassDoc(classID)
+  $: if (classID && $user?.uid) persistRecentVisit(classID, $user)
+  $: fetchRecentlySearchedClassDoc($user)
 
   onMount(() => {
     resizeObserver = new ResizeObserver(() => computeDimensionsForBlackboardsAndVideos())
@@ -68,13 +66,12 @@
     })
   }
 
-  async function handleClassDocChange () {
-    if (!$user.uid || !classID) return
-    const recentVisitedServerIDs = pushRecentVisitedServerID($user.recentVisitedServerIDs, classID)
-    updateFirestoreDoc(`/users/${$user.uid}`, {
-      mostRecentServerID: classID,
-      recentVisitedServerIDs
-    })
+  function persistRecentVisit (classID, u) {
+    if (!u?.uid || !classID) return
+    const next = pushRecentVisitedServerID(u.recentVisitedServerIDs, classID)
+    const prev = Array.isArray(u.recentVisitedServerIDs) ? u.recentVisitedServerIDs : []
+    if (u.mostRecentServerID === classID && prev.length === next.length && prev.every((id, i) => id === next[i])) return
+    updateFirestoreDoc(`/users/${u.uid}`, { mostRecentServerID: classID, recentVisitedServerIDs: next })
   }
 
   async function fetchRecentlySearchedClassDoc () {

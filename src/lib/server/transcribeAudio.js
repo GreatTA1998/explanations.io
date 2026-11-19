@@ -9,7 +9,8 @@ export const MESSAGES = {
   tooLarge: 'This recording is too large to be 30 minutes or less, so it was not transcribed.',
   unknown: 'Could not tell how long this recording is, so it was not transcribed.',
   unreadable: 'Could not read this recording.', unsplittable: 'This recording is not a WAV file and is too large to send for transcription.',
-  failed: 'Could not transcribe this recording.', empty: 'No speech was found in this recording.'
+  failed: 'Could not transcribe this recording.', empty: 'No speech was found in this recording.',
+  unconfigured: 'Transcription is not configured on this server.'
 }
 export class SafeTranscriptError extends Error { constructor (message) { super(message); this.name = 'SafeTranscriptError' } }
 export function decideTranscription (durationSeconds, sizeBytes) {

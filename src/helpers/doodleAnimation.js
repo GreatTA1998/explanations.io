@@ -40,12 +40,16 @@ export async function revertAnimationToBoard ({ boardDoc, userDoc }) {
   const creatorEmail = (boardDoc.creator && boardDoc.creator.email) || ''
   const uid = (userDoc && userDoc.uid) || ''
   const email = (userDoc && userDoc.email) || ''
+  const hasCreator = Boolean(creatorUID || creatorEmail)
+  const uidAgrees = !creatorUID || !uid || creatorUID === uid
+  const emailAgrees = !creatorEmail || !email || creatorEmail === email
+  const provedCreator = Boolean(
+    (creatorUID && uid && creatorUID === uid) ||
+    (creatorEmail && email && creatorEmail === email)
+  )
 
-  if (creatorEmail && email && creatorEmail !== email) {
-    alert('You need to be the creator to revert this animation')
-    return
-  }
-  if (creatorUID && uid && creatorUID !== uid) {
+  // Missing uid/email (signed out, or user still null) is not a match.
+  if (hasCreator && (!provedCreator || !uidAgrees || !emailAgrees)) {
     alert('You need to be the creator to revert this animation')
     return
   }

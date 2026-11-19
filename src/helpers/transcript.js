@@ -48,8 +48,14 @@ async function kick (video, audioKey) {
       body: JSON.stringify({ audioDownloadURL: video.audioDownloadURL, path: video.path, audioKey })
     })
     const body = await response.json().catch(() => ({}))
-    if (response.status === 401) { started.delete(audioKey); return fail(video, audioKey, FAIL) }
-    if (body.skipped) return setProblem(video, '')
+    if (response.status === 401 || response.status === 403) {
+      started.delete(audioKey)
+      return fail(video, audioKey, FAIL)
+    }
+    if (body.skipped) {
+      started.delete(audioKey)
+      return fail(video, audioKey, typeof body.error === 'string' && body.error ? body.error : FAIL)
+    }
     if (typeof body.error === 'string' && body.error) return body.saved ? setProblem(video, body.error) : fail(video, audioKey, body.error)
     setProblem(video, '')
   } catch (err) {

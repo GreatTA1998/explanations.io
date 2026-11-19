@@ -56,11 +56,7 @@
 <style>
   .server-card {
     position: relative; display: flex; width: 240px; flex: 0 0 auto; border-radius: 16px;
-    padding: 0; overflow: hidden; text-align: left; background-color: var(--bg-off-white, #f8f9f9);
-  }
-  .server-card::before {
-    content: ''; position: absolute; inset: 0; z-index: 0;
-    background-color: hsl(0, 0%, 0%, 0.80); pointer-events: none;
+    padding: 0; overflow: hidden; text-align: left; background-color: hsl(0, 0%, 20%);
   }
   .server-name-overlay {
     position: absolute; top: 8px; left: 16px; right: 16px; color: rgb(248, 249, 249);
@@ -72,7 +68,7 @@
   }
   .preview-frame, .preview-fallback { margin: -12px -12px -12px 0; }
   .preview-frame { overflow: hidden; border-radius: 0 8px 8px 0; background: transparent; }
-  .preview-fallback { border-top-right-radius: 24px; border-bottom-right-radius: 24px; background-color: hsl(0, 0%, 0%, 0.80); }
+  .preview-fallback { border-top-right-radius: 24px; border-bottom-right-radius: 24px; }
   .server-thumb { display: block; height: auto; object-fit: cover; border-radius: 0 8px 8px 0; }
   .server-card:hover { outline: 2px solid #F7C686; box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.08); }
 </style>

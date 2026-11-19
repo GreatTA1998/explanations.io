@@ -8,33 +8,33 @@
 
   <button on:click={() => handleRoomClick(room.id)}
     bind:this={RoomElement}
-    class="room-item" class:selected={room.id === $page.params.roomID} 
-
-    draggable="true"
+    class="room-item" class:selected={room.id === $page.params.roomID}
+    data-room-nest={room.id}
+    draggable={html5Drag}
+    use:roomTouchDrag={touchDragCtx}
+    on:contextmenu|preventDefault
     on:dragstart={(e) => dragstart_handler(e, room.id)}
     on:dragend={dragend_handler}
     on:dragover={(e) => dragover_handler(e)}
-
     on:dragenter={highlightRoom}
     on:dragleave={(e) => unhighlightRoom(e)}
-    on:drop={(e) => handleSomethingDropped(e, room.id)}
+    on:drop={(e) => nestDroppedRoom(e, room.id, parseDraggedRoomId(e.dataTransfer))}
+    on:roomtouchdrop={(e) => nestDroppedRoom(e, room.id, e.detail?.roomId)}
   >
     {#if room.numOfChildren}
       {#if !isExpanded}
-        <!-- without `height: 24px` the div will be slightly larger than necessary, IDK why though -->
         <div style="position: relative; height: 24px;">
           <div class="badge-number">
             {room.numOfChildren}
           </div>
-        
-          <button on:click|stopPropagation={expandChildrenRooms} 
+          <button on:click|stopPropagation={expandChildrenRooms}
             class="material-symbols-outlined library-item-icon"
           >
             folder
           </button>
         </div>
       {:else}
-        <button on:click|stopPropagation={() => isExpanded = false} 
+        <button on:click|stopPropagation={() => isExpanded = false}
           class="material-symbols-outlined library-item-icon"
         >
           folder_open
@@ -43,9 +43,9 @@
     {:else}
       <div class="separator"></div>
     {/if}
-    
+
     <div class="room-title my-truncated-text">
-      {room.name || '(untitled)'} 
+      {room.name || '(untitled)'}
     </div>
 
     {#if showRoomMenu}
@@ -84,11 +84,10 @@
   {/if}
 </div>
 
-<!-- ROOM SUBPAGES SECTION -->
 {#if subpages && isExpanded}
   <div style="padding-left: 12px">
     {#each subpages as subpage, i (subpage.id)}
-      <RecursiveRoom 
+      <RecursiveRoom
         room={subpage}
         {roomID}
         {classID}
@@ -100,9 +99,6 @@
       />
     {/each}
 
-    <!-- `parentRoomIDs` is used to prevent a parent becoming a child of its children
-      For the last parentRoom it doesn't matter
-    -->
     {#if subpages.length > 0}
       <div style="padding: 6px;">
         <RecursiveRoomReorderDropzone
@@ -125,15 +121,15 @@ import { goto } from '$app/navigation'
 import { collection, getFirestore, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 import { user, adminUIDs, whatIsBeingDragged, whatIsBeingDraggedID } from '/src/store.js'
 import { updateFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
-import { onDestroy, tick } from 'svelte'
+import { onDestroy, onMount, tick } from 'svelte'
 import { page } from '$app/stores'
+import { ROOM_MIME, DROP_HL, parseDraggedRoomId, lockWebkitDragSelect, unlockWebkitDragSelect, roomTouchDrag } from '/src/helpers/roomTreeDnd.js'
 
 export let room
 export let depth = 0
 export let orderWithinLevel
 export let roomsInThisLevel
 export let parentRoomIDs
-
 export let roomID
 export let classID
 /** @type {Set<string>} parent room ids that must stay open for the active deep link */
@@ -144,10 +140,10 @@ let RoomElement
 let isExpanded = false
 let unsubListener
 let scrolledForRoomId = null
-/** Only auto-expand once per active room so snapshots do not re-force open. */
 let expandedForActiveId = null
-/** Suppress the post-drag click that would navigate away on iPad. */
 let skipClickAfterDrag = false
+/** Coarse pointers use the TouchSensor path; HTML5 stays for mouse/trackpad. */
+let html5Drag = true
 
 $: showRoomMenu = $page.params.roomID && $user.uid && $adminUIDs.includes($user.uid)
 $: roomMenuId = `room-menu-${room.id}`
@@ -159,9 +155,24 @@ $: if (room.id !== activeRoomId && scrolledForRoomId === room.id) scrolledForRoo
 
 const classPath = `classes/${classID}/`
 
-onDestroy(() => {
-  if (unsubListener) unsubListener()
-})
+function clearDragState () {
+  whatIsBeingDragged.set('')
+  whatIsBeingDraggedID.set('')
+  setTimeout(() => { skipClickAfterDrag = false }, 50)
+}
+
+function beginDrag (id) {
+  skipClickAfterDrag = true
+  whatIsBeingDragged.set('room')
+  whatIsBeingDraggedID.set(id)
+}
+
+function touchDragCtx () {
+  return { roomId: room.id, onStart: () => beginDrag(room.id), onEnd: clearDragState }
+}
+
+onMount(() => { html5Drag = !window.matchMedia('(pointer: coarse)').matches })
+onDestroy(() => { if (unsubListener) unsubListener() })
 
 function ensureExpandedForActivePath (activeId, ancestors) {
   if (!activeId || !ancestors?.has(room.id)) return
@@ -174,7 +185,6 @@ async function scrollActiveRoomIntoView (id) {
   if (!id || scrolledForRoomId === id) return
   scrolledForRoomId = id
   await tick()
-  // Nested folders may still be laying out after expand; wait two frames.
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       RoomElement?.scrollIntoView({ block: 'center', inline: 'nearest' })
@@ -183,24 +193,16 @@ async function scrollActiveRoomIntoView (id) {
 }
 
 function highlightRoom () {
-  if (!isInvalidSubpageDrop()) {
-    RoomElement.style.background = 'rgb(87, 172, 247)' 
-  }
+  if (parentRoomIDs.includes($whatIsBeingDraggedID) || $whatIsBeingDraggedID === room.id) return
+  RoomElement.style.background = DROP_HL
 }
 
 function unhighlightRoom (e) {
-  if (e.currentTarget.contains(e.relatedTarget)) {
-    return
-  }
+  if (e.currentTarget.contains(e.relatedTarget)) return
   RoomElement.style.background = ''
 }
 
-function isInvalidSubpageDrop () {
-  return parentRoomIDs.includes($whatIsBeingDraggedID) || $whatIsBeingDraggedID === room.id 
-}
-
 async function fetchSubpages () {
-  // Guard before first snapshot so reactive retries cannot leak listeners.
   if (unsubListener) return
   const q = query(
     collection(getFirestore(), classPath + 'rooms'),
@@ -217,9 +219,7 @@ async function fetchSubpages () {
 }
 
 function expandChildrenRooms () {
-  if (!subpages && !unsubListener) {
-    fetchSubpages()
-  }
+  if (!subpages && !unsubListener) fetchSubpages()
   isExpanded = true
 }
 
@@ -230,25 +230,20 @@ function handleRoomClick (roomID) {
   }
   if (!isExpanded) expandChildrenRooms()
   else isExpanded = false
-  
   goto(`/${classID}/${roomID}`)
 }
 
-function dragstart_handler (e, roomID) {
-  skipClickAfterDrag = true
-  whatIsBeingDragged.set('room')
-  whatIsBeingDraggedID.set(roomID)
+function dragstart_handler (e, id) {
+  lockWebkitDragSelect()
+  beginDrag(id)
   e.dataTransfer.effectAllowed = 'move'
-  // Custom type first; plain text kept for desktop drop parsing but is not a URL.
-  e.dataTransfer.setData('application/x-blackboard-room', roomID)
-  e.dataTransfer.setData('text/plain', `roomID:${roomID}`)
+  e.dataTransfer.setData(ROOM_MIME, id)
+  e.dataTransfer.setData('text/plain', `roomID:${id}`)
 }
 
 function dragend_handler () {
-  whatIsBeingDragged.set('')
-  whatIsBeingDraggedID.set('')
-  // iPad fires a click after dragend; keep the guard briefly past that click.
-  setTimeout(() => { skipClickAfterDrag = false }, 50)
+  unlockWebkitDragSelect()
+  clearDragState()
 }
 
 function dragover_handler (e) {
@@ -256,25 +251,11 @@ function dragover_handler (e) {
   e.dataTransfer.dropEffect = 'move'
 }
 
-function handleSomethingDropped (e, droppedRoomID) {
-  // Critical on iPad Safari: without this, dropping text/plain navigates/redirects.
-  e.preventDefault()
+async function nestDroppedRoom (e, droppedRoomID, draggedRoomID) {
+  e.preventDefault?.()
   e.stopPropagation()
-  if (isInvalidSubpageDrop()) return
+  if (!draggedRoomID || parentRoomIDs.includes(draggedRoomID) || draggedRoomID === droppedRoomID) return
   RoomElement.style.background = ''
-
-  const custom = e.dataTransfer.getData('application/x-blackboard-room')
-  const data = custom ? `roomID:${custom}` : e.dataTransfer.getData('text/plain')
-  const keyValuePairs = data.split(']')
-
-  const [key1, value1] = keyValuePairs[0].split(':')
-  if (key1 === 'roomID') {
-    putRoomIntoRoom({ draggedRoomID: value1, droppedRoomID })
-  }
-}
-
-async function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
-  if (draggedRoomID === droppedRoomID) return
   const basePath = `classes/${classID}/rooms/`
   await updateNumOfSubfolders({ draggedRoomID, droppedRoomID, basePath })
   updateFirestoreDoc(basePath + draggedRoomID, { parentRoomID: droppedRoomID })
@@ -293,12 +274,14 @@ async function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
   .room-item {
     display: flex; width: 100%; align-items: center; column-gap: 8px;
     padding: 6px 0 6px 8px; border-radius: 5px; text-align: left;
+    user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation;
   }
   .room-item:hover { background: lightgrey; }
   .room-item.selected {
     font-weight: 700; background-color: #F7C686; color: black;
     transition: background 20ms ease-in 0s;
   }
+  .room-item:global(.room-touch-dragging) { opacity: 0.72; }
   .room-actions {
     position: fixed; margin: 0; inset: auto; padding: 0; border: none; border-radius: 4px;
     background-color: #fff; color: #000;
@@ -307,5 +290,8 @@ async function putRoomIntoRoom ({ draggedRoomID, droppedRoomID }) {
   .separator {
     width: 2px; height: 2px; min-width: 2px; margin: 4px 4px 4px 12px;
     border-radius: 50%; background-color: #606060;
+  }
+  :global(html.room-tree-dragging), :global(html.room-tree-dragging *) {
+    user-select: none !important; -webkit-user-select: none !important;
   }
 </style>

@@ -1,5 +1,6 @@
 <div
   class="transcript-panel"
+  class:is-playing={playing}
   role="region"
   aria-label="Transcript"
 >
@@ -155,6 +156,18 @@
       linear-gradient(var(--caret), var(--caret)) center bottom / 100% 1px no-repeat;
   }
   .transcript-word.in-sentence.is-current::before { display: none; }
-  .transcript-word:hover,
-  .transcript-word:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  /* While paused, hover/focus restores the orange caret (not plain underline). */
+  .transcript-panel:not(.is-playing) .transcript-word:hover::before,
+  .transcript-panel:not(.is-playing) .transcript-word:focus-visible::before {
+    content: ''; position: absolute; inset: 0.05em auto 0 50%;
+    width: 0.4em; transform: translateX(-50%); pointer-events: none;
+    background:
+      linear-gradient(#F7C686, #F7C686) center / 1px 100% no-repeat,
+      linear-gradient(#F7C686, #F7C686) center top / 100% 1px no-repeat,
+      linear-gradient(#F7C686, #F7C686) center bottom / 100% 1px no-repeat;
+  }
+  .transcript-panel.is-playing .transcript-word:hover,
+  .transcript-panel.is-playing .transcript-word:focus-visible {
+    text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px;
+  }
 </style>

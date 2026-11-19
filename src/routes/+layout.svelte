@@ -10,7 +10,7 @@
       <NavSideDrawer floating />
     {/if}
 
-    {#if $sidebarFullscreen && $page.url.pathname !== '/'}
+    {#if $sidebarFullscreen && $page.url.pathname !== '/' && showDrawerExpand}
       <button
         type="button"
         class="show-drawer-toggle"
@@ -65,15 +65,27 @@
 
   let unsubUserDocListener = null
   let rootEntryToken = 0
+  let showDrawerExpand = true
+  let lastScrollY = 0
 
   onMount(async () => {
     translateJSConstantsToCSSVariables()
     onAuthStateChanged(auth, reactToUserChange)
     createSessionRecording()
-    window.addEventListener('scroll', handleOnScroll)
+    lastScrollY = window.scrollY || 0
+    window.addEventListener('scroll', handleOnScroll, { passive: true })
   })
 
-  const handleOnScroll = () => { if (window.scrollY >= window.innerHeight - 120) isFullServerMode.set(true) }
+  const handleOnScroll = () => {
+    if (window.scrollY >= window.innerHeight - 120) isFullServerMode.set(true)
+    // Floating drawer-expand: hide on scroll down, show on scroll up (out of flow).
+    const y = window.scrollY || 0
+    const delta = y - lastScrollY
+    if (Math.abs(delta) > 4) {
+      showDrawerExpand = delta < 0 || y < 24
+      lastScrollY = y
+    }
+  }
   const restoreDrawerOnEscape = (e) => { if (e.key === 'Escape' && $sidebarFullscreen) sidebarFullscreen.set(false) }
   const createSessionRecording = () => posthog.init('phc_RDoJMmgzdM17agrOGJ92bC2GpY4whyQgjv8hIjEnBs7', {
     api_host: 'https://us.i.posthog.com', person_profiles: 'always'
@@ -257,7 +269,12 @@
     position: fixed; top: 12px; left: 12px; z-index: 40;
     display: flex; align-items: center; justify-content: center;
     width: 48px; height: 48px; padding: 0; border-radius: 24px;
-    border: 1px solid lightgrey; background: white; color: black;
-    font-size: 16px; font-weight: 500; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    /* Translucent fill, no blur — out of document flow. */
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: hsla(0, 8%, 11%, 0.5);
+    color: rgba(255, 255, 255, 0.92);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 </style>

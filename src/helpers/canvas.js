@@ -64,6 +64,20 @@ export function setStrokeProperties (color, lineWidth, isEraserStroke, ctx) {
   ctx.lineCap = "round"; 
 }
 
+// Live boards use CSS `hsl(0,0%,0%, 0.80)` over --bg-off-white. Video frames
+// have no alpha, so flatten that stack into the opaque equivalent once.
+export const BLACKBOARD_PAINT = 'hsl(0, 0%, 20%)'
+
+export function fillRecordedBoardBackground (ctx, width, height) {
+  if (!ctx || width < 1 || height < 1) return
+  ctx.save()
+  ctx.globalAlpha = 1
+  ctx.globalCompositeOperation = 'source-over'
+  ctx.fillStyle = BLACKBOARD_PAINT
+  ctx.fillRect(0, 0, width, height)
+  ctx.restore()
+}
+
 export function renderBackground (src, canvas, bgCtx) {
   return new Promise(resolve => {
     if (!src) resolve(); 

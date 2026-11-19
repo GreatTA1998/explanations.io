@@ -1,16 +1,9 @@
-const THUMBNAIL_FIELDS = ['featuredBlackboardID', 'thumbnailURL', 'serverThumbnail', 'thumbnail']
-const FEATURED_VIDEO_FIELDS = ['featuredVideoID', 'featuredVideo']
 const FIRESTORE_ID = /^[A-Za-z0-9]{20}$/
 
 export const CARD_WIDTH = 240
 
-const present = (v) => typeof v === 'string' ? v.trim().length > 0 : v != null && v !== false
 export const isFirestoreID = (v) => typeof v === 'string' && FIRESTORE_ID.test(v)
 const firestoreID = (v) => isFirestoreID(v) ? v : ''
-
-export function hasDesignatedPreview (server) {
-  return !!server && [...THUMBNAIL_FIELDS, ...FEATURED_VIDEO_FIELDS].some((f) => present(server[f]))
-}
 
 export function previewBlackboardID (server) {
   if (!server) return ''
@@ -55,16 +48,29 @@ export function serversForMenu (servers, query, viewerUID = '') {
   const filtered = terms.length
     ? list.filter((s) => terms.some((t) => (s.name || '').toLowerCase().includes(t)))
     : list
-  return filtered.slice().sort((a, b) => {
-    const featured = Number(hasDesignatedPreview(b)) - Number(hasDesignatedPreview(a))
-    return featured || (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' })
-  })
+  return filtered.slice().sort((a, b) =>
+    (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' })
+  )
 }
 
-export function partitionServersForMenu (servers, query, viewerUID = '') {
-  const previewServers = [], listServers = []
-  for (const server of serversForMenu(servers, query, viewerUID)) {
-    (hasDesignatedPreview(server) ? previewServers : listServers).push(server)
+const RECENT_SERVER_CAP = 8
+
+/** Most-recent-first unique Firestore IDs for the Find-server menu. */
+export function pushRecentVisitedServerID (existing, serverID, cap = RECENT_SERVER_CAP) {
+  const id = firestoreID(serverID)
+  if (!id) return Array.isArray(existing) ? existing.filter(isFirestoreID).slice(0, cap) : []
+  const rest = (Array.isArray(existing) ? existing : []).filter((x) => isFirestoreID(x) && x !== id)
+  return [id, ...rest].slice(0, cap)
+}
+
+/** Resolve recent IDs against loaded servers (preserve visit order). */
+export function recentServersForMenu (servers, recentIDs, viewerUID = '') {
+  if (!Array.isArray(recentIDs) || !recentIDs.length) return []
+  const byId = new Map((servers || []).map((s) => [s.id, s]))
+  const out = []
+  for (const id of recentIDs) {
+    const server = byId.get(id)
+    if (server && serverVisibleInMenu(server, viewerUID)) out.push(server)
   }
-  return { previewServers, listServers }
+  return out
 }

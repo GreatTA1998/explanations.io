@@ -16,6 +16,7 @@
 
 <script>
   import NavSideDrawer from '$lib/NavSideDrawer/index.svelte'
+  import { pushRecentVisitedServerID } from '$lib/NavSideDrawer/serverMenu.js'
   import { getBoardWidth } from '/src/helpers/dimensions.js'
   import { getFirestoreDoc, updateFirestoreDoc } from '/src/helpers/crud.js'
   import {
@@ -68,7 +69,12 @@
   }
 
   async function handleClassDocChange () {
-    if ($user.uid) updateFirestoreDoc(`/users/${$user.uid}`, { mostRecentServerID: classID })
+    if (!$user.uid || !classID) return
+    const recentVisitedServerIDs = pushRecentVisitedServerID($user.recentVisitedServerIDs, classID)
+    updateFirestoreDoc(`/users/${$user.uid}`, {
+      mostRecentServerID: classID,
+      recentVisitedServerIDs
+    })
   }
 
   async function fetchRecentlySearchedClassDoc () {

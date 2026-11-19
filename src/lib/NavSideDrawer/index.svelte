@@ -11,7 +11,7 @@
         style:position-area="block-end span-inline-end" style:position-try-fallbacks="flip-block, flip-inline, flip-inline flip-block"
         on:toggle={(e) => { if (e.newState === 'open') closeServerMenu() }}
       >
-        <div class="server-actions" role="menu" on:click={hideLogoMenu}>
+        <div class="server-actions" role="menu" tabindex="-1" on:click={hideLogoMenu} on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') hideLogoMenu() }}>
           <a class="menu-row" role="menuitem" href="/">Home</a>
           {#if $user.uid}
             <button type="button" class="menu-row" role="menuitem" on:click={handleSignout}>Log out</button>
@@ -36,7 +36,7 @@
         </button>
 
         <div
-          popover="auto" id={serverMenuId} class="server-menu" class:split={menuSplit}
+          popover="auto" id={serverMenuId} class="server-menu"
           style:position-anchor={serverAnchor}
           style:position-area="block-end span-inline-start"
           style:position-try-fallbacks="flip-inline, flip-block, flip-inline flip-block"
@@ -46,20 +46,49 @@
             <span class="material-icons search-icon" aria-hidden="true">search</span>
             <input type="search" name="search" maxlength="100" aria-label="Find server" autocomplete="off" bind:value={searchVal}>
           </div>
-          <div class="server-list" class:split={menuSplit}>
-            <div class="server-grid">
-              {#each previewServers as server (server.id)}
-                <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
-              {/each}
-              <button type="button" class="create-server" on:click={openCreateServer}>Create new server</button>
-            </div>
-            {#if listServers.length}
-              <div class="server-name-list" role="list">
-                {#each listServers as server (server.id)}
-                  <button type="button" role="listitem" class="server-list-row" on:click={() => pickServer(server)}>
+          <SubNavTabs
+            tabs={menuViewTabs}
+            value={menuView}
+            tabbed
+            ariaLabel="Server menu view"
+            on:change={(e) => { menuView = e.detail }}
+          />
+          <div class="server-list">
+            {#if $user.uid && recentMenuServers.length && !searchVal.trim()}
+              <div class="recent-block" aria-label="Recently visited servers">
+                <div class="recent-label">Recently visited</div>
+                {#if menuView === 'thumbnails'}
+                  <div class="server-grid recent-grid">
+                    {#each recentMenuServers as server (server.id)}
+                      <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
+                    {/each}
+                  </div>
+                {:else}
+                  <div class="server-name-list recent-list">
+                    {#each recentMenuServers as server (server.id)}
+                      <button type="button" class="server-list-row" on:click={() => pickServer(server)}>
+                        {server.name || 'Untitled server'}
+                      </button>
+                    {/each}
+                  </div>
+                {/if}
+              </div>
+            {/if}
+            {#if menuView === 'thumbnails'}
+              <div class="server-grid">
+                {#each menuServers as server (server.id)}
+                  <CompactServerCard serverObj={server} on:pick={(e) => pickServer(e.detail)} />
+                {/each}
+                <button type="button" class="create-server" on:click={openCreateServer}>Create new server</button>
+              </div>
+            {:else}
+              <div class="server-name-list">
+                {#each menuServers as server (server.id)}
+                  <button type="button" class="server-list-row" on:click={() => pickServer(server)}>
                     {server.name || 'Untitled server'}
                   </button>
                 {/each}
+                <button type="button" class="server-list-row create-server-row" on:click={openCreateServer}>Create new server</button>
               </div>
             {/if}
           </div>
@@ -149,12 +178,16 @@
   import { goto } from '$app/navigation'
   import { getAuth, signOut } from 'firebase/auth'
   import { collection, getDoc, doc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
-  import { partitionServersForMenu, serverIsPublic, viewerCanTogglePrivacy } from './serverMenu.js'
+  import {
+    serversForMenu, recentServersForMenu, pushRecentVisitedServerID,
+    serverIsPublic, viewerCanTogglePrivacy
+  } from './serverMenu.js'
   import { homepageServerPath } from '/src/helpers/visitorEntry.js'
   import { getRandomID } from '/src/helpers/utility.js'
   import { onDestroy } from 'svelte'
 
   const drawerTabs = [{ id: 'rooms', label: 'rooms' }, { id: 'forum', label: 'forum' }]
+  const menuViewTabs = [{ id: 'list', label: 'list' }, { id: 'thumbnails', label: 'thumbnails' }]
   const uid = getRandomID()
   const logoMenuId = `logo-menu-${uid}`
   const serverMenuId = `server-menu-${uid}`
@@ -165,15 +198,23 @@
 
   export let floating = false
 
-  let savingVisibility = false, searchVal = ''
+  let savingVisibility = false, searchVal = '', menuView = 'list'
   let allServers = [], creating = false, newServerPopup
   let classDoc = null, unsubFuncs = [], rooms = [], lastClassID = ''
   let ancestorRoomIds = new Set()
 
   $: classID = $page.params.class
   $: roomID = $page.params.roomID
-  $: ({ previewServers, listServers } = partitionServersForMenu(allServers, searchVal, $user.uid))
-  $: menuSplit = listServers.length > 0
+  $: menuServers = serversForMenu(allServers, searchVal, $user.uid)
+  $: recentVisitedIDs = Array.isArray($user.recentVisitedServerIDs)
+    ? $user.recentVisitedServerIDs
+    : pushRecentVisitedServerID(
+      [$user.mostRecentServerID, $user.recentSearchedServerID].filter(Boolean),
+      ''
+    )
+  $: recentMenuServers = $user.uid
+    ? recentServersForMenu(allServers, recentVisitedIDs, $user.uid)
+    : []
   $: isPrivate = !serverIsPublic($classServerDoc)
   $: canTogglePrivacy = viewerCanTogglePrivacy($classServerDoc, $user.uid)
   $: currentServerName = nameForCurrentServer(classID, allServers, $classServerDoc, $recentSearchedServerDoc)
@@ -227,7 +268,14 @@
 
   async function pickServer (server) {
     const path = homepageServerPath(server)
-    if ($user.uid) updateFirestoreDoc(`/users/${$user.uid}`, { recentSearchedServerID: server.id })
+    if ($user.uid && server?.id) {
+      const recentVisitedServerIDs = pushRecentVisitedServerID($user.recentVisitedServerIDs, server.id)
+      updateFirestoreDoc(`/users/${$user.uid}`, {
+        recentSearchedServerID: server.id,
+        mostRecentServerID: server.id,
+        recentVisitedServerIDs
+      })
+    }
     if (path) await goto(path)
     closeServerMenu()
   }
@@ -281,7 +329,20 @@
   .nav-cluster { position: relative; z-index: 5; width: 100%; height: 100%; min-height: 0; }
   .floating { position: fixed; top: 8px; left: 8px; z-index: 30; width: 280px; height: auto; }
   .nav-panel { position: relative; display: flex; flex-direction: column; height: 100%; min-height: 0; }
-  .floating .nav-panel { height: auto; background-color: var(--bg-off-white); border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 3px 5px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06); }
+  /* Floating cluster: translucent fill, no blur, out of flow (fixed). */
+  .floating .nav-panel {
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: hsla(0, 8%, 11%, 0.5);
+    color: #fff;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .floating .server-name,
+  .floating .menu-row { color: rgba(255, 255, 255, 0.92); }
+  .floating .server-name-caret { border-top-color: rgba(255, 255, 255, 0.85); }
   .room-drawer { position: relative; flex: 1; min-height: 0; overflow: hidden; }
   .room-hit { display: block; width: 100%; padding: 8px 12px; border-radius: 5px; text-align: left; font-size: var(--fs-400); color: black; }
   .room-hit:hover { background: lightgrey; }
@@ -326,19 +387,35 @@
   .switch-track.on .switch-thumb { transform: translateX(16px); }
   .server-actions { display: flex; flex-direction: column; min-width: 232px; text-align: left; }
   .server-menu {
-    margin: 0; inset: auto; margin-block-start: 4px; z-index: 40; width: min(calc(100vw - 24px), max-content);
+    margin: 0; inset: auto; margin-block-start: 4px; z-index: 40; width: min(calc(100vw - 24px), 42rem);
     max-width: calc(100vw - 24px); background: var(--bg-off-white); padding: 12px; border: none; border-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .server-menu:not(:popover-open) { display: none; }
   .server-menu::backdrop { background: rgba(0, 0, 0, 0.28); }
+  .server-menu :global(.sub-nav) { margin: 8px 0 0; }
   .server-list { max-height: 70vh; overflow: auto; padding: 8px 0 0; scrollbar-width: none; -ms-overflow-style: none; }
-  .server-list.split { display: flex; flex-direction: row; gap: 8px; align-items: flex-start; }
+  .recent-block { padding: 0 0 8px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 4px; }
+  .recent-label {
+    padding: 2px 16px 6px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; color: rgb(120, 120, 120);
+  }
+  .recent-grid { padding-bottom: 4px; }
+  .recent-list { padding-bottom: 2px; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .server-list.split .server-grid, .server-list.split .server-name-list { flex: 1 1 50%; min-width: 0; width: auto; }
-  .server-name-list { display: flex; flex-wrap: wrap; gap: 4px 8px; align-content: flex-start; }
-  .server-list-row { display: block; width: auto; max-width: 100%; min-height: 40px; padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92); color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .server-name-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: 4px;
+    align-content: start;
+  }
+  .server-list-row {
+    display: block; width: 100%; min-width: 0; min-height: 40px;
+    padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92);
+    color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
   .server-list-row:hover { background: rgba(255, 255, 255, 1); }
+  .create-server-row { color: #5d0068; }
   .create-server { display: flex; align-items: center; width: 240px; max-width: 100%; min-height: 44px; text-align: left; padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.88); color: #5d0068; font-weight: 500; }
 </style>

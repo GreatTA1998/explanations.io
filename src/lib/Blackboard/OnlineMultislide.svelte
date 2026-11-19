@@ -1,3 +1,14 @@
+<WebmRecorder bind:this={webmRecorder}
+  {canvasWidth}
+  {canvasHeight}
+  on:video-ready={(e) => {
+    recordedMimeType = e.detail.mimeType
+    recordedExtension = e.detail.fileExtension
+    recordedWidelyPlayable = e.detail.widelyPlayable
+    webmBlob = e.detail.blob
+  }}
+/>
+
 <div style="display: flex; align-items: end; width: {canvasWidth}px; column-gap: 20px;">
   <div id="multislide-record-button-wrapper-{boardDoc.id}">
     <!-- Elements portal here -->
@@ -10,20 +21,22 @@
     canCreateNewSlide
   />
 
-  <button on:click={() => {
-      if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
-        deleteMultislideBlackboard({ boardDoc, roomDoc })
-      }
-    }}
-    style="margin-left: auto; margin-right: 8px; cursor: pointer;"
-  >
-    Delete multiboard
-  </button>
+  <div style="margin-left: auto; display: flex; align-items: center;">
+    <MultiboardDropdownMenu
+      {boardDoc}
+      {roomDoc}
+      on:delete-multiboard={() => {
+        if (confirm('Are you sure you want to delete this multiboard? This is irreversible.')) {
+          deleteMultislideBlackboard({ boardDoc, roomDoc })
+        }
+      }}
+    />
+  </div>
 </div>
 
 <div style="margin-bottom: 12px;"></div>
 
-{#each boardDoc.slideIDs as slideID, i}
+{#each boardDoc.slideIDs as slideID, i (slideID)}
   <ListenToDoc docPath={`classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
     let:theDoc={theDoc}
   >
@@ -47,19 +60,29 @@
             {canvasWidth}
             {canvasHeight}
             currentTimeOverride={currentTime}
-            on:stroke-drawn={(e) => handleNewlyDrawnStroke(e.detail.newStroke)}
-            on:board-wipe={deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })}
+            on:stroke-drawn={(e) => {
+              handleNewlyDrawnStroke(e.detail.newStroke)
+              if (idxOfFocusedSlide === i) copySlideToMaster(i)
+            }}
+            on:board-wipe={() => {
+              deleteStrokesFromSlide({ strokesArray, slidePath: `${boardPath}slides/${slideID}` })
+              if (idxOfFocusedSlide === i) clearMaster()
+            }}
 
             backgroundImageDownloadURL={theDoc.backgroundImageDownloadURL}
             on:background-upload={(e) => handleWhatUserUploaded(e.detail.imageFile, slideID)}
             on:background-reset={() => deleteBackgroundImageFromSlide(theDoc)}
             
             isDeletable={boardDoc.slideIDs.length > 1}
+            on:save-animation={() => saveBoardAsAnimation({ boardDoc, userDoc: $user })}
             on:board-delete={async () => {
               if (confirm(`Are you sure you want to delete board ${i+1}? (Other boards won't be affected.)`)) {
                 await deleteSlideFromMultislide({ slideID, multislidePath: boardDoc.path })
                 changeToSlideIdx(idxOfFocusedSlide - 1)
               }
+            }}
+            on:canvas-slide-ready={(e) => {
+              canvasBySlideID = { ...canvasBySlideID, [slideID]: e.detail }
             }}
           />
         {/if}
@@ -71,7 +94,7 @@
 <RenderlessAudioRecorder
   let:startRecording={startRecording} 
   let:stopRecording={stopRecording}
-  on:record-end={(e) => saveVideo(e.detail.audioBlob)}
+  on:record-end={(e) => { audioBlob = e.detail.audioBlob }}
 >
   <div use:portal={'multislide-record-button-wrapper-' + boardDoc.id}>
     {#if !isRecording}
@@ -105,9 +128,11 @@
   import CircularSpinnerFourColor from '$lib/Blackboard/CircularSpinnerFourColor.svelte'
   import LoginGoogle from '$lib/LoginGoogle.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
+  import MultiboardDropdownMenu from './MultiboardDropdownMenu.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import ListenToStrokes from '$lib/Renderless/ListenToStrokes.svelte'
   import RenderlessAudioRecorder from '$lib/Blackboard/RenderlessAudioRecorder.svelte'
+  import WebmRecorder from './WebmRecorder.svelte'
 
   import { 
     deleteMultislideBlackboard, 
@@ -118,9 +143,11 @@
   import { portal, lazyCallable } from '/src/helpers/actions.js'
   import { roundedToFixed, getRandomID } from "/src/helpers/utility.js"
   import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
+  import { saveBoardAsAnimation } from '/src/helpers/doodleAnimation.js'
   import { styles } from '/src/helpers/styles.js'
   import { handleVideoUploadEmailNotifications } from '/src/helpers/everythingElse.js'
   import { startTranscriptForNewVideo } from '/src/helpers/transcript.js'
+  import { fillRecordedBoardBackground } from '/src/helpers/canvas.js'
 
   import { 
     getFirestore, 
@@ -152,10 +179,29 @@
   let idxOfFocusedSlide = 0 
   const timingOfSlideChanges = []
 
+  let canvasBySlideID = {}
+  let masterCanvas, masterCtx
+  let webmRecorder
+  let webmBlob
+  let audioBlob
+  let recordedMimeType = ''
+  let recordedExtension = 'webm'
+  let recordedWidelyPlayable = false
+
+  $: if (webmBlob && audioBlob) {
+    const pendingWebm = webmBlob
+    const pendingAudio = audioBlob
+    webmBlob = null
+    audioBlob = null
+    saveVideo({ webmBlob: pendingWebm, audioBlob: pendingAudio })
+  }
+
   // difference, LOCK the blackboard when you're recording, so other people's strokes don't intefere
   // if they already drawn some strokes, it doesn't matter because the timestamp = 0 is actually accurate
   onMount(async () => {
     document.addEventListener('keydown', keydownHandler)
+    masterCanvas = webmRecorder.getCanvas()
+    masterCtx = webmRecorder.getCtx()
   })
 
   onDestroy(() => {
@@ -165,6 +211,8 @@
   async function initializeRecording ({ startRecording }) {
     try {
       await startRecording()
+      copySlideToMaster(idxOfFocusedSlide)
+      webmRecorder.start()
       startStopwatch()
       timingOfSlideChanges.push({
         toIdx: idxOfFocusedSlide,
@@ -181,6 +229,12 @@
   }
 
   async function terminateRecording ({ stopRecording }) {
+    // Stop canvas recorder before mic so the final frame is encoded.
+    try {
+      await webmRecorder.stop()
+    } catch (error) {
+      alert(error)
+    }
     try {
       await stopRecording()
       stopStopwatch()
@@ -189,6 +243,21 @@
       })
     } catch (error) {
       alert(error)
+    }
+  }
+
+  function clearMaster () {
+    if (!masterCtx || !masterCanvas) return
+    fillRecordedBoardBackground(masterCtx, masterCanvas.width, masterCanvas.height)
+  }
+
+  function copySlideToMaster (slideIdx) {
+    if (!masterCtx || !masterCanvas) return
+    const slideID = boardDoc.slideIDs[slideIdx]
+    const slideCanvas = slideID ? canvasBySlideID[slideID] : null
+    fillRecordedBoardBackground(masterCtx, masterCanvas.width, masterCanvas.height)
+    if (slideCanvas) {
+      masterCtx.drawImage(slideCanvas, 0, 0, masterCanvas.width, masterCanvas.height)
     }
   }
 
@@ -218,7 +287,8 @@
   }
 
   function changeToSlideIdx (newSlideIdx) {
-    idxOfFocusedSlide = newSlideIdx 
+    idxOfFocusedSlide = newSlideIdx
+    copySlideToMaster(newSlideIdx)
     if (currentTime > 0) {
       timingOfSlideChanges.push({
         toIdx: idxOfFocusedSlide,
@@ -227,10 +297,23 @@
     }
   }
 
-  async function saveVideo (audioBlob) {
-    // JOB #1: upload the audio blob
-    let downloadURL 
+  async function saveVideo ({ audioBlob, webmBlob }) {
     const storage = getStorage()
+
+    let webmDownloadURL
+    const contentType = recordedMimeType || webmBlob.type || 'video/webm'
+    const extension = recordedExtension || (contentType.includes('mp4') ? 'mp4' : 'webm')
+    const webmRef = ref(storage, `webmVideos/${getRandomID()}`)
+    const webmUploadJob = uploadBytes(webmRef, webmBlob, {
+      contentType,
+      customMetadata: { extension: `.${extension}` }
+    }).then(async () => {
+      webmDownloadURL = await getDownloadURL(webmRef)
+      return webmDownloadURL
+    })
+
+    // Tip audio path — do not require speechMime.js
+    let downloadURL
     const audioRef = ref(storage, `audio/${getRandomID()}`)
     const audioUploadJob = uploadBytes(audioRef, audioBlob).then(async () => {
       downloadURL = await getDownloadURL(audioRef)
@@ -258,6 +341,7 @@
     })
 
     await Promise.all([
+      webmUploadJob,
       audioUploadJob,
       otherDocsMetadataUpdateJob
     ])
@@ -270,6 +354,11 @@
       date: new Date().toISOString(),
       audioDownloadURL: downloadURL,
       audioRefFullPath: audioRef.fullPath,
+      webmDownloadURL,
+      videoContentType: contentType,
+      videoFileExtension: extension,
+      videoWidelyPlayable: recordedWidelyPlayable,
+      webmRefFullPath: webmRef.fullPath,
       timingOfSlideChanges,
       isPaid: false
     })

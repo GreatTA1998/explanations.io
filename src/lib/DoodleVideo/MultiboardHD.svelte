@@ -23,25 +23,19 @@
           play_circle
         </button>
       {/if}
-      {#if onToggleComments && !commentsOpen}
-        <div class="transcript-reopen">
-          <button type="button" class="panel-toggle" aria-expanded="false" aria-label="Show transcript and comments" on:click={onToggleComments}>
-            <span class="hand-arrow" aria-hidden="true"></span>
-          </button>
-        </div>
-      {/if}
       {#each boardDoc.slideIDs as slideID, i (slideID)}
         <ListenToDoc docPath={`/classes/${classID}/blackboards/${boardDoc.id}/slides/${slideID}`}
           let:theDoc={slideDoc}
         >
-          <FetchStrokes dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
-            let:fetchStrokes={fetchStrokes}
+          <FetchStrokes
+            dbPath="/classes/{classID}/blackboards/{boardDoc.id}/slides/{slideID}"
+            autoFetchStrokes={true}
             let:strokesArray={strokesArray}
             on:mounted={(e) => {
               slideIDToStrokesArray[slideID] = e.detail.strokesArray
             }}
-          > 
-            <div use:lazyCallable={fetchStrokes}
+          >
+            <div
               style="position: absolute; transform: scale(0.5); transform-origin: top left; display: {idxOfFocusedSlide === i ? '' : 'none'}; width: {canvasWidth * 2}px; height: {canvasHeight * 2}px;"
             >
               {#if strokesArray && slideDoc}
@@ -80,10 +74,8 @@
       />
       <span class="time">{formatTime(duration)}</span>
       <button type="button" class="speed-btn" on:click={togglePlaySpeed}>{playbackSpeed}x</button>
-      {#if onToggleComments && commentsOpen}
-        <button type="button" class="panel-toggle" aria-expanded="true" aria-label="Hide transcript and comments" on:click={onToggleComments}>
-          <span class="hand-arrow left" aria-hidden="true"></span>
-        </button>
+      {#if onToggleComments}
+        <CommentsPanelButton open={commentsOpen} on:click={onToggleComments} />
       {/if}
     </div>
     <audio
@@ -107,13 +99,13 @@
 <script>
   import { revertToBoard } from '/src/helpers/unifiedDeleteAPI.js'
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { lazyCallable } from '/src/helpers/actions.js'
   import { assumedCanvasWidth } from '/src/store.js'
   import MultiboardSlide from '$lib/DoodleVideo/MultiboardSlide.svelte'
   import FetchStrokes from '$lib/Renderless/FetchStrokes.svelte'
   import MultiboardSlideChanger from '$lib/DoodleVideo/MultiboardSlideChanger.svelte'
   import ListenToDoc from '$lib/Renderless/ListenToDoc.svelte'
   import { playAudioFrom, playbackPathOf, registerPlayback } from '/src/helpers/playbackClock.js'
+  import CommentsPanelButton from '$lib/DoodleVideo/CommentsPanelButton.svelte'
 
   export let propToDeleteVideo = false
   export let audioDownloadURL
@@ -138,7 +130,7 @@
   $: if (propToDeleteVideo) handleVideoDelete(boardDoc)
   $: if (currentTime > 0) {
     let temp = 0
-    for (const change of timingOfSlideChanges) {
+    for (const change of (timingOfSlideChanges || [])) {
       if (change.timing < currentTime) temp = change.toIdx
       else if (change.timing > currentTime) break
     }
@@ -148,7 +140,7 @@
   $: seekRatio = duration > 0 ? Math.min(1, Math.max(0, currentTime / duration)) : 0
 
   onMount(() => {
-    AudioPlayer.playbackRate = playbackSpeed
+    if (AudioPlayer) AudioPlayer.playbackRate = playbackSpeed
     const tick = () => {
       updateViewMinutesTimeoutID = setTimeout(() => {
         if (isPlaying) dispatch('six-seconds-elapsed', { playbackSpeed })
@@ -207,18 +199,6 @@
 
 <style>
   .clock { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
-  .transcript-reopen { position: absolute; top: 12px; right: 12px; z-index: 7; pointer-events: auto; }
-  .panel-toggle {
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    box-sizing: border-box; width: 28px; height: 28px; min-width: 28px; min-height: 28px;
-    padding: 0; margin: 0; border: 1px solid rgba(255,255,255,.35); border-radius: 24px;
-    background: transparent; color: rgba(255,255,255,.9); cursor: pointer;
-  }
-  .transcript-reopen .panel-toggle {
-    width: 48px; height: 48px; min-width: 48px; min-height: 48px;
-    background: rgba(0, 0, 0, 0.55); color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-  }
   .playbar {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; height: 50px;
     display: flex; align-items: center; gap: 6px; padding: 0 8px; box-sizing: border-box;

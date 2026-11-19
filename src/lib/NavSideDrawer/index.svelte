@@ -345,9 +345,14 @@
   .server-list { max-height: 70vh; overflow: auto; padding: 8px 0 0; scrollbar-width: none; -ms-overflow-style: none; }
   .server-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .server-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .server-name-list { display: flex; flex-wrap: wrap; gap: 4px; align-content: flex-start; align-items: stretch; }
+  .server-name-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: 4px;
+    align-content: start;
+  }
   .server-list-row {
-    display: block; flex: 0 1 auto; width: max-content; max-width: 100%; min-width: 0; min-height: 40px;
+    display: block; width: 100%; min-width: 0; min-height: 40px;
     padding: 10px 12px; border-radius: 10px; text-align: left; background: rgba(255, 255, 255, 0.92);
     color: black; font-size: 16px; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
   }

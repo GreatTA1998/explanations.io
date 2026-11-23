@@ -5,7 +5,7 @@
   export let video
   export let classID = ''
 
-  let isSharingMp4 = false
+  let isSharingVideo = false
   let copied = false
   let copiedTimer
   const uid = Math.random().toString(36).slice(2, 9)
@@ -65,22 +65,22 @@
     }
   }
 
-  async function handleShareMp4 () {
+  async function handleShareVideo () {
     closePopover()
     if (!video?.webmDownloadURL) {
-      alert('This video has no exported file yet.')
+      alert('This video has no file yet.')
       return
     }
     if (!isWidelyPlayableVideo(video)) {
       alert([
         'This video is not a widely playable MP4.',
         `Saved file: ${video.videoContentType || 'WebM'}.`,
-        'WhatsApp and Line need H.264 + AAC. Share the link or export the current file instead.'
+        'WhatsApp and Line need H.264 + AAC. Share the link or download the file instead.'
       ].join('\n\n'))
       return
     }
 
-    isSharingMp4 = true
+    isSharingVideo = true
     try {
       const response = await fetch(video.webmDownloadURL)
       if (!response.ok) throw new Error(`Could not download the video (${response.status})`)
@@ -101,14 +101,14 @@
       }
     } catch (error) {
       if (error && error.name === 'AbortError') return
-      console.error('Failed to share MP4:', error)
-      alert(`Could not share the MP4. ${error.message || ''}`.trim())
+      console.error('Failed to share video:', error)
+      alert(`Could not share the video. ${error.message || ''}`.trim())
     } finally {
-      isSharingMp4 = false
+      isSharingVideo = false
     }
   }
 
-  function handleExportVideoClick () {
+  function handleDownloadClick () {
     closePopover()
     dispatch('export-video')
   }
@@ -143,17 +143,17 @@
     </button>
 
     {#if video?.webmDownloadURL}
-      <button type="button" class="share-action" on:click={handleExportVideoClick}>
-        <span class="material-icons">download</span>
-        Export video
-      </button>
-
       {#if isWidelyPlayableVideo(video)}
-        <button type="button" class="share-action" on:click={handleShareMp4} disabled={isSharingMp4}>
+        <button type="button" class="share-action" on:click={handleShareVideo} disabled={isSharingVideo}>
           <span class="material-icons">share</span>
-          {isSharingMp4 ? 'Preparing MP4...' : 'Share MP4'}
+          {isSharingVideo ? 'Preparing…' : 'Share video'}
         </button>
       {/if}
+
+      <button type="button" class="share-action" on:click={handleDownloadClick}>
+        <span class="material-icons">download</span>
+        Download
+      </button>
     {/if}
 
     <div class="share-footer">

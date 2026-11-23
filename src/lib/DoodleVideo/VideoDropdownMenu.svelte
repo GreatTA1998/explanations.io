@@ -2,10 +2,7 @@
   import Menu from '@smui/menu'
   import List from '@smui/list'
   import { createEventDispatcher } from 'svelte'
-  import VideoShareButton from '$lib/DoodleVideo/VideoShareButton.svelte'
 
-  export let video
-  export let classID = ''
   export let creatorName = 'Anonymous'
 
   const dispatch = createEventDispatcher()
@@ -18,8 +15,6 @@
 </script>
 
 <div class="video-actions" data-creator={creatorName}>
-  <VideoShareButton {video} {classID} on:export-video />
-
   <div style="position: relative">
     <button on:click|stopPropagation={() => DropdownMenu.setOpen(true)} class="menu-surface-anchor">
       <span class="material-symbols-outlined" style="font-size: 20px;">

@@ -35,13 +35,12 @@
           <VideoFooterInfo {video} />
 
           <EurekaButton boardDoc={video} {canvasWidth} />
+          <VideoShareButton {video} {classID} on:export-video={downloadVideo} />
 
           {#if $user.uid === video.creatorUID || !video.creatorUID}
-            <VideoDropdownMenu {video}
-              {classID}
+            <VideoDropdownMenu
               creatorName={video.creatorName || 'Anonymous'}
-              on:delete-video={() => propToDeleteVideo = true} 
-              on:export-video={downloadVideo}
+              on:delete-video={() => propToDeleteVideo = true}
             />
           {/if}
         </div>
@@ -63,6 +62,7 @@
 
 <script>
   import VideoDropdownMenu from '$lib/DoodleVideo/VideoDropdownMenu.svelte'
+  import VideoShareButton from '$lib/DoodleVideo/VideoShareButton.svelte'
   import EurekaButton from '$lib/DoodleVideo/EurekaButton.svelte'
   import LegacyHDReusableSingleBoard from '$lib/DoodleVideo/LegacyHDReusableSingleBoard.svelte'
   import VideoFooterInfo from './VideoFooterInfo.svelte'

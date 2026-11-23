@@ -122,9 +122,9 @@
     class="share-button"
     style:anchor-name={anchorName}
     popovertarget={popoverId}
+    aria-label="Share"
   >
     <span class="material-symbols-outlined share-button-icon">share</span>
-    Share
   </button>
 
   <div
@@ -168,11 +168,11 @@
 <style>
   .share-anchor { position: relative; }
   .share-button {
-    display: flex; align-items: center; justify-content: center; gap: 4px;
-    height: 32px; padding: 5px 12px; border: 1px solid lightgrey; border-radius: 24px;
-    color: black; cursor: pointer; font-size: 0.8rem; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    width: fit-content; padding: 5px; border: 1px solid lightgrey; border-radius: 24px;
+    color: black; cursor: pointer; font-size: 0.8rem;
   }
-  .share-button-icon { font-size: 20px; }
+  .share-button-icon { font-size: 1.3rem; }
   .share-panel {
     margin: 0; inset: auto; margin-block-start: 4px; width: 260px; max-width: calc(100vw - 16px);
     padding: 0; border: 1px solid lightgrey; border-radius: 12px; background: white;

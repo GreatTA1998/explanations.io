@@ -31,7 +31,7 @@
         <Menu bind:this={DropdownMenu} style="width: 300px">
           <List>
             <Item on:SMUI:action={() => dispatch('save-animation')} style="margin-bottom: 0px;">
-              Save animation
+              Save as animation
             </Item>
 
             {#if backgroundImageDownloadURL}

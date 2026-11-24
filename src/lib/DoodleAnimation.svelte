@@ -4,7 +4,7 @@
     style="width: {canvasWidth}px; height: {canvasHeight}px;"
   >
     <canvas class="background-canvas" use:mountBack></canvas>
-    <canvas class="front-canvas" use:mountFront></canvas>
+    <canvas class="front-canvas" use:mountFront on:click={pausePlay}></canvas>
 
     {#if !isPlaying}
       <button type="button" class="replay-button" on:click={pausePlay}>

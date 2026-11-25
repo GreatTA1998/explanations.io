@@ -158,13 +158,10 @@ export function handleVideoUploadEmailNotifications ({ classID, questionDoc, use
 }
 
 export function handleServerRedirect (serverObj) {
-  if (serverObj.recentQuestionID) {
-    goto(`/${serverObj.id}/question/${serverObj.recentQuestionID}`)
-  } 
-  else if (serverObj.featuredRoomID) {
+  if (serverObj.featuredRoomID) {
     goto(`/${serverObj.id}/${serverObj.featuredRoomID}`)
   }
   else {
-    goto(`/${serverObj.id}/overview`)
+    goto(`/${serverObj.id}`)
   }
 }

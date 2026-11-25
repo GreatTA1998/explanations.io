@@ -145,12 +145,12 @@ async function orderForNewRootRoom (classPath) {
   return topOrder - 3
 }
 
-// returns the ID of the new room created
-export function createRoomDoc (classPath) {
+// returns the ID of the new room created (optional fixedRoomID for default room = server id)
+export function createRoomDoc (classPath, fixedRoomID) {
   return new Promise(async resolve => {
     await getFirestoreDoc(classPath)
 
-    const newDocID = getRandomID()
+    const newDocID = fixedRoomID || getRandomID()
     const classServerOrder = await orderForNewRootRoom(classPath)
 
     const db = getFirestore()

@@ -13,44 +13,60 @@
     {/if}
 
     <div class="extra-controls">
-      <label>
-        Speed
-        <select class="doodle-speed" value={String(playbackSpeed)} on:change={changeSpeed}>
-          {#each speedOptions as speed (speed)}
-            <option value={String(speed)}>{speed}x</option>
-          {/each}
-        </select>
-      </label>
-      <button type="button" class="doodle-revert" on:click={revertToBoard}>
-        Revert to blackboard
-      </button>
+      <div class="menu-wrap" use:lightDismiss={() => DropdownMenu?.setOpen(false)}>
+        <button
+          type="button"
+          class="menu-surface-anchor"
+          aria-label="More actions"
+          on:click|stopPropagation={() => DropdownMenu.setOpen(true)}
+        >
+          <span class="material-symbols-outlined">more_vert</span>
+        </button>
+        <Menu bind:this={DropdownMenu} style="width: 200px">
+          <List>
+            <button type="button" class="menu-list-item" on:click={handleRevertClick}>
+              <span class="material-icons">undo</span>
+              Revert to blackboard
+            </button>
+          </List>
+        </Menu>
+      </div>
     </div>
-  </div>
 
-  <div class="animation-controls">
-    <button type="button" class="doodle-play" on:click={pausePlay}>
-      {isPlaying ? 'Pause' : 'Play'}
-    </button>
-    {#if isInReplayMode}
-      <input
-        class="doodle-slider"
-        type="range"
-        min="0"
-        max={Math.max(frames.length - 1, 0)}
-        step="1"
-        value={Math.max(currentFrameIdx, 0)}
-        aria-label="Animation progress"
-        on:input={onSeek}
-        on:change={onSeekEnd}
-      />
-    {/if}
+    <div class="playbar">
+      <button type="button" class="play" aria-label={isPlaying ? 'Pause' : 'Play'} on:click={pausePlay}>
+        {#if isPlaying}
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zm5 0h3v10H7z"/></svg>
+        {:else}
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.2v9.6L10.2 6z"/></svg>
+        {/if}
+      </button>
+      {#if frames.length}
+        <input
+          class="seek"
+          type="range"
+          min="0"
+          max={Math.max(frames.length - 1, 0)}
+          step="1"
+          value={seekValue}
+          style="--p:{seekRatio}"
+          aria-label="Animation progress"
+          on:input={onSeek}
+          on:change={onSeekEnd}
+        />
+      {/if}
+      <button type="button" class="speed-btn" on:click={togglePlaySpeed}>{playbackSpeed}x</button>
+    </div>
   </div>
 </div>
 
 <script>
   import { onDestroy, createEventDispatcher } from 'svelte'
   import { get } from 'svelte/store'
+  import Menu from '@smui/menu'
+  import List from '@smui/list'
   import { connectTwoPoints, drawStroke, renderBackground } from '/src/helpers/canvas.js'
+  import { lightDismiss } from '/src/helpers/lightDismiss.js'
   import { assumedCanvasWidth } from '/src/store.js'
 
   export let strokesArray = []
@@ -79,8 +95,15 @@
   let playToken = 0
   let pendingTimer
   let frames = []
+  let DropdownMenu
 
   $: frames = buildFrames(strokesArray || [])
+  $: seekValue = isInReplayMode
+    ? Math.max(currentFrameIdx, 0)
+    : Math.max(frames.length - 1, 0)
+  $: seekRatio = frames.length > 1
+    ? Math.min(1, Math.max(0, seekValue / (frames.length - 1)))
+    : (frames.length ? 1 : 0)
 
   onDestroy(() => {
     playToken += 1
@@ -258,8 +281,14 @@
     playAnimation(false)
   }
 
-  function changeSpeed (event) {
-    playbackSpeed = Number(event.currentTarget.value)
+  function togglePlaySpeed () {
+    const i = speedOptions.indexOf(playbackSpeed)
+    playbackSpeed = speedOptions[(i < 0 ? 0 : i + 1) % speedOptions.length]
+  }
+
+  function handleRevertClick () {
+    DropdownMenu?.setOpen(false)
+    revertToBoard()
   }
 
   function revertToBoard () {
@@ -270,93 +299,64 @@
 </script>
 
 <style>
-  .doodle-animation {
-    position: relative;
+  .doodle-animation { position: relative; }
+  .stage { position: relative; }
+  .front-canvas, .background-canvas {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   }
-
-  .stage {
-    position: relative;
-  }
-
-  .front-canvas {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-  }
-
-  .background-canvas {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: hsl(0, 0%, 0%, 0.8);
-  }
+  .front-canvas { z-index: 1; background-color: transparent; }
+  .background-canvas { z-index: 0; background-color: hsl(0, 0%, 0%, 0.8); }
 
   .replay-button {
-    position: absolute;
-    z-index: 3;
-    top: 50%;
-    left: 50%;
+    position: absolute; z-index: 3; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 96px;
-    height: 48px;
-    border: 0;
-    border-radius: 24px;
-    background: white;
-    color: black;
-    font-size: 1rem;
-    cursor: pointer;
+    min-width: 96px; height: 48px; border: 0; border-radius: 24px;
+    background: white; color: black; font-size: 1rem; cursor: pointer;
   }
 
   .extra-controls {
-    position: absolute;
-    z-index: 4;
-    top: 8px;
-    right: 8px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
+    position: absolute; z-index: 7; top: 8px; right: 8px;
   }
-
-  .extra-controls label {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    color: white;
-    font-size: 0.85rem;
+  .menu-wrap { position: relative; }
+  .menu-surface-anchor {
+    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; padding: 0; border: 0;
+    background: transparent; color: #fff; cursor: pointer;
   }
-
-  .doodle-speed,
-  .doodle-revert,
-  .doodle-play {
-    cursor: pointer;
+  .menu-surface-anchor .material-symbols-outlined { font-size: 20px; }
+  .menu-list-item {
+    display: flex; align-items: center; column-gap: 6px;
+    width: 100%; height: 48px; padding: 4px 16px; border: 0; border-radius: 4px;
+    background: transparent; cursor: pointer;
   }
+  .menu-list-item:hover { background-color: rgb(241, 241, 241); }
 
-  .doodle-revert,
-  .doodle-play {
-    height: 32px;
-    padding: 0 10px;
-    border: 0;
-    background: #333;
-    color: white;
+  .playbar {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; height: 50px;
+    display: flex; align-items: center; gap: 6px; padding: 0 8px; box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.55); color: #fff;
   }
-
-  .animation-controls {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    width: 100%;
-    padding: 6px 0;
-    background: #eee;
+  .play {
+    display: flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; flex: 0 0 auto; color: #fff; background: transparent; border: 0; cursor: pointer;
   }
-
-  .doodle-slider {
-    flex: 1;
+  .play svg { display: block; width: 12px; height: 12px; fill: currentColor; }
+  .seek {
+    appearance: none; -webkit-appearance: none; flex: 1 1 auto; min-width: 0; height: 16px; margin: 0; cursor: pointer;
+    background:
+      linear-gradient(#fff, #fff) left center / calc(var(--p, 0) * 100%) 2px no-repeat,
+      linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.35)) center / 100% 2px no-repeat;
+  }
+  .seek::-webkit-slider-runnable-track { height: 2px; background: transparent; }
+  .seek::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 10px; height: 10px; margin-top: -4px;
+    border-radius: 50%; background: #fff; border: 0;
+  }
+  .seek::-moz-range-track { height: 2px; background: rgba(255,255,255,.35); }
+  .seek::-moz-range-progress { height: 2px; background: #fff; }
+  .seek::-moz-range-thumb { width: 10px; height: 10px; border-radius: 50%; background: #fff; border: 0; }
+  .speed-btn {
+    flex: 0 0 auto; height: 28px; min-width: 2rem; padding: 0 4px; border: 0;
+    background: transparent; color: rgba(255,255,255,.9); font-size: 0.75rem; font-weight: 500; cursor: pointer;
   }
 </style>

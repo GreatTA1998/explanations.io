@@ -25,9 +25,7 @@
   >
   </canvas>
 
-  <!-- hsl(0, 0%, 20%) is the opaque equivalent of hsl(0,0%,0%, 0.80), but the servers looking similar to blackboards look bad
-    In general, opaque textures don't look too good in my opinion.
-  -->
+  <!-- Opaque flatten of live hsl(0,0%,0%,0.80) over --bg-off-white (= BLACKBOARD_PAINT). -->
   <canvas bind:this={bgCanvas} 
     style={`
       position: absolute;
@@ -35,7 +33,7 @@
       left: 0;
       z-index: 0;
       display: block;
-      background-color: hsl(0,0%,0%, 0.80); width: ${canvasWidth}px; height: ${canvasHeight}px;
+      background-color: hsl(0, 0%, 20%); width: ${canvasWidth}px; height: ${canvasHeight}px;
     `}
   >
 

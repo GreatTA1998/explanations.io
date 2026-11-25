@@ -33,11 +33,13 @@
   let resizeObserver = null
   let MainContent = null
   let ServerLayout
+  let lastWrittenVisitClassID = ''
 
   $: if ($isFullServerMode && MainContent && ServerLayout) transformToFullServerPage()
   $: ({ classID } = data)
   $: listenToClassDoc(classID)
-  $: if (classID && $user?.uid) persistRecentVisit(classID, $user)
+  // One write per route server; $user.id = mirror ready (not auth partial).
+  $: if (classID && $user?.id && classID !== lastWrittenVisitClassID) persistRecentVisit(classID, $user)
   $: fetchRecentlySearchedClassDoc($user)
 
   onMount(() => {
@@ -68,6 +70,7 @@
 
   function persistRecentVisit (classID, u) {
     if (!u?.uid || !classID) return
+    lastWrittenVisitClassID = classID
     const next = pushRecentVisitedServerID(u.recentVisitedServerIDs, classID)
     const prev = Array.isArray(u.recentVisitedServerIDs) ? u.recentVisitedServerIDs : []
     if (u.mostRecentServerID === classID && prev.length === next.length && prev.every((id, i) => id === next[i])) return

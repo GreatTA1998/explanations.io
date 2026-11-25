@@ -1,20 +1,20 @@
-<div bind:this={ReorderDropzone} 
-  style="height: 8px; border-radius: 2px;" 
+<div bind:this={ReorderDropzone}
+  data-room-reorder=""
+  style="height: 8px; border-radius: 2px;"
   on:dragenter={() => {
-    if (!isInvalidReorderDrop()) {
-      ReorderDropzone.style.background = 'rgb(87, 172, 247)' 
-    }
+    if (!isInvalidReorderDrop()) ReorderDropzone.style.background = DROP_HL
   }}
-  on:dragleave={() => ReorderDropzone.style.background = '' }
+  on:dragleave={() => ReorderDropzone.style.background = ''}
   on:dragover={(e) => dragover_handler(e)}
   on:drop={(e) => onReorderDrop(e)}
+  on:roomtouchdrop={(e) => onTouchReorder(e)}
 >
-
 </div>
 
 <script>
   import { whatIsBeingDragged, whatIsBeingDraggedID } from '/src/store.js'
   import { updateFirestoreDoc, updateNumOfSubfolders } from '/src/helpers/crud.js'
+  import { DROP_HL, parseDraggedRoomId } from '/src/helpers/roomTreeDnd.js'
 
   export let ReorderDropzone
   export let orderWithinLevel
@@ -33,54 +33,28 @@
     e.dataTransfer.dropEffect = 'move'
   }
 
-  async function onReorderDrop (e) {
-    // Critical on iPad Safari: without this, dropping text/plain navigates/redirects.
-    e.preventDefault()
-    e.stopPropagation()
-    if (isInvalidReorderDrop()) return
+  async function applyReorder (draggedRoomID) {
+    if (!draggedRoomID || parentRoomIDs.includes(draggedRoomID)) return
     ReorderDropzone.style.background = ''
 
-    const custom = e.dataTransfer.getData('application/x-blackboard-room')
-    const data = custom ? `roomID:${custom}` : e.dataTransfer.getData('text/plain')
-    const keyValuePairs = data.split(']')
-    const [key1, value1] = keyValuePairs[0].split(':')
-    const draggedRoomID = value1
-
-    // before updating `classServerOrder`, we update
-    // the counter showing how many subfolders a folder has
-    const droppedRoomDoc = roomsInThisLevel[orderWithinLevel]
-    await updateNumOfSubfolders({ 
-      draggedRoomID, 
-
-      // this is subtle, the dropzone above this current room actually belongs to the PARENT,
-      // because the parent is what contains all the rooms in this current level
-      droppedRoomID: roomsInThisLevel[0].parentRoomID, 
-
+    // Dropzone above a room belongs to the parent that owns this level.
+    await updateNumOfSubfolders({
+      draggedRoomID,
+      droppedRoomID: roomsInThisLevel[0].parentRoomID,
       basePath: `classes/${classID}/rooms/`
     })
 
     const initialNumericalDifference = 3
-    let newVal 
-
-    // TO-DO: need the last drop zone to be manually added
+    let newVal
     const dropZoneIdx = orderWithinLevel
-    // copy `PopupRearrangeVideos` 
     if (dropZoneIdx === 0) {
-      const topOfOrderDoc = roomsInThisLevel[0]
-      // halve the value so it never gets to 0 
-      newVal = (topOfOrderDoc.classServerOrder || 3) / 2
-    }
-    else if (dropZoneIdx === n) {
-      const bottomOfOrderDoc = roomsInThisLevel[n-1]
-      newVal = (bottomOfOrderDoc.classServerOrder || 3) + initialNumericalDifference
-      // update max class server order within this class
-      await updateFirestoreDoc(`classes/${classID}/`, {
-        maxClassServerOrder: newVal
-      })
-    }
-    else {
-      let topNeighborDoc = roomsInThisLevel[dropZoneIdx - 1]
-      let botNeighborDoc = roomsInThisLevel[dropZoneIdx]
+      newVal = (roomsInThisLevel[0].classServerOrder || 3) / 2
+    } else if (dropZoneIdx === n) {
+      newVal = (roomsInThisLevel[n - 1].classServerOrder || 3) + initialNumericalDifference
+      await updateFirestoreDoc(`classes/${classID}/`, { maxClassServerOrder: newVal })
+    } else {
+      const botNeighborDoc = roomsInThisLevel[dropZoneIdx]
+      const topNeighborDoc = roomsInThisLevel[dropZoneIdx - 1]
       const order1 = botNeighborDoc.classServerOrder || 3
       const order2 = topNeighborDoc.classServerOrder || 3 + initialNumericalDifference
       newVal = (order1 + order2) / 2
@@ -90,5 +64,16 @@
       classServerOrder: newVal,
       parentRoomID: roomsInThisLevel[0].parentRoomID || ''
     })
+  }
+
+  async function onReorderDrop (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    await applyReorder(parseDraggedRoomId(e.dataTransfer))
+  }
+
+  async function onTouchReorder (e) {
+    e.stopPropagation()
+    await applyReorder(e.detail?.roomId)
   }
 </script>

@@ -15,16 +15,6 @@
         {video.viewMinutes ? roundedToFixed(video.viewMinutes, 0) : 0} 
       </div>            
     </div>
-
-    <div style="color: black; display: flex; align-items: center;">
-      <span class="material-symbols-outlined video-footer-icon" style="font-size: 20px; padding-top: 0px; margin-right: 2px;">
-        forum
-      </span>
-      <div class="stat-number">
-        {video.numOfComments || 0}
-      </div>
-    </div>
-
   </div>
 {/if}
 

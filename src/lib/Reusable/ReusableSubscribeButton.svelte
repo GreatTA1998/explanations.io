@@ -5,7 +5,7 @@
 <PopupConfirmLearner let:setIsPopupOpen={setIsPopupOpen}>
   <button on:click={() => setIsPopupOpen({ newVal: true })} class="primary-button" {...$$restProps}>
     <slot>
-      Try for $10/week
+      Try one week for $10
     </slot>
   </button>
 </PopupConfirmLearner>

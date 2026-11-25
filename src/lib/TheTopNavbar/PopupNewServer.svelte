@@ -31,10 +31,7 @@
               />
             </div>
           </div>
-                     
 
-
-          <!-- What's the goal of this server, how will it help its members -->
           <div style="flex: 1">
             <UXFormField
               value={serverGoalDescription}
@@ -47,7 +44,7 @@
       </div>
 
       <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 24px;">
-        <ReusableRoundButton on:click={createNewClassServer} backgroundColor="#5d0068" textColor="white" isDisabled={!serverFullName}>
+        <ReusableRoundButton on:click={createNewClassServer} backgroundColor="#5d0068" textColor="white" isDisabled={!serverFullName || creating}>
           <span class="material-symbols-outlined" style="margin-right: 6px;">
             add
           </span>
@@ -62,62 +59,59 @@
   import BasePopup from '$lib/Reusable/BasePopup.svelte'
   import UXFormField from '$lib/Reusable/UXFormField.svelte'
   import ReusableRoundButton from '$lib/Reusable/ReusableRoundButton.svelte'
-  import { createEventDispatcher, onMount } from 'svelte'
-  import { updateFirestoreDoc, setFirestoreDoc } from '/src/helpers/crud.js'
+  import { createEventDispatcher } from 'svelte'
+  import { goto } from '$app/navigation'
+  import { setFirestoreDoc, createRoomDoc } from '/src/helpers/crud.js'
   import { getRandomID } from '/src/helpers/utility.js'
   import { user } from '/src/store.js'
 
-  // Accept an external isOpen prop with default value of undefined
-  export let isOpen = undefined;
+  export let isOpen = undefined
+  export let showTrigger = true
 
-  let serverFullName = '' 
+  let serverFullName = ''
   let serverGoalDescription = ''
   let serverSyllabusVersion = ''
+  let isPopupOpen = false
+  let creating = false
 
   const dispatch = createEventDispatcher()
 
-  export let showTrigger = true
-
-  // Internal state for when component controls its own visibility
-  let isPopupOpen = false;
-
-  // Make isPopupOpen reactive to isOpen when provided
   $: if (isOpen !== undefined) {
-    isPopupOpen = isOpen;
+    isPopupOpen = isOpen
   }
 
   export function openPopup () {
     isPopupOpen = true
   }
 
-  // ASSUMES NAME & DESCRIPTION ARE NOT EMPTY STRINGS (BECAUSE THE SUBMIT BUTTON IS DISABLED OTHERWISE)
   async function createNewClassServer () {
+    if (creating || !serverFullName) return
+    creating = true
     const newClassID = getRandomID()
-    await Promise.all([
-      setFirestoreDoc(`/classes/${newClassID}`, {
+    try {
+      await setFirestoreDoc(`/classes/${newClassID}`, {
         name: serverFullName,
         description: serverGoalDescription,
         syllabusVersion: serverSyllabusVersion,
         isYoutubeClass: true,
         isPublic: true,
         creatorUID: ($user && $user.uid) || '',
-        numOfMembers: 0, // has a phoneNumber
-        numOfHelpers: 0, // sign up as helper
-        numOfQuestions: 0, 
-        numOfVideos: 0, // keep +=1 on the metadata, initialize it to the right value
-        numOfSubscriptions: 0, // keep it +1 whenever someone subscribes to the class
+        featuredRoomID: newClassID,
+        numOfMembers: 0,
+        numOfHelpers: 0,
+        numOfQuestions: 0,
+        numOfVideos: 0,
+        numOfSubscriptions: 0,
         numOfUnresolvedQuestions: 0,
         numOfResolvedQuestions: 0,
         numOfCreators: 0
-      }),
-      setFirestoreDoc(`classes/${newClassID}/rooms/${newClassID}}`, {
-        blackboards: [newClassID]
-      }),
-      setFirestoreDoc(`classes/${newClassID}/rooms/${newClassID}}/blackboards/${newClassID}`, {
-        // empty object
       })
-    ])
-    window.location.reload()
-    dispatch('popup-close')
+      await createRoomDoc(`classes/${newClassID}/`, newClassID)
+      isPopupOpen = false
+      dispatch('popup-close')
+      await goto(`/${newClassID}/${newClassID}`)
+    } finally {
+      creating = false
+    }
   }
 </script>

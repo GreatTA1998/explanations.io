@@ -57,4 +57,12 @@ test('pause≥2s paragraphs; keep matching word times + punctuation; ignore mism
     sentenceAtTime(gap, 1.5), sentenceAtTime(gap, 2.6)
   ], [{ from: 0, to: 1 }, { from: 2, to: 3 }, { from: 2, to: 3 }, { from: 2, to: 3 }])
   assert.equal(wordAtTime(gap, 1.5).text, 'there.')
+
+  // CJK: Unicode terminals + whisper segment ends (little/no Latin punct)
+  const zhSeg = (start, end, text) => ({ start, end, text, words: [{ word: text, start, end }] })
+  const zh = wordsFromSegments([zhSeg(0, 1.2, '你好世界。'), zhSeg(1.3, 2.4, '下一句呢！'), zhSeg(2.5, 3.6, '没有标点的片段'), zhSeg(3.7, 4.8, '下一段仍无标点')])
+  assert.deepEqual(zh.map((w) => sentenceBounds(zh, w)), [{ from: 0, to: 0 }, { from: 1, to: 1 }, { from: 2, to: 2 }, { from: 3, to: 3 }])
+  assert.deepEqual([sentenceAtTime(zh, 0.5), sentenceAtTime(zh, 3.0)], [{ from: 0, to: 0 }, { from: 2, to: 2 }])
+  const pause = [{ id: 0, text: '甲', start: 0, end: 0.4 }, { id: 1, text: '乙', start: 1.1, end: 1.4 }, { id: 2, text: '丙', start: 1.5, end: 1.8 }]
+  assert.deepEqual([sentenceBounds(pause, pause[0]), sentenceBounds(pause, pause[1])], [{ from: 0, to: 0 }, { from: 1, to: 2 }])
 })

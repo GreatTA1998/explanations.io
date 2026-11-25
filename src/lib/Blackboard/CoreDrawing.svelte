@@ -67,6 +67,14 @@
     on:touchend|nonpassive|preventDefault={touchEnd}
     on:mousedown={mouseDown}
     on:mousemove={mouseMove}
+    on:contextmenu|preventDefault={(e) => {
+      if ($currentTool.type === 'eraser') {
+        currentTool.set(previousTool)
+      } else {
+        previousTool = $currentTool
+        currentTool.set({ type: 'eraser', color: '', lineWidth: 32 })
+      }
+    }}
     class="front-canvas"
     class:eraser-cursor={$currentTool.type === 'eraser'}
     class:pencil-cursor={$currentTool.type !== 'eraser'}
@@ -107,6 +115,8 @@
 
   // QUICKFIX
   export let isDeletable = true
+
+  let previousTool = $currentTool
 
   $: if (currentTimeOverride) {
     currentTime = currentTimeOverride
